@@ -174,3 +174,15 @@ MaintainCoder 的 token 消耗与 MapCoder 相当，远低于 MetaGPT/ChatDev，
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 基准 × 10+ 基线（含人类/推理模型/多 Agent）+ 消融 + 静态vs动态指标 + 成本分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机以 Knight Capital/千年虫开场有冲击力，形式化定义完整，方法论系统
 - 价值: ⭐⭐⭐⭐⭐ 范式转移——从"生成正确代码"到"生成可维护代码"，MaintainBench 有潜力成为标准评测
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DyCodeEval: Dynamic Benchmarking of Reasoning Capabilities in Code Large Language Models Under Data Contamination](../../ICML2025/code_intelligence/dynamic_benchmarking_of_reasoning_capabilities_in_code_large_language_models_und.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](../../ACL2025/code_intelligence/dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [Embedding Alignment in Code Generation for Audio](embedding_alignment_in_code_generation_for_audio.md)
+- [QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation](qimeng-salv_signal-aware_learning_for_verilog_code_generation.md)
+- [Text-to-Code Generation for Modular Building Layouts in Building Information Modeling](text-to-code_generation_for_modular_building_layouts_in_building_information_mod.md)
+
+<!-- RELATED:END -->

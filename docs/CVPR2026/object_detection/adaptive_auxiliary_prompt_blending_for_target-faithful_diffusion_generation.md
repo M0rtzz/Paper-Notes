@@ -140,3 +140,15 @@ $$\mathcal{L}(\gamma_t) = \|\tilde{s}_\theta(x_t; w, \gamma_t) - s_\theta(x_t, \
 - 实验充分度: ⭐⭐⭐⭐ (两个任务、多种基线、消融全面，但缺少更多模型架构验证)
 - 写作质量: ⭐⭐⭐⭐⭐ (动机清晰、推导严谨、Toy Example 直观有效)
 - 价值: ⭐⭐⭐⭐ (统一框架有实用价值，但推理成本增加和理论假设是落地瓶颈)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](../../ICLR2026/object_detection/toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
+- [Stake the Points: Structure-Faithful Instance Unlearning](stake_the_points_structure-faithful_instance_unlearning.md)
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_texttoimage_diffusion_v.md)
+- [SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras](spiraldiff_spiral_diffusion_with_lora_for_rgb-to-raw_conversion_across_cameras.md)
+- [Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints](../../AAAI2026/object_detection/mitigating_error_accumulation_in_co-speech_motion_generation_via_global_rotation.md)
+
+<!-- RELATED:END -->

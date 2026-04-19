@@ -161,3 +161,15 @@ $$\text{后续步}：\text{标准 DDIM 反转}$$
 - **实用性**: ⭐⭐⭐⭐ — 简单修复方案可直接应用
 - **实验**: ⭐⭐⭐⭐⭐ — 7个模型的全面对比和验证
 - **写作**: ⭐⭐⭐⭐⭐ — 分析层层递进，逻辑清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Relation between Rectified Flows and Optimal Transport](../../NeurIPS2025/image_generation/on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [Image Can Bring Your Memory Back: A Novel Multi-Modal Guided Attack against Image Generation Model Unlearning](image_can_bring_your_memory_back_a_novel_multi-modal_guided_attack_against_image.md)
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [RMFlow: Refined Mean Flow by a Noise-Injection Step for Multimodal Generation](rmflow_refined_mean_flow_by_a_noise-injection_step_for_multimodal_generation.md)
+- [Does Semantic Noise Initialization Transfer from Images to Videos? A Paired Diagnostic Study](does_semantic_noise_initialization_transfer_from_images_to_videos_a_paired_diagn.md)
+
+<!-- RELATED:END -->

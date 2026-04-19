@@ -149,3 +149,15 @@ Human3.6m数据集消融(T=27)：
 - 实验充分度: ⭐⭐⭐⭐⭐ (InD/OoD均有评估，消融详尽，可扩展性分析全面)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰但部分符号较多，阅读门槛稍高)
 - 价值: ⭐⭐⭐⭐⭐ (解决了实际问题：无需3D标注+OoD鲁棒+可扩展)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+- [RePOSE: 3D Human Pose Estimation via Spatio-Temporal Depth Relational Consistency](repose_3d_human_pose_estimation_via_spatio-temporal_depth_relational_consistency.md)
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+- [Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
+- [ADen: Adaptive Density Representations for Sparse-view Camera Pose Estimation](aden_adaptive_density_representations_for_sparseview_camera.md)
+
+<!-- RELATED:END -->

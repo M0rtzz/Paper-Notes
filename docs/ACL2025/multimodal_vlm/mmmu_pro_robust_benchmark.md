@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 20+ 模型、3 种设置、CoT/OCR 消融、学科维度分析，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、构建过程透明、结果呈现直观
 - 价值: ⭐⭐⭐⭐⭐ MMMU-Pro 已成为多模态模型发布时的标准评测基准之一
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](longdocurl_multimodal_long_doc.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+
+<!-- RELATED:END -->

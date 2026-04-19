@@ -122,3 +122,15 @@ $$\mathcal{L} = \log p(\tilde{\mathbf{x}}|\mathbf{q}_k) + \|sg(\mathbf{z}) - \ma
 ⭐⭐⭐⭐ (4/5)
 
 基准框架设计出色，四维度评估全面且科学。AminoAseed 方法虽简单但有效性好。消融和缩放研究深入，提供了大量有价值的洞察。美中不足是 AminoAseed 仍未缩小 VQ-VAE 与 IF 方法的差距。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein as a Second Language for LLMs](../../ICLR2026/medical_imaging/protein_as_a_second_language_for_llms.md)
+- [The Four Color Theorem for Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
+
+<!-- RELATED:END -->

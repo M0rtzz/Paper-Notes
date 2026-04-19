@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个任务（MDS/LFQA）+两种方法（提示/内部表示）+消融+多种生成器，但缺少真实用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ 任务定义严谨（三个 desiderata 清晰），图示直观（Fig.1 的对比有说服力），形式化完整
 - 价值: ⭐⭐⭐⭐ 改善 RAG/生成系统的可验证性和用户体验，可直接集成到现有系统中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VAQUUM: Are Vague Quantifiers Grounded in Visual Data?](vaquum_are_vague_quantifiers_grounded_in_visual_data.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [CiteEval: Principle-Driven Citation Evaluation for Source Attribution](citeeval_principle-driven_citation_evaluation_for_source_attribution.md)
+- [MOSAIC: Multiple Observers Spotting AI Content](mosaic_multiple_observers_spotting_ai_content.md)
+- [Principled Content Selection to Generate Diverse and Personalized Multi-Document Summaries](dpp_diverse_multidoc_summary.md)
+
+<!-- RELATED:END -->

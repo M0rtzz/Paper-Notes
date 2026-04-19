@@ -124,3 +124,15 @@ GeoBPE 的 BPR 仅为 ProToken 的 27-36%（>10× 压缩优势），ESM3 的 1.6
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个研究问题覆盖压缩/重建/泛化/效率/下游/可解释性，24 个测试集，分析极为全面
 - 写作质量: ⭐⭐⭐⭐ 数学符号严谨，算法描述清晰，但符号系统较复杂，学习曲线陡峭
 - 价值: ⭐⭐⭐⭐⭐ 为蛋白质结构表示学习开辟了全新范式，层次化词汇表的思路对其他连续结构数据（分子、材料）也有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein Structure Tokenization: Benchmarking and New Recipe](../../ICML2025/medical_imaging/protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [AntigenLM: Structure-Aware DNA Language Modeling for Influenza](antigenlm_structure-aware_dna_language_modeling_for_influenza.md)
+- [Protein Counterfactuals via Diffusion-Guided Latent Optimization](protein_counterfactuals_via_diffusion-guided_latent_optimization.md)
+- [Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+- [Reverse Distillation: Consistently Scaling Protein Language Model Representations](reverse_distillation_consistently_scaling_protein_language_model_representations.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ Lesson 2（图文对齐）对 psum 更敏感，Lesson 1（图像质量）对 nsu
 - 实验充分度：⭐⭐⭐⭐⭐ — 9 任务基准、零样本/微调双评、完整消融
 - 实用价值：⭐⭐⭐⭐ — 数据集开源且有实际安防/自动驾驶应用场景
 - 写作质量：⭐⭐⭐⭐ — 结构清晰，数据集构建和方法动机阐述充分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers](rethinking_cross-modal_interaction_in_multimodal_diffusion_transformers.md)
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [ICEdit: Enabling Instructional Image Editing with In-Context Generation in Large Scale Diffusion Transformer](../../NeurIPS2025/image_generation/in-context_edit_enabling_instructional_image_editing_with_in-context_generation_.md)
+- [UltraHR-100K: Enhancing UHR Image Synthesis with A Large-Scale High-Quality Dataset](../../NeurIPS2025/image_generation/ultrahr-100k_enhancing_uhr_image_synthesis_with_a_large-scale_high-quality_datas.md)
+
+<!-- RELATED:END -->

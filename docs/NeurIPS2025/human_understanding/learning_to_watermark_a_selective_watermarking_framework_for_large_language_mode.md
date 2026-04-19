@@ -146,3 +146,15 @@ $$\mathcal{L}_D = -\lambda_z z + \lambda_{\text{wm}} \mathcal{L}_{\text{wm\_rati
 ## 启发与关联
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization](parco_parallel_autoregressive_models_for_multi-agent_combinatorial_optimization.md)
+- [Uncovering Strategic Egoism Behaviors in Large Language Models](uncovering_strategic_egoism_behaviors_in_large_language_models.md)
+- [The Last Vote: A Multi-Stakeholder Framework for Language Model Governance](the_last_vote_a_multi-stakeholder_framework_for_language_model_governance.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models](incentivizing_reasoning_for_advanced_instruction-following_of_large_language_mod.md)
+
+<!-- RELATED:END -->

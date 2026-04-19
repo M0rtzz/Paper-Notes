@@ -134,3 +134,15 @@ $$\mathcal{L} = \mathcal{L}_{mse}^I + \mathcal{L}_{mse}^D + \mathcal{L}_{mse}^M$
 - 实验充分度: ⭐⭐⭐⭐ 在深度估计和语义分割两个下游任务上充分验证，多模型多数据集
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法描述直观，图示质量高
 - 价值: ⭐⭐⭐⭐ 提供了数据稀缺场景下的有效解决方案，方法可推广性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniVG: A Generalist Diffusion Model for Unified Image Generation and Editing](../../ICCV2025/3d_vision/univg_a_generalist_diffusion_model_for_unified_image_generation_and_editing.md)
+- [UniEgoMotion: A Unified Model for Egocentric Motion Reconstruction, Forecasting, and Generation](../../ICCV2025/3d_vision/uniegomotion_a_unified_model_for_egocentric_motion_reconstruction_forecasting_an.md)
+- [Compass Control: Multi Object Orientation Control for Text-to-Image Generation](compass_control_multi_object_orientation_control_for_text-to-image_generation.md)
+- [Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes](../../ICCV2025/3d_vision/relative_illumination_fields_learning_medium_and_light_independent_underwater_sc.md)
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+
+<!-- RELATED:END -->

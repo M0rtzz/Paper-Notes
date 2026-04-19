@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 10+数据集评估、详细消融（M值、prompt类型、编码器方案），但缺少大规模数据验证
 - 写作质量: ⭐⭐⭐⭐ "盲人摸象"类比生动，但部分公式notation较复杂
 - 价值: ⭐⭐⭐⭐ 为CLIP后续改进指明了清晰方向，多分支+M2M范式可被广泛采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalized Contrastive Learning for Universal Multimodal Retrieval](../../NeurIPS2025/information_retrieval/generalized_contrastive_learning_for_universal_multimodal_re.md)
+- [LangBridge: Interpreting Image as a Combination of Language Embeddings](../../ICCV2025/information_retrieval/langbridge_interpreting_image_as_a_combination_of_language_embeddings.md)
+- [Don't Lag, RAG: Training-Free Adversarial Detection Using RAG](../../ICML2025/information_retrieval/dont_lag_rag_training-free_adversarial_detection_using_rag.md)
+- [The Narrow Gate: Localized Image-Text Communication in Native Multimodal Models](../../NeurIPS2025/information_retrieval/the_narrow_gate_localized_imagetext_communication_in_native.md)
+- [Joint Vision-Language Social Bias Removal for CLIP](joint_vision-language_social_bias_removal_for_clip.md)
+
+<!-- RELATED:END -->

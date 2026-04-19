@@ -208,3 +208,15 @@ SIT-SC 模型无需重训练即可处理多种分辨率：
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Holistic Tokenizer for Autoregressive Image Generation](holistic_tokenizer_for_autoregressive_image_generation.md)
+- [DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer](dc-ar_efficient_masked_autoregressive_image_generation_with_deep_compression_hyb.md)
+- [M2SFormer: Multi-Spectral and Multi-Scale Attention with Edge-Aware Difficulty Guidance for Image Forgery Localization](m2sformer_multi-spectral_and_multi-scale_attention_with_edge-aware_difficulty_gu.md)
+- [EvoTok: A Unified Image Tokenizer via Residual Latent Evolution for Visual Understanding and Generation](../../CVPR2025/image_generation/evotok_a_unified_image_tokenizer_via_residual_latent_evolution_for_visual_unders.md)
+- [DiffuMatch: Category-Agnostic Spectral Diffusion Priors for Robust Non-rigid Shape Matching](diffumatch_category-agnostic_spectral_diffusion_priors_for_robust_non-rigid_shap.md)
+
+<!-- RELATED:END -->

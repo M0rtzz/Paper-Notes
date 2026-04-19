@@ -127,3 +127,15 @@ CMU Panoptic 数据集 Chamfer 距离（mm）：
 - **实验充分度**: ⭐⭐⭐⭐ — 两个数据集、多个基线对比完整，但消融实验细节可更丰富
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导严谨清晰，方法阐述条理分明
 - **价值**: ⭐⭐⭐⭐ — 解决了动态表面重建的核心痛点（时序一致性+大变形），对相关领域有较强推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mobile-VTON: High-Fidelity On-Device Virtual Try-On](mobile_vton_ondevice_virtual_tryon.md)
+- [HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity](../../ICCV2025/human_understanding/hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu.md)
+- [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](../../ICCV2025/human_understanding/avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
+- [NURBGen: High-Fidelity Text-to-CAD Generation through LLM-Driven NURBS Modeling](../../AAAI2026/human_understanding/nurbgen_high-fidelity_text-to-cad_generation_through_llm-driven_nurbs_modeling.md)
+- [SteelDefectX: A Coarse-to-Fine Vision-Language Dataset and Benchmark for Generalizable Steel Surface Defect Detection](steeldefectx_a_coarse-to-fine_vision-language_dataset_and_benchmark_for_generali.md)
+
+<!-- RELATED:END -->

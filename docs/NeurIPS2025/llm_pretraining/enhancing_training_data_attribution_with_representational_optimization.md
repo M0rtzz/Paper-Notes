@@ -165,3 +165,15 @@ AirRep 在仅用 1/48 存储的情况下，平均 LDS 超越所有梯度方法 *
 - 实验充分度: ⭐⭐⭐⭐⭐ — LDS、数据选择、数据分类、消融、成本分析、跨模型/跨架构泛化，极为全面
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，技术路线逻辑通顺，实验组织良好
 - 价值: ⭐⭐⭐⭐⭐ — 在 LLM 规模下实现高效精确的数据归因，对数据策展和模型可解释性有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Final-Model-Only Data Attribution with a Unifying View of Gradient-Based Methods](final-model-only_data_attribution_with_a_unifying_view_of_gradient-based_methods.md)
+- [Conformal Risk Training: End-to-End Optimization of Conformal Risk Control](conformal_risk_training_end-to-end_optimization_of_conformal_risk_control.md)
+- [LLM Data Selection and Utilization via Dynamic Bi-level Optimization](../../ICML2025/llm_pretraining/llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
+- [Quantifying Task-Relevant Representational Similarity Using Decision Variable Correlation](quantifying_task-relevant_representational_similarity_using_decision_variable_co.md)
+- [Understanding and Enhancing Mask-Based Pretraining towards Universal Representations](understanding_and_enhancing_mask-based_pretraining_towards_universal_representat.md)
+
+<!-- RELATED:END -->

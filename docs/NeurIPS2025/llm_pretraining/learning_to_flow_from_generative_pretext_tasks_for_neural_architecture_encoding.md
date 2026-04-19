@@ -149,3 +149,15 @@ FGP 在 **27 个设置中的 23 个**胜出。ResGatedGCN + FGP 在 NB-101 上 P
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个 NAS-Bench 数据集 × 三种编码器 × 五个基线，消融、可视化、NAS 应用俱全
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图示直观，挑战-方案的叙事流畅
 - **价值**: ⭐⭐⭐⭐ 为 NAS 领域提供了实用的预训练方法，兼顾效率与效果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
+- [Alternating Gradient Flows: A Theory of Feature Learning in Two-layer Neural Networks](alternating_gradient_flows_a_theory_of_feature_learning_in_two-layer_neural_netw.md)
+- [Gradient-Weight Alignment as a Train-Time Proxy for Generalization in Classification Tasks](gradient-weight_alignment_as_a_train-time_proxy_for_generalization_in_classifica.md)
+- [Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](language_model_behavioral_phases_are_consistent_across_archi.md)
+- [Superposition Yields Robust Neural Scaling](superposition_yields_robust_neural_scaling.md)
+
+<!-- RELATED:END -->

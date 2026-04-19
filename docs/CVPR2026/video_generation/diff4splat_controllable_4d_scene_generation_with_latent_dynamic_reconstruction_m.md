@@ -135,3 +135,15 @@ $$\mathcal{L} = \mathcal{L}_{FM} + \lambda_{photo}\mathcal{L}_{photo} + \lambda_
 - 实验充分度: ⭐⭐⭐⭐ — 多维度评估充分，但缺少与更多前馈4D方法的对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，方法描述详尽
 - 价值: ⭐⭐⭐⭐⭐ — 效率提升显著，具有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoVieDrive: Urban Scene Synthesis with Multi-Modal Multi-View Video Diffusion Transformer](moviedrive_multimodal_multiview_video_diffusion.md)
+- [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+- [Geometry-as-context: Modulating Explicit 3D in Scene-consistent Video Generation to Geometry Context](geometry-as-context_modulating_explicit_3d_in_scene-consistent_video_generation_.md)
+- [Target-Aware Video Diffusion Models](../../ICLR2026/video_generation/target-aware_video_diffusion_models.md)
+- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](../../ECCV2024/video_generation/vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -176,3 +176,15 @@ Pipeline：UK Biobank MRI数据 → TotalVibeSegmentator自动标注72类器官 
 - 实验充分度: ⭐⭐⭐⭐⭐ 标签验证+零样本泛化+多基准评测+消融+数据规模律+特征可视化，非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据集构建-质量控制-模型训练-评测的流程完整
 - 价值: ⭐⭐⭐⭐⭐ 医学影像领域的里程碑级数据集+基础模型，对社区有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)
+- [Progressive Test Time Energy Adaptation for Medical Image Segmentation](progressive_test_time_energy_adaptation_for_medical_image_segmentation.md)
+- [MRGen: Segmentation Data Engine for Underrepresented MRI Modalities](mrgen_segmentation_data_engine_for_underrepresented_mri_modalities.md)
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](../../CVPR2026/medical_imaging/medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+- [DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)
+
+<!-- RELATED:END -->

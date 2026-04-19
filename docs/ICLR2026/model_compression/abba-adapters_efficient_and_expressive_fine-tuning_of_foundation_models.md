@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个模型+算术/常识推理+矩阵重构+详尽消融
 - 写作质量: ⭐⭐⭐⭐⭐ 从动机到理论到实验叙述流畅，图表设计清晰
 - 价值: ⭐⭐⭐⭐⭐ 作为 LoRA 的直接改进方案，简单实用且提升显著，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Memba: Membrane-driven Parameter-Efficient Fine-Tuning for Mamba](memba_membrane-driven_parameter-efficient_fine-tuning_for_mamba.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [LoFT: Low-Rank Adaptation That Behaves Like Full Fine-Tuning](loft_low-rank_adaptation_that_behaves_like_full_fine-tuning.md)
+- [FedEx-LoRA: Exact Aggregation for Federated and Efficient Fine-Tuning of Large Language Models](../../ACL2025/model_compression/fedex_lora_federated_exact_aggregation.md)
+
+<!-- RELATED:END -->

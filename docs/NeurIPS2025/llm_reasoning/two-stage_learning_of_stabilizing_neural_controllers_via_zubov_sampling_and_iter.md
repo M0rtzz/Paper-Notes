@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个系统 + 5 种基线 + 详细消融 + 验证时间对比
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验设计全面
 - 价值: ⭐⭐⭐⭐ 在安全关键控制领域有显著实际价值，ROA 提升幅度惊人
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sampling-Efficient Test-Time Scaling: Self-Estimating the Best-of-N Sampling in Early Decoding](sampling-efficient_test-time_scaling_self-estimating_the_best-of-n_sampling_in_e.md)
+- [AbbIE: Autoregressive Block-Based Iterative Encoder for Efficient Sequence Modeling](abbie_autoregressive_block-based_iterative_encoder_for_efficient_sequence_modeli.md)
+- [DreamPRM: Domain-Reweighted Process Reward Model for Multimodal Reasoning](dreamprm_domain-reweighted_process_reward_model_for_multimodal_reasoning.md)
+- [SERL: Self-Examining Reinforcement Learning on Open-Domain](../../AAAI2026/llm_reasoning/serl_self-examining_reinforcement_learning_on_open-domain.md)
+- [Curriculum Abductive Learning](curriculum_abductive_learning.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 控制变量实验设计好，但作为 Workshop 论文深度有限
 - 写作质量: ⭐⭐⭐⭐ 问题驱动的写作方式清晰，实验分析有条理
 - 价值: ⭐⭐⭐⭐ 提出了重要的科学问题（推理 CoT 的不可替代性），对后续研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
+- [Flow of Reasoning: Training LLMs for Divergent Reasoning with Minimal Examples](flow_of_reasoning_training_llms_for_divergent_reasoning_with_minimal_examples.md)
+- [VinePPO: Refining Credit Assignment in RL Training of LLMs](vineppo_refining_credit_assignment_in_rl_training_of_llms.md)
+- [Router-R1: Teaching LLMs Multi-Round Routing and Aggregation via Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/router-r1_teaching_llms_multi-round_routing_and_aggregation_via_reinforcement_le.md)
+- [T1: Advancing Language Model Reasoning through Reinforcement Learning and Inference Scaling](t1_advancing_language_model_reasoning_through_reinforcement_learning_and_inferen.md)
+
+<!-- RELATED:END -->

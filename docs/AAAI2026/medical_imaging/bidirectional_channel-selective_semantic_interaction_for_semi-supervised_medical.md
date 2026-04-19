@@ -174,3 +174,15 @@ $$\tilde{\mathcal{F}}_{sub}^l = \sigma(\mathbf{Q}(\mathcal{F}_{sub}^l) \cdot \ma
 - **实验充分度**: ★★★★★ — 三个数据集、11 种对比方法、详细消融
 - **写作质量**: ★★★★☆ — 结构清晰，公式推导详细
 - **实用性**: ★★★★☆ — 单模型架构计算开销可控，有代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProPL: Universal Semi-Supervised Ultrasound Image Segmentation via Prompt-Guided Pseudo-Labeling](propl_universal_semi-supervised_ultrasound_image_segmentation_via_prompt-guided_.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](../../CVPR2026/medical_imaging/semantic_class_distribution_learning_for_debiasing.md)
+- [DualFete: Revisiting Teacher-Student Interactions from a Feedback Perspective for Semi-supervised Medical Image Segmentation](dualfete_revisiting_teacher-student_interactions_from_a_feedback_perspective_for.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](../../CVPR2026/medical_imaging/semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation](../../ECCV2024/medical_imaging/alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)
+
+<!-- RELATED:END -->

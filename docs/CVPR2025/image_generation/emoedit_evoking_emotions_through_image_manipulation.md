@@ -126,3 +126,15 @@ EmoEdit 分两大步：(1) 构建 EmoEditSet 数据集——从 EmoSet 做聚类
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+用户研究+消融+跨模型迁移，全面但缺少大规模对比
 - 写作质量: ⭐⭐⭐⭐ 故事线清晰，图表直观，数据集构建过程描述详细
 - 价值: ⭐⭐⭐⭐ 开辟了内容感知 AIM 新方向，数据集和 Adapter 有社区价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Make Me Happier: Evoking Emotions Through Image Diffusion Models](../../ICCV2025/image_generation/make_me_happier_evoking_emotions_through_image_diffusion_models.md)
+- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusion-based_image_manipulation_and_the_failure_mod.md)
+- [Interpretable Generative Models through Post-hoc Concept Bottlenecks](interpretable_generative_models_through_post-hoc_concept_bottlenecks.md)
+- [MINIMA: Modality Invariant Image Matching](minima_modality_invariant_image_matching.md)
+- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+
+<!-- RELATED:END -->

@@ -157,3 +157,15 @@ tags:
 - **实用性**: ★★☆☆☆ — 纯理论工作，距离实际应用尚有距离
 - **表达清晰度**: ★★★★☆ — 运行示例有效地辅助理解，但证明部分技术性较强
 - **综合评分**: ★★★★☆
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
+- [Rethinking Aleatoric and Epistemic Uncertainty](../../ICML2025/others/rethinking_aleatoric_and_epistemic_uncertainty.md)
+- [Local Guidance for Configuration-Based Multi-Agent Pathfinding](local_guidance_for_configuration-based_multi-agent_pathfinding.md)
+- [Structural Approach to Guiding a Present-Biased Agent](structural_approach_to_guiding_a_present-biased_agent.md)
+- [Agent-SAMA: State-Aware Mobile Assistant](agent-sama_state-aware_mobile_assistant.md)
+
+<!-- RELATED:END -->

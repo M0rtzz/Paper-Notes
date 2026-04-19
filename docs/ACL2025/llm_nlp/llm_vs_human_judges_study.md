@@ -142,3 +142,15 @@ tags:
 | 实验充分度 | ⭐⭐⭐⭐⭐ | 20任务×11模型×多属性，交叉分析极为全面 |
 | 实用价值 | ⭐⭐⭐⭐⭐ | Judge-Bench 为社区提供了统一验证 LLM-as-a-Judge 的标准工具 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，图表丰富，多作者协作但风格统一 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [Unintended Harms of Value-Aligned LLMs: Psychological and Empirical Insights](unintended_harms_of_value-aligned_llms_psychological_and_empirical_insights.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [Perspective Transition of Large Language Models for Solving Subjective Tasks](perspective_transition_of_large_language_models_for_solving_subjective_tasks.md)
+
+<!-- RELATED:END -->

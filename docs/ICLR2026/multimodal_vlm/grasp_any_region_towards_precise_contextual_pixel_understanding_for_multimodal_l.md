@@ -156,3 +156,15 @@ GAR 的核心优势在于通过 feature replay 同时解决了全局上下文和
 - 实验充分度: 9/10 — 覆盖 7+ 基准，含消融实验，还验证了视频迁移
 - 写作质量: 8/10 — 问题清晰、结构完整、图表丰富
 - 价值: 8/10 — 解决了区域级 MLLM 的根本矛盾，GAR-Bench 有望成为标准评测
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R-VLM: Region-Aware Vision Language Model for Precise GUI Grounding](../../ACL2025/multimodal_vlm/r-vlm_region-aware_vision_language_model_for_precise_gui_grounding.md)
+- [Do Vision-Language Models Respect Contextual Integrity in Location Disclosure?](do_vision-language_models_respect_contextual_integrity_in_location_disclosure.md)
+- [Omni-Mol: Multitask Molecular Model for Any-to-Any Modalities](../../NeurIPS2025/multimodal_vlm/omni-mol_multitask_molecular_model_for_any-to-any_modalities.md)
+- [URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding](../../AAAI2026/multimodal_vlm/urag_unified_retrieval_and_generation_in_multimodal_llms_for.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](../../ACL2025/multimodal_vlm/table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+
+<!-- RELATED:END -->

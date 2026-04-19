@@ -138,3 +138,15 @@ AA-CLIP 采用两阶段训练流程，CLIP 原始参数始终冻结：
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个数据集、多种shot设置、详细消融，industry+medical双域验证
 - 写作质量: ⭐⭐⭐⭐⭐ 可视化丰富（t-SNE、热力图、定性结果），逻辑清晰
 - 价值: ⭐⭐⭐⭐ 对零样本AD领域有实际价值，特别是医学场景下的低数据需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection](../../CVPR2026/medical_imaging/moeclip_patch-specialized_experts_for_zero-shot_anomaly_detection.md)
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](../../CVPR2026/medical_imaging/visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+- [Dual Distillation for Few-Shot Anomaly Detection](../../ICLR2026/medical_imaging/dual_distillation_for_few-shot_anomaly_detection.md)
+- [Enhancing Virtual Try-On with Synthetic Pairs and Error-Aware Noise Scheduling](enhancing_virtual_try-on_with_synthetic_pairs_and_error-aware_noise_scheduling.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](../../CVPR2026/medical_imaging/chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+
+<!-- RELATED:END -->

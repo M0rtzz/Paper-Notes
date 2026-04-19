@@ -134,3 +134,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ 理论贡献扎实，三层递进的下界构造（相同 Hessian → 强凸 → 非凸分量）层次分明，每一层都揭示了新的数学现象。特别是非凸分量下从多项式级到指数级的跳变非常出人意料。论文结构清晰，总结表格一目了然。但作为纯理论工作，对实际算法设计的直接指导有限，且主要结果限于 IGD 而非更广泛使用的 RR，留下了大量开放问题。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantum Optimization via Gradient-Based Hamiltonian Descent](quantum_optimization_via_gradient-based_hamiltonian_descent.md)
+- [Benefits of Early Stopping in Gradient Descent for Overparameterized Logistic Regression](benefits_of_early_stopping_in_gradient_descent_for_overparameterized_logistic_re.md)
+- [Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression](../../NeurIPS2025/optimization/large_stepsizes_accelerate_gradient_descent_for_regularized_logistic_regression.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](../../NeurIPS2025/optimization/learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Small Batch Size Training for Language Models: When Vanilla SGD Works, and Why Gradient Accumulation Is Wasteful](../../NeurIPS2025/optimization/small_batch_size_training_for_language_models_when_vanilla_sgd_works_and_why_gra.md)
+
+<!-- RELATED:END -->

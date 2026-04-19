@@ -173,3 +173,15 @@ $$L_{Align} = \frac{1}{N_B} \sum_{i=1}^{N_B} (\hat{F_B}_i - {F_B^D}_i)^2$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 干净/噪声设置对比、模块消融、超参消融、天气/距离/大小鲁棒性分析非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法描述详尽，图示设计好
 - 价值: ⭐⭐⭐⭐ 解决实际部署中的关键工程问题，即插即用，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FSD-BEV: Foreground Self-Distillation for Multi-View 3D Object Detection](fsd-bev_foreground_self-distillation_for_multi-view_3d_object_detection.md)
+- [OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection](open_object-wise_position_embedding_for_multi-view_3d_object_detection.md)
+- [MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection](monowad_weather-adaptive_diffusion_model_for_robust_monocular_3d_object_detectio.md)
+- [Look Before You Fuse: 2D-Guided Cross-Modal Alignment for Robust 3D Detection](../../CVPR2026/autonomous_driving/look_before_you_fuse_2d-guided_cross-modal_alignment_for_robust_3d_detection.md)
+- [Weakly Supervised 3D Object Detection via Multi-Level Visual Guidance](weakly_supervised_3d_object_detection_via_multi-level_visual_guidance.md)
+
+<!-- RELATED:END -->

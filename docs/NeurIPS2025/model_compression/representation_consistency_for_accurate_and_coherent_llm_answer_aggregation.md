@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 模型×4 数据集×10 配置=160 组实验，统计严谨
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义形式化、方法推导清晰、RC-E 作为对照精心设计
 - 价值: ⭐⭐⭐⭐ 零额外成本的 test-time scaling 改进，即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era](towards_implicit_aggregation_robust_image_representation_for_place_recognition_i.md)
+- [Robustifying Learning-Augmented Caching Efficiently without Compromising 1-Consistency](robustifying_learning-augmented_caching_efficiently_without_compromising_1-consi.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+- [BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG](barista_brain_scale_informed_spatiotemporal_representation_of_human_intracranial.md)
+- [Q-Palette: Fractional-Bit Quantizers Toward Optimal Bit Allocation for Efficient LLM Deployment](q-palette_fractional-bit_quantizers_toward_optimal_bit_allocation_for_efficient_.md)
+
+<!-- RELATED:END -->

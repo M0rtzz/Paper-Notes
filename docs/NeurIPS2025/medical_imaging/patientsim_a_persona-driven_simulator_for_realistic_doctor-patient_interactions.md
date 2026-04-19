@@ -146,3 +146,15 @@ Llama系列在情感表达（性格、混乱）方面表现突出；通用基准
 - 实验充分度: ⭐⭐⭐⭐ — 8个LLM对比+4名临床专家验证+句子级/对话级双层评估，较为全面；但仅5种疾病、170份档案规模有限
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题定义精确，评估方法论详尽
 - 价值: ⭐⭐⭐⭐ — 开源可复现，对医学AI教育训练有实际应用价值；临床专家高度认可增强了说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Doctor Approved: Generating Medically Accurate Skin Disease Images through AI-Expert Feedback](doctor_approved_generating_medically_accurate_skin_disease_images_through_ai-exp.md)
+- [UniSim: A Unified Simulator for Time-Coarsened Dynamics of Biomolecules](../../ICML2025/medical_imaging/unisim_a_unified_simulator_for_time-coarsened_dynamics_of_biomolecules.md)
+- [SMMILE: An Expert-Driven Benchmark for Multimodal Medical In-Context Learning](smmile_an_expert-driven_benchmark_for_multimodal_medical_in-context_learning.md)
+- [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](../../ICML2025/medical_imaging/deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
+- [Demo: Guide-RAG: Evidence-Driven Corpus Curation for Retrieval-Augmented Generation in Long COVID](demo_guide-rag_evidence-driven_corpus_curation_for_retrieval-augmented_generatio.md)
+
+<!-- RELATED:END -->

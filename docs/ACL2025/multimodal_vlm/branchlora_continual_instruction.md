@@ -156,3 +156,15 @@ BranchLoRA集成到MLLM每层的Feed-Forward模块中，pipeline：
 - 实验充分度: ⭐⭐⭐⭐ 消融完整，双尺度模型验证，效率分析充分；但benchmark单一
 - 写作质量: ⭐⭐⭐⭐ 动机清晰（参数分析→架构设计），图表直观，逻辑连贯
 - 价值: ⭐⭐⭐⭐ 为MLLM的持续学习提供了比MoELoRA更优的方案，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiDe-LLaVA: Hierarchical Decoupling for Continual Instruction Tuning of Multimodal Large Language Model](hidellava_hierarchical_decoupling_for_continual_instruction.md)
+- [Dynamic Mixture of Curriculum LoRA Experts for Continual Multimodal Instruction Tuning](../../ICML2025/multimodal_vlm/dynamic_mixture_of_curriculum_lora_experts_for_continual_multimodal_instruction_.md)
+- [SMoLoRA: Exploring and Defying Dual Catastrophic Forgetting in Continual Visual Instruction Tuning](../../ICCV2025/multimodal_vlm/smolora_exploring_and_defying_dual_catastrophic_forgetting_in_continual_visual_i.md)
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](mammoth_vl_multimodal_reasoning.md)
+- [Visual Instruction Bottleneck Tuning](../../NeurIPS2025/multimodal_vlm/visual_instruction_bottleneck_tuning.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ UbH-GCN 接受上半身骨骼关节序列作为输入（包括头部、肩部、
 - 实验充分度: ⭐⭐⭐ 数据集较少（仅两个），且 AIDE 数据集规模不大
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 对辅助驾驶中的情感识别有实用价值，骨骼超越多模态的发现有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modeling and Driving Human Body Soundfields through Acoustic Primitives](modeling_and_driving_human_body_soundfields_through_acoustic_primitives.md)
+- [HUMOS: Human Motion Model Conditioned on Body Shape](humos_human_motion_model_conditioned_on_body_shape.md)
+- [Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)
+- [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
+- [EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding](egoexo-fitness_towards_egocentric_and_exocentric_full-body_action_understanding.md)
+
+<!-- RELATED:END -->

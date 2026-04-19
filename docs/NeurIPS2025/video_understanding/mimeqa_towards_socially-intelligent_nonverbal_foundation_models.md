@@ -158,3 +158,15 @@ MimeQA 是一个开放式视频问答基准，从YouTube收集221个哑剧视频
 - 实验充分度: ⭐⭐⭐⭐ 多模型评估 + 微调 + 跨数据集迁移 + 详细错误分析，但数据集偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事流畅，理论基础扎实，错误分析生动有说服力
 - 价值: ⭐⭐⭐⭐⭐ 开辟了非语言社交AI的全新评估维度，对推动真正的社交智能有深远意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Transfer Learning for Video-language Foundation Models](../../CVPR2025/video_understanding/efficient_transfer_learning_for_video-language_foundation_models.md)
+- [MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition](../../ICML2025/video_understanding/moma_modulating_mamba_for_adapting_image_foundation_models_to_video_recognition.md)
+- [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](../../ICCV2025/video_understanding/flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
+- [Seeing the Arrow of Time in Large Multimodal Models](seeing_the_arrow_of_time_in_large_multimodal_models.md)
+- [Steering When Necessary: Flexible Steering Large Language Models with Backtracking](steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)
+
+<!-- RELATED:END -->

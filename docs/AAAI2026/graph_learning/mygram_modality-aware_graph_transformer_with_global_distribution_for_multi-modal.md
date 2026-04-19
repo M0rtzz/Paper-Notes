@@ -175,3 +175,15 @@ $$\mathcal{L}_{InfoNCE} = \sum_{(e_i,e_j) \in \mathcal{S}} -\log \frac{\exp(\tex
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5数据集、9组实验、模态消融+组件消融+低资源+案例
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，但公式符号偶有不一致
 - **实用价值**: ⭐⭐⭐⭐ — 开源代码，方法可行，但特征提取器偏老旧
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relational Graph Transformer](../../ICLR2026/graph_learning/relational_graph_transformer.md)
+- [NTSFormer: A Self-Teaching Graph Transformer for Multimodal Isolated Cold-Start Node Classification](ntsformer_a_self-teaching_graph_transformer_for_multimodal_isolated_cold-start_n.md)
+- [GSAP-ERE: Fine-Grained Scholarly Entity and Relation Extraction Focused on Machine Learning](gsap-ere_fine-grained_scholarly_entity_and_relation_extraction_focused_on_machin.md)
+- [GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
+- [PCoKG: Personality-aware Commonsense Reasoning with Debate](pcokg_personality-aware_commonsense_reasoning_with_debate.md)
+
+<!-- RELATED:END -->

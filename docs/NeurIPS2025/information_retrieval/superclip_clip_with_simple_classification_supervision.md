@@ -153,3 +153,15 @@ CLIP用100%长caption训练性能大幅下降（45.7→30.0），但SuperCLIP的
 - 实验充分度: ⭐⭐⭐⭐⭐ 多尺寸模型、多框架泛化、38数据集评估、MLLM集成、batch size分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析透彻，数据统计支撑充分
 - 实用价值: ⭐⭐⭐⭐⭐ 零门槛可集成到任何CLIP训练流程，开源代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Dataset Distillation Made Simple by Prototype-Guided Data Synthesis](../../ICLR2026/information_retrieval/multimodal_dataset_distillation_made_simple_by_prototype-guided_data_synthesis.md)
+- [Joint Vision-Language Social Bias Removal for CLIP](../../CVPR2025/information_retrieval/joint_vision-language_social_bias_removal_for_clip.md)
+- [Explaining CLIP Zero-shot Predictions Through Concepts](../../CVPR2026/information_retrieval/explaining_clip_zero-shot_predictions_through_concepts.md)
+- [HiMo-CLIP: Modeling Semantic Hierarchy and Monotonicity in Vision-Language Alignment](../../AAAI2026/information_retrieval/himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi.md)
+- [BTZSC: A Benchmark for Zero-Shot Text Classification Across Cross-Encoders, Embedding Models, Rerankers and LLMs](../../ICLR2026/information_retrieval/btzsc_a_benchmark_for_zero-shot_text_classification_across_cross-encoders_embedd.md)
+
+<!-- RELATED:END -->

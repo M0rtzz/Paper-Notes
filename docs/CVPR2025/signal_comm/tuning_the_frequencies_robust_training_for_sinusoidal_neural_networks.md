@@ -53,3 +53,15 @@ tags:
 ## 局限与展望
 - 理论分析基于简化假设，实际网络可能偏离
 - 对混合激活函数的网络扩展有待探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Eigenspectrum Analysis of Neural Networks without Aspect Ratio Bias](../../ICML2025/signal_comm/eigenspectrum_analysis_of_neural_networks_without_aspect_ratio_bias.md)
+- [Neural Video Compression with Context Modulation](neural_video_compression_with_context_modulation.md)
+- [Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](../../ICLR2026/signal_comm/spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
+- [DiTASK: Multi-Task Fine-Tuning with Diffeomorphic Transformations](ditask_multi-task_fine-tuning_with_diffeomorphic_transformations.md)
+- [Radio Frequency Ray Tracing with Neural Object Representation for Enhanced RF Modeling](radio_frequency_ray_tracing_with_neural_object_representation_for_enhanced_rf_mo.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ $$\mathcal{L}_{VCL}^t = \mathbb{E}[\log p(\mathcal{D}_t|\boldsymbol{\theta})] - 
 - 实验充分度: ⭐⭐⭐⭐ 五个基准、三种基础方法、逐任务分析，但缺少大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机明确，理论与直觉兼顾，图示清晰直观
 - 价值: ⭐⭐⭐⭐ 对贝叶斯CL领域有重要推进，TD连接的跨域洞察启发性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Knowledge Adaptation for Reinforcement Learning](continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [Language Model Distillation: A Temporal Difference Imitation Learning Perspective](../../AAAI2026/reinforcement_learning/language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
+- [Incremental Sequence Classification with Temporal Consistency](incremental_sequence_classification_with_temporal_consistency.md)
+- [STAIR: Addressing Stage Misalignment through Temporal-Aligned Preference Reinforcement Learning](stair_addressing_stage_misalignment_through_temporal-aligned_preference_reinforc.md)
+- [Modulation of Temporal Decision-Making in a Deep Reinforcement Learning Agent under the Dual-Task Paradigm](modulation_of_temporal_decision-making_in_a_deep_reinforcement_learning_agent_un.md)
+
+<!-- RELATED:END -->

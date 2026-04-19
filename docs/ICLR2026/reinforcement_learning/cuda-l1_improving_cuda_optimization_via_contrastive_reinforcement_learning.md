@@ -160,3 +160,15 @@ CUDA-L1 采用三阶段递进式训练策略：
 - **实验充分度**: ⭐⭐⭐⭐ 250 个内核全面评测，5 种 GPU 架构迁移验证，各阶段贡献分析清晰
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清楚，reward hacking 案例讲解生动，但论文篇幅较长
 - **价值**: ⭐⭐⭐⭐⭐ 首次展示 RL 可以将弱 CUDA 模型训练为有效优化器，对自动化 GPU 优化具有开创性意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+- [Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
+- [PolicyFlow: Policy Optimization with Continuous Normalizing Flow in Reinforcement Learning](policyflow_policy_optimization_with_continuous_normalizing_flow_in_reinforcement.md)
+- [MVR: Multi-view Video Reward Shaping for Reinforcement Learning](mvr_multi-view_video_reward_shaping_for_reinforcement_learning.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+
+<!-- RELATED:END -->

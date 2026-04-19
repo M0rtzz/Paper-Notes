@@ -145,3 +145,15 @@ VAR-MIORe 帧插值（PSNR）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个任务全面基准，6 个运动强度分组，VAR-MIORe 的 7 个梯度桶详尽对比
 - **写作质量**: ⭐⭐⭐ 内容详实但结构偏长，运动类型分类章节可更精炼
 - **价值**: ⭐⭐⭐⭐ 填补多任务统一运动复原评估空白，VAR-MIORe 的极端运动数据对推进领域边界有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects](../../ECCV2024/video_understanding/benchmarks_and_challenges_in_pose_estimation_for_egocentric_hand_interactions_wi.md)
+- [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+
+<!-- RELATED:END -->

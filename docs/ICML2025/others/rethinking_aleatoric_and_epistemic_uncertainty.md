@@ -163,3 +163,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为理论论文无标准实验，但缺少实证验证是明显遗憾
 - 写作质量: ⭐⭐⭐⭐⭐ 论证层层递进，概念图示（Figure 1, 2）清晰，每个矛盾都有具体文献和数学量的支撑
 - 价值: ⭐⭐⭐⭐ 对理解不确定性的概念基础有重要意义，但实践影响有待后续工作验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+- [An Epistemic Perspective on Agent Awareness](../../AAAI2026/others/an_epistemic_perspective_on_agent_awareness.md)
+- [Rethinking PCA Through Duality](../../NeurIPS2025/others/rethinking_pca_through_duality.md)
+- [Uncertainty Estimation by Flexible Evidential Deep Learning](../../NeurIPS2025/others/uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+- [LoGU: Long-form Generation with Uncertainty Expressions](../../ACL2025/others/logu_longform_gen_uncertainty.md)
+
+<!-- RELATED:END -->

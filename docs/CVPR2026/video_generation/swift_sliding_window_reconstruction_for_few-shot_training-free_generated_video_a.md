@@ -130,3 +130,15 @@ SWIFT 是完全免训练方法。核心度量使用 MSE 作为重建损失。消
 - 实验充分度: ⭐⭐⭐⭐ 5 个模型评测充分，消融详尽，但缺少视频压缩鲁棒性测试
 - 写作质量: ⭐⭐⭐⭐ 形式化定义清晰，但部分符号较冗余
 - 价值: ⭐⭐⭐⭐⭐ 高度实用，少样本免训练范式在 AI 安全领域有重要应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
+- [D3: Training-Free AI-Generated Video Detection Using Second-Order Features](../../ICCV2025/video_generation/d3_training-free_ai-generated_video_detection_using_second-order_features.md)
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [Semantic Satellite Communications for Synchronized Audiovisual Reconstruction](semantic_satellite_communications_for_synchronized.md)
+
+<!-- RELATED:END -->

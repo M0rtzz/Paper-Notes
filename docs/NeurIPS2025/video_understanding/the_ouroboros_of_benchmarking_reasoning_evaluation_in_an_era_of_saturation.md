@@ -171,3 +171,15 @@ tags:
 - **实验设计**：★★★☆☆ — 数据来源权威（官方技术报告），基准分类体系清晰完整，但定量分析较浅，未控制关键混杂因素，缺乏统计检验。
 - **写作质量**：★★★★☆ — 论述流畅、结构清晰、隐喻贴切，附录中的基准分类表和性能趋势图表直观有效。
 - **影响力**：★★★☆☆ — 对推理评估方法论的元反思有长远价值，但需要后续工作提出具体解决方案才能产生实质性变化。本文更像是一篇立场论文（position paper），为后续更具建设性的工作奠定了问题意识基础。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting](in_the_eye_of_mllm_benchmarking_egocentric_video_intent_understanding_with_gaze-.md)
+- [MLVU: Benchmarking Multi-task Long Video Understanding](../../CVPR2025/video_understanding/mlvu_benchmarking_multi-task_long_video_understanding.md)
+- [Video Finetuning Improves Reasoning Between Frames](video_finetuning_improves_reasoning_between_frames.md)
+- [When Thinking Drifts: Evidential Grounding for Robust Video Reasoning](when_thinking_drifts_evidential_grounding_for_robust_video_reasoning.md)
+- [VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding](vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)
+
+<!-- RELATED:END -->

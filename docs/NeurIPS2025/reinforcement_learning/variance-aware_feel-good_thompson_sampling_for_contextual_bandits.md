@@ -121,3 +121,15 @@ $$\sum_{t=1}^T (f_t(z_t) - f_*(z_t)) \leq \sum_{t=1}^T \frac{\gamma}{\beta_t} \s
 - 实验充分度: ⭐⭐⭐ 纯理论工作，无实证实验
 - 写作质量: ⭐⭐⭐⭐ 证明过程清晰，技术动机阐述到位
 - 价值: ⭐⭐⭐⭐ 解决了TS文献中的重要开放问题，理论贡献扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feel-Good Thompson Sampling for Contextual Bandits: a Markov Chain Monte Carlo Showdown](feel-good_thompson_sampling_for_contextual_bandits_a_markov_chain_monte_carlo_sh.md)
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Thompson Sampling in Function Spaces via Neural Operators](thompson_sampling_in_function_spaces_via_neural_operators.md)
+- [Exploration via Feature Perturbation in Contextual Bandits](exploration_via_feature_perturbation_in_contextual_bandits.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](learning_from_demonstrations_via_capability-aware_goal_sampling.md)
+
+<!-- RELATED:END -->

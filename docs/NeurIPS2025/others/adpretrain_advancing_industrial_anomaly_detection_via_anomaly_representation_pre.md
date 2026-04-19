@@ -153,3 +153,15 @@ $$\mathcal{L} = \frac{1}{2N} \sum_{i=1}^{2N} \lambda \cdot \mathbb{I}_{[i \leq N
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5个骨干×5种方法×5个数据集的全面验证，消融实验覆盖所有关键组件，额外做了样本效率和鲁棒性分析
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，数学推导严谨，损失函数梯度分析增加了可解释性
 - **价值**: ⭐⭐⭐⭐⭐ — 提供了即插即用的预训练特征，对整个 AD 社区有直接应用价值，FeatureNorm 基线揭示了预训练表示的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](../../CVPR2025/others/integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
+- [EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination](an_evidence-based_post-hoc_adjustment_framework_for_anomaly_detection_under_data.md)
+- [RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](../../AAAI2026/others/rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
+- [AnomalyNCD: Towards Novel Anomaly Class Discovery in Industrial Scenarios](../../CVPR2025/others/anomalyncd_towards_novel_anomaly_class_discovery_in_industrial_scenarios.md)
+
+<!-- RELATED:END -->

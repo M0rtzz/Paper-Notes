@@ -116,3 +116,15 @@ LDM版本在所有4个指标上取得最优。LAMA版本（非扩散）也超过
 - 实验充分度: ⭐⭐⭐⭐ SPIn-NeRF+多个360°场景+消融+定性对比
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法步骤图示直观
 - 价值: ⭐⭐⭐⭐ 3D场景物体移除是实用需求，掩码精化的思路有通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IMFine: 3D Inpainting via Geometry-guided Multi-view Refinement](imfine_3d_inpainting_via_geometry-guided_multi-view_refinement.md)
+- [GEAL: Generalizable 3D Affordance Learning with Cross-Modal Consistency](geal_generalizable_3d_affordance_learning_with_cross-modal_consistency.md)
+- [No Calibration, No Depth, No Problem: Cross-Sensor View Synthesis with 3D Consistency](../../CVPR2026/3d_vision/no_calibration_no_depth_no_problem_cross-sensor_view_synthesis_with_3d_consisten.md)
+- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
+- [Cross-View Completion Models are Zero-shot Correspondence Estimators](cross-view_completion_models_are_zero-shot_correspondence_estimators.md)
+
+<!-- RELATED:END -->

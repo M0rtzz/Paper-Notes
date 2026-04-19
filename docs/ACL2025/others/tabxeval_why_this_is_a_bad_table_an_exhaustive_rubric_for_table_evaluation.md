@@ -253,3 +253,15 @@ TabXEval 是一个两阶段框架：
 - **实验充分度**: ⭐⭐⭐⭐ — 人工相关性、排名相关性、sensitivity-specificity 多角度验证
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式化表述严谨，图表信息量大
 - **价值**: ⭐⭐⭐⭐⭐ — 解决了实际部署中的关键痛点，对表格生成系统的开发有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LATTE-MV: Learning to Anticipate Table Tennis Hits from Monocular Videos](../../CVPR2025/others/latte-mv_learning_to_anticipate_table_tennis_hits_from_monocular_videos.md)
+- [Rubrik's Cube: Testing a New Rubric for Evaluating Explanations on the CUBE Dataset](rubriks_cube_testing_a_new_rubric_for_evaluating_explanations_on_the_cube_datase.md)
+- [Identifying Reliable Evaluation Metrics for Scientific Text Revision](reliable_eval_metrics_scientific.md)
+- [DREsS: Dataset for Rubric-based Essay Scoring on EFL Writing](dress_dataset_rubric_based_essay_scoring_efl_writing.md)
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](seoe_semantic_eval.md)
+
+<!-- RELATED:END -->

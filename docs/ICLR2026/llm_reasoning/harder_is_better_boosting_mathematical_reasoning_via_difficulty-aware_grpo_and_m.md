@@ -139,3 +139,15 @@ DQW温度敏感性：$T=1.0$ → 39.03, $T=2.0$ → **39.79**, $T=5.0$ → 39.53
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个benchmark×4个模型×多组消融+动态分析+叠加实验
 - 写作质量: ⭐⭐⭐⭐ 理论与实验结合紧密，消融全面
 - 价值: ⭐⭐⭐⭐ 对RLVR训练的通用优化，DGPO可直接叠加到现有管线中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAG-Math: Graph-of-Thought Guided Mathematical Reasoning in LLMs](dag-math_graph-of-thought_guided_mathematical_reasoning_in_llms.md)
+- [No Answer Needed: Predicting LLM Answer Accuracy from Question-Only Linear Probes](no_answer_needed_predicting_llm_answer_accuracy_from_question-only_linear_probes.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](../../ACL2025/llm_reasoning/chain_of_reasoning_unified_math.md)
+- [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](../../ACL2025/llm_reasoning/safe_math_reasoning.md)
+- [AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
+
+<!-- RELATED:END -->

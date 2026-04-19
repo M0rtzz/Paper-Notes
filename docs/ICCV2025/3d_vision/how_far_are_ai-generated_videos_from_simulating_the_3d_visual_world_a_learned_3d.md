@@ -136,3 +136,15 @@ L3DE Fusion分数与人类判断的相关性远超现有指标。
 - **实用性**: ★★★★★ — 可直接集成到视频生成流水线中作为评估工具
 - **实验**: ★★★★☆ — 验证充分（重建+人类评估+多模型基准），但训练数据依赖单一生成器
 - **写作**: ★★★★☆ — 结构清晰，实验设计严谨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gen3DEval: Using vLLMs for Automatic Evaluation of Generated 3D Objects](../../CVPR2025/3d_vision/gen3deval_using_vllms_for_automatic_evaluation_of_generated_3d_objects.md)
+- [Noise2Score3D: Tweedie's Approach for Unsupervised Point Cloud Denoising](noise2score3d_tweedies_approach_for_unsupervised_point_cloud_denoising.md)
+- [Can LLMs Write Faithfully? An Agent-Based Evaluation of LLM-generated Islamic Content](../../NeurIPS2025/3d_vision/can_llms_write_faithfully_an_agent-based_evaluation_of_llm-generated_islamic_con.md)
+- [From Gallery to Wrist: Realistic 3D Bracelet Insertion in Videos](from_gallery_to_wrist_realistic_3d_bracelet_insertion_in_videos.md)
+- [MonoMobility: Zero-Shot 3D Mobility Analysis from Monocular Videos](monomobility_zero-shot_3d_mobility_analysis_from_monocular_videos.md)
+
+<!-- RELATED:END -->

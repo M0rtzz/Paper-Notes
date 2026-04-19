@@ -113,3 +113,15 @@ MARS 包含三个步骤：（1）计算每个神经元的后门能量（BE）；
 - 在无攻击场景（innocent scenario）下，MARS 不会丢弃任何客户端，保持 FedAvg 的收敛速度
 - BackdoorIndicator（Usenix Security 2024）也被纳入对比，MARS 仍然表现更优
 - 针对 MARS 设计了定制化自适应攻击，验证了防御的鲁棒性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](../../ICCV2025/ai_safety/find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
+- [Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing](../../ICCV2025/ai_safety/client2vec_improving_federated_learning_by_distribution_shifts_aware_client_inde.md)
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](../../CVPR2025/ai_safety/infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+- [Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](../../CVPR2025/ai_safety/detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
+- [DictPFL: Efficient and Private Federated Learning on Encrypted Gradients](dictpfl_efficient_and_private_federated_learning_on_encrypted_gradients.md)
+
+<!-- RELATED:END -->

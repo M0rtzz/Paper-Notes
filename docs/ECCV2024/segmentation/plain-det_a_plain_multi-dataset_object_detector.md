@@ -141,3 +141,15 @@ Plain-Det 基于任意 query-based 检测器（如 Deformable-DETR、Sparse R-CN
 - 实验充分度: ⭐⭐⭐⭐⭐ （17 个数据集，多架构验证，消融完整）
 - 写作质量: ⭐⭐⭐⭐ （逻辑清晰，图表丰富）
 - 价值: ⭐⭐⭐⭐ （实用性强，方法可推广）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OLAF: A Plug-and-Play Framework for Enhanced Multi-object Multi-part Scene Parsing](olaf_a_plug-and-play_framework_for_enhanced_multi-object_multi-part_scene_parsin.md)
+- [Thicker and Quicker: A Jumbo Token for Fast Plain Vision Transformers](../../ICLR2026/segmentation/thicker_and_quicker_a_jumbo_token_for_fast_plain_vision_transformers.md)
+- [Dataset Enhancement with Instance-Level Augmentations](dataset_enhancement_with_instance-level_augmentations.md)
+- [Self-supervised Co-salient Object Detection via Feature Correspondences at Multiple Scales](self-supervised_co-salient_object_detection_via_feature_correspondences_at_multi.md)
+- [SOS: Segment Object System for Open-World Instance Segmentation With Object Priors](sos_segment_object_system_for_open-world_instance_segmentation_with_object_prior.md)
+
+<!-- RELATED:END -->

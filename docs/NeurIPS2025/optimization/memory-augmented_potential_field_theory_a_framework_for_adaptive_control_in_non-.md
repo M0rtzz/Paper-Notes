@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个标准环境 + 2 个工程应用 + 充分消融，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 理论-实现-实验结构清晰
 - 价值: ⭐⭐⭐⭐ 对采样型控制器在非凸环境中的实际部署有显著价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Non-Stationary Bandit Convex Optimization: A Comprehensive Study](non-stationary_bandit_convex_optimization_a_comprehensive_study.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+- [Dual Optimistic Ascent (PI Control) is the Augmented Lagrangian Method in Disguise](../../ICLR2026/optimization/dual_optimistic_ascent_pi_control_is_the_augmented_lagrangian_method_in_disguise.md)
+- [Efficient Adaptive Federated Optimization](efficient_adaptive_federated_optimization.md)
+- [MDNS: Masked Diffusion Neural Sampler via Stochastic Optimal Control](mdns_masked_diffusion_neural_sampler_via_stochastic_optimal_control.md)
+
+<!-- RELATED:END -->

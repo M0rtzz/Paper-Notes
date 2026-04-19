@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 主要是理论工作，实验为验证性质，覆盖面有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论展开清晰，证明思路直观易懂
 - 价值: ⭐⭐⭐⭐ 对理解Transformer表达能力和ICL机制有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Linear Transformers Implicitly Discover Unified Numerical Algorithms](linear_transformers_implicitly_discover_unified_numerical_algorithms.md)
+- [Beyond Induction Heads: In-Context Meta Learning Induces Multi-Phase Circuit Emergence](../../ICML2025/llm_nlp/beyond_induction_heads_in-context_meta_learning_induces_multi-phase_circuit_emer.md)
+- [In-Context Learning of Linear Dynamical Systems with Transformers: Approximation Bounds and Depth-Separation](in-context_learning_of_linear_dynamical_systems_with_transformers_approximation_.md)
+- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+- [Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](../../ACL2025/llm_nlp/virsci_multi_agent_idea_gen.md)
+
+<!-- RELATED:END -->

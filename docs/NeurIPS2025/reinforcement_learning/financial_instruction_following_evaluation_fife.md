@@ -120,3 +120,15 @@ FIFE 本身是评测基准而非训练方法。零样本评测所有模型，不
 - 实验充分度: ⭐⭐⭐ 53 个模型的评测规模不错，但分析深度有限
 - 写作质量: ⭐⭐⭐ Workshop 论文的标准写作，简洁但细节不够
 - 价值: ⭐⭐⭐⭐ 填补了金融领域指令遵循评测的空白，对 RL for finance 有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalizing Verifiable Instruction Following](generalizing_verifiable_instruction_following.md)
+- [Finite-Sample Analysis of Policy Evaluation for Robust Average Reward Reinforcement Learning](finite-sample_analysis_of_policy_evaluation_for_robust_average_reward_reinforcem.md)
+- [On the Dynamic Regret of Following the Regularized Leader: Optimism with History Pruning](../../ICML2025/reinforcement_learning/on_the_dynamic_regret_of_following_the_regularized_leader_optimism_with_history_.md)
+- [Checklists Are Better Than Reward Models For Aligning Language Models](checklists_are_better_than_reward_models_for_aligning_langua.md)
+- [Demystifying the Paradox of Importance Sampling with an Estimated History-Dependent Behavior Policy in Off-Policy Evaluation](../../ICML2025/reinforcement_learning/demystifying_the_paradox_of_importance_sampling_with_an_estimated_history-depend.md)
+
+<!-- RELATED:END -->

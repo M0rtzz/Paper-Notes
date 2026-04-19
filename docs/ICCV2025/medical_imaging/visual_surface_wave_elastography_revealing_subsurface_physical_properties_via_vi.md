@@ -131,3 +131,15 @@ tags:
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](../../NeurIPS2025/medical_imaging/surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
+- [Aligning Protein Conformation Ensemble Generation with Physical Feedback](../../ICML2025/medical_imaging/aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
+- [Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI](beyond_brain_decoding_visualsemantic_reconstructions_to_ment.md)
+- [NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction](neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)
+- [SynBrain: Enhancing Visual-to-fMRI Synthesis via Probabilistic Representation Learning](../../NeurIPS2025/medical_imaging/synbrain_enhancing_visual-to-fmri_synthesis_via_probabilistic_representation_lea.md)
+
+<!-- RELATED:END -->

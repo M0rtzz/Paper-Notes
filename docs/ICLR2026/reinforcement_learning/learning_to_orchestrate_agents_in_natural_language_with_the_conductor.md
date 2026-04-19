@@ -130,3 +130,15 @@ Conductor接收问题 $q_i$，在 `<think>` 标签内推理后输出三个Python
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个benchmark+全面多Agent基线+消融+规模分析+效率分析
 - 写作质量: ⭐⭐⭐⭐⭐ 涌现行为分析引人入胜，设计决策的讨论透彻
 - 价值: ⭐⭐⭐⭐⭐ 开创性工作，定义了用RL训练Agent协调器的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HCPO: Hierarchical Conductor-Based Policy Optimization in Multi-Agent Reinforcement Learning](../../AAAI2026/reinforcement_learning/hcpo_hierarchical_conductor-based_policy_optimization_in_multi-agent_reinforceme.md)
+- [VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
+- [Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](../../NeurIPS2025/reinforcement_learning/provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
+- [Towards Strategic Persuasion with Language Models](towards_strategic_persuasion_with_language_models.md)
+- [TROLL: Trust Regions improve Reinforcement Learning for Large Language Models](troll_trust_regions_improve_reinforcement_learning_for_large_language_models.md)
+
+<!-- RELATED:END -->

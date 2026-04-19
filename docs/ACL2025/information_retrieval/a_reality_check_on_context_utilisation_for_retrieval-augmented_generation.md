@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 实验非常全面：3个数据集、2个模型、多种上下文特征、多种提示策略
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，分析深入，附录极其详尽
 - 价值: ⭐⭐⭐⭐⭐ 对RAG评估范式的重要反思，DRUID和ACU具有广泛的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FaithfulRAG: Fact-Level Conflict Modeling for Context-Faithful Retrieval-Augmented Generation](faithfulrag_fact_level_conflict.md)
+- [Hierarchical Document Refinement for Long-context Retrieval-augmented Generation](hierarchical_document_refinement_for_long-context_retrieval-augmented_generation.md)
+- [EXIT: Context-Aware Extractive Compression for Enhancing Retrieval-Augmented Generation](exit_context-aware_extractive_compression_for_enhancing_retrieval-augmented_gene.md)
+- [Graph of Records: Boosting Retrieval Augmented Generation for Long-context Summarization with Graphs](gor_rag_long_context_summary.md)
+- [Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation](towards_adaptive_memory-based_optimization_for_enhanced_retrieval-augmented_gene.md)
+
+<!-- RELATED:END -->

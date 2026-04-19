@@ -168,3 +168,15 @@ PokéAgent Challenge 包含两个互补赛道：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 100+参赛队、100K+对战、多维度分析(BenchPress正交性、harness解耦、跨赛道洞察)，实验极为充分
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表信息量大，但论文偏长，竞赛细节占比较多
 - 价值: ⭐⭐⭐⭐⭐ — 填补了游戏AI基准的重要空白，正交性发现对LLM评估社区有广泛影响，living benchmark可持续驱动研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Technical Debt in In-Context Learning: Diminishing Efficiency in Long Context](technical_debt_in_in-context_learning_diminishing_efficiency_in_long_context.md)
+- [On Many-Shot In-Context Learning for Long-Context Evaluation](../../ACL2025/llm_efficiency/on_many-shot_in-context_learning_for_long-context_evaluation.md)
+- [Mozart: Modularized and Efficient MoE Training on 3.5D Wafer-Scale Chiplet Architectures](mozart_modularized_and_efficient_moe_training_on_35d_wafer-scale_chiplet_archite.md)
+- [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](hierarchical_balance_packing_towards_efficient_supervised_fine-tuning_for_long-c.md)
+- [Learning in Compact Spaces with Approximately Normalized Transformer](learning_in_compact_spaces_with_approximately_normalized_transformer.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ CSNN 将输入无向图转为有向图（每条无向边拆为一对有向边）
 - 实验充分度: ⭐⭐⭐⭐ 合成 + 11个节点分类 + 2个图分类，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 定义-命题-证明结构清晰，数学严谨
 - 价值: ⭐⭐⭐⭐ 为 sheaf-based GNN 提供了新的理论和实践方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sheaf Graph Neural Networks via PAC-Bayes Spectral Optimization](../../AAAI2026/graph_learning/sheaf_graph_neural_networks_via_pac-bayes_spectral_optimization.md)
+- [Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)
+- [LogicXGNN: Grounded Logical Rules for Explaining Graph Neural Networks](logicxgnn_grounded_logical_rules_for_explaining_graph_neural_networks.md)
+- [Hyperbolic Busemann Neural Networks](../../CVPR2026/graph_learning/hyperbolic_busemann_neural_networks.md)
+- [Pairwise is Not Enough: Hypergraph Neural Networks for Multi-Agent Pathfinding](pairwise_is_not_enough_hypergraph_neural_networks_for_multi-agent_pathfinding.md)
+
+<!-- RELATED:END -->

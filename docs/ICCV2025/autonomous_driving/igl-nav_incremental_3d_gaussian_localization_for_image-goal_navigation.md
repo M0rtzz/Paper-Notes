@@ -165,3 +165,15 @@ IGL-Nav 包含三个核心模块：
 - **实验充分度**: ⭐⭐⭐⭐ 标准/自由视图两个设定、充分的消融、真机部署，但缺少更多实机场景
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，方法描述详细，图示信息量大
 - **价值**: ⭐⭐⭐⭐⭐ 提出了新任务设定（自由视图），性能大幅超越 SOTA，有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
+- [LookOut: Real-World Humanoid Egocentric Navigation](lookout_real-world_humanoid_egocentric_navigation.md)
+- [DuET: Dual Incremental Object Detection via Exemplar-Free Task Arithmetic](duet_dual_incremental_object_detection_via_exemplar-free_task_arithmetic.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)
+- [RTMap: Real-Time Recursive Mapping with Change Detection and Localization](rtmap_real-time_recursive_mapping_with_change_detection_and_localization.md)
+
+<!-- RELATED:END -->

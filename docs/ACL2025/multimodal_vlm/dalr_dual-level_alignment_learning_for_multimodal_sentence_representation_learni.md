@@ -163,3 +163,15 @@ DALR-RoBERTa 在 TR 任务上平均 **87.45**，比 KDMCSE 高 **+0.58**。
 - **实验充分度**: ⭐⭐⭐⭐ — STS 和 TR 双基准，两种 PLM 骨干，两种多模态数据集，消融完整
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机通过图例清晰展示，方法推导严谨
 - **价值**: ⭐⭐⭐ — 在句子表示学习领域有稳定提升，但提升幅度有限（~1%）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Object Hallucinations via Sentence-Level Early Intervention](../../ICCV2025/multimodal_vlm/mitigating_object_hallucinations_via_sentence-level_early_intervention.md)
+- [Aligning by Misaligning: Boundary-aware Curriculum Learning for Multimodal Alignment](../../NeurIPS2025/multimodal_vlm/aligning_by_misaligning_boundaryaware_curriculum_learning_fo.md)
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](../../NeurIPS2025/multimodal_vlm/on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+- [SingaKids: A Multilingual Multimodal Dialogic Tutor for Language Learning](singakids_a_multilingual_multimodal_dialogic_tutor_for_language_learning.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+
+<!-- RELATED:END -->

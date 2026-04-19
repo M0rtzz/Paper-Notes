@@ -152,3 +152,15 @@ $$\mathbf{f}_C = [\mathbf{f}_A;\, \mathbf{f}_B]$$
 - 实验充分度: ⭐⭐⭐ — 三种融合策略+单模态消融+统计分析较为完整，但仅单一数据集，无跨数据集验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，统计分析与方法设计逻辑自洽，竞赛论文写作规范
 - 价值: ⭐⭐⭐ — 散度融合的思路对需要检测"模态冲突"的任务（如讽刺检测、欺骗检测）有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Team LEYA in 10th ABAW Competition: Multimodal Ambivalence/Hesitancy Recognition Approach](team_leya_in_10th_abaw_competition_multimodal_ambivalencehesitancy_recognition_a.md)
+- [BROTHER: Behavioral Recognition Optimized Through Heterogeneous Ensemble Regularization for Ambivalence and Hesitancy](brother_behavioral_recognition_optimized_through_heterogeneous_ensemble_regulari.md)
+- [TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization](../../ICLR2026/audio_speech/triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](../../ICLR2026/audio_speech/scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+- [OmniSonic: Towards Universal and Holistic Audio Generation from Video and Text](omnisonic_towards_universal_and_holistic_audio_generation_from_video_and_text.md)
+
+<!-- RELATED:END -->

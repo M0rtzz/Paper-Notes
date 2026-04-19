@@ -116,3 +116,15 @@ $$\mathbf{y}_t = \mathbf{C}(\bm{u}_t)\mathbf{x}_t + \mathbf{d}(\bm{u}_t) + \omeg
 - CLDS与SLDS的核心区别：SLDS的"切换"由离散潜在过程驱动（推断困难），CLDS的"切换"由观测协变量驱动（推断简单）
 - 在猕猴reaching实验中使用了二维条件（角度+延迟/运动指示），展示了CLDS处理混合连续-离散条件的能力
 - 代码已开源，基于JAX实现，适合GPU加速
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
+- [Position: Solve Layerwise Linear Models First to Understand Neural Dynamical Phenomena](../../ICML2025/others/position_solve_layerwise_linear_models_first_to_understand_neural_dynamical_phen.md)
+- [Efficient Parametric SVD of Koopman Operator for Stochastic Dynamical Systems](efficient_parametric_svd_of_koopman_operator_for_stochastic_dynamical_systems.md)
+- [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
+- [Generalized Linear Mode Connectivity for Transformers](generalized_linear_mode_connectivity_for_transformers.md)
+
+<!-- RELATED:END -->

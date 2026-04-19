@@ -143,3 +143,15 @@ ORCA 的管线：输入观察图像 $I$ → VQGAN 编码器将其编码为潜变
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个任务、3个基准、多种基线对比、丰富的消融和可视化分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析（cross-attention 可视化）极具说服力，行文流畅
 - 价值: ⭐⭐⭐⭐ 对机器人视觉表示设计有实际指导意义，但限于模拟环境
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guiding Diffusion Models with Semantically Degraded Conditions](guiding_diffusion_models_with_semantically_degraded_conditions.md)
+- [Guiding Diffusion Models with Semantically Degraded Conditions (CDG)](cdg_condition_degradation_guidance_diffusion.md)
+- [Image Generation as a Visual Planner for Robotic Manipulation](image_generation_as_a_visual_planner_for_robotic_manipulation.md)
+- [Pixel Motion Diffusion Is What We Need for Robot Control](pixel_motion_diffusion_is_what_we_need_for_robot_control.md)
+- [OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions](../../NeurIPS2025/image_generation/omnivcus_feedforward_subject-driven_video_customization_with_multimodal_control_.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ VideoLucy是一个无需额外训练的推理时Agent系统，直接利用现成
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个基准全面评测+EgoMem新基准+Needle实验+丰富消融+定性对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机富于感染力（Lucy电影引喻），图示丰富
 - 价值: ⭐⭐⭐⭐⭐ 在长视频理解领域树立了新的性能标杆，EgoMem基准对社区有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoLLaMB: Long Streaming Video Understanding with Recurrent Memory Bridges](../../ICCV2025/video_understanding/videollamb_long_streaming_video_understanding_with_recurrent_memory_bridges.md)
+- [Unleashing Hour-Scale Video Training for Long Video-Language Understanding](unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
+- [Reinforcement Learning with Backtracking Feedback](reinforcement_learning_with_backtracking_feedback.md)
+- [InfiniPot-V: Memory-Constrained KV Cache Compression for Streaming Video Understanding](infinipot-v_memory-constrained_kv_cache_compression_for_streaming_video_understa.md)
+- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](../../CVPR2026/video_understanding/videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
+
+<!-- RELATED:END -->

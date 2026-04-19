@@ -125,3 +125,15 @@ Rotor的参数量比LoRA还少两个数量级。
 - 实验充分度: ⭐⭐⭐ 概念验证水平，缺少从零训练、更多模型、推理速度对比
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰但对不熟悉Clifford代数的读者门槛较高
 - 价值: ⭐⭐⭐⭐ 开辟了理解和压缩线性层的新方向，但实用性还需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Linear Transformers Implicitly Discover Unified Numerical Algorithms](linear_transformers_implicitly_discover_unified_numerical_algorithms.md)
+- [In-Context Learning of Linear Dynamical Systems with Transformers: Approximation Bounds and Depth-Separation](in-context_learning_of_linear_dynamical_systems_with_transformers_approximation_.md)
+- [Breaking the Low-Rank Dilemma of Linear Attention](../../CVPR2025/llm_nlp/breaking_the_low-rank_dilemma_of_linear_attention.md)
+- [Composing Concepts from Images and Videos via Concept-prompt Binding](../../CVPR2026/llm_nlp/composing_concepts_from_images_and_videos_via_concept-prompt_binding.md)
+- [What Happened in LLM Layers when Trained for Fast vs. Slow Thinking: A Gradient Perspective](../../ACL2025/llm_nlp/what_happened_in_llms_layers_when_trained_for_fast_vs_slow_thinking_a_gradient_p.md)
+
+<!-- RELATED:END -->

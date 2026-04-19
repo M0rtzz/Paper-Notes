@@ -111,3 +111,15 @@ HyperExpress从两个方面解决CI-ICE：**概念学习**（双曲对比学习H
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：任务定义(CI-ICE)具有创新性，方法设计(双曲空间+Horosphere投影)数学上优雅且动机清晰，ACC指标实现巨大提升(+55%)。三模块设计清晰解耦：HCL管层次、HEL管关联、HP管可组合性。扣分点是SIM指标的trade-off和仅在一种T2I模型上验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](../../NeurIPS2025/interpretability/toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
+- [Measuring the (Un)Faithfulness of Concept-Based Explanations](measuring_the_unfaithfulness_of_concept-based_explanations.md)
+- [Towards Faithful Multimodal Concept Bottleneck Models](towards_faithful_multimodal_concept_bottleneck_models.md)
+- [CrossCheck-Bench: Diagnosing Compositional Failures in Multimodal Conflict Resolution](../../AAAI2026/interpretability/crosscheck-bench_diagnosing_compositional_failures_in_multim.md)
+- [From Weights to Concepts: Data-Free Interpretability of CLIP via Singular Vector Decomposition](from_weights_to_concepts_data-free_interpretability_of_clip_via_singular_vector_.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个数据集（含2个域外）、10个基线、详细消融和多任务微调分析
 - 写作质量: ⭐⭐⭐⭐ 形式化表述清晰，框架图直观
 - 价值: ⭐⭐⭐⭐⭐ 多跳 RAG 的实用改进，8B 模型超越 70B 基线，强泛化能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering](../../NeurIPS2025/information_retrieval/rag-igbench_innovative_evaluation_for_rag-based_interleaved_generation_in_open-d.md)
+- [N2N-GQA: Noise-to-Narrative for Graph-Based Table-Text Question Answering Using LLMs](n2n-gqa_noise-to-narrative_for_graph-based_table-text_question_answering_using_l.md)
+- [Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA](../../ACL2025/information_retrieval/mitigating_lost-in-retrieval_problems_in_retrieval_augmented_multi-hop_question_.md)
+- [LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning](llms_for_game_theory_entropy-guided_in-context_learning_and_adaptive_cot_reasoni.md)
+- [PRIME: Planning and Retrieval-Integrated Memory for Enhanced Reasoning](prime_planning_and_retrieval-integrated_memory_for_enhanced_reasoning.md)
+
+<!-- RELATED:END -->

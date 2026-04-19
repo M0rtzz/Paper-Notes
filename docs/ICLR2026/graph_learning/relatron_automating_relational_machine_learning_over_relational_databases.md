@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 17 任务、大规模架构搜索、性能银行、多层面消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论分析有深度
 - 价值: ⭐⭐⭐⭐⭐ 解决了 RDB ML 的关键实践痛点，性能银行有长期研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relational Graph Transformer](relational_graph_transformer.md)
+- [MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](../../NeurIPS2025/graph_learning/moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
+- [A Geometric Perspective on the Difficulties of Learning GNN-based SAT Solvers](a_geometric_perspective_on_the_difficulties_of_learning_gnn-based_sat_solvers.md)
+- [When No Paths Lead to Rome: Benchmarking Systematic Neural Relational Reasoning](../../NeurIPS2025/graph_learning/when_no_paths_lead_to_rome_benchmarking_systematic_neural_relational_reasoning.md)
+- [GRAPHITE: Graph Homophily Booster — Reimagining the Role of Discrete Features in Heterophilic Graph Learning](graph_homophily_booster_reimagining_the_role_of_discrete_features_in_heterophili.md)
+
+<!-- RELATED:END -->

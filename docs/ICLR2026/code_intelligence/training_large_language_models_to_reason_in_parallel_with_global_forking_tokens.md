@@ -143,3 +143,15 @@ $$\mathcal{L}_{\text{Hungarian}}(\boldsymbol{\theta}) = -\mathbb{E}_{\mathbf{x},
 - 实验充分度: ⭐⭐⭐⭐⭐ (多基准、多模型规模、多数据源、丰富消融实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (公式清晰、可视化丰富、实验逻辑严密)
 - 价值: ⭐⭐⭐⭐⭐ (实用且理论优雅，对并行推理训练有重要指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRO-InstructZero: Distributionally Robust Prompt Optimization for Large Language Models](dro-instructzero_distributionally_robust_prompt_optimization_for_large_language_.md)
+- [Learning to Reason without External Rewards](learning_to_reason_without_external_rewards.md)
+- [Personality-Guided Code Generation Using Large Language Models](../../ACL2025/code_intelligence/personality_guided_code_gen.md)
+- [SPAN: Benchmarking and Improving Cross-Calendar Temporal Reasoning of Large Language Models](../../AAAI2026/code_intelligence/span_benchmarking_and_improving_cross-calendar_temporal_reasoning_of_large_langu.md)
+- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](../../ACL2025/code_intelligence/codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+
+<!-- RELATED:END -->

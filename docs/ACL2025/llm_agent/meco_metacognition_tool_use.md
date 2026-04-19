@@ -117,3 +117,15 @@ MeCo 包含三个组件：(1) **元认知信号提取**——用表示工程（R
 - 实验充分度: ⭐⭐⭐⭐ 多模型+多任务+消融+RAG场景
 - 写作质量: ⭐⭐⭐⭐ 概念清晰，双阈值策略直观
 - 价值: ⭐⭐⭐⭐⭐ 对LLM Agent实际部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](toolhop_multi_hop_tool_use_benchmark.md)
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models](../../ICLR2026/llm_agent/toolweaver_weaving_collaborative_semantics_for_scalable_tool_use_in_large_langua.md)
+- [FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models](fact_audit_factcheck.md)
+- [SMART: Self-Aware Agent for Tool Overuse Mitigation](smart_self-aware_agent_for_tool_overuse_mitigation.md)
+
+<!-- RELATED:END -->

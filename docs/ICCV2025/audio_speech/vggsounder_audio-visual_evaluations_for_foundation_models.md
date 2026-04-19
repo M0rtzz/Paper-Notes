@@ -136,3 +136,15 @@ VGGSounder 本身是评测基准，不涉及模型训练。评估使用多标签
 - **技术质量**: 8/10 — 标注流程严谨，评测全面，覆盖 11 个模型
 - **实用性**: 9/10 — 直接可用的基准，揭示了基础模型的真实能力
 - **写作质量**: 8/10 — 结构清晰，可视化丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mind the Gap! Static and Interactive Evaluations of Large Audio Models](../../ACL2025/audio_speech/mind_the_gap_static_and_interactive_evaluations_of_large_audio_models.md)
+- [MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing](mug_pseudo_labeling_augmented_audio-visual_mamba_network_for_audio-visual_video_.md)
+- [AVRobustBench: Benchmarking the Robustness of Audio-Visual Recognition Models at Test-Time](../../NeurIPS2025/audio_speech/textttavrobustbench_benchmarking_the_robustness_of_audio-visual_recognition_mode.md)
+- [E-BATS: Efficient Backpropagation-Free Test-Time Adaptation for Speech Foundation Models](../../NeurIPS2025/audio_speech/e-bats_efficient_backpropagation-free_test-time_adaptation_for_speech_foundation.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+
+<!-- RELATED:END -->

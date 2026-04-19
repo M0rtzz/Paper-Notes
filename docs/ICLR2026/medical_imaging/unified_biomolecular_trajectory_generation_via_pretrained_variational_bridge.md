@@ -121,3 +121,15 @@ PVB 采用编码器-解码器架构。输入为分子构象 $(z, C, x)$（原子
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖了蛋白质单体（ATLAS+mdCATH）和蛋白质-配体复合物（MISATO+PDBBind），评价指标全面
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，框架描述清晰
 - 价值: ⭐⭐⭐⭐ 为跨域分子动力学模拟提供了统一高效的方案，构象有效性的巨大提升具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
+- [Fractional Diffusion Bridge Models](../../NeurIPS2025/medical_imaging/fractional_diffusion_bridge_models.md)
+- [Unified All-Atom Molecule Generation with Neural Fields](../../NeurIPS2025/medical_imaging/unified_all-atom_molecule_generation_with_neural_fields.md)
+- [Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
+- [Ultra-Fast Language Generation via Discrete Diffusion Divergence Instruct](ultra-fast_language_generation_via_discrete_diffusion_divergence_instruct.md)
+
+<!-- RELATED:END -->

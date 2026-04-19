@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个语言对×3 种模型×12 个子群×多种指标，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，示例丰富，图表直观
 - 价值: ⭐⭐⭐⭐ 对 KD 和 NMT 部署的安全性有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-perspective Alignment for Increasing Naturalness in Neural Machine Translation](multi-perspective_alignment_for_increasing_naturalness_in_neural_machine_transla.md)
+- [Registering Source Tokens to Target Language Spaces in Multilingual Neural Machine Translation](registering_source_tokens_to_target_language_spaces_in_multilingual_neural_machi.md)
+- [THOR-MoE: Hierarchical Task-Guided and Context-Responsive Routing for Neural Machine Translation](thor-moe_hierarchical_task-guided_and_context-responsive_routing_for_neural_mach.md)
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+- [Unveiling the Power of Source: Source-based Minimum Bayes Risk Decoding for Neural Machine Translation](unveiling_the_power_of_source_source-based_minimum_bayes_risk_decoding_for_neura.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ Siamese 架构：左塔处理原始序列做下游任务，右塔处理掩码序
 - 对异常检测任务在 5 个数据集上取得多项 SOTA F1 分数
 - 回归任务在工业设备预测性维护场景中验证
 - Siamese 网络的参数共享使得额外计算开销仅约 30%
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Soft Task-Aware Routing of Experts for Equivariant Representation Learning](soft_task-aware_routing_of_experts_for_equivariant_representation_learning.md)
+- [Explanation-Preserving Augmentation for Semi-Supervised Graph Representation Learning](../../AAAI2026/self_supervised/explanation-preserving_augmentation_for_semi-supervised_graph_representation_lea.md)
+- [Self-supervised Video Copy Localization with Regional Token Representation](../../ECCV2024/self_supervised/self-supervised_video_copy_localization_with_regional_token_representation.md)
+- [Adv-SSL: Adversarial Self-Supervised Representation Learning with Theoretical Guarantees](adv-ssl_adversarial_self-supervised_representation_learning_with_theoretical_gua.md)
+- [Always Skip Attention](../../ICCV2025/self_supervised/always_skip_attention.md)
+
+<!-- RELATED:END -->

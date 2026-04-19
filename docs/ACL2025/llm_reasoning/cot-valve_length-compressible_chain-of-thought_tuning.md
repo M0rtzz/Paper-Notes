@@ -151,3 +151,15 @@ CoT-Valve分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 多模型（QwQ、R1-Distill、LLaMA、Qwen）、多场景（长→短、短→长、短→长→短）、丰富消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰直观，实验安排有逻辑，但公式符号偶有混乱
 - 价值: ⭐⭐⭐⭐⭐ 解决了推理模型推理成本高这一核心痛点，ACU提升显著（0.40→1.32），实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](tract_regression_cot.md)
+- [Fine-Tuning on Diverse Reasoning Chains Drives Within-Inference CoT Refinement in LLMs](dcot_diverse_cot_refinement.md)
+- [Transformers Provably Learn Chain-of-Thought Reasoning with Length Generalization](../../NeurIPS2025/llm_reasoning/transformers_provably_learn_chain-of-thought_reasoning_with_length_generalizatio.md)
+- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
+- [Mind the Gap: Bridging Thought Leap for Improved Chain-of-Thought Tuning](../../NeurIPS2025/llm_reasoning/mind_the_gap_bridging_thought_leap_for_improved_chain-of-thought_tuning.md)
+
+<!-- RELATED:END -->

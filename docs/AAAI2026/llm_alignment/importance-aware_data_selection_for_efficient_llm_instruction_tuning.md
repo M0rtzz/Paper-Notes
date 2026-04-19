@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多模型、多基线对比+消融
 - 写作质量: ⭐⭐⭐⭐ 方法清晰，实验展示充分
 - 价值: ⭐⭐⭐⭐⭐ 1%超越全量的发现对实际训练场景有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T-SHIRT: Token-Selective Hierarchical Data Selection for Instruction Tuning](../../NeurIPS2025/llm_alignment/t-shirt_token-selective_hierarchical_data_selection_for_instruction_tuning.md)
+- [Federated Data-Efficient Instruction Tuning for Large Language Models](../../ACL2025/llm_alignment/federated_data-efficient_instruction_tuning_for_large_language_models.md)
+- [Rethinking Table Instruction Tuning](../../ACL2025/llm_alignment/rethinking_table_instruction_tuning.md)
+- [Improving Data Efficiency for LLM Reinforcement Fine-tuning Through Difficulty-targeted Online Data Selection and Rollout Replay](../../NeurIPS2025/llm_alignment/improving_data_efficiency_for_llm_reinforcement_fine-tuning_through_difficulty-t.md)
+- [AlignTree: Efficient Defense Against LLM Jailbreak Attacks](aligntree_efficient_defense_against_llm_jailbreak_attacks.md)
+
+<!-- RELATED:END -->

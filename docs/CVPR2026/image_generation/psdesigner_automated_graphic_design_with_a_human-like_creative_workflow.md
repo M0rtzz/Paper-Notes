@@ -135,3 +135,15 @@ Crello-v5上的设计组合（VLM评分）：
 - 实验充分度: ⭐⭐⭐⭐ 对比了多种方法，消融实验充分，但缺乏工具调用精度等客观指标
 - 写作质量: ⭐⭐⭐⭐ 人类设计师工作流与PSDesigner的对比图非常直观，问题motivate清晰
 - 价值: ⭐⭐⭐⭐ 对自动设计领域有重要推动，展示了VLM+工具调用在创意任务中的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShowTable: Unlocking Creative Table Visualization with Collaborative Reflection and Refinement](showtable_unlocking_creative_table_visualization_with_collaborative_reflection_a.md)
+- [From Elements to Design: A Layered Approach for Automatic Graphic Design Composition](../../CVPR2025/image_generation/from_elements_to_design_a_layered_approach_for_automatic_graphic_design_composit.md)
+- [Rethinking Layered Graphic Design Generation with a Top-Down Approach](../../ICCV2025/image_generation/rethinking_layered_graphic_design_generation_with_a_top-down_approach.md)
+- [Ar2Can: An Architect and an Artist Leveraging a Canvas for Multi-Human Generation](ar2can_an_architect_and_an_artist_leveraging_a_canvas_for_multi-human_generation.md)
+- [PosterIQ: A Design Perspective Benchmark for Poster Understanding and Generation](posteriq_a_design_perspective_benchmark_for_poster_understanding_and_generation.md)
+
+<!-- RELATED:END -->

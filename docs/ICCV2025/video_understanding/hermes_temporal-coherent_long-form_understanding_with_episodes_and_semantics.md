@@ -174,3 +174,15 @@ LVU 上相比前 SOTA 提升 **+7.3%**。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5 个数据集 + 3 个 SOTA 模型集成 + 详尽消融
 - **写作质量**: ⭐⭐⭐⭐ 叙述流畅，认知科学动机阐述清楚
 - **价值**: ⭐⭐⭐⭐ ECO 和 SeTR 作为即插即用模块具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow4Agent: Long-form Video Understanding via Motion Prior from Optical Flow](flow4agent_long-form_video_understanding_via_motion_prior_from_optical_flow.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](../../AAAI2026/video_understanding/tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+- [VideoLLaMB: Long Streaming Video Understanding with Recurrent Memory Bridges](videollamb_long_streaming_video_understanding_with_recurrent_memory_bridges.md)
+- [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
+- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](../../CVPR2026/video_understanding/videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
+
+<!-- RELATED:END -->

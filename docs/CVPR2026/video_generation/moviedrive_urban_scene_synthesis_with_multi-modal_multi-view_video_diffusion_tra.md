@@ -141,3 +141,15 @@ MoVieDrive 提出统一的多模态多视图视频扩散 Transformer，通过 mo
 - 实验充分度: ⭐⭐⭐⭐ nuScenes + Waymo 双数据集，充分的消融和可视化分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法图信息量大，符号系统完整
 - 价值: ⭐⭐⭐⭐ 对自动驾驶数据合成有重要价值，统一多模态生成降低部署复杂度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
+- [Let Your Image Move with Your Motion! – Implicit Multi-Object Multi-Motion Transfer](let_your_image_move_with_your_motion_--_implicit_multi-object_multi-motion_trans.md)
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [StreamDiT: Real-Time Streaming Text-to-Video Generation](streamdit_real-time_streaming_text-to-video_generation.md)
+- [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ ABKD 在 1.5B→0.1B 的蒸馏配置上，ROUGE-L 相比 FKLD/RKLD 提升 0.81~3
 - 实验充分度: ⭐⭐⭐⭐⭐ 17 数据集、12 配置、语言+视觉全覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，图示直观，逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的通用 KD 框架，理论与实践价值均很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Distillation with Refined Logits](../../ICCV2025/model_compression/knowledge_distillation_with_refined_logits.md)
+- [A Good Teacher Adapts Their Knowledge for Distillation](../../ICCV2025/model_compression/a_good_teacher_adapts_their_knowledge_for_distillation.md)
+- [Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation](../../ICCV2025/model_compression/perspective-aware_teaching_adapting_knowledge_for_heterogeneous_distillation.md)
+- [Local Dense Logit Relations for Enhanced Knowledge Distillation](../../ICCV2025/model_compression/local_dense_logit_relations_for_enhanced_knowledge_distillation.md)
+- [When Data-Free Knowledge Distillation Meets Non-Transferable Teacher: Escaping Out-of-Distribution](when_data-free_knowledge_distillation_meets_non-transferable_teacher_escaping_ou.md)
+
+<!-- RELATED:END -->

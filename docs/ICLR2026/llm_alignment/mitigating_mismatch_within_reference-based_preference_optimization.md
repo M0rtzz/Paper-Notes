@@ -127,3 +127,15 @@ DPO 损失中的 $\Delta_\theta - \Delta_{ref}$ → 替换为 $\Delta_\theta - \
 - 实验充分度: ⭐⭐⭐⭐ 多模型多基准 + 训练动态分析 + 消融 + 与既有方法对比
 - 写作质量: ⭐⭐⭐⭐⭐ 从问题分析→形式化→一行改动的逻辑链极其清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对 DPO 实践有直接改进价值，一行代码改动带来 41% 提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Stable Optimization and Reference Regularization in RLHF (DAR)](unifying_stable_optimization_and_reference_regularization_in_rlhf.md)
+- [Margin-aware Preference Optimization for Aligning Diffusion Models without Reference](../../AAAI2026/llm_alignment/margin-aware_preference_optimization_for_aligning_diffusion_models_without_refer.md)
+- [MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization](../../CVPR2026/llm_alignment/mod-dpo_towards_mitigating_cross-modal_hallucinations_in_omni_llms_using_modalit.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization](../../NeurIPS2025/llm_alignment/mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)
+
+<!-- RELATED:END -->

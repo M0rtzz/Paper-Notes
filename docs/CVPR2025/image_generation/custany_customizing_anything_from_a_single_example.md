@@ -77,3 +77,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个领域+多种基线+消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐⭐ 通用定制化能覆盖多个下游任务，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DexGrasp Anything: Towards Universal Robotic Dexterous Grasping with Physics Awareness](dexgrasp_anything_towards_universal_robotic_dexterous_grasping_with_physics_awar.md)
+- [Orient Anything V2: Unifying Orientation and Rotation Understanding](../../NeurIPS2025/image_generation/orient_anything_v2_unifying_orientation_and_rotation_understanding.md)
+- [DiffLocks: Generating 3D Hair from a Single Image using Diffusion Models](difflocks_generating_3d_hair_from_a_single_image_using_diffusion_models.md)
+- [Exploring Semantic-constrained Adversarial Example with Instruction Uncertainty Reduction](../../NeurIPS2025/image_generation/exploring_semantic-constrained_adversarial_example_with_instruction_uncertainty_.md)
+- [Language-Free Generative Editing from One Visual Example](../../CVPR2026/image_generation/language-free_generative_editing_from_one_visual_example.md)
+
+<!-- RELATED:END -->

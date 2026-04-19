@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Multi30K + FLORES-200（108 方向）+ CoVoST-2 + WMT24++ 多基准
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，自我进化流程图直观，Modality-Agnostic Hypothesis 有理论高度
 - 价值: ⭐⭐⭐⭐ 首个系统性利用语音做多语言翻译的框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Speech-Text Transformer](latent_speech_text_transformer.md)
+- [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](../../ACL2025/audio_speech/speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
+- [VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation](vowelprompt_hearing_speech_emotions_from_text_via_vowel-level_prosodic_augmentat.md)
+- [TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization](triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)
+- [EuroSpeech: A Multilingual Speech Corpus](../../NeurIPS2025/audio_speech/eurospeech_a_multilingual_speech_corpus.md)
+
+<!-- RELATED:END -->

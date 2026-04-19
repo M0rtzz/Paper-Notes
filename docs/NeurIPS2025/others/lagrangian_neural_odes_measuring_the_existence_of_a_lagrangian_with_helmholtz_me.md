@@ -117,3 +117,15 @@ Neural ODE 是从数据学习动力学系统的强大工具，可以学到 $\dot
 - 实验充分度: ⭐⭐⭐ 验证系统较简单，缺乏与竞品对比
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，物理直觉丰富
 - 价值: ⭐⭐⭐⭐ 为 Physics-Informed ML 提供新的正则化范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
+- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [The Persistence of Neural Collapse Despite Low-Rank Bias](the_persistence_of_neural_collapse_despite_low-rank_bias.md)
+- [Learning to Condition: A Neural Heuristic for Scalable MPE Inference](learning_to_condition_a_neural_heuristic_for_scalable_mpe_inference.md)
+
+<!-- RELATED:END -->

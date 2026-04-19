@@ -123,3 +123,15 @@ $$\mathcal{L} = \|w(t) \cdot (f_\theta(I_{\text{NSFW}}(t), t, \phi(x_{\text{NSFW
 - 实验充分度: ⭐⭐⭐⭐ — 4 个模型、3 个基线、消融实验、用户研究，较为全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题-方案-评估逻辑严密
 - 价值: ⭐⭐⭐⭐ — 填补安全领域空白，benchmark 有持续影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images](causalclip_causally-informed_feature_disentanglement_and_filtering_for_generaliz.md)
+- [Detecting Generated Images by Fitting Natural Image Distributions](../../NeurIPS2025/image_generation/detecting_generated_images_by_fitting_natural_image_distributions.md)
+- [SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images](../../CVPR2026/image_generation/simlbr_learning_to_detect_fake_images_by_learning_to_detect_real_images.md)
+- [Synthetic Perception: Can Generated Images Unlock Latent Visual Prior for Text-Centric Reasoning?](../../ICML2025/image_generation/synthetic_perception_can_generated_images_unlock_latent_visual_prior_for_text-ce.md)
+- [Does Semantic Noise Initialization Transfer from Images to Videos? A Paired Diagnostic Study](../../ICLR2026/image_generation/does_semantic_noise_initialization_transfer_from_images_to_videos_a_paired_diagn.md)
+
+<!-- RELATED:END -->

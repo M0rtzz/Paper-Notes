@@ -181,3 +181,15 @@ $$\text{CI}_{1-\alpha}(\theta) = \frac{\hat{\theta} + \frac{z_{\alpha/2}^2}{2N}}
 | 实验充分性 | 5 | 5 类场景 × 多种样本量 × 多种先验，消融极为全面（39 张图） |
 | 写作质量 | 5 | 结构清晰，立论有力，代码与数学推导兼备 |
 | **综合** | **4.5** | 对 LLM 评估社区有重要的方法论贡献，值得广泛采纳 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: The Right to AI](the_right_to_ai.md)
+- [Position: Towards Bidirectional Human-AI Alignment](../../NeurIPS2025/recommender/position_towards_bidirectional_human-ai_alignment.md)
+- [RLTHF: Targeted Human Feedback for LLM Alignment](rlthf_targeted_human_feedback_for_llm_alignment.md)
+- [Preference is More Than Comparisons: Rethinking Dueling Bandits with Augmented Human Feedback](../../AAAI2026/recommender/preference_is_more_than_comparisons_rethinking_dueling_bandits_with_augmented_hu.md)
+- [Validating LLM-as-a-Judge Systems under Rating Indeterminacy](../../NeurIPS2025/recommender/validating_llm-as-a-judge_systems_under_rating_indeterminacy.md)
+
+<!-- RELATED:END -->

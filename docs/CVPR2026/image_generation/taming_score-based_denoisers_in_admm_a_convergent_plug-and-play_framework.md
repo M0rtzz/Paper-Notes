@@ -175,3 +175,15 @@ $$\bm{w}^{(k,j+1)} = \bm{w}^{(k,j)} + \eta^{(k)}\left(\frac{1}{\sigma_{\bm{s}^{(
 ## 评分
 
 ⭐⭐⭐⭐ 理论与实验俱佳的扎实工作。AC-DC 三阶段去噪器设计精巧、几何直觉清晰，收敛性分析是对 PnP 理论的实质性推进；实验全面覆盖 7 类逆问题且一致优于基线。主要遗憾是计算开销大且噪声调度缺乏自适应策略。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taming Preference Mode Collapse via Directional Decoupling Alignment in Diffusion Reinforcement Learning](taming_preference_mode_collapse_via_directional_decoupling_alignment_in_diffusio.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+- [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
+- [Imagine Before Concentration: Diffusion-Guided Registers Enhance Partially Relevant Video Retrieval](imagine_before_concentration_diffusion-guided_registers_enhance_partially_releva.md)
+
+<!-- RELATED:END -->

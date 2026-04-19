@@ -148,3 +148,15 @@ SparseLaneSTP 的输入为单帧 RGB 图像 $\mathbf{I} \in \mathbb{R}^{H \times
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集 + 自建数据集，消融详尽，效率分析完整
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式规范，图表丰富
 - **价值**: ⭐⭐⭐⭐ 在 3D 车道线检测具有实际工程价值，证明时序融合对车道线检测的重要性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering](leveraging_2d_priors_and_sdf_guidance_for_urban_scene_rendering.md)
+- [GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow](gaussianflowocc_sparse_and_weakly_supervised_occupancy_estimation_using_gaussian.md)
+- [Spatio-Temporal Graphs Beyond Grids: Benchmark for Maritime Anomaly Detection](../../NeurIPS2025/autonomous_driving/spatio-temporal_graphs_beyond_grids_benchmark_for_maritime_anomaly_detection.md)
+- [Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection](../../ECCV2024/autonomous_driving/equivariant_spatio-temporal_self-supervision_for_lidar_object_detection.md)
+- [Rethinking the Spatio-Temporal Alignment of End-to-End 3D Perception](../../AAAI2026/autonomous_driving/rethinking_the_spatio-temporal_alignment_of_end-to-end_3d_perception.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ MSRL以7B参数量超越所有开源模型，ChartMimic高层指标83.8超过GPT
 - 实验充分度: ⭐⭐⭐⭐⭐ 数据规模实验、多维度消融、跨库泛化、与GPT-4o对比，实验非常充分
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表信息丰富，动机阐述有说服力
 - 价值: ⭐⭐⭐⭐ 在chart-to-code这个细分领域建立了强SOTA，方法论对其他结构化代码生成任务有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction](../../CVPR2026/code_intelligence/mm-recoder_advancing_chart-to-code_generation_with_reinforcement_learning_and_se.md)
+- [Supervised Reinforcement Learning: From Expert Trajectories to Step-wise Reasoning](supervised_reinforcement_learning_from_expert_trajectories_to_step-wise_reasonin.md)
+- [ReCode: Updating Code API Knowledge with Reinforcement Learning](../../AAAI2026/code_intelligence/recode_updating_code_api_knowledge_with_reinforcement_learning.md)
+- [Learning to Reason without External Rewards](learning_to_reason_without_external_rewards.md)
+- [Paper2Code: Automating Code Generation from Scientific Papers in Machine Learning](paper2code_automating_code_generation_from_scientific_papers_in_machine_learning.md)
+
+<!-- RELATED:END -->

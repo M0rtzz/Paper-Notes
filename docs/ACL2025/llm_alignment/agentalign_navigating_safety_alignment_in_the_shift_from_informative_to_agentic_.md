@@ -142,3 +142,15 @@ AgentAlign 由四个环环相扣的模块组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个模型家族、多种baseline、消融、正交实验、人评、跨benchmark验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题引入有力，方法描述系统完整，实验设计合理
 - 价值: ⭐⭐⭐⭐ 填补了 agent 安全对齐训练的空白，开源数据集和代码对社区有益
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference](pku-saferlhf_towards_multi-level_safety_alignment_for_llms_with_human_preference.md)
+- [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
+- [LSSF: Safety Alignment via Low-Rank Safety Subspace Fusion](lssf_safety_subspace.md)
+- [MPO: Multilingual Safety Alignment via Reward Gap Optimization](mpo_multilingual_safety_alignment.md)
+- [Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons](../../NeurIPS2025/llm_alignment/towards_understanding_safety_alignment_a_mechanistic_perspective_from_safety_neu.md)
+
+<!-- RELATED:END -->

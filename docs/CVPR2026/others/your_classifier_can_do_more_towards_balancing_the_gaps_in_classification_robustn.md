@@ -129,3 +129,15 @@ $$p_\theta(\mathbf{x}, \tilde{\mathbf{x}}, y) = p_\theta(y|\tilde{\mathbf{x}}, \
 - 实验充分度: ⭐⭐⭐⭐ CIFAR-10/100 和 ImageNet 子集覆盖全面，但缺少完整 ImageNet 实验
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，能量分析图表说明力强
 - 价值: ⭐⭐⭐⭐⭐ 显著推进了对抗鲁棒性领域的性能前沿，方法具有普适性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness](irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a.md)
+- [DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)
+- [What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
+- [Next-Scale Autoregressive Models for Text-to-Motion Generation](next-scale_autoregressive_models_for_text-to-motion_generation.md)
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+
+<!-- RELATED:END -->

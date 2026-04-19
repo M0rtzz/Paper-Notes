@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性实验丰富，涵盖位姿估计和对应关系；消融验证了各组件必要性
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，方法推导严谨，图示直观
 - 对我的价值: ⭐⭐⭐⭐ SDS+语义特征的组合使用模式和3D canonical空间概念具有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [Learning 3D-Aware GANs from Unposed Images with Template Feature Field](learning_3d-aware_gans_from_unposed_images_with_template_feature_field.md)
+- [SAGS: Structure-Aware 3D Gaussian Splatting](sags_structure-aware_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

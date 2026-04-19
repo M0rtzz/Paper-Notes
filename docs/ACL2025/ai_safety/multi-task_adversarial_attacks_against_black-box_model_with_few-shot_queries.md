@@ -155,3 +155,15 @@ ASR 从 46% 提升到 73%，查询数从数万降到 100。
 ## 评分 ⭐⭐⭐⭐
 
 填补了文本多任务对抗攻击的空白，核心思想（深层聚类 → 统一攻击）清晰优雅。100 次查询的效率令人印象深刻。但 LLM 上的攻击成功率仍有提升空间，且缺少防御讨论。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](../../AAAI2026/ai_safety/privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
+- [Rethinking Target Label Conditioning in Adversarial Attacks: A 2D Tensor-Guided Generative Approach](../../AAAI2026/ai_safety/rethinking_target_label_conditioning_in_adversarial_attacks_a_2d_tensor-guided_g.md)
+- [Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures](../../AAAI2026/ai_safety/ghost_in_the_transformer_detecting_model_reuse_with_invariant_spectral_signature.md)
+
+<!-- RELATED:END -->

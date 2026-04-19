@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个基准数据集、12种语言、批量/序列编辑、多种基线对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清楚，实验表格丰富
 - 价值: ⭐⭐⭐⭐ 对多语言 LLM 的知识维护有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon](cross-lingual_transfer_of_cultural_knowledge_an_asymmetric_phenomenon.md)
+- [Cross-Lingual Auto Evaluation for Assessing Multilingual LLMs](cross-lingual_auto_evaluation_for_assessing_multilingual_llms.md)
+- [Middle-Layer Representation Alignment for Cross-Lingual Transfer in Fine-Tuned LLMs](mid_layer_crosslingual_alignment.md)
+- [A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs](a_case_study_of_cross-lingual_zero-shot_generalization_for_classical_languages_i.md)
+- [Cross-Lingual Transfer of Debiasing and Detoxification in Multilingual LLMs: An Extensive Investigation](cross-lingual_transfer_of_debiasing_and_detoxification_in_multilingual_llms_an_e.md)
+
+<!-- RELATED:END -->

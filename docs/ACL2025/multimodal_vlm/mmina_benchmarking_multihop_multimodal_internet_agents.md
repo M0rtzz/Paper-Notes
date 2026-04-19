@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖多类模型和人类基线，逐跳分析深入，但记忆方法实验偏少
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，图表丰富
 - 价值: ⭐⭐⭐⭐ — 揭示了多跳Web任务的核心难点，为Web Agent研究指明方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PunchBench: Benchmarking MLLMs in Multimodal Punchline Comprehension](punchbench_mllm_punchline.md)
+- [MMSciBench: Benchmarking Language Models on Chinese Multimodal Scientific Problems](mmscibench_benchmarking_language_models_on_chinese_multimodal_scientific_problem.md)
+- [Attacking Vision-Language Computer Agents via Pop-ups](attacking_vl_agents_popups.md)
+- [MMSafeAware: Can't See the Forest for the Trees: Benchmarking Multimodal Safety Awareness for Multimodal LLMs](cant_see_the_forest_for_the.md)
+- [Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents](agent_rewardbench.md)
+
+<!-- RELATED:END -->

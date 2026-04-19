@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 编码效率、质量、速度、采用率全覆盖，但仅一个领域
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，问题定义精准，分析透彻
 - 价值: ⭐⭐⭐⭐ 对LLM领域部署有直接实用价值，新token采用率分析开创新评估维度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Training-Free Online Routing for High-Volume Multi-LLM Serving](efficient_training-free_online_routing_for_high-volume_multi-llm_serving.md)
+- [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](hierarchical_balance_packing_towards_efficient_supervised_fine-tuning_for_long-c.md)
+- [OmniDraft: A Cross-Vocabulary Online Adaptive Drafter for On-Device Speculative Decoding](omnidraft_a_cross-vocabulary_online_adaptive_drafter_for_on-device_speculative_d.md)
+- [Star Attention: Efficient LLM Inference over Long Sequences](../../ICML2025/llm_efficiency/star_attention_efficient_llm_inference_over_long_sequences.md)
+- [DISC: Dynamic Decomposition Improves LLM Inference Scaling](disc_dynamic_decomposition_improves_llm_inference_scaling.md)
+
+<!-- RELATED:END -->

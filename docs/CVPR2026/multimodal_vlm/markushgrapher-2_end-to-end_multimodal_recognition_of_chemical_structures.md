@@ -129,3 +129,15 @@ MarkushGrapher-2 提出了一个端到端多模态化学结构识别模型，通
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个基准、多种基线对比、详尽消融实验，还发布了新基准IP5-M
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，对化学背景解释充分，但部分内容较冗长
 - 价值: ⭐⭐⭐⭐ 填补了端到端Markush识别的空白，对化学信息学和专利分析有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](../../ICCV2025/multimodal_vlm/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
+- [WebDS: An End-to-End Benchmark for Web-based Data Science](../../ICLR2026/multimodal_vlm/webds_an_end-to-end_benchmark_for_web-based_data_science.md)
+- [SpeakerLM: End-to-End Versatile Speaker Diarization and Recognition with Multimodal Large Language Models](../../AAAI2026/multimodal_vlm/speakerlm_end-to-end_versatile_speaker_diarization_and_recognition_with_multimod.md)
+- [Multimodal OCR: Parse Anything from Documents](multimodal_ocr_parse_anything_from_documents.md)
+- [Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models](taxonomy-aware_representation_alignment_for_hierarchical_visual_recognition_with.md)
+
+<!-- RELATED:END -->

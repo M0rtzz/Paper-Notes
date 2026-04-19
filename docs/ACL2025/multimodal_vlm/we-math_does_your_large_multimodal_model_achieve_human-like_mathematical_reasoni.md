@@ -144,3 +144,15 @@ We-Math的构建与评估流程：
 - 实验充分度: ⭐⭐⭐⭐⭐ 17个LMM的全面评估，覆盖闭源和开源模型，多维度分析深入
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，图表丰富，但部分公式与文字描述有冗余
 - 价值: ⭐⭐⭐⭐⭐ 改变了多模态数学推理评估的范式，四维指标和知识结构对社区有长期参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MathVerse: Does Your Multi-modal LLM Truly See the Diagrams in Visual Math Problems?](../../ECCV2024/multimodal_vlm/mathverse_does_your_multi-modal_llm_truly_see_the_diagrams_in_visual_math_proble.md)
+- [The Role of Visual Modality in Multimodal Mathematical Reasoning: Challenges and Insights](the_role_of_visual_modality_in_multimodal_mathematical_reasoning_challenges_and_.md)
+- [MathCoder-VL: Bridging Vision and Code for Enhanced Multimodal Mathematical Reasoning](mathcoder-vl_bridging_vision_and_code_for_enhanced_multimodal_mathematical_reaso.md)
+- [MV-MATH: Evaluating Multimodal Math Reasoning in Multi-Visual Contexts](../../CVPR2025/multimodal_vlm/mv-math_evaluating_multimodal_math_reasoning_in_multi-visual_contexts.md)
+- [Can Vision-Language Models Evaluate Handwritten Math?](can_vision-language_models_evaluate_handwritten_math.md)
+
+<!-- RELATED:END -->

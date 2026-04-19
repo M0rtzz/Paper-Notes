@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 15+ 个 benchmark、详细的融合策略/深度/广度消融、与多编码器方案的公平对比
 - 写作质量: ⭐⭐⭐⭐ 方法动机清楚，消融实验组织合理
 - 价值: ⭐⭐⭐⭐⭐ 为 VLM 视觉编码器的选择提供了新范式，Florence-2 + DBFusion 可直接应用于其他 VLM 框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](../../ACL2025/multimodal_vlm/exploring_how_generative_mllms_perceive_more.md)
+- [SPA-VL: A Comprehensive Safety Preference Alignment Dataset for Vision Language Models](spa-vl_a_comprehensive_safety_preference_alignment_dataset_for_vision_language_m.md)
+- [EVEv2: Improved Baselines for Encoder-Free Vision-Language Models](../../ICCV2025/multimodal_vlm/evev2_improved_baselines_for_encoderfree_visionlanguage_mode.md)
+- [Instruction-Grounded Visual Projectors for Continual Learning of Generative Vision-Language Models](../../ICCV2025/multimodal_vlm/instruction-grounded_visual_projectors_for_continual_learning_of_generative_visi.md)
+- [SD-VLM: Spatial Measuring and Understanding with Depth-Encoded Vision-Language Models](../../NeurIPS2025/multimodal_vlm/sd-vlm_spatial_measuring_and_understanding_with_depth-encoded_vision-language_mo.md)
+
+<!-- RELATED:END -->

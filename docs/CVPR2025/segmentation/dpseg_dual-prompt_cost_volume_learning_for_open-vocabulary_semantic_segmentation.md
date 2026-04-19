@@ -143,3 +143,15 @@ ConvNeXt-L 配置：
 - 实验充分度: ⭐⭐⭐⭐ 5 个数据集 + 两种 backbone + 详细消融
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰（t-SNE、模态差距实验），结构完整
 - 价值: ⭐⭐⭐⭐ 为开放词汇分割提供了新范式，视觉提示的引入具有普适性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
+- [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+- [Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation](fine-grained_image-text_correspondence_with_cost_aggregation_for_open-vocabulary.md)
+- [Stepping Out of Similar Semantic Space for Open-Vocabulary Segmentation](../../ICCV2025/segmentation/stepping_out_of_similar_semantic_space_for_open-vocabulary_segmentation.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ $$\frac{\mathrm{sup}(\alpha^*, S, \ell - \delta)}{\max_{\alpha \in \mathcal{U}: 
 - 实验充分度: ⭐⭐⭐ — 合成+真实数据验证，但规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论-实践框架清晰，动机到结论一气呵成
 - 价值: ⭐⭐⭐⭐ — AI+民主方向的重要进展，但离实际部署仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+- [Combining Generative and Geometry Priors for Wide-Angle Portrait Correction](../../ECCV2024/human_understanding/combining_generative_and_geometry_priors_for_wide-angle_portrait_correction.md)
+- [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [Yes FLoReNce, I Will Do Better Next Time! Agentic Feedback Reasoning for Humorous Meme Detection](../../AAAI2026/human_understanding/yes_florence_i_will_do_better_next_time_agentic_feedback_reasoning_for_humorous_.md)
+- [P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](../../ICLR2026/human_understanding/p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
+
+<!-- RELATED:END -->

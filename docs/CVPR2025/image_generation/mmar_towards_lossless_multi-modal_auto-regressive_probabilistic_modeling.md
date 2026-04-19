@@ -148,3 +148,15 @@ MMAR-7B（无 CLIP，仅 256×256）几乎追平使用预训练 CLIP 的 LLaVA-1
 | 实验充分度 | ⭐⭐⭐⭐ |
 | 工程实用性 | ⭐⭐⭐⭐ |
 | 总体推荐 | ⭐⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Collaborative Decoding Makes Visual Auto-Regressive Modeling Efficient](collaborative_decoding_makes_visual_auto-regressive_modeling_efficient.md)
+- [HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation](hmar_efficient_hierarchical_masked_auto-regressive_image_generation.md)
+- [DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
+- [Unified Uncertainty-Aware Diffusion for Multi-Agent Trajectory Modeling](unified_uncertainty-aware_diffusion_for_multi-agent_trajectory_modeling.md)
+- [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](../../NeurIPS2025/image_generation/distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
+
+<!-- RELATED:END -->

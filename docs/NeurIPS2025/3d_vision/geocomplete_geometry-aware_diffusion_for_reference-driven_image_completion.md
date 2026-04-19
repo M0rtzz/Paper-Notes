@@ -177,3 +177,15 @@ $\mathbf{w}_j$ 为有效区域权重，仅在可见区域计算损失。
 - 实验充分度: ⭐⭐⭐⭐ 定量/定性/消融/鲁棒性全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 技术描述清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ PSNR 提升 17.1% 是显著的实用改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GOATex: Geometry & Occlusion-Aware Texturing](goatex_geometry_occlusion-aware_texturing.md)
+- [PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis](../../CVPR2026/3d_vision/pr-iqa_partial-reference_image_quality_assessment_for_diffusion-based_novel_view.md)
+- [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
+- [SingRef6D: Monocular Novel Object Pose Estimation with a Single RGB Reference](singref6d_monocular_novel_object_pose_estimation_with_a_single_rgb_reference.md)
+- [PolarAnything: Diffusion-based Polarimetric Image Synthesis](../../ICCV2025/3d_vision/polaranything_diffusion-based_polarimetric_image_synthesis.md)
+
+<!-- RELATED:END -->

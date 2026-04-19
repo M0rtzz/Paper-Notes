@@ -156,3 +156,15 @@ $$\text{metric}(r, r') = \frac{\text{LD}_{\text{pt}}(r, r') - \text{LD}_*(r, r')
 - **技术深度**: ⭐⭐⭐⭐ — 因果 + 探针双重方法论严谨
 - **实验充分度**: ⭐⭐⭐ — 模型和药物组数量有限
 - **实用价值**: ⭐⭐⭐ — 对理解生物医学 LLM 有启发，但直接应用有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](../../NeurIPS2025/medical_imaging/position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+- [Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](../../AAAI2026/medical_imaging/small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](../../ACL2025/medical_imaging/radar_radiology_report_gen.md)
+- [COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
+
+<!-- RELATED:END -->

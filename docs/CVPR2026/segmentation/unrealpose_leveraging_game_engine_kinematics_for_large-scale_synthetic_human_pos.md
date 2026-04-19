@@ -175,3 +175,15 @@ UnrealPose 包含两部分：
 - **实验**: ⭐⭐⭐ — 验证数据质量的实验设计合理但不够深入，缺少在合成数据上训练后迁移到真实数据的关键实验
 - **写作**: ⭐⭐⭐⭐ — 动机阐述有力，与 SMPL 方法的对比论证清晰，技术细节充分
 - **价值**: ⭐⭐⭐⭐ — 开源管线+数据集具有实际影响力，为社区提供了一条利用游戏资产的新路径，但需要后续工作验证训练效果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do We Need Perfect Data? Leveraging Noise for Domain Generalized Segmentation](../../AAAI2026/segmentation/do_we_need_perfect_data_leveraging_noise_for_domain_generalized_segmentation.md)
+- [RealVLG-R1: A Large-Scale Real-World Visual-Language Grounding Benchmark for Robotic Perception and Manipulation](realvlg-r1_a_large-scale_real-world_visual-language_grounding_benchmark_for_robo.md)
+- [PRUE: A Practical Recipe for Field Boundary Segmentation at Scale](prue_a_practical_recipe_for_field_boundary_segmentation_at_scale.md)
+- [RAGNet: Large-scale Reasoning-based Affordance Segmentation Benchmark towards General Grasping](../../ICCV2025/segmentation/ragnet_large-scale_reasoning-based_affordance_segmentation_benchmark_towards_gen.md)
+- [Making Training-Free Diffusion Segmentors Scale with the Generative Power](making_training-free_diffusion_segmentors_scale_with_the_generative_power.md)
+
+<!-- RELATED:END -->

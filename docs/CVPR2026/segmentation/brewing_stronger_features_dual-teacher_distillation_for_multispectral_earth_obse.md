@@ -163,3 +163,15 @@ $$\mathcal{L} = -\mathcal{L}_{MS} - \mathcal{L}_O$$
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 洞察深刻（目标兼容性）、效率出色（50万张就达到SOTA）、实验全面（11个数据集3个任务），是遥感基础模型领域的优秀工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Generalization of Representation Uncertainty in Earth Observation](../../ICCV2025/segmentation/on_the_generalization_of_representation_uncertainty_in_earth_observation.md)
+- [Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](generalizable_knowledge_distillation_from_vision_foundation_models_for_semantic_.md)
+- [GKD: Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](gkd_generalizable_knowledge_distillation_vfm.md)
+- [CTFS: Collaborative Teacher Framework for Forward-Looking Sonar Image Semantic Segmentation with Extremely Limited Labels](ctfs_collaborative_teacher_framework_for_forward-looking_sonar_image_semantic_se.md)
+- [RecycleLoRA: Rank-Revealing QR-Based Dual-LoRA Subspace Adaptation for Domain Generalized Semantic Segmentation](recyclelora_rank-revealing_qr-based_dual-lora_subspace_adaptation_for_domain_gen.md)
+
+<!-- RELATED:END -->

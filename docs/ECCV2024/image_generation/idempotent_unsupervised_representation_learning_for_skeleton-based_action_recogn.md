@@ -179,3 +179,15 @@ KNN 评估（NTU 60 数据集）：
 - **实验充分度**: ★★★★☆ — 消融详尽但数据集范围有限
 - **写作质量**: ★★★★☆ — 理论推导清晰但部分符号较密集
 - **实用价值**: ★★★★☆ — 在骨架动作识别领域有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](../../ICCV2025/image_generation/bridging_the_skeleton-text_modality_gap_diffusion-powered_modality_alignment_for.md)
+- [LEGO: Learning EGOcentric Action Frame Generation via Visual Instruction Tuning](lego_learning_egocentric_action_frame_generation_via_visual_instruction_tuning.md)
+- [MacDiff: Unified Skeleton Modeling with Masked Conditional Diffusion](macdiff_unified_skeleton_modeling_with_masked_conditional_diffusion.md)
+- [SAIR: Learning Semantic-aware Implicit Representation](sair_learning_semantic-aware_implicit_representation.md)
+- [Diffusion-Driven Data Replay: A Novel Approach to Combat Forgetting in Federated Class Continual Learning](diffusion-driven_data_replay_a_novel_approach_to_combat_forgetting_in_federated_.md)
+
+<!-- RELATED:END -->

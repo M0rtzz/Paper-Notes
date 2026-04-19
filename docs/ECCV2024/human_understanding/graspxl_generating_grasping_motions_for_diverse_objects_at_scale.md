@@ -158,3 +158,15 @@ ShapeNet测试集（完全未见物体）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多数据集、多手模型、消融完整、50万+物体规模测试，极为全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，符号统一，结构合理
 - **价值**: ⭐⭐⭐⭐⭐ — 首次实现50万+物体的抓取动作生成，代码和数据集开源，对机器人和动画领域有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating Attribute-Aware Human Motions from Textual Prompt](../../AAAI2026/human_understanding/generating_attribute-aware_human_motions_from_textual_prompt.md)
+- [Learning Cross-Hand Policies of High-DOF Reaching and Grasping](learning_cross-hand_policies_of_high-dof_reaching_and_grasping.md)
+- [PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)
+- [PetFace: A Large-Scale Dataset and Benchmark for Animal Identification](petface_a_large-scale_dataset_and_benchmark_for_animal_identification.md)
+- [SignAvatars: A Large-scale 3D Sign Language Holistic Motion Dataset and Benchmark](signavatars_a_large-scale_3d_sign_language_holistic_motion_dataset_and_benchmark.md)
+
+<!-- RELATED:END -->

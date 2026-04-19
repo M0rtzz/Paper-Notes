@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Referring/generalized/reasoning segmentation均有评测
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，动机论证充分
 - 价值: ⭐⭐⭐⭐⭐ 为MLLM统一框架的像素级感知开创了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seg-VAR: Image Segmentation with Visual Autoregressive Modeling](seg-var_image_segmentation_with_visual_autoregressive_modeling.md)
+- [MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans](multihuman-testbench_benchmarking_image_generation_for_multiple_humans.md)
+- [EditAR: Unified Conditional Generation with Autoregressive Models](../../CVPR2025/segmentation/editar_unified_conditional_generation_with_autoregressive_models.md)
+- [Latent Expression Generation for Referring Image Segmentation and Grounding](../../ICCV2025/segmentation/latent_expression_generation_for_referring_image_segmentation_and_grounding.md)
+- [Towards Unsupervised Domain Bridging via Image Degradation in Semantic Segmentation](towards_unsupervised_domain_bridging_via_image_degradation_in_semantic_segmentat.md)
+
+<!-- RELATED:END -->

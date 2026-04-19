@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 六个数据集，系统消融掩码率/文本源/掩码方向
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，洞察深入，讨论部分分析到位
 - 价值: ⭐⭐⭐⭐ 开辟语言引导视频 MAE 新方向，统一框架有普适性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
+- [Data Collection-Free Masked Video Modeling](data_collection-free_masked_video_modeling.md)
+- [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
+- [Towards Efficient General Feature Prediction in Masked Skeleton Modeling](../../ICCV2025/video_understanding/towards_efficient_general_feature_prediction_in_masked_skeleton_modeling.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+
+<!-- RELATED:END -->

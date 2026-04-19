@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐ 无实验，文献调研为主
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、分析深入、论述有力
 - 价值: ⭐⭐⭐⭐ 为一致性研究提供了全面的方向指引，对社区有重要参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
+- [On the Entropy Calibration of Language Models](../../NeurIPS2025/llm_efficiency/on_the_entropy_calibration_of_language_models.md)
+- [Position: Theory of Mind Benchmarks are Broken for Large Language Models](position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
+- [LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?](../../NeurIPS2025/llm_efficiency/loogle_v2_are_llms_ready_for_real_world_long_dependency_challenges.md)
+- [SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
+
+<!-- RELATED:END -->

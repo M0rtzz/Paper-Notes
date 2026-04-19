@@ -125,3 +125,15 @@ Vist（Vision-centric Token Compression）采用慢-快双路径设计：
 - 实验充分度: ⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VQToken: Neural Discrete Token Representation Learning for Extreme Token Reduction in Video Large Language Models](vqtoken_neural_discrete_token_representation_learning_for_extreme_token_reductio.md)
+- [B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens](../../ICCV2025/model_compression/b-vllm_a_vision_large_language_model_with_balanced_spatio-temporal_tokens.md)
+- [RADIO: Rate-Distortion Optimization for Large Language Model Compression](../../ICML2025/model_compression/radio_rate-distortion_optimization_for_large_language_model_compression.md)
+- [Quantification of Large Language Model Distillation](../../ACL2025/model_compression/quantification_of_large_language_model_distillation.md)
+- [AlignDistil: Token-Level Language Model Alignment as Adaptive Policy Distillation](../../ACL2025/model_compression/aligndistil_token_level_alignment.md)
+
+<!-- RELATED:END -->

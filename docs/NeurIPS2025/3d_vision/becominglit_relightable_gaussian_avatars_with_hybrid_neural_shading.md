@@ -143,3 +143,15 @@ $$\mathcal{L} = \underbrace{\lambda_{l1}\mathcal{L}_{l1} + \lambda_{SSIM}\mathca
 - **实验充分度**: ⭐⭐⭐⭐ — 4 人定量对比 + 5 项消融 + 运行时分析 + 环境光/单目驱动应用展示，但受试者数量偏少
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰、方法图示完整、公式推导规范，附录详尽
 - **价值**: ⭐⭐⭐⭐ — 公开数据集 + 低成本方案有望推动社区跟进，实时性和驱动灵活性适合 VR/AR 落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid Physical-Neural Simulator for Fast Cosmological Hydrodynamics](hybrid_physical-neural_simulator_for_fast_cosmological_hydrodynamics.md)
+- [MPMAvatar: Learning 3D Gaussian Avatars with Accurate and Robust Physics-Based Dynamics](mpmavatar_learning_3d_gaussian_avatars_with_accurate_and_robust_physics-based_dy.md)
+- [ROGR: Relightable 3D Objects using Generative Relighting](rogr_relightable_3d_objects_using_generative_relighting.md)
+- [Gaussian Splatting with Discretized SDF for Relightable Assets](../../ICCV2025/3d_vision/gaussian_splatting_with_discretized_sdf_for_relightable_assets.md)
+- [HyRF: Hybrid Radiance Fields for Memory-efficient and High-quality Novel View Synthesis](hyrf_hybrid_radiance_fields_for_memory-efficient_and_high-quality_novel_view_syn.md)
+
+<!-- RELATED:END -->

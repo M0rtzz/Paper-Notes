@@ -132,3 +132,15 @@ EM 以单位步长迭代，无需步长调参——这是 EM 相比 GD 的实际
 - 实验充分度: ⭐⭐⭐ 以小规模实验为主，缺乏大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰
 - 价值: ⭐⭐⭐⭐ 对 MoE 训练理论有基础性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts](../../NeurIPS2025/optimization/on_minimax_estimation_of_parameters_in_softmax-contaminated_mixture_of_experts.md)
+- [Unifying Formal Explanations: A Complexity-Theoretic Perspective](../../ICLR2026/optimization/unifying_formal_explanations_a_complexity-theoretic_perspective.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](../../NeurIPS2025/optimization/learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Provable Benefit of Random Permutations over Uniform Sampling in Stochastic Coordinate Descent](provable_benefit_of_random_permutations_over_uniform_sampling_in_stochastic_coor.md)
+- [Quantum Optimization via Gradient-Based Hamiltonian Descent](quantum_optimization_via_gradient-based_hamiltonian_descent.md)
+
+<!-- RELATED:END -->

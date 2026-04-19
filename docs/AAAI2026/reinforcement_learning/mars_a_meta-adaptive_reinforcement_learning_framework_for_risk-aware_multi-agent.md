@@ -143,3 +143,15 @@ MARS 采用两层架构：
 - 实验充分度: ⭐⭐⭐⭐ （消融完整，多市场多时期验证，但 baseline 略少）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，公式规范）
 - 价值: ⭐⭐⭐⭐ （在金融 RL 领域有实际应用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization](mars_multi-agent_adaptive_reasoning_with_socratic_guidance_f.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+- [BAMAS: Structuring Budget-Aware Multi-Agent Systems](bamas_structuring_budget-aware_multi-agent_systems.md)
+- [Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation](scalable_multi-objective_and_meta_reinforcement_learning_via_gradient_estimation.md)
+- [Think, Speak, Decide: Language-Augmented Multi-Agent Reinforcement Learning for Economic Decision-Making](think_speak_decide_language-augmented_multi-agent_reinforcement_learning_for_eco.md)
+
+<!-- RELATED:END -->

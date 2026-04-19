@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 10 个 LLM × 4 个 agent 配置 × 7 个任务类型，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，协议设计有说服力
 - 价值: ⭐⭐⭐⭐ 提出了可持续 LLM 评估的新方向，对该分数在 MMLU 过饱和后尤为重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Veritas: Generalizable Deepfake Detection via Pattern-Aware Reasoning](veritas_generalizable_deepfake_detection_via_pattern-aware_reasoning.md)
+- [Towards Multiple Missing Values-Resistant Unsupervised Graph Anomaly Detection](../../AAAI2026/ai_safety/towards_multiple_missing_values-resistant_unsupervised_graph_anomaly_detection.md)
+- [Risk-Sensitive Agent Compositions](risk-sensitive_agent_compositions.md)
+- [Tutor-Student Reinforcement Learning: A Dynamic Curriculum for Robust Deepfake Detection](../../CVPR2026/ai_safety/tutor-student_reinforcement_learning_a_dynamic_curriculum_for_robust_deepfake_de.md)
+- [Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models](unmasking_backdoors_an_explainable_defense_via_gradient-attention_anomaly_scorin.md)
+
+<!-- RELATED:END -->

@@ -204,3 +204,15 @@ ITM-IoU 排名与人工评估排名高度一致，验证了指标的合理性。
 | 实用价值 | 4 |
 | 写作质量 | 4 |
 | 总体评分 | 3.9 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion-based Image-to-Image Translation by Noise Correction via Prompt Interpolation](diffusion-based_image-to-image_translation_by_noise_correction_via_prompt_interp.md)
+- [Memory-Efficient Fine-Tuning for Quantized Diffusion Model](memory-efficient_fine-tuning_for_quantized_diffusion_model.md)
+- [CharaConsist: Fine-Grained Consistent Character Generation](../../ICCV2025/image_generation/characonsist_fine-grained_consistent_character_generation.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+
+<!-- RELATED:END -->

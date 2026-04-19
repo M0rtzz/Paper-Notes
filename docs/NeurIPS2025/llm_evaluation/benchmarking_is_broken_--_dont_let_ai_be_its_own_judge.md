@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 以设计方案为主，实验验证有限
 - 写作质量: ⭐⭐⭐⭐⭐ 批评尖锐但建设性，制度设计详尽
 - 价值: ⭐⭐⭐⭐⭐ 可能改变 AI 评估的基础范式，原型 peerbench.ai 已上线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Let the Experts Speak: Improving Survival Prediction & Calibration via Mixture-of-Experts Heads](let_the_experts_speak_improving_survival_prediction_calibration_via_mixture-of-e.md)
+- [ComfyBench: Benchmarking LLM-based Agents in ComfyUI for Autonomously Designing Collaborative AI Systems](../../CVPR2025/llm_evaluation/comfybench_benchmarking_llm-based_agents_in_comfyui_for_autonomously_designing_c.md)
+- [Beyond the Surface: Enhancing LLM-as-a-Judge Alignment with Human via Internal Representations](beyond_the_surface_enhancing_llm-as-a-judge_alignment_with_human_via_internal_re.md)
+- [AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite](../../ICLR2026/llm_evaluation/astabench_benchmarking_ai_agents.md)
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](../../ACL2025/llm_evaluation/chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+
+<!-- RELATED:END -->

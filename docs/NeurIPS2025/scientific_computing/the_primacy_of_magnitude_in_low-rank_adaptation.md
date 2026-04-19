@@ -162,3 +162,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — NLU/NLG/VLM/图像生成全覆盖，消融设计精巧（tracking mode 尤其有启发性）
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，但符号略多，阅读成本较高
 - 价值: ⭐⭐⭐⭐⭐ — 为 LoRA 社区提供了极简且高效的 baseline，有望成为新的默认初始化方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [F-Adapter: Frequency-Adaptive Parameter-Efficient Fine-Tuning in Scientific Machine Learning](f-adapter_frequency-adaptive_parameter-efficient_fine-tuning_in_scientific_machi.md)
+- [Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections](enforcing_governing_equation_constraints_in_neural_pde_solvers_via_training-free.md)
+- [Integration Matters for Learning PDEs with Backward SDEs](integration_matters_for_learning_pdes_with_backward_sdes.md)
+- [Collapsing Taylor Mode Automatic Differentiation](collapsing_taylor_mode_automatic_differentiation.md)
+- [From Images to Physics: Probabilistic Inference of Galaxy Parameters and Emission Lines via VAE–Normalizing Flows](one-shot_transfer_learning_for_nonlinear_pdes_with_perturbative_pinns.md)
+
+<!-- RELATED:END -->

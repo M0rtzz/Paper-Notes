@@ -137,3 +137,15 @@ R-MSD含三组件和两阶段：(1) 多样本教师收集——每输入采样K=
 - 实验充分度: ⭐⭐⭐⭐ 6视频+2图像基准，细致消融和敏感性分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方差分析图表直观，流程完整
 - 价值: ⭐⭐⭐⭐ 对视频VLM蒸馏领域的实用贡献，方法有通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochatm1_collaborative_policy_planning_for_vide.md)
+- [VRR-QA: Visual Relational Reasoning in Videos Beyond Explicit Cues](vrr-qa_visual_relational_reasoning_in_videos_beyond_explicit_cues.md)
+- [HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_video.md)
+- [FluxMem: Adaptive Hierarchical Memory for Streaming Video Understanding](fluxmem_adaptive_hierarchical_memory_for_streaming_video_understanding.md)
+
+<!-- RELATED:END -->

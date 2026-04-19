@@ -144,3 +144,15 @@ Random类问题去偏最显著：单轮最高选择概率从0.77降至0.29。
 - 实验充分度: ⭐⭐⭐⭐⭐ (5/5) — 8个LLM、9个topic、4类问题、多个基准、详尽消融
 - 写作质量: ⭐⭐⭐⭐ (4/5) — 清晰，大量可视化辅助理解
 - 价值: ⭐⭐⭐⭐ (4/5) — 实用性强但计算开销是实际部署的障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Binary Hypothesis Testing for Softmax Models and Leverage Score Models](binary_hypothesis_testing_for_softmax_models_and_leverage_score_models.md)
+- [Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models](../../ACL2025/llm_nlp/detecting_referring_expressions_in_visually_grounded_dialogue_with_autoregressiv.md)
+- [Emergent Symbolic Mechanisms Support Abstract Reasoning in Large Language Models](emergent_symbolic_mechanisms_support_abstract_reasoning_in_large_language_models.md)
+- [Detecting High-Stakes Interactions with Activation Probes](../../NeurIPS2025/llm_nlp/detecting_high-stakes_interactions_with_activation_probes.md)
+- [Brevity is the soul of sustainability: Characterizing LLM response lengths](../../ACL2025/llm_nlp/brevity_is_the_soul_of_sustainability_characterizing_llm_response_lengths.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种策略组合的消融实验详尽，但仅限 GPT-4o 和两个任务
 - 写作质量: ⭐⭐⭐⭐⭐ 结构极为清晰，图表直观，分类体系完整
 - 价值: ⭐⭐⭐⭐ 对多智能体系统的设计有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [MAS-ZERO: Designing Multi-Agent Systems with Zero Supervision](../../NeurIPS2025/others/maszero_designing_multiagent_systems_with_zero_supervision.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+- [Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](../../AAAI2026/others/area-optimal_control_strategies_for_heterogeneous_multi-agen.md)
+
+<!-- RELATED:END -->

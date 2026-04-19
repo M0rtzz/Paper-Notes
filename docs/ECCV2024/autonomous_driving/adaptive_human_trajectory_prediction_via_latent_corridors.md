@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实+野外数据，消融充分，定性分析有洞察
 - 写作质量: ⭐⭐⭐⭐⭐ 问题motivation清晰，方法描述精炼，图表质量高
 - 价值: ⭐⭐⭐⭐ 实用性强，方法轻量即插即用，但限于单模态预测和静态相机场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Progressive Pretext Task Learning for Human Trajectory Prediction](progressive_pretext_task_learning_for_human_trajectory_prediction.md)
+- [Certified Human Trajectory Prediction](../../CVPR2025/autonomous_driving/certified_human_trajectory_prediction.md)
+- [Adaptive Bounding Box Uncertainties via Two-Step Conformal Prediction](adaptive_bounding_box_uncertainties_via_twostep_conformal_pr.md)
+- [UniTraj: A Unified Framework for Scalable Vehicle Trajectory Prediction](unitraj_a_unified_framework_for_scalable_vehicle_trajectory_prediction.md)
+- [Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation](optimizing_diffusion_models_for_joint_trajectory_prediction_and_controllable_gen.md)
+
+<!-- RELATED:END -->

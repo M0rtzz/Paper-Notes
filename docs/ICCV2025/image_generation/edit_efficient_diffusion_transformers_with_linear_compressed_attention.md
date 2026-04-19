@@ -163,3 +163,15 @@ MM-EDiT 的混合注意力显著优于完全线性化的基线（FID 11.60 vs 13
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计合理，实验全面覆盖 DiT 和 MM-DiT 两种架构。高分辨率加速效果令人印象深刻（43 倍）。混合注意力设计为 MM-DiT 加速提供了一个实用范式。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiT: Delving into a Simple Linear Diffusion Transformer for Image Generation](lit_delving_into_a_simple_linear_diffusion_transformer_for_image_generation.md)
+- [Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers](lay-your-scene_natural_scene_layout_generation_with_diffusion_transformers.md)
+- [EEdit: Rethinking the Spatial and Temporal Redundancy for Efficient Image Editing](eedit_rethinking_the_spatial_and_temporal_redundancy_for_efficient_image_editing.md)
+- [Joint Diffusion Models in Continual Learning](joint_diffusion_models_in_continual_learning.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+
+<!-- RELATED:END -->

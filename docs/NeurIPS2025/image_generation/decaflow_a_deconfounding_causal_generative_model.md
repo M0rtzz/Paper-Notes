@@ -187,3 +187,15 @@ DeCaFlow 的 ATE 估计误差比不处理隐藏混淆的方法降低约 5 倍。
 | 实验充分性 | 4 — 多种因果图 + 大规模验证 |
 | 写作质量 | 4 — 55 页包含详细的理论推导 |
 | 影响力 | 5 — Spotlight，对因果推断领域有重要推动 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](../../ICCV2025/image_generation/motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network](denoising_weak_lensing_mass_maps_with_diffusion_model_and_generative_adversarial.md)
+- [GeoRemover: Removing Objects and Their Causal Visual Artifacts](georemover_removing_objects_and_their_causal_visual_artifacts.md)
+
+<!-- RELATED:END -->

@@ -112,3 +112,15 @@ ExCEL 的训练仅需 3.2GB 显存和前人方法 6% 的训练时间。Training-
 - 实验充分度: ⭐⭐⭐⭐⭐ VOC + COCO 双数据集，丰富的消融实验，CAM seed 和分割双重评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示直观，动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ 极低训练成本 + SOTA 性能，实用价值很高，对 CLIP 密集知识的挖掘有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SSR: Semantic and Spatial Rectification for CLIP-based Weakly Supervised Segmentation](../../AAAI2026/segmentation/ssr_semantic_and_spatial_rectification_for_clip-based_weakly_supervised_segmenta.md)
+- [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](../../NeurIPS2025/segmentation/exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
+- [Know Your Attention Maps: Class-specific Token Masking for Weakly Supervised Semantic Segmentation](../../ICCV2025/segmentation/know_your_attention_maps_class-specific_token_masking_for_weakly_supervised_sema.md)
+- [CorrCLIP: Reconstructing Patch Correlations in CLIP for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/corrclip_reconstructing_patch_correlations_in_clip_for_openv.md)
+- [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
+
+<!-- RELATED:END -->

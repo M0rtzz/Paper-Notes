@@ -154,3 +154,15 @@ $\tilde{\theta}(\theta)$ 实现为残差网络：$\tilde{\theta}(\theta) = \thet
 - 实验充分度: ⭐⭐⭐⭐ — Atari 57 全集 + 困难探索子集，与 DQN 和 R2D2 两个基线结合，但缺少连续控制和更多对比
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，从定理到算法的链路完整
 - 价值: ⭐⭐⭐⭐⭐ — 为 RL 表示学习提供了理论基础扎实的新范式，对后续工作有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
+- [A Unifying View of Coverage in Linear Off-Policy Evaluation](a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
+- [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
+- [Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](../../ICML2025/reinforcement_learning/learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
+- [Emergence of Spatial Representation in an Actor-Critic Agent with Hippocampus-Inspired Sequence Generator](emergence_of_spatial_representation_in_an_actor-critic_agent_with_hippocampus-in.md)
+
+<!-- RELATED:END -->

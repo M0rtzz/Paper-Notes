@@ -155,3 +155,15 @@ $$\mathcal{R}_{\text{EM}}(\hat{y}, y) = \begin{cases} 1 & \text{is\_equivalent}(
 - **实验**: ⭐⭐⭐⭐⭐ — 基线覆盖前沿 LRM + SFT + 多种 RLVR + 课程学习，消融详尽，5 次运行报告均值和标准差
 - **实用性**: ⭐⭐⭐⭐ — 方法简洁高效，可直接集成到现有 RLVR 流程
 - **写作**: ⭐⭐⭐⭐ — 算法伪代码清晰，但表格较多导致部分内容密集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation](../../ICML2025/human_understanding/merge-friendly_post-training_quantization_for_multi-target_domain_adaptation.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning](../../ICML2025/human_understanding/rulebreakers_challenging_llms_at_the_crossroads_between_formal_logic_and_human-l.md)
+
+<!-- RELATED:END -->

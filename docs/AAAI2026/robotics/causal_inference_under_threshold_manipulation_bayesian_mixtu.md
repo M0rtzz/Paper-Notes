@@ -136,3 +136,15 @@ HBMTM 的 MAE 比 RDD 降低约 10 倍。
 - 实验充分度: ⭐⭐⭐⭐ — 模拟+真实数据，覆盖多种场景
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，概念图直观
 - 对我的价值: ⭐⭐⭐ — 偏统计方法论，非直接相关但分层贝叶斯和混合模型思想可借鉴
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling](../../NeurIPS2025/robotics/autotom_scaling_model-based_mental_inference_via_automated_agent_modeling.md)
+- [More Than Irrational: Modeling Belief-Biased Agents](more_than_irrational_modeling_belief-biased_agents.md)
+- [Cross Modal Fine-Grained Alignment via Granularity-Aware and Region-Uncertain Modeling](cross_modal_fine-grained_alignment_via_granularity-aware_and_region-uncertain_mo.md)
+- [SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation](spatialactor_exploring_disentangled_spatial_representations_for_robust_robotic_m.md)
+- [Gaming the Answer Matcher: Examining the Impact of Text Manipulation on Automated Judgment](gaming_the_answer_matcher_examining_the_impact_of_text_manipulation_on_automated.md)
+
+<!-- RELATED:END -->

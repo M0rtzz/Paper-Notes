@@ -123,3 +123,15 @@ SCPT使用标准语言建模损失但仅计算content部分（知识路径前缀
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型架构多规模、消融全面、scalability分析深入、方法对比详尽
 - 写作质量: ⭐⭐⭐⭐ 图表丰富，类比人类教育的叙事方式易于理解，但部分细节在附录中
 - 价值: ⭐⭐⭐⭐⭐ 解决了领域适配中数据效率低下的核心问题，实际应用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEGen: Generative Backdoor into Large Language Models via Model Editing](megen_generative_backdoor_into_large_language_models_via_model_editing.md)
+- [Neuron-Level Sequential Editing for Large Language Models](neuron-level_sequential_editing_for_large_language_models.md)
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models](../../NeurIPS2025/knowledge_editing/uniedit_a_unified_knowledge_editing_benchmark_for_large_language_models.md)
+- [Memorizing is Not Enough: Deep Knowledge Injection Through Reasoning](memorizing_is_not_enough_deep_knowledge_injection_through_reasoning.md)
+
+<!-- RELATED:END -->

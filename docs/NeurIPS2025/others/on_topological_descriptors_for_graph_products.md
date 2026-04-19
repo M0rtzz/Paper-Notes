@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论验证+分类+运行时间分析
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰
 - 价值: ⭐⭐⭐⭐ 为 TDA 在图学习中开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Alignment via Birkhoff Relaxation](graph_alignment_via_birkhoff_relaxation.md)
+- [A Topological Rewriting of Tarski's Mereogeometry](../../AAAI2026/others/a_topological_rewriting_of_tarskis_mereogeometry.md)
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+- [Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
+- [A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](../../ICCV2025/others/a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)
+
+<!-- RELATED:END -->

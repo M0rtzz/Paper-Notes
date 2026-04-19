@@ -122,3 +122,15 @@ $$m_G^{(0)}(x) = \arg\min_{\mu \in \mathcal{W}} E\{s_G^{(0)}(x) d_{\mathcal{W}}^
 - 实验充分度: ⭐⭐⭐⭐ 模拟和真实数据结合，但真实数据实验偏少
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰
 - 价值: ⭐⭐⭐⭐ 为分布数据分析开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Statistical and Computational Guarantees of Kernel Max-Sliced Wasserstein Distances](../../ICML2025/optimization/statistical_and_computational_guarantees_of_kernel_max-sliced_wasserstein_distan.md)
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Learning from Interval Targets](learning_from_interval_targets.md)
+- [Learning Parameterized Skills from Demonstrations](learning_parameterized_skills_from_demonstrations.md)
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+
+<!-- RELATED:END -->

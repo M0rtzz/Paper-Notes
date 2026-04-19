@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 13目标 × 6数据集 × 19语言 × 掩码/删除/策略消融
 - 写作质量: ⭐⭐⭐⭐ 清晰有条理，实验设计系统
 - 价值: ⭐⭐⭐⭐ 为低资源字符级任务的自监督策略选择提供明确指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction](shubert_self-supervised_sign_language_representation_learning_via_multi-stream_c.md)
+- [WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning](whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con.md)
+- [Clustering Properties of Self-Supervised Learning](../../ICML2025/self_supervised/clustering_properties_of_self-supervised_learning.md)
+- [Collapse-Proof Non-Contrastive Self-Supervised Learning](../../ICML2025/self_supervised/collapse-proof_non-contrastive_self-supervised_learning.md)
+- [Self-Supervised Inductive Logic Programming](../../AAAI2026/self_supervised/self-supervised_inductive_logic_programming.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ $$L_y(\theta, C) = \sum_{i \notin G_y} \max\{0, 1+h_y^\theta(X_i)\} + \sum_{e} \
 - 实验充分度: ⭐⭐⭐⭐ — 合成 + 4 个 WILDS 数据集，含消融和多种基线对比，但标签数受限
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，问题动机阐述充分，结构合理
 - 价值: ⭐⭐⭐⭐ — 为域泛化提出了实用且有理论支撑的新范式，对高风险场景有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient-Guided Annealing for Domain Generalization](../../CVPR2025/llm_evaluation/gradient-guided_annealing_for_domain_generalization.md)
+- [Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](../../ICLR2026/llm_evaluation/noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
+- [FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching](fedtail_federated_long-tailed_domain_generalization_with_sharpness-guided_gradie.md)
+- [Improving Generalization with Flat Hilbert Bayesian Inference](improving_generalization_with_flat_hilbert_bayesian_inference.md)
+- [Random Registers for Cross-Domain Few-Shot Learning](random_registers_for_cross-domain_few-shot_learning.md)
+
+<!-- RELATED:END -->

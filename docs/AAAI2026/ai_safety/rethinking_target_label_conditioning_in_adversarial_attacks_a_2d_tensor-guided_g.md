@@ -138,3 +138,15 @@ $$\theta^* \leftarrow \arg\min_\theta \mathcal{L}_{\text{CE}}\left(f_\Phi(\mathb
 ## 评分
 
 ⭐⭐⭐⭐ — 方法动机清晰（特征质量+数量分析）、2D 张量引导思路新颖、实验全面且提升显著；但核心依赖预训练扩散模型，防御场景下仍有很大提升空间。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
+- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
+- [Learning to Collaborate: An Orchestrated-Decentralized Framework for Peer-to-Peer Collaborative Learning](learning_to_collaborate_an_orchestrated-decentralized_framework_for_peer-to-peer.md)
+- [Robust Watermarking on Gradient Boosting Decision Trees](robust_watermarking_on_gradient_boosting_decision_trees.md)
+- [Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures](ghost_in_the_transformer_detecting_model_reuse_with_invariant_spectral_signature.md)
+
+<!-- RELATED:END -->

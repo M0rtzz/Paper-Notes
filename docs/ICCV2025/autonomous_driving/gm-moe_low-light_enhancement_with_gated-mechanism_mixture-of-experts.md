@@ -131,3 +131,15 @@ $$\text{PSNR loss} = -\frac{10}{\log(10)} \cdot \log(\text{MSE} + \epsilon)$$
 - **实验充分度**: ⭐⭐⭐⭐ 5个数据集25+对比方法，消融实验充分
 - **写作质量**: ⭐⭐⭐ 结构清晰，但部分公式和描述冗余
 - **价值**: ⭐⭐⭐⭐ 展示了MoE在底层视觉任务中的潜力，实验结果有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ExpertAD: Enhancing Autonomous Driving Systems with Mixture of Experts](../../AAAI2026/autonomous_driving/expertad_enhancing_autonomous_driving_systems_with_mixture_of_experts.md)
+- [OD-RASE: Ontology-Driven Risk Assessment and Safety Enhancement for Autonomous Driving](od-rase_ontology-driven_risk_assessment_and_safety_enhancement_for_autonomous_dr.md)
+- [MAESTRO: Task-Relevant Optimization via Adaptive Feature Enhancement and Suppression for Multi-task 3D Perception](maestro_task-relevant_optimization_via_adaptive_feature_enhancement_and_suppress.md)
+- [LiMoE: Mixture of LiDAR Representation Learners from Automotive Scenes](../../CVPR2025/autonomous_driving/limoe_mixture_of_lidar_representation_learners_from_automotive_scenes.md)
+- [LightLoc: Learning Outdoor LiDAR Localization at Light Speed](../../CVPR2025/autonomous_driving/lightloc_learning_outdoor_lidar_localization_at_light_speed.md)
+
+<!-- RELATED:END -->

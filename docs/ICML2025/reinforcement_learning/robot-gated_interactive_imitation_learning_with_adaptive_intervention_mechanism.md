@@ -123,3 +123,15 @@ $$J^{\text{TD}}(\theta) = \mathbb{E}_{(s,a,s')\sim\mathcal{B}_h\cup\mathcal{B}_r
 - 实验充分度: ⭐⭐⭐ — 连续/离散双场景覆盖，但环境多样性不足
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、图示直观，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 对降低 human-in-the-loop 成本有实际意义，40% 效率提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interactive and Hybrid Imitation Learning: Provably Beating Behavior Cloning](../../NeurIPS2025/reinforcement_learning/interactive_and_hybrid_imitation_learning_provably_beating_behavior_cloning.md)
+- [Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
+- [Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
+- [Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
+- [Robust Noise Attenuation via Adaptive Pooling of Transformer Outputs](robust_noise_attenuation_via_adaptive_pooling_of_transformer_outputs.md)
+
+<!-- RELATED:END -->

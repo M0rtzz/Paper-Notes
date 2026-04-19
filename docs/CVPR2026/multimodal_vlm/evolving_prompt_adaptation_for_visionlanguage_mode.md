@@ -129,3 +129,15 @@ tags:
 - **实验充分度** ⭐⭐⭐⭐：4 类评测 + 详细消融，但缺少大 backbone 验证
 - **写作质量** ⭐⭐⭐⭐：动机清晰，数学推导规范
 - **价值** ⭐⭐⭐⭐：为提示学习防遗忘提供新范式，方向冻结思路可迁移到其他 PEFT 方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvoPrompt: Evolving Prompt Adaptation for Vision-Language Models](evolving_prompt_adaptation_for_vision-language_models.md)
+- [Towards Calibrating Prompt Tuning of Vision-Language Models](towards_calibrating_prompt_tuning_of_vision-language_models.md)
+- [Decoupling Stability and Plasticity for Multi-Modal Test-Time Adaptation](decoupling_stability_and_plasticity_for_multi-modal_test-time_adaptation.md)
+- [DeAR: Fine-Grained VLM Adaptation by Decomposing Attention Head Roles](dear_fine-grained_vlm_adaptation_by_decomposing_attention_head_roles.md)
+- [Understanding Task Transfer in Vision-Language Models](understanding_task_transfer_in_vision-language_models.md)
+
+<!-- RELATED:END -->

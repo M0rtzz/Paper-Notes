@@ -152,3 +152,15 @@ RGSC 在 AlphaZero 基础上扩展三个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三种棋类游戏全面验证，包含对强开源程序的胜率评估、排名vs值网络消融、已训练模型继续提升实验
 - **写作质量**: ⭐⭐⭐⭐ 动机讲述清晰（人类vs机器学习对比图直观），方法推导完整，实验展示清楚
 - **价值**: ⭐⭐⭐⭐ 为 AlphaZero 训练效率提升提供了简洁有效的方案，有推广到更广泛 RL 场景的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control](towards_bridging_the_gap_between_large-scale_pretraining_and_efficient_finetunin.md)
+- [BA-MCTS: Bayes Adaptive Monte Carlo Tree Search for Offline Model-based RL](bayes_adaptive_monte_carlo_tree_search_for_offline_model-based_reinforcement_lea.md)
+- [QuRL: Efficient Reinforcement Learning with Quantized Rollout](qurl_efficient_reinforcement_learning_with_quantized_rollout.md)
+- [Less is More: Clustered Cross-Covariance Control for Offline RL](less_is_more_clustered_cross-covariance_control_for_offline_rl.md)
+
+<!-- RELATED:END -->

@@ -200,3 +200,15 @@ TaxaDiffusion 在不同分类层级生成的图像中，可观察到生物学性
 - 技术深度: ⭐⭐⭐⭐ — 设计简洁但有效，TaxaGuide 推理引导有理论基础
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集 + SOTA 对比 + 完善消融 + 特征发现案例
 - 实用价值: ⭐⭐⭐⭐ — 对生物多样性研究（物种识别、特征可视化）有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CharaConsist: Fine-Grained Consistent Character Generation](characonsist_fine-grained_consistent_character_generation.md)
+- [ShortFT: Diffusion Model Alignment via Shortcut-based Fine-Tuning](shortft_diffusion_model_alignment_via_shortcut-based_fine-tuning.md)
+- [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](../../CVPR2025/image_generation/clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
+- [FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
+- [Multimodal Latent Diffusion Model for Complex Sewing Pattern Generation](multimodal_latent_diffusion_model_for_complex_sewing_pattern_generation.md)
+
+<!-- RELATED:END -->

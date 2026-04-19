@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多设置+消融+感知指标
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，数学推导完整
 - 价值: ⭐⭐⭐⭐ 去 RAFT 化对视频超分辨率实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VSRM: A Robust Mamba-Based Framework for Video Super-Resolution](../../ICCV2025/video_generation/vsrm_a_robust_mamba-based_framework_for_video_super-resolution.md)
+- [RealViformer: Investigating Attention for Real-World Video Super-Resolution](../../ECCV2024/video_generation/realviformer_investigating_attention_for_real-world_video_super-resolution.md)
+- [SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization](../../ICCV2025/video_generation/sweettok_semantic-aware_spatial-temporal_tokenizer_for_compact_video_discretizat.md)
+- [Compressed-Domain-Aware Online Video Super-Resolution](../../CVPR2026/video_generation/compressed-domain-aware_online_video_super-resolution.md)
+- [MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling](mimo_controllable_character_video_synthesis_with_spatial_decomposed_modeling.md)
+
+<!-- RELATED:END -->

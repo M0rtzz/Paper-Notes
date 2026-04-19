@@ -146,3 +146,15 @@ SDST 仅使用 SG-DETR 27% 的参数量即达到竞争甚至超越的性能。
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集全面评估，丰富的消融实验，深入的可变形注意力分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机论述充分，但公式密度较高
 - 价值: ⭐⭐⭐⭐ 为参数高效的视频时序定位提供了实用的解决方案，减少 73% 参数量达到 SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sim-DETR: Unlock DETR for Temporal Sentence Grounding](sim-detr_unlock_detr_for_temporal_sentence_grounding.md)
+- [HieraMamba: Video Temporal Grounding via Hierarchical Anchor-Mamba Pooling](../../CVPR2026/object_detection/hieramamba_video_temporal_grounding_via_hierarchical_anchor-mamba_pooling.md)
+- [TubeRMC: Tube-conditioned Reconstruction with Mutual Constraints for Weakly-supervised Spatio-Temporal Video Grounding](../../AAAI2026/object_detection/tubermc_tube-conditioned_reconstruction_with_mutual_constraints_for_weakly-super.md)
+- [ChartPoint: Guiding MLLMs with Grounding Reflection for Chart Reasoning](chartpoint_guiding_mllms_with_grounding_reflection_for_chart_reasoning.md)
+- [ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
+
+<!-- RELATED:END -->

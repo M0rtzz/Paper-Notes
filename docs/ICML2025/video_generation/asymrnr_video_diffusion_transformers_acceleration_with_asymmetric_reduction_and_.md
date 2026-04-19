@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 种 SOTA 模型，VBench 评估
 - 写作质量: ⭐⭐⭐⭐ 分析透彻，可视化清晰
 - 价值: ⭐⭐⭐⭐⭐ 实用的免训练视频生成加速方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RIFLEx: A Free Lunch for Length Extrapolation in Video Diffusion Transformers](riflex_a_free_lunch_for_length_extrapolation_in_video_diffusion_transformers.md)
+- [Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer](../../ICCV2025/video_generation/decouple_and_track_benchmarking_and_improving_video_diffusion_transformers_for_m.md)
+- [DisCa: Accelerating Video Diffusion Transformers with Distillation-Compatible Learnable Feature Caching](../../CVPR2026/video_generation/disca_accelerating_video_diffusion_transformers_wi.md)
+- [UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions](../../CVPR2026/video_generation/uniavgen_unified_audio_and_video_generation_with_asymmetric_cross-modal_interact.md)
+- [I'm a Map! Interpretable Motion-Attentive Maps: Spatio-Temporally Localizing Concepts in Video Diffusion Transformers](../../CVPR2026/video_generation/interpretable_motion-attentive_maps_spatio-temporally_localizing_concepts_in_vid.md)
+
+<!-- RELATED:END -->

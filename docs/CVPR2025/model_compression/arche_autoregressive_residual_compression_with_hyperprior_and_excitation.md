@@ -157,3 +157,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (Kodak+Tecnick双数据集，完整消融，计算复杂度分析，视觉对比)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，相关工作全面，公式推导完整)
 - 价值: ⭐⭐⭐⭐ (证明了卷积架构的压缩潜力，超越VVC Intra具有里程碑意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+- [DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models](dycoke_dynamic_compression_of_tokens_for_fast_video_large_language_models.md)
+- [ECVC: Exploiting Non-Local Correlations in Multiple Frames for Contextual Video Compression](ecvc_exploiting_non-local_correlations_in_multiple_frames_for_contextual_video_c.md)
+- [DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models](ders_towards_extremely_efficient_upcycled_mixture-of-experts_models.md)
+- [Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning](embracing_collaboration_over_competition_condensing_multiple_prompts_for_visual_.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个基准数据集的全面评估，多种 baseline 对比，丰富的消融实验和可视化
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、方法描述简洁、可视化效果出色
 - 价值: ⭐⭐⭐⭐ 对生态保护有实际应用价值，前馈范式的实用优势明显
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Random Registers for Cross-Domain Few-Shot Learning](random_registers_for_cross-domain_few-shot_learning.md)
+- [Benchmarking Large Language Models for Zero-Shot and Few-Shot Phishing URL Detection](../../NeurIPS2025/llm_evaluation/benchmarking_large_language_models_for_zero-shot_and_few-shot_phishing_url_detec.md)
+- [Unlocking Transfer Learning for Open-World Few-Shot Recognition](../../NeurIPS2025/llm_evaluation/unlocking_transfer_learning_for_open-world_few-shot_recognition.md)
+- [Spectral Sensitivity Estimation with an Uncalibrated Diffraction Grating](../../ICCV2025/llm_evaluation/spectral_sensitivity_estimation_with_an_uncalibrated_diffraction_grating.md)
+- [Open-Insect: Benchmarking Open-Set Recognition of Novel Species in Biodiversity Monitoring](../../NeurIPS2025/llm_evaluation/open-insect_benchmarking_open-set_recognition_of_novel_species_in_biodiversity_m.md)
+
+<!-- RELATED:END -->

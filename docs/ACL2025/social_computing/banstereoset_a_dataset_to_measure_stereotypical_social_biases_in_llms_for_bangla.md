@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 4 个模型 3 种提示 2 种语言，但部分类别数据偏少
 - 写作质量: ⭐⭐⭐⭐ 数据构建流程描述细致，翻译问题处理清楚
 - 价值: ⭐⭐⭐⭐ 填补孟加拉语偏见评估空白，方法论可迁移到其他低资源语言
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Measuring Social Biases in Masked Language Models by Proxy of Prediction Quality](measuring_social_biases_in_masked_language_models_by_proxy_of_prediction_quality.md)
+- [HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter](hateday_global_hate_speech.md)
+- [Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
+- [Exploring the Impact of Instruction-Tuning on LLMs' Susceptibility to Misinformation](exploring_the_impact_of_instruction-tuning_on_llms_susceptibility_to_misinformat.md)
+- [Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](llm_label_propagation.md)
+
+<!-- RELATED:END -->

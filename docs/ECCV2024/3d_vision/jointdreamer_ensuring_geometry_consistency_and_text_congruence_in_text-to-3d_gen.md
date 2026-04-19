@@ -155,3 +155,15 @@ $$\nabla_\theta L_{JSD}(\theta) = \sum_{i=1}^{V} \mathbb{E}_{t, \epsilon^i_\Phi}
 - **实验充分度**: ⭐⭐⭐⭐ — 定量/定性/消融/用户研究齐全，但场景覆盖可更广
 - **写作质量**: ⭐⭐⭐⭐⭐ — 从 SDS → JSD 的推导层层递进，三种能量函数的对比设计精妙
 - **价值**: ⭐⭐⭐⭐⭐ — 从范式层面解决 Janus 问题，对后续 3D 生成研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnimatableDreamer: Text-Guided Non-rigid 3D Model Generation and Reconstruction with Canonical Score Distillation](animatabledreamer_text-guided_non-rigid_3d_model_generation_and_reconstruction_w.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](../../ICCV2025/3d_vision/advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
+- [DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors](dreamdissector_learning_disentangled_text-to-3d_generation_from_2d_diffusion_pri.md)
+
+<!-- RELATED:END -->

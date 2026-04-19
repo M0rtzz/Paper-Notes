@@ -140,3 +140,15 @@ DIY-SC 分为两个阶段：（1）伪标签生成与过滤——利用方位角
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融极为全面（逐组件、逐类别、跨数据集），定性分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导逻辑严密，方法描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 新 SOTA + 方法可扩展到更大数据集 + 对伪标签方法论有深刻洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CasP: Improving Semi-Dense Feature Matching Pipeline Leveraging Cascaded Correspondence Priors for Guidance](casp_improving_semi-dense_feature_matching_pipeline_leveraging_cascaded_correspo.md)
+- [SpatialSplat: Efficient Semantic 3D from Sparse Unposed Images](spatialsplat_efficient_semantic_3d_from_sparse_unposed_images.md)
+- [Monocular Semantic Scene Completion via Masked Recurrent Networks](monocular_semantic_scene_completion_via_masked_recurrent_networks.md)
+- [Object-Centric Representation Learning for Enhanced 3D Semantic Scene Graph Prediction](../../NeurIPS2025/3d_vision/object-centric_representation_learning_for_enhanced_3d_semantic_scene_graph_pred.md)
+- [Cross-View Completion Models are Zero-shot Correspondence Estimators](../../CVPR2025/3d_vision/cross-view_completion_models_are_zero-shot_correspondence_estimators.md)
+
+<!-- RELATED:END -->

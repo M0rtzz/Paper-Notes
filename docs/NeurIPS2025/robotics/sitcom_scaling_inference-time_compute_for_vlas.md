@@ -133,3 +133,15 @@ SITCOM 的推理流程：
 - 实验充分度: ⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling](autotom_scaling_model-based_mental_inference_via_automated_agent_modeling.md)
+- [Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](../../CVPR2026/robotics/adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)
+- [PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](../../ICLR2026/robotics/persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
+- [CogVLA: Cognition-Aligned Vision-Language-Action Model via Instruction-Driven Routing & Sparsification](cogvla_cognition-aligned_vision-language-action_model_via_instruction-driven_rou.md)
+- [T-Rex: Task-Adaptive Spatial Representation Extraction for Robotic Manipulation with VLMs](t-rex_task-adaptive_spatial_representation_extraction_for_robotic_manipulation_w.md)
+
+<!-- RELATED:END -->

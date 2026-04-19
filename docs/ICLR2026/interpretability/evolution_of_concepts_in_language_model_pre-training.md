@@ -175,3 +175,15 @@ $$\text{attr}_i^{\theta}(x, \tilde{x}) = [f_i(x) - f_i(\tilde{x})] \cdot \frac{\
 - **实用价值**: ⭐⭐⭐½ 主要面向理解和解释，直接应用价值有限但对预训练优化有启发
 - **写作质量**: ⭐⭐⭐⭐⭐ 论文结构清晰，图表精美，技术细节充分
 - **总评**: ⭐⭐⭐⭐½ 机制可解释性领域的优秀工作，首次打开了预训练动态的特征级观察窗口
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
+- [Concepts' Information Bottleneck Models](concepts_information_bottleneck_models.md)
+- [Scaling Vision Pre-Training to 4K Resolution](../../CVPR2025/interpretability/scaling_vision_pre-training_to_4k_resolution.md)
+- [NIMO: a Nonlinear Interpretable MOdel](nimo_a_nonlinear_interpretable_model.md)
+- [Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+
+<!-- RELATED:END -->

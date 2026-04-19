@@ -173,3 +173,15 @@ SEKA 几乎零开销，PASTA 内存翻倍、延迟翻三倍。
 - ⭐ 实验充分度: 8/10 — 覆盖 5 个模型 × 3 个标准 benchmark + lost-in-the-middle + 消融 + 效率分析，较为全面
 - ⭐ 写作质量: 8/10 — 逻辑清晰，可视化（PCA、heatmap）直观，公式推导完整
 - ⭐ 综合价值: 8/10 — 解决了 attention steering 与 FlashAttention 不兼容的实际痛点，方法简洁高效，工程落地友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [vCache: Verified Semantic Prompt Caching](vcache_verified_semantic_prompt_caching.md)
+- [Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
+- [Breaking the Correlation Plateau: On the Optimization and Capacity Limits of Attention-Based Regressors](breaking_the_correlation_plateau_on_the_optimization_and_capacity_limits_of_atte.md)
+- [Spectral Sensitivity Estimation with an Uncalibrated Diffraction Grating](../../ICCV2025/llm_evaluation/spectral_sensitivity_estimation_with_an_uncalibrated_diffraction_grating.md)
+- [PaTH Attention: Position Encoding via Accumulating Householder Transformations](../../NeurIPS2025/llm_evaluation/path_attention_position_encoding_via_accumulating_householder_transformations.md)
+
+<!-- RELATED:END -->

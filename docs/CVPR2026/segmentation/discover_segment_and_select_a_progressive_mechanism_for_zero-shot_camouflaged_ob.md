@@ -114,3 +114,15 @@ $$s_i = \text{corr}(m_i, \text{sim}_i) + (1 - \text{BC}(m_i))$$
 - 实验充分度: ⭐⭐⭐⭐ 多个COS benchmark + 消融实验 + 多实例分析
 - 写作质量: ⭐⭐⭐⭐ 三阶段命名直观，动机阐述清晰
 - 对我的价值: ⭐⭐⭐⭐ zero-shot pipeline设计范式可借鉴，FOD和SMS模块可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DSS: Discover, Segment, and Select - A Progressive Mechanism for Zero-shot Camouflaged Object Segmentation](dss_discover_segment_select_zero_shot_cos.md)
+- [FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning](fcl-cod_weakly_supervised_camouflaged_object_detection_with_frequency-aware_and_.md)
+- [Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](promptdriven_lightweight_foundation_model_for_inst.md)
+- [EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection](erecu_pseudo-label_evolution_fusion_and_refinement_with_multi-cue_learning_for_u.md)
+- [SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)
+
+<!-- RELATED:END -->

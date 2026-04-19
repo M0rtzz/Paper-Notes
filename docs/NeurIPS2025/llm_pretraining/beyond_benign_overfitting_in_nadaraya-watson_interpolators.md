@@ -120,3 +120,15 @@ MNIST 0/1 分类（$d_\text{extrinsic}=784$）：
 - 实验充分度: ⭐⭐⭐ 合成实验说明力强，但只用了 MNIST 一个真实数据集
 - 写作质量: ⭐⭐⭐⭐⭐ 证明直觉清晰，图示优秀，从简单到复杂循序渐进
 - 价值: ⭐⭐⭐⭐ 对泛化理论有重要贡献，"宁可高估维度"的实用建议有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benign Overfitting in Token Selection of Attention Mechanism](../../ICML2025/llm_pretraining/benign_overfitting_in_token_selection_of_attention_mechanism.md)
+- [A Law of Data Reconstruction for Random Features (and Beyond)](../../ICLR2026/llm_pretraining/a_law_of_data_reconstruction_for_random_features_and_beyond.md)
+- [On the Clean Generalization and Robust Overfitting in Adversarial Training from Two Theoretical Views: Representation Complexity and Training Dynamics](../../ICML2025/llm_pretraining/on_the_clean_generalization_and_robust_overfitting_in_adversarial_training_from_.md)
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?](does_object_binding_naturally_emerge_in_large_pretrained_vision_transformers.md)
+
+<!-- RELATED:END -->

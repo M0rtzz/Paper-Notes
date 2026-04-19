@@ -136,4 +136,14 @@ SJD2虽然步压缩更高但窗口长度翻倍导致额外开销，实际wall-cl
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析深入，从分布偏斜观察到两个解决方案的推导逻辑链非常清晰
 - 价值: ⭐⭐⭐⭐ 对AR T2I推理加速有直接实用价值，training-free + lossless是强卖点
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [Annealed Relaxation of Speculative Decoding for Faster Autoregressive Image Generation](../../AAAI2026/image_generation/annealed_relaxation_of_speculative_decoding_for_faster_autor.md)
+- [Grouped Speculative Decoding for Autoregressive Image Generation](../../ICCV2025/image_generation/grouped_speculative_decoding_for_autoregressive_image_generation.md)
+- [Accelerating Diffusion Model Training under Minimal Budgets: A Condensation-Based Perspective](accelerating_diffusion_model_training_under_minimal_budgets_a_condensation-based.md)
+- [D2C: Accelerating Diffusion Model Training under Minimal Budgets via Condensation](d2c_diffusion_dataset_condensation.md)
+- [Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration](adaptive_spectral_feature_forecasting_for_diffusion_sampling_acceleration.md)
+
+<!-- RELATED:END -->

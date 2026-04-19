@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集评估，消融完整，定性对比清晰
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，两阶段动机阐述充分
 - 价值: ⭐⭐⭐⭐ 对双手重建领域具有显著推动作用，FAE 设计范式可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction](from_2d_alignment_to_3d_plausibility_unifying_hete.md)
+- [Making Training-Free Diffusion Segmentors Scale with the Generative Power](making_training-free_diffusion_segmentors_scale_with_the_generative_power.md)
+- [Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training](data_warmup_complexity-aware_curricula_for_efficient_diffusion_training.md)
+- [Task-Oriented Data Synthesis and Control-Rectify Sampling for Remote Sensing Semantic Segmentation](task-oriented_data_synthesis_and_control-rectify_sampling_for_remote_sensing_sem.md)
+- [SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons](semlayer_semantic-aware_generative_segmentation_and_layer_construction_for_abstr.md)
+
+<!-- RELATED:END -->

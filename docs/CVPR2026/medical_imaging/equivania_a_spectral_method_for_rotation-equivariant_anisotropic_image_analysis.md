@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成实验充分，真实图像仅2张，无深度学习方法对比
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，符号清晰，算法伪代码完整
 - 价值: ⭐⭐⭐ 作为方向分析工具有实用价值，但创新幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RDFace: A Benchmark Dataset for Rare Disease Facial Image Analysis under Extreme Data Scarcity and Phenotype-Aware Synthetic Generation](rdface_a_benchmark_dataset_for_rare_disease_facial_image_analysis_under_extreme_.md)
+- [Focus-to-Perceive Representation Learning: A Cognition-Inspired Hierarchical Framework for Endoscopic Video Analysis](focus-to-perceive_representation_learning_a_cognition-inspired_hierarchical_fram.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_languageimage.md)
+- [Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](markerbased_3d_reconstruction_of_aggregates_with_a.md)
+- [MozzaVID: Mozzarella Volumetric Image Dataset](mozzavid_mozzarella_volumetric_image_dataset.md)
+
+<!-- RELATED:END -->

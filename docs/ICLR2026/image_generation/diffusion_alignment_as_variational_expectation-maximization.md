@@ -128,3 +128,15 @@ DAV 在训练中交替执行：
 - 实验充分度: ⭐⭐⭐⭐ 图像+DNA 双域验证，训练动态分析充分，但仅 SD v1.5
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，动机-方法-实验逻辑严谨
 - 价值: ⭐⭐⭐⭐⭐ 解决了扩散对齐的核心痛点（over-optimization + mode collapse），具有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Diffusion Model without Variational Autoencoder](latent_diffusion_model_without_variational_autoencoder.md)
+- [Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models](infinity_and_beyond_compositional_alignment_in_var_and_diffusion_t2i_models.md)
+- [Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment (CODA)](improved_object-centric_diffusion_learning_with_registers_and_contrastive_alignm.md)
+
+<!-- RELATED:END -->

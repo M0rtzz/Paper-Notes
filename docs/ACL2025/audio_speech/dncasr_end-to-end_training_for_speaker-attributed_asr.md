@@ -136,3 +136,15 @@ $$\bm{L}_{\text{CA}}[i] = \text{CA}(\bm{S}_{\text{CA}}[i], \bm{W}_{\text{CA}} \o
 - **实验充分度**: ⭐⭐⭐⭐ — 合成+真实数据，Oracle/非 Oracle，统计检验齐全
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图示详尽
 - **价值**: ⭐⭐⭐⭐ — 对多说话人会议转录领域有实质推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling an End-to-End Voice Assistant Without Instruction Training Data](distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
+- [OmniFlatten: An End-to-end GPT Model for Seamless Voice Conversation](omniflatten_an_end-to-end_gpt_model_for_seamless_voice_conversation.md)
+- [E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis](../../NeurIPS2025/audio_speech/e2e-vguard_adversarial_prevention_for_production_llm-based_end-to-end_speech_syn.md)
+- [On the Robust Approximation of ASR Metrics](on_the_robust_approximation_of_asr_metrics.md)
+- [GigaSpeech 2: An Evolving, Large-Scale and Multi-domain ASR Corpus for Low-Resource Languages](gigaspeech2_low_resource_asr.md)
+
+<!-- RELATED:END -->

@@ -191,3 +191,15 @@ $$L_{n+1} = \lambda L_n \odot (1 - N_n) + \frac{L_n + P_n}{2} \odot N_n$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 8 个嵌入网络 × 4 个数据集的全面评估，消融实验详尽
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，类比生物学习过程帮助理解动机
 - **价值**: ⭐⭐⭐⭐ — 为弱监督小目标检测提供了高效稳定的训练框架，即插即用的设计增强了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instance-wise Supervision-level Optimization in Active Learning](../../CVPR2025/others/instance-wise_supervision-level_optimization_in_active_learning.md)
+- [MutualVPR: A Mutual Learning Framework for Resolving Supervision Inconsistencies via Adaptive Clustering](../../NeurIPS2025/others/mutualvpr_a_mutual_learning_framework_for_resolving_supervision_inconsistencies_.md)
+- [A Linear N-Point Solver for Structure and Motion from Asynchronous Tracks](a_linear_n-point_solver_for_structure_and_motion_from_asynchronous_tracks.md)
+- [On Agnostic PAC Learning in the Small Error Regime](../../NeurIPS2025/others/on_agnostic_pac_learning_in_the_small_error_regime.md)
+- [An Incremental Unified Framework for Small Defect Inspection](../../ECCV2024/others/an_incremental_unified_framework_for_small_defect_inspection.md)
+
+<!-- RELATED:END -->

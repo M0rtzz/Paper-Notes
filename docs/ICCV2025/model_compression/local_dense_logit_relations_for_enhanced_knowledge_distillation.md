@@ -140,3 +140,15 @@ CIFAR-100 异架构蒸馏（ResNet32×4→ShuffleNetV1）：
 - 实验充分度: ⭐⭐⭐⭐⭐ CIFAR-100/ImageNet-1K/Tiny-ImageNet，同架构/异架构，大量对比
 - 写作质量: ⭐⭐⭐⭐ 图表清晰直观，方法描述严谨但公式较多
 - 价值: ⭐⭐⭐⭐ 对 logit 蒸馏领域提供了新的细粒度建模视角，实验提升一致
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Distillation with Refined Logits](knowledge_distillation_with_refined_logits.md)
+- [A Good Teacher Adapts Their Knowledge for Distillation](a_good_teacher_adapts_their_knowledge_for_distillation.md)
+- [Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation](perspective-aware_teaching_adapting_knowledge_for_heterogeneous_distillation.md)
+- [Fuse Before Transfer: Knowledge Fusion for Heterogeneous Distillation](fuse_before_transfer_knowledge_fusion_for_heterogeneous_distillation.md)
+- [ARGMatch: Adaptive Refinement Gathering for Efficient Dense Matching](argmatch_adaptive_refinement_gathering_for_efficient_dense_matching.md)
+
+<!-- RELATED:END -->

@@ -173,3 +173,15 @@ union region vs 整张图像：使用 union region 特征的 A@50/100 为 44.6/4
 - 实验充分度: ⭐⭐⭐⭐⭐ (3 数据集 × 3 backbone × 3 任务 + 单阶段方法 + 目标检测泛化 + 全面消融)
 - 写作质量: ⭐⭐⭐⭐ (动机阐述逐层递进，公式推导完整，与相关工作对比清晰)
 - 价值: ⭐⭐⭐⭐ (即插即用的通用长尾纠偏框架，低开销高收益，泛化性已验证)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ESCA: Contextualizing Embodied Agents via Scene-Graph Generation](../../NeurIPS2025/graph_learning/esca_contextualizing_embodied_agents_via_scene-graph_generation.md)
+- [GSAP-ERE: Fine-Grained Scholarly Entity and Relation Extraction Focused on Machine Learning](../../AAAI2026/graph_learning/gsap-ere_fine-grained_scholarly_entity_and_relation_extraction_focused_on_machin.md)
+- [WSGG: Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2026/graph_learning/wsgg_spatiotemporal_world_scene_graph.md)
+- [Unbiased Video Scene Graph Generation via Visual and Semantic Dual Debiasing](../../CVPR2025/graph_learning/unbiased_video_scene_graph_generation_via_visual_and_semantic_dual_debiasing.md)
+- [Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](../../NeurIPS2025/graph_learning/interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
+
+<!-- RELATED:END -->

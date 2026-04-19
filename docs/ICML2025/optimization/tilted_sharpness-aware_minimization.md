@@ -144,3 +144,15 @@ TSAM 的 Hessian 最大特征值仅为 ERM 的 41%，远比 SAM 更平坦。
 - 实验充分度: ⭐⭐⭐⭐ — CNN/ViT/BERT 全覆盖，含噪声/OOD 设置，对比了多个 SAM 变体
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，实验设计严谨，消融实验完整
 - 价值: ⭐⭐⭐⭐ — 为 SAM 提供了更平滑的替代方案，理论洞察有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Minor First, Major Last: A Depth-Induced Implicit Bias of Sharpness-Aware Minimization](../../ICLR2026/optimization/minor_first_major_last_a_depth-induced_implicit_bias_of_sharpness-aware_minimiza.md)
+- [Generalization and Robustness of the Tilted Empirical Risk](generalization_and_robustness_of_the_tilted_empirical_risk.md)
+- [Unveiling m-Sharpness Through the Structure of Stochastic Gradient Noise](../../NeurIPS2025/optimization/unveiling_m-sharpness_through_the_structure_of_stochastic_gradient_noise.md)
+- [Efficient Curvature-Aware Hypergradient Approximation for Bilevel Optimization](efficient_curvature-aware_hypergradient_approximation_for_bilevel_optimization.md)
+- [Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More](understanding_sharpness_dynamics_in_nn_training_with_a_minimalist_example_the_ef.md)
+
+<!-- RELATED:END -->

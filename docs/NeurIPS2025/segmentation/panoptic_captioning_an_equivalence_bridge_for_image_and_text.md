@@ -119,3 +119,15 @@ tags:
 -    实验充分度: ⭐⭐⭐⭐ 与多个 SOTA 对比 + 下游应用验证
 -    写作质量: ⭐⭐⭐⭐ 任务定义和方法流程清晰
 -    价值: ⭐⭐⭐⭐⭐ 定义了图像描述的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seg4Diff: Unveiling Open-Vocabulary Segmentation in Text-to-Image Diffusion Transformers](seg4diff_unveiling_open-vocabulary_segmentation_in_text-to-image_diffusion_trans.md)
+- [SRSR: Enhancing Semantic Accuracy in Real-World Image Super-Resolution with Spatially Re-Focused Text-Conditioning](srsr_enhancing_semantic_accuracy_in_real-world_image_super-resolution_with_spati.md)
+- [VSC: Visual Search Compositional Text-to-Image Diffusion Model](../../ICCV2025/segmentation/vsc_visual_search_compositional_text-to-image_diffusion_model.md)
+- [FineCaption: Compositional Image Captioning Focusing on Wherever You Want at Any Granularity](../../CVPR2025/segmentation/finecaption_compositional_image_captioning_focusing_on_wherever_you_want_at_any_.md)
+- [VIRTUE: Visual-Interactive Text-Image Universal Embedder](../../ICLR2026/segmentation/virtue_visual-interactive_text-image_universal_embedder.md)
+
+<!-- RELATED:END -->

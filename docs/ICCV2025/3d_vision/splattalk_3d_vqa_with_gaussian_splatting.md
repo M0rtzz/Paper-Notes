@@ -121,3 +121,15 @@ SplatTalk包含三个阶段：
 - 技术深度: ⭐⭐⭐⭐ (理论分析+系统设计完整)
 - 实验质量: ⭐⭐⭐⭐ (多benchmark全面对比)
 - 实用价值: ⭐⭐⭐⭐ (仅需RGB图像，门槛低)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting](stochasticsplats_stochastic_rasterization_for_sorting-free_3d_gaussian_splatting.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+- [Tune-Your-Style: Intensity-Tunable 3D Style Transfer with Gaussian Splatting](tune-your-style_intensity-tunable_3d_style_transfer_with_gaussian_splatting.md)
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+- [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
+
+<!-- RELATED:END -->

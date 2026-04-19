@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个任务、跨 fold 迁移、跨编码器泛化、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，实验设计系统化，图示直观
 - 价值: ⭐⭐⭐⭐ 为 VICL prompt 选择提供了新视角与新框架，可推广到其他 ICL 场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SouPLe: Enhancing Audio-Visual Localization and Segmentation with Learnable Prompt Contexts](souple_enhancing_audio-visual_localization_and_segmentation_with_learnable_promp.md)
+- [ConText: Driving In-context Learning for Text Removal and Segmentation](../../ICML2025/segmentation/context_driving_in-context_learning_for_text_removal_and_segmentation.md)
+- [EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection](erecu_pseudolabel_evolution_unsupervised_camouflage.md)
+- [Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation](../../ICCV2025/segmentation/hierarchical_visual_prompt_learning_for_continual_video_instance_segmentation.md)
+- [INSID3: Training-Free In-Context Segmentation with DINOv3](insid3_training-free_in-context_segmentation_with_dinov3.md)
+
+<!-- RELATED:END -->

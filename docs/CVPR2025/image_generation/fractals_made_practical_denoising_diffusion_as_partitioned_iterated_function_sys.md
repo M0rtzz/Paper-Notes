@@ -134,3 +134,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，但对非理论读者门槛高
 - 价值: ⭐⭐⭐⭐⭐ 为扩散模型提供了统一的理论设计语言，解释了多个经验设计
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Color Alignment in Diffusion](color_alignment_in_diffusion.md)
+- [Erasing Undesirable Influence in Diffusion Models (EraseDiff)](erasing_undesirable_influence_in_diffusion_models.md)
+- [LEDiff: Latent Exposure Diffusion for HDR Generation](lediff_latent_exposure_diffusion_for_hdr_generation.md)
+- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 评估了14个MLLM（开源+闭源）、5个QA子任务、多种captioning指标，消融实验详尽（视角数、采样频率、输入顺序、反事实分析）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，发现呈现有条理，图表丰富
 - 价值: ⭐⭐⭐⭐ 揭示了MLLM在4D理解上的系统性弱点，对未来研究有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Effective Tokens with Video Anomaly in Large Language Models](aligning_effective_tokens_with_video_anomaly_in_large_language_models.md)
+- [AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)
+- [DisTime: Distribution-based Time Representation for Video Large Language Models](distime_distribution-based_time_representation_for_video_large_language_models.md)
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+- [Multi-modal Multi-platform Person Re-Identification: Benchmark and Method](multi-modal_multi-platform_person_re-identification_benchmark_and_method.md)
+
+<!-- RELATED:END -->

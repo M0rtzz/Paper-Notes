@@ -128,3 +128,15 @@ $$\alpha_{\text{scaled}} = \frac{\log(l) \cdot q \cdot k}{\sqrt{d_k}}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ NSD + BOLD5000双数据集验证，多骨干(CLIP/DINO/SIGLIP)，跨域泛化和语义分析均充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ 解决了神经影像学中的核心数据效率瓶颈，跨领域启发性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding](../../CVPR2026/medical_imaging/meta-learning_in-context_enables_training-free_cross_subject_brain_decoding.md)
+- [NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction](../../ICCV2025/medical_imaging/neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)
+- [SMMILE: An Expert-Driven Benchmark for Multimodal Medical In-Context Learning](smmile_an_expert-driven_benchmark_for_multimodal_medical_in-context_learning.md)
+- [SynBrain: Enhancing Visual-to-fMRI Synthesis via Probabilistic Representation Learning](synbrain_enhancing_visual-to-fmri_synthesis_via_probabilistic_representation_lea.md)
+- [PhysioWave: A Multi-Scale Wavelet-Transformer for Physiological Signal Representation](physiowave_a_multi-scale_wavelet-transformer_for_physiological_signal_representa.md)
+
+<!-- RELATED:END -->

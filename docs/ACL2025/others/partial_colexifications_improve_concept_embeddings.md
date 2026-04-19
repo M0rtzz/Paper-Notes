@@ -117,3 +117,15 @@ tags:
 - **实用性**: ⭐⭐⭐ — 概念集有限，直接 NLP 应用需等覆盖扩展
 - **严谨性**: ⭐⭐⭐⭐⭐ — 三个互补评估任务 + 多种基线 + 负采样均衡设计
 - **综合**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
+- [Theoretical Performance Guarantees for Partial Domain Adaptation via Partial Optimal Transport](../../ICML2025/others/theoretical_performance_guarantees_for_partial_domain_adaptation_via_partial_opt.md)
+- [Synthia: Novel Concept Design with Affordance Composition](synthia_novel_concept_design_with_affordance_composition.md)
+- [MEXMA: Token-level Objectives Improve Sentence Representations](mexma_token-level_objectives_improve_sentence_representations.md)
+- [Enhancing the Comprehensibility of Text Explanations via Unsupervised Concept Discovery](enhancing_the_comprehensibility_of_text_explanations_via_unsupervised_concept_di.md)
+
+<!-- RELATED:END -->

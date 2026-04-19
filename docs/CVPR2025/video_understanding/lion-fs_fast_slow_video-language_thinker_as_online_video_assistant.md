@@ -115,3 +115,15 @@ LION-FS 的整体流程分为两条路径。Fast Path：用双编码器（SigLIP
 - 实验充分度: ⭐⭐⭐⭐ 消融非常详细，但仅两个数据集略显不足
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、图示精美、motivation 阐述到位
 - 价值: ⭐⭐⭐⭐ 为在线视频助手提供了实用的快慢推理框架，对可穿戴AI有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiveStar: Live Streaming Assistant for Real-World Online Video Understanding](../../NeurIPS2025/video_understanding/livestar_live_streaming_assistant_for_real-world_online_video_understanding.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [EgoLife: Towards Egocentric Life Assistant](egolife_towards_egocentric_life_assistant.md)
+- [Efficient Transfer Learning for Video-language Foundation Models](efficient_transfer_learning_for_video-language_foundation_models.md)
+- [OVG-HQ: Online Video Grounding with Hybrid-modal Queries](../../ICCV2025/video_understanding/ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)
+
+<!-- RELATED:END -->

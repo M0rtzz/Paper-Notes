@@ -159,3 +159,15 @@ SFCM-FE 模块内部消融：
 - 实验充分度: ⭐⭐⭐⭐ 消融全面深入，但数据集规模和场景多样性有限
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述逻辑完整
 - 价值: ⭐⭐⭐⭐ 开创性任务+真实数据集，对事件视觉社区有较大推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement](unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)
+- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](../../ICCV2025/image_restoration/low-light_image_enhancement_using_event-based_illumination_estimation.md)
+- [Domain-Adaptive Video Deblurring via Test-Time Blurring](domain-adaptive_video_deblurring_via_test-time_blurring.md)
+- [Learning to Robustly Reconstruct Dynamic Scenes from Low-Light Spike Streams](learning_to_robustly_reconstruct_dynamic_scenes_from_low-light_spike_streams.md)
+- [Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography](joint_rgb-spectral_decomposition_model_guided_image_enhancement_in_mobile_photog.md)
+
+<!-- RELATED:END -->

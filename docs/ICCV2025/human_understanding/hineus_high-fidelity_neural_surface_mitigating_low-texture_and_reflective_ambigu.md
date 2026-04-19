@@ -145,3 +145,15 @@ $$\mathcal{L}_{eikonal} = \frac{1}{|\mathcal{S}|}\sum_{\mathbf{x}\in\mathcal{S}}
 - **实验充分度**: ⭐⭐⭐⭐⭐ 合成+真实、室内+室外、多个基准、详细消融
 - **写作质量**: ⭐⭐⭐⭐ 数学推导严谨，物理直觉解释清晰
 - **价值**: ⭐⭐⭐⭐ 对神经表面重建中的实际痛点提供了系统性解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4DSurf: High-Fidelity Dynamic Scene Surface Reconstruction](../../CVPR2026/human_understanding/textit4dsurf_high-fidelity_dynamic_scene_surface_reconstruction.md)
+- [Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)
+- [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
+- [Mitigating Object Hallucinations via Sentence-Level Early Intervention](mitigating_object_hallucinations_via_sentence-level_early_intervention.md)
+- [Reflective Translation: Improving Low-Resource Machine Translation via Structured Self-Reflection](../../NeurIPS2025/human_understanding/reflective_translation_improving_low-resource_machine_translation_via_structured.md)
+
+<!-- RELATED:END -->

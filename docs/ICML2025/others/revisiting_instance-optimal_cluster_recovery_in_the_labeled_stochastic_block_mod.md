@@ -135,3 +135,15 @@ IAC 无需训练。在似然改进阶段使用经验估计的标签概率 $\hat{
 - 实验充分度: ⭐⭐ 理论为主，实验仅在附录的简单合成实例上验证
 - 写作质量: ⭐⭐⭐⭐ 定理陈述清晰，证明思路介绍到位，与已有工作的对比全面
 - 价值: ⭐⭐⭐⭐ 对社区检测理论的重要贡献，完整解决了 LSBM 实例最优聚类问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
+- [Revisiting the Predictability of Performative, Social Events](revisiting_the_predictability_of_performative_social_events.md)
+- [Revisiting Agnostic Boosting](../../NeurIPS2025/others/revisiting_agnostic_boosting.md)
+- [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ ToxEdit 由两个模块组成：(1) 语义画像毒性检测模块——在 LLM 
 - 实验充分度: ⭐⭐⭐⭐ 3个LLM+完整消融+跨数据集验证+案例分析，基准增强有额外贡献
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法图示直观，案例对比有说服力
 - 价值: ⭐⭐⭐⭐⭐ 解决了知识编辑去毒的核心痛点（过度编辑），DL从3.92%→95.36%的提升幅度惊人
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A General Knowledge Injection Framework for ICD Coding](a_general_knowledge_injection_framework_for_icd_coding.md)
+- [ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains](chainedit_propagating_ripple_effects_in_llm.md)
+- [Structure-aware Domain Knowledge Injection for Large Language Models](structure-aware_domain_knowledge_injection_for_large_language_models.md)
+- [CKnowEdit: A New Chinese Knowledge Editing Dataset for Linguistics, Facts, and Logic Error Correction in LLMs](cknowedit_chinese_knowledge_editing_dataset_llms.md)
+- [Memorizing is Not Enough: Deep Knowledge Injection Through Reasoning](memorizing_is_not_enough_deep_knowledge_injection_through_reasoning.md)
+
+<!-- RELATED:END -->

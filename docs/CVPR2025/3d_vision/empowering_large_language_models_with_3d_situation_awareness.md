@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 3 个基准+情境定位+captioning+VQA+消融，全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述系统，但部分符号较多
 - 价值: ⭐⭐⭐⭐ 情境感知是 3D LLM 的重要补充，数据集有社区贡献价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PointLLM: Empowering Large Language Models to Understand Point Clouds](../../ECCV2024/3d_vision/pointllm_empowering_large_language_models_to_understand_point_clouds.md)
+- [3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding](../../ICCV2025/3d_vision/3dgraphllm_combining_semantic_graphs_and_large_language_mode.md)
+- [DepthCues: Evaluating Monocular Depth Perception in Large Vision Models](depthcues_evaluating_monocular_depth_perception_in_large_vision_models.md)
+- [RadarLLM: Empowering Large Language Models to Understand Human Motion from Millimeter-Wave Point Cloud Sequence](../../AAAI2026/3d_vision/radarllm_empowering_large_language_models_to_understand_human_motion_from_millim.md)
+- [Ross3D: Reconstructive Visual Instruction Tuning with 3D-Awareness](../../ICCV2025/3d_vision/ross3d_reconstructive_visual_instruction_tuning_with_3d-awareness.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三类歧义、多种VQA场景、消融分析、等覆盖较全，但部分实验细节受限于abs-only
 - 写作质量: ⭐⭐⭐⭐⭐ 获 SAC Highlight Award 是对写作质量的有力认可
 - 价值: ⭐⭐⭐⭐⭐ 指出了一个被忽视但极为重要的 VLM 能力缺失，开辟新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+- [Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model](centurio_multilingual_vlm.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](../../ICCV2025/multimodal_vlm/physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+
+<!-- RELATED:END -->

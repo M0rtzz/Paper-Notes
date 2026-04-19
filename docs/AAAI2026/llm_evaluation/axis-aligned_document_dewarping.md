@@ -154,3 +154,15 @@ $$\mathcal{L}_{all} = \alpha \mathcal{L}_{2D} + \beta \mathcal{L}_{3D} + \gamma 
 - **实验** ⭐⭐⭐⭐：在两个主流基准上全面超越SOTA，消融实验充分，AAD指标的对比分析有说服力。
 - **写作** ⭐⭐⭐⭐⭐：论文结构清晰，motivation到method的逻辑链条流畅，图示直观。
 - **影响力** ⭐⭐⭐：方法实用但领域相对小众；AAD指标若被社区采纳可能有持续影响。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HybriDLA: Hybrid Generation for Document Layout Analysis](hybridla_hybrid_generation_for_document_layout_analysis.md)
+- [Gradient Aligned Regression via Pairwise Losses](../../ICML2025/llm_evaluation/gradient_aligned_regression_via_pairwise_losses.md)
+- [READoc: A Unified Benchmark for Realistic Document Structured Extraction](../../ACL2025/llm_evaluation/readoc_a_unified_benchmark_for_realistic_document_structured_extraction.md)
+- [ForCenNet: Foreground-Centric Network for Document Image Rectification](../../ICCV2025/llm_evaluation/forcennet_foreground-centric_network_for_document_image_rectification.md)
+- [MDBench: A Synthetic Multi-Document Reasoning Benchmark Generated with Knowledge Guidance](../../ACL2025/llm_evaluation/mdbench_a_synthetic_multi-document_reasoning_benchmark_generated_with_knowledge_.md)
+
+<!-- RELATED:END -->

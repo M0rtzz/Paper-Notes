@@ -141,3 +141,15 @@ Plackett-Luce模型通过最大化对数似然进行参数估计：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖LLM和LMM两个领域，消融实验全面，对比方法丰富
 - 写作质量: ⭐⭐⭐⭐ 结构清晰但部分内容较冗长，数学符号有时过度
 - 价值: ⭐⭐⭐⭐⭐ 对AI评测实践有直接指导意义，开源框架可立即使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open-Insect: Benchmarking Open-Set Recognition of Novel Species in Biodiversity Monitoring](../../NeurIPS2025/llm_evaluation/open-insect_benchmarking_open-set_recognition_of_novel_species_in_biodiversity_m.md)
+- [VoxEval: Benchmarking the Knowledge Understanding Capabilities of End-to-End Spoken Language Models](voxeval_benchmarking_the_knowledge_understanding_capabilities_of_end-to-end_spok.md)
+- [Beyond One-Size-Fits-All: Tailored Benchmarks for Efficient Evaluation](beyond_one-size-fits-all_tailored_benchmarks_for_efficient_evaluation.md)
+- [Revisiting 3D LLM Benchmarks: Are We Really Testing 3D Capabilities?](revisiting_3d_llm_benchmarks_are_we_really_testing_3d_capabilities.md)
+- [EducationQ: Evaluating LLMs' Teaching Capabilities Through Multi-Agent Dialogue Framework](educationq_evaluating_llms_teaching_capabilities_through_multi-agent_dialogue_fr.md)
+
+<!-- RELATED:END -->

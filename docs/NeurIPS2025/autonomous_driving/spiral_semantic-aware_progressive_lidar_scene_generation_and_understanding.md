@@ -121,3 +121,15 @@ Spiral 采用 4 层 Efficient U-Net 作为骨干网络，基于连续时间 DDPM
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个标准数据集 + 新评估指标 + 丰富消融 + 下游应用验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表专业，动机讲解连贯
 - 价值: ⭐⭐⭐⭐ 对自动驾驶数据生成有实际价值，但影响范围主要局限在 LiDAR 领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CymbaDiff: Structured Spatial Diffusion for Sketch-based 3D Semantic Urban Scene Generation](cymbadiff_structured_spatial_diffusion_for_sketch-based_3d_semantic_urban_scene_.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+- [Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation](../../ICCV2025/autonomous_driving/hermes_a_unified_self-driving_world_model_for_simultaneous_3d_scene_understandin.md)
+- [Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation](../../CVPR2025/autonomous_driving/exploring_scene_affinity_for_semi-supervised_lidar_semantic_segmentation.md)
+- [UniScene: Unified Occupancy-centric Driving Scene Generation](../../CVPR2025/autonomous_driving/uniscene_unified_occupancy-centric_driving_scene_generation.md)
+
+<!-- RELATED:END -->

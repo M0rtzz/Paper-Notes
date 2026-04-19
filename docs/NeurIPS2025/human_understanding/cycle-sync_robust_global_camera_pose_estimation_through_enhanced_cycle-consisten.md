@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实、理论+实验、完整消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学推导密度高
 - 价值: ⭐⭐⭐⭐⭐ 全局 SfM 新 SOTA，消除 BA 依赖
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Consistent Supervised-Unsupervised Alignment for Generalized Category Discovery](consistent_supervised-unsupervised_alignment_for_generalized_category_discovery.md)
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [ADen: Adaptive Density Representations for Sparse-view Camera Pose Estimation](../../ECCV2024/human_understanding/aden_adaptive_density_representations_for_sparseview_camera.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](../../CVPR2025/human_understanding/gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](../../ECCV2024/human_understanding/worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+
+<!-- RELATED:END -->

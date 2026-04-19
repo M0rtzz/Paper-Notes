@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop paper 规模有限，但主观+客观评估都有
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰
 - 价值: ⭐⭐⭐⭐ 对语音编辑实际部署有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [E-BATS: Efficient Backpropagation-Free Test-Time Adaptation for Speech Foundation Models](e-bats_efficient_backpropagation-free_test-time_adaptation_for_speech_foundation.md)
+- [AVRobustBench: Benchmarking the Robustness of Audio-Visual Recognition Models at Test-Time](textttavrobustbench_benchmarking_the_robustness_of_audio-visual_recognition_mode.md)
+- [VITA-1.5: Towards GPT-4o Level Real-Time Vision and Speech Interaction](vita-15_towards_gpt-4o_level_real-time_vision_and_speech_interaction.md)
+- [The Impact of Scaling Training Data on Adversarial Robustness](the_impact_of_scaling_training_data_on_adversarial_robustness.md)
+- [In-the-wild Audio Spatialization with Flexible Text-guided Localization](../../ACL2025/audio_speech/tas_audio_spatialization.md)
+
+<!-- RELATED:END -->

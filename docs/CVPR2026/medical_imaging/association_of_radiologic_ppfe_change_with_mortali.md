@@ -310,3 +310,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个独立大队列、多终点、完整亚组分析
 - 写作质量: ⭐⭐⭐⭐ 临床论文风格，结构清晰
 - 价值: ⭐⭐⭐⭐ 对肺癌筛查临床实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Novel Architecture of RPA in Oral Cancer Lesion Detection](novel_architecture_of_rpa_in_oral_cancer_lesion_de.md)
+- [Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](fair_lung_disease_diagnosis_from_chest_ct_via_gender-adversarial_attention_multi.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+- [Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions](adaptation_of_weakly_supervised_localization_in_hi.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+
+<!-- RELATED:END -->

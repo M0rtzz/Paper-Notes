@@ -113,3 +113,15 @@ tags:
 | 技术深度 | ⭐⭐⭐⭐ | 探针+参数编辑框架成熟，但方法本身是已有RepE工作的应用 |
 | 实验充分性 | ⭐⭐⭐⭐ | 多模型、多数据集验证，有消融和定性分析，但规模受限于32B |
 | 实际影响 | ⭐⭐⭐⭐⭐ | 直接挑战现有安全评估范式的有效性，提供可用的诊断工具 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计](value-guided_search_for_efficient_chain-of-thought_reasoning.md)
+- [RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics](realmath_a_continuous_benchmark_for_evaluating_language_models_on_research-level.md)
+- [Beyond Chemical QA: Evaluating LLM's Chemical Reasoning with Modular Chemical Operations](beyond_chemical_qa_evaluating_llms_chemical_reasoning_with_modular_chemical_oper.md)
+- [Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
+- [Evaluating Judges as Evaluators: The JETTS Benchmark of LLM-as-Judges as Test-Time Scaling Evaluators](../../ICML2025/llm_reasoning/evaluating_judges_as_evaluators_the_jetts_benchmark_of_llm-as-judges_as_test-tim.md)
+
+<!-- RELATED:END -->

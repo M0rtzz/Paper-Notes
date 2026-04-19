@@ -139,3 +139,15 @@ MNL 对静态融合（LF）提升显著（MVSA ε=5 提升 10.57%），对动态
 - **实验充分度**: ⭐⭐⭐⭐ — 4个数据集、多种融合方法、多种噪声类型、充分消融，但缺少大规模视觉-语言模型验证
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，动机图示直观，但符号较多需要仔细跟读
 - **价值**: ⭐⭐⭐⭐ — 即插即用的模块化设计有实际应用价值，理论贡献也有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Multimodal Contrastive Learning](continual_multimodal_contrastive_learning.md)
+- [Structure-Aware Fusion with Progressive Injection for Multimodal Molecular Representation Learning](structure-aware_fusion_with_progressive_injection_for_multimodal_molecular_repre.md)
+- [Learning to Steer: Input-dependent Steering for Multimodal LLMs](learning_to_steer_input-dependent_steering_for_multimodal_llms.md)
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+- [Rethinking Multimodal Learning from the Perspective of Mitigating Classification Ability Disproportion](rethinking_multimodal_learning_from_the_perspective_of_mitig.md)
+
+<!-- RELATED:END -->

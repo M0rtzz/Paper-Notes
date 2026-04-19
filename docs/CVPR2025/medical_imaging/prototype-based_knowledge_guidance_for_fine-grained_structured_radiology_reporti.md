@@ -116,3 +116,15 @@ ProtoSR 提出从大规模自由文本放射学报告中挖掘模板对齐的原
 - 实验充分度: ⭐⭐⭐⭐ (消融完备但仅单一基准)
 - 写作质量: ⭐⭐⭐⭐ (方法描述清晰, 图表设计好)
 - 价值: ⭐⭐⭐⭐ (对结构化报告自动化有实际指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multi-modal_learning_for_single_source_domain_general.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilistic_models_through_large-scale_.md)
+- [Residual SODAP: Residual Self-Organizing Domain-Adaptive Prompting with Structural Knowledge Preservation for Continual Learning](residual_sodap_residual_self-organizing_domain-adaptive_prompting_with_structura.md)
+- [Automated Structured Radiology Report Generation](../../ACL2025/medical_imaging/automated_structured_radiology_report_generation.md)
+
+<!-- RELATED:END -->

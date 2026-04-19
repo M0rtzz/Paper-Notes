@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 跨模型、跨数据集、跨推理策略的全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑推进清晰，发现层层递进
 - 价值: ⭐⭐⭐⭐ 对模型路由和自适应推理有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auto-PRE: An Automatic and Cost-Efficient Peer-Review Framework for Language Generation Evaluation](../../AAAI2026/human_understanding/auto-pre_an_automatic_and_cost-efficient_peer-review_framework_for_language_gene.md)
+- [The Devil behind the Mask: An Emergent Safety Vulnerability of Diffusion LLMs](the_devil_behind_the_mask_an_emergent_safety_vulnerability_of_diffusion_llms.md)
+- [Failures to Surface Harmful Contents in Video Large Language Models](../../AAAI2026/human_understanding/failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation](think-while-generating_on-the-fly_reasoning_for_personalized_long-form_generatio.md)
+- [MolLangBench: A Comprehensive Benchmark for Language-Prompted Molecular Structure Recognition, Editing, and Generation](mollangbench_a_comprehensive_benchmark_for_language-prompted_molecular_structure.md)
+
+<!-- RELATED:END -->

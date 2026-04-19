@@ -115,3 +115,15 @@ CTS对RPE_rot影响最大(0.705→1.348)
 - 实验充分度: ⭐⭐⭐⭐⭐ 3D/4D对比+3个下游任务+6+数据集+消融+motion seg评估
 - 写作质量: ⭐⭐⭐⭐ 架构图清晰，方法描述完整
 - 对我的价值: ⭐⭐⭐⭐ 4D重建方法论 + DUSt3R生态系统的重要扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](../../NeurIPS2025/others/4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)
+- [IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization](iap_invisible_adversarial_patch_attack_through_perceptibility-aware_localization.md)
+- [Symmetry-Robust 3D Orientation Estimation](../../ICML2025/others/symmetry-robust_3d_orientation_estimation.md)
+- [LaCoOT: Layer Collapse through Optimal Transport](lacoot_layer_collapse_through_optimal_transport.md)
+- [Rethinking PCA Through Duality](../../NeurIPS2025/others/rethinking_pca_through_duality.md)
+
+<!-- RELATED:END -->

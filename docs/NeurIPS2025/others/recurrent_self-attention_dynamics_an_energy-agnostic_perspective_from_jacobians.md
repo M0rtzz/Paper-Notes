@@ -122,3 +122,15 @@ $$\left\| \frac{\partial \text{RMSNorm}(X + \eta \Delta X)}{\partial X} \right\|
 - 实验充分度: ⭐⭐⭐⭐ 理论分析与实验结合紧密，但任务单一（主要是 Sudoku）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，从能量→Jacobian 的推进逻辑流畅
 - 价值: ⭐⭐⭐⭐ 为理解循环 Transformer、test-time scaling 提供了重要的动力系统视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Normalization in Attention Dynamics](normalization_in_attention_dynamics.md)
+- [Revisiting Agnostic Boosting](revisiting_agnostic_boosting.md)
+- [On Agnostic PAC Learning in the Small Error Regime](on_agnostic_pac_learning_in_the_small_error_regime.md)
+- [A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
+- [Learning Dynamics of RNNs in Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)
+
+<!-- RELATED:END -->

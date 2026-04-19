@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ HHI/HSI/混合三场景、详细消融（先验使用方式、FWSR效果）、EgoBody 迁移实验全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，四个研究问题的设置很好地组织了实验
 - 价值: ⭐⭐⭐⭐ 实时交互反应生成是一个重要但被忽视的问题，本框架提供了可扩展的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HandX: Scaling Bimanual Motion and Interaction Generation](handx_scaling_bimanual_motion_and_interaction_generation.md)
+- [PoseSyn: Synthesizing Diverse 3D Pose Data from In-the-Wild 2D Data](../../ICCV2025/human_understanding/posesyn_synthesizing_diverse_3d_pose_data_from_in-the-wild_2d_data.md)
+- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](molingo_motion-language_alignment_for_text-to-motion_generation.md)
+- [Human-Machine Ritual: Synergic Performance through Real-Time Motion Recognition](../../NeurIPS2025/human_understanding/human-machine_ritual_synergic_performance_through_real-time_motion_recognition.md)
+- [Theory of Mind for Explainable Human-Robot Interaction](../../AAAI2026/human_understanding/theory_of_mind_for_explainable_human-robot_interaction.md)
+
+<!-- RELATED:END -->

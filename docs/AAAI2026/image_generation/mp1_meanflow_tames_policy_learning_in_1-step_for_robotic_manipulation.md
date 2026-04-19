@@ -201,3 +201,15 @@ MeanFlow Ratio 消融：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 37个仿真任务 + 5个真实任务，多维度消融分析
 - **写作质量**: ⭐⭐⭐⭐ — 方法推导清晰，实验对比全面
 - **价值**: ⭐⭐⭐⭐⭐ — 6.8ms 推理 + SOTA 成功率，对实时机器人控制有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientFlow: Efficient Equivariant Flow Policy Learning for Embodied AI](efficientflow_efficient_equivariant_flow_policy_learning_for_embodied_ai.md)
+- [Image Generation as a Visual Planner for Robotic Manipulation](../../CVPR2026/image_generation/image_generation_as_a_visual_planner_for_robotic_manipulation.md)
+- [Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](../../NeurIPS2025/image_generation/two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
+- [SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](../../ICLR2026/image_generation/flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
+- [RenderFlow: Single-Step Neural Rendering via Flow Matching](../../CVPR2026/image_generation/renderflow_single-step_neural_rendering_via_flow_matching.md)
+
+<!-- RELATED:END -->

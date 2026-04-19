@@ -142,3 +142,15 @@ PITA 是首个能对丙氨酸三肽进行笛卡尔坐标下平衡态采样的扩
 - **实验充分度**: ⭐⭐⭐⭐ 涵盖 LJ-13、ALDP、AL3，但仅限小分子系统（受领域限制）
 - **写作质量**: ⭐⭐⭐⭐ 数学推导严谨，但符号和辅助结果较多
 - **价值**: ⭐⭐⭐⭐⭐ 首次在笛卡尔坐标下实现肽链的平衡态采样，是扩散采样器的重要里程碑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ψ-Sampler: Initial Particle Sampling for SMC-Based Inference-Time Reward Alignment in Score Models](psi-sampler_initial_particle_sampling_for_smc-based_inference-time_reward_alignm.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [BoltzNCE: Learning Likelihoods for Boltzmann Generation with Stochastic Interpolants](boltznce_learning_likelihoods_for_boltzmann_generation_with_stochastic_interpola.md)
+- [KLASS: KL-Guided Fast Inference in Masked Diffusion Models](klass_kl-guided_fast_inference_in_masked_diffusion_models.md)
+
+<!-- RELATED:END -->

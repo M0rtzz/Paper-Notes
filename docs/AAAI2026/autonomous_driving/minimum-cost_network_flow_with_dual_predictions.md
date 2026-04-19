@@ -120,3 +120,15 @@ tags:
 
 ## 评分
 ⭐⭐⭐⭐ — 理论工作扎实，一致性+鲁棒性复杂度bound优雅。交通网络加速非常显著（12.74×），逃逸布线适中（1.64×）。将学习增强算法扩展到MCF这一核心优化问题，兼具理论深度和实践价值。注意本文虽归入autonomous_driving但更偏运筹优化/交通优化。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-branch Spatial-Temporal Self-supervised Representation for Enhanced Road Network Learning](dual-branch_spatial-temporal_self-supervised_representation_for_enhanced_road_ne.md)
+- [AI-based Traffic Modeling for Network Security and Privacy: Challenges Ahead](ai-based_traffic_modeling_for_network_security_and_privacy_challenges_ahead.md)
+- [Debiased Dual-Invariant Defense for Adversarially Robust Person Re-Identification](debiased_dual-invariant_defense_for_adversarially_robust_person_re-identificatio.md)
+- [DriveFlow: Rectified Flow Adaptation for Robust 3D Object Detection in Autonomous Driving](driveflow_rectified_flow_adaptation_for_robust_3d_object_detection_in_autonomous.md)
+- [Meta Dynamic Graph for Traffic Flow Prediction](meta_dynamic_graph_for_traffic_flow_prediction.md)
+
+<!-- RELATED:END -->

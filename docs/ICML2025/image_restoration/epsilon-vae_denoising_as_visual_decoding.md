@@ -178,3 +178,15 @@ $$\hat{\mathbf{x}} = \text{DiffusionDecode}(\mathbf{x}_T, z) \quad \text{where }
 - 实验充分度: ⭐⭐⭐⭐ — 系统性的受控实验覆盖了关键设计选择，重建和生成质量均有评估
 - 写作质量: ⭐⭐⭐⭐ — 动机阐述清晰，贡献明确，结构规范
 - 综合价值: ⭐⭐⭐⭐ — 为视觉 tokenizer 设计提供了新范式，对 LDM 生态有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Visual State Space Model for Image Deblurring](../../CVPR2025/image_restoration/efficient_visual_state_space_model_for_image_deblurring.md)
+- [Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing](../../CVPR2025/image_restoration/iterative_predictor-critic_code_decoding_for_real-world_image_dehazing.md)
+- [Blink: Dynamic Visual Token Resolution for Enhanced Multimodal Understanding](../../CVPR2026/image_restoration/blink_dynamic_visual_token_resolution_for_enhanced_multimodal_understanding.md)
+- [DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising](../../ACL2025/image_restoration/diffusedef_adversarial_defense.md)
+- [Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)](../../ICCV2025/image_restoration/generic_event_boundary_detection_via_denoising_diffusion.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ Value Flows 的分布估计精度比 C51 好 4.5×，比 CODAC 好 3×。
 - 实验充分度: ⭐⭐⭐⭐⭐ 62 个任务（state + image）× 8 seeds × 多基线 × 分布估计精度 × 消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，从 DFM → DCFM → BCFM 的逐步简化很清晰
 - 价值: ⭐⭐⭐⭐⭐ 为分布式 RL 开辟了生成模型的新路径，方差估计的副产品特性有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReFORM: Reflected Flows for On-support Offline RL via Noise Manipulation](reform_reflected_flows_for_on-support_offline_rl_via_noise_manipulation.md)
+- [Transitive RL: Value Learning via Divide and Conquer](transitive_rl_value_learning_via_divide_and_conquer.md)
+- [Ergodic Generative Flows](../../ICML2025/reinforcement_learning/ergodic_generative_flows.md)
+- [Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+- [ROMI: Model-based Offline RL via Robust Value-Aware Model Learning with Implicitly Differentiable Adaptive Weighting](model-based_offline_rl_via_robust_value-aware_model_learning_with_implicitly_dif.md)
+
+<!-- RELATED:END -->

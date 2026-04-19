@@ -107,3 +107,15 @@ RH-Partial2Global在Partial2Global基础上引入两个正交增强：(1) Jackkn
 - 实验充分度: ⭐⭐⭐⭐ 3任务、4 folds、消融完整，但改进幅度有限
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义严谨，数学推导清晰，动机-方法逻辑线强
 - 价值: ⭐⭐⭐⭐ 对VICL提示选择有方法论贡献，但实际影响受限于改进幅度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Know Thyself by Knowing Others: Learning Neuron Identity from Population Context](know_thyself_by_knowing_others_learning_neuron_identity_from_population_context.md)
+- [Foundation Cures Personalization: Improving Personalized Models' Prompt Consistency via Hidden Foundation Knowledge](foundation_cures_personalization_improving_personalized_models_prompt_consistenc.md)
+- [Scaling Language-Free Visual Representation Learning](../../ICCV2025/self_supervised/scaling_languagefree_visual_representation_learning.md)
+- [Spectral State Space Model for Rotation-Invariant Visual Representation Learning](../../CVPR2025/self_supervised/spectral_state_space_model_for_rotation-invariant_visual_representation_learning.md)
+- [PromptCCD: Learning Gaussian Mixture Prompt Pool for Continual Category Discovery](../../ECCV2024/self_supervised/promptccd_learning_gaussian_mixture_prompt_pool_for_continual_category_discovery.md)
+
+<!-- RELATED:END -->

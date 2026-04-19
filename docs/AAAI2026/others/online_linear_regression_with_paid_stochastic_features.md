@@ -183,3 +183,15 @@ $$\text{Reg}(T) = \widetilde{\mathcal{O}}\left((S^2(R^2 d + S^2))^{2/3} \lambda^
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：论文提出了一个新颖且有实际动机的在线学习问题设定——付费降低特征噪声。理论结果干净利落：两个设定下均给出了关于 $T$ 阶最优的上下界，协方差修正和一侧 Lipschitz 性质等技术贡献也具有独立价值。主要不足在于缺乏实验验证、维度依赖的最优性未解决、以及计算效率问题。整体上是一篇扎实的理论贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](../../NeurIPS2025/others/transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)
+- [Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination](../../NeurIPS2025/others/information-computation_tradeoffs_for_noiseless_linear_regression_with_oblivious.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](../../ICML2025/others/heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [A Switching Framework for Online Interval Scheduling with Predictions](a_switching_framework_for_online_interval_scheduling_with_pr.md)
+- [Lipschitz Bandits with Stochastic Delayed Feedback](../../ICLR2026/others/lipschitz_bandits_with_stochastic_delayed_feedback.md)
+
+<!-- RELATED:END -->

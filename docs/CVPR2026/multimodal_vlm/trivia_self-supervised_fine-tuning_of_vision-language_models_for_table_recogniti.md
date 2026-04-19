@@ -121,3 +121,15 @@ TRivia 分为两个阶段：(1) 数据准备阶段——从无标注表格图像
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个基准、12 个 baseline、全面消融，还验证了作为标注器的泛化能力
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但整体篇幅较长，部分内容可精简
 - 价值: ⭐⭐⭐⭐⭐ 3B 模型超越 Gemini 2.5 Pro，为开源 TR 指明自监督 RL 方向，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Breaking the Limits of Open-Weight CLIP: An Optimization Framework for Self-supervised Fine-tuning of CLIP](../../ICLR2026/multimodal_vlm/breaking_the_limits_of_open-weight_clip_an_optimization_framework_for_self-super.md)
+- [MoE-GRPO: Optimizing Mixture-of-Experts via Reinforcement Learning in Vision-Language Models](moe-grpo_optimizing_mixture-of-experts_via_reinforcement_learning_in_vision-lang.md)
+- [AGFT: Alignment-Guided Fine-Tuning for Zero-Shot Adversarial Robustness of Vision-Language Models](agft_alignment-guided_fine-tuning_for_zero-shot_adversarial_robustness_of_vision.md)
+- [FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

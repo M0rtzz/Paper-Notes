@@ -149,3 +149,15 @@ $$r^* - r(\theta_{\pi_{\text{exp}}^*}^{(T)}) = \mathcal{O}((1+\zeta)^{-2T})$$
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖图像和文本两个领域，包含充分的消融和对比，但计算规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ — 从高斯热身到一般理论再到实验的递进结构清晰优雅，定理陈述精准
 - 价值: ⭐⭐⭐⭐ — 为实践者提供了明确的策略指导，但假设条件限制了直接推广的范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Outlier-Aware Post-Training Quantization for Image Super-Resolution](../../ICCV2025/image_restoration/outlier-aware_post-training_quantization_for_image_super-resolution.md)
+- [FoundIR: Unleashing Million-scale Training Data to Advance Foundation Models for Image Restoration](../../ICCV2025/image_restoration/foundir_unleashing_million-scale_training_data_to_advance_foundation_models_for_.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
+- [DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising](../../ACL2025/image_restoration/diffusedef_adversarial_defense.md)
+- [RefiDiff: Progressive Refinement Diffusion for Efficient Missing Data Imputation](../../AAAI2026/image_restoration/refidiff_progressive_refinement_diffusion_for_efficient_missing_data_imputation.md)
+
+<!-- RELATED:END -->

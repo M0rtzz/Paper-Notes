@@ -143,3 +143,15 @@ WARP 在 6 个方法中 4 个数据集进入前三名，包括在 SCP2 和 Heart
 ## 评分 ⭐⭐⭐⭐⭐
 
 极具创新性的范式级工作。将权重空间学习与线性递推优雅结合，在简洁的框架下实现了强大的表达能力和适应能力。PEMS08 上 50% 的 MAE 降低和 WARP-Phys 的 10x 提升都是令人印象深刻的结果。唯一的顾虑是状态转移矩阵的规模问题。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
+- [TSPulse: Tiny Pre-Trained Models with Disentangled Representations for Rapid Time Series](tspulse_tiny_pre-trained_models_with_disentangled_representations_for_rapid_time.md)
+- [EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements](edinet-bench_evaluating_llms_on_complex_financial_tasks_using_japanese_financial.md)
+- [Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
+- [Relational Transformer: Toward Zero-Shot Foundation Models for Relational Data](relational_transformer_toward_zero-shot_foundation_models_for_relational_data.md)
+
+<!-- RELATED:END -->

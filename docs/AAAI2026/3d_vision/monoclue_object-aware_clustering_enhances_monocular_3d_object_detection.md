@@ -221,3 +221,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{2D} + \mathcal{L}_{3D} + \lambda \mathcal{L
 - 实验充分度: ⭐⭐⭐⭐ — 多层次消融完善，效率分析透彻，但仅KITTI一个数据集
 - 写作质量: ⭐⭐⭐⭐ — 图示清晰（Figure 1的cluster可视化非常直观），行文流畅
 - 价值: ⭐⭐⭐⭐ — 实用且高效的SOTA方法，不依赖额外信息是一大优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Surround-View Fisheye Camera 3D Object Detection](exploring_surround-view_fisheye_camera_3d_object_detection.md)
+- [Distilling Future Temporal Knowledge with Masked Feature Reconstruction for 3D Object Detection](distilling_future_temporal_knowledge_with_masked_feature_reconstruction_for_3d_o.md)
+- [MonoPlace3D: Learning 3D-Aware Object Placement for 3D Monocular Detection](../../CVPR2025/3d_vision/monoplace3d_learning_3d-aware_object_placement_for_3d_monocular_detection.md)
+- [MonoSAOD: Monocular 3D Object Detection with Sparsely Annotated Label](../../CVPR2026/3d_vision/monosaod_monocular_3d_object_detection_with_sparsely_annotated_label.md)
+- [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](../../CVPR2026/3d_vision/span_spatial-projection_alignment_for_monocular_3d_object_detection.md)
+
+<!-- RELATED:END -->

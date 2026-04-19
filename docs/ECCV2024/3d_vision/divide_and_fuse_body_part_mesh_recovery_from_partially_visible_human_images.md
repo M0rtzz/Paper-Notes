@@ -154,3 +154,15 @@ $$\mathcal{L}_{fu} = \lambda_{ol} \mathcal{L}_{ol} + \lambda_{dc} \mathcal{L}_{d
 - 实验充分度: ⭐⭐⭐⭐ 主实验+消融+可调参数分析，自建基准合理；但缺少真实遮挡场景测试
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ 对AR/VR/医疗等场景下部分可见人体重建有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-HMR: Multi-Person Whole-Body Human Mesh Recovery in a Single Shot](multi-hmr_multi-person_whole-body_human_mesh_recovery_in_a_single_shot.md)
+- [Global-to-Pixel Regression for Human Mesh Recovery](global-to-pixel_regression_for_human_mesh_recovery.md)
+- [CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images](canonicalfusion_generating_drivable_3d_human_avatars_from_multiple_images.md)
+- [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](../../CVPR2025/3d_vision/mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
+- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](../../CVPR2025/3d_vision/heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
+
+<!-- RELATED:END -->

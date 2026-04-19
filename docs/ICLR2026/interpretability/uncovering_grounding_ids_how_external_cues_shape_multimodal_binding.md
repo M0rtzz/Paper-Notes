@@ -174,3 +174,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 因果+相关+消融+行为四层验证体系完整，但核心分析限于单模型+合成数据
 - 写作质量: ⭐⭐⭐⭐⭐ 从相关性到因果性的递进论证清晰优雅，符号体系和图示设计直观
 - 价值: ⭐⭐⭐⭐⭐ 兼具理论洞察（跨模态绑定机制）和实用贡献（免训练幻觉缓解），且适用于闭源模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
+- [Empowering Decision Trees via Shape Function Branching](../../NeurIPS2025/interpretability/empowering_decision_trees_via_shape_function_branching.md)
+- [How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
+- [Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2026/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Uncovering Graph Reasoning in Decoder-only Transformers with Circuit Tracing](../../NeurIPS2025/interpretability/uncovering_graph_reasoning_in_decoder-only_transformers_with_circuit_tracing.md)
+
+<!-- RELATED:END -->

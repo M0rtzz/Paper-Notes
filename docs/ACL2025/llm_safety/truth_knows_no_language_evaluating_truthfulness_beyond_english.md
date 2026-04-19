@@ -164,3 +164,15 @@ LLM-as-a-Judge 的训练使用学习率 0.01，训练 5 个 epoch。核心是对
 - **实用性**：⭐⭐⭐⭐ — 为多语言真实性评估提供了重要基准和方法指导
 - **实验充分性**：⭐⭐⭐⭐⭐ — 12个模型 × 5语言 × 3评估方法，加人工评估和 IAA 分析
 - **写作质量**：⭐⭐⭐⭐ — 结构清晰，翻译指南和评估方法论阐述详尽
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](intent_hallucination_eval.md)
+- [UAQFact: Evaluating Factual Knowledge Utilization of LLMs on Unanswerable Questions](uaqfact_evaluating_factual_knowledge_utilization_of_llms_on_unanswerable_questio.md)
+- [Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation](monitoring_decoding_mitigating_hallucination_via_evaluating_the_factuality_of_pa.md)
+- [ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)
+- [REVS: Unlearning Sensitive Information in Language Models via Rank Editing in the Vocabulary Space](revs_unlearning_sensitive_information_in_language_models_via_rank_editing_in_the.md)
+
+<!-- RELATED:END -->

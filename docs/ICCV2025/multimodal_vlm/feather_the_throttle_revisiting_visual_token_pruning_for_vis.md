@@ -90,3 +90,15 @@ FEATHER完全是training-free的推理时方法，不需要额外训练或微调
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个benchmark全面评估，多种消融和可视化分析极为详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 故事线流畅（发现问题→分析原因→揭示benchmark局限→提出修复），赛车比喻点睛
 - 价值: ⭐⭐⭐⭐⭐ 对VLM加速和benchmark设计两方面都有重要警示，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](llavaprumerge_adaptive_token_reduction_for_efficient_large_m.md)
+- [SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](sparsevila_decoupling_visual_sparsity_for_efficient_vlm_infe.md)
+- [Growing a Twig to Accelerate Large Vision-Language Models](growing_a_twig_to_accelerate_large_vision-language_models.md)
+- [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension](scaling_inferencetime_search_with_vision_value_model_for_imp.md)
+
+<!-- RELATED:END -->

@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 大规模场景验证
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐⭐ 大规模 3DGS 的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ARMesh: Autoregressive Mesh Generation via Next-Level-of-Detail Prediction](armesh_autoregressive_mesh_generation_via_next-level-of-detail_prediction.md)
+- [ResGS: Residual Densification of 3D Gaussian for Efficient Detail Recovery](../../ICCV2025/3d_vision/resgs_residual_densification_of_3d_gaussian_for_efficient_detail_recovery.md)
+- [VertexRegen: Mesh Generation with Continuous Level of Detail](../../ICCV2025/3d_vision/vertexregen_mesh_generation_with_continuous_level_of_detail.md)
+- [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](../../ICCV2025/3d_vision/occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
+- [CityGaussian: Real-Time High-Quality Large-Scale Scene Rendering with Gaussians](../../ECCV2024/3d_vision/citygaussian_real-time_high-quality_large-scale_scene_rendering_with_gaussians.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ LSVI 的迭代流程：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了可微/离散/不可微三种场景，但大规模实验有限
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，结构清晰，理论与实践结合好
 - 价值: ⭐⭐⭐⭐ 为无梯度变分推断提供了优雅且实用的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Brain-like Variational Inference](brain-like_variational_inference.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](neuro-symbolic_entity_alignment_via_variational_inference.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+
+<!-- RELATED:END -->

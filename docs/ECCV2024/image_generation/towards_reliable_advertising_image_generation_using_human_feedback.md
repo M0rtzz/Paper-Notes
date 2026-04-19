@@ -213,3 +213,15 @@ RFFT 可用率比原始模型提升 29.1 个百分点（56.4→85.5%），人工
 - **有效性**: ⭐⭐⭐⭐⭐ — 可用率提升 29.1%，线上 CTR 提升 2.2%，效果经工业验证
 - **工程价值**: ⭐⭐⭐⭐⭐ — 完整工业级方案，数据集公开，已在京东生产环境部署
 - **推荐度**: ⭐⭐⭐⭐ — RLHF 应用于广告图像的开创性工作，CC 正则化可广泛借鉴
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](../../ICCV2025/image_generation/trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
+
+<!-- RELATED:END -->

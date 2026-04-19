@@ -139,3 +139,15 @@ tags:
 - **技术深度**: ⭐⭐⭐⭐ — SFT数据混合消融极其细致，DPO分析深入（credit assignment）
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 主文+6个附录，超级充分
 - **总体推荐**: ⭐⭐⭐⭐⭐ — VLM推理训练的重要参考工作，数据和代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](../../CVPR2025/llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)
+- [Critic-CoT: Boosting the Reasoning Abilities of Large Language Model via Chain-of-Thoughts Critic](critic-cot_boosting_the_reasoning_abilities_of_large_language_model_via_chain-of.md)
+- [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](../../CVPR2025/llm_reasoning/argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
+- [AIMCoT: Active Information-driven Multimodal Chain-of-Thought for Vision-Language Reasoning](../../ICLR2026/llm_reasoning/aimcot_active_information-driven_multimodal_chain-of-thought_for_vision-language.md)
+
+<!-- RELATED:END -->

@@ -77,3 +77,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论为主，合成实验验证
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨优雅
 - 价值: ⭐⭐⭐⭐ 为 RS 多视角几何提供了长期理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Full-DoF Egomotion Estimation for Event Cameras Using Geometric Solvers](full-dof_egomotion_estimation_for_event_cameras_using_geometric_solvers.md)
+- [Higher-Order Responsibility](../../AAAI2026/others/higher-order_responsibility.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [One Sample is Enough to Make Conformal Prediction Robust](../../NeurIPS2025/others/one_sample_is_enough_to_make_conformal_prediction_robust.md)
+- [Enhancing Transformers for Generalizable First-Order Logical Entailment](../../ACL2025/others/enhancing_fol_entailment.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3 模型 + 多类知识 + 消融 + prompt 变体 + 别名测试 + 编辑应用，但模型规模受限
 - 写作质量: ⭐⭐⭐⭐ 分析逻辑清晰，图表丰富，但部分英文写作有语法小错
 - 价值: ⭐⭐⭐⭐ 对时间知识编辑和 LLM 可解释性有直接应用前景，但从发现到实用还有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChronoSense: Exploring Temporal Understanding in Large Language Models with Time Intervals of Events](chronosense_exploring_temporal_understanding_in_large_language_models_with_time_.md)
+- [DeAL: Decoding-time Alignment for Large Language Models](deal_decoding_time_alignment.md)
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](nudging_inference_time_alignment.md)
+- [Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization](improving_contextual_faithfulness_of_large_language_models_via_retrieval_heads-i.md)
+- [Systematic Generalization in Language Models Scales with Information Entropy](systematic_generalization_in_language_models_scales_with_information_entropy.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ ShapeCraft 在 IoGT、CLIP Score、VQA Pass Rate 三项最优，Hausdorff 距离
 - 实验充分度: ⭐⭐⭐⭐ (涵盖定性定量对比、多维度消融、与 thinking-mode LLM 对比，缺少用户研究)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图示丰富，算法伪代码规范)
 - 价值: ⭐⭐⭐⭐ (首个在 text-to-3D 中实现 100% 编译率的 LLM Agent 方案，实用性强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structured Personalization: Modeling Constraints as Matroids for Data-Minimal LLM Agents](../../AAAI2026/llm_agent/structured_personalization_modeling_constraints_as_matroids_for_data-minimal_llm.md)
+- [TrajAgent: An LLM-Agent Framework for Trajectory Modeling via Large-and-Small Model Collaboration](trajagent_an_llm-agent_framework_for_trajectory_modeling_via_large-and-small_mod.md)
+- [Traj-CoA: Patient Trajectory Modeling via Chain-of-Agents for Lung Cancer Risk Prediction](traj-coa_patient_trajectory_modeling_via_chain-of-agents_for_lung_cancer_risk_pr.md)
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [LLM Agents for Knowledge Discovery in Atomic Layer Processing](llm_agents_for_knowledge_discovery_in_atomic_layer_processing.md)
+
+<!-- RELATED:END -->

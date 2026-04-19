@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 错误分类体系和基准测试设计合理，但规模小且无端到端系统验证
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，设计张力讨论深入
 - 价值: ⭐⭐⭐⭐ 对公平AI、社区治理和本地知识补充有重要方法论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [It's Complicated: The Relationship of Algorithmic Fairness and Non-Discrimination Provisions for High-Risk Systems in the EU AI Act](its_complicated_the_relationship_of_algorithmic_fairness_and_non-discrimination_.md)
+- [Understanding Challenges to the Interpretation of Disaggregated Evaluations of AI](understanding_challenges_to_the_interpretation_of_disaggregated_evaluations_of_a.md)
+- [CTRL-ALT-DECEIT: Sabotage Evaluations for Automated AI R&D](ctrl-alt-deceit_sabotage_evaluations_for_automated_ai_rd.md)
+- [Provable Watermarking for Data Poisoning Attacks](provable_watermarking_for_data_poisoning_attacks.md)
+- [Position: Bridge the Gaps between Machine Unlearning and AI Regulation](position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)
+
+<!-- RELATED:END -->

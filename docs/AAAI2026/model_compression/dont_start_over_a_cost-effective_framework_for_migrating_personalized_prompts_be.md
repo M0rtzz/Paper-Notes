@@ -198,3 +198,15 @@ PUMA仅用2000用户就超过了随机抽样6000用户的效果！
 - 实验充分度: ⭐⭐⭐⭐⭐（三个数据集、五个模型、多种迁移拓扑，实验极为充分）
 - 写作质量: ⭐⭐⭐⭐（条理清晰，问题阐述充分）
 - 价值: ⭐⭐⭐⭐⭐（解决实际工业痛点，98%成本节省具有直接应用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Highly Efficient and Effective LLMs with Multi-Boolean Architectures](../../ICLR2026/model_compression/highly_efficient_and_effective_llms_with_multi-boolean_architectures.md)
+- [Explore and Establish Synergistic Effects between Weight Pruning and Coreset Selection](explore_and_establish_synergistic_effects_between_weight_pruning_and_coreset_sel.md)
+- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](../../ACL2025/model_compression/iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [Beyond Sharpness: A Flatness Decomposition Framework for Efficient Continual Learning](beyond_sharpness_a_flatness_decomposition_framework_for_efficient_continual_lear.md)
+- [HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression](hcf_hierarchical_cascade_framework_for_distributed_multi-stage_image_compression.md)
+
+<!-- RELATED:END -->

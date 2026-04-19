@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅在合成数据上验证，缺乏真实数据集的实验
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨完整，但符号密度高，可读性有限
 - 价值: ⭐⭐⭐⭐ 为 Hawkes 过程的非参数估计提供了理论基础和高效算法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Sharpness-Aware Minimization: A More Faithful and Effective Implementation](revisiting_sharpness-aware_minimization_a_more_faithful_and_effective_implementa.md)
+- [Theorem Prover as a Judge for Synthetic Data Generation](../../ACL2025/others/theorem_prover_as_a_judge_for_synthetic_data_generation.md)
+- [Discrepancy Minimization in Input-Sparsity Time](../../ICML2025/others/discrepancy_minimization_in_input-sparsity_time.md)
+- [Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](../../NeurIPS2025/others/variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](../../CVPR2026/others/zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+
+<!-- RELATED:END -->

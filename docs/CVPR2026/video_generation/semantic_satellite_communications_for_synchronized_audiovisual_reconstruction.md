@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 涵盖视频/音频/同步三维评估，知识库消融和 Agent 案例分析详实
 - 写作质量: ⭐⭐⭐ 系统复杂度高导致论文冗长，some sections过于公式化
 - 价值: ⭐⭐⭐⭐ 对卫星通信+语义传输领域有重要参考价值，LLM Agent 控制通信系统的思路有前瞻性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SWIFT: Sliding Window Reconstruction for Few-Shot Training-Free Generated Video Attribution](swift_sliding_window_reconstruction_for_few-shot_training-free_generated_video_a.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+- [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
+- [Free-Lunch Long Video Generation via Layer-Adaptive O.O.D Correction](free-lunch_long_video_generation_via_layer-adaptive_ood_correction.md)
+- [NeoVerse: Enhancing 4D World Model with in-the-wild Monocular Videos](neoverse_enhancing_4d_world_model_with_in-the-wild_monocular_videos.md)
+
+<!-- RELATED:END -->

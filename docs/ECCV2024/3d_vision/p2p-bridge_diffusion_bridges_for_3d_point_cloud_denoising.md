@@ -146,3 +146,15 @@ ScanNet++ 上 CD 从次优 I-PFN 的 52.31 降至 34.88（-33%），优势巨大
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 合成+真实数据集全面评估，多种baseline对比，消融实验覆盖关键设计
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导清晰，从 SDE 到可控框架的过渡自然，图示直观
 - **实用价值**: ⭐⭐⭐⭐⭐ — 仅3步去噪、代码开源、真实场景效果显著，实际应用前景广阔
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [SEDiff: Structure Extraction for Domain Adaptive Depth Estimation via Denoising Diffusion Models](sediff_structure_extraction_for_domain_adaptive_depth_estimation_via_denoising_d.md)
+- [Noise2Score3D: Tweedie's Approach for Unsupervised Point Cloud Denoising](../../ICCV2025/3d_vision/noise2score3d_tweedies_approach_for_unsupervised_point_cloud_denoising.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
+- [U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](../../NeurIPS2025/3d_vision/u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
+
+<!-- RELATED:END -->

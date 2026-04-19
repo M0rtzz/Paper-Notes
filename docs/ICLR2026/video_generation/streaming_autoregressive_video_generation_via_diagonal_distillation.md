@@ -125,3 +125,15 @@ VBench评测对比（5秒视频生成，单H100 GPU）：
 - 实验充分度: ⭐⭐⭐⭐ VBench全面评测，消融详细，长视频对比有说服力
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，直觉解释到位
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高，31 FPS实时生成具有里程碑意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
+- [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](../../CVPR2025/video_generation/from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
+- [StreamDiT: Real-Time Streaming Text-to-Video Generation](../../CVPR2026/video_generation/streamdit_real-time_streaming_text-to-video_generation.md)
+- [Learning from Streaming Video with Orthogonal Gradients](../../CVPR2025/video_generation/learning_from_streaming_video_with_orthogonal_gradients.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](../../CVPR2026/video_generation/cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+
+<!-- RELATED:END -->

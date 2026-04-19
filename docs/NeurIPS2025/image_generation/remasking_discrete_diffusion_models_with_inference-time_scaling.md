@@ -107,3 +107,15 @@ ReMDM 的 NELBO 为 MDLM 目标的一个重加权版本，仅多了 (1-σ_t) 因
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖文本、图像、分子设计三个领域，加上LLaDA大模型验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、理论推导严谨、实验展示充分
 - 价值: ⭐⭐⭐⭐⭐ 零训练成本即可提升离散扩散模型性能，对 dLLM 社区有直接影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Scaling for Flow Models via Stochastic Generation and Rollover Budget Forcing](inference-time_scaling_for_flow_models_via_stochastic_generation_and_rollover_bu.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+
+<!-- RELATED:END -->

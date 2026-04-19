@@ -121,3 +121,15 @@ $$\mathcal{L}_{\text{CSD}} = \frac{1}{2} \sum_{y_t \in \mathcal{V}} \sum_{x \in 
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖多种 backbone、任务类型、on-policy 组合，消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，图示清晰，动机分析到位
 - 价值: ⭐⭐⭐⭐ 提供了统一的 logit 蒸馏设计框架，实际性能提升稳定但幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+- [Knowledge Fusion of Large Language Models Via Modular Skillpacks](knowledge_fusion_of_large_language_models_via_modular_skillpacks.md)
+- [Unveiling Super Experts in Mixture-of-Experts Large Language Models](unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
+- [Is Finer Better? The Limits of Microscaling Formats in Large Language Models](is_finer_better_the_limits_of_microscaling_formats_in_large_language_models.md)
+- [Landscape of Thoughts: Visualizing the Reasoning Process of Large Language Models](landscape_of_thoughts_visualizing_the_reasoning_process_of_large_language_models.md)
+
+<!-- RELATED:END -->

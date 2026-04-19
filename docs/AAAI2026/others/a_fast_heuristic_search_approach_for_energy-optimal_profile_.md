@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 10张大规模真实路网、2000次查询、4种变体对比，统计详尽；但缺少与Baum等的直接比较和不同车型/电池的实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，理论证明完整，附录提供了反向/双向伪代码和profile链接示例，可复现性强
 - 价值: ⭐⭐⭐⭐ 对EV路径规划领域有实际价值，算法简洁高效，但研究方向相对窄众（EV profile搜索社区较小）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Approximation Algorithm for Constrained k-Center Clustering: A Local Search Approach](approximation_algorithm_for_constrained_k-center_clustering_.md)
+- [PIPHEN: Physical Interaction Prediction with Hamiltonian Energy Networks](piphen_physical_interaction_prediction_with_hamiltonian_energy_networks.md)
+- [Intermediate N-Gramming: Deterministic and Fast N-Grams For Large N and Large Datasets](intermediate_n-gramming_deterministic_and_fast_n-grams_for_large_n_and_large_dat.md)
+- [From Decision Trees to Boolean Logic: A Fast and Unified SHAP Algorithm](from_decision_trees_to_boolean_logic_a_fast_and_unified_shap_algorithm.md)
+- [Deadline-Aware, Energy-Efficient Control of Domestic Immersion Hot Water Heaters](deadline-aware_energy-efficient_control_of_domestic_immersion_hot_water_heater.md)
+
+<!-- RELATED:END -->

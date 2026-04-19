@@ -122,3 +122,15 @@ Push-T 图像模态：0.87 → **0.93** (+6%)；Dynamic Push-T：0.65 → **0.80
 - 实验充分度: ⭐⭐⭐⭐⭐ 理论验证(螺旋)+仿真(Push-T/Robomimic/Kitchen)+真实机器人(UR5)，层层递进
 - 写作质量: ⭐⭐⭐⭐⭐ 生物学启发→数学框架→理论保证→实验验证的叙事链条极其流畅
 - 价值: ⭐⭐⭐⭐⭐ 为扩散策略引入动态感知机制，在机器人操控上有显著实际改善
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](real-world_reinforcement_learning_of_active_perception_behaviors.md)
+- [CHDP: Cooperative Hybrid Diffusion Policies for RL in Parametric Environments](../../AAAI2026/reinforcement_learning/chdp_cooperative_hybrid_diffusion_policies_for_reinforcement_learning_in_paramet.md)
+- [Reinforcement Learning with Action Chunking](reinforcement_learning_with_action_chunking.md)
+- [See It, Say It, Sorted: An Iterative Training-Free Framework for Visually-Grounded Multimodal Reasoning in LVLMs](../../CVPR2026/reinforcement_learning/see_it_say_it_sorted_an_iterative_training-free_framework_for_visually-grounded_.md)
+
+<!-- RELATED:END -->

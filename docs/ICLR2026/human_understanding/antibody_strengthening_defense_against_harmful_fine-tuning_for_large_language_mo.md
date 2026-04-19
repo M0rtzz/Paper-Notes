@@ -121,3 +121,15 @@ Antibody的HS比次优方法Lisa低8+个百分点。
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个下游数据集×3个模型+消融+理论分析，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，Figure 2的权重分布可视化极其直观
 - 价值: ⭐⭐⭐⭐⭐ 对FTaaS安全有直接的实践意义，HS从15%→7%是显著进步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Failures to Surface Harmful Contents in Video Large Language Models](../../AAAI2026/human_understanding/failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests](socialharmbench_revealing_llm_vulnerabilities_to_socially_harmful_requests.md)
+- [Safety Subspaces are Not Linearly Distinct: A Fine-Tuning Case Study](safety_subspaces_are_not_linearly_distinct_a_fine-tuning_case_study.md)
+- [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](../../AAAI2026/human_understanding/small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
+- [Heterogeneous Federated Fine-Tuning with Parallel One-Rank Adaptation](heterogeneous_federated_fine-tuning_with_parallel_one-rank_adaptation.md)
+
+<!-- RELATED:END -->

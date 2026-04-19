@@ -116,3 +116,15 @@ HgVT-Ti与DeiT-B (86.4M) 的ReaL精度相当（83.2% vs 86.7%），但参数仅1
 - 实验充分度: ⭐⭐⭐⭐ ImageNet分类+检索+详细消融，但缺密集预测任务
 - 写作质量: ⭐⭐⭐⭐ 超图形式化严谨，但篇幅偏长
 - 价值: ⭐⭐⭐⭐ 为视觉Transformer引入高阶关系建模提供了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DVHGNN: Multi-Scale Dilated Vision HGNN for Efficient Vision Recognition](dvhgnn_multi-scale_dilated_vision_hgnn_for_efficient_vision_recognition.md)
+- [Diagnosing and Addressing Pitfalls in KG-RAG Datasets: Toward More Reliable Benchmarking](../../NeurIPS2025/graph_learning/diagnosing_and_addressing_pitfalls_in_kg-rag_datasets_toward_more_reliable_bench.md)
+- [S'MoRE: Structural Mixture of Residual Experts for Parameter-Efficient LLM Fine-tuning](../../NeurIPS2025/graph_learning/smore_structural_mixture_of_residual_experts_for_parameter-efficient_llm_fine-tu.md)
+- [Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](../../ACL2025/graph_learning/kg_llm_trustworthy_qa.md)
+- [Are Graph Transformers Necessary? Efficient Long-Range Message Passing with Fractal Nodes in MPNNs](../../AAAI2026/graph_learning/are_graph_transformers_necessary_efficient_long-range_messag.md)
+
+<!-- RELATED:END -->

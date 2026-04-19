@@ -116,3 +116,15 @@ DeepNorm/Mix-LN 在大规模时发散，LNS 始终稳定。
 - 实验充分度: ⭐⭐⭐⭐⭐ 多架构(LLaMA/OLMo/Qwen2.5/ViT)×多规模(130M-7B)×完整流程验证
 - 写作质量: ⭐⭐⭐⭐ 问题→根因→解决方案→验证的逻辑清晰，Jacobian 可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 一行代码改动让所有 Pre-LN 模型受益，应成为 LLM 训练标准实践
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Fingerprinting of Large Language Models](scalable_fingerprinting_of_large_language_models.md)
+- [Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](retrospective_incontext_learning_for_temporal_credit_assignm.md)
+- [Leveraging Importance Sampling to Detach Alignment Modules from Large Language Models](leveraging_importance_sampling_to_detach_alignment_modules_from_large_language_m.md)
+- [Large Vocabulary Size Improves Large Language Models](../../ACL2025/llm_pretraining/large_vocabulary_size_improves_large_language_models.md)
+- [Large Language Models are Demonstration Pre-Selectors for Themselves](../../ICML2025/llm_pretraining/large_language_models_are_demonstration_pre-selectors_for_themselves.md)
+
+<!-- RELATED:END -->

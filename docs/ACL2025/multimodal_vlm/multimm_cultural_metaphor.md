@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 18+个基线，多维度分析充分
 - 写作质量: ⭐⭐⭐⭐ 数据分析部分丰富，模型部分略简单
 - 价值: ⭐⭐⭐⭐ 提升对文化偏见的认识，促进更公平的NLP系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Visual and Cultural Interpretation: The K-Viscuit Benchmark with Human-VLM Collaboration](evaluating_visual_and_cultural_interpretation_the_k-viscuit_benchmark_with_human.md)
+- [Unveiling Cultural Blind Spots: Analyzing the Limitations of mLLMs in Procedural Text Comprehension](unveiling_cultural_blind_spots_analyzing_the_limitations_of_mllms_in_procedural_.md)
+- [MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](mmmu_pro_robust_benchmark.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [WikiMixQA: A Multimodal Benchmark for Question Answering over Tables and Charts](wikimixqa_a_multimodal_benchmark_for_question_answering_over_tables_and_charts.md)
+
+<!-- RELATED:END -->

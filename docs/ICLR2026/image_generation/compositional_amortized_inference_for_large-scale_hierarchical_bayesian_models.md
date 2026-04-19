@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 从高斯玩具→层次 AR→真实荧光成像三层验证，但缺少与更多基线的对比
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，从不稳定性分析→解决方案的叙事清晰
 - 价值: ⭐⭐⭐⭐⭐ 首次使层次贝叶斯的摊销推断扩展到实际科学应用规模（75 万参数）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HierarchicalPrune: Position-Aware Compression for Large-Scale Diffusion Models](../../AAAI2026/image_generation/hierarchicalprune_position-aware_compression_for_large-scale_diffusion_models.md)
+- [Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency](large_scale_diffusion_distillation_via_score-regularized_continuous-time_consist.md)
+- [Large-Scale Training Data Attribution for Music Generative Models via Unlearning](../../NeurIPS2025/image_generation/large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
+- [Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](../../NeurIPS2025/image_generation/next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
+- [GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
+
+<!-- RELATED:END -->

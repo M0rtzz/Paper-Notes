@@ -120,3 +120,15 @@ GSAC 四阶段流水线：(1) 因果发现 + 域因子估计 → (2) 构建 ACR 
 ## 评分
 - 新颖性: ⭐⭐⭐⭐⭐ 首次在网络 MARL 中统一因果表示学习和域泛化，理论贡献重大
 - 实验充分度: ⭐⭐⭐ 理论充分但实验仅限两个表格式基准，实际应用验证不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BayesG: Bayesian Ego-Graph Inference for Networked Multi-Agent Reinforcement Learning](bayesian_ego-graph_inference_for_networked_multi-agent_reinforcement_learning.md)
+- [DriveDPO: Policy Learning via Safety DPO For End-to-End Autonomous Driving](drivedpo_policy_learning_via_safety_dpo_for_end-to-end_autonomous_driving.md)
+- [Wavelet Policy: Lifting Scheme for Policy Learning in Long-Horizon Tasks](../../ICCV2025/autonomous_driving/wavelet_policy_lifting_scheme_for_policy_learning_in_long-horizon_tasks.md)
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [TranSUN: A Preemptive Paradigm to Eradicate Retransformation Bias Intrinsically from Regression Models in Recommender Systems](transun_a_preemptive_paradigm_to_eradicate_retransformation_bias_intrinsically_f.md)
+
+<!-- RELATED:END -->

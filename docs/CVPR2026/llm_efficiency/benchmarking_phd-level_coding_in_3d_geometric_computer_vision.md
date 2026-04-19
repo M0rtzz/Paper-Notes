@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个模型、上下文消融、分类分析、创造性案例研究
 - 写作质量: ⭐⭐⭐⭐⭐ 构建流程透明可复现
 - 价值: ⭐⭐⭐⭐⭐ 对3D视觉自动化研究和LLM科学编码能力评估有长远推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Retention for Continual Learning with Vision Transformers](../../AAAI2026/llm_efficiency/attention_retention_for_continual_learning_with_vision_transformers.md)
+- [Token-level Data Selection for Safe LLM Fine-tuning](../../ICLR2026/llm_efficiency/token-level_data_selection_for_safe_llm_fine-tuning.md)
+- [InterMoE: Individual-Specific 3D Human Interaction Generation via Dynamic Temporal-Selective MoE](../../AAAI2026/llm_efficiency/intermoe_individual-specific_3d_human_interaction_generation_via_dynamic_tempora.md)
+- [Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](../../ACL2025/llm_efficiency/ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+
+<!-- RELATED:END -->

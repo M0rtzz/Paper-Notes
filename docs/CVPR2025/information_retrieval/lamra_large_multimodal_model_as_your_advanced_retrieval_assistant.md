@@ -126,3 +126,15 @@ LamRA = LamRA-Ret（检索）+ LamRA-Rank（重排序）。检索部分：在LMM
 - 实验充分度: ⭐⭐⭐⭐⭐ 16种M-BEIR任务+10个未见数据集+视频检索+完整消融，实验极其充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融分析有说服力，表格虽多但组织合理
 - 价值: ⭐⭐⭐⭐⭐ 证明了LMM作为通用检索器的可行性，对工业界多模态搜索系统有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Your Language Model Secretly Contains Personality Subnetworks](../../ICLR2026/information_retrieval/your_language_model_secretly_contains_personality_subnetworks.md)
+- [GENIUS: A Generative Framework for Universal Multimodal Search](genius_a_generative_framework_for_universal_multimodal_search.md)
+- [SafeRAG: Benchmarking Security in Retrieval-Augmented Generation of Large Language Model](../../ACL2025/information_retrieval/saferag_benchmarking_security_in_retrieval-augmented_generation_of_large_languag.md)
+- [Towards Open-Ended Visual Recognition with Large Language Model](../../ECCV2024/information_retrieval/towards_open-ended_visual_recognition_with_large_language_models.md)
+- [MITRA: An AI Assistant for Knowledge Retrieval in Physics Collaborations](../../NeurIPS2025/information_retrieval/mitra_an_ai_assistant_for_knowledge_retrieval_in_physics_collaborations.md)
+
+<!-- RELATED:END -->

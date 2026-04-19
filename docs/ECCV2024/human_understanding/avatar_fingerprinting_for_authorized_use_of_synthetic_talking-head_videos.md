@@ -125,3 +125,15 @@ Avatar指纹识别的身份验证性能：
 - 实验充分度: ⭐⭐⭐⭐（数据集和基线方法完整，但性能仍有提升空间）
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐（对AI生成内容的安全使用有重要意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalizable End-to-End Tool-Use RL with Synthetic CodeGym](../../ICLR2026/human_understanding/generalizable_end-to-end_tool-use_rl_with_synthetic_codegym.md)
+- [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
+- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
+- [Event-based Head Pose Estimation: Benchmark and Method](event-based_head_pose_estimation_benchmark_and_method.md)
+- [3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views](3dgazenet_generalizing_3d_gaze_estimation_with_weak-supervision_from_synthetic_v.md)
+
+<!-- RELATED:END -->

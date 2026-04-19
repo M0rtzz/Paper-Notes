@@ -126,3 +126,15 @@ tags:
 - ⭐⭐⭐⭐ 实验充分度：合成+真实网络、多种传播参数、两种种子场景、解结构分析和收敛性分析
 - ⭐⭐⭐⭐ 实用价值：在公共卫生监测（尤其院内感染）中有明确应用前景，低预算高效果
 - ⭐⭐⭐⭐ 写作质量：理论推导严谨，问题动机清晰，但符号较多需要一定信息论和图论背景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Optimal Multimodal Information Bottleneck Representations](../../ICML2025/multimodal_vlm/learning_optimal_multimodal_information_bottleneck_representations.md)
+- [Exploring LLMs for Scientific Information Extraction using the SciEx Framework](exploring_llms_for_scientific_information_extraction_using_the_sciex_framework.md)
+- [Conditional Information Bottleneck for Multimodal Fusion: Overcoming Shortcut Learning in Sarcasm Detection](conditional_information_bottleneck_for_multimodal_fusion_overcoming_shortcut_lea.md)
+- [Evading Data Provenance in Deep Neural Networks](../../ICCV2025/multimodal_vlm/evading_data_provenance_in_deep_neural_networks.md)
+- [LiveWeb-IE: A Benchmark For Online Web Information Extraction](../../ICLR2026/multimodal_vlm/liveweb-ie_a_benchmark_for_online_web_information_extraction.md)
+
+<!-- RELATED:END -->

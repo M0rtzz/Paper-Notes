@@ -73,3 +73,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ DreamBench++ 全面评估+消融
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐⭐ 零样本超越微调方法是重大突破
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
+- [LaTexBlend: Scaling Multi-concept Customized Generation with Latent Textual Blending](latexblend_scaling_multi-concept_customized_generation_with_latent_textual_blend.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
+- [DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability](../../ICCV2025/image_generation/dynamicid_zero-shot_multi-id_image_personalization_with_flexible_facial_editabil.md)
+- [MultiGen: Zero-Shot Image Generation from Multi-modal Prompts](../../ECCV2024/image_generation/multigen_zero-shot_image_generation_from_multi-modal_prompts.md)
+
+<!-- RELATED:END -->

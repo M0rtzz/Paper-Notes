@@ -149,3 +149,15 @@ $$L_{\text{conf}}(\hat{P}, P) = \frac{1}{HW} \sum_{i=1}^{HW} C_i L_{\text{reg}}(
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖深度/场景流/目标跟踪多任务，但真实数据评估可更全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 从不变性分析自然推导出设计，逻辑清晰
 - **价值**: ⭐⭐⭐⭐⭐ 为动态3D视觉提供了统一的表示基础，影响力可能很大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
+- [Back on Track: Bundle Adjustment for Dynamic Scene Reconstruction](back_on_track_bundle_adjustment_for_dynamic_scene_reconstruction.md)
+- [D$^2$USt3R: Enhancing 3D Reconstruction for Dynamic Scenes](../../NeurIPS2025/3d_vision/d2ust3r_enhancing_3d_reconstruction_for_dynamic_scenes.md)
+- [DeGauss: Dynamic-Static Decomposition with Gaussian Splatting for Distractor-free 3D Reconstruction](degauss_dynamic-static_decomposition_with_gaussian_splatting_for_distractor-free.md)
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+
+<!-- RELATED:END -->

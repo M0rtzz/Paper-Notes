@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多数据集、多扰动类型、多分类设置，理论与实验对应好
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨完整，行文结构清晰，证明放附录不影响可读性
 - 价值: ⭐⭐⭐ 理论工作，对实际 Transformer 的直接指导有待后续验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [The Coherence Trap: MLLM-Crafted Narratives Exploit Manipulated Visual Contexts](the_coherence_trap_when_mllmcrafted_narratives_exp.md)
+- [MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent](mergevla_crossskill_model_merging_toward_a_general.md)
+- [Probabilistic Concept Graph Reasoning for Multimodal Misinformation Detection](probabilistic_concept_graph_reasoning_for_multimodal_misinformation_detection.md)
+
+<!-- RELATED:END -->

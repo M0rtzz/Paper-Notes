@@ -121,3 +121,15 @@ TPR-CL 在 ObjHal 上相比基线 LLaVA-1.5 减少了 ~93% 的幻觉（CHs: 53.6
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个幻觉基准、通用能力基准、详细消融、数据效率分析
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，motivation 到方法到实验环环相扣
 - 价值: ⭐⭐⭐⭐⭐ 93% 幻觉减少 + 高数据效率，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Object Hallucinations via Sentence-Level Early Intervention](../../ICCV2025/multimodal_vlm/mitigating_object_hallucinations_via_sentence-level_early_intervention.md)
+- [DASH: Detection and Assessment of Systematic Hallucinations of VLMs](../../ICCV2025/multimodal_vlm/dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)
+- [Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models](seeing_is_believing_mitigating_ocr_hallucinations_in_multimodal_large_language_m.md)
+- [When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations](when_semantics_mislead_vision_mitigating_large_multimodal_models_hallucinations_.md)
+- [HermesFlow: Seamlessly Closing the Gap in Multimodal Understanding and Generation](hermesflow_seamlessly_closing_the_gap_in_multimodal_understanding_and_generation.md)
+
+<!-- RELATED:END -->

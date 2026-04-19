@@ -150,3 +150,15 @@ ImageNet 512×512：
 - **实验充分性** ⭐⭐⭐⭐⭐：质量/效率/灵活性三维度评估，消融充分，与 VAR/DiT/MaskGIT 多类基线对比
 - **清晰度** ⭐⭐⭐⭐⭐：理论推导简洁，实验展示清晰，整体结构优秀
 - **实用价值** ⭐⭐⭐⭐⭐：比 VAR 更快更省内存更灵活且质量不降，是直接可替换的升级方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Collaborative Decoding Makes Visual Auto-Regressive Modeling Efficient](collaborative_decoding_makes_visual_auto-regressive_modeling_efficient.md)
+- [MMAR: Towards Lossless Multi-Modal Auto-Regressive Probabilistic Modeling](mmar_towards_lossless_multi-modal_auto-regressive_probabilistic_modeling.md)
+- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+- [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](../../NeurIPS2025/image_generation/distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
+
+<!-- RELATED:END -->

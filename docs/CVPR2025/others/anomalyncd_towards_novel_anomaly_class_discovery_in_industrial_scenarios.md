@@ -143,3 +143,15 @@ $$\mathcal{L} = \lambda(\mathcal{L}_{rep}^l + \mathcal{L}_{cls}^l) + (1-\lambda)
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融极其详尽（7个消融+跨数据集+每类结果）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 工业质检下游处理的重要基石
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples](../../CVPR2026/others/novel_anomaly_detection_scenarios_and_evaluation_metrics_to_address_the_ambiguit.md)
+- [ADPretrain: Advancing Industrial Anomaly Detection via Anomaly Representation Pretraining](../../NeurIPS2025/others/adpretrain_advancing_industrial_anomaly_detection_via_anomaly_representation_pre.md)
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
+- [MOS: Modeling Object-Scene Associations in Generalized Category Discovery](mos_modeling_object-scene_associations_in_generalized_category_discovery.md)
+- [Joint Out-of-Distribution Filtering and Data Discovery Active Learning](joint_out-of-distribution_filtering_and_data_discovery_active_learning.md)
+
+<!-- RELATED:END -->

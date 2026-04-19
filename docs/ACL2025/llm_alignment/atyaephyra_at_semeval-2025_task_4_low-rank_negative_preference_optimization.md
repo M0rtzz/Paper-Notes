@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅在一个模型上验证，多种子多超参数实验但方差较大
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，方法动机阐述明确
 - 价值: ⭐⭐⭐⭐ 对 LLM 遗忘领域的实践者有直接参考价值，LoRA 结构利用思路可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LSSF: Safety Alignment via Low-Rank Safety Subspace Fusion](lssf_safety_subspace.md)
+- [AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs](automixalign_adaptive_data_mixing.md)
+- [World Modeling Makes a Better Planner: Dual Preference Optimization for Embodied Task Planning](world_modeling_makes_a_better_planner_dual_preference_optimization_for_embodied_.md)
+- [Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](../../CVPR2025/llm_alignment/task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
+- [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](sea_lowresource_safety_alignment_for_multimodal.md)
+
+<!-- RELATED:END -->

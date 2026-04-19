@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据库、多种baseline、跨数据集泛化、超参鲁棒性、消融实验、分布偏移分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，临床动机解释充分，贡献分C1-C4有条理
 - 价值: ⭐⭐⭐⭐ 系统完整、面向真实部署（多医院合作+RCT计划），但离线评估仍是局限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Test-Time Training for Predicting Need for Invasive Mechanical Ventilation in Multi-Center Cohorts](../../ICLR2026/medical_imaging/adaptive_test-time_training_for_predicting_need_for_invasive_mechanical_ventilat.md)
+- [Overthinking Reduction with Decoupled Rewards and Curriculum Data Scheduling](../../ICLR2026/medical_imaging/overthinking_reduction_with_decoupled_rewards_and_curriculum_data_scheduling.md)
+- [MMedAgent-RL: Optimizing Multi-Agent Collaboration for Multimodal Medical Reasoning](../../ICLR2026/medical_imaging/mmedagent-rl_optimizing_multi-agent_collaboration_for_multimodal_medical_reasoni.md)
+- [Exo-Plore: Exploring Exoskeleton Control Space through Human-Aligned Simulation](../../ICLR2026/medical_imaging/exo-plore_exploring_exoskeleton_control_space_through_human-aligned_simulation.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](../../CVPR2026/medical_imaging/chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+
+<!-- RELATED:END -->

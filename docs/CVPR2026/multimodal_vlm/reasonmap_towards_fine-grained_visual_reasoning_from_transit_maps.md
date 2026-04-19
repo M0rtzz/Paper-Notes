@@ -144,3 +144,15 @@ ReasonMap 的构建流程分为三个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 16 个模型全面对比 + 视觉遮蔽 + RL 基线 + 错误分析，非常充分
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，评估框架描述严谨
 - 价值: ⭐⭐⭐⭐ — 为细粒度视觉推理提供了重要基准，开源/闭源差异发现有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OddGridBench: Exposing the Lack of Fine-Grained Visual Discrepancy Sensitivity in Multimodal Large Language Models](oddgridbench_exposing_the_lack_of_fine-grained_visual_discrepancy_sensitivity_in.md)
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+- [To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning](../../NeurIPS2025/multimodal_vlm/think_or_not_think_a_study_of_explicit_thinking_in_rule-based_visual_reinforceme.md)
+- [HandVQA: Diagnosing and Improving Fine-Grained Spatial Reasoning about Hands in Vision-Language Models](handvqa_diagnosing_and_improving_fine-grained_spatial_reasoning_about_hands_in_v.md)
+- [SALMUBench: A Benchmark for Sensitive Association-Level Multimodal Unlearning](salmubench_a_benchmark_for_sensitive_association-level_multimodal_unlearning.md)
+
+<!-- RELATED:END -->

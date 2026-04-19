@@ -146,3 +146,15 @@ PaSBench是纯评测benchmark，不涉及训练。
 - **实验充分度**: ⭐⭐⭐⭐ 36个模型的大规模评测和深入诊断分析；数据量较小是遗憾
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机阐述令人信服，实验分析层层递进，洞察力强
 - **价值**: ⭐⭐⭐⭐⭐ 对AI安全领域具有方向性意义，数据集已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Multimodal Large Language Models on Core Music Perception Tasks](evaluating_multimodal_large_language_models_on_core_music_perception_tasks.md)
+- [Adapting Vision-Language Models for Evaluating World Models](adapting_visionlanguage_models_for_evaluating_world_models.md)
+- [MME-VideoOCR: Evaluating OCR-Based Capabilities of Multimodal LLMs in Video Scenarios](mme-videoocr_evaluating_ocr-based_capabilities_of_multimodal_llms_in_video_scena.md)
+- [Beyond Greedy Exits: Improved Early Exit Decisions for Risk Control and Reliability](beyond_greedy_exits_improved_early_exit_decisions_for_risk_control_and_reliabili.md)
+- [Advancing Compositional Awareness in CLIP with Efficient Fine-Tuning](advancing_compositional_awareness_in_clip_with_efficient_fin.md)
+
+<!-- RELATED:END -->

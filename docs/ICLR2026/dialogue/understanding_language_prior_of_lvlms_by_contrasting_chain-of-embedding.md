@@ -121,3 +121,15 @@ $$\mathcal{L}(x, y; \theta) = -\log F_\theta(y|x) - \lambda \cdot \text{TVI}(l^*
 - 实验充分度: ⭐⭐⭐⭐⭐ 10个模型×6个数据集=60种设置，消融全面，含介入验证和理论分析
 - 写作质量: ⭐⭐⭐⭐ 论述清晰，公式推导严谨，图表信息丰富
 - 价值: ⭐⭐⭐⭐ 为理解和改进LVLM提供了实用分析工具，TVI正则化展示了实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Human and LLM Judgments: Understanding and Narrowing the Gap](../../NeurIPS2025/dialogue/bridging_human_and_llm_judgments_understanding_and_narrowing_the_gap.md)
+- [UniConv: Unifying Retrieval and Response Generation for Large Language Models in Conversations](../../ACL2025/dialogue/uniconv_retrieval_response_gen.md)
+- [Position: Uncertainty Quantification Needs Reassessment for Large-language Model Agents](../../ICML2025/dialogue/position_uncertainty_quantification_needs_reassessment_for_large-language_model_.md)
+- [Non-Collaborative User Simulators for Tool Agents](non-collaborative_user_simulators_for_tool_agents.md)
+- [AQuA: Toward Strategic Response Generation for Ambiguous Visual Questions](aqua_toward_strategic_response_generation_for_ambiguous_visual_questions.md)
+
+<!-- RELATED:END -->

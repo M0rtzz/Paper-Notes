@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个完整基准但消融不足
 - 写作质量: ⭐⭐⭐⭐⭐ 清晰的伦理考量和详细标注流程
 - 价值: ⭐⭐⭐⭐⭐ 高度实际应用价值且开放资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FIA-Edit: Frequency-Interactive Attention for Efficient and High-Fidelity Inversion-Free Text-Guided Image Editing](fia-edit_frequency-interactive_attention_for_efficient_and_high-fidelity_inversi.md)
+- [A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment](a_principle-driven_adaptive_policy_for_group_cognitive_stimu.md)
+- [GLEAM: A Multimodal Imaging Dataset and HAMM for Glaucoma Classification](../../CVPR2026/medical_imaging/gleam_a_multimodal_imaging_dataset_and_hamm_for_gl.md)
+- [Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering](expert-guided_prompting_and_retrieval-augmented_generation_for_emergency_medical.md)
+- [MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss](maisi-v2_accelerated_3d_high-resolution_medical_image_synthesis_with_rectified_f.md)
+
+<!-- RELATED:END -->

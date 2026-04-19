@@ -143,3 +143,15 @@ $$A_{\text{Text}} = \{\text{label}_{\text{Adv}} \mid \text{AbstractedLabel} \not
 - 实验充分度: ⭐⭐⭐⭐ (多代理、多任务、2D/3D 全面实验)
 - 写作质量: ⭐⭐⭐ (内容密集，符号系统复杂，可读性一般)
 - 价值: ⭐⭐⭐⭐ (为 AI 安全评估提供新工具)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Composition and Alignment of Diffusion Models using Constrained Learning](composition_and_alignment_of_diffusion_models_using_constrai.md)
+- [Epistemic Uncertainty for Generated Image Detection](epistemic_uncertainty_for_generated_image_detection.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [Training-Free Constrained Generation with Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)
+- [Semantic Surgery: Zero-Shot Concept Erasure in Diffusion Models](semantic_surgery_zero-shot_concept_erasure_in_diffusion_models.md)
+
+<!-- RELATED:END -->

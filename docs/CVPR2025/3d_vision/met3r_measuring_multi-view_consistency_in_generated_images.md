@@ -130,3 +130,15 @@ MEt3R本身是评价指标不需要训练。MV-LDM使用标准扩散训练。
 - 实验充分度: ⭐⭐⭐⭐⭐ 多视角/视频/物体三类方法全面评估，指标验证详尽，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 论文写得非常清楚，图表设计出色（尤其Fig.4的多指标对比），动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 填补了多视角一致性评价的关键空白，对推动多视角/视频生成的3D一致性研究有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CADDreamer: CAD Object Generation from Single-view Images](caddreamer_cad_object_generation_from_single-view_images.md)
+- [3D Gaussian Inpainting with Depth-Guided Cross-View Consistency](3d_gaussian_inpainting_with_depth-guided_cross-view_consistency.md)
+- [Auto-Regressively Generating Multi-View Consistent Images](../../ICCV2025/3d_vision/auto-regressively_generating_multi-view_consistent_images.md)
+- [IMFine: 3D Inpainting via Geometry-guided Multi-view Refinement](imfine_3d_inpainting_via_geometry-guided_multi-view_refinement.md)
+- [MVPaint: Synchronized Multi-View Diffusion for Painting Anything 3D](mvpaint_synchronized_multi-view_diffusion_for_painting_anything_3d.md)
+
+<!-- RELATED:END -->

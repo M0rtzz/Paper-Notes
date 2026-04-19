@@ -97,3 +97,15 @@ SLICE的pipeline分三步：(1) 从参考图像中提取四个语义因子描述
 - 实验充分度: ⭐⭐⭐⭐ 对抗三种伪造攻击和五种常规扰动，定性case study清晰，但数据集规模未详述
 - 写作质量: ⭐⭐⭐⭐⭐ 理论证明完整，框架描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 解决了语义感知水印的核心脆弱性，但极端几何变换的局限降低了独立部署的可靠性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
+- [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)
+- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_cross-modal_knowledge_transfer_for_knowledge-aware_concept_cust.md)
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+
+<!-- RELATED:END -->

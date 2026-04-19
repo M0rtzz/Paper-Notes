@@ -117,3 +117,15 @@ ChunkKV 在极端压缩率（10%）下优势最明显，GSM8K 上比次优方法
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个模型，4个benchmark大类，多压缩率，chunk size 消融，量化对比，hybrid 分析，效率分析，理论解释
 - 写作质量: ⭐⭐⭐⭐ Figure 1 的对比直观，Table 1 的方法对比清晰
 - 价值: ⭐⭐⭐⭐⭐ Training-free + 已集成 NVIDIA kvpress 库 + 与量化正交，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments](keydiff_key_similarity-based_kv_cache_eviction_for_long-context_llm_inference_in.md)
+- [Inference-Time Hyper-Scaling with KV Cache Compression](inference-time_hyper-scaling_with_kv_cache_compression.md)
+- [RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](../../ICML2025/model_compression/rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [MUSTAFAR: Promoting Unstructured Sparsity for KV Cache Pruning in LLM Inference](mustafar_promoting_unstructured_sparsity_for_kv_cache_pruning_in_llm_inference.md)
+- [Homogeneous Keys, Heterogeneous Values: Exploiting Local KV Cache Asymmetry for Long-Context LLMs](homogeneous_keys_heterogeneous_values_exploiting_local_kv_cache_asymmetry_for_lo.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ VPTQ利用Hessian信息优化后训练量化码本。PocketLLM在所有压缩比
 - 实验充分度: ⭐⭐⭐⭐ — 多模型/多压缩比/消融全面，但缺推理速度分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，技术细节完整
 - 价值: ⭐⭐⭐⭐⭐ — 极端压缩场景下显著优于已有方法，对边缘部署有重要实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SkipCat: Rank-Maximized Low-Rank Compression of Large Language Models via Shared Projection and Block Skipping](skipcat_rank-maximized_low-rank_compression_of_large_language_models_via_shared_.md)
+- [Distillation of Large Language Models via Concrete Score Matching](../../ICLR2026/model_compression/distillation_of_large_language_models_via_concrete_score_matching.md)
+- [500xCompressor: Generalized Prompt Compression for Large Language Models](../../ACL2025/model_compression/500xcompressor_generalized_prompt_compression_for_large_language_models.md)
+- [CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)
+- [Efficient Reasoning for Large Reasoning Language Models via Certainty-Guided Reflection Suppression](efficient_reasoning_for_large_reasoning_language_models_via_certainty-guided_ref.md)
+
+<!-- RELATED:END -->

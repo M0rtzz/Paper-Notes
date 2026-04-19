@@ -145,3 +145,15 @@ CNCB数据集542张分割掩码（512×512）的下采样对比：
 - 实验充分度: ⭐⭐⭐⭐ (医学图像+两个应用场景，定量全面，但仅测试一个数据集)
 - 写作质量: ⭐⭐⭐⭐ (数学严谨，但符号密集，需要读者有拓扑学基础)
 - 价值: ⭐⭐⭐⭐ (解决了一个有明确需求的问题，但应用场景相对小众)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning with Preserving for Continual Multitask Learning](../../AAAI2026/medical_imaging/learning_with_preserving_for_continual_multitask_learning.md)
+- [A Rotation-Invariant Texture ViT for Fine-Grained Recognition of Esophageal Cancer Endoscopic Ultrasound Images](a_rotation-invariant_texture_vit_for_fine-grained_recognition_of_esophageal_canc.md)
+- [Radiation-Preserving Selective Imaging for Pediatric Hip Dysplasia: A Cross-Modal Approach](../../AAAI2026/medical_imaging/radiation-preserving_selective_imaging_for_pediatric_hip_dysplasia_a_cross-modal.md)
+- [SegAnyPET: Universal Promptable Segmentation from Positron Emission Tomography Images](../../ICCV2025/medical_imaging/seganypet_universal_promptable_segmentation_from_positron_emission_tomography_im.md)
+- [Robust Multi-Source Covid-19 Detection in CT Images](../../CVPR2026/medical_imaging/robust_multi-source_covid-19_detection_in_ct_images.md)
+
+<!-- RELATED:END -->

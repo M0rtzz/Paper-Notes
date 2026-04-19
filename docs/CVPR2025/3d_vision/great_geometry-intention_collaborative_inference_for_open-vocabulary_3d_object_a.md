@@ -158,3 +158,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{focal} + \mathcal{L}_{dice}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三分区评测、详细消融、注意力可视化、数据集贡献
 - **论文写作**: ⭐⭐⭐⭐ — 动机清晰，图示丰富，方法描述完整
 - **实用价值**: ⭐⭐⭐⭐ — 开放词汇 affordance 对机器人操作具有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions](grounding_3d_object_affordance_with_language_instructions_visual_observations_an.md)
+- [Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)
+- [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
+- [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
+
+<!-- RELATED:END -->

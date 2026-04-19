@@ -121,3 +121,15 @@ HALoGEN 由两大核心组成：(1) 涵盖 9 个领域的 10,923 条生成式 pr
 - 实验充分度: ⭐⭐⭐⭐⭐ 规模空前——14 模型 × 9 领域 × 150K 生成，覆盖极为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分类明确，ACL Outstanding Paper 认可
 - 价值: ⭐⭐⭐⭐⭐ 为幻觉研究提供了基础性评测工具和参考基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Teaming LLMs to Detect and Mitigate Hallucinations](../../NeurIPS2025/llm_safety/teaming_llms_to_detect_and_mitigate_hallucinations.md)
+- [Stochastic Chameleons: Irrelevant Context Hallucinations Reveal Class-Based (Mis)Generalization in LLMs](stochastic_chameleons_irrelevant_context_hallucinations_reveal_class-based_misge.md)
+- [Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)
+- [TreeCut: A Synthetic Unanswerable Math Word Problem Dataset for LLM Hallucination Evaluation](treecut_a_synthetic_unanswerable_math_word_problem_dataset_for_llm_hallucination.md)
+- [LLM Targeted Underperformance Disproportionately Impacts Vulnerable Users](../../AAAI2026/llm_safety/llm_targeted_underperformance_disproportionately_impacts_vulnerable_users.md)
+
+<!-- RELATED:END -->

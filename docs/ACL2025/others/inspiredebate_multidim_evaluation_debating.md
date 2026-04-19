@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个开源+2个闭源模型，自动+人工评估
 - 写作质量: ⭐⭐⭐ 框架复杂但写作较清晰，部分公式符号较密
 - 价值: ⭐⭐⭐⭐ 为 LLM 辩论提供了评估+优化的完整工具链
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FCMR: Robust Evaluation of Financial Cross-Modal Multi-Hop Reasoning](fcmr_robust_evaluation_of_financial_cross-modal_multi-hop_reasoning.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+- [Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
+- [GETReason: Enhancing Image Context Extraction through Hierarchical Multi-Agent Reasoning](getreason_enhancing_image_context_extraction_through_hierarchical_multi-agent_re.md)
+- [AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning](aide_attribute-guided_multi-hop_data_expansion_for_data_scarcity_in_task-specifi.md)
+
+<!-- RELATED:END -->

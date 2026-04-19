@@ -172,3 +172,15 @@ $$L = \mathbb{E}_{x_0 \in D^T, \epsilon \sim \mathcal{N}(0, I), n} \left[ \| \ep
 | 实用价值 | ⭐⭐⭐⭐ | 跨域泛化+少样本能力强，代码开源，有实际应用潜力 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，但多智能体部分细节分散在大量附录中 |
 | 总评 | ⭐⭐⭐⭐ | 扎实的工作，问题定义清晰，方法设计合理，实验充分 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)
+- [Unified Uncertainty-Aware Diffusion for Multi-Agent Trajectory Modeling](../../CVPR2025/image_generation/unified_uncertainty-aware_diffusion_for_multi-agent_trajectory_modeling.md)
+- [LSCD: Lomb-Scargle Conditioned Diffusion for Time Series Imputation](lscd_lomb-scargle_conditioned_diffusion_for_time_series_imputation.md)
+- [A Diffusion Model for Regular Time Series Generation from Irregular Data with Completion and Masking](../../NeurIPS2025/image_generation/a_diffusion_model_for_regular_time_series_generation_from_irregular_data_with_co.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2025/image_generation/codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+
+<!-- RELATED:END -->

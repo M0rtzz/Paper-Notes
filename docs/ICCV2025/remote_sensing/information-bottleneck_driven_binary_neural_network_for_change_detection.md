@@ -147,3 +147,15 @@ $$\min \text{Obj} = \beta_1 \|Z(\theta)\|_2 + L_{cd} + \beta_2(\|Z(\theta,\eta)_
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、两个框架、详细消融和边缘设备部署验证
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，信息平面分析直观
 - **价值**: ⭐⭐⭐⭐ — 为资源受限场景的变化检测提供了实用方案，有实际部署意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Augmented Kalman Filters for Road Network Assisted GNSS Positioning](../../ICML2025/remote_sensing/neural_augmented_kalman_filters_for_road_network_assisted_gnss_positioning.md)
+- [GeoExplorer: Active Geo-Localization with Curiosity-Driven Exploration](geoexplorer_active_geo-localization_with_curiosity-driven_exploration.md)
+- [Hierarchical Dual-Change Collaborative Learning for UAV Scene Change Captioning](../../CVPR2025/remote_sensing/hierarchical_dual-change_collaborative_learning_for_uav_scene_change_captioning.md)
+- [MFogHub: Bridging Multi-Regional and Multi-Satellite Data for Global Marine Fog Detection and Forecasting](../../CVPR2025/remote_sensing/mfoghub_bridging_multi-regional_and_multi-satellite_data_for_global_marine_fog_d.md)
+- [RSCC: A Large-Scale Remote Sensing Change Caption Dataset for Disaster Events](../../NeurIPS2025/remote_sensing/rscc_a_large-scale_remote_sensing_change_caption_dataset_for_disaster_events.md)
+
+<!-- RELATED:END -->

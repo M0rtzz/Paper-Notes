@@ -114,3 +114,15 @@ GRPO (Group Relative Policy Optimization)。Base model: Qwen3-14B + LoRA adapter
 - 实验充分度: ⭐⭐⭐ Workshop paper 规模，单一领域
 - 写作质量: ⭐⭐⭐⭐ 简洁清晰
 - 价值: ⭐⭐⭐⭐⭐ 小模型超越 frontier 的结果非常有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thinker: Training LLMs in Hierarchical Thinking for Deep Search via Multi-Turn Interaction](../../AAAI2026/reinforcement_learning/thinker_training_llms_in_hierarchical_thinking_for_deep_search_via_multi-turn_in.md)
+- [Strict Subgoal Execution: Reliable Long-Horizon Planning in Hierarchical Reinforcement Learning](../../ICLR2026/reinforcement_learning/strict_subgoal_execution_reliable_long-horizon_planning_in_hierarchical_reinforc.md)
+- [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
+- [Horizon Reduction Makes RL Scalable](horizon_reduction_makes_rl_scalable.md)
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+
+<!-- RELATED:END -->

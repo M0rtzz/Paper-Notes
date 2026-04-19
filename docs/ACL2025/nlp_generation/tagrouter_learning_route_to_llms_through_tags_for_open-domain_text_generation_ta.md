@@ -206,3 +206,15 @@ TagGenerator 的训练策略包括三部分。
 - 实验充分度: ⭐⭐⭐⭐⭐ 有真实用户数据集、跨任务分析、跨模型组验证、可扩展性实验和多种消融，证据链比较完整。
 - 写作质量: ⭐⭐⭐⭐ 方法结构清晰，工程动机讲得比较透；不足是部分附录表格在阅读时更像工程报告，细节稍碎。
 - 价值: ⭐⭐⭐⭐⭐ 对真实 LLM 服务编排很有参考意义，尤其适合预算敏感、模型池频繁变化的场景。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-document Summarization through Multi-document Event Relation Graph Reasoning in LLMs](event_graph_bias_mitigation_summarization.md)
+- [Towards Better Open-Ended Text Generation: A Multicriteria Evaluation Framework](towards_better_open-ended_text_generation_a_multicriteria_evaluation_framework.md)
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [Personalized Text Generation with Contrastive Activation Steering](personalized_text_generation_with_contrastive_activation_steering.md)
+- [Writing Like the Best: Exemplar-Based Expository Text Generation](writing_like_best_exemplar.md)
+
+<!-- RELATED:END -->

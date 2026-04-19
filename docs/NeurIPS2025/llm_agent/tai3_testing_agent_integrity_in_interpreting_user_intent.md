@@ -162,3 +162,15 @@ TAI3 在 **所有领域、所有意图类别、所有目标模型** 上均超越
 - 实验充分度: ⭐⭐⭐⭐ — 80 个 API、5 领域、多目标模型、泛化实验和消融全面，缺少多步交互场景
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、形式化与直觉并重，图表优秀（尤其 Figure 1-3 的示例极具说服力）
 - 价值: ⭐⭐⭐⭐ — 填补了 Agent 意图完整性系统化测试的空白，对 Agent 部署质量保障具有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [iAgent: LLM Agent as a Shield between User and Recommender Systems](../../ACL2025/llm_agent/iagent_llm_agent_as_a_shield_between_user_and_recommender_systems.md)
+- [Judge Reliability Harness: Stress Testing the Reliability of LLM Judges](../../ICLR2026/llm_agent/judge_reliability_harness_stress_testing_the_reliability_of_llm_judges.md)
+- [MAT-Agent: Adaptive Multi-Agent Training Optimization](mat-agent_adaptive_multi-agent_training_optimization.md)
+- [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
+- [Group-in-Group Policy Optimization for LLM Agent Training](groupingroup_policy_optimization_for_llm_agent_training.md)
+
+<!-- RELATED:END -->

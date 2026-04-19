@@ -120,3 +120,15 @@ V-Bridge 将图像修复建模为一条从低质到高质的"质量进化轨迹"
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多种退化和 benchmark，OOD 测试充分，但缺少与更多 all-in-one 方法的对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，框架图直观，但部分实验表格不够整洁
 - 价值: ⭐⭐⭐⭐⭐ 开辟了视频先验用于低层视觉的新方向，影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AS-Bridge: A Bidirectional Generative Framework Bridging Next-Generation Astronomical Surveys](asbridge_a_bidirectional_generative_framework_brid.md)
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
+- [Agentic Retoucher for Text-To-Image Generation](agentic_retoucher_for_text-to-image_generation.md)
+- [Taming Video Models for 3D and 4D Generation via Zero-Shot Camera Control](taming_video_models_for_3d_and_4d_generation_via_zero-shot_camera_control.md)
+
+<!-- RELATED:END -->

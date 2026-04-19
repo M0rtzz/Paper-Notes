@@ -138,3 +138,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{entro}} + \lambda \cdot \mathcal{L}_{\text{al
 - **实验充分度**: ⭐⭐⭐⭐⭐ 15个数据集，两种骨干网络，详细消融（缓存组件、检索策略、缓存大小、模态权重）
 - **写作质量**: ⭐⭐⭐⭐ 条理清晰，公式规范，但部分符号定义可更简洁
 - **价值**: ⭐⭐⭐⭐ 对 TTA 领域的缓存方法有明确推进，但应用场景限于分类
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Multimodal Prototype Learning in Vision-Language Models](dynamic_multimodal_prototype_learning_in_vision-language_models.md)
+- [LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
+- [Test-Time Spectrum-Aware Latent Steering for Zero-Shot Generalization in Vision-Language Models](../../NeurIPS2025/multimodal_vlm/test-time_spectrum-aware_latent_steering_for_zero-shot_generalization_in_vision-.md)
+- [Realistic Test-Time Adaptation of Vision-Language Models](../../CVPR2025/multimodal_vlm/realistic_test-time_adaptation_of_vision-language_models.md)
+- [TOMCAT: Test-time Comprehensive Knowledge Accumulation for Compositional Zero-Shot Learning](../../NeurIPS2025/multimodal_vlm/tomcat_test-time_comprehensive_knowledge_accumulation_for_compositional_zero-sho.md)
+
+<!-- RELATED:END -->

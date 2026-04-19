@@ -122,3 +122,15 @@ POLISH++ F₁ 相比 CLEAN 提升 **158%**（0.2750→0.7107），相比 POLISH 
 - 实验充分度: ⭐⭐⭐⭐⭐ — 源检测+形状估计+透镜发现+鲁棒性+适应性的全面评估，极为充分
 - 写作质量: ⭐⭐⭐⭐ — 背景介绍清晰，实验设计科学，天文领域知识分析深入
 - 价值: ⭐⭐⭐⭐ — 使 DL 方法首次可部署到下一代射电望远镜的实际规模，对射电天文社区有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](../../CVPR2026/image_restoration/polishing_the_sky_wide-field_and_high-dynamic_range_interferometric_image_recons.md)
+- [Augmenting Perceptual Super-Resolution via Image Quality Predictors](augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
+- [MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](../../NeurIPS2025/image_restoration/moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
+- [Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)
+- [Complexity Experts are Task-Discriminative Learners for Any Image Restoration](complexity_experts_are_task-discriminative_learners_for_any_image_restoration.md)
+
+<!-- RELATED:END -->

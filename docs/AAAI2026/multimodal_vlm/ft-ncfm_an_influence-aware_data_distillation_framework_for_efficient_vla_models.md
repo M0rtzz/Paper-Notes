@@ -160,3 +160,15 @@ $$\min_{D_{synth}} \max_\psi \left\| \sum_{i=1}^{N} \frac{w_i}{\sum_j w_j} \psi(
 ## 评分
 
 ⭐⭐⭐⭐ — 提出了 VLA 领域首个数据中心生成式蒸馏框架，范式创新明确，实验覆盖三个主流基准且效果显著（5% 数据达 85-90% SOTA）。局限在于仿真器依赖和模板覆盖有限，但整体思路对推动高效 VLA 研究有较大价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WebDS: An End-to-End Benchmark for Web-based Data Science](../../ICLR2026/multimodal_vlm/webds_an_end-to-end_benchmark_for_web-based_data_science.md)
+- [Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective](../../ICLR2026/multimodal_vlm/why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](../../ICCV2025/multimodal_vlm/physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+- [SCAN: Bootstrapping Contrastive Pre-training for Data Efficiency](../../ICCV2025/multimodal_vlm/scan_bootstrapping_contrastive_pre-training_for_data_efficiency.md)
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+
+<!-- RELATED:END -->

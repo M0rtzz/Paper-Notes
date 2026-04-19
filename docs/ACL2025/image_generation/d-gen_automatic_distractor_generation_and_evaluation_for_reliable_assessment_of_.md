@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 20+模型排名+熵分析+跨域+人类评估
 - 写作质量: ⭐⭐⭐⭐ 方法清晰直观
 - 价值: ⭐⭐⭐⭐⭐ LLM评测标准化MC转换管道，实用性高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](../../ICCV2025/image_generation/adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)
+- [TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](../../ICCV2025/image_generation/trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
+- [ChatGen: Automatic Text-to-Image Generation From FreeStyle Chatting](../../CVPR2025/image_generation/chatgen_automatic_text-to-image_generation_from_freestyle_chatting.md)
+- [CAP: Evaluation of Persuasive and Creative Image Generation](../../ICCV2025/image_generation/cap_evaluation_of_persuasive_and_creative_image_generation.md)
+- [Towards Reliable Advertising Image Generation Using Human Feedback](../../ECCV2024/image_generation/towards_reliable_advertising_image_generation_using_human_feedback.md)
+
+<!-- RELATED:END -->

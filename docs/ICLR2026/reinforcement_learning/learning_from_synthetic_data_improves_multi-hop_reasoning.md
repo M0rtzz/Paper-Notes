@@ -116,3 +116,15 @@ Qwen3-0.6B + PhantomWiki训练 → 真实基准：
 - 实验充分度: ⭐⭐⭐⭐⭐ 4模型×4合成数据×5真实基准×多种消融，极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰，因果分析严谨
 - 价值: ⭐⭐⭐⭐⭐ 开辟了用免费合成数据提升LLM推理的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMhops-R1: Multimodal Multi-hop Reasoning](../../AAAI2026/reinforcement_learning/mmhops-r1_multimodal_multi-hop_reasoning.md)
+- [Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning](controllable_exploration_in_hybrid-policy_rlvr_for_multi-modal_reasoning.md)
+- [MathSmith: Towards Extremely Hard Mathematical Reasoning by Forging Synthetic Problems with a Reinforced Policy](../../AAAI2026/reinforcement_learning/mathsmith_towards_extremely_hard_mathematical_reasoning_by_forging_synthetic_pro.md)
+- [Reasoning or Memorization? Unreliable Results of Reinforcement Learning Due to Data Contamination](../../AAAI2026/reinforcement_learning/reasoning_or_memorization_unreliable_results_of_reinforcement_learning_due_to_da.md)
+- [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
+
+<!-- RELATED:END -->

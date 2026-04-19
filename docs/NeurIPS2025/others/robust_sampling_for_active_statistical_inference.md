@@ -101,3 +101,15 @@ tags:
 - 技术深度：⭐⭐⭐⭐⭐（理论推导严密完整）
 - 实验完整性：⭐⭐⭐⭐（多领域多场景验证）
 - 实用价值：⭐⭐⭐⭐⭐（直接解决LLM不确定性在标注中的实际问题）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Statistical Inference Under Performativity](statistical_inference_under_performativity.md)
+- [Statistical Inference for Gradient Boosting Regression](statistical_inference_for_gradient_boosting_regression.md)
+- [Sample-Adaptivity Tradeoff in On-Demand Sampling](sample-adaptivity_tradeoff_in_on-demand_sampling.md)
+- [Active Measurement: Efficient Estimation at Scale](active_measurement_efficient_estimation_at_scale.md)
+- [Distributionally Robust Feature Selection](distributionally_robust_feature_selection.md)
+
+<!-- RELATED:END -->

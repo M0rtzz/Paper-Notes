@@ -126,3 +126,15 @@ ChemX 包含两个层面：(1) **基准数据集层**——10 个手工标注数
 - 实验充分度: ⭐⭐⭐⭐ 10 个数据集构建完善，6 个系统横向对比，但实际评估仅覆盖 2 个数据集
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验对比全面，系统能力定性分析有价值
 - 价值: ⭐⭐⭐⭐⭐ 对 AI for Science 中的自动化信息提取有直接推动，ChemX 可成为社区标准基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automated Composition of Agents: A Knapsack Approach for Agentic Component Selection](automated_composition_of_agents_a_knapsack_approach_for_agentic_component_select.md)
+- [TAMAS: Benchmarking Adversarial Risks in Multi-Agent LLM Systems](../../ICML2025/llm_agent/tamas_benchmarking_adversarial_risks_in_multi-agent_llm_systems.md)
+- [ProBench: Benchmarking GUI Agents with Accurate Process Information](../../AAAI2026/llm_agent/probench_benchmarking_gui_agents_with_accurate_process_infor.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [LC-Opt: Benchmarking Reinforcement Learning and Agentic AI for End-to-End Liquid Cooling Optimization in Data Centers](lc-opt_benchmarking_reinforcement_learning_and_agentic_ai_for_end-to-end_liquid_.md)
+
+<!-- RELATED:END -->

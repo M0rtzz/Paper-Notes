@@ -145,3 +145,15 @@ GaussCtrl的流程分为四步：
 - 实验充分度: ⭐⭐⭐⭐ 360度和前向场景、多种编辑类型、详细消融、一致性可视化（10视角对比）
 - 写作质量: ⭐⭐⭐⭐⭐ 图示丰富，问题阐述清晰，消融设计层层递进，对指标局限的讨论坦诚
 - 价值: ⭐⭐⭐⭐ 10倍加速+更好质量，实用价值高，定义了3D编辑的新baseline
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DEgo: 3D Editing on the Go!](3dego_3d_editing_on_the_go.md)
+- [DATENeRF: Depth-Aware Text-based Editing of NeRFs](datenerf_depth-aware_text-based_editing_of_nerfs.md)
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
+- [Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
+
+<!-- RELATED:END -->

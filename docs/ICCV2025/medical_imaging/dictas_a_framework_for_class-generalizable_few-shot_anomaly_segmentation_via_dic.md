@@ -208,3 +208,15 @@ DictAS 基于 CLIP (ViT-L-14-336) 构建，包含三个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7 个数据集（工业+医学）、5 种 shot 设置、详尽的消融（组件/策略/backbone/分辨率）、t-SNE 可视化
 - **写作质量**: ⭐⭐⭐⭐ — 字典类比贯穿全文，逻辑清晰
 - **价值**: ⭐⭐⭐⭐ — 类别泛化 FSAS 的实用解决方案，推理速度和性能的优秀平衡
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](../../CVPR2026/medical_imaging/bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)
+- [Dual Distillation for Few-Shot Anomaly Detection](../../ICLR2026/medical_imaging/dual_distillation_for_few-shot_anomaly_detection.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](../../CVPR2025/medical_imaging/semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)
+
+<!-- RELATED:END -->

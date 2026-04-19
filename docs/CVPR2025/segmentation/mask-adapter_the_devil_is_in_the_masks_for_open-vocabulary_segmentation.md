@@ -129,3 +129,15 @@ Mask-Adapter 作为即插即用模块插入任何基于 mask pooling 的 OVS 方
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 5 个基准、多种 baseline 方法、SAM 扩展、详细消融和上界分析
 - 写作质量: ⭐⭐⭐⭐ 逻辑链条清晰，可视化对比直观，但公式较多
 - 价值: ⭐⭐⭐⭐ 即插即用提升明显，对 OVS 社区的 mask 分类瓶颈提供了实用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+- [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
+- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+- [CorrCLIP: Reconstructing Patch Correlations in CLIP for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/corrclip_reconstructing_patch_correlations_in_clip_for_openv.md)
+- [SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation](../../ICCV2025/segmentation/score_scene_context_matters_in_open-vocabulary_remote_sensing_instance_segmentat.md)
+
+<!-- RELATED:END -->

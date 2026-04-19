@@ -120,3 +120,15 @@ SNR影响：
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据验证，消融分析充分，但50S等复杂案例表现有限
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，背景介绍详实，但notation较多
 - 价值: ⭐⭐⭐⭐⭐ 对cryo-EM领域有重要推动，10倍加速的实际价值巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction](neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)
+- [GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule](gdkvm_echocardiography_video_segmentation_via_spatiotemporal_key-value_memory_wi.md)
+- [CuMPerLay: Learning Cubical Multiparameter Persistence Vectorizations](cumperlay_learning_cubical_multiparameter_persistence_vectorizations.md)
+- [GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis](gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)
+- [MultiverSeg: Scalable Interactive Segmentation of Biomedical Imaging Datasets with In-Context Guidance](multiverseg_scalable_interactive_segmentation_of_biomedical_imaging_datasets_wit.md)
+
+<!-- RELATED:END -->

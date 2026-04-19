@@ -125,3 +125,15 @@ $$\mathbf{x}_V^{(s_{n+1})} = \{x_V^i \in \mathbf{x}_V^{(s_n)} \mid S(i) \geq \ta
 ## 评分
 
 ⭐⭐⭐⭐ — 问题发现精准且重要，三种失配的分析深入透彻；方法设计简洁有效，免训练即用；实验全面扎实。美中不足是模型覆盖有限、阶段划分缺乏自适应性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Faceted Attack: Exposing Cross-Model Vulnerabilities in Defense-Equipped Vision-Language Models](multi-faceted_attack_exposing_cross-model_vulnerabilities_in_defense-equipped_vi.md)
+- [FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models](ft-ncfm_an_influence-aware_data_distillation_framework_for_efficient_vla_models.md)
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+- [Towards a Rigorous Understanding of the Population Dynamics of the NSGA-III: Tight Runtime Bounds](towards_a_rigorous_understanding_of_the_population_dynamics_of_the_nsga-iii_tigh.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ ADTE 是 Zero/TPT 等 TTA 方法中 Shannon 熵的即插即用替代品。流程
 - 实验充分度: ⭐⭐⭐⭐⭐ ImageNet+5变体、10跨域benchmark、两个模型、两种prompt
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但公式密集
 - 价值: ⭐⭐⭐⭐ 即插即用的 SE 替代品，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FairSteer: Inference Time Debiasing for LLMs with Dynamic Activation Steering](../../ACL2025/social_computing/fairsteer_inference_time_debiasing_for_llms_with_dynamic_activation_steering.md)
+- [Scalable Multi-Task Low-Rank Model Adaptation](scalable_multi-task_low-rank_model_adaptation.md)
+- [Human or Machine? A Preliminary Turing Test for Speech-to-Speech Interaction](human_or_machine_a_preliminary_turing_test_for_speech-to-speech_interaction.md)
+- [SceneJailEval: A Scenario-Adaptive Multi-Dimensional Framework for Jailbreak Evaluation](../../AAAI2026/social_computing/scenejaileval_a_scenario-adaptive_multi-dimensional_framework_for_jailbreak_eval.md)
+- [GRACE: Graph-Based Contextual Debiasing for Fair Visual Question Answering](../../ECCV2024/social_computing/grace_graph-based_contextual_debiasing_for_fair_visual_question_answering.md)
+
+<!-- RELATED:END -->

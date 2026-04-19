@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9 个模型 × 2 benchmark × 多指标，但受限于计算成本采样规模有限
 - 写作质量: ⭐⭐⭐⭐ 指标定义严谨，分析透彻
 - 价值: ⭐⭐⭐⭐ 对 MLLM 负责任部署具有重要参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpretable Debiasing of Vision-Language Models for Social Fairness](interpretable_debiasing_of_vision-language_models_for_social_fairness.md)
+- [Widget2Code: From Visual Widgets to UI Code via Multimodal LLMs](widget2code_from_visual_widgets_to_ui_code_via_multimodal_llms.md)
+- [MultiMM: Cultural Bias Matters — Cross-Cultural Benchmark for Multimodal Metaphors](../../ACL2025/multimodal_vlm/multimm_cultural_metaphor.md)
+- [FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
+- [Customized Visual Storytelling with Unified Multimodal LLMs](customized_visual_storytelling_with_unified_multimodal_llms.md)
+
+<!-- RELATED:END -->

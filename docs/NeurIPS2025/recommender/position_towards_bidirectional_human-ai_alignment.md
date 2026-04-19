@@ -167,3 +167,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 400+篇论文的系统综述非常扎实，定量分析充分揭示了研究偏向
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰、分类体系严谨、可读性极高，是综述写作的范例
 - 价值: ⭐⭐⭐⭐⭐ — 为AI对齐研究提供了全新的概念框架和系统路线图，对社区有重要指引价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: The Right to AI](../../ICML2025/recommender/the_right_to_ai.md)
+- [EMPATHIA: Multi-Faceted Human-AI Collaboration for Refugee Integration](empathia_multi-faceted_human-ai_collaboration_for_refugee_integration.md)
+- [RLTHF: Targeted Human Feedback for LLM Alignment](../../ICML2025/recommender/rlthf_targeted_human_feedback_for_llm_alignment.md)
+- [The Coming Crisis of Multi-Agent Misalignment: AI Alignment Must Be a Dynamic and Social Process](the_coming_crisis_of_multi-agent_misalignment_ai_alignment_must_be_a_dynamic_and.md)
+- [NeurIPS Should Lead Scientific Consensus on AI Policy](neurips_should_lead_scientific_consensus_on_ai_policy.md)
+
+<!-- RELATED:END -->

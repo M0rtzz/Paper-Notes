@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12个benchmark，多家族验证，多基线对比
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，与经济学理论的连接优雅
 - 价值: ⭐⭐⭐⭐⭐ 对LLM训练决策和评估有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Scaling Laws for Symbolic Regression](towards_scaling_laws_for_symbolic_regression.md)
+- [Closing the Curvature Gap: Full Transformer Hessians and Their Implications for Scaling Laws](../../ICLR2026/interpretability/closing_the_curvature_gap_full_transformer_hessians_and_their_implications_for_s.md)
+- [Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences](deep_value_benchmark_measuring_whether_models_generalize_deep_values_or_shallow_.md)
+- [LLM Probing with Contrastive Eigenproblems: Improving Understanding and Applicability of CCS](llm_probing_with_contrastive_eigenproblems_improving_understanding_and_applicabi.md)
+- [AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
+
+<!-- RELATED:END -->

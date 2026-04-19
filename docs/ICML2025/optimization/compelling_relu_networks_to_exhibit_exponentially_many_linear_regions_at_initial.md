@@ -152,3 +152,15 @@ $$s_{i+1} = s_i (1 - a_{i+1}) \cdot a_{i+2}$$
 - 实验充分度: ⭐⭐⭐ — 一维实验充分但大规模实验（ImageNet）仅初步展示
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，图示直观
 - 价值: ⭐⭐⭐⭐ — 为 ReLU 网络初始化和表达能力提供了新的理论视角与实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+- [Better NTK Conditioning: A Free Lunch from ReLU Nonlinear Activation in Wide Neural Networks](../../NeurIPS2025/optimization/better_ntk_conditioning_a_free_lunch_from_relu_nonlinear_activation_in_wide_neur.md)
+- [Grokking at the Edge of Linear Separability](grokking_at_the_edge_of_linear_separability.md)
+- [Training Robust Graph Neural Networks by Modeling Noise Dependencies](../../NeurIPS2025/optimization/training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)
+
+<!-- RELATED:END -->

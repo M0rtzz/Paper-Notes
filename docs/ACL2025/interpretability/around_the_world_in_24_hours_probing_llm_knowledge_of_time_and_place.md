@@ -170,3 +170,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 研究问题新颖且有实际意义，数据集设计精巧，分析深入系统。核心发现（知识存在但无法组合使用）具有广泛的启示意义。局限在于评测模型范围和任务类型相对有限，且解决方案的探索不够深入。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Probing with Contrastive Eigenproblems: Improving Understanding and Applicability of CCS](../../NeurIPS2025/interpretability/llm_probing_with_contrastive_eigenproblems_improving_understanding_and_applicabi.md)
+- [Cracking Factual Knowledge: A Comprehensive Analysis of Degenerate Knowledge Neurons in Large Language Models](cracking_factual_knowledge_a_comprehensive_analysis_of_degenerate_knowledge_neur.md)
+- [Probing Subphonemes in Morphology Models](probing_subphonemes_in_morphology_models.md)
+- [Probing the Geometry of Truth: Consistency and Generalization of Truth Directions](probing_the_geometry_of_truth_consistency_and_generalization_of_truth_directions.md)
+- [Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](shortcut_neuron_eval.md)
+
+<!-- RELATED:END -->

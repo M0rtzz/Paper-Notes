@@ -121,3 +121,15 @@ ELIC 编码器 + SANA DiT 重建器。编码器产生量化潜变量，DiT 在 3
 - **实验充分度**: ⭐⭐⭐⭐ 三测试集+多基线+详尽消融
 - **写作质量**: ⭐⭐⭐⭐ 架构图清晰，消融逐步论证
 - **价值**: ⭐⭐⭐⭐⭐ 30x加速+SOTA质量=扩散压缩实用化关键一步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaVin-DiT: Large Vision Diffusion Transformer](lavin-dit_large_vision_diffusion_transformer.md)
+- [Language-Guided Image Tokenization for Generation](language-guided_image_tokenization_for_generation.md)
+- [Diffusion Self-Distillation for Zero-Shot Customized Image Generation](diffusion_self-distillation_for_zero-shot_customized_image_generation.md)
+- [3DTopia-XL: Scaling High-Quality 3D Asset Generation via Primitive Diffusion](3dtopia-xl_scaling_high-quality_3d_asset_generation_via_primitive_diffusion.md)
+- [AniMer: Animal Pose and Shape Estimation Using Family Aware Transformer](animer_animal_pose_and_shape_estimation_using_family_aware_transformer.md)
+
+<!-- RELATED:END -->

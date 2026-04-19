@@ -136,3 +136,15 @@ FlowDrag 的 pipeline 分三个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 两个基准+用户研究+多维消融+敏感性分析，VFD-Bench 填补评估空白
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，pipeline 图直观，方法分步讲解易理解
 - 价值: ⭐⭐⭐⭐ Spotlight论文，几何先验引入drag编辑是有意义的方向，VFD-Bench有长期使用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Mesh Editing using Masked LRMs](../../ICCV2025/3d_vision/3d_mesh_editing_using_masked_lrms.md)
+- [Image-Guided Shape-from-Template Using Mesh Inextensibility Constraints](../../ICCV2025/3d_vision/image-guided_shape-from-template_using_mesh_inextensibility_constraints.md)
+- [GenVDM: Generating Vector Displacement Maps From a Single Image](../../CVPR2025/3d_vision/genvdm_generating_vector_displacement_maps_from_a_single_image.md)
+- [Thickness-aware E(3)-Equivariant 3D Mesh Neural Networks](thickness-aware_e3-equivariant_3d_mesh_neural_networks.md)
+- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](../../ICCV2025/3d_vision/meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+
+<!-- RELATED:END -->

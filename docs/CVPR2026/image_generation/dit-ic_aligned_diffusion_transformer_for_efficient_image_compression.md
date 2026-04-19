@@ -126,3 +126,15 @@ DiT-IC 在LPIPS和DISTS上均达到最优BD-rate，且解码速度最快（0.15s
 - 写作质量: ⭐⭐⭐⭐ 对齐视角统一三个设计，结构清晰
 - 价值: ⭐⭐⭐⭐ 对实际图像压缩部署有重要意义，30×加速使扩散压缩首次可行
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching](mpdit_multi-patch_global-to-local_transformer_architecture_for_efficient_flow_ma.md)
+- [Guiding a Diffusion Transformer with the Internal Dynamics of Itself](guiding_a_diffusion_transformer_with_the_internal_dynamics_of_itself.md)
+- [EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation](edgedit_hardware-aware_diffusion_transformers_for_efficient_on-device_image_gene.md)
+- [Memory-Efficient Fine-Tuning Diffusion Transformers via Dynamic Patch Sampling and Block Skipping](memory-efficient_fine-tuning_diffusion_transformers_via_dynamic_patch_sampling_a.md)
+- [CoD: A Diffusion Foundation Model for Image Compression](cod_a_diffusion_foundation_model_for_image_compression.md)
+
+<!-- RELATED:END -->

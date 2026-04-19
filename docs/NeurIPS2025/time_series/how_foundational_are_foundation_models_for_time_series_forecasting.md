@@ -152,3 +152,15 @@ tags:
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，论证逻辑流畅，图表规范 |
 | 实用价值 | ⭐⭐⭐⭐ | 对TSFM实际部署决策有直接参考价值 |
 | 总评 | 3.2/5 | 选题及时重要、结论有启发，但技术贡献有限、实验规模不足以支撑强结论 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEMPO: Lightweight Foundation Models for Time Series Forecasting](sempo_lightweight_foundation_models_for_time_series_forecasting.md)
+- [Synthetic Series-Symbol Data Generation for Time Series Foundation Models](synthetic_series-symbol_data_generation_for_time_series_foundation_models.md)
+- [In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)
+- [How Patterns Dictate Learnability in Sequential Data](how_patterns_dictate_learnability_in_sequential_data.md)
+- [Benchmarking Probabilistic Time Series Forecasting Models on Neural Activity](benchmarking_probabilistic_time_series_forecasting_models_on_neural_activity.md)
+
+<!-- RELATED:END -->

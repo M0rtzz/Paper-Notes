@@ -140,3 +140,15 @@ $ε \in \{1, 2, 4, 8, 16\}$，$δ = n^{-1.1}$，使用 LoRA 微调 + DP-Adam。
 - 实验充分度: ⭐⭐⭐⭐ — 多维度验证+回归分析+实际选择评估，但数据集/模型多样性可提升
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，从现象→分析→解决方案→理论探索层层递进
 - 价值: ⭐⭐⭐⭐⭐ — 对 DP 社区和隐私政策制定者都有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving the Variance of Differentially Private Randomized Experiments through Clustering](improving_the_variance_of_differentially_private_randomized_experiments_through_.md)
+- [On the Empirical Power of Goodness-of-Fit Tests in Watermark Detection](../../NeurIPS2025/ai_safety/on_the_empirical_power_of_goodness-of-fit_tests_in_watermark_detection.md)
+- [Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret](connecting_thompson_sampling_and_ucb_towards_more_efficient_trade-offs_between_p.md)
+- [On Differential Privacy for Adaptively Solving Search Problems via Sketching](on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)
+- [Cape: Context-Aware Prompt Perturbation Mechanism with Differential Privacy](cape_context-aware_prompt_perturbation_mechanism_with_differential_privacy.md)
+
+<!-- RELATED:END -->

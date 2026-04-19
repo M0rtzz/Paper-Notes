@@ -129,3 +129,15 @@ ShowTable 是一个四阶段 pipeline：(1) **Rewriting**——MLLM 将数据密
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个基线模型 × 3 种配置、详细消融、5 维度评估体系、丰富案例分析
 - 写作质量: ⭐⭐⭐⭐ 图表丰富直观，pipeline 描述清晰，问题发现→解决的逻辑链完整
 - 价值: ⭐⭐⭐⭐ 任务本身有明确应用场景（幻灯片/报告自动生成），benchmark 和训练管线可供社区使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViStoryBench: Comprehensive Benchmark Suite for Story Visualization](vistorybench_comprehensive_benchmark_suite_for_story_visualization.md)
+- [PSDesigner: Automated Graphic Design with a Human-Like Creative Workflow](psdesigner_automated_graphic_design_with_a_human-like_creative_workflow.md)
+- [RAISE: Requirement-Adaptive Evolutionary Refinement for Training-Free Text-to-Image Alignment](raise_requirement-adaptive_evolutionary_refinement_for_training-free_text-to-ima.md)
+- [Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss](../../ICLR2026/image_generation/condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo.md)
+- [L-DiffER: Single Image Reflection Removal with Language-Based Diffusion Model](../../ECCV2024/image_generation/l-differ_single_image_reflection_removal_with_language-based_diffusion_model.md)
+
+<!-- RELATED:END -->

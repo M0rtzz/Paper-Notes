@@ -139,3 +139,15 @@ StylePrompt 仅用 4% 参数即达到 Full tuning 99% 的性能。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 10个数据集、三大任务、多种消融，实验非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，分析透彻，t-SNE 可视化有说服力
 - 价值: ⭐⭐⭐⭐ — 为 SSM 在低层视觉感知的应用开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Image Quality Assessment: From Human to Machine Preference](../../CVPR2025/segmentation/image_quality_assessment_from_human_to_machine_preference.md)
+- [MambaOut: Do We Really Need Mamba for Vision?](../../CVPR2025/segmentation/mambaout_do_we_really_need_mamba_for_vision.md)
+- [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
+- [TinyViM: Frequency Decoupling for Tiny Hybrid Vision Mamba](../../ICCV2025/segmentation/tinyvim_frequency_decoupling_for_tiny_hybrid_vision_mamba.md)
+- [SaFiRe: Saccade-Fixation Reiteration with Mamba for Referring Image Segmentation](../../NeurIPS2025/segmentation/safire_saccade-fixation_reiteration_with_mamba_for_referring_image_segmentation.md)
+
+<!-- RELATED:END -->

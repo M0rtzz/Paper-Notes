@@ -132,3 +132,15 @@ $$\alpha = \widetilde{O}\left(\frac{\Delta_\infty^{1/2} r^{1/4} k^{1/4}}{\epsilo
 - 实验充分度: ⭐⭐ (纯理论工作，无实验)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，动机阐述充分)
 - 价值: ⭐⭐⭐⭐⭐ (开创 DP-SCP 方向，影响深远)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sequentially Auditing Differential Privacy](sequentially_auditing_differential_privacy.md)
+- [Differentially Private High-dimensional Variable Selection via Integer Programming](differentially_private_high-dimensional_variable_selection_via_integer_programmi.md)
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy](spectral_perturbation_bounds_for_low-rank_approximation_with_applications_to_pri.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+
+<!-- RELATED:END -->

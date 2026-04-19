@@ -184,3 +184,15 @@ CLAP 在所有 prompt 形式和所有数据集上均超越 CLIP 和 Im.Aug。特
 - **实验充分度**: ⭐⭐⭐⭐ — 消融全面（增强组合、prompt 来源、超参、模型规模），但缺少更多任务类型的验证
 - **实用价值**: ⭐⭐⭐⭐ — 轻量即插即用，训练仅需文本、不需图像，极具工程友好性
 - **写作质量**: ⭐⭐⭐⭐ — 因果模型→理论动机→方法→实验的叙事清晰，图表质量高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [X-Former: Unifying Contrastive and Reconstruction Learning for MLLMs](x-former_unifying_contrastive_and_reconstruction_learning_for_mllms.md)
+- [Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality](../../CVPR2026/multimodal_vlm/benchmarking_vision-language_models_under_contradictory_virtual_content_attacks_.md)
+- [Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
+- [BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning](../../NeurIPS2025/multimodal_vlm/bioclip_2_emergent_properties_from_scaling_hierarchical_contrastive_learning.md)
+- [Towards Authentic Movie Dubbing with Retrieve-Augmented Director-Actor Interaction Learning](../../AAAI2026/multimodal_vlm/towards_authentic_movie_dubbing_with_retrieve-augmented_director-actor_interacti.md)
+
+<!-- RELATED:END -->

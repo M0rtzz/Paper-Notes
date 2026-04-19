@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 17话题×6语言×7模型覆盖面广，有人工标注验证，但缺少大参数模型
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，变量关系图和热力图可视化出色，附录极其详尽
 - 价值: ⭐⭐⭐⭐ 数据集和框架对多语言LLM安全评估有实用价值，反直觉发现有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [7 Points to Tsinghua but 10 Points to 清华? Assessing Agentic Large Language Models in Multilingual National Bias](assessing_agentic_large_language_models_in_multilingual_national_bias.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+- [Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation](trans-zero_self-play_incentivizes_large_language_models_for_multilingual_transla.md)
+
+<!-- RELATED:END -->

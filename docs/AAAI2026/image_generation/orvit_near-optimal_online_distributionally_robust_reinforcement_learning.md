@@ -156,3 +156,15 @@ $$\text{Regret}(K) = \sum_{k=1}^K [V_1^{\star,\sigma}(s_1^k) - V_1^{\pi^k,\sigma
 **优势**：理论贡献突出（首次无假设+极小极大最优），算法设计优雅，统一框架适配多种散度，上下界分析完整。
 
 **不足**：实验部分偏弱，实际应用场景展示不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample Complexity of Distributionally Robust Off-Dynamics Reinforcement Learning with Online Interaction](../../ICML2025/image_generation/sample_complexity_of_distributionally_robust_off-dynamics_reinforcement_learning.md)
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](../../ICLR2026/image_generation/flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [DiffusionNFT: Online Diffusion Reinforcement with Forward Process](../../ICLR2026/image_generation/diffusionnft_online_diffusion_reinforcement_with_forward_process.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
+- [EfficientFlow: Efficient Equivariant Flow Policy Learning for Embodied AI](efficientflow_efficient_equivariant_flow_policy_learning_for_embodied_ai.md)
+
+<!-- RELATED:END -->

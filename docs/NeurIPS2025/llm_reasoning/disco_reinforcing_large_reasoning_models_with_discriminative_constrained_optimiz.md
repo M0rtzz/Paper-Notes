@@ -147,3 +147,15 @@ $$\max_\theta \mathcal{J}_2(\theta) - \beta[\mathbb{D}_{\text{KL}}(\pi_{\text{ol
 - 价值: ⭐⭐⭐⭐⭐ 对 GRPO 的根本性改进，直接推动 LRM 训练方法的发展
 
 ## 核心问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Segment Policy Optimization: Effective Segment-Level Credit Assignment in RL for Large Language Models](segment_policy_optimization_effective_segment-level_credit_assignment_in_rl_for_.md)
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+- [ProofSketch: Efficient Verified Reasoning for Large Language Models](proofsketch_efficient_verified_reasoning_for_large_language_models.md)
+- [Reinforcing Structured Chain-of-Thought for Video Understanding](../../CVPR2026/llm_reasoning/reinforcing_structured_chain-of-thought_for_video_understanding.md)
+- [Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties](topology_of_reasoning_understanding_large_reasoning_models_through_reasoning_gra.md)
+
+<!-- RELATED:END -->

@@ -112,3 +112,15 @@ FedGEM 包含两个阶段：(1) 迭代协作训练阶段——客户端本地 EM
 - 实验充分度: ⭐⭐⭐⭐ 8个数据集、7个baseline、可扩展性分析，较为全面
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，但符号较重，可读性一般
 - 价值: ⭐⭐⭐⭐ 填补了联邦学习中未知聚类数聚类的理论和方法空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Federated ADMM from Bayesian Duality](federated_admm_from_bayesian_duality.md)
+- [RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation](../../ACL2025/others/rmoa_optimizing_mixture-of-agents_through_diversity_maximization_and_residual_co.md)
+- [Neural Force Field: Few-shot Learning of Generalized Physical Reasoning](neural_force_field_few-shot_learning_of_generalized_physical_reasoning.md)
+- [Private Frequency Estimation via Residue Number Systems](../../AAAI2026/others/private_frequency_estimation_via_residue_number_systems.md)
+- [LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
+
+<!-- RELATED:END -->

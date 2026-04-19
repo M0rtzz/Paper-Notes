@@ -130,3 +130,15 @@ ConVA 包含两个阶段：(1) **上下文受控的价值向量识别**——构
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 10 个价值维度、9 种骨干模型、含用户研究和消融实验
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机论证充分，方法表述数学化且易理解
 - **价值**: ⭐⭐⭐⭐ — 提供了可解释、轻量、可扩展的 LLM 内部价值对齐新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trajectory Bellman Residual Minimization: A Simple Value-Based Method for LLM Reasoning](../../NeurIPS2025/llm_alignment/trajectory_bellman_residual_minimization_a_simple_value-based_method_for_llm_rea.md)
+- [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](sea_lowresource_safety_alignment_for_multimodal.md)
+- [QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language](queryattack_jailbreaking_aligned_large_language_models_using_structured_non-natu.md)
+- [Red Queen: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking](red_queen_safeguarding_large_language_models_against_concealed_multi-turn_jailbr.md)
+- [HiddenDetect: Detecting Jailbreak Attacks against Large Vision-Language Models via Monitoring Hidden States](hiddendetect_detecting_jailbreak_attacks_against_multimodal_large_language_model.md)
+
+<!-- RELATED:END -->

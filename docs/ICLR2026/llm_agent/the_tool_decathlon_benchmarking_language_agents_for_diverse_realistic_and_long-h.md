@@ -125,3 +125,15 @@ Toolathlon 的设计围绕四个核心原则：应用多样性（Diverse Apps）
 - 实验充分度: ⭐⭐⭐⭐⭐ SOTA 模型全面测试，32 应用 × 604 工具 × 108 任务
 - 写作质量: ⭐⭐⭐⭐ 基准描述清晰，但部分细节较密集
 - 价值: ⭐⭐⭐⭐⭐ 填补了 Agent 评估中"真实性"的关键空缺，有望成为社区标准基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solving the Granularity Mismatch: Hierarchical Preference Learning for Long-Horizon LLM Agents](solving_the_granularity_mismatch_hierarchical_preference_learning_for_long-horiz.md)
+- [Harnessing Uncertainty: Entropy-Modulated Policy Gradients for Long-Horizon LLM Agents](harnessing_uncertainty_entropy-modulated_policy_gradients_for_long-horizon_llm_a.md)
+- [CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare](../../CVPR2026/llm_agent/carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)
+- [Cook and Clean Together: Teaching Embodied Agents for Parallel Task Execution](../../AAAI2026/llm_agent/cook_and_clean_together_teaching_embodied_agents_for_paralle.md)
+- [NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ Scene Graph Caption 格式下 Relation-R1 以 3B 参数超越 13B 的 ASMv2 和 
 - 实验充分度: ⭐⭐⭐⭐ 双数据集双格式评估、多 CoT 策略消融、奖励曲线和生成长度分析丰富
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，两阶段设计逻辑紧密，问题定义准确
 - 综合评价: ⭐⭐⭐⭐ 对 MLLM 视觉关系理解方向有实质推动，渐进 CoT 思路具有迁移价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SERL: Self-Examining Reinforcement Learning on Open-Domain](serl_self-examining_reinforcement_learning_on_open-domain.md)
+- [CMMCoT: Enhancing Complex Multi-Image Comprehension via Multi-Modal Chain-of-Thought and Memory Augmentation](cmmcot_enhancing_complex_multi-image_comprehension_via_multi.md)
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](../../NeurIPS2025/llm_reasoning/sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+- [Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision](../../ICLR2026/llm_reasoning/uni-cot_towards_unified_chain-of-thought_reasoning_across_text_and_vision.md)
+
+<!-- RELATED:END -->

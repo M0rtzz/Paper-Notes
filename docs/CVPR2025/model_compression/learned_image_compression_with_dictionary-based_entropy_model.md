@@ -138,3 +138,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 方法清晰、实验充分，在性能和效率上均达到 SOTA；创新点在于将字典先验引入熵模型，方向新颖且实用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
+- [LALIC: Linear Attention Modeling for Learned Image Compression](linear_attention_modeling_for_learned_image_compression.md)
+- [Bidirectional Stereo Image Compression with Cross-Dimensional Entropy Model](../../ECCV2024/model_compression/bidirectional_stereo_image_compression_with_cross-dimensional_entropy_model.md)
+- [Learned Image Compression with Hierarchical Progressive Context Modeling](../../ICCV2025/model_compression/learned_image_compression_with_hierarchical_progressive_context_modeling.md)
+- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成实验非常系统，但真实任务验证不够充分
 - 写作质量: ⭐⭐⭐⭐⭐ 理论与实验完美交织，论证链条清晰有力
 - 价值: ⭐⭐⭐⭐⭐ 对 CoT 训练的理论理解有里程碑意义，对 RFT/SFT 实践有直接指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
+- [TumorChain: Interleaved Multimodal Chain-of-Thought Reasoning for Traceable Clinical Tumor Analysis](tumorchain_interleaved_multimodal_chain-of-thought_reasoning_for_traceable_clini.md)
+- [CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos](cot-rvs_zero-shot_chain-of-thought_reasoning_segmentation_for_videos.md)
+- [Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought](../../NeurIPS2025/llm_reasoning/reasoning_by_superposition_a_theoretical_perspective_on_chain_of_continuous_thou.md)
+- [Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
+
+<!-- RELATED:END -->

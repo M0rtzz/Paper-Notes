@@ -172,3 +172,15 @@ Chain-of-LoRA 以 4.2G 内存达到了与 16.6G 的 All-Distributed 完全相同
 - 实验充分度: ⭐⭐⭐⭐⭐ (15个benchmark全面评估，消融充分，可视化清晰)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图表丰富，技术描述详实)
 - 价值: ⭐⭐⭐⭐⭐ (代码开源，跨任务通用性强，小模型优势突出，对视频Agent方向有重要推动)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
+- [COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis](../../AAAI2026/llm_agent/coach_collaborative_agents_for_contextual_highlighting_--_a_multi-agent_framewor.md)
+- [REMem: Reasoning with Episodic Memory in Language Agents](remem_reasoning_with_episodic_memory_in_language_agent.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+
+<!-- RELATED:END -->

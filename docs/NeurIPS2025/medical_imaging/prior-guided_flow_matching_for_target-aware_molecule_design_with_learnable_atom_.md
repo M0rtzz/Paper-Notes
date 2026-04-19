@@ -110,3 +110,15 @@ PAFlow 采用 FM 框架建模分子生成过程。原子坐标使用 Variance Pr
 - 实验充分度: ⭐⭐⭐⭐⭐ 全面的基线对比、消融、采样效率、可视化分析
 - 写作质量: ⭐⭐⭐⭐ 方法推导清晰，实验展示直观
 - 价值: ⭐⭐⭐⭐⭐ SBDD 领域的显著进步，-8.31 Vina Score 大幅刷新 SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unified All-Atom Molecule Generation with Neural Fields](unified_all-atom_molecule_generation_with_neural_fields.md)
+- [Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling](energy_matching_unifying_flow_matching_and_energy-based_models_for_generative_mo.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](../../ICML2025/medical_imaging/flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry](riemannian_flow_matching_for_brain_connectivity_matrices_via_pullback_geometry.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+
+<!-- RELATED:END -->

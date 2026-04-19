@@ -137,3 +137,15 @@ $$L(S) = -\sum_{y_i \in Y} \mathbb{1}_{Hall(i)} \cdot \log P(y_i | X, y_1, ..., 
 ## 评分
 
 ⭐⭐⭐⭐ — 统一框架设计优雅，实验全面（3个VLM backbone × 多个benchmark），可调阈值带来实用价值。不足是推理开销和训练数据质量依赖外部模型。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trust but Verify: Programmatic VLM Evaluation in the Wild](../../ICCV2025/multimodal_vlm/trust_but_verify_programmatic_vlm_evaluation_in_the_wild.md)
+- [Causal-LLaVA: Causal Disentanglement for Mitigating Hallucination in Multimodal Large Language Models](causalllava_causal_disentanglement_for_mitigating_hallucinat.md)
+- [SD-VLM: Spatial Measuring and Understanding with Depth-Encoded Vision-Language Models](sd-vlm_spatial_measuring_and_understanding_with_depth-encoded_vision-language_mo.md)
+- [VisionZip: Longer is Better but Not Necessary in Vision Language Models](../../CVPR2025/multimodal_vlm/visionzip_longer_is_better_but_not_necessary_in_vision_language_models.md)
+- [ForensicZip: More Tokens are Better but Not Necessary in Forensic Vision-Language Models](../../CVPR2025/multimodal_vlm/forensiczip_more_tokens_are_better_but_not_necessary_in_forensic_vision-language.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ ToC 将专利权利要求优化建模为**序贯决策问题**：给定初始权
 - 实验充分度: ⭐⭐⭐⭐ 5个模型×3配置、消融、敏感性分析、专家评估全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，prompt 模板完全公开
 - 价值: ⭐⭐⭐⭐ 框架模式可迁移到更广泛的结构化文本编辑场景，但领域较窄限制了直接影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)
+- [SOM Directions are Better than One: Multi-Directional Refusal Suppression in Language Models](som_directions_are_better_than_one_multi-directional_refusal_suppression_in_lang.md)
+- [MATA: A Trainable Hierarchical Automaton System for Multi-Agent Visual Reasoning](../../ICLR2026/interpretability/mata_a_trainable_hierarchical_automaton_system_for_multi-agent_visual_reasoning.md)
+- [Auditing Cascading Risks in Multi-Agent Systems via Semantic–Geometric Co-evolution](../../ICLR2026/interpretability/auditing_cascading_risks_in_multi-agent_systems_via_semanti-geometric_co-evolut.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
+
+<!-- RELATED:END -->

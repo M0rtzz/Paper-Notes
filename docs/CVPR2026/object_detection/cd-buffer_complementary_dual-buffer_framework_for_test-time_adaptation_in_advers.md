@@ -125,3 +125,15 @@ $$\mathcal{L} = \mathcal{L}_{align} + \lambda_{reg} \cdot \mathcal{L}_{mask}$$
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多严重度评估充分，连续 TTA 实验有意义
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 为 TTA 提供了新的范式整合思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Adaptive Object Detection with Foundation Model](../../NeurIPS2025/object_detection/test-time_adaptive_object_detection_with_foundation_model.md)
+- [Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection](beyond_prompt_degradation_prototype-guided_dual-pool_prompting_for_incremental_o.md)
+- [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](../../CVPR2025/object_detection/efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
+- [Robust Long-term Test-Time Adaptation for 3D Human Pose Estimation through Motion Discretization](../../AAAI2026/object_detection/robust_long-term_test-time_adaptation_for_3d_human_pose_estimation_through_motio.md)
+- [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](../../ICCV2025/object_detection/is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
+
+<!-- RELATED:END -->

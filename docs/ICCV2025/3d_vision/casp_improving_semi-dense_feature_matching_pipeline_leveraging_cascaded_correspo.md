@@ -145,3 +145,15 @@ $$L = \lambda_1 L_{1/16}^c + \lambda_2 L_{1/8}^c + \lambda_3 L_{1/1}^f + \lambda
 - **实验充分度**: ⭐⭐⭐⭐⭐ 姿态/单应性/定位多任务+ETH3D 跨域消融+详细效率分析+可视化
 - **写作质量**: ⭐⭐⭐⭐ 流水线图清晰，公式推导完整，效率分析透彻
 - **价值**: ⭐⭐⭐⭐⭐ SLAM/UAV 等实时系统的重要工程贡献，2.2× 加速且精度不降
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [Dense-SfM: Structure from Motion with Dense Consistent Matching](../../CVPR2025/3d_vision/dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
+- [Do It Yourself: Learning Semantic Correspondence from Pseudo-Labels](do_it_yourself_learning_semantic_correspondence_from_pseudo-labels.md)
+- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
+- [CoMatcher: Multi-View Collaborative Feature Matching](../../CVPR2025/3d_vision/comatcher_multi-view_collaborative_feature_matching.md)
+
+<!-- RELATED:END -->

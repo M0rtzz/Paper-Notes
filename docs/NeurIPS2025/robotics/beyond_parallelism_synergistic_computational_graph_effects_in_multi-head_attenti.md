@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop paper 级别，仅 toy 任务验证，缺乏大规模实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，例子直观有教学价值
 - 价值: ⭐⭐⭐⭐ 对 Transformer 架构理解有理论贡献，可能启发新的注意力设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective](../../ICCV2025/robotics/beyond_losses_reweighting_empowering_multi-task_learning_via_the_generalization_.md)
+- [MaNGO: Adaptable Graph Network Simulators via Meta-Learning](mango_-_adaptable_graph_network_simulators_via_meta-learning.md)
+- [mmWalk: Towards Multi-modal Multi-view Walking Assistance](mmwalk_towards_multi-modal_multi-view_walking_assistance.md)
+- [MMTU: A Massive Multi-Task Table Understanding and Reasoning Benchmark](mmtu_a_massive_multi-task_table_understanding_and_reasoning_benchmark.md)
+- [Neural Graph Navigation for Intelligent Subgraph Matching](../../AAAI2026/robotics/neural_graph_navigation_for_intelligent_subgraph_matching.md)
+
+<!-- RELATED:END -->

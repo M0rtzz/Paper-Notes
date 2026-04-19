@@ -190,3 +190,15 @@ tags:
 - **实验充分度**: ★★★☆☆ — 概念验证性质，规模有限
 - **实用价值**: ★★★☆☆ — 理论洞察有价值但FPT算法实用性受限
 - **写作质量**: ★★★★☆ — 理论结果清晰组织，证明简洁
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Learning for Decision Trees with Provable Guarantees](../../ICLR2026/others/active_learning_for_decision_trees_with_provable_guarantees.md)
+- [Regression Trees Know Calculus](regression_trees_know_calculus.md)
+- [The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)
+- [Approximation Algorithm for Constrained k-Center Clustering: A Local Search Approach](../../AAAI2026/others/approximation_algorithm_for_constrained_k-center_clustering_.md)
+- [From Decision Trees to Boolean Logic: A Fast and Unified SHAP Algorithm](../../AAAI2026/others/from_decision_trees_to_boolean_logic_a_fast_and_unified_shap_algorithm.md)
+
+<!-- RELATED:END -->

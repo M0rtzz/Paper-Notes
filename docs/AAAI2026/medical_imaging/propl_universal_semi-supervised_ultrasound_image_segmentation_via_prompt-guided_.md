@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个任务、多标注比例、详细消融、效率分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，贡献明确
 - 价值: ⭐⭐⭐⭐ 数据集+框架对临床超声分割有实际推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](../../CVPR2026/medical_imaging/a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)
+- [Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)
+- [DeNAS-ViT: Data Efficient NAS-Optimized Vision Transformer for Ultrasound Image Segmentation](denas-vit_data_efficient_nas-optimized_vision_transformer_for_ultrasound_image_s.md)
+- [DualFete: Revisiting Teacher-Student Interactions from a Feedback Perspective for Semi-supervised Medical Image Segmentation](dualfete_revisiting_teacher-student_interactions_from_a_feedback_perspective_for.md)
+- [Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation](../../ECCV2024/medical_imaging/alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)
+
+<!-- RELATED:END -->

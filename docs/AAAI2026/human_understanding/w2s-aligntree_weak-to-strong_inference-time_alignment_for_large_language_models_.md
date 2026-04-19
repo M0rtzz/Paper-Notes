@@ -128,3 +128,15 @@ W2S-AlignTree 采用双阶段策略：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三类任务、多模型族、多弱模型源、详细消融和超参分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，推导完整，附录详尽
 - 价值: ⭐⭐⭐⭐ 提供实用推理时对齐方案，但推理成本仍是落地瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Failures to Surface Harmful Contents in Video Large Language Models](failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [Anti-adversarial Learning: Desensitizing Prompts for Large Language Models](anti-adversarial_learning_desensitizing_prompts_for_large_la.md)
+- [TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models](../../ICLR2026/human_understanding/timeomni-1_incentivizing_complex_reasoning_with_time_series_in_large_language_mo.md)
+- [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
+- [PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models](pathmind_a_retrieve-prioritize-reason_framework_for_knowledge_graph_reasoning_wi.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个benchmark + 10个子任务 + 消融 + 跨模型泛化 + 时间效率 + 案例分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 人格理论与Agent设计的映射图很直观，理论证明完整，但部分公式化有过度形式化之嫌
 - 价值: ⭐⭐⭐⭐ 首次超越人类专家的多模态科学推理结果很震撼，异质化Agent协作范式有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Which LLM Multi-Agent Protocol to Choose?](../../ICLR2026/llm_evaluation/which_llm_multi-agent_protocol_to_choose.md)
+- [Belief-Calibrated Multi-Agent Consensus Seeking for Complex NLP Tasks](../../NeurIPS2025/llm_evaluation/belief-calibrated_multi-agent_consensus_seeking_for_complex_nlp_tasks.md)
+- [Where Norms and References Collide: Evaluating LLMs on Normative Reasoning](where_norms_and_references_collide_evaluating_llms_on_normative_reasoning.md)
+- [Improved Runtime Guarantees for the SPEA2 Multi-Objective Optimizer](improved_runtime_guarantees_for_the_spea2_multi-objective_optimizer.md)
+- [TraF-Align: Trajectory-aware Feature Alignment for Asynchronous Multi-agent Perception](../../CVPR2025/llm_evaluation/traf-align_trajectory-aware_feature_alignment_for_asynchronous_multi-agent_perce.md)
+
+<!-- RELATED:END -->

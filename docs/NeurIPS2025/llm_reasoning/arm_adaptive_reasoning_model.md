@@ -127,3 +127,15 @@ ARM-7B vs SFT+GRPO：准确率仅降 0.2%，token 节省 32.5%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 3/7/14B 三个尺度，7个评测集，多种 backbone，多种推理模式，消融实验非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，Figure 2 的格式分布可视化非常直观
 - 价值: ⭐⭐⭐⭐ 实用价值高，Ada-GRPO 的 2× 训练加速和推理节省对部署意义大，但受限于预定义格式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
+- [Re-FORC: Adaptive Reward Prediction for Efficient Chain-of-Thought Reasoning](re-forc_adaptive_reward_prediction_for_efficient_chain-of-thought_reasoning.md)
+- [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](adaptive_dual_reasoner_large_reasoning_models_can_think_efficiently_by_hybrid_re.md)
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+- [The Impact of Quantization on Large Reasoning Model Reinforcement Learning](the_impact_of_quantization_on_large_reasoning_model_reinforcement_learning.md)
+
+<!-- RELATED:END -->

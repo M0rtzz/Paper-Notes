@@ -152,3 +152,15 @@ $$L_{J_m}^{(m)} \geq \max_{i \neq J_m} U_i^{(m)}$$
 - 实验充分度: ⭐⭐⭐ — 实验主要为理论验证性质，无大规模或复杂场景实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题动机清晰、定义精准、对比表格直观
 - 价值: ⭐⭐⭐⭐ — 为 BAI 领域揭示了重要的理论缺陷并提供了首个解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Near Optimal Best Arm Identification for Clustered Bandits](near_optimal_best_arm_identification_for_clustered_bandits.md)
+- [Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [Decision Making under the Exponential Family DRO](decision_making_under_the_exponential_family_distributionally_robust_optimisatio.md)
+- [Fixed-Confidence Multiple Change Point Identification under Bandit Feedback](fixed-confidence_multiple_change_point_identification_under_bandit_feedback.md)
+
+<!-- RELATED:END -->

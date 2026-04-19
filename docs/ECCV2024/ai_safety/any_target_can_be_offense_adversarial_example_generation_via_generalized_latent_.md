@@ -129,3 +129,15 @@ GAKer 包含冻结的特征提取器 $\mathcal{F}_\psi$ 和 UNet 生成器 $\mat
 - 实验充分度: ⭐⭐⭐⭐⭐ CNN/ViT/VLM/防御模型全面评估，详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，消融详细，但符号有些冗余
 - 价值: ⭐⭐⭐⭐ 对 AI 安全评估有重要意义，揭示了模型的广泛脆弱性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](../../NeurIPS2025/ai_safety/virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
+- [Rethinking Target Label Conditioning in Adversarial Attacks: A 2D Tensor-Guided Generative Approach](../../AAAI2026/ai_safety/rethinking_target_label_conditioning_in_adversarial_attacks_a_2d_tensor-guided_g.md)
+- [CLIP-Guided Generative Networks for Transferable Targeted Adversarial Attacks](clip-guided_generative_networks_for_transferable_targeted_adversarial_attacks.md)
+- [Editing Physiological Signals in Videos Using Latent Representations](../../CVPR2026/ai_safety/editing_physiological_signals_in_videos_using_latent_representations.md)
+- [Resource-Adaptive Federated Text Generation with Differential Privacy](../../ICLR2026/ai_safety/resource-adaptive_federated_text_generation_with_differential_privacy.md)
+
+<!-- RELATED:END -->

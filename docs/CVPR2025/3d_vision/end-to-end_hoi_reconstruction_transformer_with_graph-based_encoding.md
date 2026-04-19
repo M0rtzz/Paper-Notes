@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集全面对比+多组消融+注意力可视化
 - 写作质量: ⭐⭐⭐⭐ 动机分析清楚，方法描述条理分明
 - 价值: ⭐⭐⭐⭐ HOI 重建的实用改进，隐式建模思路有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [End-to-End Implicit Neural Representations for Classification](end-to-end_implicit_neural_representations_for_classification.md)
+- [GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)
+- [3D-LLaVA: Towards Generalist 3D LMMs with Omni Superpoint Transformer](3d-llava_towards_generalist_3d_lmms_with_omni_superpoint_transformer.md)
+- [ERUPT: Efficient Rendering with Unposed Patch Transformer](erupt_efficient_rendering_with_unposed_patch_transformer.md)
+- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+
+<!-- RELATED:END -->

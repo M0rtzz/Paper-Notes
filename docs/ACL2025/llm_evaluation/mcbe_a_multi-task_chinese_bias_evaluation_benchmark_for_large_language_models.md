@@ -129,3 +129,15 @@ McBE 的核心设计是**偏见评估实例（Bias Evaluation Instance, BEI）**
 - 实验充分度: ⭐⭐⭐⭐ 多系列多参数量模型、12 类别 × 5 任务的全矩阵评估
 - 写作质量: ⭐⭐⭐⭐ 分类体系清晰，偏见 vs 文化差异的界定有深度
 - 价值: ⭐⭐⭐⭐ 对中文 LLM 公平性研究有重要基准意义，BEI 概念可推广到其他语言
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeedBench: A Multi-task Benchmark for Evaluating Large Language Models in Seed Science](seedbench_a_multi-task_benchmark_for_evaluating_large_language_models_in_seed_sc.md)
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark](mmlu-cf_a_contamination-free_multi-task_language_understanding_benchmark.md)
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](codemenv_benchmarking_large_language_models_on_code_migration.md)
+
+<!-- RELATED:END -->

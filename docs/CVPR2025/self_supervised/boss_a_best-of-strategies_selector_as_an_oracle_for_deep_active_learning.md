@@ -131,3 +131,15 @@ BoSS将最优批次选择问题$\mathcal{B}^* = \arg\min_{\mathcal{B} \subset \m
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数据集、2种backbone、3种oracle对比、丰富消融、策略频率分析
 - 写作质量: ⭐⭐⭐⭐ 形式化推导清晰，从Eq.1到Eq.4的推导链条完整
 - 价值: ⭐⭐⭐⭐ 为AL社区提供了可靠的oracle基准，揭示了现有策略的差距，指明了ensemble方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Your Best and Get Enough Rest for Continual Learning](do_your_best_and_get_enough_rest_for_continual_learning.md)
+- [Learning to Normalize on the SPD Manifold under Bures-Wasserstein Geometry](learning_to_normalize_on_the_spd_manifold_under_bures-wasserstein_geometry.md)
+- [SMILE: Infusing Spatial and Motion Semantics in Masked Video Learning](smile_infusing_spatial_and_motion_semantics_in_masked_video_learning.md)
+- [Spectral State Space Model for Rotation-Invariant Visual Representation Learning](spectral_state_space_model_for_rotation-invariant_visual_representation_learning.md)
+- [Transformers without Normalization](transformers_without_normalization.md)
+
+<!-- RELATED:END -->

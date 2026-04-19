@@ -111,3 +111,15 @@ MambaOut 在所有尺度上均超越视觉 Mamba 模型，且 MACs 更低。
 - 实验充分度: ⭐⭐⭐⭐ 覆盖分类/检测/分割，多尺度对比全面，但缺少更多任务验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从理论到实验环环相扣，致敬 Kobe "Mamba Out" 的立意也很有趣
 - 价值: ⭐⭐⭐⭐ 为 Mamba for Vision 提供了重要反思和 baseline，但不影响 Mamba 在长序列任务中的价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
+- [TinyViM: Frequency Decoupling for Tiny Hybrid Vision Mamba](../../ICCV2025/segmentation/tinyvim_frequency_decoupling_for_tiny_hybrid_vision_mamba.md)
+- [Do We Need Perfect Data? Leveraging Noise for Domain Generalized Segmentation](../../AAAI2026/segmentation/do_we_need_perfect_data_leveraging_noise_for_domain_generalized_segmentation.md)
+- [QMamba: On First Exploration of Vision Mamba for Image Quality Assessment](../../ICML2025/segmentation/qmamba_on_first_exploration_of_vision_mamba_for_image_quality_assessment.md)
+- [VSSD: Vision Mamba with Non-Causal State Space Duality](../../ICCV2025/segmentation/vssd_vision_mamba_with_non-causal_state_space_duality.md)
+
+<!-- RELATED:END -->

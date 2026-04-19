@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 纯理论工作，定理和证明完整，但缺少实验验证算法的实际性能
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，从简单的出度到复杂的入度层层推进，图示辅助理解
 - 价值: ⭐⭐⭐⭐ — 显著拓展了 TFP 的参数化理解，但实际算法可用性受限于参数大小
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Hard is it to Explain Preferences Using Few Boolean Attributes?](how_hard_is_it_to_explain_preferences_using_few_boolean_attributes.md)
+- [Align When They Want, Complement When They Need! Human-Centered Ensembles for Adaptive Human-AI Collaboration](align_when_they_want_complement_when_they_need_human-centere.md)
+- [How Wide and How Deep? Mitigating Over-Squashing of GNNs via Channel Capacity Constrained Estimation](how_wide_and_how_deep_mitigating_over-squashing_of_gnns_via_channel_capacity_con.md)
+- [How to Marginalize in Causal Structure Learning?](how_to_marginalize_in_causal_structure_learning.md)
+- [What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](../../CVPR2026/others/what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
+
+<!-- RELATED:END -->

@@ -111,3 +111,15 @@ Access Denied Inc 是一个完整的三阶段评估 pipeline：(1) 从 Adult 数
 - 实验充分度 ⭐⭐⭐⭐：7 个模型 + 6 个特征 + 2 个特殊场景，但仅表格数据一种形式
 - 写作质量 ⭐⭐⭐⭐：形式化定义完整，实验分析深入，failure mode 分类有洞察
 - 实用价值 ⭐⭐⭐⭐：framework 可复用，暴露了真实风险，但缺乏解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spectral Sensitivity Estimation with an Uncalibrated Diffraction Grating](../../ICCV2025/llm_evaluation/spectral_sensitivity_estimation_with_an_uncalibrated_diffraction_grating.md)
+- [HeSS: Head Sensitivity Score for Sparsity Redistribution in VGGT](../../CVPR2026/llm_evaluation/hess_head_sensitivity_score_for_sparsity_redistribution_in_vggt.md)
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+- [HalluLens: LLM Hallucination Benchmark](hallulens_llm_hallucination_benchmark.md)
+- [Movie101v2: Improved Movie Narration Benchmark](movie101v2_improved_movie_narration_benchmark.md)
+
+<!-- RELATED:END -->

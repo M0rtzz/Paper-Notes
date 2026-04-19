@@ -128,3 +128,15 @@ InsightEdit 由三个模块组成：
 ## 评分
 
 ⭐⭐⭐⭐ — 数据+模型双线创新，实验充分；数据管线的自动化程度和质量令人印象深刻，双流桥接设计合理有效。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MagicQuill: An Intelligent Interactive Image Editing System](magicquill_an_intelligent_interactive_image_editing_system.md)
+- [SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing](../../ICCV2025/image_generation/superedit_rectifying_and_facilitating_supervision_for_instruction-based_image_ed.md)
+- [MangaNinja: Line Art Colorization with Precise Reference Following](manganinja_line_art_colorization_with_precise_reference_following.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](../../ICCV2025/image_generation/adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)
+
+<!-- RELATED:END -->

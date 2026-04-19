@@ -141,3 +141,15 @@ $$\mathcal{L}_{\text{tot}} = \frac{1}{N_{\text{mat}}} \sum_{i=1}^{N_{\text{det}}
 - 实验充分度: ⭐⭐⭐⭐⭐ 提出新指标、扫描/视频双设置、详尽消融、在线增量评估，非常完整
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，图表丰富，动机和设计决策解释充分
 - 价值: ⭐⭐⭐⭐ 50倍加速且精度更优，实时CAD重建有重要应用价值，新评估指标也有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting](versatilegaussian_real-time_neural_rendering_for_versatile_tasks_using_gaussian_.md)
+- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
+- [A Compact Dynamic 3D Gaussian Representation for Real-Time Dynamic View Synthesis](a_compact_dynamic_3d_gaussian_representation_for_realtime_dy.md)
+- [TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多模型变体、多语言、多评估场景（已见/未见/社会变异）、噪声学生训练
 - **写作质量**: ⭐⭐⭐⭐ 技术细节充实，评估设计周到
 - **价值**: ⭐⭐⭐⭐ 对语音学研究和低资源语言文档化有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models](statement-tuning_enables_efficient_cross-lingual_generalization_in_encoder-only_.md)
+- [Less, but Better: Efficient Multilingual Expansion for LLMs via Layer-wise Mixture-of-Experts](less_but_better_efficient_multilingual_expansion.md)
+- [Language Fusion for Parameter-Efficient Cross-lingual Transfer (FLARE)](flare_crosslingual_lora.md)
+- [M-RewardBench: Evaluating Reward Models in Multilingual Settings](m_rewardbench.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+
+<!-- RELATED:END -->

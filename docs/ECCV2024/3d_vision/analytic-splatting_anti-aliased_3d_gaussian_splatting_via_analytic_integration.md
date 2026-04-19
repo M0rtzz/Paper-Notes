@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多尺度、超分辨率、详细误差分析
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，插图形象，误差分析到位
 - 价值: ⭐⭐⭐⭐ 对 3DGS 的核心渲染 pipeline 改进，直接可用于所有基于 3DGS 的方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BAD-Gaussians: Bundle Adjusted Deblur Gaussian Splatting](bad-gaussians_bundle_adjusted_deblur_gaussian_splatting.md)
+- [Anti-Aliased 2D Gaussian Splatting](../../NeurIPS2025/3d_vision/anti-aliased_2d_gaussian_splatting.md)
+- [3iGS: Factorised Tensorial Illumination for 3D Gaussian Splatting](3igs_factorised_tensorial_illumination_for_3d_gaussian_splatting.md)
+- [HAC: Hash-grid Assisted Context for 3D Gaussian Splatting Compression](hac_hash-grid_assisted_context_for_3d_gaussian_splatting_compression.md)
+- [Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
+
+<!-- RELATED:END -->

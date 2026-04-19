@@ -147,3 +147,15 @@ Spectral布局在对称性检测上表现最佳，因为其直接反映图的谱
 ⭐⭐⭐⭐
 
 核心发现引人深思：视觉模型在图结构理解上的强大能力确实被低估。GraphAbstract benchmark设计精良，跨尺度评估协议有说服力。但论文更偏实证发现，缺少对视觉模型为何有效的深层理论解释，且大规模图的适用性存疑。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+- [S'MoRE: Structural Mixture of Residual Experts for Parameter-Efficient LLM Fine-tuning](smore_structural_mixture_of_residual_experts_for_parameter-efficient_llm_fine-tu.md)
+- [DVHGNN: Multi-Scale Dilated Vision HGNN for Efficient Vision Recognition](../../CVPR2025/graph_learning/dvhgnn_multi-scale_dilated_vision_hgnn_for_efficient_vision_recognition.md)
+- [Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)
+- [Table as a Modality for Large Language Models](table_as_a_modality_for_large_language_models.md)
+
+<!-- RELATED:END -->

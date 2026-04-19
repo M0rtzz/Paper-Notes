@@ -154,3 +154,15 @@ DCT-Shield 对其他净化手段也表现出更强鲁棒性：AdvClean（LPIPS ~
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖编辑/inpainting两类任务，多种净化方法评估，人类评价充分
 - **写作质量**: ⭐⭐⭐⭐ JPEG相关背景介绍详实，方法动机推导流畅
 - **价值**: ⭐⭐⭐⭐ 解决了图像免疫领域噪声可见性和JPEG不鲁棒两大核心痛点，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Defense against Customization via Protective Perturbation Resistant to Diffusion-based Purification](towards_robust_defense_against_customization_via_protective_perturbation_resista.md)
+- [Robust-Wide: Robust Watermarking against Instruction-driven Image Editing](../../ECCV2024/image_generation/robust-wide_robust_watermarking_against_instruction-driven_image_editing.md)
+- [TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
+- [FICGen: Frequency-Inspired Contextual Disentanglement for Layout-driven Degraded Image Generation](ficgen_frequency-inspired_contextual_disentanglement_for_layout-driven_degraded_.md)
+- [Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation](efficient_input-level_backdoor_defense_on_text-to-image_synthesis_via_neuron_act.md)
+
+<!-- RELATED:END -->

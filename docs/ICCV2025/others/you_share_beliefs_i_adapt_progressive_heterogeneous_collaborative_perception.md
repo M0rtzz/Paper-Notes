@@ -161,3 +161,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 16场景+多消融，但仅OPV2V单数据集
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 实际部署意义大，但局限于模拟环境和LiDAR编码器
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I Am Big, You Are Little; I Am Right, You Are Wrong](i_am_big_you_are_little_i_am_right_you_are_wrong.md)
+- [CoLA: Collaborative Low-Rank Adaptation](../../ACL2025/others/cola_collaborative_low-rank_adaptation.md)
+- [Contextual Dynamic Pricing with Heterogeneous Buyers](../../NeurIPS2025/others/contextual_dynamic_pricing_with_heterogeneous_buyers.md)
+- [ResNets Are Deeper Than You Think](../../NeurIPS2025/others/resnets_are_deeper_than_you_think.md)
+- [From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)
+
+<!-- RELATED:END -->

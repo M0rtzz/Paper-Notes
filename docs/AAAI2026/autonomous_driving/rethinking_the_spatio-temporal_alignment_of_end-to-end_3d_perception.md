@@ -165,3 +165,15 @@ $$B_{t,t-1} = \bar{B}_{t,t-1} + \Phi_r(Q_{t,t-1})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖检测/跟踪/E2E三大任务，多个基线，消融实验完整，鲁棒性验证充分
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法描述规范，公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ — 即插即用模块，代码开源，在安全关键指标（碰撞率）上提升显著，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaptiveAD: Decoupling Scene Perception and Ego Status for End-to-End Autonomous Driving](decoupling_scene_perception_and_ego_status_a_multi-context_fusion_approach_for_e.md)
+- [ResWorld: Temporal Residual World Model for End-to-End Autonomous Driving](../../ICLR2026/autonomous_driving/resworld_temporal_residual_world_model_for_end-to-end_autonomous_driving.md)
+- [DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving](diffrefiner_coarse_to_fine_trajectory_planning_via_diffusion_refinement_with_sem.md)
+- [DriveSuprim: Towards Precise Trajectory Selection for End-to-End Planning](drivesuprim_towards_precise_trajectory_selection_for_end-to-end_planning.md)
+- [RAST: A Retrieval Augmented Spatio-Temporal Framework for Traffic Prediction](rast_a_retrieval_augmented_spatio-temporal_framework_for_traffic_prediction.md)
+
+<!-- RELATED:END -->

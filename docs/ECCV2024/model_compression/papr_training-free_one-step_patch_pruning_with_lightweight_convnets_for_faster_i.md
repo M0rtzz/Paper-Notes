@@ -160,3 +160,15 @@ PaPr 在 MAE 模型上优势尤为明显（ViT-B 上比 ToMe 高 **4.5%** 精度
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 ViT/ConvNet/Swin 多种架构、图像/视频双任务、多种预训练方式
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰、图表丰富、PyTorch 伪代码实用
 - **价值**: ⭐⭐⭐⭐⭐ — 真正的即插即用方法，对工业界部署价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images](spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)
+- [One-Step Diffusion-Based Image Compression with Semantic Distillation](../../NeurIPS2025/model_compression/one-step_diffusion-based_image_compression_with_semantic_distillation.md)
+- [Isomorphic Pruning for Vision Models](isomorphic_pruning_for_vision_models.md)
+- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
+- [Auto-DAS: Automated Proxy Discovery for Training-free Distillation-aware Architecture Search](auto-das_automated_proxy_discovery_for_training-free_distillation-aware_architec.md)
+
+<!-- RELATED:END -->

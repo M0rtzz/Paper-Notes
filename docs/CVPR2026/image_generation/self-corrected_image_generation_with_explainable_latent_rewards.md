@@ -133,3 +133,15 @@ GenEval 细分指标（OmniGen2 backbone）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多个 benchmark（GenEval/DPGBench/ImgEdit/GEdit）和多个 backbone，消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可解释性分析详实
 - 价值: ⭐⭐⭐⭐ 即插即用的轻量修正器对实际应用很有价值，可解释性设计为领域树立了良好范例
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
+- [SOLACE: Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](solace_self_confidence_rewards_t2i.md)
+- [PSR: Scaling Multi-Subject Personalized Image Generation with Pairwise Subject-Consistency Rewards](psr_scaling_multi-subject_personalized_image_generation_with_pairwise_subject-co.md)
+- [Resolving the Identity Crisis in Text-to-Image Generation](resolving_the_identity_crisis_in_text-to-image_generation.md)
+- [CTCal: Rethinking Text-to-Image Diffusion Models via Cross-Timestep Self-Calibration](ctcal_rethinking_text-to-image_diffusion_models_via_cross-timestep_self-calibrat.md)
+
+<!-- RELATED:END -->

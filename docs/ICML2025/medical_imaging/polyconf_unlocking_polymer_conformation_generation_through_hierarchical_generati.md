@@ -211,3 +211,15 @@ $$\mathcal{L}_{\text{phase-2}} = \frac{1}{N_u}\sum_{i=1}^{N_u}\|\hat{R}_i^{(0)} 
 - **实验充分度**: ⭐⭐⭐⭐ — 多维度评估（结构/能量/效率/可扩展性），但缺少消融实验细节
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，公式推导流畅，图示直观
 - **价值**: ⭐⭐⭐⭐⭐ — 开辟新领域，代码数据全开源，对聚合物建模研究影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Protein Conformation Ensemble Generation with Physical Feedback](aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
+- [CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
+- [DeepSeq: High-Throughput Single-Cell RNA Sequencing Data Labeling via Web Search-Augmented Agentic Generative AI Foundation Models](deepseq_high-throughput_single-cell_rna_sequencing_data_labeling_via_web_search-.md)
+- [ComRecGC: Global Graph Counterfactual Explainer through Common Recourse](comrecgc_global_graph_counterfactual_explainer_through_common_recourse.md)
+- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](../../NeurIPS2025/medical_imaging/steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ RL 后训练各组件的贡献:
 - ⭐ 创新性: 8/10 — RL后训练用于MLLM个性化是新颖应用
 - ⭐ 实用性: 8/10 — 个性化视觉助手有广泛需求,开源代码
 - ⭐ 写作质量: 7/10 — 实验充分,但方法部分细节可更清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Language Models to Reason Efficiently](training_language_models_to_reason_efficiently.md)
+- [MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning](../../ACL2025/reinforcement_learning/maporl_multi-agent_post-co-training_for_collaborative_large_language_models_with.md)
+- [Post-training Large Language Models for Diverse High-Quality Responses](../../ICLR2026/reinforcement_learning/post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](teaching_language_models_to_evolve_with_users_dynamic_profile_modeling_for_perso.md)
+- [VideoRFT: Incentivizing Video Reasoning Capability in MLLMs via Reinforced Fine-Tuning](videorft_incentivizing_video_reasoning_capability_in_mllms_via_reinforced_fine-t.md)
+
+<!-- RELATED:END -->

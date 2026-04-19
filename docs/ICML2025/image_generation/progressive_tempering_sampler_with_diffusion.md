@@ -158,3 +158,15 @@ PTSD 与 PT+DM 效率相当，但在 Fig. 6 的详细对比中，相同评估预
 | 总体评价 | ★★★★☆ |
 
 温度引导的推导虽基于简单的 Taylor 展开 + 有限差分，但与 CFG 的联系深刻且优美。实验在合成和分子任务上充分验证了效率提升。主要扣分在实用价值——wall-clock 时间仍不占优、温度调度敏感、尚未扩展到真正大规模问题。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learnable Sampler Distillation for Discrete Diffusion Models](../../NeurIPS2025/image_generation/learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](../../NeurIPS2025/image_generation/progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](../../NeurIPS2025/image_generation/diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
+- [AMO Sampler: Enhancing Text Rendering with Overshooting](../../CVPR2025/image_generation/amo_sampler_enhancing_text_rendering_with_overshooting.md)
+- [FreeDiff: Progressive Frequency Truncation for Image Editing with Diffusion Models](../../ECCV2024/image_generation/freediff_progressive_frequency_truncation_for_image_editing_with_diffusion_model.md)
+
+<!-- RELATED:END -->

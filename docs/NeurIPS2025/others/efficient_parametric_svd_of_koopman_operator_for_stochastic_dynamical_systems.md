@@ -145,3 +145,15 @@ $$\mathcal{L}_{\text{lora}}(\mathbf{f}, \mathbf{g}) = -2 \operatorname{tr}(\math
 - 实验充分度: ⭐⭐⭐⭐ (合成 + Langevin + 分子动力学覆盖面广，消融充分)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论推导严谨，记号清晰，动机阐述流畅)
 - 价值: ⭐⭐⭐⭐ (为 Koopman 算子学习提供了实用且可靠的新基线)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modeling Neural Activity with Conditionally Linear Dynamical Systems](modeling_neural_activity_with_conditionally_linear_dynamical_systems.md)
+- [An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
+- [Coresets for Clustering Under Stochastic Noise](coresets_for_clustering_under_stochastic_noise.md)
+- [SVD-NO: Learning PDE Solution Operators with SVD Integral Kernels](../../AAAI2026/others/svd-no_learning_pde_solution_operators_with_svd_integral_kernels.md)
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+
+<!-- RELATED:END -->

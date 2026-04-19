@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 15个测试集全面但仅限模拟环境，缺真实数据验证
 - 写作质量: ⭐⭐⭐⭐ 形式化严谨，IP和HS算法描述清晰
 - 价值: ⭐⭐⭐⭐ 对多模型新环境部署有实用指导，逻辑推理框架可扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MapEval: A Map-Based Evaluation of Geo-Spatial Reasoning in Foundation Models](../../ICML2025/remote_sensing/mapeval_a_map-based_evaluation_of_geo-spatial_reasoning_in_foundation_models.md)
+- [M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction](m3sr_multi-scale_multi-perceptual_mamba_for_efficient_spectral_reconstruction.md)
+- [Asymmetric Cross-Modal Knowledge Distillation: Bridging Modalities with Weak Semantic Consistency](asymmetric_cross-modal_knowledge_distillation_bridging_modalities_with_weak_sema.md)
+- [Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments](../../CVPR2026/remote_sensing/olbedo_an_albedo_and_shading_aerial_dataset_for_large-scale_outdoor_environments.md)
+- [TAMMs: Change Understanding and Forecasting in Satellite Image Time Series with Temporal-Aware Multimodal Models](../../ICLR2026/remote_sensing/tamms_change_understanding_and_forecasting_in_satellite_image_time_series_with_t.md)
+
+<!-- RELATED:END -->

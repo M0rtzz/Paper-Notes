@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 案例分析有深度但样本量小，扩展实验的统计验证弥补了部分不足
 - 写作质量: ⭐⭐⭐⭐⭐ 跨学科写作流畅，将艺术理论与技术细节优雅结合
 - 价值: ⭐⭐⭐ 对HRI和创意AI有启发性，但在实用技术贡献上较弱
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Single Pixel Image Classification using an Ultrafast Digital Light Projector](../../CVPR2025/autonomous_driving/single_pixel_image_classification_using_an_ultrafast_digital_light_projector.md)
+- [Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration](../../ICML2025/autonomous_driving/geometry-to-image_synthesis-driven_generative_point_cloud_registration.md)
+- [M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](../../CVPR2025/autonomous_driving/m2-occ_resilient_3d_semantic_occupancy_prediction_for_autonomous_driving_with_in.md)
+- [SPIRAL: Semantic-Aware Progressive LiDAR Scene Generation and Understanding](spiral_semantic-aware_progressive_lidar_scene_generation_and_understanding.md)
+- [Leveraging Depth and Language for Open-Vocabulary Domain-Generalized Semantic Segmentation](leveraging_depth_and_language_for_open-vocabulary_domain-generalized_semantic_se.md)
+
+<!-- RELATED:END -->

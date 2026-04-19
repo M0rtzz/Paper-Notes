@@ -118,3 +118,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，动机和方法对应好
 - 价值: ⭐⭐⭐⭐ 为MLLM可解释性提供了实用且通用的工具
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FINER: MLLMs Hallucinate under Fine-grained Negative Queries](finer_mllms_hallucinate_under_fine-grained_negative_queries.md)
+- [Hallucination Begins Where Saliency Drops](../../ICLR2026/interpretability/hallucination_begins_where_saliency_drops.md)
+- [EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis](emoverse_mllm_emotion_representation_dataset.md)
+- [Provably Explaining Neural Additive Models](../../ICLR2026/interpretability/provably_explaining_neural_additive_models.md)
+- [What Makes an Ensemble (Un)interpretable?](../../ICML2025/interpretability/what_makes_an_ensemble_un_interpretable.md)
+
+<!-- RELATED:END -->

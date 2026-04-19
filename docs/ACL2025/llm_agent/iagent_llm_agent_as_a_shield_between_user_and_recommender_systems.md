@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集 + 回音室/多样性/活跃度分组分析 + 消融实验
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，三层范式描述直观
 - 价值: ⭐⭐⭐⭐ 对推荐系统公平性和用户保护有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAI3: Testing Agent Integrity in Interpreting User Intent](../../NeurIPS2025/llm_agent/tai3_testing_agent_integrity_in_interpreting_user_intent.md)
+- [TAMAS: Benchmarking Adversarial Risks in Multi-Agent LLM Systems](../../ICML2025/llm_agent/tamas_benchmarking_adversarial_risks_in_multi-agent_llm_systems.md)
+- [A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems](a_multi-agent_framework_for_mitigating_dialect_biases_in_privacy_policy_question.md)
+- [Parallelism Meets Adaptiveness: Scalable Documents Understanding in Multi-Agent LLM Systems](../../AAAI2026/llm_agent/parallelism_meets_adaptiveness_scalable_documents_understanding_in_multi-agent_l.md)
+- [Unveiling Privacy Risks in LLM Agent Memory](mextra_agent_memory_privacy.md)
+
+<!-- RELATED:END -->

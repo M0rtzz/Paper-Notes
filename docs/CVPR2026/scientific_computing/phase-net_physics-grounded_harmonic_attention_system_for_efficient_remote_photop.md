@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集域内+跨域评估，消融完整，但部分跨域数据缺失
 - 写作质量: ⭐⭐⭐⭐⭐ 推导严谨、从物理到架构的逻辑链清晰流畅
 - 价值: ⭐⭐⭐⭐⭐ 物理驱动架构设计范式有普适意义，0.29M参数的极致效率适合部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EHETM: High-Quality and Efficient Turbulence Mitigation with Events](high-quality_and_efficient_turbulence_mitigation_with_events.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](../../ICLR2026/scientific_computing/drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding](../../NeurIPS2025/scientific_computing/physics-informed_neural_networks_with_fourier_features_and_attention-driven_deco.md)
+- [PhysSkin: Real-Time and Generalizable Physics-Based Skin Simulation](physskin_real-time_and_generalizable_physics-based_animation_via_self-supervised.md)
+- [F-Adapter: Frequency-Adaptive Parameter-Efficient Fine-Tuning in Scientific Machine Learning](../../NeurIPS2025/scientific_computing/f-adapter_frequency-adaptive_parameter-efficient_fine-tuning_in_scientific_machi.md)
+
+<!-- RELATED:END -->

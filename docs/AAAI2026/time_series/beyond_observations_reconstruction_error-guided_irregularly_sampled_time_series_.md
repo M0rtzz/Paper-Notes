@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三类任务、多数据集验证
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，动机推导有说服力
 - 价值: ⭐⭐⭐⭐ 为不规则时序表示学习提供了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantically Guided Representation Learning For Action Anticipation](../../ECCV2024/time_series/semantically_guided_representation_learning_for_action_anticipation.md)
+- [CometNet: Contextual Motif-guided Long-term Time Series Forecasting](cometnet_contextual_motif-guided_long-term_time_series_forecasting.md)
+- [C3RL: Rethinking the Combination of Channel-independence and Channel-mixing from Representation Learning](c3rl_rethinking_the_combination_of_channel-independence_and_channel-mixing_from_.md)
+- [Mask the Redundancy: Evolving Masking Representation Learning for Multivariate Time-Series Clustering](mask_the_redundancy_evolving_masking_representation_learning_for_multivariate_ti.md)
+- [PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](../../ICLR2026/time_series/paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
+
+<!-- RELATED:END -->

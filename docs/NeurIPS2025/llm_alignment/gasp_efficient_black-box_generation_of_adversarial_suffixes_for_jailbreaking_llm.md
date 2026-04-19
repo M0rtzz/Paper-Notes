@@ -124,3 +124,15 @@ GASP包含四个模块：(A) 在AdvSuffixes数据集上预训练SuffixLLM；(B) 
 - 实验充分度: ⭐⭐⭐⭐ 5个开源+6个闭源模型，3种评估指标，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，数学表述规范，实验表格信息丰富
 - 价值: ⭐⭐⭐⭐⭐ 为LLM红队测试提供了高效可扩展的工具，对理解对齐脆弱性有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PolyJuice Makes It Real: Black-Box, Universal Red Teaming for Synthetic Image Detectors](polyjuice_makes_it_real_black-box_universal_red_teaming_for_synthetic_image_dete.md)
+- [Short-length Adversarial Training Helps LLMs Defend Long-length Jailbreak Attacks](short-length_adversarial_training_helps_llms_defend_long-length_jailbreak_attack.md)
+- [Adjacent Words, Divergent Intents: Jailbreaking Large Language Models via Task Concurrency](adjacent_words_divergent_intents_jailbreaking_large_language_models_via_task_con.md)
+- [Jailbreaking? One Step Is Enough!](../../ACL2025/llm_alignment/jailbreaking_one_step_is_enough.md)
+- [Greedy Sampling Is Provably Efficient for RLHF](greedy_sampling_is_provably_efficient_for_rlhf.md)
+
+<!-- RELATED:END -->

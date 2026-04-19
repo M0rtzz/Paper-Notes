@@ -162,3 +162,15 @@ CPM 提升显著：SS +4.80, MS +4.50, Total +6.50 mIoU。
 - 实验充分度: 4/5 - 多基准评测全面，但消融细节可更充分
 - 写作质量: 4/5 - 结构清晰，图 2 信息量大
 - 价值: 4/5 - 为 Transformer-based AVS 的训练难题提供了系统性解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cs2K: Class-Specific and Class-Shared Knowledge Guidance for Incremental Semantic Segmentation](cs2k_class-specific_and_class-shared_knowledge_guidance_for_incremental_semantic.md)
+- [ControlNet++: Improving Conditional Controls with Efficient Consistency Feedback](controlnet_improving_conditional_controls_with_efficient_consistency_feedback.md)
+- [Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics](../../CVPR2025/segmentation/dynamic_derivation_and_elimination_audio_visual_segmentation_with_enhanced_audio.md)
+- [SouPLe: Enhancing Audio-Visual Localization and Segmentation with Learnable Prompt Contexts](../../CVPR2026/segmentation/souple_enhancing_audio-visual_localization_and_segmentation_with_learnable_promp.md)
+- [Early Preparation Pays Off: New Classifier Pre-tuning for Class Incremental Semantic Segmentation](early_preparation_pays_off_new_classifier_pre-tuning_for_class_incremental_seman.md)
+
+<!-- RELATED:END -->

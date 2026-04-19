@@ -102,3 +102,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7种逆问题(+2种补充)、2个数据集、6-8个基线、NFE效率分析、假设验证、消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨完整（5个定理6个引理），实验和理论互补
 - 价值: ⭐⭐⭐⭐⭐ 对计算成像/逆问题求解领域有理论+实用双重贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FRAMER: Frequency-Aligned Self-Distillation with Adaptive Modulation Leveraging Diffusion Priors for Real-World Image Super-Resolution](framer_frequency-aligned_self-distillation_with_adaptive_modulation_leveraging_d.md)
+- [DiP: Taming Diffusion Models in Pixel Space](dip_taming_diffusion_models_in_pixel_space.md)
+- [DA-VAE: Plug-in Latent Compression for Diffusion via Detail Alignment](da-vae_plug-in_latent_compression_for_diffusion_via_detail_alignment.md)
+- [Taming Sampling Perturbations with Variance Expansion Loss for Latent Diffusion Models](taming_sampling_perturbations_with_variance_expansion_loss_for_latent_diffusion_.md)
+- [Taming Video Models for 3D and 4D Generation via Zero-Shot Camera Control](taming_video_models_for_3d_and_4d_generation_via_zero-shot_camera_control.md)
+
+<!-- RELATED:END -->

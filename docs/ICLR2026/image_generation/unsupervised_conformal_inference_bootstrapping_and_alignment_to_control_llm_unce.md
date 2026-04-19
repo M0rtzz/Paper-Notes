@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四个QA数据集、三个实验维度、两个消融分析
 - 写作质量: ⭐⭐⭐⭐ 理论严谨但符号较重，需要读者有CP背景
 - 价值: ⭐⭐⭐⭐⭐ 提供了LLM部署中急需的实用质量控制工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RNE: plug-and-play diffusion inference-time control and energy-based training](rne_plug-and-play_diffusion_inference-time_control_and_energy-based_training.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [From Parameters to Behaviors: Unsupervised Compression of the Policy Space](from_parameters_to_behaviors_unsupervised_compression_of_the_policy_space.md)
+- [GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
+- [Translate Policy to Language: Flow Matching Generated Rewards for LLM Explanations](translate_policy_to_language_flow_matching_generated_rewards_for_llm_explanation.md)
+
+<!-- RELATED:END -->

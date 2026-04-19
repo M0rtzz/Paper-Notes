@@ -112,3 +112,15 @@ H-DDx 提出基于 ICD-10 分类层级的鉴别诊断评估框架——将预测
 - 实验充分度: ⭐⭐⭐⭐⭐ 22 个 LLM + 层级分析 + case study
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，案例分析有说服力
 - 价值: ⭐⭐⭐⭐⭐ 改变医疗 AI 评估范式的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UltrasoundAgents: Hierarchical Multi-Agent Evidence-Chain Reasoning for Breast Ultrasound Diagnosis](../../CVPR2025/medical_imaging/ultrasoundagents_hierarchical_multi-agent_evidence-chain_reasoning_for_breast_ul.md)
+- [Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs](shallow_robustness_deep_vulnerabilities_multi-turn_evaluation_of_medical_llms.md)
+- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
+- [UniMRSeg: Unified Modality-Relax Segmentation via Hierarchical Self-Supervised Compensation](unimrseg_unified_modality-relax_segmentation_via_hierarchical_self-supervised_co.md)
+- [RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis](rad_towards_trustworthy_retrieval-augmented_multi-modal_clinical_diagnosis.md)
+
+<!-- RELATED:END -->

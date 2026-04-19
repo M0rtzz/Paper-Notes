@@ -103,3 +103,15 @@ In-Context Learning（ICL）是 Transformer 的核心能力之一，即模型通
 - 实验充分度: ⭐⭐⭐ 实验以验证理论为主，规模和多样性有限
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，但符号较重
 - 价值: ⭐⭐⭐⭐ 对理解 ICL 机制和 Transformer 表达力提供了重要理论视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [Markovian Transformers for Informative Language Modeling](../../ICLR2026/optimization/markovian_transformers_for_informative_language_modeling.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+- [Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
+- [Can Transformers Learn Full Bayesian Inference In Context?](../../ICML2025/optimization/can_transformers_learn_full_bayesian_inference_in_context.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 115项研究的综述提供了扎实的实证基础
 - 写作质量: ⭐⭐⭐⭐⭐ 结构极其清晰，分层阅读指南设计贴心，表格信息密度高
 - 价值: ⭐⭐⭐⭐⭐ 对整个AI评估社区具有基础性的方法论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recommendations with Sparse Comparison Data: Provably Fast Convergence for Nonconvex Matrix Factorization](recommendations_with_sparse_comparison_data_provably_fast_convergence_for_noncon.md)
+- [RLTHF: Targeted Human Feedback for LLM Alignment](rlthf_targeted_human_feedback_for_llm_alignment.md)
+- [MATCHA: Toward Safe and Human-Aligned Game Conversational Recommendation via Multi-Agent Decomposition](toward_safe_and_human-aligned_game_conversational_recommendation_via_multi-agent.md)
+- [How to Set AdamW's Weight Decay as You Scale Model and Dataset Size](how_to_set_adamws_weight_decay_as_you_scale_model_and_dataset_size.md)
+- [Position: Towards Bidirectional Human-AI Alignment](../../NeurIPS2025/recommender/position_towards_bidirectional_human-ai_alignment.md)
+
+<!-- RELATED:END -->

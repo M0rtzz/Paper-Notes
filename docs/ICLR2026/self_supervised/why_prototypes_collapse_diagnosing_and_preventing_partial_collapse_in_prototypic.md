@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 跨方法分析、训练动态追踪全面
 - 写作质量: ⭐⭐⭐⭐⭐ 从诊断到方案叙事极清晰
 - 价值: ⭐⭐⭐⭐ 为原型 SSL 健壮训练提供关键方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Collapse-Proof Non-Contrastive Self-Supervised Learning](../../ICML2025/self_supervised/collapse-proof_non-contrastive_self-supervised_learning.md)
+- [SNAP-UQ: Self-supervised Next-Activation Prediction for Single-Pass Uncertainty](snap-uq_self-supervised_next-activation_prediction_for_single-pass_uncertainty_i.md)
+- [Difficult Examples Hurt Unsupervised Contrastive Learning: A Theoretical Perspective](difficult_examples_hurt_unsupervised_contrastive_learning_a_theoretical_perspect.md)
+- [Enhancing Molecular Property Predictions by Learning from Bond Modelling and Interactions](enhancing_molecular_property_predictions_by_learning_from_bond_modelling_and_int.md)
+- [Self-Supervised Inductive Logic Programming](../../AAAI2026/self_supervised/self-supervised_inductive_logic_programming.md)
+
+<!-- RELATED:END -->

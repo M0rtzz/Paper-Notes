@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 类数据集、4 种 UDF 架构、MC 和 DC 两种三角化方法的全面评估
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，但公式符号偶有混淆
 - 价值: ⭐⭐⭐⭐ 对 UDF 表面重建有实际推动作用，分辨率提升有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Copresheaf Topological Neural Networks: A Generalized Deep Learning Framework](copresheaf_topological_neural_networks_a_generalized_deep_learning_framework.md)
+- [Instant Video Models: Universal Adapters for Stabilizing Image-Based Networks](instant_video_models_universal_adapters_for_stabilizing_image-based_networks.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](../../CVPR2025/3d_vision/a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](../../CVPR2025/3d_vision/event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
+- [Consistency-aware Self-Training for Iterative-based Stereo Matching](../../CVPR2025/3d_vision/consistency-aware_self-training_for_iterative-based_stereo_matching.md)
+
+<!-- RELATED:END -->

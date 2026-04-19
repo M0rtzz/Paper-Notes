@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个模型 × 四种设置 + 两组消融 + 显著性检验，覆盖全面
 - 写作质量: ⭐⭐⭐ 结构完整但可读性一般，数据集描述和方法论的章节组织较松散
 - 价值: ⭐⭐⭐⭐ 对社交媒体心理健康监测有实际应用价值，SHINES 和 CESM-100 可作为社区资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis](cot-based_synthesizer_enhancing_llm_performance_through_answer_synthesis.md)
+- [MathFusion: Enhancing Mathematical Problem-solving of LLM through Instruction Fusion](mathfusion_instruction_fusion.md)
+- [Self-Tuning: Instructing LLMs to Effectively Acquire New Knowledge through Self-Teaching](self-tuning_instructing_llms_to_effectively_acquire_new_knowledge_through_self-t.md)
+- [ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch](unleashing_llm_reasoning_capability_via_scalable.md)
+- [ConsistencyChecker: Tree-based Evaluation of LLM Generalization Capabilities](consistencychecker_tree_evaluation.md)
+
+<!-- RELATED:END -->

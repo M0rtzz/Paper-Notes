@@ -157,3 +157,15 @@ GRU 对照：
 - **实验充分度**: ⭐⭐⭐⭐ — 系统对比两种假说的多个预测，GRU 对照实验是亮点；但局限于形式语言和 LSTM
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论动机充分，两种假说的对比表述极为清晰，表格和图形设计优秀
 - **价值**: ⭐⭐⭐⭐ — 对元学习和认知科学社区有重要理论影响，但对实践应用的直接价值有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](../../ICCV2025/others/is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
+- [Meta-learning three-factor plasticity rules for structured credit assignment with sparse feedback](../../NeurIPS2025/others/meta-learning_three-factor_plasticity_rules_for_structured_credit_assignment_wit.md)
+- [Byte Latent Transformer: Patches Scale Better Than Tokens](byte_latent_transformer.md)
+- [The Knowledge Microscope: Features as Better Analytical Lenses than Neurons](the_knowledge_microscope_features_as_better_analytical_lenses_than_neurons.md)
+
+<!-- RELATED:END -->

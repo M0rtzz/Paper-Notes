@@ -142,3 +142,15 @@ PSNR提升2.3dB以上，Bit Acc达到99.97%，全面碾压所有基线。
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖5种AIGC篡改方法、多种图像退化、详尽的消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但部分公式和符号在正文中较密集
 - 价值: ⭐⭐⭐⭐⭐ 解决了扩散模型内容安全的实际痛点，性能大幅领先，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blameless Users in a Clean Room: Defining Copyright Protection for Generative Models](blameless_users_in_a_clean_room_defining_copyright_protection_for_generative_mod.md)
+- [Anti-Tamper Protection for Unauthorized Individual Image Generation](../../ICCV2025/image_generation/anti-tamper_protection_for_unauthorized_individual_image_generation.md)
+- [Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models](perturb_a_model_not_an_image_towards_robust_privacy_protection_via_anti-personal.md)
+- [Latent Zoning Network: A Unified Principle for Generative Modeling, Representation Learning, and Classification](latent_zoning_network_a_unified_principle_for_generative_modeling_representation.md)
+- [MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction](mge-ldm_joint_latent_diffusion_for_simultaneous_music_generation_and_source_extr.md)
+
+<!-- RELATED:END -->

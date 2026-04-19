@@ -118,3 +118,15 @@ VirtualHome-Env 基准：
 - 实验充分度: ⭐⭐⭐⭐ 充分消融和扩展性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 数学优雅，动机清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 规划和推理时计算有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoboCerebra: A Large-scale Benchmark for Long-horizon Robotic Manipulation Evaluation](../../NeurIPS2025/robotics/robocerebra_a_large-scale_benchmark_for_long-horizon_robotic_manipulation_evalua.md)
+- [Efficient Robotic Policy Learning via Latent Space Backward Planning](efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+- [Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method](../../CVPR2025/robotics/towards_long-horizon_vision-language_navigation_platform_benchmark_and_method.md)
+- [RDD: Retrieval-Based Demonstration Decomposer for Planner Alignment in Long-Horizon Tasks](../../NeurIPS2025/robotics/rdd_retrieval-based_demonstration_decomposer_for_planner_alignment_in_long-horiz.md)
+- [BiAssemble: Learning Collaborative Affordance for Bimanual Geometric Assembly](biassemble_learning_collaborative_affordance_for_bimanual_geometric_assembly.md)
+
+<!-- RELATED:END -->

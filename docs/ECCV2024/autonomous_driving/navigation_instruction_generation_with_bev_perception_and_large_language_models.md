@@ -147,3 +147,15 @@ R2R val unseen 上的组件消融：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个数据集 + 详细消融 + 下游 agent 评估，非常充分
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
 - **价值**: ⭐⭐⭐⭐ — 为具身智能的语言交互提供了新的技术路线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [H-V2X: A Large Scale Highway Dataset for BEV Perception](h-v2x_a_large_scale_highway_dataset_for_bev_perception.md)
+- [Distilling Multi-modal Large Language Models for Autonomous Driving](../../CVPR2025/autonomous_driving/distilling_multi-modal_large_language_models_for_autonomous_driving.md)
+- [Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation](optimizing_diffusion_models_for_joint_trajectory_prediction_and_controllable_gen.md)
+- [TimeBill: Time-Budgeted Inference for Large Language Models](../../AAAI2026/autonomous_driving/timebill_time-budgeted_inference_for_large_language_models.md)
+- [Embracing Large Language Models in Traffic Flow Forecasting](../../ACL2025/autonomous_driving/embracing_large_language_models_in_traffic_flow_forecasting.md)
+
+<!-- RELATED:END -->

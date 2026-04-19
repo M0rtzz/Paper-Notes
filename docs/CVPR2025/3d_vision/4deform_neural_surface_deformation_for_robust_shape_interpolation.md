@@ -115,3 +115,15 @@ $$L = L_{\text{sdf}} + \lambda_s L_s + \lambda_v L_v + \lambda_m L_m + \lambda_r
 ## 总结与展望
 
 4Deform通过将神经隐式表示与物理启发的正则化相结合，为形状插值问题提供了一个统一且鲁棒的框架。修改后的水平集方程使方法能够自然地处理拓扑变化，而物理正则化器确保了变形的合理性。AutoDecoder架构提供了在形状空间中进行灵活插值的能力。未来工作可以探索将该方法扩展到动态场景重建和4D内容生成。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](../../ICCV2025/3d_vision/neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [Geometry in Style: 3D Stylization via Surface Normal Deformation](geometry_in_style_3d_stylization_via_surface_normal_deformation.md)
+- [MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion](mp-sfm_monocular_surface_priors_for_robust_structure-from-motion.md)
+- [GauSTAR: Gaussian Surface Tracking and Reconstruction](gaustar_gaussian_surface_tracking_and_reconstruction.md)
+- [Robust Neural Rendering in the Wild with Asymmetric Dual 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/robust_neural_rendering_in_the_wild_with_asymmetric_dual_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐（多数据集、多检测器、详尽消融）
 - 写作质量: ⭐⭐⭐⭐⭐（分析透彻，论证严密）
 - 价值: ⭐⭐⭐⭐⭐（纠正了领域内的错误认知，提供了即插即用的工具）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can OOD Object Detectors Learn from Foundation Models?](can_ood_object_detectors_learn_from_foundation_models.md)
+- [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](../../ICCV2025/object_detection/revisiting_adversarial_patch_defenses_on_object_detectors_unified_evaluation_lar.md)
+- [Automated Model Evaluation for Object Detection via Prediction Consistency and Reliability](../../ICCV2025/object_detection/automated_model_evaluation_for_object_detection_via_prediction_consistency_and_r.md)
+- [Visual Modality Prompt for Adapting Vision-Language Object Detectors](../../ICCV2025/object_detection/visual_modality_prompt_for_adapting_vision-language_object_detectors.md)
+- [Rectify the Regression Bias in Long-Tailed Object Detection](rectify_the_regression_bias_in_long-tailed_object_detection.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ SPARC → dyadic → evolutionary 三层递进
 - 写作质量: ⭐⭐⭐⭐ 概念清晰，但某些博弈论细节可更易懂
 - 价值: ⭐⭐⭐⭐⭐ 对多智能体安全、合作机制、策略推理有深刻洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Hallucinations: A Composite Score for Measuring Reliability in Open-Source Large Language Models](../../AAAI2026/interpretability/beyond_hallucinations_a_composite_score_for_measuring_reliability_in_open-source.md)
+- [Saying the Unsaid: Revealing the Hidden Language of Multimodal Systems Through Telephone Games](saying_the_unsaid_revealing_the_hidden_language_of_multimodal_systems_through_te.md)
+- [Beyond Accuracy: Dissecting Mathematical Reasoning for LLMs Under Reinforcement Learning](beyond_accuracy_dissecting_mathematical_reasoning_for_llms_u.md)
+- [Minerva: Evaluating Complex Video Reasoning](../../ICCV2025/interpretability/minerva_evaluating_complex_video_reasoning.md)
+- [Evaluating Neuron Explanations: A Unified Framework with Sanity Checks](../../ICML2025/interpretability/evaluating_neuron_explanations_a_unified_framework_with_sanity_checks.md)
+
+<!-- RELATED:END -->

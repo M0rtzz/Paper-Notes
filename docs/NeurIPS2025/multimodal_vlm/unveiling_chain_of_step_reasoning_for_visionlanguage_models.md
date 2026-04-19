@@ -153,3 +153,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 理由：消融极其全面——覆盖step weight、PRM基座选择、推理长度动态、reasoning pattern对比、GRPO验证、step-wise DPO失败分析等，每个结论都有实验支撑
 - **写作质量**: ⭐⭐⭐⭐⭐ 理由：逻辑递进清晰（定义步骤→评估步骤→利用步骤），复杂设计用Figure 1一图概览，失败实验也诚实报告，论文结构紧凑信息密度高
 - **对我的价值**: ⭐⭐⭐⭐⭐ 理由：VLM推理后训练的complete framework（SFT+PRM+DPO+beam search全链路开源），"质量>长度"的insight对adaptive inference有直接指导价值，PRM+step-level beam search可作为VLM inference scaling的标准方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models](affordbot_3d_fine-grained_embodied_reasoning_via_multimodal_large_language_model.md)
+- [SpatialThinker: Reinforcing 3D Reasoning in Multimodal LLMs via Spatial Rewards](spatialthinker_reinforcing_3d_reasoning_in_multimodal_llms_via_spatial_rewards.md)
+- [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
+- [HandVQA: Diagnosing and Improving Fine-Grained Spatial Reasoning about Hands in Vision-Language Models](../../CVPR2026/multimodal_vlm/handvqa_diagnosing_and_improving_fine-grained_spatial_reasoning_about_hands_in_v.md)
+- [ReasonMap: Towards Fine-Grained Visual Reasoning from Transit Maps](../../CVPR2026/multimodal_vlm/reasonmap_towards_finegrained_visual_reasoning_fro.md)
+
+<!-- RELATED:END -->

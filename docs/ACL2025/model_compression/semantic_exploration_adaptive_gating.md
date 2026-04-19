@@ -102,3 +102,15 @@ SEAG 由三个阶段组成，形成一个完整的推理 pipeline：
 - 实验充分度: ⭐⭐⭐⭐ 三个模型两个数据集，消融充分，延迟分析到位；但数据集类型较单一（均为离散答案）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图示说明力强
 - 价值: ⭐⭐⭐⭐ 为 LLM 树搜索推理提供了一套实用的效率优化方案，思路可迁移性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fleet of Agents: Coordinated Problem Solving with Large Language Models](../../ICML2025/model_compression/fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models](scaling_laws_and_efficient_inference_for_ternary_language_models.md)
+- [AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees](../../NeurIPS2025/model_compression/admtree_compressing_lengthy_context_with_adaptive_semantic_trees.md)
+
+<!-- RELATED:END -->

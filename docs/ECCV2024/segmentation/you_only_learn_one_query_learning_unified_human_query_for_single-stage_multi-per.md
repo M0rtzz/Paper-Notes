@@ -188,3 +188,15 @@ HQNet 由四个关键组件构成：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5 个任务、3 个数据集（COCO-UniHuman/OCHuman/PoseTrack21/Human-Art）、与大量 baseline 对比、泛化性验证全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，Table 1 的数据集对比和 Table 2 的全面实验排版专业，但部分细节需参考 supplementary
 - **价值**: ⭐⭐⭐⭐⭐ 数据集 + 方法 + 基准三位一体，对统一人体感知领域有重要推动作用，Human Query 的泛化能力展示了其作为通用人体表示的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OLAF: A Plug-and-Play Framework for Enhanced Multi-object Multi-part Scene Parsing](olaf_a_plug-and-play_framework_for_enhanced_multi-object_multi-part_scene_parsin.md)
+- [HopaDIFF: Holistic-Partial Aware Fourier Conditioned Diffusion for Referring Human Action Segmentation in Multi-Person Scenarios](../../NeurIPS2025/segmentation/hopadiff_holistic-partial_aware_fourier_conditioned_diffusion_for_referring_huma.md)
+- [Plain-Det: A Plain Multi-Dataset Object Detector](plain-det_a_plain_multi-dataset_object_detector.md)
+- [UniFS: Universal Few-Shot Instance Perception with Point Representations](unifs_universal_few-shot_instance_perception_with_point_representations.md)
+- [HAODiff: Human-Aware One-Step Diffusion via Dual-Prompt Guidance](../../NeurIPS2025/segmentation/haodiff_human-aware_one-step_diffusion_via_dual-prompt_guidance.md)
+
+<!-- RELATED:END -->

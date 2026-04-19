@@ -122,3 +122,15 @@ $L_{total} = L_{seg} + L_{edge} + L_{dict}$，其中 $L_{edge} = -\sum q(\mathca
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集+遮挡鲁棒性评估
 - 写作质量: ⭐⭐⭐⭐ 方法严谨，统计验证充分
 - 价值: ⭐⭐⭐⭐⭐ 极端条件感知是自动驾驶的核心需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SRSR: Enhancing Semantic Accuracy in Real-World Image Super-Resolution with Spatially Re-Focused Text-Conditioning](srsr_enhancing_semantic_accuracy_in_real-world_image_super-resolution_with_spati.md)
+- [Online Generic Event Boundary Detection](../../ICCV2025/segmentation/online_generic_event_boundary_detection.md)
+- [Self-Disentanglement and Re-Composition for Cross-Domain Few-Shot Segmentation](../../ICML2025/segmentation/self-disentanglement_and_re-composition_for_cross-domain_few-shot_segmentation.md)
+- [EAFormer: Scene Text Segmentation with Edge-Aware Transformers](../../ECCV2024/segmentation/eaformer_scene_text_segmentation_with_edge-aware_transformers.md)
+- [Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation](../../ECCV2024/segmentation/un-evimo_unsupervised_event-based_independent_motion_segmentation.md)
+
+<!-- RELATED:END -->

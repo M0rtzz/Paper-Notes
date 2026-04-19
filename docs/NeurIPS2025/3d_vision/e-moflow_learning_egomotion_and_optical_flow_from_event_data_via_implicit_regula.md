@@ -156,3 +156,15 @@ $$\min_{\theta, \beta} \mathbb{E}_{t_{\text{ref}}} [L_{\text{flow}}(\mathcal{E}_
 - ⭐ 实验充分度: 7/10 — 两个数据集、与多种方法对比，但缺少更多真实场景和效率分析
 - ⭐ 写作质量: 8/10 — 数学推导严谨，动机阐述清晰
 - ⭐ 价值: 8/10 — 事件相机领域的重要工作，联合估计框架有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Linearly Constrained Diffusion Implicit Models](linearly_constrained_diffusion_implicit_models.md)
+- [Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](../../CVPR2025/3d_vision/flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
+- [EventHub: Data Factory for Generalizable Event-Based Stereo Networks without Active Sensors](../../CVPR2026/3d_vision/eventhub_data_factory_for_generalizable_event-based_stereo_networks_without_acti.md)
+- [EF-3DGS: Event-Aided Free-Trajectory 3D Gaussian Splatting](ef-3dgs_event-aided_free-trajectory_3d_gaussian_splatting.md)
+- [Flux4D: Flow-based Unsupervised 4D Reconstruction](flux4d_flow-based_unsupervised_4d_reconstruction.md)
+
+<!-- RELATED:END -->

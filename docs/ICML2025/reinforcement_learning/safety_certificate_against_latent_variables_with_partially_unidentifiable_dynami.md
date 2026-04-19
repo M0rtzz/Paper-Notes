@@ -156,3 +156,15 @@ $$\arg\min_{u} J(U^n, u) \quad \text{s.t.} \quad S(X_t, u, t) \ge 0$$
 - 实验充分度: ⭐⭐ （仅一个低维离散模拟实验）
 - 写作质量: ⭐⭐⭐⭐ （理论推导严谨清晰，符号体系统一）
 - 价值: ⭐⭐⭐⭐ （开辟了重要新方向，但实验验证不足限制了即时影响力）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamics-Aligned Latent Imagination in Contextual World Models for Zero-Shot Generalization](../../NeurIPS2025/reinforcement_learning/dynamics-aligned_latent_imagination_in_contextual_world_models_for_zero-shot_gen.md)
+- [Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](../../ICLR2026/reinforcement_learning/dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
+- [Embedding Safety into RL: A New Take on Trust Region Methods](embedding_safety_into_rl_a_new_take_on_trust_region_methods.md)
+- [PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
+- [Learning Dynamics under Environmental Constraints via Measurement-Induced Bundle Structures](learning_dynamics_under_environmental_constraints_via_measurement-induced_bundle.md)
+
+<!-- RELATED:END -->

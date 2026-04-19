@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型多批次多文法对比，延迟和吞吐都有测试
 - 写作质量: ⭐⭐⭐⭐ 形式化定义严谨，算法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 高实用价值，直接可用于生产环境的LLM结构化输出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enabling LLM Knowledge Analysis via Extensive Materialization](enabling_llm_knowledge_analysis_via_extensive_materialization.md)
+- [PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights](praise_enhancing_product_descriptions_with_llm-driven_structured_insights.md)
+- [SR-LLM: Rethinking the Structured Representation in Large Language Model](sr-llm_rethinking_the_structured_representation_in_large_language_model.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [From Selection to Generation: A Survey of LLM-based Active Learning](from_selection_to_generation_a_survey.md)
+
+<!-- RELATED:END -->

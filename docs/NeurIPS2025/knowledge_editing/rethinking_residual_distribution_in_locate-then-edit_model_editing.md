@@ -175,3 +175,15 @@ $$\|\Delta^{l^*} - \Delta^l\|_2 \leq \left(\|\mathbf{R}^{l^*} - \mathbf{R}^L\|_2
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个 LLM、2 个数据集、12 组实验、4 种基线方法的增强验证
 - 写作质量: ⭐⭐⭐⭐ 问题分析层层递进，理论推导清晰，图表有效
 - 价值: ⭐⭐⭐⭐ 对模型编辑领域有直接且显著的推动作用，BLUE 可即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Edit Less, Achieve More: Dynamic Sparse Neuron Masking for Lifelong Knowledge Editing in LLMs](edit_less_achieve_more_dynamic_sparse_neuron_masking_for_lifelong_knowledge_edit.md)
+- [GOT-Edit: Geometry-Aware Generic Object Tracking via Online Model Editing](../../ICLR2026/knowledge_editing/got-edit_geometry-aware_generic_object_tracking_via_online_model_editing.md)
+- [MEMOIR: Lifelong Model Editing with Minimal Overwrite and Informed Retention for LLMs](memoir_lifelong_model_editing_with_minimal_overwrite_and_informed_retention_for_.md)
+- [Efficient Knowledge Editing via Minimal Precomputation](../../ACL2025/knowledge_editing/efficient_knowledge_editing.md)
+- [DocMEdit: Towards Document-Level Model Editing](../../ACL2025/knowledge_editing/docmedit_towards_document-level_model_editing.md)
+
+<!-- RELATED:END -->

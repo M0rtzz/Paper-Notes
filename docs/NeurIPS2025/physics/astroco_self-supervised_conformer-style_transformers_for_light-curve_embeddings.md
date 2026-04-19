@@ -168,3 +168,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ — 掩码重建和少样本分类两个维度的评估清晰，但仅单数据集、缺消融、下游任务有限。
 - **写作质量**: ⭐⭐⭐⭐ — Workshop 论文篇幅内结构清晰、表述准确，架构图和公式完整。
 - **价值**: ⭐⭐⭐⭐ — 对天文自监督学习社区有较好参考价值，验证了 Conformer 在不规则时间序列上的有效性，资源效率亮点突出。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantum Doubly Stochastic Transformers](quantum_doubly_stochastic_transformers.md)
+- [Toward Complete Merger Identification at Cosmic Noon with Deep Learning](toward_complete_merger_identification_at_cosmic_noon_with_deep_learning.md)
+- [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
+- [FEAT: Free Energy Estimators with Adaptive Transport](feat_free_energy_estimators_with_adaptive_transport.md)
+- [Exoplanet Formation Inference Using Conditional Invertible Neural Networks](exoplanet_formation_inference_using_conditional_invertible_neural_networks.md)
+
+<!-- RELATED:END -->

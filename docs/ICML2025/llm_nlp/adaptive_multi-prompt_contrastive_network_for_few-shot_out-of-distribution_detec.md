@@ -164,3 +164,15 @@ AMCN 基于 CLIP 视觉-语言预训练模型，包含三个核心模块：
 | 写作质量 | 3 | 整体清晰但公式符号较多，部分记号前后不一致 |
 | 实用价值 | 3 | 方法有效但依赖 CLIP 和 OOD 标签先验 |
 | **总分** | **3.6** | 扎实的 few-shot OOD 检测工作，核心贡献明确 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Out-of-distribution Generalisation is Hard: Evidence from ARC-like Tasks](../../NeurIPS2025/llm_nlp/out-of-distribution_generalisation_is_hard_evidence_from_arc-like_tasks.md)
+- [SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning](../../CVPR2025/llm_nlp/sec-promptsemantic_complementary_prompting_for_few-shot_class-incremental_learni.md)
+- [PromptMoE: Generalizable Zero-Shot Anomaly Detection via Visually-Guided Prompt Mixing of Experts](../../AAAI2026/llm_nlp/promptmoe_generalizable_zero-shot_anomaly_detection_via_visually-guided_prompt_m.md)
+- [HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation](../../ACL2025/llm_nlp/hygenar_an_llm-driven_hybrid_genetic_algorithm_for_few-shot_grammar_generation.md)
+- [AdaCLIP: Adapting CLIP with Hybrid Learnable Prompts for Zero-Shot Anomaly Detection](../../ECCV2024/llm_nlp/adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)
+
+<!-- RELATED:END -->

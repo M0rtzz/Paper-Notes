@@ -107,3 +107,15 @@ Style Artist 自反思贡献最大——**视频质量和风格对齐提升 25.1
 - 实验充分度: ⭐⭐⭐⭐ 新benchmark+定量对比+用户研究
 - 写作质量: ⭐⭐⭐⭐ 结构清晰
 - 价值: ⭐⭐⭐⭐ 对多agent视觉生成有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](../../ACL2025/llm_agent/multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](../../ACL2025/llm_agent/os_agents_survey_mllm.md)
+- [Reflection-Driven Control for Trustworthy Code Agents](../../AAAI2026/llm_agent/reflection-driven_control_for_trustworthy_code_agents.md)
+- [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](../../ACL2025/llm_agent/os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
+- [RL-RC-DoT: A Block-level RL Agent for Task-Aware Video Compression](rl-rc-dot_a_block-level_rl_agent_for_task-aware_video_compression.md)
+
+<!-- RELATED:END -->

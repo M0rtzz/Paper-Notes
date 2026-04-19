@@ -175,3 +175,15 @@ Hurst 指数越低（越粗糙），PowerSig 的优势越大。
 ⭐⭐⭐⭐
 
 数学推导精美，解决了签名核的关键可扩展性瓶颈。内存改善是实质性的（$O(\ell^2) \to O(\ell P)$），但时间复杂度未改善，且核方法本身的 $O(N^2)$ 问题依然存在。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WaLRUS: Wavelets for Long-range Representation Using SSMs](walrus_wavelets_for_long-range_representation_using_ssms.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](../../ICML2025/time_series/timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+- [CometNet: Contextual Motif-guided Long-term Time Series Forecasting](../../AAAI2026/time_series/cometnet_contextual_motif-guided_long-term_time_series_forecasting.md)
+- [Synthetic Series-Symbol Data Generation for Time Series Foundation Models](synthetic_series-symbol_data_generation_for_time_series_foundation_models.md)
+- [Time-O1: Time-Series Forecasting Needs Transformed Label Alignment](time-o1_time-series_forecasting_needs_transformed_label_alignment.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多基准、含消融和非Transformer验证
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，Table 1很有说服力
 - 价值: ⭐⭐⭐⭐ 为LLM压缩提供了新的系统性方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Strategic Persuasion with Language Models](towards_strategic_persuasion_with_language_models.md)
+- [Efficient Estimation of Kernel Surrogate Models for Task Attribution](efficient_estimation_of_kernel_surrogate_models_for_task_attribution.md)
+- [AWM: Accurate Weight-Matrix Fingerprint for Large Language Models](awm_accurate_weight-matrix_fingerprint_for_large_language_models.md)
+- [VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
+- [Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
+
+<!-- RELATED:END -->

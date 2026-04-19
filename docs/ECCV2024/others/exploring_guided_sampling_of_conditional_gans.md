@@ -112,3 +112,15 @@ GANdance框架建立在预训练的条件GAN之上。其核心思路是：在已
 - **实验充分度**: ⭐⭐⭐ 主要实验集中在ImageNet 64×64单一数据集上，规模和多样性有限
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，方法解释通俗易懂，逻辑严密
 - **价值**: ⭐⭐⭐⭐ 为GAN的推理优化开辟了新方向，对缩小GAN与扩散模型的质量差距有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)
+- [A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](a_framework_for_efficient_model_evaluation_through_stratific.md)
+- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
+- [despite exploring contrastive deep skeletonpointcloudimutext](../../ICCV2025/others/despite_exploring_contrastive_deep_skeletonpointcloudimutext.md)
+- [Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
+
+<!-- RELATED:END -->

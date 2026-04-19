@@ -157,3 +157,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 四种架构 × 四种电网的全面对比，但缺乏速度对比和更大规模测试
 - 写作质量: ⭐⭐⭐ 结构清晰，相关工作全面，但部分实验数据未精确报告
 - 价值: ⭐⭐⭐ 为电力系统领域的 GNN 应用提供了实用参考，代码开源增加了可复现性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Underappreciated Power of Vision Models for Graph Structural Understanding](the_underappreciated_power_of_vision_models_for_graph_structural_understanding.md)
+- [BLISS: Bandit Layer Importance Sampling Strategy for Efficient Training of Graph Neural Networks](bliss_bandit_layer_importance_sampling_strategy_for_efficient_training_of_graph_.md)
+- [Over-squashing in Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+
+<!-- RELATED:END -->

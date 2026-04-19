@@ -162,3 +162,15 @@ C-CHAIN 的 churn 减少梯度对学习动态有两重作用：
 - 实验充分度: ⭐⭐⭐⭐ — 24 个环境、4 大基准、包含分析实验
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，从观察到方法到验证逻辑流畅
 - 价值: ⭐⭐⭐⭐ — 对持续 RL 的可塑性问题提供了理论理解和实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: Lifetime Tuning is Incompatible with Continual Reinforcement Learning](position_lifetime_tuning_is_incompatible_with_continual_reinforcement_learning.md)
+- [Continual Reinforcement Learning by Planning with Online World Models](continual_reinforcement_learning_by_planning_with_online_world_models.md)
+- [Continual Knowledge Adaptation for Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [Temporal-Difference Variational Continual Learning](../../NeurIPS2025/reinforcement_learning/temporal-difference_variational_continual_learning.md)
+- [Principled Fast and Meta Knowledge Learners for Continual Reinforcement Learning](../../ICLR2026/reinforcement_learning/principled_fast_and_meta_knowledge_learners_for_continual_reinforcement_learning.md)
+
+<!-- RELATED:END -->

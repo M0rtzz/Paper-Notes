@@ -121,3 +121,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 数据集论文非常清晰，实验设计描述详尽
 - 价值: ⭐⭐⭐⭐ 开源数据集+基线对后续研究有推动，但规模限制直接应用
 <!-- NeurIPS 2025 | video_understanding -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [egoPPG: Heart Rate Estimation from Eye-Tracking Cameras in Egocentric Systems to Benefit Downstream Vision Tasks](../../ICCV2025/video_understanding/egoppg_heart_rate_estimation_from_eye-tracking_cameras_in_egocentric_systems_to_.md)
+- [Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity](lattice_boltzmann_model_for_learning_real-world_pixel_dynamicity.md)
+- [LiveStar: Live Streaming Assistant for Real-World Online Video Understanding](livestar_live_streaming_assistant_for_real-world_online_video_understanding.md)
+- [Grounding Foundational Vision Models with 3D Human Poses for Robust Action Recognition](grounding_foundational_vision_models_with_3d_human_poses_for_robust_action_recog.md)
+- [Open-World Drone Active Tracking with Goal-Centered Rewards](open-world_drone_active_tracking_with_goal-centered_rewards.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （受控实验 + 临床数据 + 读者研究 + 前瞻性验证，极为完备）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，临床动机论述充分）
 - 价值: ⭐⭐⭐⭐ （解决了真实临床问题，有直接转化潜力）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SALIENT: Frequency-Aware Paired Diffusion for Controllable Long-Tail CT Detection](salient_frequency-aware_paired_diffusion_for_controllable_long-tail_ct_detection.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi.md)
+
+<!-- RELATED:END -->

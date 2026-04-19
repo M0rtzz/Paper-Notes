@@ -146,3 +146,15 @@ Show-o2 的核心创新在于：在 3D 因果 VAE 空间中通过双路径融合
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖理解和生成的多个基准，但生成端对比略不充分
 - **写作质量**: ⭐⭐⭐⭐ 架构描述清晰，训练细节完整
 - **价值**: ⭐⭐⭐⭐ 为原生统一多模态模型的设计提供了可扩展的参考方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Improved Training Technique for Shortcut Models (iSM)](improved_training_technique_for_shortcut_models.md)
+- [Mitigating Intra- and Inter-modal Forgetting in Continual Learning of Unified Multimodal Models](mitigating_intra-_and_inter-modal_forgetting_in_continual_learning_of_unified_mu.md)
+- [Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models](../../CVPR2026/image_generation/flash-unified_a_training-free_and_task-aware_acceleration_framework_for_native_u.md)
+- [Multimodal Generative Flows for LHC Jets](multimodal_generative_flows_for_lhc_jets.md)
+
+<!-- RELATED:END -->

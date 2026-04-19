@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ RealEstate10K+DL3DV，多输入配置，详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 数学形式化完整，图示清晰，与相关工作对比到位
 - 价值: ⭐⭐⭐⭐⭐ 在速度和质量之间找到了最佳平衡，推进了实用 NVS 的前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DynaRend: Learning 3D Dynamics via Masked Future Rendering for Robotic Manipulation](dynarend_learning_3d_dynamics_via_masked_future_rendering_for_robotic_manipulati.md)
+- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+- [Novel View Synthesis from A Few Glimpses via Test-Time Natural Video Completion](novel_view_synthesis_from_a_few_glimpses_via_test-time_natural_video_completion.md)
+- [Learning Neural Exposure Fields for View Synthesis](learning_neural_exposure_fields_for_view_synthesis.md)
+- [Reconstruct, Inpaint, Test-Time Finetune: Dynamic Novel-View Synthesis from Monocular Videos](reconstruct_inpaint_test-time_finetune_dynamic_novel-view_synthesis_from_monocul.md)
+
+<!-- RELATED:END -->

@@ -220,3 +220,15 @@ $$\mathbf{x}_i^{(l+1)} = \mathcal{A}\left(\sigma\left(\psi'([\mathbf{x}_j^{(l)} 
 - 实验充分度: ⭐⭐⭐⭐ — 四个benchmark、详细消融、即插即用验证覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 从动机分析到方法推导逻辑链极为清晰
 - 价值: ⭐⭐⭐⭐ — 图平滑模块的通用性和即插即用特性有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning](../../CVPR2026/3d_vision/adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning.md)
+- [ECKConv: Learning Coordinate-based Convolutional Kernels for Continuous SE(3) Equivariant Point Cloud Analysis](../../CVPR2026/3d_vision/learning_coordinate-based_convolutional_kernels_for_continuous_se3_equivariant_a.md)
+- [DeepRAHT: Learning Predictive RAHT for Point Cloud Attribute Compression](deepraht_learning_predictive_raht_for_point_cloud_attribute_compression.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](../../ICCV2025/3d_vision/upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ $$\mathcal{L}_{\text{IRPL}} = \sum_{(\hat{b},\hat{c})} w_{\hat{c}}[\alpha(-\log 
 - 实验充分度: ⭐⭐⭐⭐ — 4+域偏移场景、极端域实验、完整消融，长尾分析有说服力
 - 写作质量: ⭐⭐⭐⭐ — 理论+实验结构清晰，动机图（Fig.1）直观有力
 - 价值: ⭐⭐⭐⭐ — 对 SFOD 社区有实际推动，离线先验思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Boundaries: Leveraging Vision Foundation Models for Source-Free Object Detection](../../AAAI2026/object_detection/beyond_boundaries_leveraging_vision_foundation_models_for_so.md)
+- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
+- [Test-Time Adaptive Object Detection with Foundation Model](../../NeurIPS2025/object_detection/test-time_adaptive_object_detection_with_foundation_model.md)
+- [SFUOD: Source-Free Unknown Object Detection](../../ICCV2025/object_detection/sfuod_source-free_unknown_object_detection.md)
+- [CGSA: Class-Guided Slot-Aware Adaptation for Source-Free Object Detection](../../ICLR2026/object_detection/cgsa_class-guided_slot-aware_adaptation_for_source-free_object_detection.md)
+
+<!-- RELATED:END -->

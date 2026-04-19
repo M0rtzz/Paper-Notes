@@ -157,3 +157,15 @@ RMoA 是一个纯推理框架，无需训练。关键超参数：
 - **实验充分度**: ⭐⭐⭐⭐ — 四个多样化基准、四种模型规模、丰富的消融实验和扩展分析，覆盖面广
 - **写作质量**: ⭐⭐⭐ — 整体结构清晰，但部分公式符号较密集，可读性一般
 - **价值**: ⭐⭐⭐⭐ — 为多智能体协作提供了一个即插即用的通用优化框架，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures](../../ICML2025/others/randomized_dimensionality_reduction_for_euclidean_maximization_and_diversity_mea.md)
+- [Value Residual Learning](value_residual_learning.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+- [Optimizing Decomposition for Optimal Claim Verification](optimizing_decomposition_for_optimal_claim_verification.md)
+
+<!-- RELATED:END -->

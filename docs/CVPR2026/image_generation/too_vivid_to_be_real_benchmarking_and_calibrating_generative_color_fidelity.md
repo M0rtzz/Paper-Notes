@@ -189,3 +189,15 @@ $$s_t(u,v) = s_0 \left[1 - \lambda \alpha(t) \mathbf{a}'(u,v)\right]$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 11 模型 benchmark + 人工标注验证 + 3 模型 CFR 实验 + 完整消融
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题动机充分，图表丰富
 - 价值: ⭐⭐⭐⭐ 填补 T2I 评估维度空白，训练免费改善方案实用性强；局限在于仅覆盖"色彩"一个维度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GCC: Generative Color Constancy via Diffusing a Color Checker](../../CVPR2025/image_generation/gcc_generative_color_constancy_via_diffusing_a_color_checker.md)
+- [OARS: Process-Aware Online Alignment for Generative Real-World Image Super-Resolution](oars_processaware_online_alignment_for_generative.md)
+- [Leveraging Multispectral Sensors for Color Correction in Mobile Cameras](leveraging_multispectral_sensors_for_color_correction_in_mobile_cameras.md)
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On](promo_promptable_virtual_tryon_efficient.md)
+
+<!-- RELATED:END -->

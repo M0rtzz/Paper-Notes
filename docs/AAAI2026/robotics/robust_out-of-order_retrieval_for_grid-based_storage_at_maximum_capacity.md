@@ -134,3 +134,15 @@ RobustS 和 ImpR 在所有网格大小下均在 1 分钟和 1 秒内完成。
 - 实验充分度: ⭐⭐⭐⭐ 三指标×四组合×多网格大小，含消融实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精确，理论-算法-实验逻辑链完整清晰
 - 价值: ⭐⭐⭐⭐ 理论指导仓库设计，算法可直接部署于满载存储系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Human Cognitive Biases in Explanation-based Interaction: The Case of Within and Between Session Order Effect](human_cognitive_biases_in_explanation-based_interaction_the_case_of_within_and_b.md)
+- [TouchFormer: A Robust Transformer-based Framework for Multimodal Material Perception](touchformer_a_robust_transformer-based_framework_for_multimodal_material_percept.md)
+- [SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation](spatialactor_exploring_disentangled_spatial_representations_for_robust_robotic_m.md)
+- [Experience-based Knowledge Correction for Robust Planning in Minecraft](../../ICLR2026/robotics/experience-based_knowledge_correction_for_robust_planning_in_minecraft.md)
+- [Internal Causal Mechanisms Robustly Predict Language Model Out-of-Distribution Behaviors](../../ICML2025/robotics/internal_causal_mechanisms_robustly_predict_language_model_out-of-distribution_b.md)
+
+<!-- RELATED:END -->

@@ -182,3 +182,15 @@ $$\min_\Theta \left(\mathcal{L}^{\text{ntm}} + \gamma \cdot \mathbf{I}(t > T^{\t
 | 综合评价 | ⭐⭐⭐⭐ |
 
 > 这是一篇设计精巧的方法论文。核心思想——让LLM在NTM训练循环中提供词级反馈——既高效又有效。OT对齐目标、置信度加权、预热策略三个组件环环相扣，实验覆盖8种NTM基线和4个数据集，充分验证了框架的通用性和有效性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](cadllm_cad_modeling_from_text.md)
+- [Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues](enhancing_spoken_discourse_modeling_in_language_models_using_gestural_cues.md)
+- [Exploring Graph Representations of Logical Forms for Language Modeling](exploring_graph_representations_of_logical_forms_for_language_modeling.md)
+- [Towards Harmonized Uncertainty Estimation for Large Language Models](towards_harmonized_uncertainty_estimation_for_large_language_models.md)
+- [Neural Synchrony Between Socially Interacting Language Models](../../ICLR2026/llm_nlp/neural_synchrony_between_socially_interacting_language_models.md)
+
+<!-- RELATED:END -->

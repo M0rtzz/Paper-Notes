@@ -83,3 +83,15 @@ RoadSocial的构建流程：(1) 数据收集——从社交媒体平台按关键
 - LLM自动标注仍可能引入系统性偏差
 - 隐私问题——社交媒体视频需要脱敏处理
 - 未来可扩展到多语言标注和更多社交媒体平台
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](../../ACL2025/llm_nlp/palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
+- [TEMPLE: Incentivizing Temporal Understanding of Video LLMs via Progressive Pre-SFT Alignment](../../AAAI2026/llm_nlp/temple_incentivizing_temporal_understanding_of_video_large_language_models_via_p.md)
+- [Evaluating Text Creativity across Diverse Domains: A Dataset and Large Language Model Evaluator](../../ICLR2026/llm_nlp/evaluating_text_creativity_across_diverse_domains_a_dataset_and_large_language_m.md)
+- [Opinion Maximization in Social Networks by Modifying Internal Opinions](../../NeurIPS2025/llm_nlp/opinion_maximization_in_social_networks_by_modifying_internal_opinions.md)
+- [SocialEval: Evaluating Social Intelligence of Large Language Models](../../ACL2025/llm_nlp/socialeval_evaluating_social_intelligence_of_large_language_models.md)
+
+<!-- RELATED:END -->

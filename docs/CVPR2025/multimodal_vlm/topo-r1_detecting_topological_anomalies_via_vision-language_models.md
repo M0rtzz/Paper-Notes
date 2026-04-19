@@ -133,3 +133,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 公式密集但逻辑清晰，问题定义严谨
 - 价值: ⭐⭐⭐⭐ 为医学/遥感/自动驾驶中的拓扑质量评估提供了新范式
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Final Answers: CRYSTAL Benchmark for Transparent Multimodal Reasoning Evaluation](beyond_final_answers_crystal_benchmark_for_transparent_multimodal_reasoning_eval.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [Unified Reinforcement and Imitation Learning for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/unified_reinforcement_and_imitation_learning_for_vision-language_models.md)
+- [Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](../../ICLR2026/multimodal_vlm/vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
+- [FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
+
+<!-- RELATED:END -->

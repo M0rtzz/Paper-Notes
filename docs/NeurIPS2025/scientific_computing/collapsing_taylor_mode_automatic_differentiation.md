@@ -107,3 +107,15 @@ tags:
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ 优化思路简洁优雅，虽然技术上不复杂但对领域有实际价值
 - 实验充分度: ⭐⭐⭐ 评估了多个 PDE 算子的加速效果，NeurIPS camera-ready 版本应有充分实验
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hamiltonian Neural PDE Solvers through Functional Approximation](hamiltonian_neural_pde_solvers_through_functional_approximation.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [EddyFormer: Accelerated Neural Simulations of Three-Dimensional Turbulence at Scale](eddyformer_accelerated_neural_simulations_of_three-dimensional_turbulence_at_sca.md)
+- [Integration Matters for Learning PDEs with Backward SDEs](integration_matters_for_learning_pdes_with_backward_sdes.md)
+- [Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections](enforcing_governing_equation_constraints_in_neural_pde_solvers_via_training-free.md)
+
+<!-- RELATED:END -->

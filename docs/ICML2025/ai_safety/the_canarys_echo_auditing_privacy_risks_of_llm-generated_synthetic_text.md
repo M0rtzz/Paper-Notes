@@ -164,3 +164,15 @@ LLM 微调
 - 实验充分度: ⭐⭐⭐⭐ 多种 MIA 变体、完整消融、传统方法对比
 - 写作质量: ⭐⭐⭐⭐⭐ "金丝雀的回声"隐喻生动，问题动机和发现逻辑链清晰
 - 价值: ⭐⭐⭐⭐⭐ 对合成数据隐私领域有重大警示意义，实用审计工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sequentially Auditing Differential Privacy](../../NeurIPS2025/ai_safety/sequentially_auditing_differential_privacy.md)
+- [Robust Multi-bit Text Watermark with LLM-based Paraphrasers](robust_multi-bit_text_watermark_with_llm-based_paraphrasers.md)
+- [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](../../NeurIPS2025/ai_safety/masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
+- [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](../../NeurIPS2025/ai_safety/adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](../../NeurIPS2025/ai_safety/unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
+
+<!-- RELATED:END -->

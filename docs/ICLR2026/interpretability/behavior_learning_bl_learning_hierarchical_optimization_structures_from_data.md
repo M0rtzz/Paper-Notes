@@ -128,3 +128,15 @@ BL 在相近参数量下，ID准确率与 E-MLP 持平，但 OOD 检测显著更
 - 实验充分度: ⭐⭐⭐⭐ 10个标准数据集+case study+高维实验覆盖全面，但缺少大规模真实科学发现任务的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严密、结构清晰、图示优秀
 - 价值: ⭐⭐⭐⭐ 为可解释ML提供了新范式，但实际科学应用的影响力有待观察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LORE: Jointly Learning the Intrinsic Dimensionality and Relative Similarity Structure from Ordinal Data](lore_jointly_learning_the_intrinsic_dimensionality_and_relative_similarity_struc.md)
+- [Data Whitening Improves Sparse Autoencoder Learning](../../AAAI2026/interpretability/data_whitening_improves_sparse_autoencoder_learning.md)
+- [Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement](decoupling_dynamical_richness_from_representation_learning_towards_practical_mea.md)
+- [Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
+- [Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
+
+<!-- RELATED:END -->

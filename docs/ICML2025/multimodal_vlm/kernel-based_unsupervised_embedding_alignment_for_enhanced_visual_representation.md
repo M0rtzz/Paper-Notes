@@ -138,3 +138,15 @@ Projection 方式导致零样本性能严重下降（-7~12%），直接特征对
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖零样本分类/检索/细粒度感知/MLLM 多个维度，消融实验完整
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，动机阐述有力
 - 价值: ⭐⭐⭐⭐ — 轻量级、即插即用的方案有很强的实用性，为 MLLM 视觉增强提供了新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniAlign-V: Towards Enhanced Alignment of MLLMs with Human Preference](../../ACL2025/multimodal_vlm/omnialign-v_towards_enhanced_alignment_of_mllms_with_human_preference.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+- [Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models](../../CVPR2026/multimodal_vlm/taxonomy-aware_representation_alignment_for_hierarchical_visual_recognition_with.md)
+- [Multi-Cache Enhanced Prototype Learning for Test-Time Generalization of Vision-Language Models](../../ICCV2025/multimodal_vlm/multi-cache_enhanced_prototype_learning_for_test-time_generalization_of_vision-l.md)
+- [Handling Imbalanced Pseudolabels for Vision-Language Models with Concept Alignment and Confusion-Aware Calibrated Margin](handling_imbalanced_pseudolabels_for_vision-language_models_with_concept_alignme.md)
+
+<!-- RELATED:END -->

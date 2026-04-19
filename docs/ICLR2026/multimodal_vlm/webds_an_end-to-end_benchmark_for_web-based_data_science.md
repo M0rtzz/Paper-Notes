@@ -138,3 +138,15 @@ $$
 - **技术深度**: ⭐⭐⭐⭐ — 任务设计严谨，评估体系全面
 - **实验充分度**: ⭐⭐⭐⭐ — 9 个 SOTA agent + 人类基线，多维度分析
 - **实用价值**: ⭐⭐⭐⭐⭐ — 揭示 Agent 在真实数据科学中的关键不足，指导未来发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](../../ICCV2025/multimodal_vlm/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
+- [Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective](why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)
+- [FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models](../../AAAI2026/multimodal_vlm/ft-ncfm_an_influence-aware_data_distillation_framework_for_efficient_vla_models.md)
+- [Vision-Zero: Scalable VLM Self-Improvement via Strategic Gamified Self-Play](vision-zero_scalable_vlm_self-improvement_via_strategic_gamified_self-play.md)
+- [VisJudge-Bench: Aesthetics and Quality Assessment of Visualizations](visjudge-bench_aesthetics_and_quality_assessment_of_visualizations.md)
+
+<!-- RELATED:END -->

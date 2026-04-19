@@ -185,3 +185,15 @@ $$\widetilde{\mathcal{L}}_{\text{simple}}(\theta) = \mathbb{E}_{\mathbf{z}, \bol
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集评估、充分消融、效率分析全面，但分辨率和数据集多样性有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，Figure 优秀，逻辑链完整
 - 价值: ⭐⭐⭐⭐ — 解决了自回归 VDM 的核心效率瓶颈，2.5-3× 加速实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion](../../AAAI2026/video_generation/filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)
+- [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](../../ICLR2026/video_generation/lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
+- [MagCache: Fast Video Generation with Magnitude-Aware Cache](../../NeurIPS2025/video_generation/magcache_fast_video_generation_with_magnitudeaware_cache.md)
+- [Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](../../ICCV2025/video_generation/dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
+- [LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](../../ICCV2025/video_generation/leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)
+
+<!-- RELATED:END -->

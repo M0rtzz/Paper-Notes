@@ -120,3 +120,15 @@ SFT: 标准 CE loss。GRPO: 组内相对优势 + KL 正则，accuracy 和 format
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 数据集+15 个消融/反事实实验，覆盖零样本/微调/跨域/跨语言
 - 写作质量: ⭐⭐⭐⭐ 详细全面但篇幅略长
 - 价值: ⭐⭐⭐⭐⭐ 可解释+高性能+跨语言，对 SER 领域有实质推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Speech-Text Transformer](latent_speech_text_transformer.md)
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+- [EchoMind: An Interrelated Multi-level Benchmark for Evaluating Empathetic Speech Language Models](echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)
+- [HPSU: A Benchmark for Human-Level Perception in Real-World Spoken Speech Understanding](../../AAAI2026/audio_speech/hpsu_a_benchmark_for_human-level_perception_in_real-world_spoken_speech_understa.md)
+- [VITA-1.5: Towards GPT-4o Level Real-Time Vision and Speech Interaction](../../NeurIPS2025/audio_speech/vita-15_towards_gpt-4o_level_real-time_vision_and_speech_interaction.md)
+
+<!-- RELATED:END -->

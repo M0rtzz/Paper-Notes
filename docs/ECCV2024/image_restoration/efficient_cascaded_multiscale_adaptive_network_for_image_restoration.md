@@ -124,3 +124,15 @@ ECMA 在多种复原任务上实现了与 SOTA 可比或更优的性能，同时
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖去模糊、去噪、超分辨率三大复原任务，消融全面
 - **写作质量**: ⭐⭐⭐ 方法思路清晰，动机阐述合理
 - **价值**: ⭐⭐⭐⭐ 在效率和性能的 trade-off 上提供了有价值的新选择，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Image Restoration Transformer via Adaptive Translation Equivariance](../../ICCV2025/image_restoration/enhancing_image_restoration_transformer_via_adaptive_translation_equivariance.md)
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [Adaptive Selection of Sampling-Reconstruction in Fourier Compressed Sensing](adaptive_selection_of_samplingreconstruction_in_fourier_comp.md)
+- [Domain-Adaptive Video Deblurring via Test-Time Blurring](domain-adaptive_video_deblurring_via_test-time_blurring.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+
+<!-- RELATED:END -->

@@ -213,3 +213,15 @@ FID 降低至 8.799（最佳），KID 大幅降低至 0.702，提升明显。
 - 实验充分度: ⭐⭐⭐⭐⭐ （6 种任务全面评估，多个数据集，完整消融）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，图示丰富，问题定义清楚）
 - 价值: ⭐⭐⭐⭐⭐ （首个支持 6 种 VTON 任务的通用框架，实用性极高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wear-Any-Way: Manipulable Virtual Try-on via Sparse Correspondence Alignment](../../ECCV2024/human_understanding/wear-any-way_manipulable_virtual_try-on_via_sparse_correspondence_alignment.md)
+- [Mobile-VTON: High-Fidelity On-Device Virtual Try-On](../../CVPR2026/human_understanding/mobile-vton_high-fidelity_on-device_virtual_try-on.md)
+- [RefTon: Reference Person Shot Assist Virtual Try-on](../../CVPR2026/human_understanding/refton_reference_person_shot_assist_virtual_try-on.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](../../CVPR2026/human_understanding/referencefree_image_quality_assessment_for_virtual.md)
+- [Renormalization Group Guided Tensor Network Structure Search](renormalization_group_guided_tensor_network_structure_search.md)
+
+<!-- RELATED:END -->

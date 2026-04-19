@@ -143,3 +143,15 @@ CarlaTTA 语义分割 mIoU (%)：
 - 实验充分度: ⭐⭐⭐⭐ 三个分类基准 + 分割基准 + 效率分析 + 完整消融，但缺少不同 severity 和大规模模型实验
 - 写作质量: ⭐⭐⭐⭐⭐ 从理论推导到算法设计到实验验证的叙述极其流畅，数学推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 为 CTTA 提供了理论基础和高效实用的解决方案，黄金子空间的概念有广泛启发价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](../../ICCV2025/segmentation/hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
+- [RecycleLoRA: Rank-Revealing QR-Based Dual-LoRA Subspace Adaptation for Domain Generalized Semantic Segmentation](recyclelora_rank-revealing_qr-based_dual-lora_subspace_adaptation_for_domain_gen.md)
+- [TopoTTA: Topology-Enhanced Test-Time Adaptation for Tubular Structure Segmentation](../../ICCV2025/segmentation/topotta_topology-enhanced_test-time_adaptation_for_tubular_structure_segmentatio.md)
+- [IT³: Idempotent Test-Time Training](../../ICML2025/segmentation/it3_idempotent_test-time_training.md)
+- [Using Multiple Input Modalities Can Improve Data-Efficiency and O.O.D. Generalization for ML with Satellite Imagery](../../ICML2025/segmentation/using_multiple_input_modalities_can_improve_data-efficiency_and_ood_generalizati.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个差异化应用场景，凸/非凸/黑盒约束全覆盖
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验展示直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了 Stable Diffusion 约束生成的关键问题，工程和科学应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Composition and Alignment of Diffusion Models using Constrained Learning](composition_and_alignment_of_diffusion_models_using_constrai.md)
+- [Safe and Stable Control via Lyapunov-Guided Diffusion Models](safe_and_stable_control_via_lyapunov-guided_diffusion_models.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+
+<!-- RELATED:END -->

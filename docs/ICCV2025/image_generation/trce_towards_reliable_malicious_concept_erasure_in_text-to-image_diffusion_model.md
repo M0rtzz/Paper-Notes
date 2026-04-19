@@ -134,3 +134,15 @@ TRCE(T+V) 在所有 5 种攻击下 ASR 均达到约 1%，同时 FID_real 和 CLI
 - **技术深度**: ★★★★★ — 对扩散模型内部机制理解深入
 - **实验质量**: ★★★★★ — 5 种攻击 + 多概念 + 消融，评估极为全面
 - **写作质量**: ★★★★☆ — 问题动机清晰，两阶段逻辑递进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowTok: Flowing Seamlessly Across Text and Image Tokens](flowtok_flowing_seamlessly_across_text_and_image_tokens.md)
+- [EmotiCrafter: Text-to-Emotional-Image Generation based on Valence-Arousal Model](emoticrafter_text-to-emotional-image_generation_based_on_valence-arousal_model.md)
+- [What Makes for Text to 360-degree Panorama Generation with Stable Diffusion?](what_makes_for_text_to_360-degree_panorama_generation_with_stable_diffusion.md)
+- [Joint Diffusion Models in Continual Learning](joint_diffusion_models_in_continual_learning.md)
+- [Less is More: Improving Motion Diffusion Models with Sparse Keyframes](less_is_more_improving_motion_diffusion_models_with_sparse_keyframes.md)
+
+<!-- RELATED:END -->

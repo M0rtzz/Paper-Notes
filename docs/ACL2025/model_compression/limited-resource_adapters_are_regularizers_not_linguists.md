@@ -160,3 +160,15 @@ $$\theta_{soup} = \frac{1}{l} \sum_{i=1}^{l} \theta_i$$
 ⭐⭐⭐⭐（4/5）
 
 本文最大价值在于其反直觉的发现：adapter 的跨语言迁移效果可能纯粹来自正则化而非语言信息。实验设计全面、控制严谨，从多个角度支持核心论点。对低资源 MT 实践有直接指导意义。不足在于规模限制（仅 3 种克里奥尔语、600M 模型）以及正则化假说缺乏严格数学证明。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Random Initialization of Gated Sparse Adapters (RIGSA)](../../ICML2025/model_compression/random_initialization_of_gated_sparse_adapters.md)
+- [Neutral Residues: Revisiting Adapters for Model Extension](../../ICML2025/model_compression/neutral_residues_revisiting_adapters_for_model_extension.md)
+- [Come Together, But Not Right Now: A Progressive Strategy to Boost Low-Rank Adaptation](../../ICML2025/model_compression/come_together_but_not_right_now_a_progressive_strategy_to_boost_low-rank_adaptat.md)
+- [Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning](../../ICCV2025/model_compression/integrating_task-specific_and_universal_adapters_for_pre-trained_model-based_cla.md)
+- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](../../NeurIPS2025/model_compression/a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ LAJ（LLM-as-a-Judge）框架：接收Jira需求+Gherkin测试脚本→通过rub
 | 技术深度 | ⭐⭐⭐ | 方法以prompt设计为主，技术门槛不高 |
 | 实验完整度 | ⭐⭐⭐⭐⭐ | 20模型x500评估+三维系统分析+成本模型极其全面 |
 | 实用价值 | ⭐⭐⭐⭐ | 对工程团队的LLM选型有直接参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preference Leakage: A Contamination Problem in LLM-as-a-judge](../../ICLR2026/llm_evaluation/preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
+- [Scalable Vision-Guided Crop Yield Estimation](scalable_vision-guided_crop_yield_estimation.md)
+- [YESciEval: Robust LLM-as-a-Judge for Scientific Question Answering](../../ACL2025/llm_evaluation/yescieval_llm_judge_science.md)
+- [Position: AI Evaluation Should Learn from How We Test Humans](../../ICML2025/llm_evaluation/position_ai_evaluation_should_learn_from_how_we_test_humans.md)
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+
+<!-- RELATED:END -->

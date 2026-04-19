@@ -156,3 +156,15 @@ $$\mathcal{L}_{\text{cls}} = \mathcal{L}_{\text{BCE}} + \gamma \cdot \mathcal{L}
 - **实验**：⭐⭐⭐⭐⭐ — 23 个数据集的全面评估，跨样本+跨平台/批次的严格设置
 - **写作**：⭐⭐⭐⭐ — 框架清晰、图表丰富
 - **实用性**：⭐⭐⭐⭐ — 单卡可训练，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiFusion: Hierarchical Intra-Spot Alignment and Regional Context Fusion for Spatial Gene Expression Prediction from Histopathology](hifusion_hierarchical_intra-spot_alignment_and_regional_context_fusion_for_spati.md)
+- [Scalable Generation of Spatial Transcriptomics from Histology Images via Whole-Slide Flow Matching](../../ICML2025/medical_imaging/scalable_generation_of_spatial_transcriptomics_from_histology_images_via_whole-s.md)
+- [Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics](dual-path_knowledge-augmented_contrastive_alignment_network_for_spatially_resolv.md)
+- [HistoPrism: Unlocking Functional Pathway Analysis from Pan-Cancer Histology via Gene Expression Prediction](../../ICLR2026/medical_imaging/histoprism_unlocking_functional_pathway_analysis_from_pan-cancer_histology_via_g.md)
+- [Sim4Seg: Boosting Multimodal Multi-disease Medical Diagnosis Segmentation with Region-Aware Vision-Language Similarity Masks](sim4seg_boosting_multimodal_multi-disease_medical_diagnosis_segmentation_with_re.md)
+
+<!-- RELATED:END -->

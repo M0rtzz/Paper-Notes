@@ -124,3 +124,15 @@ tags:
 - **实验充分性**: 8/10 — 系统全面地探索了100个n,m组合和6种韵律特征
 - **写作质量**: 8/10 — 论述清晰，假设-验证结构良好
 - **应用价值**: 6/10 — 主要是基础性认知语言学研究，直接应用场景有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](../../NeurIPS2025/others/redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Entailed Between the Lines: Incorporating Implication into NLI](entailed_between_the_lines_incorporating_implication_into_nli.md)
+- [Inducing Lexicons of In-Group Language with Socio-Temporal Context](inducing_lexicons_of_in-group_language_with_socio-temporal_context.md)
+- [Autalic: A Dataset for Anti-Autistic Ableist Language In Context](autalic_a_dataset_for_anti-autistic_ableist_language_in_context.md)
+
+<!-- RELATED:END -->

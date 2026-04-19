@@ -180,3 +180,15 @@ Flux上Color属性从0.6132提升至0.7728（+26%），说明CFG在Flux上的颜
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4个模型、多个数据集、6+指标、消融、用户研究，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，图表丰富，结构完整
 - 价值: ⭐⭐⭐⭐ — 即插即用的实用性强，对RF模型生态有直接贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models](../../CVPR2026/object_detection/neighbor_grpo_contrastive_ode_policy_optimization_aligns_flow_models.md)
+- [SAFE: Multitask Failure Detection for Vision-Language-Action Models](safe_multitask_failure_detection_for_vision-language-action_models.md)
+- [XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+- [Enhancing Privacy-Utility Trade-offs to Mitigate Memorization in Diffusion Models](../../CVPR2025/object_detection/enhancing_privacy-utility_trade-offs_to_mitigate_memorization_in_diffusion_model.md)
+
+<!-- RELATED:END -->

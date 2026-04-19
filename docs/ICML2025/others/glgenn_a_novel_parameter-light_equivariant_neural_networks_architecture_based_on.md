@@ -153,3 +153,15 @@ $$\langle x \rangle_{\bar{k}} \mapsto \frac{\langle x \rangle_{\bar{k}}}{\sigma(
 - 实验充分度: ⭐⭐⭐ (基准实验覆盖较好但缺少真实应用)
 - 写作质量: ⭐⭐⭐⭐ (理论推导严谨，结构清晰)
 - 价值: ⭐⭐⭐⭐ (为等变网络的参数效率提供了坚实理论基础和实用方案)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+- [Diverse Prototypical Ensembles Improve Robustness to Subpopulation Shift](diverse_prototypical_ensembles_improve_robustness_to_subpopulation_shift.md)
+- [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [Sparse-Pivot: Dynamic Correlation Clustering for Node Insertions](sparse-pivot_dynamic_correlation_clustering_for_node_insertions.md)
+
+<!-- RELATED:END -->

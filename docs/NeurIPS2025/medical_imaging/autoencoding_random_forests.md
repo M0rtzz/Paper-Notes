@@ -122,3 +122,15 @@ RFAE 首次为随机森林构建了原则性的编码-解码框架——利用 R
 - **scRNA-seq 应用的意义**：批次效应是单细胞组学的核心挑战，RFAE 的非线性嵌入能在保留细胞类型结构的同时消除技术批次差异
 
 - **多任务潜力**：RFAE 的低维嵌入可同时用于聚类、可视化和去噪——一次训练多种用途
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Random Search Neural Networks for Efficient and Expressive Graph Learning](random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
+- [Generative Distribution Embeddings: Lifting Autoencoders to the Space of Distributions for Multiscale Representation Learning](generative_distribution_embeddings_lifting_autoencoders_to_the_space_of_distribu.md)
+- [Learning Conformational Ensembles of Proteins Based on Backbone Geometry](learning_conformational_ensembles_of_proteins_based_on_backbone_geometry.md)
+- [Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
+- [Fractional Diffusion Bridge Models](fractional_diffusion_bridge_models.md)
+
+<!-- RELATED:END -->

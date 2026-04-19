@@ -147,3 +147,15 @@ CLIP 文本嵌入和交叉注意力模块各自贡献显著，完整 CGNC 在 DN
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖常规/鲁棒/防御/跨域/多类别数多种场景，消融完整
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，图表丰富，扰动可视化直观有说服力
 - 价值: ⭐⭐⭐⭐ — 为对抗迁移攻击引入 VLM 先验开辟了新路线，对模型鲁棒性评估有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [X-Transfer Attacks: Towards Super Transferable Adversarial Attacks on CLIP](../../ICML2025/ai_safety/x-transfer_attacks_towards_super_transferable_adversarial_attacks_on_clip.md)
+- [Rethinking Target Label Conditioning in Adversarial Attacks: A 2D Tensor-Guided Generative Approach](../../AAAI2026/ai_safety/rethinking_target_label_conditioning_in_adversarial_attacks_a_2d_tensor-guided_g.md)
+- [Any Target Can Be Offense: Adversarial Example Generation via Generalized Latent Infection](any_target_can_be_offense_adversarial_example_generation_via_generalized_latent_.md)
+- [Resilience of Entropy Model in Distributed Neural Networks](resilience_of_entropy_model_in_distributed_neural_networks.md)
+- [Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
+
+<!-- RELATED:END -->

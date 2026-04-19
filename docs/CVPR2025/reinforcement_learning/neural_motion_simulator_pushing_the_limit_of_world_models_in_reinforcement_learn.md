@@ -127,3 +127,15 @@ MoSim 在 7 个机器人环境（DM Control 的 Cheetah/Reacher/Acrobot/Hopper/H
 - 实验充分度: ⭐⭐⭐⭐ 7个环境、多种评估协议、丰富的消融，但缺少真实机器人实验
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，公式推导完整，但部分符号表示稍显冗余
 - 价值: ⭐⭐⭐⭐ 为世界模型的直接评估和零样本 RL 开辟了新方向，但目前零样本能力仍有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Reinforcement Learning by Planning with Online World Models](../../ICML2025/reinforcement_learning/continual_reinforcement_learning_by_planning_with_online_world_models.md)
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](../../NeurIPS2025/reinforcement_learning/foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [The Physical Basis of Prediction: World Model Formation in Neural Organoids via an LLM-Generated Curriculum](../../NeurIPS2025/reinforcement_learning/the_physical_basis_of_prediction_world_model_formation_in_neural_organoids_via_a.md)
+- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](../../ICML2025/reinforcement_learning/sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+- [Complexity Scaling Laws for Neural Models using Combinatorial Optimization](../../NeurIPS2025/reinforcement_learning/complexity_scaling_laws_for_neural_models_using_combinatorial_optimization.md)
+
+<!-- RELATED:END -->

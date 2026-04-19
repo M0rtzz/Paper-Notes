@@ -119,3 +119,15 @@ RFM将奖励函数分解为 $r_{\theta, \mathbf{w}_h}(x,y) = \langle \phi_\theta
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实RM实验全面，但缺乏端到端RLHF验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验设计巧妙（合成用户可控实验）
 - 价值: ⭐⭐⭐⭐ 对RLHF个性化有直接指导意义，"多样评价者"的结论有实践影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Smoothed Preference Optimization via ReNoise Inversion for Aligning Diffusion Models with Varied Human Preferences](../../ICML2025/llm_alignment/smoothed_preference_optimization_via_renoise_inversion_for_aligning_diffusion_mo.md)
+- [Learning Ordinal Probabilistic Reward from Preferences (OPRM)](../../ICLR2026/llm_alignment/learning_ordinal_probabilistic_reward_from_preferences.md)
+- [Strategyproof Reinforcement Learning from Human Feedback](strategyproof_reinforcement_learning_from_human_feedback.md)
+- [When Human Preferences Flip: An Instance-Dependent Robust Loss for RLHF](../../AAAI2026/llm_alignment/when_human_preferences_flip_an_instance-dependent_robust_loss_for_rlhf.md)
+- [Human-assisted Robotic Policy Refinement via Action Preference Optimization](human-assisted_robotic_policy_refinement_via_action_preference_optimization.md)
+
+<!-- RELATED:END -->

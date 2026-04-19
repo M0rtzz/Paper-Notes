@@ -137,3 +137,15 @@ OOD泛化（OBQA训练→MMLU测试）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 7任务×4模型×多种微调方式，实验覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ 从现象观察到分析到方案的逻辑链条清晰，图表精美
 - 价值: ⭐⭐⭐⭐⭐ 对LLM微调实践有直接指导意义，特别是高风险应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Robustness Tradeoff in Fine-Tuning](../../ICCV2025/llm_evaluation/on_the_robustness_tradeoff_in_fine-tuning.md)
+- [EvoWiki: Evaluating LLMs on Evolving Knowledge](evowiki_evaluating_llms_on_evolving_knowledge.md)
+- [Atomic Calibration of LLMs in Long-Form Generations](atomic_calibration_of_llms_in_long-form_generations.md)
+- [GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning](guessarena_guess_who_i_am_a.md)
+- [GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration](grace_a_granular_benchmark_for_evaluating_model_calibration_against_human_calibr.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ LLM使用凝缩的指令和相同的样本文档执行相同任务，Fit Step使
 | 实验充分度 | ⭐⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐⭐ |
 | 总体推荐 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [Persistent Homology of Topic Networks for the Prediction of Reader Curiosity](persistent_homology_of_topic_networks_for_the_prediction_of_reader_curiosity.md)
+- [MDCure: A Scalable Pipeline for Multi-Document Instruction-Following](mdcure_a_scalable_pipeline_for_multi-document_instruction-following.md)
+- [S2WTM: Spherical Sliced-Wasserstein Autoencoder for Topic Modeling](s2wtm_spherical_sliced-wasserstein_autoencoder_for_topic_modeling.md)
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+
+<!-- RELATED:END -->

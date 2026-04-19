@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在大规模 Ego-Exo4D 数据集上有详尽的对比、消融和泛化实验
 - 写作质量: ⭐⭐⭐⭐ 来自顶级实验室，问题定义清晰，方法描述条理分明
 - 价值: ⭐⭐⭐⭐ 对第一人称视觉和视角转换领域有重要推动，3D感知扩散的范式有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Model is a Good Pose Estimator from 3D RF-Vision](diffusion_model_is_a_good_pose_estimator_from_3d_rf-vision.md)
+- [ComboVerse: Compositional 3D Assets Creation Using Spatially-Aware Diffusion Guidance](comboverse_compositional_3d_assets_creation_using_spatially-aware_diffusion_guid.md)
+- [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
+- [View Selection for 3D Captioning via Diffusion Ranking](view_selection_for_3d_captioning_via_diffusion_ranking.md)
+- [Transferable 3D Adversarial Shape Completion using Diffusion Models](transferable_3d_adversarial_shape_completion_using_diffusion_models.md)
+
+<!-- RELATED:END -->

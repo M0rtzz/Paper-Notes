@@ -89,3 +89,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (理论预测的系统性实验验证，7 个子节)
 - 写作质量: ⭐⭐⭐⭐ (严谨的数学推导配合清晰的直觉解释)
 - 价值: ⭐⭐⭐⭐ (为扩散模型设计提供了第一性原理的理论框架)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
+- [Diffusion Mental Averages](diffusion_mental_averages.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [DMin: Scalable Training Data Influence Estimation for Diffusion Models](dmin_scalable_training_data_influence_estimation_for_diffusion_models.md)
+
+<!-- RELATED:END -->

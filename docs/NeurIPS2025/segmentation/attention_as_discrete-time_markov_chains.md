@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 分割+生成+masking 三个应用 + 消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，类比直观
 - 价值: ⭐⭐⭐⭐ 为注意力分析提供了新的数学框架，对理解 Transformer 信息流动有深层启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
+- [Interpreting ResNet-based CLIP via Neuron-Attention Decomposition](interpreting_resnet-based_clip_via_neuron-attention_decomposition.md)
+- [IT³: Idempotent Test-Time Training](../../ICML2025/segmentation/it3_idempotent_test-time_training.md)
+- [PicoSAM3: Real-Time In-Sensor Region-of-Interest Segmentation](../../CVPR2025/segmentation/picosam3_real-time_in-sensor_region-of-interest_segmentation.md)
+- [Online Reasoning Video Segmentation with Just-in-Time Digital Twins](../../ICCV2025/segmentation/online_reasoning_video_segmentation_with_just-in-time_digital_twins.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ ResNet-50 上 ModHiFi-U 实现完全遗忘（0.2% forget acc），速度比 Jia 
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 CNN/ViT/LLM、剪枝/遗忘双任务、多数据集；但 LLM 遗忘实验缺失，Swin-T 结果不太理想
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，统一符号系统清晰；但数学符号密集，阅读门槛较高
 - 价值: ⭐⭐⭐⭐⭐ — 解决了无训练数据/无损失函数下的模型修改这一实际且重要的问题，统一框架的思想对后续工作有显著启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Predictive Data Selection: The Data That Predicts Is the Data That Teaches](../../ICML2025/model_compression/predictive_data_selection_the_data_that_predicts_is_the_data_that_teaches.md)
+- [Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces](../../ICLR2026/model_compression/discount_model_search_for_quality_diversity_optimization_in_high-dimensional_mea.md)
+- [Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation](../../CVPR2025/model_compression/curriculum_coarse-to-fine_selection_for_high-ipc_dataset_distillation.md)
+- [Vision-centric Token Compression in Large Language Model](vision-centric_token_compression_in_large_language_model.md)
+- [A Granular Study of Safety Pretraining under Model Abliteration](a_granular_study_of_safety_pretraining_under_model_abliteration.md)
+
+<!-- RELATED:END -->

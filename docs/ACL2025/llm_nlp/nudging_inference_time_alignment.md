@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个模型家族×13个数据集×多种对比，跨家族实验是加分项
 - 写作质量: ⭐⭐⭐⭐⭐ 分析透彻，从观察到方法到实验环环相扣
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，显著降低对齐成本，开辟新的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeAL: Decoding-time Alignment for Large Language Models](deal_decoding_time_alignment.md)
+- [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](contrastive_prompting_embeddings.md)
+- [Alignment Drift in CEFR-prompted LLMs for Interactive Spanish Tutoring](alignment_drift_in_cefr-prompted_llms_for_interactive_spanish_tutoring.md)
+- [MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](mha2mla_deepseek_latent_attention.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+
+<!-- RELATED:END -->

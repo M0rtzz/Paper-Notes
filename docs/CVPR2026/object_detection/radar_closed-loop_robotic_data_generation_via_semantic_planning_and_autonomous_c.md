@@ -119,3 +119,15 @@ GNN 策略基于 Instant Policy 框架，通过图扩散过程推理动作。从
 - 实验充分度: ⭐⭐⭐ 仿真实验充分但真实世界只有定性结果
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，FSM 状态图直观
 - 价值: ⭐⭐⭐⭐⭐ 对解决机器人数据瓶颈问题有重大潜在影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation](palm_progress-aware_policy_learning_via_affordance_reasoning_for_long-horizon_ro.md)
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](slice_semantic_latent_injection_via_compartmentali.md)
+- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+
+<!-- RELATED:END -->

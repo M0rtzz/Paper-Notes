@@ -230,3 +230,15 @@ $$\mathbf{x}_{2D} = \varphi_p\left(\begin{bmatrix}(u-c_x)/f_x \\ (v-c_y)/f_y \\ 
 - 实用性：⭐⭐⭐⭐ — 实现简单但主要在广角场景获益
 - 实验质量：⭐⭐⭐⭐ — 多数据集验证，短焦距实验有说服力
 - 写作质量：⭐⭐⭐⭐ — 数学推导清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAGS: Structure-Aware 3D Gaussian Splatting](sags_structure-aware_3d_gaussian_splatting.md)
+- [Binomial Self-compensation for Motion Error in Dynamic 3D Scanning](binomial_self-compensation_for_motion_error_in_dynamic_3d_scanning.md)
+- [Per-Gaussian Embedding-Based Deformation for Deformable 3D Gaussian Splatting](per-gaussian_embedding-based_deformation_for_deformable_3d_gaussian_splatting.md)
+- [Analysis-by-Synthesis Transformer for Single-View 3D Reconstruction](analysis-by-synthesis_transformer_for_single-view_3d_reconstruction.md)
+- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 极其全面的 benchmark 和消融分析
 - 写作质量: ⭐⭐⭐⭐ 组织良好，数据集描述详尽
 - 价值: ⭐⭐⭐ 对地球化学社区有基准价值，对 CV 社区的方法论启发有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
+- [BHViT: Binarized Hybrid Vision Transformer](bhvit_binarized_hybrid_vision_transformer.md)
+- [FIMA-Q: Post-Training Quantization for Vision Transformers by Fisher Information Matrix Approximation](fima-q_post-training_quantization_for_vision_transformers_by_fisher_information_.md)
+- [Exploration-Driven Generative Interactive Environments](exploration-driven_generative_interactive_environments.md)
+- [Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning](embracing_collaboration_over_competition_condensing_multiple_prompts_for_visual_.md)
+
+<!-- RELATED:END -->

@@ -177,3 +177,15 @@ Crossover发生在 $t \in [160, 200]$，约40步窗口。Regime I全面违反(PC
 ## 评分
 
 ⭐⭐⭐⭐⭐ 理论深度极高的工作，将分形几何与扩散模型完美对接，从第一性原理统一解释了多个孤立的经验技巧，数学推导严谨且实验验证全面（CIFAR-10 + CelebA-HQ），对扩散模型的理解和设计具有范式级启发价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
+- [Diffusion Mental Averages](diffusion_mental_averages.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping](apple_attribute-preserving_pseudo-labeling_for_diffusion-based_face_swapping.md)
+
+<!-- RELATED:END -->

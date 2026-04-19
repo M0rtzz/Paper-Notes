@@ -138,3 +138,15 @@ $$\{e\} = G_0 \trianglelefteq G_1 \trianglelefteq \cdots \trianglelefteq G_k = G
 - 实验充分度: ⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GG-SSMs: Graph-Generating State Space Models](../../CVPR2025/video_understanding/gg-ssms_graph-generating_state_space_models.md)
+- [Mamba-3: Improved Sequence Modeling using State Space Principles](mamba-3_improved_sequence_modeling_using_state_space_principles.md)
+- [Parity Requires Unified Input Dependence and Negative Eigenvalues in SSMs](../../ICML2025/video_understanding/parity_requires_unified_input_dependence_and_negative_eigenvalues_in_ssms.md)
+- [Fixed-Point RNNs: Interpolating from Diagonal to Dense](../../NeurIPS2025/video_understanding/fixed-point_rnns_interpolating_from_diagonal_to_dense.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+
+<!-- RELATED:END -->

@@ -181,3 +181,15 @@ $$\mathcal{C}(Z_{T_1}, Z_{T_2}) = \sigma(Z_{T_2})\frac{Z_{T_1} - \mu(Z_{T_1})}{\
 | 写作质量 | 4 |
 | 实用价值 | 4 |
 | **综合** | **4.2** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harnessing Massive Satellite Imagery with Efficient Masked Image Modeling](../../ICCV2025/segmentation/harnessing_massive_satellite_imagery_with_efficient_masked_image_modeling.md)
+- [Masked Representation Modeling for Domain-Adaptive Segmentation](../../CVPR2026/segmentation/masked_representation_modeling_for_domain-adaptive_segmentation.md)
+- [ColorMAE: Exploring Data-Independent Masking Strategies in Masked AutoEncoders](colormae_exploring_data-independent_masking_strategies_in_masked_autoencoders.md)
+- [ControlNet++: Improving Conditional Controls with Efficient Consistency Feedback](controlnet_improving_conditional_controls_with_efficient_consistency_feedback.md)
+- [DreamLIP: Language-Image Pre-training with Long Captions](dreamlip_language-image_pre-training_with_long_captions.md)
+
+<!-- RELATED:END -->

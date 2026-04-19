@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种消融维度（模块、融合策略、层选择）+全面 SOTA 对比
 - 写作质量: ⭐⭐⭐⭐ 物理动机论述深入，公式推导完整
 - 价值: ⭐⭐⭐⭐ 为遥感跨模态检索提供了物理驱动的有效范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Re-identification of De-identified Documents with Autoregressive Infilling](../../ACL2025/others/reidentification_deidentified.md)
+- [Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification](../../ECCV2024/others/adaptive_highfrequency_transformer_for_diverse_wildlife_reid.md)
+- [Structure-Aware Encodings of Argumentation Properties for Clique-width](../../AAAI2026/others/structure-aware_encodings_of_argumentation_properties_for_clique-width.md)
+- [ParaMETA: Towards Learning Disentangled Paralinguistic Speaking Styles Representations](../../AAAI2026/others/parameta_towards_learning_disentangled_paralinguistic_speaking_styles_representa.md)
+- [How to Marginalize in Causal Structure Learning?](../../AAAI2026/others/how_to_marginalize_in_causal_structure_learning.md)
+
+<!-- RELATED:END -->

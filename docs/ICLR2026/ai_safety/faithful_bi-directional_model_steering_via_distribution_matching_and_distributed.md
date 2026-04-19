@@ -127,3 +127,15 @@ $$\min_\Phi \mathbb{E}\left[D_\Phi^+ + D_\Phi^-\right]$$
 - 实验充分度: ⭐⭐⭐⭐ — AxBench 大规模评测 + 两个安全案例，覆盖 3.8B-70B 模型
 - 写作质量: ⭐⭐⭐⭐ — 定位清晰，诚实讨论局限性，不过分宣称
 - 价值: ⭐⭐⭐⭐ — 安全场景中的保真引导有实际价值，与现有方法互补而非替代
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resilience of Entropy Model in Distributed Neural Networks](../../ECCV2024/ai_safety/resilience_of_entropy_model_in_distributed_neural_networks.md)
+- [Hide and Find: A Distributed Adversarial Attack on Federated Graph Learning](hide_and_find_a_distributed_adversarial_attack_on_federated_graph_learning.md)
+- [Beyond Match Maximization and Fairness: Retention-Optimized Two-Sided Matching](beyond_match_maximization_and_fairness_retention-optimized_two-sided_matching.md)
+- [Rethinking the Bias of Foundation Model under Long-tailed Distribution](../../ICML2025/ai_safety/rethinking_the_bias_of_foundation_model_under_long-tailed_distribution.md)
+- [Co-LoRA: Collaborative Model Personalization on Heterogeneous Multi-Modal Clients](co-lora_collaborative_model_personalization_on_heterogeneous_multi-modal_clients.md)
+
+<!-- RELATED:END -->

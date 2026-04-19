@@ -140,3 +140,15 @@ Margin-CS 在准确率上高出近 20 个百分点，鲁棒性也更优。
 - 实验充分度: ⭐⭐⭐⭐ (CIFAR-10/Imagenette/ImageNet/HAM10k 四数据集，多 baseline 对比，消融实验完整)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，理论推导严谨，图示直观)
 - 价值: ⭐⭐⭐⭐ (填补了可扩展代价敏感认证的空白，对医学等高风险场景有实际意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cost-Sensitive Freeze-thaw Bayesian Optimization for Efficient Hyperparameter Tuning](../../NeurIPS2025/llm_evaluation/cost-sensitive_freeze-thaw_bayesian_optimization_for_efficient_hyperparameter_tu.md)
+- [A Unified Framework for Provably Efficient Algorithms to Estimate Shapley Values](../../NeurIPS2025/llm_evaluation/a_unified_framework_for_provably_efficient_algorithms_to_estimate_shapley_values.md)
+- [Deep Cost Ray Fusion for Sparse Depth Video Completion](../../ECCV2024/llm_evaluation/deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
+- [CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](../../ICLR2026/llm_evaluation/counselbench_llm_mental_health_qa.md)
+- [Gradient Aligned Regression via Pairwise Losses](gradient_aligned_regression_via_pairwise_losses.md)
+
+<!-- RELATED:END -->

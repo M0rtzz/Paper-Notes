@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 推理时搜索+自训练两个维度，9个benchmark，GPT+人工评估，多VLM验证，消融全面
 - 写作质量: ⭐⭐⭐⭐ 清晰系统，案例分析直观
 - 价值: ⭐⭐⭐⭐⭐ 为VLM的推理时计算扩展开辟了新方向，自训练pipeline有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](sparsevila_decoupling_visual_sparsity_for_efficient_vlm_infe.md)
+- [AirCache: Activating Inter-Modal Relevancy KV Cache Compression for Efficient Large Vision-Language Model Inference](aircache_activating_inter-modal_relevancy_kv_cache_compression_for_efficient_lar.md)
+- [Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
+- [Feather the Throttle: Revisiting Visual Token Pruning for Vision-Language Model Acceleration](feather_the_throttle_revisiting_visual_token_pruning_for_vis.md)
+- [Instruction-Oriented Preference Alignment for Enhancing Multi-Modal Comprehension Capability of MLLMs](instruction-oriented_preference_alignment_for_enhancing_multi-modal_comprehensio.md)
+
+<!-- RELATED:END -->

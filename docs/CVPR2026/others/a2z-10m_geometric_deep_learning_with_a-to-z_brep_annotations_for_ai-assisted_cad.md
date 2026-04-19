@@ -138,3 +138,15 @@ $$p_i(\boldsymbol{x}) = \frac{\omega_i(\boldsymbol{x})}{\sum_{j \in \mathcal{N}(
 - 实验充分度: ⭐⭐⭐⭐ — 多基线对比、Seen/Unseen 泛化、零样本迁移、人类+GPT+Gemini 三方评估体系完整
 - 写作质量: ⭐⭐⭐⭐ — 数学公式严谨，管线描述清晰，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ — 填补 CAD 逆向工程领域大规模多模态数据的根本性空缺，预计将成为该领域重要基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
+- [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+- [Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)
+- [What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution](what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_.md)
+
+<!-- RELATED:END -->

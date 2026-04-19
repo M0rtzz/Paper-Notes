@@ -120,3 +120,15 @@ GSDTTA 由两个核心模块组成：**图谱驱动点偏移（GSDPS）** 和 **
 - 实验充分度: ⭐⭐⭐⭐ 三个 backbone × 两个数据集，覆盖全面；缺少效率对比
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，公式推导严谨
 - 价值: ⭐⭐⭐⭐ 参数高效的 TTA 方案，有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CstNet: Constraint-Aware Feature Learning for Parametric Point Cloud](constraint-aware_feature_learning_for_parametric_point_cloud.md)
+- [FROSS: Faster-than-Real-Time Online 3D Semantic Scene Graph Generation from RGB-D Images](fross_faster-than-real-time_online_3d_semantic_scene_graph_generation_from_rgb-d.md)
+- [Open-Vocabulary Octree-Graph for 3D Scene Understanding](open-vocabulary_octree-graph_for_3d_scene_understanding.md)
+- [Event-Driven Storytelling with Multiple Lifelike Humans in a 3D Scene](event-driven_storytelling_with_multiple_lifelike_humans_in_a_3d_scene.md)
+- [PointMAC: Meta-Learned Adaptation for Robust Test-Time Point Cloud Completion](../../NeurIPS2025/3d_vision/pointmac_meta-learned_adaptation_for_robust_test-time_point_cloud_completion.md)
+
+<!-- RELATED:END -->

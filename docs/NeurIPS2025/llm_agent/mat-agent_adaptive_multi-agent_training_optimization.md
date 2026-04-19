@@ -134,3 +134,15 @@ MAT-Agent 由四个自主 agent 组成，分别控制四个训练组件：Agent_
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+消融+迁移+收敛分析，但缺少其他任务的验证
 - 写作质量: ⭐⭐⭐ 公式符号体系完整，但部分描述冗余，实验分析深度不够
 - 价值: ⭐⭐⭐⭐ 提供了训练优化的新视角，但实用成本和推广性还需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Group-in-Group Policy Optimization for LLM Agent Training](groupingroup_policy_optimization_for_llm_agent_training.md)
+- [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
+- [Adaptive Coopetition: Leveraging Coarse Verifier Signals for Resilient Multi-Agent LLM Reasoning](adaptive_coopetition_leveraging_coarse_verifier_signals_for_resilient_multi-agen.md)
+- [LC-Opt: Benchmarking Reinforcement Learning and Agentic AI for End-to-End Liquid Cooling Optimization in Data Centers](lc-opt_benchmarking_reinforcement_learning_and_agentic_ai_for_end-to-end_liquid_.md)
+- [Lessons Learned: A Multi-Agent Framework for Code LLMs to Learn and Improve](lessons_learned_a_multi-agent_framework_for_code_llms_to_learn_and_improve.md)
+
+<!-- RELATED:END -->

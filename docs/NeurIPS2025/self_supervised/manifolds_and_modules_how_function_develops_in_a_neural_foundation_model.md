@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅一个模型，刺激集有限，但分析深度值得肯定
 - 写作质量: ⭐⭐⭐⭐ 跨学科写作难度大但处理得当，图表信息密度高
 - 价值: ⭐⭐⭐⭐ 对理解神经基础模型的生物学相关性有重要贡献，对未来架构设计有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spikingformer: A Key Foundation Model for Spiking Neural Networks](../../AAAI2026/self_supervised/spikingformer_a_key_foundation_model_for_spiking_neural_networks.md)
+- [TabSTAR: A Tabular Foundation Model for Tabular Data with Text Fields](tabstar_a_tabular_foundation_model_for_tabular_data_with_text_fields.md)
+- [BrainOmni: A Brain Foundation Model for Unified EEG and MEG Signals](brainomni_a_brain_foundation_model_for_unified_eeg_and_meg_signals.md)
+- [Few-Shot Implicit Function Generation via Equivariance](../../CVPR2025/self_supervised/few-shot_implicit_function_generation_via_equivariance.md)
+- [Uncertainty-Guided Model Selection for Tabular Foundation Models in Biomolecule Efficacy Prediction](uncertainty-guided_model_selection_for_tabular_foundation_models_in_biomolecule_.md)
+
+<!-- RELATED:END -->

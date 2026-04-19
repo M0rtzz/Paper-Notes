@@ -115,3 +115,15 @@ SFT 阶段：标准语言模型 loss；DPO 阶段：$\mathcal{L}_{DPO} = -\log\s
 - 实验充分度: ⭐⭐⭐⭐⭐ FID+VLM评估+用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ 数据集+方法+评估系统性完整
 - 价值: ⭐⭐⭐⭐⭐ 机器人操控场景生成的基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T-Rex: Task-Adaptive Spatial Representation Extraction for Robotic Manipulation with VLMs](t-rex_task-adaptive_spatial_representation_extraction_for_robotic_manipulation_w.md)
+- [MMTU: A Massive Multi-Task Table Understanding and Reasoning Benchmark](mmtu_a_massive_multi-task_table_understanding_and_reasoning_benchmark.md)
+- [3D-MVP: 3D Multiview Pretraining for Robotic Manipulation](../../CVPR2025/robotics/3d-mvp_3d_multiview_pretraining_for_manipulation.md)
+- [Expert Pyramid Tuning: Efficient Parameter Fine-Tuning for Expertise-Driven Task Allocation](../../CVPR2025/robotics/expert_pyramid_tuning_efficient_parameter_fine-tuning_for_expertise-driven_task_.md)
+- [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](../../AAAI2026/robotics/evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+
+<!-- RELATED:END -->

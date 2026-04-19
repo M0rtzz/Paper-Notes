@@ -142,3 +142,15 @@ VLLM prompt策略对比（GPT-4o-mini）：
 | 技术深度 | ⭐⭐⭐ | 分析全面系统，但方法设计偏简单，缺乏理论深度 |
 | 实验充分性 | ⭐⭐⭐ | 消融实验和跨模型对比详尽，但模型覆盖面和benchmark多样性有限 |
 | 实用价值 | ⭐⭐⭐⭐ | 自动化prompt tuning方案零成本可用、双分支架构即插即用，对实际部署有参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting](in_the_eye_of_mllm_benchmarking_egocentric_video_intent_understanding_with_gaze-.md)
+- [Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](enhancing_temporal_understanding_in_videollms_through_stacke.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Learning to Generalize Without Bias for Open-Vocabulary Action Recognition](../../ICCV2025/video_understanding/learning_to_generalize_without_bias_for_open-vocabulary_action_recognition.md)
+- [Beyond Label Semantics: Language-Guided Action Anatomy for Few-shot Action Recognition](../../ICCV2025/video_understanding/beyond_label_semantics_language-guided_action_anatomy_for_few-shot_action_recogn.md)
+
+<!-- RELATED:END -->

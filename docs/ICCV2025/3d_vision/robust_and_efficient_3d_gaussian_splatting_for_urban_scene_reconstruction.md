@@ -162,3 +162,15 @@ $\lambda_d$ 从0.5指数衰减至0.01。
 - 技术深度：⭐⭐⭐⭐ — 各组件设计合理且有理论支撑
 - 实验充分度：⭐⭐⭐⭐ — 多场景、有消融，但缺少与最新方法（Grendel-GS等）对比
 - 实用价值：⭐⭐⭐⭐⭐ — 直接解决城市级重建+实时渲染的工程痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+- [BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curv.md)
+- [Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction](curve-aware_gaussian_splatting_for_3d_parametric_curve_reconstruction.md)
+- [StealthAttack: Robust 3D Gaussian Splatting Poisoning via Density-Guided Illusions](stealthattack_robust_3d_gaussian_splatting_poisoning_via_density-guided_illusion.md)
+- [TurboReg: TurboClique for Robust and Efficient Point Cloud Registration](turboreg_turboclique_for_robust_and_efficient_point_cloud_registration.md)
+
+<!-- RELATED:END -->

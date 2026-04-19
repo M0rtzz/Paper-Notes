@@ -139,3 +139,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 5个模型×4种方法×4种batch size，加上详细的case analysis
 - **写作质量**: ⭐⭐⭐⭐ — 形式化严谨，Example驱动的解释清晰
 - **价值**: ⭐⭐⭐⭐⭐ — 对KE社区有重要推动作用，benchmark有长期使用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAKE: Steering Activations for Knowledge Editing](sake_steering_activations_for_knowledge_editing.md)
+- [ScEdit: Script-based Assessment of Knowledge Editing](scedit_script-based_assessment_of_knowledge_editing.md)
+- [Revealing the Deceptiveness of Knowledge Editing: A Mechanistic Analysis of Superficial Editing](revealing_the_deceptiveness_of_knowledge_editing_a_mechanistic_analysis_of_super.md)
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains](chainedit_propagating_ripple_effects_in_llm.md)
+
+<!-- RELATED:END -->

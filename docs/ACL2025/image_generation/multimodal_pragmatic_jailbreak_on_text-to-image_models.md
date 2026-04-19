@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个模型、7000条提示、12600次查询、多种安全过滤器，实验规模大且全面
 - 写作质量: ⭐⭐⭐⭐ 论述清晰、结构完整，安全性研究的伦理声明充分
 - 价值: ⭐⭐⭐⭐⭐ 揭示了当前T2I模型安全机制的重大盲区，对产业实践有直接影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MacPrompt: Maraconic-guided Jailbreak against Text-to-Image Models](../../AAAI2026/image_generation/macprompt_maraconic-guided_jailbreak_against_text-to-image_models.md)
+- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](../../CVPR2025/image_generation/enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [Pragmatic Heterogeneous Collaborative Perception via Generative Communication Mechanism](../../NeurIPS2025/image_generation/pragmatic_heterogeneous_collaborative_perception_via_generative_communication_me.md)
+- [Planning with Diffusion Models for Target-Oriented Dialogue Systems](difftod_diffusion_dialogue_planning.md)
+
+<!-- RELATED:END -->

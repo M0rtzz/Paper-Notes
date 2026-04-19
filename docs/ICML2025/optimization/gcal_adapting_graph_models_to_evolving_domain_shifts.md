@@ -177,3 +177,15 @@ $$\min_{\hat{G}_t, \Phi} \mathcal{L}_{MGL} + \lambda_1 \mathcal{L}_{Reg} + \lamb
 | 写作质量 | 4 | 结构清晰，问题-方法-实验逻辑通顺 |
 | 实用价值 | 3.5 | 代码已开源，但适用场景（无标签图序列适应）较窄 |
 | **综合** | **4** | 扎实的理论驱动工作，在图持续适应新领域建立了强基线 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [Nonparametric Teaching for Graph Property Learners](nonparametric_teaching_for_graph_property_learners.md)
+- [Autoformulation of Mathematical Optimization Models Using LLMs](autoformulation_of_mathematical_optimization_models_using_llms.md)
+- [Weak-to-Strong Generalization under Distribution Shifts](../../NeurIPS2025/optimization/weak-to-strong_generalization_under_distribution_shifts.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+
+<!-- RELATED:END -->

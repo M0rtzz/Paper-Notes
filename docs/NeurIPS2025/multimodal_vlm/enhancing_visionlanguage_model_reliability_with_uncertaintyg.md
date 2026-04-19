@@ -118,3 +118,15 @@ Dropout Decoding包含两个阶段：(1) **解码前**——对所有视觉token
 - 实验充分度: ⭐⭐⭐⭐ 3个模型、CHAIR+THRONE双benchmark、详细消融，但缺乏效率分析和更多任务类型
 - 写作质量: ⭐⭐⭐⭐⭐ Figure 1的投影可视化和不确定性分解极其直观，数学推导与直觉解释并重
 - 价值: ⭐⭐⭐⭐ 推理时VLM可靠性增强的实用方法，但推理开销是实际部署的瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
+- [ViSpec: Accelerating Vision-Language Models with Vision-Aware Speculative Decoding](vispec_accelerating_vision-language_models_with_vision-aware_speculative_decodin.md)
+- [Controlling Multimodal LLMs via Reward-guided Decoding](../../ICCV2025/multimodal_vlm/controlling_multimodal_llms_via_rewardguided_decoding.md)
+- [AdaLRS: Loss-Guided Adaptive Learning Rate Search for Efficient Foundation Model Pretraining](adalrs_lossguided_adaptive_learning_rate_search_for_efficien.md)
+- [Beyond Greedy Exits: Improved Early Exit Decisions for Risk Control and Reliability](beyond_greedy_exits_improved_early_exit_decisions_for_risk_control_and_reliabili.md)
+
+<!-- RELATED:END -->

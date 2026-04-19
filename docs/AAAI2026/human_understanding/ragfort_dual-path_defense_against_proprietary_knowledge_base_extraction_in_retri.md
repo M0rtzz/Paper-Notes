@@ -193,3 +193,15 @@ $$\hat{r}(x_{<t}, z) = 1 \iff \max_y q_t(y) < \max_y p_t(y) - \alpha \cdot D_{\t
 - 实验充分度: ⭐⭐⭐⭐（多数据集多模型多攻击，但缺乏参数敏感性和适应性攻击测试）
 - 写作质量: ⭐⭐⭐⭐⭐（论文结构清晰，理论推导严谨）
 - 价值: ⭐⭐⭐⭐⭐（解决 RAG 商业部署的实际安全痛点）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PA-FAS: Towards Interpretable and Generalizable Multimodal Face Anti-Spoofing via Path-Augmented Reinforcement Learning](pa-fas_towards_interpretable_and_generalizable_multimodal_face_anti-spoofing_via.md)
+- [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](../../ICML2025/human_understanding/fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models](../../NeurIPS2025/human_understanding/vimorag_video-based_retrieval-augmented_3d_motion_generation_for_motion_language.md)
+- [Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](../../ICLR2026/human_understanding/antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
+- [Semantic Retrieval Augmented Contrastive Learning for Sequential Recommendation](../../NeurIPS2025/human_understanding/semantic_retrieval_augmented_contrastive_learning_for_sequential_recommendation.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ $$\hat{w}_{j,k} = \frac{\phi_k(\lambda_j)}{\sum_{m=1}^{C_{in}} w_{m,k}}$$
 - ⭐ 实验充分度: 4/5 — 四个数据集、两种策略、10 次重复，统计上严谨
 - ⭐ 写作质量: 4/5 — 结构清晰，分析深入，对结果有合理解释
 - ⭐ 价值: 3.5/5 — 为 HSI 集成到多模态 GFM 提供了重要基线和洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MapEval: A Map-Based Evaluation of Geo-Spatial Reasoning in Foundation Models](../../ICML2025/remote_sensing/mapeval_a_map-based_evaluation_of_geo-spatial_reasoning_in_foundation_models.md)
+- [No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors](../../CVPR2026/remote_sensing/no_labels_no_look-ahead_unsupervised_online_video_stabilization_with_classical_p.md)
+- [M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction](../../AAAI2026/remote_sensing/m3sr_multi-scale_multi-perceptual_mamba_for_efficient_spectral_reconstruction.md)
+- [Exploring Spatiotemporal Feature Propagation for Video-Level Compressive Spectral Reconstruction](../../CVPR2026/remote_sensing/exploring_spatiotemporal_feature_propagation_for_video-level_compressive_spectra.md)
+- [MetaSpectra+: A Compact Broadband Metasurface Camera for Snapshot Hyperspectral+ Imaging](../../CVPR2026/remote_sensing/metaspectra_a_compact_broadband_metasurface_camera.md)
+
+<!-- RELATED:END -->

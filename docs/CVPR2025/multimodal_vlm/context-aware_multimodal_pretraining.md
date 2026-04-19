@@ -122,3 +122,15 @@ LIxP在标准的图文对比预训练（CLIP或SigLIP）基础上，增加了一
 - 实验充分度: ⭐⭐⭐⭐⭐ 21个数据集×多种模型规模×6种适应方法×详细消融，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰，从问题到方法到实验环环相扣，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，直接改善了预训练模型的few-shot迁移能力，且方法简单易于集成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks](hificl_high-fidelity_in-context_learning_for_multimodal_tasks.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+- [Mimic In-Context Learning for Multimodal Tasks](mimic_in-context_learning_for_multimodal_tasks.md)
+- [CoCoA-Mix: Confusion-and-Confidence-Aware Mixture Model for Context Optimization](../../ICML2025/multimodal_vlm/cocoa-mix_confusion-and-confidence-aware_mixture_model_for_context_optimization.md)
+- [MMInference: Accelerating Pre-filling for Long-Context VLMs via Modality-Aware Permutation Sparse Attention](../../ICML2025/multimodal_vlm/mminference_accelerating_pre-filling_for_long-context_vlms_via_modality-aware_pe.md)
+
+<!-- RELATED:END -->

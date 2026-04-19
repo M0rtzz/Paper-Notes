@@ -141,3 +141,15 @@ SPDInv-ELITE相比原始ELITE：DINO提升85%、PSNR提升62%、MSE降低86%。
 - **实用性**: ⭐⭐⭐⭐⭐ — 即插即用、10行代码、多引擎兼容、可扩展
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 三种引擎×两种基准数据集、充分消融、定制化编辑扩展
 - **写作质量**: ⭐⭐⭐⭐ — 动机阐述清晰，但公式符号较多，部分推导可更简洁
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReNoise: Real Image Inversion Through Iterative Noising](renoise_real_image_inversion_through_iterative_noising.md)
+- [WildVidFit: Video Virtual Try-On in the Wild via Image-Based Controlled Diffusion Models](wildvidfit_video_virtual_try-on_in_the_wild_via_image-based_controlled_diffusion.md)
+- [MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed Precision Quantization](mixdq_memory-efficient_few-step_text-to-image_diffusion_models_with_metric-decou.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 平衡/不平衡、零样本/少样本、多种子验证，指标体系完整
 - 写作质量: ⭐⭐⭐⭐ 实验设计描述清晰，prompt 构造透明，结果呈现规范
 - 价值: ⭐⭐⭐ 对安全领域 LLM 应用有参考价值，行为差异分析有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feedforward Few-shot Species Range Estimation](../../ICML2025/llm_evaluation/feedforward_few-shot_species_range_estimation.md)
+- [Unlocking Transfer Learning for Open-World Few-Shot Recognition](unlocking_transfer_learning_for_open-world_few-shot_recognition.md)
+- [Random Registers for Cross-Domain Few-Shot Learning](../../ICML2025/llm_evaluation/random_registers_for_cross-domain_few-shot_learning.md)
+- [AD-LLM: Benchmarking Large Language Models for Anomaly Detection](../../ACL2025/llm_evaluation/ad-llm_benchmarking_large_language_models_for_anomaly_detection.md)
+- [Language Complexity Measurement as a Noisy Zero-Shot Proxy for Evaluating LLM Performance](../../ACL2025/llm_evaluation/language_complexity_measurement_as_a_noisy_zero-shot_proxy_for_evaluating_llm_pe.md)
+
+<!-- RELATED:END -->

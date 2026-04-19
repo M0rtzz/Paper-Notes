@@ -143,3 +143,15 @@ FEAT（Feedback Dataset Generation Framework for English AI Tutoring）由三个
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖5种排序方法、5个模型、多种数据比例组合，消融充分
 - **写作质量**: ⭐⭐⭐ 结构合理但部分描述略显冗长，图表可以更直观
 - **价值**: ⭐⭐⭐⭐ 对教育 AI 领域的数据构建有很好的指导意义，"少量高质量种子"的结论可推广到其他领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dolphin: Moving Towards Closed-loop Auto-research through Thinking, Practice, and Feedback](dolphin_moving_towards_closed-loop_auto-research_through_thinking_practice_and_f.md)
+- [Predicting Through Generation: Why Generation Is Better for Prediction](predicting_through_generation_why_generation_is_better_for_prediction.md)
+- [Practical Principles for AI Cost and Compute Accounting](../../ICML2025/others/practical_principles_for_ai_cost_and_compute_accounting.md)
+- [Sightation Counts: Leveraging Sighted User Feedback in Building a BLV-aligned Dataset of Diagram Descriptions](sightation_counts_leveraging_sighted_user_feedback_in_building_a_blv-aligned_dat.md)
+- [Counterspeech the Ultimate Shield! Multi-Conditioned Counterspeech Generation through Attributed Prefix Learning](hippro_counterspeech_gen.md)
+
+<!-- RELATED:END -->

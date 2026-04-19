@@ -151,3 +151,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作无实验验证，缺乏有限样本界和实际benchmark
 - 写作质量: ⭐⭐⭐⭐⭐ 证明结构清晰、假设逐条分析且提供松弛，理论写作典范
 - 价值: ⭐⭐⭐⭐ 为sim-to-real领域的ODR方法提供理论基础，但缺乏实验和有限样本分析限制了直接的实践指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Robustness of Offline RL Under Data Corruption via SAM](../../AAAI2026/human_understanding/enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)
+- [Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift](../../CVPR2026/human_understanding/feddap_domain-aware_prototype_learning_for_federated_learning_under_domain_shift.md)
+- [A Regularized Newton Method for Nonconvex Optimization with Global and Local Complexity Guarantees](../../NeurIPS2025/human_understanding/a_regularized_newton_method_for_nonconvex_optimization_with.md)
+
+<!-- RELATED:END -->

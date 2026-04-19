@@ -173,3 +173,15 @@ R&D-Agent(Q) 将量化研发分解为五个功能模块，分属 Research 和 De
 - 实验充分度: ⭐⭐⭐⭐ — CSI 300 主实验全面，补充了 CSI 500 和 NASDAQ 100 泛化验证，消融和分析详尽，但缺少实盘验证
 - 写作质量: ⭐⭐⭐⭐ — 框架描述清晰，模块化设计易于理解，形式化适度，图表质量高
 - 价值: ⭐⭐⭐⭐⭐ — 对量化金融自动化研发具有重要范式意义，代码开源（微软 RD-Agent），实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAT-Agent: Adaptive Multi-Agent Training Optimization](mat-agent_adaptive_multi-agent_training_optimization.md)
+- [TrajAgent: An LLM-Agent Framework for Trajectory Modeling via Large-and-Small Model Collaboration](trajagent_an_llm-agent_framework_for_trajectory_modeling_via_large-and-small_mod.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](../../ACL2025/llm_agent/bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+- [Group-in-Group Policy Optimization for LLM Agent Training](groupingroup_policy_optimization_for_llm_agent_training.md)
+- [Lessons Learned: A Multi-Agent Framework for Code LLMs to Learn and Improve](lessons_learned_a_multi-agent_framework_for_code_llms_to_learn_and_improve.md)
+
+<!-- RELATED:END -->

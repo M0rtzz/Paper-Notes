@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、详细消融、效率分析、可视化齐全
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，但部分符号较繁琐
 - 价值: ⭐⭐⭐⭐ 效率提升显著，对视频着色实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Cost Ray Fusion for Sparse Depth Video Completion](deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
+- [RefineVAD: Semantic-Guided Feature Recalibration for Weakly Supervised Video Anomaly Detection](../../AAAI2026/llm_evaluation/refinevad_semantic-guided_feature_recalibration_for_weakly_supervised_video_anom.md)
+- [Image-Feature Weak-to-Strong Consistency: An Enhanced Paradigm for Semi-Supervised Learning](image-feature_weak-to-strong_consistency_an_enhanced_paradigm_for_semi-supervise.md)
+- [SIGMA: Sinkhorn-Guided Masked Video Modeling](sigma_sinkhorn-guided_masked_video_modeling.md)
+- [Eliminating Warping Shakes for Unsupervised Online Video Stitching](eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
+
+<!-- RELATED:END -->

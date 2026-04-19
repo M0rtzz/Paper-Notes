@@ -183,3 +183,15 @@ AEQ范围[0,1]，越高越好。
 ## 评分
 
 ⭐⭐⭐⭐ — 首创性强、设计优雅实用，完整的任务+基准+方法贡献，对实际工作流（PS/AE）有直接价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+- [FlowTok: Flowing Seamlessly Across Text and Image Tokens](flowtok_flowing_seamlessly_across_text_and_image_tokens.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
+- [EmotiCrafter: Text-to-Emotional-Image Generation based on Valence-Arousal Model](emoticrafter_text-to-emotional-image_generation_based_on_valence-arousal_model.md)
+
+<!-- RELATED:END -->

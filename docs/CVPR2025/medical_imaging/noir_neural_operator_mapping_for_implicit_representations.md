@@ -114,3 +114,15 @@ NOIR 包含两个核心模块：
 - 实验充分度: ⭐⭐⭐⭐ — 4 个任务 5 个数据集，消融和理论验证完整，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 理论建模清晰，公式推导严谨
 - 价值: ⭐⭐⭐⭐ — 分辨率鲁棒性有实际临床价值，但全分辨率性能差距限制了即时应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](../../NeurIPS2025/medical_imaging/self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](../../ECCV2024/medical_imaging/i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)
+- [Convolutional Monge Mapping between EEG Datasets to Support Independent Component Labeling](../../NeurIPS2025/medical_imaging/convolutional_monge_mapping_between_eeg_datasets_to_support_independent_componen.md)
+- [GFlowNets for Learning Better Drug-Drug Interaction Representations](../../NeurIPS2025/medical_imaging/gflownets_for_learning_better_drug-drug_interaction_representations.md)
+- [Unmasking Biases and Reliability Concerns in Convolutional Neural Networks Analysis of Cancer Pathology Images](unmasking_biases_and_reliability_concerns_in_convolutional_neural_networks_analy.md)
+
+<!-- RELATED:END -->

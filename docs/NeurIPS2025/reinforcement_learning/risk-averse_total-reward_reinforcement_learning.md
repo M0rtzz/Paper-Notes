@@ -137,3 +137,15 @@ $$(\pi^*, \beta^*) \in \arg\max_{(\pi,\beta) \in \Pi \times \mathcal{B}(\beta_0,
 - 实验充分度: ⭐⭐⭐ (仅表格域验证)
 - 写作质量: ⭐⭐⭐⭐ (理论严谨，结构清晰)
 - 价值: ⭐⭐⭐⭐ (重要理论基础工作)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Risk-Averse Constrained Reinforcement Learning with Optimized Certainty Equivalents](risk-averse_constrained_reinforcement_learning_with_optimized_certainty_equivale.md)
+- [Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
+- [Maximum Total Correlation Reinforcement Learning](../../ICML2025/reinforcement_learning/maximum_total_correlation_reinforcement_learning.md)
+- [DISCOVER: Automated Curricula for Sparse-Reward Reinforcement Learning](discover_automated_curricula_for_sparse-reward_reinforcement_learning.md)
+- [Finite-Sample Analysis of Policy Evaluation for Robust Average Reward Reinforcement Learning](finite-sample_analysis_of_policy_evaluation_for_robust_average_reward_reinforcem.md)
+
+<!-- RELATED:END -->

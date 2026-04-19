@@ -139,3 +139,15 @@ ROI 内 shuffle 测试（验证体素间多样性）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 句子级+图像级评估、多样性分析、ROI shuffle 分析、跨受试者验证，非常充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表设计精美，方法描述步骤明确
 - 价值: ⭐⭐⭐⭐ 对理解视觉皮层表征有重要贡献，但应用范围较窄（神经科学方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience](../../CVPR2026/3d_vision/3drawagent_teaching_llm_to_draw_in_3d_with_early_contrastive_experience.md)
+- [ArtLLM: Generating Articulated Assets via 3D LLM](../../CVPR2026/3d_vision/artllm_generating_articulated_assets_via_3d_llm.md)
+- [Quantized Visual Geometry Grounded Transformer](quantized_visual_geometry_grounded_transformer.md)
+- [View Selection for 3D Captioning via Diffusion Ranking](../../ECCV2024/3d_vision/view_selection_for_3d_captioning_via_diffusion_ranking.md)
+- [Bi-directional Contextual Attention for 3D Dense Captioning](../../ECCV2024/3d_vision/bi-directional_contextual_attention_for_3d_dense_captioning.md)
+
+<!-- RELATED:END -->

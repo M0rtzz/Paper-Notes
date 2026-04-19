@@ -128,3 +128,15 @@ CoLA 和 CoLA⊺ 在所有领域均显著优于基线（p<0.01）。
 - **实验充分度**: ⭐⭐⭐⭐ — 6 个领域、2 种模型规模、4 个维度的 Observation 分析系统全面。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，4 个观察总结非常好，但公式符号较多增加了阅读难度。
 - **价值**: ⭐⭐⭐⭐ — 对 LoRA 变体设计有重要指导意义，低样本场景下的优势具有实际应用价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)
+- [MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+- [MaCP: Minimal yet Mighty Adaptation via Hierarchical Cosine Projection](macp_minimal_yet_mighty_adaptation_via_hierarchical_cosine_projection.md)
+
+<!-- RELATED:END -->

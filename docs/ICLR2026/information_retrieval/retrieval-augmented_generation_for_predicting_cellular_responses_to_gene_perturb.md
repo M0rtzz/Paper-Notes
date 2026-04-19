@@ -195,3 +195,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{dist}} + \lambda_{\text{sparse}} \mathcal{L}_
 - **写作质量**: ⭐⭐⭐⭐ — 三种方法的对比清晰，图表专业
 - **实用价值**: ⭐⭐⭐⭐ — 为计算生物学提供新工具，负面结果有指导意义
 - **总体推荐**: ⭐⭐⭐⭐ — 跨界创新 + 负面结果的深入分析，绝对提升虽温和但 insight 有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Chain-of-Retrieval Augmented Generation (CoRAG)](../../NeurIPS2025/information_retrieval/chain-of-retrieval_augmented_generation.md)
+- [Attributing Response to Context: A Jensen-Shannon Divergence Driven Mechanistic Study of Context Attribution in Retrieval-Augmented Generation](attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)
+- [Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation](../../ACL2025/information_retrieval/towards_adaptive_memory-based_optimization_for_enhanced_retrieval-augmented_gene.md)
+- [A Reality Check on Context Utilisation for Retrieval-Augmented Generation](../../ACL2025/information_retrieval/a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
+- [Retrieval-Augmented Generation for Reliable Interpretation of Radio Regulations](../../NeurIPS2025/information_retrieval/retrieval-augmented_generation_for_reliable_interpretation_of_radio_regulations.md)
+
+<!-- RELATED:END -->

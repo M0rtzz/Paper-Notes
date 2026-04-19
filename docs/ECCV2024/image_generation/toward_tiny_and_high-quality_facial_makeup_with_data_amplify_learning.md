@@ -199,3 +199,15 @@ TinyBeauty 获得 86.56% 的 Rank-1 票数，遥遥领先。
 - **有效性**: ⭐⭐⭐⭐⭐ — PSNR 提升 17.3%，模型压缩 100 倍以上，用户研究碾压式胜出
 - **工程价值**: ⭐⭐⭐⭐⭐ — 2.18ms iPhone 推理，代码开源，极具实用价值
 - **推荐度**: ⭐⭐⭐⭐⭐ — 方法创新 + 效果惊艳 + 工程落地，强烈推荐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation](emdm_efficient_motion_diffusion_model_for_fast_and_high-quality_motion_generatio.md)
+- [DreamDiffusion: High-Quality EEG-to-Image Generation with Temporal Masked Signal Modeling and CLIP Alignment](dreamdiffusion_high-quality_eeg-to-image_generation_with_temporal_masked_signal_.md)
+- [Diffusion-Driven Data Replay: A Novel Approach to Combat Forgetting in Federated Class Continual Learning](diffusion-driven_data_replay_a_novel_approach_to_combat_forgetting_in_federated_.md)
+- [ArtiFade: Learning to Generate High-quality Subject from Blemished Images](../../CVPR2025/image_generation/artifade_learning_to_generate_high-quality_subject_from_blemished_images.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](../../CVPR2026/image_generation/high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+
+<!-- RELATED:END -->

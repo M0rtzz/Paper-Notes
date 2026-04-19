@@ -193,3 +193,15 @@ Erwin 在四个大规模物理领域进行了验证：
 | 实用性 | 4.0 | 实现简洁（reshape 即可），但旋转不变性缺失限制部分场景 |
 | 写作质量 | 4.5 | 图示清晰，从背景到方法到实验的逻辑链完整 |
 | **总分** | **4.3** | 高质量工作，将经典数值方法引入现代架构设计 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](../../CVPR2025/human_understanding/hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](../../NeurIPS2025/human_understanding/graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [From Logits to Hierarchies: Hierarchical Clustering made Simple](from_logits_to_hierarchies_hierarchical_clustering_made_simple.md)
+- [Scaling Large Motion Models with Million-Level Human Motions](scaling_large_motion_models_with_million-level_human_motions.md)
+
+<!-- RELATED:END -->

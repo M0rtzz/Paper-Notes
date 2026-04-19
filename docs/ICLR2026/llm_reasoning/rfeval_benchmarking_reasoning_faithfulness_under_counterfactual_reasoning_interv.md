@@ -146,3 +146,15 @@ RF^contrast(M, D) = E[RF(o, o') | δ(x, r'; M) = 1]
 - 新颖性: ⭐⭐⭐⭐⭐ 推理忠实度形式化
 - 实验充分度: ⭐⭐⭐⭐⭐ 7任务/7186实例
 - 价值: ⭐⭐⭐⭐⭐ 揭示RL训练的隐患
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+- [Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
+- [Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models](dynamics-predictive_sampling_for_active_rl_finetuning_of_large_reasoning_models.md)
+- [When Reasoning Meets Compression: Understanding the Effects of LLMs Compression on Large Reasoning Models](when_reasoning_meets_compression_understanding_the_effects_of_llms_compression_o.md)
+- [GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs](geogrambench_benchmarking_the_geometric_program_reasoning_in_modern_llms.md)
+
+<!-- RELATED:END -->

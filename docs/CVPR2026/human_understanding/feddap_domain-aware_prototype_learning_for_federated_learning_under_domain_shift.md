@@ -120,3 +120,15 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \lambda_1 \mathcal{L}_{DPA} + \lambda_2 \math
 - 实验充分度: ⭐⭐⭐⭐ （3 个数据集，丰富的消融实验和参数分析）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，动机阐述充分）
 - 价值: ⭐⭐⭐⭐ （实用性强，代码开源，对 FL 域偏移问题有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](../../ICLR2026/human_understanding/rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [Statistical Guarantees for Offline Domain Randomization](../../ICLR2026/human_understanding/statistical_guarantees_for_offline_domain_randomization.md)
+- [Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](../../ICLR2026/human_understanding/cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
+
+<!-- RELATED:END -->

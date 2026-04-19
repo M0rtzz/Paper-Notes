@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个基线×6个数据集×详细消融，非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 即插即用设计实用性强，但提升幅度在强基线上有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
+- [Generative Video Propagation](generative_video_propagation.md)
+- [DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
+- [2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)
+- [MatAnyone: Stable Video Matting with Consistent Memory Propagation](matanyone_stable_video_matting_with_consistent_memory_propagation.md)
+
+<!-- RELATED:END -->

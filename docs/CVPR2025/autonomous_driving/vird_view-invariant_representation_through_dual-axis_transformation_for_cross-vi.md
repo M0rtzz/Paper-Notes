@@ -115,3 +115,15 @@ $\mathcal{L} = \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{match}} + \mathca
 - 实验充分度: ⭐⭐⭐⭐ (两个数据集，Same/Cross-Area，多 backbone)
 - 写作质量: ⭐⭐⭐⭐⭐ (图示清晰，问题分析透彻)
 - 价值: ⭐⭐⭐⭐ (显著推进无先验跨视角定位 SOTA)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)
+- [ProtoOcc: 3D Occupancy Prediction with Low-Resolution Queries via Prototype-aware View Transformation](3d_occupancy_prediction_with_low-resolution_queries_via_prototype-aware_view_tra.md)
+- [Cubify Anything: Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)
+- [6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](../../ICCV2025/autonomous_driving/6dopegs_online_6d_object_pose_estimation_using_gaussian_spla.md)
+- [EVolSplat: Efficient Volume-based Gaussian Splatting for Urban View Synthesis](evolsplat_efficient_volume-based_gaussian_splatting_for_urban_view_synthesis.md)
+
+<!-- RELATED:END -->

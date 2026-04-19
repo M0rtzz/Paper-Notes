@@ -128,3 +128,15 @@ TALR在data-oblivious设定下实现了最佳的Pareto权衡。
 - 实验充分度: ⭐⭐⭐ — 多模型多设定验证充分，但数据集种类偏少
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，理论与实验紧密衔接
 - 价值: ⭐⭐⭐⭐ — 对LLM领域微调实践具有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memba: Membrane-driven Parameter-Efficient Fine-Tuning for Mamba](memba_membrane-driven_parameter-efficient_fine-tuning_for_mamba.md)
+- [Fine-tuning Quantized Neural Networks with Zeroth-order Optimization](fine-tuning_quantized_neural_networks_with_zeroth-order_optimization.md)
+- [ABBA-Adapters: Efficient and Expressive Fine-Tuning of Foundation Models](abba-adapters_efficient_and_expressive_fine-tuning_of_foundation_models.md)
+- [LoFT: Low-Rank Adaptation That Behaves Like Full Fine-Tuning](loft_low-rank_adaptation_that_behaves_like_full_fine-tuning.md)
+- [LoRA Fine-Tuning Without GPUs: A CPU-Efficient Meta-Generation Framework for LLMs](../../ICML2025/model_compression/lora_fine-tuning_without_gpus_a_cpu-efficient_meta-generation_framework_for_llms.md)
+
+<!-- RELATED:END -->

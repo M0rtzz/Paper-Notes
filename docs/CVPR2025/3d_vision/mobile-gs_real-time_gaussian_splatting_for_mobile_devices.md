@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个数据集+移动端实测+详细消融
 - 写作质量: ⭐⭐⭐⭐ 清晰，实验展示充分
 - 价值: ⭐⭐⭐⭐⭐ 首个真正移动端实时3DGS，高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmbodiedSplat: Personalized Real-to-Sim-to-Real Navigation with Gaussian Splats from a Mobile Device](../../ICCV2025/3d_vision/embodiedsplat_personalized_real-to-sim-to-real_navigation_with_gaussian_splats_f.md)
+- [BANet: Bilateral Aggregation Network for Mobile Stereo Matching](../../ICCV2025/3d_vision/banet_bilateral_aggregation_network_for_mobile_stereo_matchi.md)
+- [FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting](fruitninja_3d_object_interior_texture_generation_with_gaussian_splatting.md)
+- [Horizon-GS: Unified 3D Gaussian Splatting for Large-Scale Aerial-to-Ground Scenes](horizon-gs_unified_3d_gaussian_splatting_for_large-scale_aerial-to-ground_scenes.md)
+- [MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots](mne-slam_multi-agent_neural_slam_for_mobile_robots.md)
+
+<!-- RELATED:END -->

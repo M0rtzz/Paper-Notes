@@ -157,3 +157,15 @@ $$\mathbb{E}[F(x_\tau) - \min_x F(x)] \leq \frac{8(d+6)L_1\|x_0 - x_F^*\|^2}{T} 
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖玩具例子、凸分类任务、LLM微调三层次，但非凸场景下GD也有类似行为减弱了区分度
 - 写作质量: ⭐⭐⭐⭐⭐ — 从直觉到形式化层层递进，Example 2.1和Proposition 2.2的Warm-up设计精巧
 - 价值: ⭐⭐⭐⭐ — 理论有深度，为零阶优化和LLM微调提供了新的理解角度，但凸性限制降低了实际指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trust Region Reward Optimization and Proximal Inverse Reward Optimization Algorithm](trust_region_reward_optimization_and_proximal_inverse_reward_optimization_algori.md)
+- [Online Optimization for Offline Safe Reinforcement Learning](online_optimization_for_offline_safe_reinforcement_learning.md)
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [Complexity Scaling Laws for Neural Models using Combinatorial Optimization](complexity_scaling_laws_for_neural_models_using_combinatorial_optimization.md)
+- [Improved Regret Bounds for GP-UCB in Bayesian Optimization](improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+
+<!-- RELATED:END -->

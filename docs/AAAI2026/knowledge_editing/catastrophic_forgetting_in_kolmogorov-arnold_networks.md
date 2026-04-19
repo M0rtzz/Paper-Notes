@@ -204,3 +204,15 @@ $\log(F_i)/d_i$ 近似恒定，验证遗忘与内禀维度的**指数关系**。
 - 实验充分度: ⭐⭐⭐⭐ (合成+视觉+语言三层验证)
 - 写作质量: ⭐⭐⭐⭐ (理论推导清晰，实验对应明确)
 - 价值: ⭐⭐⭐⭐ (对KAN在持续学习中的能力边界给出了清晰回答)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Large Multimodal Models Confront Evolving Knowledge: Challenges and Explorations](../../ICLR2026/knowledge_editing/when_large_multimodal_models_confront_evolving_knowledge_challenges_and_explorat.md)
+- [Multiplicative Orthogonal Sequential Editing for Language Models (MOSE)](multiplicative_orthogonal_sequential_editing_for_language_models.md)
+- [Model Editing as a Double-Edged Sword: Steering Agent Ethical Behavior](model_editing_as_a_double-edged_sword_steering_agent_ethical_behavior_toward_ben.md)
+- [Is the Information Bottleneck Robust Enough? Towards Label-Noise Resistant Information Bottleneck Learning](is_the_information_bottleneck_robust_enough_towards_label-noise_resistant_inform.md)
+- [Fine-tuning Done Right in Model Editing](../../ICLR2026/knowledge_editing/fine-tuning_done_right_in_model_editing.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ LAN环境（3Gbps，0.8ms延迟）下RoBERTa-LARGE效率对比：
 - 实验充分度: ⭐⭐⭐⭐ 效率/性能/部署性/隐私多维评估全面
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，系统设计条理清晰
 - 价值: ⭐⭐⭐⭐ 对隐私保护LLM微调的工程实践有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](../../NeurIPS2025/ai_safety/fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+- [SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA](she-lora_selective_homomorphic_encryption_for_federated_tuning_with_heterogeneou.md)
+- [Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark](measuring_physical-world_privacy_awareness_of_large_language_models_an_evaluatio.md)
+- [Plug-and-Play Parameter-Efficient Tuning of Embeddings for Federated Recommendation](../../AAAI2026/ai_safety/plug-and-play_parameter-efficient_tuning_of_embeddings_for_federated_recommendat.md)
+- [Ferret: Federated Full-Parameter Tuning at Scale for Large Language Models](../../ICML2025/ai_safety/ferret_federated_full-parameter_tuning_at_scale_for_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ ComboVerse分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ (自建benchmark、多基线对比、用户研究、消融详细，但benchmark规模较小)
 - 写作质量: ⭐⭐⭐⭐ (分析清晰，图文并茂，motivation阐述充分)
 - 价值: ⭐⭐⭐⭐ (填补了多物体3D生成的空白，组合式思路有实际应用前景)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REPARO: Compositional 3D Assets Generation with Differentiable 3D Layout Alignment](../../ICCV2025/3d_vision/reparo_compositional_3d_assets_generation_with_differentiable_3d_layout_alignmen.md)
+- [4Diff: 3D-Aware Diffusion Model for Third-to-First Viewpoint Translation](4diff_3d-aware_diffusion_model_for_third-to-first_viewpoint_translation.md)
+- [Transferable 3D Adversarial Shape Completion using Diffusion Models](transferable_3d_adversarial_shape_completion_using_diffusion_models.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+
+<!-- RELATED:END -->

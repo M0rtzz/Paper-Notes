@@ -195,3 +195,15 @@ RadarMP 的检测概率（69.5%）远超此前最优方法 Radelft（44.1%），
 - 实验充分度: ⭐⭐⭐⭐ （消融充分，但仅在一个数据集上验证）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，动机阐述到位）
 - 价值: ⭐⭐⭐⭐⭐ （为4D雷达运动感知开辟新范式，对全天候自动驾驶有重要意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [V2X-Radar: A Multi-Modal Dataset with 4D Radar for Cooperative Perception](../../NeurIPS2025/autonomous_driving/v2x-radar_a_multi-modal_dataset_with_4d_radar_for_cooperative_perception.md)
+- [AdaptiveAD: Decoupling Scene Perception and Ego Status for End-to-End Autonomous Driving](decoupling_scene_perception_and_ego_status_a_multi-context_fusion_approach_for_e.md)
+- [R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](../../CVPR2026/autonomous_driving/r4det_4d_radar-camera_fusion_for_high-performance_3d_object_detection.md)
+- [AdaRadar: Rate Adaptive Spectral Compression for Radar-based Perception](../../CVPR2026/autonomous_driving/adaradar_rate_adaptive_spectral_compression_for_radar-based_perception.md)
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+
+<!-- RELATED:END -->

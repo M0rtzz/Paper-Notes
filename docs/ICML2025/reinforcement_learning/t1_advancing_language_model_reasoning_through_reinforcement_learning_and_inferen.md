@@ -266,3 +266,15 @@ T1 的训练分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 多模型规模、多基准的全面评估，但缺少非数学推理任务
 - 写作质量: ⭐⭐⭐⭐ 清晰地阐述了方法和实验，结构合理
 - 价值: ⭐⭐⭐⭐⭐ 开源模型的推理时缩放具有重要实用价值，推动了推理模型的开源进展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BRITE: Bootstrapping Reinforced Thinking Process to Enhance Language Model Reasoning](brite_bootstrapping_reinforced_thinking_process_to_enhance_language_model_reason.md)
+- [R1-Onevision: Advancing Generalized Multimodal Reasoning through Cross-Modal Formalization](../../ICCV2025/reinforcement_learning/r1-onevision_advancing_generalized_multimodal_reasoning_through_cross-modal_form.md)
+- [Optimizing Language Models for Inference Time Objectives using Reinforcement Learning](optimizing_language_models_for_inference_time_objectives_using_reinforcement_lea.md)
+- [SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution](../../NeurIPS2025/reinforcement_learning/swe-rl_advancing_llm_reasoning_via_reinforcement_learning_on_open_software_evolu.md)
+- [Reinforcement Learning Teachers of Test Time Scaling](../../NeurIPS2025/reinforcement_learning/reinforcement_learning_teachers_of_test_time_scaling.md)
+
+<!-- RELATED:END -->

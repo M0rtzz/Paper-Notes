@@ -140,3 +140,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ — 纯理论工作，验证实验规模小但方向正确。增加实际规模的 MoE 实验会显著增强说服力。
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导严谨但表达清晰，Example 5.1 的多语言+数学任务例子直观易懂
 - **价值**: ⭐⭐⭐⭐⭐ — 为 MoE 架构设计提供了坚实理论基础，多项建议（非线性 gating、低维专家、交替架构）已有实践验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of Lookup Experts](../../ICML2025/llm_efficiency/mixture_of_lookup_experts.md)
+- [GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](../../ACL2025/llm_efficiency/gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)
+- [UMoE: Unifying Attention and FFN with Shared Experts](umoe_unifying_attention_and_ffn_with_shared_experts.md)
+- [Autonomy-of-Experts Models (AoE)](../../ICML2025/llm_efficiency/autonomy-of-experts_models.md)
+- [One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning](../../ICLR2026/llm_efficiency/one-prompt_strikes_back_sparse_mixture_of_experts_for_prompt-based_continual_lea.md)
+
+<!-- RELATED:END -->

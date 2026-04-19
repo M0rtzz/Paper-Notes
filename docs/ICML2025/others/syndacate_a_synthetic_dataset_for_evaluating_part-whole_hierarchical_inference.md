@@ -112,3 +112,15 @@ ImToClass和PartsToClass使用交叉熵损失；ImToParts使用Chamfer MSE损失
 - 实验充分度: ⭐⭐⭐ Workshop paper篇幅下消融尚可，但缺少更多CapsNet变体和自然图像实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，论证逻辑严密，结论简洁有力
 - 价值: ⭐⭐⭐⭐ 对理解CapsNet的失败原因和未来归纳偏置设计有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KodCode: A Diverse, Challenging, and Verifiable Synthetic Dataset for Coding](../../ACL2025/others/kodcode_a_diverse_challenging_and_verifiable_synthetic_dataset_for_coding.md)
+- [Rubrik's Cube: Testing a New Rubric for Evaluating Explanations on the CUBE Dataset](../../ACL2025/others/rubriks_cube_testing_a_new_rubric_for_evaluating_explanations_on_the_cube_datase.md)
+- [BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](../../CVPR2025/others/bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)
+- [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](../../ACL2025/others/personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)
+- [Learning-Augmented Hierarchical Clustering](learning-augmented_hierarchical_clustering.md)
+
+<!-- RELATED:END -->

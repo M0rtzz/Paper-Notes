@@ -151,3 +151,15 @@ LACA (LLM Augmented Cross-lingual ABSA) 是一个两阶段框架：
 | 写作质量 | 8 | 结构清晰，实验分析详尽 |
 | 实用价值 | 8 | 接近有监督水平且无需翻译工具 |
 | 总分 | 8 | 扎实的工作，实验全面，方法实用 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](../../NeurIPS2025/multilingual_mt/enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
+- [Quantifying Climate Policy Action and Its Links to Development Outcomes: A Cross-National Data-Driven Analysis](../../NeurIPS2025/multilingual_mt/quantifying_climate_policy_action_and_its_links_to_development_outcomes_a_cross-.md)
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+- [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [CLIX: Cross-Lingual Explanations of Idiomatic Expressions](clix_cross-lingual_explanations_of_idiomatic_expressions.md)
+
+<!-- RELATED:END -->

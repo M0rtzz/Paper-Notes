@@ -104,3 +104,15 @@ tags:
 | 实验完整度 | ⭐⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐ |
 | 实用性 | ⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
+- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
+
+<!-- RELATED:END -->

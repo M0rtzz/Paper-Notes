@@ -138,3 +138,15 @@ Wan2.1 适配实验：
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)
+- [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
+- [S²Q-VDiT: Accurate Quantized Video Diffusion Transformer with Salient Data and Sparse Token Distillation](s2q-vdit_accurate_quantized_video_diffusion_transformer_with_salient_data_and_sp.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](../../CVPR2025/video_generation/when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+- [Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion](self_forcing_bridging_the_train-test_gap_in_autoregressive_video_diffusion.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ EEG + MEG 双数据集，10+ 基线对比，模块/编码器/模态多维度消融
 - **写作质量**: ⭐⭐⭐ 内容详实但结构偏复杂，部分符号定义分散
 - **价值**: ⭐⭐⭐⭐ 在 EEG 视觉解码领域达到新 SOTA，多模态融合思路有迁移价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+- [Image Generation as a Visual Planner for Robotic Manipulation](image_generation_as_a_visual_planner_for_robotic_manipulation.md)
+- [ViHOI: Human-Object Interaction Synthesis with Visual Priors](vihoi_human-object_interaction_synthesis_with_visual_priors.md)
+- [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
+
+<!-- RELATED:END -->

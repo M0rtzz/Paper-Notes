@@ -120,3 +120,15 @@ AutoDS 的核心流程：(1) 设计 meta-prompt 向基座模型提两个 YES/NO 
 - 实验充分度: ⭐⭐⭐⭐ 三模型×三基准，对比 DSIR/QuRating/Uniform，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法简洁，数据可视化（treemap、分布图）直观
 - 价值: ⭐⭐⭐⭐⭐ AutoMathText 数据集已开源，方法可直接复用，2× 效率提升有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](data_whisperer_data_selection.md)
+- [ZEUS: Zero-shot Embeddings for Unsupervised Separation of Tabular Data](../../NeurIPS2025/llm_pretraining/zeus_zero-shot_embeddings_for_unsupervised_separation_of_tabular_data.md)
+- [DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
+- [Model Performance-Guided Evaluation Data Selection for Effective Prompt Optimization](model_performance-guided_evaluation_data_selection_for_effective_prompt_optimiza.md)
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ SSHG是一个模块化的两阶段GNN框架：
 - 实验充分度: ⭐⭐⭐⭐ 两个benchmark任务、多个backbone、效率分析完整，但任务覆盖面可更广
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，图示清晰，从生物学动机到方法设计到理论保证的逻辑链非常完整
 - 价值: ⭐⭐⭐⭐⭐ 提供了一个通用的即插即用框架，任何GNN都能从中受益，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
+- [Multiscale Guidance of Protein Structure Prediction with Heterogeneous Cryo-EM Data](multiscale_guidance_of_protein_structure_prediction_with_heterogeneous_cryo-em_d.md)
+- [Geometric Generative Modeling with Noise-Conditioned Graph Networks](../../ICML2025/medical_imaging/geometric_generative_modeling_with_noise-conditioned_graph_networks.md)
+- [Random Search Neural Networks for Efficient and Expressive Graph Learning](random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
+- [Generative Distribution Embeddings: Lifting Autoencoders to the Space of Distributions for Multiscale Representation Learning](generative_distribution_embeddings_lifting_autoencoders_to_the_space_of_distribu.md)
+
+<!-- RELATED:END -->

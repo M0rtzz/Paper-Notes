@@ -98,3 +98,15 @@ LLM 微调阶段使用 LoRA (rank=8) 进行轻量级调整。
 - 实用性：⭐⭐⭐⭐（通用的人体行为分析框架，代码即将开源）
 - 技术深度：⭐⭐⭐⭐⭐（VQ-VAE概念发现 + 判别/可操作信息性 + 跨模态对齐，多损失函数协同设计精巧）
 - 表达清晰度：⭐⭐⭐⭐（系统概述清晰，但公式较多需仔细阅读）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ego4o: Egocentric Human Motion Capture and Understanding from Multi-Modal Input](ego4o_egocentric_human_motion_capture_and_understanding_from_multi-modal_input.md)
+- [H-MoRe: Learning Human-centric Motion Representation for Action Analysis](h-more_learning_human-centric_motion_representation_for_action_analysis.md)
+- [Locality-Aware Zero-Shot Human-Object Interaction Detection](locality-aware_zero-shot_human-object_interaction_detection.md)
+- [FastCAV: Efficient Computation of Concept Activation Vectors for Explaining Deep Neural Networks](../../ICML2025/video_understanding/fastcav_efficient_computation_of_concept_activation_vectors_for_explaining_deep_.md)
+- [Estimating 2D Camera Motion with Hybrid Motion Basis](../../ICCV2025/video_understanding/estimating_2d_camera_motion_with_hybrid_motion_basis.md)
+
+<!-- RELATED:END -->

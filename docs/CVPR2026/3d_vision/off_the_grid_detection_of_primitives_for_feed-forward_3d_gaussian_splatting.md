@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个评估数据集、多种视角设置、几何评估、消融实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述详尽，图表设计好
 - 价值: ⭐⭐⭐⭐ 为前馈3DGS提供了一个重要的设计范式转变，从网格对齐到自适应检测
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [EmbodiedSplat: Online Feed-Forward Semantic 3DGS for Open-Vocabulary 3D Scene Understanding](embodiedsplat_online_feed-forward_semantic_3dgs_for_open-vocabulary_3d_scene_und.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting](sr3r_rethinking_super-resolution_3d_reconstruction_with_feed-forward_gaussian_sp.md)
+
+<!-- RELATED:END -->

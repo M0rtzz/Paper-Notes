@@ -138,3 +138,15 @@ Student 模型的总损失由语言建模损失 $L_{language}$（用于时间线
 - 实验充分度: ⭐⭐⭐⭐ 自动评估+人类评估+表征分析，三种KD策略的全面比较，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机链清晰，方法图直观，但公式部分LaTeX渲染较冗长
 - 价值: ⭐⭐⭐⭐ 时序推理提升摘要质量的思路有一定通用性，但仅在单一测试集（30条 TalkLife 时间线）上验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Reason Over Time: Timeline Self-Reflection for Temporal Reasoning](tiser_timeline_self_reflection_temporal.md)
+- [Graphically Speaking: Unmasking Abuse in Social Media with Conversation Insights](graphically_speaking_unmasking_abuse_in_social_media_with_conversation_insights.md)
+- [Narrative Media Framing in Political Discourse](narrative_media_framing_in_political_discourse.md)
+- [RePanda: Pandas-powered Tabular Verification and Reasoning](repanda_pandas-powered_tabular_verification_and_reasoning.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+
+<!-- RELATED:END -->

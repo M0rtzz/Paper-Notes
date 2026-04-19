@@ -155,3 +155,15 @@ Burgers方程（非线性）对比：
 - **实验充分度**: ⭐⭐⭐ 覆盖了正/反问题和多种PDE类型，但实验规模偏小（主要1D），缺乏大规模验证
 - **写作质量**: ⭐⭐⭐⭐ 方法论层层递进，矩阵公式推导详细清晰，但符号定义较密集
 - **价值**: ⭐⭐⭐ 对Kansa方法社区有实用贡献，系统对比有参考价值，但影响范围相对有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scientific Knowledge-Guided Machine Learning for Vessel Power Prediction: A Comparative Study](../../AAAI2026/scientific_computing/scientific_knowledge-guided_machine_learning_for_vessel_power_prediction_a_compa.md)
+- [Physics-Guided Machine Learning for Uncertainty Quantification in Turbulence Models](../../NeurIPS2025/scientific_computing/physics-guided_machine_learning_for_uncertainty_quantification_in_turbulence_mod.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/scientific_computing/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+
+<!-- RELATED:END -->

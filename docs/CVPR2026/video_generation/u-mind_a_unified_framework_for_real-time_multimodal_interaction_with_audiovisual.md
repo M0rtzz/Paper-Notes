@@ -164,3 +164,15 @@ U-Mind 基于 LLaMA2-7B 构建，采用两阶段训练：
 - 实验充分度: ⭐⭐⭐⭐ 多维度评估（对话、指令、S2M、T2M）+ 完整消融，但缺少人类评估
 - 写作质量: ⭐⭐⭐⭐ 系统性强、层次清晰
 - 价值: ⭐⭐⭐⭐⭐ 对数字人和具身智能领域有重要推动，开创了统一推理+多模态生成的范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation](unitalking_a_unified_audio-video_framework_for_talking_portrait_generation.md)
+- [StreamDiT: Real-Time Streaming Text-to-Video Generation](streamdit_real-time_streaming_text-to-video_generation.md)
+- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](../../ICLR2026/video_generation/motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+- [AutoCut: End-to-end Advertisement Video Editing Based on Multimodal Discretization and Controllable Generation](autocut_end-to-end_advertisement_video_editing_based_on_multimodal_discretizatio.md)
+- [Mind the Time: Temporally-Controlled Multi-Event Video Generation](../../CVPR2025/video_generation/mind_the_time_temporally-controlled_multi-event_video_generation.md)
+
+<!-- RELATED:END -->

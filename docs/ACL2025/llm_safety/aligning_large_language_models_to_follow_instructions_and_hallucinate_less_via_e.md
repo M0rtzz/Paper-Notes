@@ -134,3 +134,15 @@ ICP替代方案比较：
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个幻觉基准+2个指令基准+详尽消融+替代方法比较+人类评估
 - 写作质量: ⭐⭐⭐⭐ 方法清晰，动机论证充分，但符号较多
 - 价值: ⭐⭐⭐⭐⭐ 对LLM对齐研究有重要指导意义，方法简洁有效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](intent_hallucination_eval.md)
+- [Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)
+- [Unveiling and Addressing Pseudo Forgetting in Large Language Models](unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)
+- [Opt-Out: Investigating Entity-Level Unlearning for Large Language Models via Optimal Transport](opt-out_investigating_entity-level_unlearning_for_large_language_models_via_opti.md)
+- [UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)
+
+<!-- RELATED:END -->

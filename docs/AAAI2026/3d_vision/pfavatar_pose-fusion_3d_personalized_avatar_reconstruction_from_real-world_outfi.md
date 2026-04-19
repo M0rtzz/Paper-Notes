@@ -174,3 +174,15 @@ PFAvatar 在所有评估指标上均显著领先。
 - **实验充分度**: ⭐⭐⭐⭐ — 有两个数据集评估、多基线比较、用户研究、完整消融
 - **写作质量**: ⭐⭐⭐⭐ — 动机充分，对比清晰，图示丰富
 - **实用价值**: ⭐⭐⭐⭐⭐ — 5分钟个性化、支持多种下游应用，非常实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+- [RTGaze: Real-Time 3D-Aware Gaze Redirection from a Single Image](rtgaze_real-time_3d-aware_gaze_redirection_from_a_single_image.md)
+- [3D Reconstruction of Objects in Hands without Real World 3D Supervision](../../ECCV2024/3d_vision/3d_reconstruction_of_objects_in_hands_without_real_world_3d.md)
+- [MoGA: 3D Generative Avatar Prior for Monocular Gaussian Avatar Reconstruction](../../ICCV2025/3d_vision/moga_3d_generative_avatar_prior_for_monocular_gaussian_avatar_reconstruction.md)
+- [EmbodiedSplat: Personalized Real-to-Sim-to-Real Navigation with Gaussian Splats from a Mobile Device](../../ICCV2025/3d_vision/embodiedsplat_personalized_real-to-sim-to-real_navigation_with_gaussian_splats_f.md)
+
+<!-- RELATED:END -->

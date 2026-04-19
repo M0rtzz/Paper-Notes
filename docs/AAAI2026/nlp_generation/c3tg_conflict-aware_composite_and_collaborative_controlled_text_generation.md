@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 与 10+ 基线对比，自动+人工评估，消融完整
 - 写作质量: ⭐⭐⭐⭐ 公式推导严谨，流程图清晰
 - 价值: ⭐⭐⭐⭐ 多属性可控生成的实用框架，冲突解决思路可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context-Aware Hierarchical Merging for Long Document Summarization](../../ACL2025/nlp_generation/context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
+- [Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
+- [FS-DFM: Fast and Accurate Long Text Generation with Few-Step Diffusion Language Model](../../ICLR2026/nlp_generation/fs-dfm_fast_and_accurate_long_text_generation_with_few-step_diffusion_language_m.md)
+- [Writing Like the Best: Exemplar-Based Expository Text Generation](../../ACL2025/nlp_generation/writing_like_best_exemplar.md)
+
+<!-- RELATED:END -->

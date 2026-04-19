@@ -169,3 +169,15 @@ $$\mathcal{L}_{\text{DavIR-DPO}} = -\mathbb{E}\left[\log \sigma\left(\beta \frac
 - **实验充分性**：⭐⭐⭐⭐ 多模型家族、多数据集、多基线对比，统计检验完善
 - **写作质量**：⭐⭐⭐⭐ 问题提出清晰，但符号较多且行文稍显冗长
 - **实用性**：⭐⭐⭐⭐⭐ 计算代价低、效果显著，直接可用于任何 LLM 后训练数据选择场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
+- [Large Vocabulary Size Improves Large Language Models](large_vocabulary_size_improves_large_language_models.md)
+- [SCAR: Data Selection via Style Consistency-Aware Response Ranking for Efficient Instruction-Tuning](scar_style_consistency_data_selection.md)
+- [Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](stealing_training_data_from_large_language_models_in_decentralized_training_thro.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+
+<!-- RELATED:END -->

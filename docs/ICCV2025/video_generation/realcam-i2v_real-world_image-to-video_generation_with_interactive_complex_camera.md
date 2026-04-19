@@ -127,3 +127,15 @@ $$z_t = m \cdot (\alpha_t z_{\text{preview}} + \sigma_t \epsilon) + (1-m) \cdot 
 - **实用性**: ★★★★★ — 交互式3D界面极大降低了用户门槛
 - **实验**: ★★★★☆ — 消融充分，跨基线泛化验证了通用性
 - **写作**: ★★★★☆ — 问题分析深入，方法动机清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
+- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+- [ReCamMaster: Camera-Controlled Generative Rendering from A Single Video](recammaster_camera-controlled_generative_rendering_from_a_single_video.md)
+- [Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation](../../NeurIPS2025/video_generation/autoregressive_adversarial_posttraining_for_realtime_interac.md)
+- [WorldScore: A Unified Evaluation Benchmark for World Generation](worldscore_a_unified_evaluation_benchmark_for_world_generation.md)
+
+<!-- RELATED:END -->

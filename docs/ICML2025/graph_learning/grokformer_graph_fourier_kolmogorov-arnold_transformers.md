@@ -139,3 +139,15 @@ $$\mathbf{X}^{(l)} = \text{FFN}(\text{LN}(\mathbf{X}'^{(l)})) + \mathbf{X}'^{(l)
 - 实验充分度: ⭐⭐⭐⭐ — 11 节点分类 + 5 图分类 + 滤波器拟合实验 + 消融，但缺大规模图
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、理论推导完整、图表质量高
 - 价值: ⭐⭐⭐⭐ — 为谱图 Transformer 提供了新的滤波器设计范式，对异配图学习有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relieving the Over-Aggregating Effect in Graph Transformers](../../NeurIPS2025/graph_learning/relieving_the_over-aggregating_effect_in_graph_transformers.md)
+- [Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework](../../NeurIPS2025/graph_learning/unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)
+- [Graph Tokenization for Bridging Graphs and Transformers](../../ICLR2026/graph_learning/graph_tokenization_for_bridging_graphs_and_transformers.md)
+- [Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors](../../ACL2025/graph_learning/fast-and-frugal_text-graph_transformers_are_effective_link_predictors.md)
+- [From Sequence to Structure: Uncovering Substructure Reasoning in Transformers](../../NeurIPS2025/graph_learning/from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)
+
+<!-- RELATED:END -->

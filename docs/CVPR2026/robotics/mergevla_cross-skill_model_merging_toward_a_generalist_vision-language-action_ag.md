@@ -178,3 +178,15 @@ $$\mathbf{S}_m = \mathbb{I}\left[|\tau_m| > \lambda |\tau_{\text{merge}} - \tau_
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 仿真基准 + 真机 + 大量消融 + OOD 评估
 - 写作质量: ⭐⭐⭐⭐⭐ 诊断→方案→验证逻辑严密，图表清晰
 - 价值: ⭐⭐⭐⭐⭐ 为具身 AI 多技能扩展提供了可行的轻量化路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Boosting Vision-Language-Action Finetuning with Feasible Action Neighborhood Prior](boosting_vision-language-action_finetuning_with_feasible_action_neighborhood_pri.md)
+- [Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_active_perception_manipulation_vla_roboti.md)
+
+<!-- RELATED:END -->

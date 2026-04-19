@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 双数据集 + 四基线交叉验证 + 用户研究 + 消融实验
 - 写作质量: ⭐⭐⭐⭐ — 框架描述清晰，公式推导完整，图示直观
 - 价值: ⭐⭐⭐⭐ — 提供了通用流式手势生成解决方案，200 FPS 实时性突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Co-speech Gestures in-the-wild](../../ICCV2025/human_understanding/understanding_co-speech_gestures_in-the-wild.md)
+- [Scaling Speech Tokenizers with Diffusion Autoencoders](../../ICLR2026/human_understanding/scaling_speech_tokenizers_with_diffusion_autoencoders.md)
+- [GestureHYDRA: Semantic Co-speech Gesture Synthesis via Hybrid Modality Diffusion Transformer and Cascaded-Synchronized Retrieval-Augmented Generation](../../ICCV2025/human_understanding/gesturehydra_semantic_co-speech_gesture_synthesis_via_hybrid_modality_diffusion_.md)
+- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](finextrol_controllable_motion_generation_via_fine-grained_text.md)
+- [I See What You Mean: Co-Speech Gestures for Reference Resolution in Multimodal Dialogue](../../ACL2025/human_understanding/i_see_what_you_mean_co-speech_gestures_for_reference_resolution_in_multimodal_di.md)
+
+<!-- RELATED:END -->

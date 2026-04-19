@@ -142,3 +142,15 @@ SHARE 数据集构建 + EPISODE 对话框架。数据从电影剧本中提取，
 - 实验充分度: ⭐⭐⭐⭐ 自动评估 + GPT-4o评估 + 人工评估，多backbone对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，开头引用 Saint-Exupéry 贴切，表格丰富
 - 价值: ⭐⭐⭐⭐ 填补了长期对话中共享记忆的空白，数据集和框架都开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [X-Turing: Towards an Enhanced and Efficient Turing Test for Long-Term Dialogue Agents](xturing_enhanced_turing_test.md)
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](seoe_semantic_eval.md)
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [ConECT Dataset: Overcoming Data Scarcity in Context-Aware E-Commerce MT](conect_dataset_overcoming_data_scarcity_in_context-aware_e-commerce_mt.md)
+- [USDC: A Dataset of User Stance and Dogmatism in Long Conversations](usdc_a_dataset_of_underlineuser_underlinestance_and_underlinedogmatism_in_long_u.md)
+
+<!-- RELATED:END -->

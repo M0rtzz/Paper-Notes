@@ -113,3 +113,15 @@ MoE专家中HydroNet最优（MAE 0.0085），STGCN次优。
 - 该工作的方法论和实验设计对相关领域有参考价值
 - 后续工作可在更多场景和更大规模上验证方法的泛化性和可扩展性
 - 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments](agentsense_virtual_sensor_data_generation_using_llm_agents_i.md)
+- [FinRpt: Dataset, Evaluation System and LLM-based Multi-agent Framework for Equity Research Report Generation](finrpt_dataset_evaluation_system_and_llm-based_multi-agent_framework_for_equity_.md)
+- [PANDA: Towards Generalist Video Anomaly Detection via Agentic AI Engineer](../../NeurIPS2025/llm_agent/panda_towards_generalist_video_anomaly_detection_via_agentic_ai_engineer.md)
+- [Thucy: An LLM-based Multi-Agent System for Claim Verification across Relational Databases](thucy_an_llm-based_multi-agent_system_for_claim_verification_across_relational_d.md)
+- [COVR: Collaborative Optimization of VLMs and RL Agent for Visual-Based Control](covrcollaborative_optimization_of_vlms_and_rl_agent_for_visu.md)
+
+<!-- RELATED:END -->

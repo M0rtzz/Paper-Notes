@@ -146,3 +146,15 @@ ISS聚合方式对比：
 - 实验充分度: ⭐⭐ 作为政策论文无实验验证，仅提出回顾性分析计划
 - 写作质量: ⭐⭐⭐⭐ 框架组织清晰，数学形式化完整，但部分内容略显冗长
 - 价值: ⭐⭐⭐ 提供了系统的治理思考框架，但实际可操作性和验证路径仍需大量后续工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization](learning_to_watermark_a_selective_watermarking_framework_for_large_language_mode.md)
+- [KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment](../../ICML2025/human_understanding/kelps_a_framework_for_verified_multi-language_autoformalization_via_semantic-syn.md)
+- [SAEBench: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability](../../ICML2025/human_understanding/saebench_a_comprehensive_benchmark_for_sparse_autoencoders_in_language_model_int.md)
+- [The Transparent Earth: A Multimodal Foundation Model for the Earth's Subsurface](the_transparent_earth_a_multimodal_foundation_model_for_the_earths_subsurface.md)
+- [Discovering Transformer Circuits via a Hybrid Attribution and Pruning Framework](discovering_transformer_circuits_via_a_hybrid_attribution_and_pruning_framework.md)
+
+<!-- RELATED:END -->

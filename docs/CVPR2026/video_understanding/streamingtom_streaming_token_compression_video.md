@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 离线和流式基准均SOTA，效率指标全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，数学推导完整
 - 价值: ⭐⭐⭐⭐⭐ 解决流式视频VLM实际部署核心痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FluxMem: Adaptive Hierarchical Memory for Streaming Video Understanding](fluxmem_adaptive_hierarchical_memory_for_streaming_video_understanding.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [AutoGaze: Attend Before Attention — Efficient and Scalable Video Understanding via Autoregressive Gazing](autogaze_attend_before_attention_efficient_video.md)
+- [FLoC: Facility Location-Based Efficient Visual Token Compression for Long Video Understanding](../../ICLR2026/video_understanding/floc_facility_location-based_efficient_visual_token_compression_for_long_video_u.md)
+- [Unified Spatiotemporal Token Compression for Video-LLMs at Ultra-Low Retention](unified_spatiotemporal_token_compression_for_video-llms_at_ultra-low_retention.md)
+
+<!-- RELATED:END -->

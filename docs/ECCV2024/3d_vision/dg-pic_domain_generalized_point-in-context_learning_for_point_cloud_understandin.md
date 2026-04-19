@@ -151,3 +151,15 @@ DG-PIC 分为两个阶段：(1) 预训练阶段——基于 Masked Point Modelin
 - 实验充分度: ⭐⭐⭐⭐ 消融实验充分，多种 baseline 对比，但目标域过于单一
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述合理，图示直观
 - 价值: ⭐⭐⭐⭐ 新设定和基准测试对推动点云泛化研究有较好贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mamba Learns in Context: Structure-Aware Domain Generalization for Multi-Task Point Cloud Understanding](../../CVPR2026/3d_vision/mamba_learns_in_context_structure-aware_domain_generalization_for_multi-task_poi.md)
+- [GPSFormer: A Global Perception and Local Structure Fitting-Based Transformer for Point Cloud Understanding](gpsformer_a_global_perception_and_local_structure_fitting-based_transformer_for_.md)
+- [Deformation-based In-Context Learning for Point Cloud Understanding](../../CVPR2026/3d_vision/deformation-based_in-context_learning_for_point_cloud_understanding.md)
+- [T-MAE: Temporal Masked Autoencoders for Point Cloud Representation Learning](t-mae_temporal_masked_autoencoders_for_point_cloud_representation_learning.md)
+- [SegPoint: Segment Any Point Cloud via Large Language Model](segpoint_segment_any_point_cloud_via_large_language_model.md)
+
+<!-- RELATED:END -->

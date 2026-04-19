@@ -159,3 +159,15 @@ $$\tilde{\Omega}\left(\frac{d^{1/2}}{\alpha^2}\right)$$
 - 实验充分度：⭐⭐⭐（纯理论，无数值验证）
 - 实用性：⭐⭐（纯理论结果）
 - 写作质量：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)
+- [Regression Trees Know Calculus](regression_trees_know_calculus.md)
+- [Online Linear Regression with Paid Stochastic Features](../../AAAI2026/others/online_linear_regression_with_paid_stochastic_features.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](../../ICML2025/others/heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [Statistical Inference for Gradient Boosting Regression](statistical_inference_for_gradient_boosting_regression.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 83仓库+1401实例+多个SOTA模型+与SWE-bench对比
 - 写作质量: ⭐⭐⭐⭐ 定义清晰，与SWE-bench的区别阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 对代码LLM评估和软件工程AI有重大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TeXpert: A Multi-Level Benchmark for Evaluating LaTeX Code Generation by LLMs](texpert_a_multi-level_benchmark_for_evaluating_latex_code_generation_by_llms.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](../../NeurIPS2025/code_intelligence/mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
+- [GiFT: Gibbs Fine-Tuning for Code Generation](gift_gibbs_fine_tuning_code_gen.md)
+- [UTBoost: Rigorous Evaluation of Coding Agents on SWE-Bench](utboost_rigorous_evaluation_of_coding_agents_on_swe-bench.md)
+
+<!-- RELATED:END -->

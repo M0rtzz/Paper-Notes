@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个预训练模型 + 微调 + patching + 自然场景，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰，从理论到实验层层递进
 - 价值: ⭐⭐⭐⭐ 对理解LLM能力边界有实际指导意义，尤其是RAG和精确复制场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
+- [Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+- [MoPFormer: Motion-Primitive Transformer for Wearable-Sensor Activity Recognition](mopformer_motion-primitive_transformer_for_wearable-sensor_activity_recognition.md)
+- [Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models](bigram_subnetworks_mapping_to_next_tokens_in_transformer_language_models.md)
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+
+<!-- RELATED:END -->

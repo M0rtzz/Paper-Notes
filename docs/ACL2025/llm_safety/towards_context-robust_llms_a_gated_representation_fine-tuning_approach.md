@@ -156,3 +156,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{FT}}(\hat{y}_i, y_i) + \mathca
 - **实用性**: ⭐⭐⭐⭐⭐ — 极低成本、即插即用，直接可用于 RAG 系统增强
 - **实验充分度**: ⭐⭐⭐⭐ — 消融全面、泛化验证充分，但模型范围可扩展
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，方法动机阐述充分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Misleading Queries to Accurate Answers: A Three-Stage Fine-Tuning Method for LLMs](from_misleading_queries_to_accurate_answers_a_three-stage_fine-tuning_method_for.md)
+- [Stochastic Chameleons: Irrelevant Context Hallucinations Reveal Class-Based (Mis)Generalization in LLMs](stochastic_chameleons_irrelevant_context_hallucinations_reveal_class-based_misge.md)
+- [On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)
+- [Factual Knowledge in Language Models: Robustness and Anomalies under Simple Temporal Context Variations](factual_knowledge_in_language_models_robustness_and_anomalies_under_simple_tempo.md)
+- [Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning](answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md)
+
+<!-- RELATED:END -->

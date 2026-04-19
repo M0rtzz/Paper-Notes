@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖20+模型（开源+闭源），多维度分析（编码器设计、模型规模、视角鲁棒性、失败案例）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题类型说明详细，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 填补3D空间推理评估空白，对VLM社区和具身AI研究有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning](../../ACL2025/llm_evaluation/physreason_a_comprehensive_benchmark_towards_physics-based_reasoning.md)
+- [OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)
+- [Revisiting 3D LLM Benchmarks: Are We Really Testing 3D Capabilities?](../../ACL2025/llm_evaluation/revisiting_3d_llm_benchmarks_are_we_really_testing_3d_capabilities.md)
+- [FinanceReasoning: Benchmarking Financial Numerical Reasoning More Credible, Comprehensive and Challenging](../../ACL2025/llm_evaluation/financereasoning_benchmarking_financial_numerical_reasoning_more.md)
+- [AnesSuite: A Comprehensive Benchmark and Dataset Suite for Anesthesiology Reasoning](../../ICLR2026/llm_evaluation/anessuite_a_comprehensive_benchmark_and_dataset_suite_for_anesthesiology_reasoni.md)
+
+<!-- RELATED:END -->

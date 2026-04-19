@@ -142,3 +142,15 @@ Critical KV Hit Rate（与理论上界的重合度）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个benchmark、两个模型、多budget、hit rate分析、prompt扰动、数据消融、token数量消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 观察→动机→方法的推进逻辑清晰，Figure 1的方法对比图直观
 - 价值: ⭐⭐⭐⭐ 方法简洁实用，训练成本极低，可直接应用于任何开源LLM
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Retention for Continual Learning with Vision Transformers](attention_retention_for_continual_learning_with_vision_transformers.md)
+- [KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](../../ACL2025/llm_efficiency/kv_latent_cache_reduction.md)
+- [RefreshKV: Updating Small KV Cache During Long-form Generation](../../ACL2025/llm_efficiency/refreshkv_updating_small_kv_cache_during_long-form_generation.md)
+- [SpindleKV: A Novel KV Cache Reduction Method Balancing Both Shallow and Deep Layers](../../ACL2025/llm_efficiency/spindlekv_layered_kv_cache.md)
+- [Randomization Boosts KV Caching, Learning Balances Query Load: A Joint Perspective](../../ICLR2026/llm_efficiency/randomization_boosts_kv_caching_learning_balances_query_load_a_joint_perspective.md)
+
+<!-- RELATED:END -->

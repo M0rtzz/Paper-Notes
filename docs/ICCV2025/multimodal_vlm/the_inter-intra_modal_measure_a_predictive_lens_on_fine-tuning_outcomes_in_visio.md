@@ -157,3 +157,15 @@ IIMM 与"微调增益/零样本误差"的相关性：
 - 技术深度：⭐⭐⭐⭐⭐ （从对比学习损失推导+Wasserstein 理论界+全面实验验证）
 - 实验充分度：⭐⭐⭐⭐ （4 模型 × 5 微调方法 × 9 数据集，但仅限分类任务）
 - 实用价值：⭐⭐⭐⭐⭐ （一次前向推理即可预测微调效果，极具实用性）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AirCache: Activating Inter-Modal Relevancy KV Cache Compression for Efficient Large Vision-Language Model Inference](aircache_activating_inter-modal_relevancy_kv_cache_compression_for_efficient_lar.md)
+- [From Holistic to Localized: Local Enhanced Adapters for Efficient Visual Instruction Fine-Tuning](from_holistic_to_localized_local_enhanced_adapters_for_efficient_visual_instruct.md)
+- [Advancing Compositional Awareness in CLIP with Efficient Fine-Tuning](../../NeurIPS2025/multimodal_vlm/advancing_compositional_awareness_in_clip_with_efficient_fin.md)
+- [FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
+- [Difference Vector Equalization for Robust Fine-tuning of Vision-Language Models](../../AAAI2026/multimodal_vlm/difference_vector_equalization_for_robust_fine-tuning_of_vis.md)
+
+<!-- RELATED:END -->

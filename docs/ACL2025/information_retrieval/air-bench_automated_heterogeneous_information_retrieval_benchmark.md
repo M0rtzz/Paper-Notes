@@ -136,3 +136,15 @@ AIR-Bench的数据生成管线分三个阶段：(1) **语料准备**——收集
 - 实验充分度: ⭐⭐⭐⭐ 生成数据与人工标注一致性验证充分，消融分析完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，管线设计描述详尽，符号体系规范
 - 价值: ⭐⭐⭐⭐ 为IR社区提供了可持续演进的评估平台，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoIR: A Comprehensive Benchmark for Code Information Retrieval Models](coir_a_comprehensive_benchmark_for_code_information_retrieval_models.md)
+- [HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation](hoh_a_dynamic_benchmark_for_evaluating_the_impact_of_outdated_information_on_ret.md)
+- [Logical Consistency is Vital: Neural-Symbolic Information Retrieval for Negative-Constraint Queries](logical_consistency_is_vital_neural-symbolic_information_retrieval_for_negative-.md)
+- [MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation](memerag_a_multilingual_end-to-end_meta-evaluation_benchmark_for_retrieval_augmen.md)
+- [GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation](garage_a_benchmark_with_grounding_annotations_for_rag_evaluation.md)
+
+<!-- RELATED:END -->

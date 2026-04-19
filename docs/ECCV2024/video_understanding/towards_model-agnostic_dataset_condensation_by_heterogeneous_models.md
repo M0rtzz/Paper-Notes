@@ -145,3 +145,15 @@ $$\mathcal{L}_{\text{MD}}(\mathbf{x}) = \text{MSE}(\text{SSD}(f_{\theta_1}(\math
 | 实验充分性 | 3.5 | 仅 CIFAR-10 实验，虽模型覆盖广但数据集单一 |
 | 实用性 | 4 | 解决了数据集蒸馏的核心实用性问题 |
 | 总体 | 4 | 对数据集蒸馏领域的重要贡献，值得关注 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos](actionswitch_class-agnostic_detection_of_simultaneous_actions_in_streaming_video.md)
+- [SemTrack: A Large-Scale Dataset for Semantic Tracking in the Wild](semtrack_a_large-scale_dataset_for_semantic_tracking_in_the_wild.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](videomamba_state_space_model_for_efficient_video_understanding.md)
+- [VideoMamba: Spatio-Temporal Selective State Space Model](videomamba_spatio-temporal_selective_state_space_model.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
+
+<!-- RELATED:END -->

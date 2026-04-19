@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了高斯/Poisson/Gamma/log-Rayleigh噪声，但数据集有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，表格总结清晰，定理-命题-证明结构规范
 - 价值: ⭐⭐⭐⭐ 为非高斯噪声的自监督去噪提供了统一理论框架，代码开源，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blind2Sound: Self-Supervised Image Denoising without Residual Noise](../../ICCV2025/image_restoration/blind2sound_self-supervised_image_denoising_without_residual_noise.md)
+- [The Effect of Optimal Self-Distillation in Noisy Gaussian Mixture Model](../../NeurIPS2025/image_restoration/the_effect_of_optimal_self-distillation_in_noisy_gaussian_mixture_model.md)
+- [TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation](../../ICML2025/image_restoration/timedart_a_diffusion_autoregressive_transformer_for_self-supervised_time_series_.md)
+- [MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](../../NeurIPS2025/image_restoration/moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
+- [Asymmetric Mask Scheme for Self-supervised Real Image Denoising](../../ECCV2024/image_restoration/asymmetric_mask_scheme_for_self-supervised_real_image_denoising.md)
+
+<!-- RELATED:END -->

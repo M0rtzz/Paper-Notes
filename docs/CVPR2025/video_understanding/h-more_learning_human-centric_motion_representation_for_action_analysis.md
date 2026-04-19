@@ -135,3 +135,15 @@ H-MoRe 包含两个核心组成部分：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖步态识别/动作识别/视频生成三大任务，消融全面
 - 写作质量: ⭐⭐⭐⭐ 图示丰富清晰，约束设计的数学表达严谨
 - 价值: ⭐⭐⭐⭐ 提供了一种新的"即插即用"运动表示范式，实际应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Heterogeneous Skeleton-Based Action Representation Learning](heterogeneous_skeleton-based_action_representation_learning.md)
+- [SUGAR: Learning Skeleton Representation with Visual-Motion Knowledge for Action Recognition](../../AAAI2026/video_understanding/sugar_learning_skeleton_representation_with_visual-motion_knowledge_for_action_r.md)
+- [Ego4o: Egocentric Human Motion Capture and Understanding from Multi-Modal Input](ego4o_egocentric_human_motion_capture_and_understanding_from_multi-modal_input.md)
+- [From Vicious to Virtuous Cycles: Synergistic Representation Learning for Unsupervised Video Object-Centric Learning](../../ICLR2026/video_understanding/from_vicious_to_virtuous_cycles_synergistic_representation_learning_for_unsuperv.md)
+- [No More Sibling Rivalry: Debiasing Human-Object Interaction Detection](../../ICCV2025/video_understanding/no_more_sibling_rivalry_debiasing_human-object_interaction_detection.md)
+
+<!-- RELATED:END -->

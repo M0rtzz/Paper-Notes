@@ -208,3 +208,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{base} + \mathcal{L}_{cic} + \lambda_1 \math
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6 个数据集、详细消融、可视化分析完整
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富，动机阐述到位
 - **实用价值**: ⭐⭐⭐⭐ — 统一框架减少部署成本，但需要配对数据集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Debiased Dual-Invariant Defense for Adversarially Robust Person Re-Identification](debiased_dual-invariant_defense_for_adversarially_robust_person_re-identificatio.md)
+- [Modeling Thousands of Human Annotators for Generalizable Text-to-Image Person Re-identification](../../CVPR2025/autonomous_driving/modeling_thousands_of_human_annotators_for_generalizable_text-to-image_person_re.md)
+- [When Person Re-Identification Meets Event Camera: A Benchmark Dataset and An Attribute-guided Re-Identification Framework](when_person_re-identification_meets_event_camera_a_benchmark_dataset_and_an_attr.md)
+- [FedBPrompt: Federated Domain Generalization Person Re-Identification via Body Distribution Aware Visual Prompts](../../CVPR2026/autonomous_driving/fedbprompt_federated_domain_generalization_person.md)
+- [Backdoor Attacks on Open Vocabulary Object Detectors via Multi-Modal Prompt Tuning](backdoor_attacks_on_open_vocabulary_object_detectors_via_multi-modal_prompt_tuni.md)
+
+<!-- RELATED:END -->

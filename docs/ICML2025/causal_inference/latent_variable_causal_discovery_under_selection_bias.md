@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成数据和两个真实数据集验证全面，但缺少更大规模的合成实验
 - 写作质量: ⭐⭐⭐⭐⭐ 从直观示例到严格理论推导层次分明，Figure 1 的贡献定位图清晰精准
 - 价值: ⭐⭐⭐⭐⭐ 为因果发现社区提供了全新的理论工具，打开了潜变量+选择偏差因果发现的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Discovery of Latent Variables in Galactic Archaeology](causal_discovery_of_latent_variables_in_galactic_archaeology.md)
+- [Causal Abstraction Inference under Lossy Representations](causal_abstraction_inference_under_lossy_representations.md)
+- [Dynamic Causal Discovery in Alzheimer's Disease through Latent Pseudotime Modelling](../../NeurIPS2025/causal_inference/dynamic_causal_discovery_in_alzheimers_disease_through_latent_pseudotime_modelli.md)
+- [Distributional Equivalence in Linear Non-Gaussian Latent-Variable Cyclic Causal Models](../../ICLR2026/causal_inference/distributional_equivalence_in_linear_non-gaussian_latent-variable_cyclic_causal_.md)
+- [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+
+<!-- RELATED:END -->

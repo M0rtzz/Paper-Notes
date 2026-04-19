@@ -160,3 +160,15 @@ TE-ViDS在所有5只小鼠上均取得最高解码分数，比次优模型提升
 - 实验充分度: ⭐⭐⭐⭐⭐ (合成数据+真实神经数据，多动物多区域全面分析)
 - 写作质量: ⭐⭐⭐⭐ (方法清晰，生物学讨论深入)
 - 价值: ⭐⭐⭐⭐ (填补视觉神经活动LVM的空白，提供有价值的神经科学洞察)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)
+- [SEED-SET: Scalable Evolving Experimental Design for System-level Ethical Testing](../../ICLR2026/interpretability/seed-set_scalable_evolving_experimental_design_for_system-level_ethical_testing.md)
+- [Learning Visual Composition through Improved Semantic Guidance](../../CVPR2025/interpretability/learning_visual_composition_through_improved_semantic_guidance.md)
+- [Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement](../../ICLR2026/interpretability/decoupling_dynamical_richness_from_representation_learning_towards_practical_mea.md)
+- [H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition](h-splid_hsic-based_saliency_preserving_latent_information_decomposition.md)
+
+<!-- RELATED:END -->

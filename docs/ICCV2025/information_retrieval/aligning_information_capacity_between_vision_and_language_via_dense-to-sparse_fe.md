@@ -176,3 +176,15 @@ Surround方式最优，因为稀疏文本在稠密文本中的位置未知，前
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViLU: Learning Vision-Language Uncertainties for Failure Prediction](vilu_learning_vision-language_uncertainties_for_failure_prediction.md)
+- [Joint Vision-Language Social Bias Removal for CLIP](../../CVPR2025/information_retrieval/joint_vision-language_social_bias_removal_for_clip.md)
+- [Revela: Dense Retriever Learning via Language Modeling](../../ICLR2026/information_retrieval/revela_dense_retriever_learning_via_language_modeling.md)
+- [Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers](../../ACL2025/information_retrieval/drama_diverse_augmentation_from_large_language_models_to_smaller_dense_retriever.md)
+- [ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](../../ECCV2024/information_retrieval/artvlm_attribute_recognition_through_vision-based_prefix_language_modeling.md)
+
+<!-- RELATED:END -->

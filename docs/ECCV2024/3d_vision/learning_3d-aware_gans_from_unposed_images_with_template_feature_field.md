@@ -141,3 +141,15 @@ TeFF在EG3D的基础上进行了关键扩展：生成器不仅生成辐射场（
 - **实验充分度**: ⭐⭐⭐⭐ — 4个数据集，多种metrics，消融完整
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ — 解决了3D-aware GAN的一个关键限制，实用意义明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving 2D Feature Representations by 3D-Aware Fine-Tuning](improving_2d_feature_representations_by_3d-aware_fine-tuning.md)
+- [Learning Part-Aware Dense 3D Feature Field for Generalizable Articulated Object Manipulation](../../ICLR2026/3d_vision/learning_part-aware_dense_3d_feature_field_for_generalizable_articulated_object_.md)
+- [Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
+- [Lagrangian Hashing for Compressed Neural Field Representations](lagrangian_hashing_for_compressed_neural_field_representations.md)
+- [CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field](cg-slam_efficient_dense_rgb-d_slam_in_a_consistent_uncertainty-aware_3d_gaussian.md)
+
+<!-- RELATED:END -->

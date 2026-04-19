@@ -147,3 +147,15 @@ PSNR 超越最佳单图方法 1.27 dB，超越最佳陀螺仪方法 1.79 dB。
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义清晰（处理陀螺仪误差），技术方案有针对性（细化-去模糊-课程学习三环联动），实验设置严谨（合成+真实+跨设备），PSNR 提升幅度显著（+1.3 dB over best single-image）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)
+- [DiffFNO: Diffusion Fourier Neural Operator](difffno_diffusion_fourier_neural_operator.md)
+- [Efficient Concertormer for Image Deblurring and Beyond](../../ICCV2025/image_restoration/efficient_concertormer_for_image_deblurring_and_beyond.md)
+- [MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](../../NeurIPS2025/image_restoration/moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
+- [Blind Noisy Image Deblurring Using Residual Guidance Strategy](../../ICCV2025/image_restoration/blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
+
+<!-- RELATED:END -->

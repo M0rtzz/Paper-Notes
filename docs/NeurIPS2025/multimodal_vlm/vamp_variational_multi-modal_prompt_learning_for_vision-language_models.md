@@ -140,3 +140,15 @@ VaMP在Novel类上超过MMRL **1.51%**，调和均值提升 **1.17%**。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三种泛化设置、11个数据集、完整消融、可视化分析
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数学推导严谨
 - **价值**: ⭐⭐⭐⭐ 为prompt学习引入了结构化的概率建模范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMRL: Multi-Modal Representation Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/mmrl_multi-modal_representation_learning_for_vision-language_models.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [Approximate Domain Unlearning for Vision-Language Models](approximate_domain_unlearning_for_visionlanguage_models.md)
+- [Efficient Multi-modal Large Language Models via Progressive Consistency Distillation](efficient_multi-modal_large_language_models_via_progressive_consistency_distilla.md)
+- [Vision-Language Model IP Protection via Prompt-based Learning](../../CVPR2025/multimodal_vlm/vision-language_model_ip_protection_via_prompt-based_learning.md)
+
+<!-- RELATED:END -->

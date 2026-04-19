@@ -136,3 +136,15 @@ SSAH 不是一个具体方法，而是一个关于安全对齐本质的假说框
 - 实验充分度: ⭐⭐⭐⭐ 多模型多基准多评估方法，但LLaMA3实验因计算限制不够完整
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从假说→验证→应用的叙事循序渐进
 - 价值: ⭐⭐⭐⭐⭐ 为理解安全对齐本质和设计高效安全训练策略提供了理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Safety Alignment Can Be Not Superficial With Explicit Safety Signals](../../ICML2025/llm_alignment/safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
+- [A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models](a2d_any-order_any-step_safety_alignment_for_diffusion_language_models.md)
+- [GuardAlign: Test-time Safety Alignment in Multimodal Large Language Models](guardalign_test-time_safety_alignment_in_multimodal_large_language_models.md)
+- [Reasoned Safety Alignment: Ensuring Jailbreak Defense via Answer-Then-Check](reasoned_safety_alignment_ensuring_jailbreak_defense_via_answer-then-check.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+
+<!-- RELATED:END -->

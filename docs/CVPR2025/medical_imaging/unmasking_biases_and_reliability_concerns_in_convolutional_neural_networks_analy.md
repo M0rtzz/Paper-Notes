@@ -255,3 +255,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 13 个数据集 × 4 架构的全面覆盖，类别平衡消融等实验设计严谨
 - 写作质量: ⭐⭐⭐⭐ 清晰系统，图表丰富
 - 价值: ⭐⭐⭐⭐ 对医学AI社区具有重要的警示价值，但缺少修复方案降低了实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PanFoMa: A Lightweight Foundation Model and Benchmark for Pan-Cancer Pathology Image Analysis](../../AAAI2026/medical_imaging/panfoma_a_lightweight_foundation_model_and_benchmark_for_pan-cancer.md)
+- [Cell-Type Prototype-Informed Neural Network for Gene Expression Estimation from Pathology Images](../../CVPR2026/medical_imaging/cell-type_prototype-informed_neural_network_for_gene_expression_estimation_from_.md)
+- [SIC: Similarity-Based Interpretable Image Classification with Neural Networks](../../ICCV2025/medical_imaging/sic_similarity-based_interpretable_image_classification_with_neural_networks.md)
+- [Random Search Neural Networks for Efficient and Expressive Graph Learning](../../NeurIPS2025/medical_imaging/random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
+- [Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics](../../NeurIPS2025/medical_imaging/learning_relative_gene_expression_trends_from_pathology_images_in_spatial_transc.md)
+
+<!-- RELATED:END -->

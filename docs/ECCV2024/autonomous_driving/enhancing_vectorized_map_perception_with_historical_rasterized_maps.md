@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （两数据集、两基线、消融完善、鲁棒性/初始地图等额外实验丰富）
 - 写作质量: ⭐⭐⭐⭐ （逻辑清晰，图表信息量大）
 - 价值: ⭐⭐⭐⭐ （对实际自动驾驶地图感知部署有直接参考价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stream Query Denoising for Vectorized HD-Map Construction](stream_query_denoising_for_vectorized_hd-map_construction.md)
+- [SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction](../../NeurIPS2025/autonomous_driving/sdtagnet_leveraging_text-annotated_navigation_maps_for_online_hd_map_constructio.md)
+- [SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving](../../NeurIPS2025/autonomous_driving/sqs_enhancing_sparse_perception_models_via_query-based_splatting_in_autonomous_d.md)
+- [Driving by the Rules: A Benchmark for Integrating Traffic Sign Regulations into Vectorized HD Map](../../CVPR2025/autonomous_driving/driving_by_the_rules_a_benchmark_for_integrating_traffic_sign_regulations_into_v.md)
+- [MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction](../../CVPR2026/autonomous_driving/mapgclr_geospatial_contrastive_learning_of_represe.md)
+
+<!-- RELATED:END -->

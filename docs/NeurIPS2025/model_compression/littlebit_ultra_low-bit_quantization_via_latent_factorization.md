@@ -150,3 +150,15 @@ LittleBit 在 0.55 BPW 时的 PPL 已超越 STBLLM 在 0.7 BPW 的表现。在 0
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖多种模型族和规模，PPL + 零样本推理双重评估，但缺少实际推理延迟测试
 - **写作质量**: ⭐⭐⭐⭐ — 可视化（Figure 3 权重重建对比）非常直观，方法描述清晰
 - **价值**: ⭐⭐⭐⭐⭐ — 极端压缩的需求真实存在，在端侧部署场景有巨大潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization](paretoq_improving_scaling_laws_in_extremely_low-bit_llm_quantization.md)
+- [SpecQuant: Spectral Decomposition and Adaptive Truncation for Ultra-Low-Bit LLMs Quantization](../../AAAI2026/model_compression/specquant_spectral_decomposition_and_adaptive_truncation_for_ultra-low-bit_llms_.md)
+- [Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression](learning_grouped_lattice_vector_quantizers_for_low-bit_llm_compression.md)
+- [FALQON: Accelerating LoRA Fine-tuning with Low-Bit Floating-Point Arithmetic](falqon_accelerating_lora_fine-tuning_with_low-bit_floating-point_arithmetic.md)
+- [Q-Palette: Fractional-Bit Quantizers Toward Optimal Bit Allocation for Efficient LLM Deployment](q-palette_fractional-bit_quantizers_toward_optimal_bit_allocation_for_efficient_.md)
+
+<!-- RELATED:END -->

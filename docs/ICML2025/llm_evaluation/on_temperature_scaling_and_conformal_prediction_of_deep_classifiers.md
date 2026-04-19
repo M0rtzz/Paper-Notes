@@ -139,3 +139,15 @@ TS 增大温度 ($T > 1$) 时：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 7 个数据集-模型对，多种 $\alpha$ 和 CP set 比例，100 次中位数-均值统计
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，实验→理论的递进逻辑好，理论推导完整
 - 价值: ⭐⭐⭐⭐ — 对 CP 实践者有直接指导意义，理论贡献扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](../../NeurIPS2025/llm_evaluation/conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
+- [Conformal Prediction Adaptive to Unknown Subpopulation Shifts](../../ICLR2026/llm_evaluation/conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
+- [Semi-Supervised Conformal Prediction With Unlabeled Nonconformity Score](../../CVPR2026/llm_evaluation/semi-supervised_conformal_prediction_with_unlabeled_nonconformity_score.md)
+- [Conformal Online Learning of Deep Koopman Linear Embeddings](../../NeurIPS2025/llm_evaluation/conformal_online_learning_of_deep_koopman_linear_embeddings.md)
+- [Fully Heteroscedastic Count Regression with Deep Double Poisson Networks](fully_heteroscedastic_count_regression_with_deep_double_poisson_networks.md)
+
+<!-- RELATED:END -->

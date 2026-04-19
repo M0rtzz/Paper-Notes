@@ -181,3 +181,15 @@ FlexDeMo 采用**混合分片策略**：
 - 实验充分度: ⭐⭐⭐⭐⭐（T5/ViT/OLMo2 三个领域 + 带宽/扩展性/超参分析）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，图表丰富）
 - 价值: ⭐⭐⭐⭐⭐（直接降低大模型训练的带宽门槛，实用性极强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](../../CVPR2026/others/zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [A Switching Framework for Online Interval Scheduling with Predictions](a_switching_framework_for_online_interval_scheduling_with_pr.md)
+- [Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model](../../CVPR2026/others/rethinking_snn_online_training_and_deployment_grad.md)
+- [Learning Network Dismantling Without Handcrafted Inputs](learning_network_dismantling_without_handcrafted_inputs.md)
+- [Optimal Welfare in Noncooperative Network Formation under Attack](optimal_welfare_in_noncooperative_network_formation_under_attack.md)
+
+<!-- RELATED:END -->

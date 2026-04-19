@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多场景+多基线+数据集构建
 - 写作质量: ⭐⭐⭐⭐ 清晰，问题动机分析到位
 - 价值: ⭐⭐⭐⭐⭐ 对全景拼接实际应用有重大推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [End-to-End Implicit Neural Representations for Classification](end-to-end_implicit_neural_representations_for_classification.md)
+- [GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)
+- [MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model](mvgenmaster_scaling_multi-view_generation_from_any_image_via_3d_priors_enhanced_.md)
+- [MeshArt: Generating Articulated Meshes with Structure-Guided Transformers](meshart_generating_articulated_meshes_with_structure-guided_transformers.md)
+- [End-to-End HOI Reconstruction Transformer with Graph-based Encoding](end-to-end_hoi_reconstruction_transformer_with_graph-based_encoding.md)
+
+<!-- RELATED:END -->

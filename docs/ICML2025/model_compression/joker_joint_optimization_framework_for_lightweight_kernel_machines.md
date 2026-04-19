@@ -140,3 +140,15 @@ $$\boldsymbol{K}_{\mathcal{B},:}\boldsymbol{\alpha} = \boldsymbol{\psi}(\boldsym
 - 实验充分度: ⭐⭐⭐⭐ — 在大规模数据集上与多方法全面对比，90%内存节省的结论有说服力
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨清晰，算法伪代码完整，理论与实践结合好
 - 价值: ⭐⭐⭐⭐ — 填补了大规模核方法低资源训练的空白，对资源受限场景（单 GPU）很有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba](../../CVPR2025/model_compression/jamma_ultra-lightweight_local_feature_matching_with_joint_mamba.md)
+- [Adaptive Kernel Design for Bayesian Optimization Is a Piece of CAKE with LLMs](../../NeurIPS2025/model_compression/adaptive_kernel_design_for_bayesian_optimization_is_a_piece_of_cake_with_llms.md)
+- [Direct Behavior Optimization: Unlocking the Potential of Lightweight LLMs](../../ACL2025/model_compression/direct_behavior_optimization_unlocking_the_potential_of_lightweight_llms.md)
+- [SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images](../../ECCV2024/model_compression/spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)
+- [AdaFuse: Accelerating Dynamic Adapter Inference via Token-Level Pre-Gating and Fused Kernel Optimization](../../AAAI2026/model_compression/adafuse_accelerating_dynamic_adapter_inference_via_token-lev.md)
+
+<!-- RELATED:END -->

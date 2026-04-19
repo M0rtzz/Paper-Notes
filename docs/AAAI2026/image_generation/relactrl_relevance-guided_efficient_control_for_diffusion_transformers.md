@@ -202,3 +202,15 @@ RGLC 和 Prior 2 的影响：
 - 实验充分度: ⭐⭐⭐⭐⭐ （4 种条件任务、多个基线、详尽消融、效率分析）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰、定理证明严谨、可视化丰富）
 - 价值: ⭐⭐⭐⭐⭐ （解决了 DiT 可控生成效率的关键问题，实用性强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Laytrol: Preserving Pretrained Knowledge in Layout Control for Multimodal Diffusion Transformers](laytrol_preserving_pretrained_knowledge_in_layout_control_fo.md)
+- [DogFit: Domain-guided Fine-tuning for Efficient Transfer Learning of Diffusion Models](dogfit_domain-guided_fine-tuning_for_efficient_transfer_learning_of_diffusion_mo.md)
+- [EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation](../../CVPR2026/image_generation/edgedit_hardware-aware_diffusion_transformers_for_efficient_on-device_image_gene.md)
+- [Contact-Guided 3D Genome Structure Generation of E. coli via Diffusion Transformers](../../ICLR2026/image_generation/contact-guided_3d_genome_structure_generation_of_e_coli_via_diffusion_transforme.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](../../ICCV2025/image_generation/edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+
+<!-- RELATED:END -->

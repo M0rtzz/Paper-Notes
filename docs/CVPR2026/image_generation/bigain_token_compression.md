@@ -117,3 +117,15 @@ Training-free 方法，无需训练。直接在预训练的 Stable Diffusion 2.0
 - 实验充分度: ⭐⭐⭐⭐ 多模型(DiT/UNet) × 多数据集 × 多任务验证
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，频率分析视角独特
 - 价值: ⭐⭐⭐⭐ 对部署双用途扩散模型有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FRAMER: Frequency-Aligned Self-Distillation with Adaptive Modulation Leveraging Diffusion Priors for Real-World Image Super-Resolution](framer_frequency-aligned_self-distillation_with_adaptive_modulation_leveraging_d.md)
+- [CoD: A Diffusion Foundation Model for Image Compression](cod_a_diffusion_foundation_model_for_image_compression.md)
+- [CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation](cologen_progressive_learning_of_concept-localization_duality_for_unified_image_g.md)
+- [Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models](flash-unified_a_training-free_and_task-aware_acceleration_framework_for_native_u.md)
+- [EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing](effecterase_joint_video_object_removal_and_insertion_for_high-quality_effect_era.md)
+
+<!-- RELATED:END -->

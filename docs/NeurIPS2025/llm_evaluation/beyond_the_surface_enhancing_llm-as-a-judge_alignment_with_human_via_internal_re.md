@@ -111,3 +111,15 @@ LLM生成评判时，在score token位置提取所有L+1层（embedding层到最
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个模型、3个benchmark、多个消融、下游应用验证，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰（Figure 2的层级分析很有说服力），方法描述精确
 - 价值: ⭐⭐⭐⭐⭐ 即插即用、几乎零成本的改进，对所有使用LLM-as-a-Judge的场景都有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Evaluating LLM Alignment by Evaluating LLMs as Judges](on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+- [YESciEval: Robust LLM-as-a-Judge for Scientific Question Answering](../../ACL2025/llm_evaluation/yescieval_llm_judge_science.md)
+- [Leveraging Robust Optimization for LLM Alignment under Distribution Shifts](leveraging_robust_optimization_for_llm_alignment_under_distribution_shifts.md)
+- [Preference Leakage: A Contamination Problem in LLM-as-a-judge](../../ICLR2026/llm_evaluation/preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
+- [Can External Validation Tools Improve Annotation Quality for LLM-as-a-Judge?](../../ACL2025/llm_evaluation/can_external_validation_tools_improve_annotation_quality_for_llm-as-a-judge.md)
+
+<!-- RELATED:END -->

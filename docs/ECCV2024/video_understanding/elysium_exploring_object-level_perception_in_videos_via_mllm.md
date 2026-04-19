@@ -294,3 +294,15 @@ Elysium 仅用 108 个视觉 Token 即超越使用 256-608 Token 的基线方法
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖图像 Grounding、VideoQA、SOT、RSOT、Video-REG 多个任务，消融研究完整
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，问题定义明确，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 数据集和方法为视频 MLLM 的目标级感知研究奠定了基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring the Feature Extraction and Relation Modeling For Light-Weight Transformer Tracking](exploring_the_feature_extraction_and_relation_modeling_for_light-weight_transfor.md)
+- [Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
+- [AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
+- [CrossGLG: LLM Guides One-Shot Skeleton-Based 3D Action Recognition in a Cross-Level Manner](crossglg_llm_guides_one-shot_skeleton-based_3d_action_recognition_in_a_cross-lev.md)
+- [In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting](../../NeurIPS2025/video_understanding/in_the_eye_of_mllm_benchmarking_egocentric_video_intent_understanding_with_gaze-.md)
+
+<!-- RELATED:END -->

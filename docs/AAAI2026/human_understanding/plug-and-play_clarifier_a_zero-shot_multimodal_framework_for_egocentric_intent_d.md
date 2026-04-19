@@ -142,3 +142,15 @@ $$\vec{v} = \frac{p_{tip}^{3D} - p_{base}^{3D}}{\|p_{tip}^{3D} - p_{base}^{3D}\|
 - **实验**: ⭐⭐⭐⭐ — 覆盖多个模型家族和多种任务，消融充分，但 VRA-Ego 基准规模偏小
 - **写作**: ⭐⭐⭐⭐ — 结构清晰，图示丰富，动机阐述到位
 - **实用性**: ⭐⭐⭐⭐⭐ — 即插即用设计对实际 AR/可穿戴设备部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](../../ICLR2026/human_understanding/toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
+- [Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs](../../ICLR2026/human_understanding/supervised_metric_regularization_through_alternating_optimization_for_multi-regi.md)
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](../../ICLR2026/human_understanding/rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](../../ICLR2026/human_understanding/uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
+
+<!-- RELATED:END -->

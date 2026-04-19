@@ -142,3 +142,15 @@ tags:
 - **实验充分度**: 10/10 — 100+ 模型的系统控制实验堪称标杆
 - **实用性**: 9/10 — 12 条 Takeaway 对 LM 训练实践有直接指导价值
 - **写作质量**: 9/10 — 结构清晰，图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Language Models to Reason Efficiently](training_language_models_to_reason_efficiently.md)
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+- [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
+- [NavQ: Learning a Q-Model for Foresighted Vision-and-Language Navigation](../../ICCV2025/reinforcement_learning/navq_learning_a_q-model_for_foresighted_vision-and-language_navigation.md)
+- [Solving Neural Min-Max Games: The Role of Architecture, Initialization & Dynamics](solving_neural_min-max_games_the_role_of_architecture_initialization_dynamics.md)
+
+<!-- RELATED:END -->

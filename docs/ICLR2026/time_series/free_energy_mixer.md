@@ -143,3 +143,15 @@ FEM 是一个即插即用的模块，直接替换 Transformer block 中的注意
 - 实验充分度: ⭐⭐⭐⭐ 合成 + NLP + 视觉 + 时序四个领域覆盖广，但缺少超大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析极其严谨，从问题定义到解决方案的逻辑链条完整
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的通用机制改进，理论和实践价值都很高，可能影响未来注意力机制设计方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [xLSTM-Mixer: Multivariate Time Series Forecasting by Mixing via Scalar Memories](../../NeurIPS2025/time_series/xlstm-mixer_multivariate_time_series_forecasting_by_mixing_via_scalar_memories.md)
+- [Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
+- [Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
+- [PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+
+<!-- RELATED:END -->

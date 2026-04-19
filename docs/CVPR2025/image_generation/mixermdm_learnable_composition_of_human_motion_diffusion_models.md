@@ -150,3 +150,15 @@ $L1$ 正则项惩罚两个判别器损失的差距过大。训练 300 epochs，b
 | 实验充分度 | ⭐⭐⭐⭐ |
 | 工程实用性 | ⭐⭐⭐ |
 | 总体推荐 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Move-in-2D: 2D-Conditioned Human Motion Generation](move-in-2d_2d-conditioned_human_motion_generation.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](../../NeurIPS2025/image_generation/learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](../../ECCV2024/image_generation/realistic_human_motion_generation_with_cross-diffusion_models.md)
+
+<!-- RELATED:END -->

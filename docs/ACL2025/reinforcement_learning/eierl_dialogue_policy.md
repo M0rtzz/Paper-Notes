@@ -157,3 +157,15 @@ Epoch=500 时的平均奖励（Reward）：
 - 实验充分度: ⭐⭐⭐⭐ 4 数据集（3 单域+1 多域）、多基线（含 LLM）、消融+超参分析全面
 - 写作质量: ⭐⭐⭐ 算法描述详细但略冗长，符号较多增加阅读负担
 - 价值: ⭐⭐⭐ 对对话系统 RL 研究有贡献，但受限于模拟器评估和特定 DP 场景，实际影响力有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TreeRL: LLM Reinforcement Learning with On-Policy Tree Search](treerl_tree_search_rl.md)
+- [Efficient Estimation of Kernel Surrogate Models for Task Attribution](../../ICLR2026/reinforcement_learning/efficient_estimation_of_kernel_surrogate_models_for_task_attribution.md)
+- [Helix: Evolutionary Reinforcement Learning for Open-Ended Scientific Problem Solving](../../ICLR2026/reinforcement_learning/helix_evolutionary_reinforcement_learning_for_open-ended_scientific_problem_solv.md)
+- [Mastering Massive Multi-Task Reinforcement Learning via Mixture-of-Expert Decision Transformer](../../ICML2025/reinforcement_learning/mastering_massive_multi-task_reinforcement_learning_via_mixture-of-expert_decisi.md)
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+
+<!-- RELATED:END -->

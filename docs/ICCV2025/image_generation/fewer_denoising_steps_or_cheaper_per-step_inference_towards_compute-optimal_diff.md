@@ -155,3 +155,15 @@ PostDiff 完全是**训练无关**（training-free）的——不需要任何微
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个 SOTA 模型 × 多种配置，FID-FLOPs 权衡曲线详尽，与6+种方法对比
 - 写作质量: ⭐⭐⭐⭐ 研究问题聚焦，实验设计合理，可视化分析（CLIP Score 逐步变化）说服力强
 - 价值: ⭐⭐⭐⭐ 实用的 training-free 加速方案 + 对扩散模型部署策略的系统性指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Diffusion Model Distillation](inference-time_diffusion_model_distillation.md)
+- [Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](../../NeurIPS2025/image_generation/two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
+- [AccuQuant: Simulating Multiple Denoising Steps for Quantizing Diffusion Models](../../NeurIPS2025/image_generation/accuquant_simulating_multiple_denoising_steps_for_quantizing.md)
+- [Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal](compression-aware_one-step_diffusion_model_for_jpeg_artifact_removal.md)
+- [Tortoise and Hare Guidance: Accelerating Diffusion Model Inference with Multirate Integration](../../NeurIPS2025/image_generation/tortoise_and_hare_guidance_accelerating_diffusion_model_inference_with_multirate.md)
+
+<!-- RELATED:END -->

@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个标准RL环境+RLHF，大量消融和基线对比，统计显著性检验完善
 - 写作质量: ⭐⭐⭐⭐⭐ 写作非常清晰，问题-方法-应用的逻辑链条完整，图表直观
 - 价值: ⭐⭐⭐⭐ 框架优雅且实用，但目前局限于PPO，扩展到更广泛的RL算法和更大规模模型仍需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DexFlyWheel: A Scalable Self-Improving Data Generation Framework for Dexterous Manipulation](dexflywheel_a_scalable_and_self-improving_data_generation_framework_for_dexterou.md)
+- [Towards Reinforcement Learning from Neural Feedback: Mapping fNIRS Signals to Agent Performance](../../AAAI2026/robotics/towards_reinforcement_learning_from_neural_feedback_mapping_.md)
+- [Attribution-Guided Decoding](../../ICLR2026/robotics/attribution-guided_decoding.md)
+- [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](../../CVPR2025/robotics/a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
+- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+
+<!-- RELATED:END -->

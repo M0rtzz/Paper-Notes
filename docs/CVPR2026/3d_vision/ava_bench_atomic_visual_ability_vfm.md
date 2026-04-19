@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖了9个VFM×14种AVA，消融实验（bbox、LLM大小、物体尺度）设计精巧
 - 写作质量: ⭐⭐⭐⭐⭐ 图表设计精美（雷达图、热力图、排名图），逻辑清晰，motivating example生动
 - 价值: ⭐⭐⭐⭐ 对VFM选型有直接指导意义，但benchmark的持续更新和社区采纳度还需观察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ArtHOI: Taming Foundation Models for Monocular 4D Reconstruction of Hand-Articulated-Object Interactions](arthoi_taming_foundation_models_for_monocular_4d_reconstruction_of_hand-articula.md)
+- [Sky2Ground: A Benchmark for Site Modeling under Varying Altitude](sky2ground_a_benchmark_for_site_modeling_under_varying_altitude.md)
+- [Pano360: Perspective to Panoramic Vision with Geometric Consistency](pano360_perspective_to_panoramic_vision_with_geome.md)
+- [PhysGaia: A Physics-Aware Benchmark with Multi-Body Interactions for Dynamic Novel View Synthesis](physgaia_a_physics-aware_benchmark_with_multi-body_interactions_for_dynamic_nove.md)
+- [Random Wins All: Rethinking Grouping Strategies for Vision Tokens](random_wins_all_rethinking_grouping_strategies_for_vision_tokens.md)
+
+<!-- RELATED:END -->

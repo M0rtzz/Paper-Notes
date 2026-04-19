@@ -113,3 +113,15 @@ Co-op在多个位姿估计基准上进行了评估：
 ## 总结与展望
 
 Co-op通过学习可泛化的对应关系匹配能力，实现了无需CAD模型的新物体6D位姿估计。该方法的核心优势在于其跨物体的泛化能力和对参考视图的高效利用。未来工作可以探索结合深度信息进一步提升精度，以及在动态场景中实现实时位姿跟踪。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+- [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
+- [MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
+- [COG: Confidence-aware Optimal Geometric Correspondence for Unsupervised Single-reference Novel Object Pose Estimation](../../CVPR2026/human_understanding/cog_confidence-aware_optimal_geometric_correspondence_for_unsupervised_single-re.md)
+- [GS-Pose: Category-Level Object Pose Estimation via Geometric and Semantic Correspondence](../../ECCV2024/human_understanding/gs-pose_category-level_object_pose_estimation_via_geometric_and_semantic_corresp.md)
+
+<!-- RELATED:END -->

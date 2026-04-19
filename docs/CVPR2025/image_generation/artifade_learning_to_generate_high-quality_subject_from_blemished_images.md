@@ -160,3 +160,15 @@ DreamBooth集成结果（ID测试）：
 - 实验充分度: ⭐⭐⭐⭐ ID/OOD分析、DreamBooth扩展、不可见瑕疵、多种应用场景、消融研究全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，数学符号规范，实验组织系统，但部分符号较繁琐
 - 价值: ⭐⭐⭐⭐ 解决了实际痛点，OOD泛化性使其真正可用，但与最新扩散模型的结合有待探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmoDubber: Towards High Quality and Emotion Controllable Movie Dubbing](emodubber_towards_high_quality_and_emotion_controllable_movie_dubbing.md)
+- [3DTopia-XL: Scaling High-Quality 3D Asset Generation via Primitive Diffusion](3dtopia-xl_scaling_high-quality_3d_asset_generation_via_primitive_diffusion.md)
+- [Toward Tiny and High-quality Facial Makeup with Data Amplify Learning](../../ECCV2024/image_generation/toward_tiny_and_high-quality_facial_makeup_with_data_amplify_learning.md)
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+- [SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images](../../CVPR2026/image_generation/simlbr_learning_to_detect_fake_images_by_learning_to_detect_real_images.md)
+
+<!-- RELATED:END -->

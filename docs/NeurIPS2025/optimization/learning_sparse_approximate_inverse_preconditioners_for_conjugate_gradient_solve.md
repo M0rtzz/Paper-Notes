@@ -134,3 +134,15 @@ $$\mathcal{L}_{\text{SAI}}(\mathbf{A}, \mathbf{M}^{-1}, \mathbf{w}) = \left\|\le
 - 实验充分度: ⭐⭐⭐⭐ 多种PDE问题+合成数据集，与传统和学习方法全面对比
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，局部性分析的对比论证尤为精彩
 - 价值: ⭐⭐⭐⭐ 在GPU科学计算领域实用价值高，68%-113%的加速非常显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Natural Gradient VI: Guarantees for Non-Conjugate Models](natural_gradient_vi_guarantees_for_non-conjugate_models.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [Projecting Assumptions: The Duality Between Sparse Autoencoders and Concept Geometry](projecting_assumptions_the_duality_between_sparse_autoencoders_and_concept_geome.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+
+<!-- RELATED:END -->

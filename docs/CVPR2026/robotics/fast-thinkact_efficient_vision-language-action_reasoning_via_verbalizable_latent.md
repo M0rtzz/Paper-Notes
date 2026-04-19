@@ -180,3 +180,15 @@ LIBERO 超越 ThinkAct-3B 6.6%，SimplerEnv 超 4.0%，延迟降低 7×。
 - 实验充分度: 9/10 — 六个基准（3 reasoning + 3 manipulation）、详尽消融、延迟分析全面
 - 写作质量: 8/10 — 结构清晰，方法公式化完整，图示直观
 - 价值: 9/10 — 推理延迟从秒级降到亚秒级且性能提升，解决了 reasoning VLA 落地的关键瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ThinkAct: Vision-Language-Action Reasoning via Reinforced Visual Latent Planning](../../NeurIPS2025/robotics/thinkact_vision-language-action_reasoning_via_reinforced_visual_latent_planning.md)
+- [Towards Open Environments and Instructions: General Vision-Language Navigation via Fast-Slow Interactive Reasoning](towards_open_environments_and_instructions_general_vision-language_navigation_vi.md)
+- [Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
+- [TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](../../ICLR2026/robotics/twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
+
+<!-- RELATED:END -->

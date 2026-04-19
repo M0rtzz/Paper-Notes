@@ -150,3 +150,15 @@ GSTransform 实时延迟仅 77-87 秒，比 InBedder-Llama2 快 **6~300 倍**。
 - **实验充分度**: 9/10 — 3 任务 9 数据集 + 消融 + 参数敏感性 + 效率对比 + case study
 - **写作质量**: 8/10 — 逻辑清晰，图表设计好
 - **价值**: 8/10 — 实际部署价值高，6~300 倍加速对工业应用有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncovering Visual-Semantic Psycholinguistic Properties from the Distributional Structure of Text Embedding Space](psycholinguistic_visual_semantic.md)
+- [Optimized Text Embedding Models and Benchmarks for Amharic Passage Retrieval](optimized_text_embedding_models_and_benchmarks_for_amharic_passage_retrieval.md)
+- [A Text is Worth Several Tokens: Text Embedding from LLMs Secretly Aligns Well with The Key Tokens](a_text_is_worth_several_tokens_text_embedding_from_llms_secretly_aligns_well_wit.md)
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)
+
+<!-- RELATED:END -->

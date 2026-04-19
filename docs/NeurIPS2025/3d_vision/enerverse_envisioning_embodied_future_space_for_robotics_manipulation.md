@@ -137,3 +137,15 @@ $$\min_{\theta} \mathbb{E}_{t, \mathbf{z}, \boldsymbol{\epsilon}} \|\boldsymbol{
 - ⭐ 实验充分度: 4.5/5 — LIBERO/CALVIN/真实世界全面验证，消融详尽
 - ⭐ 写作质量: 3.5/5 — 内容丰富但略显冗长，核心贡献可更突出
 - ⭐ 价值: 4/5 — 为具身智能提供了视频生成+策略的统一范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DynaRend: Learning 3D Dynamics via Masked Future Rendering for Robotic Manipulation](dynarend_learning_3d_dynamics_via_masked_future_rendering_for_robotic_manipulati.md)
+- [SoFar: Language-Grounded Orientation Bridges Spatial Reasoning and Object Manipulation](sofar_language-grounded_orientation_bridges_spatial_reasoning_and_object_manipul.md)
+- [TesserAct: Learning 4D Embodied World Models](../../ICCV2025/3d_vision/learning_4d_embodied_world_models.md)
+- [3D-Mem: 3D Scene Memory for Embodied Exploration and Reasoning](../../CVPR2025/3d_vision/3d-mem_3d_scene_memory_for_embodied_exploration_and_reasoning.md)
+- [RoboPearls: Editable Video Simulation for Robot Manipulation](../../ICCV2025/3d_vision/robopearls_editable_video_simulation_for_robot_manipulation.md)
+
+<!-- RELATED:END -->

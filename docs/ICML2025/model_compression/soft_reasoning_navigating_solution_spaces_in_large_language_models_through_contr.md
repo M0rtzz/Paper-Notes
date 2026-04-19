@@ -176,3 +176,15 @@ Soft Reasoning 是一种**纯推理时方法（test-time method）**，不需要
 - **实验充分度**: ⭐⭐⭐☆☆ — 覆盖了多种 LLM 和推理任务，但缓存截断导致无法完整评估实验细节
 - **写作质量**: ⭐⭐⭐⭐☆ — 动机清晰，方法描述系统，与已有工作的对比到位
 - **价值**: ⭐⭐⭐⭐☆ — 提供了一种新颖且实用的推理增强策略，模型无关的特性使其具有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Persistent Topological Features in Large Language Models](persistent_topological_features_in_large_language_models.md)
+- [Weak-to-Strong Jailbreaking on Large Language Models](weak-to-strong_jailbreaking_on_large_language_models.md)
+- [MARGE: Improving Math Reasoning for LLMs with Guided Exploration](marge_improving_math_reasoning_for_llms_with_guided_exploration.md)
+- [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](../../ACL2025/model_compression/pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ Top-k 的导数矩阵 $D = \frac{\partial P}{\partial r} = s\,q^T - \text{diag}(
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 top-k/排列/kNN，但应用场景偏窄
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，实验对比完整
 - 价值: ⭐⭐⭐⭐⭐ — 提供开箱即用的 CPU/CUDA 实现，有望成为可微排序的标准工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](../../ICCV2025/others/a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)
+- [Bipartite Ranking From Multiple Labels: On Loss Versus Label Aggregation](bipartite_ranking_from_multiple_labels_on_loss_versus_label_aggregation.md)
+- [One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit](../../ACL2025/others/one_for_all_update_parameterized_knowledge_across_multiple_models_with_once_edit.md)
+- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+
+<!-- RELATED:END -->

@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 只用一个模型，100 个任务，部分模拟数据
 - 写作质量: ⭐⭐⭐⭐ 清晰简洁
 - 价值: ⭐⭐⭐⭐ 企业 NL2SQL 场景很实用，cost 节省显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+- [Orchestration Framework for Financial Agents: From Algorithmic Trading to Agentic Trading](orchestration_framework_for_financial_agents_from_algorithmic_trading_to_agentic.md)
+- [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
+- [CAM: A Constructivist View of Agentic Memory for LLM-Based Reading Comprehension](cam_a_constructivist_view_of_agentic_memory_for_llm-based_reading_comprehension.md)
+
+<!-- RELATED:END -->

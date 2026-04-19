@@ -181,3 +181,15 @@ $$\mathcal{L}_\text{CAA} = \frac{1}{2}\sum_v \sum_{v' \neq v} [\text{sim}(v,v') 
 - **技术深度**: ⭐⭐⭐⭐ — 四个组件设计完整，数学推导清晰
 - **实验充分性**: ⭐⭐⭐ — 4 个数据集 4 种缺失率，但数据规模偏小
 - **实用价值**: ⭐⭐⭐ — 在多模态数据融合场景有实际意义，但计算开销可能限制大规模应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REXO: Indoor Multi-View Radar Object Detection via 3D Bounding Box Diffusion](rexo_indoor_multi-view_radar_object_detection_via_3d_bounding_box_diffusion.md)
+- [You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](../../NeurIPS2025/object_detection/you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
+- [Continuous Vision-Language-Action Co-Learning with Semantic-Physical Alignment for Behavioral Cloning](continuous_vision-language-action_co-learning_with_semantic-.md)
+- [AerialMind: Towards Referring Multi-Object Tracking in UAV Scenarios](aerialmind_towards_referring_multi-object_tracking_in_uav_sc.md)
+- [ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](../../ICCV2025/object_detection/viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
+
+<!-- RELATED:END -->

@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基准评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰
 - 价值: ⭐⭐⭐⭐ 有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Implicit Modeling for Transferability Estimation of Vision Foundation Models](../../NeurIPS2025/self_supervised/implicit_modeling_for_transferability_estimation_of_vision_foundation_models.md)
+- [Manifolds and Modules: How Function Develops in a Neural Foundation Model](../../NeurIPS2025/self_supervised/manifolds_and_modules_how_function_develops_in_a_neural_foundation_model.md)
+- [Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](../../ACL2025/self_supervised/llm_back_gen_treebank.md)
+- [CObL: Toward Zero-Shot Ordinal Layering without User Prompting](../../ICCV2025/self_supervised/cobl_toward_zero-shot_ordinal_layering_without_user_prompting.md)
+- [Alpha-SQL: Zero-Shot Text-to-SQL using Monte Carlo Tree Search](../../ICML2025/self_supervised/alpha-sql_zero-shot_text-to-sql_using_monte_carlo_tree_search.md)
+
+<!-- RELATED:END -->

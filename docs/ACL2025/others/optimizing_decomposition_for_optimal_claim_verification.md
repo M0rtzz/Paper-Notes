@@ -138,3 +138,15 @@ $$L^{\text{PPO}} = \mathbb{E}_t\left[L^{\text{clip}} - c_1 \hat{A}_t^2 + c_2 S[\
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义清晰，方法优雅（轻量 RL 策略 + 冻结 LLM），实验充分跨多个验证器/数据集/原子性水平。局限在于仅关注原子性一个维度，且置信度-准确率不完全对齐的问题值得进一步探索。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RePanda: Pandas-powered Tabular Verification and Reasoning](repanda_pandas-powered_tabular_verification_and_reasoning.md)
+- [Entropy-UID: A Method for Optimizing Information Density](entropy-uid_a_method_for_optimizing_information_density.md)
+- [RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation](rmoa_optimizing_mixture-of-agents_through_diversity_maximization_and_residual_co.md)
+- [Quantifying Lexical Semantic Shift via Unbalanced Optimal Transport](quantifying_lexical_semantic_shift_via_unbalanced_optimal_transport.md)
+- [Principled Algorithms for Optimizing Generalized Metrics in Binary Classification](../../ICML2025/others/principled_algorithms_for_optimizing_generalized_metrics_in_binary_classificatio.md)
+
+<!-- RELATED:END -->

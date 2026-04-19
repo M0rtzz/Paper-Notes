@@ -119,3 +119,15 @@ $$\min_{\lambda \geq 0} \max_{D \in \Delta\Pi} L(D, \lambda) = \mathbb{E}_{\pi \
 - **实验充分度**: ⭐⭐⭐⭐☆ — 8个任务、多种消融，但缺乏真实场景验证
 - **写作质量**: ⭐⭐⭐⭐☆ — 理论推导清晰，从通用到实用的层次递进设计合理
 - **价值**: ⭐⭐⭐⭐☆ — 为离线安全 RL 提供了实用可靠的新方案，即插即用特性有实际工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](../../ICML2025/reinforcement_learning/online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [Extreme Value Policy Optimization for Safe Reinforcement Learning](../../ICML2025/reinforcement_learning/extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
+- [Gradient-Variation Online Adaptivity for Accelerated Optimization with Hölder Smoothness](gradient-variation_online_adaptivity_for_accelerated_optimization_with_hölder_sm.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+
+<!-- RELATED:END -->

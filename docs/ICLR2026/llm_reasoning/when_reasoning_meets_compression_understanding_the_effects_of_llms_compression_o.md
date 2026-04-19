@@ -130,3 +130,15 @@ DeepSeek-R1 及其压缩变体在 4 个推理基准上的表现：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 3 类压缩方法 × 4 个模型族 × 4 个数据集，含验证实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，发现明确可操作
 - 价值: ⭐⭐⭐⭐⭐ 三大发现对 LRM 压缩研究有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+- [RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
+- [Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
+- [Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models](dynamics-predictive_sampling_for_active_rl_finetuning_of_large_reasoning_models.md)
+- [When Shallow Wins: Silent Failures and the Depth-Accuracy Paradox in Latent Reasoning](when_shallow_wins_silent_failures_and_the_depth-accuracy_paradox_in_latent_reaso.md)
+
+<!-- RELATED:END -->

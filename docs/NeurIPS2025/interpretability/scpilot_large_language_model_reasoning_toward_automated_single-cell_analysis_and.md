@@ -111,3 +111,15 @@ scPilot是training-free框架，不微调LLM。所有推理能力来自prompt en
 - 实验充分度: ⭐⭐⭐⭐ 9个数据集、3个任务、多个LLM和baseline，但GRN任务的提升幅度有限
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但数学形式化有些过度符号化
 - 价值: ⭐⭐⭐⭐⭐ 对计算生物学社区有变革性影响——展示了LLM作为"科学推理伙伴"而非"代码生成器"的可能性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Principle Discovery for Language Model Self-Improvement](latent_principle_discovery_for_language_model_self-improvement.md)
+- [Probabilistic Token Alignment for Large Language Model Fusion](probabilistic_token_alignment_for_large_language_model_fusion.md)
+- [Encoding and Understanding Astrophysical Information in Large Language Model-Generated Summaries](encoding_and_understanding_astrophysical_information_in_large_language_model-gen.md)
+- [Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
+- [Curvature Tuning: Provable Training-free Model Steering From a Single Parameter](curvature_tuning_provable_training-free_model_steering_from_a_single_parameter.md)
+
+<!-- RELATED:END -->

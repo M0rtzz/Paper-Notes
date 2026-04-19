@@ -126,3 +126,15 @@ ATPrompt 将传统的"软 prompt + 类别 token"格式改造为"属性软 prompt
 - 实验充分度: ⭐⭐⭐⭐⭐ 11 个数据集×5 个基线×3 种实验设置，消融极其详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 动机-方法-实验逻辑清晰，与现有方法的架构比较图直观
 - 价值: ⭐⭐⭐⭐ 作为即插即用模块具有很高的实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SABRE-FL: Selective and Accurate Backdoor Rejection for Federated Prompt Learning](../../ICLR2026/object_detection/sabre-fl_selective_and_accurate_backdoor_rejection_for_federated_prompt_learning.md)
+- [FG-CLIP: Fine-Grained Visual and Textual Alignment](../../ICML2025/object_detection/fg-clip_fine-grained_visual_and_textual_alignment.md)
+- [UPRE: Zero-Shot Domain Adaptation for Object Detection via Unified Prompt and Representation Enhancement](upre_zero-shot_domain_adaptation_for_object_detection_via_unified_prompt_and_rep.md)
+- [Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning](../../AAAI2026/object_detection/resource_efficient_sleep_staging_via_multi-level_masking_and_prompt_learning.md)
+- [TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking](../../CVPR2026/object_detection/tiacam_text-anchored_invariant_feature_learning_with_auto-augmentation_for_camer.md)
+
+<!-- RELATED:END -->

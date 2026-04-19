@@ -132,3 +132,15 @@ HippoMM 准确率最高，且比 VideoRAG 快 5 倍以上。
 - 实验充分度: ⭐⭐⭐⭐ 消融详尽，自建基准有价值，但外部基准评估有限
 - 写作质量: ⭐⭐⭐⭐ 生物映射解释清楚，但系统流程偏复杂
 - 价值: ⭐⭐⭐⭐ 提出了一种有原则的长视频理解范式，自建基准可推动跨模态记忆研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Ego-Exo Correspondence with Long-Term Memory](../../NeurIPS2025/segmentation/robust_ego-exo_correspondence_with_long-term_memory.md)
+- [PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding](../../NeurIPS2025/segmentation/partonomy_large_multimodal_models_with_part-level_visual_understanding.md)
+- [Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](../../CVPR2025/segmentation/holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
+- [SAM2Long: Enhancing SAM 2 for Long Video Segmentation with a Training-Free Memory Tree](../../ICCV2025/segmentation/sam2long_enhancing_sam_2_for_long_video_segmentation_with_a.md)
+- [SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semanticguided_modalityaware_segmentation_for.md)
+
+<!-- RELATED:END -->

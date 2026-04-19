@@ -139,3 +139,15 @@ $$\text{diff-bias}_{\text{disamb}} = \frac{n_{bb}}{n_b} - \frac{n_{cc}}{n_c}$$
 - **实验充分度**: ⭐⭐⭐⭐ — 10个模型（base+instruct各5个）× 2子集 × 2上下文类型，评估覆盖全面
 - **写作质量**: ⭐⭐⭐⭐ — 翻译挑战的讨论非常详细且具有启发性，是本文最有价值的部分
 - **价值**: ⭐⭐⭐⭐ — 填补了德语偏见评估的空白，翻译过程中的发现对多语言偏见研究社区有重要警示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [taz2024full: Analysing German Newspapers for Gender Bias and Discrimination across Decades](taz2024full_analysing_german_newspapers_for_gender_bias_and_discrimination_acros.md)
+- [Translate With Care: Addressing Gender Bias, Neutrality, and Reasoning in Large Language Model Translations](translate_with_care_addressing_gender_bias_neutrality_and_reasoning_in_large_lan.md)
+- [GRACE: Graph-Based Contextual Debiasing for Fair Visual Question Answering](../../ECCV2024/social_computing/grace_graph-based_contextual_debiasing_for_fair_visual_question_answering.md)
+- [Auto-Search and Refinement: An Automated Framework for Gender Bias Mitigation in LLMs](../../NeurIPS2025/social_computing/auto-search_and_refinement_an_automated_framework_for_gender_bias_mitigation_in_.md)
+- [Exploring Multimodal Challenges in Toxic Chinese Detection: Taxonomy, Benchmark, and Findings](exploring_multimodal_challenges_in_toxic_chinese_detection_taxonomy_benchmark_an.md)
+
+<!-- RELATED:END -->

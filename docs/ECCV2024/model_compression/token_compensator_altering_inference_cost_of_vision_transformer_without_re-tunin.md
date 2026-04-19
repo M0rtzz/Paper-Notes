@@ -157,3 +157,15 @@ $$\mathcal{L} = \mathcal{L}_{KD}\left(\hat{\mathcal{M}}_m \oplus \left(\bigoplus
 | 实用性 | 4.5 |
 | 写作质量 | 4 |
 | 总体 | 4 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
+- [BHViT: Binarized Hybrid Vision Transformer](../../CVPR2025/model_compression/bhvit_binarized_hybrid_vision_transformer.md)
+- [Isomorphic Pruning for Vision Models](isomorphic_pruning_for_vision_models.md)
+- [Uncertainty-Driven Spectral Compressive Imaging with Spatial-Frequency Transformer](uncertainty-driven_spectral_compressive_imaging_with_spatial-frequency_transform.md)
+- [EA-ViT: Efficient Adaptation for Elastic Vision Transformer](../../ICCV2025/model_compression/ea-vit_efficient_adaptation_for_elastic_vision_transformer.md)
+
+<!-- RELATED:END -->

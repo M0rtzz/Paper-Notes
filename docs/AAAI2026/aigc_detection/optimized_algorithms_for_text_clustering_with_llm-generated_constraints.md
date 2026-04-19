@@ -125,4 +125,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 形式化表述清晰，算法伪代码规范，但部分符号较密
 - 价值: ⭐⭐⭐⭐ 对 LLM 辅助半监督学习的查询效率优化有普遍参考价值
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [Synthesizing Performance Constraints for Evaluating and Improving Code Efficiency](../../NeurIPS2025/aigc_detection/synthesizing_performance_constraints_for_evaluating_and_improving_code_efficienc.md)
+- [Comparing LLM-generated and human-authored news text using formal syntactic theory](../../ACL2025/aigc_detection/llm_vs_human_formal_syntax.md)
+- [Low-Perplexity LLM-Generated Sequences and Where To Find Them](../../ACL2025/aigc_detection/low-perplexity_llm-generated_sequences_and_where_to_find_them.md)
+- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+
+<!-- RELATED:END -->

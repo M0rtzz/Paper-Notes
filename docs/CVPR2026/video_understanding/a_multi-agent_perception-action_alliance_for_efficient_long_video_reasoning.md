@@ -129,3 +129,15 @@ A4VL 在 MLVU 长视频上仅需 74 秒/样本，比 GPT-4o 快 42%，比 TraveL
 - 实验充分度: ⭐⭐⭐⭐⭐ (5个基准、28个对比、多维消融，非常全面)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图示丰富，公式表述规范)
 - 价值: ⭐⭐⭐⭐ (无训练框架实用性强，但高硬件需求限制了部分应用场景)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A4VL: A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a4vl_multiagent_long_video_reasoning.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochat-m1_collaborative_policy_planning_for_video_understanding_via_multi-age.md)
+- [MINERVA-Cultural: A Benchmark for Cultural and Multilingual Long Video Reasoning](minerva-cultural_a_benchmark_for_cultural_and_multilingual_long_video_reasoning.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_for_efficient_video_understanding.md)
+- [VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking](videoseek_long-horizon_video_agent_with_tool-guided_seeking.md)
+
+<!-- RELATED:END -->

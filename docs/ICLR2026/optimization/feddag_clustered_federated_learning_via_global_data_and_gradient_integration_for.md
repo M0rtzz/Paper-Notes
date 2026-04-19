@@ -110,3 +110,15 @@ FedDAG 分为两个核心组件：(1) 相似度计算与自适应聚类：融合
 - 实验充分度: ⭐⭐⭐⭐ 四种异构类型的评估较全面
 - 写作质量: ⭐⭐⭐ 内容充实但结构略显复杂
 - 价值: ⭐⭐⭐ 对聚类 FL 有实际改进，但场景较为特定
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data](../../AAAI2026/optimization/smofi_step-wise_momentum_fusion_for_split_federated_learning_on_heterogeneous_da.md)
+- [Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data](../../ICCV2025/optimization/federated_prompt-tuning_with_heterogeneous_and_incomplete_multimodal_client_data.md)
+- [DeepAFL: Deep Analytic Federated Learning](deepafl_deep_analytic_federated_learning.md)
+- [FedSWA: Improving Generalization in Federated Learning with Highly Heterogeneous Data via Momentum-Based Stochastic Controlled Weight Averaging](../../ICML2025/optimization/fedswa_improving_generalization_in_federated_learning_with_highly_heterogeneous_.md)
+- [Data Heterogeneity and Forgotten Labels in Split Federated Learning](../../AAAI2026/optimization/data_heterogeneity_and_forgotten_labels_in_split_federated_learning.md)
+
+<!-- RELATED:END -->

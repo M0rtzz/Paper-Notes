@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ GLUE+MTEB+IMDB+压力测试+6种backbone，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，从理论到实践逻辑完整
 - 价值: ⭐⭐⭐⭐⭐ 高效实用，对冻结 LLM 的下游应用有即时价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Repetition-Invariant Representations for Polymer Informatics](../../NeurIPS2025/graph_learning/learning_repetition-invariant_representations_for_polymer_informatics.md)
+- [Beyond Simple Graphs: Neural Multi-Objective Routing on Multigraphs](beyond_simple_graphs_neural_multi-objective_routing_on_multigraphs.md)
+- [Banyan: Improved Representation Learning with Explicit Structure](../../ICML2025/graph_learning/banyan_improved_representation_learning_with_explicit_structure.md)
+- [Graph Tokenization for Bridging Graphs and Transformers](graph_tokenization_for_bridging_graphs_and_transformers.md)
+- [Revisiting Node Affinity Prediction in Temporal Graphs](revisiting_node_affinity_prediction_in_temporal_graphs.md)
+
+<!-- RELATED:END -->

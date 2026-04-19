@@ -109,3 +109,15 @@ PROMO建立在FLUX.1-dev（Flow Matching DiT）骨干上，采用LoRA（rank=128
 - 实验充分度: ⭐⭐⭐⭐⭐ 在VITON-HD、DressCode、In-The-Wild三个数据集上评测，与VTON方法和通用编辑模型全面对比，消融实验覆盖所有关键设计，还有与商业产品的用户研究
 - 写作质量: ⭐⭐⭐⭐ 系统设计讲解清晰，图表丰富，但部分公式符号定义可以更紧凑
 - 价值: ⭐⭐⭐⭐ 工业导向的实用框架，多个技术设计可迁移到其他条件生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Garments2Look: A Multi-Reference Dataset for High-Fidelity Outfit-Level Virtual Try-On with Clothing and Accessories](garments2look_a_multi-reference_dataset_for_high-fidelity_outfit-level_virtual_t.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [FontCrafter: High-Fidelity Element-Driven Artistic Font Creation with Visual In-Context Generation](fontcrafter_high-fidelity_element-driven_artistic_font_creation_with_visual_in-c.md)
+- [HiFi-Inpaint: Towards High-Fidelity Reference-Based Inpainting for Generating Detail-Preserving Human-Product Images](hifi-inpaint_towards_high-fidelity_reference-based_inpainting_for_generating_det.md)
+
+<!-- RELATED:END -->

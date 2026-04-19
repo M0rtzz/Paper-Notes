@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 9种方法×6种概念的全面对比，单记忆和多记忆分析双重验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，图表设计精美（尤其Fig. 1-3的可视化），论证逻辑严密
 - 价值: ⭐⭐⭐⭐ 对概念擦除方向的重要警示，但未提供解决方案，实用性有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-Unlearning on Diffusion Models: Preventing Relearning Unlearned Concepts](../../ICCV2025/image_generation/meta-unlearning_on_diffusion_models_preventing_relearning_unlearned_concepts.md)
+- [When Are Concepts Erased From Diffusion Models?](../../NeurIPS2025/image_generation/when_are_concepts_erased_from_diffusion_models.md)
+- [Concept Replacer: Replacing Sensitive Concepts in Diffusion Models via Precision Localization](concept_replacer_replacing_sensitive_concepts_in_diffusion_models_via_precision_.md)
+- [Nonparametric Identification of Latent Concepts](../../ICML2025/image_generation/nonparametric_identification_of_latent_concepts.md)
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](../../NeurIPS2025/image_generation/emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+
+<!-- RELATED:END -->

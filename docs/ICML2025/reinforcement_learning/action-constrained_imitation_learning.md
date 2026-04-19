@@ -119,3 +119,15 @@ MPC生成候选滚出时采用交叉熵方法(CEM)迭代优化动作序列分布
 
 ### 进度参数自适应更新
 每步MPC选择最优轨迹后，通过DTW对齐矩阵反向追踪对齐到专家轨迹的位置，自动更新进度参数，允许Agent在困难段落用更多步骤。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BEAST: Efficient Tokenization of B-Splines Encoded Action Sequences for Imitation Learning](../../NeurIPS2025/reinforcement_learning/beast_efficient_tokenization_of_b-splines_encoded_action_sequences_for_imitation.md)
+- [Automaton Constrained Q-Learning](../../NeurIPS2025/reinforcement_learning/automaton_constrained_q-learning.md)
+- [Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
+- [Quantifying Generalisation in Imitation Learning](../../NeurIPS2025/reinforcement_learning/quantifying_generalisation_in_imitation_learning.md)
+- [Controlling Underestimation Bias in Constrained Reinforcement Learning for Safe Exploration](controlling_underestimation_bias_in_constrained_reinforcement_learning_for_safe_.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 模型 × 2 任务 × 多 α 水平全面验证，鲁棒性诊断完善，但缺真实湿实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，问题动机和方法逻辑紧密衔接
 - 价值: ⭐⭐⭐⭐⭐ 直接影响生成式药物发现的实际部署决策，提供了从"试试看"到"有保证"的范式转变
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
+- [Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](../../NeurIPS2025/medical_imaging/pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
+- [UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](../../ICML2025/medical_imaging/unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
+- [AFD-INSTRUCTION: A Comprehensive Antibody Instruction Dataset with Functional Annotations for LLM-Based Understanding and Design](afd-instruction_a_comprehensive_antibody_instruction_dataset_with_functional_ann.md)
+- [Multivariate Conformal Selection](../../ICML2025/medical_imaging/multivariate_conformal_selection.md)
+
+<!-- RELATED:END -->

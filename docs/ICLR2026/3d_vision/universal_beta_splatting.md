@@ -159,3 +159,15 @@ PSNR 提升最高达 **+8.27 dB**（6DGS-PBR 数据集）。
 - **实用性**: ⭐⭐⭐⭐⭐ — 即插即用兼容性 + 实时渲染
 - **清晰度**: ⭐⭐⭐⭐ — 数学推导清晰，但符号较多
 - **意义**: ⭐⭐⭐⭐⭐ — 为辐射场渲染建立了通用基元框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SplatTalk: 3D VQA with Gaussian Splatting](../../ICCV2025/3d_vision/splattalk_3d_vqa_with_gaussian_splatting.md)
+- [Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk](topology-preserved_auto-regressive_mesh_generation_in_the_manner_of_weaving_silk.md)
+- [UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction](urbangs_a_scalable_and_efficient_architecture_for_geometrically_accurate_large-s.md)
+- [UFO-4D: Unposed Feedforward 4D Reconstruction from Two Images](ufo-4d_unposed_feedforward_4d_reconstruction_from_two_images.md)
+- [StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting](../../ICCV2025/3d_vision/stochasticsplats_stochastic_rasterization_for_sorting-free_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

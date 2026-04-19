@@ -105,3 +105,15 @@ SelfElicit 在所有模型-数据集组合上均取得最佳或接近最佳的 E
 | 实验充分性 | ⭐⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐⭐ |
 | 总体推荐 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improve Language Model and Brain Alignment via Associative Memory](improve_language_model_and_brain_alignment_via_associative_memory.md)
+- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
+- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+
+<!-- RELATED:END -->

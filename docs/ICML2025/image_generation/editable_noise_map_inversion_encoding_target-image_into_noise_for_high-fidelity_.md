@@ -192,3 +192,15 @@ ENM Inversion 作为即插即用的反演模块，可直接替换以下编辑方
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多种编辑方法 × 多种基线 × 图像/视频 × 消融 × 超参分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述到位，图表丰富
 - 综合价值: ⭐⭐⭐⭐ — 实用性强，即插即用，但受限于 SD v1 生态
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Position Encoding in Diffusion U-Net for Training-free High-resolution Image Generation](exploring_position_encoding_in_diffusion_u-net_for_training-free_high-resolution.md)
+- [Taming Rectified Flow for Inversion and Editing](taming_rectified_flow_for_inversion_and_editing.md)
+- [Rectified Noise: A Generative Model Using Positive-incentive Noise](../../AAAI2026/image_generation/rectified_noise_a_generative_model_using_positive-incentive_noise.md)
+- [Diffusion-based Image-to-Image Translation by Noise Correction via Prompt Interpolation](../../ECCV2024/image_generation/diffusion-based_image-to-image_translation_by_noise_correction_via_prompt_interp.md)
+- [Improved Noise Schedule for Diffusion Training](../../ICCV2025/image_generation/improved_noise_schedule_for_diffusion_training.md)
+
+<!-- RELATED:END -->

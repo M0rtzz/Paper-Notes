@@ -143,3 +143,15 @@ TripTailor 包含三个部分：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多种LLM、多种agent策略、Easy/Hard难度、客观+LLM+RM三种评估
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，数据集构建流程描述详细
 - **价值**: ⭐⭐⭐⭐ — 为LLM旅行规划的评估提供了可靠的真实世界基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RuleArena: A Benchmark for Rule-Guided Reasoning with LLMs in Real-World Scenarios](rulearena_rule_guided_reasoning.md)
+- [AntiLeakBench: Preventing Data Contamination by Automatically Constructing Benchmarks with Updated Real-World Knowledge](antileakbench_preventing_data_contamination_by_automatically_constructing_benchm.md)
+- [A Real-world Display Inverse Rendering Dataset](../../ICCV2025/llm_evaluation/a_real-world_display_inverse_rendering_dataset.md)
+- [Time Travel is Cheating: Going Live with DeepFund for Real-Time Fund Investment Benchmarking](../../NeurIPS2025/llm_evaluation/time_travel_is_cheating_going_live_with_deepfund_for_real-time_fund_investment_b.md)
+- [EcomScriptBench: A Multi-task Benchmark for E-commerce Script Planning via Step-wise Intention-Driven Product Association](ecomscriptbench.md)
+
+<!-- RELATED:END -->

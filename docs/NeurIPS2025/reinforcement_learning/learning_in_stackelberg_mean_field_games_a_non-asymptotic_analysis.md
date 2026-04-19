@@ -122,3 +122,15 @@ $$\phi_\omega(b|s) = \frac{\exp(\omega(s,b))}{\sum_{b'}\exp(\omega(s,b'))}, \qua
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献扎实，首次为SMFG提供非渐近保证，技术创新（PL条件处理）有独立价值。实验场景充分展示了方法优势。局限性在于正则化假设和同质性假设限制了直接应用范围。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics](solving_continuous_mean_field_games_deep_reinforcement_learning_for_non-stationa.md)
+- [Last Iterate Convergence in Monotone Mean Field Games](last_iterate_convergence_in_monotone_mean_field_games.md)
+- [Non-convex Entropic Mean-Field Optimization via Best Response Flow](non-convex_entropic_mean-field_optimization_via_best_response_flow.md)
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+- [Scalable Neural Incentive Design with Parameterized Mean-Field Approximation](scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)
+
+<!-- RELATED:END -->

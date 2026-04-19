@@ -109,3 +109,15 @@ SITAlign 在推理时逐 token 生成：
 - 实验充分度: ⭐⭐⭐⭐ 三个评估设置，GPT-4 评估
 - 写作质量: ⭐⭐⭐⭐ 动机有说服力，理论+实验兼备
 - 价值: ⭐⭐⭐⭐⭐ 提出对齐的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-time Alignment in Continuous Space](../../NeurIPS2025/llm_alignment/inference-time_alignment_in_continuous_space.md)
+- [MPO: An Efficient Post-Processing Framework for Mixing Diverse Preference Alignment](mpo_an_efficient_post-processing_framework_for_mixing_diverse_preference_alignme.md)
+- [Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models](layer-wise_alignment_examining_safety_alignment_across_image_encoder_layers_in_v.md)
+- [On the Robustness of Reward Models for Language Model Alignment](on_the_robustness_of_reward_models_for_language_model_alignment.md)
+- [AlphaPO: Reward Shape Matters for LLM Alignment](alphapo_reward_shape_matters_for_llm_alignment.md)
+
+<!-- RELATED:END -->

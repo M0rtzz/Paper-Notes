@@ -154,3 +154,15 @@ $$I_{\text{edit}} = \text{Inpaint}(I_{\text{warped}}, M_{\text{inpaint}})$$
 ## 评分 ⭐⭐⭐⭐
 
 方法简洁优雅，解决了拖拽编辑中精度和效率的核心痛点。600倍加速和实时预览使其具有极强的实用价值。将拖拽编辑转化为修复问题的视角新颖且有效。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](../../CVPR2026/image_generation/from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [BVINet: Unlocking Blind Video Inpainting with Zero Annotations](bvinet_unlocking_blind_video_inpainting_with_zero_annotations.md)
+- [OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting](omnipaint_mastering_object-oriented_editing_via_disentangled_insertion-removal_i.md)
+- [Dense Policy: Bidirectional Autoregressive Learning of Actions](dense_policy_bidirectional_autoregressive_learning_of_actions.md)
+- [Trans-Adapter: A Plug-and-Play Framework for Transparent Image Inpainting](trans-adapter_a_plug-and-play_framework_for_transparent_image_inpainting.md)
+
+<!-- RELATED:END -->

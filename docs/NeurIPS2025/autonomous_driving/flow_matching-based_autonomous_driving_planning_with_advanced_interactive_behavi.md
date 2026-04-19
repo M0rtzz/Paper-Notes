@@ -146,3 +146,15 @@ Val14 上 **90.43** 是首个纯学习方法突破 90 分。
 - 实验充分度: ⭐⭐⭐⭐⭐ nuPlan 三基准 + interPlan + 详尽消融 + case study
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，case study 直观
 - 价值: ⭐⭐⭐⭐⭐ 首个纯学习 90+ 的里程碑 + 交互建模新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Foundational LiDAR World Models with Efficient Latent Flow Matching](towards_foundational_lidar_world_models_with_efficient_latent_flow_matching.md)
+- [Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution](future-aware_end-to-end_driving_bidirectional_modeling_of_trajectory_planning_an.md)
+- [Prioritizing Perception-Guided Self-Supervision: A New Paradigm for Causal Modeling in End-to-End Autonomous Driving](prioritizing_perception-guided_self-supervision_a_new_paradigm_for_causal_modeli.md)
+- [UniMotion: A Unified Motion Framework for Simulation, Prediction and Planning](unimotion_a_unified_motion_framework_for_simulation_prediction_and_planning.md)
+- [DriveGPT: Scaling Autoregressive Behavior Models for Driving](../../ICML2025/autonomous_driving/drivegpt_scaling_autoregressive_behavior_models_for_driving.md)
+
+<!-- RELATED:END -->

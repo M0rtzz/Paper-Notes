@@ -149,3 +149,15 @@ ICA 模块贡献 +21.6% SRCC 提升和 +5.8% 微匹配准确率。
 - 实验充分度: ⭐⭐⭐⭐⭐ 14 个 VTON 模型、跨组泛化、人类对比、分类别评估，极其全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据集构建流程描述细致
 - 价值: ⭐⭐⭐⭐⭐ 填补了 VTON 领域缺乏标准化评估基准的空白，有望成为社区标准工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RefTon: Reference Person Shot Assist Virtual Try-on](refton_reference_person_shot_assist_virtual_try-on.md)
+- [Mobile-VTON: High-Fidelity On-Device Virtual Try-On](mobile_vton_ondevice_virtual_tryon.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [Bilevel Layer-Positioning LoRA for Real Image Dehazing](bilevel_lora_real_image_dehazing.md)
+- [UniFit: Towards Universal Virtual Try-on with MLLM-Guided Semantic Alignment](../../AAAI2026/human_understanding/unifit_towards_universal_virtual_try-on_with_mllm-guided_semantic_alignment.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ mOSCAR 的构建流程包括六个阶段：数据采集 → 语言识别 → 纯
 - **实用性** ⭐⭐⭐⭐⭐: 开源发布、CC BY 4.0 许可，直接推动多语言 mLLM 研究
 - **实验** ⭐⭐⭐⭐: 多维度评估（质量/多样性/安全性/模型训练），但仅验证了小规模模型
 - **写作** ⭐⭐⭐⭐: 管道描述详尽，但论文较长且实验部分集中在附录
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COSMMIC: Comment-Sensitive Multimodal Multilingual Indian Corpus](cosmmic_commentsensitive_multimodal_multilingual_indian_corpus.md)
+- [Towards Global AI Inclusivity: A Large-Scale Multilingual Terminology Dataset (GIST)](towards_global_ai_inclusivity_a_large-scale_multilingual_terminology_dataset_gis.md)
+- [Group then Scale: Dynamic Mixture-of-Experts Multilingual Language Model](group_then_scale_dynamic_mixture-of-experts_multilingual_language_model.md)
+- [M2rc-Eval: Massively Multilingual Repository-level Code Completion Evaluation](m2rc-eval_massively_multilingual_repository-level_code_completion_evaluation.md)
+- [Memorization Inheritance in Sequence-Level Knowledge Distillation for Neural Machine Translation](memorization_inheritance_seqkd.md)
+
+<!-- RELATED:END -->

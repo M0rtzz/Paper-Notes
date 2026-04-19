@@ -10,19 +10,19 @@ description: >-
 
 **🧪 ICML2025** · **29** 篇论文解读
 
-**[A Cross Modal Knowledge Distillation Data Augmentation Recipe For Improving Tran](a_cross_modal_knowledge_distillation_data_augmentation_recipe_for_improving_tran.md)**
+**[A Cross Modal Knowledge Distillation & Data Augmentation Recipe for Improving Transcriptomics Representations through Morphological Features](a_cross_modal_knowledge_distillation_data_augmentation_recipe_for_improving_tran.md)**
 
 :   提出 Semi-Clipped（基于 CLIP 的跨模态蒸馏方法）和 PEA（扰动嵌入增强），在弱配对数据场景下将显微镜图像的丰富形态学特征蒸馏到转录组学表征中，在保持基因表达可解释性的同时显著提升其预测能力。
 
-**[A Reasoning-Based Approach To Cryptic Crossword Clue Solving](a_reasoning-based_approach_to_cryptic_crossword_clue_solving.md)**
+**[A Reasoning-Based Approach to Cryptic Crossword Clue Solving](a_reasoning-based_approach_to_cryptic_crossword_clue_solving.md)**
 
 :   提出三阶段LLM推理pipeline（答案候选生成→wordplay解释→Python形式化验证），使用开源9B模型在Cryptonite密码填字谜数据集上实现新SOTA，关键创新在于将wordplay推理形式化为可执行Python代码并通过带hints的verifier迭代修正。
 
-**[Ab Initio Nonparametric Variable Selection For Scalable Symbolic Regression With](ab_initio_nonparametric_variable_selection_for_scalable_symbolic_regression_with.md)**
+**[Ab Initio Nonparametric Variable Selection for Scalable Symbolic Regression with Large p](ab_initio_nonparametric_variable_selection_for_scalable_symbolic_regression_with.md)**
 
 :   提出 PAN+SR 框架，通过基于 BART 的非参数变量预筛选，将高维符号回归问题降维至低维子空间，使 19 种现有 SR 方法在高维场景下均获显著性能提升。
 
-**[Avoiding Leakage Poisoning Concept Interventions Under Distribution Shifts](avoiding_leakage_poisoning_concept_interventions_under_distribution_shifts.md)**
+**[Avoiding Leakage Poisoning: Concept Interventions Under Distribution Shifts](avoiding_leakage_poisoning_concept_interventions_under_distribution_shifts.md)**
 
 :   揭示概念模型（CBM）中的"泄漏中毒"现象——绕过概念瓶颈的信息泄漏在分布偏移下反而损害预测准确率，使概念干预失效，提出 MixCEM 通过置信度门控动态决定何时使用/丢弃泄漏信息，在分布内外均保持高准确率和有效干预。
 
@@ -30,98 +30,98 @@ description: >-
 
 :   提出 CUDA 框架——将概念瓶颈模型（CBM）与无监督域适应（UDA）结合，通过松弛一致性对齐概念表示（允许域间小差异）和目标域的无标注概念推断，首次在域偏移下同时提供可解释性和跨域泛化，并提供理论保证。
 
-**[Configurable Preference Tuning With Rubric-Guided Synthetic Data](configurable_preference_tuning_with_rubric-guided_synthetic_data.md)**
+**[Configurable Preference Tuning with Rubric-Guided Synthetic Data](configurable_preference_tuning_with_rubric-guided_synthetic_data.md)**
 
 :   提出Configurable Preference Tuning (CPT)框架，通过基于细粒度rubric生成的合成偏好数据训练LLM，使模型能在推理时仅通过修改system prompt就动态调整行为风格，无需重新训练，在多个基座模型上准确率从0.52-0.68提升至0.76-0.83。
 
-**[Conformal Prediction As Bayesian Quadrature](conformal_prediction_as_bayesian_quadrature.md)**
+**[Conformal Prediction as Bayesian Quadrature](conformal_prediction_as_bayesian_quadrature.md)**
 
 :   从贝叶斯视角重新审视共形预测——证明分裂共形预测和共形风险控制都是贝叶斯求积（Bayesian Quadrature）框架的特例，提出实用的贝叶斯替代方案，提供可解释的保证和对未来损失范围的更丰富表示。
 
-**[Do Sparse Autoencoders Generalize A Case Study Of Answerability](do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)**
+**[Do Sparse Autoencoders Generalize? A Case Study of Answerability](do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)**
 
 :   本文系统评估了稀疏自编码器（SAE）提取的特征在"可回答性"（answerability）任务上的跨域泛化能力，发现 SAE 特征的域外迁移表现极不一致——在某些数据集上优于残差流线性探针，但在另一些上接近随机，揭示了当前 SAE 可解释性方法在捕获抽象概念方面的根本局限。
 
-**[Evaluating Neuron Explanations A Unified Framework With Sanity Checks](evaluating_neuron_explanations_a_unified_framework_with_sanity_checks.md)**
+**[Evaluating Neuron Explanations: A Unified Framework with Sanity Checks](evaluating_neuron_explanations_a_unified_framework_with_sanity_checks.md)**
 
 :   提出 NeuronEval 统一框架，将 19 种现有神经元解释评估方法形式化为同一数学范式，并设计 Missing Labels / Extra Labels 两项合理性检验，揭示大多数常用指标（如 Recall、AUC、top-and-random 采样下的 Correlation）不可靠，仅 Correlation(Pearson)、Cosine、AUPRC、F1 和 IoU 通过测试。
 
-**[Evolving Prompts In-Context An Open-Ended Self-Replicating Perspective](evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)**
+**[Evolving Prompts In-Context: An Open-ended, Self-replicating Perspective](evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)**
 
 :   提出 PromptQuine 框架，通过进化搜索对 ICL prompt 进行 token 级剪枝，发现将清晰示例剪成看似"乱码"的子序列反而能提升 LLM 性能，且匹配或超越 SOTA prompt 优化方法。
 
-**[Explaining Fast And Slow Abstraction And Refinement Of Provable Explanations](explaining_fast_and_slow_abstraction_and_refinement_of_provable_explanations.md)**
+**[Explaining, Fast and Slow: Abstraction and Refinement of Provable Explanations](explaining_fast_and_slow_abstraction_and_refinement_of_provable_explanations.md)**
 
 :   本文提出了一种基于抽象-细化的方法来高效计算神经网络预测的可证明充分解释（provably sufficient explanations），通过将大网络抽象为小网络来加速验证过程，解释质量有形式化保证。
 
-**[Foundation Molecular Grammar Multi-Modal Foundation Models Induce Interpretable ](foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)**
+**[Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar](foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)**
 
 :   FMG 利用多模态基础模型（MMFM）的化学知识，通过将分子渲染为图像并用文本描述，结合 prompt learning 跨模态对齐来归纳出可解释的分子图语法，替代传统依赖专家标注或启发式的语法学习方法。
 
-**[Inference-Time Decomposition Of Activations Itda A Scalable Approach To Interpre](inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)**
+**[Inference-Time Decomposition of Activations (ITDA): A Scalable Approach to Interpreting Large Language Models](inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)**
 
 :   提出 ITDA，一种基于匹配追踪（Matching Pursuit）的推理时激活分解方法，以仅 1% 的 SAE 训练成本实现可比的重构性能，可扩展到 405B 参数模型，并天然支持跨模型表示比较。
 
-**[Leveraging Predictive Equivalence In Decision Trees](leveraging_predictive_equivalence_in_decision_trees.md)**
+**[Leveraging Predictive Equivalence in Decision Trees](leveraging_predictive_equivalence_in_decision_trees.md)**
 
 :   提出将决策树转换为最小析取范式(DNF)表示，消除"预测等价性"问题，统一表示具有相同决策边界的不同决策树，进而改善变量重要性度量、缺失数据鲁棒性和特征获取成本优化。
 
-**[Mib A Mechanistic Interpretability Benchmark](mib_a_mechanistic_interpretability_benchmark.md)**
+**[MIB: A Mechanistic Interpretability Benchmark](mib_a_mechanistic_interpretability_benchmark.md)**
 
 :   提出 MIB（Mechanistic Interpretability Benchmark），包含电路定位和因果变量定位两个赛道、四个任务、五个模型，通过标准化的反事实干预评估和新指标（CPR/CMD）系统比较 MI 方法，发现 attribution + mask optimization 方法在电路定位中最优，而 SAE 特征在因果变量定位中并不优于原始神经元。
 
-**[Modeling User Behavior From Adaptive Surveys With Supplemental Context](modeling_user_behavior_from_adaptive_surveys_with_supplemental_context.md)**
+**[LANTERN: Modeling User Behavior from Adaptive Surveys with Supplemental Context](modeling_user_behavior_from_adaptive_surveys_with_supplemental_context.md)**
 
 :   提出LANTERN（Late-Attentive Network for Enriched Response Modeling），一个模块化的用户行为建模架构，将自适应调查数据作为主信号，通过交叉注意力实现后期融合，选择性门控和残差连接保持调查信号的主导地位，外部上下文（人口统计、行为日志等）仅在相关时被融入，在约35,000用户的生产级数据集上以F1=0.775显著超越纯调查基线的0.734。
 
-**[Near Optimal Decision Trees In A Split Second](near_optimal_decision_trees_in_a_split_second.md)**
+**[Near-Optimal Decision Trees in a SPLIT Second](near_optimal_decision_trees_in_a_split_second.md)**
 
 :   提出 SPLIT 算法族，通过在决策树根部附近做全局最优搜索、叶节点附近用贪心策略的混合方案，实现比全局最优方法快 100 倍以上且精度几乎无损的决策树构建。
 
-**[On The Effect Of Uncertainty On Layer-Wise Inference Dynamics](on_the_effect_of_uncertainty_on_layer-wise_inference_dynamics.md)**
+**[On the Effect of Uncertainty on Layer-wise Inference Dynamics](on_the_effect_of_uncertainty_on_layer-wise_inference_dynamics.md)**
 
 :   使用 Tuned Lens 系统分析 5 个 LLM 在 11 个数据集上各层的 token 概率演化轨迹，发现确定性和不确定性预测的层间推理动力学高度对齐（信心突变出现在相似的层），表明不确定性并不影响模型的推理动态结构，挑战了通过简单中间层特征检测不确定性的方法可行性。
 
-**[On The Power Of Context-Enhanced Learning In Llms](on_the_power_of_context-enhanced_learning_in_llms.md)**
+**[On the Power of Context-Enhanced Learning in LLMs](on_the_power_of_context-enhanced_learning_in_llms.md)**
 
 :   本文形式化定义了"上下文增强学习"（context-enhanced learning），证明在简化设定下它比标准学习的样本效率**指数级更高**，并在机制层面揭示其优势来源于更精确的梯度学习信号。
 
-**[Position We Need An Algorithmic Understanding Of Generative Ai](position_we_need_an_algorithmic_understanding_of_generative_ai.md)**
+**[Position: We Need An Algorithmic Understanding of Generative AI](position_we_need_an_algorithmic_understanding_of_generative_ai.md)**
 
 :   提出 AlgEval 框架，倡导系统性地研究生成式 AI 学习和使用的算法——包括算法原语（vocabulary）及其组合（grammar）——作为替代纯粹规模扩展的理解路径，并通过图导航任务的案例研究展示了 top-down 假说与 bottom-up 验证相结合的方法论。
 
-**[Rethinking Explainable Machine Learning As Applied Statistics](rethinking_explainable_machine_learning_as_applied_statistics.md)**
+**[Rethinking Explainable Machine Learning as Applied Statistics](rethinking_explainable_machine_learning_as_applied_statistics.md)**
 
 :   本文是一篇立场论文，提出可解释机器学习应被视为"高维函数的应用统计学"——解释算法本质上是函数的统计量（functionals），应当像传统统计量（如 p 值、置信区间）一样关注其**解释**（interpretation）问题，而非仅研究数学性质；当前文献最大的缺陷正是忽视了"解释算法的输出到底回答了哪个直觉问题"这一核心议题。
 
-**[Safetyanalyst Interpretable Transparent And Steerable Safety Moderation For Ai B](safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)**
+**[SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)**
 
 :   提出 SafetyAnalyst 框架，通过链式思维推理生成可解释的"危害-收益树"（枚举 AI 行为可能导致的有害和有益效果及其可能性/严重性/即时性），再用 28 个全可解释参数聚合为危害分数，在 prompt 安全分类上以平均 F1=0.81 超越现有审核系统（F1<0.72），同时提供可解释性、透明性和可操控性。
 
-**[Slim One-Shot Quantization And Sparsity With Low-Rank Approximation For Llm Weig](slim_one-shot_quantization_and_sparsity_with_low-rank_approximation_for_llm_weig.md)**
+**[SLiM: One-shot Quantization and Sparsity with Low-rank Approximation for LLM Weight Compression](slim_one-shot_quantization_and_sparsity_with_low-rank_approximation_for_llm_weig.md)**
 
 :   提出 SLiM，一种一次性压缩框架，将硬件友好的均匀量化、半结构化稀疏和基于显著性的低秩适配器无缝整合，在 4-bit + 2:4 稀疏条件下准确率提升最高 5.66%。
 
-**[Supernova Event Dataset Interpreting Large Language Models Personality Through C](supernova_event_dataset_interpreting_large_language_models_personality_through_c.md)**
+**[Supernova Event Dataset: Interpreting Large Language Models' Personality through Critical Event Analysis](supernova_event_dataset_interpreting_large_language_models_personality_through_c.md)**
 
 :   提出 Supernova Event Dataset（包含传记、历史事件、新闻、科学发现的 Wikipedia 文章），通过让 LLM 从长文本中抽取并排序关键事件，再由另一个 LLM 作为评判者推断目标模型的"人格特质"，揭示不同 LLM 在主观决策中的一致性行为模式差异。
 
-**[To Steer Or Not To Steer Mechanistic Error Reduction With Abstention For Languag](to_steer_or_not_to_steer_mechanistic_error_reduction_with_abstention_for_languag.md)**
+**[To Steer or Not to Steer? Mechanistic Error Reduction with Abstention for Language Models](to_steer_or_not_to_steer_mechanistic_error_reduction_with_abstention_for_languag.md)**
 
 :   提出 MERA（Mechanistic Error Reduction with Abstention），一个基于线性error estimator的原则性activation steering框架，通过约束优化推导闭式最优steering强度，并引入校准步骤确保仅在可证明有效时才进行干预，解决了传统固定steering强度导致的过度/不足steering问题。
 
-**[Towards Attributions Of Input Variables In A Coalition](towards_attributions_of_input_variables_in_a_coalition.md)**
+**[Towards Attributions of Input Variables in a Coalition](towards_attributions_of_input_variables_in_a_coalition.md)**
 
 :   本文从 AND-OR 交互的视角重新推导了 Shapley value 的计算机制，证明了不同变量划分下的归因冲突本质上源于仅覆盖联盟部分变量的交互效应，并据此定义了联盟归因指标和三个忠实度度量，实验验证其与人类直觉一致。
 
-**[Towards Flexible Perception With Visual Memory](towards_flexible_perception_with_visual_memory.md)**
+**[Towards Flexible Perception with Visual Memory](towards_flexible_perception_with_visual_memory.md)**
 
 :   将深度视觉模型的知识表示从"刻在权重里"转变为"存在外部数据库里"，用预训练编码器 + kNN 检索构建灵活的 Visual Memory，实现数据的即插即拔（添加/删除/扩展）和可解释分类，ImageNet 上达到 88.5% top-1 准确率。
 
-**[What Makes An Ensemble Un Interpretable](what_makes_an_ensemble_un_interpretable.md)**
+**[What Makes an Ensemble (Un)interpretable?](what_makes_an_ensemble_un_interpretable.md)**
 
 :   系统研究集成学习方法的可解释性问题——什么因素使集成模型难以解释，以及如何在保持预测性能的同时提高集成的可解释性，提出了量化集成可解释性的理论框架和实用的可解释集成构建方法。
 
-**[Why Is Spatial Reasoning Hard For Vlms An Attention Mechanism Perspective On Foc](why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)**
+**[Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas](why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)**
 
 :   从机制可解释性视角研究 VLM 空间推理失败的原因，发现图像 token 虽占输入 90% 但仅获 10% 注意力，且注意力的几何分布才是关键；提出 AdaptVis——基于推理时置信度自适应调整图像注意力温度的无训练解码方法，在 WhatsUp 上实现高达 50% 绝对提升。

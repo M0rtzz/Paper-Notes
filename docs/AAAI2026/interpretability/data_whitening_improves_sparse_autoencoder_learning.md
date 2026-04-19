@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐（多架构、多模型、多指标的系统评估，统计检验严谨）
 - 写作质量: ⭐⭐⭐⭐⭐（理论分析清晰，可视化直观，叙事流畅）
 - 价值: ⭐⭐⭐⭐（对 SAE 可解释性社区有实际指导意义，简单易用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SALVE: Sparse Autoencoder-Latent Vector Editing for Mechanistic Control of Neural Networks](../../ICLR2026/interpretability/salve_sparse_autoencoder-latent_vector_editing_for_mechanistic_control_of_neural.md)
+- [Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](../../ICLR2026/interpretability/behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+- [FastDINOv2: Frequency Based Curriculum Learning Improves Robustness and Training Speed](../../NeurIPS2025/interpretability/fastdinov2_frequency_based_curriculum_learning_improves_robustness_and_training_.md)
+- [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
+- [LORE: Jointly Learning the Intrinsic Dimensionality and Relative Similarity Structure from Ordinal Data](../../ICLR2026/interpretability/lore_jointly_learning_the_intrinsic_dimensionality_and_relative_similarity_struc.md)
+
+<!-- RELATED:END -->

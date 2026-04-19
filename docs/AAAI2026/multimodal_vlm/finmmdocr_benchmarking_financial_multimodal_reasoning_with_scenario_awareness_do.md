@@ -151,3 +151,15 @@ FinMMDocR 由1200道中英双语（各600题）数值推理问题组成，每题
 - 实验充分度: ⭐⭐⭐⭐⭐ （26种配置+RAG分析+错误分析，非常全面）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，但部分细节在附录较多）
 - 价值: ⭐⭐⭐⭐⭐ （填补金融多模态推理评估空白，实用价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FRIEDA: Benchmarking Multi-Step Cartographic Reasoning in Vision-Language Models](../../ICLR2026/multimodal_vlm/frieda_benchmarking_multi-step_cartographic_reasoning_in_vision-language_models.md)
+- [URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding](urag_unified_retrieval_and_generation_in_multimodal_llms_for.md)
+- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](../../ACL2025/multimodal_vlm/longdocurl_multimodal_long_doc.md)
+- [Index-Preserving Lightweight Token Pruning for Efficient Document Understanding](../../ICLR2026/multimodal_vlm/index-preserving_lightweight_token_pruning_for_efficient_document_understanding_.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+
+<!-- RELATED:END -->

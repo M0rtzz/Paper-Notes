@@ -130,3 +130,15 @@ $$\max_{\pi} \Sigma_i \log \sigma\left(\frac{1}{\beta} \log \frac{\pi(y_{i,1}|x_
 - **实验充分度**: ⭐⭐⭐⭐ — 4个数据集、多种设置、消融实验+多样性分析+case study，非常充分
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述详细，图示直观
 - **价值**: ⭐⭐⭐⭐ — 对few-shot RE实践有直接指导意义，方法可推广到其他任务的数据增强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Variational Approach for Mitigating Entity Bias in Relation Extraction](a_variational_approach_for_mitigating_entity_bias_in_relation_extraction.md)
+- [Rethinking Semantic Parsing for Large Language Models: Enhancing LLM Performance with Semantic Hints](rethinking_semantic_parsing_for_large_language_models_enhancing_llm_performance_.md)
+- [Towards a More Generalized Approach in Open Relation Extraction](generalized_open_relation_extract.md)
+- [Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing](disambiguate_first_parse_later_generating_interpretations_for_ambiguity_resoluti.md)
+- [Language Models and Logic Programs for Trustworthy Tax Reasoning](../../AAAI2026/nlp_understanding/language_models_and_logic_programs_for_trustworthy_tax_reasoning.md)
+
+<!-- RELATED:END -->

@@ -152,3 +152,15 @@ $$L = L_{zero} + \alpha_1 L_{field} + \alpha_2 L_{dist} + \alpha_3 L_{CD}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — ShapeNet/ABC/FAMOUS/SRB/3D Scene五个数据集，含边缘Chamfer距离等针对性指标，消融全面
 - **写作质量**: ⭐⭐⭐⭐ — 公式推导清晰，图示直观解释了滤波优于均值的原因
 - **实用价值**: ⭐⭐⭐⭐ — 作为即插即用模块可广泛集成到现有SDF学习框架中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ray-Distance Volume Rendering for Neural Scene Reconstruction](ray-distance_volume_rendering_for_neural_scene_reconstruction.md)
+- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [SEED: A Simple and Effective 3D DETR in Point Clouds](seed_a_simple_and_effective_3d_detr_in_point_clouds.md)
+- [3D Single-Object Tracking in Point Clouds with High Temporal Variation](3d_single-object_tracking_in_point_clouds_with_high_temporal_variation.md)
+- [FLAT: Flux-Aware Imperceptible Adversarial Attacks on 3D Point Clouds](flat_flux-aware_imperceptible_adversarial_attacks_on_3d_point_clouds.md)
+
+<!-- RELATED:END -->

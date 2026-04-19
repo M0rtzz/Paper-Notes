@@ -241,3 +241,15 @@ Flow 模型（尤其是经过 rectification 微调的）在中间步骤的后验
 - 实验充分度: ⭐⭐⭐⭐ — 两个主要任务 + 消融实验 + 附录中的美学生成和 Flow vs Diffusion 对比，但缺少视频实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，从问题动机到方法再到实验逻辑链完整，图表质量高
 - 价值: ⭐⭐⭐⭐ — 为 Flow 模型生态引入了推理时扩展能力，实用性强，但推理开销限制了大规模部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [Tiny Inference-Time Scaling with Latent Verifiers](../../CVPR2026/image_generation/tiny_inference-time_scaling_with_latent_verifiers.md)
+- [Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models](../../ICML2025/image_generation/performance_plateaus_in_inference-time_scaling_for_text-to-image_diffusion_witho.md)
+- [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [Ψ-Sampler: Initial Particle Sampling for SMC-Based Inference-Time Reward Alignment in Score Models](psi-sampler_initial_particle_sampling_for_smc-based_inference-time_reward_alignm.md)
+
+<!-- RELATED:END -->

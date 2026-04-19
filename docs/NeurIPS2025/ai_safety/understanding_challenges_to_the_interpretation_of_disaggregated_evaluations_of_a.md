@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 以理论分析为主，实验主要用于验证理论性质
 - 写作质量: ⭐⭐⭐⭐⭐ 论证严谨缜密，因果图的使用使复杂问题可视化
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 公平性评估实践有深远影响，应成为所有做分组评估者的必读文献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CTRL-ALT-DECEIT: Sabotage Evaluations for Automated AI R&D](ctrl-alt-deceit_sabotage_evaluations_for_automated_ai_rd.md)
+- [Matchings Under Biased and Correlated Evaluations](matchings_under_biased_and_correlated_evaluations.md)
+- [Distributed and Decentralised Training: Technical Governance Challenges in a Shifting AI Landscape](../../ICML2025/ai_safety/distributed_and_decentralised_training_technical_governance_challenges_in_a_shif.md)
+- [Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification](keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)
+- [Understanding and Improving Adversarial Robustness of Neural Probabilistic Circuits](understanding_and_improving_adversarial_robustness_of_neural_probabilistic_circu.md)
+
+<!-- RELATED:END -->

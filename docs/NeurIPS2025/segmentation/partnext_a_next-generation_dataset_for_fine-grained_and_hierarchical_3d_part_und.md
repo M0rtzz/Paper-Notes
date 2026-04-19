@@ -177,3 +177,15 @@ PartNeXt 的构建包含四个环节：
 - 实验充分度: ⭐⭐⭐⭐ 分割和问答双基准测试全面，Point-SAM 消融有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，图表精美，数据统计详尽
 - 价值: ⭐⭐⭐⭐⭐ 高质量数据集对社区有长期价值，基准测试揭示了重要研究缺口
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GTPBD: A Fine-Grained Global Terraced Parcel and Boundary Dataset](gtpbd_a_fine-grained_global_terraced_parcel_and_boundary_dataset.md)
+- [LangHOPS: Language Grounded Hierarchical Open-Vocabulary Part Segmentation](langhops_language_grounded_hierarchical_open-vocabulary_part_segmentation.md)
+- [FineRS: Fine-grained Reasoning and Segmentation of Small Objects with Reinforcement Learning](finers_fine-grained_reasoning_and_segmentation_of_small_objects_with_reinforceme.md)
+- [PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding](partonomy_large_multimodal_models_with_part-level_visual_understanding.md)
+- [Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation](../../CVPR2025/segmentation/fine-grained_image-text_correspondence_with_cost_aggregation_for_open-vocabulary.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 静态+视频+AMT 用户研究+消融，较全面
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰
 - 价值: ⭐⭐⭐⭐ 统一框架对影视、AR 应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LumiNet: Latent Intrinsics Meets Diffusion Models for Indoor Scene Relighting](luminet_latent_intrinsics_meets_diffusion_models_for_indoor_scene_relighting.md)
+- [UniLumos: Fast and Unified Image and Video Relighting with Physics-Plausible Feedback](../../NeurIPS2025/image_generation/unilumos_fast_and_unified_image_and_video_relighting_with_physics-plausible_feed.md)
+- [Learning Latent Proxies for Controllable Single-Image Relighting](../../CVPR2026/image_generation/learning_latent_proxies_for_controllable_single-image_relighting.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [PI-Light: Physics-Inspired Diffusion for Full-Image Relighting](../../ICLR2026/image_generation/pi-light_physics-inspired_diffusion_for_full-image_relighting.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ FRACTAL 由三个关键组件组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个数据集、4 类任务、多种基线和变体、端到端微调验证
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，但符号较多，部分段落较密集
 - 价值: ⭐⭐⭐⭐ 对 LLM 评估和 RLHF 的细粒度反馈有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TROVE: A Challenge for Fine-Grained Text Provenance via Source Sentence Tracing and Relationship Classification](trove_a_challenge_for_finegrained_text.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [Guidelines for Fine-grained Sentence-level Arabic Readability Annotation](guidelines_for_fine-grained_sentence-level_arabic_readability_annotation.md)
+
+<!-- RELATED:END -->

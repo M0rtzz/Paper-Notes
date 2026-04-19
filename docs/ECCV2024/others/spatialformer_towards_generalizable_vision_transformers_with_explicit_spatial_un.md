@@ -123,3 +123,15 @@ SpatialFormer接收图像patch embedding作为image token（上下文token），
 - 实验充分度: ⭐⭐⭐⭐ 覆盖分类、分割、2D/3D检测多个任务，消融较完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述系统，但代码未完整开源略有遗憾
 - 价值: ⭐⭐⭐⭐ 空间token的思路对ViT后续设计有启发，但尚需更广泛验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AttnZero: Efficient Attention Discovery for Vision Transformers](attnzero_efficient_attention_discovery_for_vision_transformers.md)
+- [Enhancing Transformers for Generalizable First-Order Logical Entailment](../../ACL2025/others/enhancing_fol_entailment.md)
+- [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
+- [Synergy of Sight and Semantics: Visual Intention Understanding with CLIP](synergy_of_sight_and_semantics_visual_intention_understanding_with_clip.md)
+- [The Counting Power of Transformers](../../ICLR2026/others/the_counting_power_of_transformers.md)
+
+<!-- RELATED:END -->

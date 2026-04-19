@@ -147,3 +147,15 @@ FP32 vs INT8量化精度对比：
 - 实验充分度: ⭐⭐⭐ 覆盖多芯片平台和多用例，有精度-延迟-内存的全面KPI分析，但用例种类有限（主要2-4个）
 - 写作质量: ⭐⭐⭐ 框架描述清晰，但论文结构稍显堆砌，部分图表重复
 - 价值: ⭐⭐⭐⭐ 对移动端GenAI部署有直接实用价值，解决了工业界真实痛点——多任务共享单模型部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [All-in-One Slider for Attribute Manipulation in Diffusion Models](all_in_one_slider_attribute_manipulation.md)
+- [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
+- [Multi-Aspect Cross-modal Quantization for Generative Recommendation](../../AAAI2026/image_generation/multi-aspect_cross-modal_quantization_for_generative_recommendation.md)
+- [WaDi: Weight Direction-aware Distillation for One-step Image Synthesis](wadi_weight_direction-aware_distillation_for_one-step_image_synthesis.md)
+- [All-atom Diffusion Transformers: Unified Generative Modelling of Molecules and Materials](../../ICML2025/image_generation/all-atom_diffusion_transformers_unified_generative_modelling_of_molecules_and_ma.md)
+
+<!-- RELATED:END -->

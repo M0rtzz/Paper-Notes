@@ -171,3 +171,15 @@ LocAgent 在所有级别上全面领先。
 ⭐⭐⭐⭐（4/5）
 
 本文解决了代码定位中的核心痛点——跨文件依赖追踪，图表示和统一工具设计简洁有效。微调开源模型降低成本的思路实用。遗憾的是仅限 Python，且 Loc-Bench 的安全和性能类别样本偏少。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Lighthouse of Language: Enhancing LLM Agents via Critique-Guided Improvement](../../NeurIPS2025/llm_agent/the_lighthouse_of_language_enhancing_llm_agents_via_critique-guided_improvement.md)
+- [Distilling LLM Agent into Small Models with Retrieval and Code Tools](../../NeurIPS2025/llm_agent/distilling_llm_agent_into_small_models_with_retrieval_and_co.md)
+- [Reflection-Driven Control for Trustworthy Code Agents](../../AAAI2026/llm_agent/reflection-driven_control_for_trustworthy_code_agents.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](../../AAAI2026/llm_agent/agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)
+
+<!-- RELATED:END -->

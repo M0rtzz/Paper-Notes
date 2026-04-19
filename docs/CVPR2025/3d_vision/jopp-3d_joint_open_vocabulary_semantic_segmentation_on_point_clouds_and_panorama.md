@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+消融+弱监督/无监督对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式完整
 - 价值: ⭐⭐⭐⭐ 对室内场景理解有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Functionality Understanding and Segmentation in 3D Scenes](functionality_understanding_and_segmentation_in_3d_scenes.md)
+- [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
+- [P-SLCR: Unsupervised Point Cloud Semantic Segmentation via Prototypes Structure Learning and Consistent Reasoning](p-slcr_unsupervised_point_cloud_semantic_segmentation_via_prototypes_structure_l.md)
+- [BFANet: Revisiting 3D Semantic Segmentation with Boundary Feature Analysis](bfanet_revisiting_3d_semantic_segmentation_with_boundary_feature_analysis.md)
+- [Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)
+
+<!-- RELATED:END -->

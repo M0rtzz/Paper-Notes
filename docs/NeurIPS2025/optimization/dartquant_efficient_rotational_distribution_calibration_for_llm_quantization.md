@@ -136,3 +136,15 @@ DartQuant 流程：(1) 少量校准数据前向传播得到各层激活值；(2)
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型多配置全面对比，消融详尽，效率对比有说服力
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰图表丰富，动机推导自然
 - 价值: ⭐⭐⭐⭐⭐ 70B 模型单卡 3090 可校准，极大降低量化部署门槛，工程价值突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+- [Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](../../CVPR2025/optimization/automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)
+- [Weak-to-Strong Generalization under Distribution Shifts](weak-to-strong_generalization_under_distribution_shifts.md)
+- [Efficient Adaptive Federated Optimization](efficient_adaptive_federated_optimization.md)
+- [Oracle-Efficient Combinatorial Semi-Bandits](oracle-efficient_combinatorial_semi-bandits.md)
+
+<!-- RELATED:END -->

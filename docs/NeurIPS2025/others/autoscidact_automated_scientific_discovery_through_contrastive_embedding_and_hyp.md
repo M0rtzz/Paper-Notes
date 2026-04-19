@@ -142,3 +142,15 @@ $$\mathcal{L}_{\text{NPLM}} = \sum_{(x,y)} \left[ w_R (1-y) \log(1+e^{f_w}) + y 
 - **实验充分度**: ⭐⭐⭐⭐ — 五个数据集、四个科学领域、三种基线对比，消融实验有核宽度和嵌入维度的分析；但缺少与 MMD/C2ST 等 ML 双样本检验的直接对比。
 - **写作质量**: ⭐⭐⭐⭐ — 科学方法与管线的类比清晰，公式推导完整；但论文较长，部分内容放在附录中。
 - **价值**: ⭐⭐⭐⭐ — 为多个科学领域提供了即插即用的新现象发现工具，具有实际应用潜力，但域偏移和标签依赖问题限制了直接部署。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IRIS: Interactive Research Ideation System for Accelerating Scientific Discovery](../../ACL2025/others/iris_interactive_research_ideation_system_for_accelerating_scientific_discovery.md)
+- [Rethinking PCA Through Duality](rethinking_pca_through_duality.md)
+- [Improving Decision Trees through the Lens of Parameterized Local Search](improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
+- [Auto-GAS: Automated Proxy Discovery for Training-Free Generative Architecture Search](../../ECCV2024/others/auto-gas_automated_proxy_discovery_for_training-free_generative_architecture_sea.md)
+- [despite exploring contrastive deep skeletonpointcloudimutext](../../ICCV2025/others/despite_exploring_contrastive_deep_skeletonpointcloudimutext.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ OmniSegmentor 包含两大创新：(1) ImageNeXt 数据集——基于 ImageNet-
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个基准全面评测，丰富的消融实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机推导合理，图表丰富
 - 价值: ⭐⭐⭐⭐ 为多模态分割提供了可复用的预训练范式和大规模数据集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Torch-Uncertainty: A Deep Learning Framework for Uncertainty Quantification](torch-uncertainty_a_deep_learning_framework_for_uncertainty_quantification.md)
+- [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
+- [Diffusion-Driven Two-Stage Active Learning for Low-Budget Semantic Segmentation](diffusion-driven_two-stage_active_learning_for_low-budget_semantic_segmentation.md)
+- [Robust Egocentric Referring Video Object Segmentation via Dual-Modal Causal Intervention](robust_egocentric_referring_video_object_segmentation_via_dual-modal_causal_inte.md)
+- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](../../CVPR2025/segmentation/multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
+
+<!-- RELATED:END -->

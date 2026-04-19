@@ -120,3 +120,15 @@ EfficientQAT 提出两阶段 QAT 框架——先逐块训练所有参数（Block
 - 实验充分度: ⭐⭐⭐⭐⭐ 7B-70B 规模、2/3/4-bit、基座+指令+多模态场景、完整消融
 - 写作质量: ⭐⭐⭐⭐ 明确清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高，单 GPU 完成 70B 模型 2-bit QAT 是切实可部署的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
+- [PTQ1.61: Push the Real Limit of Extremely Low-Bit Post-Training Quantization Methods for Large Language Models](ptq161_low_bit_quantization.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [Outlier-Safe Pre-Training for Robust 4-Bit Quantization of Large Language Models](outlier-safe_pre-training_for_robust_4-bit_quantization_of_large_language_models.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+
+<!-- RELATED:END -->

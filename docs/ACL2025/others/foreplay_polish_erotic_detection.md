@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 编码器+LLM+开源/闭源全面对比
 - 写作质量: ⭐⭐⭐⭐ 标注流程描述详细，伦理考量到位
 - 价值: ⭐⭐⭐ 对波兰语 NLP 社区直接有用，跨语言方法可迁移性一般
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [Words of Warmth: Trust and Sociability Norms for over 26k English Words](words_of_warmth_trust_and_sociability_norms_for_over_26k_english_words.md)
+- [Narrative Media Framing in Political Discourse](narrative_media_framing_in_political_discourse.md)
+- [Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility](meaning_beyond_truth_conditions_evaluating_discourse_level_understanding_via_ana.md)
+- [HelpSteer3: Human-Annotated Feedback and Edit Data to Empower Inference-Time Scaling](helpsteer3_human-annotated_feedback_and_edit_data_to_empower_inference-time_scal.md)
+
+<!-- RELATED:END -->

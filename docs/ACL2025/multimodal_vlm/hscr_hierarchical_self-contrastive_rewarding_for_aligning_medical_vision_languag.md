@@ -192,3 +192,15 @@ HSCR 在零样本设置下取得 SOTA，在 SLAKE 封闭题上提升 6.97%，在
 ## 评分 ⭐⭐⭐⭐
 
 方法设计巧妙且有深刻的动机分析，数据效率极高（2K样本），多层级偏好优化的设计有创新性。消融实验充分验证了各组件的贡献。不足在于仅限7B模型验证，且缺少临床环境下的真实应用评估。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Symmetrical Visual Contrastive Optimization: Aligning Vision-Language Models with Minimal Contrastive Images](symmetrical_visual_contrastive_optimization_aligning_visionlanguage.md)
+- [Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models](retrieval_visual_contrastive_decoding_to_mitigate_object_hallucinations_in_large.md)
+- [BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning](../../NeurIPS2025/multimodal_vlm/bioclip_2_emergent_properties_from_scaling_hierarchical_contrastive_learning.md)
+- [Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback](improving_medical_large_vision-language_models_with_abnormal-aware_feedback.md)
+- [SPHERE: Unveiling Spatial Blind Spots in Vision-Language Models Through Hierarchical Evaluation](sphere_unveiling_spatial_blind_spots_in.md)
+
+<!-- RELATED:END -->

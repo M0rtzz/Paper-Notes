@@ -196,3 +196,15 @@ MLR attention 的层级结构天然适合时间序列中的多尺度时间依赖
 | 实用价值 | 4.0 | KV cache 压缩和 FLOPs 节省有直接工程意义 |
 | 写作质量 | 4.5 | 结构清晰，数学推导严谨 |
 | **综合** | **4.2** | 理论漂亮、视角新颖的工作，实验可进一步加强 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TransPL: VQ-Code Transition Matrices for Pseudo-Labeling of Time Series Unsupervised Domain Adaptation](transpl_vq-code_transition_matrices_for_pseudo-labeling_of_time_series_unsupervi.md)
+- [Structured Temporal Causality for Interpretable Multivariate Time Series Anomaly Detection](../../NeurIPS2025/time_series/structured_temporal_causality_for_interpretable_multivariate_time_series_anomaly.md)
+- [FLAVC: Learned Video Compression with Feature Level Attention](../../CVPR2025/time_series/flavc_learned_video_compression_with_feature_level_attention.md)
+- [MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series](../../NeurIPS2025/time_series/maestro_adaptive_sparse_attention_and_robust_learning_for_multimodal_dynamic_tim.md)
+- [WAVE: Weighted Autoregressive Varying Gate for Time Series Forecasting](wave_weighted_autoregressive_varying_gate_for_time_series_forecasting.md)
+
+<!-- RELATED:END -->

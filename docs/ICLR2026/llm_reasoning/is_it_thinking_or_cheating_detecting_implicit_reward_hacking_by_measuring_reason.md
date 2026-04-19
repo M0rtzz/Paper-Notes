@@ -156,3 +156,15 @@ $$\mathcal{L}_{\text{RLOO}} = -\mathbb{E}_{\pi_\theta}\left[\left(R(x, y) - \fra
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多漏洞类型×多任务×多检测设置的全面组合，设计严谨
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰，图示直观，讨论诚实（充分讨论了局限性）
 - **综合评分**: ⭐⭐⭐⭐⭐ (9/10)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why is Your Language Model a Poor Implicit Reward Model?](why_is_your_language_model_a_poor_implicit_reward_model.md)
+- [The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs](the_illusion_of_diminishing_returns_measuring_long_horizon_execution_in_llms.md)
+- [I Can't Believe It's Not Robust: Catastrophic Collapse of Safety Classifiers under Embedding Drift](i_cant_believe_its_not_robust_catastrophic_collapse_of_safety_classifiers_under_.md)
+- [mR3: Multilingual Rubric-Agnostic Reward Reasoning Models](mr3_multilingual_rubric-agnostic_reward_reasoning_models.md)
+- [DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
+
+<!-- RELATED:END -->

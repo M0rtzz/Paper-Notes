@@ -139,3 +139,15 @@ FGNO 在仅 5% 标注数据时几乎保持了全量数据的性能水平（Sleep
 - **实验充分度**: ⭐⭐⭐⭐ 多数据集多任务评估，丰富的消融实验
 - **写作质量**: ⭐⭐⭐⭐ 图示清晰，方法动机阐述充分
 - **价值**: ⭐⭐⭐⭐ 对生物医学时间序列分析有实际价值，特别在数据稀缺场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Self-Supervised Foundation Models for Critical Care Time Series](towards_self-supervised_foundation_models_for_critical_care_time_series.md)
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [NOIR: Neural Operator Mapping for Implicit Representations](../../CVPR2025/medical_imaging/noir_neural_operator_mapping_for_implicit_representations.md)
+
+<!-- RELATED:END -->

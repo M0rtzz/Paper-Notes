@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论，匹配下界是最强验证
 - 写作质量: ⭐⭐⭐⭐ 技术概览清晰但公式密集
 - 价值: ⭐⭐⭐⭐⭐ 闭合重要理论差距，开辟 contextual Pandora's Box 新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Regret Bounds for GP-UCB in Bayesian Optimization](improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Tractable Multinomial Logit Contextual Bandits with Non-Linear Utilities](tractable_multinomial_logit_contextual_bandits_with_non-linear_utilities.md)
+- [Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update](generalized_linear_bandits_almost_optimal_regret_with_one-pass_update.md)
+- [Exploration via Feature Perturbation in Contextual Bandits](exploration_via_feature_perturbation_in_contextual_bandits.md)
+
+<!-- RELATED:END -->

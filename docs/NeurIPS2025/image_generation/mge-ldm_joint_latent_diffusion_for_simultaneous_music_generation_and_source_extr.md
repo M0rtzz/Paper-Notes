@@ -119,3 +119,15 @@ MGE-LDM 将三个潜在变量——混合 z^(m)、子混合 z^(u)、源 z^(s)—
 - **实验充分度**: ⭐⭐⭐⭐ 多数据集、多任务评估全面，但缺少主观听觉评估
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数学符号规范
 - **实用价值**: ⭐⭐⭐⭐ 一个模型覆盖多个音乐制作任务，有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](../../CVPR2025/image_generation/enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
+- [Blind Strong Gravitational Lensing Inversion: Joint Inference of Source and Lens Mass with Score-Based Models](blind_strong_gravitational_lensing_inversion_joint_inference_of_source_and_lens_.md)
+- [Large-Scale Training Data Attribution for Music Generative Models via Unlearning](large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
+- [Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
+- [StableGuard: Towards Unified Copyright Protection and Tamper Localization in Latent Diffusion Models](stableguard_towards_unified_copyright_protection_and_tamper_localization_in_late.md)
+
+<!-- RELATED:END -->

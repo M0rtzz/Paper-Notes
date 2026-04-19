@@ -142,3 +142,15 @@ FedMeNF遵循标准的联邦元学习流程：服务器发送全局元学习器 
 - 实验充分度: ⭐⭐⭐⭐ 多模态验证，消融充分，但对抗性攻击测试较少
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但符号较多，算法描述可进一步精简
 - 价值: ⭐⭐⭐⭐⭐ 揭示了重要的隐私漏洞并提供了有效解决方案，对NF+FL社区有重大影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](../../NeurIPS2025/ai_safety/fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+- [FecalFed: Privacy-Preserving Poultry Disease Detection via Federated Learning](../../CVPR2026/ai_safety/fecalfed_privacy-preserving_poultry_disease_detection_via_federated_learning.md)
+- [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
+- [A Framework for Double-Blind Federated Adaptation of Foundation Models](a_framework_for_double-blind_federated_adaptation_of_foundation_models.md)
+- [Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning](geminio_language-guided_gradient_inversion_attacks_in_federated_learning.md)
+
+<!-- RELATED:END -->

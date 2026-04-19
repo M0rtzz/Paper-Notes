@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个benchmark、完整消融、重建可视化、感知直线性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事逻辑性强，从"什么是好的视觉状态"出发推导出方法设计
 - 价值: ⭐⭐⭐⭐ 对机器人视觉表示学习有重要启发，单帧训练胜时序训练的发现有广泛影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAWN: Pixel Motion Diffusion is What We Need for Robot Control](dawn_pixel_motion_diffusion_robot_control.md)
+- [Towards Training-Free Scene Text Editing](towards_training-free_scene_text_editing.md)
+- [ENC-Bench: A Benchmark for Evaluating MLLMs in Electronic Navigational Chart Understanding](enc-bench_a_benchmark_for_evaluating_multimodal_large_language_models_in_electro.md)
+- [Diagnose, Correct, and Learn from Manipulation Failures via Visual Symbols](diagnose_correct_and_learn_from_manipulation_failures_via_visual_symbols.md)
+- [FORCE: Transferable Visual Jailbreaking Attacks via Feature Over-Reliance CorrEction](force_transferable_visual_jailbreaking_attacks_via_feature_over-reliance_correct.md)
+
+<!-- RELATED:END -->

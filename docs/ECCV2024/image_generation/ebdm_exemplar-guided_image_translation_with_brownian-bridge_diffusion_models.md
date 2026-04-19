@@ -178,3 +178,15 @@ CLIP 作全局编码器反而大幅降低 SSIM（从 0.831 降到 0.632），因
 - 实验充分度：⭐⭐⭐⭐ — 三个任务 + 多个基线对比 + 消融
 - 实用价值：⭐⭐⭐⭐ — 虚拟试衣、人脸编辑等场景有直接应用
 - 总体推荐：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion-based Image-to-Image Translation by Noise Correction via Prompt Interpolation](diffusion-based_image-to-image_translation_by_noise_correction_via_prompt_interp.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge](../../NeurIPS2025/image_generation/towards_general_modality_translation_with_contrastive_and_predictive_latent_diff.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
+
+<!-- RELATED:END -->

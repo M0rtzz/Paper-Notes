@@ -106,3 +106,15 @@ tags:
 
 ## 评分
 - ⭐⭐⭐⭐⭐ 理论贡献突出，建立了分布学习与组合采样之间的新联系，解决了多个开放问题，方法优雅且结果最优。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification](stealthy_yet_effective_distribution-preserving_backdoor_attacks_on_graph_classif.md)
+- [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
+- [Stable Coresets via Posterior Sampling: Aligning Induced and Full Loss Landscapes](stable_coresets_via_posterior_sampling_aligning_induced_and_full_loss_landscapes.md)
+- [TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](../../ICML2025/human_understanding/toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+
+<!-- RELATED:END -->

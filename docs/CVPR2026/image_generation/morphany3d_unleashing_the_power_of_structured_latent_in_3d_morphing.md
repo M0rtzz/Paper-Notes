@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量+用户研究+消融+应用+迁移，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 分析从观察到验证到设计逻辑链条完整
 - 价值: ⭐⭐⭐⭐ 在 3D 内容创作中有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TextDiffuser-2: Unleashing the Power of Language Models for Text Rendering](../../ECCV2024/image_generation/textdiffuser-2_unleashing_the_power_of_language_models_for_text_rendering.md)
+- [Vinedresser3D: Agentic Text-guided 3D Editing](vinedresser3d_agentic_text-guided_3d_editing.md)
+- [PhysGen: Physically Grounded 3D Shape Generation for Industrial Design](physgen_physically_grounded_3d_shape_generation_for_industrial_design.md)
+- [FG-Portrait: 3D Flow Guided Editable Portrait Animation](fg-portrait_3d_flow_guided_editable_portrait_animation.md)
+- [Parallelised Differentiable Straightest Geodesics for 3D Meshes](parallelised_differentiable_straightest_geodesics_for_3d_meshes.md)
+
+<!-- RELATED:END -->

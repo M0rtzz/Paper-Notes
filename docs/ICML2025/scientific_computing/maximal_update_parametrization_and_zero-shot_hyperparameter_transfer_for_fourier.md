@@ -156,3 +156,15 @@ $$a(K)=1, \quad b(K) = c(K) = \Theta\!\left(\frac{1}{\sqrt{d\log K}}\right)$$
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖三类 PDE、多种超参数、PINO 扩展，但 PDE 类型可更丰富
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导严谨、实验清晰、动机明确
 - 价值: ⭐⭐⭐⭐ — 对大规模 FNO 训练有直接实用价值，但受限于 FNO 单一架构
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Universal Neural Operators through Multiphysics Pretraining](../../NeurIPS2025/scientific_computing/towards_universal_neural_operators_through_multiphysics_pretraining.md)
+- [Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding](../../NeurIPS2025/scientific_computing/physics-informed_neural_networks_with_fourier_features_and_attention-driven_deco.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/scientific_computing/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [Accurate Differential Operators for Hybrid Neural Fields](../../CVPR2025/scientific_computing/accurate_differential_operators_for_hybrid_neural_fields.md)
+- [Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data](../../NeurIPS2025/scientific_computing/multi-trajectory_physics-informed_neural_networks_for_hjb_equations_with_hard-ze.md)
+
+<!-- RELATED:END -->

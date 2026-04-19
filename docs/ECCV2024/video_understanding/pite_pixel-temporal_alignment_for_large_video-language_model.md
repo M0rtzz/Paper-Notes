@@ -131,3 +131,15 @@ PiTe 由四个核心组件构成：(1) ViT 视觉编码器（CLIP ViT-L/14）提
 - 实验充分度: ⭐⭐⭐⭐ 三个任务六个数据集的零样本评估，消融分析到位
 - 写作质量: ⭐⭐⭐ 符号体系略混乱，部分英文表达不通顺
 - 价值: ⭐⭐⭐⭐ 数据集和对齐范式对后续工作有借鉴意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMamba: Spatio-Temporal Selective State Space Model](videomamba_spatio-temporal_selective_state_space_model.md)
+- [LLAVIDAL: A Large Language Vision Model for Daily Activities of Living](../../CVPR2025/video_understanding/llavidal_a_large_language_vision_model_for_daily_activities_of_living.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](videomamba_state_space_model_for_efficient_video_understanding.md)
+- [Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity](../../NeurIPS2025/video_understanding/lattice_boltzmann_model_for_learning_real-world_pixel_dynamicity.md)
+- [SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging](safnet_selective_alignment_fusion_network_for_efficient_hdr_imaging.md)
+
+<!-- RELATED:END -->

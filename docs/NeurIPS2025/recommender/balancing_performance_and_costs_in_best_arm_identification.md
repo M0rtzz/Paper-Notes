@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 模拟+真实实验+与经典方法对比
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，动机示例清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 BAI 理论和实践都有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ASAP: An Agentic Solution to Auto-Optimize Performance of Large-Scale LLM Training](asap_an_agentic_solution_to_auto-optimize_performance_of_large-scale_llm_trainin.md)
+- [Length-Adaptive Interest Network for Balancing Long and Short Sequence Modeling in CTR Prediction](../../AAAI2026/recommender/length-adaptive_interest_network_for_balancing_long_and_short_sequence_modeling_.md)
+- [EMPATHIA: Multi-Faceted Human-AI Collaboration for Refugee Integration](empathia_multi-faceted_human-ai_collaboration_for_refugee_integration.md)
+- [VisualLens: Personalization through Task-Agnostic Visual History](visuallens_personalization_through_task-agnostic_visual_history.md)
+- [Position: Towards Bidirectional Human-AI Alignment](position_towards_bidirectional_human-ai_alignment.md)
+
+<!-- RELATED:END -->

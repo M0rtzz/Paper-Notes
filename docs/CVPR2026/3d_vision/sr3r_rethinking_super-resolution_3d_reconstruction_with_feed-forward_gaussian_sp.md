@@ -196,3 +196,15 @@ SR3R不仅超越所有前馈基线，还**超越了需要逐场景优化的SRGS/
 - 实验充分度: ⭐⭐⭐⭐ — 3个数据集+零样本泛化+消融+上采样策略分析，较为完整
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，motivation阐述充分，公式规范
 - 价值: ⭐⭐⭐⭐ — 为3DSR领域提供了新范式，实用性强且即插即用设计利于推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+- [PhysGM: Large Physical Gaussian Model for Feed-Forward 4D Synthesis](physgm_large_physical_gaussian_model_for_feed-forward_4d_synthesis.md)
+- [Off The Grid: Detection of Primitives for Feed-Forward 3D Gaussian Splatting](off_the_grid_detection_of_primitives_for_feed-forward_3d_gaussian_splatting.md)
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+
+<!-- RELATED:END -->

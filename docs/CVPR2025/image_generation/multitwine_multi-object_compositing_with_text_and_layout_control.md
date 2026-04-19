@@ -132,3 +132,15 @@ $$\mathcal{L} = \mathcal{L}_d + \alpha \mathcal{L}_c + \beta \mathcal{L}_s$$
 - ⭐ 实验完备性：8/10 — 用户研究充分，消融清晰，但缺少定量交互质量度量
 - ⭐ 实用价值：7/10 — 应用场景广泛但基于SD1.5且未开源
 - ⭐ 总体：8/10 — 定义了新任务并给出有效解法，联合训练策略值得借鉴
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation](mvportrait_text-guided_motion_and_emotion_control_for_multi-view_vivid_portrait_.md)
+- [MTADiffusion: Mask Text Alignment Diffusion Model for Object Inpainting](mtadiffusion_mask_text_alignment_diffusion_model_for_object_inpainting.md)
+- [InterMimic: Towards Universal Whole-Body Control for Physics-Based Human-Object Interactions](intermimic_towards_universal_whole-body_control_for_physics-based_human-object_i.md)
+- [ConsistCompose: Unified Multimodal Layout Control for Image Composition](../../CVPR2026/image_generation/consistcompose_multimodal_layout_control.md)
+- [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
+
+<!-- RELATED:END -->

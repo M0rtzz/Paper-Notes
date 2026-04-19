@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个数据集、详细消融、导航器评估、用户研究，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，但公式符号略显繁杂
 - 价值: ⭐⭐⭐⭐ 风格可控和内容可控在实际人机交互中价值大，数据增强效果显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Intention Chain-of-Thought Prompting with Dynamic Routing for Code Generation](../../AAAI2026/llm_reasoning/intention_chain-of-thought_prompting_with_dynamic_routing_for_code_generation.md)
+- [ThinkSound: Chain-of-Thought Reasoning in Multimodal Large Language Models for Audio Generation and Editing](../../NeurIPS2025/llm_reasoning/thinksound_chain-of-thought_reasoning_in_multimodal_large_language_models_for_au.md)
+- [RoadPainter: Points Are Ideal Navigators for Topology Transformer](roadpainter_points_are_ideal_navigators_for_topology_transformer.md)
+- [PrismAudio: Decomposed Chain-of-Thoughts and Multi-dimensional Rewards for Video-to-Audio Generation](../../ICLR2026/llm_reasoning/prismaudio_decomposed_chain-of-thoughts_and_multi-dimensional_rewards_for_video-.md)
+- [Video-T1: Test-Time Scaling for Video Generation](../../ICCV2025/llm_reasoning/video-t1_test-time_scaling_for_video_generation.md)
+
+<!-- RELATED:END -->

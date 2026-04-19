@@ -114,3 +114,15 @@ GSrec的整体pipeline分三个阶段。首先，在标准3DGS训练的基础上
 - 实验充分度: ⭐⭐⭐⭐ 多个数据集覆盖室内外场景，消融全面
 - 写作质量: ⭐⭐⭐⭐ 方法动机和技术细节描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 对3DGS的表面重建有显著实际推动，开源代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](../../AAAI2026/3d_vision/sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
+- [MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting](../../AAAI2026/3d_vision/meshsplat_generalizable_sparse-view_surface_reconstruction_via_gaussian_splattin.md)
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](../../CVPR2026/3d_vision/3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+- [GauSTAR: Gaussian Surface Tracking and Reconstruction](../../CVPR2025/3d_vision/gaustar_gaussian_surface_tracking_and_reconstruction.md)
+- [SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction](splatfields_neural_gaussian_splats_for_sparse_3d_and_4d_reconstruction.md)
+
+<!-- RELATED:END -->

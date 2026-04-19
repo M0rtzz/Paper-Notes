@@ -128,3 +128,15 @@ VisionZip本身是training-free的，不涉及新的损失函数。可选的Effi
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个图像benchmark、4个视频benchmark、3种VLM架构、详细的效率分析和消融实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富（注意力分布、特征错位），但部分表格密度过高
 - 价值: ⭐⭐⭐⭐ 作为即插即用的推理加速方案实用价值高，但需要更多主流模型的验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ForensicZip: More Tokens are Better but Not Necessary in Forensic Vision-Language Models](forensiczip_more_tokens_are_better_but_not_necessary_in_forensic_vision-language.md)
+- [VLsI: Verbalized Layers-to-Interactions from Large to Small Vision Language Models](vlsi_verbalized_layers-to-interactions_from_large_to_small_vision_language_model.md)
+- [NVILA: Efficient Frontier Visual Language Models](nvila_efficient_frontier_visual_language_models.md)
+- [Spatial Reasoning is Not a Free Lunch: A Controlled Study on LLaVA](spatial_reasoning_is_not_a_free_lunch_a_controlled_study_on_llava.md)
+- [FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
+
+<!-- RELATED:END -->

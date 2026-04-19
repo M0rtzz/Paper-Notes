@@ -158,3 +158,15 @@ Engine 在所有数据集上都显著领先，特别是在细粒度数据集 Air
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个数据集×多种设定的全面评估，消融和对比实验非常充分
 - 写作质量: ⭐⭐⭐⭐ 动机分析透彻，方法表示清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ 在CLIP-based CIL领域取得大幅领先，外部知识注入思路有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Shift Estimation via Dual-Projection and Classifier Reconstruction for Exemplar-Free Class-Incremental Learning](../../ICML2025/human_understanding/semantic_shift_estimation_via_dual-projection_and_classifier_reconstruction_for_.md)
+- [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
+- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](../../NeurIPS2025/human_understanding/policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+- [Learning Visual Proxy for Compositional Zero-Shot Learning](learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+
+<!-- RELATED:END -->

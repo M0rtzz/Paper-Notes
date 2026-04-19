@@ -136,3 +136,15 @@ $$\mathcal{L} = -\frac{1}{N}\sum_i \mathbf{z}_i^\top \log(\mathbf{p}_i) - \sum_{
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 12 数据集 × 3 编码器 × 3 设定，消融全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式与直觉解释结合良好
 - **价值**: ⭐⭐⭐⭐⭐ — 实用性极强，zero-shot 精度大幅提升且计算成本低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIPSym: Delving into Symmetry Detection with CLIP](clipsym_delving_into_symmetry_detection_with_clip.md)
+- [DASH: Detection and Assessment of Systematic Hallucinations of VLMs](dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)
+- [Generate, but Verify: Reducing Hallucination in Vision-Language Models with Retrospective Resampling](../../NeurIPS2025/multimodal_vlm/generate_but_verify_reducing_hallucination_in_visionlanguage.md)
+- [BabyVLM: Data-Efficient Pretraining of VLMs Inspired by Infant Learning](babyvlm_data-efficient_pretraining_of_vlms_inspired_by_infant_learning.md)
+- [Breaking the Limits of Open-Weight CLIP: An Optimization Framework for Self-supervised Fine-tuning of CLIP](../../ICLR2026/multimodal_vlm/breaking_the_limits_of_open-weight_clip_an_optimization_framework_for_self-super.md)
+
+<!-- RELATED:END -->

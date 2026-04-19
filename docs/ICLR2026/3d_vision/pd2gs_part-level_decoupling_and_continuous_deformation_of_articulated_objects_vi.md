@@ -111,3 +111,15 @@ $\mathcal{L}_{total} = \mathcal{L}_{photo} + \mathcal{L}_{D_{SIMM}}$，光度重
 - 实验充分度: ⭐⭐⭐⭐ PartNet-Mobility + RS-Art 真实数据，消融完整
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式规范
 - 价值: ⭐⭐⭐⭐⭐ 铰接物体连续建模的重要进展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoE-GS: Mixture of Experts for Dynamic Gaussian Splatting](moe-gs_mixture_of_experts_for_dynamic_gaussian_splatting.md)
+- [Learning Part-Aware Dense 3D Feature Field for Generalizable Articulated Object Manipulation](learning_part-aware_dense_3d_feature_field_for_generalizable_articulated_object_.md)
+- [PartSAM: A Scalable Promptable Part Segmentation Model Trained on Native 3D Data](partsam_a_scalable_promptable_part_segmentation_model_trained_on_native_3d_data.md)
+- [IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments](../../CVPR2025/3d_vision/iaao_interactive_affordance_learning_for_articulated_objects_in_3d_environments.md)
+- [ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](../../CVPR2026/3d_vision/extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
+
+<!-- RELATED:END -->

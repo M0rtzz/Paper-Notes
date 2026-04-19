@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 38 场景 × 3 设置 + 黑盒迁移 + 干净兼容 + 8 组消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，频域分析有深度
 - 价值: ⭐⭐⭐⭐ 对 3DGS 安全部署有重要意义，且方法兼具实用压缩价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Off The Grid: Detection of Primitives for Feed-Forward 3D Gaussian Splatting](off_the_grid_detection_of_primitives_for_feed-forward_3d_gaussian_splatting.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [LTGS: Long-Term Gaussian Scene Chronology From Sparse View Updates](ltgs_long-term_gaussian_scene_chronology_from_sparse_view_updates.md)
+- [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
+- [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
+
+<!-- RELATED:END -->

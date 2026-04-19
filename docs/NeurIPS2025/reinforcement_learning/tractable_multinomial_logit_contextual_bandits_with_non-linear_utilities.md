@@ -164,3 +164,15 @@ $$\mathrm{Regret}_T = \widetilde{\mathcal{O}}\left(\kappa^{-3/2}d_w\sqrt{T} + \k
 - 实验充分度: ⭐⭐⭐ — 验证了核心claims但规模较小，缺少真实应用数据集
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，技术路线自洽，理论推导严谨
 - 价值: ⭐⭐⭐⭐ — 填补重要理论空白，对推荐系统等实际应用有潜在价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploration via Feature Perturbation in Contextual Bandits](exploration_via_feature_perturbation_in_contextual_bandits.md)
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits](variance-aware_feel-good_thompson_sampling_for_contextual_bandits.md)
+- [Improved Regret and Contextual Linear Extension for Pandora's Box and Prophet Inequality](improved_regret_and_contextual_linear_extension_for_pandoras_box_and_prophet_ine.md)
+- [Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update](generalized_linear_bandits_almost_optimal_regret_with_one-pass_update.md)
+
+<!-- RELATED:END -->

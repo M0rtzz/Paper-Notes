@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验非常全面（数据源、嵌入方法、RL奖励），10次训练运行的统计显著性检验，详尽的错误分析
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，图表设计优秀，案例分析深入，局限性讨论诚恳充分
 - 对我的价值: ⭐⭐⭐⭐ 多模态数据融合的方法论有参考价值，attention dilution的发现对多源输入方法有普遍启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automated Structured Radiology Report Generation](automated_structured_radiology_report_generation.md)
+- [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
+- [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
+- [PriorRG: Prior-Guided Contrastive Pre-training and Coarse-to-Fine Decoding for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/priorrg_prior-guided_contrastive_pre-training_and_coarse-to-fine_decoding_for_ch.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](radar_radiology_report_gen.md)
+
+<!-- RELATED:END -->

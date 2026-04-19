@@ -167,3 +167,15 @@ Duo 在低 NFE 区间显著优于 MDLM——因为 USDM 的自纠错特性在少
 - 实验充分度: ⭐⭐⭐⭐⭐ 全面的似然评估、零样本评估、生成质量评估、消融和蒸馏轮次分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨完整，实验分析深入，附录详尽
 - 价值: ⭐⭐⭐⭐⭐ 对离散扩散领域有重大推进，打开了从高斯扩散迁移技术的大门
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation](../../CVPR2026/image_generation/cologen_progressive_learning_of_concept-localization_duality_for_unified_image_g.md)
+- [Progressive Tempering Sampler with Diffusion](progressive_tempering_sampler_with_diffusion.md)
+- [Efficient Diffusion Models for Symmetric Manifolds](efficient_diffusion_models_for_symmetric_manifolds.md)
+- [Towards a Mechanistic Explanation of Diffusion Model Generalization](towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [TCP-Diffusion: A Multi-modal Diffusion Model for Global Tropical Cyclone Precipitation Forecasting with Change Awareness](tcp-diffusion_a_multi-modal_diffusion_model_for_global_tropical_cyclone_precipit.md)
+
+<!-- RELATED:END -->

@@ -171,3 +171,15 @@ $$L_{style} = \mathbb{E}_{t,\epsilon}[\|\mathcal{R}(z_t^{src}, t) \odot w_t (\ep
 - 实验充分度: ⭐⭐⭐⭐⭐ 定量+定性+用户研究+消融+前馈扩展全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐ 实用性强，开源代码，适用于多种风格
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [Domain Generalizable Portrait Style Transfer](domain_generalizable_portrait_style_transfer.md)
+- [A Connection Between Score Matching and Local Intrinsic Dimension](../../NeurIPS2025/image_generation/a_connection_between_score_matching_and_local_intrinsic_dimension.md)
+- [Mind the Gap: Aligning Vision Foundation Models to Image Feature Matching](mind_the_gap_aligning_vision_foundation_models_to_image_feature_matching.md)
+- [InfiniDreamer: Arbitrarily Long Human Motion Generation via Segment Score Distillation](infinidreamer_arbitrarily_long_human_motion_generation_via_segment_score_distill.md)
+
+<!-- RELATED:END -->

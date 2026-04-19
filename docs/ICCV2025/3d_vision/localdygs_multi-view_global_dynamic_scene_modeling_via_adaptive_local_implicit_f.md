@@ -166,3 +166,15 @@ L = (1 - 0.2)·L1 + 0.2·L_SSIM + 0.001·L_v
 - **实验充分度**: ★★★★★ — 定量定性全面，首次大尺度验证
 - **实用性**: ★★★★★ — 训练快/存储小/质量高/首次大尺度动态
 - **总分**: 9.0/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
+- [ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling](atlas_decoupling_skeletal_and_shape_parameters_for_expressiv.md)
+- [CA-I2P: Channel-Adaptive Registration Network with Global Optimal Selection](ca-i2p_channel-adaptive_registration_network_with_global_optimal_selection.md)
+- [Global-Local Tree Search in VLMs for 3D Indoor Scene Generation](../../CVPR2025/3d_vision/global-local_tree_search_in_vlms_for_3d_indoor_scene_generation.md)
+- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zero-shot_single-view_3d_indoor_scene_modeling.md)
+
+<!-- RELATED:END -->

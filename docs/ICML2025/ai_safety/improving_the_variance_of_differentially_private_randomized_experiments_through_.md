@@ -161,3 +161,15 @@ tags:
 - ⭐ 实验充分度: 3.5/5 — 合成实验验证性好，YouTube 半合成实验增加了可信度，但缺少大规模真实 A/B 测试验证
 - ⭐ 写作质量: 4/5 — 层次清晰，动机阐述充分，算法描述规范
 - ⭐ 实用价值: 4/5 — 直接面向广告平台的真实需求，方法易于部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](../../NeurIPS2025/ai_safety/mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+- [Empirical Privacy Variance](empirical_privacy_variance.md)
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
+- [On the Sample Complexity of Differentially Private Policy Optimization](../../NeurIPS2025/ai_safety/on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+- [Differentially Private High-dimensional Variable Selection via Integer Programming](../../NeurIPS2025/ai_safety/differentially_private_high-dimensional_variable_selection_via_integer_programmi.md)
+
+<!-- RELATED:END -->

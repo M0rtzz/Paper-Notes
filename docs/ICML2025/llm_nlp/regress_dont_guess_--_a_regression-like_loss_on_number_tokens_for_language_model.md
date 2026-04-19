@@ -118,3 +118,15 @@ NTL 与数字级分词组合效果最佳。
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 方法简洁优雅、理论完备、即插即用、零开销，应该成为 LLM 预训练的标准组件。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identifying and Analyzing Performance-Critical Tokens in Large Language Models](../../AAAI2026/llm_nlp/identifying_and_analyzing_performance-critical_tokens_in_large_language_models.md)
+- [ReCall: Library-Like Behavior In Language Models is Enhanced by Self-Referencing Causal Cycles](../../ACL2025/llm_nlp/library-like_behavior_in_language_models_is_enhanced_by_self-referencing_causal_.md)
+- [HumT DumT: Measuring and Controlling Human-like Language in LLMs](../../ACL2025/llm_nlp/humt_dumt_measuring_and_controlling_human-like_language_in_llms.md)
+- [OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens](../../ACL2025/llm_nlp/olmotrace_tracing_language_model_outputs_back_to_trillions_of_training_tokens.md)
+- [Post Hoc Regression Refinement via Pairwise Rankings](../../NeurIPS2025/llm_nlp/post_hoc_regression_refinement_via_pairwise_rankings.md)
+
+<!-- RELATED:END -->

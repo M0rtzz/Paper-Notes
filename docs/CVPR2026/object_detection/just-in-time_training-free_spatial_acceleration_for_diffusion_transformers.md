@@ -144,3 +144,15 @@ $$\mathbf{I}(t) = \mathbb{E}_\mathcal{W}[\boldsymbol{u}_\theta \odot \boldsymbol
 - 实验充分度: ⭐⭐⭐⭐ 多指标定量+定性+用户研究+消融齐全，但只在单一模型验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，数学推导严谨，图示直观
 - 价值: ⭐⭐⭐⭐ 免训练7×加速实用价值高，但泛化性和视频扩展有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+- [Connecting the Dots: Training-Free Visual Grounding via Agentic Reasoning](../../AAAI2026/object_detection/connecting_the_dots_training-free_visual_grounding_via_agent.md)
+- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
+- [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](../../ICCV2025/object_detection/is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
+- [SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras](spiraldiff_spiral_diffusion_with_lora_for_rgb-to-raw_conversion_across_cameras.md)
+
+<!-- RELATED:END -->

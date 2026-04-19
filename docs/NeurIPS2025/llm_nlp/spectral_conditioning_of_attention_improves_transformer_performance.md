@@ -162,3 +162,15 @@ $$\mathbf{SpecA}(X) = \text{softmax}(X(W_Q + C_Q)(W_K + C_K)^T X^T) X(W_V + C_V)
 - **理论深度** ⭐⭐⭐⭐⭐：完整的定理-证明-验证链条
 - **实验充分度** ⭐⭐⭐⭐⭐：5种 ViT + 检测/分割 + NLP + 长序列
 - **实用性** ⭐⭐⭐⭐⭐：零开销即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Transformer with Spatial-Temporal Attention](../../CVPR2025/llm_nlp/spiking_transformer_with_spatial-temporal_attention.md)
+- [Strassen Attention, Split VC Dimension and Compositionality in Transformers](strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
+- [On the Role of Hidden States of Modern Hopfield Network in Transformer](on_the_role_of_hidden_states_of_modern_hopfield_network_in_transformer.md)
+- [Characterizing the Expressivity of Fixed-Precision Transformer Language Models](characterizing_the_expressivity_of_fixed-precision_transformer_language_models.md)
+- [MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](../../ACL2025/llm_nlp/mha2mla_deepseek_latent_attention.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ TFLA 包含两个核心内核：
 - 实验充分度: ⭐⭐⭐⭐ 多规模+多基线+消融充分，缺大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ 图表直观，数学严谨，附录详尽
 - 价值: ⭐⭐⭐⭐ 实用价值高，超越 FlashAttention 3/Mamba 2 的内核可直接用于生产
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](zeros_zero-sum_linear_attention_for_efficient_transformers.md)
+- [Rectifying Magnitude Neglect in Linear Attention](../../ICCV2025/llm_efficiency/rectifying_magnitude_neglect_in_linear_attention.md)
+- [xLSTM Scaling Laws: Competitive Performance with Linear Time-Complexity](../../ICLR2026/llm_efficiency/xlstm_scaling_laws_competitive_performance_with_linear_time-complexity.md)
+- [Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
+
+<!-- RELATED:END -->

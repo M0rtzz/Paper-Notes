@@ -129,3 +129,15 @@ $$\mathcal{L}_{\text{omm}}(V) = \text{tr}((I_d - VV^\top)^2 A) - \text{tr}(A)$$
 - 实验充分度: ⭐⭐⭐⭐ 涵盖RL、PDE、SSL三类任务，但SSL未达SOTA
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰简洁，历史脉络梳理精当
 - 价值: ⭐⭐⭐⭐⭐ 为谱分解问题提供了统一的变分框架，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Extragradient Method for $(L_0, L_1)$-Lipschitz Root-finding Problems](extragradient_method_for_l_0_l_1-lipschitz_root-finding_problems.md)
+- [Revisiting Unbiased Implicit Variational Inference](../../ICML2025/optimization/revisiting_unbiased_implicit_variational_inference.md)
+- [Tilted Sharpness-Aware Minimization](../../ICML2025/optimization/tilted_sharpness-aware_minimization.md)
+- [Learning Single-Index Models via Harmonic Decomposition](learning_single-index_models_via_harmonic_decomposition.md)
+- [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+
+<!-- RELATED:END -->

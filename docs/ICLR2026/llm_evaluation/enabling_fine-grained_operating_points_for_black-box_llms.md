@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 11个数据集 + 多种基线 + 消融
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 对LLM部署有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperband-based Bayesian Optimization for Black-box Prompt Selection](../../ICML2025/llm_evaluation/hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
+- [When to Ensemble: Identifying Token-Level Points for Stable and Fast LLM Ensembling](when_to_ensemble_identifying_token-level_points_for_stable_and_fast_llm_ensembli.md)
+- [OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](../../ICCV2025/llm_evaluation/omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)
+- [Benchmarking Overton Pluralism in LLMs](benchmarking_overton_pluralism_in_llms.md)
+- [Free-Grained Hierarchical Visual Recognition](../../CVPR2026/llm_evaluation/free-grained_hierarchical_visual_recognition.md)
+
+<!-- RELATED:END -->

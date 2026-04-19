@@ -141,3 +141,15 @@ DyME 训练的 SVLM 性能超过 7B 参数的 MoVA（54.2）。
 - 实验充分度: 5/5 （算法验证+系统验证双轨实验，三领域三模型，消融详尽）
 - 写作质量: 5/5 （动机阐述清晰，SFT/GRPO 梯度统一分析精彩）
 - 价值: 5/5 （实用性极强，对边缘端 SVLM 部署有直接推动）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VTool-R1: VLMs Learn to Think with Images via Reinforcement Learning on Multimodal Tool Use](vtool-r1_vlms_learn_to_think_with_images_via_reinforcement_learning_on_multimoda.md)
+- [Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](../../AAAI2026/reinforcement_learning/start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
+- [Spectral Bellman Method: Unifying Representation and Exploration in RL](spectral_bellman_method_unifying_representation_and_exploration_in_rl.md)
+- [Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning](controllable_exploration_in_hybrid-policy_rlvr_for_multi-modal_reasoning.md)
+- [Exploration vs Exploitation: Rethinking RLVR through Clipping, Entropy, and Spurious Reward](exploration_vs_exploitation_rethinking_rlvr_through_clipping_entropy_and_spuriou.md)
+
+<!-- RELATED:END -->

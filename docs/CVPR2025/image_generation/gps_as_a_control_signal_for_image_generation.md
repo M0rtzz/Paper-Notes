@@ -149,3 +149,15 @@ $$\tilde{\boldsymbol{\epsilon}}_\phi = \boldsymbol{\epsilon}_\phi(\varnothing, \
 - **实验充分度**: ⭐⭐⭐⭐ — 生成+3D 两个任务，定性定量+用户研究，但城市数量偏少
 - **论文写作**: ⭐⭐⭐⭐ — 图示清晰，展示效果令人印象深刻
 - **实用价值**: ⭐⭐⭐ — 应用场景明确但相对小众（旅游照片/地标重建）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-party Collaborative Attention Control for Image Customization](multi-party_collaborative_attention_control_for_image_customization.md)
+- [LaRender: Training-Free Occlusion Control in Image Generation via Latent Rendering](../../ICCV2025/image_generation/larender_training-free_occlusion_control_in_image_generation_via_latent_renderin.md)
+- [Learning Flow Fields in Attention for Controllable Person Image Generation](learning_flow_fields_in_attention_for_controllable_person_image_generation.md)
+- [DreamDiffusion: High-Quality EEG-to-Image Generation with Temporal Masked Signal Modeling and CLIP Alignment](../../ECCV2024/image_generation/dreamdiffusion_high-quality_eeg-to-image_generation_with_temporal_masked_signal_.md)
+- [Collaborative Control for Geometry-Conditioned PBR Image Generation](../../ECCV2024/image_generation/collaborative_control_for_geometry-conditioned_pbr_image_generation.md)
+
+<!-- RELATED:END -->

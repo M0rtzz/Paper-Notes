@@ -164,3 +164,15 @@ AdvAgent 的攻击流程分为三个核心阶段：
 - 实验充分度: ⭐⭐⭐⭐ — 440 个任务、4 个领域、多种防御对比、详细消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、动机充分、图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 暴露 Web Agent 重大安全漏洞，对 Agent 安全领域有重要警示价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative AI Agents for Controllable and Protected Content Creation](../../NeurIPS2025/llm_agent/generative_ai_agents_for_controllable_and_protected_content_creation.md)
+- [Web-Shepherd: Advancing PRMs for Reinforcing Web Agents](../../NeurIPS2025/llm_agent/web-shepherd_advancing_prms_for_reinforcing_web_agents.md)
+- [Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents](../../ACL2025/llm_agent/explorer_scaling_exploration-driven_web_trajectory_synthesis_for_multimodal_web_.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](../../ICLR2026/llm_agent/web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](../../NeurIPS2025/llm_agent/agentdam_privacy_leakage_evaluation_for_autonomous_web_agent.md)
+
+<!-- RELATED:END -->

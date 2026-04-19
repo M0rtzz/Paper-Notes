@@ -139,3 +139,15 @@ SCoSPARC 分为两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个基准、4 种指标、完整消融（各组件、backbone、数据集、推理速度）、与有监督方法的低数据对比
 - **写作质量**: ⭐⭐⭐⭐ 图1的三方法对比直观展示贡献，Algorithm 1 清晰呈现 Stage 2 流程
 - **实用价值**: ⭐⭐⭐⭐ 轻量模型 + 无需标注 + 超越有监督方法，对标注稀缺的实际场景有很强的应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FREST: Feature Restoration for Semantic Segmentation under Multiple Adverse Conditions](frest_feature_restoration_for_semantic_segmentation_under_multiple_adverse_condi.md)
+- [CoLA: Conditional Dropout and Language-Driven Robust Dual-Modal Salient Object Detection](cola_conditional_dropout_and_language-driven_robust_dual-modal_salient_object_de.md)
+- [Frequency-Spatial Entanglement Learning for Camouflaged Object Detection](frequency-spatial_entanglement_learning_for_camouflaged_object_detection.md)
+- [Representing Topological Self-Similarity Using Fractal Feature Maps for Accurate Segmentation of Tubular Structures](representing_topological_self-similarity_using_fractal_feature_maps_for_accurate.md)
+- [Learning Camouflaged Object Detection from Noisy Pseudo Label](learning_camouflaged_object_detection_from_noisy_pseudo_label.md)
+
+<!-- RELATED:END -->

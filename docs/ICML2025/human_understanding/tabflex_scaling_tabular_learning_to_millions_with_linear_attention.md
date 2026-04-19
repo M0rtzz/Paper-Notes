@@ -126,3 +126,15 @@ poker-hand (100 万+ 样本) 上，TabFlex 仅用 **4.88 秒**完成分类，第
 - 实验充分度: ⭐⭐⭐⭐⭐ — 115 个 OpenML 数据集、25 个基线、涵盖分类和回归、消融研究全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论和实验衔接紧密，图表信息密度高
 - 价值: ⭐⭐⭐⭐ — 显著推进了表格 ICL 的实用化，对工业界大规模表格任务有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Large Motion Models with Million-Level Human Motions](scaling_large_motion_models_with_million-level_human_motions.md)
+- [SpecAttn: Speculating Sparse Attention](../../NeurIPS2025/human_understanding/specattn_speculating_sparse_attention.md)
+- [FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](../../ICCV2025/human_understanding/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
+- [STRIDE: Subset-Free Functional Decomposition for XAI in Tabular Settings](../../ICLR2026/human_understanding/stride_subset-free_functional_decomposition_for_xai_in_tabular_settings.md)
+- [CarGait: Cross-Attention based Re-ranking for Gait Recognition](../../ICCV2025/human_understanding/cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ $$\mathcal{L}_{\text{trg}} = \lambda_1 \mathcal{L}_{\text{ce}} + \lambda_2 \math
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、多种基线对比、消融充分、可解释性分析直观，但数据集规模和多样性偏小（主要是传感器数据）
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，方法推导完整，图表直观，符号定义规范，可解释性可视化很有说服力
 - 价值: ⭐⭐⭐⭐ 为时序域适应提供了可解释的伪标签新范式，弱监督扩展具有实用价值，但需在更大规模数据集上验证泛化性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Customizing the Inductive Biases of Softmax Attention using Structured Matrices](customizing_the_inductive_biases_of_softmax_attention_using_structured_matrices.md)
+- [Martingale Score: An Unsupervised Metric for Bayesian Rationality in LLM Reasoning](../../NeurIPS2025/time_series/martingale_score_an_unsupervised_metric_for_bayesian_rationality_in_llm_reasonin.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](../../ICLR2026/time_series/adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+- [HydroDCM: Hydrological Domain-Conditioned Modulation for Cross-Reservoir Inflow Prediction](../../AAAI2026/time_series/hydrodcm_hydrological_domain-conditioned_modulation_for_cross-reservoir_inflow_p.md)
+- [Channel Normalization for Time Series Channel Identification](channel_normalization_for_time_series_channel_identification.md)
+
+<!-- RELATED:END -->

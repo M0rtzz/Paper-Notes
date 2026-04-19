@@ -113,3 +113,15 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\text{task}} \left[ \mathbb{E}_{\text{contex
 | 写作质量 | 4 |
 | 实用价值 | 3 |
 | 总体推荐 | 4 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts](zero-shot_context_generalization_in_reinforcement_learning_from_few_training_con.md)
+- [Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
+- [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](../../ICLR2026/reinforcement_learning/longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+- [Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling](robust_adversarial_reinforcement_learning_in_stochastic_games_via_sequence_model.md)
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+
+<!-- RELATED:END -->

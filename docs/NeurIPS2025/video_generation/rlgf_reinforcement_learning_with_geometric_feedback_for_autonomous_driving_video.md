@@ -141,3 +141,15 @@ LoRA 应用于 DiT backbone 的注意力层（Q/K/V 投影），训练在 8×A10
 - 实验充分度: ⭐⭐⭐⭐ 双基线验证、完整消融、多维度评估，但仅限单一数据集
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，技术描述详尽，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对自动驾驶合成数据生成领域具有重要意义，GeoScores 和 RLGF 都有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MagicDrive-V2: High-Resolution Long Video Generation for Autonomous Driving with Adaptive Control](../../ICCV2025/video_generation/magicdrive-v2_high-resolution_long_video_generation_for_autonomous_driving_with_.md)
+- [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](../../CVPR2026/video_generation/goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+- [Disentangled World Models: Learning to Transfer Semantic Knowledge from Distracting Videos for Reinforcement Learning](../../ICCV2025/video_generation/disentangled_world_models_learning_to_transfer_semantic_knowledge_from_distracti.md)
+- [Learning Temporally Consistent Video Depth from Video Diffusion Priors](../../CVPR2025/video_generation/learning_temporally_consistent_video_depth_from_video_diffusion_priors.md)
+- [NormalCrafter: Learning Temporally Consistent Normals from Video Diffusion Priors](../../ICCV2025/video_generation/normalcrafter_learning_temporally_consistent_normals_from_video_diffusion_priors.md)
+
+<!-- RELATED:END -->

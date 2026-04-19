@@ -174,3 +174,15 @@ $$\mathcal{L}_{ord} = \max(0, \theta(\mathbf{h}_t, \mathbf{h}_p) - \phi(\mathbf{
 - 实验充分度: ⭐⭐⭐ — 消融实验充分，但对比基线数量不足
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机论证严谨、数学推导完整、图示清晰
 - 价值: ⭐⭐⭐⭐ — 对Text-3D检索领域有显著推进，双曲几何的思路可推广到其他跨模态任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HierLoc: Hyperbolic Entity Embeddings for Hierarchical Visual Geolocation](../../ICLR2026/image_generation/hierloc_hyperbolic_entity_embeddings_for_hierarchical_visual_geolocation.md)
+- [HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation](../../ICCV2025/image_generation/hypdae_hyperbolic_diffusion_autoencoders_for_hierarchical_few-shot_image_generat.md)
+- [ReAlign: Text-to-Motion Generation via Step-Aware Reward-Guided Alignment](realign_text-to-motion_generation_via_step-aware_reward-guided_alignment.md)
+- [AbductiveMLLM: Boosting Visual Abductive Reasoning Within MLLMs](abductivemllm_boosting_visual_abductive_reasoning_within_mll.md)
+- [TruthfulRAG: Resolving Factual-level Conflicts in Retrieval-Augmented Generation with Knowledge Graphs](truthfulrag_resolving_factual-level_conflicts_in_retrieval-augmented_generation_.md)
+
+<!-- RELATED:END -->

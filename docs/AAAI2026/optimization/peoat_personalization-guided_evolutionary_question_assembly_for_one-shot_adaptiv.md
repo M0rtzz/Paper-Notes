@@ -221,3 +221,15 @@ $$P(x_j \in \mathcal{Z}) = \frac{\mathbf{I}_j}{\sum_{k \in \mathcal{Z}} \mathbf{
 - 实验充分度: ⭐⭐⭐⭐ — 两个真实教育数据集、多种基线、消融分析，但缺少大规模场景测试
 - 写作质量: ⭐⭐⭐⭐ — 公式化严谨清晰，问题定义规范
 - 价值: ⭐⭐⭐⭐ — 对智能教育领域有实际应用价值，但场景相对垂直
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Synthetic and Real Routing Problems via LLM-Guided Instance Generation and Progressive Adaptation](bridging_synthetic_and_real_routing_problems_via_llm-guided_instance_generation_.md)
+- [Class-Wise Federated Averaging for Efficient Personalization](../../ICCV2025/optimization/class-wise_federated_averaging_for_efficient_personalization.md)
+- [Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization](pareto-grid-guided_large_language_models_for_fast_and_high-quality_heuristics_de.md)
+- [Evaluating LLMs for Combinatorial Optimization: One-Phase and Two-Phase Heuristics for 2D Bin-Packing](../../NeurIPS2025/optimization/evaluating_llms_for_combinatorial_optimization_one-phase_and_two-phase_heuristic.md)
+- [Verbalized Algorithms: Zero-shot Classical Algorithmic Reasoning for Correctness and Runtime Guarantees](../../NeurIPS2025/optimization/verbalized_algorithms.md)
+
+<!-- RELATED:END -->

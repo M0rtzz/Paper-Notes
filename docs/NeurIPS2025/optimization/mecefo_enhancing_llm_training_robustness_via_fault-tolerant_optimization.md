@@ -127,3 +127,15 @@ MeCeFO 采用**邻居代做**（Neighbor-Do-Both, NDB）策略：当一个节点
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种模型规模、三种故障频率、吞吐量+质量全面评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，三技术的动机和协同关系阐述得当
 - 价值: ⭐⭐⭐⭐⭐ 对大规模LLM训练有直接实用价值，5-7倍弹性提升非常显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning](../../ICLR2026/optimization/scaf-grpo_scaffolded_group_relative_policy_optimization_for_enhancing_llm_reason.md)
+- [DartQuant: Efficient Rotational Distribution Calibration for LLM Quantization](dartquant_efficient_rotational_distribution_calibration_for_llm_quantization.md)
+- [Training Robust Graph Neural Networks by Modeling Noise Dependencies](training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)
+- [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](a_theoretical_study_on_bridging_internal_probability_and_sel.md)
+- [ScaleBiO: Scalable Bilevel Optimization for LLM Data Reweighting](../../ACL2025/optimization/scalebio_bilevel_data_reweighting.md)
+
+<!-- RELATED:END -->

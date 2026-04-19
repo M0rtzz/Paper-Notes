@@ -112,3 +112,15 @@ ST-WSGE 是一个两阶段训练流程，输入包括 3D 注视数据集（Gaze3
 - 实验充分度: ⭐⭐⭐⭐ 多数据集跨域评估全面，消融充分，但缺少可视化分析
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、逻辑连贯，图表质量高
 - 价值: ⭐⭐⭐⭐ 对野外注视估计的实用价值大，伪标签思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views](../../ECCV2024/human_understanding/3dgazenet_generalizing_3d_gaze_estimation_with_weak-supervision_from_synthetic_v.md)
+- [Multi-view Gaze Target Estimation](../../ICCV2025/human_understanding/multi-view_gaze_target_estimation.md)
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [Co-op: Correspondence-Based Novel Object Pose Estimation](co-op_correspondence-based_novel_object_pose_estimation.md)
+- [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
+
+<!-- RELATED:END -->

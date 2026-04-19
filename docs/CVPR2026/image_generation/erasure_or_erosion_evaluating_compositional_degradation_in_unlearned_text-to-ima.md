@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 16种方法、两个互补基准、多维度评估，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，论证链条完整，图表设计直观
 - 价值: ⭐⭐⭐⭐ 对 unlearning 社区有重要警示价值，但缺乏解决方案稍显遗憾
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+- [TINA: Text-Free Inversion Attack for Unlearned Text-to-Image Diffusion Models](tina_text-free_inversion_attack_for_unlearned_text-to-image_diffusion_models.md)
+- [Prototype-Guided Concept Erasure in Diffusion Models](prototype-guided_concept_erasure_in_diffusion_models.md)
+- [Mass Concept Erasure in Diffusion Models with Concept Hierarchy](../../AAAI2026/image_generation/mass_concept_erasure_in_diffusion_models_with_concept_hierarchy.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+
+<!-- RELATED:END -->

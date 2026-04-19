@@ -166,3 +166,15 @@ ReCast 在 16 个 MSE/MAE 指标中取得 12 个最优。
 - 实验充分度: ⭐⭐⭐⭐ — 8 数据集、全面消融和可迁移性验证，但缺少在线/流式场景的评估
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，公式推导完整，图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 轻量、高精度、可迁移，实用价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LightGTS: A Lightweight General Time Series Forecasting Model](../../ICML2025/time_series/lightgts_a_lightweight_general_time_series_forecasting_model.md)
+- [A Unified Shape-Aware Foundation Model for Time Series Classification](a_unified_shape-aware_foundation_model_for_time_series_class.md)
+- [SEMPO: Lightweight Foundation Models for Time Series Forecasting](../../NeurIPS2025/time_series/sempo_lightweight_foundation_models_for_time_series_forecasting.md)
+- [Task-Aware Retrieval Augmentation for Dynamic Recommendation](task-aware_retrieval_augmentation_for_dynamic_recommendation.md)
+- [Harmonic Dataset Distillation for Time Series Forecasting](harmonic_dataset_distillation_for_time_series_forecasting.md)
+
+<!-- RELATED:END -->

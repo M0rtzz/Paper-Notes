@@ -147,3 +147,15 @@ SFT 带来 30-50 个百分点的提升，远超 few-shot 和 CoT 方法。Qwen-2
 - **实验完备性**: ⭐⭐⭐⭐ 13 个模型 × 5 种方法，分类别分析透彻
 - **数据集质量**: ⭐⭐⭐⭐ 分类体系完善，质量控制严格（93.76%通过率）
 - **实用性**: ⭐⭐⭐⭐ 直接指导 LLM 安全性和可靠性的改进方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](codemenv_benchmarking_large_language_models_on_code_migration.md)
+- [AD-LLM: Benchmarking Large Language Models for Anomaly Detection](ad-llm_benchmarking_large_language_models_for_anomaly_detection.md)
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
+- [Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models](retrieval_models_arent_tool-savvy_benchmarking_tool_retrieval_for_large_language.md)
+
+<!-- RELATED:END -->

@@ -165,3 +165,15 @@ $$\Pr_{\mathcal{D}}\big(\mathbf{rob}_f(X) < \rho \mid \mathbf{conf}_f(X) \geq \k
 - 实验充分度: ⭐⭐⭐⭐ — 230次实验覆盖4种架构×2种训练×2种预言机，统计充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰严谨，定义-命题-定理层层递进
 - 价值: ⭐⭐⭐⭐ — 填补了大规模网络全局鲁棒性认证的空白，实际可用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](../../NeurIPS2025/others/learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [Diverse Prototypical Ensembles Improve Robustness to Subpopulation Shift](diverse_prototypical_ensembles_improve_robustness_to_subpopulation_shift.md)
+- [Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+- [Neuron Empirical Gradient: Discovering and Quantifying Neurons' Global Linear Controllability](../../ACL2025/others/neuron_empirical_gradient_discovering_and_quantifying_neurons_global_linear_cont.md)
+- [Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
+
+<!-- RELATED:END -->

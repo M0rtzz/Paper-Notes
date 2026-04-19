@@ -151,3 +151,15 @@ PENCIL在所有规模上均达100%准确率，trace rate也维持100%。
 - 实验充分度: ⭐⭐⭐⭐ — 三类任务+消融+理论验证，虽仍限于形式化问题
 - 写作质量: ⭐⭐⭐⭐⭐ — 概念清晰、图示优雅、理论与实验衔接流畅
 - 价值: ⭐⭐⭐⭐⭐ — 从根本上改变了"LLM推理=无限context"的范式，开辟空间高效推理方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access](../../NeurIPS2025/llm_efficiency/hardware-aligned_hierarchical_sparse_attention_for_efficient_long-term_memory_ac.md)
+- [Dense Associative Memory with Epanechnikov Energy](../../NeurIPS2025/llm_efficiency/dense_associative_memory_with_epanechnikov_energy.md)
+- [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](../../ACL2025/llm_efficiency/smarter_better_faster_longer_a_modern_bidirectional_encoder_for_fast_memory_effi.md)
+- [Star Attention: Efficient LLM Inference over Long Sequences](star_attention_efficient_llm_inference_over_long_sequences.md)
+
+<!-- RELATED:END -->

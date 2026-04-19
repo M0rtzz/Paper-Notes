@@ -130,3 +130,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{L1}}(\hat{C}, C_{gt}) + \lambda \mathcal{L}_{
 - **实验充分度**: ⭐⭐⭐⭐⭐ 3 个数据集、多种视角数、丰富消融、兼容性验证、超参分析
 - **写作质量**: ⭐⭐⭐⭐ Pilot study 的分析很扎实，图表清晰
 - **价值**: ⭐⭐⭐⭐ 方法简单实用、即插即用，对 3DGS 社区有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Hybrid SE(3)-Equivariant Visuomotor Flow Policy via Spherical Harmonics](efficient_hybrid_se3-equivariant_visuomotor_flow_policy_via_spherical_harmonics_.md)
+- [CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization](../../ECCV2024/3d_vision/cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization.md)
+- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](../../ECCV2024/3d_vision/mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
+- [LTGS: Long-Term Gaussian Scene Chronology From Sparse View Updates](ltgs_long-term_gaussian_scene_chronology_from_sparse_view_updates.md)
+- [DropoutGS: Dropping Out Gaussians for Better Sparse-view Rendering](../../CVPR2025/3d_vision/dropoutgs_dropping_out_gaussians_for_better_sparse-view_rendering.md)
+
+<!-- RELATED:END -->

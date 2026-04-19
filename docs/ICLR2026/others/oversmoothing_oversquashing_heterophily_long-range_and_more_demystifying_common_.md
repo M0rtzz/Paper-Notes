@@ -138,3 +138,15 @@ $$\mathcal{M}_v^K := \mathcal{M}_v^{K-1} \uplus \left\{\biguplus_{u \in \mathcal
 - **实用性**: ⭐⭐⭐ — 概念澄清价值大但无新方法
 - **写作**: ⭐⭐⭐⭐⭐ — 逻辑清晰，反例精炼，表格总结一目了然
 - **影响力**: ⭐⭐⭐⭐ — 对图 ML 社区的术语使用和问题定义具有长期影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)
+- [Directional Non-Commutative Monoidal Structures for Compositional Embeddings in Machine Learning](../../NeurIPS2025/others/directional_non-commutative_monoidal_structures_for_compositional_embeddings_in_.md)
+- [Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
+- [Compositional Diffusion with Guided Search for Long-Horizon Planning](compositional_diffusion_long_horizon_planning.md)
+- [Revisiting Sharpness-Aware Minimization: A More Faithful and Effective Implementation](revisiting_sharpness-aware_minimization_a_more_faithful_and_effective_implementa.md)
+
+<!-- RELATED:END -->

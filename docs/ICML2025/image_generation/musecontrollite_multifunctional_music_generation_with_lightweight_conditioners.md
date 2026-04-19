@@ -133,3 +133,15 @@ MuseControlLite 基于 Stable Audio Open（一个 24 层扩散 Transformer）进
 ## 评分
 
 ⭐⭐⭐⭐ 核心 idea 简洁高效（仅加 RoPE 到解耦交叉注意力），实验充分覆盖旋律/节奏/力度/音频修复/续写多种任务，参数效率提升显著（85M vs 572M）。消融实验清晰证明了每个设计选择的必要性。但应用场景限于器乐生成，对更广泛的音频控制场景（人声、音效）的泛化性有待验证。整体而言是可控音乐生成方向的一个扎实且实用的贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamCache: Finetuning-Free Lightweight Personalized Image Generation via Feature Caching](../../CVPR2025/image_generation/dreamcache_finetuning-free_lightweight_personalized_image_generation_via_feature.md)
+- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](../../CVPR2025/image_generation/enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
+- [Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](../../ICCV2025/image_generation/music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)
+- [MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction](../../NeurIPS2025/image_generation/mge-ldm_joint_latent_diffusion_for_simultaneous_music_generation_and_source_extr.md)
+- [AnoStyler: Text-Driven Localized Anomaly Generation via Lightweight Style Transfer](../../AAAI2026/image_generation/anostyler_text-driven_localized_anomaly_generation_via_light.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ CPS-Prompt 沿用 PCL 标准两阶段架构：(1) 冻结 query encoder $f_q$ 前
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集+真实边缘硬件+完整消融+效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，算法流程图和伪代码完备
 - 价值: ⭐⭐⭐⭐ 对边缘持续学习有实际意义，但整体 scope 偏小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REP: Resource-Efficient Prompting for Rehearsal-Free Continual Learning](../../NeurIPS2025/model_compression/rep_resource-efficient_prompting_for_rehearsal-free_continual_learning.md)
+- [MEMO: Human-like Crisp Edge Detection Using Masked Edge Prediction](memo_human-like_crisp_edge_detection_using_masked_edge_prediction.md)
+- [CHEEM: Continual Learning by Reuse, New, Adapt and Skip -- A Hierarchical Exploration-Exploitation Approach](cheem_continual_learning_by_reuse_new_adapt_and_skip_--_a_hierarchical_explorati.md)
+- [FASA: Frequency-aware Sparse Attention](../../ICLR2026/model_compression/fasa_frequency-aware_sparse_attention.md)
+- [IDER: IDempotent Experience Replay for Reliable Continual Learning](../../ICLR2026/model_compression/ider_idempotent_experience_replay_for_reliable_continual_learning.md)
+
+<!-- RELATED:END -->

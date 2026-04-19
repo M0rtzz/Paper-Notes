@@ -160,3 +160,15 @@ $$\mathcal{L} = \lambda_{\text{retain}}\mathcal{L}_{\text{retain}} + \lambda_{\t
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、三种 WSOL 模型、四个 SFDA 基线，消融和定性分析充分
 - 写作质量: ⭐⭐⭐⭐ 问题动机讲述清晰，Fig.1 诊断有力，数学符号规范
 - 价值: ⭐⭐⭐⭐ 指出了 SFDA 在病理中的核心失败模式并给出有效方案，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+- [Weakly Supervised Teacher-Student Framework with Progressive Pseudo-mask Refinement for Gland Segmentation](weakly_supervised_teacher-student_framework_with_progressive_pseudo-mask_refinem.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Cell-Type Prototype-Informed Neural Network for Gene Expression Estimation from Pathology Images](cell-type_prototype-informed_neural_network_for_gene_expression_estimation_from_.md)
+
+<!-- RELATED:END -->

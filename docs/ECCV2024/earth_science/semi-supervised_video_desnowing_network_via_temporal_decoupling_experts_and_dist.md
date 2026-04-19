@@ -147,3 +147,15 @@ $$\mathcal{L}_{un} = 2 \cdot \mathcal{L}'_{pixel} + 0.1 \cdot \mathcal{L}_{cl} +
 - 实验充分度: 8/10 — 对比 15 个方法，消融完整，提供合成和真实数据评估，并收集新数据集
 - 写作质量: 7/10 — 结构清晰，公式推导完整，但部分符号较多，可读性可进一步提升
 - 价值: 7/10 — 半监督去雪是有意义的研究方向，但应用面相对较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MdaIF: Robust One-Stop Multi-Degradation-Aware Image Fusion with Language-Driven Semantics](../../AAAI2026/earth_science/mdaif_robust_one-stop_multi-degradation-aware_image_fusion_with_language-driven_.md)
+- [Reasoning With a Star: A Heliophysics Dataset and Benchmark for Agentic Scientific Reasoning](../../NeurIPS2025/earth_science/reasoning_with_a_star_a_heliophysics_dataset_and_benchmark_for_agentic_scientifi.md)
+- [Adaptive Online Emulation for Accelerating Complex Physical Simulations](../../NeurIPS2025/earth_science/adaptive_online_emulation_for_accelerating_complex_physical_simulations.md)
+- [A Probabilistic U-Net Approach to Downscaling Climate Simulations](../../NeurIPS2025/earth_science/a_probabilistic_unet_approach_to_downscaling_climate_simulat.md)
+- [ControlFusion: A Controllable Image Fusion Framework with Language-Vision Degradation Prompts](../../NeurIPS2025/earth_science/controlfusion_a_controllable_image_fusion_framework_with_language-vision_degrada.md)
+
+<!-- RELATED:END -->

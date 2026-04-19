@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实实验验证，多种激活函数和配置
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，结构清晰，但对非理论读者门槛较高
 - 价值: ⭐⭐⭐⭐ 深化了ICL理论理解，对数据混合策略有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GrammaMT: Improving Machine Translation with Grammar-Informed In-Context Learning](../../ACL2025/multilingual_mt/grammamt_improving_machine_translation_with_grammar-informed_in-context_learning.md)
+- [Blessing of Multilinguality: A Systematic Analysis of Multilingual In-Context Learning](../../ACL2025/multilingual_mt/blessing_of_multilinguality_a_systematic_analysis_of_multilingual_in-context_lea.md)
+- [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
+- [Exploring In-context Example Generation for Machine Translation](../../ACL2025/multilingual_mt/exploring_in-context_example_generation_for_machine_translation.md)
+- [DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)
+
+<!-- RELATED:END -->

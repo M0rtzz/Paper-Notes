@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 主要是归纳偏置验证，缺乏任务级实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨完整，附录证明详尽
 - 价值: ⭐⭐⭐⭐ 为紧空间上的 SDE 建模提供了坚实理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalizable, Real-Time Neural Decoding with Hybrid State-Space Models](../../NeurIPS2025/medical_imaging/generalizable_real-time_neural_decoding_with_hybrid_state-space_models.md)
+- [Out-of-Distribution Detection Methods Answer the Wrong Questions](out-of-distribution_detection_methods_answer_the_wrong_questions.md)
+- [H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis](../../NeurIPS2025/medical_imaging/h-ddx_a_hierarchical_evaluation_framework_for_differential_diagnosis.md)
+- [SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](../../ICCV2025/medical_imaging/scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)
+- [BarcodeMamba+: Advancing State-Space Models for Fungal Biodiversity Research](../../NeurIPS2025/medical_imaging/barcodemamba_advancing_state-space_models_for_fungal_biodiversity_research.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 消融实验完整，多数据集多模型评估，与 NeRF-Stereo 公平对比，还有边缘误差和合成效率分析
 - 写作质量: ⭐⭐⭐⭐ — 论文结构清晰，图表信息量大，符号使用规范
 - 价值: ⭐⭐⭐⭐ — 实用性强，35K 数据即可达 SOTA，对计算资源有限的场景意义显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RobuSTereo: Robust Zero-Shot Stereo Matching under Adverse Weather](robustereo_robust_zero-shot_stereo_matching_under_adverse_weather.md)
+- [FoundationStereo: Zero-Shot Stereo Matching](../../CVPR2025/3d_vision/foundationstereo_zero-shot_stereo_matching.md)
+- [Stereo Any Video: Temporally Consistent Stereo Matching](stereo_any_video_temporally_consistent_stereo_matching.md)
+- [MVSAnywhere: Zero-Shot Multi-View Stereo](../../CVPR2025/3d_vision/mvsanywhere_zero-shot_multi-view_stereo.md)
+- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](../../CVPR2026/3d_vision/lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+
+<!-- RELATED:END -->

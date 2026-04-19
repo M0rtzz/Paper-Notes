@@ -132,3 +132,15 @@ RLVRR 用 10K 数据在所有指标上超越 100K SFT 和 8B 奖励模型。
 - 实验充分度: ⭐⭐⭐⭐⭐ 10+ benchmark、多模型系列、详细消融、多样性分析、效率分析
 - 写作质量: ⭐⭐⭐⭐ 叙事清晰，"dot→chain"的类比直观
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高——为没有标准答案的对齐任务提供了低成本、可扩展的 RL 训练方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+- [Helix: Evolutionary Reinforcement Learning for Open-Ended Scientific Problem Solving](helix_evolutionary_reinforcement_learning_for_open-ended_scientific_problem_solv.md)
+- [Reasoning Gym: Reasoning Environments for Reinforcement Learning with Verifiable Rewards](../../NeurIPS2025/reinforcement_learning/reasoning_gym_reasoning_environments_for_reinforcement_learning_with_verifiable_.md)
+- [Generalizing Verifiable Instruction Following](../../NeurIPS2025/reinforcement_learning/generalizing_verifiable_instruction_following.md)
+- [References Improve LLM Alignment in Non-Verifiable Domains](references_improve_llm_alignment_in_non-verifiable_domains.md)
+
+<!-- RELATED:END -->

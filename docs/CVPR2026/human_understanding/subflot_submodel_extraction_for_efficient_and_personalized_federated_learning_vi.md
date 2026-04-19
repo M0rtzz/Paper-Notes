@@ -121,3 +121,15 @@ SubFLOT 在每轮联邦通信中包含三个阶段：(1) **服务器端OTP模块
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖CV/NLP/IoT多领域，label skew/feature shift/real-world多设置，大量扩展性和消融实验
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义和方法描述清晰，但公式较多，部分读者可能需要OT背景知识
 - **价值**: ⭐⭐⭐⭐ — 对联邦学习在边缘设备上的实际部署有重要意义，方法具有即插即用的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift](feddap_domain-aware_prototype_learning_for_federated_learning_under_domain_shift.md)
+- [An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](../../ICLR2026/human_understanding/an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)
+- [COG: Confidence-aware Optimal Geometric Correspondence for Unsupervised Single-reference Novel Object Pose Estimation](cog_confidence-aware_optimal_geometric_correspondence_for_unsupervised_single-re.md)
+- [TriLite: Efficient WSOL with Universal Visual Features and Tri-Region Disentanglement](trilite_efficient_weakly_supervised_object_localization_with_universal_visual_fe.md)
+- [Heterogeneous Federated Fine-Tuning with Parallel One-Rank Adaptation](../../ICLR2026/human_understanding/heterogeneous_federated_fine-tuning_with_parallel_one-rank_adaptation.md)
+
+<!-- RELATED:END -->

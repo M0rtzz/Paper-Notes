@@ -112,3 +112,15 @@ RCPO 在 Llama-3-8B, Gemma-2-9B, Mistral-7B 上均一致优于或持平 DPO 和 
 - 实验充分度: ⭐⭐⭐⭐ 3 个模型 × 多基线 × ID/OOD 评估，但仅限 7-9B 规模
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，框架呈现清晰，梯度分析有深度
 - 价值: ⭐⭐⭐⭐ 为 LLM 对齐提供了更通用的框架，尤其 Mallows-RMJ 的实践价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
+- [Beyond RLHF and NLHF: Population-Proportional Alignment under an Axiomatic Framework](beyond_rlhf_and_nlhf_population-proportional_alignment_under_an_axiomatic_framew.md)
+- [Align Once, Benefit Multilingually: Enforcing Multilingual Consistency for LLM Safety Alignment](align_once_benefit_multilingually_enforcing_multilingual_consistency_for_llm_saf.md)
+- [On the Exponential Convergence for Offline RLHF with Pairwise Comparisons](../../AAAI2026/llm_alignment/on_the_exponential_convergence_for_offline_rlhf_with_pairwise_comparisons.md)
+- [IOPO: Empowering LLMs with Complex Instruction Following via Input-Output Preference Optimization](../../ACL2025/llm_alignment/iopo_input_output_preference.md)
+
+<!-- RELATED:END -->

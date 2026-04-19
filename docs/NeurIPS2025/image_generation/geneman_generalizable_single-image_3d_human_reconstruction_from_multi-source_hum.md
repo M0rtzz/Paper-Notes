@@ -220,3 +220,15 @@ $$\mathcal{L}_{\text{fine}} = \|I_{\text{fine}} - I_{\text{coarse}}\|_2 + \lambd
 3. **与 feed-forward 方法的互补**：GeneMAN 走优化路线（~1.4h），质量上限高但速度慢；LRM/Instant3D 等前馈方法速度快但质量有限。未来可能的方向是用 GeneMAN 级别的先验初始化前馈网络，兼顾质量与速度。
 4. **Sapiens 作为人体基础模型的潜力**：论文中使用 Sapiens 提供参考视角的 depth/normal 先验，提示 foundation model 在下游 3D 任务中可作为即插即用的几何信号源。
 5. **训练免费多视角一致性技巧**：对多视角渲染加相同噪声并拼接推理，这一简洁技巧可能适用于其他基于 SDS 的 3D 生成任务。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image](../../CVPR2025/image_generation/decloth_decomposable_3d_cloth_and_human_body_reconstruction_from_a_single_image.md)
+- [A Data-Driven Prism: Multi-View Source Separation with Diffusion Model Priors](a_data-driven_prism_multi-view_source_separation_with_diffusion_model_priors.md)
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](../../CVPR2025/image_generation/interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [Diff-ICMH: Harmonizing Machine and Human Vision in Image Compression with Generative Prior](diff-icmh_harmonizing_machine_and_human_vision_in_image_compression_with_generat.md)
+- [Comprehensive Relighting: Generalizable and Consistent Monocular Human Relighting and Harmonization](../../CVPR2025/image_generation/comprehensive_relighting_generalizable_and_consistent_monocular_human_relighting.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ $$O\left(\frac{S_m \cdot n \ln n}{\mu} + \frac{n\mu}{S_m}\right) \text{ 代}$$
 
 - ⭐⭐⭐⭐ (4/5)
 - 纯理论贡献非常扎实，首次给出 NSGA-III 在经典基准上的紧致界，迭代缩减证明框架新颖。扣分原因：仅限于 OMM 等"所有点均 Pareto 最优"的简单基准，实际指导意义有限；多目标推广仍有较大间隙。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](../../ACL2025/multimodal_vlm/table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video](../../NeurIPS2025/multimodal_vlm/rtv-bench_benchmarking_mllm_continuous_perception_understanding_and_reasoning_th.md)
+- [FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models](ft-ncfm_an_influence-aware_data_distillation_framework_for_efficient_vla_models.md)
+- [Multi-Faceted Attack: Exposing Cross-Model Vulnerabilities in Defense-Equipped Vision-Language Models](multi-faceted_attack_exposing_cross-model_vulnerabilities_in_defense-equipped_vi.md)
+- [Rethinking Visual Token Reduction in LVLMs under Cross-Modal Misalignment](rethinking_visual_token_reduction_in_lvlms_under_cross-modal_misalignment.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ Explorer-7B 在 MiniWob++ 上匹敌甚至超过 GPT-4（53.26% vs 53.04%）。
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个benchmark+in-domain评估+消融+scaling分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ pipeline 描述清晰，数据统计详尽
 - 价值: ⭐⭐⭐⭐⭐ 对 web agent 训练数据问题提供了可扩展解决方案，数据和模型均开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Web-Shepherd: Advancing PRMs for Reinforcing Web Agents](../../NeurIPS2025/llm_agent/web-shepherd_advancing_prms_for_reinforcing_web_agents.md)
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](gui_explorer_autonomous.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](../../ICLR2026/llm_agent/web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis](os_genesis_gui_agent_trajectory.md)
+- [HATS: Hardness-Aware Trajectory Synthesis for GUI Agents](../../CVPR2026/llm_agent/hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)
+
+<!-- RELATED:END -->

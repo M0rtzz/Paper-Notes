@@ -139,3 +139,15 @@ $$\mathcal{L}(x_{1,\dots,M}) = \mathbb{E}_{z^{1:K} \sim q_\phi} \left[ \log \sum
 - 实验充分度: ⭐⭐ — 仅模拟数据、小规模验证，缺少真实数据和扩散模型对比
 - 写作质量: ⭐⭐⭐⭐ — 行文清晰，问题动机阐述充分，架构图直观
 - 价值: ⭐⭐⭐ — 面向 LSST 时代的实际需求，但需要真实数据验证才有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Discovery of High-Redshift Galaxy Populations with Variational Autoencoders](../../NeurIPS2025/physics/unsupervised_discovery_of_high-redshift_galaxy_populations_with_variational_auto.md)
+- [ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](../../NeurIPS2025/physics/multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+- [Data Verification is the Future of Quantum Computing Copilots](../../AAAI2026/physics/data_verification_is_the_future_of_quantum_computing_copilots.md)
+- [Finetuning Stellar Spectra Foundation Models with LoRA](finetuning_stellar_spectra_foundation_models_with_lora.md)
+
+<!-- RELATED:END -->

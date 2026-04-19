@@ -163,3 +163,15 @@ LaMoGen 是一个 **Text → LabanLite → Motion** 的两阶段生成框架：
 ## 评分
 
 ⭐⭐⭐⭐ — 将 Labanotation 引入 LLM 动作生成是一个巧妙且有说服力的创新，符号推理路线为可解释可控动作生成开辟了新方向；Laban Benchmark 的评测贡献也很扎实。但 FID 偏高和 LLM 依赖是需要后续工作解决的实际瓶颈。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](molingo_motion-language_alignment_for_text-to-motion_generation.md)
+- [SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control](../../AAAI2026/human_understanding/soscontrol_enhancing_human_motion_generation_through_saliency-aware_symbolic_ori.md)
+- [CoMo: Controllable Motion Generation Through Language Guided Pose Code Editing](../../ECCV2024/human_understanding/como_controllable_motion_generation_through_language_guided_pose_code_editing.md)
+- [HandX: Scaling Bimanual Motion and Interaction Generation](handx_scaling_bimanual_motion_and_interaction_generation.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+
+<!-- RELATED:END -->

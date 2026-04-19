@@ -131,3 +131,15 @@ $$f(x) = \arg\max_l P(z=l|x)$$
 | 实用性 | ⭐⭐⭐⭐ | 免训练，跨模型通用，可直接部署 |
 | 实验充分性 | ⭐⭐⭐⭐ | 8 个任务，4 种骨干模型，全面对比 |
 | 写作质量 | ⭐⭐⭐⭐ | 观察-方法-实验逻辑清晰 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlashBack: Efficient Retrieval-Augmented Language Modeling for Fast Inference](../../ACL2025/information_retrieval/flashbackefficient_retrieval-augmented_language_modeling_for_long_context_infere.md)
+- [LightRetriever: A LLM-based Text Retrieval Architecture with Extremely Faster Query Inference](lightretriever_a_llm-based_text_retrieval_architecture_with_extremely_faster_que.md)
+- [Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
+- [Efficient Discriminative Joint Encoders for Large Scale Vision-Language Re-ranking](efficient_discriminative_joint_encoders_for_large_scale_vision-language_rerankin.md)
+- [Leveraging Data to Say No: Memory Augmented Plug-and-Play Selective Prediction](leveraging_data_to_say_no_memory_augmented_plug-and-play_selective_prediction.md)
+
+<!-- RELATED:END -->

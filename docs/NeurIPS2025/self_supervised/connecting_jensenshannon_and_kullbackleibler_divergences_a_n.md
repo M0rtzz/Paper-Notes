@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ MI估计benchmark全面（高斯/非高斯/离散），IB应用有说服力，但缺乏大规模视觉SSL实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，Figure 1/2的可视化直观展示了联合值域和下界紧致性
 - 价值: ⭐⭐⭐⭐ 为JSD基于的判别式SSL方法提供了缺失的理论基础，IB中的实际效果（86.1%对抗鲁棒性）令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Soft Task-Aware Routing of Experts for Equivariant Representation Learning](soft_task-aware_routing_of_experts_for_equivariant_representation_learning.md)
+- [Adv-SSL: Adversarial Self-Supervised Representation Learning with Theoretical Guarantees](adv-ssl_adversarial_self-supervised_representation_learning_with_theoretical_gua.md)
+- [TRIDENT: Tri-Modal Molecular Representation Learning with Taxonomic Annotations and Structural Relationships](trident_tri-modal_molecular_representation_learning_with_taxonomic_annotations_a.md)
+- [Revisiting Supervision for Continual Representation Learning](../../ECCV2024/self_supervised/revisiting_supervision_for_continual_representation_learning.md)
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+
+<!-- RELATED:END -->

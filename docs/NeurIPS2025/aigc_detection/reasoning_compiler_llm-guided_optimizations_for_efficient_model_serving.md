@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 benchmark × 5 个硬件平台 + 端到端评估，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化清晰，动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 对编译器和模型服务社区有重大影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
+- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+- [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
+- [ActiShade: Activating Overshadowed Knowledge to Guide Multi-Hop Reasoning in Large Language Models](../../AAAI2026/aigc_detection/actishade_activating_overshadowed_knowledge_to_guide_multi-h.md)
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个下游任务验证+标注精度量化评估+跨数据集泛化分析
 - 写作质量: ⭐⭐⭐⭐⭐ 清晰展示动机、系统设计、标注pipeline和实验，数据集论文的典范
 - 价值: ⭐⭐⭐⭐⭐ 对自我中心视觉和手物交互领域有直接而重大的推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects](../../ECCV2024/video_understanding/benchmarks_and_challenges_in_pose_estimation_for_egocentric_hand_interactions_wi.md)
+- [SemTrack: A Large-Scale Dataset for Semantic Tracking in the Wild](../../ECCV2024/video_understanding/semtrack_a_large-scale_dataset_for_semantic_tracking_in_the_wild.md)
+- [Nymeria: A Massive Collection of Multimodal Egocentric Daily Motion in the Wild](../../ECCV2024/video_understanding/nymeria_a_massive_collection_of_multimodal_egocentric_daily_motion_in_the_wild.md)
+- [Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training](../../ECCV2024/video_understanding/boosting_3d_single_object_tracking_with_2d_matching_distillation_and_3d_pre-trai.md)
+- [Lifelong Domain Adaptive 3D Human Pose Estimation](../../AAAI2026/video_understanding/lifelong_domain_adaptive_3d_human_pose_estimation.md)
+
+<!-- RELATED:END -->

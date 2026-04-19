@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实、静态+动态、多个 benchmark、详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但物理背景部分对非光学读者可能较难
 - 价值: ⭐⭐⭐⭐ 首个 Mamba 用于湍流消除，LPD 设计可迁移到其他退化估计场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [High-Resolution Spatiotemporal Modeling with Global-Local State Space Models for Video-Based Human Pose Estimation](../../ICCV2025/human_understanding/high-resolution_spatiotemporal_modeling_with_global-local_state_space_models_for.md)
+- [A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments](../../ICML2025/human_understanding/a_generalizable_physics-enhanced_state_space_model_for_long-term_dynamics_foreca.md)
+- [Homogeneous Dynamics Space for Heterogeneous Humans](homogeneous_dynamics_space_for_heterogeneous_humans.md)
+- [Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization](../../NeurIPS2025/human_understanding/learning_to_watermark_a_selective_watermarking_framework_for_large_language_mode.md)
+- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
+
+<!-- RELATED:END -->

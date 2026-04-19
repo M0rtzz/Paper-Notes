@@ -181,4 +181,16 @@ RoG 将任务分解为：
 **创新性**: ⭐⭐⭐⭐⭐ — 新任务 + 新数据集 + 新方法，体系完整  
 **实用性**: ⭐⭐⭐⭐ — 直接面向穿戴式 AI 助手场景  
 **实验深度**: ⭐⭐⭐⭐ — 零样本+微调+消融全覆盖，6个模型8个数据集  
-**写作质量**: ⭐⭐⭐⭐ — 场景引入生动，方法动机清晰  
+**写作质量**: ⭐⭐⭐⭐ — 场景引入生动，方法动机清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProbRes: Probabilistic Jump Diffusion for Open-World Egocentric Activity Recognition](probres_probabilistic_jump_diffusion_for_open-world_egocentric_activity_recognit.md)
+- [DOGR: Towards Versatile Visual Document Grounding and Referring](dogr_towards_versatile_visual_document_grounding_and_referring.md)
+- [MC-Bench: A Benchmark for Multi-Context Visual Grounding in the Era of MLLMs](mc-bench_a_benchmark_for_multi-context_visual_grounding_in_the_era_of_mllms.md)
+- [HAMMER: Harnessing MLLM via Cross-Modal Integration for Intention-Driven 3D Affordance Grounding](../../CVPR2026/multimodal_vlm/hammer_harnessing_mllm_via_cross-modal_integration_for_intention-driven_3d_affor.md)
+- [WearVQA: A Visual Question Answering Benchmark for Wearables in Egocentric Authentic Real-world scenarios](../../NeurIPS2025/multimodal_vlm/wearvqa_a_visual_question_answering_benchmark_for_wearables_in_egocentric_authen.md)
+
+<!-- RELATED:END -->

@@ -162,3 +162,15 @@ $$\text{KRR} = \left(1 + e^{-R_\Delta \cdot \text{KPR}^{-1}}\right)^{-1}$$
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖7个模型系列、Qwen2.5全参数规模分析、双语对比，但缺少最新模型（如GPT-4o、Claude 3）
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，任务定义明确，图表排版规范
 - 价值: ⭐⭐⭐⭐ — 揭示知识存储与利用的鸿沟这一关键洞察，对LLM诚实性和可靠性研究有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)
+- [Factual Knowledge in Language Models: Robustness and Anomalies under Simple Temporal Context Variations](factual_knowledge_in_language_models_robustness_and_anomalies_under_simple_tempo.md)
+- [Mamba Knockout for Unraveling Factual Information Flow](mamba_knockout_for_unraveling_factual_information_flow.md)
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](intent_hallucination_eval.md)
+- [Truth Knows No Language: Evaluating Truthfulness Beyond English](truth_knows_no_language_evaluating_truthfulness_beyond_english.md)
+
+<!-- RELATED:END -->

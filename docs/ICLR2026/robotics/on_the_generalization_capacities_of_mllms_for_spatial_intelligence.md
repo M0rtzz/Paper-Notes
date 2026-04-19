@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 跨相机泛化实验设计精妙，消融全面，多基准验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题诊断→理论分析→实验验证的叙事流畅完美
 - 价值: ⭐⭐⭐⭐⭐ 揭示了领域根本性问题，提出的三组件framework可直接应用于各种空间MLLM
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SITE: towards Spatial Intelligence Thorough Evaluation](../../ICCV2025/robotics/site_towards_spatial_intelligence_thorough_evaluation.md)
+- [From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors](from_spatial_to_actions_grounding_vision-language-action_model_in_spatial_founda.md)
+- [Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping](constructive_distortion_improving_mllms_with_attention-guided_image_warping.md)
+- [Let's Think in Two Steps: Mitigating Agreement Bias in MLLMs with Self-Grounded Verification](lets_think_in_two_steps_mitigating_agreement_bias_in_mllms_with_self-grounded_ve.md)
+- [Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ UniGame 在标准 UMM（如 Janus-Pro-7B）上添加两个轻量模块：(1) 扰
 - 实验充分度: ⭐⭐⭐⭐ 一致性、理解、生成、OOD、对抗五维评估全面，消融细致
 - 写作质量: ⭐⭐⭐⭐ 动机论述清晰，与 GAN/AT/reconstruction 的区别分析到位
 - 价值: ⭐⭐⭐⭐ 对 UMM 后训练和一致性改进有重要参考价值，自博弈思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Customized Visual Storytelling with Unified Multimodal LLMs](customized_visual_storytelling_with_unified_multimodal_llms.md)
+- [UniHM: Unified Dexterous Hand Manipulation with Vision Language Model](../../ICLR2026/multimodal_vlm/unihm_unified_dexterous_hand_manipulation_with_vision_language_model.md)
+- [Uni3DL: Unified Model for 3D and Language Understanding](../../ECCV2024/multimodal_vlm/uni3dl_a_unified_model_for_3d_vision-language_understanding.md)
+- [VecGlypher: Unified Vector Glyph Generation with Language Models](vecglypher_unified_vector_glyph_generation_with_language_models.md)
+- [Modal Aphasia: Can Unified Multimodal Models Describe Images From Memory?](../../ICLR2026/multimodal_vlm/modal_aphasia_can_unified_multimodal_models_describe_images_from_memory.md)
+
+<!-- RELATED:END -->

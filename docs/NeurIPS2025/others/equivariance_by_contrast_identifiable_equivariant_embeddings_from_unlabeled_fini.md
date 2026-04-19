@@ -145,3 +145,15 @@ $$\hat{\mathbf{R}}_{n+m}' = \begin{pmatrix} \hat{\mathbf{R}}_n & \mathbf{0} \\ \
 - ⭐ 实验充分度: 7/10 — 合成数据验证充分，但视觉数据仅限 idSprites，缺乏更多真实场景
 - ⭐ 写作质量: 8/10 — 理论推导清晰，符号一致，图示直观
 - ⭐ 价值: 8/10 — 为等变表示学习提供了新范式，理论意义大于当前实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Universality Classes of Equivariant Networks](on_universality_classes_of_equivariant_networks.md)
+- [Faithful Group Shapley Value](faithful_group_shapley_value.md)
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [Better Embeddings with Coupled Adam](../../ACL2025/others/better_embeddings_with_coupled_adam.md)
+- [Partial Colexifications Improve Concept Embeddings](../../ACL2025/others/partial_colexifications_improve_concept_embeddings.md)
+
+<!-- RELATED:END -->

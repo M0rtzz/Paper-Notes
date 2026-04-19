@@ -10,23 +10,23 @@ description: >-
 
 **🎞️ ECCV2024** · **6** 篇论文解读
 
-**[Adaclip Adapting Clip With Hybrid Learnable Prompts For Zero](adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)**
+**[AdaCLIP: Adapting CLIP with Hybrid Learnable Prompts for Zero-Shot Anomaly Detection](adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)**
 
 :   在CLIP中同时引入静态（全局共享）和动态（逐图生成）两种可学习提示，用辅助异常检测数据训练后，在14个工业+医学异常检测数据集上实现零样本SOTA，核心在于"任务级+实例级"双层自适应的混合提示设计。
 
-**[Funqa Towards Surprising Video Comprehension](funqa_towards_surprising_video_comprehension.md)**
+**[FunQA: Towards Surprising Video Comprehension](funqa_towards_surprising_video_comprehension.md)**
 
 :   构建了大规模反直觉视频问答基准 FunQA（4.3K 视频、312K QA 对），覆盖幽默/创意/魔术三类令人惊讶的视频，并提出 FunMentor 智能体通过多轮对话增强 VLM 的反常识推理能力。
 
-**[Promptiqa Boosting The Performance And Generalization For No-Reference Image Qua](promptiqa_boosting_the_performance_and_generalization_for_no-reference_image_qua.md)**
+**[PromptIQA: Boosting the Performance and Generalization for No-Reference Image Quality Assessment via Prompts](promptiqa_boosting_the_performance_and_generalization_for_no-reference_image_qua.md)**
 
 :   提出 PromptIQA，通过少量"图像-分数对"（ISP）作为 prompt 的方式，使 NR-IQA 模型训练完成后无需微调即可自适应适配新的质量评估需求，在 12 个数据集、5 类 IQA 任务上均达到 SOTA 性能和泛化能力。
 
-**[Propose Assess Search Harnessing Llms For Goal-Oriented Planning In Instructiona](propose_assess_search_harnessing_llms_for_goal-oriented_planning_in_instructiona.md)**
+**[Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos](propose_assess_search_harnessing_llms_for_goal-oriented_planning_in_instructiona.md)**
 
 :   VidAssist提出"提议-评估-搜索"三步框架，利用LLM作为知识库和评估工具，结合广度优先搜索算法，在教学视频的目标导向规划任务中以零/少样本方式超越全监督SOTA，few-shot在COIN上比全监督VLaMP高+7.7% SR。
 
-**[Reprojection Errors As Prompts For Efficient Scene Coordinate Regression](reprojection_errors_as_prompts_for_efficient_scene_coordinate_regression.md)**
+**[Reprojection Errors as Prompts for Efficient Scene Coordinate Regression](reprojection_errors_as_prompts_for_efficient_scene_coordinate_regression.md)**
 
 :   本文提出 EGFS（Error-Guided Feature Selection）机制，利用低重投影误差区域作为 SAM 的 point prompts 扩展为语义掩码，迭代地筛选可靠训练样本，在 Cambridge Landmarks 和 Indoor6 数据集上以更小模型和更少训练时间超越现有无 3D 信息依赖的 SCR 方法。
 

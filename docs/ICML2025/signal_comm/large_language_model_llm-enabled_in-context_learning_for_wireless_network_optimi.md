@@ -190,3 +190,15 @@ $$a = \begin{cases} \text{随机动作}, & \text{if } rand < \epsilon \\ \text{L
 - 实验充分度: ⭐⭐⭐ — 消融实验完整，但场景规模小，缺少与更多基线的对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，任务定义和算法描述规范
 - 价值: ⭐⭐⭐ — Workshop 论文，概念验证阶段，距离实际部署还有较大距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/signal_comm/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
+- [The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning](../../NeurIPS2025/signal_comm/the_surprising_effectiveness_of_negative_reinforcement_in_llm_reasoning.md)
+- [Neural Video Compression with Context Modulation](../../CVPR2025/signal_comm/neural_video_compression_with_context_modulation.md)
+- [WirelessMathBench: A Mathematical Modeling Benchmark for LLMs in Wireless Communications](../../ACL2025/signal_comm/wirelessmathbench_a_mathematical_modeling_benchmark_for_llms_in_wireless_communi.md)
+
+<!-- RELATED:END -->

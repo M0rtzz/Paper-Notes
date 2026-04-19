@@ -150,3 +150,15 @@ $$R_{fc} = \frac{\sum_{i=1}^{\min(m,n)} \text{sim}(p_i, g_{\sigma(i)})}{|P| + |G
 - **技术深度**: ⭐⭐⭐⭐ — 对 KL 散度行为的分析深入，梯度层面的理论支撑
 - **实验充分性**: ⭐⭐⭐⭐ — 多尺度模型 + 全面消融 + 两个主流基准
 - **实用性**: ⭐⭐⭐⭐⭐ — 端侧部署的 0.6B function calling 模型有巨大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Super Experts in Mixture-of-Experts Large Language Models](unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
+- [Reference-Guided Machine Unlearning](reference-guided_machine_unlearning.md)
+- [SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
+- [KBVQ-MoE: KLT-guided SVD with Bias-Corrected Vector Quantization for MoE Large Language Models](kbvq-moe_klt-guided_svd_with_bias-corrected_vector_quantization_for_moe_large_la.md)
+- [Distilling Balanced Knowledge from a Biased Teacher](../../CVPR2026/model_compression/distilling_balanced_knowledge_from_a_biased_teacher.md)
+
+<!-- RELATED:END -->

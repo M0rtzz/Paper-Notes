@@ -169,3 +169,15 @@ EVA 在最大批大小时开销仅 0.7%，减小批大小至 4 后仅 0.2%。增
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖语言/视觉/RL 四域 51 个任务，消融充分（秩/学习率/alpha/反向方差），效率分析详尽
 - 写作质量: ⭐⭐⭐⭐ — 理论-方法-实验结构清晰，符号规范，上下文引用完整
 - 价值: ⭐⭐⭐⭐⭐ — 已集成到 HuggingFace PEFT 库，低秩微调场景的新标准方案，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoRFT: Incentivizing Video Reasoning Capability in MLLMs via Reinforced Fine-Tuning](videorft_incentivizing_video_reasoning_capability_in_mllms_via_reinforced_fine-t.md)
+- [Continual Knowledge Adaptation for Reinforcement Learning](continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [Parameter-Free Algorithms for the Stochastically Extended Adversarial Model](parameter-free_algorithms_for_the_stochastically_extended_adversarial_model.md)
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+- [Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits](variance-aware_feel-good_thompson_sampling_for_contextual_bandits.md)
+
+<!-- RELATED:END -->

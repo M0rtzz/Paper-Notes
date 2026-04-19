@@ -133,3 +133,15 @@ ALOcc采用经典的"2D特征提取→视图变换→3D编码→任务解码"范
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个基准全面评测，消融设计详尽，速度-精度权衡分析完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导规范，图表信息量大
 - 价值: ⭐⭐⭐⭐ 在自动驾驶3D感知领域建立新基线，实时版本具有工程部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Metric Convolutions: A Unifying Theory to Adaptive Image Convolutions](metric_convolutions_a_unifying_theory_to_adaptive_image_convolutions.md)
+- [Enhancing Image Restoration Transformer via Adaptive Translation Equivariance](enhancing_image_restoration_transformer_via_adaptive_translation_equivariance.md)
+- [Learning Pixel-adaptive Multi-layer Perceptrons for Real-time Image Enhancement](learning_pixel-adaptive_multi-layer_perceptrons_for_real-time_image_enhancement.md)
+- [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
+- [UniPhys: Unified Planner and Controller with Diffusion for Flexible Physics-Based Character Control](uniphys_unified_planner_and_controller_with_diffusion_for_flexible_physics-based.md)
+
+<!-- RELATED:END -->

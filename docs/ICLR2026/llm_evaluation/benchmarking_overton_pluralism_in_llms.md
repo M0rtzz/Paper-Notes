@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 1208人大规模人类研究、8个LLM、自动化验证、子群公平性分析、两个数据集子集对比，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，定义严谨，图表信息丰富（特别是 Figure 1 直观展示了 OvertonScore 的计算过程）
 - 价值: ⭐⭐⭐⭐ 为 LLM 多元对齐研究提供了首个可量化基准，发现的负相关关系具有政策影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking LLMs for Political Science: A United Nations Perspective](../../AAAI2026/llm_evaluation/benchmarking_llms_for_political_science_a_united_nations_perspective.md)
+- [CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](counselbench_llm_mental_health_qa.md)
+- [RankLLM: Weighted Ranking of LLMs by Quantifying Question Difficulty](rankllm_weighted_ranking_of_llms_by_quantifying_question_difficulty.md)
+- [PATCH: Psychometrics-Assisted Benchmarking of LLMs Against Human Populations](../../ACL2025/llm_evaluation/patch_psychometrics-assisted_benchmarking_of_large_language_models_against_human.md)
+- [PlanetAlign: A Comprehensive Python Library for Benchmarking Network Alignment](planetalign_a_comprehensive_python_library_for_benchmarking_network_alignment.md)
+
+<!-- RELATED:END -->

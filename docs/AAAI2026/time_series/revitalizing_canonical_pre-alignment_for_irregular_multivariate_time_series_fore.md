@@ -178,3 +178,15 @@ KAFNet 实现 7.2× 参数减少和 8.4× 训练推理加速。
 - 实验充分度: ⭐⭐⭐⭐ — 23 个基线、全面消融、效率分析、注意力可视化，但数据集可再扩展
 - 写作质量: ⭐⭐⭐⭐⭐ — 论点清晰，动机论证有力，图示精美
 - 价值: ⭐⭐⭐⭐⭐ — 在 IMTS 预测领域提供了范式转变的证据，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](../../ICLR2026/time_series/learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
+- [HN-MVTS: HyperNetwork-based Multivariate Time Series Forecasting](hn-mvts_hypernetwork-based_multivariate_time_series_forecasting.md)
+- [Transparent Networks for Multivariate Time Series](transparent_networks_for_multivariate_time_series.md)
+- [HyperIMTS: Hypergraph Neural Network for Irregular Multivariate Time Series Forecasting](../../ICML2025/time_series/hyperimts_hypergraph_neural_network_for_irregular_multivariate_time_series_forec.md)
+- [Time-IMM: A Dataset and Benchmark for Irregular Multimodal Multivariate Time Series](../../NeurIPS2025/time_series/time-imm_a_dataset_and_benchmark_for_irregular_multimodal_multivariate_time_seri.md)
+
+<!-- RELATED:END -->

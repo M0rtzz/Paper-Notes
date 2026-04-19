@@ -183,3 +183,15 @@ $$\dot{M}(t) = A \cdot M(t) + M(t) \cdot A^T - M(t) \cdot B \cdot M(t) + C$$
 | 实验充分度 | 3 | 以理论为主，数值验证充分但无实际实验 |
 | 实用性 | 2 | 高度理论化，直接实用性有限 |
 | 写作质量 | 4 | 数学严谨，主要结果清晰 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules](functional_scaling_laws_in_kernel_regression_loss_dynamics_and_learning_rate_sch.md)
+- [The Rich and the Simple: On the Implicit Bias of Adam and SGD](the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)
+- [Neural Thermodynamics: Entropic Forces in Deep and Universal Representation Learning](neural_thermodynamics_entropic_forces_in_deep_and_universal_representation_learn.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ AMA（Attractive Metadata Attack）证明仅通过精心设计恶意工具的元
 - **对 MCP 生态的警示**：MCP 协议标准化了工具注册但没有安全审查机制——任何人可以发布工具，这是一个开放的攻击面
 
 - **防御建议总结**：工具注册时需要安全审查签名验证，Agent应对工具描述做语义异常检测，敏感操作需用户确认，工具调用日志应保留供事后审计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling LLM Agent into Small Models with Retrieval and Code Tools](distilling_llm_agent_into_small_models_with_retrieval_and_co.md)
+- [It's LIT! Reliability-Optimized LLMs with Inspectable Tools](its_lit_reliability-optimized_llms_with_inspectable_tools.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [LLM Agents for Knowledge Discovery in Atomic Layer Processing](llm_agents_for_knowledge_discovery_in_atomic_layer_processing.md)
+
+<!-- RELATED:END -->

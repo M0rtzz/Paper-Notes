@@ -82,3 +82,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ nuScenes+KITTI+7个跨域数据集+鲁棒性测试
 - 写作质量: ⭐⭐⭐⭐ 互补性分析清晰
 - 价值: ⭐⭐⭐⭐ 为LiDAR表示学习提供了统一框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4D Contrastive Superflows are Dense 3D Representation Learners](../../ECCV2024/autonomous_driving/4d_contrastive_superflows_are_dense_3d_representation_learners.md)
+- [FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes](freesim_toward_free-viewpoint_camera_simulation_in_driving_scenes.md)
+- [LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation](lidar-rt_gaussian-based_ray_tracing_for_dynamic_lidar_re-simulation.md)
+- [Generating Multimodal Driving Scenes via Next-Scene Prediction](generating_multimodal_driving_scenes_via_next-scene_prediction.md)
+- [ExpertAD: Enhancing Autonomous Driving Systems with Mixture of Experts](../../AAAI2026/autonomous_driving/expertad_enhancing_autonomous_driving_systems_with_mixture_of_experts.md)
+
+<!-- RELATED:END -->

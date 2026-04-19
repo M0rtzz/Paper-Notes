@@ -94,3 +94,15 @@ OPERA 解耦为两层：
 - 实验充分度: ⭐⭐⭐⭐ — 三个主流 benchmark + ablation + OOD 实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论分析较完整
 - 价值: ⭐⭐⭐⭐ — 对复杂 RAG 系统设计有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](../../ICLR2026/human_understanding/rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
+- [OmniEVA: Embodied Versatile Planner via Task-Adaptive 3D-Grounded and Embodiment-aware Reasoning](../../ICLR2026/human_understanding/omnieva_embodied_versatile_planner_via_task-adaptive_3d-grounded_and_embodiment-.md)
+- [TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search](../../NeurIPS2025/human_understanding/tensorrl-qas_reinforcement_learning_with_tensor_networks_for_improved_quantum_ar.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [Signs as Tokens: A Retrieval-Enhanced Multilingual Sign Language Generator](../../ICCV2025/human_understanding/signs_as_tokens_a_retrieval-enhanced_multilingual_sign_language_generator.md)
+
+<!-- RELATED:END -->

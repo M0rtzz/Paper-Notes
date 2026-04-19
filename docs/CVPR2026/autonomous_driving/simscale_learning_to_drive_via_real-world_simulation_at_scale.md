@@ -139,3 +139,15 @@ SimScale 的仿真数据生成流程分为三个核心模块：
 - 实验充分度: 5/5 — 3 种策略架构 x 2 种骨干 x 2 种伪专家 x 5 轮扩展，消融全面，已开源数据和代码
 - 写作质量: 4/5 — 结构清晰，核心洞见提炼到位（三个 scaling insight），CVPR Oral 水准
 - 价值: 5/5 — 为端到端自动驾驶提供了可扩展的仿真数据增强范式，开源生态完善，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Drive is a Free Gift: Large-Scale Label-Free Autonomy Pretraining from Unposed In-The-Wild Videos](learning_to_drive_is_a_free_gift_large-scale_label-free_autonomy_pretraining_fro.md)
+- [SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](../../CVPR2025/autonomous_driving/scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)
+- [LookOut: Real-World Humanoid Egocentric Navigation](../../ICCV2025/autonomous_driving/lookout_real-world_humanoid_egocentric_navigation.md)
+- [EgoDex: Learning Dexterous Manipulation from Large-Scale Egocentric Video](../../ICLR2026/autonomous_driving/egodex_learning_dexterous_manipulation_from_large-scale_egocentric_video.md)
+- [Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)
+
+<!-- RELATED:END -->

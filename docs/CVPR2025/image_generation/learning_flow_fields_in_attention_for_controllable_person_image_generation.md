@@ -142,3 +142,15 @@ Paired FID 从 3.99 降至 **2.06** (−48.4%)，提升极为显著。
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 洞察精准、方法优雅（从注意力到流场的转换非常自然）、实验全面（3 数据集 × 2 任务 × 模型无关验证）、实用性极强（零额外推理开销）。Top-tier CVPR 工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
+- [Multi-focal Conditioned Latent Diffusion for Person Image Synthesis](multi-focal_conditioned_latent_diffusion_for_person_image_synthesis.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
+- [Learning Latent Proxies for Controllable Single-Image Relighting](../../CVPR2026/image_generation/learning_latent_proxies_for_controllable_single-image_relighting.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ VideoChat-M1平均仅使用69.9帧（其他模型的12%-18%），推理时间19.
 - 价值: ⭐⭐⭐⭐⭐ — 37B多Agent协作超越GPT-4o和Gemini 2.5 Pro，展示小模型协作的巨大潜力
 
 <!-- end of note -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a_multi-agent_perception-action_alliance_for_efficient_long_video_reasoning.md)
+- [Dual-Agent Reinforcement Learning for Adaptive and Cost-Aware Visual-Inertial Odometry](dual-agent_reinforcement_learning_for_adaptive_and_cost-aware_visual-inertial_od.md)
+- [LensWalk: Agentic Video Understanding by Planning How You See in Videos](lenswalk_agentic_video_understanding_by_planning_how_you_see_in_videos.md)
+- [Learning to Assist: Physics-Grounded Human-Human Control via Multi-Agent Reinforcement Learning](learning_to_assist_physics-grounded_human-human_control_via_multi-agent_reinforc.md)
+- [VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking](videoseek_long-horizon_video_agent_with_tool-guided_seeking.md)
+
+<!-- RELATED:END -->

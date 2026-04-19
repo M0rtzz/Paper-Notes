@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ NLU + NLG，多基线对比，充分消融，三个关键观察提供了实验动机
 - 写作质量: ⭐⭐⭐⭐ 从观察→方法→实验的逻辑清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 解决了联邦 LoRA 微调中的实际痛点，方法即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedSVD: Adaptive Orthogonalization for Private Federated Learning with LoRA](fedsvd_adaptive_orthogonalization_for_private_federated_learning_with_lora.md)
+- [LoRA-FAIR: Federated LoRA Fine-Tuning with Aggregation and Initialization Refinement](../../ICCV2025/ai_safety/lora-fair_federated_lora_fine-tuning_with_aggregation_and_initialization_refinem.md)
+- [FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA](../../AAAI2026/ai_safety/fedalt_federated_fine-tuning_through_adaptive_local_training_with_rest-of-world_.md)
+- [SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA](../../ICLR2026/ai_safety/she-lora_selective_homomorphic_encryption_for_federated_tuning_with_heterogeneou.md)
+- [Differentially Private Federated Low Rank Adaptation Beyond Fixed-Matrix](differentially_private_federated_low_rank_adaptation_beyond_fixed-matrix.md)
+
+<!-- RELATED:END -->

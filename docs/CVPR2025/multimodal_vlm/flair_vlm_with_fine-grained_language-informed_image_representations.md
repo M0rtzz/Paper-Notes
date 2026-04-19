@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖检索、分割、分类多种任务，消融实验详尽且解释清晰
 - 写作质量: ⭐⭐⭐⭐ 方法动机讲解清楚，DreamLIP 对比分析有力，但部分实验表格过多影响阅读流畅性
 - 价值: ⭐⭐⭐⭐⭐ 开创了文本条件视觉表征的范式，对 VLM 表征学习和密集预测任务有广泛启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](../../NeurIPS2025/multimodal_vlm/focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
+- [Bongard-RWR+: Real-World Representations of Fine-Grained Concepts in Bongard Problems](../../ICLR2026/multimodal_vlm/bongard-rwr_real-world_representations_of_fine-grained_concepts_in_bongard_probl.md)
+- [DeAR: Fine-Grained VLM Adaptation by Decomposing Attention Head Roles](../../CVPR2026/multimodal_vlm/dear_fine-grained_vlm_adaptation_by_decomposing_attention_head_roles.md)
+- [Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning](../../AAAI2026/multimodal_vlm/heterogeneous_uncertainty-guided_composed_image_retrieval_with_fine-grained_prob.md)
+- [AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/affordbot_3d_fine-grained_embodied_reasoning_via_multimodal_large_language_model.md)
+
+<!-- RELATED:END -->

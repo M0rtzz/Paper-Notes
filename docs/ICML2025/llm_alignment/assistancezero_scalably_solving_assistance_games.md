@@ -168,3 +168,15 @@ AssistanceZero 减少 42 次人类动作，助手自主完成 27% 目标。
 - 实验充分度: ⭐⭐⭐⭐ (仿真+人类实验+丰富消融，但人类实验规模有限)
 - 写作质量: ⭐⭐⭐⭐⭐ (论文结构清晰，图示精美，涌现行为展示极有说服力)
 - 价值: ⭐⭐⭐⭐⭐ (开辟 assistance game 大规模应用方向，对 AI 对齐有深远启示)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diverging Preferences: When do Annotators Disagree and do Models Know?](diverging_preferences_when_do_annotators_disagree_and_do_models_know.md)
+- [Instruction Tuning of Large Language Models for Tabular Data Generation—in One Day](instruction_tuning_of_large_language_models_for_tabular_data_generation-in_one_d.md)
+- [DPO Meets PPO: Reinforced Token Optimization for RLHF](dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
+- [Right Now, Wrong Then: Non-Stationary Direct Preference Optimization under Preference Drift](right_now_wrong_then_non-stationary_direct_preference_optimization_under_prefere.md)
+- [On the Robustness of Reward Models for Language Model Alignment](on_the_robustness_of_reward_models_for_language_model_alignment.md)
+
+<!-- RELATED:END -->

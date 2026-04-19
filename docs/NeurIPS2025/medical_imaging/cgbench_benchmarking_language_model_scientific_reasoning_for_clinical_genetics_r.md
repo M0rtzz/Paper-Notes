@@ -127,3 +127,15 @@ CGBench 包含三个主任务：(1) VCI 证据评分（E-Score）：给定论文
 - 实验充分度: ⭐⭐⭐⭐ 8 个模型 + 多种提示策略 + LM Judge + 人工校准，但数据规模偏小
 - 写作质量: ⭐⭐⭐⭐ 背景知识介绍充分，任务形式化清晰，但领域门槛较高
 - 价值: ⭐⭐⭐⭐ 为 LLM 在科学文献推理中的应用提供了严谨的评估标准，对 AI4Science 社区有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CodeCrash: Exposing LLM Fragility to Misleading Natural Language in Code Reasoning](codecrash_exposing_llm_fragility_to_misleading_natural_language_in_code_reasonin.md)
+- [FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](fairgrpo_fair_reinforcement_learning_for_equitable_clinical_reasoning.md)
+- [CureAgent: A Training-Free Executor-Analyst Framework for Clinical Reasoning](cureagent_a_training-free_executor-analyst_framework_for_clinical_reasoning.md)
+- [BiomedSQL: Text-to-SQL for Scientific Reasoning on Biomedical Knowledge Bases](../../ICLR2026/medical_imaging/biomedsql_text-to-sql_for_scientific_reasoning_on_biomedical_knowledge_bases.md)
+- [MedXpertQA: Benchmarking Expert-Level Medical Reasoning and Understanding](../../ICML2025/medical_imaging/medxpertqa_benchmarking_expert-level_medical_reasoning_and_understanding.md)
+
+<!-- RELATED:END -->

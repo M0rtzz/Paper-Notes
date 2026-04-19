@@ -138,3 +138,15 @@ $$\mathcal{L}(\mathbf{x}) = \mathbb{E}_{\boldsymbol{\epsilon}, t}[\|\boldsymbol{
 ⭐⭐⭐⭐ (4/5)
 
 论点清晰有力——等变性非必须。旋转对齐的自编码器设计优雅，为连接分子生成与通用生成架构开辟了路径。实验充分但规模有限（仅小分子）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis](../../NeurIPS2025/medical_imaging/scalable_diffusion_transformer_for_conditional_4d_fmri_synthesis.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](../../ACL2025/medical_imaging/radar_radiology_report_gen.md)
+- [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
+- [Protein Structure Tokenization: Benchmarking and New Recipe](protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [The Four Color Theorem for Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)
+
+<!-- RELATED:END -->

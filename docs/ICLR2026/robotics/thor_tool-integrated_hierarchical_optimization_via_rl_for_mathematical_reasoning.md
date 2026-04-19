@@ -182,3 +182,15 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{\pi_\theta}^{epis}(\theta) + \mathcal{L}_{\
 ## 总结
 
 THOR 是一个端到端的工具集成数学推理增强框架，核心贡献在于：(1) TIRGen 管线生成与策略模型对齐的高质量 TIR 数据；(2) 层次化 RL 通过 episode 级（答案奖励）和 step 级（代码执行奖励）联合优化，有效缓解稀疏奖励；(3) 自修正机制利用工具反馈实现低开销在线纠错。该框架在多个数学和代码基准上达到同规模 SOTA，展示了工具集成推理的系统性解决方案。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Entropy Control in LLM-RL Algorithms](on_entropy_control_in_llm-rl_algorithms.md)
+- [SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
+- [Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
+- [MindPower: Enabling Theory-of-Mind Reasoning in VLM-based Embodied Agents](../../CVPR2026/robotics/mindpower_enabling_theoryofmind_reasoning_in_vlmba.md)
+- [LabUtopia: High-Fidelity Simulation and Hierarchical Benchmark for Scientific Embodied Agents](../../NeurIPS2025/robotics/labutopia_high-fidelity_simulation_and_hierarchical_benchmark_for_scientific_emb.md)
+
+<!-- RELATED:END -->

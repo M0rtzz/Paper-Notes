@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四数据集、五任务顺序、多baseline、消融和遗忘度量
 - 写作质量: ⭐⭐⭐⭐ 问题动机分析透彻，方法推导清晰
 - 价值: ⭐⭐⭐⭐ 对PTM-based增量学习有重要推动，无样本存储即超越replay方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Versatile Incremental Learning: Towards Class and Domain-Agnostic Incremental Learning](../../ECCV2024/llm_evaluation/versatile_incremental_learning_towards_class_and_domain-agnostic_incremental_lea.md)
+- [Your Pre-trained LLM is Secretly an Unsupervised Confidence Calibrator](../../NeurIPS2025/llm_evaluation/your_pre-trained_llm_is_secretly_an_unsupervised_confidence_calibrator.md)
+- [Gradient-Guided Annealing for Domain Generalization](gradient-guided_annealing_for_domain_generalization.md)
+- [Do ImageNet-trained Models Learn Shortcuts? The Impact of Frequency Shortcuts on Generalization](do_imagenet-trained_models_learn_shortcuts_the_impact_of_frequency_shortcuts_on_.md)
+- [Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training](../../NeurIPS2025/llm_evaluation/exploiting_vocabulary_frequency_imbalance_in_language_model_pre-training.md)
+
+<!-- RELATED:END -->

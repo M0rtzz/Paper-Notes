@@ -119,3 +119,15 @@ CCFS分为两个阶段：首先用现有DD方法（如CDA）蒸馏得到$\mathca
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多个IPC设置、跨架构、消融全面、可视化清晰
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，从分析实验自然过渡到方法设计，逻辑清晰
 - 价值: ⭐⭐⭐⭐ 在高IPC数据集蒸馏这个实际重要场景取得接近全数据集性能，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HierAmp: Coarse-to-Fine Autoregressive Amplification for Generative Dataset Distillation](../../CVPR2026/model_compression/hieramp_coarse-to-fine_autoregressive_amplification_for_generative_dataset_disti.md)
+- [Emphasizing Discriminative Features for Dataset Distillation in Complex Scenarios](emphasizing_discriminative_features_for_dataset_distillation_in_complex_scenario.md)
+- [Enhancing Dataset Distillation via Non-Critical Region Refinement](enhancing_dataset_distillation_via_non-critical_region_refinement.md)
+- [Dataset Distillation with Neural Characteristic Function: A Minmax Perspective](dataset_distillation_with_neural_characteristic_function_a_minmax_perspective.md)
+- [DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation](delt_a_simple_diversity-driven_earlylate_training_for_dataset_distillation.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4模型×2策略×单语/多语×5语言，全面但中文/法语样本偏少
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，统计表格丰富
 - 价值: ⭐⭐⭐⭐⭐ 数据集+模型+基线全开源，对医学 ASR 社区有长期资源价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](../../ICML2025/medical_imaging/idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](../../ICML2025/medical_imaging/the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](../../CVPR2025/medical_imaging/decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](../../NeurIPS2025/medical_imaging/from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)
+- [Brain-tuning Improves Generalizability and Efficiency of Brain Alignment in Speech Models](../../NeurIPS2025/medical_imaging/brain-tuning_improves_generalizability_and_efficiency_of_brain_alignment_in_spee.md)
+
+<!-- RELATED:END -->

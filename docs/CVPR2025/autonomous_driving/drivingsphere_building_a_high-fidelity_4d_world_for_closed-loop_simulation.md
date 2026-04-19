@@ -106,3 +106,15 @@ BEV 地图 → OccDreamer（VQVAE + CLIP 条件扩散）生成静态占用 → A
 - 实验充分度: ⭐⭐⭐⭐ 开环+闭环评估，多个下游任务验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清楚
 - 价值: ⭐⭐⭐⭐⭐ 对自动驾驶仿真有重要工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Safe-Sim: Safety-Critical Closed-Loop Traffic Simulation with Diffusion-Controllable Adversaries](../../ECCV2024/autonomous_driving/safe-sim_safety-critical_closed-loop_traffic_simulation_with_diffusion-controlla.md)
+- [SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)
+- [Closed-Loop Supervised Fine-Tuning of Tokenized Traffic Models](closed-loop_supervised_fine-tuning_of_tokenized_traffic_models.md)
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](../../NeurIPS2025/autonomous_driving/x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+
+<!-- RELATED:END -->

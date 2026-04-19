@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、详尽消融、热力图可视化
 - 写作质量: ⭐⭐⭐ 结构完整但部分描述略冗余
 - 价值: ⭐⭐⭐⭐ 对机器人场景理解有实用价值，速度精度平衡出色
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction](learning_cross-view_object_correspondence_via_cycle-consistent_mask_prediction.md)
+- [3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion](3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros.md)
+- [EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection](erecu_pseudo-label_evolution_fusion_and_refinement_with_multi-cue_learning_for_u.md)
+- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_re.md)
+- [Universal 3D Shape Matching via Coarse-to-Fine Language Guidance](universal_3d_shape_matching_via_coarse-to-fine_language_guidance.md)
+
+<!-- RELATED:END -->

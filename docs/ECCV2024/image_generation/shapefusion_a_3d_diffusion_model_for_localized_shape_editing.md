@@ -116,3 +116,15 @@ $$\mathcal{L}_t = \|\epsilon_t - \epsilon_\theta(\mathbf{x}, t, \mathbf{M})\|_2$
 - **实用性**: ⭐⭐⭐⭐ — 直接点操纵和区域交换功能对3D建模师和医学领域有实际价值
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 三个数据集、多种应用场景、定量定性全面评估
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰、图示丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeuSDFusion: A Spatial-Aware Generative Model for 3D Shape Completion, Reconstruction, and Generation](neusdfusion_a_spatial-aware_generative_model_for_3d_shape_completion_reconstruct.md)
+- [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [ZigMa: A DiT-style Zigzag Mamba Diffusion Model](zigma_a_dit-style_zigzag_mamba_diffusion_model.md)
+
+<!-- RELATED:END -->

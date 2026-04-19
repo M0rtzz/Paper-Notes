@@ -107,3 +107,15 @@ Wild-P-Diff 框架包含：(1) 参数编码：VAE 将 LoRA 参数编码为隐空
 - 实验充分度: ⭐⭐⭐ 三个研究问题逐步深入，但规模偏小
 - 写作质量: ⭐⭐⭐⭐ 研究问题设定清晰，分析诚实
 - 价值: ⭐⭐⭐ 有启发性但实用性有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Synthetic Face Datasets Generation via Latent Space Exploration from Brownian Identity Diffusion](synthetic_face_datasets_generation_via_latent_space_exploration_from_brownian_id.md)
+- [Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models](zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)
+- [Provable Maximum Entropy Manifold Exploration via Diffusion Models](provable_maximum_entropy_manifold_exploration_via_diffusion_models.md)
+- [ETTA: Elucidating the Design Space of Text-to-Audio Models](etta_elucidating_the_design_space_of_text-to-audio_models.md)
+
+<!-- RELATED:END -->

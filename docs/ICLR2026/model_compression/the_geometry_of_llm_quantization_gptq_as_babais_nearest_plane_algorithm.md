@@ -126,3 +126,15 @@ $$\|\bm{X}\text{diag}(\bm{s}_i)\bm{z}_i - \bm{X}\bm{w}_i\|^2 \leq \frac{1}{4}(\b
 - 理论性：⭐⭐⭐⭐⭐（严格的数学证明+紧误差界）
 - 实验：⭐⭐⭐（理论验证充分但大规模实验相对有限）
 - 实用性：⭐⭐⭐⭐（无裁剪方法+GPU内核直接可用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Lattice Geometry of Neural Network Quantization -- A Short Equivalence Proof of GPTQ and Babai's Algorithm](the_lattice_geometry_of_neural_network_quantization_--_a_short_equivalence_proof.md)
+- [TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
+- [ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
+- [Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
+- [Cut Less, Fold More: Model Compression through the Lens of Projection Geometry](cut_less_fold_more_model_compression_through_the_lens_of_projection_geometry.md)
+
+<!-- RELATED:END -->

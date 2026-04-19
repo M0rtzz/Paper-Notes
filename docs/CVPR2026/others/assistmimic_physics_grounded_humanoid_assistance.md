@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、多场景、详尽消融、生成轨迹泛化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，技术细节完整
 - 价值: ⭐⭐⭐⭐⭐ 开辟辅助机器人控制新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Local Guidance for Configuration-Based Multi-Agent Pathfinding](../../AAAI2026/others/local_guidance_for_configuration-based_multi-agent_pathfinding.md)
+- [Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](../../AAAI2026/others/area-optimal_control_strategies_for_heterogeneous_multi-agen.md)
+- [Multi-Agent Collaboration via Cross-Team Orchestration](../../ACL2025/others/multi-agent_collaboration_via_cross-team_orchestration.md)
+- [Voting or Consensus? Decision-Making in Multi-Agent Debate](../../ACL2025/others/voting_or_consensus_decision-making_in_multi-agent_debate.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](../../ACL2025/others/preventing_rogue_agents_improves_multi-agent_collaboration.md)
+
+<!-- RELATED:END -->

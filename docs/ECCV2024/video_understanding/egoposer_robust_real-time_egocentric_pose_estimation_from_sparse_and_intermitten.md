@@ -145,3 +145,15 @@ $$\mathcal{L}_{\text{total}} = \lambda_{\text{ori}} \mathcal{L}_{\text{ori}} + \
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多方法对比、详尽消融、真机验证，实验设计极为全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法描述系统，图文配合好
 - 价值: ⭐⭐⭐⭐⭐ 解决了MR姿态估计中的三个核心实际问题，600fps推理速度使其具有直接的工业部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects](benchmarks_and_challenges_in_pose_estimation_for_egocentric_hand_interactions_wi.md)
+- [EgoXtreme: A Dataset for Robust Object Pose Estimation in Egocentric Views under Extreme Conditions](../../CVPR2026/video_understanding/egoxtreme_a_dataset_for_robust_object_pose_estimation_in_egocentric_views_under_.md)
+- [Motion-prior Contrast Maximization for Dense Continuous-Time Motion Estimation](motion-prior_contrast_maximization_for_dense_continuous-time_motion_estimation.md)
+- [Learning Occlusion-Robust Vision Transformers for Real-Time UAV Tracking](../../CVPR2025/video_understanding/learning_occlusion-robust_vision_transformers_for_real-time_uav_tracking.md)
+- [AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
+
+<!-- RELATED:END -->

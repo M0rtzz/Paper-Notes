@@ -144,3 +144,15 @@ MoICL 在 7 个数据集中的 5 个上超越了所有基线方法，其中在 H
 ⭐⭐⭐⭐ (4/5)
 
 创新性强，将 MoE 思想优雅地应用于 ICL；实验设计丰富、分析深入，尤其是鲁棒性分析令人印象深刻。但局限于需要 logits 访问，在纯黑盒 LLM 时代的适用性受限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Models are Good Relational Learners](large_language_models_are_good_relational_learners.md)
+- [Vision Transformers are Circulant Attention Learners](../../AAAI2026/llm_nlp/vision_transformers_are_circulant_attention_learners.md)
+- [Exploring Explanations Improves the Robustness of In-Context Learning](exploring_explanations_improves_the_robustness_of_in-context_learning.md)
+- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
+- [Uncertainty Unveiled: Can Exposure to More In-context Examples Mitigate Uncertainty for Large Language Models?](uncertainty_unveiled_can_exposure_to_more_in-context_examples_mitigate_uncertain.md)
+
+<!-- RELATED:END -->

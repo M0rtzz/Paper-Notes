@@ -126,3 +126,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 11 数据集 + OOD 泛化 + 多 shot 设置，覆盖全面
 - **写作质量**: ⭐⭐⭐ 技术描述清晰但部分表述冗余
 - **价值**: ⭐⭐⭐⭐ 揭示了 CLIP FSL 的关键瓶颈并提供了有效解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InsTaG: Learning Personalized 3D Talking Head from Few-Second Video](instag_learning_personalized_3d_talking_head_from_few-second_video.md)
+- [Improving Zero-Shot Generalization for CLIP with Variational Adapter](../../ECCV2024/model_compression/improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
+- [Targeted Forgetting of Image Subgroups in CLIP Models](targeted_forgetting_of_image_subgroups_in_clip_models.md)
+- [Enhancing Semi-supervised Learning with Zero-shot Pseudolabels](../../NeurIPS2025/model_compression/enhancing_semi-supervised_learning_with_zero-shot_pseudolabels.md)
+- [Knowledge Distillation with Refined Logits](../../ICCV2025/model_compression/knowledge_distillation_with_refined_logits.md)
+
+<!-- RELATED:END -->

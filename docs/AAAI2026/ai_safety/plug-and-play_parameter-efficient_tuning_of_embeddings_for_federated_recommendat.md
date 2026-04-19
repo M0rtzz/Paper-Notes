@@ -157,3 +157,15 @@ LoRA 的最优潜在维度 $k_L = 4$，通信量仅为全量嵌入的 12.5%。RQ
 - 实验充分度: ⭐⭐⭐⭐⭐ (4 模型 × 3 数据集 × 多策略，含 DP 分析)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，分析全面)
 - 价值: ⭐⭐⭐⭐ (解决实际 FR 通信瓶颈，实用性强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient Inversion Attacks on Parameter-Efficient Fine-Tuning](../../CVPR2025/ai_safety/gradient_inversion_attacks_on_parameter-efficient_fine-tuning.md)
+- [SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC](../../ICLR2026/ai_safety/secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_models.md)
+- [FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA](fedalt_federated_fine-tuning_through_adaptive_local_training_with_rest-of-world_.md)
+- [Ferret: Federated Full-Parameter Tuning at Scale for Large Language Models](../../ICML2025/ai_safety/ferret_federated_full-parameter_tuning_at_scale_for_large_language_models.md)
+- [Reference Recommendation based Membership Inference Attack against Hybrid-based Recommender Systems](reference_recommendation_based_membership_inference_attack_against_hybrid-based_.md)
+
+<!-- RELATED:END -->

@@ -2939,3 +2939,15 @@ BCE 和 HSC 的反|--------|------|--??据集上与异常样本同?*arX??|**会�
 **a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**???*a_{\**arXiv**:0.**arXiv**: [?
 **a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥**a_{\**arXiv**: [2510.21153](?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**??**a_{\**arXiv**: [2510.21153](?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**???*a_{\**arXiv**:0.**arX??*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥*?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**???*a_{\**arXiv**:0.**arX?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥**a_{\**arXiv**: [2510.21153](?*a_{*3**a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**???*a_{\**arXiv**:0.**arXiv**: [?
 **a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥**a_{\**arXiv**: [2510.21153](?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**??**a_{\**arXiv**: [2510.21153](?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**???*a_{\**arXiv**:0.**arX??*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥*?*a_{\**arXiv**: [2510.2115??*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥**a_{\**arXiv**: [2510.21153](?*a_{??**a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥**a_{\**arXiv**: [2510.21153](?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**??**a_{\**arXiv**: [2510.21153](?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**???*a_{\**arXiv**:0.**arX??*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥*?*a_{\**arXiv**: [2510.2115??*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥**a_{\**arXiv**: [2510.21153](?*a_{??**a_{\**arXiv**: [2510.21153](https://arxiv.org/ab啥**a_{\**arXiv**: [2510.21153](?*a_{\**arXiv**: [2510.21153](https://arxiv.org/ab?**??**L 引导分子生成和多目标药物设计均有实用价值，MD/ADMET 验证增强了实际可信度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AttnZero: Efficient Attention Discovery for Vision Transformers](../../ECCV2024/others/attnzero_efficient_attention_discovery_for_vision_transformers.md)
+- [On Agnostic PAC Learning in the Small Error Regime](../../NeurIPS2025/others/on_agnostic_pac_learning_in_the_small_error_regime.md)
+- [CADReview: Automatically Reviewing CAD Programs with Error Detection and Correction](cadreview_automatically_reviewing_cad_programs_with_error_detection_and_correcti.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](../../CVPR2025/others/sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
+- [CiteEval: Principle-Driven Citation Evaluation for Source Attribution](citeeval_principle-driven_citation_evaluation_for_source_attribution.md)
+
+<!-- RELATED:END -->

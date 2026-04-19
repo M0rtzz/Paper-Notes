@@ -223,3 +223,15 @@ EVSSM 采用经典的三级对称编码器-解码器架构。输入模糊图像 
 - 实验充分度: ⭐⭐⭐⭐ 在多个去模糊基准和其他复原任务上验证，但消融实验可以更详细
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机推导合理，图表展示清楚
 - 价值: ⭐⭐⭐⭐ 为视觉 SSM 的高效化提供了简洁实用的方案，对相关领域有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaIR: A Simple Baseline for Image Restoration with State-Space Model](../../ECCV2024/image_restoration/mambair_a_simple_baseline_for_image_restoration_with_state-space_model.md)
+- [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](../../ICCV2025/image_restoration/eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
+- [MambaIRv2: Attentive State Space Restoration](mambairv2_attentive_state_space_restoration.md)
+- [PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining](../../ICCV2025/image_restoration/pre-mamba_a_4d_state_space_model_for_ultra-high-frequent_event_camera_deraining.md)
+- [MFmamba: A Multi-function Network for Panchromatic Image Resolution Restoration Based on State-Space Model](../../AAAI2026/image_restoration/mfmamba_a_multi-function_network_for_panchromatic_image_resolution_restoration_b.md)
+
+<!-- RELATED:END -->

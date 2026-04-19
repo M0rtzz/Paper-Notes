@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实多个数据集、完整消融、两种基础表示验证，非常充分
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰透彻，方法描述有序
 - 价值: ⭐⭐⭐⭐ HDR NVS 的重要进步，特别是解决了 HDR 重建不稳定这个关键问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
+- [High Dynamic Range Novel View Synthesis with Single Exposure](../../ICML2025/3d_vision/high_dynamic_range_novel_view_synthesis_with_single_exposure.md)
+- [4DTAM: Non-Rigid Tracking and Mapping via Dynamic Surface Gaussians](4dtam_non-rigid_tracking_and_mapping_via_dynamic_surface_gaussians.md)
+- [FreeGave: 3D Physics Learning from Dynamic Videos by Gaussian Velocity](freegave_3d_physics_learning_from_dynamic_videos_by_gaussian_velocity.md)
+
+<!-- RELATED:END -->

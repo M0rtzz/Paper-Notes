@@ -141,3 +141,15 @@ MotionMap在多模态度量MMADE/MMFDE上全面最优。
 ## 评分
 
 ⭐⭐⭐⭐ — 问题重新定义有深度（well-posed reformulation），热力图表示直观优雅，采样效率使其有实际应用价值；但t-SNE+codebook的方式相比end-to-end方法显得工程化，模式内细粒度不足是明显短板。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
+- [BubbleFormer: Forecasting Boiling with Transformers](../../NeurIPS2025/human_understanding/bubbleformer_forecasting_boiling_with_transformers.md)
+- [Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework](../../ECCV2024/human_understanding/human_motion_forecasting_in_dynamic_domain_shifts_a_homeostatic_continual_test-t.md)
+- [PoseSOR: Human Pose Can Guide Our Attention](../../ECCV2024/human_understanding/posesor_human_pose_can_guide_our_attention.md)
+
+<!-- RELATED:END -->

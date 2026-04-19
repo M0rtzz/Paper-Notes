@@ -147,3 +147,15 @@ PDD 在所有维度上实现最高平均分且方差最低（p<0.05）。
 | 写作质量 | 4.0 |
 | 实用价值 | 4.0 |
 | 总分 | 4.1 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeAL: Decoding-time Alignment for Large Language Models](../../ACL2025/llm_nlp/deal_decoding_time_alignment.md)
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](../../ACL2025/llm_nlp/nudging_inference_time_alignment.md)
+- [Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](../../ACL2025/llm_nlp/beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)
+- [Stopping Computation for Converged Tokens in Masked Diffusion-LM Decoding](stopping_computation_for_converged_tokens_in_masked_diffusion-lm_decoding.md)
+- [Scaling Equitable Reflection Assessment in Education via Large Language Models and Role-Based Feedback Agents](../../AAAI2026/llm_nlp/scaling_equitable_reflection_assessment_in_education_via_large_language_models_a.md)
+
+<!-- RELATED:END -->

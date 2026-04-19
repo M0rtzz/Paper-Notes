@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多架构比较充分，但仅限 CIFAR-10 稍显不足
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析、直觉解释、实验验证三位一体，叙事逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 对理解扩散模型泛化机制有开创性贡献，为未来可解释AI生成模型奠定基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+- [Dissecting and Mitigating Diffusion Bias via Mechanistic Interpretability](../../CVPR2025/image_generation/dissecting_and_mitigating_diffusion_bias_via_mechanistic_interpretability.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [A Closer Look at Model Collapse: From a Generalization-to-Memorization Perspective](../../NeurIPS2025/image_generation/a_closer_look_at_model_collapse_from_a_generalization-to-memorization_perspectiv.md)
+- [TCP-Diffusion: A Multi-modal Diffusion Model for Global Tropical Cyclone Precipitation Forecasting with Change Awareness](tcp-diffusion_a_multi-modal_diffusion_model_for_global_tropical_cyclone_precipit.md)
+
+<!-- RELATED:END -->

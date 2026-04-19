@@ -135,3 +135,15 @@ RealViformer 采用单向循环 Transformer 框架：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 敏感性分析、协方差量化、多数据集对比、消融实验、用户研究、RPS分析，实验体系非常完整
 - **写作质量**: ⭐⭐⭐⭐ 叙事流畅，从发现问题到解决问题的逻辑清晰，exploration → finding → verification → model design 的结构很好
 - **价值**: ⭐⭐⭐⭐ 对RWVSR和低级视觉Transformer设计都有启发，通道注意力冗余的发现可推广到更多任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Kalman-Inspired Feature Propagation for Video Face Super-Resolution](kalman-inspired_feature_propagation_for_video_face_super-resolution.md)
+- [VSRM: A Robust Mamba-Based Framework for Video Super-Resolution](../../ICCV2025/video_generation/vsrm_a_robust_mamba-based_framework_for_video_super-resolution.md)
+- [BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](../../CVPR2025/video_generation/bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)
+- [Compressed-Domain-Aware Online Video Super-Resolution](../../CVPR2026/video_generation/compressed-domain-aware_online_video_super-resolution.md)
+- [RealCam-I2V: Real-World Image-to-Video Generation with Interactive Complex Camera Control](../../ICCV2025/video_generation/realcam-i2v_real-world_image-to-video_generation_with_interactive_complex_camera.md)
+
+<!-- RELATED:END -->

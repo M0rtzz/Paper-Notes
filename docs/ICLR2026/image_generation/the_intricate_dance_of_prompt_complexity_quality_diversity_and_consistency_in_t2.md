@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （多数据集、多模型、多方法的全面评估）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，理论与实验结合紧密）
 - 价值: ⭐⭐⭐⭐ （对T2I合成数据应用具有重要指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models](infinity_and_beyond_compositional_alignment_in_var_and_diffusion_t2i_models.md)
+- [GeoDiv: Framework for Measuring Geographical Diversity in Text-to-Image Models](geodiv_framework_for_measuring_geographical_diversity_in_text-to-image_models.md)
+- [Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)
+- [CMT: Mid-Training for Efficient Learning of Consistency, Mean Flow, and Flow Map Models](cmt_mid-training_for_efficient_learning_of_consistency_mean_flow_and_flow_map_mo.md)
+- [Temporal Concept Dynamics in Diffusion Models via Prompt-Conditioned Interventions](temporal_concept_dynamics_in_diffusion_models_via_prompt-conditioned_interventio.md)
+
+<!-- RELATED:END -->

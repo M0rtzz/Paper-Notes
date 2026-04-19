@@ -405,3 +405,15 @@ IoU提升6.35%（绝对值），mIoU提升4.16%。在所有语义类别上均有
 - **实验充分度**: ⭐⭐⭐⭐ — 详尽的消融实验，但数据集限于室内
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题分析严谨，数学推导清晰，方法动机充分
 - **实用价值**: ⭐⭐⭐⭐ — 室内3D场景理解的重要进展，对具身智能有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Monocular Semantic Scene Completion via Masked Recurrent Networks](../../ICCV2025/3d_vision/monocular_semantic_scene_completion_via_masked_recurrent_networks.md)
+- [Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion](../../ICCV2025/3d_vision/disentangling_instance_and_scene_contexts_for_3d_semantic_scene_completion.md)
+- [Global-Aware Monocular Semantic Scene Completion with State Space Models](../../ICCV2025/3d_vision/global-aware_monocular_semantic_scene_completion_with_state_space_models.md)
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction](sparse4dgs_4d_gaussian_splatting_for_sparse-frame_dynamic_scene_reconstruction.md)
+
+<!-- RELATED:END -->

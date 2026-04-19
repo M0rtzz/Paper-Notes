@@ -116,3 +116,15 @@ CIM 是一个无标注的 RL 框架，核心流程：(1) LVLM 为输入图像生
 - **Mean Resultant Length**: 超球面上的向量一致性度量
 - **Identity Mapping**: 将图像到 caption 的转换视为恋恒映射，最小化信息损失
 - **SBERT/OpenCLIP**: 分别用于文本检索和图像 embedding 提取
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R1-Onevision: Advancing Generalized Multimodal Reasoning through Cross-Modal Formalization](../../ICCV2025/reinforcement_learning/r1-onevision_advancing_generalized_multimodal_reasoning_through_cross-modal_form.md)
+- [CCCaption: Dual-Reward Reinforcement Learning for Complete and Correct Image Captioning](cccaption_dual-reward_reinforcement_learning_for_complete_and_correct_image_capt.md)
+- [Cross-Embodiment Offline Reinforcement Learning for Heterogeneous Robot Datasets](../../ICLR2026/reinforcement_learning/cross-embodiment_offline_reinforcement_learning_for_heterogeneous_robot_datasets.md)
+- [Mitigating Plasticity Loss in Continual Reinforcement Learning by Reducing Churn](../../ICML2025/reinforcement_learning/mitigating_plasticity_loss_in_continual_reinforcement_learning_by_reducing_churn.md)
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](../../NeurIPS2025/reinforcement_learning/repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+
+<!-- RELATED:END -->

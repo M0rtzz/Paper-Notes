@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数据集×多模型×多生成器×多语言×OOD，极其充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，论证逻辑严密，可视化直观
 - 价值: ⭐⭐⭐⭐ 对NLP数据标注策略有直接的实际指导意义，结论简明有力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HelpSteer3: Human-Annotated Feedback and Edit Data to Empower Inference-Time Scaling](helpsteer3_human-annotated_feedback_and_edit_data_to_empower_inference-time_scal.md)
+- [Improving Forecasts of Suicide Attempts for Patients with Little Data](../../NeurIPS2025/others/improving_forecasts_of_suicide_attempts_for_patients_with_little_data.md)
+- [Anything Goes? A Crosslinguistic Study of (Im)possible Language Learning in LMs](anything_goes_a_crosslinguistic_study_of_impossible_language_learning_in_lms.md)
+- [LoGU: Long-form Generation with Uncertainty Expressions](logu_longform_gen_uncertainty.md)
+- [Theorem Prover as a Judge for Synthetic Data Generation](theorem_prover_as_a_judge_for_synthetic_data_generation.md)
+
+<!-- RELATED:END -->

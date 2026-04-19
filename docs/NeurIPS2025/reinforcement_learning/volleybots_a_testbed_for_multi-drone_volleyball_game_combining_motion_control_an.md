@@ -116,3 +116,15 @@ VolleyBots 构建于 NVIDIA Isaac Sim 之上，利用 OmniDrones 仿真器实现
 - 实验充分度: ⭐⭐⭐⭐⭐ 9 个任务、多种 RL/MARL/博弈论算法、消融、sim-to-real 全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，任务描述详尽
 - 价值: ⭐⭐⭐⭐ 作为标准化benchmark对多智能体具身智能研究有长期推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
+- [Strategic Costs of Perceived Bias in Fair Selection](strategic_costs_of_perceived_bias_in_fair_selection.md)
+- [TRiCo: Triadic Game-Theoretic Co-Training for Robust Semi-Supervised Learning](trico_triadic_game-theoretic_co-training_for_robust_semi-supervised_learning.md)
+- [Sample-Efficient Tabular Self-Play for Offline Robust Reinforcement Learning](sample-efficient_tabular_self-play_for_offline_robust_reinforcement_learning.md)
+- [Actor-Free Continuous Control via Structurally Maximizable Q-Functions](actorfree_continuous_control_via_structurally_maximizable_qf.md)
+
+<!-- RELATED:END -->

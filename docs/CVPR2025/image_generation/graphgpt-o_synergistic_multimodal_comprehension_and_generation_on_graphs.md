@@ -158,3 +158,15 @@ $$\mathcal{L} = \mathcal{L}_{MLLM}^{GraphGPT-o} + \mathcal{L}_{SD}^{GraphGPT-o}$
 - **实验充分度**: ⭐⭐⭐⭐ — 线性化变体的系统研究非常详尽，但数据集规模偏小
 - **论文写作**: ⭐⭐⭐⭐ — 问题动机清晰，方法描述完整
 - **实用价值**: ⭐⭐⭐ — 电商推荐/艺术创作场景有前景，但图上生成的实际需求仍需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiVoT: Diffusion Powers Video Tokenizer for Comprehension and Generation](divot_diffusion_powers_video_tokenizer_for_comprehension_and_generation.md)
+- [Janus-Pro-R1: Advancing Collaborative Visual Comprehension and Generation via Reinforcement Learning](../../NeurIPS2025/image_generation/janus-pro-r1_advancing_collaborative_visual_comprehension_and_generation_via_rei.md)
+- [Video Motion Graphs](../../ICCV2025/image_generation/video_motion_graphs.md)
+- [JanusFlow: Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding and Generation](janusflow_harmonizing_autoregression_and_rectified_flow_for_unified_multimodal_u.md)
+- [Generative Multimodal Pretraining with Discrete Diffusion Timestep Tokens](generative_multimodal_pretraining_with_discrete_diffusion_timestep_tokens.md)
+
+<!-- RELATED:END -->

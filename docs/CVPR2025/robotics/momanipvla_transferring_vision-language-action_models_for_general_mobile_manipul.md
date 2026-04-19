@@ -79,3 +79,15 @@ VLA 用少量体现特定（embodiment-specific）数据微调。底盘优化无
 - 实验充分度: ⭐⭐⭐⭐ 仿真+真实世界
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 低成本迁移 VLA 到移动操作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
+- [AnyBimanual: Transferring Unimanual Policy for General Bimanual Manipulation](../../ICCV2025/robotics/anybimanual_transferring_unimanual_policy_for_general_bimanual_manipulation.md)
+- [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers](../../ICCV2025/robotics/vq-vla_improving_vision-language-action_models_via_scaling_vector-quantized_acti.md)
+
+<!-- RELATED:END -->

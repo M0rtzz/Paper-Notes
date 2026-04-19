@@ -146,3 +146,15 @@ RankLLM 比最快的 IRT 基线快 3,100 倍以上。
 - **实验完整度**: ⭐⭐⭐⭐⭐ — 6 个基准、30 个模型、人类评测、鲁棒性分析齐全
 - **写作质量**: ⭐⭐⭐⭐ — 思路清晰，公式推导完整
 - **综合评分**: ⭐⭐⭐⭐ — 方法简单有效，但理论贡献相对有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving](../../NeurIPS2025/llm_evaluation/evalearn_quantifying_the_learning_capability_and_efficiency_of_llms_via_sequenti.md)
+- [Benchmarking Overton Pluralism in LLMs](benchmarking_overton_pluralism_in_llms.md)
+- [Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_with_the_hu.md)
+- [JuStRank: Benchmarking LLM Judges for System Ranking](../../ACL2025/llm_evaluation/justrank_llm_judge_system_ranking.md)
+- [Enabling Fine-Grained Operating Points for Black-Box LLMs](enabling_fine-grained_operating_points_for_black-box_llms.md)
+
+<!-- RELATED:END -->

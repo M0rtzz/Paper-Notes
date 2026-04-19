@@ -158,3 +158,15 @@ Dynamic-VLM-7B 在 VideoMME 上比 LLaVA-OneVision-7B 提升 **2.7%**，在 EgoS
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖开放式/多选/零样本多图像三大类任务，消融全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数据对比详尽
 - **价值**: ⭐⭐⭐⭐ 实用性强，提供了VideoLLM训练的完整方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Group Detection using VLM-augmented Temporal Groupness Graph](dynamic_group_detection_using_vlm-augmented_temporal_groupness_graph.md)
+- [Dynamic Multimodal Prototype Learning in Vision-Language Models](dynamic_multimodal_prototype_learning_in_vision-language_models.md)
+- [Dynamic Token Reweighting for Robust Vision-Language Models](../../CVPR2026/multimodal_vlm/dynamic_token_reweighting_for_robust_vision-language_models.md)
+- [DSCA: Dynamic Subspace Concept Alignment for Lifelong VLM Editing](../../CVPR2026/multimodal_vlm/dsca_dynamic_subspace_concept_alignment_for_lifelong_vlm_editing.md)
+- [DTR: Dynamic Token Reweighting for Robust Vision-Language Models](../../CVPR2026/multimodal_vlm/dynamic_token_reweighting_for_robust_visionlanguag.md)
+
+<!-- RELATED:END -->

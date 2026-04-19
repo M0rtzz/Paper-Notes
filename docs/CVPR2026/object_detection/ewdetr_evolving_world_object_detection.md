@@ -92,3 +92,15 @@ VOC→Clipart具体数据：U-Recall在T1为77.35%、T2为78.23%；T2 Prev. Know
 - 实验充分度: ⭐⭐⭐⭐ 消融详尽，多基准多变体，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表精美，问题到方法的推导自然
 - 价值: ⭐⭐⭐⭐ 为检测领域引入了一个重要的新范式，但落地能力需更大规模验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection](beyond_prompt_degradation_prototype-guided_dual-pool_prompting_for_incremental_o.md)
+- [Fourier Angle Alignment for Oriented Object Detection in Remote Sensing](fourier_angle_alignment_for_oriented_object_detection_in_remote_sensing.md)
+- [CD-Buffer: Complementary Dual-Buffer Framework for Test-Time Adaptation in Adverse Weather Object Detection](cd-buffer_complementary_dual-buffer_framework_for_test-time_adaptation_in_advers.md)
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+
+<!-- RELATED:END -->

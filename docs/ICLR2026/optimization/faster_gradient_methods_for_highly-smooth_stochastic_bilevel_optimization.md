@@ -117,3 +117,15 @@ $$\text{SFO 复杂度} = \tilde{\mathcal{O}}\left(p \kappa^{9+2/p} \epsilon^{-4-
 - 实验充分度: ⭐⭐⭐ — 实验相对简单，仅凸下层逻辑回归，大规模实验不足
 - 写作质量: ⭐⭐⭐⭐⭐ — 论文结构清晰，从洞察到算法到理论的逻辑链条完整
 - 价值: ⭐⭐⭐⭐ — 在双层优化理论中建立了重要的新结果，缩小了上下界差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nonlinearly Preconditioned Gradient Methods: Momentum and Stochastic Analysis](../../NeurIPS2025/optimization/nonlinearly_preconditioned_gradient_methods_momentum_and_stochastic_analysis.md)
+- [Converge Faster, Talk Less: Hessian-Informed Federated Zeroth-Order Optimization](converge_faster_talk_less_hessian-informed_federated_zeroth-order_optimization.md)
+- [Improved Last-Iterate Convergence of Shuffling Gradient Methods for Nonsmooth Convex Optimization](../../ICML2025/optimization/improved_last-iterate_convergence_of_shuffling_gradient_methods_for_nonsmooth_co.md)
+- [ScaleBiO: Scalable Bilevel Optimization for LLM Data Reweighting](../../ACL2025/optimization/scalebio_bilevel_data_reweighting.md)
+- [Efficient Curvature-Aware Hypergradient Approximation for Bilevel Optimization](../../ICML2025/optimization/efficient_curvature-aware_hypergradient_approximation_for_bilevel_optimization.md)
+
+<!-- RELATED:END -->

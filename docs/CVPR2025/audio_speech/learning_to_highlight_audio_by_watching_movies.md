@@ -110,3 +110,15 @@ VisAH在所有5个指标上均大幅领先，MAG降低56%、W-dis降低59%。
 - 实验充分度: ⭐⭐⭐⭐ 定量+主观+消融+应用展示都比较完整
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机和方法阐述充分
 - 价值: ⭐⭐⭐⭐ 开辟了音频高亮新方向，有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PACE: Pretrained Audio Continual Learning](../../ICLR2026/audio_speech/pace_pretrained_audio_continual_learning.md)
+- [LiveCC: Learning Video LLM with Streaming Speech Transcription at Scale](livecc_learning_video_llm_with_streaming_speech_transcription_at_scale.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [Towards Open-Vocabulary Audio-Visual Event Localization](towards_open-vocabulary_audio-visual_event_localization.md)
+- [DistinctAD: Distinctive Audio Description Generation in Contexts](distinctad_distinctive_audio_description_generation_in_contexts.md)
+
+<!-- RELATED:END -->

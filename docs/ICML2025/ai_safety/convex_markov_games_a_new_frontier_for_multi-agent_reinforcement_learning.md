@@ -130,3 +130,15 @@ $$\mathcal{L}^{\tau}(\pi) = \sum_i \|\Pi_{T\mathcal{U}_i}(\nabla_{\mu_i}^{i\tau}
 - 实验充分度: ⭐⭐⭐⭐ — 七个场景覆盖四类应用，但均为小规模表格实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论严谨、图示直观（Figure 1 的占用度量空间可视化尤佳）
 - 价值: ⭐⭐⭐⭐⭐ — 为 MARL 开辟新方向，统一框架具有广泛应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](../../ICLR2026/ai_safety/sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
+- [Adversarial Inception Backdoor Attacks against Reinforcement Learning](adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [Reverse Engineering Human Preferences with Reinforcement Learning](../../NeurIPS2025/ai_safety/reverse_engineering_human_preferences_with_reinforcement_learning.md)
+- [Contextual Integrity in LLMs via Reasoning and Reinforcement Learning](../../NeurIPS2025/ai_safety/contextual_integrity_in_llms_via_reasoning_and_reinforcement_learning.md)
+- [From Single to Societal: Analyzing Persona-Induced Bias in Multi-Agent Interactions](../../AAAI2026/ai_safety/from_single_to_societal_analyzing_persona-induced_bias_in_multi-agent_interactio.md)
+
+<!-- RELATED:END -->

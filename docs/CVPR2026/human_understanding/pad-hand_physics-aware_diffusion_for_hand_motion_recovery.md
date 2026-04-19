@@ -140,3 +140,15 @@ DexYCB 上各组件消融：
 - 实验充分度: ⭐⭐⭐⭐ DexYCB+HO3D 两个数据集，消融设计清晰，定性方差可视化有说服力
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，但公式密集度较高
 - 价值: ⭐⭐⭐⭐ 为手部运动恢复引入了物理一致性量化指标，对AR/VR和具身AI有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenFS: Multi-Hand-Capable Fingerspelling Recognition with Implicit Signing-Hand Detection and Frame-Wise Letter-Conditioned Synthesis](openfs_multi-hand-capable_fingerspelling_recognition_with_implicit_signing-hand_.md)
+- [UniDex: A Robot Foundation Suite for Universal Dexterous Hand Control from Egocentric Human Videos](unidex_a_robot_foundation_suite_for_universal_dexterous_hand_control_from_egocen.md)
+- [OMG-Bench: A New Challenging Benchmark for Skeleton-based Online Micro Hand Gesture Recognition](omg-bench_a_new_challenging_benchmark_for_skeleton-based_online_micro_hand_gestu.md)
+- [RecoverMark: Robust Watermarking for Localization and Recovery of Manipulated Faces](recovermark_robust_watermarking_for_localization_and_recovery_of_manipulated_fac.md)
+- [Dynamic Reconstruction of Hand-Object Interaction with Distributed Force-aware Contact Representation](../../ICCV2025/human_understanding/dynamic_reconstruction_of_hand-object_interaction_with_distributed_force-aware_c.md)
+
+<!-- RELATED:END -->

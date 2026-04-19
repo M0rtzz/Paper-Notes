@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 8 个模型 × 3 个数据集 × 2 种策略，显式/非显式分析细致，人类评估验证指标可靠性
 - 写作质量: ⭐⭐⭐⭐ 任务动机和定义清晰，TSE vs OTSD 的区别用实例说明直观易懂
 - 价值: ⭐⭐⭐ 为立场检测领域提供了更现实的评估框架，但实际落地仍受非显式场景性能瓶颈制约
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open-Set Living Need Prediction with Large Language Models](open-set_living_need_prediction_with_large_language_models.md)
+- [OpenCoder: The Open Cookbook for Top-Tier Code Large Language Models](opencoder_the_open_cookbook_for_top-tier_code_large_language_models.md)
+- [Do Language Models Mirror Human Confidence? Exploring Psychological Insights to Address Overconfidence in LLMs](do_language_models_mirror_human_confidence_exploring_psychological_insights_to_a.md)
+- [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
+- [Revisiting Epistemic Markers in Confidence Estimation: Can Markers Accurately Reflect Large Language Models' Uncertainty?](revisiting_epistemic_markers_in_confidence_estimation_can_markers_accurately_ref.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐（公开基准+工业部署+线上A/B测试，消融完整）
 - **写作质量**: ⭐⭐⭐⭐（数学推导清晰，但符号较多需要仔细跟读）
 - **价值**: ⭐⭐⭐⭐⭐（4.10%广告收入提升的工业验证价值极高，具有直接商业影响力）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Not All Explanations for Deep Learning Phenomena Are Equally Valuable](not_all_explanations_for_deep_learning_phenomena_are_equally_valuable.md)
+- [GoalRank: Group-Relative Optimization for a Large Ranking Model](../../ICLR2026/recommender/goalrank_group-relative_optimization_for_a_large_ranking_model.md)
+- [MIRA: Empowering One-Touch AI Services on Smartphones with MLLM-based Instruction Recommendation](../../ACL2025/recommender/mira_empowering_one-touch_ai_services_on_smartphones_with_mllm-based_instruction.md)
+- [SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
+- [Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](../../NeurIPS2025/recommender/transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
+
+<!-- RELATED:END -->

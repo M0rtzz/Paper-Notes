@@ -162,3 +162,15 @@ $$\mathcal{L}_{AD} = \sum_{t'} pe(I_t, \tilde{I}_{t' \to t})$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5 个基线 × 5 个数据集，消融完整
 - **写作质量**: ⭐⭐⭐⭐ — 问题剖析清晰，方法动机充分
 - **价值**: ⭐⭐⭐⭐ — 通用框架，对领域有持续推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [High-Precision Self-Supervised Monocular Depth Estimation with Rich-Resource Prior](high-precision_self-supervised_monocular_depth_estimation_with_rich-resource_pri.md)
+- [ProDepth: Boosting Self-Supervised Multi-Frame Monocular Depth with Probabilistic Fusion](prodepth_boosting_self-supervised_multi-frame_monocular_depth_with_probabilistic.md)
+- [Camera Height Doesn't Change: Unsupervised Training for Metric Monocular Road-Scene Depth Estimation](camera_height_doesnapost_change_unsupervised_training_for_metric_monocular_road-.md)
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [SEDiff: Structure Extraction for Domain Adaptive Depth Estimation via Denoising Diffusion Models](sediff_structure_extraction_for_domain_adaptive_depth_estimation_via_denoising_d.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ SpatialLM 基线 → 提取点云 token 的 $(x,y,z)$ 坐标 → 转换为球面
 - 实验充分度: ⭐⭐⭐⭐ 多基准完整消融 + 真机部署延迟测试
 - 写作质量: ⭐⭐⭐⭐ 动机分析透彻，信息流可视化出色
 - 实用价值: ⭐⭐⭐⭐ drop-in 替换 RoPE，跨领域参考价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PPE: Positional Preservation Embedding for Token Compression in Multimodal Large Language Models](../../ICLR2026/multimodal_vlm/ppe_positional_preservation_embedding_for_token_compression_in_multimodal_large_.md)
+- [HiSpatial: Taming Hierarchical 3D Spatial Understanding in Vision-Language Models](hispatial_taming_hierarchical_3d_spatial_understanding_in_vision-language_models.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs](hulluedit_subspace_editing_hallucination.md)
+- [PointAlign: Feature-Level Alignment Regularization for 3D Vision-Language Models](pointalign_feature-level_alignment_regularization_for_3d_vision-language_models.md)
+- [HAMMER: Harnessing MLLM via Cross-Modal Integration for Intention-Driven 3D Affordance Grounding](hammer_harnessing_mllm_via_cross-modal_integration_for_intention-driven_3d_affor.md)
+
+<!-- RELATED:END -->

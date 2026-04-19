@@ -116,3 +116,15 @@ NTP 损失 $\mathcal{L} = -\sum_t \log P_\theta(y_t|y_{<t},C,o,a)$，其中 $y=[
 - 实验充分度: ⭐⭐⭐⭐ 三场景覆盖+树搜索验证+消融完整，但缺真实复杂网页验证
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，逐步奖励计算过程直观，动机充分
 - 价值: ⭐⭐⭐⭐⭐ 10 倍成本/速度优势直接解决部署瓶颈，对网页 Agent 研究有基础性推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents](../../ACL2025/llm_agent/explorer_scaling_exploration-driven_web_trajectory_synthesis_for_multimodal_web_.md)
+- [AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](agentdam_privacy_leakage_evaluation_for_autonomous_web_agent.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](../../ICLR2026/llm_agent/web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [AdvAgent: Controllable Blackbox Red-teaming on Web Agents](../../ICML2025/llm_agent/advagent_controllable_blackbox_red-teaming_on_web_agents.md)
+- [ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents](../../ICLR2026/llm_agent/st-webagentbench_a_benchmark_for_evaluating_safety_and_trustworthiness_in_web_ag.md)
+
+<!-- RELATED:END -->

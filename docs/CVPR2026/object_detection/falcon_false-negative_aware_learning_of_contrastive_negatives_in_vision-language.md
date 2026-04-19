@@ -142,3 +142,15 @@ $$\phi_{k+1} = \phi_k + \gamma \cdot \mathbb{E}_{\pi_{\phi_k}}\left[\Delta_k^{V,
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三种VLP框架、多种下游任务、详尽消融、训练动态可视化、wall-clock对比
 - 写作质量: ⭐⭐⭐⭐ — 动机论证充分（图2的假负样本率分析很有说服力），公式推导完整，图表清晰
 - 价值: ⭐⭐⭐⭐ — 方法通用、即插即用，假负样本问题在大规模VLP中普遍存在，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discovering Global False Negatives On the Fly for Self-supervised Contrastive Learning](../../ICML2025/object_detection/discovering_global_false_negatives_on_the_fly_for_self-supervised_contrastive_le.md)
+- [Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward](saliency-r1_enforcing_interpretable_and_faithful_vision-language_reasoning_via_s.md)
+- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
+- [Continuous Vision-Language-Action Co-Learning with Semantic-Physical Alignment for Behavioral Cloning](../../AAAI2026/object_detection/continuous_vision-language-action_co-learning_with_semantic-.md)
+- [Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification](specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat.md)
+
+<!-- RELATED:END -->

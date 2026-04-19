@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 3+1 个 Agent、多维度分析、失败原因分类完整，但缺少更多 LLM backbone 对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，数据收集与评分标准描述详尽
 - 价值: ⭐⭐⭐⭐ — 填补了 AI 辅助可复现性评估的 Benchmark 空白，对社会科学研究流程有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MLRC-Bench: Can Language Agents Solve Machine Learning Research Challenges?](../../NeurIPS2025/llm_agent/mlrc-bench_can_language_agents_solve_machine_learning_research_challenges.md)
+- [With Great Capabilities Come Great Responsibilities: Introducing the Agentic Risk & Capability Framework for Governing Agentic AI Systems](../../AAAI2026/llm_agent/with_great_capabilities_come_great_responsibilities_introducing_the_agentic_risk.md)
+- [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](../../NeurIPS2025/llm_agent/benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
+- [xChemAgents: Agentic AI for Explainable Quantum Chemistry](../../ICML2025/llm_agent/xchemagents_agentic_ai_for_explainable_quantum_chemistry.md)
+- [EU-Agent-Bench: Measuring Illegal Behavior of LLM Agents Under EU Law](../../NeurIPS2025/llm_agent/eu-agent-bench_measuring_illegal_behavior_of_llm_agents_under_eu_law.md)
+
+<!-- RELATED:END -->

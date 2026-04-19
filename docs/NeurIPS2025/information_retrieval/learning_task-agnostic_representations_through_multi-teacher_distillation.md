@@ -144,3 +144,15 @@ tags:
 - **技术深度**：⭐⭐⭐⭐ — 理论推导严谨完整，从条件熵到互信息的等价关系清晰；但实际实现相对直接
 - **实验充分性**：⭐⭐⭐⭐⭐ — 三模态（NLP/视觉/分子）×多基准×多体量的全面评估，消融实验覆盖教师数量和蒸馏方法对比
 - **实用价值**：⭐⭐⭐⭐ — 预计算嵌入使训练高效可扩展，已开源模型；但聚类/STS场景提升有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Digging Deeper: Learning Multi-Level Concept Hierarchies](../../ICLR2026/information_retrieval/digging_deeper_learning_multi-level_concept_hierarchies.md)
+- [Multi-Label Cluster Discrimination for Visual Representation Learning](../../ECCV2024/information_retrieval/multi-label_cluster_discrimination_for_visual_representation_learning.md)
+- [Scaling Language-Centric Omnimodal Representation Learning](scaling_language-centric_omnimodal_representation_learning.md)
+- [Generalized Contrastive Learning for Universal Multimodal Retrieval](generalized_contrastive_learning_for_universal_multimodal_re.md)
+- [Retrieval is Not Enough: Enhancing RAG Reasoning through Test-Time Critique and Optimization](retrieval_is_not_enough_enhancing_rag_reasoning_through_test-time_critique_and_o.md)
+
+<!-- RELATED:END -->

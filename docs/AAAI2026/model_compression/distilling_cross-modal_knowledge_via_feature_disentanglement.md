@@ -155,3 +155,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \mathcal{L}_{\text{al
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个数据集、3 类任务、详细消融和可视化，覆盖双向蒸馏和多架构
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从观察→假设→验证→设计的推导链完整
 - 价值: ⭐⭐⭐⭐ 方法通用且可与其他方法叠加，频域解耦是正交增强模块
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling Balanced Knowledge from a Biased Teacher](../../CVPR2026/model_compression/distilling_balanced_knowledge_from_a_biased_teacher.md)
+- [Improving Knowledge Distillation via Regularizing Feature Direction and Norm](../../ECCV2024/model_compression/improving_knowledge_distillation_via_regularizing_feature_direction_and_norm.md)
+- [DOS: Distilling Observable Softmaps of Zipfian Prototypes for Self-Supervised Point Representation](dos_distilling_observable_softmaps_of_zipfian_prototypes_for_self-supervised_poi.md)
+- [InfoCom: Kilobyte-Scale Communication-Efficient Collaborative Perception with Information-Aware Feature Compression](infocom_kilobyte-scale_communication-efficient_collaborative_perception_with_inf.md)
+- [Distilling Tool Knowledge into Language Models via Back-Translated Traces](../../ICML2025/model_compression/distilling_tool_knowledge_into_language_models_via_back-translated_traces.md)
+
+<!-- RELATED:END -->

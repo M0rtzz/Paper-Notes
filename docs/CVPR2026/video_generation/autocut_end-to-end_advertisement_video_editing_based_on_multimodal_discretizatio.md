@@ -131,3 +131,15 @@ AutoCut 提出了一个端到端的广告视频编辑框架，通过残差向量
 - 实验充分度: ⭐⭐⭐⭐ 自动指标 + 人工评估 + 消融，但测试集仅 364 视频
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但 evaluation metrics 的定义较分散
 - 价值: ⭐⭐⭐⭐ 对广告视频自动化生产有直接实用价值，成本优势显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
+- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
+- [VideoCoF: Unified Video Editing with Temporal Reasoner](videocof_unified_video_editing_with_temporal_reasoner.md)
+- [LoRA-Edit: Controllable First-Frame-Guided Video Editing via Mask-Aware LoRA Fine-Tuning](../../ICLR2026/video_generation/lora-edit_controllable_first-frame-guided_video_editing_via_mask-aware_lora_fine.md)
+
+<!-- RELATED:END -->

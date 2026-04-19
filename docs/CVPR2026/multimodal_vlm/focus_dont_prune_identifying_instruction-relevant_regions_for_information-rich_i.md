@@ -134,3 +134,15 @@ PinPoint 包含两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个基准+两个基模型+对比方法全面+消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰、图表丰富、动机充分
 - 价值: ⭐⭐⭐⭐ 对信息密集场景有实际应用价值，方法通用性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relation-Rich Visual Document Generator for Visual Information Extraction](../../CVPR2025/multimodal_vlm/relation-rich_visual_document_generator_for_visual_information_extraction.md)
+- [When Token Pruning is Worse than Random: Understanding Visual Token Information in VLLMs](when_token_pruning_is_worse_than_random_understanding_visual_token_information_i.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/cosyn_code_guided_synthetic_data.md)
+- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](../../CVPR2025/multimodal_vlm/identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+- [Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/code_guided_text_rich_image.md)
+
+<!-- RELATED:END -->

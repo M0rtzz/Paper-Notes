@@ -166,3 +166,15 @@ $$L^{MAX\text{-}ENT}(\theta) = L^{PPO}(\theta) + \beta_H \mathbb{E}_t[H(\pi_\the
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5 个 benchmark、3 种模型规模、完整消融、统计检验
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰、方法推导严谨，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 加速收益稳定但增量有限（1.03-1.06× over EAGLE-3），实际落地价值取决于部署规模
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+- [Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](../../NeurIPS2025/reinforcement_learning/learning_from_demonstrations_via_capability-aware_goal_sampling.md)
+- [RLSLM: A Hybrid Reinforcement Learning Framework Aligning Rule-Based Social Locomotion Model with Human Social Norms](rlslm_a_hybrid_reinforcement_learning_framework_aligning_rule-based_social_locom.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+
+<!-- RELATED:END -->

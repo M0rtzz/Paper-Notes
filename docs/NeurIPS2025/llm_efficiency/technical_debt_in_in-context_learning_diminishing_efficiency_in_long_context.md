@@ -108,3 +108,15 @@ Transformer使用GPT-2架构，训练目标为 $\mathcal{L}(\theta) = \mathbb{E}
 - 实验充分度: ⭐⭐⭐⭐ 9种SNR场景×512次重复×多种性能分位数，统计充分；理论+实验互相印证
 - 写作质量: ⭐⭐⭐⭐⭐ 从直觉到定义到定理到实验验证的叙述逻辑极其清晰
 - 价值: ⭐⭐⭐⭐⭐ 对"ICL作为通用学习器"的愿景提出了根本性挑战，对ICL研究方向有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The PokeAgent Challenge: Competitive and Long-Context Learning at Scale](the_pokeagent_challenge_competitive_and_long-context_learning_at_scale.md)
+- [On Many-Shot In-Context Learning for Long-Context Evaluation](../../ACL2025/llm_efficiency/on_many-shot_in-context_learning_for_long-context_evaluation.md)
+- [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](hierarchical_balance_packing_towards_efficient_supervised_fine-tuning_for_long-c.md)
+- [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](../../ACL2025/llm_efficiency/ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+
+<!-- RELATED:END -->

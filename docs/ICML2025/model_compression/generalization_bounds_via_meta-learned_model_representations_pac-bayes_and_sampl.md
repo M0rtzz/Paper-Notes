@@ -165,3 +165,15 @@ $$\min_{\psi, \phi_1, \phi_2} \frac{1}{n} \sum_{i=1}^n \mathbb{E}\hat{\mathcal{L
 - 实验充分度: ⭐⭐⭐ 合成+小规模真实数据验证充分，但缺少大规模实验
 - 写作质量: ⭐⭐⭐⭐ 理论部分严谨清晰，图示优美，但定理密度高、阅读门槛高
 - 价值: ⭐⭐⭐⭐ 理论贡献重要，但实践应用路径有待拓展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tighter CMI-Based Generalization Bounds via Stochastic Projection and Quantization](../../NeurIPS2025/model_compression/tighter_cmi-based_generalization_bounds_via_stochastic_projection_and_quantizati.md)
+- [Sample Efficient Demonstration Selection for In-Context Learning](sample_efficient_demonstration_selection_for_in-context_learning.md)
+- [Learned Image Compression with Dictionary-based Entropy Model](../../CVPR2025/model_compression/learned_image_compression_with_dictionary-based_entropy_model.md)
+- [RADIO: Rate-Distortion Optimization for Large Language Model Compression](radio_rate-distortion_optimization_for_large_language_model_compression.md)
+- [any4: Learned 4-bit Numeric Representation for LLMs](any4_learned_4-bit_numeric_representation_for_llms.md)
+
+<!-- RELATED:END -->

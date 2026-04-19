@@ -187,3 +187,15 @@ $$\theta_{T,\ell}^{(c)} \approx U_T (\Sigma_T + U_T^\top U_S \cdot \Delta\Sigma_
 | 实用价值 | 7 | 解决了真实的稀有类别数据缺失问题，但需要域专家预训练 |
 | 写作质量 | 8 | 结构清晰，图例丰富，数学符号统一 |
 | **总分** | **7.6** | 扎实的方法论工作，问题定义有价值，数学优雅 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps](a_closer_look_at_cross-domain_few-shot_object_detection_fine-tuning_matters_and_.md)
+- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_crossmodal_knowledge_transfer_for.md)
+
+<!-- RELATED:END -->

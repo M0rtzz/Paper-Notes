@@ -138,3 +138,15 @@ GeAR 在局部信息检索上相比次优的 BGE-Reranker-L 平均相对提升 1
 - **实验充分度**: ⭐⭐⭐⭐ — 两个场景、五个数据集、多种基线和消融，但缺少 BEIR 等标准基准
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，可视化分析直观，但部分数学符号可以更简洁
 - **价值**: ⭐⭐⭐⭐ — 对检索系统的可解释性和细粒度能力有实际推动作用，尤其适用于 RAG 场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HASH-RAG: Bridging Deep Hashing with Retriever for Efficient, Fine Retrieval and Augmented Generation](hash-rag_bridging_deep_hashing_with_retriever_for_efficient_fine_retrieval_and_a.md)
+- [HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](../../NeurIPS2025/others/hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
+- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification](taclr_a_scalable_and_efficient_retrieval-based_method_for_industrial_product_att.md)
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+
+<!-- RELATED:END -->

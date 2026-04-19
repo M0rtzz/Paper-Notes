@@ -130,3 +130,15 @@ OccWorld 提出在 3D 占用空间中学习世界模型，用 VQ-VAE 对 3D occu
 - 实验充分度: ⭐⭐⭐⭐ 4D forecasting 和 planning 两个任务都有详细实验和消融
 - 写作质量: ⭐⭐⭐⭐ 论文逻辑清晰，从动机到方法到实验层层递进
 - 价值: ⭐⭐⭐⭐⭐ 开创了 occupancy world model 方向，后续大量工作跟进，影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianWorld: Gaussian World Model for Streaming 3D Occupancy Prediction](../../CVPR2025/autonomous_driving/gaussianworld_gaussian_world_model_for_streaming_3d_occupancy_prediction.md)
+- [Neural Volumetric World Models for Autonomous Driving](neural_volumetric_world_models_for_autonomous_driving.md)
+- [OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multi-modal_3d_occupancy_prediction_for_autonomous_driving.md)
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](../../ICCV2025/autonomous_driving/epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+- [Risk-Aware Self-Consistent Imitation Learning for Trajectory Planning in Autonomous Driving](risk-aware_self-consistent_imitation_learning_for_trajectory_planning_in_autonom.md)
+
+<!-- RELATED:END -->

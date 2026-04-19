@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 15个模型、500个概念、多种控制实验、人类对照，统计分析严谨
 - 写作质量: ⭐⭐⭐⭐ 逻辑紧密，但数学符号较多，阅读门槛偏高
 - 价值: ⭐⭐⭐⭐⭐ 对LLM可信度和公平性研究有深远影响，医疗案例凸显实际风险
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Graph Descriptive Order Affect Solving Graph Problems with LLMs?](graph_descriptive_order_llm.md)
+- [Only a Little to the Left: A Theory-grounded Measure of Political Bias in LLMs](political_bias_theory_grounded.md)
+- [Brevity is the soul of sustainability: Characterizing LLM response lengths](brevity_is_the_soul_of_sustainability_characterizing_llm_response_lengths.md)
+- [Theory of Mind in Large Language Models: Assessment and Enhancement](theory_of_mind_llm.md)
+- [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
+
+<!-- RELATED:END -->

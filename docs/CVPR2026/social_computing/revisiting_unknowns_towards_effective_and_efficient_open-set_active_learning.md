@@ -147,3 +147,15 @@ E2OAL 的等效训练时间与 Random、MSP、Coreset、Uncertainty 等轻量基
 - 实验充分度: ⭐⭐⭐⭐ — 三数据集 × 多 mismatch ratio × 完整消融 + 效率分析 + 敏感性分析，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，pilot study 动机自然，公式推导连贯
 - 价值: ⭐⭐⭐⭐ — 为开放集主动学习提供了统一高效的解决方案，代码开源，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Slice Discovery in Large Language Models](../../NeurIPS2025/social_computing/active_slice_discovery_in_large_language_models.md)
+- [Stop Wasting Your Tokens: Towards Efficient Runtime Multi-Agent Systems](../../ICLR2026/social_computing/stop_wasting_your_tokens_towards_efficient_runtime_multi-agent_systems.md)
+- [Learning from Synthetic Data via Provenance-Based Input Gradient Guidance](learning_from_synthetic_data_via_provenance-based_input_gradient_guidance.md)
+- [Learning from Neighbors: Category Extrapolation for Long-Tail Learning](../../CVPR2025/social_computing/learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)
+- [Multi-modal Dynamic Proxy Learning for Personalized Multiple Clustering](../../AAAI2026/social_computing/multi-modal_dynamic_proxy_learning_for_personalized_multiple_clustering.md)
+
+<!-- RELATED:END -->

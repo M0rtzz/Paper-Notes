@@ -136,3 +136,15 @@ PSIVG不需要额外训练数据。TTCO在测试时使用AdamW优化器，LR=2e-
 - 实验充分度: ⭐⭐⭐⭐ 定量比较全面，用户研究(82.3%偏好率)说服力强，消融覆盖了关键组件
 - 写作质量: ⭐⭐⭐⭐ 方法流程清晰易懂，图示直观
 - 价值: ⭐⭐⭐⭐ 提出了一种通用范式可即插即用到任何视频生成模型，但pipeline复杂度和MPM限制制约了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Phantom: Physics-Infused Video Generation via Joint Modeling of Visual and Latent Physical Dynamics](phantom_physics-infused_video_generation_via_joint_modeling_of_visual_and_latent.md)
+- [How Far is Video Generation from World Model: A Physical Law Perspective](../../ICML2025/video_generation/how_far_is_video_generation_from_world_model_a_physical_law_perspective.md)
+- [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
+- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
+- [Lighting-grounded Video Generation with Renderer-based Agent Reasoning](lighting-grounded_video_generation_with_renderer-based_agent_reasoning.md)
+
+<!-- RELATED:END -->

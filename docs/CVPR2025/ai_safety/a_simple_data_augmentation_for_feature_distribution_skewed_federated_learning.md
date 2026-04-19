@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个数据集、6种FL方法、与4种增强对比，但缺乏更多non-IID场景
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，Algorithm伪代码简洁
 - 价值: ⭐⭐⭐⭐⭐ 即插即用、零额外开销、隐私安全、一致提升——FL从业者可立即采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](../../CVPR2026/ai_safety/domain-skewed_federated_learning_with_feature_decoupling_and_calibration.md)
+- [Geometric Knowledge-Guided Localized Global Distribution Alignment for Federated Learning](geometric_knowledge-guided_localized_global_distribution_alignment_for_federated.md)
+- [FedAWA: Adaptive Optimization of Aggregation Weights in Federated Learning Using Client Vectors](fedawa_adaptive_optimization_of_aggregation_weights_in_federated_learning_using_.md)
+- [Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing](../../ICCV2025/ai_safety/client2vec_improving_federated_learning_by_distribution_shifts_aware_client_inde.md)
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+
+<!-- RELATED:END -->

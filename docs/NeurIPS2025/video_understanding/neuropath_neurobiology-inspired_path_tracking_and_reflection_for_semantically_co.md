@@ -149,3 +149,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个主要数据集+三个附加数据集，多种LLM和检索器的消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，案例研究直观，但神经科学类比的深度可以更强
 - 价值: ⭐⭐⭐⭐ 在多跳QA上大幅超越SOTA，对RAG社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PASS: Path-Selective State Space Model for Event-Based Recognition](pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics](../../ICCV2025/video_understanding/hermes_temporal-coherent_long-form_understanding_with_episodes_and_semantics.md)
+- [VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding](vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)
+- [AdaVideoRAG: Omni-Contextual Adaptive Retrieval-Augmented Efficient Long Video Understanding](adavideorag_omnicontextual_adaptive_retrievalaugmented_effic.md)
+- [RAGTrack: Language-aware RGBT Tracking with Retrieval-Augmented Generation](../../CVPR2026/video_understanding/ragtrack_language-aware_rgbt_tracking_with_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

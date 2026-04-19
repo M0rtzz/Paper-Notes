@@ -211,3 +211,15 @@ DTC 数据集包含三部分：(1) 2000个扫描级3D物体模型；(2) 50个物
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖逆渲染、NVS、自中心重建、机器人等多个任务
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、数据详实、对比全面
 - 价值: ⭐⭐⭐⭐⭐ 填补大规模高质量3D数字孪生数据集的空白，对社区有重大推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionAnyMesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins](motionanymesh_physics-grounded_articulation_for_simulation-ready_digital_twins.md)
+- [3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination](3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall.md)
+- [3D-SLNR: A Super Lightweight Neural Representation for Large-scale 3D Mapping](3d-slnr_a_super_lightweight_neural_representation_for_large-scale_3d_mapping.md)
+- [Horizon-GS: Unified 3D Gaussian Splatting for Large-Scale Aerial-to-Ground Scenes](horizon-gs_unified_3d_gaussian_splatting_for_large-scale_aerial-to-ground_scenes.md)
+- [HumanOLAT: A Large-Scale Dataset for Full-Body Human Relighting and Novel-View Synthesis](../../ICCV2025/3d_vision/humanolat_a_large-scale_dataset_for_full-body_human_relighting_and_novel-view_sy.md)
+
+<!-- RELATED:END -->

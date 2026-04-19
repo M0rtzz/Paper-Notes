@@ -138,3 +138,15 @@ $$L = \mathrm{CrossEntropy}(S[1:], \hat{S}[:,-1]) + \lambda \|\mathbf{Z}\|_2^2$$
 - 技术深度：⭐⭐⭐⭐ （Token 化设计精巧，多条件融合合理）
 - 实验充分度：⭐⭐⭐⭐ （定量+用户研究+消融+定性分析覆盖全面）
 - 实用价值：⭐⭐⭐⭐ （直接可应用于 AI 视频生成的运镜控制）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Consistency for LLM-Based Motion Trajectory Generation and Verification](../../CVPR2026/multimodal_vlm/self-consistency_for_llm-based_motion_trajectory_generation_and_verification.md)
+- [Universal Retrieval for Multimodal Trajectory Modeling](../../ICML2025/multimodal_vlm/universal_retrieval_for_multimodal_trajectory_modeling.md)
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)
+- [Harmonizing Visual Representations for Unified Multimodal Understanding and Generation](harmonizing_visual_representations_for_unified_multimodal_un.md)
+- [AutoComPose: Automatic Generation of Pose Transition Descriptions for Composed Pose Retrieval Using Multimodal LLMs](autocompose_automatic_generation_of_pose_transition_descriptions_for_composed_po.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ HO3D消融：
 - 实验充分度: ⭐⭐⭐⭐ — 两个数据集、详细消融、实时演示，但缺少更大规模benchmark
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ — 实时model-free追踪有很高实用价值，推动GS在机器人领域的应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
+- [3DRealCar: An In-the-wild RGB-D Car Dataset with 360-degree Views](3drealcar_an_in-the-wild_rgb-d_car_dataset_with_360-degree_views.md)
+- [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
+- [GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting](gs-livm_real-time_photo-realistic_lidar-inertial-visual_mapping_with_gaussian_sp.md)
+- [GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow](gaussianflowocc_sparse_and_weakly_supervised_occupancy_estimation_using_gaussian.md)
+
+<!-- RELATED:END -->

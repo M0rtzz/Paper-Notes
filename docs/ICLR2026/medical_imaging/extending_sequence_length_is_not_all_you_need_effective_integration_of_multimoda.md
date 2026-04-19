@@ -134,3 +134,15 @@ Prism 用 2k 序列超越了所有使用 200k 序列的方法。
 - 实验充分度: ⭐⭐⭐⭐ 消融/敏感性分析充分，但仅两种细胞系
 - 写作质量: ⭐⭐⭐⭐⭐ 动机展开层层递进，实验设计精巧，反直觉的核心发现论证严密
 - 价值: ⭐⭐⭐⭐ 对基因表达预测领域有重要启示，方法简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HistoPrism: Unlocking Functional Pathway Analysis from Pan-Cancer Histology via Gene Expression Prediction](histoprism_unlocking_functional_pathway_analysis_from_pan-cancer_histology_via_g.md)
+- [Is Sequence Information All You Need for Bayesian Optimization of Antibodies?](../../NeurIPS2025/medical_imaging/is_sequence_information_all_you_need_for_bayesian_optimization_of_antibodies.md)
+- [HiFusion: Hierarchical Intra-Spot Alignment and Regional Context Fusion for Spatial Gene Expression Prediction from Histopathology](../../AAAI2026/medical_imaging/hifusion_hierarchical_intra-spot_alignment_and_regional_context_fusion_for_spati.md)
+- [Decentralized Attention Fails Centralized Signals: Rethinking Transformers for Medical Time Series](decentralized_attention_fails_centralized_signals_rethinking_transformers_for_me.md)
+- [Controllable Sequence Editing for Biological and Clinical Trajectories](controllable_sequence_editing_for_biological_and_clinical_trajectories.md)
+
+<!-- RELATED:END -->

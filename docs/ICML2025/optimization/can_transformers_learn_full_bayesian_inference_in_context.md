@@ -139,3 +139,15 @@ GLM 后验推断（真实数据集，与 MCMC/VI 对比）：
 - 实验充分度: ⭐⭐⭐⭐ 多模型多数据集，与 MCMC/VI 充分对比
 - 写作质量: ⭐⭐⭐⭐⭐ 清晰优雅，类比 LLM 的图示极具启发性
 - 价值: ⭐⭐⭐⭐⭐ 可能改变统计推断的实践方式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+- [Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](../../NeurIPS2025/optimization/multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](../../NeurIPS2025/optimization/generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+- [Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+
+<!-- RELATED:END -->

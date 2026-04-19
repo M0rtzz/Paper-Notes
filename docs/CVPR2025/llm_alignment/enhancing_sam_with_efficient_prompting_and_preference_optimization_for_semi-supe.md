@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种模态三种任务覆盖面广，但缺乏具体数值表格
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法流程直观
 - 价值: ⭐⭐⭐⭐ 对低标注医学分割有实际价值，DPO+虚拟标注器范式可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment](inpo_inversion_preference_optimization_with_reparametrized_ddim_for_efficient_di.md)
+- [Boost Your Human Image Generation Model via Direct Preference Optimization](boost_your_human_image_generation_model_via_direct_preference_optimization.md)
+- [Fine-grained Video Dubbing Duration Alignment with Segment Supervised Preference Optimization](../../ACL2025/llm_alignment/fine-grained_video_dubbing_duration_alignment_with_segment_supervised_preference.md)
+- [Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization](../../ACL2025/llm_alignment/kpo_protein_safety.md)
+- [DP²O-SR: Direct Perceptual Preference Optimization for Real-World Image Super-Resolution](../../NeurIPS2025/llm_alignment/dp2o-sr_direct_perceptual_preference_optimization_for_real-world_image_super-res.md)
+
+<!-- RELATED:END -->

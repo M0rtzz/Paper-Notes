@@ -142,3 +142,15 @@ MergePrint 采用两阶段优化流程：**输入优化（OptI）** → **参数
 - **有效性**: ⭐⭐⭐⭐⭐ — 全部五项需求满足，8 种合并方法上全面优于基线，且泛化到合并之外的场景。
 - **实用性**: ⭐⭐⭐⭐ — 整体流程 <10 分钟，纯黑盒验证，但不抗蒸馏且仅验证了 7B 模型。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，五项需求定义明确，实验全面系统，但数学符号较密集。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Length Controlled Generation for Black-box LLMs](length_controlled_generation_for_black-box_llms.md)
+- [Self-Instructed Derived Prompt Generation Meets In-Context Learning: Unlocking New Potential of Black-Box LLMs](self-instructed_derived_prompt_generation_meets_in-context_learning_unlocking_ne.md)
+- [Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings](../../ICML2025/llm_nlp/towards_universal_offline_black-box_optimization_via_learning_language_model_emb.md)
+- [PRESTO: Preimage-Informed Instruction Optimization for Prompting Black-Box LLMs](../../NeurIPS2025/llm_nlp/presto_preimage-informed_instruction_optimization_for_prompting_black-box_llms.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+
+<!-- RELATED:END -->

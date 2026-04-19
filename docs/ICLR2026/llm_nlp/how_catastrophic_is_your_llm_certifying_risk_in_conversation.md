@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6 个 frontier 模型 × 3 种分布 × 2 个类别，案例分析深入
 - 写作质量: ⭐⭐⭐⭐ 形式化严谨，数学符号系统清晰
 - 价值: ⭐⭐⭐⭐⭐ 为 AI 安全评估提供了更高标准的方法论，从经验测试升级到统计认证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](../../ACL2025/llm_nlp/a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
+- [Are Your LLMs Capable of Stable Reasoning?](../../ACL2025/llm_nlp/are_your_llms_capable_of_stable_reasoning.md)
+- [On the Risk of Evidence Pollution for Malicious Social Text Detection in the Era of LLMs](../../ACL2025/llm_nlp/on_the_risk_of_evidence_pollution_for_malicious_social_text_detection_in_the_era.md)
+- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](../../ACL2025/llm_nlp/selfelicit_evidence_highlighting.md)
+- [IPO: Your Language Model is Secretly a Preference Classifier](../../ACL2025/llm_nlp/ipo_your_language_model_is_secretly_a_preference_classifier.md)
+
+<!-- RELATED:END -->

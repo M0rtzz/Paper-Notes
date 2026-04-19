@@ -131,3 +131,15 @@ M3DLayout 的构建分为三个阶段：（1）多源数据收集与清洗；（
 - 实验充分度: ⭐⭐⭐⭐ 定量对比+消融+用户研究+密度可控性验证，评估维度丰富
 - 写作质量: ⭐⭐⭐⭐ 数据集特征分析透彻，表格和统计图清晰展示了多源数据的互补性
 - 价值: ⭐⭐⭐⭐ 填补了文本驱动3D场景生成的数据瓶颈，开源数据集+代码具有持续影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CustomTex: High-fidelity Indoor Scene Texturing via Multi-Reference Customization](customtex_high-fidelity_indoor_scene_texturing_via_multi-reference_customization.md)
+- [ForgeDreamer: Industrial Text-to-3D Generation with Multi-Expert LoRA and Cross-View Hypergraph](forgedreamer_industrial_text-to-3d_generation_with_multi-expert_lora_and_cross-v.md)
+- [Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments](few-shot_incremental_3d_object_detection_in_dynamic_indoor_environments.md)
+- [VGGT-Det: Mining VGGT Internal Priors for Sensor-Geometry-Free Multi-View Indoor 3D Object Detection](vggt-det_mining_vggt_internal_priors_for_sensor-geometry-free_multi-view_indoor_.md)
+- [SceneTransporter: Optimal Transport-Guided Compositional Latent Diffusion for Single-Image Structured 3D Scene Generation](../../ICLR2026/3d_vision/scenetransporter_optimal_transport-guided_compositional_latent_diffusion_for_sin.md)
+
+<!-- RELATED:END -->

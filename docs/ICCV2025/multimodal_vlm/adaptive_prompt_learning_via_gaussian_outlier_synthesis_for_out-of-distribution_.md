@@ -195,3 +195,15 @@ $$\mathcal{L} = \xi_1[\gamma_1 \tau \mathcal{L}_{align}^{id} + \gamma_2(1-\tau)\
 - 实验充分度: ⭐⭐⭐⭐ （四个数据集，丰富消融实验，含真实场景测试）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，公式推导详细）
 - 价值: ⭐⭐⭐⭐ （OOD 检测 + VLM 的结合具有实用价值，FPR95 降低 7.76% 显著）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FA: Forced Prompt Learning of Vision-Language Models for Out-of-Distribution Detection](fa_forced_prompt_learning_of_vision-language_models_for_out-of-distribution_dete.md)
+- [PRO-VPT: Distribution-Adaptive Visual Prompt Tuning via Prompt Relocation](pro-vpt_distribution-adaptive_visual_prompt_tuning_via_prompt_relocation.md)
+- [Revisiting Logit Distributions for Reliable Out-of-Distribution Detection](../../NeurIPS2025/multimodal_vlm/revisiting_logit_distributions_for_reliable_out-of-distribution_detection.md)
+- [Exploiting Vision Language Model for Training-Free 3D Point Cloud OOD Detection](exploiting_vision_language_model_for_training-free_3d_point_cloud_ood_detection_.md)
+- [Attention to the Burstiness in Visual Prompt Tuning!](attention_to_the_burstiness_in_visual_prompt_tuning.md)
+
+<!-- RELATED:END -->

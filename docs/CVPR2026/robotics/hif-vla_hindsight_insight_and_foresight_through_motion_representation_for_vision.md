@@ -157,3 +157,15 @@ HiF-VLA 的第三人称变体（94.4%）甚至接近多视角基线的性能。
 - 实验充分度: ⭐⭐⭐⭐⭐ （模拟+真实世界、效率分析、推理可扩展性、详尽消融）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，RQ 驱动的实验设计）
 - 价值: ⭐⭐⭐⭐⭐ （对 VLA 领域的时间建模提供了高效且有效的新范式）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_active_perception_manipulation_vla_roboti.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](lada_robotic_manipulation.md)
+- [Boosting Vision-Language-Action Finetuning with Feasible Action Neighborhood Prior](boosting_vision-language-action_finetuning_with_feasible_action_neighborhood_pri.md)
+
+<!-- RELATED:END -->

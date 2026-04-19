@@ -158,3 +158,15 @@ $$\mathcal{L} = \mathcal{L}_{top}(\mathbf{A}_{ll}) + \mathcal{L}_{cls}(\mathbf{S
 - 实验充分度: ⭐⭐⭐⭐ 两个子集对比、多组消融、注意力消融、可视化分析均有，但缺少与更多方法的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，公式规范
 - 价值: ⭐⭐⭐⭐ 实际提升显著且思路可迁移，SD Map 集成对工业界有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties](../../NeurIPS2025/llm_reasoning/topology_of_reasoning_understanding_large_reasoning_models_through_reasoning_gra.md)
+- [Controllable Navigation Instruction Generation with Chain of Thought Prompting](controllable_navigation_instruction_generation_with_chain_of_thought_prompting.md)
+- [MM-Verify: Enhancing Multimodal Reasoning with Chain-of-Thought Verification](../../ACL2025/llm_reasoning/mm-verify_enhancing_multimodal_reasoning_with_chain-of-thought_verification.md)
+- [Marco-o1 v2: Towards Widening The Distillation Bottleneck for Reasoning Models](../../ACL2025/llm_reasoning/marco-o1_v2_towards_widening_the_distillation_bottleneck_for_reasoning_models.md)
+- [Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](../../CVPR2025/llm_reasoning/reason-before-retrieve_one-stage_reflective_chain-of-thoughts_for_training-free_.md)
+
+<!-- RELATED:END -->

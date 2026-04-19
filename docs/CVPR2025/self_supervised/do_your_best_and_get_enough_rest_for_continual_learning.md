@@ -108,3 +108,15 @@ Fig.4实证验证了遗忘曲线理论在神经网络中的适用性：
 - 实验充分度: ⭐⭐⭐⭐⭐ Fig.2涵盖6个维度（step/buffer/method/pretrain/benchmark/protocol），验证极其全面
 - 写作质量: ⭐⭐⭐⭐ 理论动机清晰，Fig.1遗忘曲线可视化直观
 - 价值: ⭐⭐⭐⭐⭐ Drop-in替代、零额外开销、一致提升——CL从业者可立即受益
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](boss_a_best-of-strategies_selector_as_an_oracle_for_deep_active_learning.md)
+- [Continuous Subspace Optimization for Continual Learning (CoSO)](../../NeurIPS2025/self_supervised/continuous_subspace_optimization_for_continual_learning.md)
+- [Revisiting Supervision for Continual Representation Learning](../../ECCV2024/self_supervised/revisiting_supervision_for_continual_representation_learning.md)
+- [Update Your Transformer to the Latest Release: Re-Basin of Task Vectors](../../ICML2025/self_supervised/update_your_transformer_to_the_latest_release_re-basin_of_task_vectors.md)
+- [Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning](../../NeurIPS2025/self_supervised/contrastive_consolidation_of_top-down_modulations_achieves_sparsely_supervised_c.md)
+
+<!-- RELATED:END -->

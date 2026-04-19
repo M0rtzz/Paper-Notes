@@ -181,3 +181,15 @@ tags:
 - 实验充分度：★★★★☆（实验与理论预测一致，但规模有限）
 - 实用价值：★★★☆☆（理论贡献为主，对实践的直接指导有限）
 - 写作质量：★★★★★（理论表述严谨，直觉解释清晰）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Provably Improves the Convergence of Gradient Descent](learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](../../ICML2025/optimization/in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+- [Can Transformers Learn Full Bayesian Inference In Context?](../../ICML2025/optimization/can_transformers_learn_full_bayesian_inference_in_context.md)
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](../../ICML2025/optimization/how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+
+<!-- RELATED:END -->

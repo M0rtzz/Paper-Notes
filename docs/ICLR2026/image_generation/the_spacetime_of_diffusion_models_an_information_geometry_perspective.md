@@ -153,3 +153,15 @@ DiffED 捕获的是结构级编辑成本，而非感知相似度。
 - **实用性**: ⭐⭐⭐⭐ — DiffED和转移路径有实际价值
 - **实验**: ⭐⭐⭐⭐ — 理论验证充分，分子动力学结果强
 - **写作**: ⭐⭐⭐⭐⭐ — 理论优雅，表达精准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning a Distance Measure from the Information-Estimation Geometry of Data](learning_a_distance_measure_from_the_information-estimation_geometry_of_data.md)
+- [Continual Unlearning for Text-to-Image Diffusion Models: A Regularization Perspective](continual_unlearning_for_text-to-image_diffusion_models_a_regularization_perspec.md)
+- [When Scores Learn Geometry: Rate Separations under the Manifold Hypothesis](when_scores_learn_geometry_rate_separations_under_the_manifold_hypothesis.md)
+- [Information Theoretic Learning for Diffusion Models with Warm Start](../../NeurIPS2025/image_generation/information_theoretic_learning_for_diffusion_models_with_warm_start.md)
+- [Revelio: Interpreting and Leveraging Semantic Information in Diffusion Models](../../ICCV2025/image_generation/revelio_interpreting_and_leveraging_semantic_information_in_diffusion_models.md)
+
+<!-- RELATED:END -->

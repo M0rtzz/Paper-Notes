@@ -117,3 +117,15 @@ tags:
 - lambda控制对齐强度：大lambda → 更可解释但可能欠拟合
 - 实际中lambda = 0.01-0.1效果最好
 - 也可以用互信息约束替代L2正则，但计算更复杂
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Measuring the (Un)Faithfulness of Concept-Based Explanations](../../CVPR2026/interpretability/measuring_the_unfaithfulness_of_concept-based_explanations.md)
+- [SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)
+- [What Happens During the Loss Plateau? Understanding Abrupt Learning in Transformers](../../NeurIPS2025/interpretability/what_happens_during_the_loss_plateau_understanding_abrupt_learning_in_transforme.md)
+- [Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar](foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)
+- [CLEME2.0: Towards Interpretable Evaluation by Disentangling Edits for Grammatical Error Correction](../../ACL2025/interpretability/cleme2_gec_evaluation.md)
+
+<!-- RELATED:END -->

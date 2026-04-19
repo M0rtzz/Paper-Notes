@@ -106,3 +106,15 @@ APVR的核心优势是**双粒度**——帧+token同时优化，且完全训练
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个benchmark、3个基线MLLM、丰富的消融分析、定性对比
 - 写作质量: ⭐⭐⭐⭐ 框架图和算法描述清晰，动机说明有力
 - 价值: ⭐⭐⭐⭐⭐ 训练免费+即插即用+超越GPT-4V，实际应用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models](state-space_hierarchical_compression_with_gated_attention_an.md)
+- [FLoC: Facility Location-Based Efficient Visual Token Compression for Long Video Understanding](../../ICLR2026/video_understanding/floc_facility_location-based_efficient_visual_token_compression_for_long_video_u.md)
+- [ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding](reason_reinforced_causal_search_with_information_bottleneck_for_video_understand.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+- [Unleashing Hour-Scale Video Training for Long Video-Language Understanding](../../NeurIPS2025/video_understanding/unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
+
+<!-- RELATED:END -->

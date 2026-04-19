@@ -129,3 +129,14 @@ SDeC 是一个 training-free 的 prompt embedding 编辑方法：
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-洞察-方法-实验的逻辑链清晰流畅
 - 价值: ⭐⭐⭐⭐ training-free per-scene 方案具有很强的实用价值，理论贡献也很有启发
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Infinite-Story: A Training-Free Consistent Text-to-Image Generation](../../AAAI2026/image_generation/infinite-story_a_training-free_consistent_text-to-image_gene.md)
+- [Directional Textual Inversion for Personalized Text-to-Image Generation](directional_textual_inversion_for_personalized_text-to-image_generation.md)
+- [Match-and-Fuse: Consistent Generation from Unstructured Image Sets](../../CVPR2026/image_generation/match-and-fuse_consistent_generation_from_unstructured_image_sets.md)
+- [Asynchronous Denoising Diffusion Models for Aligning Text-to-Image Generation](asynchronous_denoising_diffusion_models_for_aligning_text-to-image_generation.md)
+- [SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency](../../NeurIPS2025/image_generation/scenedecorator_towards_scene-oriented_story_generation_with_scene_planning_and_s.md)
+
+<!-- RELATED:END -->

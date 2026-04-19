@@ -119,3 +119,15 @@ $L_{\text{S-VCO}} = L_{\text{VCO}}(i_w, y_w, i_l) + L_{\text{VCO}}(i_l, y_l, i_w
 - 实验充分度: ⭐⭐⭐⭐ 多个基准覆盖幻觉/视觉/通用，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 困惑度实验的动机论证极其有说服力，图表清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 视觉对齐提供了新范式，幻觉减少 22% 有显著实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HSCR: Hierarchical Self-Contrastive Rewarding for Aligning Medical Vision Language Models](hscr_hierarchical_self-contrastive_rewarding_for_aligning_medical_vision_languag.md)
+- [Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models](retrieval_visual_contrastive_decoding_to_mitigate_object_hallucinations_in_large.md)
+- [Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](../../CVPR2025/multimodal_vlm/octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)
+- [Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains](weaving_context_across_images_improving_vision-language_models_through_focus-cen.md)
+- [Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
+
+<!-- RELATED:END -->

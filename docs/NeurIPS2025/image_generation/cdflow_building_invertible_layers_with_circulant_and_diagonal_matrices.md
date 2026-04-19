@@ -150,3 +150,15 @@ $m \geq 2$ 后 BPD 改善极小，但参数和计算线性增长，因此 $m=2$ 
 | 实用价值 | ⭐⭐⭐⭐ |
 
 数学推导精炼优雅，同时解决行列式和求逆两大瓶颈。不足在于实验规模偏小，仅 1×1 卷积，且未与最新生成模型（扩散/Flow Matching）做全面对比。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Linear Differential Vision Transformer: Learning Visual Contrasts via Pairwise Differentials](linear_differential_vision_transformer_learning_visual_contrasts_via_pairwise_di.md)
+- [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
+- [BlurDM: A Blur Diffusion Model for Image Deblurring](blurdm_a_blur_diffusion_model_for_image_deblurring.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [Text to Sketch Generation with Multi-Styles](text_to_sketch_generation_with_multi-styles.md)
+
+<!-- RELATED:END -->

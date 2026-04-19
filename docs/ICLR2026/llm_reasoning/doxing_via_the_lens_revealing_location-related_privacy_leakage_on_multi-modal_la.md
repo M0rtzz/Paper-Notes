@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 13 个模型 + 人类基线，多个消融维度，但防御实验略薄
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，法律框架与技术指标融合好，附录详尽
 - 价值: ⭐⭐⭐⭐⭐ — 对 AI 安全和隐私保护有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](../../CVPR2026/llm_reasoning/visref_visual_refocusing_while_thinking_improves_test-time_scaling_in_multi-moda.md)
+- [Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning](fine-r1_make_multi-modal_llms_excel_in_fine-grained_visual_recognition_by_chain-.md)
+- [Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](../../CVPR2026/llm_reasoning/rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)
+- [CMMCoT: Enhancing Complex Multi-Image Comprehension via Multi-Modal Chain-of-Thought and Memory Augmentation](../../AAAI2026/llm_reasoning/cmmcot_enhancing_complex_multi-image_comprehension_via_multi.md)
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+
+<!-- RELATED:END -->

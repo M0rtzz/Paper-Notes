@@ -161,3 +161,15 @@ $$\sum_{s=t}^{t+c^r} z_{i,r}(s) \leq 1$$
 - 实验充分度: ⭐⭐⭐⭐ — 两个真实数据集、多种设置的全面实验+公平性分析
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，但符号较多、论文偏长
 - 价值: ⭐⭐⭐⭐ — 实用性强，代码开源，直击真实资源分配痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bandit and Delayed Feedback in Online Structured Prediction](../../NeurIPS2025/reinforcement_learning/bandit_and_delayed_feedback_in_online_structured_prediction.md)
+- [Virne: A Comprehensive Benchmark for RL-based Network Resource Allocation in NFV](../../ICLR2026/reinforcement_learning/virne_a_comprehensive_benchmark_for_rl-based_network_resource_allocation_in_nfv.md)
+- [Single Index Bandits: Generalized Linear Contextual Bandits with Unknown Reward Functions](../../ICLR2026/reinforcement_learning/single_index_bandits_generalized_linear_contextual_bandits_with_unknown_reward_f.md)
+- [Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits](../../NeurIPS2025/reinforcement_learning/variance-aware_feel-good_thompson_sampling_for_contextual_bandits.md)
+- [Exploration via Feature Perturbation in Contextual Bandits](../../NeurIPS2025/reinforcement_learning/exploration_via_feature_perturbation_in_contextual_bandits.md)
+
+<!-- RELATED:END -->

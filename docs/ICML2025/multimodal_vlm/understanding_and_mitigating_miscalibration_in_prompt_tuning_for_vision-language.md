@@ -154,3 +154,15 @@ DOR在所有4种方法上均实现了显著的ECE降低，平均降低8.09%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个数据集、4种方法、域泛化、视觉调优、消融实验，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，动机推导自然，实验组织有条理
 - 价值: ⭐⭐⭐⭐ 校准是VLM部署中的重要问题，DOR的即插即用特性使其具有很高的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Calibrating Prompt Tuning of Vision-Language Models](../../CVPR2026/multimodal_vlm/towards_calibrating_prompt_tuning_of_vision-language_models.md)
+- [A-TPT: Angular Diversity Calibration Properties for Test-Time Prompt Tuning of Vision-Language Models](../../ICLR2026/multimodal_vlm/a-tpt_angular_diversity_calibration_properties_for_test-time_prompt_tuning_of_vi.md)
+- [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](../../CVPR2025/multimodal_vlm/dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
+- [FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](../../ICCV2025/multimodal_vlm/fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
+- [OmniBal: Towards Fast Instruction-Tuning for Vision-Language Models via Omniverse Computation Balance](omnibal_towards_fast_instruction-tuning_for_vision-language_models_via_omniverse.md)
+
+<!-- RELATED:END -->

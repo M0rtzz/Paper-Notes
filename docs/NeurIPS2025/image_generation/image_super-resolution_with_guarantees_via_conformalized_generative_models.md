@@ -156,3 +156,15 @@ $$\text{Fidelity Error} \le \alpha \cdot \frac{n_{\text{new}} + n_{\text{leaked}
 - 实验充分度: ⭐⭐⭐⭐ (Liu4K 数据集 + 分布偏移 + 数据泄漏 + 着色迁移，覆盖全面)
 - 写作质量: ⭐⭐⭐⭐⭐ (定理陈述清晰，实验可视化直观，附录详尽)
 - 价值: ⭐⭐⭐⭐ (为生成模型的可信部署提供了实用工具，但计算开销和 i.i.d. 假设限制了直接应用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PatchScaler: An Efficient Patch-Independent Diffusion Model for Image Super-Resolution](../../ICCV2025/image_generation/patchscaler_an_efficient_patch-independent_diffusion_model_for_image_super-resol.md)
+- [OARS: Process-Aware Online Alignment for Generative Real-World Image Super-Resolution](../../CVPR2026/image_generation/oars_processaware_online_alignment_for_generative.md)
+- [Arbitrary-Steps Image Super-Resolution via Diffusion Inversion](../../CVPR2025/image_generation/arbitrary-steps_image_super-resolution_via_diffusion_inversion.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](../../ECCV2024/image_generation/dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
+
+<!-- RELATED:END -->

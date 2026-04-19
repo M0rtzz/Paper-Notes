@@ -166,3 +166,15 @@ $$\mathcal{L}_{\text{ground}} = \frac{1}{N} \sum_{i=1}^{N} \| \hat{b}_i - b_i \|
 | 实用价值 | 4 | 完整开源，可直接用于 GUI 自动化产品 |
 | 写作清晰度 | 4 | 方法描述清晰，实验组织系统 |
 | **总分** | **4.25** | 高质量的系统性工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](../../ACL2025/llm_agent/os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
+- [UIPro: Unleashing Superior Interaction Capability for GUI Agents](../../ICCV2025/llm_agent/uipro_unleashing_superior_interaction_capability_for_gui_agents.md)
+- [GUICourse: From General Vision Language Model to Versatile GUI Agent](../../ACL2025/llm_agent/guicourse_from_general_vision_language_model_to_versatile_gui_agent.md)
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](../../ACL2025/llm_agent/gui_explorer_autonomous.md)
+- [Towards GUI Agents: Vision-Language Diffusion Models for GUI Grounding](../../CVPR2026/llm_agent/towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)
+
+<!-- RELATED:END -->

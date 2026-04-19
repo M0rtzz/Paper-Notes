@@ -89,3 +89,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三层消融、两个数据集、多指标
 - 写作质量: ⭐⭐⭐⭐⭐ 条理清晰，动机充分
 - 价值: ⭐⭐⭐⭐⭐ 直接改进无障碍通信
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](../../ACL2025/llm_nlp/infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
+- [Locate-and-Focus: Enhancing Terminology Translation in Speech Language Models](../../ACL2025/llm_nlp/locateandfocus_enhancing_terminology_translation_in_speech.md)
+- [Combining the Best of Both Worlds: A Method for Hybrid NMT and LLM Translation](../../ACL2025/llm_nlp/combining_the_best_of_both_worlds_a_method_for_hybrid_nmt_and_llm_translation.md)
+- [Test-Time Visual In-Context Tuning](test-time_visual_in-context_tuning.md)
+- [Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues](../../ACL2025/llm_nlp/enhancing_spoken_discourse_modeling_in_language_models_using_gestural_cues.md)
+
+<!-- RELATED:END -->

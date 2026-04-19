@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 LLM、5 个数据集（含 2 个全新后截止数据集）、充分的统计检验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据集构建过程详实，但方法描述可更精炼
 - 价值: ⭐⭐⭐⭐ 实用性强，方法简单有效，数据集贡献有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)
+- [Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)
+- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](tract_regression_cot.md)
+- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
+
+<!-- RELATED:END -->

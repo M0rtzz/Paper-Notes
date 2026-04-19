@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论工作的实验验证基本充分，但数据集和模型规模偏小
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，符号体系一致，逻辑清晰
 - 价值: ⭐⭐⭐⭐ 填补了 FL 泛化理论中参与差距分析的空白，隐私-泛化连接有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Trustworthy Federated Learning with Untrusted Participants](towards_trustworthy_federated_learning_with_untrusted_participants.md)
+- [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](../../NeurIPS2025/ai_safety/fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
+- [Disparate Conditional Prediction in Multiclass Classifiers](disparate_conditional_prediction_in_multiclass_classifiers.md)
+- [Federated In-Context Learning: Iterative Refinement for Improved Answer Quality](federated_in-context_learning_iterative_refinement_for_improved_answer_quality.md)
+- [Why Do Unlearnable Examples Work: A Novel Perspective of Mutual Information](../../ICLR2026/ai_safety/why_do_unlearnable_examples_work_a_novel_perspective_of_mutual_information.md)
+
+<!-- RELATED:END -->

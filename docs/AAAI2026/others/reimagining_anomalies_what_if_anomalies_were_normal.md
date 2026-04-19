@@ -148,3 +148,15 @@ BCE 和 HSC 的反事实在多数数据集上与异常样本同样逼真，在 M
 - 实验充分度: ⭐⭐⭐⭐ — 80+ AD 设置、5 数据集、3 种检测器，定性定量分析全面，但缺少与其他 CE 方法的直接定量对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论分析严谨，定性展示直观；符号较多但必要
 - 价值: ⭐⭐⭐⭐ — 为 AD 的可解释性开辟了新范式，从特征归因到语义反事实是重要的方向性进步，对模型审计和偏差发现有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](../../ECCV2024/others/learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
+- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](../../ACL2025/others/if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
+- [Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples](../../CVPR2026/others/novel_anomaly_detection_scenarios_and_evaluation_metrics_to_address_the_ambiguit.md)
+- [What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](../../CVPR2026/others/what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](../../CVPR2026/others/integration_of_deep_generative_anomaly_detection_a.md)
+
+<!-- RELATED:END -->

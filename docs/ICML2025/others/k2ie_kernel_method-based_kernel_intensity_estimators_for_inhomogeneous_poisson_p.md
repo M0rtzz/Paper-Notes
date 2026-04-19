@@ -125,3 +125,15 @@ K²IE 的最小二乘交叉验证仅需计算 $\int_{\mathcal{X}}[\sum_n h(\math
 - 实验充分度: ⭐⭐⭐ — 合成实验设计合理但缺乏主文真实数据验证
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨清晰，论文结构紧凑
 - 价值: ⭐⭐⭐⭐ — 为核强度估计领域提供了兼顾效率与精度的新方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Kernel Conditional Tests from Learning-Theoretic Bounds](../../NeurIPS2025/others/kernel_conditional_tests_from_learning-theoretic_bounds.md)
+- [Probabilistic Kernel Function for Fast Angle Testing](../../ICLR2026/others/probabilistic_kernel_function_for_fast_angle_testing.md)
+- [Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](../../ICLR2026/others/characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)
+- [Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](../../ICLR2026/others/predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
+- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+
+<!-- RELATED:END -->

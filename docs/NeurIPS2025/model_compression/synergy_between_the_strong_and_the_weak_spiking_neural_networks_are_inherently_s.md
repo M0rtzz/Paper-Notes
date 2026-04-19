@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 静态 + 神经形态数据集，多架构验证，低延迟和鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐ 故事线清晰，从解构到识别到蒸馏循序渐进
 - 价值: ⭐⭐⭐⭐ 零开销的 SNN 训练改进方法，可直接集成到现有 SNN 训练流程
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
+- [Weak-to-Strong Jailbreaking on Large Language Models](../../ICML2025/model_compression/weak-to-strong_jailbreaking_on_large_language_models.md)
+- [QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks](quadenhancer_leveraging_quadratic_transformations_to_enhance_deep_neural_network.md)
+- [S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection](s2m-former_spiking_symmetric_mixing_branchformer_for_brain_auditory_attention_de.md)
+- [Global Minimizers of ℓp-Regularized Objectives Yield the Sparsest ReLU Neural Networks](global_minimizers_of_ellp-regularized_objectives_yield_the_sparsest_relu_neural_.md)
+
+<!-- RELATED:END -->

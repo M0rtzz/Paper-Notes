@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Wan2.1和CogVideoX双验证+充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析(三大缺陷)清晰有力，方法pipeline直观
 - 价值: ⭐⭐⭐⭐⭐ 通用的视频质量偏好对齐方案，效率和效果双优
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Direct Preference Optimization in Diffusion Models](../../AAAI2026/llm_alignment/rethinking_direct_preference_optimization_in_diffusion_models.md)
+- [DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models](../../NeurIPS2025/llm_alignment/densedpo_finegrained_temporal_preference_optimization_for_vi.md)
+- [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](../../CVPR2025/llm_alignment/curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
+- [DiffPO: Diffusion Alignment with Direct Preference Optimization](../../ACL2025/llm_alignment/diffpo_diffusion_alignment.md)
+- [GlyphPrinter: Region-Grouped Direct Preference Optimization for Glyph-Accurate Visual Text Rendering](glyphprinter_region-grouped_direct_preference_optimization_for_glyph-accurate_vi.md)
+
+<!-- RELATED:END -->

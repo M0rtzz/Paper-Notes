@@ -151,3 +151,15 @@ $$s \approx \beta_\psi + a \cdot \psi^{-d}$$
 - ⭐ 实用性：3/5 — 对算法基准测试和边缘部署性能预测有价值，但实际应用场景有限
 - ⭐ 实验充分度：4/5 — RL/SFT/局部搜索三方对比全面，128M数据集是重要贡献
 - ⭐ 写作质量：5/5 — 论文组织出色，讨论深入，局限性分析坦诚且富有洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcement Learning Teachers of Test Time Scaling](reinforcement_learning_teachers_of_test_time_scaling.md)
+- [Inverse Optimization Latent Variable Models for Learning Costs Applied to Route Problems](inverse_optimization_latent_variable_models_for_learning_costs_applied_to_route_.md)
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
+- [Graph-Supported Dynamic Algorithm Configuration for Multi-Objective Combinatorial Optimization](../../ICML2025/reinforcement_learning/graph-supported_dynamic_algorithm_configuration_for_multi-objective_combinatoria.md)
+
+<!-- RELATED:END -->

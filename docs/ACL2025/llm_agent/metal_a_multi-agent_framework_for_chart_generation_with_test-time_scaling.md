@@ -156,3 +156,15 @@ return y_t
 - 实用性：⭐⭐⭐⭐⭐ — 图表生成有广泛应用场景（报告生成、研究展示）
 - 方法新颖度：⭐⭐⭐⭐ — 分模态评审设计和迭代修正机制设计巧妙
 - 实验充分度：⭐⭐⭐⭐ — 消融完整、test-time scaling 分析有说服力、case study 清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
+- [OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis](os_genesis_gui_agent_trajectory.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_survey_mllm.md)
+- [AgentTTS: Large Language Model Agent for Test-time Compute-optimal Scaling Strategy in Complex Tasks](../../NeurIPS2025/llm_agent/agenttts_large_language_model_agent_for_testtime_computeopti.md)
+
+<!-- RELATED:END -->

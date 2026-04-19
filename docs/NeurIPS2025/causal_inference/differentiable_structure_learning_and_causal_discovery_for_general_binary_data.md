@@ -139,3 +139,15 @@ $$p_{\lambda,\delta}(t) = \lambda \left[ (|t| - \frac{t^2}{2\delta}) \mathbb{1}(
 - 实验充分度: ⭐⭐⭐ (合成实验充分但大规模和真实数据实验偏少)
 - 写作质量: ⭐⭐⭐⭐ (理论推导清晰，动机明确)
 - 价值: ⭐⭐⭐⭐ (填补了离散数据可微因果发现的理论空白)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Causal Discovery in Alzheimer's Disease through Latent Pseudotime Modelling](dynamic_causal_discovery_in_alzheimers_disease_through_latent_pseudotime_modelli.md)
+- [CaDyT: Causal Structure Learning for Dynamical Systems with Theoretical Score Analysis](../../AAAI2026/causal_inference/causal_structure_learning_for_dynamical_systems_with_theoretical_score_analysis.md)
+- [Sparse Additive Model Pruning for Order-Based Causal Structure Learning](../../AAAI2026/causal_inference/sparse_additive_model_pruning_for_order-based_causal_structure_learning.md)
+- [An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation](an_analysis_of_causal_effect_estimation_using_outcome_invariant_data_augmentatio.md)
+- [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ ROS-DVC为DETR-based密集视频描述设计角色专用查询（定位和描述
 - 实验充分度: ⭐⭐⭐⭐ 两个标准数据集、逐组件递增消融、多基线多指标对比
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，"Stay in your Lane"标题贴切，方法图示直观
 - 价值: ⭐⭐⭐⭐ 对DVC有直接实用改进，查询角色分离思路可迁移到其他DETR多任务架构
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAIL: Similarity-Aware Guidance and Inter-Caption Augmentation-based Learning for Weakly-Supervised Dense Video Captioning](sail_similarity-aware_guidance_and_inter-caption_augmentation-based_learning_for.md)
+- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochatm1_collaborative_policy_planning_for_vide.md)
+- [CVA: Context-aware Video-text Alignment for Video Temporal Grounding](cva_context-aware_video-text_alignment_for_video_temporal_grounding.md)
+- [EgoPointVQA: Gesture-Based Egocentric Video Question Answering](egopointvqa_gesture_based_egocentric_video_qa.md)
+
+<!-- RELATED:END -->

@@ -100,3 +100,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 控制实验设计严谨，frontier模型评估全面
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑清晰，数学分析简洁有力
 - 价值: ⭐⭐⭐⭐⭐ 对LLM缩放投资决策和agent系统设计有根本性影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
+- [Putnam-AXIOM: A Functional & Static Benchmark for Measuring Higher Level Mathematical Reasoning in LLMs](../../ICML2025/llm_reasoning/putnam-axiom_a_functional_and_static_benchmark_for_measuring_higher_level_mathem.md)
+- [ReasonFlux-PRM: Trajectory-Aware PRMs for Long Chain-of-Thought Reasoning in LLMs](../../NeurIPS2025/llm_reasoning/reasonfluxprm_trajectoryaware_prms_for_long_chainofthought_r.md)
+- [Segment-Level Attribution for Selective Learning of Long Reasoning Traces](segment-level_attribution_for_selective_learning_of_long_reasoning_traces.md)
+- [GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs](geogrambench_benchmarking_the_geometric_program_reasoning_in_modern_llms.md)
+
+<!-- RELATED:END -->

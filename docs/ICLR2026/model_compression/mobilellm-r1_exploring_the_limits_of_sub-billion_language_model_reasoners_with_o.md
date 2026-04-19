@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 详尽的LOO分析、阶段消融、跨模型对比
 - 写作质量: ⭐⭐⭐⭐⭐ 方法论清晰，图表精美，洞察深刻
 - 价值: ⭐⭐⭐⭐⭐ 对小模型训练有极高参考价值，完全开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Finer Better? The Limits of Microscaling Formats in Large Language Models](is_finer_better_the_limits_of_microscaling_formats_in_large_language_models.md)
+- [PASER: Post-Training Data Selection for Efficient Pruned Large Language Model Recovery](paser_post-training_data_selection_for_efficient_pruned_large_language_model_rec.md)
+- [InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
+- [The Unseen Frontier: Pushing the Limits of LLM Sparsity with Surrogate-Free ADMM](the_unseen_frontier_pushing_the_limits_of_llm_sparsity_with_surrogate-free_admm.md)
+- [Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+
+<!-- RELATED:END -->

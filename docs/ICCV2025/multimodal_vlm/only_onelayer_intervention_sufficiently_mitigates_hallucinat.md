@@ -132,3 +132,15 @@ MME-Hallucination（LLaVA-1.5）：ONLY 635.55 vs 次优M3ID 598.11 (+37.44)
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个benchmark，3个LVLM，效率对比，大量消融（层选择、策略对比、超参数），GPT-4V评估
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析精准（Figure 1的效率-性能trade-off图），TVER与幻觉的关联验证（Figure 4）
 - 价值: ⭐⭐⭐⭐⭐ 1.07×时间超过2×+的方法，实用价值极高，很可能成为default hallucination mitigation方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Object Hallucinations via Sentence-Level Early Intervention](mitigating_object_hallucinations_via_sentence-level_early_intervention.md)
+- [Visual Evidence Prompting Mitigates Hallucinations in Large Vision-Language Models](../../ACL2025/multimodal_vlm/visual_evidence_prompting.md)
+- [TAB: Transformer Attention Bottlenecks enable User Intervention and Debugging in Vision-Language Models](tab_transformer_attention_bottlenecks_enable_user_intervention_and_debugging_in_.md)
+- [One Perturbation is Enough: On Generating Universal Adversarial Perturbations against Vision-Language Pre-training Models](one_perturbation_is_enough_on_generating_universal_adversarial_perturbations_aga.md)
+- [MMOne: Representing Multiple Modalities in One Scene](mmone_representing_multiple_modalities_in_one_scene.md)
+
+<!-- RELATED:END -->

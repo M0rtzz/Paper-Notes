@@ -155,3 +155,15 @@ $$\{(\bar{\mathbf{v}}_c^t, \bar{\mathbf{a}}_c^t), (\mathbf{w}_p^t, \boldsymbol{\
 - **实验充分性**: ⭐⭐⭐⭐ — 四数据集（含新数据集），但缺少更多真实场景验证
 - **实用价值**: ⭐⭐⭐⭐ — 对机器人操作中的短时运动预测有直接应用
 - **总体推荐**: ⭐⭐⭐⭐⭐ — 动态场景物理建模的里程碑工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MPMAvatar: Learning 3D Gaussian Avatars with Accurate and Robust Physics-Based Dynamics](../../NeurIPS2025/3d_vision/mpmavatar_learning_3d_gaussian_avatars_with_accurate_and_robust_physics-based_dy.md)
+- [Multi-View 3D Point Tracking](multi-view_3d_point_tracking.md)
+- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](../../CVPR2025/3d_vision/hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+- [FreeGave: 3D Physics Learning from Dynamic Videos by Gaussian Velocity](../../CVPR2025/3d_vision/freegave_3d_physics_learning_from_dynamic_videos_by_gaussian_velocity.md)
+- [Benchmarking and Learning Multi-Dimensional Quality Evaluator for Text-to-3D Generation](benchmarking_and_learning_multidimensional_quality_evaluator.md)
+
+<!-- RELATED:END -->

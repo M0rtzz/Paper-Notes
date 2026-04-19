@@ -163,3 +163,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 从 toy 到 real 的多层次验证、6 种基线对比、红队测试，但缺乏更大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰，toy experiment → probing → detox 层层递进，图表直观
 - 价值: ⭐⭐⭐⭐ 对预训练数据策略有重要启发，但最佳比例的泛化性有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Multiple Models Using Labeled and Unlabeled Data](../../NeurIPS2025/social_computing/evaluating_multiple_models_using_labeled_and_unlabeled_data.md)
+- [DATE-LM: Benchmarking Data Attribution Evaluation for Large Language Models](../../NeurIPS2025/social_computing/date-lm_benchmarking_data_attribution_evaluation_for_large_language_models.md)
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [Raising the Bar: Investigating the Values of Large Language Models via Generative Evolving Testing](raising_the_bar_investigating_the_values_of_large_language_models_via_generative.md)
+- [Learning from Synthetic Data via Provenance-Based Input Gradient Guidance](../../CVPR2026/social_computing/learning_from_synthetic_data_via_provenance-based_input_gradient_guidance.md)
+
+<!-- RELATED:END -->

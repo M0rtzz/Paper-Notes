@@ -176,3 +176,15 @@ $$h'_{\ell}(x)_t = h_{\ell}(x)_t + \alpha \cdot s_u^{\ell}$$
 - **写作质量**: ⭐⭐⭐⭐ — 公式推导清晰，框架图直观
 - **实用价值**: ⭐⭐⭐⭐⭐ — 无训练+极低存储+O(1)推理延迟，部署友好
 - **局限**: 仅验证了单一基座模型，跨域场景未覆盖
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [Writing Like the Best: Exemplar-Based Expository Text Generation](writing_like_best_exemplar.md)
+- [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](dehumanizing_machines_anthropomorphic.md)
+- [CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation](cocolex_legal_text_gen.md)
+- [Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+
+<!-- RELATED:END -->

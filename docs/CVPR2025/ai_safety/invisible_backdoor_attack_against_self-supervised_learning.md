@@ -81,3 +81,15 @@ $\mathcal{L}_{total} = \mathcal{L}_{stealthy} + \alpha \mathcal{L}_{disentangle}
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 种 SSL + 7 种防御 + 4 个数据集
 - 写作质量: ⭐⭐⭐⭐ 攻击方法论清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 SSL 安全研究有重大警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Backdooring Self-Supervised Contrastive Learning by Noisy Alignment](../../ICCV2025/ai_safety/backdooring_self-supervised_contrastive_learning_by_noisy_alignment.md)
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+- [Adversarial Inception Backdoor Attacks against Reinforcement Learning](../../ICML2025/ai_safety/adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
+- [MOS-Attack: A Scalable Multi-Objective Adversarial Attack Framework](mos-attack_a_scalable_multi-objective_adversarial_attack_framework.md)
+
+<!-- RELATED:END -->

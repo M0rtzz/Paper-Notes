@@ -146,3 +146,15 @@ NeuralOS 将 OS 界面模拟建模为自回归生成问题：$P(x_{1:T}|a_{1:T};
 - **实验充分度**: ⭐⭐⭐⭐ — 多角度评估（光标/状态转换/人类实验/消融），但环境简化严重
 - **写作质量**: ⭐⭐⭐⭐⭐ — 叙事引人入胜，问题形式化清晰，训练策略描述详尽
 - **价值**: ⭐⭐⭐⭐ — 愿景激动人心且初步验证可行，但离实际应用仍有很大距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AccuQuant: Simulating Multiple Denoising Steps for Quantizing Diffusion Models](../../NeurIPS2025/image_generation/accuquant_simulating_multiple_denoising_steps_for_quantizing.md)
+- [Planning with Diffusion Models for Target-Oriented Dialogue Systems](../../ACL2025/image_generation/difftod_diffusion_dialogue_planning.md)
+- [Neural Entropy](../../NeurIPS2025/image_generation/neural_entropy.md)
+- [Amortising Inference and Meta-Learning Priors in Neural Networks (BNNP)](amortising_inference_and_meta-learning_priors_in_neural_networks.md)
+- [Beyond Confidence: The Rhythms of Reasoning in Generative Models](beyond_confidence_the_rhythms_of_reasoning_in_generative_models.md)
+
+<!-- RELATED:END -->

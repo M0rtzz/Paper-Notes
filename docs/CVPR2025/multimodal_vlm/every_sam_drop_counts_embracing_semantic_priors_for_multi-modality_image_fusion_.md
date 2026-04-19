@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集评估、详尽的逐组件消融（SAM/SPA/蒸馏损失/蒸馏方式）
 - 写作质量: ⭐⭐⭐⭐ 方法流程清晰，效率数据有说服力
 - 价值: ⭐⭐⭐⭐ 对多模态融合领域有直接工程价值，蒸馏思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](../../CVPR2026/multimodal_vlm/multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
+- [Harnessing Textual Semantic Priors for Knowledge Transfer and Refinement in CLIP-Driven Continual Learning](../../AAAI2026/multimodal_vlm/harnessing_textual_semantic_priors_for_knowledge_transfer_and_refinement_in_clip.md)
+- [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
+- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+
+<!-- RELATED:END -->

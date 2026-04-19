@@ -150,3 +150,15 @@ $$
 - 技术深度：⭐⭐⭐⭐⭐ — 理论证明 + 实验验证 + 系统性分析
 - 实验充分度：⭐⭐⭐⭐ — 覆盖视觉与语言任务，多个基准
 - 实用价值：⭐⭐⭐⭐ — 恒定存储、即插即用，部署友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Continual Learning with Progressive Neural Collapse](rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [Come Together, But Not Right Now: A Progressive Strategy to Boost Low-Rank Adaptation](../../ICML2025/model_compression/come_together_but_not_right_now_a_progressive_strategy_to_boost_low-rank_adaptat.md)
+- [S2R-HDR: A Large-Scale Rendered Dataset for HDR Fusion](s2r-hdr_a_large-scale_rendered_dataset_for_hdr_fusion.md)
+- [SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
+- [Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/model_compression/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集+人工评估+消融+表示分析，但缺少与大 LLM 的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，但部分公式较密集
 - 价值: ⭐⭐⭐⭐ 为扩散语言模型应用于长文本生成提供了可行方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
+- [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
+- [LongDPO: Unlock Better Long-form Generation Abilities for LLMs via Critique-augmented Stepwise Information](longdpo_unlock_better_long-form_generation_abilities_for_llms_via_critique-augme.md)
+- [Beyond In-Context Learning: Aligning Long-form Generation of LLMs via Task-Inherent Attribute Guidelines](beyond_in-context_learning_aligning_long-form_generation_of_large_language_model.md)
+- [TESS 2: A Large-Scale Generalist Diffusion Language Model](tess_2_a_large-scale_generalist_diffusion_language_model.md)
+
+<!-- RELATED:END -->

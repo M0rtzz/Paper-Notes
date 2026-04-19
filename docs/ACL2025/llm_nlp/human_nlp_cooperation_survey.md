@@ -140,3 +140,15 @@ tags:
 | 实验充分度 | ⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐⭐ |
 | 实用价值 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian](conceptual_knowledge_org.md)
+- [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
+- [MEraser: An Effective Fingerprint Erasure Approach for Large Language Models](meraser_fingerprint_erasure.md)
+- [The Nature of NLP: Analyzing Contributions in NLP Papers](the_nature_of_nlp_analyzing_contributions_in_nlp_papers.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+
+<!-- RELATED:END -->

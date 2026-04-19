@@ -126,3 +126,15 @@ Goal Prioritization 通过强调安全目标优先级来约束生成。它在 MM
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 模型 × 7 攻击 × 多维有用性评估 + 可解释性分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，可视化丰富，动机引人入胜
 - 价值: ⭐⭐⭐⭐ — 实用且易部署的安全增强方案，可解释性分析有理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Safer or Luckier? LLMs as Safety Evaluators Are Not Robust to Artifacts](safer_or_luckier_llms_as_safety_evaluators_are_not_robust_to_artifacts.md)
+- [Refuse Whenever You Feel Unsafe: Improving Safety in LLMs via Decoupled Refusal Training](derta_decoupled_refusal.md)
+- [LLMs Know Their Vulnerabilities: Uncover Safety Gaps through Natural Distribution Shifts](llms_know_their_vulnerabilities_uncover_safety_gaps_through_natural_distribution.md)
+- [Self-Instructed Derived Prompt Generation Meets In-Context Learning: Unlocking New Potential of Black-Box LLMs](self-instructed_derived_prompt_generation_meets_in-context_learning_unlocking_ne.md)
+- [HiCUPID: Exploring the Potential of LLMs as Personalized Assistants](exploring_the_potential_of_llms_as.md)
+
+<!-- RELATED:END -->

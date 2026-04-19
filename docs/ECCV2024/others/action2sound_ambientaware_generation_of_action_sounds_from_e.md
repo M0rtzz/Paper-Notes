@@ -126,3 +126,15 @@ AV-LDM 是一个音频-视觉潜在扩散模型。输入为一段无声视频，
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集评估、全面消融、人类评估、可控性验证、跨域 demo，非常完整
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，motivation 自然流畅，图示直观易懂
 - 价值: ⭐⭐⭐⭐ 开辟了 ambient-aware 音频生成方向，数据集贡献大，但应用场景偏窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)
+- [Object-Aware NIR-to-Visible Translation](object-aware_nir-to-visible_translation.md)
+- [Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [MetaFind: Scene-Aware 3D Asset Retrieval for Coherent Metaverse Scene Generation](../../NeurIPS2025/others/metafind_scene-aware_3d_asset_retrieval_for_coherent_metaverse_scene_generation.md)
+
+<!-- RELATED:END -->

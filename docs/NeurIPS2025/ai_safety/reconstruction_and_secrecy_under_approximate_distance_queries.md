@@ -149,3 +149,15 @@ $$\frac{1}{2}(2+\epsilon)\delta \leq \mathrm{OPT}_X(\epsilon,\delta) \leq (2+\ep
 - 实验充分度: ⭐⭐ — 纯理论工作，无数值实验或算法实现
 - 写作质量: ⭐⭐⭐⭐⭐ — 行文极为清晰，动机阐述充分，技术概览(Section 3)可读性强，示例丰富
 - 价值: ⭐⭐⭐⭐ — 建立了重建攻击与几何学的优雅桥梁，但纯理论性质限制了直接应用影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniFC: Rethinking Federated Clustering via Lossless and Secure Distance Reconstruction](omnifc_rethinking_federated_clustering_via_lossless_and_secure_distance_reconstr.md)
+- [Truth, Justice, and Secrecy: Cake Cutting Under Privacy Constraints](../../AAAI2026/ai_safety/truth_justice_and_secrecy_cake_cutting_under_privacy_constraints.md)
+- [Fairness under Competition](fairness_under_competition.md)
+- [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
+- [Matchings Under Biased and Correlated Evaluations](matchings_under_biased_and_correlated_evaluations.md)
+
+<!-- RELATED:END -->

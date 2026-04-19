@@ -140,3 +140,15 @@ SR提升2.3%，首次超越LLM方法NaVid。
 ⭐⭐⭐⭐ (4/5)
 
 工作系统性强，从数据准备到模型设计到多任务验证形成完整闭环。多级对比学习的设计有深度。不过核心建模架构主要继承HNR，创新集中在预训练策略；室内场景限制了在自动驾驶这一领域垂直方向的适用性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding](../../ICCV2025/autonomous_driving/embodiedocc_embodied_3d_occupancy_prediction_for_vision-based_online_scene_under.md)
+- [Modeling Thousands of Human Annotators for Generalizable Text-to-Image Person Re-identification](modeling_thousands_of_human_annotators_for_generalizable_text-to-image_person_re.md)
+- [CCL-LGS: Contrastive Codebook Learning for 3D Language Gaussian Splatting](../../ICCV2025/autonomous_driving/ccl-lgs_contrastive_codebook_learning_for_3d_language_gaussian_splatting.md)
+- [Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)
+- [Wavelet Policy: Lifting Scheme for Policy Learning in Long-Horizon Tasks](../../ICCV2025/autonomous_driving/wavelet_policy_lifting_scheme_for_policy_learning_in_long-horizon_tasks.md)
+
+<!-- RELATED:END -->

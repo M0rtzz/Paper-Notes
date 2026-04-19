@@ -132,3 +132,15 @@ $$C_{\text{KE}} \mapsto C_{\text{TL}}, \quad O_{\text{KE}} \mapsto O_{\text{TL}}
 - 实验充分度: ⭐⭐⭐⭐ — 多基准评测、消融实验完整，但缺少 pass@k(k>1) 的对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、图表丰富，定义和形式化规范
 - 价值: ⭐⭐⭐⭐ — 首个多形式语言自动形式化框架，数据集和代码开源，有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards a Common Framework for Autoformalization](../../AAAI2026/human_understanding/towards_a_common_framework_for_autoformalization.md)
+- [The Last Vote: A Multi-Stakeholder Framework for Language Model Governance](../../NeurIPS2025/human_understanding/the_last_vote_a_multi-stakeholder_framework_for_language_model_governance.md)
+- [Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization](../../NeurIPS2025/human_understanding/learning_to_watermark_a_selective_watermarking_framework_for_large_language_mode.md)
+- [Semantic Shift Estimation via Dual-Projection and Classifier Reconstruction for Exemplar-Free Class-Incremental Learning](semantic_shift_estimation_via_dual-projection_and_classifier_reconstruction_for_.md)
+- [UniFit: Towards Universal Virtual Try-on with MLLM-Guided Semantic Alignment](../../AAAI2026/human_understanding/unifit_towards_universal_virtual_try-on_with_mllm-guided_semantic_alignment.md)
+
+<!-- RELATED:END -->

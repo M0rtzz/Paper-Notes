@@ -142,3 +142,15 @@ FUCRT（Federated Unlearning via Class-aware Representation Transformation）保
 2. 保留类性能超过从零重训这一结果值得关注：表征变换可能起到了知识蒸馏/正则化的效果
 3. 该框架在多遗忘类场景下的扩展性值得进一步研究
 4. 全局类原型的传输存在隐私泄露风险（原型可能编码关于数据分布的信息），未来可考虑差分隐私保护
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [System-Aware Unlearning Algorithms: Use Lesser, Forget Faster](../../ICML2025/llm_safety/system-aware_unlearning_algorithms_use_lesser_forget_faster.md)
+- [Unlearning Evaluation through Subset Statistical Independence](../../ICLR2026/llm_safety/unlearning_evaluation_through_subset_statistical_independence.md)
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](../../ACL2025/llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+- [Unveiling and Addressing Pseudo Forgetting in Large Language Models](../../ACL2025/llm_safety/unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)
+- [Exploring Forgetting in Large Language Model Pre-Training](../../ACL2025/llm_safety/exploring_forgetting_in_large_language_model_pre-training.md)
+
+<!-- RELATED:END -->

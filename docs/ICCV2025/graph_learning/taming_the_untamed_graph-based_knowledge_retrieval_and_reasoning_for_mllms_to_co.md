@@ -157,3 +157,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 14个模型、6个子任务、多种设置，分析全面深入
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，任务变体设计合理，可读性好
 - **价值**: ⭐⭐⭐⭐ — 提供了评估MLLM图谱检索推理能力的新平台，基准和代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](../../ACL2025/graph_learning/kg_rag_recommendation.md)
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](../../ICML2025/graph_learning/graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+- [mRAKL: Multilingual Retrieval-Augmented Knowledge Graph Construction for Low-Resourced Languages](../../ACL2025/graph_learning/mrakl_multilingual_retrieval-augmented_knowledge_graph_construction_for_low-reso.md)
+- [Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](../../ACL2025/graph_learning/beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
+- [TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](../../NeurIPS2025/graph_learning/tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)
+
+<!-- RELATED:END -->

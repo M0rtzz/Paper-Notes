@@ -117,3 +117,15 @@ $W \xrightarrow[\text{KLT+SVD}]{\text{IDRE}} \underbrace{W_{\text{share}}}_{\tex
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个模型、2/3-bit、7个数据集、完整消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述详细，公式推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 首个MoE专用VQ框架，3-bit近无损量化实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
+- [SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
+- [MoNE: Replacing Redundant Experts with Lightweight Novices for Structured Pruning of MoE](mone_replacing_redundant_experts_with_lightweight_novices_for_structured_pruning.md)
+- [Knowledge Fusion of Large Language Models Via Modular Skillpacks](knowledge_fusion_of_large_language_models_via_modular_skillpacks.md)
+
+<!-- RELATED:END -->

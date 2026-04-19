@@ -111,3 +111,15 @@ MxD 在所有稀疏度水平上 Pareto 支配 Transcoder。
 - 实验充分度: ⭐⭐⭐⭐ 4个模型×多种稀疏度，Pareto 分析+可解释性评估
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-方法-实验链条清晰，Table 1 总结到位
 - 价值: ⭐⭐⭐⭐⭐ 为 LLM 可解释性提供了更忠实且实用的层分解工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FaCT: Faithful Concept Traces for Explaining Neural Network Decisions](fact_faithful_concept_traces_for_explaining_neural_network_decisions.md)
+- [Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+- [Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](../../ICLR2026/interpretability/exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+- [H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition](h-splid_hsic-based_saliency_preserving_latent_information_decomposition.md)
+- [Partial Information Decomposition via Normalizing Flows in Latent Gaussian Distributions](partial_information_decomposition_via_normalizing_flows_in_latent_gaussian_distr.md)
+
+<!-- RELATED:END -->

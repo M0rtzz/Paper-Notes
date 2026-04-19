@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （三个GenAI模型+文本+多种后处理场景）
 - 写作质量: ⭐⭐⭐⭐⭐ （理论清晰，实验详实，框架完整）
 - 价值: ⭐⭐⭐⭐ （实用性强，对GenAI服务商有直接参考价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](../../NeurIPS2025/ai_safety/adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [On the Empirical Power of Goodness-of-Fit Tests in Watermark Detection](../../NeurIPS2025/ai_safety/on_the_empirical_power_of_goodness-of-fit_tests_in_watermark_detection.md)
+- [Veritas: Generalizable Deepfake Detection via Pattern-Aware Reasoning](veritas_generalizable_deepfake_detection_via_pattern-aware_reasoning.md)
+- [DNA-DetectLLM: Unveiling AI-Generated Text via a DNA-Inspired Mutation-Repair Paradigm](../../NeurIPS2025/ai_safety/dna-detectllm_unveiling_ai-generated_text_via_a_dna-inspired_mutation-repair_par.md)
+- [Improving the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models](improving_the_trade-off_between_watermark_strength_and_speculative_sampling_effi.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑递进清晰，从宏观到微观层层深入
 - 价值: ⭐⭐⭐⭐⭐ 为高效MLLM架构设计提供了关键的机制性理解
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](vlm_model_inversion_adaptive_token_weight.md)
+- [Do Vision-Language Models Really Understand Visual Language?](../../ICML2025/multimodal_vlm/do_vision-language_models_really_understand_visual_language.md)
+- [Vision-Language Models Encode Clinical Guidelines for Concept-Based Medical Reasoning](vision-language_models_encode_clinical_guidelines_for_concept-based_medical_reas.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+- [Predictive Regularization Against Visual Representation Degradation in Multimodal Large Language Models](predictive_regularization_against_visual_representation_degradation_in_multimoda.md)
+
+<!-- RELATED:END -->

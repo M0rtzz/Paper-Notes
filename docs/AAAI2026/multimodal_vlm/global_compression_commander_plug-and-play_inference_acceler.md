@@ -161,3 +161,15 @@ GlobalCom²的设计理念是"**全局到局部**"（global-to-local）的层级
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型（7B/13B/0.5B）、多比例（75%/50%/25%/10%）、消融完善（策略/分数来源/超参数/组合性/视频/效率），可视化也做得很好
 - 写作质量: ⭐⭐⭐⭐ 分析部分（Section 3）做得很扎实，先观察再设计的叙事逻辑清楚；发现positional bias这个bug的分析很有说服力
 - 价值: ⭐⭐⭐⭐ 实用价值高——training-free、plug-and-play、兼容FlashAttention，工业界可直接用；学术上为HR-LVLM的token压缩开辟了"结构感知"的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prune2Drive: A Plug-and-Play Framework for Accelerating Vision-Language Models in Autonomous Driving](../../CVPR2026/multimodal_vlm/prune2drive_a_plug-and-play_framework_for_accelerating_vision-language_models_in.md)
+- [Seeing Clearly, Reasoning Confidently: Plug-and-Play Remedies for Vision Language Model Blindness](../../CVPR2026/multimodal_vlm/seeing_clearly_reasoning_confidently_plug-and-play_remedies_for_vision_language_.md)
+- [PlantTraitNet: An Uncertainty-Aware Multimodal Framework for Global-Scale Plant Trait Inference from Citizen Science Data](planttraitnet_an_uncertainty-aware_multimodal_framework_for_global-scale_plant_t.md)
+- [FALCON: Resolving Visual Redundancy and Fragmentation in High-resolution Multimodal Large Language Models via Visual Registers](../../ICCV2025/multimodal_vlm/falcon_resolving_visual_redundancy_and_fragmentation_in_high.md)
+- [PPE: Positional Preservation Embedding for Token Compression in Multimodal Large Language Models](../../ICLR2026/multimodal_vlm/ppe_positional_preservation_embedding_for_token_compression_in_multimodal_large_.md)
+
+<!-- RELATED:END -->

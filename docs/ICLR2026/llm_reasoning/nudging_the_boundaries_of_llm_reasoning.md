@@ -109,3 +109,15 @@ NuRL = 离线Hint收集 + 在线Rollout增强(两阶段训练)
 - 实验充分度: ⭐⭐⭐⭐ 3模型6benchmark + 多hint类型 + pass@k分析
 - 写作质量: ⭐⭐⭐⭐⭐ ZPD类比优美，动机→方法→实验逻辑流畅
 - 价值: ⭐⭐⭐⭐ 解决RL推理训练的实际瓶颈，方法简洁可落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning](on_the_design_of_kl-regularized_policy_gradient_algorithms_for_llm_reasoning.md)
+- [The Path of Least Resistance: Guiding LLM Reasoning Trajectories with Prefix Consensus](the_path_of_least_resistance_guiding_llm_reasoning_trajectories_with_prefix_cons.md)
+- [DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
+- [LogicReward: Incentivizing LLM Reasoning via Step-Wise Logical Supervision](logicreward_incentivizing_llm_reasoning_via_step-wise_logical_supervision.md)
+- [No Answer Needed: Predicting LLM Answer Accuracy from Question-Only Linear Probes](no_answer_needed_predicting_llm_answer_accuracy_from_question-only_linear_probes.md)
+
+<!-- RELATED:END -->

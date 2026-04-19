@@ -188,3 +188,15 @@ PriOr-GMA 仅用 4 次迭代就实现 17.6% 提升，推理时间几乎不变。
 - **实验充分度**: ⭐⭐⭐⭐ — 多数据集、多基线、多消融维度，但缺少真实场景定量评估
 - **实用性**: ⭐⭐⭐⭐ — 即插即用，已开源，对全景光流领域有实际推动作用
 - **总评**: ⭐⭐⭐⭐ — 思路优雅，效果显著（30% EPE↓），消融充分，是全景光流估计的扎实工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow4Agent: Long-form Video Understanding via Motion Prior from Optical Flow](flow4agent_long-form_video_understanding_via_motion_prior_from_optical_flow.md)
+- [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
+- [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [SEA-RAFT: Simple, Efficient, Accurate RAFT for Optical Flow](../../ECCV2024/video_understanding/sea-raft_simple_efficient_accurate_raft_for_optical_flow.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 13专家+原作者交叉验证+检测器评估，方法严谨但样本量有限
 - 写作质量: ⭐⭐⭐⭐⭐ 论证有力，数据说服力强
 - 价值: ⭐⭐⭐⭐⭐ 对学术界和AI科研有重大警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [Research Borderlands: Analysing Writing Across Research Cultures](research_borderlands_analysing_writing_across_research_cultures.md)
+- [Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](../../NeurIPS2025/others/military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
+- [Synthia: Novel Concept Design with Affordance Composition](synthia_novel_concept_design_with_affordance_composition.md)
+- [Do not Abstain! Identify and Solve the Uncertainty](do_not_abstain_identify_and_solve_the_uncertainty.md)
+
+<!-- RELATED:END -->

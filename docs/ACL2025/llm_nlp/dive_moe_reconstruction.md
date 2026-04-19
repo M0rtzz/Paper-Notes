@@ -144,3 +144,15 @@ DIVE 1/8 在 WikiText2 上比次优的 FLAP 低 0.99 PPL，LAMBADA 上低 8.38 P
 - 实验充分度: ⭐⭐⭐⭐ 11 个下游任务、详细消融、路由分布分析，但仅 1.1B 模型稍显不足
 - 写作质量: ⭐⭐⭐⭐ 图表设计出色（热力图清晰展示领域亲和性），算法描述完整
 - 价值: ⭐⭐⭐⭐ 提供了一种高效的 Dense-to-MoE 转换方案，<1%参数微调的效率令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diversity-oriented Data Augmentation with Large Language Models](diversity_data_augmentation.md)
+- [NeKo: Cross-Modality Post-Recognition Error Correction with Tasks-Guided Mixture-of-Experts Language Model](neko_cross-modality_post-recognition_error_correction_with_tasks-guided_mixture-.md)
+- [CER: Confidence Enhanced Reasoning in LLMs](cer_confidence_enhanced_reasoning.md)
+- [Towards Enhanced Immersion and Agency for LLM-based Interactive Drama](towards_enhanced_immersion_and_agency_for_llm-based_interactive_drama.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+
+<!-- RELATED:END -->

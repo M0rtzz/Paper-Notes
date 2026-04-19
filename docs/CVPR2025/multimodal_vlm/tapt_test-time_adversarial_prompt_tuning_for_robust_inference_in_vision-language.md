@@ -109,3 +109,15 @@ $\mathcal{L}_{TAPT} = \mathcal{L}_{entropy} + \alpha \cdot \mathcal{L}_{adv} + (
 - 实验充分度: ⭐⭐⭐⭐ 11 个数据集、多种攻击方法，但缺少自适应攻击评估
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法讲解到位
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 安全部署有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
+- [Realistic Test-Time Adaptation of Vision-Language Models](realistic_test-time_adaptation_of_vision-language_models.md)
+- [CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [A-TPT: Angular Diversity Calibration Properties for Test-Time Prompt Tuning of Vision-Language Models](../../ICLR2026/multimodal_vlm/a-tpt_angular_diversity_calibration_properties_for_test-time_prompt_tuning_of_vi.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ $$\tilde{\epsilon}_t = \epsilon_\theta(z_t^{tar}, t, \emptyset) + \omega_1 \cdot
 - 技术深度：⭐⭐⭐⭐ （风格注入机制分析深入，消融全面）
 - 实验充分性：⭐⭐⭐⭐⭐ （6种风格×8种基线+多风格+人类评估）
 - 写作质量：⭐⭐⭐⭐ （可视化丰富，对比清晰）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](../../CVPR2025/image_generation/image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+- [FlipSketch: Flipping Static Drawings to Text-Guided Sketch Animations](../../CVPR2025/image_generation/flipsketch_flipping_static_drawings_to_text-guided_sketch_animations.md)
+- [SceneDesigner: Controllable Multi-Object Image Generation with 9-DoF Pose Manipulation](scenedesigner_controllable_multi-object_image_generation_with_9-dof_pose_manipul.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [Multitwine: Multi-Object Compositing with Text and Layout Control](../../CVPR2025/image_generation/multitwine_multi-object_compositing_with_text_and_layout_control.md)
+
+<!-- RELATED:END -->

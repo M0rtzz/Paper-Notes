@@ -124,3 +124,15 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{s,t,i}\left[\min\left(A_i\rho_t^{(i)}, A_i\l
 - 实验充分度: ⭐⭐⭐⭐ 多指标评估+消融充分+人类评估，但仅一个基模型
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，图示直观，从洞察到方法逻辑流畅
 - 价值: ⭐⭐⭐⭐⭐ 训练效率提升 5 倍+质量更优，对 RLHF 视觉生成有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](../../NeurIPS2025/object_detection/m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+- [Diverse Text-to-Image Generation via Contrastive Noise Optimization](../../ICLR2026/object_detection/diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
+- [PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation](palm_progress-aware_policy_learning_via_affordance_reasoning_for_long-horizon_ro.md)
+- [Token Reduction via Local and Global Contexts Optimization for Efficient Video Large Language Models](token_reduction_via_local_and_global_contexts_optimization_for_efficient_video_l.md)
+- [Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition](learning_by_neighbor-aware_semantics_deciding_by_open-form_flows_towards_robust_.md)
+
+<!-- RELATED:END -->

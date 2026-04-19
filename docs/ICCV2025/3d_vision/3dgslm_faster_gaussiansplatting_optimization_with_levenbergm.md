@@ -258,4 +258,14 @@ $$(J^T J + \lambda_{\text{reg}} \cdot \text{diag}(J^T J)) \Delta = -J^T F(\mathb
 - 写作质量: ⭐⭐⭐⭐⭐ [逻辑清晰，从动机到方法到实验层层递进，两阶段设计的motivation through Fig.4很好，算法伪代码和缓存示意图直观易懂]
 - 价值: ⭐⭐⭐⭐ [20%加速+质量不变+正交可叠加，实用价值高；但53GB内存消耗限制了实际部署场景]
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration](reggs_unposed_sparse_views_gaussian_splatting_with_3dgs_registration.md)
+- [Faster and Better 3D Splatting via Group Training](faster_and_better_3d_splatting_via_group_training.md)
+- [EvaGaussians: Event Stream Assisted Gaussian Splatting from Blurry Images](evagaussians_event_stream_assisted_gaussian_splatting_from_blurry_images.md)
+- [Lightweight Gradient-Aware Upscaling of 3D Gaussian Splatting Images](lightweight_gradient-aware_upscaling_of_3d_gaussian_splatting_images.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+
+<!-- RELATED:END -->

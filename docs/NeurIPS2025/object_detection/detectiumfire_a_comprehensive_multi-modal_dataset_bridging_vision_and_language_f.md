@@ -121,3 +121,15 @@ DetectiumFire 构建了最大的多模态火灾理解数据集——14.5K 真实
 - 实验充分度: ⭐⭐⭐⭐ 检测+VLM+合成+跨域多维评测
 - 写作质量: ⭐⭐⭐⭐ 数据集构建流程详细
 - 价值: ⭐⭐⭐⭐ 为火灾安全 AI 提供了急需的数据基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAFE: Multitask Failure Detection for Vision-Language-Action Models](safe_multitask_failure_detection_for_vision-language-action_models.md)
+- [Visual Modality Prompt for Adapting Vision-Language Object Detectors](../../ICCV2025/object_detection/visual_modality_prompt_for_adapting_vision-language_object_detectors.md)
+- [BurstDeflicker: A Benchmark Dataset for Flicker Removal in Dynamic Scenes](burstdeflicker_a_benchmark_dataset_for_flicker_removal_in_dynamic_scenes.md)
+- [SM3Det: A Unified Model for Multi-Modal Remote Sensing Object Detection](../../AAAI2026/object_detection/sm3det_a_unified_model_for_multi-modal_remote_sensing_object_detection.md)
+- [Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection](../../CVPR2026/object_detection/mining_instance-centric_vision-language_contexts_for_human-object_interaction_de.md)
+
+<!-- RELATED:END -->

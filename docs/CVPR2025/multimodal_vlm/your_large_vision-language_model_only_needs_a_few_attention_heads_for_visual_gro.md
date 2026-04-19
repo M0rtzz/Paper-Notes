@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 10+ 种 LVLM、3 个 REC 数据集、详尽的筛选指标分析
 - 写作质量: ⭐⭐⭐⭐⭐ 从假设到发现到验证的逻辑极为清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 可解释性和高效定位都有重大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention! Your Vision Language Model Could Be Maliciously Manipulated](../../NeurIPS2025/multimodal_vlm/attention_your_vision_language_model_could_be_maliciously_manipulated.md)
+- [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
+- [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
+- [CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+- [Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?](can_large_vision-language_models_correct_semantic_grounding_errors_by_themselves.md)
+
+<!-- RELATED:END -->

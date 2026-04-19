@@ -142,3 +142,15 @@ AV2 Val 上各组件贡献（$T_{cl}=5s$）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 AV2/AV1/nuScenes 三个数据集，演化场景评估是一大亮点，消融全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验设计与分析严谨
 - 价值: ⭐⭐⭐⭐⭐ 直接面向自动驾驶实际部署需求，多智能体流式预测 SOTA，提出的评估协议对社区有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlashCap: Millisecond-Accurate Human Motion Capture via Flashing LEDs and Event-Based Vision](flashcap_millisecond-accurate_human_motion_capture_via_flashing_leds_and_event-b.md)
+- [Future-Aware Interaction Network For Motion Forecasting](../../ICCV2025/autonomous_driving/future-aware_interaction_network_for_motion_forecasting.md)
+- [ReMoT: Reinforcement Learning with Motion Contrast Triplets](remot_reinforcement_learning_with_motion_contrast_triplets.md)
+- [RESBev: Making BEV Perception More Robust](resbev_making_bev_perception_more_robust.md)
+- [GaussianWorld: Gaussian World Model for Streaming 3D Occupancy Prediction](../../CVPR2025/autonomous_driving/gaussianworld_gaussian_world_model_for_streaming_3d_occupancy_prediction.md)
+
+<!-- RELATED:END -->

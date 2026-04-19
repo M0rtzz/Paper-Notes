@@ -138,3 +138,15 @@ MMTIT-Bench 上各模型表现（Gemini-Flash Judge，other→en / other→zh）
 - 实验充分度: ⭐⭐⭐⭐ 广泛的模型评估和详细的消融分析，但缺少跨语言的细粒度分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表信息量大，但基准和方法两部分各占半篇略显拥挤
 - 价值: ⭐⭐⭐⭐ 填补了多语言 TIMT 评估空白，CPR-Trans 范式有广泛迁移价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEA-Vision: A Multilingual Benchmark for Document and Scene Text Understanding in Southeast Asia](sea-vision_a_multilingual_benchmark_for_comprehensive_document_and_scene_text_un.md)
+- [CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](../../ACL2025/multilingual_mt/cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
+- [Exploring In-Image Machine Translation with Real-World Background](../../ACL2025/multilingual_mt/exploring_in-image_machine_translation_with_real-world_background.md)
+- [Multi-perspective Alignment for Increasing Naturalness in Neural Machine Translation](../../ACL2025/multilingual_mt/multi-perspective_alignment_for_increasing_naturalness_in_neural_machine_transla.md)
+- [Consensus-Aligned Neuron Efficient Fine-Tuning Large Language Models for Multi-Domain Machine Translation](../../AAAI2026/multilingual_mt/consensus-aligned_neuron_efficient_fine-tuning_large_language_models_for_multi-d.md)
+
+<!-- RELATED:END -->

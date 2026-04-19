@@ -166,3 +166,15 @@ $$\hat{\mathbf{x}}_j^{(t+1)} = \lambda\big(\hat{\mathbf{x}}_j^{(t)} - \frac{\alp
 - 实验充分度: ⭐⭐⭐⭐⭐ 13 个数据集、21 个 baseline、丰富的消融和分析
 - 写作质量: ⭐⭐⭐⭐ 物理类比直觉好，理论分析完整，实验组织清晰
 - 价值: ⭐⭐⭐⭐ 无监督图 OOD 检测的重要进展，标签无关特性有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+- [Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis](double_descent_meets_out-of-distribution_detection_theoretical_insights_and_empi.md)
+- [H2ST: Hierarchical Two-Sample Tests for Continual Out-of-Distribution Detection](../../CVPR2025/others/h2st_hierarchical_two-sample_tests_for_continual_out-of-distribution_detection.md)
+- [Joint Out-of-Distribution Filtering and Data Discovery Active Learning](../../CVPR2025/others/joint_out-of-distribution_filtering_and_data_discovery_active_learning.md)
+- [EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination](an_evidence-based_post-hoc_adjustment_framework_for_anomaly_detection_under_data.md)
+
+<!-- RELATED:END -->

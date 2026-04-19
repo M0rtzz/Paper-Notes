@@ -132,3 +132,15 @@ CREPE 维护 $M+1$ 个粒子，每个粒子驻留在不同的扩散时间步 $t_
 - 实验充分度: ⭐⭐⭐⭐ 覆盖分子/图像/轨迹/离散数据多模态，但高分辨率图像定量实验较少
 - 写作质量: ⭐⭐⭐⭐ 理论严谨但符号密度高，需要较强的随机过程背景
 - 价值: ⭐⭐⭐⭐ 为扩散模型推理时控制提供了新的范式，尤其在多样性和在线精炼方面有独特优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Controlling the World by Sleight of Hand](../../ECCV2024/image_generation/controlling_the_world_by_sleight_of_hand.md)
+- [StyleTokenizer: Defining Image Style by a Single Instance for Controlling Diffusion Models](../../ECCV2024/image_generation/styletokenizer_defining_image_style_by_a_single_instance_for_controlling_diffusi.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [Diffusion Alignment as Variational Expectation-Maximization](diffusion_alignment_as_variational_expectation-maximization.md)
+- [AlignTok: Aligning Visual Foundation Encoders to Tokenizers for Diffusion Models](aligntok_aligning_visual_foundation_encoders_to_tokenizers_for_diffusion_models.md)
+
+<!-- RELATED:END -->

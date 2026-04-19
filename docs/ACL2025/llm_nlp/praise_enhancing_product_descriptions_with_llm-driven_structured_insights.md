@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 90 产品 × 9 类别，消融完整，缺用户研究和多模型对比
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，pipeline 各步描述详尽
 - 价值: ⭐⭐⭐⭐ 对电商 NLP 应用有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SR-LLM: Rethinking the Structured Representation in Large Language Model](sr-llm_rethinking_the_structured_representation_in_large_language_model.md)
+- [Pre³: Enabling Deterministic Pushdown Automata for Faster Structured LLM Generation](pre3_deterministic_pda_structured_gen.md)
+- [Unintended Harms of Value-Aligned LLMs: Psychological and Empirical Insights](unintended_harms_of_value-aligned_llms_psychological_and_empirical_insights.md)
+- [AAD-LLM: Neural Attention-Driven Auditory Scene Understanding](aad-llm_neural_attention-driven_auditory_scene_understanding.md)
+- [MAPS: Motivation-Aware Personalized Search via LLM-Driven Consultation Alignment](maps_personalized_search.md)
+
+<!-- RELATED:END -->

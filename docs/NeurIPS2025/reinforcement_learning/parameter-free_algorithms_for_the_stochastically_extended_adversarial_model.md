@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，无实验
 - 写作质量: ⭐⭐⭐⭐ 技术内容深入，架构层次清晰，但符号密度极高
 - 价值: ⭐⭐⭐⭐ 填补了 SEA 模型无参数算法的理论空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Can Model-Free Reinforcement Learning be Enough for Thinking?](when_can_model-free_reinforcement_learning_be_enough_for_thinking.md)
+- [Improving Planning and MBRL with Temporally-Extended Actions](improving_planning_and_mbrl_with_temporally-extended_actions.md)
+- [Deep RL Needs Deep Behavior Analysis: Exploring Implicit Planning by Model-Free Agents](deep_rl_needs_deep_behavior_analysis_exploring_implicit_planning_by_model-free_a.md)
+- [On Discovering Algorithms for Adversarial Imitation Learning](../../ICLR2026/reinforcement_learning/on_discovering_algorithms_for_adversarial_imitation_learning.md)
+- [Parameter Efficient Fine-tuning via Explained Variance Adaptation](parameter_efficient_fine-tuning_via_explained_variance_adaptation.md)
+
+<!-- RELATED:END -->

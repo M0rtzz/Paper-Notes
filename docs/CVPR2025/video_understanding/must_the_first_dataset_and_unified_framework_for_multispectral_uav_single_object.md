@@ -141,3 +141,15 @@ HOT 数据集上 SOTA 精度 + 最快速度（37 FPS）。GOT10K 上与 SOTA 持
 - **实验充分度**: ⭐⭐⭐⭐⭐ 数据集分析、主实验、跨数据集、多项消融、可视化全面
 - **写作质量**: ⭐⭐⭐⭐ 数据集和方法描述详细，注意力分析有图示辅助
 - **价值**: ⭐⭐⭐⭐⭐ 数据集和框架对无人机跟踪社区具有基础性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UETrack: A Unified and Efficient Framework for Single Object Tracking](../../CVPR2026/video_understanding/uetrack_a_unified_and_efficient_framework_for_single_object_tracking.md)
+- [General Compression Framework for Efficient Transformer Object Tracking](../../ICCV2025/video_understanding/general_compression_framework_for_efficient_transformer_object_tracking.md)
+- [MITracker: Multi-View Integration for Visual Object Tracking](mitracker_multi-view_integration_for_visual_object_tracking.md)
+- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+- [Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
+
+<!-- RELATED:END -->

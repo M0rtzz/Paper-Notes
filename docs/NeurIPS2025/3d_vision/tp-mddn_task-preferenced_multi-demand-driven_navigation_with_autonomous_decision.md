@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融实验覆盖各组件，但仅在模拟环境测试
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，系统描述详尽，但公式较多略显冗长
 - 价值: ⭐⭐⭐⭐ 为多需求长程导航提供了完整解决方案，推动具身AI发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Orientation Matters: Making 3D Generative Models Orientation-Aligned](orientation_matters_making_3d_generative_models_orientation-aligned.md)
+- [GeoComplete: Geometry-Aware Diffusion for Reference-Driven Image Completion](geocomplete_geometry-aware_diffusion_for_reference-driven_image_completion.md)
+- [Context-Nav: Context-Driven Exploration and Viewpoint-Aware 3D Spatial Reasoning for Instance Navigation](../../CVPR2026/3d_vision/context-nav_context-driven_exploration_and_viewpoint-aware_3d_spatial_reasoning_.md)
+- [DC4GS: Directional Consistency-Driven Adaptive Density Control for 3D Gaussian Splatting](dc4gs_directional_consistency-driven_adaptive_density_control_for_3d_gaussian_sp.md)
+- [MSGNav: Unleashing the Power of Multi-modal 3D Scene Graph for Zero-Shot Embodied Navigation](../../CVPR2026/3d_vision/msgnav_unleashing_the_power_of_multi-modal_3d_scene_graph_for_zero-shot_embodied.md)
+
+<!-- RELATED:END -->

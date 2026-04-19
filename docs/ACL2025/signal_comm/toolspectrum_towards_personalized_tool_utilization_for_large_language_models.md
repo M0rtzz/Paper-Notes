@@ -122,3 +122,15 @@ ToolSpectrum的构建分为四个阶段：(1) 工具集收集——从9个常用
 - 实验充分度: ⭐⭐⭐⭐ 评测了大量开源和闭源模型，分析维度丰富
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，形式化完整，图表直观
 - 价值: ⭐⭐⭐⭐ 为LLM Agent的个性化发展指明方向，基准本身有较高复用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](../../ICML2025/signal_comm/sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
+- [Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](../../ICML2025/signal_comm/large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)
+- [Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)](../../NeurIPS2025/signal_comm/artificial_hivemind_the_open-ended_homogeneity_of_language_models_and_beyond.md)
+- [WirelessMathBench: A Mathematical Modeling Benchmark for LLMs in Wireless Communications](wirelessmathbench_a_mathematical_modeling_benchmark_for_llms_in_wireless_communi.md)
+- [Defect Spectrum: A Granular Look of Large-Scale Defect Datasets with Rich Semantics](../../ECCV2024/signal_comm/defect_spectrum_a_granular_look_of_large-scale_defect_datasets_with_rich_semanti.md)
+
+<!-- RELATED:END -->

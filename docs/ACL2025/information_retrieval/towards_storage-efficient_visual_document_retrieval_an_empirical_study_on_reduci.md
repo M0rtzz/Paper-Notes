@@ -128,3 +128,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个benchmark、两个基础模型、多种策略对比、充分的消融实验
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，从pruning的失败到merging的成功的叙事很自然
 - **价值**: ⭐⭐⭐⭐ — 为VDR系统的实际部署提供了直接可用的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DocoPilot: Improving Multimodal Models for Document-Level Understanding](../../CVPR2025/information_retrieval/docopilot_improving_multimodal_models_for_document-level_understanding.md)
+- [FlashBack: Efficient Retrieval-Augmented Language Modeling for Fast Inference](flashbackefficient_retrieval-augmented_language_modeling_for_long_context_infere.md)
+- [Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
+- [Hierarchical Document Refinement for Long-context Retrieval-augmented Generation](hierarchical_document_refinement_for_long-context_retrieval-augmented_generation.md)
+- [VISA: Retrieval Augmented Generation with Visual Source Attribution](visa_retrieval_augmented_generation_with_visual_source_attribution.md)
+
+<!-- RELATED:END -->

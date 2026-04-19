@@ -148,3 +148,15 @@ $$L_{total} = \frac{1}{N} \sum_{i=1}^{N} (L_{bce} + L_{iou} + L_{fm} + L_{mse})$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 21 方法对比、7 组消融、统计检验、失败案例，非常扎实
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ — 对遥感显著性检测的尺度问题给出了有效方案，但实时性有待提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)
+- [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](../../CVPR2025/segmentation/binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
+- [AFRO: Bootstrap Dynamic-Aware 3D Visual Representation for Scalable Robot Learning](bootstrap_dynamic-aware_3d_visual_representation_for_scalable_robot_learning.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgb-d_scene_understanding_via_multi-task_adaptive_learning_and_cross-d.md)
+- [SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semantic-guided_modality-aware_segmentation_for_remote_sensing_with_incompl.md)
+
+<!-- RELATED:END -->

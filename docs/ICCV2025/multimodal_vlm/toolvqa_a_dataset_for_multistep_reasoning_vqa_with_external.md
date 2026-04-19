@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 主实验+5个OOD benchmark+few-shot+消融+错误分析全面
 - 写作质量: ⭐⭐⭐⭐ 清晰，Table 1的数据集对比直观有力
 - 价值: ⭐⭐⭐⭐ 填补了真实场景多步推理工具使用数据集的空白，揭示了VLM+tool的核心挑战
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning](mmat1m_a_large_reasoning_dataset_for_multimodal_agent_tuning.md)
+- [LLaVA-CoT: Let Vision Language Models Reason Step-by-Step](llavacot_let_vision_language_models_reason_stepbystep.md)
+- [ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering](reasonvqa_a_multi-hop_reasoning_benchmark_with_structural_knowledge_for_visual_q.md)
+- [Understanding Museum Exhibits using Vision-Language Reasoning](understanding_museum_exhibits_using_vision-language_reasoning.md)
+- [MC-Bench: A Benchmark for Multi-Context Visual Grounding in the Era of MLLMs](mc-bench_a_benchmark_for_multi-context_visual_grounding_in_the_era_of_mllms.md)
+
+<!-- RELATED:END -->

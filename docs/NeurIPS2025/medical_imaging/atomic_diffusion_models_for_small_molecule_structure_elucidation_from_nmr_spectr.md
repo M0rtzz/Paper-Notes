@@ -143,3 +143,15 @@ $$\mathcal{L} = \lambda(\sigma)\mathcal{L}_{\text{MSE}}(\hat{\mathbf{X}}_0, \mat
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集（合成+实验）、多基线、详细消融，但缺乏实际化学家评估
 - 写作质量: ⭐⭐⭐⭐ — 背景动机清晰，方法描述完整，图表质量高
 - 价值: ⭐⭐⭐⭐ — 对药物发现和天然产物研究有重要加速潜力，但复杂分子准确率仍需提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One Small Step with Fingerprints, One Giant Leap for De Novo Molecule Generation from Mass Spectra](one_small_step_with_fingerprints_one_giant_leap_for_de_novo_molecule_generation_.md)
+- [Apo2Mol: 3D Molecule Generation via Dynamic Pocket-Aware Diffusion Models](../../AAAI2026/medical_imaging/apo2mol_3d_molecule_generation_via_dynamic_pocket-aware_diff.md)
+- [Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
+- [Posterior Sampling by Combining Diffusion Models with Annealed Langevin Dynamics](posterior_sampling_by_combining_diffusion_models_with_annealed_langevin_dynamics.md)
+- [Unified All-Atom Molecule Generation with Neural Fields](unified_all-atom_molecule_generation_with_neural_fields.md)
+
+<!-- RELATED:END -->

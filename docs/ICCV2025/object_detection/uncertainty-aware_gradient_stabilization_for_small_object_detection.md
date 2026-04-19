@@ -145,3 +145,15 @@ DINO-5scale + UGS 超越了之前的 SOTA 方法 DQ-DETR（37.0 AP）。在 SODA
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个数据集、6+ 种检测器、完整消融、梯度方差分析、训练开销分析
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 方法通用性强，可作为即插即用的小目标检测增强模块
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CQ-DINO: Mitigating Gradient Dilution via Category Queries for Vast Vocabulary Object Detection](../../NeurIPS2025/object_detection/cq-dino_mitigating_gradient_dilution_via_category_queries_for_vast_vocabulary_ob.md)
+- [Small Target Detection Based on Mask-Enhanced Attention Fusion of Visible and Infrared Remote Sensing Images](../../CVPR2025/object_detection/small_target_detection_based_on_mask-enhanced_attention_fusion_of_visible_and_in.md)
+- [SFUOD: Source-Free Unknown Object Detection](sfuod_source-free_unknown_object_detection.md)
+- [Adversarial Attention Perturbations for Large Object Detection Transformers](adversarial_attention_perturbations_for_large_object_detection_transformers.md)
+- [Measuring the Impact of Rotation Equivariance on Aerial Object Detection](measuring_the_impact_of_rotation_equivariance_on_aerial_object_detection.md)
+
+<!-- RELATED:END -->

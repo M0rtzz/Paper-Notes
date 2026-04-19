@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 LLM × 8 策略 × 6 benchmark
 - 写作质量: ⭐⭐⭐⭐ 理论部分清晰，但符号较多
 - 价值: ⭐⭐⭐⭐ 对 test-time scaling 实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding the Role of Training Data in Test-Time Scaling](../../ICLR2026/llm_reasoning/understanding_the_role_of_training_data_in_test-time_scaling.md)
+- [Rethinking Optimal Verification Granularity for Compute-Efficient Test-Time Scaling](../../NeurIPS2025/llm_reasoning/rethinking_optimal_verification_granularity_for_compute-efficient_test-time_scal.md)
+- [Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering](test_time_scaling_selective_qa.md)
+- [Revisiting the Test-Time Scaling of o1-like Models: Do they Truly Possess Test-Time Scaling Capabilities?](revisiting_the_test-time_scaling_of_o1-like_models_do_they_truly_possess_test-ti.md)
+- [Towards Thinking-Optimal Scaling of Test-Time Compute for LLM Reasoning](../../NeurIPS2025/llm_reasoning/towards_thinking-optimal_scaling_of_test-time_compute_for_llm_reasoning.md)
+
+<!-- RELATED:END -->

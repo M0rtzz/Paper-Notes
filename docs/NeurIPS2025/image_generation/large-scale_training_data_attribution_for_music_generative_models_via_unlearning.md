@@ -151,3 +151,15 @@ $$({\mathbf{F}_{\text{diag}}})_{jj} \approx \frac{1}{N} \sum_{i=1}^N \frac{1}{T}
 - 实验充分度: ⭐⭐⭐ — 自影响验证严谨但测试规模有限（40 + 16 样本），缺少人工评估
 - 写作质量: ⭐⭐⭐⭐ — 方法推导清晰，实验设计合理，图表信息量大
 - 价值: ⭐⭐⭐⭐ — 为音乐 AI 伦理和版权归因开拓了重要方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
+- [Hephaestus: Mixture Generative Modeling with Energy Guidance for Large-scale QoS Degradation](hephaestus_mixture_generative_modeling_with_energy_guidance_for_large-scale_qos_.md)
+- [Towards Resilient Safety-Driven Unlearning for Diffusion Models Against Downstream Fine-tuning](towards_resilient_safety-driven_unlearning_for_diffusion_models_against_downstre.md)
+- [UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation](utilgen_utility-centric_generative_data_augmentation_with_dual-level_task_adapta.md)
+- [UltraHR-100K: Enhancing UHR Image Synthesis with A Large-Scale High-Quality Dataset](ultrahr-100k_enhancing_uhr_image_synthesis_with_a_large-scale_high-quality_datas.md)
+
+<!-- RELATED:END -->

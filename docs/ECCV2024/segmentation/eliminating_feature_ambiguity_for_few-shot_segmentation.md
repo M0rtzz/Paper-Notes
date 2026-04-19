@@ -167,3 +167,15 @@ AE中减法操作的重要性：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个baseline × 两个数据集 × 两个backbone × 详细消融
 - **写作质量**: ⭐⭐⭐⭐ 问题阐述清晰，可视化验证充分
 - **价值**: ⭐⭐⭐⭐ 即插即用设计具有很好的实用性，在多个baseline上一致提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniFS: Universal Few-Shot Instance Perception with Point Representations](unifs_universal_few-shot_instance_perception_with_point_representations.md)
+- [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
+- [FREST: Feature Restoration for Semantic Segmentation under Multiple Adverse Conditions](frest_feature_restoration_for_semantic_segmentation_under_multiple_adverse_condi.md)
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](../../ICCV2025/segmentation/move_motion-guided_few-shot_video_object_segmentation.md)
+- [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](../../NeurIPS2025/segmentation/sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
+
+<!-- RELATED:END -->

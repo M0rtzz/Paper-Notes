@@ -134,3 +134,15 @@ CarGait是一个两阶段方法：（1）用预训练步态模型做全局排序
 - 实验充分度: ⭐⭐⭐⭐⭐ 七种模型、三大数据集、与三种重排序基线对比，实验极为充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，可视化分析到位
 - 价值: ⭐⭐⭐⭐ 即插即用的实用方案，Rank-1持续提升有明确的工业价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One-Shot Knowledge Transfer for Scalable Person Re-Identification](one-shot_knowledge_transfer_for_scalable_person_re-identification.md)
+- [GUIOdyssey: A Comprehensive Dataset for Cross-App GUI Navigation on Mobile Devices](guiodyssey_a_comprehensive_dataset_for_cross-app_gui_navigation_on_mobile_device.md)
+- [Weakly Supervised Visible-Infrared Person Re-Identification via Heterogeneous Expert Collaborative Consistency Learning](weakly_supervised_visible-infrared_person_re-identification_via_heterogeneous_ex.md)
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_quality-guided_mixture_of_score-fusion_experts_framework_for_human_recognition.md)
+- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
+
+<!-- RELATED:END -->

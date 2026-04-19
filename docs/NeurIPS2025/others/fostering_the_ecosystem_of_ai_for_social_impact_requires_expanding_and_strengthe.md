@@ -167,3 +167,15 @@ AI/ML for Social Impact (AISI) 领域近十年发展迅速，已有 AAAI Special
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰、论证严谨、建议具体可操作)
 - 推荐度: ⭐⭐⭐⭐ (对 AISI 生态有实际指导意义，event study 讨论对所有 ML 部署都有参考价值)
 <!-- 由 src/gen_stubs.py 自动生成 -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Impact of Layer Norm on Memorization and Generalization in Transformers](impact_of_layer_norm_on_memorization_and_generalization_in_transformers.md)
+- [Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
+- [Mapping the Podcast Ecosystem with the Structured Podcast Research Corpus](../../ACL2025/others/mapping_the_podcast_ecosystem_with_the_structured_podcast_research_corpus.md)
+- [Revisiting the Predictability of Performative, Social Events](../../ICML2025/others/revisiting_the_predictability_of_performative_social_events.md)
+- [Emergency Response Measures for Catastrophic AI Risk](emergency_response_measures_for_catastrophic_ai_risk.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ProteinGym全面+链式消融
 - 实用性: ⭐⭐⭐⭐⭐ 极简实现+立即可用
 - 综合: ⭐⭐⭐⭐⭐ 解决PLM缩放问题→简洁优雅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How to Make the Most of Your Masked Language Model for Protein Engineering](how_to_make_the_most_of_your_masked_language_model_for_protein_engineering.md)
+- [Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+- [Controlling Repetition in Protein Language Models](controlling_repetition_in_protein_language_models.md)
+- [mCLM: A Modular Chemical Language Model that Generates Functional and Makeable Molecules](mclm_a_modular_chemical_language_model_that_generates_functional_and_makeable_mo.md)
+- [Dual Distillation for Few-Shot Anomaly Detection](dual_distillation_for_few-shot_anomaly_detection.md)
+
+<!-- RELATED:END -->

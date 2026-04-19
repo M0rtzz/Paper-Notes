@@ -131,3 +131,15 @@ ManipArena 本身是评估框架而非训练方法。评分采用部分得分制
 - 实验充分度: ⭐⭐⭐⭐ 框架设计详尽全面，任务覆盖广泛，但缺少现有模型的详细基线结果
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，设计原则阐述透彻，每个设计决策都有充分动机说明
 - 价值: ⭐⭐⭐⭐ 填补了真实世界标准化评测的空白，对VLA社区有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](rcnf_robot_conditioned_normalizing_flow_anomaly.md)
+- [Real-Time Robot Execution with Masked Action Chunking](../../ICLR2026/robotics/real-time_robot_execution_with_masked_action_chunking.md)
+- [Chain of World: World Model Thinking in Latent Motion (CoWVLA)](chain_of_world_world_model_thinking_in_latent_motion.md)
+- [Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](../../ICLR2026/robotics/evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+
+<!-- RELATED:END -->

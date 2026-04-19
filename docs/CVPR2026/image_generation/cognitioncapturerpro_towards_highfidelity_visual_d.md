@@ -128,3 +128,15 @@ CogCapPro(F)融合模式达到最优，对比会议版CognitionCapturer提升25.
 - 实验充分度: ⭐⭐⭐⭐ EEG和MEG双模态验证，10个被试逐一报告，但缺少与更多最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ 问题动机从认知科学角度切入有深度，但论文较长，部分描述冗余
 - 价值: ⭐⭐⭐⭐ 为BCI领域提供了实用的多模态融合框架，轻量对齐思路有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Garments2Look: A Multi-Reference Dataset for High-Fidelity Outfit-Level Virtual Try-On with Clothing and Accessories](garments2look_a_multi-reference_dataset_for_high-fidelity_outfit-level_virtual_t.md)
+- [FontCrafter: High-Fidelity Element-Driven Artistic Font Creation with Visual In-Context Generation](fontcrafter_high-fidelity_element-driven_artistic_font_creation_with_visual_in-c.md)
+- [PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On](promo_promptable_virtual_tryon_efficient.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+
+<!-- RELATED:END -->

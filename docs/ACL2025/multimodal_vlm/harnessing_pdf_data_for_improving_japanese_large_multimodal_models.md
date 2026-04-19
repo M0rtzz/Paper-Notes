@@ -143,3 +143,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融极为详尽：模型规模、LLM选择、数据量、图文对vs指令、翻译vs原生数据均有对比
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，每个实验都围绕一个明确的问题展开
 - **价值**: ⭐⭐⭐⭐ — 为低资源语言 LMM 训练提供了可复制的方法论，PDF 数据源的思路有广泛启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback](improving_medical_large_vision-language_models_with_abnormal-aware_feedback.md)
+- [Error-driven Data-efficient Large Multimodal Model Tuning](error-driven_data-efficient_large_multimodal_model_tuning.md)
+- [CompCap: Improving Multimodal Large Language Models with Composite Captions](../../ICCV2025/multimodal_vlm/compcap_improving_multimodal_large_language_models_with_composite_captions.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [Effective Training Data Synthesis for Improving MLLM Chart Understanding](../../ICCV2025/multimodal_vlm/effective_training_data_synthesis_for_improving_mllm_chart_understanding.md)
+
+<!-- RELATED:END -->

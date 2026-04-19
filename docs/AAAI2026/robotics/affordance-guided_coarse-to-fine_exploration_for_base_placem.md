@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 5个任务×20次随机化的规模适中，消融实验设计合理，但仅限仿真、无真机实验
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，问题定义精确，方法描述详细，图表配合良好
 - 价值: ⭐⭐⭐⭐ 指出了OVMM中被忽视的关键问题（基座选位），提供了实用的零样本解决方案，对VLM在机器人中应用有通用启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations](from_passive_perception_to_active_memory_a_weakly_supervised_image_manipulation_.md)
+- [Attribution-Guided Decoding](../../ICLR2026/robotics/attribution-guided_decoding.md)
+- [UrbanNav: Learning Language-Guided Urban Navigation from Web-Scale Human Trajectories](urbannav_learning_language-guided_urban_navigation_from_web-scale_human_trajecto.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](../../CVPR2026/robotics/learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation](../../CVPR2025/robotics/momanipvla_transferring_vision-language-action_models_for_general_mobile_manipul.md)
+
+<!-- RELATED:END -->

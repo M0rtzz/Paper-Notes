@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 20个数据集、三种泛化设置、多个FL基线、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，但符号系统稍复杂
 - 价值: ⭐⭐⭐⭐ 为联邦VLM适配提供了实用方案，跨域泛化改进显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PRO-VPT: Distribution-Adaptive Visual Prompt Tuning via Prompt Relocation](pro-vpt_distribution-adaptive_visual_prompt_tuning_via_prompt_relocation.md)
+- [Attention to the Burstiness in Visual Prompt Tuning!](attention_to_the_burstiness_in_visual_prompt_tuning.md)
+- [LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
+- [CVPT: Cross Visual Prompt Tuning](cvpt_cross_visual_prompt_tuning.md)
+- [FA: Forced Prompt Learning of Vision-Language Models for Out-of-Distribution Detection](fa_forced_prompt_learning_of_vision-language_models_for_out-of-distribution_dete.md)
+
+<!-- RELATED:END -->

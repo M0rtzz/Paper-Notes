@@ -143,3 +143,15 @@ tags:
 | 写作质量 | 7 | 逻辑清晰，分析有深度，图1的例子很直观 |
 | 实用价值 | 7 | 发现可直接落地为 RAG 预处理管线 |
 | 总分 | 6.5 | 扎实的实证研究，发现有启发，但缺乏方法创新 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Distracting Effect: Understanding Irrelevant Passages in RAG](the_distracting_effect_understanding_irrelevant_passages_in_rag.md)
+- [Investigating Language Preference of Multilingual RAG Systems](investigating_language_preference_of_multilingual_rag_systems.md)
+- [VoxRAG: A Step Toward Transcription-Free RAG Systems in Spoken Question Answering](voxrag_a_step_toward_transcription-free_rag_systems_in_spoken_question_answering.md)
+- [KnowShiftQA: How Robust are RAG Systems when Textbook Knowledge Shifts in K-12 Education?](knowshiftqa_rag_knowledge_shifts.md)
+- [Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA](mitigating_lost-in-retrieval_problems_in_retrieval_augmented_multi-hop_question_.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ $$y^* = \arg\min_{c \in \text{candidates}} \mathcal{D}(y_{:m} \oplus c)$$
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 8 种检测器、3 大类方法、完整迁移矩阵、文本质量分析，比较全面。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，算法伪代码和可视化到位，迁移性直觉解释易懂。
 - **价值**: ⭐⭐⭐⭐ — 对 AI 文本检测领域的安全性敲响警钟，攻击的通用性和迁移性为防御端提供了重要参考。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DNA-DetectLLM: Unveiling AI-Generated Text via a DNA-Inspired Mutation-Repair Paradigm](dna-detectllm_unveiling_ai-generated_text_via_a_dna-inspired_mutation-repair_par.md)
+- [AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text](agentstealth_reinforcing_large_language_model_for_anonymizing_user-generated_tex.md)
+- [MOS-Attack: A Scalable Multi-Objective Adversarial Attack Framework](../../CVPR2025/ai_safety/mos-attack_a_scalable_multi-objective_adversarial_attack_framework.md)
+- [Watermark-based Detection and Attribution of AI-Generated Content](../../ICLR2026/ai_safety/watermark-based_attribution_of_ai-generated_content.md)
+- [The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](../../ICML2025/ai_safety/the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
+
+<!-- RELATED:END -->

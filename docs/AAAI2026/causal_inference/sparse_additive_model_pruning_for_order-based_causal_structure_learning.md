@@ -138,3 +138,15 @@ SARTRE 在所有维度上均快于 DAS，且 SHD 和 SID 更优。
 - 实验充分度: ⭐⭐⭐⭐ — 合成/真实数据覆盖全面，含高维实验和消融分析
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、图示直观、算法描述完整
 - 价值: ⭐⭐⭐⭐ — 对基于拓扑序的因果发现流水线具有直接实用价值，且 SARTRE 框架可独立用于非线性变量选择
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CaDyT: Causal Structure Learning for Dynamical Systems with Theoretical Score Analysis](causal_structure_learning_for_dynamical_systems_with_theoretical_score_analysis.md)
+- [I-CAM-UV: Integrating Causal Graphs over Non-Identical Variable Sets Using Causal Additive Models with Unobserved Variables](i-cam-uv_integrating_causal_graphs_over_non-identical_variable_sets_using_causal.md)
+- [Differentiable Structure Learning and Causal Discovery for General Binary Data](../../NeurIPS2025/causal_inference/differentiable_structure_learning_and_causal_discovery_for_general_binary_data.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](../../ICML2025/causal_inference/learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+- [Causal Effect Identification in lvLiNGAM from Higher-Order Cumulants](../../ICML2025/causal_inference/causal_effect_identification_in_lvlingam_from_higher-order_cumulants.md)
+
+<!-- RELATED:END -->

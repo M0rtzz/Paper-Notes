@@ -203,3 +203,15 @@ $$R(\hat{f}) - R(f^*) \leq 2U\epsilon + 4\sqrt{2}\rho\sum_{y=1}^{C}\mathcal{R}_O
 - 实验充分度: ⭐⭐⭐⭐ 消融实验全面，伪标签质量分析详细，有理论分析；但数据集规模和类别数偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 论文以"方枘方凿"为核心比喻贯穿全文，动机→观察→设计的逻辑链清晰，图表丰富直观
 - 价值: ⭐⭐⭐⭐ 在 LTSSL 领域推进了 SOTA，DEA 和 MFF 的设计思想对其他长尾学习任务有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Density Ratio Estimation-based Bayesian Optimization with Semi-Supervised Learning](density_ratio_estimation-based_bayesian_optimization_with_semi-supervised_learni.md)
+- [A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
+- [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+- [On the Role of Label Noise in the Feature Learning Process](on_the_role_of_label_noise_in_the_feature_learning_process.md)
+- [Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning](revisiting_continuity_of_image_tokens_for_cross-domain_few-shot_learning.md)
+
+<!-- RELATED:END -->

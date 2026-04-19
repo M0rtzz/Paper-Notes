@@ -115,3 +115,15 @@ SeqAfford由三大组件构成：(1) 基于大规模3D表征学习的3D视觉编
 - 实验充分度: ⭐⭐⭐⭐ 多设定对比+消融实验充分，但缺少下游机器人操作的实际验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，任务动机阐述透彻
 - 价值: ⭐⭐⭐⭐ 为具身AI的长horizon操作提供了affordance推理的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
+- [Period-LLM: Extending the Periodic Capability of Multimodal Large Language Model](period-llm_extending_the_periodic_capability_of_multimodal_large_language_model.md)
+- [SketchAgent: Language-Driven Sequential Sketch Generation](sketchagent_language-driven_sequential_sketch_generation.md)
+- [AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/affordbot_3d_fine-grained_embodied_reasoning_via_multimodal_large_language_model.md)
+- [Distraction is All You Need for Multimodal Large Language Model Jailbreaking](distraction_is_all_you_need_for_multimodal_large_language_model_jailbreaking.md)
+
+<!-- RELATED:END -->

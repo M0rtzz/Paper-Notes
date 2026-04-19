@@ -155,3 +155,15 @@ $$\mathcal{B}^{\star}=\arg\min_{\mathcal{B}\in\{\mathcal{B}_1,\dots,\mathcal{B}_
 ⭐⭐⭐⭐ (4/5)
 
 方法理念简洁有效（策略集成+proxy重训+性能选择），首次将Oracle扩展到ImageNet规模，10个图像+4个文本数据集+2种backbone的实验非常充分，但方法本身新颖性有限（策略集成+暴力搜索），且作为Oracle仅用于评估基准而非实际应用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
+- [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physica.md)
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+- [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
+
+<!-- RELATED:END -->

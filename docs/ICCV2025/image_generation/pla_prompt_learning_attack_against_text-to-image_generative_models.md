@@ -136,3 +136,15 @@ PLA 包含三个核心组件：(1) 敏感知识引导编码（Sensitive Knowledg
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多模型、多检查器、在线服务，消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ 对 T2I 安全研究有重要意义，但需注意潜在滥用风险
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Implicit Bias Injection Attacks against Text-to-Image Diffusion Models](../../CVPR2025/image_generation/implicit_bias_injection_attacks_against_text-to-image_diffusion_models.md)
+- [Exploring Multimodal Diffusion Transformers for Enhanced Prompt-based Image Editing](exploring_multimodal_diffusion_transformers_for_enhanced_prompt-based_image_edit.md)
+- [TINA: Text-Free Inversion Attack for Unlearned Text-to-Image Diffusion Models](../../CVPR2026/image_generation/tina_text-free_inversion_attack_for_unlearned_text-to-image_diffusion_models.md)
+- [FedDifRC: Unlocking the Potential of Text-to-Image Diffusion Models in Heterogeneous Federated Learning](feddifrc_unlocking_the_potential_of_text-to-image_diffusion_models_in_heterogene.md)
+- [PAK-UCB Contextual Bandit: An Online Learning Approach to Prompt-Aware Selection of Generative Models and LLMs](../../ICML2025/image_generation/pak-ucb_contextual_bandit_an_online_learning_approach_to_prompt-aware_selection_.md)
+
+<!-- RELATED:END -->

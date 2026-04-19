@@ -114,3 +114,15 @@ DINO Teacher 分三个阶段：(1) **离线标注器训练**：在冻结的 DINO
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 4 个数据集 6 个测试场景，消融实验彻底
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导逻辑严密，方法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 为 DAOD 定义了新的 baseline 范式，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](../../NeurIPS2025/object_detection/m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](../../CVPR2026/object_detection/da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+- [LMM-Det: Make Large Multimodal Models Excel in Object Detection](../../ICCV2025/object_detection/lmm-det_make_large_multimodal_models_excel_in_object_detection.md)
+- [Bridge Past and Future: Overcoming Information Asymmetry in Incremental Object Detection](../../ECCV2024/object_detection/bridge_past_and_future_overcoming_information_asymmetry_in_incremental_object_de.md)
+
+<!-- RELATED:END -->

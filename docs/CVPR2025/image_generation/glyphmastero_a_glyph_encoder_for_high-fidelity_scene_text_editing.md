@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多方法对比、系统性消融、定性+定量分析完整
 - 写作质量: ⭐⭐⭐⭐ 架构图清楚，方法描述系统性强
 - 价值: ⭐⭐⭐⭐⭐ 在中文场景文字编辑这个困难且实用的任务上取得了巨大突破
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GLYPH-SR: Can We Achieve Both High-Quality Image Super-Resolution and High-Fidelity Text Recovery via VLM-Guided Latent Diffusion Model?](../../ICLR2026/image_generation/glyph-sr_can_we_achieve_both_high-quality_image_super-resolution_and_high-fideli.md)
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [FlashAudio: Rectified Flows for Fast and High-Fidelity Text-to-Audio Generation](../../ACL2025/image_generation/flashaudio_rectified_flow_tta.md)
+- [Your Text Encoder Can Be An Object-Level Watermarking Controller](../../ICCV2025/image_generation/your_text_encoder_can_be_an_object-level_watermarking_controller.md)
+- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
+
+<!-- RELATED:END -->

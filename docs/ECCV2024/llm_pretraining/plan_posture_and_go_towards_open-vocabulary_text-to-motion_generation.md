@@ -112,3 +112,15 @@ PRO-Motion 由三个模块组成，形成一个流水线：（1）**Motion Plann
 - 实验充分度: ⭐⭐⭐⭐ 闭集和开放词汇实验、消融、用户控制示例丰富，但定量开放词汇评估较薄弱
 - 写作质量: ⭐⭐⭐⭐ 故事讲得清晰流畅，分治动机阐述充分
 - 价值: ⭐⭐⭐⭐ 开放词汇动作生成是重要方向，分治思路有广泛的借鉴意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DragAPart: Learning a Part-Level Motion Prior for Articulated Objects](dragapart_learning_a_part-level_motion_prior_for_articulated_objects.md)
+- [FlowMotion: Training-Free Flow Guidance for Video Motion Transfer](../../CVPR2026/llm_pretraining/flowmotion_training-free_flow_guidance_for_video_motion_transfer.md)
+- [How to Synthesize Text Data without Model Collapse?](../../ICML2025/llm_pretraining/how_to_synthesize_text_data_without_model_collapse.md)
+- [TokAlign: Efficient Vocabulary Adaptation via Token Alignment](../../ACL2025/llm_pretraining/tokalign_vocab_adaptation.md)
+- [Large Vocabulary Size Improves Large Language Models](../../ACL2025/llm_pretraining/large_vocabulary_size_improves_large_language_models.md)
+
+<!-- RELATED:END -->

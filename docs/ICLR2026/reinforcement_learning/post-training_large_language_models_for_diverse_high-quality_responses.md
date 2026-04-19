@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 类任务，多个多样性指标，消融完整
 - 写作质量: ⭐⭐⭐⭐ 几何解释清晰，与 D-最优设计的联系有启发性
 - 价值: ⭐⭐⭐⭐ 对 LLM 后训练多样性问题有实用贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning](../../ACL2025/reinforcement_learning/maporl_multi-agent_post-co-training_for_collaborative_large_language_models_with.md)
+- [AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_automatic_discovery_of_diverse_behaviors_with_quality-diversity_optimizat.md)
+- [Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](../../NeurIPS2025/reinforcement_learning/repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+- [Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
+
+<!-- RELATED:END -->

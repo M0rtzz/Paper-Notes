@@ -139,3 +139,15 @@ $$\mathcal{L} = \frac{1}{2B} \sum_{i=1}^{B} \left(\log(\sigma_i^2) + \frac{(y_i 
 - 实验充分度: ⭐⭐⭐⭐ — 5个基线+4项消融+不确定性校准+group split分析
 - 写作质量: ⭐⭐⭐⭐ — 方法动机清晰，图示信息量大
 - 价值: ⭐⭐⭐⭐ — 可加速钙钛矿器件筛选，材料科学+AI交叉的实用贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Geometric Imbalance in Semi-Supervised Node Classification](geometric_imbalance_in_semi-supervised_node_classification.md)
+- [TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)
+- [Graph Attention is Not Always Beneficial: A Theoretical Analysis of Graph Attention Mechanisms via Contextual Stochastic Block Models](../../ICML2025/graph_learning/graph_attention_is_not_always_beneficial_a_theoretical_analysis_of_graph_attenti.md)
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+- [OCN: Effectively Utilizing Higher-Order Common Neighbors for Better Link Prediction](ocn_effectively_utilizing_higher-order_common_neighbors_for_better_link_predicti.md)
+
+<!-- RELATED:END -->

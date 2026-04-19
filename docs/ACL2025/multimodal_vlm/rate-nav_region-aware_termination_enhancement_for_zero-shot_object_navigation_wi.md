@@ -182,3 +182,15 @@ RATE-Nav 是一个零样本方法，不需要训练。使用：
 - **实验充分度**: ★★★★☆ — 两个标准数据集、全面消融、VLM 推理分析
 - **写作质量**: ★★★☆☆ — 整体清晰但部分公式描述冗余，动机分析可更精炼
 - **价值**: ★★★★☆ — 方法实用且效果显著，区域级思维对具身导航研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R-VLM: Region-Aware Vision Language Model for Precise GUI Grounding](r-vlm_region-aware_vision_language_model_for_precise_gui_grounding.md)
+- [Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](../../NeurIPS2025/multimodal_vlm/zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+- [Test-Time Spectrum-Aware Latent Steering for Zero-Shot Generalization in Vision-Language Models](../../NeurIPS2025/multimodal_vlm/test-time_spectrum-aware_latent_steering_for_zero-shot_generalization_in_vision-.md)
+- [Unifying Vision-Language Latents for Zero-Label Image Caption Enhancement](../../NeurIPS2025/multimodal_vlm/unifying_vision-language_latents_for_zero-label_image_caption_enhancement.md)
+- [Zero-shot Object Counting with Good Exemplars (VA-Count)](../../ECCV2024/multimodal_vlm/zero-shot_object_counting_with_good_exemplars.md)
+
+<!-- RELATED:END -->

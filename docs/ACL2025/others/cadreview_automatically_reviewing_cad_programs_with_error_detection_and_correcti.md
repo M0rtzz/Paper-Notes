@@ -160,3 +160,15 @@ $$\mathcal{L}_{sgo} = w_i \cdot \mathcal{L}_i, \quad w_i = \begin{cases} 2, & \t
 - **实验充分性**: ★★★★☆ — 多基线（含 GPT-4o/Claude/Gemini）+ 消融 + 案例分析
 - **实用性**: ★★★★☆ — 对 CAD 设计工作流有直接应用价值
 - **写作质量**: ★★★★☆ — 图示丰富，框架描述清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [On Agnostic PAC Learning in the Small Error Regime](../../NeurIPS2025/others/on_agnostic_pac_learning_in_the_small_error_regime.md)
+- [LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)
+- [How Do Transformers Learn Variable Binding in Symbolic Programs?](../../ICML2025/others/how_do_transformers_learn_variable_binding_in_symbolic_programs.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+
+<!-- RELATED:END -->

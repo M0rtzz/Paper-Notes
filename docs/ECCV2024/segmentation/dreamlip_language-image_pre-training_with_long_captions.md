@@ -161,3 +161,15 @@ DreamLIP 30M 在语义分割上平均超越 CLIP 400M 2.5%。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖检索/分类/分割/VQA 等多维度，多数据规模对比，消融极其详尽
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富，可视化有说服力
 - **价值**: ⭐⭐⭐⭐⭐ 30M vs 400M 的数据效率结论具有很高的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training](../../CVPR2025/segmentation/cosmos_cross-modality_self-distillation_for_vision_language_pre-training.md)
+- [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
+- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](../../CVPR2025/segmentation/multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
+- [Long-Tail Temporal Action Segmentation with Group-wise Temporal Logit Adjustment](long-tail_temporal_action_segmentation_with_group-wise_temporal_logit_adjustment.md)
+
+<!-- RELATED:END -->

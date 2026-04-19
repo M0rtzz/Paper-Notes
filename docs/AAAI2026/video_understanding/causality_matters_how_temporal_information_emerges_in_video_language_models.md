@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 多模型多任务验证，消融设计精巧，但帧数和视频时长覆盖有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑链清晰递进，从现象到机制到应用环环相扣
 - 价值: ⭐⭐⭐⭐ — 为VideoLM时序建模提供全新认知框架，加速策略实用但尚需完善
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
+- [Understanding Temporal Logic Consistency in Video-Language Models through Cross-Modal Attention Discriminability](../../CVPR2026/video_understanding/understanding_temporal_logic_consistency_in_video-language_models_through_cross-.md)
+- [ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding](reason_reinforced_causal_search_with_information_bottleneck_for_video_understand.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+- [APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval](apvr_hour-level_long_video_understanding_with_adaptive_pivot.md)
+
+<!-- RELATED:END -->

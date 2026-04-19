@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种变体对比+域外泛化+消融，但仅室内场景，数据集较窄
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示丰富，三种变体对比直观
 - 价值: ⭐⭐⭐⭐ 解决了全景生成的实际痛点（不需要相机参数），对 AR/VR 内容创作有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What Makes for Text to 360-degree Panorama Generation with Stable Diffusion?](../../ICCV2025/image_generation/what_makes_for_text_to_360-degree_panorama_generation_with_stable_diffusion.md)
+- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](../../ICCV2025/image_generation/freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
+- [DreamCache: Finetuning-Free Lightweight Personalized Image Generation via Feature Caching](dreamcache_finetuning-free_lightweight_personalized_image_generation_via_feature.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](../../ICML2025/image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
+
+<!-- RELATED:END -->

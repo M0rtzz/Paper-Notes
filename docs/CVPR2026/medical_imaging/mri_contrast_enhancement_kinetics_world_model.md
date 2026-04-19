@@ -134,3 +134,15 @@ MRI CEKWorld 在 Avg.SSIM（0.6509）和 Avg.cSSIM（0.6176）上均达到最佳
 - 实验充分度: ⭐⭐⭐⭐ — 两个数据集、多基线对比、消融实验完整，但缺少更大规模或多中心验证
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，公式推导严谨，图表丰富；部分符号较重
 - 价值: ⭐⭐⭐⭐⭐ — 无造影连续动态成像具有重要临床意义，技术路线对其他稀疏时序医学成像有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [X-WIN: Building Chest Radiograph World Model via Predictive Sensing](x-win_building_chest_radiograph_world_model_via_predictive_sensing.md)
+- [PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](../../AAAI2026/medical_imaging/pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)
+- [CD-DPE: Dual-Prompt Expert Network Based on Convolutional Dictionary Feature Decoupling for Multi-Contrast MRI Super-Resolution](../../AAAI2026/medical_imaging/cd-dpe_dual-prompt_expert_network_based_on_convolutional_dictionary_feature_deco.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](../../NeurIPS2025/medical_imaging/mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation](../../AAAI2026/medical_imaging/funkan_functional_kolmogorov-arnold_network_for_medical_image_enhancement_and_se.md)
+
+<!-- RELATED:END -->

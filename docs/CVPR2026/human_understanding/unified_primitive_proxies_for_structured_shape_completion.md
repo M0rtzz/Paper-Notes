@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集（合成+真实）、四种装配求解器、详细消融和鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 设计原则清晰，从问题到方案推导逻辑严密
 - 价值: ⭐⭐⭐⭐ 为 3D 结构化理解提供了有效 recipe，但应用场景偏专业
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)
+- [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
+- [Self-Correction Distillation for Structured Data Question Answering](../../AAAI2026/human_understanding/self-correction_distillation_for_structured_data_question_answering.md)
+- [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](../../ICLR2026/human_understanding/uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
+- [Combinative Matching for Geometric Shape Assembly](../../ICCV2025/human_understanding/combinative_matching_for_geometric_shape_assembly.md)
+
+<!-- RELATED:END -->

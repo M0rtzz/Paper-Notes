@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 14 万+数据，5 折交叉验证，三模型×两索引模式×三检索策略的完整对比，加上真实医生验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，错误案例分析（Table 2）非常有价值，定量+定性分析结合好
 - 价值: ⭐⭐⭐⭐ 对低资源语言医学 NLP 有直接参考价值，检索范式处理极端长尾分类的思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Omni-RAG: Comprehensive Retrieval-Augmented Generation for Large Language Models in Medical Applications](omni_rag_medical.md)
+- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](medbiorag_semantic_search_and_retrieval-augmented_generation_with_large_language.md)
+- [Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling](../../NeurIPS2025/medical_imaging/energy_matching_unifying_flow_matching_and_energy-based_models_for_generative_mo.md)
+- [RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification](../../NeurIPS2025/medical_imaging/raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica.md)
+- [Rethinking Bias in Generative Data Augmentation for Medical AI: a Frequency Recalibration Approach](../../AAAI2026/medical_imaging/rethinking_bias_in_generative_data_augmentation_for_medical_ai_a_frequency_recal.md)
+
+<!-- RELATED:END -->

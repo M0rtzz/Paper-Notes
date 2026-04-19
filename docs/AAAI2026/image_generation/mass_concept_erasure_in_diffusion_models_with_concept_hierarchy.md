@@ -168,3 +168,15 @@ $$\min_{\mathbf{W}^*} \underbrace{\mathbb{E}_{i,j}\|\mathbf{W}^*\mathbf{e}_{j,i}
 - 实验充分度: ⭐⭐⭐⭐⭐ — 跨域benchmark、多基线对比、充分消融、扩展实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论推导严谨，公式与图表配合良好
 - 价值: ⭐⭐⭐⭐ — 解决扩散模型安全部署的实际痛点，方法可扩展性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Surgery: Zero-Shot Concept Erasure in Diffusion Models](../../NeurIPS2025/image_generation/semantic_surgery_zero-shot_concept_erasure_in_diffusion_models.md)
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](../../CVPR2026/image_generation/neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+- [Prototype-Guided Concept Erasure in Diffusion Models](../../CVPR2026/image_generation/prototype-guided_concept_erasure_in_diffusion_models.md)
+- [SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](../../ICLR2026/image_generation/speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
+- [Localized Concept Erasure in Text-to-Image Diffusion Models via High-Level Representation Misdirection](../../ICLR2026/image_generation/localized_concept_erasure_in_text-to-image_diffusion_models_via_high-level_repre.md)
+
+<!-- RELATED:END -->

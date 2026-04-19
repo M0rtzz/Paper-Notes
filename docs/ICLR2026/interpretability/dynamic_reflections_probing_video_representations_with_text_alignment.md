@@ -133,3 +133,15 @@ $$\text{score}(n_f, n_c) = S_{\infty} - (C_f \cdot n_f^{-\alpha} + C_c \cdot n_c
 - 实验充分度: ⭐⭐⭐⭐⭐ — 121 个模型组合覆盖广泛，多数据集验证，缩放律拟合严谨
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富直观，核心发现阐述精确
 - 价值: ⭐⭐⭐⭐ — 对视频表示学习的评估范式和多模态对齐理论均有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-guided Fine-Grained Video Anomaly Understanding](../../CVPR2026/interpretability/text-guided_fine-grained_video_anomaly_understanding.md)
+- [Beyond Linear Probes: Dynamic Safety Monitoring for Language Models](beyond_linear_probes_dynamic_safety_monitoring_for_language_models.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](../../AAAI2026/interpretability/probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
+- [Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](../../AAAI2026/interpretability/concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
+- [Layer by layer, module by module: Choose both for optimal OOD probing of ViT](layer_by_layer_module_by_module_choose_both_for_optimal_ood_probing_of_vit.md)
+
+<!-- RELATED:END -->

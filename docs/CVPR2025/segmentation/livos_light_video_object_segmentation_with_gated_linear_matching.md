@@ -128,3 +128,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 MOSE/DAVIS/YouTube-VOS/LVOS，含效率和高分辨率实验
 - **写作质量**: ⭐⭐⭐⭐ 从 softmax→线性→门控线性的推导过程清晰流畅
 - **价值**: ⭐⭐⭐⭐⭐ 解决了 VOS 领域的核心可扩展性瓶颈，开启高分辨率长视频处理新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ELVIS: Enhance Low-Light for Video Instance Segmentation in the Dark](../../CVPR2026/segmentation/elvis_enhance_low-light_for_video_instance_segmentation_in_the_dark.md)
+- [O-MaMa: Learning Object Mask Matching between Egocentric and Exocentric Views](../../ICCV2025/segmentation/o-mama_learning_object_mask_matching_between_egocentric_and_exocentric_views.md)
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](../../ICCV2025/segmentation/move_motion-guided_few-shot_video_object_segmentation.md)
+- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](../../ICCV2025/segmentation/referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
+- [Generative Video Propagation](generative_video_propagation.md)
+
+<!-- RELATED:END -->

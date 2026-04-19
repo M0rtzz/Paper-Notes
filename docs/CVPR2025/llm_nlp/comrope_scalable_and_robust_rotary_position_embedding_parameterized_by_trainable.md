@@ -188,3 +188,15 @@ In this work, we propose ComRoPE, which generalizes RoPE by defining it in terms
 - 实验充分度: ⭐⭐⭐ 需读全文验证
 - 写作质量: ⭐⭐⭐ 基于摘要初评
 - 价值: ⭐⭐⭐ 在该领域有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
+- [LLM as Effective Streaming Processor: Bridging Streaming-Batch Mismatches with Group Position Encoding](../../ACL2025/llm_nlp/llm_as_effective_streaming_processor_bridging_streaming-batch_mismatches_with_gr.md)
+- [Computation Mechanism Behind LLM Position Generalization](../../ACL2025/llm_nlp/computation_mechanism_behind_llm_position_generalization.md)
+- [Probabilistic Aggregation and Targeted Embedding Optimization for Collective Moral Reasoning](../../ACL2025/llm_nlp/probabilistic_aggregation_and_targeted_embedding_optimization_for_collective_mor.md)
+- [Safer or Luckier? LLMs as Safety Evaluators Are Not Robust to Artifacts](../../ACL2025/llm_nlp/safer_or_luckier_llms_as_safety_evaluators_are_not_robust_to_artifacts.md)
+
+<!-- RELATED:END -->

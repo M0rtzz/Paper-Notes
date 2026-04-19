@@ -142,3 +142,15 @@ $$\mathbb{P}[\mathcal{M}(D) \in S] \leq e^\varepsilon \cdot \mathbb{P}[\mathcal{
 - 实验充分度: ⭐⭐ — 仅CartPole一个环境，实验为附录中的概念验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论体系完整，动机和技术路线阐述流畅
 - 价值: ⭐⭐⭐⭐ — 填补PO隐私理论空白，为RLHF等隐私敏感应用的算法设计提供理论指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+- [Private Zeroth-Order Optimization with Public Data](private_zeroth-order_optimization_with_public_data.md)
+- [Differentially Private High-dimensional Variable Selection via Integer Programming](differentially_private_high-dimensional_variable_selection_via_integer_programmi.md)
+- [Differentially Private Federated Low Rank Adaptation Beyond Fixed-Matrix](differentially_private_federated_low_rank_adaptation_beyond_fixed-matrix.md)
+- [Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+
+<!-- RELATED:END -->

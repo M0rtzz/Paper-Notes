@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个基准、多步数配置、组件消融
 - 写作质量: ⭐⭐⭐⭐ 退化因素分析清晰
 - 价值: ⭐⭐⭐⭐ 对低光增强的实时部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DarkIR: Robust Low-Light Image Restoration](darkir_robust_low-light_image_restoration.md)
+- [CWNet: Causal Wavelet Network for Low-Light Image Enhancement](../../ICCV2025/image_restoration/cwnet_causal_wavelet_network_for_low-light_image_enhancement.md)
+- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](../../ICCV2025/image_restoration/low-light_image_enhancement_using_event-based_illumination_estimation.md)
+- [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](../../ECCV2024/image_restoration/towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+- [Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)
+
+<!-- RELATED:END -->

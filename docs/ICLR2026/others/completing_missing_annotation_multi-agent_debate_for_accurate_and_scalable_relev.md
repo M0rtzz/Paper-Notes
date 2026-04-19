@@ -153,3 +153,15 @@ DREAM用3.5%的人工介入达到95.2% bAcc，超过Human-Only的93.8%。LARA需
 - 实验充分度: ⭐⭐⭐⭐⭐ 全面消融+BRIDGE构建+检索重排+RAG对齐分析
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，问题定义和方法动机层层递进
 - 价值: ⭐⭐⭐⭐⭐ IR评测方法论的重要进步+BRIDGE基准的实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Voting or Consensus? Decision-Making in Multi-Agent Debate](../../ACL2025/others/voting_or_consensus_decision-making_in_multi-agent_debate.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](../../ACL2025/others/cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+- [Missing Mass for Differentially Private Domain Discovery](missing_mass_for_differentially_private_domain_discovery.md)
+- [A Scalable Inter-edge Correlation Modeling in CopulaGNN for Link Sign Prediction](a_scalable_inter-edge_correlation_modeling_in_copulagnn_for_link_sign_prediction.md)
+- [Local Guidance for Configuration-Based Multi-Agent Pathfinding](../../AAAI2026/others/local_guidance_for_configuration-based_multi-agent_pathfinding.md)
+
+<!-- RELATED:END -->

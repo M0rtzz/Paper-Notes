@@ -148,3 +148,15 @@ FedGRPO 包含三步循环：
 - 实验充分度: ⭐⭐⭐⭐ — 多模型规模、多数据集，但缺少更多领域验证
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法描述严谨
 - 价值: ⭐⭐⭐⭐⭐ — 解决了隐私保护联邦学习的实际痛点，通信效率提升巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Tabular Foundation Models](robust_tabular_foundation_models.md)
+- [From Pretrain to Pain: Adversarial Vulnerability of Video Foundation Models without Finetuning](from_pretrain_to_pain_adversarial_vulnerability_of_video_foundation_models_witho.md)
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](../../ICML2025/self_supervised/test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [Regularized Latent Dynamics Prediction is a Strong Baseline for Behavioral Foundation Models](../../ICLR2026/self_supervised/regularized_latent_dynamics_prediction_is_a_strong_baseline_for_behavioral_found.md)
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](../../ICML2025/self_supervised/towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+
+<!-- RELATED:END -->

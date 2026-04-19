@@ -161,3 +161,15 @@ CoRe benchmark 构建包含四个阶段：**程序采样** → **半自动标注
 - **实验充分度**: ⭐⭐⭐⭐⭐ 10 个模型（含 6 个推理模型）、3 类任务、3 种语言、多维度影响因素分析和消融实验，非常全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 背景从真实 CVE 案例切入动机清晰，任务定义数学化严谨，定性分析深入且有实际意义
 - **价值**: ⭐⭐⭐⭐ 对理解和改进 LLM 代码推理能力有较高参考价值，反向依赖偏差等发现有启发性；但 benchmark 的实际应用距离尚远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preserving LLM Capabilities through Calibration Data Curation: From Analysis to Optimization](preserving_llm_capabilities_through_calibration_data_curation_from_analysis_to_o.md)
+- [FractalBench: Diagnosing Visual-Mathematical Reasoning Through Recursive Program Synthesis](fractalbench_diagnosing_visual-mathematical_reasoning_through_recursive_program_.md)
+- [DyCodeEval: Dynamic Benchmarking of Reasoning Capabilities in Code Large Language Models Under Data Contamination](../../ICML2025/code_intelligence/dynamic_benchmarking_of_reasoning_capabilities_in_code_large_language_models_und.md)
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](../../ACL2025/code_intelligence/codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+- [Principled Fine-tuning of LLMs from User-Edits: A Medley of Preference, Supervision, and Reward](principled_fine-tuning_of_llms_from_user-edits_a_medley_of_preference_supervisio.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ tags:
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 4 任务 × 23 语言 × 2 基座 × 多种变体对比，非常全面
 - **清晰度**: ⭐⭐⭐⭐ — 结构清晰，图表辅助理解，变体命名系统
 - **影响力**: ⭐⭐⭐⭐ — 对多语言 NLP 社区有直接指导价值，方案可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Lingual Representation Alignment Through Contrastive Image-Caption Tuning](cross-lingual_representation_alignment_through_contrastive_image-caption_tuning.md)
+- [Middle-Layer Representation Alignment for Cross-Lingual Transfer in Fine-Tuned LLMs](mid_layer_crosslingual_alignment.md)
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Harnessing Frozen Unimodal Encoders for Flexible Multimodal Alignment](../../CVPR2025/multilingual_mt/harnessing_frozen_unimodal_encoders_for_flexible_multimodal_alignment.md)
+
+<!-- RELATED:END -->

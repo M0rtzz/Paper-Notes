@@ -125,3 +125,15 @@ $$(\hat{\mathbf{T}}_1, \ldots, \hat{\mathbf{T}}_K) = \arg\max_{\mathbf{T}_1, \ld
 - 实验充分度: ⭐⭐⭐⭐ 两个不同临床场景（头颈放疗+骨科手术），定性定量均充分，鲁棒性分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨清晰，可视化出色
 - 价值: ⭐⭐⭐⭐⭐ 解决了临床实际痛点，方法简洁通用，有很强的临床转化价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](../../CVPR2026/medical_imaging/markerbased_3d_reconstruction_of_aggregates_with_a.md)
+- [Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
+- [Multimodal 3D Genome Pre-training](multimodal_3d_genome_pre-training.md)
+- [Raptor: Scalable Train-Free Embeddings for 3D Medical Volumes Leveraging Pretrained 2D Foundation Models](../../ICML2025/medical_imaging/raptor_scalable_train-free_embeddings_for_3d_medical_volumes_leveraging_pretrain.md)
+- [3D-RAD: A Comprehensive 3D Radiology Med-VQA Dataset with Multi-Temporal Analysis and Diverse Diagnostic Tasks](3drad_a_comprehensive_3d_radiology_medvqa_dataset_with_multi.md)
+
+<!-- RELATED:END -->

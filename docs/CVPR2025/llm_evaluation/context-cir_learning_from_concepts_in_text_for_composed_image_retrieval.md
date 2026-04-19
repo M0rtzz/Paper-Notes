@@ -116,3 +116,15 @@ TCC Loss 和合成数据均对性能有显著贡献。
 - 推理时不增加任何计算开销，概念一致性仅在训练阶段引入
 - 在零样本设置下以小模型超越大模型，体现了方法的数据效率
 - 支持多种 CLIP backbone 且均有提升，方法通用性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In-Context Learning of Temporal Point Processes with Foundation Inference Models](../../ICLR2026/llm_evaluation/in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
+- [PhantomWiki: On-Demand Datasets for Reasoning and Retrieval Evaluation](../../ICML2025/llm_evaluation/phantomwiki_on-demand_datasets_for_reasoning_and_retrieval_evaluation.md)
+- [SATTC: Structure-Aware Label-Free Test-Time Calibration for Cross-Subject EEG-to-Image Retrieval](../../CVPR2026/llm_evaluation/sattc_structure-aware_label-free_test-time_calibration_for_cross-subject_eeg-to-.md)
+- [Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models](../../ACL2025/llm_evaluation/retrieval_models_arent_tool-savvy_benchmarking_tool_retrieval_for_large_language.md)
+- [Potential Field Based Deep Metric Learning](potential_field_based_deep_metric_learning.md)
+
+<!-- RELATED:END -->

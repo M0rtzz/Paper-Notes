@@ -187,3 +187,15 @@ $$\text{Fourier}(t, T) = [\sin(\frac{2\pi k t}{T}), \cos(\frac{2\pi k t}{T})] \i
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数据集、11+种方法、严格的控制变量实验、15种随机种子、鲁棒性分析，极为充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从问题发现→原因分析→方案设计层层递进，图表精美且信息量大
 - 价值: ⭐⭐⭐⭐ 对表格学习实践有直接指导意义，即插即用方案降低了使用门槛，但局限于有时间戳的表格数据场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](../../NeurIPS2025/time_series/syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)
+- [Selective Learning for Deep Time Series Forecasting](../../NeurIPS2025/time_series/selective_learning_for_deep_time_series_forecasting.md)
+- [IonCast: A Deep Learning Framework for Forecasting Ionospheric Dynamics](../../NeurIPS2025/time_series/ioncast_a_deep_learning_framework_for_forecasting_ionospheric_dynamics.md)
+- [TQNet: Temporal Query Network for Efficient Multivariate Time Series Forecasting](temporal_query_network_for_efficient_multivariate_time_series_forecasting.md)
+- [scits scientific time series understanding and generation with llms](../../ICLR2026/time_series/scits_scientific_time_series_understanding_and_generation_with_llms.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ $$\mathcal{L} = -\sum_{i=1}^{|S|} \ln(\text{net}(s_i)) + \int_\Omega \text{net}(
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实+消融覆盖全面，但真实实验缺乏定量 ground truth
 - 写作质量: ⭐⭐⭐⭐ — 符号定义清晰，理论推导完整，但公式密度较高
 - 价值: ⭐⭐⭐⭐ — 填补了深度学习时空因果推理的空白，框架通用性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Interpretability with Identifiable Temporal-Instantaneous Representation](../../NeurIPS2025/causal_inference/llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
+- [Causality-Induced Positional Encoding for Transformer-Based Representation Learning of Non-Sequential Features](../../NeurIPS2025/causal_inference/causality-induced_positional_encoding_for_transformer-based_representation_learn.md)
+- [Exogenous Isomorphism for Counterfactual Identifiability](exogenous_isomorphism_for_counterfactual_identifiability.md)
+- [Do-PFN: In-Context Learning for Causal Effect Estimation](../../NeurIPS2025/causal_inference/do-pfn_in-context_learning_for_causal_effect_estimation.md)
+- [An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation](../../NeurIPS2025/causal_inference/an_analysis_of_causal_effect_estimation_using_outcome_invariant_data_augmentatio.md)
+
+<!-- RELATED:END -->

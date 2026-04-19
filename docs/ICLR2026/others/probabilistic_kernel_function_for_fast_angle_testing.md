@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6 个数据集全面覆盖，与 SOTA 对比充分，消融实验完整
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，但符号较多，部分符号定义分散在正文和附录中
 - 价值: ⭐⭐⭐⭐ 对 ANNS 领域有实质贡献，2.5×–3× 加速具有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
+- [An Information-Theoretic Framework For Optimizing Experimental Design To Distinguish Probabilistic Neural Codes](an_information-theoretic_framework_for_optimizing_experimental_design_to_disting.md)
+- [Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
+- [Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry](fast_and_stable_riemannian_metrics_on_spd_manifolds_via_cholesky_product_geometr.md)
+- [Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)
+
+<!-- RELATED:END -->

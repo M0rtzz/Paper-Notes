@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 只有一个数据集，虽然三种协议+三种融合+消融比较全面，但外部验证不足
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，弱模态预测坍缩的分析（Figure 3）和模态竞争的实验证据有说服力
 - 价值: ⭐⭐⭐ 方法有一定通用性但应用场景局限，多模态HPE本身还不是主流方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection](ccf_complementary_collaborative_fusion_for_domain_generalized_multi-modal_3d_obj.md)
+- [EMDUL: Expanding mmWave Datasets for Human Pose Estimation with Unlabeled Data and LiDAR Datasets](expanding_mmwave_datasets_for_human_pose_estimation_with_unlabeled_data_and_lida.md)
+- [Le MuMo JEPA: Multi-Modal Self-Supervised Representation Learning with Learnable Fusion Tokens](le_mumo_jepa_multi-modal_self-supervised_representation_learning_with_learnable_.md)
+- [x2-Fusion: Cross-Modality and Cross-Dimension Flow Estimation in Event Edge Space](x2-fusion_cross-modality_and_cross-dimension_flow_estimation_in_event_edge_space.md)
+- [InCaRPose: In-Cabin Relative Camera Pose Estimation Model and Dataset](incarpose_in-cabin_relative_camera_pose_estimation_model_and_dataset.md)
+
+<!-- RELATED:END -->

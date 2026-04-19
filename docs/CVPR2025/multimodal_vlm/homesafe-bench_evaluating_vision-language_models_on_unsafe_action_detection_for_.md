@@ -79,3 +79,15 @@ tags:
 - 当前框架假设视频流连续可用，在通信不稳定或机器人快速移动导致帧模糊的实际场景中的鲁棒性待验证
 - 未讨论检测到不安全行为后的干预机制——如何与机器人控制系统联动实现即时制动是工程化的关键
 - SlowBrain依赖大型VLM的API调用，在网络受限或需要离线运行的家庭场景中可能受限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons](from_multimodal_llms_to_generalist_embodied_agents_methods_and_lessons.md)
+- [ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models](espire_a_diagnostic_benchmark_for_embodied_spatial_reasoning_of_vision-language_.md)
+- [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
+- [GTR-Bench: Evaluating Geo-Temporal Reasoning in Vision-Language Models](../../ICLR2026/multimodal_vlm/gtr-bench_evaluating_geo-temporal_reasoning_in_vision-language_mod.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](../../ACL2025/multimodal_vlm/effivlm_bench_acceleration.md)
+
+<!-- RELATED:END -->

@@ -153,3 +153,15 @@ RL 中的探索问题在稀疏奖励环境下极具挑战性。基础模型（LL
 - **实验充分度**: 7/10 — 渐进评测设计好，混合框架验证不够充分
 - **实用性**: 6/10 — 混合框架过于简单，更多作为概念验证
 - **写作质量**: 8/10 — 结构清晰，定性分析生动有图
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Improving Embodied Foundation Models](self-improving_embodied_foundation_models.md)
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](../../ICML2025/reinforcement_learning/sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+- [Exploration via Feature Perturbation in Contextual Bandits](exploration_via_feature_perturbation_in_contextual_bandits.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+
+<!-- RELATED:END -->

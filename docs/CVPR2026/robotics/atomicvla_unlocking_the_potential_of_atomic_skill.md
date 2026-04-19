@@ -90,3 +90,15 @@ AtomicVLA 提出统一规划-执行框架，通过Think-Act自适应切换生成
 - 实验充分度: ⭐⭐⭐⭐⭐ LIBERO+CALVIN+真实Franka长horizon+持续学习+消融，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 架构清晰，可视化丰富，技术细节充足
 - 价值: ⭐⭐⭐⭐⭐ 为VLA的可扩展性和持续学习提供了实际解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](lada_robotic_manipulation.md)
+- [Chain of World: World Model Thinking in Latent Motion (CoWVLA)](chain_of_world_world_model_thinking_in_latent_motion.md)
+- [ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation](forcevla2_unleashing_hybrid_force-position_control_with_force_awareness_for_cont.md)
+
+<!-- RELATED:END -->

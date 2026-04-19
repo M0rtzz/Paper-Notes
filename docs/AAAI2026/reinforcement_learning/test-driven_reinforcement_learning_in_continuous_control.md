@@ -168,3 +168,15 @@ RL 中奖励函数承担双重职责：(1) 定义最优行为；(2) 引导学习
 
 ## 评分 ⭐⭐⭐⭐ (4/5)
 Oral 论文，概念新颖，理论贡献扎实。但实验规模有限（DMC），且测试函数设计仍有主观因素。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Actor-Free Continuous Control via Structurally Maximizable Q-Functions](../../NeurIPS2025/reinforcement_learning/actorfree_continuous_control_via_structurally_maximizable_qf.md)
+- [WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](../../ICLR2026/reinforcement_learning/wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [Learning to Generate Unit Test via Adversarial Reinforcement Learning](../../ICLR2026/reinforcement_learning/learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
+- [DiffOP: Reinforcement Learning of Optimization-Based Control Policies via Implicit Policy Gradients](diffop_reinforcement_learning_of_optimization-based_control_policies_via_implici.md)
+- [Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](../../ICLR2026/reinforcement_learning/continuous-time_value_iteration_for_multi-agent_reinforcement_learning.md)
+
+<!-- RELATED:END -->

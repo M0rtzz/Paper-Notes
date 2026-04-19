@@ -197,3 +197,15 @@ FiLM 模块是性能提升的关键（去掉后 AOE 从 9.22 升至 11.35），F
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 离线评估+真实机器人部署+鲁棒性测试+消融+数据规模消融，非常全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰，问题定义精准，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 对最后一公里配送机器人等实际应用有重要价值，数据和代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realistic Synthetic Household Data Generation at Scale](realistic_synthetic_household_data_generation_at_scale.md)
+- [Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation](recursive_visual_imagination_and_adaptive_linguistic_grounding_for_vision_langua.md)
+- [Attribution-Guided Decoding](../../ICLR2026/robotics/attribution-guided_decoding.md)
+- [Affordance-Guided Coarse-to-Fine Exploration for Base Placement in Open-Vocabulary Mobile Manipulation](affordance-guided_coarse-to-fine_exploration_for_base_placem.md)
+- [DexVLG: Dexterous Vision-Language-Grasp Model at Scale](../../ICCV2025/robotics/dexvlg_dexterous_vision-language-grasp_model_at_scale.md)
+
+<!-- RELATED:END -->

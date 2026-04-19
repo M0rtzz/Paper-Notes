@@ -136,3 +136,15 @@ Tokenized Brier score + LoRA。LLaMA 用 $\mathcal{T}_{100}$（0-100%），Qwen/
 - **与Bayesian方法的关系**: ConfTuner的校准可视为将LLM输出映射到近似贝叶斯后验概率
 - **多语言扩展**: 置信度表达在不同语言中的自然表述不同，跨语言校准是开放问题
 - **长文本场景**: 当回答包含多个claim时，每个claim的独立置信度比全局置信度更有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Large Language Models Master Complex Card Games?](can_large_language_models_master_complex_card_games.md)
+- [LTD-Bench: Evaluating Large Language Models by Letting Them Draw](ltd-bench_evaluating_large_language_models_by_letting_them_draw.md)
+- [Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training](exploiting_vocabulary_frequency_imbalance_in_language_model_pre-training.md)
+- [Correlated Errors in Large Language Models](../../ICML2025/llm_evaluation/correlated_errors_in_large_language_models.md)
+- [Creativity or Brute Force? Using Brainteasers as a Window into the Problem-Solving Abilities of Large Language Models](creativity_or_brute_force_using_brainteasers_as_a_window_into_the_problem-solvin.md)
+
+<!-- RELATED:END -->

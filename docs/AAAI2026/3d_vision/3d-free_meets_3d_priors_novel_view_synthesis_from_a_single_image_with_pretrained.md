@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 评估场景偏少，缺少标准 3D 基准对比
 - 写作质量: ⭐⭐⭐⭐ 分析部分（CLIP 3D 理解、引导图重要性）论证清晰
 - 价值: ⭐⭐⭐ 提供了一种不需要 3D 数据的相机控制方案，但推理速度限制实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis](../../CVPR2026/3d_vision/pr-iqa_partial-reference_image_quality_assessment_for_diffusion-based_novel_view.md)
+- [Debiasing Diffusion Priors via 3D Attention for Consistent Gaussian Splatting](debiasing_diffusion_priors_via_3d_attention_for_consistent_gaussian_splatting.md)
+- [DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](../../CVPR2026/3d_vision/dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
+- [GeoWizard: Unleashing the Diffusion Priors for 3D Geometry Estimation from a Single Image](../../ECCV2024/3d_vision/geowizard_unleashing_the_diffusion_priors_for_3d_geometry_estimation_from_a_sing.md)
+- [Geometry Meets Light: Leveraging Geometric Priors for Universal Photometric Stereo under Limited Multi-Illumination Cues](geometry_meets_light_leveraging_geometric_priors_for_universal_photometric_stere.md)
+
+<!-- RELATED:END -->

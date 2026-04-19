@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 数据集×3 语言×3 嵌入模型+1 基线，统计严谨（GLMM+Tukey），但缺少预测性任务验证
 - 写作质量: ⭐⭐⭐⭐ 认知科学和 NLP 的桥梁叙事清晰，但部分结果呈现较冗长
 - 价值: ⭐⭐⭐⭐ 为认知科学提供了自动化分析工具，对临床诊断有潜在价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exo-Plore: Exploring Exoskeleton Control Space through Human-Aligned Simulation](exo-plore_exploring_exoskeleton_control_space_through_human-aligned_simulation.md)
+- [Controllable Sequence Editing for Biological and Clinical Trajectories](controllable_sequence_editing_for_biological_and_clinical_trajectories.md)
+- [VLM-SubtleBench: How Far Are VLMs from Human-Level Subtle Comparative Reasoning?](vlm-subtlebench_how_far_are_vlms_from_human-level_subtle_comparative_reasoning.md)
+- [Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model](brain-semantoks_learning_semantic_tokens_of_brain_dynamics_with_a_self-distilled.md)
+- [Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
+
+<!-- RELATED:END -->

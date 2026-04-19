@@ -89,3 +89,15 @@ MergeDNA 采用层次化 autoencoder 架构，包含四个模块：
 - 实验充分度: ⭐⭐⭐⭐ — 三大 benchmark + 多组消融，但缺少超大规模对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 为 DNA foundation model 的 tokenization 提供了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images](../../ICML2025/medical_imaging/context_matters_query-aware_dynamic_long_sequence_modeling_of_gigapixel_images.md)
+- [Apo2Mol: 3D Molecule Generation via Dynamic Pocket-Aware Diffusion Models](apo2mol_3d_molecule_generation_via_dynamic_pocket-aware_diff.md)
+- [Towards Effective and Efficient Context-aware Nucleus Detection in Histopathology Whole Slide Images](towards_effective_and_efficient_context-aware_nucleus_detection_in_histopatholog.md)
+- [Learning Cell-Aware Hierarchical Multi-Modal Representations for Robust Molecular Modeling](learning_cell-aware_hierarchical_multi-modal_representations.md)
+- [Bridging Vision and Language for Robust Context-Aware Surgical Point Tracking: The VL-SurgPT Dataset and Benchmark](bridging_vision_and_language_for_robust_context-aware_surgical_point_tracking_th.md)
+
+<!-- RELATED:END -->

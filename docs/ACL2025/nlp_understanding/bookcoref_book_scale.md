@@ -118,3 +118,15 @@ BookCoref Pipeline四步流程：(1) 角色链接初始化显式提及簇；(2) 
 - 实验充分度: ⭐⭐⭐⭐ 管线评估详尽，但现有系统对比略少
 - 写作质量: ⭐⭐⭐⭐⭐ 论述清晰，方法与评估紧密结合
 - 价值: ⭐⭐⭐⭐⭐ 填补书级别CR的资源空白，具有长期研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [End-to-End Dialog Neural Coreference Resolution: Balancing Efficiency and Accuracy in Large-Scale Systems](end-to-end_dialog_neural_coreference_resolution_balancing_efficiency_and_accurac.md)
+- [Adapting Psycholinguistic Research for LLMs: Gender-Inclusive Language in a Coreference Context](adapting_psycholinguistic_research_for_llms_gender-inclusive_language_in_a_coref.md)
+- [Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing](disambiguate_first_parse_later_generating_interpretations_for_ambiguity_resoluti.md)
+- [Analyzing Political Bias in LLMs via Target-Oriented Sentiment Classification](analyzing_political_bias_in_llms_via_target-oriented_sentiment_classification.md)
+- [Dynamic Order Template Prediction for Generative Aspect-Based Sentiment Analysis](dot_absa_template.md)
+
+<!-- RELATED:END -->

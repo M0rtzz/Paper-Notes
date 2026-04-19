@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多规模模型对比，offloading延迟测试
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，方法描述简洁
 - 价值: ⭐⭐⭐⭐⭐ 对推理效率优化有重要实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Curse of Depth in Large Language Models](the_curse_of_depth_in_large_language_models.md)
+- [Scalable Fingerprinting of Large Language Models](scalable_fingerprinting_of_large_language_models.md)
+- [Superposition Yields Robust Neural Scaling](superposition_yields_robust_neural_scaling.md)
+- [Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](retrospective_incontext_learning_for_temporal_credit_assignm.md)
+- [Learning the Wrong Lessons: Syntactic-Domain Spurious Correlations in Language Models](learning_the_wrong_lessons_syntactic-domain_spurious_correlations_in_language_mo.md)
+
+<!-- RELATED:END -->

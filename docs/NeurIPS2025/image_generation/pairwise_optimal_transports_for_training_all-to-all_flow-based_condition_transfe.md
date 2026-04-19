@@ -139,3 +139,15 @@ $$\int \|x_1 - x_2\|^2 d\Pi^*(x_1, x_2 | c_1, c_2) = W_2^2(P_{c_1}, P_{c_2})$$
 - **实验充分度**: ⭐⭐⭐⭐ 合成数据验证理论、分子优化展示应用价值，但缺乏更多领域的实验
 - **写作质量**: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，直觉解释到位，与相关工作的区别讨论详尽
 - **价值**: ⭐⭐⭐⭐⭐ 解决了条件迁移的基本问题，适用范围广，化学应用展示了实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer](guideflow3d_optimization-guided_rectified_flow_for_appearance_transfer.md)
+- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [Position: All Current Generative Fidelity and Diversity Metrics are Flawed](../../ICML2025/image_generation/position_all_current_generative_fidelity_and_diversity_metrics_are_flawed.md)
+- [Model Immunization from a Condition Number Perspective](../../ICML2025/image_generation/model_immunization_from_a_condition_number_perspective.md)
+- [GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration](../../CVPR2025/image_generation/gendeg_diffusion-based_degradation_synthesis_for_generalizable_all-in-one_image_.md)
+
+<!-- RELATED:END -->

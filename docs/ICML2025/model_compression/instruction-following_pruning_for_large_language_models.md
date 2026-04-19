@@ -125,3 +125,15 @@ $$\mathcal{L} = \sum_{k=1}^{K-1} \sum_{x_i \in \mathbf{x}^{(k+1)}} \ell\big[f(\m
 - 实验充分度: ⭐⭐⭐⭐ — 多规模、多基线、多任务，含可解释性分析和效率测评
 - 写作质量: ⭐⭐⭐⭐ — 论文结构清晰，动机、方法、实验层层推进
 - 价值: ⭐⭐⭐⭐ — 为端侧 LLM 部署提供了极具前景的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Olica: Efficient Structured Pruning of Large Language Models without Retraining](olica_efficient_structured_pruning_of_large_language_models_without_retraining.md)
+- [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
+- [BlockPruner: Fine-grained Pruning for Large Language Models](../../ACL2025/model_compression/blockpruner_fine-grained_pruning_for_large_language_models.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](../../ACL2025/model_compression/wanda_pruning_large_language_models_via_regional_gradients.md)
+- [Fleet of Agents: Coordinated Problem Solving with Large Language Models](fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
+
+<!-- RELATED:END -->

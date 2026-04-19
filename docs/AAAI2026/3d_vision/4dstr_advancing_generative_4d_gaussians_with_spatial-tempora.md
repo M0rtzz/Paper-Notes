@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融实验详尽（时序/空间校正、编码方式、窗口大小、长序列、用户研究），但定量评估的数据集规模偏小（7个对象），场景多样性不足
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、图示直观，动机阐述充分，但公式符号和方法描述在某些细节上略显冗余
 - 价值: ⭐⭐⭐⭐ 在video-to-4D任务上取得了显著的SOTA提升（FVD降低19.9%），轻量设计工程实用性强，但4D生成领域仍在快速发展，方法的持久影响力待观察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction](sparse4dgs_4d_gaussian_splatting_for_sparse-frame_dynamic_scene_reconstruction.md)
+- [Simba: Towards High-Fidelity and Geometrically-Consistent Point Cloud Completion via Transformation Diffusion](simba_towards_high-fidelity_and_geometrically-consistent_point_cloud_completion_.md)
+- [AnchorHOI: Zero-shot Generation of 4D Human-Object Interaction via Anchor-based Prior Distillation](anchorhoi_zero-shot_generation_of_4d_human-object_interactio.md)
+- [UFO-4D: Unposed Feedforward 4D Reconstruction from Two Images](../../ICLR2026/3d_vision/ufo-4d_unposed_feedforward_4d_reconstruction_from_two_images.md)
+- [StreamSTGS: Streaming Spatial and Temporal Gaussian Grids for Real-Time Free-Viewpoint Video](streamstgs_streaming_spatial_and_temporal_gaussian_grids_for_real-time_free-view.md)
+
+<!-- RELATED:END -->

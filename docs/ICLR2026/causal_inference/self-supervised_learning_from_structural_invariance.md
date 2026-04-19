@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多任务验证（数值/CRL/图像/视频），但缺乏大规模对比
 - 写作质量: ⭐⭐⭐⭐⭐ 理论动机清晰，从理论到方法到实验逻辑流畅
 - 价值: ⭐⭐⭐⭐ 解决了 SSL 的根本理论问题，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Root Cause Analysis of Outliers with Missing Structural Knowledge](../../NeurIPS2025/causal_inference/root_cause_analysis_of_outliers_with_missing_structural_knowledge.md)
+- [Learning Robust Intervention Representations with Delta Embeddings](learning_robust_intervention_representations_with_delta_embeddings.md)
+- [Retrieving Counterfactuals Improves Visual In-Context Learning](../../CVPR2026/causal_inference/retrieving_counterfactuals_improves_visual_in-context_learning.md)
+- [Sparse Additive Model Pruning for Order-Based Causal Structure Learning](../../AAAI2026/causal_inference/sparse_additive_model_pruning_for_order-based_causal_structure_learning.md)
+- [Learning Subgroups with Maximum Treatment Effects without Causal Heuristics](../../AAAI2026/causal_inference/learning_subgroups_with_maximum_treatment_effects_without_causal_heuristics.md)
+
+<!-- RELATED:END -->

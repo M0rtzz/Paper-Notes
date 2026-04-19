@@ -99,3 +99,15 @@ AHAMask 在 LALM 的 decoder-only LLM 骨干中，为每个注意力头引入一
 - 实验充分度: ⭐⭐⭐⭐⭐ （3 个模型、7+ 任务、复合任务、消融、泛化、可视化，非常全面）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，实验递进式展开，分析深入）
 - 价值: ⭐⭐⭐⭐ （揭示了重要的可解释性发现，但实用场景仍受限于需要任务特定训练）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Reliable Large Audio Language Model](../../ACL2025/audio_speech/towards_reliable_large_audio_language_model.md)
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](../../ACL2025/audio_speech/audio_dialogue_benchmark.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [MMSU: A Massive Multi-task Spoken Language Understanding and Reasoning Benchmark](../../ICLR2026/audio_speech/mmsu_a_massive_multi-task_spoken_language_understanding_and_reasoning_benchmark.md)
+- [Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models](../../ACL2025/audio_speech/who_can_withstand_chat-audio_attacks_an_evaluation_benchmark_for_large_audio-lan.md)
+
+<!-- RELATED:END -->

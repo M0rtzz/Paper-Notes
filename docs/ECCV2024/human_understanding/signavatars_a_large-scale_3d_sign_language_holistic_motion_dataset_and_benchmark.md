@@ -198,3 +198,15 @@ $$L_{\text{SLP}} = \mathbb{E}_{X \sim p(X)}[-\log p(X|c)]$$
 - **实验充分度**: ⭐⭐⭐⭐ 标注质量、SLP 性能、消融实验均有覆盖，但受限于评估指标的成熟度
 - **写作质量**: ⭐⭐⭐⭐ 问题动机清晰，方法描述详实，但数学符号繁多，部分段落较密
 - **价值**: ⭐⭐⭐⭐⭐ 兼具技术价值和社会价值，为聋哑人社区的数字化通信提供关键基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PetFace: A Large-Scale Dataset and Benchmark for Animal Identification](petface_a_large-scale_dataset_and_benchmark_for_animal_identification.md)
+- [A Simple Baseline for Spoken Language to Sign Language Translation with 3D Avatars](a_simple_baseline_for_spoken_language_to_sign_language_trans.md)
+- [EvSign: Sign Language Recognition and Translation with Streaming Events](evsign_sign_language_recognition_and_translation_with_streaming_events.md)
+- [Large Motion Model for Unified Multi-Modal Motion Generation](large_motion_model_for_unified_multi-modal_motion_generation.md)
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+
+<!-- RELATED:END -->

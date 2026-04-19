@@ -137,3 +137,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ (三种架构×三个语言方向, R²=0.99的强相关)
 - **写作质量**: ⭐⭐⭐⭐⭐ (论述严谨, 伦理讨论充分, 结构清晰)
 - **价值**: ⭐⭐⭐⭐ (对ST架构设计和公平性均有实际指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Eta-WavLM: Efficient Speaker Identity Removal in Self-Supervised Speech Representations Using a Simple Linear Equation](eta-wavlm_efficient_speaker_identity_removal_in_self-supervised_speech_represent.md)
+- [SimulMEGA: MoE Routers are Advanced Policy Makers for Simultaneous Speech Translation](../../NeurIPS2025/audio_speech/simulmega_moe_routers_are_advanced_policy_makers_for_simultaneous_speech_transla.md)
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](../../ICLR2026/audio_speech/scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+- [Sortformer: A Novel Approach for Permutation-Resolved Speaker Supervision in Speech-to-Text Systems](../../ICML2025/audio_speech/sortformer_a_novel_approach_for_permutation-resolved_speaker_supervision_in_spee.md)
+
+<!-- RELATED:END -->

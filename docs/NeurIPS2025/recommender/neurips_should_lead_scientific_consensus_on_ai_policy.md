@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 立场论文无传统实验，但案例分析（评估选择和阈值设计）具有说服力，IPCC 经验的深度分析弥补了实证不足。
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰、论证严密、对预期反对的回应有力，引用广泛涵盖多学科文献，是立场论文写作的优秀范例。
 - 价值: ⭐⭐⭐⭐ — 提出了 AI 研究社区亟需面对的制度建设挑战，试点方案具有可操作性。但最终价值取决于 NeurIPS 是否愿意采纳和推行。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: Towards Bidirectional Human-AI Alignment](position_towards_bidirectional_human-ai_alignment.md)
+- [EMPATHIA: Multi-Faceted Human-AI Collaboration for Refugee Integration](empathia_multi-faceted_human-ai_collaboration_for_refugee_integration.md)
+- [SlideTailor: Personalized Presentation Slide Generation for Scientific Papers](../../AAAI2026/recommender/slidetailor_personalized_presentation_slide_generation_for_scientific_papers.md)
+- [SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](../../ICML2025/recommender/simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
+- [Position: The Right to AI](../../ICML2025/recommender/the_right_to_ai.md)
+
+<!-- RELATED:END -->

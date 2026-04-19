@@ -117,3 +117,15 @@ A3包含四个组件：(1) A3-Law理论范式定义三阶段评估规则；(2) A
 - 实验充分度: ⭐⭐⭐⭐ 多模型对比、下游任务验证，但消融可更详细
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但内容较多导致部分细节需看附录
 - 价值: ⭐⭐⭐⭐ 对广告行业有实际应用价值，但领域相对小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Venus: Benchmarking and Empowering Multimodal Large Language Models for Aesthetic Guidance and Cropping](venus_benchmarking_and_empowering_multimodal_large_language_models_for_aesthetic.md)
+- [FluoCLIP: Stain-Aware Focus Quality Assessment in Fluorescence Microscopy](fluoclip_stain-aware_focus_quality_assessment_in_fluorescence_microscopy.md)
+- [VisJudge-Bench: Aesthetics and Quality Assessment of Visualizations](../../ICLR2026/multimodal_vlm/visjudge-bench_aesthetics_and_quality_assessment_of_visualizations.md)
+- [BriMA: Bridged Modality Adaptation for Multi-Modal Continual Action Quality Assessment](brima_bridged_modality_adaptation_for_multi-modal_continual_action_quality_asses.md)
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](../../ICLR2026/multimodal_vlm/self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，缺少任何实证验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，定理陈述规范，技术贡献的定位明确
 - 价值: ⭐⭐⭐⭐ 推进了隐私联邦个性化的理论前沿，但实际影响需等待实验验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-LoRA: Collaborative Model Personalization on Heterogeneous Multi-Modal Clients](../../ICLR2026/ai_safety/co-lora_collaborative_model_personalization_on_heterogeneous_multi-modal_clients.md)
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
+- [Faster Rates for Private Adversarial Bandits](faster_rates_for_private_adversarial_bandits.md)
+- [Improving the Variance of Differentially Private Randomized Experiments through Clustering](improving_the_variance_of_differentially_private_randomized_experiments_through_.md)
+- [Understanding Model Ensemble in Transferable Adversarial Attack](understanding_model_ensemble_in_transferable_adversarial_attack.md)
+
+<!-- RELATED:END -->

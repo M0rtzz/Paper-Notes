@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐ — 仅有作者自行执行的单个案例研究，缺乏专业用户研究、定量指标、以及与替代方案的对比实验，作为NeurIPS论文的实验评估严重不足
 - 写作质量: ⭐⭐⭐⭐ — 问题动机论述深入且有理论支撑（引用认知语言学文献），每个设计选择背后的理由说明清晰，局限性讨论坦诚且富有建设性
 - 价值: ⭐⭐⭐⭐ — 面向真实创作需求的实用价值较高，人机协作范式的哲学思考对整个创意AI领域有启发意义，但工程实现层面的技术门槛不高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OPRO: Orthogonal Panel-Relative Operators for Panel-Aware In-Context Image Generation](../../CVPR2026/image_generation/opro_orthogonal_panel-relative_operators_for_panel-aware_in-context_image_genera.md)
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](../../CVPR2025/image_generation/image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+- [Scaling Offline RL via Efficient and Expressive Shortcut Models](scaling_offline_rl_via_efficient_and_expressive_shortcut_models.md)
+- [Aligning Compound AI Systems via System-level DPO](aligning_compound_ai_systems_via_system-level_dpo.md)
+- [Physics-Driven Spatiotemporal Modeling for AI-Generated Video Detection](physics-driven_spatiotemporal_modeling_for_ai-generated_video_detection.md)
+
+<!-- RELATED:END -->

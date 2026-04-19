@@ -146,3 +146,15 @@ s-OTDD 处理 10 倍数据量，速度更快，相关性更高。
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖图像/文本/大规模实验，含消融和计算时间分析
 - 写作质量: ⭐⭐⭐⭐ — 层次清晰，数学严谨
 - 价值: ⭐⭐⭐⭐ — 解决了 OTDD 的核心可扩展性瓶颈，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Theoretical Performance Guarantees for Partial Domain Adaptation via Partial Optimal Transport](theoretical_performance_guarantees_for_partial_domain_adaptation_via_partial_opt.md)
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+- [Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization](../../ECCV2024/others/mahalanobis_distance-based_multi-view_optimal_transport_for_multi-view_crowd_loc.md)
+- [LaCoOT: Layer Collapse through Optimal Transport](../../ICCV2025/others/lacoot_layer_collapse_through_optimal_transport.md)
+- [Quantifying Lexical Semantic Shift via Unbalanced Optimal Transport](../../ACL2025/others/quantifying_lexical_semantic_shift_via_unbalanced_optimal_transport.md)
+
+<!-- RELATED:END -->

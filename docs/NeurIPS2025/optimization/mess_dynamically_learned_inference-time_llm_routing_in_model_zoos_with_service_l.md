@@ -137,3 +137,15 @@ MESS+是首个将LLM请求路由形式化为带SLA约束的随机优化问题的
 - 实验充分度: ⭐⭐⭐⭐ 覆盖8个基准、多基线对比、超参数分析充分，但模型zoo规模偏小
 - 写作质量: ⭐⭐⭐⭐ 问题动机从三方需求切入很清晰，理论推导严谨
 - 价值: ⭐⭐⭐⭐⭐ 解决LLM部署中的核心实际问题（成本vs质量），理论+实践俱佳
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preference Learning with Response Time: Robust Losses and Guarantees](preference_learning_with_response_time_robust_losses_and_guarantees.md)
+- [DynaAct: Large Language Model Reasoning with Dynamic Action Spaces](dynaact_large_language_model_reasoning_with_dynamic_action_spaces.md)
+- [Least Squares Variational Inference](least_squares_variational_inference.md)
+- [Brain-like Variational Inference](brain-like_variational_inference.md)
+- [Learning to Insert for Constructive Neural Vehicle Routing Solver](learning_to_insert_for_constructive_neural_vehicle_routing_solver.md)
+
+<!-- RELATED:END -->

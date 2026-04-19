@@ -173,3 +173,15 @@ $$\mathcal{L}_{\text{CRD}} = \|\mathbf{M}_A - \mathbf{M}_P\|_2 + \|\mathbf{M}_A'
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 两大数据集全面评估，消融涵盖所有核心设计
 - **实用性**: ⭐⭐⭐⭐⭐ — 轻量级、从头训练、快速推理，非常适合工业部署
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integration of Deep Generative Anomaly Detection Algorithm in High-Speed Industrial Line](../../CVPR2026/others/integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
+- [ADPretrain: Advancing Industrial Anomaly Detection via Anomaly Representation Pretraining](../../NeurIPS2025/others/adpretrain_advancing_industrial_anomaly_detection_via_anomaly_representation_pre.md)
+- [Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples](../../CVPR2026/others/novel_anomaly_detection_scenarios_and_evaluation_metrics_to_address_the_ambiguit.md)
+- [Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](../../ECCV2024/others/learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
+- [From Sequential to Recursive: Enhancing Decision-Focused Learning with Bidirectional Feedback](from_sequential_to_recursive_enhancing_decision-focused_learning_with_bidirectio.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ S'MoRE在更大模型上同样持续超越LoRA和MixLoRA等基线，在ARC-c、C
 ⭐⭐⭐⭐⭐
 
 方法设计优雅，理论分析扎实（GNN+WL测试视角非常有趣），实验全面。"结构灵活性"的概念为MoE设计开辟了新维度，且参数效率控制精确。唯一不足是缺少生成任务实验和推理延迟分析。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Moscat: Mixture of Scope Experts at Test for Generalizing Deeper GNNs](mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)
+- [MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
+- [Magnitude-Modulated Equivariant Adapter for Parameter-Efficient Fine-Tuning of Equivariant Graph Neural Networks](../../AAAI2026/graph_learning/magnitude-modulated_equivariant_adapter_for_parameter-efficient_fine-tuning_of_e.md)
+- [The Underappreciated Power of Vision Models for Graph Structural Understanding](the_underappreciated_power_of_vision_models_for_graph_structural_understanding.md)
+- [ReMindRAG: Low-Cost LLM-Guided Knowledge Graph Traversal for Efficient RAG](remindrag_low-cost_llm-guided_knowledge_graph_traversal_for_efficient_rag.md)
+
+<!-- RELATED:END -->

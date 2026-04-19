@@ -223,3 +223,15 @@ $$\mathbb{E}[\ell_{\hat{P}}(\boldsymbol{\pi})] \leq \inf_{\boldsymbol{P}} \mathb
 - 实验充分度: ⭐⭐ 纯理论，无实验
 - 写作质量: ⭐⭐⭐⭐⭐ 严谨清晰，证明步骤逻辑性强
 - 价值: ⭐⭐⭐ 理论贡献扎实但实际影响有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cost-Free Neutrality for the River Method](cost-free_neutrality_for_the_river_method.md)
+- [t-SNE Exaggerates Clusters, Provably](../../ICLR2026/others/t-sne_exaggerates_clusters_provably.md)
+- [Whispering Agents: An Event-Driven Covert Communication Protocol for the Internet of Agents](whispering_agents_an_event-driven_covert_communication_protocol_for_the_internet.md)
+- [TaylorPODA: A Taylor Expansion-Based Method to Improve Post-Hoc Attributions for Opaque Models](taylorpoda_a_taylor_expansion-based_method_to_improve_post-hoc_attributions_for_.md)
+- [Sampling from Binary Quadratic Distributions via Stochastic Localization](../../ICML2025/others/sampling_from_binary_quadratic_distributions_via_stochastic_localization.md)
+
+<!-- RELATED:END -->

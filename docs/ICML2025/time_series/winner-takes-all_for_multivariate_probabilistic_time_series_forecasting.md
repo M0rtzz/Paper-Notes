@@ -143,3 +143,15 @@ TimeMCL 的预测轨迹在所有数据集上都显著更平滑，这与理论分
 - 实验充分度: ⭐⭐⭐⭐ — 6 个基准+合成数据，多指标评测，含计算成本分析
 - 写作质量: ⭐⭐⭐⭐ — 理论与实证结合紧密，结构清晰
 - 价值: ⭐⭐⭐⭐ — 为概率时序预测提供了一条高效且有理论保证的新路线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Probabilistic Time Series Forecasting Models on Neural Activity](../../NeurIPS2025/time_series/benchmarking_probabilistic_time_series_forecasting_models_on_neural_activity.md)
+- [HyperIMTS: Hypergraph Neural Network for Irregular Multivariate Time Series Forecasting](hyperimts_hypergraph_neural_network_for_irregular_multivariate_time_series_forec.md)
+- [TQNet: Temporal Query Network for Efficient Multivariate Time Series Forecasting](temporal_query_network_for_efficient_multivariate_time_series_forecasting.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+- [LightGTS: A Lightweight General Time Series Forecasting Model](lightgts_a_lightweight_general_time_series_forecasting_model.md)
+
+<!-- RELATED:END -->

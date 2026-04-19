@@ -142,3 +142,15 @@ $$L = L_G + \lambda L_C$$
 - 实验充分度: ⭐⭐⭐⭐ — 两个基准、多域交叉、长期 CTTA、消融、超参分析、t-SNE 可视化
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 对医学影像部署场景有实际意义，但计算开销是落地障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Progressive Test Time Energy Adaptation for Medical Image Segmentation](../../ICCV2025/medical_imaging/progressive_test_time_energy_adaptation_for_medical_image_segmentation.md)
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Cross-Sample Augmented Test-Time Adaptation for Personalized Intraoperative Hypotension Prediction](../../AAAI2026/medical_imaging/cross-sample_augmented_test-time_adaptation_for_personalized_intraoperative_hypo.md)
+
+<!-- RELATED:END -->

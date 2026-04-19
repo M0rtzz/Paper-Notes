@@ -234,3 +234,15 @@ FreeMotion 在奥运会运动合成上大幅超越 CLIP 基方法，显示出 ML
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖四个下游任务，但自动化指标不足，主要靠用户研究
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰、动机充分，双 Agent 设计解释详细
 - **价值**: ⭐⭐⭐⭐ — 开辟了 MLLM 驱动运动合成的新方向，但实际应用受限于推理成本和 API 依赖
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Img-Diff: Contrastive Data Synthesis for Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/img-diff_contrastive_data_synthesis_for_multimodal_large_language_models.md)
+- [Genixer: Empowering Multimodal Large Language Model as a Powerful Data Generator](genixer_empowering_multimodal_large_language_model_as_a_powerful_data_generator.md)
+- [OpenHOI: Open-World Hand-Object Interaction Synthesis with Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/openhoi_open-world_hand-object_interaction_synthesis_with_multimodal_large_langu.md)
+- [ReMoRa: Multimodal Large Language Model based on Refined Motion Representation for Long-Video Understanding](../../CVPR2026/multimodal_vlm/remora_multimodal_large_language_model_based_on_refined_motion_representation_fo.md)
+- [AdaShield: Safeguarding Multimodal Large Language Models from Structure-based Attack via Adaptive Shield Prompting](adashield_safeguarding_multimodal_large_language_models_from_structure-based_att.md)
+
+<!-- RELATED:END -->

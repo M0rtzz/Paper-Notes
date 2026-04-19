@@ -166,3 +166,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个真实数据集 + 光流质量评估 + 完整消融 + 推理速度对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、两个核心问题-两个解决方案的对应关系明确
 - 价值: ⭐⭐⭐⭐ HDR 视频重建的实用框架，Flow Adapter 思路有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S2R-HDR: A Large-Scale Rendered Dataset for HDR Fusion](../../ICLR2026/model_compression/s2r-hdr_a_large-scale_rendered_dataset_for_hdr_fusion.md)
+- [UniComp: Rethinking Video Compression Through Informational Uniqueness](unicomp_rethinking_video_compression_through_informational_uniqueness.md)
+- [Generative Video Compression with One-Dimensional Latent Representation](generative_video_compression_with_one-dimensional_latent_representation.md)
+- [Gain-MLP: Improving HDR Gain Map Encoding via a Lightweight MLP](../../ICCV2025/model_compression/gain-mlp_improving_hdr_gain_map_encoding_via_a_lightweight_mlp.md)
+- [PriVi: Towards a General-Purpose Video Model for Primate Behavior in the Wild](privi_towards_a_general-purpose_video_model_for_primate_behavior_in_the_wild.md)
+
+<!-- RELATED:END -->

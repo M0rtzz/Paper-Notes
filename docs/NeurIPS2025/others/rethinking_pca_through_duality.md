@@ -147,3 +147,15 @@ PCA 算法的运行时间比较 (n=10000, d=1000, k=50):
 - ⭐ 创新性: 8/10 — DC视角揭示了经典算法的新理解
 - ⭐ 实用性: 6/10 — 主要是理论贡献,实际应用场景有限
 - ⭐ 写作质量: 9/10 — 理论推导严谨,与经典文献的联系阐述清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Federated ADMM from Bayesian Duality](../../ICLR2026/others/federated_admm_from_bayesian_duality.md)
+- [Rethinking Aleatoric and Epistemic Uncertainty](../../ICML2025/others/rethinking_aleatoric_and_epistemic_uncertainty.md)
+- [Improving Decision Trees through the Lens of Parameterized Local Search](improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
+- [AutoSciDACT: Automated Scientific Discovery through Contrastive Embedding and Hypothesis Testing](autoscidact_automated_scientific_discovery_through_contrastive_embedding_and_hyp.md)
+- [LaCoOT: Layer Collapse through Optimal Transport](../../ICCV2025/others/lacoot_layer_collapse_through_optimal_transport.md)
+
+<!-- RELATED:END -->

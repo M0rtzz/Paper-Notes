@@ -187,3 +187,15 @@ $$\nabla_\nu \log \mathbf{p}_\nu(\mathbf{z}_t=\mathbf{m}, t=1) \approx \nabla_\n
 | 实用价值 | 7 | 训练高效、加速显著，但仅验证非条件生成，且模型规模有限 |
 | 写作质量 | 8 | 结构清晰，公式推导连贯，图示（Figure 2）直观展示了流水线 |
 | **总分** | **8.0** | 理论贡献扎实、实验结果令人印象深刻的 dLLM 加速工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [GenMol: A Drug Discovery Generalist with Discrete Diffusion](../../ICML2025/medical_imaging/genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+- [Protein Counterfactuals via Diffusion-Guided Latent Optimization](protein_counterfactuals_via_diffusion-guided_latent_optimization.md)
+- [Why Masking Diffusion Works: Condition on the Jump Schedule for Improved Discrete Diffusion](../../NeurIPS2025/medical_imaging/why_masking_diffusion_works_condition_on_the_jump_schedule_for_improved_discrete.md)
+
+<!-- RELATED:END -->

@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ （原型验证充分但缺乏定量指标和用户研究）
 - 写作质量: ⭐⭐⭐⭐ （问题定位清晰，系统设计描述完整）
 - 价值: ⭐⭐⭐ （概念有意义但实际部署距离较远；应用场景偏窄）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text to Robotic Assembly of Multi Component Objects using 3D Generative AI and Vision Language Models](text_to_robotic_assembly_of_multi_component_objects_using_3d_generative_ai_and_v.md)
+- [CoreMatching: A Co-adaptive Sparse Inference Framework with Token and Neuron Pruning for Comprehensive Acceleration of Vision-Language Models](../../ICML2025/multimodal_vlm/corematching_a_co-adaptive_sparse_inference_framework_with_token_and_neuron_prun.md)
+- [ViSpec: Accelerating Vision-Language Models with Vision-Aware Speculative Decoding](vispec_accelerating_vision-language_models_with_vision-aware_speculative_decodin.md)
+- [Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+- [Towards Human-AI Accessibility Mapping in India: VLM-Guided Annotations and POI-Centric Analysis in Chandigarh](../../AAAI2026/multimodal_vlm/towards_human-ai_accessibility_mapping_in_india_vlm-guided_annotations_and_poi-c.md)
+
+<!-- RELATED:END -->

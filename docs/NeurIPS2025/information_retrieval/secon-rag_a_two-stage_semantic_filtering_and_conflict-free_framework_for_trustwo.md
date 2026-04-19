@@ -123,3 +123,15 @@ SeCon-RAG 分两阶段工作：**第一阶段 SCF（Semantic and Clustering-Base
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ 语义图结构差异的观察有启发性，但整体框架是多个已知技术的组合
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个LLM × 3个数据集 × 4种攻击设置 + 详细消融 + 嵌入模型分析 + 阈值敏感性，非常全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiFi-RAG: Hierarchical Content Filtering and Two-Pass Generation for Open-Domain RAG](hifi-rag_hierarchical_content_filtering_and_two-pass_generation_for_open-domain_.md)
+- [Don't Lag, RAG: Training-Free Adversarial Detection Using RAG](../../ICML2025/information_retrieval/dont_lag_rag_training-free_adversarial_detection_using_rag.md)
+- [Retrieval is Not Enough: Enhancing RAG Reasoning through Test-Time Critique and Optimization](retrieval_is_not_enough_enhancing_rag_reasoning_through_test-time_critique_and_o.md)
+- [RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering](rag-igbench_innovative_evaluation_for_rag-based_interleaved_generation_in_open-d.md)
+- [MAIN-RAG: Multi-Agent Filtering Retrieval-Augmented Generation](../../ACL2025/information_retrieval/main-rag_multi-agent_filtering_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

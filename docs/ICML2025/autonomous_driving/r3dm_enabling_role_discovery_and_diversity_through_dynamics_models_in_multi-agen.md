@@ -139,3 +139,15 @@ $$\mathcal{L}_{TD}(\theta) = \left[r^t + \alpha r_{\text{int}}^t + \gamma \max_{
 - 实验充分度: ⭐⭐⭐⭐ SMAC/SMACv2 全面评测含消融和定性分析，但环境类型单一
 - 写作质量: ⭐⭐⭐⭐ 定理推导清晰，消防无人机例子贯穿全文，直观易懂
 - 价值: ⭐⭐⭐⭐ 为 MARL 角色学习提供连接历史与未来行为的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BayesG: Bayesian Ego-Graph Inference for Networked Multi-Agent Reinforcement Learning](../../NeurIPS2025/autonomous_driving/bayesian_ego-graph_inference_for_networked_multi-agent_reinforcement_learning.md)
+- [Hybrid Quantum-Classical Multi-Agent Pathfinding](hybrid_quantum-classical_multi-agent_pathfinding.md)
+- [GoIRL: Graph-Oriented Inverse Reinforcement Learning for Multimodal Trajectory Prediction](goirl_graph-oriented_inverse_reinforcement_learning_for_multimodal_trajectory_pr.md)
+- [RAW2Drive: Reinforcement Learning with Aligned World Models for End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/raw2drive_reinforcement_learning_with_aligned_world_models_for_end-to-end_autono.md)
+- [Learning to Detect Objects from Multi-Agent LiDAR Scans without Manual Labels](../../CVPR2025/autonomous_driving/learning_to_detect_objects_from_multi-agent_lidar_scans_without_manual_labels.md)
+
+<!-- RELATED:END -->

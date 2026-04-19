@@ -111,3 +111,15 @@ DWDN和DDPM均在Harvard+ICVL数据集上用合成数据训练。子图像通过
 - 实验充分度: ⭐⭐⭐⭐ 仿真比较充分、有实物原型和真实场景验证，消融可更深入
 - 写作质量: ⭐⭐⭐⭐⭐ 物理建模严谨、图示清晰、硬件细节详尽
 - 价值: ⭐⭐⭐⭐ 对计算成像和超表面光学有重要推动，但与CV主流方向距离较远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lumosaic: Hyperspectral Video via Active Illumination and Coded-Exposure Pixels](lumosaic_hyperspectral_video_via_active_illumination_and_coded-exposure_pixels.md)
+- [No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors](no_labels_no_look-ahead_unsupervised_online_video_stabilization_with_classical_p.md)
+- [Asking like Socrates: Socrates helps VLMs understand remote sensing images](asking_like_socrates_socrates_helps_vlms_understand_remote_sensing_images.md)
+- [SDF-Net: Structure-Aware Disentangled Feature Learning for Optical-SAR Ship Re-identification](sdfnet_structureaware_disentangled_feature_learnin.md)
+- [AVION: Aerial Vision-Language Instruction from Offline Teacher to Prompt-Tuned Network](avion_aerial_vision-language_instruction_from_offline_teacher_to_prompt-tuned_ne.md)
+
+<!-- RELATED:END -->

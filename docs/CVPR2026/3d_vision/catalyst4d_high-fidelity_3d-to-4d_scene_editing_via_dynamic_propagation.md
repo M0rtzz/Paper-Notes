@@ -114,3 +114,15 @@ Catalyst4D框架分为两步：（1）用现有3D编辑器（DGE/DreamCatalyst/S
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+定量+定性+消融+多基线对比
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导清晰，模块逻辑紧凑，图表精美
 - 价值: ⭐⭐⭐⭐ 建立了3D→4D编辑传播的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruct-4DGS: Efficient Dynamic Scene Editing via 4D Gaussian-based Static-Dynamic Separation](../../CVPR2025/3d_vision/efficient_dynamic_scene_editing_via_4d_gaussian-based_static-dynamic_separation.md)
+- [CustomTex: High-fidelity Indoor Scene Texturing via Multi-Reference Customization](customtex_high-fidelity_indoor_scene_texturing_via_multi-reference_customization.md)
+- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification](topomesh_high-fidelity_mesh_autoencoding_via_topological_unification.md)
+- [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
+
+<!-- RELATED:END -->

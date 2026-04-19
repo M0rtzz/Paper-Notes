@@ -136,3 +136,15 @@ HarmBench上的攻击成功率（ASR）对比：
 ⭐⭐⭐⭐
 
 创新性强——首次将SOM用于拒绝方向提取，理论上证明了SD是其特例，实验中显著超越SD和专用越狱算法。理论推导完整，实验设计合理。不足在于计算开销和对模型正常性能影响的分析不充分。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToC: Tree-of-Claims Search with Multi-Agent Language Models](toc_tree-of-claims_search_with_multi-agent_language_models.md)
+- [Are Greedy Task Orderings Better Than Random in Continual Linear Regression?](../../NeurIPS2025/interpretability/are_greedy_task_orderings_better_than_random_in_continual_linear_regression.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
+- [Better Estimation of the Kullback-Leibler Divergence Between Language Models](../../NeurIPS2025/interpretability/better_estimation_of_the_kullback--leibler_divergence_between_language_models.md)
+- [HSKBenchmark: Modeling and Benchmarking Chinese Second Language Acquisition in Large Language Models through Curriculum Tuning](hskbenchmark_modeling_and_benchmarking_chinese_second_language_acquisition_in_la.md)
+
+<!-- RELATED:END -->

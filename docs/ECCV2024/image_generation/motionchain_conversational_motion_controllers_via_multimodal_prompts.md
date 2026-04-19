@@ -126,3 +126,15 @@ $$\mathcal{L}_{LM} = -\sum_{i=0}^{L_t-1} \log p_\theta(x_a^i | X_v, X_{s,<i}, X_
 ## 评分
 
 ⭐⭐⭐⭐ (4/5) — 首次将多轮对话引入运动生成领域，统一多模态表示设计精巧，但受限于运动数据规模和交互建模能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [M2D2M: Multi-Motion Generation from Text with Discrete Diffusion Models](m2d2m_multi-motion_generation_from_text_with_discrete_diffusion_models.md)
+
+<!-- RELATED:END -->

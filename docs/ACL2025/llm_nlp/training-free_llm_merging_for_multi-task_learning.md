@@ -153,3 +153,15 @@ Hi-Merging采用两阶段层级处理架构：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖三种合并场景（双语/多任务/跨语言跨任务），与10+基线对比，含消融分析
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，三种冲突类型的可视化说明直观，整体结构良好
 - 价值: ⭐⭐⭐⭐ 无训练方法超越有训练基线，对LLM社区的模型整合具有实际指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Training-free LLM-based Approach to General Chinese Character Error Correction](a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
+- [SkillAggregation: Reference-free LLM-Dependent Aggregation](skillaggregation_reference-free_llm-dependent_aggregation.md)
+- [Beyond In-Context Learning: Aligning Long-form Generation of LLMs via Task-Inherent Attribute Guidelines](beyond_in-context_learning_aligning_long-form_generation_of_large_language_model.md)
+- [Understanding Silent Data Corruption in LLM Training](understanding_silent_data_corruption_in_llm_training.md)
+
+<!-- RELATED:END -->

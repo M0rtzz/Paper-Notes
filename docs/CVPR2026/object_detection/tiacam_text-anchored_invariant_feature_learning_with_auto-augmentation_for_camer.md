@@ -154,3 +154,15 @@ TIACam 由三个模块组成，以三方对抗循环联合训练：
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实场景、消融、区分度测试较完整，但缺少运行效率分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，图示直观
 - 价值: ⭐⭐⭐⭐ — 在相机鲁棒零水印方向有显著进展，但实际部署可行性需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition](learning_by_neighbor-aware_semantics_deciding_by_open-form_flows_towards_robust_.md)
+- [SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_texttoimage_diffusion_v.md)
+- [Advancing Textual Prompt Learning with Anchored Attributes](../../ICCV2025/object_detection/advancing_textual_prompt_learning_with_anchored_attributes.md)
+- [Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection](foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob.md)
+
+<!-- RELATED:END -->

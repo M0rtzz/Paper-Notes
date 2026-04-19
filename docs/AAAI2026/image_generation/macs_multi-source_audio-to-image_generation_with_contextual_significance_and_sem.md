@@ -186,3 +186,15 @@ MACS 在 21 个评估指标中的 **17 个**取得最佳，全面超越 SOTA。
 - 实验充分度: ⭐⭐⭐⭐⭐（三类数据集 + 5折交叉验证 + 丰富消融和可视化）
 - 写作质量: ⭐⭐⭐⭐（方法描述详尽，公式化完整）
 - 价值: ⭐⭐⭐⭐（开辟多源音频-图像生成新方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cinematic Audio Source Separation Using Visual Cues](../../CVPR2026/image_generation/cinematic_audio_source_separation_using_visual_cues.md)
+- [Multi-Metric Preference Alignment for Generative Speech Restoration](multi-metric_preference_alignment_for_generative_speech_restoration.md)
+- [ReAlign: Text-to-Motion Generation via Step-Aware Reward-Guided Alignment](realign_text-to-motion_generation_via_step-aware_reward-guided_alignment.md)
+- [Playmate2: Training-Free Multi-Character Audio-Driven Animation via Diffusion Transformer with Reward Feedback](playmate2_training-free_multi-character_audio-driven_animation_via_diffusion_tra.md)
+- [FreeInpaint: Tuning-free Prompt Alignment and Visual Rationality Enhancement in Image Inpainting](freeinpaint_tuning-free_prompt_alignment_and_visual_rationality_enhancement_in_i.md)
+
+<!-- RELATED:END -->

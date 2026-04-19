@@ -137,3 +137,15 @@ $$\mathcal{I} = \lambda_1 \mathbb{E}_{\ell \in \mathcal{L}_{\text{perc}}}[\mathc
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3模型×5基准×4baseline，加上大规模超参数搜索和消融
 - 写作质量: ⭐⭐⭐⭐ — 理论分析清晰，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ — 即插即用+几乎零开销，工程落地价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Faithful Multimodal Concept Bottleneck Models](towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Cut to the Chase: Training-free Multimodal Summarization via Chain-of-Events](cut_to_the_chase_training-free_multimodal_summarization_via_chain-of-events.md)
+- [How to Take a Memorable Picture? Empowering Users with Actionable Feedback](how_to_take_a_memorable_picture_empowering_users_with_actionable_feedback.md)
+- [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
+- [SafeDrive: Fine-Grained Safety Reasoning for End-to-End Driving in a Sparse World](safedrive_fine-grained_safety_reasoning_for_end-to-end_driving_in_a_sparse_world.md)
+
+<!-- RELATED:END -->

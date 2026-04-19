@@ -133,3 +133,15 @@ $$\hat{\mathbf{p}} = \arg\min_{\|\mathbf{b}-\mathbf{q}\|_1 \leq r} \frac{1}{n}\s
 - **理论深度**: ★★★★★（上下界分析严谨，分块技术精巧）
 - **实用性**: ★★☆☆☆（纯理论工作，实际应用场景有限）
 - **清晰度**: ★★★★☆（技术概述清晰，证明结构良好）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Radar: Benchmarking Language Models on Imperfect Tabular Data](radar_benchmarking_language_models_on_imperfect_tabular_data.md)
+- [Joint Out-of-Distribution Filtering and Data Discovery Active Learning](../../CVPR2025/others/joint_out-of-distribution_filtering_and_data_discovery_active_learning.md)
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+- [Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](../../CVPR2025/others/distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
+- [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](../../ECCV2024/others/rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)
+
+<!-- RELATED:END -->

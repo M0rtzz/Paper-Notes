@@ -136,3 +136,15 @@ $$\mathbf{Adv}^{\mathsf{AMI}}_{\text{LDP}}(\mathcal{A}^{\mathcal{D}}_{\mathsf{FC
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖CIFAR10/100/ImageNet、4种LDP机制、FC/Attention两类攻击、视觉+NLP
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 对联邦学习隐私保护实践具有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Privacy-Shielded Image Compression: Defending Against Exploitation from Vision-Language Pretrained Models](privacy-shielded_image_compression_defending_against_exploitation_from_vision-la.md)
+- [Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)](../../ICLR2026/ai_safety/membership_inference_attacks_against_fine-tuned_diffusion_language_models.md)
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
+- [Adversarial Inception Backdoor Attacks against Reinforcement Learning](adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](../../NeurIPS2025/ai_safety/exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
+
+<!-- RELATED:END -->

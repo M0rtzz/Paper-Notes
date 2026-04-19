@@ -165,3 +165,15 @@ mesh 重建和缩放模块对最终性能影响最大。
 - 实验充分度: ⭐⭐⭐⭐ 多维度评估（重建精度、泛化、时间一致性、模块消融），设计合理
 - 写作质量: ⭐⭐⭐⭐ 图表丰富，管线说明清晰
 - 价值: ⭐⭐⭐ 聚焦实验室液体操作场景，应用范围较窄但在目标领域有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PIMRL: Physics-Informed Multi-Scale Recurrent Learning for Burst-Sampled Spatiotemporal Dynamics](pimrl_physics-informed_multi-scale_recurrent_learning_for_burst-sampled_spatiote.md)
+- [Astral: Training Physics-Informed Neural Networks with Error Majorants](../../ICLR2026/scientific_computing/astral_training_physics-informed_neural_networks_with_error_majorants.md)
+- [Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](../../ICML2025/scientific_computing/differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [Neuro-Spectral Architectures for Causal Physics-Informed Networks](../../NeurIPS2025/scientific_computing/neuro-spectral_architectures_for_causal_physics-informed_networks.md)
+- [Causal-PIK: Causality-based Physical Reasoning with a Physics-Informed Kernel](../../ICML2025/scientific_computing/causal-pik_causality-based_physical_reasoning_with_a_physics-informed_kernel.md)
+
+<!-- RELATED:END -->

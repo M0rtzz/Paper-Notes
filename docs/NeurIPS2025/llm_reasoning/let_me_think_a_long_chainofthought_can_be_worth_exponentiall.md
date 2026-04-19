@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 从头训练小模型 + 前沿大模型验证 + RL涌现实验 + AIME 迁移
 - 写作质量: ⭐⭐⭐⭐⭐ 理论清晰、直觉解释到位、证明结构优雅
 - 价值: ⭐⭐⭐⭐⭐ 对"长思考 vs 多次短思考"这一核心问题给出了理论基础，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](adaptive_dual_reasoner_large_reasoning_models_can_think_efficiently_by_hybrid_re.md)
+- [Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](../../ACL2025/llm_reasoning/can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)
+- [Let LRMs Break Free from Overthinking via Self-Braking Tuning](let_lrms_break_free_from_overthinking_via_self-braking_tuning.md)
+- [ReasonFlux-PRM: Trajectory-Aware PRMs for Long Chain-of-Thought Reasoning in LLMs](reasonfluxprm_trajectoryaware_prms_for_long_chainofthought_r.md)
+- [Many LLMs Are More Utilitarian Than One](many_llms_are_more_utilitarian_than_one.md)
+
+<!-- RELATED:END -->

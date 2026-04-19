@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐ 缺少基线对比和消融实验，无置信区间
 - 写作质量: ⭐⭐⭐ 工程细节详尽，但论文结构偏工业报告
 - 价值: ⭐⭐⭐ 工业部署经验有参考价值，但学术贡献有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)
+- [Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples](novel_anomaly_detection_scenarios_and_evaluation_metrics_to_address_the_ambiguit.md)
+- [ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization](enhancing_outofdistribution_detection_with_extende.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_widefield_and_highdynamic_range.md)
+- [Reimagining Anomalies: What if Anomalies Were Normal?](../../AAAI2026/others/reimagining_anomalies_what_if_anomalies_were_normal.md)
+
+<!-- RELATED:END -->

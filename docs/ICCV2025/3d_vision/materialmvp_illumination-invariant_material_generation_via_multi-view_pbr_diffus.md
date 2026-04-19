@@ -129,3 +129,15 @@ MaterialMVP是一个端到端的多视图PBR纹理生成模型，通过一致性
 - 实验充分度: ⭐⭐⭐ 定量全面领先但消融仅定性
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化效果出色
 - 价值: ⭐⭐⭐⭐ 端到端PBR生成的实用方案，对3D资产产线有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SuperMat: Physically Consistent PBR Material Estimation at Interactive Rates](supermat_physically_consistent_pbr_material_estimation_at_interactive_rates.md)
+- [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
+- [FlexGen: Flexible Multi-View Generation from Text and Image Inputs](flexgen_flexible_multi-view_generation_from_text_and_image_inputs.md)
+- [MV-Adapter: Multi-view Consistent Image Generation Made Easy](mv-adapter_multi-view_consistent_image_generation_made_easy.md)
+- [MVGBench: a Comprehensive Benchmark for Multi-view Generation Models](mvgbench_a_comprehensive_benchmark_for_multi-view_generation_models.md)
+
+<!-- RELATED:END -->

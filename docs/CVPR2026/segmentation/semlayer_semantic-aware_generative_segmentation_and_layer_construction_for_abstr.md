@@ -135,3 +135,15 @@ Refined 分割指标提升：
 - 实验充分度: ⭐⭐⭐ 定量评估在 48 个测试图标上进行稍显不足，但定性可视化充分展示了效果
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，四个挑战逐一对应解决方案
 - 价值: ⭐⭐⭐⭐ 对设计工具领域有实际应用价值，数据集和方法可为矢量图形理解奠定基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Making Training-Free Diffusion Segmentors Scale with the Generative Power](making_training-free_diffusion_segmentors_scale_with_the_generative_power.md)
+- [SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semanticguided_modalityaware_segmentation_for.md)
+- [Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training](data_warmup_complexity-aware_curricula_for_efficient_diffusion_training.md)
+- [LayerAnimate: Layer-level Control for Animation](../../ICCV2025/segmentation/layeranimate_layer-level_control_for_animation.md)
+- [Task-Oriented Data Synthesis and Control-Rectify Sampling for Remote Sensing Semantic Segmentation](task-oriented_data_synthesis_and_control-rectify_sampling_for_remote_sensing_sem.md)
+
+<!-- RELATED:END -->

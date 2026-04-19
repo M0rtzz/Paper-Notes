@@ -152,3 +152,15 @@ FineRS 基于 Qwen2.5-VL-7B 构建，采用两阶段流水线：
 - 实验充分度: ⭐⭐⭐⭐ — 自建数据集 + 多个公开基准 + 全面消融，但缺少推理效率分析
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，图表得当
 - 价值: ⭐⭐⭐⭐⭐ — 填补了 MLLM 在高分辨率小目标分割领域的空白，数据集和方法均有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAM-R1: Leveraging SAM for Reward Feedback in Multimodal Segmentation via Reinforcement Learning](sam-r1_leveraging_sam_for_reward_feedback_in_multimodal_segmentation_via_reinfor.md)
+- [GTPBD: A Fine-Grained Global Terraced Parcel and Boundary Dataset](gtpbd_a_fine-grained_global_terraced_parcel_and_boundary_dataset.md)
+- [PartNeXt: A Next-Generation Dataset for Fine-Grained and Hierarchical 3D Part Understanding](partnext_a_next-generation_dataset_for_fine-grained_and_hierarchical_3d_part_und.md)
+- [Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation](../../CVPR2025/segmentation/fine-grained_image-text_correspondence_with_cost_aggregation_for_open-vocabulary.md)
+- [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
+
+<!-- RELATED:END -->

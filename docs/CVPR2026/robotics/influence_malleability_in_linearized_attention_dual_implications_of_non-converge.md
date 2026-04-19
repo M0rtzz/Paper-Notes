@@ -133,3 +133,15 @@ tags:
 - 价值: ⭐⭐⭐⭐ — 为理解注意力机制的本质提供了新视角，对对抗鲁棒性研究有启发
 - 总评: ⭐⭐⭐⭐ — 一篇扎实的理论工作，核心洞察"注意力的能力与脆弱性同源"既优雅又实用，
   若能扩展到 softmax attention 和大规模模型将更具影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-time Ego-Exo-centric Adaptation for Action Anticipation via Multi-Label Prototype Growing and Dual-Clue Consistency](test-time_ego-exo-centric_adaptation_for_action_anticipation_via_multi-label_pro.md)
+- [RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](rc-nf_robot-conditioned_normalizing_flow_for_real-time_anomaly_detection_in_robo.md)
+- [Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning](cross-domain_demo-to-code_via_neurosymbolic_counterfactual_reasoning.md)
+- [PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments](panoaffordancenet_towards_holistic_affordance_grounding_in_360_indoor_environmen.md)
+- [Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning](fast-thinkact_efficient_vision-language-action_reasoning_via_verbalizable_latent.md)
+
+<!-- RELATED:END -->

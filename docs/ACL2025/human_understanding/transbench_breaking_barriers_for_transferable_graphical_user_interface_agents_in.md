@@ -127,3 +127,15 @@ TransBench 是一个 **benchmark 数据集**，不提出新模型。核心贡献
 - 实验充分度: ⭐⭐⭐⭐ 多模型多维度评估，但微调只用一个模型
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验设计系统，图表丰富
 - 价值: ⭐⭐⭐⭐ 对 GUI Agent 实际部署有直接参考价值，benchmark 可推动社区研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [nnterp: A Standardized Interface for Mechanistic Interpretability of Transformers](../../NeurIPS2025/human_understanding/nnterp_a_standardized_interface_for_mechanistic_interpretability_of_transformers.md)
+- [Learning Skill-Attributes for Transferable Assessment in Video](../../NeurIPS2025/human_understanding/learning_skill-attributes_for_transferable_assessment_in_video.md)
+- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](../../NeurIPS2025/human_understanding/policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+- [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](../../AAAI2026/human_understanding/transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
+- [A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments](../../ICML2025/human_understanding/a_generalizable_physics-enhanced_state_space_model_for_long-term_dynamics_foreca.md)
+
+<!-- RELATED:END -->

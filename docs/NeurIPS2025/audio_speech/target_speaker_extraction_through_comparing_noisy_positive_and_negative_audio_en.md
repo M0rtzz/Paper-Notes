@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （多场景对比全面，消融清晰，但缺乏真实数据评估）
 - 写作质量: ⭐⭐⭐⭐ （问题定义清楚，方法动机阐述好）
 - 价值: ⭐⭐⭐⭐ （解决了实际场景中的关键痛点）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound](audsemthinker_enhancing_audio-language_models_through_reasoning_over_semantics_o.md)
+- [Teaching Physical Awareness to LLMs through Sounds](../../ICML2025/audio_speech/teaching_physical_awareness_to_llms_through_sounds.md)
+- [USE: A Unified Model for Universal Sound Separation and Extraction](../../AAAI2026/audio_speech/use_a_unified_model_for_universal_sound_separation_and_extraction.md)
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](../../ACL2025/audio_speech/dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+- [Different Speech Translation Models Encode and Translate Speaker Gender Differently](../../ACL2025/audio_speech/different_speech_translation_models_encode_and_translate_speaker_gender_differen.md)
+
+<!-- RELATED:END -->

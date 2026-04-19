@@ -110,3 +110,15 @@ SPARROW作为即插即用模块分别适配到VideoGLaMM、UniPixel和GLUS三个
 - 实验充分度: ⭐⭐⭐⭐ 三个基线×六个benchmark的全面验证，模块化消融清晰
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，方法描述详细，图示清晰
 - 价值: ⭐⭐⭐⭐ 对视频MLLM的时序一致性和空间精度提供了通用增强方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SouPLe: Enhancing Audio-Visual Localization and Segmentation with Learnable Prompt Contexts](souple_enhancing_audio-visual_localization_and_segmentation_with_learnable_promp.md)
+- [Reasoning with Pixel-level Precision: QVLM Architecture and SQuID Dataset for Quantitative Geospatial Analytics](reasoning_with_pixel-level_precision_qvlm_architecture_and_squid_dataset_for_qua.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [Live Interactive Training for Video Segmentation](live_interactive_training_for_video_segmentation.md)
+- [RobotSeg: A Model and Dataset for Segmenting Robots in Image and Video](robotseg_a_model_and_dataset_for_segmenting_robots_in_image_and_video.md)
+
+<!-- RELATED:END -->

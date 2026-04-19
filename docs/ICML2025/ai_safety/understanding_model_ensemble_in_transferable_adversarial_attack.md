@@ -157,3 +157,15 @@ $$TE(z, \epsilon) \leq 4\mathcal{R}_N(\mathcal{Z}) + \sqrt{\frac{18\gamma \beta^
 | 实用价值 | ⭐⭐⭐⭐ | 三条指南有实用意义，但缺少具体新算法 |
 | 写作清晰度 | ⭐⭐⭐⭐ | 逻辑清晰，图示直观，符号较多但定义明确 |
 | 总评 | ⭐⭐⭐⭐ | 理论导向的高质量工作，开创了模型集成攻击理论研究新方向 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [X-Transfer Attacks: Towards Super Transferable Adversarial Attacks on CLIP](x-transfer_attacks_towards_super_transferable_adversarial_attacks_on_clip.md)
+- [Identifying and Understanding Cross-Class Features in Adversarial Training](identifying_and_understanding_cross-class_features_in_adversarial_training.md)
+- [Understanding and Improving Adversarial Robustness of Neural Probabilistic Circuits](../../NeurIPS2025/ai_safety/understanding_and_improving_adversarial_robustness_of_neural_probabilistic_circu.md)
+- [Transferable Hypergraph Attack via Injecting Nodes into Pivotal Hyperedges](../../AAAI2026/ai_safety/transferable_hypergraph_attack_via_injecting_nodes_into_pivotal_hyperedges.md)
+- [MOS-Attack: A Scalable Multi-Objective Adversarial Attack Framework](../../CVPR2025/ai_safety/mos-attack_a_scalable_multi-objective_adversarial_attack_framework.md)
+
+<!-- RELATED:END -->

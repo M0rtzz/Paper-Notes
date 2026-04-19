@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作无实验，但定理证明严谨完整，包含上下界和多种变体
 - 写作质量: ⭐⭐⭐⭐⭐ 论文写作极其清晰，直觉解释和形式化证明交替推进，可读性极强
 - 价值: ⭐⭐⭐⭐⭐ 对AI安全的理论基础有根本性贡献，"可学则安全可学"的等价性可能成为经典结果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Computable Universal Online Learning](../../NeurIPS2025/others/computable_universal_online_learning.md)
+- [Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+- [Prediction-Powered Semi-Supervised Learning with Online Power Tuning](../../NeurIPS2025/others/prediction-powered_semi-supervised_learning_with_online_power_tuning.md)
+- [Learning-Augmented Online Bipartite Fractional Matching](../../NeurIPS2025/others/learning-augmented_online_bipartite_fractional_matching.md)
+- [Can Uniform Meaning Representation Help GPT-4 Translate from Indigenous Languages?](../../ACL2025/others/can_uniform_meaning_representation_help_gpt-4_translate_from_indigenous_language.md)
+
+<!-- RELATED:END -->

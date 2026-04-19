@@ -126,3 +126,15 @@ InterDyn在LPIPS上超越CosHand 37.5%，FVD上超越77%。
 - 实验充分度: ⭐⭐⭐⭐ 从合成到真实、从简单到复杂的渐进验证，定量定性都有
 - 写作质量: ⭐⭐⭐⭐ 叙事清晰，从问题定义到实验设计逻辑通顺
 - 价值: ⭐⭐⭐⭐ 开辟了视频模型作为隐式物理模拟器的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
+- [Target-Aware Video Diffusion Models](../../ICLR2026/video_generation/target-aware_video_diffusion_models.md)
+- [Mimir: Improving Video Diffusion Models for Precise Text Understanding](mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
+- [Articulated Kinematics Distillation from Video Diffusion Models](articulated_kinematics_distillation_from_video_diffusion_models.md)
+- [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
+
+<!-- RELATED:END -->

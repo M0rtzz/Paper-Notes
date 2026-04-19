@@ -94,3 +94,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个基准、完整消融、cross-composition诊断、prompt可视化分析全面
 - 写作质量: ⭐⭐⭐⭐ 动机分析（Fig.1）有说服力，方法描述详尽且有数学严谨性
 - 价值: ⭐⭐⭐⭐ 在无数据存储的医学影像域增量学习这一实用场景有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multimodal_learning_for.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [Active Inference for Micro-Gesture Recognition: EFE-Guided Temporal Sampling and Adaptive Learning](active_inference_for_micro-gesture_recognition_efe-guided_temporal_sampling_and_.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+
+<!-- RELATED:END -->

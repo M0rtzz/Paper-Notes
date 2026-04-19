@@ -173,3 +173,15 @@ $$L_{contr} = -\frac{1}{|\mathcal{U}|} \sum_{u \in \mathcal{U}} \log \frac{\sum_
 - **实验充分性**: ⭐⭐⭐⭐⭐ — Replica+NVOS+in-the-wild，完整消融，公平对比
 - **实用价值**: ⭐⭐⭐⭐⭐ — 3D资产提取和场景编辑的直接应用价值
 - **总体推荐**: ⭐⭐⭐⭐⭐ — 3D分割提升领域的重要突破，解决了长期痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PanSt3R: Multi-view Consistent Panoptic Segmentation](panst3r_multi-view_consistent_panoptic_segmentation.md)
+- [CutS3D: Cutting Semantics in 3D for 2D Unsupervised Instance Segmentation](cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)
+- [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](../../CVPR2025/3d_vision/layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
+- [Towards Scalable Spatial Intelligence via 2D-to-3D Data Lifting](towards_scalable_spatial_intelligence_via_2d-to-3d_data_lifting.md)
+- [Part2Object: Hierarchical Unsupervised 3D Instance Segmentation](../../ECCV2024/3d_vision/part2object_hierarchical_unsupervised_3d_instance_segmentation.md)
+
+<!-- RELATED:END -->

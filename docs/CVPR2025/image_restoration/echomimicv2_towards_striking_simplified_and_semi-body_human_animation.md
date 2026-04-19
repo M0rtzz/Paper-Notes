@@ -108,3 +108,15 @@ PhD Loss = 按去噪时步加权的三段式损失。CelebV-HQ 视频训练。
 - 实验充分度: ⭐⭐⭐⭐ 详细组件消融，多指标对比
 - 写作质量: ⭐⭐⭐⭐ "华尔兹"比喻生动
 - 价值: ⭐⭐⭐⭐ 对数字人/虚拟主播应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InterActHuman: Multi-Concept Human Animation with Layout-Aligned Audio Conditions](../../ICLR2026/image_restoration/interacthuman_multi-concept_human_animation_with_layout-aligned_audio_conditions.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [ClearAIR: A Human-Visual-Perception-Inspired All-in-One Image Restoration](../../AAAI2026/image_restoration/clearair_a_human-visual-perception-inspired_all-in-one_image_restoration.md)
+- [INFP: Audio-Driven Interactive Head Generation in Dyadic Conversations](infp_audio-driven_interactive_head_generation_in_dyadic_conversations.md)
+- [Augmenting Perceptual Super-Resolution via Image Quality Predictors](augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
+
+<!-- RELATED:END -->

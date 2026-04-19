@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个基准、4个backbone、3种微调策略的全面消融
 - 写作质量: ⭐⭐⭐⭐⭐ 离散vs连续奖励的可视化对比（Figure 3、4）非常直观
 - 价值: ⭐⭐⭐⭐ 对无监督多模态自进化方向有重要参考价值，但绝对提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory](evolving_contextual_safety_in_multi-modal_large_language_models_via_inference-ti.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [Evolving Prompt Adaptation for Vision-Language Models](evolving_prompt_adaptation_for_visionlanguage_mode.md)
+- [EvoPrompt: Evolving Prompt Adaptation for Vision-Language Models](evolving_prompt_adaptation_for_vision-language_models.md)
+- [Beyond the Mean: Modelling Annotation Distributions in Continuous Affect Prediction](beyond_the_mean_modelling_annotation_distributions_in_continuous_affect_predicti.md)
+
+<!-- RELATED:END -->

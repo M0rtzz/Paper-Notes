@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 多种 $d$ 值下 95% 精确匹配，但仅限合成模加法任务
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨清晰，但代数记号密集、门槛较高
 - 价值: ⭐⭐⭐⭐ — 为理解网络推理能力提供全新代数视角，未来可能影响训练算法设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DynaAct: Large Language Model Reasoning with Dynamic Action Spaces](dynaact_large_language_model_reasoning_with_dynamic_action_spaces.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+- [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](a_theoretical_study_on_bridging_internal_probability_and_sel.md)
+- [Verbalized Algorithms: Zero-shot Classical Algorithmic Reasoning for Correctness and Runtime Guarantees](verbalized_algorithms.md)
+- [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+
+<!-- RELATED:END -->

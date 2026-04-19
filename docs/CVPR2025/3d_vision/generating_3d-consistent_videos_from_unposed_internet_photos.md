@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 用户研究+COLMAP+3DGS多角度验证，但缺乏定量的逐帧评估指标
 - 写作质量: ⭐⭐⭐⭐⭐ 叙述流畅，图示清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ 提出了可扩展的3D学习范式，对场景理解和视频生成社区都有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DepthCrafter: Generating Consistent Long Depth Sequences for Open-world Videos](depthcrafter_generating_consistent_long_depth_sequences_for_open-world_videos.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](../../ICCV2025/3d_vision/longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+- [ERUPT: Efficient Rendering with Unposed Patch Transformer](erupt_efficient_rendering_with_unposed_patch_transformer.md)
+- [Auto-Regressively Generating Multi-View Consistent Images](../../ICCV2025/3d_vision/auto-regressively_generating_multi-view_consistent_images.md)
+- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
+
+<!-- RELATED:END -->

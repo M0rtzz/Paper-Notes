@@ -170,3 +170,15 @@ FS-DFM 是连续空间 flow-matching 中少步/单步蒸馏思想（如 consiste
 - 实验充分度: ⭐⭐⭐⭐（多模型规模 + 多基线 + 消融充分，但缺少条件生成评估）
 - 实用性: ⭐⭐⭐⭐（128x 加速有实际意义，但 DLM 整体生态仍不成熟）
 - 写作质量: ⭐⭐⭐⭐（数学表述清晰，但符号较多需要反复查阅）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Isolated Words: Diffusion Brush for Handwritten Text-Line Generation](../../ICCV2025/nlp_generation/beyond_isolated_words_diffusion_brush_for_handwritten_text-line_generation.md)
+- [Tell, Don't Show: Leveraging Language Models' Abstractive Retellings to Model Literary Themes](../../ACL2025/nlp_generation/tell_dont_show_leveraging_language_models_abstractive_retellings_to_model_litera.md)
+- [Context-Aware Hierarchical Merging for Long Document Summarization](../../ACL2025/nlp_generation/context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [LotusFilter: Fast Diverse Nearest Neighbor Search via a Learned Cutoff Table](../../CVPR2025/nlp_generation/lotusfilter_fast_diverse_nearest_neighbor_search_via_a_learned_cutoff_table.md)
+- [C3TG: Conflict-aware, Composite, and Collaborative Controlled Text Generation](../../AAAI2026/nlp_generation/c3tg_conflict-aware_composite_and_collaborative_controlled_text_generation.md)
+
+<!-- RELATED:END -->

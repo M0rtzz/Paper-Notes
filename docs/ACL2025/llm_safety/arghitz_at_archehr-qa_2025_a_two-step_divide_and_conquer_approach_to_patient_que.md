@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 对比了多种方法和模型，但数据集太小（20条dev）限制了分析深度
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验设计和讨论充分
 - 价值: ⭐⭐⭐ 共享任务系统描述论文，方法组合的经验有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZJUKLAB at SemEval-2025 Task 4: Unlearning via Model Merging](zjuklab_at_semeval-2025_task_4_unlearning_via_model_merging.md)
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+- [Ewe: Improving Factuality with Explicit Working Memory](improving_factuality_with_explicit_working_memory.md)
+- [Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)
+- [ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)
+
+<!-- RELATED:END -->

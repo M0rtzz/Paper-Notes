@@ -147,3 +147,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 合成+真实数据集，多种配置消融，逐关节分析，但缺少与IMU方案的对比
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，实验详尽，但部分符号较繁琐
 - **价值**: ⭐⭐⭐⭐⭐ 对HMD硬件设计和自中心感知社区有重要启发，数据集开源价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PersPose: 3D Human Pose Estimation with Perspective Encoding and Perspective Rotation](perspose_3d_human_pose_estimation_with_perspective_encoding_and_perspective_rota.md)
+- [Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision](fish2mesh_transformer_3d_human_mesh_recovery_from_egocentric_vision.md)
+- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pose_estimation.md)
+- [RePoseD: Efficient Relative Pose Estimation with Known Depth Information](reposed_efficient_relative_pose_estimation_with_known_depth_information.md)
+- [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
+
+<!-- RELATED:END -->

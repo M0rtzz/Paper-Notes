@@ -123,3 +123,15 @@ MRM 作为辅助任务插入现有 UDA pipeline。在分割模型的编码器 $E
 - 实验充分度: ⭐⭐⭐⭐ 两大 benchmark、4 种 baseline、详细消融
 - 写作质量: ⭐⭐⭐⭐ 三种辅助任务的对比图非常直观，方法描述清楚
 - 价值: ⭐⭐⭐⭐ 简洁有效的即插即用策略，对 UDA 分割领域有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
+- [SARMAE: Masked Autoencoder for SAR Representation Learning](sarmae_masked_autoencoder_for_sar_representation_learning.md)
+- [REL-SF4PASS: Panoramic Semantic Segmentation with REL Depth Representation and Spherical Fusion](rel-sf4pass_panoramic_semantic_segmentation_with_rel_depth_representation_and_sp.md)
+- [CA-LoRA: Concept-Aware LoRA for Domain-Aligned Segmentation Dataset Generation](ca-lora_concept-aware_lora_for_domain-aligned_segmentation_dataset_generation.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+
+<!-- RELATED:END -->

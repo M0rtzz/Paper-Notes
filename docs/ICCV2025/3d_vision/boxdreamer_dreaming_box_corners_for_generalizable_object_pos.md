@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个数据集（LINEMOD/Occ-LM/YCB-Video/OnePose-LT），多种参考数据库配置，充分的消融实验和运行时间分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法叙述逻辑流畅，图表质量高，但部分细节（如参考图选择策略）放在了补充材料中
 - 价值: ⭐⭐⭐⭐ 在实际应用场景（稀疏视角+遮挡）中表现优异，17ms实时推理具有很强的工程价值，对机器人操作等下游任务有直接帮助
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation](bring_your_rear_cameras_for_egocentric_3d_human_pose_estimat.md)
+- [No Pose at All: Self-Supervised Pose-Free 3D Gaussian Splatting from Sparse Views](no_pose_at_all_self-supervised_pose-free_3d_gaussian_splatting_from_sparse_views.md)
+- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
+- [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
+- [TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update](2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ Mistral-7B在PKU-SafeRLHF和HH-RLHF测试集上的结果：
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多种基线、GPT-4o评估、Pareto前沿分析
 - 写作质量: ⭐⭐⭐⭐ 理论推导和实验衔接好，定理陈述规范
 - 价值: ⭐⭐⭐⭐ 对LLM安全对齐有实际指导意义，方法可扩展到更多目标
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
+- [DeAL: Decoding-time Alignment for Large Language Models](deal_decoding_time_alignment.md)
+- [GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization](gapo_preferential_prompt.md)
+- [From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
+- [Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization](improving_contextual_faithfulness_of_large_language_models_via_retrieval_heads-i.md)
+
+<!-- RELATED:END -->

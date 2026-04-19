@@ -128,3 +128,15 @@ VCWorld 在药物扰动预测基准上达到最先进性能，同时是唯一提
 - 实验充分度: ⭐⭐⭐⭐ 药物扰动基准全面，机制验证有说服力
 - 写作质量: ⭐⭐⭐⭐ 概念清晰，跨领域读者友好
 - 价值: ⭐⭐⭐⭐⭐ 对 AI for Science 和可解释 AI 均有重要方向性启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery](../../NeurIPS2025/interpretability/scpilot_large_language_model_reasoning_toward_automated_single-cell_analysis_and.md)
+- [NIMO: a Nonlinear Interpretable MOdel](nimo_a_nonlinear_interpretable_model.md)
+- [Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
+- [Evolution of Concepts in Language Model Pre-Training](evolution_of_concepts_in_language_model_pre-training.md)
+- [Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
+
+<!-- RELATED:END -->

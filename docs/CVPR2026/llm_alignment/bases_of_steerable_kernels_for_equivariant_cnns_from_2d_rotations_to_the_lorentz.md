@@ -143,3 +143,15 @@ $$K^{(j,l)}(g \cdot x) = \rho_j(g) K^{(j,l)}(x) \rho_l(g)^{-1}, \quad \forall g 
 - **实验充分度**: ⭐ — 纯理论工作，完全没有实验，这是最大短板
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导层层递进，从简单群到复杂群的展示很有教学价值，但符号偶尔不一致
 - **价值**: ⭐⭐⭐ — 对等变网络的理论基础有一定贡献，但缺乏实验验证限制了实际影响力；对需要构建 Lorentz 等变网络的研究者有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models](principled_steering_via_null-space_projection_for_jailbreak_defense_in_vision-la.md)
+- [PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization](physmodpo_physicallyplausible_humanoid_motion_with.md)
+- [LocalDPO: Direct Localized Detail Preference Optimization for Video Diffusion Models](mind_the_generative_details_direct_localized_detail_preference_optimization_for_.md)
+- [GlyphPrinter: Region-Grouped Direct Preference Optimization for Glyph-Accurate Visual Text Rendering](glyphprinter_region-grouped_direct_preference_optimization_for_glyph-accurate_vi.md)
+- [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+
+<!-- RELATED:END -->

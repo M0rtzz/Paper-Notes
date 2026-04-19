@@ -130,3 +130,15 @@ VertexRegen生成质量与SOTA可比，同时独有连续细节层级能力。JS
 - 技术深度: ⭐⭐⭐⭐⭐ (半边数据结构+引导解码的精巧设计)
 - 实验充分度: ⭐⭐⭐⭐ (无条件+条件+消融)
 - 实用价值: ⭐⭐⭐⭐⭐ (连续LOD是实际刚需)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MeshAnything V2: Artist-Created Mesh Generation with Adjacent Mesh Tokenization](meshanything_v2_artist-created_mesh_generation_with_adjacent_mesh_tokenization.md)
+- [ARMesh: Autoregressive Mesh Generation via Next-Level-of-Detail Prediction](../../NeurIPS2025/3d_vision/armesh_autoregressive_mesh_generation_via_next-level-of-detail_prediction.md)
+- [ExCap3D: Expressive 3D Scene Understanding via Object Captioning with Varying Detail](excap3d_expressive_3d_scene_understanding_via_object_captioning_with_varying_det.md)
+- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+- [LODGE: Level-of-Detail Large-Scale Gaussian Splatting with Efficient Rendering](../../NeurIPS2025/3d_vision/lodge_level-of-detail_large-scale_gaussian_splatting_with_efficient_rendering.md)
+
+<!-- RELATED:END -->

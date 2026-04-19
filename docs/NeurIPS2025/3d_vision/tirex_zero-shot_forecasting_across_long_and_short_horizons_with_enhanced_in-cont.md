@@ -154,3 +154,15 @@ CPM是TiRex的核心创新之一，解决多步预测中的误差累积问题：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两大标准基准、6种子重复、全面消融、推理效率分析、定性分析，实验设计非常扎实
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，实验组织合理
 - 价值: ⭐⭐⭐⭐⭐ — 以极小参数量统一短期和长期零样本预测SOTA，对实际应用有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-Centric Representation Learning for Enhanced 3D Semantic Scene Graph Prediction](object-centric_representation_learning_for_enhanced_3d_semantic_scene_graph_pred.md)
+- [Look and Tell: A Dataset for Multimodal Grounding Across Egocentric and Exocentric Views](look_and_tell_a_dataset_for_multimodal_grounding_across_egocentric_and_exocentri.md)
+- [Plana3R: Zero-shot Metric Planar 3D Reconstruction via Feed-Forward Planar Splatting](plana3r_zero-shot_metric_planar_3d_reconstruction_via_feed-forward_planar_splatt.md)
+- [FoundationStereo: Zero-Shot Stereo Matching](../../CVPR2025/3d_vision/foundationstereo_zero-shot_stereo_matching.md)
+- [Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span](gaze_beyond_the_frame_forecasting_egocentric_3d_visual_span.md)
+
+<!-- RELATED:END -->

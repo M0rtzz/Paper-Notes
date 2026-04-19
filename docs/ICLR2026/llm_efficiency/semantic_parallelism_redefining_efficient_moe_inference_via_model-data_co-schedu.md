@@ -105,3 +105,15 @@ tags:
 - **实验充分度**: 4/5 — 两种模型两种场景，但仅单节点
 - **写作质量**: 4/5 — 系统描述清晰，图示质量高
 - **价值**: 5/5 — MoE推理的核心痛点，产业价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference](../../ICML2025/llm_efficiency/ladder-residual_parallelism-aware_architecture_for_accelerating_large_model_infe.md)
+- [Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws](fast_catch-up_late_switching_optimal_batch_size_scheduling_via_functional_scalin.md)
+- [ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation](../../CVPR2026/llm_efficiency/ace-merging_data-free_model_merging_with_adaptive_covariance_estimation.md)
+- [Token-level Data Selection for Safe LLM Fine-tuning](token-level_data_selection_for_safe_llm_fine-tuning.md)
+
+<!-- RELATED:END -->

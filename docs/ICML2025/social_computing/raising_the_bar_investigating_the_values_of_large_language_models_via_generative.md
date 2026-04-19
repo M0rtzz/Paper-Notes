@@ -153,3 +153,15 @@ GETA 在并发效度指标上全面优于所有基线，特别是在最可靠的
 - 实验充分度: ⭐⭐⭐⭐ — 8个模型、3类价值、多维消融，但考生规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 框架图清晰、形式化严谨，公式较多但逻辑连贯
 - 价值: ⭐⭐⭐⭐⭐ — 解决了LLM安全评估中一个真实且重要的问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](../../ACL2025/social_computing/explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
+- [Active Slice Discovery in Large Language Models](../../NeurIPS2025/social_computing/active_slice_discovery_in_large_language_models.md)
+- [DATE-LM: Benchmarking Data Attribution Evaluation for Large Language Models](../../NeurIPS2025/social_computing/date-lm_benchmarking_data_attribution_evaluation_for_large_language_models.md)
+- [A Survey on Proactive Defense Strategies Against Misinformation in Large Language Models](../../ACL2025/social_computing/a_survey_on_proactive_defense_strategies_against_misinformation_in_large_languag.md)
+
+<!-- RELATED:END -->

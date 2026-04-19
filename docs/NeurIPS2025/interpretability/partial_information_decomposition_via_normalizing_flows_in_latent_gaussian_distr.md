@@ -122,3 +122,15 @@ Flow-PID 损失为两个边际的高斯边际正则化之和：$\mathcal{L}_{\te
 - 实验充分度: ⭐⭐⭐⭐ 合成数据有 ground truth 验证，真实数据覆盖多个 benchmark
 - 写作质量: ⭐⭐⭐⭐ 数学表述严谨，paper 组织清晰
 - 价值: ⭐⭐⭐⭐ 将 PID 推广到实际多模态场景，对理解模态交互有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition](h-splid_hsic-based_saliency_preserving_latent_information_decomposition.md)
+- [Latent Principle Discovery for Language Model Self-Improvement](latent_principle_discovery_for_language_model_self-improvement.md)
+- [Towards Interpretability Without Sacrifice: Faithful Dense Layer Decomposition with Mixture of Decoders](towards_interpretability_without_sacrifice_faithful_dense_layer_decomposition_wi.md)
+- [Knowing When to Stop: Efficient Context Processing via Latent Sufficiency Signals](knowing_when_to_stop_efficient_context_processing_via_latent_sufficiency_signals.md)
+- [Encoding and Understanding Astrophysical Information in Large Language Model-Generated Summaries](encoding_and_understanding_astrophysical_information_in_large_language_model-gen.md)
+
+<!-- RELATED:END -->

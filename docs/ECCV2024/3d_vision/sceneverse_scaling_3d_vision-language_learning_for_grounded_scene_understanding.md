@@ -137,3 +137,15 @@ GPS 预训练后直接在 ScanRefer 上已超过所有方法（47.1），fine-tu
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖grounding/QA/零样本/语义分割多个任务，消融详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从数据到方法到实验一气呵成
 - 价值: ⭐⭐⭐⭐⭐ 为3D-VL领域奠定数据基础，类似ImageNet/CLIP对各自领域的贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open Vocabulary 3D Scene Understanding via Geometry Guided Self-Distillation](open_vocabulary_3d_scene_understanding_via_geometry_guided_self-distillation.md)
+- [nuCraft: Crafting High Resolution 3D Semantic Occupancy for Unified 3D Scene Understanding](nucraft_crafting_high_resolution_3d_semantic_occupancy_for_unified_3d_scene_unde.md)
+- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding](dg-pic_domain_generalized_point-in-context_learning_for_point_cloud_understandin.md)
+- [3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding](../../ICCV2025/3d_vision/3dgraphllm_combining_semantic_graphs_and_large_language_models_for_3d_scene_unde.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ $$\mathcal{L}_{total} = \alpha \mathcal{L}_{CE}(Z_s, y) + (1-\alpha) \mathcal{L}
 ## 评分
 
 ⭐⭐⭐⭐ — 分组扫描设计简洁优雅，实验充分覆盖多个下游任务；蒸馏+CAM 的组合虽非全新但实用有效，参数效率优势显著。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DefMamba: Deformable Visual State Space Model](defmamba_deformable_visual_state_space_model.md)
+- [2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)
+- [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
+- [EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
+- [MambaOut: Do We Really Need Mamba for Vision?](mambaout_do_we_really_need_mamba_for_vision.md)
+
+<!-- RELATED:END -->

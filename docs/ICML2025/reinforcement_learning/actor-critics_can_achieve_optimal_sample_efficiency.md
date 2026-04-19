@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论论文的实验规模合适，但缺少大规模验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，问题动机和贡献阐述清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 RL 理论有重要推动，解决了长期开放问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimal and Practical Batched Linear Bandit Algorithm](optimal_and_practical_batched_linear_bandit_algorithm.md)
+- [Pessimism Principle Can Be Effective: Towards a Framework for Zero-Shot Transfer RL](pessimism_principle_can_be_effective_towards_a_framework_for_zero-shot_transfer_.md)
+- [Risk-Sensitive Exponential Actor Critic](../../AAAI2026/reinforcement_learning/risk-sensitive_exponential_actor_critic.md)
+- [The Sample Complexity of Online Strategic Decision Making with Information Asymmetry and Knowledge Transportability](the_sample_complexity_of_online_strategic_decision_making_with_information_asymm.md)
+- [Actor-Free Continuous Control via Structurally Maximizable Q-Functions](../../NeurIPS2025/reinforcement_learning/actorfree_continuous_control_via_structurally_maximizable_qf.md)
+
+<!-- RELATED:END -->

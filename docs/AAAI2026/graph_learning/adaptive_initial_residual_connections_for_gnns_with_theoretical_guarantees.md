@@ -126,3 +126,15 @@ tags:
 - **实验充分度** ⭐⭐⭐⭐：9 数据集、深度分析、能量可视化
 - **写作质量** ⭐⭐⭐⭐：理论推导清晰
 - **价值** ⭐⭐⭐⭐：为深层 GNN 提供有理论支撑的轻量级方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Adaptive Graph Mixture of Models](self-adaptive_graph_mixture_of_models.md)
+- [Adaptive Riemannian Graph Neural Networks](adaptive_riemannian_graph_neural_networks.md)
+- [Logical Characterizations of GNNs with Mean Aggregation](logical_characterizations_of_gnns_with_mean_aggregation.md)
+- [Enhancing Logical Expressiveness in GNNs via Path-Neighbor Aggregation](enhancing_logical_expressiveness_in_graph_neural_networks_via_path-neighbor_aggr.md)
+- [Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity](connectivity-guided_sparsification_of_2-fwl_gnns_preserving_full_expressivity_wi.md)
+
+<!-- RELATED:END -->

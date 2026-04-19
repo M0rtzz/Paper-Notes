@@ -183,3 +183,15 @@ $$\mathcal{L}_{LoRA} = \text{CrossEntropy}(f_{LLM}(\hat{\mathbf{s}}), y)$$
 - 实验充分度: ⭐⭐⭐⭐ （4个数据集、零样本实验、多消融、可视化分析）
 - 写作质量: ⭐⭐⭐⭐ （流程清晰，逻辑完整，图文配合好）
 - 价值: ⭐⭐⭐⭐ （为 LLM-based 骨骼识别提供了新范式，零样本能力实用性强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Heterogeneous Skeleton-Based Action Representation Learning](../../CVPR2025/video_understanding/heterogeneous_skeleton-based_action_representation_learning.md)
+- [FineTec: Fine-Grained Action Recognition Under Temporal Corruption via Skeleton Decomposition and Sequence Completion](finetec_fine-grained_action_recognition_under_temporal_corruption_via_skeleton_d.md)
+- [SkeletonContext: Skeleton-side Context Prompt Learning for Zero-Shot Skeleton-based Action Recognition](../../CVPR2026/video_understanding/skeletoncontext_skeleton-side_context_prompt_learning_for_zero-shot_skeleton-bas.md)
+- [H-MoRe: Learning Human-centric Motion Representation for Action Analysis](../../CVPR2025/video_understanding/h-more_learning_human-centric_motion_representation_for_action_analysis.md)
+- [Task-Specific Distance Correlation Matching for Few-Shot Action Recognition](task-specific_distance_correlation_matching_for_few-shot_action_recognition.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ DPSBA 包含两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4数据集×3分类器×5基线，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 问题分析清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 对GNN安全研究有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distribution Learning Meets Graph Structure Sampling](distribution_learning_meets_graph_structure_sampling.md)
+- [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](../../AAAI2026/human_understanding/transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
+- [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [Authority Backdoor: A Certifiable Backdoor Mechanism for Authoring DNNs](../../AAAI2026/human_understanding/authority_backdoor_a_certifiable_backdoor_mechanism_for_authoring_dnns.md)
+
+<!-- RELATED:END -->

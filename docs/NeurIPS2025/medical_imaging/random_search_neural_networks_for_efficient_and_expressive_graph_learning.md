@@ -142,3 +142,15 @@ RSNN在大规模分子基准上$m=1$时AUC提升超过10个百分点；在稠密
 - 实验充分度: ⭐⭐⭐⭐ — 涵盖分子/蛋白质/大规模/稠密图多类设定，但缺少社交/知识图谱实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论-方法-实验三者衔接紧密，分析层层递进，图示清晰直观
 - 价值: ⭐⭐⭐⭐ — 为图表示学习提供了高效且有理论保证的新范式，但稀疏图假设限制了应用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification](firegnn_neuro-symbolic_graph_neural_networks_with_trainable_fuzzy_rules_for_inte.md)
+- [Autoencoding Random Forests](autoencoding_random_forests.md)
+- [Towards Multiscale Graph-based Protein Learning with Geometric Secondary Structural Motifs](towards_multiscale_graph-based_protein_learning_with_geometric_secondary_structu.md)
+- [SIC: Similarity-Based Interpretable Image Classification with Neural Networks](../../ICCV2025/medical_imaging/sic_similarity-based_interpretable_image_classification_with_neural_networks.md)
+- [Geometric Generative Modeling with Noise-Conditioned Graph Networks](../../ICML2025/medical_imaging/geometric_generative_modeling_with_noise-conditioned_graph_networks.md)
+
+<!-- RELATED:END -->

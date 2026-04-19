@@ -153,3 +153,15 @@ Minerva 的构建和评估包含三个层次：
 - 技术深度：⭐⭐⭐⭐ （标注设计严谨，对抗过滤+多级评估体系完备）
 - 实验充分度：⭐⭐⭐⭐⭐ （10+ 模型、人类基线、帧数/ASR/prompt/thinking 多维消融）
 - 实用价值：⭐⭐⭐⭐⭐ （直接可用于诊断视频模型的推理瓶颈）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Reasoning Framework for Holistic Zero-Shot Video Anomaly Analysis](../../NeurIPS2025/interpretability/a_unified_reasoning_framework_for_holistic_zeroshot_video_an.md)
+- [Evaluating LLMs in Open-Source Games](../../NeurIPS2025/interpretability/evaluating_llms_in_open-source_games.md)
+- [Evaluating Neuron Explanations: A Unified Framework with Sanity Checks](../../ICML2025/interpretability/evaluating_neuron_explanations_a_unified_framework_with_sanity_checks.md)
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](../../NeurIPS2025/interpretability/vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ MMLongBench 包含 5 类任务 × 5 级长度 × 混合图像类型：
 - 实验充分度: ⭐⭐⭐⭐⭐ 46 个模型 + 5 任务 + 5 长度 + 详细错误分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，与现有基准的对比表格很有说服力
 - 价值: ⭐⭐⭐⭐⭐ 填补了 LCVLM 评估的重要空白，将成为标准基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HoPE: Hybrid of Position Embedding for Long Context Vision-Language Models](hope_hybrid_of_position_embedding_for_long_context_visionlan.md)
+- [NeedleInATable: Exploring Long-Context Capability of Large Language Models towards Long-Structured Tables](needleinatable_exploring_long-context_capability_of_large_language_models_toward.md)
+- [Context Informs Pragmatic Interpretation in Vision-Language Models](context_informs_pragmatic_interpretation_in_vision-language_models.md)
+- [CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models](choice_benchmarking_the_remote_sensing_capabilities_of_large_vision-language_mod.md)
+- [ExGra-Med: Extended Context Graph Alignment for Medical Vision-Language Models](exgra-med_extended_context_graph_alignment_for_medical_vision-language_models.md)
+
+<!-- RELATED:END -->

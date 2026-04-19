@@ -125,3 +125,15 @@ Advantage Alignment 学到的策略特点：
 - **实验充分性**: ⭐⭐⭐⭐ — 消融和可扩展性分析到位
 - **写作质量**: ⭐⭐⭐⭐ — 理论严谨，表述清晰
 - **实用性**: ⭐⭐⭐ — 对真实金融决策的指导意义需要进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Sustainable AI Economy Needs Data Deals That Work for Generators](../../NeurIPS2025/others/a_sustainable_ai_economy_needs_data_deals_that_work_for_gene.md)
+- [CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data](../../AAAI2026/others/cellstream_dynamical_optimal_transport_informed_embeddings_for_reconstructing_ce.md)
+- [Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+- [Task-Informed Anti-Curriculum by Masking Improves Downstream Performance on Text](../../ACL2025/others/task-informed_anti-curriculum_by_masking_improves_downstream_performance_on_text.md)
+- [Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](../../NeurIPS2025/others/military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
+
+<!-- RELATED:END -->

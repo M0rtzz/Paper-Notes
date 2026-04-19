@@ -121,3 +121,15 @@ SAM FTI-FDet 在 AP^box 和 AP^mask 上均取得最优，同时参数量仅为 S
 - 实验充分度: ⭐⭐⭐⭐ — 消融实验覆盖全面（7 组消融），对比方法丰富；但数据集规模偏小且单一
 - 写作质量: ⭐⭐⭐ — 结构清晰但数学符号较多导致阅读繁重，部分段落冗长
 - 价值: ⭐⭐⭐ — 工业应用价值明确，但方法通用性和场景可扩展性有待进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)
+- [LoD-Loc v3: Generalized Aerial Localization in Dense Cities using Instance Silhouette Alignment](lod-loc_v3_generalized_aerial_localization_in_dense_cities_using_instance_silhou.md)
+- [FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning](fcl-cod_weakly_supervised_camouflaged_object_detection_with_frequency-aware_and_.md)
+- [VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](videomt_your_vit_is_secretly_also_a_video_segmentation_model.md)
+- [MEDISEG: A Dataset of Medication Images with Instance Segmentation Masks for Preventing Adverse Drug Events](a_dataset_of_medication_images_with_instance_segmentation_masks_for_preventing_a.md)
+
+<!-- RELATED:END -->

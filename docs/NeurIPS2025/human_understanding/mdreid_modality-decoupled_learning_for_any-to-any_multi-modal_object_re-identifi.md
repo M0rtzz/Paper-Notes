@@ -146,3 +146,15 @@ $$L = L_{ce} + L_{tri} + L_{MML}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、模态匹配/不匹配/缺失多种场景、详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式完整，图示直观
 - 价值: ⭐⭐⭐⭐ 解决了多模态ReID中重要的实际部署问题，性能提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One2Any: One-Reference 6D Pose Estimation for Any Object](../../CVPR2025/human_understanding/one2any_one-reference_6d_pose_estimation_for_any_object.md)
+- [TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](../../CVPR2026/human_understanding/teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)
+- [LLaVA-ReID: Selective Multi-Image Questioner for Interactive Person Re-Identification](../../ICML2025/human_understanding/llava-reid_selective_multi-image_questioner_for_interactive_person_re-identifica.md)
+- [Modality-Aware Bias Mitigation and Invariance Learning for Unsupervised Visible-Infrared Person Re-Identification](../../AAAI2026/human_understanding/modality-aware_bias_mitigation_and_invariance_learning_for_unsupervised_visible-.md)
+- [Hearing Anywhere in Any Environment](../../CVPR2025/human_understanding/hearing_anywhere_in_any_environment.md)
+
+<!-- RELATED:END -->

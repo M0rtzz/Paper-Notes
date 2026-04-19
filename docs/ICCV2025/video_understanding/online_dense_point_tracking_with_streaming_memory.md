@@ -193,3 +193,15 @@ Warm-Start 消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ CVO+TAP-Vid+RoboTAP 全覆盖，详细消融
 - 写作质量: ⭐⭐⭐⭐ 问题清晰，对比全面
 - 价值: ⭐⭐⭐⭐⭐ 10× 小参数量+2× 快速度+SOTA 精度，工程和学术价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AllTracker: Efficient Dense Point Tracking at High Resolution](alltracker_efficient_dense_point_tracking_at_high_resolution.md)
+- [VideoLLaMB: Long Streaming Video Understanding with Recurrent Memory Bridges](videollamb_long_streaming_video_understanding_with_recurrent_memory_bridges.md)
+- [Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding](hierarchical_event_memory_for_accurate_and_low-latency_online_video_temporal_gro.md)
+- [Fixed-Point RNNs: Interpolating from Diagonal to Dense](../../NeurIPS2025/video_understanding/fixed-point_rnns_interpolating_from_diagonal_to_dense.md)
+- [Context-Enhanced Memory-Refined Transformer for Online Action Detection](../../CVPR2025/video_understanding/context-enhanced_memory-refined_transformer_for_online_action_detection.md)
+
+<!-- RELATED:END -->

@@ -157,3 +157,15 @@ $$\mathbf{C}^\intercal \mathbf{C} \mathbf{n}_k = \lambda_k \mathbf{X}^{+-\interc
 - 实验充分度: ⭐⭐⭐ 在 9 个数据集上验证覆盖多种场景，但仅用 Llama-2-7B 单一模型
 - 写作质量: ⭐⭐⭐⭐⭐ 从实验观察→理论分析→方法设计→多变量扩展一气呵成，数学推导详尽清晰
 - 价值: ⭐⭐⭐⭐ 为无监督探测提供了更深入的理论理解和实用的特征值诊断工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Perturbation-based Explanations by Understanding the Role of Uncertainty Calibration](improving_perturbation-based_explanations_by_understanding_the_role_of_uncertain.md)
+- [Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)
+- [URLs Help, Topics Guide: Understanding Metadata Utility in LLM Training](urls_help_topics_guide_understanding_metadata_utility_in_llm_training.md)
+- [Explainable Melanoma Diagnosis with Contrastive Learning and LLM-based Report Generation](../../AAAI2026/interpretability/explainable_melanoma_diagnosis_with_contrastive_learning_and_llm-based_report_ge.md)
+- [Around the World in 24 Hours: Probing LLM Knowledge of Time and Place](../../ACL2025/interpretability/around_the_world_in_24_hours_probing_llm_knowledge_of_time_and_place.md)
+
+<!-- RELATED:END -->

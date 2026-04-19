@@ -84,3 +84,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 详尽的组件消融+实机部署
 - 写作质量: ⭐⭐⭐⭐ 物理仿真过程描述详细
 - 价值: ⭐⭐⭐⭐ 可直接部署到手机相机应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MDP: Multidimensional Vision Model Pruning with Latency Constraint](mdp_multidimensional_vision_model_pruning_with_latency_constraint.md)
+- [Forensics Adapter: Adapting CLIP for Generalizable Face Forgery Detection](forensics_adapter_adapting_clip_for_generalizable_face_forgery_detection.md)
+- [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
+- [Improve Representation for Imbalanced Regression through Geometric Constraints](improve_representation_for_imbalanced_regression_through_geometric_constraints.md)
+- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 定量评估、用户调研、消融实验、多种基线对比非常充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，方法描述详尽，figure 质量高
 - 价值: ⭐⭐⭐⭐ 提出了一种实用的交互式图像创作范式，对创意工作流有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Image Layer Decomposition with Visual Effects](generative_image_layer_decomposition_with_visual_effects.md)
+- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+- [GIF: Generative Inspiration for Face Recognition at Scale](gif_generative_inspiration_for_face_recognition_at_scale.md)
+- [GCC: Generative Color Constancy via Diffusing a Color Checker](gcc_generative_color_constancy_via_diffusing_a_color_checker.md)
+- [Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
+
+<!-- RELATED:END -->

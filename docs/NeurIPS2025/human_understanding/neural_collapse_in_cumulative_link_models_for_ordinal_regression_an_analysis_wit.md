@@ -134,3 +134,15 @@ Neural Collapse (NC)是深度分类网络中发现的一个关键现象：经过
 - 实验充分度: ⭐⭐⭐⭐ — 在表格和图像数据集上系统验证，设计了定量指标，但数据集规模和多样性可进一步加强
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构严谨，证明完整，从理论到实验逻辑链清晰
 - 价值: ⭐⭐⭐⭐ — 填补了NC在OR中的理论空白，固定阈值的实践发现有应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](../../ICML2025/human_understanding/sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
+- [Improve Representation for Imbalanced Regression through Geometric Constraints](../../CVPR2025/human_understanding/improve_representation_for_imbalanced_regression_through_geometric_constraints.md)
+- [OrderChain: Towards General Instruct-Tuning for Stimulating the Ordinal Understanding Ability of MLLM](../../ICCV2025/human_understanding/orderchain_towards_general_instruct-tuning_for_stimulating_the_ordinal_understan.md)
+- [The Transparent Earth: A Multimodal Foundation Model for the Earth's Subsurface](the_transparent_earth_a_multimodal_foundation_model_for_the_earths_subsurface.md)
+
+<!-- RELATED:END -->

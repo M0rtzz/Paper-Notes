@@ -110,3 +110,15 @@ RIFLEx分三步：(1) 分析RoPE各频率分量 $\theta_j$ 的周期 $N_j = 2\pi
 - 实验充分度: ⭐⭐⭐⭐ 两个SOTA模型、多种外推倍数、时空联合、用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析透彻，从失败模式→频率分析→固有频率→解决方案，逻辑链完美
 - 价值: ⭐⭐⭐⭐⭐ 对视频生成社区有范式性贡献，training-free解决方案极具实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AsymRnR: Video Diffusion Transformers Acceleration with Asymmetric Reduction and Restoration](asymrnr_video_diffusion_transformers_acceleration_with_asymmetric_reduction_and_.md)
+- [Free-Lunch Long Video Generation via Layer-Adaptive O.O.D Correction](../../CVPR2026/video_generation/free-lunch_long_video_generation_via_layer-adaptive_ood_correction.md)
+- [Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer](../../ICCV2025/video_generation/decouple_and_track_benchmarking_and_improving_video_diffusion_transformers_for_m.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](../../CVPR2025/video_generation/when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+- [D3: Training-Free AI-Generated Video Detection Using Second-Order Features](../../ICCV2025/video_generation/d3_training-free_ai-generated_video_detection_using_second-order_features.md)
+
+<!-- RELATED:END -->

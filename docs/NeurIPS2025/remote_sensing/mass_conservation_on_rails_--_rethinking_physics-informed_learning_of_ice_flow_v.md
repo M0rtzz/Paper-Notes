@@ -104,3 +104,15 @@ $$\mathcal{L} = (1-w_{dir}) \cdot \mathcal{L}_{MSE} + w_{dir} \cdot \mathcal{L}_
 ## 评分
 
 - ⭐⭐⭐⭐ — 方法简洁有效、物理动机清晰，但问题规模和通用性有待进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Foundation Models: Disentangling Physics from Instrument Properties](../../ICML2025/remote_sensing/causal_foundation_models_disentangling_physics_from_instrument_properties.md)
+- [OrbitZoo: Real Orbital Systems Challenges for Reinforcement Learning](orbitzoo_real_orbital_systems_challenges_for_reinforcement_learning.md)
+- [GeoFlow: Real-Time Fine-Grained Cross-View Geolocalization via Iterative Flow Prediction](../../CVPR2026/remote_sensing/geoflow_real-time_fine-grained_cross-view_geolocalization_via_iterative_flow_pre.md)
+- [ACPV-Net: All-Class Polygonal Vectorization for Seamless Vector Map Generation from Aerial Imagery](../../CVPR2026/remote_sensing/acpv-net_all-class_polygonal_vectorization_for_seamless_vector_map_generation_fr.md)
+- [ChA-MAEViT: Unifying Channel-Aware Masked Autoencoders and Multi-Channel Vision Transformers for Improved Cross-Channel Learning](chamaevit_unifying_channelaware_masked_autoencoders_and_mult.md)
+
+<!-- RELATED:END -->

@@ -168,3 +168,15 @@ Cradle2Cane 基于 SDXL-Turbo（4步生成）构建两阶段（two-pass）流水
 - 写作质量: ⭐⭐⭐⭐ — 动机阐述清晰，trade-off 分析图表设计好
 - 价值: ⭐⭐⭐⭐ — 解决了人脸老化的核心矛盾，实用性强（快速推理 + 少量训练数据）
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](../../CVPR2026/image_generation/high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](../../CVPR2026/image_generation/preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [MGAudio: Model-Guided Dual-Role Alignment for High-Fidelity Open-Domain Video-to-Audio Generation](model-guided_dual-role_alignment_for_high-fidelity_open-domain_video-to-audio_ge.md)
+- [GlyphMastero: A Glyph Encoder for High-Fidelity Scene Text Editing](../../CVPR2025/image_generation/glyphmastero_a_glyph_encoder_for_high-fidelity_scene_text_editing.md)
+- [One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting](one_stone_with_two_birds_a_null-text-null_frequency-aware_diffusion_models_for_t.md)
+
+<!-- RELATED:END -->

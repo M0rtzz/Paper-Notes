@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个融合数据集+两个下游任务+完整消融，但缺少cross-dataset泛化分析
 - 写作质量: ⭐⭐⭐⭐ 公式推导严谨，框架图清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 首次解决红外缺失融合，有实际应用前景，字典范式可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neurodynamics-Driven Coupled Neural P Systems for Multi-Focus Image Fusion](neurodynamics-driven_coupled_neural_p_systems_for_multi-focus_image_fusion.md)
+- [Cross-Modal Redundancy and the Geometry of Vision-Language Embeddings](../../ICLR2026/interpretability/cross-modal_redundancy_and_the_geometry_of_vision-language_embeddings.md)
+- [On the Possible Detectability of Image-in-Image Steganography](on_the_possible_detectability_of_image-in-image_steganography.md)
+- [Geometry-Guided Camera Motion Understanding in VideoLLMs](geometry-guided_camera_motion_understanding_in_videollms.md)
+- [FINER: MLLMs Hallucinate under Fine-grained Negative Queries](finer_mllms_hallucinate_under_fine-grained_negative_queries.md)
+
+<!-- RELATED:END -->

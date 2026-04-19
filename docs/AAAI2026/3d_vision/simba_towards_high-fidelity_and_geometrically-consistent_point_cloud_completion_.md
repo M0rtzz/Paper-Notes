@@ -252,3 +252,15 @@ $$\mathcal{L}_{\text{stage2}} = \mathcal{L}_{\text{proxy}} + \sum_{l=1}^{3} L_{C
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个基准（PCN/ShapeNet/KITTI）+ 详细消融（预测模块/上采样/架构）
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，图表丰富，但部分推导（如扩散训练目标）可更详细
 - 价值: ⭐⭐⭐⭐⭐ — 新范式+强泛化+开源代码，对点云补全领域有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [Debiasing Diffusion Priors via 3D Attention for Consistent Gaussian Splatting](debiasing_diffusion_priors_via_3d_attention_for_consistent_gaussian_splatting.md)
+- [DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion](dance_density-agnostic_and_class-aware_network_for_point_cloud_completion.md)
+- [4DSTR: Advancing Generative 4D Gaussians with Spatial-Temporal Rectification for High-Quality and Consistent 4D Generation](4dstr_advancing_generative_4d_gaussians_with_spatial-tempora.md)
+
+<!-- RELATED:END -->

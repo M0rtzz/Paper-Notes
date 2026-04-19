@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个模型族 × 3 个数据集，从 0.5B 到 70B
 - 写作质量: ⭐⭐⭐⭐⭐ 理论和实验交织自然，结论清晰
 - 价值: ⭐⭐⭐⭐⭐ 对理解 LLM 生成质量和 scaling 有深远意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Inference-Efficient Language Models](../../ICML2025/llm_efficiency/scaling_inference-efficient_language_models.md)
+- [SPARTA Alignment: Collectively Aligning Multiple Language Models through Combat](sparta_alignment_collectively_aligning_multiple_language_models_through_combat.md)
+- [Ranked Entropy Minimization for Continual Test-Time Adaptation](../../ICML2025/llm_efficiency/ranked_entropy_minimization_for_continual_test-time_adaptation.md)
+- [L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context for Large Language Models](l-mtp_leap_multi-token_prediction_beyond_adjacent_context_for_large_language_mod.md)
+- [Improving Accuracy and Calibration via Differentiated Deep Mutual Learning](../../CVPR2025/llm_efficiency/improving_accuracy_and_calibration_via_differentiated_deep_mutual_learning.md)
+
+<!-- RELATED:END -->

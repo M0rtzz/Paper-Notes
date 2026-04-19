@@ -195,3 +195,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 个下游任务 + 详尽的消融，每个设计选择都有消融验证
 - **写作质量**: ⭐⭐⭐⭐ — 问题分析清晰，但公式较多，部分地方阅读难度较高
 - **价值**: ⭐⭐⭐⭐ — 为 Mamba 在 3D 领域的应用提供了重要的结构建模范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [Towards More Diverse and Challenging Pre-training for Point Cloud Learning: Self-Supervised Cross Reconstruction with Decoupled Views](towards_more_diverse_and_challenging_pre-training_for_point_cloud_learning_self-.md)
+- [RayZer: A Self-supervised Large View Synthesis Model](rayzer_a_self-supervised_large_view_synthesis_model.md)
+- [UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling](ust-ssm_unified_spatio-temporal_state_space_models_for_point_cloud_video_modelin.md)
+- [SHeaP: Self-Supervised Head Geometry Predictor Learned via 2D Gaussians](sheap_self-supervised_head_geometry_predictor_learned_via_2d_gaussians.md)
+
+<!-- RELATED:END -->

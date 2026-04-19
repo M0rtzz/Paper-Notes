@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6 个数据集 + 3 个模型 + 多组消融，一致性好；但缺少与训练-based 方法的对比
 - 写作质量: ⭐⭐⭐⭐ 问题导向清晰，Figure 1 的示例直观易懂
 - 价值: ⭐⭐⭐⭐ 即插即用的标签精炼策略，可直接应用于各种 ICL 分类场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](../../ICCV2025/others/is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
+- [DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](../../CVPR2026/others/dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)
+- [Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](../../ICCV2025/others/doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [ConceptCarve: Dynamic Realization of Evidence](conceptcarve_dynamic_realization_of_evidence.md)
+
+<!-- RELATED:END -->

@@ -113,3 +113,15 @@ tags:
 | 实用性 | ★★★★★ |
 | 实验充分性 | ★★★★☆ |
 | 写作清晰度 | ★★★★☆ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MagicDrive-V2: High-Resolution Long Video Generation for Autonomous Driving with Adaptive Control](magicdrive-v2_high-resolution_long_video_generation_for_autonomous_driving_with_.md)
+- [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
+- [Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks](generating_fast_and_slow_scalable_parallel_video_generation_with_video_interface.md)
+- [DreamRelation: Relation-Centric Video Customization](dreamrelation_relation-centric_video_customization.md)
+- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+
+<!-- RELATED:END -->

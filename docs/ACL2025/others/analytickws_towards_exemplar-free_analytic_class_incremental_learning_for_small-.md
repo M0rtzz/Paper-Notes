@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、多种任务设置、与多种方法对比、效率分析完整
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，方法描述系统完整
 - 价值: ⭐⭐⭐⭐ 对边缘设备 KWS 部署有高度实用价值，理论保证是亮点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting](../../ECCV2024/others/abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou.md)
+- [Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning](../../AAAI2026/others/expandable_and_differentiable_dual_memories_with_orthogonal_regularization_for_e.md)
+- [An Incremental Unified Framework for Small Defect Inspection](../../ECCV2024/others/an_incremental_unified_framework_for_small_defect_inspection.md)
+- [Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
+- [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](../../ECCV2024/others/stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
+
+<!-- RELATED:END -->

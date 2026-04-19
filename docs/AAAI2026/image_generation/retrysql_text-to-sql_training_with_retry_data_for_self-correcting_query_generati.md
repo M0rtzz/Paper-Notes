@@ -215,3 +215,15 @@ Qwen2.5-Coder 1.5B 在 SPIDER 数据集上：
 - 实验充分度: ⭐⭐⭐⭐⭐ （多模型、多基准、四种策略、多概率、置信度分析、管线评估）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰、分析深入、可复现性强）
 - 价值: ⭐⭐⭐⭐ （小模型+自纠正的范式对实际部署有启发，但需更多领域验证）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Infinite-Story: A Training-Free Consistent Text-to-Image Generation](infinite-story_a_training-free_consistent_text-to-image_gene.md)
+- [Difficulty Controlled Diffusion Model for Synthesizing Effective Training Data](difficulty_controlled_diffusion_model_for_synthesizing_effec.md)
+- [Self-NPO: Data-Free Diffusion Model Enhancement via Truncated Diffusion Fine-Tuning](self-npo_data-free_diffusion_model_enhancement_via_truncated_diffusion_fine-tuni.md)
+- [Neon: Negative Extrapolation From Self-Training Improves Image Generation](../../ICLR2026/image_generation/neon_negative_extrapolation_image_generation.md)
+- [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](../../CVPR2026/image_generation/improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
+
+<!-- RELATED:END -->

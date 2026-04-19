@@ -125,3 +125,15 @@ SVLTA的构建流程包含五个阶段：(1) 情境组件初始化——定义96
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义清晰（时序偏差）、方法设计系统（从常识图到全局过滤）、发现有价值（VidLLM时序极弱），但合成视频的视觉真实感偏差和场景覆盖有限是主要限制
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synthetic Visual Genome](synthetic_visual_genome.md)
+- [Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)
+- [Enrich and Detect: Video Temporal Grounding with Multimodal LLMs](../../ICCV2025/multimodal_vlm/enrich_and_detect_video_temporal_grounding_with_multimodal_llms.md)
+- [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
+- [SpaRE: Enhancing Spatial Reasoning in Vision-Language Models with Synthetic Data](../../ACL2025/multimodal_vlm/spare_enhancing_spatial_reasoning_in_vision-language_models_with_synthetic_data.md)
+
+<!-- RELATED:END -->

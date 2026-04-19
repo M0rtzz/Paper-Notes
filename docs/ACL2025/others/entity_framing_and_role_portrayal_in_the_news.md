@@ -142,3 +142,15 @@ tags:
 | 实验充分度 | 4 | 微调 + 零样本 + 语料库分析，覆盖面广 |
 | 写作质量 | 4 | 数据集论文写法规范，统计分析详尽 |
 | 价值 | 4.5 | 作为社区资源价值很高，应用前景广泛 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Narrative Media Framing in Political Discourse](narrative_media_framing_in_political_discourse.md)
+- [Evaluating Design Decisions for Dual Encoder-based Entity Disambiguation](evaluating_design_decisions_for_dual_encoder-based_entity_disambiguation.md)
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Decoding Reading Goals from Eye Movements](decoding_reading_goals_from_eye_movements.md)
+
+<!-- RELATED:END -->

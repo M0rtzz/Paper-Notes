@@ -113,3 +113,15 @@ T-REGS 可作为：(a) 独立正则化——仅用 MSE + T-REG 替代全部 SSL 
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ MST 正则化用于 SSL 是新颖的跨领域迁移，理论elegant
 - 实验充分度: ⭐⭐⭐ 合成数据和中等规模验证充分，但缺乏大规模实验
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Ice Crystal Habit Diversity with Self-Supervised Learning](understanding_ice_crystal_habit_diversity_with_self-supervised_learning.md)
+- [Adv-SSL: Adversarial Self-Supervised Representation Learning with Theoretical Guarantees](adv-ssl_adversarial_self-supervised_representation_learning_with_theoretical_gua.md)
+- [Clustering Properties of Self-Supervised Learning](../../ICML2025/self_supervised/clustering_properties_of_self-supervised_learning.md)
+- [Collapse-Proof Non-Contrastive Self-Supervised Learning](../../ICML2025/self_supervised/collapse-proof_non-contrastive_self-supervised_learning.md)
+- [MoSiC: Optimal-Transport Motion Trajectory for Dense Self-Supervised Learning](../../ICCV2025/self_supervised/mosic_optimal-transport_motion_trajectory_for_dense_self-supervised_learning.md)
+
+<!-- RELATED:END -->

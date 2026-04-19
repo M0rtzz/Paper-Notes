@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5攻击×3任务×多模型×5baseline，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 机制分析条理清晰，方法动机自然
 - 价值: ⭐⭐⭐⭐⭐ 首个面向生成式LLM的无先验后门净化方法，实用且高效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CAVGAN: Unifying Jailbreak and Defense of LLMs via Generative Adversarial Attacks](../../ACL2025/ai_safety/cavgan_unifying_jailbreak_and_defense_of_llms_via_generative_adversarial_attacks.md)
+- [Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models](unmasking_backdoors_an_explainable_defense_via_gradient-attention_anomaly_scorin.md)
+- [Reference Recommendation based Membership Inference Attack against Hybrid-based Recommender Systems](../../AAAI2026/ai_safety/reference_recommendation_based_membership_inference_attack_against_hybrid-based_.md)
+- [Inoculation Prompting: Eliciting Traits from LLMs during Training Can Suppress Them at Test-Time](inoculation_prompting_eliciting_traits_from_llms_during_training_can_suppress_th.md)
+- [Data-free Universal Adversarial Perturbation with Pseudo-Semantic Prior](../../CVPR2025/ai_safety/data-free_universal_adversarial_perturbation_with_pseudo-semantic_prior.md)
+
+<!-- RELATED:END -->

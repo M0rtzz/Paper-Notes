@@ -138,3 +138,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖插值质量、消融、网格跟踪、单目重建多个评估维度
 - **写作质量**: ⭐⭐⭐⭐ 方法动机清晰，技术路线层层递进
 - **价值**: ⭐⭐⭐⭐ 解决了实际生产中的核心需求（跟踪网格），实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)
+- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
+- [GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation](../../ECCV2024/3d_vision/grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)
+- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](../../ECCV2024/3d_vision/gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
+- [RayZer: A Self-supervised Large View Synthesis Model](../../ICCV2025/3d_vision/rayzer_a_self-supervised_large_view_synthesis_model.md)
+
+<!-- RELATED:END -->

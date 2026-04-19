@@ -150,3 +150,15 @@ DualSpeechLM 包含两个核心模块：
 - 实验充分度: ⭐⭐⭐⭐ 理解+生成双向评估，数据比例消融说服力强
 - 写作质量: ⭐⭐⭐⭐ 图示直观，思路递进清晰
 - 价值: ⭐⭐⭐⭐⭐ 为统一语音大模型提供了一个优雅而高效的范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HPSU: A Benchmark for Human-Level Perception in Real-World Spoken Speech Understanding](hpsu_a_benchmark_for_human-level_perception_in_real-world_spoken_speech_understa.md)
+- [Efficient Speech Language Modeling via Energy Distance in Continuous Latent Space](../../NeurIPS2025/audio_speech/efficient_speech_language_modeling_via_energy_distance_in_continuous_latent_spac.md)
+- [Pay Attention to CTC: Fast and Robust Pseudo-Labelling for Unified Speech Recognition](../../ICLR2026/audio_speech/pay_attention_to_ctc_fast_and_robust_pseudo-labelling_for_unified_speech_recogni.md)
+- [Chain-Talker: Chain Understanding and Rendering for Empathetic Conversational Speech Synthesis](../../ACL2025/audio_speech/chain-talker_chain_understanding_and_rendering_for_empathetic_conversational_spe.md)
+- [Crab: A Unified Audio-Visual Scene Understanding Model with Explicit Cooperation](../../CVPR2025/audio_speech/crab_a_unified_audio-visual_scene_understanding_model_with_explicit_cooperation.md)
+
+<!-- RELATED:END -->

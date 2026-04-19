@@ -398,3 +398,15 @@ $$\mathcal{F} = \text{Concat}(\mathcal{F}_{\text{Geo}}, \mathcal{F}_{\text{IL}})
 - 实验充分度: ⭐⭐⭐⭐ — DiLiGenT+LUCES定量 + Multi-illumination定性 + 消融全面，但缺少更多真实场景定量评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机论述非常优秀，"为什么需要几何先验"的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ — 开辟了将基础模型几何知识引入PS的新方向，启发其他依赖光度信号的任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-Free Meets 3D Priors: Novel View Synthesis from a Single Image with Pretrained Diffusion Guidance](3d-free_meets_3d_priors_novel_view_synthesis_from_a_single_image_with_pretrained.md)
+- [Generalized Geometry Encoding Volume for Real-time Stereo Matching](generalized_geometry_encoding_volume_for_real-time_stereo_matching.md)
+- [Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes](../../ICCV2025/3d_vision/relative_illumination_fields_learning_medium_and_light_independent_underwater_sc.md)
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](../../CVPR2026/3d_vision/anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+- [VGGT-Det: Mining VGGT Internal Priors for Sensor-Geometry-Free Multi-View Indoor 3D Object Detection](../../CVPR2026/3d_vision/vggt-det_mining_vggt_internal_priors_for_sensor-geometry-free_multi-view_indoor_.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ LumiNet 作为通用模型（训练在多样数据上），接近专用 MIIW 模
 ## 评分
 
 ⭐⭐⭐⭐ — 场景级重光照的新突破，数据策略+架构设计+推理增强形成完整方案，用户研究全面胜出；但推理管线较重、极端场景处理不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Comprehensive Relighting: Generalizable and Consistent Monocular Human Relighting and Harmonization](comprehensive_relighting_generalizable_and_consistent_monocular_human_relighting.md)
+- [EchoScene: Indoor Scene Generation via Information Echo over Scene Graph Diffusion](../../ECCV2024/image_generation/echoscene_indoor_scene_generation_via_information_echo_over_scene_graph_diffusio.md)
+- [Channel-wise Noise Scheduled Diffusion for Inverse Rendering in Indoor Scenes](channel-wise_noise_scheduled_diffusion_for_inverse_rendering_in_indoor_scenes.md)
+- [Diffusion-4K: Ultra-High-Resolution Image Synthesis with Latent Diffusion Models](diffusion-4k_ultra-high-resolution_image_synthesis_with_latent_diffusion_models.md)
+- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
+
+<!-- RELATED:END -->

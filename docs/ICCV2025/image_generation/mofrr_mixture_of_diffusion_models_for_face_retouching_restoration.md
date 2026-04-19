@@ -133,3 +133,15 @@ $$\mathcal{L} = \mathcal{L}_{freq} + \mathcal{L}_{space} + \mathcal{L}_{class}$$
 - 技术深度：⭐⭐⭐⭐ — 小波 + DDIM + MoE 多层设计
 - 实验充分度：⭐⭐⭐⭐ — 内 API + 跨 API 测试
 - 实用价值：⭐⭐⭐⭐ — 反修图诈骗、司法取证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking the Potential of Diffusion Priors in Blind Face Restoration](unlocking_the_potential_of_diffusion_priors_in_blind_face_restoration.md)
+- [VIGFace: Virtual Identity Generation for Privacy-Free Face Recognition Dataset](vigface_virtual_identity_generation_for_privacy-free_face_recognition_dataset.md)
+- [Gaussian Mixture Flow Matching Models](../../ICML2025/image_generation/gaussian_mixture_flow_matching_models.md)
+- [Golden Noise for Diffusion Models: A Learning Framework](golden_noise_for_diffusion_models_a_learning_framework.md)
+- [RestoreGrad: Signal Restoration Using Conditional Denoising Diffusion Models with Jointly Learned Prior](../../ICML2025/image_generation/restoregrad_signal_restoration_using_conditional_denoising_diffusion_models_with.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ MoE-GS (N=3) 比最强单专家 E-D3DGS 提升 0.9 dB PSNR。
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个标准 benchmark、多种 N 配置、全面消融、效率分析、蒸馏评估
 - 写作质量: ⭐⭐⭐⭐ 动机深入（三层面分析），方法描述清晰
 - 价值: ⭐⭐⭐⭐ MoE+GS 是有前景的方向，但通用性待进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting](pd2gs_part-level_decoupling_and_continuous_deformation_of_articulated_objects_vi.md)
+- [Mono4DGS-HDR: High Dynamic Range 4D Gaussian Splatting from Alternating-exposure Monocular Videos](mono4dgs-hdr_high_dynamic_range_4d_gaussian_splatting_from_alternating-exposure_.md)
+- [Learning Robust Stereo Matching in the Wild with Selective Mixture-of-Experts](../../ICCV2025/3d_vision/learning_robust_stereo_matching_in_the_wild_with_selective_mixture-of-experts.md)
+- [Uncertainty Matters in Dynamic Gaussian Splatting for Monocular 4D Reconstruction](uncertainty_matters_in_dynamic_gaussian_splatting_for_monocular_4d_reconstructio.md)
+- [Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting](augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting.md)
+
+<!-- RELATED:END -->

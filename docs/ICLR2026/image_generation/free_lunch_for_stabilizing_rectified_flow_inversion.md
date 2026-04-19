@@ -118,3 +118,15 @@ PIE-Bench（700编辑任务），基于FLUX模型：
 - 实验充分度: ⭐⭐⭐⭐ PIE-Bench全面评估、多baseline叠加测试、prompt-free评估
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导与直觉解释兼备，算法伪代码清晰
 - 价值: ⭐⭐⭐⭐⭐ 真正的free lunch方法，对RF反演和编辑有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taming Rectified Flow for Inversion and Editing](../../ICML2025/image_generation/taming_rectified_flow_for_inversion_and_editing.md)
+- [Unified Multi-Modal Interactive & Reactive 3D Motion Generation via Rectified Flow](unified_multi-modal_interactive_reactive_3d_motion_generation_via_rectified_flow.md)
+- [FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](../../ICCV2025/image_generation/flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
+- [CaReFlow: Cyclic Adaptive Rectified Flow for Multimodal Fusion](../../CVPR2026/image_generation/careflow_cyclic_adaptive_rectified_flow_for_multimodal_fusion.md)
+- [Balanced Conic Rectified Flow](../../NeurIPS2025/image_generation/balanced_conic_rectified_flow.md)
+
+<!-- RELATED:END -->

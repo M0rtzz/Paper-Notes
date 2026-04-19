@@ -155,3 +155,15 @@ $B=0$ 表示无偏差，$B=1$ 表示完全偏向一个方向。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 20 个翻译方向，3 个 NMT 模型，4 种翻译类型，有监督对比，法证案例
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰，法证案例引人入胜，质性分析深入
 - **价值**: ⭐⭐⭐⭐ — 方法简洁实用，对数据过滤、翻译评估和法证语言学均有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Translation and Fusion Improves Zero-shot Cross-lingual Information Extraction](translation_and_fusion_improves_cross-lingual_information_extraction.md)
+- [Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation](trans-zero_self-play_incentivizes_large_language_models_for_multilingual_transla.md)
+- [A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs](a_case_study_of_cross-lingual_zero-shot_generalization_for_classical_languages_i.md)
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+- [Exploring In-Image Machine Translation with Real-World Background](exploring_in-image_machine_translation_with_real-world_background.md)
+
+<!-- RELATED:END -->

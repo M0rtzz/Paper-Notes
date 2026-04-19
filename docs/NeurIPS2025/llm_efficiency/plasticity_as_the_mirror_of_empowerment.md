@@ -148,3 +148,15 @@ $$\mathfrak{E}_{a:b}^{c:d}(\lambda, e) + \mathfrak{P}_{c:d}^{a:b}(\lambda, e) \l
 - 实验充分度: ⭐⭐ — 仅有简单赌博机实验，缺乏大规模实证验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 论证层层递进，从公理化要求到定义到定理到实验，结构极为清晰
 - 价值: ⭐⭐⭐⭐ — 理论框架优美且有深远影响潜力，但离实际应用还有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structure-Aware Spectral Sparsification via Uniform Edge Sampling](structure-aware_spectral_sparsification_via_uniform_edge_sampling.md)
+- [Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
+- [Unmasking COVID-19 Vulnerability in Nigeria: Mapping Risks Beyond Urban Hotspots](unmasking_covid-19_vulnerability_in_nigeria_mapping_risks_beyond_urban_hotspots.md)
+- [Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access](hardware-aligned_hierarchical_sparse_attention_for_efficient_long-term_memory_ac.md)
+- [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
+
+<!-- RELATED:END -->

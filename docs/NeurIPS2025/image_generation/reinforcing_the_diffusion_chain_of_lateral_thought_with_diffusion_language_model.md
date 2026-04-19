@@ -150,3 +150,15 @@ $$\mathcal{L}_{\theta,n} = -\frac{1}{G}\sum_{g=1}^{G}\frac{\pi_{\theta,n}(x_n^g|
 - 实验充分度: ⭐⭐⭐⭐☆ — 多任务多消融对比充分，但缺少更大模型规模验证
 - 写作质量: ⭐⭐⭐⭐☆ — 结构清晰、公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ — 证明了非自回归模型也能通过横向思维实现强推理能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMaDA: Multimodal Large Diffusion Language Models](mmada_multimodal_large_diffusion_language_models.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
+- [Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
+
+<!-- RELATED:END -->

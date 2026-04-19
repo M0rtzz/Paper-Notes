@@ -158,3 +158,15 @@ tags:
 - **实用价值**: ⭐⭐⭐⭐ — 对理解 VLM 行为特性有价值，对 AI 安全和对齐有参考意义
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，可视化丰富
 - **综合评分**: 7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](../../NeurIPS2025/multimodal_vlm/on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+- [Transferring Textual Preferences to Vision-Language Understanding through Model Merging](transferring_textual_preferences_to_vision-language_understanding_through_model_.md)
+- [Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension](../../ICCV2025/multimodal_vlm/scaling_inferencetime_search_with_vision_value_model_for_imp.md)
+- [KVSmooth: Mitigating Hallucination in Multi-modal Large Language Models through Key-Value Smoothing](../../CVPR2026/multimodal_vlm/kvsmooth_mitigating_hallucination_in_multimodal_la.md)
+- [Vision Graph Prompting via Semantic Low-Rank Decomposition](../../ICML2025/multimodal_vlm/vision_graph_prompting_via_semantic_low-rank_decomposition.md)
+
+<!-- RELATED:END -->

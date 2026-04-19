@@ -110,3 +110,15 @@ ProSpero 遵循主动学习循环：每轮 (1) 在当前数据集上训练代理
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个蛋白任务、10个基线、代理失配鲁棒性分析全面
 - 写作质量: ⭐⭐⭐⭐ 动机明确、方法描述清晰、消融分析详细
 - 价值: ⭐⭐⭐⭐ 对数据高效蛋白质工程有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein Design with Dynamic Protein Vocabulary](protein_design_with_dynamic_protein_vocabulary.md)
+- [Amortized Active Generation of Pareto Sets](amortized_active_generation_of_pareto_sets.md)
+- [Self Iterative Label Refinement via Robust Unlabeled Learning](self_iterative_label_refinement_via_robust_unlabeled_learning.md)
+- [Towards Multiscale Graph-based Protein Learning with Geometric Secondary Structural Motifs](towards_multiscale_graph-based_protein_learning_with_geometric_secondary_structu.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](../../ICML2025/medical_imaging/flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+
+<!-- RELATED:END -->

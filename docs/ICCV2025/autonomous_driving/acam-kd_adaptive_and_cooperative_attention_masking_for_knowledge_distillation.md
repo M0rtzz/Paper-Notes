@@ -201,3 +201,15 @@ $$L = L_{task} + \alpha (L^c_{distill} + L^s_{distill}) + \lambda L_{div}$$
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting](frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast.md)
+- [Multi-modal Knowledge Distillation-based Human Trajectory Forecasting](../../CVPR2025/autonomous_driving/multi-modal_knowledge_distillation-based_human_trajectory_forecasting.md)
+- [Passing the Driving Knowledge Test](passing_the_driving_knowledge_test.md)
+- [CoLMDriver: LLM-based Negotiation Benefits Cooperative Autonomous Driving](colmdriver_llm-based_negotiation_benefits_cooperative_autonomous_driving.md)
+- [Where, What, Why: Towards Explainable Driver Attention Prediction](where_what_why_towards_explainable_driver_attention_prediction.md)
+
+<!-- RELATED:END -->

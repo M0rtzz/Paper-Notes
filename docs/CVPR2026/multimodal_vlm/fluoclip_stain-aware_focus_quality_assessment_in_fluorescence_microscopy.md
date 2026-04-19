@@ -109,3 +109,14 @@ $\mathcal{L}_{total} = \alpha \cdot \mathcal{L}_{CE} + \beta \cdot \mathcal{L}_{
 - 写作质量: ⭐⭐⭐⭐ 任务动机分析深入，染色依赖性的定量验证有说服力
 - 价值: ⭐⭐⭐⭐ 对生物医学图像分析社区有重要价值
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisJudge-Bench: Aesthetics and Quality Assessment of Visualizations](../../ICLR2026/multimodal_vlm/visjudge-bench_aesthetics_and_quality_assessment_of_visualizations.md)
+- [BriMA: Bridged Modality Adaptation for Multi-Modal Continual Action Quality Assessment](brima_bridged_modality_adaptation_for_multi-modal_continual_action_quality_asses.md)
+- [A3: Towards Advertising Aesthetic Assessment](a3_towards_advertising_aesthetic_assessment.md)
+- [Grounding-IQA: Grounding Multimodal Language Models for Image Quality Assessment](../../ICLR2026/multimodal_vlm/grounding-iqa_grounding_multimodal_language_model_for_image_quality_assessment.md)
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](../../ICLR2026/multimodal_vlm/self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ MagDiff 在仅用 76K 微调数据的情况下，FVD 指标大幅领先所有方
 - **技术深度**: ⭐⭐⭐⭐ — 三种对齐策略设计合理，APA 模块有启发性
 - **实验充分度**: ⭐⭐⭐⭐ — 四个基准数据集 + 人工评估 + 完整消融
 - **写作质量**: ⭐⭐⭐⭐ — 问题剖析清晰，图示丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion](videoshop_localized_semantic_video_editing_with_noise-extrapolated_diffusion_inv.md)
+- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
+- [MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model](mofa-video_controllable_image_animation_via_generative_motion_field_adaptions_in.md)
+- [DIVE: Taming DINO for Subject-Driven Video Editing](../../ICCV2025/video_generation/dive_taming_dino_for_subject-driven_video_editing.md)
+- [DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing](dreammotion_space-time_self-similar_score_distillation_for_zero-shot_video_editi.md)
+
+<!-- RELATED:END -->

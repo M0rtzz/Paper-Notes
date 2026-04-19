@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 有真实机器人验证和消融分析，但论文全文未能完整获取，定量对比细节有待确认
 - 写作质量: ⭐⭐⭐⭐ "Show, Don't Tell" 命名精准传神，故事线清晰连贯
 - 价值: ⭐⭐⭐⭐ 对机器人场景的物体识别提供了实用且工程可行的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+- [FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition](fusionagent_a_multimodal_agent_with_dynamic_model_selection_for_human_recognitio.md)
+
+<!-- RELATED:END -->

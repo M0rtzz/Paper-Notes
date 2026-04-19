@@ -166,3 +166,15 @@ SED-Aug在所有数据集上全面超越基线，尤其在Twitter2012和Twitter2
 **优点**：框架设计清晰，显式和隐式增强的设计都有充分的动机和理论支撑；实验非常全面（6个研究问题逐一回答）；提升幅度巨大（15-17%平均F1）。
 
 **不足**：增强方法本身并非特别新颖（高斯扰动等较为基础）；频域扰动的设计缺乏更深入的理论分析；缺少与其他数据增强方法（如Mixup, CutMix等）的对比。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Linguistically-Motivated Data Augmentation Worth It?](is_linguistically-motivated_data_augmentation_worth_it.md)
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](seoe_semantic_eval.md)
+- [Temporal Reasoning for Timeline Summarisation in Social Media](temporal_reasoning_for_timeline_summarisation_in_social_media.md)
+- [FreeAugment: Data Augmentation Search Across All Degrees of Freedom](../../ECCV2024/others/freeaugment_data_augmentation_search_across_all_degrees_of_freedom.md)
+- [Predicting Implicit Arguments in Procedural Video Instructions](implicit_arguments_video_instructions.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ $$\hat{\epsilon}(\mathbf{a}^k, o_t) = \epsilon(\mathbf{a}^k, o_t) - s\sqrt{1-\ba
 - 实验充分度: ⭐⭐⭐⭐ 5 组仿真实验 + 3 组真实机器人实验，消融全面
 - 写作质量: ⭐⭐⭐⭐ 方法推导清晰，图表信息量大
 - 实用价值: ⭐⭐⭐⭐ 即插即用特性对实际机器人部署有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Activation Steering for Masked Diffusion Language Models](../../ICLR2026/image_restoration/activation_steering_for_masked_diffusion_language_models.md)
+- [Blind Noisy Image Deblurring Using Residual Guidance Strategy](../../ICCV2025/image_restoration/blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](../../ECCV2024/image_restoration/efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
+- [Decouple to Reconstruct: High Quality UHD Restoration via Active Feature Disentanglement and Reversible Fusion](../../ICCV2025/image_restoration/decouple_to_reconstruct_high_quality_uhd_restoration_via_active_feature_disentan.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了分类和检测任务，多种架构，但缺乏对抗攻击的鲁棒性测试
 - 写作质量: ⭐⭐⭐⭐⭐ 思路清晰，理论和实验紧密结合，算法伪代码详尽
 - 价值: ⭐⭐⭐⭐⭐ 解决了模型IP保护的核心痛点（免训练），具有很强的实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers](semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf.md)
+- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
+- [A Unified Perspective on Adversarial Membership Manipulation in Vision Models](../../CVPR2026/ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)
+- [Privacy-Shielded Image Compression: Defending Against Exploitation from Vision-Language Pretrained Models](../../ICML2025/ai_safety/privacy-shielded_image_compression_defending_against_exploitation_from_vision-la.md)
+- [Theoretically Unmasking Inference Attacks Against LDP-Protected Clients in Federated Vision Models](../../ICML2025/ai_safety/theoretically_unmasking_inference_attacks_against_ldp-protected_clients_in_feder.md)
+
+<!-- RELATED:END -->

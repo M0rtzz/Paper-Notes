@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 种评估设置、图像+视频、细粒度部件、完整消融、多方法对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、图示丰富，但部分模块描述稍显冗长
 - 价值: ⭐⭐⭐⭐⭐ 数据集和模型对机器人感知社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](videomt_encoder_only_video_segmentation.md)
+- [RS-SSM: Refining Forgotten Specifics in State Space Model for Video Semantic Segmentation](rs-ssm_refining_forgotten_specifics_in_state_space_model_for_video_semantic_segm.md)
+- [Live Interactive Training for Video Segmentation](live_interactive_training_for_video_segmentation.md)
+- [VINCIE: Unlocking In-context Image Editing from Video](../../ICLR2026/segmentation/vincie_unlocking_in-context_image_editing_from_video.md)
+- [ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](../../NeurIPS2025/segmentation/argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
+
+<!-- RELATED:END -->

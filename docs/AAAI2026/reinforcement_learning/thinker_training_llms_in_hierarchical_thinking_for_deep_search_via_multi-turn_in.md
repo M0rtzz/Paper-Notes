@@ -115,3 +115,15 @@ LLM 在复杂多跳推理任务中面临知识不足和幻觉问题。现有 dee
 - 实验充分度: ⭐⭐⭐⭐ — 7 个数据集、多模型规模、消融和灵敏度分析齐全
 - 写作质量: ⭐⭐⭐⭐ — 框架图清晰，问题定义明确
 - 价值: ⭐⭐⭐⭐⭐ — 对 deep search / agentic RAG 领域有直接的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcement Learning for Long-Horizon Multi-Turn Search Agents](../../NeurIPS2025/reinforcement_learning/reinforcement_learning_for_long-horizon_multi-turn_search_agents.md)
+- [HCPO: Hierarchical Conductor-Based Policy Optimization in Multi-Agent Reinforcement Learning](hcpo_hierarchical_conductor-based_policy_optimization_in_multi-agent_reinforceme.md)
+- [AbstRaL: Augmenting LLMs' Reasoning by Reinforcing Abstract Thinking](../../ICLR2026/reinforcement_learning/abstral_augmenting_llms_reasoning_by_reinforcing_abstract_thinking.md)
+- [EvoLM: In Search of Lost Language Model Training Dynamics](../../NeurIPS2025/reinforcement_learning/evolm_in_search_of_lost_language_model_training_dynamics.md)
+- [SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](../../ICLR2026/reinforcement_learning/spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
+
+<!-- RELATED:END -->

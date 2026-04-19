@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 主实验+消融+端到端+成本分析全面，但基准数量有限
 - 写作质量: ⭐⭐⭐⭐⭐ 问题驱动的叙述结构清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对实际 RAG 系统有直接参考价值，半结构化 KB 场景常见
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeaKR: Self-aware Knowledge Retrieval for Adaptive Retrieval Augmented Generation](seakr_self-aware_knowledge_retrieval_for_adaptive_retrieval_augmented_generation.md)
+- [Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval](../../NeurIPS2025/information_retrieval/mind_the_gap_aligning_knowledge_bases_with_user_needs_to_enhance_mental_health_r.md)
+- [Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation](towards_adaptive_memory-based_optimization_for_enhanced_retrieval-augmented_gene.md)
+- [A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
+- [Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
+
+<!-- RELATED:END -->

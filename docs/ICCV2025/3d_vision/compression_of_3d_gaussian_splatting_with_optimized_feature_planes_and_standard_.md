@@ -156,3 +156,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{render}} + \lambda_{\text{ent}} \mathcal{L}_{
 - **实验充分度**: ⭐⭐⭐⭐ — 三个标准数据集、RD曲线、详细消融、编解码器对比
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，图表丰富，消融层次分明
 - **价值**: ⭐⭐⭐⭐ — 实现了3DGS与标准视频编解码器的无缝集成，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Compression for 3D Geometry Sets](neural_compression_for_3d_geometry_sets.md)
+- [GIFStream: 4D Gaussian-based Immersive Video with Feature Stream](../../CVPR2025/3d_vision/gifstream_4d_gaussian-based_immersive_video_with_feature_stream.md)
+- [Temporal Smoothness-Aware Rate-Distortion Optimized 4D Gaussian Splatting](../../NeurIPS2025/3d_vision/temporal_smoothness-aware_rate-distortion_optimized_4d_gaussian_splatting.md)
+- [CF³: Compact and Fast 3D Feature Fields](cf3_compact_and_fast_3d_feature_fields.md)
+- [VoluMe: Authentic 3D Video Calls from Live Gaussian Splat Prediction](volume_-_authentic_3d_video_calls_from_live_gaussian_splat_prediction.md)
+
+<!-- RELATED:END -->

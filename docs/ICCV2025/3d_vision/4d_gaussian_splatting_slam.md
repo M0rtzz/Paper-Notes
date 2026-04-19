@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ TUM+BONN双数据集、多baseline、消融完整，但缺少大规模/室外场景
 - 写作质量: ⭐⭐⭐ 方法描述清晰但组织有改进空间
 - 价值: ⭐⭐⭐⭐ 填补4D GS-SLAM空白，对动态场景理解和机器人应用有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEGA: Memory-Efficient 4D Gaussian Splatting for Dynamic Scenes](mega_memory-efficient_4d_gaussian_splatting_for_dynamic_scenes.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](../../CVPR2025/3d_vision/varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [Outdoor Monocular SLAM with Global Scale-Consistent 3D Gaussian Pointmaps](outdoor_monocular_slam_with_global_scale-consistent_3d_gaussian_pointmaps.md)
+- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](../../ECCV2024/3d_vision/sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [Benchmarking Egocentric Visual-Inertial SLAM at City Scale](benchmarking_egocentric_visualinertial_slam_at_city_scale.md)
+
+<!-- RELATED:END -->

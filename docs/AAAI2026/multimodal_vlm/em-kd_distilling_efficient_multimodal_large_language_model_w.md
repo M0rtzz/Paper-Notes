@@ -87,3 +87,15 @@ EM-KD以LLaVA-OneVision-SI为teacher，以自适应平均池化压缩视觉token
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个benchmark + 两个规模 + 完善的消融实验，非常充分
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，但某些公式表述可以更简洁
 - 价值: ⭐⭐⭐⭐⭐ 解决了MLLM蒸馏中一个实际且重要的问题，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLaVA-KD: A Framework of Distilling Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/llava-kd_a_framework_of_distilling_multimodal_large_language_models.md)
+- [Towards Long-window Anchoring in Vision-Language Model Distillation](towards_long-window_anchoring_in_vision-language_model_distillation.md)
+- [TinyChemVL: Advancing Chemical Vision-Language Models via Efficient Visual Token Reduction and Complex Reaction Tasks](tinychemvl_advancing_chemical_vision-language_models_via_efficient_visual_token_.md)
+- [PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision-language_models.md)
+- [SDEval: Safety Dynamic Evaluation for Multimodal Large Language Models](sdeval_safety_dynamic_evaluation_for_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

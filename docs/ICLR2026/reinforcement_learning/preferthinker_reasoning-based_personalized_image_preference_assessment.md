@@ -120,3 +120,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 方法设计完整，从数据构建到训练都有创新点。偏好画像桥接概念简洁有效。主要的担忧是模拟数据与真实个性化偏好之间的 gap，PickaPic 上的表现也证实了这一点。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning as Representation: Rethinking Visual Reinforcement Learning in Image Quality Assessment](reasoning_as_representation_rethinking_visual_reinforcement_learning_in_image_qu.md)
+- [DiVE-k: Differential Visual Reasoning for Fine-grained Image Recognition](dive-k_differential_visual_reasoning_for_fine-grained_image_recognition.md)
+- [FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning](fapo_flawed-aware_policy_optimization_for_efficient_and_reliable_reasoning.md)
+- [Reasoning-Driven Anomaly Detection and Localization with Image-Level Supervision](../../CVPR2026/reinforcement_learning/reasoning-driven_anomaly_detection_and_localization_with_image-level_supervision.md)
+- [Metis-SPECS: Decoupling Multimodal Learning via Self-distilled Preference-based Cold Start](metis-specs_decoupling_multimodal_learning_via_self-distilled_preference-based_c.md)
+
+<!-- RELATED:END -->

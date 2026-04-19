@@ -146,3 +146,15 @@ $$L_{\text{stage2}} = L_{\text{traj}} + L_{\text{action}}$$
 ## 评分
 
 ⭐⭐⭐⭐ — 问题设定新颖且实用，"动作即锚点"的洞察独到，多模态对齐设计精巧，定位精度提升显著。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion](disentangling_instance_and_scene_contexts_for_3d_semantic_scene_completion.md)
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images](one_look_is_enough_seamless_patchwise_refinement_for_zero-shot_monocular_depth_e.md)
+
+<!-- RELATED:END -->

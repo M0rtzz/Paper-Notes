@@ -115,3 +115,15 @@ Torch-Uncertainty 基于 PyTorch 和 Lightning 构建，核心架构包括：任
 - **实验充分度**: ⭐⭐⭐⭐ 分类基准详尽，分割基准相对简单，覆盖多维度评估
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，库设计和对比表格一目了然
 - **价值**: ⭐⭐⭐⭐⭐ 对 UQ 社区有极高实用价值，填补了统一工具的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Generalization of Representation Uncertainty in Earth Observation](../../ICCV2025/segmentation/on_the_generalization_of_representation_uncertainty_in_earth_observation.md)
+- [OmniSegmentor: A Flexible Multi-Modal Learning Framework for Semantic Segmentation](omnisegmentor_a_flexible_multi-modal_learning_framework_for_semantic_segmentatio.md)
+- [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
+- [Diffusion-Driven Two-Stage Active Learning for Low-Budget Semantic Segmentation](diffusion-driven_two-stage_active_learning_for_low-budget_semantic_segmentation.md)
+- [InstructSAM: A Training-Free Framework for Instruction-Oriented Remote Sensing Object Recognition](instructsam_a_training-free_framework_for_instruction-oriented_remote_sensing_ob.md)
+
+<!-- RELATED:END -->

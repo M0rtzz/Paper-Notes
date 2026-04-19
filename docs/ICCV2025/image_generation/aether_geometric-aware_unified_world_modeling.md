@@ -152,3 +152,15 @@ Aether 基于 CogVideoX-5b-I2V 进行后训练（post-training）。模型的目
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SummDiff: Generative Modeling of Video Summarization with Diffusion](summdiff_generative_modeling_of_video_summarization_with_diffusion.md)
+- [Long-Context State-Space Video World Models](long-context_state-space_video_world_models.md)
+- [A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
+- [Generative Modeling of Shape-Dependent Self-Contact Human Poses](generative_modeling_of_shape-dependent_self-contact_human_poses.md)
+- [Domain Generalizable Portrait Style Transfer](domain_generalizable_portrait_style_transfer.md)
+
+<!-- RELATED:END -->

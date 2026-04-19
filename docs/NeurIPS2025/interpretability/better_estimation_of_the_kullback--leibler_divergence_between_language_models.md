@@ -121,3 +121,15 @@ KL < 5 区域：RB 模型占 Pareto 前沿的 **95%**！
 - 实验充分度: ⭐⭐⭐⭐⭐ 估计质量+RLHF 训练+Pareto 分析+梯度方差
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导极其清晰，定理-证明结构优美
 - 价值: ⭐⭐⭐⭐⭐ 对 RLHF 实践有直接可落地的改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Trilemma of Truth in Large Language Models](the_trilemma_of_truth_in_large_language_models.md)
+- [ARECHO: Autoregressive Evaluation via Chain-Based Hypothesis Optimization for Speech Multi-Metric Estimation](arecho_autoregressive_evaluation_via_chain-based_hypothesis_optimization_for_spe.md)
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+- [Are Greedy Task Orderings Better Than Random in Continual Linear Regression?](are_greedy_task_orderings_better_than_random_in_continual_linear_regression.md)
+- [SOM Directions are Better than One: Multi-Directional Refusal Suppression in Language Models](../../AAAI2026/interpretability/som_directions_are_better_than_one_multi-directional_refusal_suppression_in_lang.md)
+
+<!-- RELATED:END -->

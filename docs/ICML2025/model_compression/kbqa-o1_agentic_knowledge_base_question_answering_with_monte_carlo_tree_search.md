@@ -117,3 +117,15 @@ MCTS 四阶段：
 - 实验充分度: ⭐⭐⭐⭐ （三个数据集、多模型、消融实验完备）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，理论和实验相辅相成）
 - 价值: ⭐⭐⭐⭐⭐ （低资源 KBQA 的突破性工作，开源可用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Communication Overhead: A Multilevel Monte Carlo Approach for Mitigating Compression Bias in Distributed Learning](beyond_communication_overhead_a_multilevel_monte_carlo_approach_for_mitigating_c.md)
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](../../ACL2025/model_compression/rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [Traversal Verification for Speculative Tree Decoding](../../NeurIPS2025/model_compression/traversal_verification_for_speculative_tree_decoding.md)
+- [TreeLoRA: Efficient Continual Learning via Layer-Wise LoRAs Guided by a Hierarchical Gradient-Similarity Tree](treelora_efficient_continual_learning_via_layer-wise_loras_guided_by_a_hierarchi.md)
+- [Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models](../../ACL2025/model_compression/trans_peft_transferable.md)
+
+<!-- RELATED:END -->

@@ -182,3 +182,15 @@ $$\hat{R} = \mathcal{G}_{\text{edge}}(\mathcal{C}_{\text{edge}})$$
 - 实验充分度: ⭐⭐⭐⭐ (真实硬件评测，8种模型组合，但数据集规模偏小)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论证明严谨，系统架构描述清晰)
 - 价值: ⭐⭐⭐⭐⭐ (解决LLM隐私保护的实际问题，方案具有落地前景)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference](infodecom_decomposing_information_for_defending_against_privacy_leakage_in_split.md)
+- [CryptoMoE: Privacy-Preserving and Scalable Mixture of Experts Inference via Balanced Expert Routing](../../NeurIPS2025/ai_safety/cryptomoe_privacy-preserving_and_scalable_mixture_of_experts_inference_via_balan.md)
+- [Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](../../ICLR2026/ai_safety/adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
+- [RegionMarker: A Region-Triggered Semantic Watermarking Framework for Embedding-as-a-Service](regionmarker_a_region-triggered_semantic_watermarking_framework_for_embedding-as.md)
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+
+<!-- RELATED:END -->

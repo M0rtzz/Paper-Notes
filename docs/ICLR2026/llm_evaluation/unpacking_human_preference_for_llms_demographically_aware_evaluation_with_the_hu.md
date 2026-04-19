@@ -155,3 +155,15 @@ HUMAINE 基于心理测量学原理，包含四个层次：
 | 写作质量 | 4.5 |
 | 实用价值 | 4.5 |
 | 总分 | 4.3 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Talk, Evaluate, Diagnose: User-aware Agent Evaluation with Automated Error Analysis](talk_evaluate_diagnose_user-aware_agent_evaluation_with_automated_error_analysis.md)
+- [Subliminal Signals in Preference Labels](subliminal_signals_in_preference_labels.md)
+- [GranAlign: Granularity-Aware Alignment Framework for Zero-Shot Video Moment Retrieval](../../AAAI2026/llm_evaluation/granalign_granularity-aware_alignment_framework_for_zero-shot_video_moment_retri.md)
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](../../ACL2025/llm_evaluation/chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+- [Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
+
+<!-- RELATED:END -->

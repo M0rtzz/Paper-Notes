@@ -152,3 +152,15 @@ SPT 为每个空间 token 赋予精确的 3D 位置信息：
 
 **总体推荐**：⭐⭐⭐⭐  
 **推荐理由**：在机器人操控领域提出了一个工程直觉清晰且效果显著的空间表征框架，语义-几何解耦 + 互补几何融合的设计在噪声条件下优势明显，50+ 任务的全面评估和真实机器人实验大幅提升了可信度。核心思想(解耦 + 互补融合)对其他需要多模态鲁棒融合的任务也具有参考价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TouchFormer: A Robust Transformer-based Framework for Multimodal Material Perception](touchformer_a_robust_transformer-based_framework_for_multimodal_material_percept.md)
+- [Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems](shadows_in_the_code_exploring_the_risks_and_defenses_of_llm-.md)
+- [T-Rex: Task-Adaptive Spatial Representation Extraction for Robotic Manipulation with VLMs](../../NeurIPS2025/robotics/t-rex_task-adaptive_spatial_representation_extraction_for_robotic_manipulation_w.md)
+- [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+- [Robust Out-of-Order Retrieval for Grid-Based Storage at Maximum Capacity](robust_out-of-order_retrieval_for_grid-based_storage_at_maximum_capacity.md)
+
+<!-- RELATED:END -->

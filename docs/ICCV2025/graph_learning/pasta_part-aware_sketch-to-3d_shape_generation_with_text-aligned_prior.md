@@ -213,3 +213,15 @@ $\mathcal{L} = \lambda_{align}\mathcal{L}_{align} + \lambda_{indiv}\mathcal{L}_{
 - 实验充分度: ⭐⭐⭐⭐ 多数据集定量+定性，有消融但类别有限
 - 写作质量: ⭐⭐⭐⭐ 图文清晰，架构描述详细
 - 价值: ⭐⭐⭐⭐ 对交互式3D内容创建有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](../../NeurIPS2025/graph_learning/unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](../../NeurIPS2025/graph_learning/sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+- [Nonlinear Laplacians: Tunable Principal Component Analysis under Directional Prior Information](../../NeurIPS2025/graph_learning/nonlinear_laplacians_tunable_principal_component_analysis_under_directional_prio.md)
+- [Can Graph Neural Networks Learn Language with Extremely Weak Text Supervision?](../../ACL2025/graph_learning/can_graph_neural_networks_learn_language.md)
+- [Format as a Prior: Quantifying and Analyzing Bias in LLMs for Heterogeneous Data](../../AAAI2026/graph_learning/format_as_a_prior_quantifying_and_analyzing_bias_in_llms_for_heterogeneous_data.md)
+
+<!-- RELATED:END -->

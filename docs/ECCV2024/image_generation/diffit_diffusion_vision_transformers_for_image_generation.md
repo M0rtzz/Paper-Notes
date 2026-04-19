@@ -168,3 +168,15 @@ DiffiT提供两种变体：
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融极其详尽，覆盖架构/TMSA设计/窗口大小/CFG/时间嵌入/效率等多维度
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验组织有条理，可视化注意力图很有说服力
 - 价值: ⭐⭐⭐⭐⭐ TMSA可直接替换现有方法中的自注意力层，通用性强，NVIDIA出品代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAZOR: Ratio-Aware Layer Editing for Targeted Unlearning in Vision Transformers and Diffusion Models](../../CVPR2026/image_generation/razor_ratio-aware_layer_editing_for_targeted_unlearning_in_vision_transformers_a.md)
+- [EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation](../../CVPR2026/image_generation/edgedit_hardware-aware_diffusion_transformers_for_efficient_on-device_image_gene.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
+- [Contact-Guided 3D Genome Structure Generation of E. coli via Diffusion Transformers](../../ICLR2026/image_generation/contact-guided_3d_genome_structure_generation_of_e_coli_via_diffusion_transforme.md)
+
+<!-- RELATED:END -->

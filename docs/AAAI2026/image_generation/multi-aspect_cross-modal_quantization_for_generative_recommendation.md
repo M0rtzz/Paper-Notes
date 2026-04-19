@@ -205,3 +205,15 @@ MACRec 有效降低了两种模态的 ID 冲突率。
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、多种消融、冲突率分析、码字分布可视化
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，方法描述详细
 - **价值**: ⭐⭐⭐⭐ — 对 GR 领域贡献显著，跨模态量化思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](../../ICCV2025/image_generation/stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [Multi-Metric Preference Alignment for Generative Speech Restoration](multi-metric_preference_alignment_for_generative_speech_restoration.md)
+- [Cross-Modal Emotion Transfer for Emotion Editing in Talking Face Video](../../CVPR2026/image_generation/cross-modal_emotion_transfer_for_emotion_editing_in_talking_face_video.md)
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](../../CVPR2026/image_generation/quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+
+<!-- RELATED:END -->

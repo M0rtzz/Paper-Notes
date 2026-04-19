@@ -123,3 +123,15 @@ $$\|x_{t-1} - x_t\|_1 \leq \eta \cdot g_{t-1}^T x_{t-1}$$
 - 实验充分度: ⭐⭐ — 纯理论，无实验
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，技术脉络连贯，与相关工作对比充分
 - 价值: ⭐⭐⭐⭐ — 给出紧界，解决了自然而重要的开放问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fixed-Confidence Multiple Change Point Identification under Bandit Feedback](fixed-confidence_multiple_change_point_identification_under_bandit_feedback.md)
+- [Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
+- [Learning-Augmented Online Bipartite Fractional Matching](../../NeurIPS2025/others/learning-augmented_online_bipartite_fractional_matching.md)
+- [Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+- [Learning-Augmented Hierarchical Clustering](learning-augmented_hierarchical_clustering.md)
+
+<!-- RELATED:END -->

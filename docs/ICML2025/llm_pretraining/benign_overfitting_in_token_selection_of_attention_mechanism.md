@@ -118,3 +118,15 @@ tags:
 3. 探索与强化学习、在线学习结合的可能性，实现动态适应
 4. 开发自动化评估和优化工具，降低方法的使用门槛
 5. 考虑与 LLM alignment 研究的交叉，探索安全性和性能的协同优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Benign Overfitting in Nadaraya-Watson Interpolators](../../NeurIPS2025/llm_pretraining/beyond_benign_overfitting_in_nadaraya-watson_interpolators.md)
+- [Counting in Small Transformers: The Delicate Interplay between Attention and Feed-Forward Layers](counting_in_small_transformers_the_delicate_interplay_between_attention_and_feed.md)
+- [On the Clean Generalization and Robust Overfitting in Adversarial Training from Two Theoretical Views: Representation Complexity and Training Dynamics](on_the_clean_generalization_and_robust_overfitting_in_adversarial_training_from_.md)
+- [LLM Data Selection and Utilization via Dynamic Bi-level Optimization](llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
+- [TokAlign: Efficient Vocabulary Adaptation via Token Alignment](../../ACL2025/llm_pretraining/tokalign_vocab_adaptation.md)
+
+<!-- RELATED:END -->

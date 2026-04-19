@@ -132,3 +132,15 @@ ManiVideo 基于条件扩散模型，输入为双手 MANO 模型参数 $(θ,β)$
 **实验充分度**: ⭐⭐⭐⭐ 两个数据集对比 + 完善的消融实验  
 **写作质量**: ⭐⭐⭐⭐ 结构清晰，图示直观  
 **实用价值**: ⭐⭐⭐⭐ 在数字人和 VR 领域有直接应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Material Anything: Generating Materials for Any 3D Object via Diffusion](material_anything_generating_materials_for_any_3d_object_via_diffusion.md)
+- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
+- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+- [D-REX: Differentiable Real-to-Sim-to-Real Engine for Learning Dexterous Grasping](../../ICLR2026/3d_vision/d-rex_differentiable_real-to-sim-to-real_engine_for_learning_dexterous_grasping.md)
+- [RoboPearls: Editable Video Simulation for Robot Manipulation](../../ICCV2025/3d_vision/robopearls_editable_video_simulation_for_robot_manipulation.md)
+
+<!-- RELATED:END -->

@@ -157,3 +157,15 @@ MSE ≥ 5.0 表明 prompt 类型对该模型影响极大，商业模型通常更
 - 实验充分度: ⭐⭐⭐⭐⭐ — 20+ 模型全面测评，商业+开源覆盖，微调+外推探索系统
 - 写作质量: ⭐⭐⭐⭐ — 发现总结清晰，图表丰富，结构条理
 - 价值: ⭐⭐⭐⭐ — 填补中文长文本摘要基准空白，洞察对实际应用有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sliding Windows Are Not the End: Exploring Full Ranking with Long-Context Large Language Models](sliding_windows_full_ranking.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+- [Literary Evidence Retrieval via Long-Context Language Models](literary_evidence_retrieval_via_long-context_language_models.md)
+- [Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
+
+<!-- RELATED:END -->

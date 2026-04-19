@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基线对比+消融+定性展示
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但公式符号较多
 - 价值: ⭐⭐⭐⭐ 单GPU视觉叙事的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Quantitive and Spatial Awareness for Zero-Shot Object Counting](boosting_quantitive_and_spatial_awareness_for_zero-shot_object_counting.md)
+- [SparVAR: Exploring Sparsity in Visual Autoregressive Modeling for Training-Free Acceleration](sparvar_exploring_sparsity_in_visual_autoregressive_modeling_for_training-free_a.md)
+- [MVAR: Visual Autoregressive Modeling with Scale and Spatial Markovian Conditioning](../../ICLR2026/llm_efficiency/mvar_visual_autoregressive_modeling_with_scale_and_spatial_markovian_conditionin.md)
+- [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](../../NeurIPS2025/llm_efficiency/zeros_zero-sum_linear_attention_for_efficient_transformers.md)
+- [MixANT: Observation-dependent Memory Propagation for Stochastic Dense Action Anticipation](../../ICCV2025/llm_efficiency/mixant_observation-dependent_memory_propagation_for_stochastic_dense_action_anti.md)
+
+<!-- RELATED:END -->

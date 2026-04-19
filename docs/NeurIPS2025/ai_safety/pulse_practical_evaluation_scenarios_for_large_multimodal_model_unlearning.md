@@ -133,3 +133,15 @@ PULSE 在传统"先微调、再遗忘"的评估管线之上，增加了两个新
 - 实验充分度: ⭐⭐⭐ （模型和方法覆盖偏窄）
 - 写作质量: ⭐⭐⭐⭐ （问题动机清晰，实验设计合理）
 - 价值: ⭐⭐⭐⭐ （对 LMM 遗忘社区具有重要的基准设定意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text](agentstealth_reinforcing_large_language_model_for_anonymizing_user-generated_tex.md)
+- [Music Arena: Live Evaluation for Text-to-Music](music_arena_live_evaluation_for_text-to-music.md)
+- [An Information Theoretic Evaluation Metric for Strong Unlearning](../../AAAI2026/ai_safety/an_information_theoretic_evaluation_metric_for_strong_unlear.md)
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Position: Bridge the Gaps between Machine Unlearning and AI Regulation](position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ DAM 使用广义 KL 散度（gKL）作为匹配函数：$D_{\text{gKL}}(u,w) = \
 - 实验充分度: ⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiFlowDubber: Discrete Flow Matching for Automated Video Dubbing via Cross-Modal Alignment and Synchronization](../../CVPR2026/image_generation/diflowdubber_discrete_flow_matching_for_automated_video_dubbing_via_cross-modal_.md)
+- [Loopholing Discrete Diffusion: Deterministic Bypass of the Sampling Wall](loopholing_discrete_diffusion_deterministic_bypass_of_the_sampling_wall.md)
+- [Embracing Discrete Search: A Reasonable Approach to Causal Structure Learning](embracing_discrete_search_a_reasonable_approach_to_causal_structure_learning.md)
+- [JointDiff: Bridging Continuous and Discrete in Multi-Agent Trajectory Generation](jointdiff_bridging_continuous_and_discrete_in_multi-agent_trajectory_generation.md)
+- [Branched Schrödinger Bridge Matching](branched_schrödinger_bridge_matching.md)
+
+<!-- RELATED:END -->

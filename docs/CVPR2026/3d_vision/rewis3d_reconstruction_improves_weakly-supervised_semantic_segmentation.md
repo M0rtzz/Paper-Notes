@@ -126,3 +126,15 @@ Cityscapes 跨标注类型泛化：
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个数据集、3 种标注类型、全面消融、真实vs重建对比
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表丰富，消融彻底
 - 价值: ⭐⭐⭐⭐ 实用性强（推理零开销），但依赖视频输入限制了部分应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [VGG-T3: Offline Feed-Forward 3D Reconstruction at Scale](vgg-t3_offline_feed-forward_3d_reconstruction_at_scale.md)
+- [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
+- [Neural Field-Based 3D Surface Reconstruction of Microstructures from Multi-Detector Signals in Scanning Electron Microscopy](neural_field-based_3d_surface_reconstruction_of_microstructures_from_multi-detec.md)
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp3d_joint_open_vocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

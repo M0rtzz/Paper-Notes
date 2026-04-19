@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 QA、毒性缓解、图像分类、图像描述四类任务和五个模型，对照充分
 - 写作质量: ⭐⭐⭐⭐ 方法和实验层层递进，论证充分
 - 价值: ⭐⭐⭐⭐ 为模型理解和轻量级控制提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiTFastAttnV2: Head-wise Attention Compression for Multi-Modality Diffusion Transformers](../../ICCV2025/image_generation/ditfastattnv2_head-wise_attention_compression_for_multi-modality_diffusion_trans.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](../../ICCV2025/image_generation/edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+- [Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers](../../ICCV2025/image_generation/rethinking_cross-modal_interaction_in_multimodal_diffusion_transformers.md)
+- [Exploring Multimodal Diffusion Transformers for Enhanced Prompt-based Image Editing](../../ICCV2025/image_generation/exploring_multimodal_diffusion_transformers_for_enhanced_prompt-based_image_edit.md)
+
+<!-- RELATED:END -->

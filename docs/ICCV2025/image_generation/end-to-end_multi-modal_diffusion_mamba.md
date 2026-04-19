@@ -173,3 +173,15 @@ $$L_{total} = L_{rec}^{img} + L_{rec}^{txt} + \beta L_{KL} + \lambda L_{se}$$
 - 实验充分度: ⭐⭐⭐⭐ 覆盖图像生成、VQA、文本理解等多任务，但高分辨率和视频生成评测缺失
 - 写作质量: ⭐⭐⭐⭐ 架构描述详细，公式推导完整，但整体篇幅较长
 - 价值: ⭐⭐⭐⭐ 提出了一个有前景的新方向（Mamba端到端多模态），但与 Transformer 基线相比优势尚未完全拉开
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers](repae_unlocking_vae_for_endtoend_tuning_of_latent_diffusion.md)
+- [REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers](repa-e_unlocking_vae_for_end-to-end_tuning_of_latent_diffusion_transformers.md)
+- [LinEAS: End-to-end Learning of Activation Steering with a Distributional Loss](../../NeurIPS2025/image_generation/lineas_end-to-end_learning_of_activation_steering_with_a_distributional_loss.md)
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [MamTiff-CAD: Multi-Scale Latent Diffusion with Mamba+ for Complex Parametric Sequence](mamtiff-cad_multi-scale_latent_diffusion_with_mamba_for_complex_parametric_seque.md)
+
+<!-- RELATED:END -->

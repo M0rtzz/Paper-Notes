@@ -134,3 +134,15 @@ CIFAR-100：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多任务长度的全面对比，5次随机种子平均，但缺少一些分析性实验
 - 写作质量: ⭐⭐⭐⭐ 方法流程清晰，Fig.1 的特征漂移可视化直观有力
 - 价值: ⭐⭐⭐⭐⭐ 解决了 EFCL 中的核心痛点，长任务优势突出，方法实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CL-LoRA: Continual Low-Rank Adaptation for Rehearsal-Free Class-Incremental Learning](cl-lora_continual_low-rank_adaptation_for_rehearsal-free_class-incremental_learn.md)
+- [REP: Resource-Efficient Prompting for Rehearsal-Free Continual Learning](../../NeurIPS2025/model_compression/rep_resource-efficient_prompting_for_rehearsal-free_continual_learning.md)
+- [Function-Space Learning Rates](../../ICML2025/model_compression/function-space_learning_rates.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](../../NeurIPS2025/model_compression/gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [Train with Perturbation, Infer after Merging: A Two-Stage Framework for Continual Learning](../../NeurIPS2025/model_compression/train_with_perturbation_infer_after_merging_a_two-stage_framework_for_continual_.md)
+
+<!-- RELATED:END -->

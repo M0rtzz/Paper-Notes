@@ -145,3 +145,15 @@ TrAP 在 GLIP-T 上同样有效，Aquarium 数据集 ASR 达 0.96，验证方法
 - 实验充分度: ⭐⭐⭐ — 消融全面，但数据集偏小且缺少大规模评估
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 揭示重要安全隐患，对 OVOD 部署有直接警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MOBA: A Material-Oriented Backdoor Attack against LiDAR-based 3D Object Detection](moba_a_material-oriented_backdoor_attack_against_lidar-based_3d_object_detection.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](../../CVPR2026/autonomous_driving/o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
+- [Open-Vocabulary Domain Generalization in Urban-Scene Segmentation](../../CVPR2026/autonomous_driving/open-vocabulary_domain_generalization_in_urban-scene_segmentation.md)
+- [Monocular Open Vocabulary Occupancy Prediction for Indoor Scenes (LegoOcc)](../../CVPR2026/autonomous_driving/monocular_open_vocabulary_occupancy_prediction_for_indoor_scenes.md)
+- [Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification](hierarchical_prompt_learning_for_image-_and_text-based_person_re-identification.md)
+
+<!-- RELATED:END -->

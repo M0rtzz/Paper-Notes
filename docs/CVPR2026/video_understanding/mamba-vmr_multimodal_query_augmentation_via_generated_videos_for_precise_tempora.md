@@ -118,3 +118,15 @@ ActivityNet也有提升：R@100/IoU=0.5从ICQ的81.20→83.59。
 - 实验充分度: ⭐⭐⭐⭐ 消融实验覆盖全面，多动词分析有说服力，但主数据集偏少
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对VMR社区有启发，生成视频先验的思路有潜力扩展到更多视频理解任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SlotVTG: Object-Centric Adapter for Generalizable Video Temporal Grounding](slotvtg_object-centric_adapter_for_generalizable_video_temporal_grounding.md)
+- [CVA: Context-aware Video-text Alignment for Video Temporal Grounding](cva_context-aware_video-text_alignment_for_video_temporal_grounding.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](../../ICCV2025/video_understanding/vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
+- [SAIL: Similarity-Aware Guidance and Inter-Caption Augmentation-based Learning for Weakly-Supervised Dense Video Captioning](sail_similarity-aware_guidance_and_inter-caption_augmentation-based_learning_for.md)
+
+<!-- RELATED:END -->

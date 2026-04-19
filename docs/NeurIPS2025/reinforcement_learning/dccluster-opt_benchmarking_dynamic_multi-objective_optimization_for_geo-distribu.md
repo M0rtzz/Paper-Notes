@@ -178,3 +178,15 @@ DCcluster-Opt 构建了一个由多个地理分布式数据中心组成的仿真
 | 实验充分性 | 4 — 多策略、多规模的系统性评估 |
 | 写作质量 | 4 — 基准论文结构清晰 |
 | 影响力 | 4 — 为可持续计算研究提供重要基准 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph-Supported Dynamic Algorithm Configuration for Multi-Objective Combinatorial Optimization](../../ICML2025/reinforcement_learning/graph-supported_dynamic_algorithm_configuration_for_multi-objective_combinatoria.md)
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Sequential Multi-Agent Dynamic Algorithm Configuration](sequential_multi-agent_dynamic_algorithm_configuration.md)
+- [Trust Region Reward Optimization and Proximal Inverse Reward Optimization Algorithm](trust_region_reward_optimization_and_proximal_inverse_reward_optimization_algori.md)
+- [Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](teaching_language_models_to_evolve_with_users_dynamic_profile_modeling_for_perso.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 13 个模型、3 个数据集、多维度分析（准确性/偏差/指令跟随/格式遵循），非常全面。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，实验结果呈现直观，分析深入。
 - **价值**: ⭐⭐⭐⭐ — 为图表领域的自动评估提供了实用指南，偏差分析对社区有警示意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Vision-Language Models Evaluate Handwritten Math?](can_vision-language_models_evaluate_handwritten_math.md)
+- [ChartCoder: Advancing Multimodal Large Language Model for Chart-to-Code Generation](chartcoder_chart_to_code.md)
+- [NegVQA: Can Vision Language Models Understand Negation?](negvqa_can_vision_language_models_understand_negation.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+
+<!-- RELATED:END -->

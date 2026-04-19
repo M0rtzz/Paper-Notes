@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ VBench/光流/场景切换/用户研究/消融全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富，双系统类比直观
 - **价值**: ⭐⭐⭐⭐⭐ 为长视频生成提供了可扩展的新范式，具有很强的实用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+- [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](../../CVPR2025/video_generation/from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
+- [VACE: All-in-One Video Creation and Editing](vace_all-in-one_video_creation_and_editing.md)
+- [WorldScore: A Unified Evaluation Benchmark for World Generation](worldscore_a_unified_evaluation_benchmark_for_world_generation.md)
+- [ReCamMaster: Camera-Controlled Generative Rendering from A Single Video](recammaster_camera-controlled_generative_rendering_from_a_single_video.md)
+
+<!-- RELATED:END -->

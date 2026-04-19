@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 81K论文+55万LLM生成，规模大且指标设计有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ — 混合方法叙述流畅，质性与定量结合紧密
 - 价值: ⭐⭐⭐⭐ — 对LLM科研写作工具的文化适应性提出了重要警示，评价套件可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [笔记5：ReSearch - 学习通过搜索推理](../../NeurIPS2025/others/research_learning_to_reason_with_search_for_llms_via_reinforcement_learning.md)
+- [Mapping the Podcast Ecosystem with the Structured Podcast Research Corpus](mapping_the_podcast_ecosystem_with_the_structured_podcast_research_corpus.md)
+- [IRIS: Interactive Research Ideation System for Accelerating Scientific Discovery](iris_interactive_research_ideation_system_for_accelerating_scientific_discovery.md)
+- [All That Glitters is Not Novel: Plagiarism in AI Generated Research](plagiarism_ai_generated_research.md)
+- [The Noisy Path from Source to Citation: Measuring How Scholars Engage with Past Research](the_noisy_path_from_source_to_citation_measuring_how_scholars_engage_with_past_r.md)
+
+<!-- RELATED:END -->

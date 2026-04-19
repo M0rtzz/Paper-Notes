@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 14个模型5个家族，多维度评测，深入的家族差异分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，分析深入
 - 价值: ⭐⭐⭐⭐⭐ 填补了多跳工具使用评测的空白，对模型开发有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](meco_metacognition_tool_use.md)
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [LegalAgentBench: Evaluating LLM Agents in Legal Domain](legalagentbench_evaluating_llm_agents_in_legal_domain.md)
+- [Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)
+- [GuideBench: Benchmarking Domain-Oriented Guideline Following for LLM Agents](guidebench_guideline_following.md)
+
+<!-- RELATED:END -->

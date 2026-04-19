@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 六个任务、多种模型尺寸、四种思维策略的全面对比，发现丰富
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，发现逐步深入，实验设计有说服力
 - 价值: ⭐⭐⭐⭐⭐ 对多模态RFT社区极具指导意义，挑战了盲目追随思维链的趋势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When to Think and When to Look: Uncertainty-Guided Lookback](../../CVPR2026/multimodal_vlm/when_to_think_and_when_to_look_uncertainty-guided_lookback.md)
+- [Visual Instruction Bottleneck Tuning](visual_instruction_bottleneck_tuning.md)
+- [DocThinker: Explainable Multimodal Large Language Models with Rule-based Reinforcement Learning for Document Understanding](../../ICCV2025/multimodal_vlm/docthinker_explainable_multimodal_large_language_models_with.md)
+- [Advancing Compositional Awareness in CLIP with Efficient Fine-Tuning](advancing_compositional_awareness_in_clip_with_efficient_fin.md)
+- [Unified Reinforcement and Imitation Learning for Vision-Language Models](unified_reinforcement_and_imitation_learning_for_vision-language_models.md)
+
+<!-- RELATED:END -->

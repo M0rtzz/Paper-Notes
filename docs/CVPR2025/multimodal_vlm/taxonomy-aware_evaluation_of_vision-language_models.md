@@ -108,3 +108,15 @@ $$hR = \frac{1}{N}\sum_{n=1}^{N}\frac{|anc(v_n^{pr}) \cap anc(v_n^{gt})|}{|anc(v
 - 实验充分度: ⭐⭐⭐⭐ 8个VLM、两大分类学、合成与真实数据、prompt调优实验，覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化定义清晰，图表设计精美，论证逻辑严密
 - 价值: ⭐⭐⭐⭐ 填补了VLM细粒度分类评估的理论空白，hP/hR可作为prompt调优反馈信号
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Vision-Language Models Have Internal World Models? Towards an Atomic Evaluation](../../ACL2025/multimodal_vlm/do_vision-language_models_have_internal_world_models_towards_an_atomic_evaluatio.md)
+- [Hyperbolic Safety-Aware Vision-Language Models](hyperbolic_safety-aware_vision-language_models.md)
+- [Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models](../../CVPR2026/multimodal_vlm/taxonomy-aware_representation_alignment_for_hierarchical_visual_recognition_with.md)
+- [UPME: An Unsupervised Peer Review Framework for Multimodal Large Language Model Evaluation](upme_an_unsupervised_peer_review_framework_for_multimodal_large_language_model_e.md)
+- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

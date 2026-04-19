@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 数据集小，评估指标有限
 - 写作质量: ⭐⭐⭐⭐ 动机和方法阐述清晰
 - 价值: ⭐⭐⭐⭐ 为 RAG 系统的因果感知检索提供了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I-CAM-UV: Integrating Causal Graphs over Non-Identical Variable Sets Using Causal Additive Models with Unobserved Variables](../../AAAI2026/causal_inference/i-cam-uv_integrating_causal_graphs_over_non-identical_variable_sets_using_causal.md)
+- [FitCF: A Framework for Automatic Feature Importance-guided Counterfactual Example Generation](fitcf_a_framework_for_automatic_feature_importance-guided_counterfactual_example.md)
+- [Characterization and Learning of Causal Graphs from Hard Interventions](../../NeurIPS2025/causal_inference/characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [Integrating Markov Blanket Discovery into Causal Representation Learning for Domain Generalization](../../ECCV2024/causal_inference/integrating_markov_blanket_discovery_into_causal_representation_learning_for_dom.md)
+- [A Visual Leap in CLIP Compositionality Reasoning through Generation of Counterfactual Sets](../../ICCV2025/causal_inference/a_visual_leap_in_clip_compositionality_reasoning_through_gen.md)
+
+<!-- RELATED:END -->

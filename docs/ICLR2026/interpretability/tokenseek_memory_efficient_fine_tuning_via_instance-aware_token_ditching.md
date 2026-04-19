@@ -112,3 +112,15 @@ Token 比例消融（Llama3.2 1B + QLoRA）：10%→52.61, 20%→51.80, 30%→52
 - 实验充分度: ⭐⭐⭐⭐ 多模型多PEFT组合+消融+可视化完整，但缺少更多任务类型验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富，但篇幅略冗长
 - 价值: ⭐⭐⭐⭐⭐ 2.8GB微调1B模型极具工程价值，plugin设计易于落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GateRA: Token-Aware Modulation for Parameter-Efficient Fine-Tuning](../../AAAI2026/interpretability/gatera_token-aware_modulation_for_parameter-efficient_fine-tuning.md)
+- [Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+- [RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
+- [ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
+- [Efficient Vision-Language Reasoning via Adaptive Token Pruning](../../NeurIPS2025/interpretability/efficient_vision-language_reasoning_via_adaptive_token_pruning.md)
+
+<!-- RELATED:END -->

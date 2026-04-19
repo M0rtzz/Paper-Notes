@@ -96,3 +96,15 @@ Ensemble++ 维护一个共享矩阵因子 $\mathbf{A}_t \in \mathbb{R}^{d \times
 - 实验充分度: ⭐⭐⭐⭐ 线性和非线性 Bandit 覆盖全面，但大规模场景偏少
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，从线性到非线性的扩展逻辑自然
 - 价值: ⭐⭐⭐⭐⭐ 解决了集成采样的核心瓶颈问题，为 LLM agent 探索提供基础框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning](../../ICLR2026/reinforcement_learning/rethinking_policy_diversity_in_ensemble_policy_gradient_in_large-scale_reinforce.md)
+- [Horizon Reduction Makes RL Scalable](horizon_reduction_makes_rl_scalable.md)
+- [Scalable Policy-Based RL Algorithms for POMDPs](scalable_policy-based_rl_algorithms_for_pomdps.md)
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+- [Exploration via Feature Perturbation in Contextual Bandits](exploration_via_feature_perturbation_in_contextual_bandits.md)
+
+<!-- RELATED:END -->

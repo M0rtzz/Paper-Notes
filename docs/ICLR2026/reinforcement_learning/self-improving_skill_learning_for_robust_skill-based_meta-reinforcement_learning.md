@@ -126,3 +126,15 @@ $$\beta = \frac{\exp(\bar{G}_{\text{on}} / T)}{\exp(\bar{G}_{\text{on}} / T) + \
 - **实验充分度**: ⭐⭐⭐⭐ — 四个环境×多个噪声水平，消融充分
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ — 解决了实际场景中数据质量不可控的关键问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SUSD: Structured Unsupervised Skill Discovery through State Factorization](susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
+- [Periodic Skill Discovery](../../NeurIPS2025/reinforcement_learning/periodic_skill_discovery.md)
+- [Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+- [CUDA-L1: Improving CUDA Optimization via Contrastive Reinforcement Learning](cuda-l1_improving_cuda_optimization_via_contrastive_reinforcement_learning.md)
+
+<!-- RELATED:END -->

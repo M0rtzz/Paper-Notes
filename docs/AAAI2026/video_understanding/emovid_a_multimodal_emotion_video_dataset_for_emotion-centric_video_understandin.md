@@ -142,3 +142,15 @@ EmoVid 的构建和应用包括三个部分：
 - 实验充分度: ⭐⭐⭐⭐ — T2V/I2V 双任务评估充分，但消融较简单
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，数据分析详尽
 - 价值: ⭐⭐⭐⭐ — 数据集+基准+分析洞察对社区有持续贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models](state-space_hierarchical_compression_with_gated_attention_an.md)
+- [egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](../../NeurIPS2025/video_understanding/egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
+- [OpenMarcie: Dataset for Multimodal Action Recognition in Industrial Environments](../../CVPR2026/video_understanding/openmarcie_dataset_for_multimodal_action_recognition_in_industrial_environments.md)
+- [SmartWilds: Multimodal Wildlife Monitoring Dataset](../../NeurIPS2025/video_understanding/smartwilds_multimodal_wildlife_monitoring_dataset.md)
+- [Rethinking Progression of Memory State in Robotic Manipulation: An Object-Centric Perspective](rethinking_progression_of_memory_state_in_robotic_manipulation_an_object-centric.md)
+
+<!-- RELATED:END -->

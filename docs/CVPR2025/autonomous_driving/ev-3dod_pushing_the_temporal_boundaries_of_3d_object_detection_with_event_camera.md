@@ -102,3 +102,15 @@ $\mathcal{L} = \mathcal{L}_{RPN} + \lambda_1 \mathcal{L}_{reg} + \lambda_2 \math
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据集，但真实数据规模有限
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法逻辑通顺
 - 价值: ⭐⭐⭐⭐⭐ 开辟了事件相机在3D感知中的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing the Temporal Potential of Stereo Event Cameras for Continuous-Time 3D Perception](../../ICCV2025/autonomous_driving/unleashing_the_temporal_potential_of_stereo_event_cameras_for_continuous-time_3d.md)
+- [PAP: A Prediction-as-Perception Framework for 3D Object Detection](a_prediction-as-perception_framework_for_3d_object_detection.md)
+- [Cubify Anything: Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)
+- [SimPB: A Single Model for 2D and 3D Object Detection from Multiple Cameras](../../ECCV2024/autonomous_driving/simpb_a_single_model_for_2d_and_3d_object_detection_from_multiple_cameras.md)
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](../../ICCV2025/autonomous_driving/cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+
+<!-- RELATED:END -->

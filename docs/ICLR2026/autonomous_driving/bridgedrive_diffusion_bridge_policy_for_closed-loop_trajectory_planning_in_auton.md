@@ -119,3 +119,15 @@ Bench2Drive 闭环评估（CARLA Leaderboard 2.0, 220 条路线）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 闭环+开环评估，详细消融，多数据集验证，三种子重复实验
 - 写作质量: ⭐⭐⭐⭐⭐ 对 DiffusionDrive 的缺陷分析非常清晰，算法伪代码对比一目了然
 - 价值: ⭐⭐⭐⭐⭐ 在最具挑战性的闭环基准上取得显著提升，且方法简洁、推理高效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving](../../AAAI2026/autonomous_driving/diffrefiner_coarse_to_fine_trajectory_planning_via_diffusion_refinement_with_sem.md)
+- [VILTA: A VLM-in-the-Loop Adversary for Enhancing Driving Policy Robustness](../../AAAI2026/autonomous_driving/vilta_a_vlm-in-the-loop_adversary_for_enhancing_driving_poli.md)
+- [NeuroNCAP: Photorealistic Closed-Loop Safety Testing for Autonomous Driving](../../ECCV2024/autonomous_driving/neuroncap_photorealistic_closed-loop_safety_testing_for_autonomous_driving.md)
+- [ColaVLA: Leveraging Cognitive Latent Reasoning for Hierarchical Parallel Trajectory Planning in Autonomous Driving](../../CVPR2026/autonomous_driving/colavla_leveraging_cognitive_latent_reasoning_for_hierarchical_parallel_trajecto.md)
+
+<!-- RELATED:END -->

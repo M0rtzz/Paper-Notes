@@ -117,3 +117,15 @@ Parenting 在 LLaMA2-7B 上相比最强 baseline，adherence 提升 15+%，robus
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多数据集、消融全面，含可视化与跨域泛化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，类比恰当，但数学符号较密集
 - 价值: ⭐⭐⭐⭐ 为 RAG 知识控制提供了新的优化范式，有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SetR: Shifting from Ranking to Set Selection for Retrieval Augmented Generation](setr_set_selection_rag.md)
+- [Evaluation of Attribution Bias in Generator-Aware Retrieval-Augmented Large Language Models](evaluation_of_attribution_bias_in_generator-aware_retrieval-augmented_large_lang.md)
+- [RARE: Retrieval-Augmented Reasoning Enhancement for Large Language Models](rare_retrieval_augmented_reasoning.md)
+- [HybGRAG: Hybrid Retrieval-Augmented Generation on Textual and Relational Knowledge Bases](hybgrag_hybrid_rag_skb.md)
+- [REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)
+
+<!-- RELATED:END -->

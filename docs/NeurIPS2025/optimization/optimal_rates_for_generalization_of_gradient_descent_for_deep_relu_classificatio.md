@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作
 - 写作质量: ⭐⭐⭐⭐ 对比表清晰，proof sketch帮助理解核心思想
 - 价值: ⭐⭐⭐⭐⭐ 深度学习泛化理论的重要进展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression](large_stepsizes_accelerate_gradient_descent_for_regularized_logistic_regression.md)
+- [Do Neural Networks Need Gradient Descent to Generalize? A Theoretical Study](do_neural_networks_need_gradient_descent_to_generalize_a_theoretical_study.md)
+
+<!-- RELATED:END -->

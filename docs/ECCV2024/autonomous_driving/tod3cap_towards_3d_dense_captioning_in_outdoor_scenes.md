@@ -152,3 +152,15 @@ TOD3Cap 网络分三个阶段：(1) BEV 检测器从 LiDAR 点云和多视角图
 - 实验充分度: ⭐⭐⭐⭐ 多维消融完整，但缺少跨数据集评估
 - 写作质量: ⭐⭐⭐⭐ 域差异分析透彻，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 填补户外3D密集描述空白，对自动驾驶可解释性有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4D Contrastive Superflows are Dense 3D Representation Learners](4d_contrastive_superflows_are_dense_3d_representation_learners.md)
+- [Monocular Occupancy Prediction for Scalable Indoor Scenes](monocular_occupancy_prediction_for_scalable_indoor_scenes.md)
+- [Random Walk on Pixel Manifolds for Anomaly Segmentation of Complex Driving Scenes](random_walk_on_pixel_manifolds_for_anomaly_segmentation_of_complex_driving_scene.md)
+- [Controllable 3D Outdoor Scene Generation via Scene Graphs](../../ICCV2025/autonomous_driving/controllable_3d_outdoor_scene_generation_via_scene_graphs.md)
+- [TopoMaskV3: 3D Mask Head with Dense Offset and Height Predictions for Road Topology Understanding](../../CVPR2026/autonomous_driving/topomaskv3_3d_mask_head_with_dense_offset_and_height_predictions_for_road_topolo.md)
+
+<!-- RELATED:END -->

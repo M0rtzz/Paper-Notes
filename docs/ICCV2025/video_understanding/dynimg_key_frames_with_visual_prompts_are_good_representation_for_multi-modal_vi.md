@@ -137,3 +137,15 @@ DynImg 提出了一种新颖的视频表示方法，将非关键帧作为"时序
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个开放式QA基准+MVBench+多维度消融，实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，图示直观，定量和定性分析完整
 - 价值: ⭐⭐⭐⭐ 提供了视频理解中时空交互的新思路，对MLLM视频架构设计有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMiner: Iteratively Grounding Key Frames of Hour-Long Videos via Tree-based Group Relative Policy Optimization](videominer_iteratively_grounding_key_frames_of_hour-long_videos_via_tree-based_g.md)
+- [MUVR: A Multi-Modal Untrimmed Video Retrieval Benchmark with Multi-Level Visual Correspondence](../../NeurIPS2025/video_understanding/muvr_a_multi-modal_untrimmed_video_retrieval_benchmark_with_multi-level_visual_c.md)
+- [Multi-modal Multi-platform Person Re-Identification: Benchmark and Method](multi-modal_multi-platform_person_re-identification_benchmark_and_method.md)
+- [4D-Bench: Benchmarking Multi-Modal Large Language Models for 4D Object Understanding](4d-bench_benchmarking_multi-modal_large_language_models_for_4d_object_understand.md)
+- [PixFoundation 2.0: Do Video Multi-Modal LLMs Use Motion in Visual Grounding?](../../NeurIPS2025/video_understanding/pixfoundation_20_do_video_multi-modal_llms_use_motion_in_visual_grounding.md)
+
+<!-- RELATED:END -->

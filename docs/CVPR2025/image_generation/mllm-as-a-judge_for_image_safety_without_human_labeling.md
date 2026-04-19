@@ -150,3 +150,15 @@ CLUE 在零样本设置下大幅超越所有微调基线，验证了微调方法
 | 实验充分度 | ⭐⭐⭐⭐ |
 | 工程实用性 | ⭐⭐⭐⭐⭐ |
 | 总体推荐 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Calibrating MLLM-as-a-Judge via Multimodal Bayesian Prompt Ensembles](../../ICCV2025/image_generation/calibrating_mllm-as-a-judge_via_multimodal_bayesian_prompt_ensembles.md)
+- [CleanDIFT: Diffusion Features without Noise](cleandift_diffusion_features_without_noise.md)
+- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+- [Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
+- [Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](../../ICCV2025/image_generation/cycle_consistency_as_reward_learning_imagetext_alignment_wit.md)
+
+<!-- RELATED:END -->

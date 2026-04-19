@@ -140,3 +140,15 @@ $$F_{\max} = \min\left[A\sigma_y(s), \frac{1}{2}AE(s)d(s)\kappa_{\max}(s)\right]
 - **实用性**: ⭐⭐⭐⭐ — 真实机器人抓取验证，应用前景广阔
 - **实验完整度**: ⭐⭐⭐⭐ — 材料分割/动态仿真/机器人抓取三方面验证
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DSO: Aligning 3D Generators with Simulation Feedback for Physical Soundness](dso_aligning_3d_generators_with_simulation_feedback_for_physical_soundness.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion](disentangling_instance_and_scene_contexts_for_3d_semantic_scene_completion.md)
+- [ResGS: Residual Densification of 3D Gaussian for Efficient Detail Recovery](resgs_residual_densification_of_3d_gaussian_for_efficient_detail_recovery.md)
+
+<!-- RELATED:END -->

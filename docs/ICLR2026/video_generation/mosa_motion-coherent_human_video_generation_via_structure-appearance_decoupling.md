@@ -140,3 +140,15 @@ MoSA 框架迁移到 Wan 2.1 后也有显著提升：Wan 2.1 原始 FVD=1251 / C
 - 价值: ⭐⭐⭐⭐ 为人体视频生成提供了一个系统性的解耦范式，MoVid 数据集也有社区价值；但 30K 数据集规模和单人限制使得实际落地还需扩展
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，框架图直观
 - 价值: ⭐⭐⭐⭐⭐ 对人物视频生成的运动合理性有显著推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](../../AAAI2026/video_generation/motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
+- [PAM: A Pose-Appearance-Motion Engine for Sim-to-Real HOI Video Generation](../../CVPR2026/video_generation/pam_a_pose-appearance-motion_engine_for_sim-to-real_hoi_video_generation.md)
+- [SymphoMotion: Joint Control of Camera Motion and Object Dynamics for Coherent Video Generation](../../CVPR2026/video_generation/symphomotion_joint_control_of_camera_motion_and_object_dynamics_for_coherent_vid.md)
+- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+- [BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration](bindweave_subject-consistent_video_generation_via_cross-modal_integration.md)
+
+<!-- RELATED:END -->

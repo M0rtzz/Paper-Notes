@@ -142,3 +142,15 @@ DHSA 作为 plug-in 模块嵌入 Transformer 每一层。输入当前层的 toke
 - **实验充分度**: ⭐⭐⭐⭐ — Needle-in-a-Haystack + LongBench 多任务 + 延迟/内存分析 + 不同注意力实现的对比，评估维度全面
 - **写作质量**: ⭐⭐⭐⭐ — 方法动机和流程描述清晰，分层预测的直觉解释得好
 - **价值**: ⭐⭐⭐⭐ — 端侧长上下文 LLM 部署的实用方案，plug-in 设计降低了工程门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access](hardware-aligned_hierarchical_sparse_attention_for_efficient_long-term_memory_ac.md)
+- [Efficient Many-Shot In-Context Learning with Dynamic Block-Sparse Attention](../../ACL2025/llm_efficiency/efficient_many-shot_in-context_learning_with_dynamic_block-sparse_attention.md)
+- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [The Emergence of Sparse Attention: Impact of Data Distribution and Benefits of Repetition](the_emergence_of_sparse_attention_impact_of_data_distribution_and_benefits_of_re.md)
+
+<!-- RELATED:END -->

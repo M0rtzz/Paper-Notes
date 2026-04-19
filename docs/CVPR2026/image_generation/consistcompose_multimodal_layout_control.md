@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ COCO-Position、MS-Bench、GenEval、MMMU、MMBench全面评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，技术细节充分
 - 价值: ⭐⭐⭐⭐⭐ 为统一多模态模型的布局控制提供了简洁有效的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LumiCtrl: Learning Illuminant Prompts for Lighting Control in Personalized Text-to-Image Models](lumictrl_learning_illuminant_prompts_for_lighting_control_in_personalized_text-t.md)
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [Learning to Generate via Understanding: Understanding-Driven Intrinsic Rewarding for Unified Multimodal Models](learning_to_generate_via_understanding_understanding-driven_intrinsic_rewarding_.md)
+- [EchoGen: Cycle-Consistent Learning for Unified Layout-Image Generation and Understanding](../../AAAI2026/image_generation/echogen_cycle-consistent_learning_for_unified_layout-image_generation_and_unders.md)
+- [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
+
+<!-- RELATED:END -->

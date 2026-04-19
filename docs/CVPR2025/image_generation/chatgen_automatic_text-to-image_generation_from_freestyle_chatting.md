@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 256K 数据+14K 测试+步骤级评估+多种基线+消融，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 问题动机和方法描述清晰，基准设计细致
 - 价值: ⭐⭐⭐⭐ 直接解决 T2I 使用痛点，对非专业用户有明确价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Minority-Focused Text-to-Image Generation via Prompt Optimization](minority-focused_text-to-image_generation_via_prompt_optimization.md)
+- [From Elements to Design: A Layered Approach for Automatic Graphic Design Composition](from_elements_to_design_a_layered_approach_for_automatic_graphic_design_composit.md)
+- [A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation](a_comprehensive_study_of_decoder-only_llms_for_text-to-image_generation.md)
+- [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
+- [ConceptGuard: Continual Personalized Text-to-Image Generation with Forgetting and Confusion Mitigation](conceptguard_continual_personalized_text-to-image_generation_with_forgetting_and.md)
+
+<!-- RELATED:END -->

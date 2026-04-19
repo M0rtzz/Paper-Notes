@@ -116,3 +116,15 @@ SciNO 分两步：(1) 在光滑函数空间中训练神经算子来近似 score 
 - 实验充分度: ⭐⭐⭐⭐⭐ 36页18图12表
 - 写作质量: ⭐⭐⭐⭐ 理论严谨
 - 价值: ⭐⭐⭐⭐ 推动排序式因果发现前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Entropy](neural_entropy.md)
+- [What We Don't C: Manifold Disentanglement for Structured Discovery](what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)
+- [Flow Matching Neural Processes](flow_matching_neural_processes.md)
+- [A Connection Between Score Matching and Local Intrinsic Dimension](a_connection_between_score_matching_and_local_intrinsic_dimension.md)
+- [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+
+<!-- RELATED:END -->

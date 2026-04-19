@@ -114,3 +114,15 @@ Morpheus在所有指标上领先。CLIP Direction Similarity高达0.175（第二
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计巧妙（分离控制+深度引导注意力），解决了3D风格化中长期存在的"不能改几何"限制，来自Niantic Labs的工程实现也很扎实。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](../../ECCV2024/3d_vision/gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [Geometry in Style: 3D Stylization via Surface Normal Deformation](geometry_in_style_3d_stylization_via_surface_normal_deformation.md)
+- [Segment then Splat: Unified 3D Open-Vocabulary Segmentation via Gaussian Splatting](../../NeurIPS2025/3d_vision/segment_then_splat_unified_3d_open-vocabulary_segmentation_via_gaussian_splattin.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [Blended Point Cloud Diffusion for Localized Text-guided Shape Editing](../../ICCV2025/3d_vision/blended_point_cloud_diffusion_for_localized_textguided_shape.md)
+
+<!-- RELATED:END -->

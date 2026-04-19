@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 10 个模型×4 种干扰×3 种模式，非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，与已有安全研究的区分明确
 - 价值: ⭐⭐⭐⭐⭐ 对 GUI Agent 的安全部署有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents](explorer_scaling_exploration-driven_web_trajectory_synthesis_for_multimodal_web_.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](../../ICLR2026/llm_agent/simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
+- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_a_survey_on_mllm-based_agents_for_general_computing_devices_use.md)
+- [Multiple LLM Agents Debate for Equitable Cultural Alignment](multiple_llm_agents_debate_for_equitable.md)
+- [Sketchtopia: A Dataset and Foundational Agents for Benchmarking Asynchronous Multimodal Communication with Iconic Feedback](../../CVPR2025/llm_agent/sketchtopia_a_dataset_and_foundational_agents_for_benchmarking_asynchronous_mult.md)
+
+<!-- RELATED:END -->

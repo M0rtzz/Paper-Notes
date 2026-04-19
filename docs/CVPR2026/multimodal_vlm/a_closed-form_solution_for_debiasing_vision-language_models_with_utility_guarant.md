@@ -146,3 +146,15 @@ $$\min_{0 \leq \alpha \leq \|\vec{e}_{\mathcal{A}_\parallel}\|} \sup_{w_1+w_2=1}
 ## 评分
 
 ⭐⭐⭐⭐ 理论完备且实用性强的VLM去偏方法。闭式解优雅，效用保证有理论支撑，实验全面覆盖三个下游任务+intersectional fairness。唯一不足是效用保证停留在嵌入空间层面。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpretable Debiasing of Vision-Language Models for Social Fairness](interpretable_debiasing_of_vision-language_models_for_social_fairness.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [CrossHOI-Bench: A Unified Benchmark for HOI Evaluation across Vision-Language Models and HOI-Specific Methods](crosshoi-bench_a_unified_benchmark_for_hoi_evaluation_across_vision-language_mod.md)
+- [EagleNet: Energy-Aware Fine-Grained Relationship Learning Network for Text-Video Retrieval](eaglenet_energy-aware_fine-grained_relationship_learning_network_for_text-video_.md)
+
+<!-- RELATED:END -->

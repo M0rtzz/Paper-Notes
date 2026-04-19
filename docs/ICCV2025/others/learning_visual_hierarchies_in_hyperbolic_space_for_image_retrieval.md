@@ -158,3 +158,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — in-domain + out-of-domain 全面评测；更多骨干/数据集可增强说服力
 - **写作质量**: ⭐⭐⭐⭐ — 理论与方法铺垫充分，但公式较多可能影响可读性
 - **价值**: ⭐⭐⭐⭐ — 开辟了视觉层次学习的新方向，检索评估指标有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
+- [Towards Text-Image Interleaved Retrieval](../../ACL2025/others/towards_text-image_interleaved_retrieval.md)
+- [Kaputt: A Large-Scale Dataset for Visual Defect Detection](kaputt_a_large-scale_dataset_for_visual_defect_detection.md)
+- [EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration](edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati.md)
+- [A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)
+
+<!-- RELATED:END -->

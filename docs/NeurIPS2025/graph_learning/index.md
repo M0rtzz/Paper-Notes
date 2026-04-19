@@ -10,47 +10,47 @@ description: >-
 
 **🧠 NeurIPS2025** · **53** 篇论文解读
 
-**[Bliss Bandit Layer Importance Sampling Strategy For Efficient Training Of Graph ](bliss_bandit_layer_importance_sampling_strategy_for_efficient_training_of_graph_.md)**
+**[BLISS: Bandit Layer Importance Sampling Strategy for Efficient Training of Graph Neural Networks](bliss_bandit_layer_importance_sampling_strategy_for_efficient_training_of_graph_.md)**
 
 :   提出 BLISS，将 GNN 的层级邻居采样建模为多臂老虎机问题，用 EXP3 算法动态调整每条边的采样概率，根据邻居对节点表示的方差贡献作为奖励信号，在 GCN 和 GAT 上维持或超越全批次训练精度。
 
-**[Deliberation On Priors Trustworthy Reasoning Of Large Language Models On Knowled](deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)**
+**[Deliberation on Priors: Trustworthy Reasoning of LLMs on Knowledge Graphs](deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)**
 
 :   提出 Deliberation over Priors（DP）框架，通过渐进式知识蒸馏（SFT + KTO 偏好优化）提升关系路径生成的忠实度，并通过约束引导的内省-回溯机制保障推理可靠性，在 ComplexWebQuestions 上 H@1 提升 16.5%，且 LLM 调用次数仅为 2.9 次（ToG 需 22.6 次）。
 
-**[Diagnosing And Addressing Pitfalls In Kg-Rag Datasets Toward More Reliable Bench](diagnosing_and_addressing_pitfalls_in_kg-rag_datasets_toward_more_reliable_bench.md)**
+**[Diagnosing and Addressing Pitfalls in KG-RAG Datasets: Toward More Reliable Benchmarking](diagnosing_and_addressing_pitfalls_in_kg-rag_datasets_toward_more_reliable_bench.md)**
 
 :   系统审计16个KGQA数据集发现平均事实正确率仅57%（WebQSP 52%，MetaQA 20%），提出KGQAGen框架——通过LLM引导的子图扩展+SPARQL自动验证构建高质量多跳QA数据集KGQAGen-10k（96.3%准确率），揭示KG-RAG的主要瓶颈在检索而非推理。
 
-**[Disentangling Hyperedges Through The Lens Of Category Theory](disentangling_hyperedges_through_the_lens_of_category_theory.md)**
+**[Disentangling Hyperedges through the Lens of Category Theory](disentangling_hyperedges_through_the_lens_of_category_theory.md)**
 
 :   首次从范畴论视角分析超边解耦，基于自然性条件导出"因子表示一致性"标准（聚合后解耦 vs 解耦后聚合应一致），提出 Natural-HNN 模型在6个癌症分型数据集上全面超越14个baseline（BRCA F1 从75.7%提升至80.4%），并能100%正确捕获基因通路的功能上下文。
 
-**[Duetgraph Coarse-To-Fine Knowledge Graph Reasoning With Dual-Pathway Global-Loca](duetgraph_coarse-to-fine_knowledge_graph_reasoning_with_dual-pathway_global-loca.md)**
+**[DuetGraph: Coarse-to-Fine Knowledge Graph Reasoning with Dual-Pathway Global-Local Fusion](duetgraph_coarse-to-fine_knowledge_graph_reasoning_with_dual-pathway_global-loca.md)**
 
 :   DuetGraph 提出双通路（消息传递 + 全局注意力）并行融合模型与粗到精推理优化策略，通过分离而非堆叠局部/全局信息处理来缓解 KG 推理中的分数过平滑问题，在归纳与传导推理任务上取得 SOTA，MRR 最高提升 8.7%、训练加速 1.8×。
 
-**[Dynamic Bundling With Large Language Models For Zero-Shot Inference On Text-Attr](dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)**
+**[Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)**
 
 :   DENSE 提出"文本捆绑"策略，将拓扑/语义相近的节点文本打包后查询 LLM 获取 bundle 级别标签，再用 entropy-based 和 ranking-based 损失监督 GNN 训练，并动态精炼 bundle 排除噪声节点，在 10 个 TAG 数据集上零样本推理全面超越 GPT-4o 和图基础模型。
 
-**[Elastic Weight Consolidation For Knowledge Graph Continual Learning An Empirical](elastic_weight_consolidation_for_knowledge_graph_continual_learning_an_empirical.md)**
+**[Elastic Weight Consolidation for Knowledge Graph Continual Learning: An Empirical Evaluation](elastic_weight_consolidation_for_knowledge_graph_continual_learning_an_empirical.md)**
 
 :   本文在 FB15k-237 上系统评估了弹性权重固化（EWC）对 TransE 知识图谱嵌入持续学习的效果，发现 EWC 将灾难性遗忘从 12.62% 降至 6.85%（减少 45.7%），并揭示了任务划分策略（基于关系 vs 随机）对遗忘度量的显著影响（9.8 个百分点差异）。
 
-**[Esca Contextualizing Embodied Agents Via Scene-Graph Generation](esca_contextualizing_embodied_agents_via_scene-graph_generation.md)**
+**[ESCA: Contextualizing Embodied Agents via Scene-Graph Generation](esca_contextualizing_embodied_agents_via_scene-graph_generation.md)**
 
 :   提出 ESCA 框架，通过开放域场景图生成（SGClip 模型）为 MLLM 驱动的具身智能体提供结构化视觉理解上下文，显著降低了感知错误率并提升了任务完成率。
 
-**[Falcon An Ml Framework For Fully Automated Layout-Constrained Analog Circuit Des](falcon_an_ml_framework_for_fully_automated_layout-constrained_analog_circuit_des.md)**
+**[FALCON: An ML Framework for Fully Automated Layout-Constrained Analog Circuit Design](falcon_an_ml_framework_for_fully_automated_layout-constrained_analog_circuit_des.md)**
 
 :   FALCON 提出端到端的模拟/RF 电路自动化设计框架，通过 MLP 拓扑选择 + 边中心 GNN 性能预测 + 可微版图约束梯度推理三阶段流水线，在 100 万级 Cadence 仿真数据集上实现 >99% 拓扑选择准确率、<10% 性能预测误差，单实例推理不到 1 秒。
 
-**[Fastjam A Fast Joint Alignment Model For Images](fastjam_a_fast_joint_alignment_model_for_images.md)**
+**[FastJAM: a Fast Joint Alignment Model for Images](fastjam_a_fast_joint_alignment_model_for_images.md)**
 
 :   提出 FastJAM，一种基于图的快速图像联合对齐方法：利用现成图像匹配器计算成对关键点对应，通过快速非参数聚类构建关键点图，GNN 传播聚合信息后预测每张图像的单应性参数，配合反向合成损失（inverse-compositional loss）消除正则化超参数需求。将联合对齐时间从小时/分钟级降至约 49 秒，同时对齐质量优于或持平现有方法。
 
-**[From Sequence To Structure Uncovering Substructure Reasoning In Transformers](from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)**
+**[From Sequence to Structure: Uncovering Substructure Reasoning in Transformers](from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)**
 
 :   本文通过实证和理论分析揭示 decoder-only Transformer 如何从文本序列中理解图结构，提出"诱导子图过滤"（ISF）解释子结构逐层识别机制，并扩展到 LLM 验证一致性、复合图推理（Thinking-in-Substructures）和属性图（分子图）子结构提取。
 
@@ -58,83 +58,83 @@ description: >-
 
 :   提出 Generative Graph Pattern Machine (G2PM)，一种完全无消息传递的生成式 Transformer 图预训练框架：通过随机游走将图实例（节点/边/图）tokenize 为子结构序列，以 Masked Substructure Modeling 目标进行自监督预训练，在节点/链接/图分类及跨域迁移任务上全面超越现有图预训练方法，并展现出类似 NLP/CV 的模型和数据双重扩展性。
 
-**[Geometric Imbalance In Semi-Supervised Node Classification](geometric_imbalance_in_semi-supervised_node_classification.md)**
+**[Geometric Imbalance in Semi-Supervised Node Classification](geometric_imbalance_in_semi-supervised_node_classification.md)**
 
 :   首次形式化定义了半监督节点分类中的"几何不平衡"概念——消息传递在类别不平衡图上导致少数类节点在黎曼流形嵌入空间中产生几何歧义，并提出 UNREAL 框架，通过双路径伪标签对齐、节点重排序和几何歧义样本丢弃三个模块系统性缓解该问题。
 
-**[Gfm-Rag Graph Foundation Model For Retrieval Augmented Generation](gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)**
+**[GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)**
 
 :   提出首个图基础模型驱动的检索增强生成框架 GFM-RAG，通过 query-dependent GNN 在知识图谱上进行单步多跳推理，仅 8M 参数即可在未见数据集上零样本泛化，在多跳QA检索任务上大幅超越 SOTA。
 
-**[Gnnxemplar Exemplars To Explanations -- Natural Language Rules For Global Gnn In](gnnxemplar_exemplars_to_explanations_--_natural_language_rules_for_global_gnn_in.md)**
+**[GnnXemplar: Exemplars to Explanations -- Natural Language Rules for Global GNN Interpretability](gnnxemplar_exemplars_to_explanations_--_natural_language_rules_for_global_gnn_in.md)**
 
 :   提出GnnXemplar框架，基于认知科学的样例理论（Exemplar Theory），通过在GNN嵌入空间中选取代表性节点（exemplar）并利用LLM迭代生成自然语言布尔规则，实现大规模图上节点分类GNN的全局可解释性。
 
-**[Graph Neural Networks For Efficient Ac Power Flow Prediction In Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)**
+**[Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)**
 
 :   将电力网络建模为图结构（母线为节点、输电线为边），探索 GCN、GAT、SAGEConv 和 GraphConv 四种 GNN 架构预测 AC 潮流解（电压幅值和相角），在 IEEE 14/30/57/118 母线测试系统上展示了 GNN 可高效替代传统 Newton-Raphson 求解器。
 
-**[Graph Neural Networks For Interferometer Simulations](graph_neural_networks_for_interferometer_simulations.md)**
+**[Graph Neural Networks for Interferometer Simulations](graph_neural_networks_for_interferometer_simulations.md)**
 
 :   首次将图神经网络应用于光学干涉仪仿真，通过 GATv2 + KAN 架构预测 LIGO 干涉仪中的电磁场功率和空间强度分布，实现比标准仿真软件（FINESSE）快 815 倍的推理速度，同时保持较好的物理精度。
 
-**[Graph Persistence Goes Spectral](graph_persistence_goes_spectral.md)**
+**[Graph Persistence goes Spectral](graph_persistence_goes_spectral.md)**
 
 :   提出 SpectRe——将图拉普拉斯谱信息融入持续同调（PH）图的新拓扑描述符，证明其表达力严格强于 PH 和谱信息单独使用，建立了局部稳定性理论，在合成和真实数据集上提升 GNN 的图分类能力。
 
-**[Graphfaas Serverless Gnn Inference For Burst-Resilient Real-Time Intrusion Detec](graphfaas_serverless_gnn_inference_for_burst-resilient_real-time_intrusion_detec.md)**
+**[GraphFaaS: Serverless GNN Inference for Burst-Resilient, Real-Time Intrusion Detection](graphfaas_serverless_gnn_inference_for_burst-resilient_real-time_intrusion_detec.md)**
 
 :   提出 GraphFaaS，一种专为 GNN 入侵检测设计的 Serverless 推理架构，通过来源图的增量构建、特征长度感知的并行节点嵌入和贪心 best-fit 子图分区，将平均检测延迟从 14.16 秒降至 2.1 秒（6.7 倍），变异系数从 1.46 降至 0.52（64% 降低），在突发负载下保持稳定低延迟且不损失检测准确率。
 
-**[Graphtop Graph Topology-Oriented Prompting For Graph Neural Networks](graphtop_graph_topology-oriented_prompting_for_graph_neural_networks.md)**
+**[GraphTOP: Graph Topology-Oriented Prompting for Graph Neural Networks](graphtop_graph_topology-oriented_prompting_for_graph_neural_networks.md)**
 
 :   提出首个图拓扑导向的 prompting 框架 GraphTOP，通过将 topology-oriented prompting 建模为边重连问题并用 Gumbel-Softmax 松弛到连续空间，在 5 个数据集 4 种预训练策略下超越 6 个基线方法。
 
-**[Heterogeneous Swarms Jointly Optimizing Model Roles And Weights For Multi-Llm Sy](heterogeneous_swarms_jointly_optimizing_model_roles_and_weights_for_multi-llm_sy.md)**
+**[Heterogeneous Swarms: Jointly Optimizing Model Roles and Weights for Multi-LLM Systems](heterogeneous_swarms_jointly_optimizing_model_roles_and_weights_for_multi-llm_sy.md)**
 
 :   提出Heterogeneous Swarms算法，将多LLM系统建模为有向无环图（DAG），通过粒子群优化（PSO）联合优化模型角色（图结构）和模型权重，在12个任务上平均超越17个基线18.5%。
 
-**[Inductive Transfer Learning For Graph-Based Recommenders](inductive_transfer_learning_for_graph-based_recommenders.md)**
+**[Inductive Transfer Learning for Graph-Based Recommenders](inductive_transfer_learning_for_graph-based_recommenders.md)**
 
 :   提出 NBF-Rec，一个基于神经 Bellman-Ford 网络的图推荐模型，支持在用户和物品完全不相交的数据集之间进行归纳式迁移学习，实现零样本跨域推荐和轻量微调适配。
 
-**[Interaction-Centric Knowledge Infusion And Transfer For Open-Vocabulary Scene Gr](interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)**
+**[Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)**
 
 :   本文提出ACC框架，通过交互驱动范式（而非传统以对象为中心的范式）来解决开放词汇场景图生成中的关键匹配问题：在知识注入阶段用双向交互提示生成更准确的伪监督，在知识迁移阶段用交互引导的查询选择和交互一致性知识蒸馏来减少不匹配，在VG、GQA、PSG三个基准上达到SOTA。
 
-**[Learning Repetition-Invariant Representations For Polymer Informatics](learning_repetition-invariant_representations_for_polymer_informatics.md)**
+**[Learning Repetition-Invariant Representations for Polymer Informatics](learning_repetition-invariant_representations_for_polymer_informatics.md)**
 
 :   提出 GRIN（Graph Repetition-Invariant Network），通过 Max 聚合和特殊的图构建策略使 GNN 对聚合物重复单元的拼接数量不变，解决了聚合物表示中的基本对称性问题。
 
-**[Logical Expressiveness Of Graph Neural Networks With Hierarchical Node Individua](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)**
+**[Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)**
 
 :   提出了分层自我图神经网络（Hierarchical Ego GNNs，HEGNNs），通过层次化的节点个体化机制泛化了子图GNN，形成表达力递增的模型层级；在有界度图上，证明HEGNN节点分类器的区分能力等价于分级杂合逻辑（graded hybrid logic），从而统一了多种GNN变体的表达力分析。
 
-**[Making Classic Gnns Strong Baselines Across Varying Homophily A Smoothness-Gener](making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)**
+**[Making Classic GNNs Strong Baselines Across Varying Homophily: A Smoothness-Generalization Perspective](making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)**
 
 :   从理论上揭示了 GNN 消息传递中平滑性（smoothness）与泛化性（generalization）之间的两难困境，提出 IGNN 框架通过三个简约设计原则（分离邻域变换、感知聚合、邻域关系学习）缓解该困境，在 30 个基线中表现最优且具备跨同质/异质图的通用性。
 
-**[Mixture Of Scope Experts At Test Generalizing Deeper Graph Neural Networks With ](mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)**
+**[Moscat: Mixture of Scope Experts at Test for Generalizing Deeper GNNs](mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)**
 
 :   从 PAC-Bayes 泛化理论出发，证明 GNN 深度变化导致不同同质性节点子群间的泛化偏好漂移，据此提出 Moscat——一种后处理注意力门控模型，将独立训练的不同深度 GNN 专家在测试时节点自适应地融合，在多种 GNN 架构和数据集上实现显著提升。
 
-**[Moemeta Mixture-Of-Experts Meta Learning For Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)**
+**[MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)**
 
 :   提出MoEMeta框架，通过混合专家模型学习全局共享的关系原型实现跨任务泛化，结合任务定制的投影适应机制捕获局部上下文，在三个KG基准上达到SOTA。
 
-**[Nonlinear Laplacians Tunable Principal Component Analysis Under Directional Prio](nonlinear_laplacians_tunable_principal_component_analysis_under_directional_prio.md)**
+**[Nonlinear Laplacians: Tunable Principal Component Analysis under Directional Prior Information](nonlinear_laplacians_tunable_principal_component_analysis_under_directional_prio.md)**
 
 :   提出非线性Laplacian谱算法，通过在观测矩阵 $\bm{Y}$ 上添加由度数向量经非线性函数 $\sigma$ 变换后得到的对角矩阵，将谱信息与方向先验信息融合，在稀疏偏向PCA问题中显著降低信号检测阈值（从 $\beta^*=1$ 降至约 $0.76$）。
 
-**[Ocn Effectively Utilizing Higher-Order Common Neighbors For Better Link Predicti](ocn_effectively_utilizing_higher-order_common_neighbors_for_better_link_predicti.md)**
+**[OCN: Effectively Utilizing Higher-Order Common Neighbors for Better Link Prediction](ocn_effectively_utilizing_higher-order_common_neighbors_for_better_link_predicti.md)**
 
 :   揭示高阶公共邻居（CN）在链接预测中的冗余和过平滑问题，提出正交化（Gram-Schmidt 去除阶间线性相关）+ 归一化（除以路径数，广义资源分配启发式）解决方案，在 7 个数据集上平均提升 HR@100 7.7%，DDI 数据集上提升 13.3%。
 
-**[Over-Squashing In Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)**
+**[Over-squashing in Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)**
 
 :   首次形式化时空图神经网络(STGNN)中的 over-squashing 问题，揭示了因果卷积中反直觉的"时间远处偏好"现象（最早时间步对最终表示影响最大），并证明 time-and-space 和 time-then-space 架构在信息瓶颈上等价，为使用计算高效的 TTS 架构提供理论支持。
 
-**[P-Drum Post-Hoc Descriptor-Based Residual Uncertainty Modeling For Machine Learn](p-drum_post-hoc_descriptor-based_residual_uncertainty_modeling_for_machine_learn.md)**
+**[P-DRUM: Post-hoc Descriptor-based Residual Uncertainty Modeling for Machine Learning Potentials](p-drum_post-hoc_descriptor-based_residual_uncertainty_modeling_for_machine_learn.md)**
 
 :   提出 P-DRUM，一种简单高效的事后（post-hoc）不确定性量化框架，利用已训练图神经网络势的描述子来估计预测残差，作为不确定性代理，无需修改原模型架构或训练流程。
 
@@ -142,71 +142,71 @@ description: >-
 
 :   提出 BASE 和 G-BASE 两种实用的贝叶斯最优成员推断攻击方法，分别针对 i.i.d. 数据和图结构数据,在保持理论最优性的同时大幅降低计算成本。
 
-**[Preference-Driven Knowledge Distillation For Few-Shot Node Classification](preference-driven_knowledge_distillation_for_few-shot_node_classification.md)**
+**[PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](preference-driven_knowledge_distillation_for_few-shot_node_classification.md)**
 
 :   PKD 框架协同 LLM 和多 GNN 教师做文本属性图少样本节点分类——GNN 偏好节点选择器（GNS）用 KL 散度不确定性选择需要 LLM 标注的节点，节点偏好 GNN 选择器（NGS）用 RL 为每个节点匹配最优 GNN 教师，在 9 个数据集上一致 SOTA（Cornell 87% vs 基线 59-82%）。
 
-**[Principled Data Augmentation For Learning To Solve Quadratic Programming Problem](principled_data_augmentation_for_learning_to_solve_quadratic_programming_problem.md)**
+**[Principled Data Augmentation for Learning to Solve Quadratic Programming Problems](principled_data_augmentation_for_learning_to_solve_quadratic_programming_problem.md)**
 
 :   提出基于KKT系统仿射变换的原则性数据增强框架，为线性规划(LP)和二次规划(QP)的MPNN学习优化(L2O)任务生成保最优性的增强实例，并结合对比学习预训练，在数据稀缺和OOD泛化场景下大幅提升性能。
 
-**[Reasoning Meets Representation Envisioning Neuro-Symbolic Wireless Foundation Mo](reasoning_meets_representation_envisioning_neuro-symbolic_wireless_foundation_mo.md)**
+**[Reasoning Meets Representation: Envisioning Neuro-Symbolic Wireless Foundation Models](reasoning_meets_representation_envisioning_neuro-symbolic_wireless_foundation_mo.md)**
 
 :   提出将神经符号（Neuro-Symbolic）范式与无线物理层基础模型（WPFM）结合的愿景框架——以WPFM作为神经感知引擎生成RF嵌入向量，以本体论驱动的知识图谱和可微逻辑层作为符号推理组件，实现可解释、可泛化且可验证合规的无线AI系统，为AI原生6G网络提供技术路径。
 
-**[Relieving The Over-Aggregating Effect In Graph Transformers](relieving_the_over-aggregating_effect_in_graph_transformers.md)**
+**[Relieving the Over-Aggregating Effect in Graph Transformers](relieving_the_over-aggregating_effect_in_graph_transformers.md)**
 
 :   发现了 Graph Transformer 中的 over-aggregating 现象——大量节点以近均匀注意力分数被聚合导致关键信息被稀释，提出 Wideformer 通过分割聚合+引导注意力来缓解，作为即插即用模块在 13 个数据集上一致提升骨干模型性能。
 
-**[Remindrag Low-Cost Llm-Guided Knowledge Graph Traversal For Efficient Rag](remindrag_low-cost_llm-guided_knowledge_graph_traversal_for_efficient_rag.md)**
+**[ReMindRAG: Low-Cost LLM-Guided Knowledge Graph Traversal for Efficient RAG](remindrag_low-cost_llm-guided_knowledge_graph_traversal_for_efficient_rag.md)**
 
 :   提出ReMindRAG，一种结合LLM引导的KG遍历（节点探索+利用）与无训练记忆重放机制的KG-RAG系统，将LLM遍历经验存储在边嵌入中，在后续相似查询时显著减少LLM调用次数（约50%成本降低），同时提升回答准确率（5%-10%提升）。
 
-**[Self-Supervised Discovery Of Neural Circuits In Spatially Patterned Neural Respo](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)**
+**[Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)**
 
 :   提出基于GNN的自监督框架，通过结构学习模块推断潜在突触连接、同时用脉冲预测模块预测未来发放活动，在环形吸引子网络仿真数据和真实小鼠头方向细胞记录上均显著优于统计推断基线。
 
-**[Sketch-Augmented Features Improve Learning Long-Range Dependencies In Graph Neur](sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)**
+**[Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)**
 
 :   提出Sketched Random Features (SRF)，将节点特征的核空间随机投影注入标准消息传递GNN的每一层，同时缓解过压缩、过平滑和表达力受限三大问题，理论性质完备且计算高效。
 
-**[Smore Structural Mixture Of Residual Experts For Parameter-Efficient Llm Fine-Tu](smore_structural_mixture_of_residual_experts_for_parameter-efficient_llm_fine-tu.md)**
+**[S'MoRE: Structural Mixture of Residual Experts for Parameter-Efficient LLM Fine-tuning](smore_structural_mixture_of_residual_experts_for_parameter-efficient_llm_fine-tu.md)**
 
 :   提出S'MoRE框架，将低秩残差专家组织成多层树状结构，通过层次化路由为每个token构建定制化的"残差树"，在与LoRA相当的参数量下实现指数级增长的结构灵活性，显著提升LLM微调效果。
 
-**[Solar-Geco Perovskite Solar Cell Property Prediction With Geometric-Aware Co-Att](solar-geco_perovskite_solar_cell_property_prediction_with_geometric-aware_co-att.md)**
+**[Solar-GECO: Perovskite Solar Cell Property Prediction with Geometric-Aware Co-Attention](solar-geco_perovskite_solar_cell_property_prediction_with_geometric-aware_co-att.md)**
 
 :   提出Solar-GECO多模态框架，将钙钛矿吸收层的3D晶体结构通过几何GNN编码、器件其他层通过LLM文本嵌入编码，经共注意力融合后预测光电转换效率(PCE)及其不确定性，MAE从3.066降至2.936。
 
-**[Spatio-Temporal Directed Graph Learning For Account Takeover Fraud Detection](spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)**
+**[Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection](spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)**
 
 :   提出 ATLAS 框架，将账户接管（ATO）欺诈检测重新建模为时空有向图上的节点分类问题，通过时间窗口 + 最近邻约束构建因果有向图，结合延迟感知标签传播和 GraphSAGE 编码器，在 Capital One 的 1 亿节点、10 亿边大规模生产图上实现 +6.38% AUC 提升和超过 50% 的用户摩擦降低。
 
-**[Spot-Trip Dual-Preference Driven Out-Of-Town Trip Recommendation](spot-trip_dual-preference_driven_out-of-town_trip_recommendation.md)**
+**[SPOT-Trip: Dual-Preference Driven Out-of-Town Trip Recommendation](spot-trip_dual-preference_driven_out-of-town_trip_recommendation.md)**
 
 :   提出SPOT-Trip框架，首次系统研究异地旅行推荐问题，通过知识图谱增强的静态偏好学习、神经ODE驱动的动态偏好学习以及偏好融合模块，在两个真实数据集上最高提升17.01%。
 
-**[Table As A Modality For Large Language Models](table_as_a_modality_for_large_language_models.md)**
+**[Table as a Modality for Large Language Models](table_as_a_modality_for_large_language_models.md)**
 
 :   提出 TaMo 框架，将表格作为独立模态通过超图神经网络编码其结构信息，与 LLM 的文本模态融合，在多个表格推理基准上相比纯文本方法平均提升 42.65%，且在结构鲁棒性上接近 GPT-4。
 
-**[Tami Taming Heterogeneity In Temporal Interactions For Temporal Graph Link Predi](tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)**
+**[TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)**
 
 :   首次系统识别时序图交互中的异质性问题（交互间隔呈幂律分布），提出TAMI框架包含对数时间编码(LTE)和链接历史聚合(LHA)两个模块，可无缝集成到现有TGNN中，在16个数据集上持续提升链接预测性能，最高提升87.05%。
 
-**[The Underappreciated Power Of Vision Models For Graph Structural Understanding](the_underappreciated_power_of_vision_models_for_graph_structural_understanding.md)**
+**[The Underappreciated Power of Vision Models for Graph Structural Understanding](the_underappreciated_power_of_vision_models_for_graph_structural_understanding.md)**
 
 :   揭示视觉模型（ResNet/ViT/Swin等）在图结构理解方面被严重低估的能力——通过将图渲染为图像并用视觉编码器处理，在全局拓扑感知和跨尺度泛化上显著优于GNN，并提出GraphAbstract benchmark系统评估这一发现。
 
-**[Uncertain Knowledge Graph Completion Via Semi-Supervised Confidence Distribution](uncertain_knowledge_graph_completion_via_semi-supervised_confidence_distribution.md)**
+**[Uncertain Knowledge Graph Completion via Semi-Supervised Confidence Distribution Learning](uncertain_knowledge_graph_completion_via_semi-supervised_confidence_distribution.md)**
 
 :   ssCDL 通过将三元组置信度从标量转换为高斯分布形式的置信度分布以捕获邻近置信度的监督信号，并利用元自训练（meta self-training）为负采样三元组生成高质量伪置信度标签来重平衡训练数据，在不确定知识图谱补全的置信度预测和链接预测上显著超过所有基线方法。
 
-**[Unifying And Enhancing Graph Transformers Via A Hierarchical Mask Framework](unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)**
+**[Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework](unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)**
 
 :   提出统一的层级掩码框架揭示 Graph Transformer 架构与注意力掩码的等价性，并设计 M3Dphormer 通过多层级掩码、双层专家路由和双重注意力计算实现对局部/簇/全局交互的高效自适应建模，在 9 个基准上取得 SOTA。
 
-**[Unifying Text Semantics And Graph Structures For Temporal Text-Attributed Graphs](unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)**
+**[Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)**
 
 :   提出 Cross 框架——用 LLM 在策略采样的时间点上动态总结节点邻域的语义演变（Temporal Reasoning Chain），然后通过语义-结构协同编码器双向融合文本语义和图结构时序信息，在时序链接预测上平均 MRR 提升 24.7%，工业数据（微信）上 AUC 提升 3.7%。
 
@@ -214,10 +214,10 @@ description: >-
 
 :   揭示了Transformer注意力层本质上等价于完全图上的图神经扩散过程，并基于二阶波动方程提出Wavy Transformer，通过能量守恒特性缓解深层Transformer的过平滑问题，在NLP、CV和稀疏图任务上均取得一致性提升。
 
-**[What Expressivity Theory Misses Message Passing Complexity For Gnns](what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)**
+**[What Expressivity Theory Misses: Message Passing Complexity for GNNs](what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)**
 
 :   批判 GNN 的二值表达力理论无法解释实际性能差异，提出 MPC——基于概率性 lossyWL 的连续、任务特定复杂度度量，与准确率的 Spearman 相关性达 -1（传统 WLC 恒为零），成功解释了 GCN+虚拟节点为何在长程任务上优于更高表达力的高阶模型。
 
-**[When No Paths Lead To Rome Benchmarking Systematic Neural Relational Reasoning](when_no_paths_lead_to_rome_benchmarking_systematic_neural_relational_reasoning.md)**
+**[When No Paths Lead to Rome: Benchmarking Systematic Neural Relational Reasoning](when_no_paths_lead_to_rome_benchmarking_systematic_neural_relational_reasoning.md)**
 
 :   提出NoRA benchmark，系统性地打破现有关系推理benchmark中"推理可归约为路径组合"的假设，引入非路径推理、歧义事实和多关系等挑战，揭示包括o3在内的所有现有模型在off-path推理上的根本缺陷。

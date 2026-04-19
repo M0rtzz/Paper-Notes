@@ -152,3 +152,15 @@ BBEH 用 23 个新任务一一替换 BBH 中的原始任务，每个新任务：
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖多个主流模型系列，分析维度丰富（模型大小、类型、上下文长度等）
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、结构严谨、分析深入、可视化出色
 - 价值: ⭐⭐⭐⭐⭐ 填补了通用推理评测的空白，将成为该领域的重要基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unique Hard Attention: A Tale of Two Sides](unique_hard_attention_a_tale_of_two_sides.md)
+- [Hard Negative Mining for Domain-Specific Retrieval in Enterprise Systems](hard_negative_mining_for_domain-specific_retrieval_in_enterprise_systems.md)
+- [I Am Big, You Are Little; I Am Right, You Are Wrong](../../ICCV2025/others/i_am_big_you_are_little_i_am_right_you_are_wrong.md)
+- [How Hard is it to Explain Preferences Using Few Boolean Attributes?](../../AAAI2026/others/how_hard_is_it_to_explain_preferences_using_few_boolean_attributes.md)
+- [From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](../../ICCV2025/others/from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)
+
+<!-- RELATED:END -->

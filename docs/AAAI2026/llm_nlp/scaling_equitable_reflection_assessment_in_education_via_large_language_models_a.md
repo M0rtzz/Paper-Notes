@@ -129,3 +129,15 @@ Evaluator、Equity Monitor、Metacognitive三个Agent可并行运行，Aggregato
 ## 评分
 
 ⭐⭐⭐ — 问题切入点好（教育公平+自动反馈），公平性量化框架有价值，但实验规模太小、零样本性能与专家仍有差距、技术创新相对直觉化。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Theory of Mind in Large Language Models: Assessment and Enhancement](../../ACL2025/llm_nlp/theory_of_mind_llm.md)
+- [The Role of Deductive and Inductive Reasoning in Large Language Models](../../ACL2025/llm_nlp/the_role_of_deductive_and_inductive_reasoning_in_large_language_models.md)
+- [Position on LLM-Assisted Peer Review: Addressing Reviewer Gap through Mentoring and Feedback](position_on_llm-assisted_peer_review_addressing_reviewer_gap_through_mentoring_a.md)
+- [Enhancing Persona Following at Decoding Time via Dynamic Importance Estimation for Role-Playing Agents](../../ICLR2026/llm_nlp/enhancing_persona_following_at_decoding_time_via_dynamic_importance_estimation_f.md)
+- [Blue Teaming Function-Calling Agents](blue_teaming_function-calling_agents.md)
+
+<!-- RELATED:END -->

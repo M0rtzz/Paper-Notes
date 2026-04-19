@@ -170,3 +170,15 @@ MACI 单次评分 + 轻量校准，总时间仅为 CCI 的 **36%**。
 - **实验充分度**: ⭐⭐⭐⭐ — 3 个数据集、多种分组标准、消融、时间成本、协变量偏移，实验全面扎实
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，动机充足，结构完整
 - **价值**: ⭐⭐⭐⭐ — 为 LLM 在高风险领域的可靠部署提供了实用且有理论保证的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Conformal Prediction Adaptive to Unknown Subpopulation Shifts](conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
+- [Which LLM Multi-Agent Protocol to Choose?](which_llm_multi-agent_protocol_to_choose.md)
+- [How Reliable is Language Model Micro-Benchmarking?](how_reliable_is_language_model_micro-benchmarking.md)
+- [Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
+- [Predicting LLM Reasoning Performance with Small Proxy Model](predicting_llm_reasoning_performance_with_small_proxy_model.md)
+
+<!-- RELATED:END -->

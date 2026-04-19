@@ -182,3 +182,15 @@ OneOcc 的流水线如下：
 ## 评分
 
 ⭐⭐⭐⭐ 系统性强的工作，精准定义新问题+完整方法+双数据集贡献，四个模块设计动机清晰且增益可叠加，但每个模块的单独增益较小（0.26-0.41），夜间场景仍有短板。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction.md)
+- [M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](m2occ_resilient_3d_semantic_occupancy_prediction_f.md)
+- [Sparsity-Aware Voxel Attention and Foreground Modulation for 3D Semantic Scene Completion](sparsity-aware_voxel_attention_and_foreground_modulation_for_3d_semantic_scene_c.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
+- [Generalizing Visual Geometry Priors to Sparse Gaussian Occupancy Prediction](generalizing_visual_geometry_priors_to_sparse_gaussian_occupancy_prediction.md)
+
+<!-- RELATED:END -->

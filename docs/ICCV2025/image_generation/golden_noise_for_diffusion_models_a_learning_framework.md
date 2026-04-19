@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨模型、跨数据集、跨采样器、正交实验、消融实验全面
 - 写作质量: ⭐⭐⭐⭐ 思路清晰，但细节较多需要仔细追踪
 - 价值: ⭐⭐⭐⭐⭐ 作为即插即用的质量提升模块，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisualCloze: A Universal Image Generation Framework via Visual In-Context Learning](visualcloze_a_universal_image_generation_framework_via_visua.md)
+- [Improved Noise Schedule for Diffusion Training](improved_noise_schedule_for_diffusion_training.md)
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+- [Joint Diffusion Models in Continual Learning](joint_diffusion_models_in_continual_learning.md)
+- [T2SMark: Balancing Robustness and Diversity in Noise-as-Watermark for Diffusion Models](../../NeurIPS2025/image_generation/t2smark_balancing_robustness_and_diversity_in_noise-as-watermark_for_diffusion_m.md)
+
+<!-- RELATED:END -->

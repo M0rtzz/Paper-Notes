@@ -162,3 +162,15 @@ CL loss 将 EMD 降低约 4.5 倍，IIA 略有提升。OOD 设置中（在 dense
 - **实验充分度**: ⭐⭐⭐⭐ — 理论证明扎实，LLM 实验有意义，但改进方法仅在合成数据验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题定义精准，逻辑清晰，理论与实验结合紧密
 - **价值**: ⭐⭐⭐⭐⭐ — 对 mech interp 领域的因果干预实验有广泛影响，Oral 当之无愧
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures](../../NeurIPS2025/others/sad_neural_networks_divergent_gradient_flows_and_asymptotic_optimality_via_o-min.md)
+- [Learning Fair Representations with Kolmogorov-Arnold Networks](../../AAAI2026/others/learning_fair_representations_with_kolmogorov-arnold_networks.md)
+- [Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
+- [On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
+- [Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
+
+<!-- RELATED:END -->

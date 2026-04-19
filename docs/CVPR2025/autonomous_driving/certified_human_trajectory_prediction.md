@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型、多模态、多agent、下游任务验证全面，但缺乏大规模数据集
 - 写作质量: ⭐⭐⭐⭐⭐ 问题形式化清晰，理论推导严谨，新指标设计合理
 - 价值: ⭐⭐⭐⭐⭐ 为安全关键的自动驾驶系统提供了可靠性保障新工具，具有重要实用和学术价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-modal Knowledge Distillation-based Human Trajectory Forecasting](multi-modal_knowledge_distillation-based_human_trajectory_forecasting.md)
+- [Adaptive Human Trajectory Prediction via Latent Corridors](../../ECCV2024/autonomous_driving/adaptive_human_trajectory_prediction_via_latent_corridors.md)
+- [Towards Predicting Any Human Trajectory in Context](../../NeurIPS2025/autonomous_driving/towards_predicting_any_human_trajectory_in_context.md)
+- [Progressive Pretext Task Learning for Human Trajectory Prediction](../../ECCV2024/autonomous_driving/progressive_pretext_task_learning_for_human_trajectory_prediction.md)
+- [DONUT: A Decoder-Only Model for Trajectory Prediction](../../ICCV2025/autonomous_driving/donut_a_decoder-only_model_for_trajectory_prediction.md)
+
+<!-- RELATED:END -->

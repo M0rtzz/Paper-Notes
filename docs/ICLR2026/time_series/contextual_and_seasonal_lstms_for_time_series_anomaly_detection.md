@@ -119,3 +119,15 @@ $$\mathcal{D}(\mu, \sigma, x, \hat{x}) = \log \sigma^2 + \frac{(x \odot \text{ma
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、十个baseline、消融/迁移/效率实验完整
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐ 实用性强，轻量高效适合工业部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
+- [Structured Temporal Causality for Interpretable Multivariate Time Series Anomaly Detection](../../NeurIPS2025/time_series/structured_temporal_causality_for_interpretable_multivariate_time_series_anomaly.md)
+- [KAN-AD: Time Series Anomaly Detection with Kolmogorov-Arnold Networks](../../ICML2025/time_series/kan-ad_time_series_anomaly_detection_with_kolmogorov-arnold_networks.md)
+- [ScatterAD: Temporal-Topological Scattering Mechanism for Time Series Anomaly Detection](../../NeurIPS2025/time_series/scatterad_temporal-topological_scattering_mechanism_for_time_series_anomaly_dete.md)
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](../../ICML2025/time_series/causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+
+<!-- RELATED:END -->

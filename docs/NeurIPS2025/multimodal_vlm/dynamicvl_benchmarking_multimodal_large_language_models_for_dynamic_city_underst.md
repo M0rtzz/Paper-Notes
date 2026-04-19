@@ -145,3 +145,15 @@ DVL-Suite 包含两部分：
 - 技术深度：⭐⭐⭐ — DVLChat 架构不复杂但实用，核心贡献在数据和基准
 - 实验充分度：⭐⭐⭐⭐⭐ — 评估了 18 个模型，多维度分析透彻
 - 实用价值：⭐⭐⭐⭐ — 对城市规划、灾害评估等应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PunchBench: Benchmarking MLLMs in Multimodal Punchline Comprehension](../../ACL2025/multimodal_vlm/punchbench_mllm_punchline.md)
+- [RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video](rtv-bench_benchmarking_mllm_continuous_perception_understanding_and_reasoning_th.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs](struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)
+- [CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models](choice_benchmarking_the_remote_sensing_capabilities_of_large_vision-language_mod.md)
+
+<!-- RELATED:END -->

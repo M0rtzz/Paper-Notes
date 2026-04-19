@@ -214,3 +214,15 @@ SaP 提供“检测+纠偏”一体化路线，理论上更适合对抗场景。
 
 ## 引用信息
 Xin Chen, Yarden As, Andreas Krause. **Learning Safety Constraints for Large Language Models**. ICML 2025.
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CROW: Eliminating Backdoors from Large Language Models via Internal Consistency Regularization](crow_eliminating_backdoors_from_large_language_models_via_internal_consistency_r.md)
+- [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](../../ACL2025/ai_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+- [De-mark: Watermark Removal in Large Language Models](de-mark_watermark_removal_in_large_language_models.md)
+- [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+- [ALMGuard: Safety Shortcuts and Where to Find Them as Guardrails for Audio-Language Models](../../NeurIPS2025/ai_safety/almguard_safety_shortcuts_and_where_to_find_them_as_guardrails_for_audio-languag.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ Transformer 组件消融（MOVi-A）：
 - 实验充分度: ⭐⭐⭐⭐ 7 个数据集（含真实场景），详尽的消融分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，两种方法（分析/经验）和两种架构（Joint/Cross）的对比系统
 - 价值: ⭐⭐⭐⭐ 解决了对象中心视频预测在复杂场景中的关键瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction](aid_adapting_image2video_diffusion_models_for_instruction-guided_video_predictio.md)
+- [DreamRelation: Relation-Centric Video Customization](dreamrelation_relation-centric_video_customization.md)
+- [FuXi-RTM: A Physics-Guided Prediction Framework with Radiative Transfer Modeling](fuxi-rtm_a_physics-guided_prediction_framework_with_radiative_transfer_modeling.md)
+- [Articulated Kinematics Distillation from Video Diffusion Models](../../CVPR2025/video_generation/articulated_kinematics_distillation_from_video_diffusion_models.md)
+- [Dynamic Camera Poses and Where to Find Them](../../CVPR2025/video_generation/dynamic_camera_poses_and_where_to_find_them.md)
+
+<!-- RELATED:END -->

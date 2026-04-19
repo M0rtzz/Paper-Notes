@@ -131,3 +131,15 @@ $$e_{scale} = \begin{cases} e_{coarse} & \text{if token from coarse scale} \\ e_
 - VILA: 视觉-语言对齐的美学评估
 - TANet: 主题感知的美学网络
 - Token 剪枝/合并：DynamicViT, ToMe 等
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RL-ScanIQA: Reinforcement-Learned Scanpaths for Blind 360° Image Quality Assessment](../../CVPR2026/model_compression/rl-scaniqa_reinforcement-learned_scanpaths_for_blind_360image_quality_assessment.md)
+- [Hyperbolic Fine-Tuning for Large Language Models](../../NeurIPS2025/model_compression/hyperbolic_fine-tuning_for_large_language_models.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [ViT-Linearizer: Distilling Quadratic Knowledge into Linear-Time Vision Models](../../ICCV2025/model_compression/vit-linearizer_distilling_quadratic_knowledge_into_linear-time_vision_models.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ EFX（Envy-Freeness up to Any good）是 EF 的一个重要松弛：允许代理
 - 实验充分度: N/A （纯理论工作）
 - 写作质量: ⭐⭐⭐⭐ （构造清晰、逐步递进，前置定义充分）
 - 价值: ⭐⭐⭐⭐ （推进公平分配核心开放问题，但距一般解仍有距离）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
+- [Beyond Match Maximization and Fairness: Retention-Optimized Two-Sided Matching](../../ICLR2026/ai_safety/beyond_match_maximization_and_fairness_retention-optimized_two-sided_matching.md)
+- [Adaptive LoRA Experts Allocation and Selection for Federated Fine-Tuning](../../NeurIPS2025/ai_safety/adaptive_lora_experts_allocation_and_selection_for_federated_fine-tuning.md)
+- [PubSub-VFL: Towards Efficient Two-Party Split Learning in Heterogeneous Environments via Publisher/Subscriber Architecture](../../NeurIPS2025/ai_safety/pubsub-vfl_towards_efficient_two-party_split_learning_in_heterogeneous_environme.md)
+- [Can Editing LLMs Inject Harm?](can_editing_llms_inject_harm.md)
+
+<!-- RELATED:END -->

@@ -166,3 +166,15 @@ CAFE 的跨域均值达到 63.48%，相比最佳基线 EAC（53.70%）提升 **+
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5 个数据集交叉验证、5 种训练设置、详细消融、多骨干、CLIP+Finetune 对比、Sigmoid 影响、超参研究，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，与人类认知的类比生动，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 首次系统性研究 FER 零样本泛化问题，方法简洁高效，对实际部署有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Video Meetings Change Your Expression](how_video_meetings_change_your_expression.md)
+- [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
+- [TF-FAS: Twofold-Element Fine-Grained Semantic Guidance for Generalizable Face Anti-Spoofing](tf-fas_twofold-element_fine-grained_semantic_guidance_for_generalizable_face_ant.md)
+- [Facial Affective Behavior Analysis with Instruction Tuning](facial_affective_behavior_analysis_with_instruction_tuning.md)
+- [Cut Out the Middleman: Revisiting Pose-Based Gait Recognition](cut_out_the_middleman_revisiting_pose-based_gait_recognition.md)
+
+<!-- RELATED:END -->

@@ -91,3 +91,15 @@ Agent-SAMA是一个多Agent框架，包含四个阶段：规划（Planning）→
 - 实验充分度: ⭐⭐⭐⭐ （三个基准、消融实验、多MLLM对比，但跨App知识迁移效果缺少定量分析）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰、图示直观，附录含完整prompt和案例，但部分表格排版略乱）
 - 价值: ⭐⭐⭐⭐ （FSM作为Agent记忆层的思路具有通用性，代码已开源，可作为后续研究的起点）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](../../ICML2025/others/unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+- [An Epistemic Perspective on Agent Awareness](an_epistemic_perspective_on_agent_awareness.md)
+- [Local Guidance for Configuration-Based Multi-Agent Pathfinding](local_guidance_for_configuration-based_multi-agent_pathfinding.md)
+- [Structural Approach to Guiding a Present-Biased Agent](structural_approach_to_guiding_a_present-biased_agent.md)
+- [Controllable Financial Market Generation with Diffusion Guided Meta Agent](controllable_financial_market_generation_with_diffusion_guided_meta_agent.md)
+
+<!-- RELATED:END -->

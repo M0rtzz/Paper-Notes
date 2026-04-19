@@ -175,3 +175,15 @@ $$\nabla_\theta J_{\text{CLIP}} = \nabla_\theta r_{i,t} \cdot G(r_{i,t})$$
 - 实验充分度: ⭐⭐⭐⭐ — 检测、复现、构建、验证四阶段完整，梯度分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ — 论证逻辑严密，图表直观，结论明确
 - 价值: ⭐⭐⭐⭐⭐ — 对当前RL for LLM reasoning社区具有重要的方法论警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning from Synthetic Data Improves Multi-hop Reasoning](../../ICLR2026/reinforcement_learning/learning_from_synthetic_data_improves_multi-hop_reasoning.md)
+- [Reasoning with Exploration: An Entropy Perspective](reasoning_with_exploration_an_entropy_perspective.md)
+- [Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning](well_begun_half_done_reinforcement_learning_with_prefix_optimization_for_llm_rea.md)
+- [Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
+- [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](../../ICLR2026/reinforcement_learning/textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
+
+<!-- RELATED:END -->

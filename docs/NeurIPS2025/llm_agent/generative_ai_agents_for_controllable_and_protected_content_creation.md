@@ -151,3 +151,15 @@ $$\min_{\theta_g, \theta_p} \{L_{plan} + L_{rev} + L_{int} + L_{prot}\}$$
 - 实验充分度: ⭐⭐ (无实际实验结果，仅有可行性分析)
 - 写作质量: ⭐⭐⭐ (结构清晰，数学形式化完整，但作为提案文档内容偏理论)
 - 价值: ⭐⭐⭐ (方向有意义，但需要实验验证才能评估真正价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdvAgent: Controllable Blackbox Red-teaming on Web Agents](../../ICML2025/llm_agent/advagent_controllable_blackbox_red-teaming_on_web_agents.md)
+- [What AI Speaks for Your Community: Polling AI Agents for Public Opinion on Data Center Projects](what_ai_speaks_for_your_community_polling_ai_agents_for_public_opinion_on_data_c.md)
+- [SuffixDecoding: Extreme Speculative Decoding for Emerging AI Applications](suffixdecoding_extreme_speculative_decoding_for_emerging_ai_applications.md)
+- [PerfGuard: A Performance-Aware Agent for Visual Content Generation](../../ICLR2026/llm_agent/radiometrically_consistent_gaussian_surfels_for_inverse_rendering.md)
+- [LC-Opt: Benchmarking Reinforcement Learning and Agentic AI for End-to-End Liquid Cooling Optimization in Data Centers](lc-opt_benchmarking_reinforcement_learning_and_agentic_ai_for_end-to-end_liquid_.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多基准(5+)、多模型、OOD评估、消融完整、7B超GPT-4的亮眼结果
 - 写作质量: ⭐⭐⭐⭐ 流程清晰，算法伪代码规范
 - 价值: ⭐⭐⭐⭐⭐ 提供了一种可迁移的结构化推理增强范式，开源代码和数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal Reasoning for Timeline Summarisation in Social Media](temporal_reasoning_for_timeline_summarisation_in_social_media.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
+- [Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning](micro_act_knowledge_conflict_reasoning.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+
+<!-- RELATED:END -->

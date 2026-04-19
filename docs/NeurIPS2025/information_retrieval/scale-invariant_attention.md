@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多个基线对比、消融实验、needle-in-a-haystack 评估全面；扣分在于模型规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰自洽，从定义到定理到实现的逻辑链完整
 - 价值: ⭐⭐⭐⭐ 实现极简（一行代码）但效果显著的长上下文方案，工程落地门槛极低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation](the_atlas_of_in-context_learning_how_attention_heads_shape_in-context_retrieval_.md)
+- [SEAL: Scaling to Emphasize Attention for Long-Context Retrieval](../../ACL2025/information_retrieval/seal_scaling_to_emphasize_attention_for_long-context_retrieval.md)
+- [M4-RAG: A Massive-Scale Multilingual Multi-Cultural Multimodal RAG](../../CVPR2026/information_retrieval/m4-rag_a_massive-scale_multilingual_multi-cultural_multimodal_rag.md)
+- [Efficient Discriminative Joint Encoders for Large Scale Vision-Language Re-ranking](../../ICLR2026/information_retrieval/efficient_discriminative_joint_encoders_for_large_scale_vision-language_rerankin.md)
+- [SR-KI: Scalable and Real-Time Knowledge Integration into LLMs via Supervised Attention](../../AAAI2026/information_retrieval/sr-ki_scalable_and_real-time_knowledge_integration_into_llms_via_supervised_atte.md)
+
+<!-- RELATED:END -->

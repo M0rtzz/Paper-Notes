@@ -152,3 +152,15 @@ DualReg提出双空间配准范式，先用轻量级1-point RANSAC + 3-point RAN
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖室内/室外数据集、多种特征描述符、详尽的消融实验和运行时间对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，实验设置公平详尽
 - 价值: ⭐⭐⭐⭐ 速度和精度兼顾，对实际SLAM和三维重建系统有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection](beyond_prompt_degradation_prototype-guided_dual-pool_prompting_for_incremental_o.md)
+- [CD-Buffer: Complementary Dual-Buffer Framework for Test-Time Adaptation in Adverse Weather Object Detection](cd-buffer_complementary_dual-buffer_framework_for_test-time_adaptation_in_advers.md)
+- [Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection](foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob.md)
+- [DreamVideo-Omni: Omni-Motion Controlled Multi-Subject Video Customization with Latent Identity Reinforcement Learning](dreamvideoomni_omnimotion_controlled_multisubject.md)
+- [Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification](specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat.md)
+
+<!-- RELATED:END -->

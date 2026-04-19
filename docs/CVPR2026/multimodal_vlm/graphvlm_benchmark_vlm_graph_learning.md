@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6数据集、3范式、多种GNN/LLM/VLM方法的全面对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分类框架直观
 - 价值: ⭐⭐⭐⭐ 为多模态图学习提供了系统性benchmark和明确的方法论指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality](benchmarking_vision-language_models_under_contradictory_virtual_content_attacks_.md)
+- [Multi-Crit: Benchmarking Multimodal Judges on Pluralistic Criteria-Following](multi-crit_benchmarking_multimodal_judges_on_pluralistic_criteria-following.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [Venus: Benchmarking and Empowering Multimodal Large Language Models for Aesthetic Guidance and Cropping](venus_benchmarking_and_empowering_multimodal_large_language_models_for_aesthetic.md)
+- [OddGridBench: Exposing the Lack of Fine-Grained Visual Discrepancy Sensitivity in Multimodal Large Language Models](oddgridbench_exposing_the_lack_of_fine-grained_visual_discrepancy_sensitivity_in.md)
+
+<!-- RELATED:END -->

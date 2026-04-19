@@ -190,3 +190,15 @@ ThoughtComm 的整体 pipeline 如下：在每个通信轮次 $t$，首先收集
 - 实验充分度: ⭐⭐⭐⭐ 五种模型、两个基准、合成+真实实验、多个维度的消融分析均有覆盖，但任务多样性局限于数学推理
 - 写作质量: ⭐⭐⭐⭐⭐ 从理论到实践的叙事流畅自然，图例设计直观（如 Fig.1 的行李/速度/准时例子），数学公式呈现清晰易读
 - 价值: ⭐⭐⭐⭐⭐ 既有理论深度也有实际价值，轻量级设计使其容易被社区采纳，开辟了超越语言通信的全新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LCDB 1.1: A Database Illustrating Learning Curves Are More Ill-Behaved Than Previously Thought](lcdb_11_a_database_illustrating_learning_curves_are_more_ill-behaved_than_previo.md)
+- [Beyond the Surface: Enhancing LLM-as-a-Judge Alignment with Human via Internal Representations](beyond_the_surface_enhancing_llm-as-a-judge_alignment_with_human_via_internal_re.md)
+- [Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention](generalization_error_analysis_for_selective_state-space_models_through_the_lens_.md)
+- [OptiTree: Hierarchical Thoughts Generation with Tree Search for LLM Optimization Modeling](optitree_hierarchical_thoughts_generation_with_tree_search_for_llm_optimization_.md)
+- [Put CASH on Bandits: A Max K-Armed Problem for Automated Machine Learning](put_cash_on_bandits_a_max_k-armed_problem_for_automated_machine_learning.md)
+
+<!-- RELATED:END -->

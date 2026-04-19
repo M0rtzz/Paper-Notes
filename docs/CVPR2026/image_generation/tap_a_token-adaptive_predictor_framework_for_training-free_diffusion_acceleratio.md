@@ -171,3 +171,15 @@ TAP 在视频生成上也取得最佳质量-效率平衡，VBench 仅下降 1.7%
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：问题动机清晰（token 级异质性），方法设计优雅（probe-then-select），无需训练且开销极低。实验覆盖多模型多任务，消融充分。核心贡献——逐 token 自适应预测器选择——是扩散加速领域的显著推进。扣一颗星因为候选预测器仍局限于 Taylor 族且缺乏理论保证（为什么第一层探针一定是好的代理？）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAUE: Training-free Noise Transplant and Cultivation Diffusion Model](taue_training-free_noise_transplant_and_cultivation_diffusion_model.md)
+- [MatchDiffusion: Training-free Generation of Match-Cuts](../../ICCV2025/image_generation/matchdiffusion_training-free_generation_of_match-cuts.md)
+- [When Safety Collides: Resolving Multi-Category Harmful Conflicts in Text-to-Image Diffusion via Adaptive Safety Guidance](when_safety_collides_resolving_multi-category_harmful_conflicts_in_text-to-image.md)
+- [TINA: Text-Free Inversion Attack for Unlearned Text-to-Image Diffusion Models](tina_text-free_inversion_attack_for_unlearned_text-to-image_diffusion_models.md)
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+
+<!-- RELATED:END -->

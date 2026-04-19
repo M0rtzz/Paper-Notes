@@ -139,3 +139,15 @@ tags:
 - ⭐ 创新性: 9/10 — 将响应时间与偏好学习理论优雅结合
 - ⭐ 实用性: 7/10 — 理论贡献大，但LLM场景实验不足
 - ⭐ 写作质量: 8/10 — 理论推导严谨，实验设计合理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MESS+: Dynamically Learned Inference-Time LLM Routing in Model Zoos with Service Level Guarantees](mess_dynamically_learned_inference-time_llm_routing_in_model_zoos_with_service_l.md)
+- [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
+- [Robust Estimation Under Heterogeneous Corruption Rates](robust_estimation_under_heterogeneous_corruption_rates.md)
+- [POPri: Private Federated Learning using Preference-Optimized Synthetic Data](../../ICML2025/optimization/popri_private_federated_learning_using_preference-optimized_synthetic_data.md)
+- [FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling](fedrts_federated_robust_pruning_via_combinatorial_thompson_sampling.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ $$R^i(t) \leq \sum_{\Delta^i(a) > 0} \min_{j \in [m]} \left\{ \frac{(\Lambda^j(\
 - 实验充分度: ⭐⭐⭐ — 仅合成实验，缺乏真实场景
 - 写作质量: ⭐⭐⭐⭐ — 理论严谨，结构清晰
 - 价值: ⭐⭐⭐⭐ — 理论贡献突出，填补重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep (Predictive) Discounted Counterfactual Regret Minimization](deep_predictive_discounted_counterfactual_regret_minimization.md)
+- [Online Minimization of Polarization and Disagreement via Low-Rank Matrix Bandits](../../ICLR2026/reinforcement_learning/online_minimization_of_polarization_and_disagreement_via_low-rank_matrix_bandits.md)
+- [Perturbing Best Responses in Zero-Sum Games](perturbing_best_responses_in_zero-sum_games.md)
+- [Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](../../NeurIPS2025/reinforcement_learning/gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [Simultaneous Swap Regret Minimization via KL-Calibration](../../NeurIPS2025/reinforcement_learning/simultaneous_swap_regret_minimization_via_kl-calibration.md)
+
+<!-- RELATED:END -->

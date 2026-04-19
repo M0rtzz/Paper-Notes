@@ -163,3 +163,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 7 模型 × 20 语言 × 多基准 × 多微调方法，消融和相关性分析全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，实验结果的可视化和分析逻辑性强
 - 价值: ⭐⭐⭐⭐ — 对多语言 LLM 安全部署有重要的实践指导意义，"迁移有代价"的结论值得广泛关注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Middle-Layer Representation Alignment for Cross-Lingual Transfer in Fine-Tuned LLMs](mid_layer_crosslingual_alignment.md)
+- [Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon](cross-lingual_transfer_of_cultural_knowledge_an_asymmetric_phenomenon.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Cross-Lingual Auto Evaluation for Assessing Multilingual LLMs](cross-lingual_auto_evaluation_for_assessing_multilingual_llms.md)
+- [Semantic Aware Linear Transfer by Recycling Pre-trained Language Models for Cross-Lingual Transfer](semantic_aware_linear_transfer_by_recycling_pre-trained_language_models_for_cros.md)
+
+<!-- RELATED:END -->

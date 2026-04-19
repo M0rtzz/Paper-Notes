@@ -123,3 +123,15 @@ tags: ["clothed human", "avatar", "point cloud", "free-form generation", "CVPR20
 - 实验充分度: ⭐⭐⭐⭐ 消融全面、感知实验有说服力，但只在合成数据集上评估是遗憾
 - 写作质量: ⭐⭐⭐⭐ 图表制作精美，动机阐述清晰，方法描述有条理
 - 价值: ⭐⭐⭐⭐ 对宽松服装建模的实际问题提供了有效解决方案，开拓了混合建模新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
+- [TELA: Text to Layer-wise 3D Clothed Human Generation](../../ECCV2024/human_understanding/tela_text_to_layer-wise_3d_clothed_human_generation.md)
+- [RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning](../../ICML2025/human_understanding/rulebreakers_challenging_llms_at_the_crossroads_between_formal_logic_and_human-l.md)
+- [GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)
+- [Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation](../../ICLR2026/human_understanding/think-while-generating_on-the-fly_reasoning_for_personalized_long-form_generatio.md)
+
+<!-- RELATED:END -->

@@ -420,3 +420,15 @@ FDeID-Toolbox 本身是工具箱而非单一模型，不涉及特定的损失函
 - 实验充分度: ⭐⭐⭐
 - 写作质量: ⭐⭐⭐
 - 对我的价值: ⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pose-dIVE: Pose-Diversified Augmentation with Diffusion Model for Person Re-Identification](pose-dive_pose-diversified_augmentation_with_diffusion_model_for_person_re-ident.md)
+- [APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping](apple_attribute-preserving_pseudo-labeling_for_diffusion-based_face_swapping.md)
+- [MOS: Mitigating Optical-SAR Modality Gap for Cross-Modal Ship Re-Identification](mos_mitigating_optical-sar_modality_gap_for_cross-modal_ship_re-identification.md)
+- [Cross-Modal Emotion Transfer for Emotion Editing in Talking Face Video](cross-modal_emotion_transfer_for_emotion_editing_in_talking_face_video.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+
+<!-- RELATED:END -->

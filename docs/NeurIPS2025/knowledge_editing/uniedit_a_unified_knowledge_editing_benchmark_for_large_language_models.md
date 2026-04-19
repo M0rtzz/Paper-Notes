@@ -112,3 +112,15 @@ UniEdit 共包含 311K 条样本，每条包含编辑样本、泛化性样本和
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个编辑器 × 3 个 LLM 骨干 × 25 域 × 多种评估标准组合，实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 构建流程清晰，实验分析系统深入
 - 价值: ⭐⭐⭐⭐ 为知识编辑领域提供了急需的标准化、大规模评估基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neuron-Level Sequential Editing for Large Language Models](../../ACL2025/knowledge_editing/neuron-level_sequential_editing_for_large_language_models.md)
+- [Structure-aware Domain Knowledge Injection for Large Language Models](../../ACL2025/knowledge_editing/structure-aware_domain_knowledge_injection_for_large_language_models.md)
+- [MEGen: Generative Backdoor into Large Language Models via Model Editing](../../ACL2025/knowledge_editing/megen_generative_backdoor_into_large_language_models_via_model_editing.md)
+- [KScope: A Framework for Characterizing the Knowledge Status of Language Models](kscope_a_framework_for_characterizing_the_knowledge_status_of_language_models.md)
+- [Context-Robust Knowledge Editing for Language Models](../../ACL2025/knowledge_editing/context-robust_knowledge_editing_for_language_models.md)
+
+<!-- RELATED:END -->

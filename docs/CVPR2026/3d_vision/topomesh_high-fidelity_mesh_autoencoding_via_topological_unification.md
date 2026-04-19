@@ -155,3 +155,15 @@ F1-Sharp（锐利特征保持指标）：在 Topo-Bench 上比 SparseFlex 提升
 - 实验充分度: ⭐⭐⭐⭐⭐ Remesh+AutoEncoding+Generation+消融全面覆盖，引入F1-Sharp和Topo-Bench新指标/基准
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精准（表示不匹配），方法推导逻辑清晰，从数学原理到工程实现完整
 - 价值: ⭐⭐⭐⭐⭐ 作为3D VAE的基础设施级改进，直接提升下游3D生成质量的上界，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [CustomTex: High-fidelity Indoor Scene Texturing via Multi-Reference Customization](customtex_high-fidelity_indoor_scene_texturing_via_multi-reference_customization.md)
+- [Catalyst4D: High-Fidelity 3D-to-4D Scene Editing via Dynamic Propagation](catalyst4d_high-fidelity_3d-to-4d_scene_editing_via_dynamic_propagation.md)
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+- [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
+
+<!-- RELATED:END -->

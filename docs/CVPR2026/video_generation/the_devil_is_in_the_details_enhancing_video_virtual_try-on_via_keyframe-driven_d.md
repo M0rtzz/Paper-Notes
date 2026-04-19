@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5个数据集 + 用户研究 + 9组消融 + 效率分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 问题阐述清晰，图表丰富，但部分公式符号可更统一
 - 价值: ⭐⭐⭐⭐ — ViT-HD 数据集对社区有较大价值，轻量方案对工业落地友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeoVerse: Enhancing 4D World Model with in-the-wild Monocular Videos](neoverse_enhancing_4d_world_model_with_in-the-wild_monocular_videos.md)
+- [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+- [DIVE: Taming DINO for Subject-Driven Video Editing](../../ICCV2025/video_generation/dive_taming_dino_for_subject-driven_video_editing.md)
+- [Data-Juicer Sandbox: A Feedback-Driven Suite for Multimodal Data-Model Co-development](../../ICML2025/video_generation/data-juicer_sandbox_a_feedback-driven_suite_for_multimodal_data-model_co-develop.md)
+- [Generative Inbetweening through Frame-wise Conditions-Driven Video Generation](../../CVPR2025/video_generation/generative_inbetweening_through_frame-wise_conditions-driven_video_generation.md)
+
+<!-- RELATED:END -->

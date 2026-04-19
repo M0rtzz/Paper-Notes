@@ -121,3 +121,15 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \alpha \mathcal{L}_{CC}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个评估设置、六个数据集、详尽的消融实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰但部分公式符号较多需仔细阅读
 - 价值: ⭐⭐⭐⭐ 提供了视频-语言模型高效迁移的实用方案，适用范围广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding](../../ECCV2024/video_understanding/r2tuning_efficient_imagetovideo_transfer_learning_for_video.md)
+- [Factorized Learning for Temporally Grounded Video-Language Models](../../ICCV2025/video_understanding/factorized_learning_for_temporally_grounded_video-language_models.md)
+- [MimeQA: Towards Socially-Intelligent Nonverbal Foundation Models](../../NeurIPS2025/video_understanding/mimeqa_towards_socially-intelligent_nonverbal_foundation_models.md)
+- [Coarse Correspondences Boost Spatial-Temporal Reasoning in Multimodal Language Models](coarse_correspondences_boost_spatial-temporal_reasoning_in_multimodal_language_m.md)
+- [MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition](../../ICML2025/video_understanding/moma_modulating_mamba_for_adapting_image_foundation_models_to_video_recognition.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 224 条 prompt + 2240 条验证轨迹的合成基准，两种 LLM、多种决策准则对比完整，但限于合成数据
 - 写作质量: ⭐⭐⭐⭐⭐ 数学定义精确，直觉解释清晰，图示优秀
 - 价值: ⭐⭐⭐⭐ 为 LLM 视觉生成的自动验证开辟了新范式，但应用场景（运动图形轨迹）偏窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenDoP: Auto-regressive Camera Trajectory Generation as a Director of Photography](../../ICCV2025/multimodal_vlm/gendop_auto-regressive_camera_trajectory_generation_as_a_director_of_photography.md)
+- [EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards](evolmm_self-evolving_large_multimodal_models_with_continuous_rewards.md)
+- [Enhance Multimodal Consistency and Coherence for Text-Image Plan Generation](../../ACL2025/multimodal_vlm/enhance_multimodal_consistency_and_coherence_for_text-image_plan_generation.md)
+- [Enhancing Outcome Reward-Based RL Training of MLLMs with Self-Consistency Sampling](../../NeurIPS2025/multimodal_vlm/enhancing_the_outcome_reward-based_rl_training_of_mllms_with_self-consistency_sa.md)
+- [DC-Merge: Improving Model Merging with Directional Consistency](dc-merge_improving_model_merging_with_directional_consistency.md)
+
+<!-- RELATED:END -->

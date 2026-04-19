@@ -153,3 +153,15 @@ $$\mathbf{h}_i^{l+1} = \sum_{(r,j) \in \mathcal{N}(i)} \sigma(\omega_{\tau(r)}^l
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9个数据集5种KG类型+消融+联合训练+效率分析，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，HiDR转换规则定义严谨
 - 价值: ⭐⭐⭐⭐ — 填补了统一KG表示学习的空白，联合训练实验展示了实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feature-Centric Unsupervised Node Representation Learning Without Homophily Assumption](feature-centric_unsupervised_node_representation_learning_without_homophily_assu.md)
+- [TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](../../NeurIPS2025/graph_learning/tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)
+- [Banyan: Improved Representation Learning with Explicit Structure](../../ICML2025/graph_learning/banyan_improved_representation_learning_with_explicit_structure.md)
+- [Learnable Spatial-Temporal Positional Encoding for Link Prediction](../../ICML2025/graph_learning/learnable_spatial-temporal_positional_encoding_for_link_prediction.md)
+- [OCN: Effectively Utilizing Higher-Order Common Neighbors for Better Link Prediction](../../NeurIPS2025/graph_learning/ocn_effectively_utilizing_higher-order_common_neighbors_for_better_link_predicti.md)
+
+<!-- RELATED:END -->

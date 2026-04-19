@@ -141,3 +141,15 @@ MEMERAG 的构建流程：
 - **实验充分度**: ⭐⭐⭐ — 实验合理但规模偏小（250题/语言），评估模型覆盖有限
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，标注流程文档化程度高，附录完善
 - **价值**: ⭐⭐⭐⭐ — 填补了多语言 RAG 元评估的空白，标注方法论可广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gumbel Reranking: Differentiable End-to-End Reranker Optimization](gumbel_reranking.md)
+- [Multilingual Retrieval Augmented Generation for Culturally-Sensitive Tasks: A Benchmark for Cross-lingual Robustness](multilingual_retrieval_augmented_generation_for_culturally-sensitive_tasks_a_ben.md)
+- [HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation](hoh_a_dynamic_benchmark_for_evaluating_the_impact_of_outdated_information_on_ret.md)
+- [MT-RAIG: Novel Benchmark and Evaluation Framework for Retrieval-Augmented Insight Generation over Multiple Tables](mt-raig_novel_benchmark_and_evaluation_framework_for_retrieval-augmented_insight.md)
+- [Unanswerability Evaluation for Retrieval Augmented Generation](unanswerability_evaluation_for_retrieval_augmented_generation.md)
+
+<!-- RELATED:END -->

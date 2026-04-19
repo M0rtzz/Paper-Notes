@@ -154,3 +154,15 @@ $$\mathcal{G}_t^* = \arg\min_{\mathcal{G}} \sum_{k=t-W/2}^{t+W/2} w(k-t) \cdot \
 - 实验充分度：⭐⭐⭐⭐ — 用户研究 + 定量指标 + 消融完整，但数据集较小（56个案例）
 - 实用价值：⭐⭐⭐⭐⭐ — 直接可用于珠宝虚拟试戴/AR 场景，交互 GUI 提升体验
 - 写作质量：⭐⭐⭐⭐ — 管线叙述清晰，图示丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MonoMobility: Zero-Shot 3D Mobility Analysis from Monocular Videos](monomobility_zero-shot_3d_mobility_analysis_from_monocular_videos.md)
+- [TRACE: Learning 3D Gaussian Physical Dynamics from Multi-view Videos](trace_learning_3d_gaussian_physical_dynamics_from_multi-view_videos.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+- [How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach](how_far_are_ai-generated_videos_from_simulating_the_3d_visual_world_a_learned_3d.md)
+- [Generating 3D-Consistent Videos from Unposed Internet Photos](../../CVPR2025/3d_vision/generating_3d-consistent_videos_from_unposed_internet_photos.md)
+
+<!-- RELATED:END -->

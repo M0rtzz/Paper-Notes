@@ -140,3 +140,15 @@ BOLD是后处理方法，不涉及模型重训练。Weighted_BOLD的权重优化
 - 实验充分度: ⭐⭐⭐⭐⭐ 11种设定×3个模型×4个数据集，分析极为详尽
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富，数学公式化规范
 - 价值: ⭐⭐⭐⭐ 对MCQA评估的可靠性提出了重要质疑，去偏方法实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](../../ICLR2026/video_understanding/air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
+- [CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing](../../NeurIPS2025/video_understanding/cleverbirds_a_multiple-choice_benchmark_for_fine-grained_human_knowledge_tracing.md)
+- [EgoTextVQA: Towards Egocentric Scene-Text Aware Video Question Answering](../../CVPR2025/video_understanding/egotextvqa_towards_egocentric_scene-text_aware_video_question_answering.md)
+- [Bimba: Selective-Scan Compression for Long-Range Video Question Answering](../../CVPR2025/video_understanding/bimba_selective-scan_compression_for_long-range_video_question_answering.md)
+- [Tool-Augmented Spatiotemporal Reasoning for Streamlining Video Question Answering Task](../../NeurIPS2025/video_understanding/toolaugmented_spatiotemporal_reasoning_for_streamlining_vide.md)
+
+<!-- RELATED:END -->

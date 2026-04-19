@@ -155,3 +155,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+消融+计算开销对比完整，但定量评估仅在NVOS（8个前向场景）上进行较局限
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，从二值到场景分割的扩展自然，但部分内容有重复
 - 价值: ⭐⭐⭐⭐⭐ 50倍加速+全局最优+更少显存+更好质量，实用价值极高，对3D-GS分割任务是近乎终结性的工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3×2: 3D Object Part Segmentation by 2D Semantic Correspondences](3x2_3d_object_part_segmentation_by_2d_semantic_correspondenc.md)
+- [GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting](gaussianimage_1000_fps_image_representation_and_compression_by_2d_gaussian_splat.md)
+- [Click-Gaussian: Interactive Segmentation to Any 3D Gaussians](click-gaussian_interactive_segmentation_to_any_3d_gaussians.md)
+- [Surface Reconstruction from 3D Gaussian Splatting via Local Structural Hints](surface_reconstruction_from_3d_gaussian_splatting_via_local_structural_hints.md)
+- [DreamScene360: Unconstrained Text-to-3D Scene Generation with Panoramic Gaussian Splatting](dreamscene360_unconstrained_text-to-3d_scene_generation_with_panoramic_gaussian_.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ MPAIL 的规划 horizon 仅 3 米，但任务 horizon 可达规划 horizon 的 1
 - 实验充分度: ⭐⭐⭐⭐ 仿真导航 + 真实 RC 小车 + OOD 评估 + 效率对比 + Wall Clock Time，但缺乏更复杂任务
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰严谨，实验动机和结论之间的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 对安全关键系统的模仿学习有直接且实际的价值，开源实现降低了复现门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning](near-optimal_second-order_guarantees_for_model-based_adversarial_imitation_learn.md)
+- [On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
+- [Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
+- [One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
+- [Language Model Distillation: A Temporal Difference Imitation Learning Perspective](../../AAAI2026/reinforcement_learning/language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
+
+<!-- RELATED:END -->

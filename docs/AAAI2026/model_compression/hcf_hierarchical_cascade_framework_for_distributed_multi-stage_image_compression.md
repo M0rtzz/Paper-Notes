@@ -202,3 +202,15 @@ $$\eta^{\mathcal{M}}(\boldsymbol{\pi}) = \frac{1}{2}(RQS(\boldsymbol{\pi}, \bold
 - 实验充分度: ⭐⭐⭐⭐⭐ （5种架构、3种数据集、理论分析、消融实验、效率分析全面覆盖）
 - 写作质量: ⭐⭐⭐⭐ （框架描述清晰，但公式符号较多，阅读门槛稍高）
 - 价值: ⭐⭐⭐⭐⭐ （对6G边缘网络等分布式场景有直接工程价值，97.8%的计算节省非常实用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Pedagogical Oversight: A Multi-Agent Adversarial Framework for Reliable AI Tutoring](hierarchical_pedagogical_oversight_a_multi-agent_adversarial_framework_for_relia.md)
+- [Parallax to Align Them All: An OmniParallax Attention Mechanism for Distributed Multi-View Image Compression](../../CVPR2026/model_compression/parallax_to_align_them_all_an_omniparallax_attention_mechanism_for_distributed_m.md)
+- [Learned Image Compression with Hierarchical Progressive Context Modeling](../../ICCV2025/model_compression/learned_image_compression_with_hierarchical_progressive_context_modeling.md)
+- [DynaQuant: Dynamic Mixed-Precision Quantization for Learned Image Compression](dynaquant_dynamic_mixed-precision_quantization_for_learned_i.md)
+- [CAMERA: Multi-Matrix Joint Compression for MoE Models via Micro-Expert Redundancy Analysis](camera_multi-matrix_joint_compression_for_moe_models_via_mic.md)
+
+<!-- RELATED:END -->

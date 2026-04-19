@@ -128,3 +128,15 @@ $$d\nu_t = \alpha(\Psi_\sigma[\nu_t] - \nu_t)dt$$
 ⭐⭐⭐⭐ (4/5)
 
 理论工作完整而优美，将BR流理论从凸推广到非凸，给出了清晰的定量条件。在MDP和多智能体RL中的应用有明确意义。主要不足是离散化分析和大规模实验验证缺失，实用性有待进一步展示。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis](learning_in_stackelberg_mean_field_games_a_non-asymptotic_analysis.md)
+- [Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics](solving_continuous_mean_field_games_deep_reinforcement_learning_for_non-stationa.md)
+- [Last Iterate Convergence in Monotone Mean Field Games](last_iterate_convergence_in_monotone_mean_field_games.md)
+- [Scalable Neural Incentive Design with Parameterized Mean-Field Approximation](scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{PDE} + \lambda_2 \mathcal{L}_{ODE} + \lam
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多backbone/分辨率/数据集、组件消融、距离分段分析、PE 对比、注意力可视化，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 图示清晰（特别是 Fig.1 和 Fig.4 的 PE 对比），问题动机论述有说服力
 - **价值**: ⭐⭐⭐⭐ — nuScenes SOTA，设计理念对后续多视图检测工作有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FQ-PETR: Fully Quantized Position Embedding Transformation for Multi-View 3D Object Detection](../../AAAI2026/autonomous_driving/fq-petr_fully_quantized_position_embedding_transformation_fo.md)
+- [FSD-BEV: Foreground Self-Distillation for Multi-View 3D Object Detection](fsd-bev_foreground_self-distillation_for_multi-view_3d_object_detection.md)
+- [Weakly Supervised 3D Object Detection via Multi-Level Visual Guidance](weakly_supervised_3d_object_detection_via_multi-level_visual_guidance.md)
+- [GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
+- [CSOT: Cross-Scan Object Transfer for Semi-Supervised LiDAR Object Detection](csot_cross-scan_object_transfer_for_semi-supervised_lidar_object_detection.md)
+
+<!-- RELATED:END -->

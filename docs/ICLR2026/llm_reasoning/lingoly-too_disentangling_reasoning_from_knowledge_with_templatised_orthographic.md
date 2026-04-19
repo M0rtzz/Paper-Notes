@@ -131,3 +131,15 @@ GPT-5按难度（$M_{obf}$）：Breakthrough=0.81, Round 2=0.31
 - 实验充分度: ⭐⭐⭐⭐ 15模型+多维消融+人类RCT+未公开题验证
 - 写作质量: ⭐⭐⭐⭐ 结构严谨，分析全面
 - 价值: ⭐⭐⭐⭐⭐ 为LLM推理评测提供里程碑式的抗污染方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RPM-MCTS: Knowledge-Retrieval as Process Reward Model with Monte Carlo Tree Search for Code Generation](../../AAAI2026/llm_reasoning/rpm-mcts_knowledge-retrieval_as_process_reward_model_with_monte_carlo_tree_searc.md)
+- [RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+- [Nudging the Boundaries of LLM Reasoning](nudging_the_boundaries_of_llm_reasoning.md)
+- [Agentified Assessment of Logical Reasoning Agents](agentified_assessment_of_logical_reasoning_agents.md)
+
+<!-- RELATED:END -->

@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多captioner多策略充分对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、模块化好
 - 价值: ⭐⭐⭐⭐ 对具身场景下视觉理解有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Interpretable Image Classification Through LLM Agents and Conditional Concept Bottleneck Models](../../ACL2025/llm_agent/llm_agent_image_classification.md)
+- [PerTouch: VLM-Driven Agent for Personalized and Semantic Image Retouching](../../AAAI2026/llm_agent/pertouch_vlm-driven_agent_for_personalized_and_semantic_image_retouching.md)
+- [TANGO: Training-free Embodied AI Agents for Open-world Tasks](../../CVPR2025/llm_agent/tango_training-free_embodied_ai_agents_for_open-world_tasks.md)
+- [Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement](../../ACL2025/llm_agent/gödel_agent_a_self-referential_agent_framework_for_recursive_self-improvement.md)
+- [Agentic Knowledgeable Self-Awareness](../../ACL2025/llm_agent/agentic_knowledgeable_self-awareness.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ VRAG 检测 pipeline（如 Figure 2 所示）分四步：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、四种攻击、四种VLM、多种消融实验，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，算法描述详尽
 - 价值: ⭐⭐⭐⭐ 免训练范式实用性强，但workshop论文影响力有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeCon-RAG: A Two-Stage Semantic Filtering and Conflict-Free Framework for Trustworthy RAG](../../NeurIPS2025/information_retrieval/secon-rag_a_two-stage_semantic_filtering_and_conflict-free_framework_for_trustwo.md)
+- [VoxRAG: A Step Toward Transcription-Free RAG Systems in Spoken Question Answering](../../ACL2025/information_retrieval/voxrag_a_step_toward_transcription-free_rag_systems_in_spoken_question_answering.md)
+- [HiFi-RAG: Hierarchical Content Filtering and Two-Pass Generation for Open-Domain RAG](../../NeurIPS2025/information_retrieval/hifi-rag_hierarchical_content_filtering_and_two-pass_generation_for_open-domain_.md)
+- [RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering](../../NeurIPS2025/information_retrieval/rag-igbench_innovative_evaluation_for_rag-based_interleaved_generation_in_open-d.md)
+- [Investigating Language Preference of Multilingual RAG Systems](../../ACL2025/information_retrieval/investigating_language_preference_of_multilingual_rag_systems.md)
+
+<!-- RELATED:END -->

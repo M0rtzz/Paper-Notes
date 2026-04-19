@@ -158,3 +158,15 @@ $$L_{total} = L_{labels} + \alpha \cdot L_{content}$$
 - 实验充分度: ⭐⭐⭐⭐ (iHarmony4+ARCore+用户研究+边缘部署，但标准指标偏弱)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论分析完整，动机清晰，数据集贡献有价值)
 - 价值: ⭐⭐⭐⭐ (实际应用价值高，AR 场景需求明确)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](../../NeurIPS2025/model_compression/optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
+- [Cross-Domain Lossy Compression via Rate- and Classification-Constrained Optimal Transport](../../ICLR2026/model_compression/cross_domain_lossy_compression_optimal_transport.md)
+- [MEMO: Human-like Crisp Edge Detection Using Masked Edge Prediction](../../CVPR2026/model_compression/memo_human-like_crisp_edge_detection_using_masked_edge_prediction.md)
+- [SparseRM: A Lightweight Preference Modeling with Sparse Autoencoder](sparserm_a_lightweight_preference_modeling_with_sparse_autoencoder.md)
+- [Satisficing and Optimal Generalised Planning via Goal Regression (Extended Version)](satisficing_and_optimal_generalised_planning_via_goal_regression_extended_versio.md)
+
+<!-- RELATED:END -->

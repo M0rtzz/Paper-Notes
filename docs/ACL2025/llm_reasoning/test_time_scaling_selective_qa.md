@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 只在 AIME 上评估两个模型，但分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 可视化精美（3D surface），论述清晰
 - 价值: ⭐⭐⭐⭐ 对 test-time scaling 评估方法论有重要贡献，Jeopardy Odds 值得推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory](rethinking_the_role_of_prompting_strategies_in_llm_test-time_scaling_a_perspecti.md)
+- [Linguistic Generalizability of Test-Time Scaling in Mathematical Reasoning](mclm_multilingual_test_time_scaling.md)
+- [Revisiting the Test-Time Scaling of o1-like Models: Do they Truly Possess Test-Time Scaling Capabilities?](revisiting_the_test-time_scaling_of_o1-like_models_do_they_truly_possess_test-ti.md)
+- [Video-T1: Test-Time Scaling for Video Generation](../../ICCV2025/llm_reasoning/video-t1_test-time_scaling_for_video_generation.md)
+- [VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](../../CVPR2026/llm_reasoning/visref_visual_refocusing_while_thinking_improves_test-time_scaling_in_multi-moda.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 11 个基准、12 个模型、41K 题目，分析规模足够大
 - 写作质量: ⭐⭐⭐⭐ 理论与实证结合良好，可视化清晰展示了题目质量问题
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 评估方法论有重要基础贡献，揭示了现有基准中普遍存在的低质量题目
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Reliable is Language Model Micro-Benchmarking?](../../ICLR2026/llm_evaluation/how_reliable_is_language_model_micro-benchmarking.md)
+- [Bayesian Evaluation of Large Language Model Behavior](../../NeurIPS2025/llm_evaluation/bayesian_evaluation_of_large_language_model_behavior.md)
+- [PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory](../../ACL2025/llm_evaluation/papersplease_a_benchmark_for_evaluating_motivational_values_of_large_language_mo.md)
+- [ConInstruct: Evaluating Large Language Models on Conflict Detection and Resolution in Instructions](coninstruct_evaluating_large_language_models_on_conflict_detection_and_resolutio.md)
+- [NeSTR: A Neuro-Symbolic Abductive Framework for Temporal Reasoning in Large Language Models](nestr_a_neuro-symbolic_abductive_framework_for_temporal_reasoning_in_large_langu.md)
+
+<!-- RELATED:END -->

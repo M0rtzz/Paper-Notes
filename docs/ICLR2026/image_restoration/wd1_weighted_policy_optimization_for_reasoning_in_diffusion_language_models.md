@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多 benchmark 验证 + 消融 + 计算成本分析，但仅一个 base model
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但论文较密集
 - 价值: ⭐⭐⭐⭐⭐ 解决了 dLLM RL 的核心技术瓶颈，SOTA 性能 + 显著计算节省
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](../../NeurIPS2025/image_restoration/mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
+- [Horizon Imagination: Efficient On-Policy Rollout in Diffusion World Models](horizon_imagination_efficient_on-policy_rollout_in_diffusion_world_models.md)
+- [Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
+- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+- [AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
+
+<!-- RELATED:END -->

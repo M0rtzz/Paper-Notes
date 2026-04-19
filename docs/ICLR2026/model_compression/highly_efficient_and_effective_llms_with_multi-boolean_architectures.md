@@ -162,3 +162,15 @@ $$\mathcal{L} = -\sum_{t} \log P(x_t | x_{<t}; \{B_k, \alpha_k\})$$
 - 实验充分度: ⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnyBCQ: Hardware Efficient Flexible Binary-Coded Quantization for Multi-Precision LLMs](anybcq_hardware_efficient_flexible_binary-coded_quantization_for_multi-precision.md)
+- [Don't Start Over: A Cost-Effective Framework for Migrating Personalized Prompts Between LLMs](../../AAAI2026/model_compression/dont_start_over_a_cost-effective_framework_for_migrating_personalized_prompts_be.md)
+- [Obscure but Effective: Classical Chinese Jailbreak Prompt Optimization via Bio-Inspired Search](obscure_but_effective_classical_chinese_jailbreak_prompt_optimization_via_bio-in.md)
+- [Draft-based Approximate Inference for LLMs](draft-based_approximate_inference_for_llms.md)
+- [Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
+
+<!-- RELATED:END -->

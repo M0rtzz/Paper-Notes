@@ -120,3 +120,15 @@ EmoVerse 的构建包括四个阶段：(1) 数据收集与清洗；(2) B-A-S 三
 - 实验充分度: ⭐⭐⭐ 缺少跨数据集泛化实验和更大模型验证
 - 写作质量: ⭐⭐⭐⭐ 数据集构建流程描述详尽，pipeline 各环节动机清晰
 - 价值: ⭐⭐⭐⭐ 填补了可解释视觉情感分析数据集的空白，B-A-S 标注体系和验证 pipeline 可复用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TDATR: Improving End-to-End Table Recognition via Table Detail-Aware Learning and Cell-Level Visual Alignment](tdatr_improving_end-to-end_table_recognition_via_table_detail-aware_learning_and.md)
+- [Towards Faithful Multimodal Concept Bottleneck Models](towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Text-guided Fine-Grained Video Anomaly Understanding](text-guided_fine-grained_video_anomaly_understanding.md)
+- [DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
+- [FINER: MLLMs Hallucinate under Fine-grained Negative Queries](finer_mllms_hallucinate_under_fine-grained_negative_queries.md)
+
+<!-- RELATED:END -->

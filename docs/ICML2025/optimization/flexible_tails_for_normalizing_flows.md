@@ -193,3 +193,15 @@ $$\mathcal{J}_{\text{VI}}(\theta) = \mathbb{E}_{x \sim q_x}[\log \tilde{p}(x) - 
 | 实用性 | ⭐⭐⭐⭐ | 实现简单（erfc 特殊函数），可直接插入现有 NF 架构 |
 | 写作质量 | ⭐⭐⭐⭐⭐ | 动机清晰，理论-实验逻辑链完整，图 1 直观展示核心思想 |
 | **综合** | **⭐⭐⭐⭐☆** | 解决了 NF 领域一个重要且长期存在的问题，方法简洁有效 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adjustment for Confounding using Pre-Trained Representations](adjustment_for_confounding_using_pre-trained_representations.md)
+- [Nearly Optimal Sample Complexity for Learning with Label Proportions](nearly_optimal_sample_complexity_for_learning_with_label_proportions.md)
+- [GCAL: Adapting Graph Models to Evolving Domain Shifts](gcal_adapting_graph_models_to_evolving_domain_shifts.md)
+- [Autoformulation of Mathematical Optimization Models Using LLMs](autoformulation_of_mathematical_optimization_models_using_llms.md)
+- [Optimization over Sparse Support-Preserving Sets: Two-Step Projection with Global Optimality Guarantees](optimization_over_sparse_support-preserving_sets_two-step_projection_with_global.md)
+
+<!-- RELATED:END -->

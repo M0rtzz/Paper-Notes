@@ -157,3 +157,15 @@ Lyra 无 RAG baseline = 2.83，RAG 未带来提升。
 - **实验充分度**: ⭐⭐⭐⭐ (四个模型+RAG分析+注意力可视化+多角度消融)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰, 分析深入, 发现有洞察力)
 - **价值**: ⭐⭐⭐⭐⭐ (揭示了开源语音模型的关键短板, 对社区发展有指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling an End-to-End Voice Assistant Without Instruction Training Data](distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
+- [Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots](aae_voice_chatbot.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+- [OmniFlatten: An End-to-end GPT Model for Seamless Voice Conversation](omniflatten_an_end-to-end_gpt_model_for_seamless_voice_conversation.md)
+- [TCSinger 2: Customizable Multilingual Zero-shot Singing Voice Synthesis](tcsinger_2_customizable_multilingual_zero-shot_singing_voice_synthesis.md)
+
+<!-- RELATED:END -->

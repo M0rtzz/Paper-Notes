@@ -164,3 +164,15 @@ GRAM 在所有城市全面领先，特别是在 Dar es Salaam 提升最为显著
 - 实验充分度: ⭐⭐⭐⭐ — 大规模数据集,多基线对比,消融充分,时序追踪展示
 - 写作质量: ⭐⭐⭐⭐ — 方法动机清晰，地理可视化直观
 - 价值: ⭐⭐⭐⭐⭐ — 开源数据集+代码，实际社会影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation](../../CVPR2026/segmentation/spatio-semantic_expert_routing_architecture_with_mixture-of-experts_for_referrin.md)
+- [Harnessing Massive Satellite Imagery with Efficient Masked Image Modeling](../../ICCV2025/segmentation/harnessing_massive_satellite_imagery_with_efficient_masked_image_modeling.md)
+- [Alberta Wells Dataset: Pinpointing Oil and Gas Wells from Satellite Imagery](../../ICML2025/segmentation/alberta_wells_dataset_pinpointing_oil_and_gas_wells_from_satellite_imagery.md)
+- [Using Multiple Input Modalities Can Improve Data-Efficiency and O.O.D. Generalization for ML with Satellite Imagery](../../ICML2025/segmentation/using_multiple_input_modalities_can_improve_data-efficiency_and_ood_generalizati.md)
+- [Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](../../CVPR2026/segmentation/generalizable_knowledge_distillation_from_vision_foundation_models_for_semantic_.md)
+
+<!-- RELATED:END -->

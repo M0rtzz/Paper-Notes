@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 在标准数据集上有对比和消融实验，但数据集覆盖有限
 - 写作质量: ⭐⭐⭐ 问题定义清晰，方法描述完整
 - 价值: ⭐⭐⭐ 作为即插即用模块有一定实用价值，但影响范围较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UPose3D: Uncertainty-Aware 3D Human Pose Estimation with Cross-View and Temporal Cues](upose3d_uncertainty-aware_3d_human_pose_estimation_with_cross-view_and_temporal_.md)
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+- [Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
+- [RePOSE: 3D Human Pose Estimation via Spatio-Temporal Depth Relational Consistency](repose_3d_human_pose_estimation_via_spatio-temporal_depth_relational_consistency.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+
+<!-- RELATED:END -->

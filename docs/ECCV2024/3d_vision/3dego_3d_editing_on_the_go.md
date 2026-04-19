@@ -105,3 +105,15 @@ $$\mathcal{L}_T = \lambda_{rgb}\mathcal{L}_{rgb} + \lambda_{KEA}\mathcal{L}_{KEA
 - 实验充分度: ⭐⭐⭐⭐ 6个数据集200次编辑，对比充分；但缺乏用户打分和perceptual评估
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述有条理，图表展示直观
 - 价值: ⭐⭐⭐⭐ 显著降低3D编辑门槛，对实际应用有较高价值；但受限于IP2P编辑质量上限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [DATENeRF: Depth-Aware Text-based Editing of NeRFs](datenerf_depth-aware_text-based_editing_of_nerfs.md)
+- [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
+- [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](../../CVPR2025/3d_vision/go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
+- [3D Mesh Editing using Masked LRMs](../../ICCV2025/3d_vision/3d_mesh_editing_using_masked_lrms.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ DynaVid 是一个两阶段视频生成框架。第一阶段，**运动生成器*
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融全面，覆盖动态运动和相机控制两个场景，噪声鲁棒性也有验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机阐述到位
 - 价值: ⭐⭐⭐⭐ 提供了一种利用合成数据增强视频生成能力的通用框架思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond the Golden Data: Resolving the Motion-Vision Quality Dilemma via Timestep Selective Training](beyond_the_golden_data_resolving_the_motion-vision_quality_dilemma_via_timestep_.md)
+- [Learning to Generate via Understanding: Understanding-Driven Intrinsic Rewarding for Unified Multimodal Models](learning_to_generate_via_understanding_understanding-driven_intrinsic_rewarding_.md)
+- [BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation](bimotion_b-spline_motion_for_text-guided_dynamic_3d_character_generation.md)
+- [OSMGen: Highly Controllable Satellite Image Synthesis using OpenStreetMap Data](../../NeurIPS2025/image_generation/osmgen_highly_controllable_satellite_image_synthesis_using_openstreetmap_data.md)
+- [Backdoors in Conditional Diffusion: Threats to Responsible Synthetic Data Pipelines](../../AAAI2026/image_generation/backdoors_in_conditional_diffusion_threats_to_responsible_synthetic_data_pipelin.md)
+
+<!-- RELATED:END -->

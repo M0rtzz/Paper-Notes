@@ -126,3 +126,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 首个面向专业设计的系统性基准，任务设计精心、评估体系合理，对领域发展具有重要指导意义；但部分任务对现有模型难度过高，导致评分缺乏区分度。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoPresent: Designing Structured Visuals from Scratch](autopresent_designing_structured_visuals_from_scratch.md)
+- [Image Generation Diversity Issues and How to Tame Them](image_generation_diversity_issues_and_how_to_tame_them.md)
+- [Blueprint-Bench: Comparing Spatial Intelligence of LLMs, Agents and Image Models](../../ICLR2026/image_generation/blueprint-bench_comparing_spatial_intelligence_of_llms_agents_and_image_models.md)
+- [Goku: Flow Based Video Generative Foundation Models](goku_flow_based_video_generative_foundation_models.md)
+- [Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
+
+<!-- RELATED:END -->

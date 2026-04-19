@@ -121,3 +121,15 @@ $$\mathcal{L} = (1-\lambda)\mathcal{L}_1(I, I^*) + \lambda\mathcal{L}_{D\text{-}
 - 实验充分度: ⭐⭐⭐⭐ LLFF和Mip-NeRF 360多设置评估，消融完整，与多个baseline对比
 - 写作质量: ⭐⭐⭐⭐ 符号定义严谨，方法描述系统化，图例清晰
 - 价值: ⭐⭐⭐⭐ 实用的即插即用模块，对稀疏视角合成有持续性的贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DropGaussian: Structural Regularization for Sparse-view Gaussian Splatting](dropgaussian_structural_regularization_for_sparse-view_gaussian_splatting.md)
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](../../ICCV2025/3d_vision/self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+- [High Dynamic Range Novel View Synthesis with Single Exposure](../../ICML2025/3d_vision/high_dynamic_range_novel_view_synthesis_with_single_exposure.md)
+- [CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians](../../ECCV2024/3d_vision/coherentgs_sparse_novel_view_synthesis_with_coherent_3d_gaussians.md)
+- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](../../CVPR2026/3d_vision/physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
+
+<!-- RELATED:END -->

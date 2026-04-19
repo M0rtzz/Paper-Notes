@@ -157,3 +157,15 @@ $$\mathcal{L}^{\text{div}}_{\text{FM}} = \mathbb{E}_{\underline{s}} \sum_{t=1}^\
 - 实验充分度: ⭐⭐⭐ — 仅低维实验，缺少高维和主流 benchmark
 - 写作质量: ⭐⭐⭐⭐ — 理论严谨、结构清晰，但数学予以较重
 - 价值: ⭐⭐⭐⭐ — 理论贡献重大，实用性待高维验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Value Flows](../../ICLR2026/reinforcement_learning/value_flows.md)
+- [A Theory of Multi-Agent Generative Flow Networks](../../NeurIPS2025/reinforcement_learning/a_theory_of_multi-agent_generative_flow_networks.md)
+- [ReFORM: Reflected Flows for On-support Offline RL via Noise Manipulation](../../ICLR2026/reinforcement_learning/reform_reflected_flows_for_on-support_offline_rl_via_noise_manipulation.md)
+- [Offline Reinforcement Learning with Generative Trajectory Policies](../../ICLR2026/reinforcement_learning/offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [One-Step Generative Policies with Q-Learning: A Reformulation of MeanFlow](../../AAAI2026/reinforcement_learning/one-step_generative_policies_with_q-learning_a_reformulation_of_meanflow.md)
+
+<!-- RELATED:END -->

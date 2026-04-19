@@ -154,3 +154,15 @@ PASG 包含四个核心阶段：
 - **实验充分度**: ⭐⭐⭐⭐ — 操作任务评估、VQA 基准、数据效率实验、人工验证均有覆盖，但缺乏真实机器人实验
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，方法细节充分，比较表格（Table 1）直观展示了与现有方法的差异
 - **价值**: ⭐⭐⭐⭐ — 为机器人操作中的语义-几何桥接提供了实用且可扩展的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RADAR: Closed-Loop Robotic Data Generation via Semantic Planning and Autonomous Causal Environment Reset](../../CVPR2026/object_detection/radar_closed-loop_robotic_data_generation_via_semantic_planning_and_autonomous_c.md)
+- [SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](../../AAAI2026/object_detection/semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
+- [Automated Model Evaluation for Object Detection via Prediction Consistency and Reliability](automated_model_evaluation_for_object_detection_via_prediction_consistency_and_r.md)
+- [H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation](../../AAAI2026/object_detection/h-gar_a_hierarchical_interaction_framework_via_goal-driven_observation-action_re.md)
+- [Semantic Discrepancy-aware Detector for Image Forgery Identification](semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
+
+<!-- RELATED:END -->

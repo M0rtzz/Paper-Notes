@@ -190,3 +190,15 @@ $$y_{it} = \beta \cdot PostLLM_t + \gamma \cdot len_{it} + \delta_c + \alpha_i +
 - **实验充分度**: ⭐⭐⭐⭐ — 大规模语料、多种统计控制、聚类鲁棒性验证充分；但缺少人类验证和多语言实验
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，叙事逻辑通顺，从宏观到微观层层递进
 - **价值**: ⭐⭐⭐⭐ — 对 AI 时代创作研究、AI 检测、人机交互均有重要启示；但实际应用路径尚需探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Enhanced Immersion and Agency for LLM-based Interactive Drama](../../ACL2025/llm_nlp/towards_enhanced_immersion_and_agency_for_llm-based_interactive_drama.md)
+- [EscapeBench: Towards Advancing Creative Intelligence of Language Model Agents](../../ACL2025/llm_nlp/escapebench_creative_agent.md)
+- [Mapping 1,000+ Language Models via the Log-Likelihood Vector](../../ACL2025/llm_nlp/mapping_1000_models_loglikelihood.md)
+- [LLMs can Perform Multi-Dimensional Analytic Writing Assessments](../../ACL2025/llm_nlp/llm_writing_assessment.md)
+- [On the Risk of Evidence Pollution for Malicious Social Text Detection in the Era of LLMs](../../ACL2025/llm_nlp/on_the_risk_of_evidence_pollution_for_malicious_social_text_detection_in_the_era.md)
+
+<!-- RELATED:END -->

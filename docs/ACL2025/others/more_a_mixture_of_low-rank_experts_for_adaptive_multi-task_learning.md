@@ -154,3 +154,15 @@ LLaMA2-7B 上：
 - **实验充分度**: ⭐⭐⭐⭐ — GLUE、常识推理、Few-shot 迁移、消融实验全面，两个骨干模型验证
 - **写作质量**: ⭐⭐⭐⭐ — 动机用 Table 1 直观展示不同任务需要不同秩，方法描述清晰
 - **价值**: ⭐⭐⭐⭐ — 实用性强，推理零额外开销，代码已开源，可直接用于多任务微调场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)
+- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+- [Dropout Mixture Low-Rank Adaptation for Visual Parameters-Efficient Fine-Tuning](../../ECCV2024/others/dropout_mixture_low-rank_adaptation_for_visual_parameters-efficient_fine-tuning.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)
+- [Decoding Knowledge Attribution in Mixture-of-Experts: A Framework of Basic-Refinement Collaboration and Efficiency Analysis](decoding_knowledge_attribution_in_mixture-of-experts_a_framework_of_basic-refine.md)
+
+<!-- RELATED:END -->

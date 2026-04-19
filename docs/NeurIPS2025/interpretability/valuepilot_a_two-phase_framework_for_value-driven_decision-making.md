@@ -179,3 +179,15 @@ DMM 在 OS-Sim 上超过 GPT-5 约 3.93%，First-Action Accuracy 超过 8.13%。
 - 实验充分度: ⭐⭐⭐ — 价值识别和人类对齐两个维度的评估合理，但人类研究规模较小
 - 写作质量: ⭐⭐⭐⭐ — 框架描述清晰，公式推导完整，动机论述充分
 - 价值: ⭐⭐⭐⭐ — 为 AI 个性化对齐提供了超越 RLHF 的新路径，方法可扩展性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empowering Decision Trees via Shape Function Branching](empowering_decision_trees_via_shape_function_branching.md)
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Steering Information Utility in Key-Value Memory for Language Model Post-Training](steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)
+- [Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences](deep_value_benchmark_measuring_whether_models_generalize_deep_values_or_shallow_.md)
+- [Leveraging Predictive Equivalence in Decision Trees](../../ICML2025/interpretability/leveraging_predictive_equivalence_in_decision_trees.md)
+
+<!-- RELATED:END -->

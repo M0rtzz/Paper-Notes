@@ -124,3 +124,15 @@ Open-Sora上平均提升0.202（GPT-4o仅-0.037），CogVideoX上提升0.067。
 - 新颖性：★★★★☆ — 首个面向视频扩散模型的提示词优化系统
 - 技术深度：★★★★☆ — 多阶段优化设计精巧
 - 实用性：★★★★★ — 直接提升用户视频生成体验
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [V.I.P.: Iterative Online Preference Distillation for Efficient Video Diffusion Models](vip_iterative_online_preference_distillation_for_efficient_video_diffusion_model.md)
+- [LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)
+- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+- [DIVE: Taming DINO for Subject-Driven Video Editing](dive_taming_dino_for_subject-driven_video_editing.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](../../CVPR2026/video_generation/when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+
+<!-- RELATED:END -->

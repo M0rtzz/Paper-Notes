@@ -122,3 +122,15 @@ VF-Eval是评估基准，不涉及模型训练。评估指标：CV和RE用LLM（
 - 实验充分度: ⭐⭐⭐⭐ 13个模型+人类基准+RePrompt验证
 - 写作质量: ⭐⭐⭐ 结构清晰但细节可以更简洁
 - 价值: ⭐⭐⭐⭐ 对AIGC视频质量评估和视频生成改进有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MME-VideoOCR: Evaluating OCR-Based Capabilities of Multimodal LLMs in Video Scenarios](../../NeurIPS2025/multimodal_vlm/mme-videoocr_evaluating_ocr-based_capabilities_of_multimodal_llms_in_video_scena.md)
+- [MMSafeAware: Can't See the Forest for the Trees: Benchmarking Multimodal Safety Awareness for Multimodal LLMs](cant_see_the_forest_for_the.md)
+- [Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback](improving_medical_large_vision-language_models_with_abnormal-aware_feedback.md)
+- [Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](unsolvable_problem_detection.md)
+- [SciVer: Evaluating Foundation Models for Multimodal Scientific Claim Verification](sciver_evaluating_foundation_models_for_multimodal_scientific_claim_verification.md)
+
+<!-- RELATED:END -->

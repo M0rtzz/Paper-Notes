@@ -208,3 +208,15 @@ RepoCod 有超过一半的任务需要仓库级上下文——远超其他基准
 ## 评分 ⭐⭐⭐⭐
 
 构建了目前最具挑战性和最贴近真实世界的代码生成基准，设计理念清晰，统计指标全面碾压现有基准。揭示了 LLM 在真实编码任务上的巨大差距（~90% vs ~28%），对社区有重要的校准价值。测试收集流程的自动化设计值得借鉴。不足之处在于仅覆盖11个Python项目，模型评估数量有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Meets Scene Graph: Can Large Language Models Understand and Generate Scene Graphs?](llm_meets_scene_graph_can_large_language_models_understand_and_generate_scene_gr.md)
+- [Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [Can Language Models Reason about Individualistic Human Values and Preferences?](can_language_models_reason_about_individualistic_human_values_and_preferences.md)
+- [To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization](to_code_or_not_to_code_adaptive_tool_integration_for_math_language_models_via_ex.md)
+- [Can Large Language Models Address Open-Target Stance Detection?](can_large_language_models_address_open-target_stance_detection.md)
+
+<!-- RELATED:END -->

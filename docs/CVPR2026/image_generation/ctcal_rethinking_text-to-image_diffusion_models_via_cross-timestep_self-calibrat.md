@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个 benchmark+SD 2.1 和 SD 3+用户研究+完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ 观察→设计→验证的逻辑链清晰
 - 价值: ⭐⭐⭐⭐⭐ 对文本到图像生成的文本-图像对齐有实质提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers](../../ICCV2025/image_generation/rethinking_cross-modal_interaction_in_multimodal_diffusion_transformers.md)
+- [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+- [Erasure or Erosion? Evaluating Compositional Degradation in Unlearned Text-To-Image Diffusion Models](erasure_or_erosion_evaluating_compositional_degradation_in_unlearned_text-to-ima.md)
+- [SOLACE: Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](solace_self_confidence_rewards_t2i.md)
+
+<!-- RELATED:END -->

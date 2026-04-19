@@ -168,3 +168,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 模拟污染+真实模型评估，但 benchmark 类型有限
 - 写作质量: ⭐⭐⭐⭐ — 框架图清晰，数学形式化严谨
 - 价值: ⭐⭐⭐⭐⭐ — 对 LLM 评估公正性有重要贡献，方法实用且可扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations](expert_an_explainable_image_captioning_evaluation_metric_with_structured_explana.md)
+- [Rectifying Shortcut Behaviors in Preference-based Reward Learning](../../NeurIPS2025/interpretability/rectifying_shortcut_behaviors_in_preference-based_reward_learning.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](../../AAAI2026/interpretability/probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
+- [Evaluating Neuron Explanations: A Unified Framework with Sanity Checks](../../ICML2025/interpretability/evaluating_neuron_explanations_a_unified_framework_with_sanity_checks.md)
+- [CLEME2.0: Towards Interpretable Evaluation by Disentangling Edits for Grammatical Error Correction](cleme2_gec_evaluation.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ MARS在所有环境中实现**零约束违反**，是唯一做到这点的PPO-ba
 - 实验充分度: ⭐⭐⭐⭐ (导航+速度场景验证，收敛曲线详尽)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论展开清晰，Table 1的formulation对比一目了然)
 - 价值: ⭐⭐⭐⭐ (理论与实践兼具，模块化设计实用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Risk-Averse Total-Reward Reinforcement Learning](risk-averse_total-reward_reinforcement_learning.md)
+- [Automaton Constrained Q-Learning](automaton_constrained_q-learning.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Controlling Underestimation Bias in Constrained Reinforcement Learning for Safe Exploration](../../ICML2025/reinforcement_learning/controlling_underestimation_bias_in_constrained_reinforcement_learning_for_safe_.md)
+- [Global Convergence for Average Reward Constrained MDPs with Primal-Dual Actor-Critic](global_convergence_for_average_reward_constrained_mdps_with_primal-dual_actor_cr.md)
+
+<!-- RELATED:END -->

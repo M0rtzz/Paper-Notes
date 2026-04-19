@@ -152,3 +152,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多种水印方法、可见/隐形版权、伪造/模糊攻击、真实版权图像
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，攻击类型定义严谨，但部分符号和术语偏多
 - 价值: ⭐⭐⭐⭐⭐ 揭示了紧迫的AI安全威胁，对版权保护社区具有警示意义和防御研究的基准价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffDoctor: Diagnosing Image Diffusion Models Before Treating](diffdoctor_diagnosing_image_diffusion_models_before_treating.md)
+- [Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention](../../CVPR2025/object_detection/efficient_event-based_object_detection_a_hybrid_neural_network_with_spatial_and_.md)
+- [Can OOD Object Detectors Learn from Foundation Models?](../../ECCV2024/object_detection/can_ood_object_detectors_learn_from_foundation_models.md)
+- [Diffusion Curriculum: Synthetic-to-Real Data Curriculum via Image-Guided Diffusion](diffusion_curriculum_synthetic-to-real_data_curriculum_via_image-guided_diffusio.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](../../CVPR2025/object_detection/generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+
+<!-- RELATED:END -->

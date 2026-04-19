@@ -123,3 +123,15 @@ Pipeline：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、六种CL方法、多种计算预算的全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ 分析深入、逻辑清晰、表格丰富
 - 价值: ⭐⭐⭐⭐⭐ 同时提升效率和性能，实用价值突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking the Power of Rehearsal in Continual Learning: A Theoretical Perspective](unlocking_the_power_of_rehearsal_in_continual_learning_a_theoretical_perspective.md)
+- [BECAME: BayEsian Continual Learning with Adaptive Model MErging](became_bayesian_continual_learning_with_adaptive_model_merging.md)
+- [Finding Structure in Continual Learning](../../NeurIPS2025/llm_safety/finding_structure_in_continual_learning.md)
+- [Cut out and Replay: A Simple yet Versatile Strategy for Multi-Label Online Continual Learning](cut_out_and_replay_a_simple_yet_versatile_strategy_for_multi-label_online_contin.md)
+- [Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](../../ACL2025/llm_safety/learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)
+
+<!-- RELATED:END -->

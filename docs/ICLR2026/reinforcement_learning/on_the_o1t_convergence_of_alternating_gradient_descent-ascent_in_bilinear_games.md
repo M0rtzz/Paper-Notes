@@ -116,3 +116,15 @@ AltGDA算法：$\mathbf{x}^{t+1} = \Pi_\mathcal{X}(\mathbf{x}^t - \eta A^\top \m
 - 实验充分度: ⭐⭐⭐⭐ 多种分布+多种规模的矩阵博弈+PEP数值验证，但缺少大规模博弈应用
 - 写作质量: ⭐⭐⭐⭐⭐ 物理直觉→数学证明→数值验证的三重论证极具说服力
 - 价值: ⭐⭐⭐⭐⭐ 回答了博弈论/优化社区的长期开放问题，对大规模博弈求解有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Last Iterate Convergence in Monotone Mean Field Games](../../NeurIPS2025/reinforcement_learning/last_iterate_convergence_in_monotone_mean_field_games.md)
+- [Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning](rethinking_policy_diversity_in_ensemble_policy_gradient_in_large-scale_reinforce.md)
+- [Learning to Play Multi-Follower Bayesian Stackelberg Games](learning_to_play_multi-follower_bayesian_stackelberg_games.md)
+- [Nearly-Optimal Bandit Learning in Stackelberg Games with Side Information](nearly-optimal_bandit_learning_in_stackelberg_games_with_side_information.md)
+- [Solving Football by Exploiting Equilibrium Structure of 2p0s Differential Games with One-Sided Information](solving_football_by_exploiting_equilibrium_structure_of_2p0s_differential_games_.md)
+
+<!-- RELATED:END -->

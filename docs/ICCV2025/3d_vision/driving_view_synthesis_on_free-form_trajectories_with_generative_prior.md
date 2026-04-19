@@ -176,3 +176,15 @@ K=3000在质量和效率间取得良好平衡。
 - 技术深度：⭐⭐⭐⭐ — 各组件设计有深度，但扩散模型本身是微调现有模型
 - 实验充分度：⭐⭐⭐⭐ — Waymo上充分验证，缺少nuScenes等其他数据集
 - 实用价值：⭐⭐⭐⭐⭐ — 直接提升驾驶仿真质量，推理不增加开销
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GAS: Generative Avatar Synthesis from a Single Image](gas_generative_avatar_synthesis_from_a_single_image.md)
+- [MoGA: 3D Generative Avatar Prior for Monocular Gaussian Avatar Reconstruction](moga_3d_generative_avatar_prior_for_monocular_gaussian_avatar_reconstruction.md)
+- [Decompositional Neural Scene Reconstruction with Generative Diffusion Prior](../../CVPR2025/3d_vision/decompositional_neural_scene_reconstruction_with_generative_diffusion_prior.md)
+- [RayZer: A Self-supervised Large View Synthesis Model](rayzer_a_self-supervised_large_view_synthesis_model.md)
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](../../ECCV2024/3d_vision/generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+
+<!-- RELATED:END -->

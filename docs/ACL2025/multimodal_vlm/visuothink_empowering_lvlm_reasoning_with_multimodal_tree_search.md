@@ -130,3 +130,15 @@ VisuoThink是一个推理时框架，**不需要任何微调**。直接使用现
 - **实验充分性**: 8/10 — 多模型多任务评估，消融分析深入
 - **写作质量**: 8/10 — 结构清晰，可视化效果好
 - **应用价值**: 7/10 — 计算成本限制了直接应用，但思路有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search](mcts_video_captioning_eval.md)
+- [VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism](vrest_tree_search_vlm_reasoning.md)
+- [Re-ranking Reasoning Context with Tree Search Makes Large Vision-Language Models Stronger](../../ICML2025/multimodal_vlm/re-ranking_reasoning_context_with_tree_search_makes_large_vision-language_models.md)
+- [Progressive Multimodal Reasoning via Active Retrieval](progressive_multimodal_reasoning_via_active_retrieval.md)
+- [Unveiling the Lack of LVLM Robustness to Fundamental Visual Variations: Why and Path Forward](unveiling_the_lack_of_lvlm_robustness_to_fundamental_visual_variations_why_and_p.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种子、多视角分析、Grad-CAM/UMAP 解释性分析完整
 - 写作质量: ⭐⭐⭐⭐ Workshop paper 但方法和结论清晰
 - 价值: ⭐⭐⭐ 对天文学领域有实际意义，但方法层面创新有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](../../ICML2025/physics/rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
+- [Transfer Learning Beyond the Standard Model](transfer_learning_beyond_the_standard_model.md)
+- [Latent Representation Learning in Heavy-Ion Collisions with MaskPoint Transformer](latent_representation_learning_in_heavy-ion_collisions_with_maskpoint_transforme.md)
+- [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+
+<!-- RELATED:END -->

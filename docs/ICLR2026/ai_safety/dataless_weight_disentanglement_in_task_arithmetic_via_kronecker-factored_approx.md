@@ -127,3 +127,15 @@ TAK 在无需外部数据的条件下达到或超过使用数据的 $\tau$Jp 方
 - 在文本领域（T5-base）与使用数据的 $\tau$Jp 仍有差距
 - 理论分析基于线性化假设，虽然非线性实验也有效但缺乏严格保证
 - 未探索参数高效微调（如 LoRA）场景下的适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Enhancing Representation Learning in Federated Multi-Task Settings](toward_enhancing_representation_learning_in_federated_multi-task_settings.md)
+- [NoT: Federated Unlearning via Weight Negation](../../CVPR2025/ai_safety/not_federated_unlearning_via_weight_negation.md)
+- [Reconstruction and Secrecy under Approximate Distance Queries](../../NeurIPS2025/ai_safety/reconstruction_and_secrecy_under_approximate_distance_queries.md)
+- [TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs](../../ACL2025/ai_safety/tip_iceberg_adversarial_attacks.md)
+- [Dynamic Integration of Task-Specific Adapters for Class Incremental Learning](../../CVPR2025/ai_safety/dynamic_integration_of_task-specific_adapters_for_class_incremental_learning.md)
+
+<!-- RELATED:END -->

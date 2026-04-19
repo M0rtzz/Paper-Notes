@@ -139,3 +139,15 @@ $$\mathcal{L}_{\text{equiv}}^{i,j} = -\log \frac{\exp(s(z_{ij}, z'_{ij}))}{\exp(
 - 实验充分度: ⭐⭐⭐⭐⭐ 严格的匹配 view 对比、多 SSL 基线、多数据集、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，实验设计缜密，符号使用规范
 - 价值: ⭐⭐⭐⭐ 层解耦作为通用设计原则有推广价值，但绝对提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization](../../ECCV2024/human_understanding/pose-aware_self-supervised_learning_with_viewpoint_trajectory_regularization.md)
+- [Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs](supervised_metric_regularization_through_alternating_optimization_for_multi-regi.md)
+- [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
+- [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](../../ECCV2024/human_understanding/videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
+- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](../../ECCV2024/human_understanding/self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
+
+<!-- RELATED:END -->

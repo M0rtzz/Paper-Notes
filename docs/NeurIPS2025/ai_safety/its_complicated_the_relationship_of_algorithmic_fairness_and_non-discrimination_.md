@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 法律文本分析细致，但缺乏实证验证和技术实验
 - 写作质量: ⭐⭐⭐⭐ 跨学科写作清晰，术语使用精准，结构逻辑严密
 - 价值: ⭐⭐⭐⭐ 对AI法规合规实践和标准化进程具有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Proportional Fairness in Centroid and Non-Centroid Clustering](unifying_proportional_fairness_in_centroid_and_non-centroid_clustering.md)
+- [Collective Narrative Grounding: Community-Coordinated Data Contributions to Improve Local AI Systems](collective_narrative_grounding_community-coordinated_data_contributions_to_impro.md)
+- [Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs](../../ACL2025/ai_safety/fairness_difference_awareness.md)
+- [Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification](keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)
+- [Fairness under Competition](fairness_under_competition.md)
+
+<!-- RELATED:END -->

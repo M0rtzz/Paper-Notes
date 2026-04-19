@@ -194,3 +194,15 @@ MoE-Gyro包含三个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐⭐ （全面消融、跨设备泛化、实时性能、真实场景验证）
 - **写作质量**: ⭐⭐⭐⭐ （结构清晰，算法描述详细）
 - **价值**: ⭐⭐⭐⭐ （解决实际工程问题，代码和benchmark开源）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blind2Sound: Self-Supervised Image Denoising without Residual Noise](../../ICCV2025/image_restoration/blind2sound_self-supervised_image_denoising_without_residual_noise.md)
+- [Asymmetric Mask Scheme for Self-supervised Real Image Denoising](../../ECCV2024/image_restoration/asymmetric_mask_scheme_for_self-supervised_real_image_denoising.md)
+- [SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning](scan_self-denoising_monte_carlo_annotation_for_robust_process_reward_learning.md)
+- [TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation](../../ICML2025/image_restoration/timedart_a_diffusion_autoregressive_transformer_for_self-supervised_time_series_.md)
+- [Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise](../../CVPR2025/image_restoration/generalized_recorrupted-to-recorrupted_self-supervised_learning_beyond_gaussian_.md)
+
+<!-- RELATED:END -->

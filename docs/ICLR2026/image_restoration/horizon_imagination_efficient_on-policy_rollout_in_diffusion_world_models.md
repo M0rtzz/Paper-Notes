@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 覆盖尚可但缺连续控制
 - 写作质量: ⭐⭐⭐⭐ 动机清晰
 - 价值: ⭐⭐⭐⭐ 对扩散世界模型实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models](wd1_weighted_policy_optimization_for_reasoning_in_diffusion_language_models.md)
+- [Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
+- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+- [Are Deep Speech Denoising Models Robust to Adversarial Noise?](are_deep_speech_denoising_models_robust_to_adversarial_noise.md)
+- [RefiDiff: Progressive Refinement Diffusion for Efficient Missing Data Imputation](../../AAAI2026/image_restoration/refidiff_progressive_refinement_diffusion_for_efficient_missing_data_imputation.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ SFT 使用标准交叉熵损失。RL 使用 PPO 算法，带 GAE 优势估计。
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+多种指标+消融分析，但缺少更多多模态推理基准
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法描述系统化，公式和图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 解决MLLM的核心可靠性问题，步级置信度对AI安全和人机协作有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+- [Adaptive Linguistic Prompting (ALP) Enhances Phishing Webpage Detection in Multimodal Large Language Models](adaptive_linguistic_prompting_alp_enhances_phishing_webpage_detection_in_multimo.md)
+- [Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](exploring_how_generative_mllms_perceive_more.md)
+
+<!-- RELATED:END -->

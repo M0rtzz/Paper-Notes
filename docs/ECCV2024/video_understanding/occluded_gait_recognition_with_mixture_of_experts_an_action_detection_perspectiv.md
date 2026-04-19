@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集验证，详尽消融，新数据集贡献
 - 写作质量: ⭐⭐⭐⭐ 动机分析深入，方法描述清晰，实验组织有条理
 - 价值: ⭐⭐⭐⭐ OccGait数据集和方法对遮挡步态识别领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Coupling Experts and Routers in Mixture-of-Experts via an Auxiliary Loss](../../ICLR2026/video_understanding/coupling_experts_and_routers_in_mixture-of-experts_via_an_auxiliary_loss.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [Bayesian Evidential Deep Learning for Online Action Detection](bayesian_evidential_deep_learning_for_online_action_detection.md)
+- [Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
+- [Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
+
+<!-- RELATED:END -->

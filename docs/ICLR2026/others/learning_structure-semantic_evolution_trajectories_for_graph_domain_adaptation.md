@@ -178,3 +178,15 @@ DiffGDA比同为图生成的GraphAlign减少50%以上运行时间，同时性能
 - **实验充分度**: ⭐⭐⭐⭐⭐ 8数据集14任务、16个baseline、消融/参数分析/效率对比/可视化齐全，显著性检验(p<0.05)
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，框架图直观，公式符号统一
 - **实用价值**: ⭐⭐⭐⭐ 为连续图域适应开辟新范式，但大图可扩展性仍需改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
+- [Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation](distributionally_robust_classification_for_multi-source_unsupervised_domain_adap.md)
+- [OwlEye: Zero-Shot Learner for Cross-Domain Graph Data Anomaly Detection](owleye_zero-shot_learner_for_cross-domain_graph_data_anomaly_detection.md)
+- [Missing Mass for Differentially Private Domain Discovery](missing_mass_for_differentially_private_domain_discovery.md)
+- [How to Marginalize in Causal Structure Learning?](../../AAAI2026/others/how_to_marginalize_in_causal_structure_learning.md)
+
+<!-- RELATED:END -->

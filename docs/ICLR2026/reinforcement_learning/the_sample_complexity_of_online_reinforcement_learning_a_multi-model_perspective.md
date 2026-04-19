@@ -143,3 +143,15 @@ $$s_k^i = \sum_{j=1}^{k-1} \frac{|x_{j+1} - f_i(x_j, u_j)|^2}{1 + |(x_j, u_j)|^2
 - 实验充分度: ⭐⭐⭐ （仅线性系统验证，缺乏真正非线性的实验）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，证明思路展示出色）
 - 价值: ⭐⭐⭐⭐ （理论贡献扎实，为非线性在线控制奠定基础）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Sample Complexity of Online Strategic Decision Making with Information Asymmetry and Knowledge Transportability](../../ICML2025/reinforcement_learning/the_sample_complexity_of_online_strategic_decision_making_with_information_asymm.md)
+- [On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification](on_the_generalization_of_sft_a_reinforcement_learning_perspective_with_reward_re.md)
+- [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
+- [Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning](near-optimal_second-order_guarantees_for_model-based_adversarial_imitation_learn.md)
+- [Language Model Distillation: A Temporal Difference Imitation Learning Perspective](../../AAAI2026/reinforcement_learning/language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
+
+<!-- RELATED:END -->

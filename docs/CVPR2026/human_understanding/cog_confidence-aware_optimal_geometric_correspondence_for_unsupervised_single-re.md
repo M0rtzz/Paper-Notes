@@ -144,3 +144,15 @@ COG 采用**粗到精(coarse-to-fine)**两阶段架构：
 - 实验充分度: ⭐⭐⭐⭐ (3个BOP基准+详细消融+可视化)
 - 写作质量: ⭐⭐⭐⭐ (公式推导清晰，整体架构图表达力强)
 - 价值: ⭐⭐⭐⭐ (无监督媲美有监督是有实用价值的方向)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
+- [GS-Pose: Category-Level Object Pose Estimation via Geometric and Semantic Correspondence](../../ECCV2024/human_understanding/gs-pose_category-level_object_pose_estimation_via_geometric_and_semantic_corresp.md)
+- [Co-op: Correspondence-Based Novel Object Pose Estimation](../../CVPR2025/human_understanding/co-op_correspondence-based_novel_object_pose_estimation.md)
+- [CoordAR: One-Reference 6D Pose Estimation of Novel Objects via Autoregressive Coordinate Map Generation](../../AAAI2026/human_understanding/coordar_one-reference_6d_pose_estimation_of_novel_objects_via_autoregressive_coo.md)
+- [SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)
+
+<!-- RELATED:END -->

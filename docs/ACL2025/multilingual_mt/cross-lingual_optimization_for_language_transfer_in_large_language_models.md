@@ -174,3 +174,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 模型 × 6 语言 × 3 评估基准，消融充分（NLL 变体、attention-only、数据量曲线），实验规模在该领域属上乘
 - 写作质量: ⭐⭐⭐⭐ 两个假设清晰，方法推导严谨，图示直观；但 Limitations 部分写得过于冗长
 - 价值: ⭐⭐⭐⭐⭐ 对低资源语言 LLM 部署有直接实用价值，方法简洁易复现，仅需公开英语数据+翻译模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Aware Linear Transfer by Recycling Pre-trained Language Models for Cross-Lingual Transfer](semantic_aware_linear_transfer_by_recycling_pre-trained_language_models_for_cros.md)
+- [Language Fusion for Parameter-Efficient Cross-lingual Transfer (FLARE)](flare_crosslingual_lora.md)
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+- [Lost in Multilinguality: Dissecting Cross-lingual Factual Inconsistency in Transformer Language Models](lost_in_multilinguality_dissecting_cross-lingual_factual_inconsistency_in_transf.md)
+
+<!-- RELATED:END -->

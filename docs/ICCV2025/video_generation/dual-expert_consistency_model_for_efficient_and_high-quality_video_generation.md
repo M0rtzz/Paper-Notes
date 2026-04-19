@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ HunyuanVideo+CogVideoX两个骨干，VBench+用户研究+全面消融
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从观察到假设到验证到设计层层递进
 - 价值: ⭐⭐⭐⭐⭐ 首次实现130亿参数视频模型的高质量4步蒸馏，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation](dh-facevid-1k_a_large-scale_high-quality_dataset_for_face_video_generation.md)
+- [Foresight: Adaptive Layer Reuse for Accelerated and High-Quality Text-to-Video Generation](../../NeurIPS2025/video_generation/foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)
+- [MimicMotion: High-Quality Human Motion Video Generation with Confidence-aware Pose Guidance](../../ICML2025/video_generation/mimicmotion_high-quality_human_motion_video_generation_with_confidence-aware_pos.md)
+- [Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing](../../ICML2025/video_generation/ca2-vdm_efficient_autoregressive_video_diffusion_model_with_causal_generation_an.md)
+- [PreciseCache: Precise Feature Caching for Efficient and High-fidelity Video Generation](../../ICLR2026/video_generation/precisecache_precise_feature_caching_for_efficient_and_high-fidelity_video_gener.md)
+
+<!-- RELATED:END -->

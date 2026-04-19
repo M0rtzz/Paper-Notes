@@ -117,3 +117,15 @@ NCI 是纯 post-hoc 方法，无需训练。只需一次性计算训练集特征
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多架构（ResNet/DenseNet/ViT/Swin）、13 个基线方法、完备消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，实验分析深入，连接已有方法的讨论极好
 - 价值: ⭐⭐⭐⭐ 提供了统一理论框架并实现了高效实用的 OOD 检测器
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRA: Detecting Oriented Objects Through Group-Wise Rotating and Attention](../../ECCV2024/object_detection/gra_detecting_oriented_objects_through_group-wise_rotating_and_attention.md)
+- [Detecting Adversarial Data Using Perturbation Forgery](detecting_adversarial_data_using_perturbation_forgery.md)
+- [Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention](efficient_event-based_object_detection_a_hybrid_neural_network_with_spatial_and_.md)
+- [Attention to Neural Plagiarism: Diffusion Models Can Plagiarize Your Copyrighted Images!](../../ICCV2025/object_detection/attention_to_neural_plagiarism_diffusion_models_can_plagiarize_your_copyrighted_.md)
+- [Weed Out, Then Harvest: Dual Low-Rank Adaptation is an Effective Noisy Label Detector for Noise-Robust Learning](../../ACL2025/object_detection/weed_out_then_harvest_dual_low-rank_adaptation_is_an_effective_noisy_label_detec.md)
+
+<!-- RELATED:END -->

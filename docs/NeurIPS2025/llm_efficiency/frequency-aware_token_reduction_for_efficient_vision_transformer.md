@@ -119,3 +119,15 @@ Proposition 3.1 证明：无论 pruning 还是 merging 都使 $\|H_f[SA(MX)]\|_F
 - 实验充分度: ⭐⭐⭐⭐⭐ 多种模型（DeiT/ViT/MAE/DINO）+ 多种训练策略 + 详细消融 + 频域分析可视化
 - 写作质量: ⭐⭐⭐⭐ 理论动机清晰，实验与理论对应紧密
 - 价值: ⭐⭐⭐⭐ 实用的 ViT 加速方法，rank collapse 视角对 ViT 效率研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](../../ACL2025/llm_efficiency/kv_latent_cache_reduction.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [Learning in Compact Spaces with Approximately Normalized Transformer](learning_in_compact_spaces_with_approximately_normalized_transformer.md)
+- [Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention](dynamics_of_spontaneous_topic_changes_in_next_token_prediction_with_self-attenti.md)
+- [Associative Transformer](../../CVPR2025/llm_efficiency/associative_transformer.md)
+
+<!-- RELATED:END -->

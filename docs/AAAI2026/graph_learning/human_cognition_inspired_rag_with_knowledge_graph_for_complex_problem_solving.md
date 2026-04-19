@@ -218,3 +218,15 @@ CogGRAG 将幻觉率大幅降低至 25%，同时拒答率从 ~20% 提升到 40.6
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4个数据集、多backbone、消融、幻觉分析、推理时间分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、图表丰富
 - 价值: ⭐⭐⭐⭐ — 对 RAG + KG 的组合推理提供了有效框架，但需要额外的 KG 基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReMindRAG: Low-Cost LLM-Guided Knowledge Graph Traversal for Efficient RAG](../../NeurIPS2025/graph_learning/remindrag_low-cost_llm-guided_knowledge_graph_traversal_for_efficient_rag.md)
+- [Is Complex Query Answering Really Complex?](../../ICML2025/graph_learning/is_complex_query_answering_really_complex.md)
+- [Can LLMs Evaluate Complex Attribution in QA? Automatic Benchmarking using Knowledge Graphs](../../ACL2025/graph_learning/paper_2401_14640.md)
+- [Graph-to-Frame RAG: Visual-Space Knowledge Fusion for Training-Free and Auditable Video Reasoning](../../CVPR2026/graph_learning/graph-to-frame_rag_visual-space_knowledge_fusion_for_training-free_and_auditable.md)
+- [Extending Complex Logical Queries on Uncertain Knowledge Graphs](../../ACL2025/graph_learning/extending_complex_logical_queries_uncertain_knowledge_graphs.md)
+
+<!-- RELATED:END -->

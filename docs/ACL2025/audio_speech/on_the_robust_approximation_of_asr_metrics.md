@@ -145,3 +145,15 @@ $$\text{Similarity}(x_{\text{speech}}, x_{\text{text}}) = \frac{e_{\text{speech}
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 40+ 模型 × 14 数据集 × 4 设置，极其全面
 - **写作质量**: ⭐⭐⭐⭐ — 框架清晰，评估设置严谨
 - **价值**: ⭐⭐⭐⭐ — 对 ASR 无标签评估领域有重大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+- [Double Entendre: Robust Audio-Based AI-Generated Lyrics Detection via Multi-View Fusion](double_entendre_robust_audio-based_ai-generated_lyrics_detection_via_multi-view_.md)
+- [GigaSpeech 2: An Evolving, Large-Scale and Multi-domain ASR Corpus for Low-Resource Languages](gigaspeech2_low_resource_asr.md)
+- [Pay Attention to CTC: Fast and Robust Pseudo-Labelling for Unified Speech Recognition](../../ICLR2026/audio_speech/pay_attention_to_ctc_fast_and_robust_pseudo-labelling_for_unified_speech_recogni.md)
+- [Hearing More with Less: Multi-Modal Retrieval-and-Selection Augmented Conversational LLM-Based ASR](../../AAAI2026/audio_speech/hearing_more_with_less_multi-modal_retrieval-and-selection_augmented_conversatio.md)
+
+<!-- RELATED:END -->

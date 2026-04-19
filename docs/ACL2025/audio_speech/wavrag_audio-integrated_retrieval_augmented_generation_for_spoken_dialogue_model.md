@@ -128,3 +128,15 @@ WavRAG 包含四个步骤：(1) 双模态编码器为音频和文本查询创建
 | 实验充分度 | 4 | 多任务多基线对比、消融实验和人工评估 |
 | 写作质量 | 4 | 框架描述清晰，对比直观 |
 | 总分 | 4 | 将 RAG 拓展到音频模态的重要工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](audio_dialogue_benchmark.md)
+- [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
+- [CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages](clamp_3_universal_music_information_retrieval_across_unaligned_modalities_and_un.md)
+- [ATRI: Mitigating Multilingual Audio Text Retrieval Inconsistencies by Reducing Data Distribution Errors](atri_mitigating_multilingual_audio_text_retrieval_inconsistencies_by_reducing_da.md)
+- [Hearing More with Less: Multi-Modal Retrieval-and-Selection Augmented Conversational LLM-Based ASR](../../AAAI2026/audio_speech/hearing_more_with_less_multi-modal_retrieval-and-selection_augmented_conversatio.md)
+
+<!-- RELATED:END -->

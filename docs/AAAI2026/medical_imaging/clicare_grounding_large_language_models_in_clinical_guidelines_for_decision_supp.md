@@ -186,3 +186,15 @@ TKG 压缩是最关键组件，移除后性能大幅下降（Gemini 从 4.976→
 - **实验充分度**: ★★★★★ — 双数据集（中英文）、多基线、多模型、详细消融和长度分析
 - **写作质量**: ★★★★★ — 问题定义清晰，框架设计逻辑严密
 - **实用性**: ★★★★☆ — 有代码开源，但指南图谱构建和大规模 EHR 处理仍有工程挑战
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foundation Models for Clinical Records at Health System Scale](../../ICML2025/medical_imaging/foundation_models_for_clinical_records_at_health_system_scale.md)
+- [Personalization of Large Foundation Models for Health Interventions](personalization_of_large_foundation_models_for_health_interventions.md)
+- [G2L: From Giga-Scale to Cancer-Specific Large-Scale Pathology Foundation Models via Efficient Fine-Tuning](g2lfrom_giga-scale_to_cancer-specific_large-scale_pathology_foundation_models_vi.md)
+- [Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment](unleashing_the_potential_of_large_language_models_for_text-to-image_generation_t.md)
+- [Do Large Language Models Think Like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI](do_large_language_models_think_like_the_brain_sentence-level_evidences_from_laye.md)
+
+<!-- RELATED:END -->

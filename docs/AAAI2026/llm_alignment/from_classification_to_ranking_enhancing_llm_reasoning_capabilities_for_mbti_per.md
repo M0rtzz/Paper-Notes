@@ -124,3 +124,15 @@ tags:
 - 该工作的方法论和实验设计对相关领域有参考价值
 - 后续工作可在更多场景和更大规模上验证方法的泛化性和可扩展性
 - 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Vulnerability Detection of LLMs via Curriculum Preference Optimization with Synthetic Reasoning Data](../../ACL2025/llm_alignment/boosting_vulnerability_detection_of_llms_via_curriculum_preference_optimization_.md)
+- [Enhancing Uncertainty Estimation in LLMs with Expectation of Aggregated Internal States](enhancing_uncertainty_estimation_in_llms_with_expectation_of_aggregated_internal.md)
+- [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](../../ACL2025/llm_alignment/probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
+- [DeCoRL: Decoupling Reasoning Chains via Parallel Sub-Step Generation and Cascaded Reinforcement for Interpretable and Scalable RLHF](decorl_decoupling_reasoning_chains_via_parallel_sub-step_gen.md)
+- [AlignTree: Efficient Defense Against LLM Jailbreak Attacks](aligntree_efficient_defense_against_llm_jailbreak_attacks.md)
+
+<!-- RELATED:END -->

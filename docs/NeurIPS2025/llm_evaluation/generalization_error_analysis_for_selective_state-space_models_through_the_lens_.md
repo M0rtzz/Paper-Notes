@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个任务验证理论预测，但任务复杂度有限
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，直觉解释清晰，证明思路透明
 - 价值: ⭐⭐⭐⭐⭐ 为 SSM 设计提供了理论指导（保持稳定性），填补了重要理论空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVSMamba: Multi-View Stereo with State Space Model](mvsmamba_multi-view_stereo_with_state_space_model.md)
+- [What Does It Take to Build a Performant Selective Classifier?](what_does_it_take_to_build_a_performant_selective_classifier.md)
+- [PaTH Attention: Position Encoding via Accumulating Householder Transformations](path_attention_position_encoding_via_accumulating_householder_transformations.md)
+- [Learning Distribution-Wise Control in Representation Space for Language Models](../../ICML2025/llm_evaluation/learning_distribution-wise_control_in_representation_space_for_language_models.md)
+- [Talk, Evaluate, Diagnose: User-aware Agent Evaluation with Automated Error Analysis](../../ICLR2026/llm_evaluation/talk_evaluate_diagnose_user-aware_agent_evaluation_with_automated_error_analysis.md)
+
+<!-- RELATED:END -->

@@ -153,3 +153,15 @@ VMDT 平台评估两类模型：T2V（文本到视频，7 个模型）和 V2T（
 - 实验充分度: ⭐⭐⭐⭐⭐ 26 个模型 × 5 个维度的大规模评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，发现丰富有洞察力
 - 价值: ⭐⭐⭐⭐ 对视频模型安全发展具有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Force Prompting: Video Generation Models Can Learn and Generalize Physics-based Control Signals](force_prompting_video_generation_models_can_learn_and_generalize_physics-based_c.md)
+- [VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](../../ICCV2025/video_generation/vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [Navigation World Models](../../CVPR2025/video_generation/navigation_world_models.md)
+- [Video Diffusion Models Excel at Tracking Similar-Looking Objects Without Supervision](video_diffusion_models_excel_at_tracking_similar-looking_objects_without_supervi.md)
+- [Video Killed the Energy Budget: Characterizing the Latency and Power Regimes of Open Text-to-Video Models](video_killed_the_energy_budget_characterizing_the_latency_and_power_regimes_of_o.md)
+
+<!-- RELATED:END -->

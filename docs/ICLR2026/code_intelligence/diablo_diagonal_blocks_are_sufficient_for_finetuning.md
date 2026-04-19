@@ -157,3 +157,15 @@ $$\mathbf{Y} = \mathbf{X}\mathbf{W}_0 + \mathbf{X}\mathbf{D}, \quad \mathbf{D} =
 - 实验充分度: ⭐⭐⭐⭐⭐ 多任务、多精度、多模型全面验证
 - 写作质量: ⭐⭐⭐⭐ 理论和实验叙述清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 可能替代 LoRA 成为新的 PEFT 默认选择
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Large Language Models To Reason In Parallel With Global Forking Tokens](training_large_language_models_to_reason_in_parallel_with_global_forking_tokens.md)
+- [MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
+- [Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
+- [IMSE: Intrinsic Mixture of Spectral Experts Fine-tuning for Test-Time Adaptation](imse_intrinsic_mixture_of_spectral_experts_fine-tuning_for_test-time_adaptation.md)
+- [Execution-Grounded Credit Assignment for GRPO in Code Generation](execution-grounded_credit_assignment_for_grpo_in_code_generation.md)
+
+<!-- RELATED:END -->

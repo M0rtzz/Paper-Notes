@@ -141,3 +141,15 @@ $$c_t^* = \frac{1}{|\mathcal{S}_t|}\sum_{i \in \mathcal{S}_t} y_i$$
 - **实验**: ⭐⭐⭐⭐⭐ — 从小到 200 万样本的全面实验，首次攻克连续特征大规模最优回归树
 - **写作**: ⭐⭐⭐⭐ — 问题定义清晰，算法描述详细，理论证明完整
 - **价值**: ⭐⭐⭐⭐⭐ — 对可解释 AI 和最优决策树领域具有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Non-Asymptotic Analysis of Efficiency in Conformalized Regression](non-asymptotic_analysis_of_efficiency_in_conformalized_regression.md)
+- [∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
+- [A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization](../../ICML2025/optimization/a_near-optimal_single-loop_stochastic_algorithm_for_convex_finite-sum_coupled_co.md)
+- [Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?](scaling_laws_of_signsgd_in_linear_regression_when_does_it_outperform_sgd.md)
+- [A Distributed Asynchronous Generalized Momentum Algorithm Without Delay Bounds](../../AAAI2026/optimization/a_distributed_asynchronous_generalized_momentum_algorithm_wi.md)
+
+<!-- RELATED:END -->

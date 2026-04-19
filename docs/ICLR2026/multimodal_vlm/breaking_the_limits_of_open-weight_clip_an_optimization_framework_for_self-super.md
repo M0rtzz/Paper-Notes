@@ -126,3 +126,15 @@ TuneCLIP 分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ (多模型×多数据集×多基准，消融详尽，包含 ViT-H/14 大规模验证)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，理论与实验对应良好)
 - 价值: ⭐⭐⭐⭐⭐ (开辟 SSFT 新方向，实用性极强，可直接应用于现有 CLIP 模型)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Advancing Compositional Awareness in CLIP with Efficient Fine-Tuning](../../NeurIPS2025/multimodal_vlm/advancing_compositional_awareness_in_clip_with_efficient_fin.md)
+- [TRivia: Self-supervised Fine-tuning of Vision-Language Models for Table Recognition](../../CVPR2026/multimodal_vlm/trivia_self-supervised_fine-tuning_of_vision-language_models_for_table_recogniti.md)
+- [O3SLM: Open Weight, Open Data, and Open Vocabulary Sketch-Language Model](../../AAAI2026/multimodal_vlm/o3slm_open_weight_open_data_and_open_vocabulary_sketch-language_model.md)
+- [READ: Enhancing Compositional Reasoning in CLIP via Reconstruction and Alignment of Text Descriptions](../../NeurIPS2025/multimodal_vlm/enhancing_compositional_reasoning_in_clip_via_reconstruction.md)
+- [BioCAP: Exploiting Synthetic Captions Beyond Labels in Biological Foundation Models](biocap_exploiting_synthetic_captions_beyond_labels_in_biological_foundation_mode.md)
+
+<!-- RELATED:END -->

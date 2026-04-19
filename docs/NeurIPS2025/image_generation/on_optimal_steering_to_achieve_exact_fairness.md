@@ -159,3 +159,15 @@ tags:
 | 理论深度 | ⭐⭐⭐⭐ | 参数化条件推导严谨，凸性证明完整，KL 距离到公平性的传递上界有价值 |
 | 实验充分性 | ⭐⭐⭐ | 合成数据分析透彻，但真实数据实验偏少（仅 Bios 和情感引导），缺少大规模基准对比 |
 | 实用价值 | ⭐⭐⭐⭐ | 闭式解和凸优化使方法可直接应用于表示引导，但参数化假设限制了通用性 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Counterfactual Identifiability via Dynamic Optimal Transport](counterfactual_identifiability_via_dynamic_optimal_transport.md)
+- [LinEAS: End-to-end Learning of Activation Steering with a Distributional Loss](lineas_end-to-end_learning_of_activation_steering_with_a_distributional_loss.md)
+- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [Pairwise Optimal Transports for Training All-to-All Flow-Based Condition Transfer Model](pairwise_optimal_transports_for_training_all-to-all_flow-based_condition_transfe.md)
+- [CountSteer: Steering Attention for Object Counting in Diffusion Models](../../AAAI2026/image_generation/countsteer_steering_attention_for_object_counting_in_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -208,3 +208,15 @@ Last token 由于与周期性最对齐且与预测任务最相关，效果最佳
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9 个数据集 × zero-shot/full-shot + 详细消融 + 效率对比 + 跨分辨率鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，case study 直观，理论和实验组织良好
 - 价值: ⭐⭐⭐⭐⭐ — 4M 参数达到 SOTA，对资源受限部署极具实际意义，Periodical Tokenization 可迁移到其他 TSFM
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEMPO: Lightweight Foundation Models for Time Series Forecasting](../../NeurIPS2025/time_series/sempo_lightweight_foundation_models_for_time_series_forecasting.md)
+- [GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data](../../ICLR2026/time_series/gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)
+- [ReCast: Reliability-aware Codebook Assisted Lightweight Time Series Forecasting](../../AAAI2026/time_series/recast_reliability-aware_codebook_assisted_lightweight_time_series_forecasting.md)
+- [Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting](breaking_silos_adaptive_model_fusion_unlocks_better_time_series_forecasting.md)
+- [Winner-takes-all for Multivariate Probabilistic Time Series Forecasting](winner-takes-all_for_multivariate_probabilistic_time_series_forecasting.md)
+
+<!-- RELATED:END -->

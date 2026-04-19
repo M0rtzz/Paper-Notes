@@ -122,3 +122,15 @@ $\mathcal{L} = \mathcal{L}_{occ} + \mathcal{L}_{vox\text{-}pix} + \mathcal{L}_{o
 - 实验充分度: ⭐⭐⭐⭐ 双数据集+多模型验证+消融，但缺少大规模户外数据
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，框架图清晰，整体结构完整
 - 价值: ⭐⭐⭐⭐⭐ 为具身智能的开放世界 3D 场景理解提供了重要的技术路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianFormer-2: Probabilistic Gaussian Superposition for Efficient 3D Occupancy Prediction](gaussianformer-2_probabilistic_gaussian_superposition_for_efficient_3d_occupancy.md)
+- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
+- [3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation](3d-avs_lidar-based_3d_auto-vocabulary_segmentation.md)
+- [ProtoOcc: 3D Occupancy Prediction with Low-Resolution Queries via Prototype-aware View Transformation](3d_occupancy_prediction_with_low-resolution_queries_via_prototype-aware_view_tra.md)
+- [GDFusion: Rethinking Temporal Fusion with a Unified Gradient Descent View for 3D Semantic Occupancy Prediction](rethinking_temporal_fusion_with_a_unified_gradient_descent_view_for_3d_semantic_.md)
+
+<!-- RELATED:END -->

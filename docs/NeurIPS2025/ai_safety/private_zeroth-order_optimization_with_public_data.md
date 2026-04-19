@@ -138,3 +138,15 @@ PAZO (Public-data-Assisted Zeroth-Order) 框架在标准零阶优化流程中引
 - ⭐ 创新性: 8/10 — 公共数据引导零阶方法的思路简洁有效
 - ⭐ 实用性: 9/10 — 速度和隐私效用双重优势,实际部署价值高
 - ⭐ 写作质量: 8/10 — 多变体对比全面,实验设计合理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stochastic Regret Guarantees for Online Zeroth- and First-Order Bilevel Optimization](stochastic_regret_guarantees_for_online_zeroth-_and_first-order_bilevel_optimiza.md)
+- [On the Sample Complexity of Differentially Private Policy Optimization](on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+- [Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+- [Private Continual Counting of Unbounded Streams](private_continual_counting_of_unbounded_streams.md)
+
+<!-- RELATED:END -->

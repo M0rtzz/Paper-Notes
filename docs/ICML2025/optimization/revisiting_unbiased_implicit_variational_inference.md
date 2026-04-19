@@ -144,3 +144,15 @@ AISIVI 在相同计算预算下（10k 迭代）远超 IWHVI、BSIVI、PVI、UIVI
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 2D 玩具、22D 逻辑回归、100D 扩散过程，与多个 baseline 系统比较
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导严谨清晰，行文流畅，证明自包含
 - 价值: ⭐⭐⭐⭐ — 为 SIVI 领域提供了新的强基线（BSIVI）和 SOTA 方法（AISIVI），理论与实践兼顾
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synonymous Variational Inference for Perceptual Image Compression](synonymous_variational_inference_for_perceptual_image_compression.md)
+- [Least Squares Variational Inference](../../NeurIPS2025/optimization/least_squares_variational_inference.md)
+- [Brain-like Variational Inference](../../NeurIPS2025/optimization/brain-like_variational_inference.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](../../NeurIPS2025/optimization/viking_deep_variational_inference_with_stochastic_projections.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](../../NeurIPS2025/optimization/neuro-symbolic_entity_alignment_via_variational_inference.md)
+
+<!-- RELATED:END -->

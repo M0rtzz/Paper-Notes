@@ -166,3 +166,15 @@ Prompt 生成方式对比（LIVE-1, QF=5）：
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、多 QF 级别、全面的指标体系、消融完整
 - **写作质量**: ⭐⭐⭐⭐ — 图示清晰，t-SNE 可视化有说服力
 - **价值**: ⭐⭐⭐⭐⭐ — 实际应用价值高，推理快且效果好，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](sanasprint_onestep_diffusion_with_continuoustime_consistency.md)
+- [Steering One-Step Diffusion Model with Fidelity-Rich Decoder for Fast Image Compression](../../AAAI2026/image_generation/steering_one-step_diffusion_model_with_fidelity-rich_decoder_for_fast_image_comp.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+- [Fewer Denoising Steps or Cheaper Per-Step Inference: Towards Compute-Optimal Diffusion Model Deployment](fewer_denoising_steps_or_cheaper_per-step_inference_towards_compute-optimal_diff.md)
+- [A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
+
+<!-- RELATED:END -->

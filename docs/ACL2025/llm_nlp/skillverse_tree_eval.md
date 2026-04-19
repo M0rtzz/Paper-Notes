@@ -139,3 +139,15 @@ SkillVerse增强ICL vs 基线方法（相对于直接生成的改进百分比）
 - **实验充分度**: 4/5 — 多模型对比+ICL增强+弱点预测三个下游任务
 - **实用性**: 4/5 — 对模型评估、选型和改进有直接实践价值
 - **综合评分**: 4/5
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ConsistencyChecker: Tree-based Evaluation of LLM Generalization Capabilities](consistencychecker_tree_evaluation.md)
+- [Which of These Best Describes Multiple Choice Evaluation with LLMs?](multiple_choice_eval.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+- [CodeTool: Enhancing Programmatic Tool Invocation of LLMs via Process Supervision](codetool_enhancing_programmatic_tool_invocation_of_llms_via_process_supervision.md)
+
+<!-- RELATED:END -->

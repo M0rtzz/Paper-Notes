@@ -142,3 +142,15 @@ GLane3D-Large在OpenLane上以66.0% F1超越所有先前方法，严格阈值0.5
 - 实验充分度: ⭐⭐⭐⭐⭐ OpenLane+Apollo双数据集、类别细分、FPS、跨数据集泛化、详细消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 在自动驾驶车道线检测中有实际部署价值，尤其是Lite版本的实时性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](../../ECCV2024/autonomous_driving/detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+- [SeqGrowGraph: Learning Lane Topology as a Chain of Graph Expansions](../../ICCV2025/autonomous_driving/seqgrowgraph_learning_lane_topology_as_a_chain_of_graph_expansions.md)
+- [3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation](3d-avs_lidar-based_3d_auto-vocabulary_segmentation.md)
+- [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](../../NeurIPS2025/autonomous_driving/chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
+- [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](../../NeurIPS2025/autonomous_driving/self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
+
+<!-- RELATED:END -->

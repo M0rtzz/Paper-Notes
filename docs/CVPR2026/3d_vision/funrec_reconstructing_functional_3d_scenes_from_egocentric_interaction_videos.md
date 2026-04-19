@@ -137,3 +137,15 @@ mIoU 提升 50+ 个百分点。
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集（含两个新数据集）、四个评估任务、多个基线对比，差距巨大且一致
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，实验结果令人信服
 - 价值: ⭐⭐⭐⭐⭐ 对具身智能和机器人场景理解有重要推动作用，应用演示（URDF导出、机器人交互）展示了实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionScale: Reconstructing Appearance, Geometry, and Motion of Dynamic Scenes with Scalable 4D Gaussian Splatting](motionscale_reconstructing_appearance_geometry_and_motion_of_dynamic_scenes_with.md)
+- [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
+- [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](../../CVPR2025/3d_vision/layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
+- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](../../CVPR2025/3d_vision/hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+
+<!-- RELATED:END -->

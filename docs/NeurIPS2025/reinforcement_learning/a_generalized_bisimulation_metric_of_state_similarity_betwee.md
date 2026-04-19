@@ -118,3 +118,15 @@ GBSM定义在**状态-MDP对**上：$d((s, M_1), (s', M_2))$，简写为$d_{1-2}
 - 实验充分度: ⭐⭐⭐ 主要在小规模随机MDP上验证，5G实验是rebuttal后补充的
 - 写作质量: ⭐⭐⭐⭐ 理论清晰严谨，写作结构好，但实验描述不够详细
 - 价值: ⭐⭐⭐⭐ 填补了跨MDP理论分析的空白，对sim-to-real迁移有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Utilities from Demonstrations in Markov Decision Processes](../../ICML2025/reinforcement_learning/learning_utilities_from_demonstrations_in_markov_decision_processes.md)
+- [Certifying Stability of Reinforcement Learning Policies using Generalized Lyapunov Functions](certifying_stability_of_reinforcement_learning_policies_using_generalized_lyapun.md)
+- [Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update](generalized_linear_bandits_almost_optimal_regret_with_one-pass_update.md)
+- [Feel-Good Thompson Sampling for Contextual Bandits: a Markov Chain Monte Carlo Showdown](feel-good_thompson_sampling_for_contextual_bandits_a_markov_chain_monte_carlo_sh.md)
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](structured_reinforcement_learning_for_combinatorial_decision-making.md)
+
+<!-- RELATED:END -->

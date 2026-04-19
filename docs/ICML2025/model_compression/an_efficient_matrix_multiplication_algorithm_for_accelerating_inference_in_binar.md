@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 从矩阵乘法到 LLM 端到端，多尺度验证
 - 写作质量: ⭐⭐⭐⭐ 算法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 对二值/三值模型的部署有重大实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models](../../ACL2025/model_compression/scaling_laws_and_efficient_inference_for_ternary_language_models.md)
+- [RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [Improved Exploration in GFlowNets via Enhanced Epistemic Neural Networks](improved_exploration_in_gflownets_via_enhanced_epistemic_neural_networks.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+- [FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)
+
+<!-- RELATED:END -->

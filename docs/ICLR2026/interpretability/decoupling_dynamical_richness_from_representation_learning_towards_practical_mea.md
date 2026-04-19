@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种架构、数据集和训练因素的全面实验
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，图表高质量，直觉解释好
 - 价值: ⭐⭐⭐⭐ 作为诊断工具有实际价值，理论上桥接了 rich dynamics 和表征学习
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
+- [Uni-NTFM: A Unified Foundation Model for EEG Signal Representation Learning](uni-ntfm_a_unified_foundation_model_for_eeg_signal_representation_learning.md)
+- [Time-Evolving Dynamical System for Learning Latent Representations of Mouse Visual Cortex](../../NeurIPS2025/interpretability/time-evolving_dynamical_system_for_learning_latent_representations_of_mouse_visu.md)
+- [Information Shapes Koopman Representation](information_shapes_koopman_representation.md)
+- [Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+
+<!-- RELATED:END -->

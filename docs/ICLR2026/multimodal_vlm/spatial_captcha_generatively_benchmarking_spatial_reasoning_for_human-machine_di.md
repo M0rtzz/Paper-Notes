@@ -167,3 +167,15 @@ Spatial CAPTCHA 是一个评测框架而非训练方法。在基准测试（Spat
 - 实验充分度: ⭐⭐⭐⭐ — 10 个 MLLM + 人类对比 + reCAPTCHA 对比，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，系统设计叙述完整
 - 价值: ⭐⭐⭐⭐⭐ — 兼具学术价值（AI 空间推理评测）和实际价值（新一代 CAPTCHA 设计）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs](spinbench_perspective_and_rotation_as_a_lens_on_spatial_reasoning_in_vlms.md)
+- [Spatial-DISE: A Unified Benchmark for Evaluating Spatial Reasoning in Vision-Language Models](spatial-dise_a_unified_benchmark_for_evaluating_spatial_reasoning_in_vision-lang.md)
+- [OmniSpatial: Towards Comprehensive Spatial Reasoning Benchmark for Vision Language Models](omnispatial_towards_comprehensive_spatial_reasoning_benchmark_for_vision_languag.md)
+- [SpatiaLab: Can Vision-Language Models Perform Spatial Reasoning in the Wild?](spatialab_can_vision-language_models_perform_spatial_reasoning_in_the_wild.md)
+- [Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes](seeing_across_views_benchmarking_spatial_reasoning_of_vision-language_models_in_.md)
+
+<!-- RELATED:END -->

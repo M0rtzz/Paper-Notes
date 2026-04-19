@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 数据集 × 4 预训练策略，但仅做了节点分类
 - 写作质量: ⭐⭐⭐⭐ 理论分析清晰，符号较多但组织合理
 - 价值: ⭐⭐⭐⭐ 为 graph prompting 开辟了新方向，有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Over-squashing in Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Graph Neural Networks for Interferometer Simulations](graph_neural_networks_for_interferometer_simulations.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+
+<!-- RELATED:END -->

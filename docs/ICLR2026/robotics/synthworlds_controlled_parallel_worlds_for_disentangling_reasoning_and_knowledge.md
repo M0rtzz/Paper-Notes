@@ -152,3 +152,15 @@ SynthWorlds 的生成流程分为三个阶段：
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 实验设计极其精妙，首次真正实现了 LLM 推理与记忆的可控解耦。KA 框架、One-step RAG 扩大差距等发现对 RAG 和 agent 系统的评估有深远影响。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ExoPredicator: Learning Abstract Models of Dynamic Worlds for Robot Planning](exopredicator_learning_abstract_models_of_dynamic_worlds_for_robot_planning.md)
+- [Experience-based Knowledge Correction for Robust Planning in Minecraft](experience-based_knowledge_correction_for_robust_planning_in_minecraft.md)
+- [JULI: Jailbreak Large Language Models by Self-Introspection](juli_jailbreak_large_language_models_by_self-introspection.md)
+- [RoboPARA: Dual-Arm Robot Planning with Parallel Allocation and Recomposition Across Tasks](robopara_dual-arm_robot_planning_with_parallel_allocation_and_recomposition_acro.md)
+- [Sysformer: Safeguarding Frozen Large Language Models with Adaptive System Prompts](sysformer_safeguarding_frozen_large_language_models_with_adaptive_system_prompts.md)
+
+<!-- RELATED:END -->

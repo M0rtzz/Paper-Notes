@@ -191,3 +191,15 @@ $$\mathcal{L} = \mathcal{L}_{\mathrm{task}} + \alpha \cdot \mathcal{L}_{\mathrm{
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 11个数据集、完整的消融和可视化分析
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，模块设计动机明确
 - **价值**: ⭐⭐⭐⭐ — 在非平稳时序预测这一重要问题上提供了有效的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IdealTSF: Can Non-Ideal Data Contribute to Enhancing Time Series Forecasting?](idealtsf_can_non-ideal_data_contribute_to_enhancing_the_performance_of_time_seri.md)
+- [FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [M2FMoE: Multi-Resolution Multi-View Frequency Mixture-of-Experts for Extreme-Adaptive Time Series Forecasting](m2fmoe_multi-resolution_multi-view_frequency_mixture-of-experts_for_extreme-adap.md)
+- [Neural MJD: Neural Non-Stationary Merton Jump Diffusion for Time Series Prediction](../../NeurIPS2025/time_series/neural_mjd_neural_non-stationary_merton_jump_diffusion_for_time_series_predictio.md)
+- [Scaling LLM Speculative Decoding: Non-Autoregressive Forecasting in Large-Batch Scenarios](scaling_llm_speculative_decoding_non-autoregressive_forecasting_in_large-batch_s.md)
+
+<!-- RELATED:END -->

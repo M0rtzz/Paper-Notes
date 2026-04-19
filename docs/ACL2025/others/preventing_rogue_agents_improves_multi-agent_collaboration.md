@@ -152,3 +152,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 3 个环境、3+ 模型、多复杂度级别、消融实验、监控器质量分析、定性分析、泛化测试，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 概念清晰，图示直观，形式化定义准确，环境描述详尽
 - **价值**: ⭐⭐⭐⭐ — 提供了一种即插即用的多 Agent 协作增强策略，对日益流行的 Agent 系统有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
+- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](beyond_frameworks_multi_agent_collaboration.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+- [DocAgent: A Multi-Agent System for Automated Code Documentation Generation](docagent_a_multi-agent_system_for_automated_code_documentation_generation.md)
+- [RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation](rmoa_optimizing_mixture-of-agents_through_diversity_maximization_and_residual_co.md)
+
+<!-- RELATED:END -->

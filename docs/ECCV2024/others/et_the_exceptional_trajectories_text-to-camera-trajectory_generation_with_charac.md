@@ -206,3 +206,15 @@ Director C 在 FD_CLaTr 上相比 MDM 降低 3.0，相比 CCD 降低 32.1；CLaT
 - **实验充分度**: ⭐⭐⭐⭐ — 定量指标丰富，定性分析有力，但消融实验可以更深入（如角色条件的影响）
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，数据集从构建到应用的叙述完整
 - **价值**: ⭐⭐⭐⭐ — 数据集价值高，可推动电影摄影自动化，但应用场景相对小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Free-Viewpoint Video of Outdoor Sports Using a Flying Camera](free-viewpoint_video_of_outdoor_sports_using_a_flying_camera.md)
+- [Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [Elegantly Written: Disentangling Writer and Character Styles for Enhancing Online Chinese Handwriting](elegantly_written_disentangling_writer_and_character_styles_for_enhancing_online.md)
+- [Next-Scale Autoregressive Models for Text-to-Motion Generation](../../CVPR2026/others/next-scale_autoregressive_models_for_text-to-motion_generation.md)
+- [An Epistemic Perspective on Agent Awareness](../../AAAI2026/others/an_epistemic_perspective_on_agent_awareness.md)
+
+<!-- RELATED:END -->

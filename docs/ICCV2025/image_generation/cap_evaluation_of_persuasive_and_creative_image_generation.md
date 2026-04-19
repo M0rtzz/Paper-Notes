@@ -123,3 +123,15 @@ LLM扩展对T2I生成的改善（InternVL+LLAMA3+AuraFlow）:
 - 实验充分度: ⭐⭐⭐⭐ 多种MLLM/LLM/T2I组合 + 人类标注实验 + 商业/PSA分组分析
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，示例直观，但公式符号较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐ 为广告和创意内容生成提供了有价值的评估工具和改进方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)
+- [Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning](holistic_unlearning_benchmark_a_multi-faceted_evaluation_for_text-to-image_diffu.md)
+- [OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models](../../NeurIPS2025/image_generation/overt_a_benchmark_for_over-refusal_evaluation_on_text-to-image_models.md)
+- [Hallucination as an Upper Bound: A New Perspective on Text-to-Image Evaluation](../../NeurIPS2025/image_generation/hallucination_as_an_upper_bound_a_new_perspective_on_text-to-image_evaluation.md)
+- [D-GEN: Automatic Distractor Generation and Evaluation for Reliable Assessment of Generative Models](../../ACL2025/image_generation/d-gen_automatic_distractor_generation_and_evaluation_for_reliable_assessment_of_.md)
+
+<!-- RELATED:END -->

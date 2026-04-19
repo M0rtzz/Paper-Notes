@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 种扰动攻击 + 2 种越狱攻击 × 4 种 CEM × 3 数据集 × 多模型，极其全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式化定义完整，但表格数据量巨大读起来有些累
 - 价值: ⭐⭐⭐⭐ 揭示了一个重要的安全盲区，但缺乏有效防御方案略显遗憾
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs](../../ACL2025/ai_safety/tip_iceberg_adversarial_attacks.md)
+- [Towards Adversarial Robustness via Debiased High-Confidence Logit Alignment](../../ICCV2025/ai_safety/towards_adversarial_robustness_via_debiased_high-confidence_logit_alignment.md)
+- [MixAT: Combining Continuous and Discrete Adversarial Training for LLMs](mixat_combining_continuous_and_discrete_adversarial_training_for_llms.md)
+- [Bridging Symmetry and Robustness: On the Role of Equivariance in Enhancing Adversarial Robustness](bridging_symmetry_and_robustness_on_the_role_of_equivariance_in_enhancing_advers.md)
+
+<!-- RELATED:END -->

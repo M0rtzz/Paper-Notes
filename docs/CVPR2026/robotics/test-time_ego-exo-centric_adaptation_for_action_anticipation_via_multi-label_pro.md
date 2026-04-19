@@ -134,3 +134,15 @@ ML-PGM 几乎零额外计算量，narrator 极其轻量。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两个 benchmark、四种设置、详尽消融、可视化分析均到位
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，方法描述规范，图表完善
 - 价值: ⭐⭐⭐⭐ — 为人机协作/具身 AI 中的跨视角在线适应提供了实用范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PacGDC: Label-Efficient Generalizable Depth Completion with Projection Ambiguity and Consistency](../../ICCV2025/robotics/pacgdc_label-efficient_generalizable_depth_completion_with_projection_ambiguity_.md)
+- [Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)
+- [Test-Time Mixture of World Models for Embodied Agents in Dynamic Environments](../../ICLR2026/robotics/test-time_mixture_of_world_models_for_embodied_agents_in_dynamic_environments.md)
+- [All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation](../../ICLR2026/robotics/all-day_multi-scenes_lifelong_vision-and-language_navigation_with_tucker_adaptat.md)
+- [Real-Time Robot Execution with Masked Action Chunking](../../ICLR2026/robotics/real-time_robot_execution_with_masked_action_chunking.md)
+
+<!-- RELATED:END -->

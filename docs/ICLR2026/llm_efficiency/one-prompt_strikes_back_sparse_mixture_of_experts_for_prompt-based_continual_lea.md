@@ -133,3 +133,15 @@ SMoPE 的输入是 ViT 的 patch token 序列 $\mathbf{X} \in \mathbb{R}^{N \tim
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集 + 两种预训练范式 + 详细消融 + 计算量对比
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，从理论到实现过渡自然
 - 价值: ⭐⭐⭐⭐ 对 prompt-based CL 有实际推动，50% 计算量减少有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One Prompt Fits All: Universal Graph Adaptation for Pretrained Models](../../NeurIPS2025/llm_efficiency/one_prompt_fits_all_universal_graph_adaptation_for_pretrained_models.md)
+- [Mixture of Lookup Experts](../../ICML2025/llm_efficiency/mixture_of_lookup_experts.md)
+- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
+- [Attention Retention for Continual Learning with Vision Transformers](../../AAAI2026/llm_efficiency/attention_retention_for_continual_learning_with_vision_transformers.md)
+- [KAC: Kolmogorov-Arnold Classifier for Continual Learning](../../CVPR2025/llm_efficiency/kac_kolmogorov-arnold_classifier_for_continual_learning.md)
+
+<!-- RELATED:END -->

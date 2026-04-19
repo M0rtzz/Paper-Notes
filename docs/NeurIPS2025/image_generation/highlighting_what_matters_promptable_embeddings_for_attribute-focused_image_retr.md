@@ -178,3 +178,15 @@ tags:
 - **实验充分度**: ★★★★☆ — 27页含6图，实验全面但仅在COCO上验证
 - **实用价值**: ★★★★☆ — 加速策略使方法具备实际部署价值
 - **写作质量**: ★★★★☆ — 问题动机清晰，方法描述完整
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?](can_knowledge-graph-based_retrieval_augmented_generation_really_retrieve_what_yo.md)
+- [Instance-Level Composed Image Retrieval](instance-level_composed_image_retrieval.md)
+- [GenIR: Generative Visual Feedback for Mental Image Retrieval](genir_generative_visual_feedback_for_mental_image_retrieval.md)
+- [What We Don't C: Manifold Disentanglement for Structured Discovery](what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)
+- [On the Emergence of Linear Analogies in Word Embeddings](on_the_emergence_of_linear_analogies_in_word_embeddings.md)
+
+<!-- RELATED:END -->

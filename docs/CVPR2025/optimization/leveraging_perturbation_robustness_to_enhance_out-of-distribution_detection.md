@@ -88,3 +88,15 @@ CIFAR-10 FPR@95↓：
 - 实验充分度: ⭐⭐⭐⭐ 多得分函数，鲁棒/非鲁棒模型对比
 - 写作质量: ⭐⭐⭐⭐ 动机论证清晰
 - 价值: ⭐⭐⭐⭐ 通用 OOD 检测增强方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stop Walking in Circles! Bailing Out Early in Projected Gradient Descent](stop_walking_in_circles_bailing_out_early_in_projected_gradient_descent.md)
+- [Generalization and Robustness of the Tilted Empirical Risk](../../ICML2025/optimization/generalization_and_robustness_of_the_tilted_empirical_risk.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](../../NeurIPS2025/optimization/perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [Weak-to-Strong Generalization under Distribution Shifts](../../NeurIPS2025/optimization/weak-to-strong_generalization_under_distribution_shifts.md)
+- [MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization](../../NeurIPS2025/optimization/mecefo_enhancing_llm_training_robustness_via_fault-tolerant_optimization.md)
+
+<!-- RELATED:END -->

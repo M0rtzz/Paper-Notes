@@ -128,3 +128,15 @@ Latte 在所有基准上均取得最佳性能。值得注意的是，在 TerraIn
 - **技术质量**: 8/10 — 方法完整、理论分析扎实、实验全面
 - **实用性**: 8/10 — 免训练、低通信开销、通信与推理解耦
 - **写作质量**: 8/10 — 结构清晰，符号定义完整
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DOTA: DistributiOnal Test-time Adaptation of Vision-Language Models](../../NeurIPS2025/multimodal_vlm/dota_distributional_testtime_adaptation_of_visionlanguage_mo.md)
+- [Multi-Cache Enhanced Prototype Learning for Test-Time Generalization of Vision-Language Models](multi-cache_enhanced_prototype_learning_for_test-time_generalization_of_vision-l.md)
+- [The Illusion of Progress? A Critical Look at Test-Time Adaptation for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/the_illusion_of_progress_a_critical_look_at_testtime_adaptat.md)
+- [Realistic Test-Time Adaptation of Vision-Language Models](../../CVPR2025/multimodal_vlm/realistic_test-time_adaptation_of_vision-language_models.md)
+- [FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
+
+<!-- RELATED:END -->

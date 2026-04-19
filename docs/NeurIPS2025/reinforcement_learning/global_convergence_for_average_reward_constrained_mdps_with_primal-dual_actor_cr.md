@@ -169,3 +169,15 @@ $$\frac{1}{K}\sum_k (\mathcal{L}(\pi^*, \lambda_k) - \mathcal{L}(\theta_k, \lamb
 - **实验充分性**: ★★☆☆☆ — 纯理论工作，无实验验证
 - **实用价值**: ★★★☆☆ — 理论贡献卓越，但实际部署需进一步工程化
 - **写作质量**: ★★★★☆ — 理论严谨，符号统一，但内容密度极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finite-Sample Analysis of Policy Evaluation for Robust Average Reward Reinforcement Learning](finite-sample_analysis_of_policy_evaluation_for_robust_average_reward_reinforcem.md)
+- [Risk-Sensitive Exponential Actor Critic](../../AAAI2026/reinforcement_learning/risk-sensitive_exponential_actor_critic.md)
+- [Automaton Constrained Q-Learning](automaton_constrained_q-learning.md)
+- [On the Global Optimality of Policy Gradient Methods in General Utility Reinforcement Learning](on_the_global_optimality_of_policy_gradient_methods_in_general_utility_reinforce.md)
+- [Last Iterate Convergence in Monotone Mean Field Games](last_iterate_convergence_in_monotone_mean_field_games.md)
+
+<!-- RELATED:END -->

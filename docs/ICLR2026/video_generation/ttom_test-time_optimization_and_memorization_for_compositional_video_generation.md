@@ -122,3 +122,15 @@ VBench 上也有一致的改进。
 - 实验充分度: ⭐⭐⭐⭐ 两个基准+多种VFM+消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机层层递进，框架设计优雅
 - 价值: ⭐⭐⭐⭐⭐ 对组合视频生成有实质性推进，参数记忆范式有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+- [JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
+- [Training-free Motion Factorization for Compositional Video Generation](../../CVPR2026/video_generation/training-free_motion_factorization_for_compositional_video_generation.md)
+- [VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](../../ICCV2025/video_generation/vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [DreamRunner: Fine-Grained Compositional Story-to-Video Generation with Retrieval-Augmented Motion Adaptation](../../AAAI2026/video_generation/dreamrunner_fine-grained_compositional_story-to-video_genera.md)
+
+<!-- RELATED:END -->

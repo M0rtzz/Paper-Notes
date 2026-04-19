@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个模型、多维分析、迁移实验和遗忘分析完整，但受限于模型规模
 - 写作质量: ⭐⭐⭐⭐⭐ 分析层次分明，图表精美，演化过程的可视化极具说服力
 - 价值: ⭐⭐⭐⭐⭐ 对理解LLM知识获取机制有深远理论价值，对持续预训练策略有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Incorporating Domain Knowledge into Materials Tokenization](incorporating_domain_knowledge_into_materials_tokenization.md)
+- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [Velocitune: A Velocity-based Dynamic Domain Reweighting Method for Continual Pre-training](velocitune_a_velocity-based_dynamic_domain_reweighting_method_for_continual_pre-.md)
+- [An Effective Incorporating Heterogeneous Knowledge Curriculum Learning for Sequence Labeling](dual_stage_curriculum_learning_sequence_labeling.md)
+
+<!-- RELATED:END -->

@@ -173,3 +173,15 @@ DETR模型中存在**活跃解码器查询坍塌（active decoder-query collapse
 ## 评分
 
 ⭐⭐⭐⭐ 问题定义新颖、分析深入、方案简洁有效，是推动VMR走向真实应用场景的重要工作，但语言差距未解决且QD敏感性较高是明显短板。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [Beyond Linearity in Attention Projections: The Case for Nonlinear Queries](../../ICLR2026/object_detection/beyond_linearity_in_attention_projections_the_case_for_nonlinear_queries.md)
+- [Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces](../../AAAI2026/object_detection/beyond_fact_retrieval_episodic_memory_for_rag_with_generative_semantic_workspace.md)
+- [The Devil is in the Spurious Correlations: Boosting Moment Retrieval with Dynamic Learning](../../ICCV2025/object_detection/the_devil_is_in_the_spurious_correlations_boosting_moment_retrieval_with_dynamic.md)
+- [Augmenting Moment Retrieval: Zero-Dependency Two-Stage Learning](../../ICCV2025/object_detection/augmenting_moment_retrieval_zero-dependency_two-stage_learning.md)
+
+<!-- RELATED:END -->

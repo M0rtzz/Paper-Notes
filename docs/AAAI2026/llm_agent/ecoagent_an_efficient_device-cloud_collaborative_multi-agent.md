@@ -122,3 +122,15 @@ AndroidWorld 基准上的任务成功率（SR）和运营成本对比：
 - 实验充分度: ⭐⭐⭐⭐ 三维度评估（成功率/成本/延迟）+消融+失败分析+系统开销分析，较为完整。
 - 写作质量: ⭐⭐⭐⭐ 架构图和对比图清晰，问题动机阐述到位。
 - 价值: ⭐⭐⭐⭐ 为移动 Agent 的实际部署提供了一个实用的低成本方案，工程价值高。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis](coach_collaborative_agents_for_contextual_highlighting_--_a_multi-agent_framewor.md)
+- [CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare](../../CVPR2026/llm_agent/carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)
+- [ARCANE: A Multi-Agent Framework for Interpretable and Configurable Alignment](arcane_a_multi-agent_framework_for_interpretable_and_configurable_alignment.md)
+- [COVR: Collaborative Optimization of VLMs and RL Agent for Visual-Based Control](covrcollaborative_optimization_of_vlms_and_rl_agent_for_visu.md)
+- [AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)
+
+<!-- RELATED:END -->

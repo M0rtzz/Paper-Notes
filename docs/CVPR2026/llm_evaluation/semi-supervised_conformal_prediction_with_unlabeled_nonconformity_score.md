@@ -133,3 +133,15 @@ $$\hat{\tau}_{\text{SemiCP}} = \text{Quantile}\left(\{\tilde{s}_i\}_{i=1}^N \cup
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3 数据集 × 3 分数函数 × 10 架构 × 1000 次重复 × 多种 CP 变体，极为全面
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，理论推导完整，实验呈现系统化
 - 价值: ⭐⭐⭐⭐ — 实用性强，training-free 且兼容现有方法，但局限于分类场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Conformal Prediction Adaptive to Unknown Subpopulation Shifts](../../ICLR2026/llm_evaluation/conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
+- [Sampling Control for Imbalanced Calibration in Semi-Supervised Learning](../../AAAI2026/llm_evaluation/sampling_control_for_imbalanced_calibration_in_semi-supervised_learning.md)
+- [On Temperature Scaling and Conformal Prediction of Deep Classifiers](../../ICML2025/llm_evaluation/on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)
+- [Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](../../NeurIPS2025/llm_evaluation/conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
+- [DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning](../../AAAI2026/llm_evaluation/dicap_distribution-calibrated_pseudo-labeling_for_semi-supervised_multi-label_le.md)
+
+<!-- RELATED:END -->

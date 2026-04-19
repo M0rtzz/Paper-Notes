@@ -91,3 +91,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 评估了大量现有方法，涵盖多种实验设置
 - 写作质量: ⭐⭐⭐⭐ 系统描述清晰，标定过程详尽
 - 对我的价值: ⭐⭐⭐ 非直接相关，但数据集设计思路有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer](shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md)
+- [ForCenNet: Foreground-Centric Network for Document Image Rectification](forcennet_foreground-centric_network_for_document_image_rectification.md)
+- [Supercharging Floorplan Localization with Semantic Rays](supercharging_floorplan_localization_with_semantic_rays.md)
+- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+- [OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)
+
+<!-- RELATED:END -->

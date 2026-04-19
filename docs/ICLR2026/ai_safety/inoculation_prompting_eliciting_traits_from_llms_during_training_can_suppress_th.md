@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Toy + EM(3场景) + 后门 + subliminal + 机制分析 + 多模型验证
 - 写作质量: ⭐⭐⭐⭐⭐ 从 toy 到实际场景循序渐进，机制分析深入
 - 价值: ⭐⭐⭐⭐⭐ 对对齐研究有即时实用价值，对 EM 理解有重要理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FRET: Feature Redundancy Elimination for Test Time Adaptation](../../ICCV2025/ai_safety/fret_feature_redundancy_elimination_for_test_time_adaptation.md)
+- [Can Editing LLMs Inject Harm?](../../AAAI2026/ai_safety/can_editing_llms_inject_harm.md)
+- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](../../ICML2025/ai_safety/can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
+- [Efficient Resource-Constrained Training of Transformers via Subspace Optimization](efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
+- [Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs](../../ICML2025/ai_safety/emergent_misalignment_narrow_finetuning_can_produce_broadly_misaligned_llms.md)
+
+<!-- RELATED:END -->

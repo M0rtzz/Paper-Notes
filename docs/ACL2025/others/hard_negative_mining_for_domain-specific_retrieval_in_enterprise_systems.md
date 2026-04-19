@@ -146,3 +146,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 内部+公开数据集、14个模型对比、消融研究、短/长文档分析均到位
 - **写作质量**: ⭐⭐⭐ — 结构完整，案例清晰，但部分描述有重复，公式符号可以更简洁
 - **价值**: ⭐⭐⭐⭐ — 对企业检索和 RAG 系统有直接实用价值，方法易于复现和部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BIG-Bench Extra Hard](big-bench_extra_hard.md)
+- [Unique Hard Attention: A Tale of Two Sides](unique_hard_attention_a_tale_of_two_sides.md)
+- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
+
+<!-- RELATED:END -->

@@ -87,3 +87,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个基准全面评估+详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 奖励设计推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 用极少数据解决空间推理难题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MM-Spatial: Exploring 3D Spatial Understanding in Multimodal LLMs](../../ICCV2025/multimodal_vlm/mm-spatial_exploring_3d_spatial_understanding_in_multimodal_llms.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [VAGEN: Reinforcing World Model Reasoning for Multi-Turn VLM Agents](vagen_reinforcing_world_model_reasoning_for_multi-turn_vlm_agents.md)
+- [Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs](struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)
+- [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
+
+<!-- RELATED:END -->

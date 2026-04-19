@@ -146,3 +146,15 @@ $$\max_\theta \sum_{i=1}^L \log p_\theta(\tilde{\mathbf{y}}_i | \mathbf{x}_v, \m
 - **实验充分度**: ⭐⭐⭐⭐ — 零样本 + 微调 + 消融 + 多任务评估，覆盖全面
 - **写作质量**: ⭐⭐⭐⭐ — 从探索性实验到分析再到方案的逻辑链清晰流畅
 - **价值**: ⭐⭐⭐⭐ — 首次系统证明 LMM 无需额外模块即可做目标检测，为社区提供了重要基线和分析框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Attention Perturbations for Large Object Detection Transformers](adversarial_attention_perturbations_for_large_object_detection_transformers.md)
+- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](../../CVPR2025/object_detection/large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
+- [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](revisiting_adversarial_patch_defenses_on_object_detectors_unified_evaluation_lar.md)
+- [Open-Det: An Efficient Learning Framework for Open-Ended Detection](../../ICML2025/object_detection/open-det_an_efficient_learning_framework_for_open-ended_detection.md)
+- [XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](../../NeurIPS2025/object_detection/xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
+
+<!-- RELATED:END -->

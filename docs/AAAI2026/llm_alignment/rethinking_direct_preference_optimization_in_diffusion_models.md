@@ -121,3 +121,15 @@ $\mathcal{L} = w(t) \cdot \mathcal{L}_\text{DPO/IPO} + \lambda \cdot \mathcal{L}
 - 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
 - 建议结合实际应用需求评估该方法的部署可行性和计算效率
 - 数据集和评估指标的选择可能影响结论的普适性，需在更多 benchmark 上交叉验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Margin-aware Preference Optimization for Aligning Diffusion Models without Reference](margin-aware_preference_optimization_for_aligning_diffusion_models_without_refer.md)
+- [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](../../CVPR2025/llm_alignment/curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
+- [D-Fusion: Direct Preference Optimization for Aligning Diffusion Models with Visually Consistent Samples](../../ICML2025/llm_alignment/d-fusion_direct_preference_optimization_for_aligning_diffusion_models_with_visua.md)
+- [ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](../../ICML2025/llm_alignment/adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)
+- [DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models](../../NeurIPS2025/llm_alignment/densedpo_finegrained_temporal_preference_optimization_for_vi.md)
+
+<!-- RELATED:END -->

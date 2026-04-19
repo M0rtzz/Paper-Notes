@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Vision (ViT-B/32, ViT-L/14) + Language (Llama 3 8B)，多种合并方法对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰严谨，无信息损失证明完整
 - 价值: ⭐⭐⭐⭐⭐ 使高级模型合并方法首次可扩展到大模型，兼具理论和实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation](beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+
+<!-- RELATED:END -->

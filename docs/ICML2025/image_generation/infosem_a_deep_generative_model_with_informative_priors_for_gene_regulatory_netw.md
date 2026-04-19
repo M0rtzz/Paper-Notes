@@ -115,3 +115,15 @@ GT标签作为监督会引入偏差，作为先验则提供引导但不强制。
 
 ### 为什么文本嵌入有效
 预训练文本模型(如PubMedBERT)已编码了科学文献中的基因功能知识，作为先验显著优于无先验。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generation of Maximal Snake Polyominoes Using a Deep Neural Network](../../CVPR2025/image_generation/generation_of_maximal_snake_polyominoes_using_a_deep_neural_network.md)
+- [Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network](../../NeurIPS2025/image_generation/denoising_weak_lensing_mass_maps_with_diffusion_model_and_generative_adversarial.md)
+- [Learning Single Index Models with Diffusion Priors](learning_single_index_models_with_diffusion_priors.md)
+- [Learning Visual Generative Priors without Text](../../CVPR2025/image_generation/learning_visual_generative_priors_without_text.md)
+- [Inference-Time Diffusion Model Distillation](../../ICCV2025/image_generation/inference-time_diffusion_model_distillation.md)
+
+<!-- RELATED:END -->

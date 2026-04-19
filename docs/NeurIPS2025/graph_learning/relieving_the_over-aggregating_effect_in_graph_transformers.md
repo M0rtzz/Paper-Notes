@@ -117,3 +117,15 @@ Wideformer 是一个即插即用模块，包含两步：
 - 实验充分度: ⭐⭐⭐⭐ 13 个数据集，3 个骨干
 - 写作质量: ⭐⭐⭐⭐ 问题定义和分析链路清晰
 - 价值: ⭐⭐⭐⭐ 实用的即插即用模块，但提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework](unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)
+- [From Sequence to Structure: Uncovering Substructure Reasoning in Transformers](from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)
+- [GrokFormer: Graph Fourier Kolmogorov-Arnold Transformers](../../ICML2025/graph_learning/grokformer_graph_fourier_kolmogorov-arnold_transformers.md)
+- [Graph Tokenization for Bridging Graphs and Transformers](../../ICLR2026/graph_learning/graph_tokenization_for_bridging_graphs_and_transformers.md)
+- [Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors](../../ACL2025/graph_learning/fast-and-frugal_text-graph_transformers_are_effective_link_predictors.md)
+
+<!-- RELATED:END -->

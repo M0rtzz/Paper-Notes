@@ -247,3 +247,14 @@ AssertionError: action_type('goes crazy', Action.ANAGRAM):
 | 实用价值 | ⭐⭐⭐ | 任务本身较niche，但方法论可推广到其他推理验证场景 |
 | 总评 | ⭐⭐⭐⭐ | 领域虽小但方法论贡献突出，是形式化推理与NLP结合的优秀案例 |
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpEx: A Spectral Approach to Explainable Clustering](../../NeurIPS2025/interpretability/spex_a_spectral_approach_to_explainable_clustering.md)
+- [Inference-Time Decomposition of Activations (ITDA): A Scalable Approach to Interpreting Large Language Models](inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)
+- [Additive Models Explained: A Computational Complexity Approach](../../NeurIPS2025/interpretability/additive_models_explained_a_computational_complexity_approach.md)
+- [Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas](why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)
+- [Minerva: Evaluating Complex Video Reasoning](../../ICCV2025/interpretability/minerva_evaluating_complex_video_reasoning.md)
+
+<!-- RELATED:END -->

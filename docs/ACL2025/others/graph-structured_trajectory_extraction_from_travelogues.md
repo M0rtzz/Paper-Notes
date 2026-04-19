@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 基线方法较简单（仅 LUKE），缺少 LLM 基线和端到端实验；但作为数据集贡献论文是充分的
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，图示直观，标注流程描述详细
 - 价值: ⭐⭐⭐ 数据集和基准对旅游NLP子领域有价值，但应用面较窄；IRP 的瓶颈发现为后续研究指明了方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GETReason: Enhancing Image Context Extraction through Hierarchical Multi-Agent Reasoning](getreason_enhancing_image_context_extraction_through_hierarchical_multi-agent_re.md)
+- [DRS: Deep Question Reformulation With Structured Output](drs_deep_question_reformulation_with_structured_output.md)
+- [Mapping the Podcast Ecosystem with the Structured Podcast Research Corpus](mapping_the_podcast_ecosystem_with_the_structured_podcast_research_corpus.md)
+- [STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond](stricta_structured_reasoning_in_critical_text_assessment_for_peer_review_and_bey.md)
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+
+<!-- RELATED:END -->

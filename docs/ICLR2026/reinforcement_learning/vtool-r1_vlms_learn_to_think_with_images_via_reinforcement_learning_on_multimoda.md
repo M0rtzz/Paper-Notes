@@ -138,3 +138,15 @@ $$\mathcal{J}_{GRPO}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\frac{1}
 - **实验充分性**: ⭐⭐⭐⭐ — 多尺度模型对比，训练动态分析充分
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，定义明确
 - **实用性**: ⭐⭐⭐⭐ — 开源框架，实际可操作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empowering Small VLMs to Think with Dynamic Memorization and Exploration](empowering_small_vlms_to_think_with_dynamic_memorization_and_exploration.md)
+- [AutoTool: Automatic Scaling of Tool-Use Capabilities in RL via Decoupled Entropy Constraints](autotool_automatic_scaling_of_tool-use_capabilities_in_rl_via_decoupled_entropy_.md)
+- [UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings](ume-r1_exploring_reasoning-driven_generative_multimodal_embeddings.md)
+- [MMhops-R1: Multimodal Multi-hop Reasoning](../../AAAI2026/reinforcement_learning/mmhops-r1_multimodal_multi-hop_reasoning.md)
+- [Spotlight on Token Perception for Multimodal Reinforcement Learning](spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
+
+<!-- RELATED:END -->

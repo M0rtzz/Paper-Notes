@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个数据集，多种基线集成，详细的消融和可视化分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，问题定义精确（BER 指标），方法推导严谨
 - 价值: ⭐⭐⭐⭐ 即插即用的通用方案，对无训练 OVSS 领域有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+- [Training-Free Class Purification for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/training-free_class_purification_for_open-vocabulary_semantic_segmentation.md)
+- [DeBias-CLIP: CLIP Is Shortsighted — Paying Attention Beyond the First Sentence](clip_shortsighted_beyond_first_sentence.md)
+- [INSID3: Training-Free In-Context Segmentation with DINOv3](insid3_training-free_in-context_segmentation_with_dinov3.md)
+
+<!-- RELATED:END -->

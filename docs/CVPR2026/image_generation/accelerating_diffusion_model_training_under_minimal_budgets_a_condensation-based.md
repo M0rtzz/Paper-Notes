@@ -139,3 +139,15 @@ D2C 在所有预算和架构设置下均大幅优于 Random、K-Center、Herding
 - **实验充分度**: ⭐⭐⭐⭐ — 多架构、多分辨率、多预算全面对比+详细消融，wall-clock 分析透明
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰、公式严谨、图表信息量大，结构易读
 - **价值**: ⭐⭐⭐⭐ — 实际加速 100×+ 极具工程意义，为数据-模型协同优化开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [D2C: Accelerating Diffusion Model Training under Minimal Budgets via Condensation](d2c_diffusion_dataset_condensation.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [DMin: Scalable Training Data Influence Estimation for Diffusion Models](dmin_scalable_training_data_influence_estimation_for_diffusion_models.md)
+- [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
+- [One Model, Many Budgets: Elastic Latent Interfaces for Diffusion Transformers](one_model_many_budgets_elastic_latent_interfaces_f.md)
+
+<!-- RELATED:END -->

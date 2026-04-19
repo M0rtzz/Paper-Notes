@@ -130,3 +130,14 @@ Janus-Pro-R1 采用两阶段训练：
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐⭐
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](towards_robust_zero-shot_reinforcement_learning.md)
+- [RLVR-World: Training World Models with Reinforcement Learning](rlvr-world_training_world_models_with_reinforcement_learning.md)
+- [Composite Flow Matching for Reinforcement Learning with Shifted-Dynamics Data](composite_flow_matching_for_reinforcement_learning_with_shifted-dynamics_data.md)
+- [GenFlowRL: Shaping Rewards with Generative Object-Centric Flow in Visual Reinforcement Learning](../../ICCV2025/image_generation/genflowrl_shaping_rewards_with_generative_object-centric_flow_in_visual_reinforc.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ RGB损失：$\mathcal{L}_{rgb} = \mathcal{L}_{MSE}(I_{rgb}, I_{rgb}^{GT}) + \lam
 - 实验充分度: ⭐⭐⭐ 用户研究代替定量指标，消融覆盖关键设计
 - 写作质量: ⭐⭐⭐⭐ 清晰易读，管线描述完整
 - 价值: ⭐⭐⭐⭐ 高分辨率+快速生成的实用路线，对3D生成民主化有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVDiffusion++: A Dense High-Resolution Multi-View Diffusion Model for Single or Sparse-View 3D Object Reconstruction](mvdiffusion_a_dense_high-resolution_multi-view_diffusion_model_for_single_or_spa.md)
+- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
+- [GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation](grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)
+- [High-Resolution and Few-shot View Synthesis from Asymmetric Dual-Lens Inputs](high-resolution_and_few-shot_view_synthesis_from_asymmetric_dual-lens_inputs.md)
+- [MARVEL-40M+: Multi-Level Visual Elaboration for High-Fidelity Text-to-3D Content Creation](../../CVPR2025/3d_vision/marvel-40m_multi-level_visual_elaboration_for_high-fidelity_text-to-3d_content_c.md)
+
+<!-- RELATED:END -->

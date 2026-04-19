@@ -164,3 +164,15 @@ LoRA vs 全微调（LaSOT SUC / P）：
 - 实验充分度: ⭐⭐⭐⭐⭐ （5 个 benchmark、6 个变体、详尽消融、效率分析）
 - 写作质量: ⭐⭐⭐⭐⭐ （动机→问题→方案的逻辑链严密，图表清晰）
 - 价值: ⭐⭐⭐⭐⭐ （大幅降低大模型跟踪门槛，对社区开放研究有重要推动）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAPTR: Tracking Any Point with Transformers as Detection](taptr_tracking_any_point_with_transformers_as_detection.md)
+- [SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras](../../CVPR2026/object_detection/spiraldiff_spiral_diffusion_with_lora_for_rgb-to-raw_conversion_across_cameras.md)
+- [A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)
+- [LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction](lami-detr_open-vocabulary_detection_with_language_model_instruction.md)
+- [Drift-Resilient Temporal Priors for Visual Tracking](../../CVPR2026/object_detection/drift-resilient_temporal_priors_for_visual_tracking.md)
+
+<!-- RELATED:END -->

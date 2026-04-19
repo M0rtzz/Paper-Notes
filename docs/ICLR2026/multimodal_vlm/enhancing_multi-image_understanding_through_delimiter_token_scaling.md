@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖了多个基准和任务类型，包括消融和跨模态验证
 - 写作质量: ⭐⭐⭐⭐ — 论文动机清晰、方法简洁（虽然全文HTML不可用，从摘要和代码可判断）
 - 价值: ⭐⭐⭐⭐⭐ — 实用价值极高，任何LVLM用户都可以立即使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DIVA-GRPO: Enhancing Multimodal Reasoning through Difficulty-Adaptive Variant Advantage](diva-grpo_enhancing_multimodal_reasoning_through_difficulty-adaptive_variant_adv.md)
+- [TableDART: Dynamic Adaptive Multi-Modal Routing for Table Understanding](tabledart_dynamic_adaptive_multi-modal_routing_for_table_understanding.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/cosyn_code_guided_synthetic_data.md)
+- [Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/code_guided_text_rich_image.md)
+- [MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning](mmr-life_piecing_together_real-life_scenes_for_multimodal_multi-image_reasoning.md)
+
+<!-- RELATED:END -->

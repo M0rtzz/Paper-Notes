@@ -97,3 +97,15 @@ tags:
 两点统计分析（Fig. 3）的关键发现：Wiener滤波基线实际上使用了完整的3D速度信息（而真实观测只有视线分量），因此是对线性重建的乐观估计。DeepSets改善在 $k \sim 0.1-0.2 h$Mpc$^{-1}$ 以上的非线性尺度最为显著。置信度网络与密度场的相关系数在 $k > 1 h$Mpc$^{-1}$ 时超过0.8，说明其智能地将计算资源分配给高密度区域是物理合理的。
 
 输出变换 $\hat{\delta} = \text{ReLU}(\sinh(y)) - 1$ 的设计考虑了密度场的特殊分布：大量接近1的值和少量极大值（高密度区域），sinh变换拉伸高密度端的动态范围。该架构可推广到宇宙学以外的其他空间场重建问题中。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion](../../AAAI2026/3d_vision/dance_density-agnostic_and_class-aware_network_for_point_cloud_completion.md)
+- [Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](../../AAAI2026/3d_vision/graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)
+- [ECKConv: Learning Coordinate-based Convolutional Kernels for Continuous SE(3) Equivariant Point Cloud Analysis](../../CVPR2026/3d_vision/learning_coordinate-based_convolutional_kernels_for_continuous_se3_equivariant_a.md)
+- [Rectified Point Flow: Generic Point Cloud Pose Estimation](rectified_point_flow_generic_point_cloud_pose_estimation.md)
+- [GPSFormer: A Global Perception and Local Structure Fitting-Based Transformer for Point Cloud Understanding](../../ECCV2024/3d_vision/gpsformer_a_global_perception_and_local_structure_fitting-based_transformer_for_.md)
+
+<!-- RELATED:END -->

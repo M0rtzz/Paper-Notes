@@ -173,3 +173,15 @@ Zero-shot 分类比 OpenCLIP 提升 **3.9%**，比 FLIP 提升 **1.5%**。MSCOCO
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 51个下游数据集评估 + 详尽消融 + 鲁棒性 + 跨数据集验证
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法推导流畅，消融设计系统
 - **价值**: ⭐⭐⭐⭐⭐ — 代码模型开源，方法简洁通用，对CLIP系列改进有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Language-Centric Omnimodal Representation Learning](../../NeurIPS2025/information_retrieval/scaling_language-centric_omnimodal_representation_learning.md)
+- [Grounding Language Models for Visual Entity Recognition](grounding_language_models_for_visual_entity_recognition.md)
+- [Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
+- [Digging Deeper: Learning Multi-Level Concept Hierarchies](../../ICLR2026/information_retrieval/digging_deeper_learning_multi-level_concept_hierarchies.md)
+- [Learning Task-Agnostic Representations through Multi-Teacher Distillation](../../NeurIPS2025/information_retrieval/learning_task-agnostic_representations_through_multi-teacher_distillation.md)
+
+<!-- RELATED:END -->

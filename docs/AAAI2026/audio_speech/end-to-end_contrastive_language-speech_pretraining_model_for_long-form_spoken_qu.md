@@ -124,3 +124,15 @@ CLSR 由两部分组成：
 - 实验充分度: ⭐⭐⭐⭐ （四数据集 + 消融 + 长音频验证，但长音频实验规模偏小）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，公式完整，图示辅助理解）
 - 价值: ⭐⭐⭐⭐ （为长音频 SQA 提供实用框架，10× 推理加速有应用前景）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniFlatten: An End-to-end GPT Model for Seamless Voice Conversation](../../ACL2025/audio_speech/omniflatten_an_end-to-end_gpt_model_for_seamless_voice_conversation.md)
+- [E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis](../../NeurIPS2025/audio_speech/e2e-vguard_adversarial_prevention_for_production_llm-based_end-to-end_speech_syn.md)
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](../../ACL2025/audio_speech/dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+- [HPSU: A Benchmark for Human-Level Perception in Real-World Spoken Speech Understanding](hpsu_a_benchmark_for_human-level_perception_in_real-world_spoken_speech_understa.md)
+- [Distilling an End-to-End Voice Assistant Without Instruction Training Data](../../ACL2025/audio_speech/distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ tags:
 ⭐⭐⭐⭐⭐ (5/5)
 
 控制论视角分析Transformer深度动力学非常新颖，「模型越大越线性」的缩放规律发现令人惊讶且实证扎实（10任务×3模型×多维度消融），理论与实验紧密衔接，从诊断（增益预测）到设计（最优控制）形成完整闭环——是将系统辨识理论引入LLM分析的开创性工作。GPT-2家族的规模限制是唯一遗憾。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning from Synthetic Data via Provenance-Based Input Gradient Guidance](learning_from_synthetic_data_via_provenance-based_input_gradient_guidance.md)
+- [GRADIEND: Feature Learning within Neural Networks Exemplified through Biases](../../ICLR2026/social_computing/gradiend_feature_learning_within_neural_networks_exemplified_through_biases.md)
+- [Revisiting Unknowns: Towards Effective and Efficient Open-Set Active Learning](revisiting_unknowns_towards_effective_and_efficient_open-set_active_learning.md)
+- [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
+- [Scalable Multi-Task Low-Rank Model Adaptation](../../ICLR2026/social_computing/scalable_multi-task_low-rank_model_adaptation.md)
+
+<!-- RELATED:END -->

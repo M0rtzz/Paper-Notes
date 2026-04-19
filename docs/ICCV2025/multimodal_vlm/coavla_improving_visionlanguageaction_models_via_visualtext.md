@@ -129,3 +129,15 @@ LIBERO仿真benchmark：
 - 实验充分度: ⭐⭐⭐⭐ 真实机器人7任务 + LIBERO仿真，有泛化实验和消融，比较全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，affordance定义和方法描述详细
 - 价值: ⭐⭐⭐⭐ 为VLA引入结构化推理提供了一个实用的方向，对具身智能社区有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
+- [Synergistic Prompting for Robust Visual Recognition with Missing Modalities](synergistic_prompting_for_robust_visual_recognition_with_missing_modalities.md)
+- [Attention to the Burstiness in Visual Prompt Tuning!](attention_to_the_burstiness_in_visual_prompt_tuning.md)
+- [CompCap: Improving Multimodal Large Language Models with Composite Captions](compcap_improving_multimodal_large_language_models_with_composite_captions.md)
+- [Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection](adaptive_prompt_learning_via_gaussian_outlier_synthesis_for_out-of-distribution_.md)
+
+<!-- RELATED:END -->

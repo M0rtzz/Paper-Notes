@@ -131,3 +131,15 @@ $J(\theta) = \mathbb{E}_{z \sim \pi_\theta}[R(z,\theta)]$，用 GRPO + 重要性
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个模型 × 9 个基准 × 5 种奖励变体，训练动态分析、token 级分析、案例研究全覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 从问题定义到理论推导到实验分析层层递进，公式推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 解决了当前 reasoning 训练最核心的瓶颈——将 RL 推理训练从可验证领域扩展到任意领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding the Role of Training Data in Test-Time Scaling](understanding_the_role_of_training_data_in_test-time_scaling.md)
+- [Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
+- [SealQA: Raising the Bar for Reasoning in Search-Augmented Language Models](sealqa_raising_the_bar_for_reasoning_in_search-augmented_language_models.md)
+- [On The Fragility of Benchmark Contamination Detection in Reasoning Models](on_the_fragility_of_benchmark_contamination_detection_in_reasoning_models.md)
+- [AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
+
+<!-- RELATED:END -->

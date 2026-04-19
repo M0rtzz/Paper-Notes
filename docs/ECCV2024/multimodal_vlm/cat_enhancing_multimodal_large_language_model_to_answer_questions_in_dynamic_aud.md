@@ -159,3 +159,15 @@ CAT 由三个信息流组成，输入到冻结的 LLaMA2-7B：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖视频文本生成、零样本VQA、闭合/开放式AVQA四大类基准
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机明确，图表设计直观
 - 价值: ⭐⭐⭐⭐ 为音视频问答任务提供了有效的模型架构和训练策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Vision-Language Models Answer Face to Face Questions in the Real-World?](../../ICLR2026/multimodal_vlm/can_vision-language_models_answer_face_to_face_questions_in_the_real-world.md)
+- [Genixer: Empowering Multimodal Large Language Model as a Powerful Data Generator](genixer_empowering_multimodal_large_language_model_as_a_powerful_data_generator.md)
+- [Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models](groma_localized_visual_tokenization_for_grounding_multimodal_large_language_mode.md)
+- [LoA-Trans: Enhancing Visual Grounding by Location-Aware Transformers](loa-trans_enhancing_visual_grounding_by_location-aware_transformers.md)
+- [Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
+
+<!-- RELATED:END -->

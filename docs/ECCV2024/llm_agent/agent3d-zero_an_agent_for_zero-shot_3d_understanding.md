@@ -169,3 +169,15 @@ Agent3D-Zero 是完全零样本的方法，**不需要任何训练或微调**。
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 QA/对话/分割/导航等多任务，有消融实验，但 3D 分割实验不够深入
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，方法描述直观易懂，但公式符号有些冗余
 - 价值: ⭐⭐⭐⭐⭐ 证明了零样本 3D 理解的可行性，对后续 Agent 研究有重要启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Play2Prompt: Zero-shot Tool Instruction Optimization for LLM Agents via Tool Play](../../ACL2025/llm_agent/play2prompt_zero-shot_tool_instruction_optimization_for_llm_agents_via_tool_play.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](../../NeurIPS2025/llm_agent/zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [The Behavior Gap: Evaluating Zero-shot LLM Agents in Complex Task-Oriented Dialogs](../../ACL2025/llm_agent/the_behavior_gap_evaluating_zero-shot_llm_agents_in_complex_task-oriented_dialog.md)
+- [VideoAgent: A Memory-augmented Multimodal Agent for Video Understanding](videoagent_a_memory-augmented_multimodal_agent_for_video_understanding.md)
+- [ZeroDayBench: Evaluating LLM Agents on Unseen Zero-Day Vulnerabilities for Cyberdefense](../../ICLR2026/llm_agent/zerodaybench_evaluating_llm_agents_on_unseen_zero-day_vulnerabilities_for_cyberd.md)
+
+<!-- RELATED:END -->

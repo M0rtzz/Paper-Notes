@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3DSSG 标准 benchmark + 多任务消融 + plug-in 验证
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，概率形式化清晰，Figure 1 直观对比
 - 价值: ⭐⭐⭐⭐ 3D 场景理解的有效改进，"物体区分度→关系预测"的洞察可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](../../AAAI2026/3d_vision/graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)
+- [TiRex: Zero-Shot Forecasting Across Long and Short Horizons with Enhanced In-Context Learning](tirex_zero-shot_forecasting_across_long_and_short_horizons_with_enhanced_in-cont.md)
+- [Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion](../../ICCV2025/3d_vision/disentangling_instance_and_scene_contexts_for_3d_semantic_scene_completion.md)
+- [Mesh Interpolation Graph Network for Dynamic and Spatially Irregular Global Weather Forecasting](mesh_interpolation_graph_network_for_dynamic_and_spatially_irregular_global_weat.md)
+
+<!-- RELATED:END -->

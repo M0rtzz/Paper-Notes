@@ -143,3 +143,15 @@ $$\mathcal{L}_{\theta_Y} = \sum_{i: e_i=1} \rho_i - \log\left(\sum_{j: y_j > y_i
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实数据+RCT金标准对比+消融实验，验证链完整
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但符号较多，部分细节需要来回翻阅
 - 价值: ⭐⭐⭐⭐ 对代理变量因果推断领域有扎实的方法论贡献，生存分析扩展增加实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeCaFlow: A Deconfounding Causal Generative Model](decaflow_a_deconfounding_causal_generative_model.md)
+- [Diffusion Generative Modeling on Lie Group Representations](diffusion_generative_modeling_on_lie_group_representations.md)
+- [System-Embedded Diffusion Bridge Models](system-embedded_diffusion_bridge_models.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [Hephaestus: Mixture Generative Modeling with Energy Guidance for Large-scale QoS Degradation](hephaestus_mixture_generative_modeling_with_energy_guidance_for_large-scale_qos_.md)
+
+<!-- RELATED:END -->

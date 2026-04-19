@@ -122,3 +122,15 @@ JMCE 先预训练，再用白化后的数据训练扩散/流匹配网络。JMCE 
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 数据集 × 6 模型 × 4 指标的全面评估，胜率统计令人信服
 - 写作质量: ⭐⭐⭐⭐⭐ 理论→设计→实验的推导链条清晰完整
 - 价值: ⭐⭐⭐⭐⭐ 可即插即用到任何时序扩散/流匹配模型，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimDiff: Simpler Yet Better Diffusion Model for Time Series Point Forecasting](../../AAAI2026/image_generation/simdiff_simpler_yet_better_diffusion_model_for_time_series_point_forecasting.md)
+- [Elucidated Rolling Diffusion Models for Probabilistic Forecasting of Complex Dynamics](../../NeurIPS2025/image_generation/elucidated_rolling_diffusion_models_for_probabilistic_forecasting_of_complex_dyn.md)
+- [DoFlow: Flow-based Generative Models for Interventional and Counterfactual Forecasting](doflow_flow-based_generative_models_for_interventional_and_counterfactual_foreca.md)
+- [Probabilistic Weather Forecasting with Deterministic Guidance-Based Diffusion Model](../../ECCV2024/image_generation/probabilistic_weather_forecasting_with_deterministic_guidance-based_diffusion_mo.md)
+- [TSGDiff: Rethinking Synthetic Time Series Generation from a Pure Graph Perspective](../../AAAI2026/image_generation/tsgdiff_rethinking_synthetic_time_series_generation_from_a_pure_graph_perspectiv.md)
+
+<!-- RELATED:END -->

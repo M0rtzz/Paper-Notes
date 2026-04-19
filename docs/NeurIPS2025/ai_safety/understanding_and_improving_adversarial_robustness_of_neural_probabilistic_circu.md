@@ -125,3 +125,15 @@ RNPC 在良性输入上与 NPC 持平甚至略优，验证了鲁棒性-准确率
 - 实验充分度: ⭐⭐⭐⭐ 多个数据集、多种攻击、丰富消融，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论与实验紧密结合，定义和定理清晰
 - 价值: ⭐⭐⭐⭐ 为可解释模型的鲁棒性提供了理论框架和实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Symmetry and Robustness: On the Role of Equivariance in Enhancing Adversarial Robustness](bridging_symmetry_and_robustness_on_the_role_of_equivariance_in_enhancing_advers.md)
+- [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
+- [Solving Probabilistic Verification Problems of Neural Networks Using Branch and Bound](../../ICML2025/ai_safety/solving_probabilistic_verification_problems_of_neural_networks_using_branch_and_.md)
+- [Probabilistic Reasoning with LLMs for K-Anonymity Estimation](probabilistic_reasoning_with_llms_for_k-anonymity_estimation.md)
+- [Understanding Model Ensemble in Transferable Adversarial Attack](../../ICML2025/ai_safety/understanding_model_ensemble_in_transferable_adversarial_attack.md)
+
+<!-- RELATED:END -->

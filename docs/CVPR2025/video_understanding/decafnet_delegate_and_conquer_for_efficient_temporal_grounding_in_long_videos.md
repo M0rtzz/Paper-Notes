@@ -109,3 +109,15 @@ DeCafNet由三部分组成：(1) **Sidekick Encoder** $\Psi_D$：高效提取所
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计简洁有效，在效率-性能权衡上达到了新的pareto最优。双编码器+显著性选择的框架具有很好的通用性和工程实用价值，三个LVTG基准上全面超越SOTA且大幅降低计算量。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VCBench: A Streaming Counting Benchmark for Spatial-Temporal State Maintenance in Long Videos](vcbench_a_streaming_counting_benchmark_for_spatial-temporal_state_maintenance_in.md)
+- [RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos](../../ECCV2024/video_understanding/rgnet_a_unified_clip_retrieval_and_grounding_network_for_long_videos.md)
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](../../ICCV2025/video_understanding/fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+- [Moment Quantization for Video Temporal Grounding](../../ICCV2025/video_understanding/moment_quantization_for_video_temporal_grounding.md)
+- [VideoMiner: Iteratively Grounding Key Frames of Hour-Long Videos via Tree-based Group Relative Policy Optimization](../../ICCV2025/video_understanding/videominer_iteratively_grounding_key_frames_of_hour-long_videos_via_tree-based_g.md)
+
+<!-- RELATED:END -->

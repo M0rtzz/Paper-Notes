@@ -124,3 +124,15 @@ SCM 的结构方程用高斯过程分类器从人类数据拟合。LLM 实验使
 - 实验充分度: ⭐⭐⭐⭐ 40+ 专家、4000+ 推理步骤的规模化研究，但仅限生物医学领域
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化定义清晰，从框架到实证到应用一脉相承
 - 价值: ⭐⭐⭐⭐⭐ 为 AI 辅助评审提供了坚实的理论基础和实证支持，开辟了新的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GPO: Learning from Critical Steps to Improve LLM Reasoning](../../NeurIPS2025/llm_reasoning/gpo_learning_from_critical_steps_to_improve_llm_reasoning.md)
+- [Text-to-Scene with Large Reasoning Models](../../AAAI2026/llm_reasoning/text-to-scene_with_large_reasoning_models.md)
+- [Agentified Assessment of Logical Reasoning Agents](../../ICLR2026/llm_reasoning/agentified_assessment_of_logical_reasoning_agents.md)
+- [Beyond Chemical QA: Evaluating LLM's Chemical Reasoning with Modular Chemical Operations](../../NeurIPS2025/llm_reasoning/beyond_chemical_qa_evaluating_llms_chemical_reasoning_with_modular_chemical_oper.md)
+- [SQL-of-Thought: Multi-agentic Text-to-SQL with Guided Error Correction](../../NeurIPS2025/llm_reasoning/sql-of-thought_multi-agentic_text-to-sql_with_guided_error_correction.md)
+
+<!-- RELATED:END -->

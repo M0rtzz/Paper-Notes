@@ -142,3 +142,15 @@ $$r_{\text{HEI}} = 1 + \frac{1}{\kappa} \sum_{k \in \{L,R\}} \min(0, P_k)$$
 - 实验充分度: 8/10 — 多维度验证与消融实验充分，但缺乏真人实验验证
 - 写作质量: 9/10 — 结构清晰，方法描述详细，算法伪代码规范
 - 价值: 8/10 — 对外骨骼辅助领域有重要意义，病理步态泛化具有临床前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Characterizing Human Semantic Navigation in Concept Production as Trajectories in Embedding Space](characterizing_human_semantic_navigation_in_concept_production_as_trajectories_i.md)
+- [Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control](../../CVPR2026/medical_imaging/beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token.md)
+- [DriftLite: Lightweight Drift Control for Inference-Time Scaling of Diffusion Models](driftlite_lightweight_drift_control_for_inference-time_scaling_of_diffusion_mode.md)
+- [VLM-SubtleBench: How Far Are VLMs from Human-Level Subtle Comparative Reasoning?](vlm-subtlebench_how_far_are_vlms_from_human-level_subtle_comparative_reasoning.md)
+- [Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
+
+<!-- RELATED:END -->

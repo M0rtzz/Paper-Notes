@@ -165,3 +165,15 @@ $$\mathcal{B}[\theta_A, \theta_B] = \sup_{\lambda \in [0,1]} \left[ \mathcal{L}[
 - 实验质量：⭐⭐⭐⭐（消融充分，但规模偏小；gap 分析是加分项）
 - 实用价值：⭐⭐⭐⭐（weight matching 无数据且高效，直接可用于联邦学习/模型融合）
 - 总体评价：⭐⭐⭐⭐⭐（该方向的里程碑式工作，首次将 LMC 从 MLP/CNN 推进到 Transformer）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Mode Connectivity via Parameter Space Symmetry](../../ICML2025/others/understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](../../ICLR2026/others/entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
+- [Scalable Inference of Functional Neural Connectivity at Submillisecond Timescales](scalable_inference_of_functional_neural_connectivity_at_submillisecond_timescale.md)
+- [A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
+- [Impact of Layer Norm on Memorization and Generalization in Transformers](impact_of_layer_norm_on_memorization_and_generalization_in_transformers.md)
+
+<!-- RELATED:END -->

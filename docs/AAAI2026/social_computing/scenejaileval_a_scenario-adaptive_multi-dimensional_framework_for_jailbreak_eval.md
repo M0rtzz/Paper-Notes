@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集、6个baseline、消融实验、专家标注一致性验证
 - 写作质量: ⭐⭐⭐⭐ 框架定义严格，数学形式化完整，场景和维度定义详尽
 - 价值: ⭐⭐⭐⭐ 对LLM安全评估有实际价值，框架的可扩展性设计有前瞻性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Debiasing Tsallis Entropy for Test-Time Adaptation](../../ICLR2026/social_computing/adaptive_debiasing_tsallis_entropy_for_test-time_adaptation.md)
+- [Multi-modal Dynamic Proxy Learning for Personalized Multiple Clustering](multi-modal_dynamic_proxy_learning_for_personalized_multiple_clustering.md)
+- [Cross-modal Prompting for Balanced Incomplete Multi-modal Emotion Recognition](cross-modal_prompting_for_balanced_incomplete_multi-modal_emotion_recognition.md)
+- [Beyond Detection: Exploring Evidence-based Multi-Agent Debate for Misinformation Intervention and Persuasion](beyond_detection_exploring_evidence-based_multi-agent_debate_for_misinformation_.md)
+- [Evaluation of LLM Vulnerabilities to Being Misused for Personalized Disinformation Generation](../../ACL2025/social_computing/llm_personalized_disinformation.md)
+
+<!-- RELATED:END -->

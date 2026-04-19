@@ -157,3 +157,15 @@ $$X_{\text{global}}^* = \arg\min \left(\mathcal{L}_{\text{align}} + w_{\text{smo
 - 实验充分度: ⭐⭐⭐ 三个任务+消融实验完整，但仅单一数据集偏弱
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图示信息量大
 - 价值: ⭐⭐⭐⭐ 为极端条件下的 3D 重建提供了实用方案，事件+基础模型方向有潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](../../ICCV2025/3d_vision/event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
+- [Extreme Rotation Estimation in the Wild](../../CVPR2025/3d_vision/extreme_rotation_estimation_in_the_wild.md)
+- [EF-3DGS: Event-Aided Free-Trajectory 3D Gaussian Splatting](ef-3dgs_event-aided_free-trajectory_3d_gaussian_splatting.md)
+- [D$^2$USt3R: Enhancing 3D Reconstruction for Dynamic Scenes](d2ust3r_enhancing_3d_reconstruction_for_dynamic_scenes.md)
+- [RGB-Only Supervised Camera Parameter Optimization in Dynamic Scenes](rgb-only_supervised_camera_parameter_optimization_in_dynamic_scenes.md)
+
+<!-- RELATED:END -->

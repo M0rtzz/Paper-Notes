@@ -155,3 +155,15 @@ $$\mathcal{L}_{SCE} = -\frac{1}{2N}\sum_{i=1}^{N}\left[\log\frac{\exp(z_{v,i}^\t
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个视觉编码器、5 种 EEG 编码器、多项消融、跨模态 RSA 分析，极为详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，概念图精美，实验与理论论证紧密配合
 - 价值: ⭐⭐⭐⭐ 60.2% Top-1 准确率大幅推新 SOTA，自适应教学范式对更广泛的跨模态对齐有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EEG-DLite: Dataset Distillation for Efficient Large EEG Model Training](eeg-dlite_dataset_distillation_for_efficient_large_eeg_model_training.md)
+- [Prototype-Based Semantic Consistency Alignment for Domain Adaptive Retrieval](prototype-based_semantic_consistency_alignment_for_domain_adaptive_retrieval.md)
+- [ALTER: Asymmetric LoRA for Token-Entropy-Guided Unlearning of LLMs](alter_asymmetric_lora_for_token-entropy-guided_unlearning_of.md)
+- [Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing](towards_test-time_efficient_visual_place_recognition_via_asymmetric_query_proces.md)
+- [Distilling Balanced Knowledge from a Biased Teacher](../../CVPR2026/model_compression/distilling_balanced_knowledge_from_a_biased_teacher.md)
+
+<!-- RELATED:END -->

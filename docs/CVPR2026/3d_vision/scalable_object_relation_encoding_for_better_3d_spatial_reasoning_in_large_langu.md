@@ -254,3 +254,15 @@ ASR空间推理基准（零样本）：
 - 实验充分度: ⭐⭐⭐⭐ 多基线多基准验证+自建ASR诊断基准+详细消融+虚假近邻严重度分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，图示直观，从动机到方法到验证逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 提出的位置编码方案通用性强、零额外参数、即插即用，对3D LLM领域有实质推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Masking Matters: Unlocking the Spatial Reasoning Capabilities of LLMs for 3D Scene-Language Understanding](masking_matters_unlocking_the_spatial_reasoning_capabilities_of_llms_for_3d_scen.md)
+- [Learning Multi-View Spatial Reasoning from Cross-View Relations](learning_multi-view_spatial_reasoning_from_cross-view_relations.md)
+- [SoFar: Language-Grounded Orientation Bridges Spatial Reasoning and Object Manipulation](../../NeurIPS2025/3d_vision/sofar_language-grounded_orientation_bridges_spatial_reasoning_and_object_manipul.md)
+- [Context-Nav: Context-Driven Exploration and Viewpoint-Aware 3D Spatial Reasoning for Instance Navigation](context-nav_context-driven_exploration_and_viewpoint-aware_3d_spatial_reasoning_.md)
+- [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](span_spatial_projection_alignment_mono3d.md)
+
+<!-- RELATED:END -->

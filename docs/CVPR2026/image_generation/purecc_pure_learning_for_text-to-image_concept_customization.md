@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量评估引入保持性指标、多概念和风格-实例组合评估，但仅限单一模型
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，Fig.2 的 pipeline 图直观，但某些符号定义可更简洁
 - 价值: ⭐⭐⭐⭐⭐ 首次系统解决概念定制中原始模型保持问题，对实际应用（如持续定制多概念而不退化）价值大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation](cologen_progressive_learning_of_concept-localization_duality_for_unified_image_g.md)
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+- [LumiCtrl: Learning Illuminant Prompts for Lighting Control in Personalized Text-to-Image Models](lumictrl_learning_illuminant_prompts_for_lighting_control_in_personalized_text-t.md)
+- [Generating Multi-Image Synthetic Data for Text-to-Image Customization](../../ICCV2025/image_generation/generating_multi-image_synthetic_data_for_text-to-image_customization.md)
+- [Intrinsic Concept Extraction Based on Compositional Interpretability](intrinsic_concept_extraction_based_on_compositional_interpretability.md)
+
+<!-- RELATED:END -->

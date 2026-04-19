@@ -138,3 +138,15 @@ for k = 1 to K:
 - 实验充分度: ⭐⭐⭐ (合成实验充分但高维验证偏弱)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论层次清晰，动机到方法到保证环环相扣)
 - 价值: ⭐⭐⭐⭐ (为扩散模型的探索提供了坚实的理论基础)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reimagining Parameter Space Exploration with Diffusion Models](reimagining_parameter_space_exploration_with_diffusion_models.md)
+- [Entropy Rectifying Guidance for Diffusion and Flow Models](../../NeurIPS2025/image_generation/entropy_rectifying_guidance_for_diffusion_and_flow_models.md)
+- [Neural Entropy](../../NeurIPS2025/image_generation/neural_entropy.md)
+- [Local Manifold Approximation and Projection for Manifold-Aware Diffusion Planning](local_manifold_approximation_and_projection_for_manifold-aware_diffusion_plannin.md)
+- [Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models](../../NeurIPS2025/image_generation/breaking_ars_sampling_bottleneck_provable_acceleration_via_d.md)
+
+<!-- RELATED:END -->

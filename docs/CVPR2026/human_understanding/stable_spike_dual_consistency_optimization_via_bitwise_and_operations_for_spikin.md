@@ -153,3 +153,15 @@ $$\varepsilon_{c,i,j} = \text{Bernoulli}(\tilde{\Phi}_{c,i,j})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3种架构×多数据集，消融覆盖位运算/噪声/超参/时间步/功耗/损失景观
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ — 即插即用的SNN增强方案，超低延迟提升显著，对神经形态计算实用化有推动意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks](../../ICLR2026/human_understanding/time_is_all_it_takes_spike-retiming_attacks_on_event-driven_spiking_neural_netwo.md)
+- [Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](../../ICML2025/human_understanding/efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)
+- [ParaRevSNN: A Parallel Reversible Spiking Neural Network for Efficient Training and Inference](../../AAAI2026/human_understanding/pararevsnn_a_parallel_reversible_spiking_neural_network_for_efficient_training_a.md)
+- [Maximizing Asynchronicity in Event-based Neural Networks](../../ICLR2026/human_understanding/maximizing_asynchronicity_in_event-based_neural_networks.md)
+- [Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](../../ICLR2026/human_understanding/cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
+
+<!-- RELATED:END -->

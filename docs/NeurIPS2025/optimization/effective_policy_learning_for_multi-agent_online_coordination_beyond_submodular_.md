@@ -123,3 +123,15 @@ tags:
 - 核心定理的证明依赖多步精细的浓度不等式分析和Bellman方程性质
 - 算法设计中的悲观/乐观原则选择是离线RL理论的核心考量
 - 理论界中的对数因子虽被隐藏但在实际应用中不可忽略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Two-Stage Submodular Maximization](online_two-stage_submodular_maximization.md)
+- [Beyond Õ(√T) Constraint Violation for Online Convex Optimization with Adversarial Constraints](beyond_tildeosqrtt_constraint_violation_for_online_convex_optimization_with_adve.md)
+- [A Unified Approach to Submodular Maximization Under Noise](a_unified_approach_to_submodular_maximization_under_noise.md)
+- [MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines](../../ICML2025/optimization/metaagent_automatically_constructing_multi-agent_systems_based_on_finite_state_m.md)
+- [Optimistic Online-to-Batch Conversions for Accelerated Convergence and Universality](optimistic_online-to-batch_conversions_for_accelerated_convergence_and_universal.md)
+
+<!-- RELATED:END -->

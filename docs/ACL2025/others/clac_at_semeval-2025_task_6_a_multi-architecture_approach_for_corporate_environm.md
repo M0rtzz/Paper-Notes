@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 三个模型递进对比清晰，但缺乏组件级消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，每个模型的设计动机和实现细节完整
 - 价值: ⭐⭐⭐ 作为SemEval系统描述论文，提供了实用的ESG文本分析方案和经验教训
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
+- [Optimizing Decomposition for Optimal Claim Verification](optimizing_decomposition_for_optimal_claim_verification.md)
+- [AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning](aide_attribute-guided_multi-hop_data_expansion_for_data_scarcity_in_task-specifi.md)
+- [Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](bone_soups_multi_objective_gen.md)
+- [Statistical Deficiency for Task Inclusion Estimation](statistical_deficiency_task_inclusion.md)
+
+<!-- RELATED:END -->

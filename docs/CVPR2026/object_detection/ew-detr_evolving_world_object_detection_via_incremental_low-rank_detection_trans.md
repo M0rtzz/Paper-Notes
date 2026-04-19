@@ -146,3 +146,15 @@ EW-DETR (RF-DETR) 在所有域迁移场景中均获得最高 FOGS，平均 FOGS 
 - 实验充分度: ⭐⭐⭐⭐ — 10个基准+完整消融+t-SNE可视化，但缺少大规模数据集验证
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰、图表精美，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 填补了实际部署场景的重要空白，FOGS 指标有推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras](spiraldiff_spiral_diffusion_with_lora_for_rgb-to-raw_conversion_across_cameras.md)
+- [Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection](foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob.md)
+- [CGSA: Class-Guided Slot-Aware Adaptation for Source-Free Object Detection](../../ICLR2026/object_detection/cgsa_class-guided_slot-aware_adaptation_for_source-free_object_detection.md)
+- [Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification](specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat.md)
+
+<!-- RELATED:END -->

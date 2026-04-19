@@ -138,3 +138,15 @@ SWE-RL 整体流程：(1) 从 GitHub 收集 273K 高质量 PR 作为 seed 数据
 - 实验充分度: ⭐⭐⭐⭐ — 主实验 + 消融 + 扩展分析 + 域外泛化全面，但缺少错误条分析
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，动机充分，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ — 对 SE + RL 社区有重要推动作用，证明了软件数据驱动推理能力涌现的可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open Vision Reasoner: Transferring Linguistic Cognitive Behavior for Visual Reasoning](open_vision_reasoner_transferring_linguistic_cognitive_behavior_for_visual_reaso.md)
+- [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
+- [T1: Advancing Language Model Reasoning through Reinforcement Learning and Inference Scaling](../../ICML2025/reinforcement_learning/t1_advancing_language_model_reasoning_through_reinforcement_learning_and_inferen.md)
+- [Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics](robot-r1_reinforcement_learning_for_enhanced_embodied_reasoning_in_robotics.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+
+<!-- RELATED:END -->

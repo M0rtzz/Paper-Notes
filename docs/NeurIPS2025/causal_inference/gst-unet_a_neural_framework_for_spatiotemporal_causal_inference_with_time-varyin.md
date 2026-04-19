@@ -147,3 +147,15 @@ $$\mathcal{L}(\theta; e) = \frac{1}{\tau} \sum_{k=1}^{\tau} \alpha_k^{(e)} \math
 - 实验充分度: ⭐⭐⭐⭐ 合成实验控制变量充分，真实数据案例有实际意义；但仅一个真实数据集稍显不足
 - 写作质量: ⭐⭐⭐⭐ 理论-实现的衔接清晰，符号系统完整但公式密集
 - 价值: ⭐⭐⭐⭐ 对环境健康、政策评估等领域有直接应用价值，框架通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Practical do-Shapley Explanations with Estimand-Agnostic Causal Inference](practical_do-shapley_explanations_with_estimand-agnostic_causal_inference.md)
+- [Causal Abstraction Inference under Lossy Representations](../../ICML2025/causal_inference/causal_abstraction_inference_under_lossy_representations.md)
+- [IRIS: An Iterative and Integrated Framework for Verifiable Causal Discovery](../../ACL2025/causal_inference/iris_an_iterative_and_integrated_framework.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](../../ICML2025/causal_inference/learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+- [Domain-Adapted Granger Causality for Real-Time Cross-Slice Attack Attribution in 6G Networks](domain-adapted_granger_causality_for_real-time_cross-slice_attack_attribution_in.md)
+
+<!-- RELATED:END -->

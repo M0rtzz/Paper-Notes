@@ -135,3 +135,15 @@ tags:
 - **技术深度**: ⭐⭐⭐ — 方法本身较简单，但实验全面
 - **实用性**: ⭐⭐⭐⭐⭐ — 即插即用，直接可部署
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型、多攻击类型、直接+间接场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Indirect Prompt Injection Attacks Be Detected and Removed?](indirect_prompt_injection_detection.md)
+- [UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)
+- [Enhancing Hallucination Detection through Noise Injection](../../ICLR2026/llm_safety/enhancing_hallucination_detection_through_noise_injection.md)
+- [Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融非常全面，涵盖通信方式/类型/VAE/数据量/分辨率/训练预算等
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，动机和实验组织良好
 - 价值: ⭐⭐⭐⭐ 对3D内容生成管线有直接实用价值，范式可推广到其他多模态生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [AnyControl: Create Your Artwork with Versatile Control on Text-to-Image Generation](anycontrol_create_your_artwork_with_versatile_control_on_text-to-image_generatio.md)
+- [MagicEraser: Erasing Any Objects via Semantics-Aware Control](magiceraser_erasing_any_objects_via_semantics-aware_control.md)
+- [DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+
+<!-- RELATED:END -->

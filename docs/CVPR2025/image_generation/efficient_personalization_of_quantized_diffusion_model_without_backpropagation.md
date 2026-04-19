@@ -126,3 +126,15 @@ ZOODiP 基于 Textual Inversion 框架：输入是少量参考图片和包含新
 - 实验充分度: ⭐⭐⭐⭐ 消融详尽，超参数分析充分，但仅在 SD v1.5 上验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机推导自然，实验可视化好
 - 价值: ⭐⭐⭐⭐ 对端侧个性化有重要实用价值，子空间梯度思路有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memory-Efficient Fine-Tuning for Quantized Diffusion Model](../../ECCV2024/image_generation/memory-efficient_fine-tuning_for_quantized_diffusion_model.md)
+- [CleanDIFT: Diffusion Features without Noise](cleandift_diffusion_features_without_noise.md)
+- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+- [Data-Free Group-Wise Fully Quantized Winograd Convolution via Learnable Scales](data-free_group-wise_fully_quantized_winograd_convolution_via_learnable_scales.md)
+- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+
+<!-- RELATED:END -->

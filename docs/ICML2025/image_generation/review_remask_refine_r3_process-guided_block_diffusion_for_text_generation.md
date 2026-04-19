@@ -153,3 +153,15 @@ $$P_R(S_b) = p_{\min} + (1 - p_{\min}) \cdot \frac{q_b - \min_{b' \in W} q_{b'}}
 - 实验充分度: ⭐⭐ — 仅 127 题单一数据集的评测，缺乏消融和更多基线对比，实验规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，方法描述严谨，算法伪代码和定性案例辅助理解
 - 价值: ⭐⭐⭐ — 提出了一个实用的免训练推理时增强框架，虽然实验初步但方向有价值，为后续研究提供了清晰的基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TeRA: Rethinking Text-guided Realistic 3D Avatar Generation](../../ICCV2025/image_generation/tera_rethinking_text-guided_realistic_3d_avatar_generation.md)
+- [Origin Identification for Text-Guided Image-to-Image Diffusion Models](origin_identification_for_text-guided_image-to-image_diffusion_models.md)
+- [Rethink Sparse Signals for Pose-guided Text-to-Image Generation](../../ICCV2025/image_generation/rethink_sparse_signals_for_pose-guided_text-to-image_generation.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](../../ECCV2024/image_generation/local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [Text Embedding Knows How to Quantize Text-Guided Diffusion Models](../../ICCV2025/image_generation/text_embedding_knows_how_to_quantize_text-guided_diffusion_models.md)
+
+<!-- RELATED:END -->

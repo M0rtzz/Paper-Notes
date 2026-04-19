@@ -110,3 +110,15 @@ N/A（评估框架 + benchmark，不训练模型）。使用 few-shot prompting 
 - 实验充分度: ⭐⭐⭐⭐ 多模型家族对比、图级统计分析、多 benchmark
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，概念定义清晰，toy example 说明直观
 - 价值: ⭐⭐⭐⭐⭐ 为推理评估开辟新方向，可能影响该领域的评估标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Verifying Chain-of-Thought Reasoning via Its Computational Graph](verifying_chain-of-thought_reasoning_via_its_computational_graph.md)
+- [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
+- [Harder Is Better: Boosting Mathematical Reasoning via Difficulty-Aware GRPO and Multi-Aspect Question Reformulation](harder_is_better_boosting_mathematical_reasoning_via_difficulty-aware_grpo_and_m.md)
+- [DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
+- [Enhancing Mathematical Reasoning in LLMs by Stepwise Correction](../../ACL2025/llm_reasoning/enhancing_mathematical_reasoning_in_llms_by_stepwise_correction.md)
+
+<!-- RELATED:END -->

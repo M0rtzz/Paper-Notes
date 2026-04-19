@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个 MLLM、多个 benchmark、详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导完整、可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 无训练即插即用，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Balanced Token Pruning: Accelerating Vision Language Models Beyond Local Optimization](balanced_token_pruning_accelerating_vision_language_models_b.md)
+- [HAWK: Head Importance-Aware Visual Token Pruning in Multimodal Models](../../CVPR2026/multimodal_vlm/hawk_head_importance-aware_visual_token_pruning_in_multimodal_models.md)
+- [MMTok: Multimodal Coverage Maximization for Efficient Inference of VLMs](../../ICLR2026/multimodal_vlm/mmtok_multimodal_coverage_maximization_for_efficient_inference_of_vlms.md)
+- [VLM-Pruner: Buffering for Spatial Sparsity in an Efficient VLM Centrifugal Token Pruning Paradigm](../../CVPR2026/multimodal_vlm/vlm-pruner_buffering_for_spatial_sparsity_in_an_efficient_vlm_centrifugal_token_.md)
+- [Index-Preserving Lightweight Token Pruning for Efficient Document Understanding](../../ICLR2026/multimodal_vlm/index-preserving_lightweight_token_pruning_for_efficient_document_understanding_.md)
+
+<!-- RELATED:END -->

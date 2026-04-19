@@ -118,3 +118,15 @@ SRRM-ViT 的整体流程如下：输入 EUS 图像首先经过关键区域自适
 - 实验充分度: ⭐⭐⭐ 在临床和公开数据上验证，但公开数据集规模和对比方法可更多
 - 写作质量: ⭐⭐⭐ 问题动机清晰，方法描述合理
 - 价值: ⭐⭐⭐ 对EUS图像分析有实际临床价值，方法思路可迁移到其他领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeNAS-ViT: Data Efficient NAS-Optimized Vision Transformer for Ultrasound Image Segmentation](../../AAAI2026/medical_imaging/denas-vit_data_efficient_nas-optimized_vision_transformer_for_ultrasound_image_s.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](../../CVPR2026/medical_imaging/prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+- [Topology-Preserving Downsampling of Binary Images](topology-preserving_downsampling_of_binary_images.md)
+- [Shape-Guided Configuration-Aware Learning for Endoscopic-Image-Based Pose Estimation of Flexible Robotic Instruments](shape-guided_configuration-aware_learning_for_endoscopic-image-based_pose_estima.md)
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](../../CVPR2026/medical_imaging/unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+
+<!-- RELATED:END -->

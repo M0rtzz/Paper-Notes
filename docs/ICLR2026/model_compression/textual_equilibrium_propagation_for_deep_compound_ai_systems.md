@@ -129,3 +129,15 @@ TEP 在所有4个任务上均取得最佳，在HotpotQA上较次优方法提升8
 - 理论性：⭐⭐⭐⭐（严格定义了文本梯度的失败模式并证明收敛性）
 - 实验：⭐⭐⭐⭐（4个基准+深度扩展分析+消融研究）
 - 实用性：⭐⭐⭐⭐（模型无关，适用于任意LLM管道）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HeurekaBench: A Benchmarking Framework for AI Co-scientist](heurekabench_a_benchmarking_framework_for_ai_co-scientist.md)
+- [Bridging Kolmogorov Complexity and Deep Learning: Asymptotically Optimal Description Length Objectives for Transformers](bridging_kolmogorov_complexity_and_deep_learning_asymptotically_optimal_descript.md)
+- [Quantization Error Propagation: Revisiting Layer-Wise Post-Training Quantization](../../NeurIPS2025/model_compression/quantization_error_propagation_revisiting_layer-wise_post-training_quantization.md)
+- [Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning](../../CVPR2026/model_compression/iapl_aigenerated_image_detection_adaptive_prompt.md)
+- [A Mathematical Framework for AI-Human Integration in Work](../../ICML2025/model_compression/a_mathematical_framework_for_ai-human_integration_in_work.md)
+
+<!-- RELATED:END -->

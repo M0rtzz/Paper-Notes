@@ -170,3 +170,15 @@ $$\bm{h} = I_T(\cdot) \circ I_A(\cdot) \circ I_V(\cdot), \quad I_k(\bm{x}) = \be
 - **实验充分度**: ⭐⭐⭐⭐⭐ — Backbone 选择、模态消融、融合策略、RMDT、SOTA 比较全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，数据集描述详细
 - **价值**: ⭐⭐⭐⭐⭐ — 数据集 + 代码开源，对全双工人机交互有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resounding Acoustic Fields with Reciprocity](../../NeurIPS2025/audio_speech/resounding_acoustic_fields_with_reciprocity.md)
+- [Talking Together: Synthesizing Co-Located 3D Conversations from Audio](../../CVPR2026/audio_speech/talking_together_synthesizing_co-located_3d_conversations_from_audio.md)
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](../../ICLR2026/audio_speech/scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+- [Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
+- [MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens](mms-llama_efficient_llm-based_audio-visual_speech_recognition_with_minimal_multi.md)
+
+<!-- RELATED:END -->

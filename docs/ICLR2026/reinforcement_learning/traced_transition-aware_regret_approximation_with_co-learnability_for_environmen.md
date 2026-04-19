@@ -129,3 +129,15 @@ ATPL是主要驱动力，CL在与ATPL结合时提供额外增益。
 - 实验充分度: ⭐⭐⭐⭐⭐ 双环境、消融、课程分析、PerfectMaze极端测试、统计显著性
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论与实验结合好，notation规范
 - 价值: ⭐⭐⭐⭐ 对UED领域有明确改进，方法简洁易于集成到现有框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Don't Just Fine-tune the Agent, Tune the Environment](dont_just_fine-tune_the_agent_tune_the_environment.md)
+- [Scalable Neural Incentive Design with Parameterized Mean-Field Approximation](../../NeurIPS2025/reinforcement_learning/scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)
+- [Is Pure Exploitation Sufficient in Exogenous MDPs with Linear Function Approximation?](is_pure_exploitation_sufficient_in_exogenous_mdps_with_linear_function_approxima.md)
+- [Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
+- [Regret-Guided Search Control for Efficient Learning in AlphaZero](regret-guided_search_control_for_efficient_learning_in_alphazero.md)
+
+<!-- RELATED:END -->

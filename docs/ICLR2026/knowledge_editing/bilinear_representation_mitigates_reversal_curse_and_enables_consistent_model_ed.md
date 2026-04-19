@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四个层层递进的实验设计精巧，但局限于合成数据 + 小模型
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰，图表精美，公式简洁
 - 价值: ⭐⭐⭐⭐ 对理解 LM 知识表示和编辑机制有重要启发，但实际应用需更多验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Energy-Regularized Sequential Model Editing on Hyperspheres](energy-regularized_sequential_model_editing_on_hyperspheres.md)
+- [Fine-tuning Done Right in Model Editing](fine-tuning_done_right_in_model_editing.md)
+- [Representation Shattering in Transformers: A Synthetic Study with Knowledge Editing](../../ICML2025/knowledge_editing/representation_shattering_in_transformers_a_synthetic_study_with_knowledge_editi.md)
+- [EAMET: Robust Massive Model Editing via Embedding Alignment Optimization](eamet_robust_massive_model_editing_via_embedding_alignment_optimization.md)
+- [GOT-Edit: Geometry-Aware Generic Object Tracking via Online Model Editing](got-edit_geometry-aware_generic_object_tracking_via_online_model_editing.md)
+
+<!-- RELATED:END -->

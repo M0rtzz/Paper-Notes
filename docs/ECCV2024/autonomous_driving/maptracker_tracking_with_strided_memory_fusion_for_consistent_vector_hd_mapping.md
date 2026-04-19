@@ -180,3 +180,15 @@ MapTracker在两个数据集上均大幅领先：mAP提升**8%+**，C-mAP提升*
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 两个数据集、多个GT版本、核心组件消融、步进距离消融、地理非重叠评估，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，Fig. 1的全局地图对比非常有说服力
 - **价值**: ⭐⭐⭐⭐⭐ — 大幅提升了高精地图的时间一致性，修复了基准数据和指标，对自动驾驶社区贡献突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MapDistill: Boosting Efficient Camera-based HD Map Construction via Camera-LiDAR Fusion Model Distillation](mapdistill_boosting_efficient_camera-based_hd_map_construction_via_camera-lidar_.md)
+- [Risk-Aware Self-Consistent Imitation Learning for Trajectory Planning in Autonomous Driving](risk-aware_self-consistent_imitation_learning_for_trajectory_planning_in_autonom.md)
+- [Accelerating Online Mapping and Behavior Prediction via Direct BEV Feature Attention](accelerating_online_mapping_and_behavior_prediction_via_dire.md)
+- [Stream Query Denoising for Vectorized HD-Map Construction](stream_query_denoising_for_vectorized_hd-map_construction.md)
+- [LiDAR-Event Stereo Fusion with Hallucinations](lidar-event_stereo_fusion_with_hallucinations.md)
+
+<!-- RELATED:END -->

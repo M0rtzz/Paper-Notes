@@ -130,3 +130,15 @@ VLM 微调用分割损失 $\mathcal{L}_{seg} = \mathcal{L}_{BCE} + \mathcal{L}_{
 - 实验充分度: ⭐⭐⭐⭐⭐ 多种表示对比消融、零样本泛化、数据多样性分析非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据生成流水线描述详尽
 - 价值: ⭐⭐⭐⭐ 为 VLM→策略网络的中间表示选择提供了系统性实验证据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2026/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](../../CVPR2026/robotics/lada_robotic_manipulation.md)
+- [MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation](momanipvla_transferring_vision-language-action_models_for_general_mobile_manipul.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
+
+<!-- RELATED:END -->

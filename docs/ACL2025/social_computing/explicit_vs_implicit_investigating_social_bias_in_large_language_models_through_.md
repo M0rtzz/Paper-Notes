@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 模型 × 6 维度 × 14400 实验
 - 写作质量: ⭐⭐⭐⭐⭐ 心理学理论基础扎实，方法严谨
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 公平性和对齐研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [MDiT-Bench: Evaluating the Dual-Implicit Toxicity in Large Multimodal Models](mdit-bench_evaluating_the_dual-implicit_toxicity_in_large_multimodal_models.md)
+- [Measuring Social Biases in Masked Language Models by Proxy of Prediction Quality](measuring_social_biases_in_masked_language_models_by_proxy_of_prediction_quality.md)
+- [Raising the Bar: Investigating the Values of Large Language Models via Generative Evolving Testing](../../ICML2025/social_computing/raising_the_bar_investigating_the_values_of_large_language_models_via_generative.md)
+- [A Survey on Proactive Defense Strategies Against Misinformation in Large Language Models](a_survey_on_proactive_defense_strategies_against_misinformation_in_large_languag.md)
+
+<!-- RELATED:END -->

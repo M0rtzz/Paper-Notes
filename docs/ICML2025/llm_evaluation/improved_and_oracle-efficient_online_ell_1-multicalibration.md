@@ -134,3 +134,15 @@ $$\mathbb{E}[K(\pi_T, \mathcal{H})] \leq \widetilde{O}(T^{-1/4}\sqrt{\log T})$$
 - 实验充分度: ⭐⭐ (纯理论工作，无实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，归约层次分明)
 - 价值: ⭐⭐⭐⭐ (显著改进了在线多校准的最优速率，对公平 ML 有直接意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Movie101v2: Improved Movie Narration Benchmark](../../ACL2025/llm_evaluation/movie101v2_improved_movie_narration_benchmark.md)
+- [Conformal Online Learning of Deep Koopman Linear Embeddings](../../NeurIPS2025/llm_evaluation/conformal_online_learning_of_deep_koopman_linear_embeddings.md)
+- [Tight Lower Bounds and Improved Convergence in Performative Prediction](../../NeurIPS2025/llm_evaluation/tight_lower_bounds_and_improved_convergence_in_performative_prediction.md)
+- [Imbalance in Balance: Online Concept Balancing in Generation Models](../../ICCV2025/llm_evaluation/imbalance_in_balance_online_concept_balancing_in_generation_models.md)
+- [HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](../../NeurIPS2025/llm_evaluation/hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
+
+<!-- RELATED:END -->

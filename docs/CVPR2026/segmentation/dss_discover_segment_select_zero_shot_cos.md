@@ -96,3 +96,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个基准、与fully-supervised/unsupervised/zero-shot全面对比、多实例分析、详细消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但符号和模块多，阅读门槛略高
 - 价值: ⭐⭐⭐⭐ 零样本伪装分割的新SOTA，且在多实例场景优势最为突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation](discover_segment_and_select_a_progressive_mechanism_for_zero-shot_camouflaged_ob.md)
+- [FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning](fcl-cod_weakly_supervised_camouflaged_object_detection_with_frequency-aware_and_.md)
+- [INSID3: Training-Free In-Context Segmentation with DINOv3](insid3_training-free_in-context_segmentation_with_dinov3.md)
+- [Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](promptdriven_lightweight_foundation_model_for_inst.md)
+- [Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation](looking_beyond_the_window_global-local_aligned_clip_for_training-free_open-vocab.md)
+
+<!-- RELATED:END -->

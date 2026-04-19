@@ -177,3 +177,15 @@ $$G_s = G(\mathbf{x}_t, \mathbf{z}, \emptyset, t) + s \cdot (G(\mathbf{x}_t, \ma
 | 实用价值 | 5 |
 | 写作质量 | 4 |
 | 总体评分 | 4.2 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Prompting Future Driven Diffusion Model for Hand Motion Prediction](prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
+
+<!-- RELATED:END -->

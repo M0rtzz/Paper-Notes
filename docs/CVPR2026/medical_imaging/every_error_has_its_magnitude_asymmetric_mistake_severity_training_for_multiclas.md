@@ -139,3 +139,15 @@ PAMS 在所有指标上取得最优，AsCC 和 AsMC 提升最为显著。In-hous
 - 实验充分度: ⭐⭐⭐⭐ — 公开+私有数据集、多种 MIL 架构、消融实验、remix 策略对比、自然图像泛化实验
 - 写作质量: ⭐⭐⭐⭐ — 图表表达清晰，问题动机铺垫有说服力，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 切中临床 MIL 部署中的核心安全痛点，非对称指标有通用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](mil-pf_multiple_instance_learning_on_precomputed_features_for_mammography_classi.md)
+- [Do Multiple Instance Learning Models Transfer?](../../ICML2025/medical_imaging/do_multiple_instance_learning_models_transfer.md)
+- [Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](fair_lung_disease_diagnosis_from_chest_ct_via_gend.md)
+- [Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](../../ECCV2024/medical_imaging/pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)
+- [Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding](meta-learning_in-context_enables_training-free_cross_subject_brain_decoding.md)
+
+<!-- RELATED:END -->

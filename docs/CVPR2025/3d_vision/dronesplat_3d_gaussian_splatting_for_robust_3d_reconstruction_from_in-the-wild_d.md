@@ -112,3 +112,15 @@ DroneSplat 提出了一个面向野外无人机影像的鲁棒 3DGS 框架，通
 - 实验充分度: ⭐⭐⭐⭐ 自制数据集+两个公开数据集，消除和稀疏视角两个任务都有对比
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，方法阐述逻辑性强，图示质量高
 - 价值: ⭐⭐⭐⭐ 针对无人机实际应用场景的实用框架，提供的数据集有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [Robust Neural Rendering in the Wild with Asymmetric Dual 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/robust_neural_rendering_in_the_wild_with_asymmetric_dual_3d_gaussian_splatting.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [Indoor Asset Detection in Large Scale 360° Drone-Captured Imagery via 3D Gaussian Splatting](../../CVPR2026/3d_vision/indoor_asset_detection_in_large_scale_360_drone-captured_imagery_via_3d_gaussian.md)
+- [Mitigating Ambiguities in 3D Classification with Gaussian Splatting](mitigating_ambiguities_in_3d_classification_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

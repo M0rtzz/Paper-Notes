@@ -125,3 +125,15 @@ DiffAware与模型能力的关系：Pearson r≈0, p>0.3（无相关性）
 - 实验充分度: ⭐⭐⭐⭐ 10个模型、8个基准、16K问题、去偏消融完整
 - 写作质量: ⭐⭐⭐⭐⭐ 论证严密，文献综述详尽，社会科学视角专业
 - 价值: ⭐⭐⭐⭐⭐ 对公平性研究方向有范式级影响，拓展了公平性的定义边界
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TuCo: Measuring the Contribution of Fine-Tuning to Individual Responses of LLMs](../../ICML2025/ai_safety/tuco_measuring_the_contribution_of_fine-tuning_to_individual_responses_of_llms.md)
+- [Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark](../../ICLR2026/ai_safety/measuring_physical-world_privacy_awareness_of_large_language_models_an_evaluatio.md)
+- [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](../../NeurIPS2025/ai_safety/fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
+- [Some Optimizers are More Equal: Understanding the Role of Optimizers in Group Fairness](../../NeurIPS2025/ai_safety/some_optimizers_are_more_equal_understanding_the_role_of_optimizers_in_group_fai.md)
+- [FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation](../../NeurIPS2025/ai_safety/faircontrast_enhancing_fairness_through_contrastive_learning_and_customized_augm.md)
+
+<!-- RELATED:END -->

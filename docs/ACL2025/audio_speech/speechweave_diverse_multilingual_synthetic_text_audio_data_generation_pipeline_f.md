@@ -129,3 +129,15 @@ SpeechWeave 包含四个核心模块：关键词采样器（Keyphrase Sampler）
 - 实验充分度: ⭐⭐⭐⭐ 多维度评估（多样性、归一化、语音质量、下游任务），但缺乏更多语言验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，表格和示例丰富，易于理解和复现
 - 价值: ⭐⭐⭐⭐ 解决了TTS数据生成的实际痛点，对工业界有较高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATRI: Mitigating Multilingual Audio Text Retrieval Inconsistencies by Reducing Data Distribution Errors](atri_mitigating_multilingual_audio_text_retrieval_inconsistencies_by_reducing_da.md)
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [Zero-Shot Text-to-Speech for Vietnamese](zero-shot_text-to-speech_for_vietnamese.md)
+- [T2A-Feedback: Improving Basic Capabilities of Text-to-Audio Generation via Fine-grained AI Feedback](t2a_feedback_audio_gen.md)
+- [In-the-wild Audio Spatialization with Flexible Text-guided Localization](tas_audio_spatialization.md)
+
+<!-- RELATED:END -->

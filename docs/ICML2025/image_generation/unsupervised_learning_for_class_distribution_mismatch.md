@@ -145,3 +145,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{gen}}^{(\mathcal{D}_P, \mathcal{D}_N)} + \mat
 - 实验充分度: ⭐⭐⭐ — 三个标准数据集、多种 mismatch 比例、消融实验完备，但缺少大规模数据集验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，定理证明严谨，图示说明直观
 - 价值: ⭐⭐⭐⭐ — 打开了 CDM 无监督学习的新方向，对开集识别和分布偏移领域有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Autoencoder-Based Hybrid Replay for Class-Incremental Learning](autoencoder-based_hybrid_replay_for_class-incremental_learning.md)
+- [Pretrained Reversible Generation as Unsupervised Visual Representation Learning](../../ICCV2025/image_generation/pretrained_reversible_generation_as_unsupervised_visual_representation_learning.md)
+- [Idempotent Unsupervised Representation Learning for Skeleton-Based Action Recognition](../../ECCV2024/image_generation/idempotent_unsupervised_representation_learning_for_skeleton-based_action_recogn.md)
+- [Learning Few-Step Diffusion Models by Trajectory Distribution Matching](../../ICCV2025/image_generation/learning_few-step_diffusion_models_by_trajectory_distribution_matching.md)
+- [Expressive Score-Based Priors for Distribution Matching with Geometry-Preserving Regularization](expressive_score-based_priors_for_distribution_matching_with_geometry-preserving.md)
+
+<!-- RELATED:END -->

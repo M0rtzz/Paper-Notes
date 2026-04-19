@@ -121,3 +121,15 @@ tags:
 - 核心定理的证明依赖多步精细的浓度不等式分析和Bellman方程性质
 - 算法设计中的悲观/乐观原则选择是离线RL理论的核心考量
 - 理论界中的对数因子虽被隐藏但在实际应用中不可忽略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoiRL: Efficient, Self-Supervised Reasoning with Offline Iterative Reinforcement Learning](roirl_efficient_self-supervised_reasoning_with_offline_iterative_reinforcement_l.md)
+- [Finite-Sample Analysis of Policy Evaluation for Robust Average Reward Reinforcement Learning](finite-sample_analysis_of_policy_evaluation_for_robust_average_reward_reinforcem.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](../../ICLR2026/reinforcement_learning/self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+- [Online Optimization for Offline Safe Reinforcement Learning](online_optimization_for_offline_safe_reinforcement_learning.md)
+
+<!-- RELATED:END -->

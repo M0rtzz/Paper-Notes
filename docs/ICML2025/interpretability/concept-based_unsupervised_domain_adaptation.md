@@ -136,3 +136,15 @@ CUB-200（鸟类分类，背景偏移）：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+概念级分析+理论验证
 - 写作质量: ⭐⭐⭐⭐ 松弛对齐的直觉图示清晰
 - 价值: ⭐⭐⭐⭐⭐ 推进可解释AI在真实场景中的部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Avoiding Leakage Poisoning: Concept Interventions Under Distribution Shifts](avoiding_leakage_poisoning_concept_interventions_under_distribution_shifts.md)
+- [Granular Concept Circuits: Toward a Fine-Grained Circuit Discovery for Concept Representations](../../ICCV2025/interpretability/granular_concept_circuits_toward_a_fine-grained_circuit_discovery_for_concept_re.md)
+- [Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/interpretability/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [Unsupervised Feature Selection Through Group Discovery](../../AAAI2026/interpretability/unsupervised_feature_selection_through_group_discovery.md)
+
+<!-- RELATED:END -->

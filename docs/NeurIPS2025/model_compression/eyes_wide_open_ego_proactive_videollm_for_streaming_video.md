@@ -125,3 +125,15 @@ $$\text{ESTP-F1} = \frac{2 \times \sum_{k=1}^{M} S(g_k)}{2\sum_{k=1}^{M} S(g_k) 
 - 实验充分度: ⭐⭐⭐⭐⭐ 新benchmark+新指标+多baseline对比+充分消融+跨benchmark验证
 - 写作质量: ⭐⭐⭐⭐ 三属性形式化清晰，不可能三角分析有洞察力
 - 价值: ⭐⭐⭐⭐⭐ 定义了Video-LLM的重要新方向，完整技术栈可落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming](4dgcpro_efficient_hierarchical_4d_gaussian_compression_for_p.md)
+- [Smooth Regularization for Efficient Video Recognition](smooth_regularization_for_efficient_video_recognition.md)
+- [AI-Generated Video Detection via Perceptual Straightening](ai-generated_video_detection_via_perceptual_straightening.md)
+- [Mitigating Semantic Collapse in Partially Relevant Video Retrieval](mitigating_semantic_collapse_in_partially_relevant_video_retrieval.md)
+- [VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models](vessa_video-based_object-centric_self-supervised_adaptation_for_visual_foundatio.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ GoLore: $P$ 由随机矩阵生成（数据无关，无偏）
 - 实验充分度: ⭐⭐⭐⭐ 从合成到 LLM 预训练/微调全覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-实验对应清晰，故事线流畅
 - 价值: ⭐⭐⭐⭐⭐ 对子空间优化的理论和实践都很重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Doubly Robust Alignment for Large Language Models](../../NeurIPS2025/optimization/doubly_robust_alignment_for_large_language_models.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](../../NeurIPS2025/optimization/vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Large Language Bayes](../../NeurIPS2025/optimization/large_language_bayes.md)
+- [Training-Free Bayesianization for Low-Rank Adapters of Large Language Models](../../NeurIPS2025/optimization/training-free_bayesianization_for_low-rank_adapters_of_large_language_models.md)
+- [Autoformulation of Mathematical Optimization Models Using LLMs](autoformulation_of_mathematical_optimization_models_using_llms.md)
+
+<!-- RELATED:END -->

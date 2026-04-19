@@ -100,3 +100,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 9600次实验、多数据集/拓扑/异质性regime、消融全面、异常值分析透彻
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，理论与实验紧密呼应，Figure 1的regime可视化特别直观
 - 价值: ⭐⭐⭐⭐ 为半去中心化FL的实际部署提供了清晰的配置指南，学术和工程价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Stability Analysis of SAM vs SGD: Role of Data Coherence and Emergence of Simplicity Bias](../../NeurIPS2025/optimization/a_unified_stability_analysis_of_sam_vs_sgd_role_of_data_cohe.md)
+- [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](../../ICLR2026/optimization/a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+- [FedPM: Federated Learning Using Second-order Optimization with Preconditioned Mixing of Local Parameters](fedpm_federated_learning_using_second-order_optimization_with_preconditioned_mix.md)
+- [Unveiling the Power of Multiple Gossip Steps: A Stability-Based Generalization Analysis in Decentralized Training](../../NeurIPS2025/optimization/unveiling_the_power_of_multiple_gossip_steps_a_stability-based_generalization_an.md)
+- [Data Heterogeneity and Forgotten Labels in Split Federated Learning](data_heterogeneity_and_forgotten_labels_in_split_federated_learning.md)
+
+<!-- RELATED:END -->

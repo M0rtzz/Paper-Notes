@@ -163,3 +163,15 @@ $$\text{Eff}_{\text{Skill}}(\text{Path}^i) = \frac{N_{\text{Path}^i \in \mathcal
 - 实验充分度: ⭐⭐⭐⭐ （消融、可视化、跨策略对比全面，但限于 GPT2-small）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，图表丰富，但公式密度较高）
 - 价值: ⭐⭐⭐⭐ （首次定量验证技能分层/包容猜想，对 mechanistic interpretability 领域有推动意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causally-Grounded Dual-Path Attention Intervention for Object Hallucination Mitigation in LVLMs](causally-grounded_dual-path_attention_intervention_for_objec.md)
+- [Characterization and Learning of Causal Graphs from Hard Interventions](../../NeurIPS2025/causal_inference/characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [I-CAM-UV: Integrating Causal Graphs over Non-Identical Variable Sets Using Causal Additive Models with Unobserved Variables](i-cam-uv_integrating_causal_graphs_over_non-identical_variable_sets_using_causal.md)
+- [CausalRAG: Integrating Causal Graphs into Retrieval-Augmented Generation](../../ACL2025/causal_inference/causalrag_integrating_causal_graphs_into_retrieval-augmented_generation.md)
+- [Hallucinate Less by Thinking More: Aspect-Based Causal Abstention for Large Language Models](hallucinate_less_by_thinking_more_aspect-based_causal_absten.md)
+
+<!-- RELATED:END -->

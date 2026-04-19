@@ -160,3 +160,15 @@ TAPTR 由四个主要部分组成：(1) **Video Preparation** — 使用 CNN bac
 - **实验充分度**: ⭐⭐⭐⭐⭐ 消融实验覆盖所有关键组件，每个设计决策都有定量验证，BADJA 等额外数据集的补充评估
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，与目标检测的类比直观易懂，公式符号统一
 - **价值**: ⭐⭐⭐⭐ 为 TAP 任务提供了一个简洁强大的基线，消融研究对后续工作具有很高的参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Projecting Points to Axes: Oriented Object Detection via Point-Axis Representation](projecting_points_to_axes_oriented_object_detection_via_point-axis_representatio.md)
+- [Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance](tracking_meets_lora_faster_training_larger_model_stronger_performance.md)
+- [Adversarial Attention Perturbations for Large Object Detection Transformers](../../ICCV2025/object_detection/adversarial_attention_perturbations_for_large_object_detection_transformers.md)
+- [Stepwise Multi-grained Boundary Detector for Point-Supervised Temporal Action Localization](stepwise_multi-grained_boundary_detector_for_point-supervised_temporal_action_lo.md)
+- [Generalizable Insights for Graph Transformers in Theory and Practice](../../NeurIPS2025/object_detection/generalizable_insights_for_graph_transformers_in_theory_and_practice.md)
+
+<!-- RELATED:END -->

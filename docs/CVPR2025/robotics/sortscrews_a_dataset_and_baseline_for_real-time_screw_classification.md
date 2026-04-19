@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 有基线对比和错误分析，但验证集过小、缺少更多模型对比
 - 写作质量: ⭐⭐⭐ 清晰易懂，结构完整，但技术深度有限
 - 价值: ⭐⭐⭐ 填补了螺丝分类数据集的空白，开源采集工具有实用意义，但数据集规模限制了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TinyNav: End-to-End TinyML for Real-Time Autonomous Navigation on Microcontrollers](tinynav_end-to-end_tinyml_for_real-time_autonomous_navigation_on_microcontroller.md)
+- [Real-Time Robot Execution with Masked Action Chunking](../../ICLR2026/robotics/real-time_robot_execution_with_masked_action_chunking.md)
+- [CHEER-Ekman: Fine-grained Embodied Emotion Classification](../../ACL2025/robotics/cheer-ekman_fine-grained_embodied_emotion_classification.md)
+- [RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](../../CVPR2026/robotics/rc-nf_robot-conditioned_normalizing_flow_for_real-time_anomaly_detection_in_robo.md)
+- [Enginuity: Building an Open Multi-Domain Dataset of Complex Engineering Diagrams](../../NeurIPS2025/robotics/enginuity_building_an_open_multi-domain_dataset_of_complex_engineering_diagrams.md)
+
+<!-- RELATED:END -->

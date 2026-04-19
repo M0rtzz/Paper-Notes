@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖合成+真实数据集，充分消融，但缺少更多类别的评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，方法描述详细，两阶段流程解释得当
 - 对我的价值: ⭐⭐⭐⭐ 跨模态训练思想有启发，噪声教师概念可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Baking Gaussian Splatting into Diffusion Denoiser for Fast and Scalable Single-stage Image-to-3D Generation and Reconstruction](baking_gaussian_splatting_into_diffusion_denoiser_for_fast_and_scalable_single-s.md)
+- [Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis](gaussian_variation_field_diffusion_for_high-fidelity_video-to-4d_synthesis.md)
+- [HouseTour: A Virtual Real Estate A(I)gent](housetour_a_virtual_real_estate_aigent.md)
+- [CATSplat: Context-Aware Transformer with Spatial Guidance for Generalizable 3D Gaussian Splatting from A Single-View Image](catsplat_contextaware_transformer_with_spatial_guidance_for.md)
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+
+<!-- RELATED:END -->

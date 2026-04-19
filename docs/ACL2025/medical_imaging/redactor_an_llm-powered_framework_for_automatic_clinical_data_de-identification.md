@@ -153,3 +153,15 @@ RedactX 由三大组件构成：(1) **Auto De-ID** — LLM 驱动的非结构化
 - **实用性** ⭐⭐⭐⭐⭐: 已在 Oracle Health 生产部署 12+ 月，工业价值极高
 - **实验** ⭐⭐⭐⭐: 多方法对比、实体级分析、消融实验齐全
 - **系统设计** ⭐⭐⭐⭐⭐: 模块化、schema 驱动、多模态支持，架构成熟度高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge](biore_llm_judge_evaluation.md)
+- [Robust or Suggestible? Exploring Non-Clinical Induction in LLM Drug-Safety Decisions](../../NeurIPS2025/medical_imaging/robust_or_suggestible_exploring_non-clinical_induction_in_llm_drug-safety_decisi.md)
+- [CureAgent: A Training-Free Executor-Analyst Framework for Clinical Reasoning](../../NeurIPS2025/medical_imaging/cureagent_a_training-free_executor-analyst_framework_for_clinical_reasoning.md)
+- [Aligning AI Research with the Needs of Clinical Coding Workflows: Eight Recommendations Based on US Data Analysis and Critical Review](clinical_coding_eight_recommendations.md)
+- [Unlearned but Not Forgotten: Data Extraction after Exact Unlearning in LLM](../../NeurIPS2025/medical_imaging/unlearned_but_not_forgotten_data_extraction_after_exact_unlearning_in_llm.md)
+
+<!-- RELATED:END -->

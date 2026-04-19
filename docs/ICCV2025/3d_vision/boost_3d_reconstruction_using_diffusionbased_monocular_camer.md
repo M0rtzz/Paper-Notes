@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 标定+深度+位姿+重建+度量全覆盖，5个零样本数据集
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，VAE重构误差分析有说服力
 - 对我的价值: ⭐⭐⭐⭐⭐ 将非视觉信号编码为图像格式以利用扩散先验的范式非常有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CHARM3R: Towards Unseen Camera Height Robust Monocular 3D Detector](charm3r_towards_unseen_camera_height_robust_monocular_3d_detector.md)
+- [MoGA: 3D Generative Avatar Prior for Monocular Gaussian Avatar Reconstruction](moga_3d_generative_avatar_prior_for_monocular_gaussian_avatar_reconstruction.md)
+- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
+- [HORT: Monocular Hand-held Objects Reconstruction with Transformers](hort_monocular_hand-held_objects_reconstruction_with_transformers.md)
+- [Baking Gaussian Splatting into Diffusion Denoiser for Fast and Scalable Single-stage Image-to-3D Generation and Reconstruction](baking_gaussian_splatting_into_diffusion_denoiser_for_fast_and_scalable_single-s.md)
+
+<!-- RELATED:END -->

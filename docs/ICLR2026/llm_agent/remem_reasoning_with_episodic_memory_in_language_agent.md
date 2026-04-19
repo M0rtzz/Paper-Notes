@@ -168,3 +168,15 @@ REMem-I 在 Test of Time 上 EM 达 **93.1%**，是唯一超过 90% 的方法。
 - **实验完整度**: ⭐⭐⭐⭐⭐ — 四个基准、全面对比、消融分析、人类评估、错误分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，表格信息密集，但部分描述偏冗长
 - **综合评分**: ⭐⭐⭐⭐ — 在情节记忆领域建立了强基线，工程贡献大于理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [The Tool Decathlon: Benchmarking Language Agents for Diverse, Realistic, and Long-Horizon Task Execution](the_tool_decathlon_benchmarking_language_agents_for_diverse_realistic_and_long-h.md)
+- [Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization](exploratory_memory-augmented_llm_agent_via_hybrid_on-_and_off-policy_optimizatio.md)
+- [Reducing Belief Deviation in Reinforcement Learning for Active Reasoning of LLM Agents](reducing_belief_deviation_in_reinforcement_learning_for_active_reasoning.md)
+
+<!-- RELATED:END -->

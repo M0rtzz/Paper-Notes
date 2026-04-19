@@ -141,3 +141,15 @@ PCA 结果显示，四个模型的第一主成分解释方差比例为 32-42%，
 - 实验充分度: ⭐⭐⭐⭐⭐ — 1200万+ prompts、4 模型、470 名字、28 职业，统计检验严谨，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰逻辑连贯，伦理讨论充分，但数学符号较多增加阅读负担
 - 价值: ⭐⭐⭐ — 发现有意义但偏描述性，内在表征仅能部分解释外在偏差的结论某种程度上削弱了方法的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [Exploring Graph Representations of Logical Forms for Language Modeling](exploring_graph_representations_of_logical_forms_for_language_modeling.md)
+- [ICL-Router: In-Context Learned Model Representations for LLM Routing](../../AAAI2026/llm_nlp/icl-router_in-context_learned_model_representations_for_llm_routing.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [Language-Codec: Bridging Discrete Codec Representations and Speech Language Models](language_codec_bridging_discrete_codec_speech_language_models.md)
+
+<!-- RELATED:END -->

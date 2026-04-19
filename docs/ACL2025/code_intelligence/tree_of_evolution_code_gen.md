@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5个主流benchmark全面评估，消融实验覆盖主要设计选择
 - 写作质量: ⭐⭐⭐⭐ 从单向链到多路径树的递进逻辑自然清晰
 - 对我的价值: ⭐⭐⭐⭐ 数据高效合成的通用思路可迁移到其他领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tree-of-Code: A Tree-Structured Exploring Framework for End-to-End Code Generation](tree-of-code_a_tree-structured_exploring_framework_for_end-to-end_code_generatio.md)
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+- [Personality-Guided Code Generation Using Large Language Models](personality_guided_code_gen.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+
+<!-- RELATED:END -->

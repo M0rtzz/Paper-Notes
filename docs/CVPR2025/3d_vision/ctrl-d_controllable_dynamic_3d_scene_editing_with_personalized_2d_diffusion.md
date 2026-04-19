@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定性定量全面，消融充分，跨域泛化实验有说服力
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，pipeline 描述详细
 - 价值: ⭐⭐⭐⭐ 实用性强，降低了动态场景编辑门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruct-4DGS: Efficient Dynamic Scene Editing via 4D Gaussian-based Static-Dynamic Separation](efficient_dynamic_scene_editing_via_4d_gaussian-based_static-dynamic_separation.md)
+- [Color3D: Controllable and Consistent 3D Colorization with Personalized Colorizer](../../ICLR2026/3d_vision/color3d_controllable_and_consistent_3d_colorization_with_personalized_colorizer.md)
+- [GaussHDR: High Dynamic Range Gaussian Splatting via Learning Unified 3D and 2D Local Tone Mapping](gausshdr_high_dynamic_range_gaussian_splatting_via_learning_unified_3d_and_2d_lo.md)
+- [FreeScene: Mixed Graph Diffusion for 3D Scene Synthesis from Free Prompts](freescene_mixed_graph_diffusion_for_3d_scene_synthesis_from_free_prompts.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+
+<!-- RELATED:END -->

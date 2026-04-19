@@ -173,3 +173,15 @@ OnceEdit 编辑 3 个模型的总时间最少——其他方法需要 2-4 倍的
 - **实验充分度**: ⭐⭐⭐⭐ — 3+4 个模型、2 个数据集、多种评估设定、效率分析齐全；但缺少序列编辑和多跳编辑
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述完整，图表设计好；但部分数学符号较密集
 - **价值**: ⭐⭐⭐⭐⭐ — 解决了实际部署中的多模型知识同步更新需求，方法通用且高效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Any-to-Any Models More Consistent Across Modality Transfers Than Specialists?](are_any-to-any_models_more_consistent_across_modality_transfers_than_specialists.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](../../ICML2025/others/heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [LapSum -- One Method to Differentiate Them All: Ranking, Sorting and Top-k Selection](../../ICML2025/others/lapsum_--_one_method_to_differentiate_them_all_ranking_sorting_and_top-k_selecti.md)
+- [CoAM: Corpus of All-Type Multiword Expressions](coam_corpus_of_all-type_multiword_expressions.md)
+- [HelpSteer3: Human-Annotated Feedback and Edit Data to Empower Inference-Time Scaling](helpsteer3_human-annotated_feedback_and_edit_data_to_empower_inference-time_scal.md)
+
+<!-- RELATED:END -->

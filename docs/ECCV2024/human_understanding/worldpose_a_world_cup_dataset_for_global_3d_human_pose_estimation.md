@@ -133,3 +133,15 @@ SOTA方法在WorldPose上的表现：
 - 实验充分度: ⭐⭐⭐⭐⭐ (Vicon验证+全面的SOTA评估+消融)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，分析深入)
 - 价值: ⭐⭐⭐⭐⭐ (填补了重要的数据集空白，对领域发展有重大意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+- [Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
+- [RePOSE: 3D Human Pose Estimation via Spatio-Temporal Depth Relational Consistency](repose_3d_human_pose_estimation_via_spatio-temporal_depth_relational_consistency.md)
+- [UPose3D: Uncertainty-Aware 3D Human Pose Estimation with Cross-View and Temporal Cues](upose3d_uncertainty-aware_3d_human_pose_estimation_with_cross-view_and_temporal_.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+
+<!-- RELATED:END -->

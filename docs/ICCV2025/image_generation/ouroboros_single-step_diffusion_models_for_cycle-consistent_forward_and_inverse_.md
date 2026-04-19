@@ -162,3 +162,15 @@ Ouroboros 由两个互补的单步扩散模型组成：(1) 逆渲染模型（RGB
 - 实验充分度: ⭐⭐⭐⭐ 覆盖室内外多数据集、多种内在属性，消融充分，但缺少与DiffusionRenderer的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但部分表述冗余，数学推导可以更简洁
 - 价值: ⭐⭐⭐⭐ 50× 加速+质量提升在实际应用中很有价值，开阔了循环训练在渲染领域的应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Channel-wise Noise Scheduled Diffusion for Inverse Rendering in Indoor Scenes](../../CVPR2025/image_generation/channel-wise_noise_scheduled_diffusion_for_inverse_rendering_in_indoor_scenes.md)
+- [RenderFlow: Single-Step Neural Rendering via Flow Matching](../../CVPR2026/image_generation/renderflow_single-step_neural_rendering_via_flow_matching.md)
+- [Cycle-Consistent Tuning for Layered Image Decomposition](../../CVPR2026/image_generation/cycle-consistent_tuning_for_layered_image_decomposition.md)
+- [Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)
+- [Learning Few-Step Diffusion Models by Trajectory Distribution Matching](learning_few-step_diffusion_models_by_trajectory_distribution_matching.md)
+
+<!-- RELATED:END -->

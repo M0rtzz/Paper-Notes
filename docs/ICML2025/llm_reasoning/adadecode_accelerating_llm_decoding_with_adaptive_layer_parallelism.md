@@ -155,3 +155,15 @@ AdaDecode 的整体 pipeline 如下：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 3 种任务、3 种模型规模、详细消融和超参数分析，但缺少更大模型和更多任务的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 方法动机清晰，与相关工作的对比表格直观，图示说明到位
 - 价值: ⭐⭐⭐⭐ 实用性强、部署友好，但加速比上限和领域特定训练的限制降低了一些通用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastGRPO: Accelerating Policy Optimization via Concurrency-aware Speculative Decoding and Online Draft Learning](../../ICLR2026/llm_reasoning/fastgrpo_accelerating_policy_optimization_via_concurrency-aware_speculative_deco.md)
+- [ARM: Adaptive Reasoning Model](../../NeurIPS2025/llm_reasoning/arm_adaptive_reasoning_model.md)
+- [Evaluating Judges as Evaluators: The JETTS Benchmark of LLM-as-Judges as Test-Time Scaling Evaluators](evaluating_judges_as_evaluators_the_jetts_benchmark_of_llm-as-judges_as_test-tim.md)
+- [ProofCompass: Enhancing Specialized Provers with LLM Guidance](proofcompass_enhancing_specialized_provers_with_llm_guidance.md)
+- [Sampling-Efficient Test-Time Scaling: Self-Estimating the Best-of-N Sampling in Early Decoding](../../NeurIPS2025/llm_reasoning/sampling-efficient_test-time_scaling_self-estimating_the_best-of-n_sampling_in_e.md)
+
+<!-- RELATED:END -->

@@ -84,3 +84,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 新数据集+定量+真实机器人+双手
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 为动捕到灵巧操作的迁移提供了高效方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment](../../AAAI2026/human_understanding/dexterous_manipulation_transfer_via_progressive_kinematic-dynamic_alignment.md)
+- [BiPreManip: Learning Affordance-Based Bimanual Preparatory Manipulation through Anticipatory Collaboration](../../CVPR2026/human_understanding/bipremanip_learning_affordance-based_bimanual_preparatory_manipulation_through_a.md)
+- [Less is More: Efficient Model Merging with Binary Task Switch](less_is_more_efficient_model_merging_with_binary_task_switch.md)
+- [Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models](two_is_better_than_one_efficient_ensemble_defense_for_robust_and_compact_models.md)
+- [Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
+
+<!-- RELATED:END -->

@@ -213,3 +213,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}}^{(t)} + \lambda_{\text{me
 - 实验充分度: ⭐⭐⭐⭐⭐ — 14 种对比方法、3 个数据集 5 种设置、充分消融、特征对齐分析、计算复杂度分析
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰系统，但部分符号定义冗长
 - 价值: ⭐⭐⭐⭐⭐ — 在严格的 exemplar-free 设置下大幅推进了 SOTA，对 CL 社区有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](../../ACL2025/others/analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
+- [DS-ATGO: Dual-Stage Synergistic Learning via Forward Adaptive Threshold and Backward Gradient Optimization for Spiking Neural Networks](ds-atgo_dual-stage_synergistic_learning_via_forward_adaptive_threshold_and_backw.md)
+- [Cost-Free Neutrality for the River Method](cost-free_neutrality_for_the_river_method.md)
+- [Exact Learning of Arithmetic with Differentiable Agents](../../NeurIPS2025/others/exact_learning_of_arithmetic_with_differentiable_agents.md)
+- [DW-DGAT: Dynamically Weighted Dual Graph Attention Network for Neurodegenerative Disease Diagnosis](dw-dgat_dynamically_weighted_dual_graph_attention_network_for_neurodegenerative_.md)
+
+<!-- RELATED:END -->

@@ -163,3 +163,15 @@ IC 的进一步分解（iDigits VIL）：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集、三种场景、多个基线、详细消融和分析
 - 写作质量: ⭐⭐⭐⭐ — 问题动机阐述清晰，方法推导完整；数据表格较多但组织良好
 - 综合价值: ⭐⭐⭐⭐ — 开创了 VIL 新场景，方法在各场景上全面 SOTA，兼具理论贡献和实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal Imbalance of Positive and Negative Supervision in Class-Incremental Learning](../../CVPR2026/llm_evaluation/temporal_imbalance_of_positive_and_negative_supervision_in_class-incremental_lea.md)
+- [Gene Incremental Learning for Single-Cell Transcriptomics](../../AAAI2026/llm_evaluation/gene_incremental_learning_for_single-cell_transcriptomics.md)
+- [Dual Consolidation for Pre-Trained Model-Based Domain-Incremental Learning](../../CVPR2025/llm_evaluation/dual_consolidation_for_pre-trained_model-based_domain-incremental_learning.md)
+- [Image-Feature Weak-to-Strong Consistency: An Enhanced Paradigm for Semi-Supervised Learning](image-feature_weak-to-strong_consistency_an_enhanced_paradigm_for_semi-supervise.md)
+- [Instance-dependent Noisy-label Learning with Graphical Model Based Noise-rate Estimation](instance-dependent_noisy-label_learning_with_graphical_model_based_noise-rate_es.md)
+
+<!-- RELATED:END -->

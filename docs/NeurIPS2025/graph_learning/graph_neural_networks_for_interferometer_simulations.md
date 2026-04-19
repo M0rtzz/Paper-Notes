@@ -173,3 +173,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 三种拓扑 + 多架构对比 + 消融 + 速度对比，但缺乏对高阶物理效应的测试
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，物理背景解释到位，附录完整
 - 价值: ⭐⭐⭐⭐ 开辟了 ML for instrumentation design 的新方向，数据集贡献有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Over-squashing in Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+- [GraphTOP: Graph Topology-Oriented Prompting for Graph Neural Networks](graphtop_graph_topology-oriented_prompting_for_graph_neural_networks.md)
+
+<!-- RELATED:END -->

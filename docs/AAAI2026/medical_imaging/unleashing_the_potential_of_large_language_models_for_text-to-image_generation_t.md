@@ -134,3 +134,15 @@ $$\mathcal{L}_{ARRA}(\theta, \phi) = \mathcal{L}_{AR}(\theta) + \lambda \mathcal
 - 实验充分度: ⭐⭐⭐⭐⭐ 自然图像+医学影像、多尺度模型、三种变体、系统的组件分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机论证有力，实验分析总结出实用 Takeaway，结构清晰
 - 价值: ⭐⭐⭐⭐ 即插即用的通用框架对 AR T2I 社区有实际价值，医学影像方面应用前景好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](../../CVPR2026/medical_imaging/unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+- [Tracing Pharmacological Knowledge in Large Language Models](../../ICLR2026/medical_imaging/tracing_pharmacological_knowledge_in_large_language_models.md)
+- [Do Large Language Models Think Like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI](do_large_language_models_think_like_the_brain_sentence-level_evidences_from_laye.md)
+- [CliCARE: Grounding Large Language Models in Clinical Guidelines for Decision Support over Longitudinal Cancer Electronic Health Records](clicare_grounding_large_language_models_in_clinical_guidelines_for_decision_supp.md)
+- [Measuring Stability Beyond Accuracy in Small Open-Source Medical Large Language Models for Pediatric Endocrinology](measuring_stability_beyond_accuracy_in_small_open-source_medical_large_language_.md)
+
+<!-- RELATED:END -->

@@ -171,3 +171,15 @@ CVK 和 DVR 模块在 EventFlowQA 上的消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ （7个基准、详尽消融、多尺度分析、可视化对比）
 - 写作质量: ⭐⭐⭐⭐ （方法描述清晰但公式较多，数据集细节不足）
 - 价值: ⭐⭐⭐⭐⭐ （为视频推理提供了更简洁高效的训练范式）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PrismAudio: Decomposed Chain-of-Thoughts and Multi-dimensional Rewards for Video-to-Audio Generation](../../ICLR2026/llm_reasoning/prismaudio_decomposed_chain-of-thoughts_and_multi-dimensional_rewards_for_video-.md)
+- [Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought](../../NeurIPS2025/llm_reasoning/visual_thoughts_a_unified_perspective_of_understanding_multi.md)
+- [Video-T1: Test-Time Scaling for Video Generation](../../ICCV2025/llm_reasoning/video-t1_test-time_scaling_for_video_generation.md)
+- [EagleVision: A Dual-Stage Framework with BEV-grounding-based Chain-of-Thought for Spatial Intelligence](eaglevision_a_dual-stage_framework_with_bev-grounding-based_chain-of-thought_for.md)
+- [DisCO: Reinforcing Large Reasoning Models with Discriminative Constrained Optimization](../../NeurIPS2025/llm_reasoning/disco_reinforcing_large_reasoning_models_with_discriminative_constrained_optimiz.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ $$\hat{R}_{\text{0-1}}(f) \leq R^* - \varepsilon \implies S(f) < \max\left\{\fra
 - **技术深度**: ⭐⭐⭐⭐⭐ — 证明技巧精巧，从 Lipschitz 代理到 signed distance 表示
 - **实验充分性**: ⭐⭐⭐ — MNIST 和 CIFAR-10 验证，定性为主
 - **实用价值**: ⭐⭐⭐⭐ — 为理解过参数化泛化提供理论支撑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training](evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t.md)
+- [Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry](fast_and_stable_riemannian_metrics_on_spd_manifolds_via_cholesky_product_geometr.md)
+- [LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
+- [Key and Value Weights Are Probably All You Need: On the Necessity of the Query, Key, and Value Weight Triplet in Self-Attention](key_and_value_weights_are_probably_all_you_need_on_the_necessity_of_the_query_ke.md)
+- [The Price of Freedom: Exploring Expressivity and Runtime Tradeoffs in Equivariant Networks](../../ICML2025/others/the_price_of_freedom_exploring_expressivity_and_runtime_tradeoffs_in_equivariant.md)
+
+<!-- RELATED:END -->

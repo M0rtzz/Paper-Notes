@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖域内(多比例)和域泛化(多方法)，但消融可更深入
 - 写作质量: ⭐⭐⭐⭐⭐ motivation清晰、图示直观、方法描述完整
 - 价值: ⭐⭐⭐⭐ 对数据稀缺场景有实际价值，概念解耦思想可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RecycleLoRA: Rank-Revealing QR-Based Dual-LoRA Subspace Adaptation for Domain Generalized Semantic Segmentation](recyclelora_rank-revealing_qr-based_dual-lora_subspace_adaptation_for_domain_gen.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearthsar_a_sarcentric_and_billionscale_geospa.md)
+- [Masked Representation Modeling for Domain-Adaptive Segmentation](mrm_masked_representation_modeling_domain_adaptive.md)
+- [Reasoning with Pixel-level Precision: QVLM Architecture and SQuID Dataset for Quantitative Geospatial Analytics](reasoning_with_pixel-level_precision_qvlm_architecture_and_squid_dataset_for_qua.md)
+- [Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](generalizable_knowledge_distillation_from_vision_foundation_models_for_semantic_.md)
+
+<!-- RELATED:END -->

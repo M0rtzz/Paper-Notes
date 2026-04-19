@@ -128,3 +128,15 @@ HERBench 是一个评估基准而非模型。它的核心是：(1) 一套 12 类
 - 实验充分度: ⭐⭐⭐⭐⭐ 评估了 13 个模型，跨基准 MRFS 比较，多维度诊断分析
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，任务分类体系完整，但论文较长
 - 价值: ⭐⭐⭐⭐ 诊断了 Video-LLM 的关键短板，为领域进步提供了重要参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MovieRecapsQA: A Multimodal Open-Ended Video Question-Answering Benchmark](movierecapsqa_a_multimodal_open-ended_video_question-answering_benchmark.md)
+- [EgoPointVQA: Gesture-Based Egocentric Video Question Answering](egopointvqa_gesture_based_egocentric_video_qa.md)
+- [Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering](do_you_see_what_i_am_pointing_at_gesture-based_egocentric_video_question_answeri.md)
+- [DIvide, then Ground: Adapting Frame Selection to Query Types for Long-Form Video Understanding](divide_then_ground_adapting_frame_selection_to_query_types_for_long-form_video_u.md)
+- [A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](../../ICLR2026/video_understanding/air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ Semi Constraint（更接近实际应用）提升更大：
 - 实验充分度: ⭐⭐⭐⭐ 三种约束设置、多数据集、详细消融，但主数据集单一
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但符号较多且部分公式可进一步简化
 - 价值: ⭐⭐⭐⭐ 为 VidSGG 提供了新的去偏置思路，尾部类别提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ESCA: Contextualizing Embodied Agents via Scene-Graph Generation](../../NeurIPS2025/graph_learning/esca_contextualizing_embodied_agents_via_scene-graph_generation.md)
+- [Graph-to-Frame RAG: Visual-Space Knowledge Fusion for Training-Free and Auditable Video Reasoning](../../CVPR2026/graph_learning/graph-to-frame_rag_visual-space_knowledge_fusion_for_training-free_and_auditable.md)
+- [Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](../../NeurIPS2025/graph_learning/interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
+- [WSGG: Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2026/graph_learning/wsgg_spatiotemporal_world_scene_graph.md)
+- [Fine-Grained Scene Graph Generation via Sample-Level Bias Prediction](../../ECCV2024/graph_learning/fine-grained_scene_graph_generation_via_sample-level_bias_prediction.md)
+
+<!-- RELATED:END -->

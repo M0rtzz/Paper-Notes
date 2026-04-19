@@ -175,3 +175,15 @@ UMEG-Net 在所有 5 个数据集上对所有基线取得一致优势。UMEG-Net
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5 个数据集、全面消融、多种 k-clip 设置
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，分析深入
 - **实用价值**: ⭐⭐⭐⭐⭐ — 少样本设置直接解决实际标注成本问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Correction Distillation for Structured Data Question Answering](self-correction_distillation_for_structured_data_question_answering.md)
+- [Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/human_understanding/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
+- [Sketch2Colab: Sketch-Conditioned Multi-Human Animation via Controllable Flow Distillation](../../CVPR2026/human_understanding/sketch2colab_sketch-conditioned_multi-human_animation_via_controllable_flow_dist.md)
+- [PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models](pathmind_a_retrieve-prioritize-reason_framework_for_knowledge_graph_reasoning_wi.md)
+- [HiLoMix: Robust High- and Low-Frequency Graph Learning Framework for Mixing Address Association](hilomix_robust_high-_and_low-frequency_graph_learning_framework_for_mixing_addre.md)
+
+<!-- RELATED:END -->

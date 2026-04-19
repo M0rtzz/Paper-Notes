@@ -196,3 +196,15 @@ BBSplat是唯一基于2DGS同时支持任意形状、RGB纹理和存储压缩的
 - 实验充分度: ⭐⭐⭐⭐ 三个标准数据集27个场景、固定/最大存储两种设置、压缩方法对比、网格提取、消融、逐场景指标、纹理大小搜索；但缺少明确的训练时间对比表
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，公式推导完整，图表直观，补充材料详尽（CUDA伪码、逐场景指标、超参数搜索、训练过程可视化）
 - 价值: ⭐⭐⭐⭐ 实际解决了2DGS质量不足和GS存储过大两个重要问题；ray-tracing和即插即用能力有实用价值；训练慢(×8)是主要瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+- [HumanOLAT: A Large-Scale Dataset for Full-Body Human Relighting and Novel-View Synthesis](humanolat_a_large-scale_dataset_for_full-body_human_relighting_and_novel-view_sy.md)
+- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](../../CVPR2026/3d_vision/physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
+- [SeHDR: Single-Exposure HDR Novel View Synthesis via 3D Gaussian Bracketing](sehdr_single-exposure_hdr_novel_view_synthesis_via_3d_gaussian_bracketing.md)
+- [RayZer: A Self-supervised Large View Synthesis Model](rayzer_a_self-supervised_large_view_synthesis_model.md)
+
+<!-- RELATED:END -->

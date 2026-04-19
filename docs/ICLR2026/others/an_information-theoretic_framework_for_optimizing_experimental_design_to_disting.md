@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 仿真验证充分（两种神经元模型、多参数、多对比度），但缺乏真实多上下文实验的前瞻性验证
 - 写作质量: ⭐⭐⭐⭐⭐ 从直觉到理论再到实验的逻辑链极为清晰，图表设计优秀，符号系统一致
 - 价值: ⭐⭐⭐⭐ 为计算神经科学的一个根本争论提供了可操作的理论工具，但影响面受限于领域规模
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
+- [Entropy-UID: A Method for Optimizing Information Density](../../ACL2025/others/entropy-uid_a_method_for_optimizing_information_density.md)
+- [DeepRWCap: Neural-Guided Random-Walk Capacitance Solver for IC Design](../../AAAI2026/others/deeprwcap_neural-guided_random-walk_capacitance_solver_for_ic_design.md)
+- [Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)
+- [Optimizer Choice Matters for the Emergence of Neural Collapse](optimizer_choice_matters_for_the_emergence_of_neural_collapse.md)
+
+<!-- RELATED:END -->

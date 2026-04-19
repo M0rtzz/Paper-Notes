@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 离线+在线评估 + 低级grounding + Recall@k + 消融 + plug-and-play验证 + 小模型实验
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，评分模板细节充分，但论文结构层次较多需仔细消化
 - 价值: ⭐⭐⭐⭐⭐ 3B模型达SOTA级表现 + 97.5% Recall@20 是实用的工程范式，对Web Agent社区有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning](../../ICLR2026/llm_agent/tooltree_efficient_llm_agent_tool_planning_via_dual-feedback_monte_carlo_tree_se.md)
+- [Promoting Sustainable Web Agents: Benchmarking and Estimating Energy Consumption Through Empirical and Theoretical Analysis](promoting_sustainable_web_agents_benchmarking_and_estimating_energy_consumption_.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](../../ICLR2026/llm_agent/web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [TongUI: Internet-Scale Trajectories from Multimodal Web Tutorials for Generalized GUI Agents](tongui_internet-scale_trajectories_from_multimodal_web_tutor.md)
+- [Web-Shepherd: Advancing PRMs for Reinforcing Web Agents](../../NeurIPS2025/llm_agent/web-shepherd_advancing_prms_for_reinforcing_web_agents.md)
+
+<!-- RELATED:END -->

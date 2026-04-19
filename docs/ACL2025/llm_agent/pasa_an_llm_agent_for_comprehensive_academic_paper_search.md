@@ -185,3 +185,15 @@ Selector 的 F1 达到 85%，超越 GPT-4o 的 80%。
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 系统设计优雅、实验全面、实际应用价值极高。Session-Level PPO 的创新解决了 Agent RL 训练的实际难题，7B 模型击败 GPT-4o Agent 的结果令人印象深刻。数据集构建质量高，论文搜索作为科研刚需的场景选择极具影响力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving LLM Agent Planning with In-Context Learning via Atomic Fact Augmentation and Lookahead Search](../../ICML2025/llm_agent/improving_llm_agent_planning_with_in-context_learning_via_atomic_fact_augmentati.md)
+- [AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](../../AAAI2026/llm_agent/agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)
+- [OpenAgentSafety: A Comprehensive Framework for Evaluating Real-World AI Agent Safety](../../ICLR2026/llm_agent/openagentsafety_a_comprehensive_framework_for_evaluating_real-world_ai_agent_saf.md)
+- [MC-Search: Evaluating and Enhancing Multimodal Agentic Search with Structured Long Reasoning Chains](../../ICLR2026/llm_agent/mc-search_evaluating_and_enhancing_multimodal_agentic_search_with_structured_lon.md)
+- [LiveNewsBench: Evaluating LLM Web Search Capabilities with Freshly Curated News](../../ICLR2026/llm_agent/livenewsbench_evaluating_llm_web_search_capabilities_with_freshly_curated_news.md)
+
+<!-- RELATED:END -->

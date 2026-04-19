@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实数据集、多基线、每关节/每动作分析、完整消融
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，数据集设计详尽
 - 对我的价值: ⭐⭐⭐ 自我中心姿态估计的细分方向，多视角融合思路有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
+- [Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision](fish2mesh_transformer_3d_human_mesh_recovery_from_egocentric_vision.md)
+- [PersPose: 3D Human Pose Estimation with Perspective Encoding and Perspective Rotation](perspose_3d_human_pose_estimation_with_perspective_encoding_and_perspective_rota.md)
+- [Multi-View 3D Point Tracking](multi-view_3d_point_tracking.md)
+- [SuperDec: 3D Scene Decomposition with Superquadric Primitives](superdec_3d_scene_decomposition_with_superquadrics_primitives.md)
+
+<!-- RELATED:END -->

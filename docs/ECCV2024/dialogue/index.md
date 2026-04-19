@@ -10,6 +10,6 @@ description: >-
 
 **🎞️ ECCV2024** · **1** 篇论文解读
 
-**[Bi-Mdrg Bridging Image History In Multimodal Dialogue Response Generation](bi-mdrg_bridging_image_history_in_multimodal_dialogue_response_generation.md)**
+**[BI-MDRG: Bridging Image History in Multimodal Dialogue Response Generation](bi-mdrg_bridging_image_history_in_multimodal_dialogue_response_generation.md)**
 
 :   提出 BI-MDRG 框架，通过桥接图像历史信息来增强多模态对话中文本回复的图像 grounding 能力和连续图像回复中物体的一致性。

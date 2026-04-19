@@ -134,3 +134,15 @@ SAE 使用 MSE 重构损失训练 50,000 步，Adam 优化器（学习率 $3 \ti
 - 实验充分度: ⭐⭐⭐ — 392 次消融有力但仅限 ETT 数据、单一模型、分类覆盖率待提升
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，反直觉发现阐述充分，图表设计合理
 - 价值: ⭐⭐⭐⭐ — 为时间序列模型的机制可解释性开辟新方向，发现对模型设计和压缩有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FeDaL: Federated Dataset Learning for General Time Series Foundation Models](fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
+- [Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](../../NeurIPS2025/3d_vision/multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
+- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](../../AAAI2026/3d_vision/uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+- [ProbFM: Probabilistic Time Series Foundation Model with Uncertainty Decomposition](../../AAAI2026/3d_vision/probfm_probabilistic_time_series_foundation_model_with_uncertainty_decomposition.md)
+- [Less is More: Unlocking Specialization of Time Series Foundation Models via Structured Pruning](../../NeurIPS2025/3d_vision/less_is_more_unlocking_specialization_of_time_series_foundation_models_via_struc.md)
+
+<!-- RELATED:END -->

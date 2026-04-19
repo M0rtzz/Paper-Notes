@@ -112,3 +112,15 @@ tags:
 - 价值: ⭐⭐⭐⭐⭐ 对agent领域从SFT向RL过渡提供了关键评估工具
 
 <!-- 覆盖: 3维度(perception/planning/safety), 7场景, 1136条样本, 8个模型评测 -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+- [WearVQA: A Visual Question Answering Benchmark for Wearables in Egocentric Authentic Real-world scenarios](../../NeurIPS2025/multimodal_vlm/wearvqa_a_visual_question_answering_benchmark_for_wearables_in_egocentric_authen.md)
+- [MMSafeAware: Can't See the Forest for the Trees: Benchmarking Multimodal Safety Awareness for Multimodal LLMs](cant_see_the_forest_for_the.md)
+- [CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)
+- [Vision-Language Models Struggle to Align Entities across Modalities](vision-language_models_struggle_to_align_entities_across_modalities.md)
+
+<!-- RELATED:END -->

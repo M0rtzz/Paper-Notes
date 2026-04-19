@@ -132,3 +132,15 @@ TAWM 基于 TD-MPC2 架构进行修改。编码器 $h$ 将观测 $o_t$ 映射到
 ## 评分
 
 ⭐⭐⭐⭐ 方法简洁有效（仅加 $\Delta t$ 输入 + 混合 $\Delta t$ 训练），实验在 9 个 Meta-World 任务和 3 个 PDE 控制任务上充分展示了跨时间分辨率泛化的实用价值。Nyquist-Shannon 定理提供了优雅的理论动机，Lemma 4.1-4.2 给出了样本效率的理论解释。与 MTS3 的对比清晰展示了单步条件预测 vs 多步滚动预测的优势。但理论分析的严格性有限（依赖较强假设），且未在视觉输入场景验证。对 sim-to-real 迁移具有潜在重要性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
+- [General Agents Contain World Models](general_agents_contain_world_models.md)
+- [Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation](sassha_sharpness-aware_adaptive_second-order_optimization_with_stable_hessian_ap.md)
+- [Test-Time Augmentation Improves Efficiency in Conformal Prediction](../../CVPR2025/others/test-time_augmentation_improves_efficiency_in_conformal_prediction.md)
+- [Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
+
+<!-- RELATED:END -->

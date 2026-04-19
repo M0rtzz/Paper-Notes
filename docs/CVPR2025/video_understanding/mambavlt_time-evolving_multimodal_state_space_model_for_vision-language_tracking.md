@@ -119,3 +119,15 @@ $$\mathcal{L} = \lambda_{bbox}\mathcal{L}_{bbox} + \lambda_{tgt}\mathcal{L}_{tgt
 - 实验充分度: ⭐⭐⭐⭐ 4 个数据集 3 种模态设置，但缺少与更多最新 Transformer tracker 的对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，SRF 实验设计有说服力，图示直观
 - 价值: ⭐⭐⭐⭐ 为 SSM 在视觉跟踪领域的应用开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PASS: Path-Selective State Space Model for Event-Based Recognition](../../NeurIPS2025/video_understanding/pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [LLAVIDAL: A Large Language Vision Model for Daily Activities of Living](llavidal_a_large_language_vision_model_for_daily_activities_of_living.md)
+- [GG-SSMs: Graph-Generating State Space Models](gg-ssms_graph-generating_state_space_models.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](../../ECCV2024/video_understanding/videomamba_state_space_model_for_efficient_video_understanding.md)
+- [VideoMamba: Spatio-Temporal Selective State Space Model](../../ECCV2024/video_understanding/videomamba_spatio-temporal_selective_state_space_model.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ $$\mathcal{W}_2^2(f(x;\theta_t), G_t(x)) \leq r\left(\frac{a_1 \log n_1}{(\lambd
 - 实验充分度: ⭐⭐⭐ 作为理论工作，数值验证存在但规模有限，未在大规模实际网络上验证
 - 写作质量: ⭐⭐⭐⭐ 理论陈述严谨，符号统一，证明路径清晰
 - 价值: ⭐⭐⭐⭐ 为NTK理论增加了重要的定量工具，对理解有限宽网络的理论属性有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Global Convergence and Rich Feature Learning in $L$-Layer Infinite-Width Neural Networks under $\mu$P Parametrization](../../ICML2025/optimization/global_convergence_and_rich_feature_learning_in_l-layer_infinite-width_neural_ne.md)
+- [Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks](../../ICLR2026/optimization/directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Training Robust Graph Neural Networks by Modeling Noise Dependencies](training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+
+<!-- RELATED:END -->

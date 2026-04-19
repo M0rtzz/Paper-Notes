@@ -204,3 +204,15 @@ TSPulse 基于 TSMixer 轻量架构构建，核心流程为：
 - 实验充分度: ⭐⭐⭐⭐⭐ （75+数据集，4大任务，全面消融，效率分析，嵌入敏感性分析）
 - 写作质量: ⭐⭐⭐⭐ （内容详尽，逻辑清晰，附录极其丰富）
 - 价值: ⭐⭐⭐⭐⭐ （1M参数超越100倍大模型，开源可用，对部署友好）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SwiftTS: A Swift Selection Framework for Time Series Pre-trained Models via Multi-task Meta-Learning](swiftts_a_swift_selection_framework_for_time_series_pre-trained_models_via_multi.md)
+- [Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+- [Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting](../../AAAI2026/time_series/revitalizing_canonical_pre-alignment_for_irregular_multivariate_time_series_fore.md)
+- [Relational Transformer: Toward Zero-Shot Foundation Models for Relational Data](relational_transformer_toward_zero-shot_foundation_models_for_relational_data.md)
+
+<!-- RELATED:END -->

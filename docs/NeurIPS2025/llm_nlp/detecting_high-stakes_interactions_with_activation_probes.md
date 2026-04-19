@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 种探针 × 6 数据集 × 级联 × 少样本适配
 - 写作质量: ⭐⭐⭐⭐ 系统设计清晰，实用导向
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全部署有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Polar Sparsity: High Throughput Batched LLM Inferencing with Scalable Contextual Sparsity](polar_sparsity_high_throughput_batched_llm_inferencing_with_scalable_contextual_.md)
+- [LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation](../../ICML2025/llm_nlp/la_rosa_enhancing_llm_efficiency_via_layerwise_rotated_sparse_activation.md)
+- [Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models](../../ACL2025/llm_nlp/detecting_referring_expressions_in_visually_grounded_dialogue_with_autoregressiv.md)
+- [Improving Preference Extraction In LLMs By Identifying Latent Knowledge Through Classifying Probes](../../ACL2025/llm_nlp/improving_preference_extraction_in_llms_by_identifying_latent_knowledge_through_.md)
+- [B-score: Detecting biases in large language models using response history](../../ICML2025/llm_nlp/b-score_detecting_biases_in_large_language_models_using_response_history.md)
+
+<!-- RELATED:END -->

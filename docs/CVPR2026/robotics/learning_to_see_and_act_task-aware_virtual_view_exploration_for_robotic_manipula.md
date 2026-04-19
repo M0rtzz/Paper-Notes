@@ -173,3 +173,15 @@ TVVE 比此前 SOTA（ARP 81.6%）提升约 **5 个百分点**，在 Insert Peg 
 ## 评分
 
 ⭐⭐⭐⭐ 方法设计完整度高（MVEP + TaskMoE + 三阶段训练），实验覆盖仿真/OOD/真机三个层面，在 18 个 RLBench 任务上实现了显著提升，但推理效率和点云依赖是实际部署的瓶颈。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [See and Think: Embodied Agent in Virtual Environment](../../ECCV2024/robotics/see_and_think_embodied_agent_in_virtual_environment.md)
+- [Learning Spatial-Aware Manipulation Ordering](../../NeurIPS2025/robotics/learning_spatial-aware_manipulation_ordering.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](lada_robotic_manipulation.md)
+
+<!-- RELATED:END -->

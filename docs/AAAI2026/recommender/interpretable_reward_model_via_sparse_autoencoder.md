@@ -203,3 +203,15 @@ RewardBench 2 上的性能对比（Overall 分数越高越好）：
 - **实验充分度**: ⭐⭐⭐⭐ — RewardBench 2 结果强力，消融完整，但偏好操控仅在安全维度验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 论述清晰，动机-方法-实验一脉贯通
 - **价值**: ⭐⭐⭐⭐⭐ — 在 RM 可解释性和可控性上的突破性工作，对 RLHF 安全研究有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](../../ICML2025/recommender/parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
+- [From Parameter to Representation: A Closed-Form Approach for Controllable Model Merging](from_parameter_to_representation_a_closed-form_approach_for_controllable_model_m.md)
+- [Inference-Time Reward Hacking in Large Language Models](../../NeurIPS2025/recommender/inference-time_reward_hacking_in_large_language_models.md)
+- [Recommendations with Sparse Comparison Data: Provably Fast Convergence for Nonconvex Matrix Factorization](../../ICML2025/recommender/recommendations_with_sparse_comparison_data_provably_fast_convergence_for_noncon.md)
+- [GoalRank: Group-Relative Optimization for a Large Ranking Model](../../ICLR2026/recommender/goalrank_group-relative_optimization_for_a_large_ranking_model.md)
+
+<!-- RELATED:END -->

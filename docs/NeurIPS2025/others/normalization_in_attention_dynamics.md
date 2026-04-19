@@ -126,3 +126,15 @@ $$\dot{\theta}_j(t) = \frac{1}{s_j(t)} \mathbf{P}_{\theta_j(t)} A_j^t(\Theta(t))
 - **实验充分度**: ⭐⭐⭐ — 主要是理论分析辅以简化实验验证，缺少大规模实际训练对比
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学推导严谨，表格和图示清晰，论证层层递进
 - **价值**: ⭐⭐⭐⭐ — 为 Transformer 归一化选择提供了系统性的理论指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians](recurrent_self-attention_dynamics_an_energy-agnostic_perspective_from_jacobians.md)
+- [Learning Dynamics of RNNs in Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+- [FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)
+- [Modeling Cell Dynamics and Interactions with Unbalanced Mean Field Schrödinger Bridge](modeling_cell_dynamics_and_interactions_with_unbalanced_mean_field_schrödinger_b.md)
+
+<!-- RELATED:END -->

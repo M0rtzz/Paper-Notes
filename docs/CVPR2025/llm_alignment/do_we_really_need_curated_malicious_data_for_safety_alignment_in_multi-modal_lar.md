@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5种架构验证充分
 - 写作质量: ⭐⭐⭐⭐ 控制变量分析方法论严谨
 - 价值: ⭐⭐⭐⭐⭐ 对安全对齐实践有重大影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](../../ACL2025/llm_alignment/mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
+- [Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
+- [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](../../ACL2025/llm_alignment/sea_lowresource_safety_alignment_for_multimodal.md)
+- [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
+- [Federated Data-Efficient Instruction Tuning for Large Language Models](../../ACL2025/llm_alignment/federated_data-efficient_instruction_tuning_for_large_language_models.md)
+
+<!-- RELATED:END -->

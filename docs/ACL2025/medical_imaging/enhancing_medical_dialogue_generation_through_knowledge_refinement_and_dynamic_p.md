@@ -139,3 +139,15 @@ MedRef 在 MedDG 上全面领先：比 GPT-4o 在 ROUGE-1 上高 **16.08%**，En
 - **实验充分度**: ⭐⭐⭐⭐ — 两个数据集、完整消融、人工评估、案例分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，案例分析有说服力
 - **价值**: ⭐⭐⭐⭐ — 对医学对话系统有实际意义，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](radar_radiology_report_gen.md)
+- [CliniDial: A Naturally Occurring Multimodal Dialogue Dataset for Team Reflection in Action During Clinical Operation](clinidial_a_naturally_occurring_multimodal_dialogue_dataset_for_team_reflection_.md)
+- [iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](../../ICML2025/medical_imaging/idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
+- [Towards Omni-RAG: Comprehensive Retrieval-Augmented Generation for Large Language Models in Medical Applications](omni_rag_medical.md)
+- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](medbiorag_semantic_search_and_retrieval-augmented_generation_with_large_language.md)
+
+<!-- RELATED:END -->

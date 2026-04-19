@@ -154,3 +154,15 @@ $$\mathcal{L}_{pen} = \sum_{t=0}^{H} \lambda^t \left[ \mathbb{E}_{(\hat{\mathbf{
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖运动/操控/视觉三类任务，消融实验充分，但缺少真实机器人验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，实验说明完整，符号统一规范
 - 价值: ⭐⭐⭐⭐ — 灵巧手操控上的突破性表现（基线成功率~0 vs IQ-MPC 73-96%）展示了方法的实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Reinforcement Learning by Planning with Online World Models](continual_reinforcement_learning_by_planning_with_online_world_models.md)
+- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
+- [Robot-Gated Interactive Imitation Learning with Adaptive Intervention Mechanism](robot-gated_interactive_imitation_learning_with_adaptive_intervention_mechanism.md)
+
+<!-- RELATED:END -->

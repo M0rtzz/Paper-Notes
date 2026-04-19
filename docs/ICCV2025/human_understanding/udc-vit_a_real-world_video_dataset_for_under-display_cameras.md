@@ -148,3 +148,15 @@ DDRNet 在合成数据上表现最佳（31.91 dB），但在真实数据上仅 2
 - 实验充分度: ⭐⭐⭐⭐ 6个模型+2个数据集对比全面，人脸识别评估有新意
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，现有数据集问题的分析深入直观
 - 价值: ⭐⭐⭐⭐ 填补了真实UDC视频数据集的空白，对UDC领域有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Large Multimodal Models as Open-World Image Classifiers](on_large_multimodal_models_as_open-world_image_classifiers.md)
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](../../ECCV2024/human_understanding/worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+- [BEDLAM2.0: Synthetic Humans and Cameras in Motion](../../NeurIPS2025/human_understanding/bedlam20_synthetic_humans_and_cameras_in_motion.md)
+- [MagShield: Towards Better Robustness in Sparse Inertial Motion Capture Under Magnetic Disturbances](magshield_towards_better_robustness_in_sparse_inertial_motion_capture_under_magn.md)
+- [BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
+
+<!-- RELATED:END -->

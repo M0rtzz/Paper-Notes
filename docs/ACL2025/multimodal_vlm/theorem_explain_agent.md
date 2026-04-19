@@ -146,3 +146,15 @@ TheoremExplainAgent（TEA）采用双 Agent 流水线：
 - 实验充分度: ⭐⭐⭐⭐ 4 个 Agent、240 个定理、重试消融、RAG 对比、人类研究，较为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，案例分析和人类研究增强了说服力
 - 价值: ⭐⭐⭐⭐ 对 AI 教育、多模态评估和 agent 设计都有启发，但实用性受限于当前视觉质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Watch and Listen: Understanding Audio-Visual-Speech Moments with Multimodal LLM](../../NeurIPS2025/multimodal_vlm/watch_and_listen_understanding_audio-visual-speech_moments_with_multimodal_llm.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [Video-XL: Extra-Long Vision Language Model for Hour-Scale Video Understanding](../../CVPR2025/multimodal_vlm/video-xl_extra-long_vision_language_model_for_hour-scale_video_understanding.md)
+- [MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](mmmu_pro_robust_benchmark.md)
+- [Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search](mcts_video_captioning_eval.md)
+
+<!-- RELATED:END -->

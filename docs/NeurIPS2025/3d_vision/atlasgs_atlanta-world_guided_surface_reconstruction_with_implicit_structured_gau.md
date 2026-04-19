@@ -150,3 +150,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{rgb}} + \lambda_1 \mathcal{L}_{\text{depth}} 
 - **实验充分度**: ⭐⭐⭐⭐ — 4 个数据集（含室内外）、6+ 个基线、完整消融，结果令人信服。但缺少复杂非结构化场景的失败案例分析。
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述详尽，图表质量高。公式较多但组织合理。
 - **价值**: ⭐⭐⭐⭐ — 在室内/城市重建这一重要方向上取得全面 SOTA，工程价值和学术价值均高。主要受限于速度和适用场景范围。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoSVR: Taming Sparse Voxels for Geometrically Accurate Surface Reconstruction](geosvr_taming_sparse_voxels_for_geometrically_accurate_surface_reconstruction.md)
+- [RayletDF: Raylet Distance Fields for Generalizable 3D Surface Reconstruction from Point Clouds or Gaussians](../../ICCV2025/3d_vision/rayletdf_raylet_distance_fields_for_generalizable_3d_surface_reconstruction_from.md)
+- [Linearly Constrained Diffusion Implicit Models](linearly_constrained_diffusion_implicit_models.md)
+- [NTK-Guided Implicit Neural Teaching](../../CVPR2026/3d_vision/ntk-guided_implicit_neural_teaching.md)
+- [SceneForge: Enhancing 3D-text alignment with Structured Scene Compositions](sceneforge_enhancing_3d-text_alignment_with_structured_scene_compositions.md)
+
+<!-- RELATED:END -->

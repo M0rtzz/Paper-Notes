@@ -117,3 +117,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐ 以清晰的四层架构和四种范式为医学 Agent 领域提供了有价值的组织框架和发展地图，但叙述性综述缺乏定量对比、实操指导不足，且对核心挑战（幻觉、偏差、隐私）的解决方案讨论停留在方向层面。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
+- [From Selection to Generation: A Survey of LLM-based Active Learning](from_selection_to_generation_a_survey.md)
+- [MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents](membench_towards_more_comprehensive_evaluation_on_the_memory_of_llm-based_agents.md)
+- [How to Enable Effective Cooperation Between Humans and NLP Models: A Survey of Principles, Formalizations, and Beyond](human_nlp_cooperation_survey.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+
+<!-- RELATED:END -->

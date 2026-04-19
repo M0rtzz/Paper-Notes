@@ -147,3 +147,15 @@ $$\min_{\mathcal{P} \in \text{Cuts}(T)} \sum_{C \in \mathcal{P}} \text{cost}(C)$
 | 写作质量 | 4 |
 | 实用价值 | 3 |
 | 总体推荐 | 4 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uni-LoRA: One Vector is All You Need](uni-lora_one_vector_is_all_you_need.md)
+- [Break the Tie: Learning Cluster-Customized Category Relationships for Categorical Data Clustering](../../AAAI2026/model_compression/break_the_tie_learning_cluster-customized_category_relationships_for_categorical.md)
+- [One QuantLLM for ALL: Fine-tuning Quantized LLMs Once for Efficient Deployments](../../ACL2025/model_compression/one_quantllm_for_all_fine-tuning_quantized_llms_once_for_efficient_deployments.md)
+- [Parallax to Align Them All: An OmniParallax Attention Mechanism for Distributed Multi-View Image Compression](../../CVPR2026/model_compression/parallax_to_align_them_all_an_omniparallax_attention_mechanism_for_distributed_m.md)
+- [Is Retain Set All You Need in Machine Unlearning? Restoring Performance of Unlearned Models with Out-Of-Distribution Images](../../ECCV2024/model_compression/is_retain_set_all_you_need_in_machine_unlearning_restoring_performance_of_unlear.md)
+
+<!-- RELATED:END -->

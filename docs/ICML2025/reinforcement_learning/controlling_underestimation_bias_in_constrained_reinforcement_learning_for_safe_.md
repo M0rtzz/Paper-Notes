@@ -137,3 +137,15 @@ Safety Gymnasium 基准（多种安全约束环境）：
 - 实验充分度: ⭐⭐⭐⭐ 多环境、多基方法、完整消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，理论+实验兼备
 - 价值: ⭐⭐⭐⭐⭐ 对安全 RL 研究有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
+- [Extreme Value Policy Optimization for Safe Reinforcement Learning](extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
+- [Risk-Averse Constrained Reinforcement Learning with Optimized Certainty Equivalents](../../NeurIPS2025/reinforcement_learning/risk-averse_constrained_reinforcement_learning_with_optimized_certainty_equivale.md)
+- [Automaton Constrained Q-Learning](../../NeurIPS2025/reinforcement_learning/automaton_constrained_q-learning.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+
+<!-- RELATED:END -->

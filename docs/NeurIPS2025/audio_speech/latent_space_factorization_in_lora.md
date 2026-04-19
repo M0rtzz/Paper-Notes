@@ -155,3 +155,15 @@ FVAE-LoRA 在最差组准确率上始终更高，验证了 $\mathbf{z}_1$ 确实
 
 ⭐⭐⭐⭐⭐ (4.5/5)
 理论优美、实验全面、跨模态验证充分，虚假相关性实验令人信服。训练开销增加和超参数多是主要不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Speech Language Modeling via Energy Distance in Continuous Latent Space](efficient_speech_language_modeling_via_energy_distance_in_continuous_latent_spac.md)
+- [Multi-head Temporal Latent Attention](multi-head_temporal_latent_attention.md)
+- [Latent Swap Joint Diffusion for 2D Long-Form Latent Generation](../../ICCV2025/audio_speech/latent_swap_joint_diffusion_for_2d_long-form_latent_generation.md)
+- [Dynamic Parameter Memory: Temporary LoRA-Enhanced LLM for Long-Sequence Emotion Recognition in Conversation](../../ICLR2026/audio_speech/dynamic_parameter_memory_temporary_lora-enhanced_llm_for_long-sequence_emotion_r.md)
+- [Latent Speech-Text Transformer](../../ICLR2026/audio_speech/latent_speech_text_transformer.md)
+
+<!-- RELATED:END -->

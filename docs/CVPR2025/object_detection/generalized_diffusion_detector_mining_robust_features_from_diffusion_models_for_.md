@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个DG基准、13个数据集、与DA/DG方法全面对比、多种消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，但部分数学符号较多
 - 价值: ⭐⭐⭐⭐⭐ 开辟了利用扩散模型做域泛化的新方向，代码开源，具有很强的follow-up价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Privacy-Utility Trade-offs to Mitigate Memorization in Diffusion Models](enhancing_privacy-utility_trade-offs_to_mitigate_memorization_in_diffusion_model.md)
+- [Beyond Semantic Features: Pixel-Level Mapping for Generalized AI-Generated Image Detection](../../AAAI2026/object_detection/beyond_semantic_features_pixel-level_mapping_for_generalized_ai-generated_image_.md)
+- [DiffDoctor: Diagnosing Image Diffusion Models Before Treating](../../ICCV2025/object_detection/diffdoctor_diagnosing_image_diffusion_models_before_treating.md)
+- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
+- [Implicit Concept Removal of Diffusion Models](../../ECCV2024/object_detection/implicit_concept_removal_of_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \alpha_1 \mathcal{L}_{\
 - **实验充分度**: 7/10 — 多模型多基准测试 + 消融研究较完整，但缺少大模型和复杂 Agent 场景验证
 - **写作质量**: 8/10 — 结构清晰，公式推导完整，图示直观
 - **价值**: 7/10 — 为 Agent PEFT 提供了实用方案，小模型上效果显著，但角色定义的刚性限制了泛化性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+- [Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations](../../ICCV2025/model_compression/generalized_tensor-based_parameter-efficient_fine-tuning_via_lie_group_transform.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](../../ACL2025/model_compression/l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [Faster Parameter-Efficient Tuning with Token Redundancy Reduction (FPET)](../../CVPR2025/model_compression/faster_parameter-efficient_tuning_with_token_redundancy_reduction.md)
+
+<!-- RELATED:END -->

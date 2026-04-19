@@ -115,3 +115,15 @@ DiffATD 将主动目标发现（ATD）建模为在网格化搜索空间中的序
 - **写作质量**: ⭐⭐⭐⭐ 理论推导清晰，但符号较多初读有一定门槛
 - **价值**: ⭐⭐⭐⭐⭐ 无监督主动发现在医学影像中有重要应用前景，特别是罕见疾病筛查场景
 - **总体**: ⭐⭐⭐⭐ 扎实的工作，理论和实验兼备，跨领域泛化令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Target Discovery under Uninformative Prior: The Power of Permanent and Transient Memory](active_target_discovery_under_uninformative_prior_the_power_of_permanent_and_tra.md)
+- [Compressing Biology: Evaluating the Stable Diffusion VAE for Phenotypic Drug Discovery](compressing_biology_evaluating_the_stable_diffusion_vae_for_phenotypic_drug_disc.md)
+- [Doctor Approved: Generating Medically Accurate Skin Disease Images through AI-Expert Feedback](doctor_approved_generating_medically_accurate_skin_disease_images_through_ai-exp.md)
+- [Amortized Active Generation of Pareto Sets](amortized_active_generation_of_pareto_sets.md)
+- [Interpreting GFlowNets for Drug Discovery: Extracting Actionable Insights for Medicinal Chemistry](interpreting_gflownets_for_drug_discovery_extracting_actionable_insights_for_med.md)
+
+<!-- RELATED:END -->

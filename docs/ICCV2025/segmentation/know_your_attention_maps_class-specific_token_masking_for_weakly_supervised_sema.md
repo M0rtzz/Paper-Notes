@@ -130,3 +130,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 5 个数据集（标准+专业领域），消融全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ 对弱监督分割特别是标注稀缺的专业领域有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cs2K: Class-Specific and Class-Shared Knowledge Guidance for Incremental Semantic Segmentation](../../ECCV2024/segmentation/cs2k_class-specific_and_class-shared_knowledge_guidance_for_incremental_semantic.md)
+- [Training-Free Class Purification for Open-Vocabulary Semantic Segmentation](training-free_class_purification_for_open-vocabulary_semantic_segmentation.md)
+- [SSR: Semantic and Spatial Rectification for CLIP-based Weakly Supervised Segmentation](../../AAAI2026/segmentation/ssr_semantic_and_spatial_rectification_for_clip-based_weakly_supervised_segmenta.md)
+- [ConformalSAM: Unlocking the Potential of Foundational Segmentation Models in Semi-Supervised Semantic Segmentation with Conformal Prediction](conformalsam_unlocking_the_potential_of_foundational_segmentation_models_in_semi.md)
+- [Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation](../../CVPR2025/segmentation/exploring_clips_dense_knowledge_for_weakly_supervised_semantic_segmentation.md)
+
+<!-- RELATED:END -->

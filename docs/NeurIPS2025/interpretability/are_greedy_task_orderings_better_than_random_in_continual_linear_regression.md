@@ -123,3 +123,15 @@ $$x_{k+1} = x_k - A_{i_k}^\dagger (A_{i_k} x_k - b_{i_k})$$
 - 创新性: ⭐⭐⭐⭐
 - 实用性: ⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Scaling Laws for Symbolic Regression](towards_scaling_laws_for_symbolic_regression.md)
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+- [Do Different Prompting Methods Yield a Common Task Representation?](do_different_prompting_methods_yield_a_common_task_representation_in_language_mo.md)
+- [SOM Directions are Better than One: Multi-Directional Refusal Suppression in Language Models](../../AAAI2026/interpretability/som_directions_are_better_than_one_multi-directional_refusal_suppression_in_lang.md)
+- [Better Estimation of the Kullback-Leibler Divergence Between Language Models](better_estimation_of_the_kullback--leibler_divergence_between_language_models.md)
+
+<!-- RELATED:END -->

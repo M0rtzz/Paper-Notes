@@ -147,3 +147,15 @@ $\theta_{i+1} = \theta_i - \eta \left(\frac{1}{L}\sum_{k=1}^{L} \text{clip}(g(x_
 ## 评分
 
 ⭐⭐⭐ — 工作扎实且开源代码有实用价值，但主要贡献在于"实现和基准测试"而非方法创新。DP适配性能不佳的问题被指出但未解决。作为首个VAR适配基准，具有奠基性意义，但深度和新颖性有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrossNovo: Bidirectional Representations Augmented Autoregressive Biological Sequence Generation](../../NeurIPS2025/medical_imaging/bidirectional_representations_augmented_autoregressive_biological_sequence_gener.md)
+- [Toward a Vision-Language Foundation Model for Medical Data: Multimodal Dataset and Benchmarks for Vietnamese PET/CT Report Generation](../../NeurIPS2025/medical_imaging/toward_a_vision-language_foundation_model_for_medical_data_multimodal_dataset_an.md)
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](../../CVPR2026/medical_imaging/tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+- [eccDNAMamba: A Pre-Trained Model for Ultra-Long eccDNA Sequence Analysis](eccdnamamba_a_pre-trained_model_for_ultra-long_eccdna_sequence_analysis.md)
+- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](../../ICCV2025/medical_imaging/boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)
+
+<!-- RELATED:END -->

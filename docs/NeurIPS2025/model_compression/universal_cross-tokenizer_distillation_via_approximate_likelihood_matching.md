@@ -119,3 +119,15 @@ $$\mathcal{L}^{ALM}_{S,T}(\mathbf{x}) = \sum_{i,j,k,l \in A_c(\mathbf{x})} f(p_T
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个Use Case全面验证，消融详尽，效率比较充分
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，方法描述清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了LLM蒸馏的核心瓶颈问题，实际意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Architecture Distillation Made Simple with Redundancy Suppression](../../ICCV2025/model_compression/cross-architecture_distillation_made_simple_with_redundancy_suppression.md)
+- [Learning to Factorize and Adapt: A Versatile Approach Toward Universal Spatio-Temporal Foundation Models](learning_to_factorize_and_adapt_a_versatile_approach_toward_universal_spatio-tem.md)
+- [UNIC: Universal Classification Models via Multi-teacher Distillation](../../ECCV2024/model_compression/unic_universal_classification_models_via_multi-teacher_distillation.md)
+- [Distillation of Large Language Models via Concrete Score Matching](../../ICLR2026/model_compression/distillation_of_large_language_models_via_concrete_score_matching.md)
+- [Draft-based Approximate Inference for LLMs](../../ICLR2026/model_compression/draft-based_approximate_inference_for_llms.md)
+
+<!-- RELATED:END -->

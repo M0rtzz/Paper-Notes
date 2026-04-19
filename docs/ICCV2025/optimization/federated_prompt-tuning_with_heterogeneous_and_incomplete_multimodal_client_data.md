@@ -169,3 +169,15 @@ FED-PRIME 相对第二名的提升幅度在 Food-101 上为 1.73%~107.83%，在 
 - **实验充分度**: ⭐⭐⭐⭐ — 15 组训练-测试场景组合全面，但仅 2 个数据集稍显不足
 - **写作质量**: ⭐⭐⭐⭐ — 问题形式化清晰，但符号和公式较多，可读性有提升空间
 - **价值**: ⭐⭐⭐⭐ — 填补了多模态缺失数据的联邦 Prompt-Tuning 空白，实际应用场景广泛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](../../NeurIPS2025/optimization/learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Federated Continual Instruction Tuning](federated_continual_instruction_tuning.md)
+- [FedSWA: Improving Generalization in Federated Learning with Highly Heterogeneous Data via Momentum-Based Stochastic Controlled Weight Averaging](../../ICML2025/optimization/fedswa_improving_generalization_in_federated_learning_with_highly_heterogeneous_.md)
+- [SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data](../../AAAI2026/optimization/smofi_step-wise_momentum_fusion_for_split_federated_learning_on_heterogeneous_da.md)
+- [Exact and Linear Convergence for Federated Learning under Arbitrary Client Participation is Attainable](../../NeurIPS2025/optimization/exact_and_linear_convergence_for_federated_learning_under_arbitrary_client_parti.md)
+
+<!-- RELATED:END -->

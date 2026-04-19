@@ -147,3 +147,15 @@ $$parameters = FFN\left(softmax\left(\frac{\mathbbm{q} \cdot \mathbbm{k}^T}{\sqr
 - **实验充分度**: ⭐⭐⭐⭐ — 涵盖检测+分割、多种光照、多个 backbone，但消融实验可以更详细
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，公式规范
 - **价值**: ⭐⭐⭐⭐ — 对 RAW 图像的实际应用有重要推动作用，参数高效的设计具有工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QueryCDR: Query-based Controllable Distortion Rectification Network for Fisheye Images](querycdr_query-based_controllable_distortion_rectification_network_for_fisheye_i.md)
+- [Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](../../ICML2025/signal_comm/large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)
+- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
+- [Defect Spectrum: A Granular Look of Large-Scale Defect Datasets with Rich Semantics](defect_spectrum_a_granular_look_of_large-scale_defect_datasets_with_rich_semanti.md)
+- [Unsupervised Exposure Correction](unsupervised_exposure_correction.md)
+
+<!-- RELATED:END -->

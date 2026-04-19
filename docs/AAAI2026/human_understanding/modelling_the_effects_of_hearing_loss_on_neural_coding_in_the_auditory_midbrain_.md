@@ -153,3 +153,15 @@ $$\mathcal{L} = \mathcal{L}_{CE}(R, p(\hat{R})) + \alpha_{KL} D_{KL} + \alpha_{A
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型对比、ψ空间可视化、泛化测试充分，但动物数量有限
 - **写作质量**: ⭐⭐⭐⭐ — 技术清晰，动机阐述充分，图示精美
 - **实用价值**: ⭐⭐⭐⭐⭐ — 对未来助听器/听力补偿技术有直接潜力，应用前景明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning](clip-fti_fine-grained_face_template_inversion_via_clip-driven_attribute_conditio.md)
+- [REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation](reina_regularized_entropy_information-based_loss_for_efficient_simultaneous_spee.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/human_understanding/in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [Hearing Anywhere in Any Environment](../../CVPR2025/human_understanding/hearing_anywhere_in_any_environment.md)
+- [ParaRevSNN: A Parallel Reversible Spiking Neural Network for Efficient Training and Inference](pararevsnn_a_parallel_reversible_spiking_neural_network_for_efficient_training_a.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ $$\mathcal{L}_{align} = \lambda_{2D} \cdot \mathcal{L}_{align}^{2D} + \lambda_{3
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据，退化场景验证
 - 写作质量: ⭐⭐⭐⭐ 架构图清晰，对比范式图直观
 - 价值: ⭐⭐⭐⭐⭐ 对多模态融合流估计领域提供全新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)
+- [Look Before You Fuse: 2D-Guided Cross-Modal Alignment for Robust 3D Detection](look_before_you_fuse_2d-guided_cross-modal_alignment_for_robust_3d_detection.md)
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](../../ICCV2025/autonomous_driving/cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [LiDAR-Event Stereo Fusion with Hallucinations](../../ECCV2024/autonomous_driving/lidar-event_stereo_fusion_with_hallucinations.md)
+- [LiREC-Net: A Target-Free and Learning-Based Network for LiDAR, RGB, and Event Calibration](lirec-net_a_target-free_and_learning-based_network_for_lidar_rgb_and_event_calib.md)
+
+<!-- RELATED:END -->

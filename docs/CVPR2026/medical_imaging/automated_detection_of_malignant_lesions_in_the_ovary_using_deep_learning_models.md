@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 15个变体的系统对比较全面，但数据集太小、无外部验证
 - 写作质量: ⭐⭐⭐ 结构清晰，但部分细节冗余，公式描述偏初级教科书风格
 - 价值: ⭐⭐⭐ 对卵巢癌CAD有一定参考价值，但距离临床可用仍有较大差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Novel Architecture of RPA In Oral Cancer Lesion Detection](novel_architecture_of_rpa_in_oral_cancer_lesion_detection.md)
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversionbased_reconstructionfree_anomaly_de.md)
+- [Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration](reinforcing_the_weakest_links_modernizing_siena_with_targeted_deep_learning_inte.md)
+- [Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiationinduced_cont.md)
+- [Deep Learning–Based Estimation of Blood Glucose Levels from Multidirectional Scleral Blood Vessel Imaging](deep_learning_based_estimation_of_blood_glucose_levels_from_multidirectional_scl.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ tags:
 - **实验**: ⭐⭐⭐⭐ — 覆盖多个LLM和数据集，消融充分，人类评估增强可信度
 - **实用性**: ⭐⭐⭐⭐ — 零成本部署，但依赖高质量双语数据集
 - **写作**: ⭐⭐⭐ — 框架阐述清晰但部分表格排版较密集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thompson Sampling via Fine-Tuning of LLMs](thompson_sampling_via_fine-tuning_of_llms.md)
+- [Tracing Pharmacological Knowledge in Large Language Models](tracing_pharmacological_knowledge_in_large_language_models.md)
+- [GEM: Generative Entropy-Guided Preference Modeling for Few-shot Alignment of LLMs](../../AAAI2026/medical_imaging/gem_generative_entropy-guided_preference_modeling_for_few-shot_alignment_of_llms.md)
+- [Protein Structure Tokenization: Benchmarking and New Recipe](../../ICML2025/medical_imaging/protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](../../NeurIPS2025/medical_imaging/position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+
+<!-- RELATED:END -->

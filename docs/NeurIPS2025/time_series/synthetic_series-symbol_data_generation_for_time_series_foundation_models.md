@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 大任务 + scaling 实验 + 消融 + 表示分析 + 复杂度分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论与实验衔接好，Takens 定理的引入自然
 - 价值: ⭐⭐⭐⭐ 为时序基础模型提供了新的数据范式，纯合成预训练的可行性有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Foundational are Foundation Models for Time Series Forecasting?](how_foundational_are_foundation_models_for_time_series_forecasting.md)
+- [SEMPO: Lightweight Foundation Models for Time Series Forecasting](sempo_lightweight_foundation_models_for_time_series_forecasting.md)
+- [In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](../../ICLR2026/time_series/adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+- [Benchmarking Probabilistic Time Series Forecasting Models on Neural Activity](benchmarking_probabilistic_time_series_forecasting_models_on_neural_activity.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ DGLS 继承了 GDBA 的基本运行流程——每轮中各智能体初始化代
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OptiTree: Hierarchical Thoughts Generation with Tree Search for LLM Optimization Modeling](../../NeurIPS2025/llm_evaluation/optitree_hierarchical_thoughts_generation_with_tree_search_for_llm_optimization_.md)
+- [Scalable Vision-Guided Crop Yield Estimation](scalable_vision-guided_crop_yield_estimation.md)
+- [LCA: Local Classifier Alignment for Continual Learning](../../ICLR2026/llm_evaluation/lca_local_classifier_alignment_for_continual_learning.md)
+- [OGNI-DC: Robust Depth Completion with Optimization-Guided Neural Iterations](../../ECCV2024/llm_evaluation/ogni-dc_robust_depth_completion_with_optimization-guided_neural_iterations.md)
+- [Low-Rank Curvature for Zeroth-Order Optimization in LLM Fine-Tuning](low-rank_curvature_for_zeroth-order_optimization_in_llm_fine-tuning.md)
+
+<!-- RELATED:END -->

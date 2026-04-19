@@ -125,3 +125,15 @@ Improvement Score（相对随机基线的改进百分比）平均提升 5.0%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 160B tokens 长训练、全面的消融（5 种 MoE 配置、学习率、模型规模）、详细的效率分析
 - 写作质量: ⭐⭐⭐⭐ 从梯度误差分析切入的叙事逻辑清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对 MoE 训练的实际改进，开源代码，zero-cost 特性使其易于被广泛采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Efficient Inference Attacks: Shadow Model Sharing via Mixture-of-Experts](toward_efficient_inference_attacks_shadow_model_sharing_via_mixture-of-experts.md)
+- [DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models](../../CVPR2025/model_compression/ders_towards_extremely_efficient_upcycled_mixture-of-experts_models.md)
+- [Online Mixture of Experts: No-Regret Learning for Optimal Collective Decision-Making](online_mixture_of_experts_no-regret_learning_for_optimal_collective_decision-mak.md)
+- [REOrdering Patches Improves Vision Models](reordering_patches_improves_vision_models.md)
+- [Unveiling Super Experts in Mixture-of-Experts Large Language Models](../../ICLR2026/model_compression/unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
+
+<!-- RELATED:END -->

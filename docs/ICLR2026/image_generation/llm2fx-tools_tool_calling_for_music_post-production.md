@@ -113,3 +113,15 @@ $$\mathcal{L}_{\text{NTL-WAS}} = \frac{1}{|\mathcal{I}_{\text{num}}|} \sum_{i \i
 - 实验充分度: ⭐⭐⭐⭐⭐ MUSHRA听测+多维度指标+消融+风格迁移+NLG评估
 - 写作质量: ⭐⭐⭐⭐ 任务定义清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 开辟了 LLM 在音频后期制作中的新应用方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FilmComposer: LLM-Driven Music Production for Silent Film Clips](../../CVPR2025/image_generation/filmcomposer_llm-driven_music_production_for_silent_film_clips.md)
+- [QuantVSR: Low-Bit Post-Training Quantization for Real-World Video Super-Resolution](../../AAAI2026/image_generation/quantvsr_low-bit_post-training_quantization_for_real-world_video_super-resolutio.md)
+- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+- [Diff-V2M: A Hierarchical Conditional Diffusion Model with Explicit Rhythmic Modeling for Video-to-Music Generation](../../AAAI2026/image_generation/diff-v2m_a_hierarchical_conditional_diffusion_model_with_explicit_rhythmic_model.md)
+- [MuseControlLite: Multifunctional Music Generation with Lightweight Conditioners](../../ICML2025/image_generation/musecontrollite_multifunctional_music_generation_with_lightweight_conditioners.md)
+
+<!-- RELATED:END -->

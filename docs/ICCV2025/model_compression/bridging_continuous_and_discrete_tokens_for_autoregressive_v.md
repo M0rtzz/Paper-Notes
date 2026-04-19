@@ -143,3 +143,15 @@ TokenBridge颠覆了传统"在tokenizer训练中引入量化"的范式，改为*
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融非常全面，涵盖量化粒度、预测策略、通道分组、head容量、维度顺序、不同AE泛化等多个维度
 - 写作质量: ⭐⭐⭐⭐ 论文组织清晰，motivation表述到位，图表设计好
 - 价值: ⭐⭐⭐⭐ 为自回归视觉生成提供了更简洁的方案，对统一多模态框架有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation](bridging_continuous_and_discrete_tokens_for_autoregressive_visual_generation.md)
+- [FastVAR: Linear Visual Autoregressive Modeling via Cached Token Pruning](fastvar_linear_visual_autoregressive_modeling_via_cached_token_pruning.md)
+- [SynCity: Training-Free Generation of 3D Worlds](syncity_training-free_generation_of_3d_worlds.md)
+- [Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification](competitive_distillation_a_simple_learning_strategy_for_improving_visual_classif.md)
+- [B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens](b-vllm_a_vision_large_language_model_with_balanced_spatio-temporal_tokens.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ QViC-MF 在仅使用 16 token/帧的条件下，MLVU test 超越前 SOTA 6.1%，
 - 实验充分度: ⭐⭐⭐⭐ — 四个基准全面评测，消融实验逐层验证各组件，压缩率对比和案例分析丰富
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，图示直观（尤其是压缩幻觉的可视化诊断），技术描述严谨
 - 价值: ⭐⭐⭐⭐ — 在多个长视频基准上取得显著提升，16 token/帧的高效设计对实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FLoC: Facility Location-Based Efficient Visual Token Compression for Long Video Understanding](../../ICLR2026/video_understanding/floc_facility_location-based_efficient_visual_token_compression_for_long_video_u.md)
+- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_for_efficient_video_understanding.md)
+- [VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking](videoseek_long-horizon_video_agent_with_tool-guided_seeking.md)
+- [LongVideo-R1: Smart Navigation for Low-cost Long Video Understanding](longvideo-r1_smart_navigation_for_low-cost_long_video_understanding.md)
+
+<!-- RELATED:END -->

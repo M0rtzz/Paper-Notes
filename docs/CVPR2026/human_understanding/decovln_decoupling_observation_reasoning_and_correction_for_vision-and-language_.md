@@ -133,3 +133,15 @@ $$DM(s_t) = \min_{s^* \in P_{exp}} d_g(s_t, s^*)$$
 - 实验充分度: ⭐⭐⭐⭐ — 多基准对比、详细消融、长期导航验证、真实机器人部署
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题建模严谨，方法描述规范
 - 价值: ⭐⭐⭐⭐ — 在仅 RGB 输入条件下大幅超越多传感器方法，具有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing Vision-Language Semantics for Deepfake Video Detection](unleashing_vision-language_semantics_for_deepfake_video_detection.md)
+- [AdvMark: Decoupling Defense Strategies for Robust Image Watermarking](decoupling_defense_strategies_for_robust_image_watermarking.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [GUI-Rise: Structured Reasoning and History Summarization for GUI Navigation](../../NeurIPS2025/human_understanding/gui-rise_structured_reasoning_and_history_summarization_for_gui_navigation.md)
+- [SteelDefectX: A Coarse-to-Fine Vision-Language Dataset and Benchmark for Generalizable Steel Surface Defect Detection](steeldefectx_a_coarse-to-fine_vision-language_dataset_and_benchmark_for_generali.md)
+
+<!-- RELATED:END -->

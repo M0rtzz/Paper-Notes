@@ -179,3 +179,15 @@ L_score = ReLU(S'_nm) + ReLU(m - S'_mat)
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表质量高
 - **实用价值**: ⭐⭐⭐⭐⭐ — 即插即用，不需重训骨干，部署友好
 - **总体**: ⭐⭐⭐⭐ (4/5) — 实用性强的多模态分数融合框架，对安防和识别领域有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contact-Aware Refinement of Human Pose Pseudo-Ground Truth via Bioimpedance Sensing](contact-aware_refinement_of_human_pose_pseudo-ground_truth_via_bioimpedance_sens.md)
+- [DynFaceRestore: Balancing Fidelity and Quality in Diffusion-Guided Blind Face Restoration](dynfacerestore_balancing_fidelity_and_quality_in_diffusion-guided_blind_face_res.md)
+- [DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)
+- [CarGait: Cross-Attention based Re-ranking for Gait Recognition](cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
+- [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+
+<!-- RELATED:END -->

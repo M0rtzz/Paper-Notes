@@ -119,3 +119,15 @@ RRID的输入是配对的RAW图像 $\mathbf{I}_{raw} \in \mathbb{R}^{H/2 \times 
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个层面的消融（架构/输入、SCDM、RGISP），跨数据集泛化验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，每个模块的设计动机交代充分
 - 价值: ⭐⭐⭐⭐ 开辟了RAW+sRGB联合图像复原的新方向，实际应用前景明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](../../CVPR2026/others/polishing_the_sky_widefield_and_highdynamic_range.md)
+- [Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)
+- [COIN-Matting: Confounder Intervention for Image Matting](coin-matting_confounder_intervention_for_image_matting.md)
+- [Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](../../ICLR2026/others/predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
+
+<!-- RELATED:END -->

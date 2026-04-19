@@ -112,3 +112,15 @@ $\mathcal{L} = \mathcal{L}_{CFM} + \lambda \cdot \text{FABO}$。在 MimicGen 基
 - 实验充分度: ⭐⭐⭐⭐ 12个任务+多基线+消融，但仅在仿真
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，图示直觉清晰
 - 价值: ⭐⭐⭐⭐⭐ 为高效具身AI策略学习提供了理论和实践的统一方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](../../ICLR2026/image_generation/flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
+- [MP1: MeanFlow Tames Policy Learning in 1-step for Robotic Manipulation](mp1_meanflow_tames_policy_learning_in_1-step_for_robotic_manipulation.md)
+- [FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency](../../NeurIPS2025/image_generation/freqpolicy_efficient_flow-based_visuomotor_policy_via_frequency_consistency.md)
+- [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](../../NeurIPS2025/image_generation/equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
+- [DogFit: Domain-guided Fine-tuning for Efficient Transfer Learning of Diffusion Models](dogfit_domain-guided_fine-tuning_for_efficient_transfer_learning_of_diffusion_mo.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仿真验证有限，缺乏与专业航天系统的定量对比
 - 写作质量: ⭐⭐⭐⭐ 问题动机和航天背景描述清晰
 - 价值: ⭐⭐⭐ 应用导向的前瞻性工作，对航天自主系统研究有启发价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
+- [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](../../ACL2025/llm_nlp/llm_braces_straightening.md)
+- [ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework](../../ICLR2026/llm_nlp/ellmob_event-driven_human_mobility_generation_with_self-aligned_llm_framework.md)
+- [ICL-Router: In-Context Learned Model Representations for LLM Routing](../../AAAI2026/llm_nlp/icl-router_in-context_learned_model_representations_for_llm_routing.md)
+- [PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights](../../ACL2025/llm_nlp/praise_enhancing_product_descriptions_with_llm-driven_structured_insights.md)
+
+<!-- RELATED:END -->

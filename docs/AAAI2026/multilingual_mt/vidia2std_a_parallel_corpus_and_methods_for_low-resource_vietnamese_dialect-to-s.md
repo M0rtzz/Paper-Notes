@@ -142,3 +142,15 @@ ViDia2Std 构建了首个覆盖越南全部 63 个省份的手工标注越南语
 - 实验充分度: ⭐⭐⭐⭐⭐ 内在+外在双维评估，6 个翻译系统交叉验证，退化案例深度归因分析，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化到位，标注协议描述详细
 - 价值: ⭐⭐⭐⭐ 语料库和基线模型都已开源，对越南语 NLP 社区有直接的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STELLAR: Scene Text Editor for Low-Resource Languages and Real-World Data](stellar_scene_text_editor_for_low-resource_languages_and_real-world_data.md)
+- [The Esethu Framework: Reimagining Sustainable Dataset Governance and Curation for Low-Resource Languages](../../ACL2025/multilingual_mt/the_esethu_framework_reimagining_sustainable_dataset_governance_and_curation_for.md)
+- [Dictionaries to the Rescue: Cross-Lingual Vocabulary Transfer for Low-Resource Languages Using Bilingual Dictionaries](../../ACL2025/multilingual_mt/dictionaries_to_the_rescue_cross-lingual_vocabulary_transfer_for_low-resource_la.md)
+- [Multilingual Encoder Knows More Than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages](../../ACL2025/multilingual_mt/multilingual_encoder_knows_more_than_you_realize_shared_weights_pretraining_for_.md)
+- [Read it in Two Steps: Translating Extremely Low-Resource Languages with Code-Augmented Grammar Books](../../ACL2025/multilingual_mt/low_resource_translation.md)
+
+<!-- RELATED:END -->

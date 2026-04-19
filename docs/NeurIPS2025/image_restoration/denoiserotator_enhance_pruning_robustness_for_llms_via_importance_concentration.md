@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型（7B-72B），3 种剪枝方法，2 种稀疏模式，消融实验和超参数分析完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、理论推导完整、图示直观
 - 价值: ⭐⭐⭐⭐ 对 LLM 部署有直接实用价值，尤其是 2:4 硬件加速场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising](../../ACL2025/image_restoration/diffusedef_adversarial_defense.md)
+- [Skip to the Good Part: Representation Structure & Inference-Time Layer Skipping in Diffusion vs. Autoregressive LLMs](../../ICLR2026/image_restoration/skip_to_the_good_part_representation_structure_inference-time_layer_skipping_in_.md)
+- [SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning](scan_self-denoising_monte_carlo_annotation_for_robust_process_reward_learning.md)
+- [GC4NC: A Benchmark Framework for Graph Condensation on Node Classification with New Insights](gc4nc_a_benchmark_framework_for_graph_condensation_on_node_classification_with_n.md)
+- [Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
+
+<!-- RELATED:END -->

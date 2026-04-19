@@ -152,3 +152,15 @@ EuroSAT 场景分类 Top-1 准确率：
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个数据集，涵盖分类/分割/多尺度/未见传感器等全面评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，设计动机与物理原理结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 为遥感多传感器统一建模提供了高效且可扩展的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Masked Angle-Aware Autoencoder for Remote Sensing Images](../../ECCV2024/remote_sensing/masked_angle-aware_autoencoder_for_remote_sensing_images.md)
+- [RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
+- [GeoLink: Empowering Remote Sensing Foundation Model with OpenStreetMap Data](../../NeurIPS2025/remote_sensing/geolink_empowering_remote_sensing_foundation_model_with_openstreetmap_data.md)
+- [Think and Answer ME: Benchmarking and Exploring Multi-Entity Reasoning Grounding in Remote Sensing](../../CVPR2025/remote_sensing/think_and_answer_me_benchmarking_and_exploring_multi-entity_reasoning_grounding_.md)
+- [Asking like Socrates: Socrates helps VLMs understand remote sensing images](../../CVPR2026/remote_sensing/asking_like_socrates_socrates_helps_vlms_understand_remote_sensing_images.md)
+
+<!-- RELATED:END -->

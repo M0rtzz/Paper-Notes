@@ -128,3 +128,15 @@ DINO-based RL 在表格任务上严重退化（Avg 降至 65.3），而 Visual-E
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三类任务全面验证，与多种奖励基线对比，包含 TTS 实验和 VC-RewardBench
 - 写作质量: ⭐⭐⭐⭐ — 问题分析深入，实验设计严谨，图示清晰
 - 价值: ⭐⭐⭐⭐ — 为 vision-to-code 的 RL 提供了实用的奖励解决方案，VC-RewardBench 有持续价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Collaborative Decoding Makes Visual Auto-Regressive Modeling Efficient](collaborative_decoding_makes_visual_auto-regressive_modeling_efficient.md)
+- [InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
+- [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
+- [Overcoming Visual Clutter in Vision Language Action Models via Concept-Gated Visual Distillation](overcoming_visual_clutter_in_vision_language_action_models_via_concept-gated_vis.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+
+<!-- RELATED:END -->

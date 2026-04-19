@@ -125,3 +125,15 @@ FlagEvalMM 由两大组件构成：**评估服务器 (Evaluation Server)** 和 *
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 50+ VLM 和 30+ 生成模型的大规模评测
 - **写作质量**: ⭐⭐⭐ — 架构描述清晰但部分实验细节（自建数据集、具体流程）不够详尽
 - **价值**: ⭐⭐⭐⭐ — 作为开源评估工具具有很高的实用价值，横向评测数据有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+- [UPME: An Unsupervised Peer Review Framework for Multimodal Large Language Model Evaluation](../../CVPR2025/multimodal_vlm/upme_an_unsupervised_peer_review_framework_for_multimodal_large_language_model_e.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](longdocurl_multimodal_long_doc.md)
+- [CoreMatching: A Co-adaptive Sparse Inference Framework with Token and Neuron Pruning for Comprehensive Acceleration of Vision-Language Models](../../ICML2025/multimodal_vlm/corematching_a_co-adaptive_sparse_inference_framework_with_token_and_neuron_prun.md)
+
+<!-- RELATED:END -->

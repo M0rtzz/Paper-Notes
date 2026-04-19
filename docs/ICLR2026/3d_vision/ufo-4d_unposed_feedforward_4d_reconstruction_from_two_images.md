@@ -157,3 +157,15 @@ UFO-4D 在 Stereo4D 和 KITTI 上比竞争方法提升 **3×以上**。
 - **实用性**: ⭐⭐⭐⭐ — 前馈推理、实时应用潜力大
 - **清晰度**: ⭐⭐⭐⭐⭐ — 方法描述系统清晰，公式推导完整
 - **意义**: ⭐⭐⭐⭐⭐ — 将密集 4D 重建从优化推向前馈时代
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction](urbangs_a_scalable_and_efficient_architecture_for_geometrically_accurate_large-s.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](../../ICCV2025/3d_vision/longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+- [TeHOR: Text-Guided 3D Human and Object Reconstruction with Textures](../../CVPR2026/3d_vision/tehor_text-guided_3d_human_and_object_reconstruction_with_textures.md)
+- [Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk](topology-preserved_auto-regressive_mesh_generation_in_the_manner_of_weaving_silk.md)
+- [Universal Beta Splatting](universal_beta_splatting.md)
+
+<!-- RELATED:END -->

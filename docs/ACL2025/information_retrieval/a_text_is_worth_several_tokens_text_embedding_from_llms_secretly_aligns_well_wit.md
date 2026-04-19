@@ -146,3 +146,15 @@ $$v_j = \mathbb{E}_{s_i \in D}\left[(\hat{\mathbf{h}}_i - \mathbf{h}_i)^\top \ma
 - **实用性**: ★★★★☆ — 稀疏检索应用有实际价值，但主要贡献在分析性发现
 - **实验充分度**: ★★★★☆ — 8 个嵌入器、多组定性定量分析、4 个 IR 数据集
 - **写作质量**: ★★★★★ — 叙事流畅，从发现到解释到应用层层递进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimized Text Embedding Models and Benchmarks for Amharic Passage Retrieval](optimized_text_embedding_models_and_benchmarks_for_amharic_passage_retrieval.md)
+- [Don't Reinvent the Wheel: Efficient Instruction-Following Text Embedding based on Guided Space Transformation](dont_reinvent_the_wheel_efficient_instruction-following_text_embedding_based_on_.md)
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [LDIR: Low-Dimensional Dense and Interpretable Text Embeddings with Relative Representations](ldir_low-dimensional_dense_and_interpretable_text_embeddings_with_relative_repre.md)
+- [Uncovering Visual-Semantic Psycholinguistic Properties from the Distributional Structure of Text Embedding Space](psycholinguistic_visual_semantic.md)
+
+<!-- RELATED:END -->

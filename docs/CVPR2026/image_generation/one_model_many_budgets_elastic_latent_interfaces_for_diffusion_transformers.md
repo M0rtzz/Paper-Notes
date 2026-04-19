@@ -135,3 +135,15 @@ ELIT 的核心优势在于「最小改动、最大兼容」——不改变训练
 - 综合: ⭐⭐⭐⭐⭐ — Snap Research + Rice 的扎实工作，兼具理论洞见（均匀计算浪费）和工程价值（即插即用加速），CVPR oral 级别
 
 > **推荐阅读**：Section 3.2 的零填充实验和 Figure 2 的注意力可视化是全文最精彩的部分，清晰展示了 DiT 的计算浪费问题和 ELIT 的解决思路。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAZOR: Ratio-Aware Layer Editing for Targeted Unlearning in Vision Transformers and Diffusion Models](razor_ratio-aware_layer_editing_for_targeted_unlearning_in_vision_transformers_a.md)
+- [PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On](promo_promptable_outfitting_for_efficient_high-fidelity_virtual_try-on.md)
+- [CARE-Edit: Condition-Aware Routing of Experts for Contextual Image Editing](care-edit_condition-aware_routing_of_experts_for_contextual_image_editing.md)
+- [Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](pluggable_pruning_with_contiguous_layer_distillation_for_diffusion_transformers.md)
+- [Circuit Mechanisms for Spatial Relation Generation in Diffusion Transformers](circuit_mechanisms_for_spatial_relation_generation_in_diffusion_transformers.md)
+
+<!-- RELATED:END -->

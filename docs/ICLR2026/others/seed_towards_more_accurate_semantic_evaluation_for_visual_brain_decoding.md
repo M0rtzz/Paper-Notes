@@ -129,3 +129,15 @@ $$\text{SEED} = \frac{\text{Object F1} + \text{Cap-Sim} + \overline{\text{EffNet
 - 理论深度: ⭐⭐⭐ — 以经验驱动为主，缺乏理论分析
 - 实验充分性: ⭐⭐⭐⭐⭐ — 大规模人类评估 + 多指标全面对比 + 跨数据集验证
 - 实用价值: ⭐⭐⭐⭐⭐ — 直接改善脑解码评估标准，人类数据开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](../../ECCV2024/others/brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](../../ACL2025/others/self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](../../ACL2025/others/seoe_semantic_eval.md)
+- [Completing Missing Annotation: Multi-Agent Debate for Accurate and Scalable Relevance Assessment](completing_missing_annotation_multi-agent_debate_for_accurate_and_scalable_relev.md)
+- [Revisiting Sharpness-Aware Minimization: A More Faithful and Effective Implementation](revisiting_sharpness-aware_minimization_a_more_faithful_and_effective_implementa.md)
+
+<!-- RELATED:END -->

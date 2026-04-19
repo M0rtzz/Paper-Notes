@@ -161,3 +161,15 @@ mask token作为视觉思维链，显著提升了高精度定位(Acc@0.9)。
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖RES/GRES/ReasonSeg/OVS/REC/通用理解，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ 三种范式的对比图清晰，方法描述完整
 - **价值**: ⭐⭐⭐⭐⭐ 为LMM分割开辟了新方向，代码开源，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [F-LMM: Grounding Frozen Large Multimodal Models](../../CVPR2025/segmentation/f-lmm_grounding_frozen_large_multimodal_models.md)
+- [Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation](hierarchical_visual_prompt_learning_for_continual_video_instance_segmentation.md)
+- [Refer to Any Segmentation Mask Group With Vision-Language Prompts](refer_to_any_segmentation_mask_group_with_vision-language_prompts.md)
+- [O-MaMa: Learning Object Mask Matching between Egocentric and Exocentric Views](o-mama_learning_object_mask_matching_between_egocentric_and_exocentric_views.md)
+- [Advancing Visual Large Language Model for Multi-granular Versatile Perception](advancing_visual_large_language_model_for_multi-granular_versatile_perception.md)
+
+<!-- RELATED:END -->

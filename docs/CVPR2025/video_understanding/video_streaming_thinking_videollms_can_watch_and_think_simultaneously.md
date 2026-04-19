@@ -135,3 +135,14 @@ VST-7B 在在线基准上超越所有开源模型（包括 StreamForest +2.2%）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式规范，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 对流式视频理解领域有重要影响，提出了新的研究范式
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Thinking Drifts: Evidential Grounding for Robust Video Reasoning](../../NeurIPS2025/video_understanding/when_thinking_drifts_evidential_grounding_for_robust_video_reasoning.md)
+- [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](../../ICCV2025/video_understanding/vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
+- [Towards Video Thinking Test: A Holistic Benchmark for Advanced Video Reasoning and Understanding](../../ICCV2025/video_understanding/towards_video_thinking_test_a_holistic_benchmark_for_advanced_video_reasoning_an.md)
+- [VideoAuto-R1: Video Auto Reasoning via Thinking Once, Answering Twice](../../CVPR2026/video_understanding/videoauto-r1_video_auto_reasoning_via_thinking_once_answering_twice.md)
+- [InfiniPot-V: Memory-Constrained KV Cache Compression for Streaming Video Understanding](../../NeurIPS2025/video_understanding/infinipot-v_memory-constrained_kv_cache_compression_for_streaming_video_understa.md)
+
+<!-- RELATED:END -->

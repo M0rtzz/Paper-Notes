@@ -113,3 +113,15 @@ STEAD的嵌入容量比同类安全鲁棒方法PSARS高出约6倍。
 - 实验充分度: ⭐⭐⭐⭐ 安全性/鲁棒性/容量评测全面，消融完整，但仅测试一个DLM模型
 - 写作质量: ⭐⭐⭐⭐ 理论部分严谨，但符号较多，需要仔细阅读
 - 价值: ⭐⭐⭐⭐ 解决了隐写术的关键瓶颈问题，对隐蔽通信实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fast and Fluent Diffusion Language Models via Convolutional Decoding and Rejective Fine-tuning](fast_and_fluent_diffusion_language_models_via_convolutional_decoding_and_rejecti.md)
+- [Robust Ego-Exo Correspondence with Long-Term Memory](robust_ego-exo_correspondence_with_long-term_memory.md)
+- [VSC: Visual Search Compositional Text-to-Image Diffusion Model](../../ICCV2025/segmentation/vsc_visual_search_compositional_text-to-image_diffusion_model.md)
+- [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
+- [Advancing Visual Large Language Model for Multi-granular Versatile Perception](../../ICCV2025/segmentation/advancing_visual_large_language_model_for_multi-granular_versatile_perception.md)
+
+<!-- RELATED:END -->

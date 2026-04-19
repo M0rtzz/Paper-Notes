@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在标准benchmark上验证了有效性，消融实验较完整
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法动机充分，作为Oral论文质量有保证
 - 价值: ⭐⭐⭐⭐⭐ 对光度立体和计算摄影领域有重要推动作用，实际应用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
+- [Thermal Polarimetric Multi-view Stereo](../../ICCV2025/others/thermal_polarimetric_multi-view_stereo.md)
+- [Synthia: Novel Concept Design with Affordance Composition](../../ACL2025/others/synthia_novel_concept_design_with_affordance_composition.md)
+- [A Federated Generalized Expectation-Maximization Algorithm for Mixture Models with an Unknown Number of Components](../../ICLR2026/others/a_federated_generalized_expectation-maximization_algorithm_for_mixture_models_wi.md)
+- [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)
+
+<!-- RELATED:END -->

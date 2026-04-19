@@ -187,3 +187,15 @@ $$R_{\text{ST}}(s_{t-1}, s_t) = \begin{cases} \mathbb{I}[f_t \in s_t \setminus s
 ## 评分 ⭐⭐⭐⭐⭐
 
 方法设计完整且创新，从数据构建到训练策略到推理范式形成闭环。笔记驱动的思路优雅解决数据瓶颈，单轮推理范式是对多轮对话训练的本质改进。实验充分，消融透彻，临床医生对比增添可信度。7B 模型显著超越 GPT-4o 的结果令人印象深刻。是 LLM+临床对话方向的优秀工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs](../../NeurIPS2025/medical_imaging/shallow_robustness_deep_vulnerabilities_multi-turn_evaluation_of_medical_llms.md)
+- [PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)
+- [ATPO: Adaptive Tree Policy Optimization for Multi-Turn Medical Dialogue](../../ICLR2026/medical_imaging/atpo_adaptive_tree_policy_optimization_for_multi-turn_medical_dialogue.md)
+- [Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge](../../ACL2025/medical_imaging/biore_llm_judge_evaluation.md)
+- [Error Correction in Radiology Reports: A Knowledge Distillation-Based Multi-Stage Framework](error_correction_in_radiology_reports_a_knowledge_distillation-based_multi-stage.md)
+
+<!-- RELATED:END -->

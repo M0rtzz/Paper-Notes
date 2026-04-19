@@ -147,3 +147,15 @@ $$\mathcal{L}_{rec} = \mathcal{L}_{MSE}(b^m, \hat{b}^m) + \mathcal{L}_{OT}(r, \h
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7 个数据集、3 个下游任务、详尽的消融实验
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，动机充分，图示直观
 - **价值**: ⭐⭐⭐⭐ — 对遥感预训练有实际推动作用，方法简洁有效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMARTIES: Spectrum-Aware Multi-Sensor Auto-Encoder for Remote Sensing Images](../../ICCV2025/remote_sensing/smarties_spectrum-aware_multi-sensor_auto-encoder_for_remote_sensing_images.md)
+- [Learning Representations of Satellite Images From Metadata Supervision](learning_representations_of_satellite_images_from_metadata_supervision.md)
+- [Asking like Socrates: Socrates helps VLMs understand remote sensing images](../../CVPR2026/remote_sensing/asking_like_socrates_socrates_helps_vlms_understand_remote_sensing_images.md)
+- [ChA-MAEViT: Unifying Channel-Aware Masked Autoencoders and Multi-Channel Vision Transformers for Improved Cross-Channel Learning](../../NeurIPS2025/remote_sensing/chamaevit_unifying_channelaware_masked_autoencoders_and_mult.md)
+- [RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](../../ICCV2025/remote_sensing/rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
+
+<!-- RELATED:END -->

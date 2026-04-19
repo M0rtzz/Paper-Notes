@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐ 仅有仿真，无真实数据验证，作为 workshop 论文可以接受
 - 写作质量: ⭐⭐⭐⭐ 概念清晰，思路连贯，适合作为方向性的导引文章
 - 价值: ⭐⭐⭐ 提出了有前景的研究方向，但需要实际数据验证才能评估真正价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Johnson-Lindenstrauss Lemma Beyond Euclidean Geometry](johnson-lindenstrauss_lemma_beyond_euclidean_geometry.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+- [On Universality Classes of Equivariant Networks](on_universality_classes_of_equivariant_networks.md)
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+
+<!-- RELATED:END -->

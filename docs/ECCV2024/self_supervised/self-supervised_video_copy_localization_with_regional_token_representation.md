@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在标准benchmark上超越有监督方法，消融实验验证了各组件贡献
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，两个关键挑战的解决方案对应明确
 - 价值: ⭐⭐⭐⭐ 完全自监督的视频拷贝定位具有很高的实用价值，在版权保护领域可直接应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
+- [AutoSSVH: Automated Frame Sampling for Self-Supervised Video Hashing](../../CVPR2025/self_supervised/autossvh_exploring_automated_frame_sampling_for_efficient_self-supervised_video_.md)
+- [SCPNet: Unsupervised Cross-modal Homography Estimation via Intra-modal Self-supervised Learning](scpnet_unsupervised_cross-modal_homography_estimation_via_intra-modal_self-super.md)
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](../../NeurIPS2025/self_supervised/starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+- [Revisiting Supervision for Continual Representation Learning](revisiting_supervision_for_continual_representation_learning.md)
+
+<!-- RELATED:END -->

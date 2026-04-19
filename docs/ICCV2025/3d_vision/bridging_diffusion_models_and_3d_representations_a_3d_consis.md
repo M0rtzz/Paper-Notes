@@ -88,3 +88,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+多种SR基线+MEt3R 3D一致性指标
 - 写作质量: ⭐⭐⭐⭐ 动机图(Fig.2)说服力强，方法描述清晰
 - 对我的价值: ⭐⭐⭐⭐ 3D一致性+扩散SR的框架有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Diffusion Models and 3D Representations: A 3D Consistent Super-Resolution Framework](bridging_diffusion_models_and_3d_representations_a_3d_consistent_super-resolutio.md)
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+- [From Image to Video: An Empirical Study of Diffusion Representations](from_image_to_video_an_empirical_study_of_diffusion_representations.md)
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+- [Textured 3D Regenerative Morphing with 3D Diffusion Prior](textured_3d_regenerative_morphing_with_3d_diffusion_prior.md)
+
+<!-- RELATED:END -->

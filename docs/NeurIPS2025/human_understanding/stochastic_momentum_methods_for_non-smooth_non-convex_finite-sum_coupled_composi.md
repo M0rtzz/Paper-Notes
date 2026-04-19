@@ -143,3 +143,15 @@ ALEXR2 在保持约束满足度相当的前提下，AUC 最优化效果最佳。
 - 实验充分度: ⭐⭐⭐ — 覆盖 GDRO、公平性约束、持续学习三类任务，但规模偏小且缺少更多基线对比
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，符号系统清晰，但内容密度极高，非优化方向读者门槛较高
 - 价值: ⭐⭐⭐⭐ — 复杂度改进有坚实的理论意义，动量方法的引入对实际深度学习应用有直接帮助
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Parallelism in Decentralized Stochastic Convex Optimization](../../ICML2025/human_understanding/enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
+- [UnCLe: Towards Scalable Dynamic Causal Discovery in Non-Linear Temporal Systems](uncle_towards_scalable_dynamic_causal_discovery_in_non-linear_temporal_systems.md)
+- [Exploration of Incremental Synthetic Non-Morphed Images for Single Morphing Attack Detection](exploration_of_incremental_synthetic_non-morphed_images_for_single_morphing_atta.md)
+- [Domain Reduction Strategy for Non-Line-of-Sight Imaging](../../ECCV2024/human_understanding/domain_reduction_strategy_for_non-line-of-sight_imaging.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](in-context_compositional_learning_via_sparse_coding_transformer.md)
+
+<!-- RELATED:END -->

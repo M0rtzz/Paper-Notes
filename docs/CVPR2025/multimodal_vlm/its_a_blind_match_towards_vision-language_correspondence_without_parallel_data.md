@@ -124,3 +124,15 @@ Platonic表示假说指出：随着模型和数据规模的增长，不同模态
 - 实验充分度: ⭐⭐⭐⭐⭐ 33×27模型组合、4个数据集、多种求解器对比、无监督分类应用
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，但QAP部分对CV读者可能较难理解
 - 价值: ⭐⭐⭐⭐ 理论洞察深刻，但实用性受限于计算复杂度和问题规模
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantization without Tears](quantization_without_tears.md)
+- [Words or Vision: Do Vision-Language Models Have Blind Faith in Text?](words_or_vision_do_vision-language_models_have_blind_faith_in_text.md)
+- [Self-Supervised Spatial Correspondence Across Modalities](self-supervised_spatial_correspondence_across_modalities.md)
+- [Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)
+- [Molmo and PixMo: Open Weights and Open Data for State-of-the-Art Vision-Language Models](molmo_and_pixmo_open_weights_and_open_data_for_state-of-the-art_vision-language_.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ MOBO-OSD的流程可概括为四步：
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个基准、多种batch size、详尽消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 为MOBO提供了强大且可扩展的新baseline
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In Search of Adam's Secret Sauce](in_search_of_adams_secret_sauce.md)
+- [Learning Orthogonal Multi-Index Models: A Fine-Grained Information Exponent Analysis](learning_orthogonal_multi-index_models_a_fine-grained_information_exponent_analy.md)
+- [Optimistic Online-to-Batch Conversions for Accelerated Convergence and Universality](optimistic_online-to-batch_conversions_for_accelerated_convergence_and_universal.md)
+- [Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
+- [Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization](../../AAAI2026/optimization/pareto-grid-guided_large_language_models_for_fast_and_high-quality_heuristics_de.md)
+
+<!-- RELATED:END -->

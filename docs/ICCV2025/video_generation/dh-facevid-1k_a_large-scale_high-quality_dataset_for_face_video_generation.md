@@ -123,3 +123,15 @@ DH-FaceVid-1K 的构建分为四个关键阶段：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5 个 T2V 模型 + 5 个 I2V 模型 + 6 个数据规模 + 2 种参数规模的系统实验
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数据统计完整，缩放定律分析有深度
 - **价值**: ⭐⭐⭐⭐ 填补了高质量大规模人脸视频数据集的空白，缩放定律分析具有实用指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation](../../CVPR2025/video_generation/hoigen-1m_a_large-scale_dataset_for_human-object_interaction_video_generation.md)
+- [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
+- [Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
+- [MagicDrive-V2: High-Resolution Long Video Generation for Autonomous Driving with Adaptive Control](magicdrive-v2_high-resolution_long_video_generation_for_autonomous_driving_with_.md)
+- [MimicMotion: High-Quality Human Motion Video Generation with Confidence-aware Pose Guidance](../../ICML2025/video_generation/mimicmotion_high-quality_human_motion_video_generation_with_confidence-aware_pos.md)
+
+<!-- RELATED:END -->

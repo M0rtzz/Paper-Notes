@@ -136,3 +136,15 @@ Batayan 按三大能力维度组织 8 个任务，共 3800 条测试样本：
 - 实验充分度: ⭐⭐⭐⭐ (50+ 模型评测，7B-671B 参数覆盖，含商用系统)
 - 写作质量: ⭐⭐⭐⭐ (语言学背景详实，构建挑战记录诚恳)
 - 价值: ⭐⭐⭐⭐ (填补菲律宾语评测空白，方法论可推广到其他低资源语言)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory](papersplease_a_benchmark_for_evaluating_motivational_values_of_large_language_mo.md)
+- [SeedBench: A Multi-task Benchmark for Evaluating Large Language Models in Seed Science](seedbench_a_multi-task_benchmark_for_evaluating_large_language_models_in_seed_sc.md)
+- [McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
+- [WXImpactBench: A Disruptive Weather Impact Understanding Benchmark for Evaluating Large Language Models](wximpactbench_a_disruptive_weather_impact_understanding_benchmark_for_evaluating.md)
+- [Com2: A Causal-Guided Benchmark for Exploring Complex Commonsense Reasoning in Large Language Models](com2_causal_commonsense.md)
+
+<!-- RELATED:END -->

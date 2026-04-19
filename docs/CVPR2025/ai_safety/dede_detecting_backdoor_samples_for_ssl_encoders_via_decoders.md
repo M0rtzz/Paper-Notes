@@ -158,3 +158,15 @@ $$s(x) = \| x - D(E(M(x))) \|_2^2$$
 - CTRL: 基于对比学习的后门攻击
 - Neural Cleanse: 经典后门检测方法（需要分类头）
 - MAE: 掩码自编码器，启发了 DeDe 的高遮蔽率设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
+- [The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples](../../NeurIPS2025/ai_safety/the_unseen_threat_residual_knowledge_in_machine_unlearning_under_perturbed_sampl.md)
+- [Mind the Gap: Detecting Black-box Adversarial Attacks in the Making through Query Update Analysis](mind_the_gap_detecting_black-box_adversarial_attacks_in_the_making_through_query.md)
+- [SHIELD: Suppressing Hallucinations In LVLM Encoders via Bias and Vulnerability Defense](../../ICLR2026/ai_safety/shield_suppressing_hallucinations_in_lvlm_encoders_via_bias_and_vulnerability_de.md)
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ ViT-base 下 1-shot/5-shot 分别超越 SOTA LoEC **+3.23%** / **+1.89%**。
 - 技术深度: ⭐⭐⭐⭐ — FFT 频域增强、多尺度超像素挖掘、自适应阈值调制技术扎实
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面，覆盖两种 backbone 和四个目标域
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，图示直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adapter Naturally Serves as Decoupler for Cross-Domain Few-Shot Semantic Segmentation](../../ICML2025/segmentation/adapter_naturally_serves_as_decoupler_for_cross-domain_few-shot_semantic_segment.md)
+- [Self-Disentanglement and Re-Composition for Cross-Domain Few-Shot Segmentation](../../ICML2025/segmentation/self-disentanglement_and_re-composition_for_cross-domain_few-shot_segmentation.md)
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+- [InfoCLIP: Bridging Vision-Language Pretraining and Open-Vocabulary Semantic Segmentation via Information-Theoretic Alignment Transfer](infoclip_bridging_vision-language_pretraining_and_open-vocab.md)
+- [Otter: Mitigating Background Distractions of Wide-Angle Few-Shot Action Recognition with Enhanced RWKV](otter_mitigating_background_distractions_of_wide-angle_few-shot_action_recogniti.md)
+
+<!-- RELATED:END -->

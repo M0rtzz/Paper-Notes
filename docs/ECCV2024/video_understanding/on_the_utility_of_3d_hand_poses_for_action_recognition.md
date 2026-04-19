@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融非常全面（关节数、micro-action 长度、损失组件、2D vs 3D、跨视角、多视角替代、帧数消融），在两个数据集上均有 SOTA
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导清晰，从统计分析引出设计决策的逻辑链非常流畅，图表信息量大
 - 价值: ⭐⭐⭐⭐ 对 AR/VR 场景的手部交互识别有实际意义，密集 pose + 稀疏 RGB 的框架范式值得借鉴
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Grounding Foundational Vision Models with 3D Human Poses for Robust Action Recognition](../../NeurIPS2025/video_understanding/grounding_foundational_vision_models_with_3d_human_poses_for_robust_action_recog.md)
+- [Optimizing Factorized Encoder Models: Time and Memory Reduction for Scalable and Efficient Action Recognition](optimizing_factorized_encoder_models_time_and_memory_reduction_for_scalable_and_.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [CrossGLG: LLM Guides One-Shot Skeleton-Based 3D Action Recognition in a Cross-Level Manner](crossglg_llm_guides_one-shot_skeleton-based_3d_action_recognition_in_a_cross-lev.md)
+- [Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects](benchmarks_and_challenges_in_pose_estimation_for_egocentric_hand_interactions_wi.md)
+
+<!-- RELATED:END -->

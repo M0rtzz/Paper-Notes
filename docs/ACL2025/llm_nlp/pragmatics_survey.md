@@ -120,3 +120,15 @@ tags:
 - **覆盖全面度** ⭐⭐⭐⭐⭐：58 篇论文、五大语用现象、七种任务类型全面覆盖
 - **写作质量** ⭐⭐⭐⭐：分类清晰、图表丰富，未来方向务实可行
 - **价值** ⭐⭐⭐⭐：为 LLM 语用评估提供了重要的资源地图和研究路线图
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [Steering off Course: Reliability Challenges in Steering Language Models](steering_off_course_reliability_challenges_in_steering_language_models.md)
+- [Efficient Ensemble for Fine-tuning Language Models on Multiple Datasets](efficient_ensemble_for_fine-tuning_language_models_on_multiple_datasets.md)
+- [A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)
+
+<!-- RELATED:END -->

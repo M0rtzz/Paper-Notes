@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在 FLUX 768×1360 上的 4 奖励模型 × 2 benchmark 验证有说服力，但缺少更多架构对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨清晰，从直觉到形式化层层递进，reviewer dnmw 评 "excellent soundness"
 - 价值: ⭐⭐⭐⭐⭐ 直接解决了推理时奖励对齐的实际瓶颈，作为 drop-in replacement 的实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment](densegrpo_from_sparse_to_dense_reward_for_flow_matching_model_alignment.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [CMT: Mid-Training for Efficient Learning of Consistency, Mean Flow, and Flow Map Models](cmt_mid-training_for_efficient_learning_of_consistency_mean_flow_and_flow_map_mo.md)
+- [Ψ-Sampler: Initial Particle Sampling for SMC-Based Inference-Time Reward Alignment in Score Models](../../NeurIPS2025/image_generation/psi-sampler_initial_particle_sampling_for_smc-based_inference-time_reward_alignm.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](../../NeurIPS2025/image_generation/encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+
+<!-- RELATED:END -->

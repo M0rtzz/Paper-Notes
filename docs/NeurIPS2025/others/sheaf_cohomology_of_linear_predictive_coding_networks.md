@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop规模合理，但实验仅限于极小的2D玩具网络
 - 写作质量: ⭐⭐⭐⭐ 数学表达精确，直觉解释清晰，但对不熟悉层论的读者门槛很高
 - 价值: ⭐⭐⭐⭐ 对PC理论社区有重要价值，框架的潜在适用范围远超PC——任何基于局部-全局一致性的学习范式都可能受益
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
+- [Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs](../../ICLR2026/others/directional_sheaf_hypergraph_networks_unifying_learning_on_directed_and_undirect.md)
+- [Generalized Linear Mode Connectivity for Transformers](generalized_linear_mode_connectivity_for_transformers.md)
+- [On a Geometry of Interbrain Networks](on_a_geometry_of_interbrain_networks.md)
+- [On Universality Classes of Equivariant Networks](on_universality_classes_of_equivariant_networks.md)
+
+<!-- RELATED:END -->

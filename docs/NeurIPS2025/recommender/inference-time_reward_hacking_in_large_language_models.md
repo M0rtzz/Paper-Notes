@@ -131,3 +131,15 @@ Pipeline：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖可验证奖励和人类偏好两类场景，多个奖励模型和数据集，但缺少更大规模 LLM 实验
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，理论推导严谨，图表信息量大且美观
 - 价值: ⭐⭐⭐⭐⭐ 对推理时对齐方法的安全部署有直接指导意义，BoP 和 HedgeTune 可即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R²ec: Towards Large Recommender Models with Reasoning](r2ec_towards_large_recommender_models_with_reasoning.md)
+- [Inference-Aware Prompt Optimization for Aligning Black-Box Large Language Models](../../AAAI2026/recommender/inference-aware_prompt_optimization_for_aligning_black-box_large_language_models.md)
+- [Measuring What Matters: Construct Validity in Large Language Model Benchmarks](measuring_what_matters_construct_validity_in_large_language_model_benchmarks.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+- [MMPB: It's Time for Multi-Modal Personalization](mmpb_its_time_for_multi-modal_personalization.md)
+
+<!-- RELATED:END -->

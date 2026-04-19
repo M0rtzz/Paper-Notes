@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 三个标准基准+医疗模拟+消融研究+泛化分析，较完整，但防御实验略少
 - **写作质量**: ⭐⭐⭐⭐ 问题阐述清晰，威胁模型定义严谨，图示有效（尤其是 Fig.1 的患者数据提取示例）
 - **价值**: ⭐⭐⭐⭐⭐ 对 LLM 安全和隐私治理有重大影响，特别是医疗 AI 领域应高度重视此类风险
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RedactX: An LLM-Powered Framework for Automatic Clinical Data De-Identification](../../ACL2025/medical_imaging/redactor_an_llm-powered_framework_for_automatic_clinical_data_de-identification.md)
+- [Nyxus: A Next Generation Image Feature Extraction Library for the Big Data and AI Era](../../CVPR2025/medical_imaging/nyxus_a_next_generation_image_feature_extraction_library_for_the_big_data_and_ai.md)
+- [ImageNet-trained CNNs are not biased towards texture: Revisiting feature reliance through controlled suppression](imagenet-trained_cnns_are_not_biased_towards_texture_revisiting_feature_reliance.md)
+- [CodeCrash: Exposing LLM Fragility to Misleading Natural Language in Code Reasoning](codecrash_exposing_llm_fragility_to_misleading_natural_language_in_code_reasonin.md)
+- [Robust or Suggestible? Exploring Non-Clinical Induction in LLM Drug-Safety Decisions](robust_or_suggestible_exploring_non-clinical_induction_in_llm_drug-safety_decisi.md)
+
+<!-- RELATED:END -->

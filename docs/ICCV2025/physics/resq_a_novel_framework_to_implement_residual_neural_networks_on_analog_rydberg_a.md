@@ -167,3 +167,15 @@ $$H(t) = \frac{\Omega(t)}{2}\sum_i(e^{i\phi(t)}|g\rangle_i\langle r|_i + h.c.) -
 - **实验充分度**: ⭐⭐⭐⭐ — 包含真实量子硬件验证和多个数据集，但限于4原子和二分类
 - **写作质量**: ⭐⭐⭐⭐ — 物理背景和方法设计讲解清晰，适合跨领域读者
 - **价值**: ⭐⭐⭐ — 学术创新性强，但实际应用场景和可扩展性有限，与视觉领域关联较弱
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compact Matrix Quantum Group Equivariant Neural Networks](../../ICML2025/physics/compact_matrix_quantum_group_equivariant_neural_networks.md)
+- [ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
+- [Exoplanet Formation Inference Using Conditional Invertible Neural Networks](../../NeurIPS2025/physics/exoplanet_formation_inference_using_conditional_invertible_neural_networks.md)
+- [Feedback-driven Recurrent Quantum Neural Network Universality](../../ICLR2026/physics/feedback-driven_recurrent_quantum_neural_network_universality.md)
+- [Knowledge is Overrated: A Zero-Knowledge ML and Cryptographic Hashing-Based Framework for Verifiable, Low Latency Inference at the LHC](../../NeurIPS2025/physics/knowledge_is_overrated_a_zero-knowledge_machine_learning_and_cryptographic_hashi.md)
+
+<!-- RELATED:END -->

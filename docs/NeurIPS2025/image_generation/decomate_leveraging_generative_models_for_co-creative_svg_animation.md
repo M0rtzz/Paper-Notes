@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 有需求调研+用户研究，但仅定性评估、小样本(6人)、无定量对比
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰、流程图和界面截图详细、用户反馈原汁原味
 - 价值: ⭐⭐⭐ 作为 workshop demo 有展示意义，但离可靠的设计工具仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Revelio: Interpreting and Leveraging Semantic Information in Diffusion Models](../../ICCV2025/image_generation/revelio_interpreting_and_leveraging_semantic_information_in_diffusion_models.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](../../CVPR2025/image_generation/consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [CAP: Evaluation of Persuasive and Creative Image Generation](../../ICCV2025/image_generation/cap_evaluation_of_persuasive_and_creative_image_generation.md)
+- [Compositional Flows for 3D Molecule and Synthesis Pathway Co-design](../../ICML2025/image_generation/compositional_flows_for_3d_molecule_and_synthesis_pathway_co-design.md)
+
+<!-- RELATED:END -->

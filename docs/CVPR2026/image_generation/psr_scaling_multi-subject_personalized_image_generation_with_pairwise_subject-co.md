@@ -113,3 +113,15 @@ PSRBench 包含 7 个子集，从三个维度评估：主体一致性（SC）、
 - 实验充分度: ⭐⭐⭐⭐⭐ 自建 benchmark 评估全面，消融充分，有用户研究
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ 为多主体个性化生成提供了完整的数据+训练+评估方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Corrected Image Generation with Explainable Latent Rewards](self-corrected_image_generation_with_explainable_latent_rewards.md)
+- [Disentangling to Re-couple: Resolving the Similarity-Controllability Paradox in Subject-Driven Text-to-Image Generation](disentangling_to_re-couple_resolving_the_similarity-controllability_paradox_in_s.md)
+- [Image Diffusion Preview with Consistency Solver](image_diffusion_preview_with_consistency_solver.md)
+- [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
+- [SOLACE: Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](solace_self_confidence_rewards_t2i.md)
+
+<!-- RELATED:END -->

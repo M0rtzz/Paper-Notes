@@ -150,3 +150,15 @@ tags:
 | 实用价值 | ⭐⭐⭐⭐ | 4 倍加速对 DLM 实用化有重要推动意义 |
 
 **综合评分**: ⭐⭐⭐⭐ — 理论分析深入，提出的卷积归一化和 R2FT 方案实用有效，是 DLM 加速方向的重要工作。任务覆盖面可进一步拓展。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](../../ECCV2024/segmentation/efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
+- [STEAD: Robust Provably Secure Linguistic Steganography with Diffusion Language Model](stead_robust_provably_secure_linguistic_steganography_with_diffusion_language_mo.md)
+- [Can Generative Geospatial Diffusion Models Excel as Discriminative Geospatial Foundation Models?](../../ICCV2025/segmentation/can_generative_geospatial_diffusion_models_excel_as_discriminative_geospatial_fo.md)
+- [Seg4Diff: Unveiling Open-Vocabulary Segmentation in Text-to-Image Diffusion Transformers](seg4diff_unveiling_open-vocabulary_segmentation_in_text-to-image_diffusion_trans.md)
+- [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
+
+<!-- RELATED:END -->

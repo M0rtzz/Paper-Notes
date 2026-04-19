@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，无计算实验或应用评估
 - 写作质量: ⭐⭐⭐ 数学严谨但阅读门槛极高，非该领域专家难以理解
 - 价值: ⭐⭐⭐ 对定性空间推理的理论基础有重要贡献，但短期实际应用有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Topological Descriptors for Graph Products](../../NeurIPS2025/others/on_topological_descriptors_for_graph_products.md)
+- [Unlocking Speech Instruction Data Potential with Query Rewriting](../../ACL2025/others/unlocking_speech_instruction_data_potential_with_query_rewriting.md)
+- [GeNRe: A French Gender-Neutral Rewriting System Using Collective Nouns](../../ACL2025/others/genre_a_french_gender-neutral_rewriting_system_using_collective_nouns.md)
+- [RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
+- [Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
+
+<!-- RELATED:END -->

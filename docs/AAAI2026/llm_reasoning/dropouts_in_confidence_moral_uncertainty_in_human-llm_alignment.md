@@ -120,3 +120,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 信息论框架推导清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐ 为 LLM 道德对齐提供了新思路——主动引入不确定性而非追求确定性
 - 综合: 信息论视角分析道德对齐的有价值探索，dropout改善对齐的发现有重要实践意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Annotation-Efficient Universal Honesty Alignment](../../ICLR2026/llm_reasoning/annotation-efficient_universal_honesty_alignment.md)
+- [Reasoning Models Better Express Their Confidence](../../NeurIPS2025/llm_reasoning/reasoning_models_better_express_their_confidence.md)
+- [Graph of Verification: Structured Verification of LLM Reasoning with Directed Acyclic Graphs](graph_of_verification_structured_verification_of_llm_reasoning_with_directed_acy.md)
+- [Ad-Hoc Human-AI Coordination Challenge (AH2AC2)](../../ICML2025/llm_reasoning/ad-hoc_human-ai_coordination_challenge.md)
+- [Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
+
+<!-- RELATED:END -->

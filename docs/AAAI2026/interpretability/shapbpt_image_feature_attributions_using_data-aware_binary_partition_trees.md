@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个实验覆盖多任务多模型 + 用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，示例图示清晰
 - 价值: ⭐⭐⭐⭐ 对 XAI 领域的实际贡献大，开源且有 pip 包
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DR.Experts: Differential Refinement of Distortion-Aware Experts for Blind Image Quality Assessment](drexperts_differential_refinement_of_distortion-aware_experts_for_blind_image_qu.md)
+- [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](../../CVPR2026/interpretability/feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
+- [Enhancing Binary Encoded Crime Linkage Analysis Using Siamese Network](enhancing_binary_encoded_crime_linkage_analysis_using_siamese_network.md)
+- [Data Whitening Improves Sparse Autoencoder Learning](data_whitening_improves_sparse_autoencoder_learning.md)
+- [Quiet Feature Learning in Algorithmic Tasks](quiet_feature_learning_in_algorithmic_tasks.md)
+
+<!-- RELATED:END -->

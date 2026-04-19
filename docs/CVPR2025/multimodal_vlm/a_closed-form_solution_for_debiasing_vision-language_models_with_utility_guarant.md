@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个任务、多个数据集、消融和敏感性分析都很充分
 - 写作质量: ⭐⭐⭐⭐⭐ 问题形式化清晰，定理推导逻辑连贯
 - 价值: ⭐⭐⭐⭐ 公平性领域的重要贡献，但实际部署场景还需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Spatial Correspondence Across Modalities](self-supervised_spatial_correspondence_across_modalities.md)
+- [HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks](hificl_high-fidelity_in-context_learning_for_multimodal_tasks.md)
+- [DynRefer: Delving into Region-level Multimodal Tasks via Dynamic Resolution](dynrefer_delving_into_region-level_multimodal_tasks_via_dynamic_resolution.md)
+- [FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
+- [What's in the Image? A Deep-Dive into the Vision of Vision Language Models](whats_in_the_image_a_deep-dive_into_the_vision_of_vision_language_models.md)
+
+<!-- RELATED:END -->

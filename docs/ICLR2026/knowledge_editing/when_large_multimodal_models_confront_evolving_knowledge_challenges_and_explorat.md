@@ -179,3 +179,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 实验规模大、覆盖全面、分析深入
 - 写作质量: ⭐⭐⭐⭐ — 结构良好，挑战-路径框架清晰
 - 价值: ⭐⭐⭐⭐ — 基准和发现对社区有重要参考价值，但模型偏旧
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid-DMKG: A Hybrid Reasoning Framework over Dynamic Multimodal Knowledge Graphs for Multimodal Multihop QA with Knowledge Editing](../../AAAI2026/knowledge_editing/hybrid-dmkg_a_hybrid_reasoning_framework_over_dynamic_multimodal_knowledge_graph.md)
+- [UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models](../../NeurIPS2025/knowledge_editing/uniedit_a_unified_knowledge_editing_benchmark_for_large_language_models.md)
+- [Structure-aware Domain Knowledge Injection for Large Language Models](../../ACL2025/knowledge_editing/structure-aware_domain_knowledge_injection_for_large_language_models.md)
+- [Neuron-Level Sequential Editing for Large Language Models](../../ACL2025/knowledge_editing/neuron-level_sequential_editing_for_large_language_models.md)
+- [MEGen: Generative Backdoor into Large Language Models via Model Editing](../../ACL2025/knowledge_editing/megen_generative_backdoor_into_large_language_models_via_model_editing.md)
+
+<!-- RELATED:END -->

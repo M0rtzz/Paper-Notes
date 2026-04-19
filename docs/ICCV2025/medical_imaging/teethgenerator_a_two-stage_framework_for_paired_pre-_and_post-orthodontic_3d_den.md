@@ -143,3 +143,15 @@ TeethGenerator 分两个阶段：Stage I 生成矫正后牙齿模型（形态生
 - **实验充分度**: ⭐⭐⭐⭐ 包含分布相似性、独特性、下游任务提升、体素化消融、风格迁移策略对比
 - **写作质量**: ⭐⭐⭐⭐ 问题动机清晰，可视化结果有说服力（生成牙齿模型 vs 真实牙齿对比）
 - **价值**: ⭐⭐⭐⭐⭐ 解决了数字正畸领域的关键数据瓶颈，合成数据已验证可提升下游任务性能，具有重要临床应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](../../AAAI2026/medical_imaging/guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
+- [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
+- [Multimodal 3D Genome Pre-training](../../NeurIPS2025/medical_imaging/multimodal_3d_genome_pre-training.md)
+- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)
+- [MRGen: Segmentation Data Engine for Underrepresented MRI Modalities](mrgen_segmentation_data_engine_for_underrepresented_mri_modalities.md)
+
+<!-- RELATED:END -->

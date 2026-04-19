@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 指标全面（6类度量），ablation清晰，但受限于无真正4D ground truth
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，架构设计的动机推导从优化理论出发逻辑严密
 - 价值: ⭐⭐⭐⭐ 首个可泛化到真实场景的高效4D视频生成方法，具有重要应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Temporally Consistent Video Depth from Video Diffusion Priors](learning_temporally_consistent_video_depth_from_video_diffusion_priors.md)
+- [Learning from Streaming Video with Orthogonal Gradients](learning_from_streaming_video_with_orthogonal_gradients.md)
+- [NormalCrafter: Learning Temporally Consistent Normals from Video Diffusion Priors](../../ICCV2025/video_generation/normalcrafter_learning_temporally_consistent_normals_from_video_diffusion_priors.md)
+- [Reangle-A-Video: 4D Video Generation as Video-to-Video Translation](../../ICCV2025/video_generation/reangle-a-video_4d_video_generation_as_video-to-video_translation.md)
+- [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](../../CVPR2026/video_generation/goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+
+<!-- RELATED:END -->

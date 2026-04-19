@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、多种基线、物理化学可信性全面评估，但缺少湿实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，算法描述严谨，讨论部分坦诚
 - 价值: ⭐⭐⭐⭐ 同时服务于模型可解释性和蛋白质工程，具有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](../../CVPR2026/medical_imaging/multiscale_structureguided_latent_diffusion_for_mu.md)
+- [Scalable Spatio-Temporal SE(3) Diffusion for Long-Horizon Protein Dynamics](scalable_spatio-temporal_se3_diffusion_for_long-horizon_protein_dynamics.md)
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](../../NeurIPS2025/medical_imaging/generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
+- [DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction](dm4ct_benchmarking_diffusion_models_for_computed_tomography_reconstruction.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ MMBench 设计了三级能力分类体系：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 评测 21 个 VLM，多维度分析，消融充分
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，动机论述充分
 - 价值: ⭐⭐⭐⭐⭐ — 已成为 VLM 评测标配，VLMEvalKit 被广泛采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MathVerse: Does Your Multi-modal LLM Truly See the Diagrams in Visual Math Problems?](mathverse_does_your_multi-modal_llm_truly_see_the_diagrams_in_visual_math_proble.md)
+- [m&m's: A Benchmark to Evaluate Tool-Use for Multi-step Multi-modal Tasks](m_ampmaposs_a_benchmark_to_evaluate_tool-use_for_multi-step_multi-modal_tasks.md)
+- [EgoLM: Multi-Modal Language Model of Egocentric Motions](../../CVPR2025/multimodal_vlm/egolm_multi-modal_language_model_of_egocentric_motions.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](../../ICLR2026/multimodal_vlm/multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+
+<!-- RELATED:END -->

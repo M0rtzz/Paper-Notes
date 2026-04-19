@@ -159,3 +159,15 @@ $$\mathbf{S}_\phi(x_{t_i}, t_i, t_{i-1}) = \frac{t_i - t_{i-1}}{t_i}(\mathbf{g}_
 - 实验充分度: ⭐⭐⭐ 核心论证清晰但规模较小（64×64），缺乏高分辨率和 LDM/DiT 实验
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从问题发现→机制分析→方法提出→实验验证的叙事流畅
 - 价值: ⭐⭐⭐⭐ 低数据需求和参数冻结策略有实际意义，新视角对后续研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DUO-VSR: Dual-Stream Distillation for One-Step Video Super-Resolution](../../CVPR2026/image_generation/duo-vsr_dual-stream_distillation_for_one-step_video_super-resolution.md)
+- [Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)
+- [Task-Agnostic Pre-training and Task-Guided Fine-tuning for Versatile Diffusion Planner](task-agnostic_pre-training_and_task-guided_fine-tuning_for_versatile_diffusion_p.md)
+- [SoFlow: Solution Flow Models for One-Step Generative Modeling](../../ICLR2026/image_generation/soflow_solution_flow_models_for_one-step_generative_modeling.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](../../CVPR2026/image_generation/pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+
+<!-- RELATED:END -->

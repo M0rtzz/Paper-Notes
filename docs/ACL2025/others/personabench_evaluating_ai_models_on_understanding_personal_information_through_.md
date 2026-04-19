@@ -264,3 +264,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 12 种 RAG 配置、4 种噪声级别、多维度分析，消融实验充分
 - **写作质量**: ⭐⭐⭐⭐ — 管线描述清晰，图表丰富，但方法部分稍长可精简
 - **价值**: ⭐⭐⭐⭐ — 揭示了个性化 AI 的核心瓶颈（即使有正确上下文也难以理解），为后续研究指明了方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Theorem Prover as a Judge for Synthetic Data Generation](theorem_prover_as_a_judge_for_synthetic_data_generation.md)
+- [Generating Synthetic Relational Tabular Data via Structural Causal Models](generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+- [Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility](meaning_beyond_truth_conditions_evaluating_discourse_level_understanding_via_ana.md)
+- [Beyond World Models: Rethinking Understanding in AI Models](../../AAAI2026/others/beyond_world_models_rethinking_understanding_in_ai_models.md)
+
+<!-- RELATED:END -->

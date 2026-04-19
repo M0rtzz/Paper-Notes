@@ -139,3 +139,15 @@ FDR在不同显著性水平和不同MIA方法下均被有效控制。
 - 实验充分度：★★★★★（多数据集、多攻击设置、消融充分，扩展到遗忘/终身学习）
 - 实用价值：★★★★☆（wrapper设计实用性强，但需要辅助数据限制了部分场景）
 - 写作质量：★★★★☆（理论推导清晰，但符号较多、阅读门槛较高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](a_hidden_stumbling_block_in_generalized_category_discovery_d.md)
+- [Statistical Inference Under Performativity](../../NeurIPS2025/others/statistical_inference_under_performativity.md)
+- [Improving Transferable Targeted Attacks with Feature Tuning Mixup](../../CVPR2025/others/improving_transferable_targeted_attacks_with_feature_tuning_mixup.md)
+- [Statistical Inference for Gradient Boosting Regression](../../NeurIPS2025/others/statistical_inference_for_gradient_boosting_regression.md)
+- [Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
+
+<!-- RELATED:END -->

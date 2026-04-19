@@ -114,3 +114,15 @@ I-RAVEN (3×3) vs I-RAVEN-X (3×10, Range 1000) 的准确率对比：
 - 实验充分度: ⭐⭐⭐ 模型覆盖有限（仅 4-5 个模型），且部分是已有工作的合并
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验设置描述明确，但篇幅较短（workshop paper 风格）
 - 价值: ⭐⭐⭐⭐ 对理解 LRM 的能力边界有参考价值，不确定性推理是重要的未解问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](../../ACL2025/llm_reasoning/chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)
+- [ProofSketch: Efficient Verified Reasoning for Large Language Models](proofsketch_efficient_verified_reasoning_for_large_language_models.md)
+- [The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](../../AAAI2026/llm_reasoning/the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](../../ACL2025/llm_reasoning/chain_of_reasoning_unified_math.md)
+- [ThinkSound: Chain-of-Thought Reasoning in Multimodal Large Language Models for Audio Generation and Editing](thinksound_chain-of-thought_reasoning_in_multimodal_large_language_models_for_au.md)
+
+<!-- RELATED:END -->

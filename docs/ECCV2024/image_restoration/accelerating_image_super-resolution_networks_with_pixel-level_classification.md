@@ -116,3 +116,15 @@ PCSR模型由三部分组成：**骨干网络(Backbone)** + **像素级分类器
 - 实验充分度: ⭐⭐⭐⭐⭐ 多backbone(3种) × 多数据集(4+3) × 多消融(patch size/M/refinement/LIIF)，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 动机表述清晰，方法描述完整，图表质量高
 - 价值: ⭐⭐⭐⭐ 对大图SR场景有很强实用价值，FLOPs和运行时间的改善都很显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Overcoming Distribution Mismatch in Quantizing Image Super-Resolution Networks](overcoming_distribution_mismatch_in_quantizing_image_super-resolution_networks.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](rethinking_image_super-resolution_from_training_data_perspectives.md)
+- [Contourlet Residual for Prompt Learning Enhanced Infrared Image Super-Resolution](contourlet_residual_for_prompt_learning_enhanced_infrared_image_super-resolution.md)
+- [Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution](pairwise_distance_distillation_for_unsupervised_real-world_image_super-resolutio.md)
+- [Spatially-Variant Degradation Model for Dataset-free Super-resolution](spatially-variant_degradation_model_for_dataset-free_super-resolution.md)
+
+<!-- RELATED:END -->

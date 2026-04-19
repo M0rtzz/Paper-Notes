@@ -121,3 +121,15 @@ Pipeline: 估计概念方向 $v_\ell$ → 局部线性化获得 Jacobian $A_\ell
 - 实验充分度: ⭐⭐⭐⭐ 10 个任务 + 3 个规模 + 详尽消融（Krylov vs random, ε扫描, 维度扫描），但缺少现代大模型（7B+）验证
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，从动机→形式化→预测→验证逻辑一气呵成，图表设计精美
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 可解释性提供了系统理论框架，"操作复杂度下降"的实用价值大，scaling law 发现具有深远理论意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Classifier-guided CLIP Distillation for Unsupervised Multi-label Classification](classifier-guided_clip_distillation_for_unsupervised_multi-label_classification.md)
+- [Learning from Neighbors: Category Extrapolation for Long-Tail Learning](learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)
+- [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](../../NeurIPS2025/social_computing/a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [Active Slice Discovery in Large Language Models](../../NeurIPS2025/social_computing/active_slice_discovery_in_large_language_models.md)
+
+<!-- RELATED:END -->

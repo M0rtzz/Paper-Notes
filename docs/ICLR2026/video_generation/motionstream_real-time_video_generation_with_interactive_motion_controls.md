@@ -131,3 +131,15 @@ Teacher训练：Flow matching loss $\mathcal{L}_{\text{FM}} = \mathbb{E}_{z_0,z_
 - 实验充分度: ⭐⭐⭐⭐ 运动迁移+相机控制+用户拖拽+多分辨率+消融全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 系统设计层次清晰，消融实验设计精到（特别是注意力配置分析）
 - 价值: ⭐⭐⭐⭐⭐ 对交互式视频创作的工程实现和学术理解都有重要推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation](../../NeurIPS2025/video_generation/autoregressive_adversarial_posttraining_for_realtime_interac.md)
+- [TTOM: Test-Time Optimization and Memorization for Compositional Video Generation](ttom_test-time_optimization_and_memorization_for_compositional_video_generation.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](../../CVPR2026/video_generation/u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+- [StreamDiT: Real-Time Streaming Text-to-Video Generation](../../CVPR2026/video_generation/streamdit_real-time_streaming_text-to-video_generation.md)
+- [MoSA: Motion-Coherent Human Video Generation via Structure-Appearance Decoupling](mosa_motion-coherent_human_video_generation_via_structure-appearance_decoupling.md)
+
+<!-- RELATED:END -->

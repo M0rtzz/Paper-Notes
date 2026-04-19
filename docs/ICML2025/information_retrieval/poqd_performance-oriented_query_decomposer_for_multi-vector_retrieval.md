@@ -181,3 +181,15 @@ $$\mathcal{L}(\Theta^*(p^{\text{old}}); p^{\text{old}}) - \mathcal{L}(\Theta^*(p
 | 实用性 | ⭐⭐⭐⭐ | 可直接集成到现有 RAG 系统，代码开源 |
 | 写作 | ⭐⭐⭐⭐ | 动机示例清晰，框架描述完整 |
 | 总评 | ⭐⭐⭐⭐ | 扎实的工作，理论+实验+实用性兼备 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reliable Decision Making via Calibration Oriented Retrieval Augmented Generation](../../NeurIPS2025/information_retrieval/reliable_decision_making_via_calibration_oriented_retrieval_augmented_generation.md)
+- [Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](../../ACL2025/information_retrieval/investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
+- [Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA](../../ACL2025/information_retrieval/mitigating_lost-in-retrieval_problems_in_retrieval_augmented_multi-hop_question_.md)
+- [ComRAG: Retrieval-Augmented Generation with Dynamic Vector Stores for Real-time Community Question Answering in Industry](../../ACL2025/information_retrieval/comrag_retrieval-augmented_generation_with_dynamic_vector_stores_for_real-time_c.md)
+- [ReFeed: Retrieval Feedback-Guided Dataset Construction for Style-Aware Query Rewriting](../../AAAI2026/information_retrieval/refeed_retrieval_feedback-guided_dataset_construction_for_style-aware_query_rewr.md)
+
+<!-- RELATED:END -->

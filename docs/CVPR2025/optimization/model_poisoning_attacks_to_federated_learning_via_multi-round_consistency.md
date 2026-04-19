@@ -123,3 +123,15 @@ PoisonedFL vs 7 种攻击 × 9 种防御 × 5 数据集，测试错误率（%）
 ## 评分
 
 ⭐⭐⭐⭐ — 洞察深刻（多轮自抵消问题），方法极简但效果摧毁性，在最弱假设下击穿所有SOTA防御，对FL安全社区敲响警钟。扣1星因为仅聚焦 untargeted attack，且实验场景偏学术（小模型+标准数据集）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients](../../NeurIPS2025/optimization/efficient_federated_learning_against_byzantine_attacks_and_data_heterogeneity_vi.md)
+- [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](../../NeurIPS2025/optimization/fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
+- [Federated Learning with Domain Shift Eraser](federated_learning_with_domain_shift_eraser.md)
+- [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning](scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
+- [Mind the Gap: Confidence Discrepancy Can Guide Federated Semi-Supervised Learning](mind_the_gap_confidence_discrepancy_can_guide_federated_semi-supervised_learning.md)
+
+<!-- RELATED:END -->

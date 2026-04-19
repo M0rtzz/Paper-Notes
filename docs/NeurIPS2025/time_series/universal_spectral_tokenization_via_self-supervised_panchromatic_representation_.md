@@ -121,3 +121,15 @@ tags:
 - 技术贡献：⭐⭐⭐⭐ （通用架构设计简洁有效）
 - 实验充分度：⭐⭐⭐⭐ （多数据集、多任务验证）
 - 写作质量：⭐⭐⭐⭐ （动机清晰，展示充分）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TimePoint: Accelerated Time Series Alignment via Self-Supervised Keypoint and Descriptor Learning](../../ICML2025/time_series/timepoint_accelerated_time_series_alignment_via_self-supervised_keypoint_and_des.md)
+- [OmniSat: Self-Supervised Modality Fusion for Earth Observation](../../ECCV2024/time_series/omnisat_self-supervised_modality_fusion_for_earth_observation.md)
+- [WaLRUS: Wavelets for Long-range Representation Using SSMs](walrus_wavelets_for_long-range_representation_using_ssms.md)
+- [Fern: Chaining Spectral Pearls — Ellipsoidal Forecasting Beyond Trajectories for Time Series](friren_beyond_trajectories_--_a_spectral_lens_on_time.md)
+- [SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)
+
+<!-- RELATED:END -->

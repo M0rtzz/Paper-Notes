@@ -145,3 +145,15 @@ $$\mathcal{L}_{BNS} = -\frac{1}{m+1}\left[\sum_{q_* \in \{q_i\} \cup \boldsymbol
 - 实验充分度: ⭐⭐⭐⭐ — 4 数据集 × 9 baseline，含消融、不同 IF、线性探测、t-SNE 可视化
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，结构完整，理论与实验对应良好
 - 价值: ⭐⭐⭐⭐ — 长尾识别领域的一致性 SOTA，理论与实践结合紧密
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BCE3S: Binary Cross-Entropy Based Tripartite Synergistic Learning for Long-tailed Recognition](../../AAAI2026/self_supervised/bce3s_binary_cross-entropy_based_tripartite_synergistic_learning_for_long-tailed.md)
+- [Know Thyself by Knowing Others: Learning Neuron Identity from Population Context](know_thyself_by_knowing_others_learning_neuron_identity_from_population_context.md)
+- [Maximizing Incremental Information Entropy for Contrastive Learning](../../ICLR2026/self_supervised/maximizing_incremental_information_entropy_for_contrastive_learning.md)
+- [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+
+<!-- RELATED:END -->

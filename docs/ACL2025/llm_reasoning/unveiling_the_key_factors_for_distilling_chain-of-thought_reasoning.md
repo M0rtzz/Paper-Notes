@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 教师 × 7 学生 × 7 数据集 × 6 粒度，实验量巨大
 - 写作质量: ⭐⭐⭐⭐ 教学类比框架清晰，结论可操作
 - 价值: ⭐⭐⭐⭐ 为 CoT 蒸馏提供了实用的配置指南
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improve Vision Language Model Chain-of-thought Reasoning](improve_vlm_cot_reasoning.md)
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)
+- [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
+- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](tract_regression_cot.md)
+- [SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](softcot_soft_chain_of_thought.md)
+
+<!-- RELATED:END -->

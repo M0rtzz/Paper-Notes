@@ -167,3 +167,15 @@ MLP MKC+ 一骑绝尘，大幅领先基线。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5 种语言、多种分类器、多种阈值、去污染分析、多语言训练，极其全面
 - 写作质量: ⭐⭐⭐⭐ — 清晰系统，实验描述详尽
 - 价值: ⭐⭐⭐⭐⭐ — 公开 20 语言精炼数据集，实用价值极高，缓解多语言诅咒的发现意义深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation](../../ACL2025/multilingual_mt/laca_crosslingual_absa.md)
+- [LangSAMP: Language-Script Aware Multilingual Pretraining](../../ACL2025/multilingual_mt/langsamp_multilingual_pretraining.md)
+- [ParallelPrompt: Extracting Parallelism from Large Language Model Queries](parallelprompt_extracting_parallelism_from_large_language_model_queries.md)
+- [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](../../ACL2025/multilingual_mt/execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)
+
+<!-- RELATED:END -->

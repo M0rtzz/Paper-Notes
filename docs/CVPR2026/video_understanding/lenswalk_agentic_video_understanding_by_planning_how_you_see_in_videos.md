@@ -121,3 +121,15 @@ LensWalk将视频理解建模为一个多轮迭代过程。每一轮中，LLM推
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个基准、多种模型组合、详细消融和行为分析
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事流畅，原理阐述清晰，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 即插即用框架，可直接提升现有强模型，实用性极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering](do_you_see_what_i_am_pointing_at_gesture-based_egocentric_video_question_answeri.md)
+- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochatm1_collaborative_policy_planning_for_vide.md)
+- [Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos](mistake_attribution_fine-grained_mistake_understanding_in_egocentric_videos.md)
+- [VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking](videoseek_long-horizon_video_agent_with_tool-guided_seeking.md)
+
+<!-- RELATED:END -->

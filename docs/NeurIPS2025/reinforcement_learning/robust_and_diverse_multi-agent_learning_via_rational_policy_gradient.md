@@ -155,3 +155,15 @@ AD-RPG 在所有环境中都避免了自毁并保持高鲁棒性。
 - **实验充分度**: ⭐⭐⭐⭐ 四种环境 + 五种算法变体 + 鲁棒性/多样性/对抗样本三个维度的全面验证
 - **写作质量**: ⭐⭐⭐⭐⭐ 矩阵博弈示例直观，理论压缩凝练，图形语言设计精巧
 - **价值**: ⭐⭐⭐⭐⭐ 解决了多智能体对抗优化中持续多年的核心开放问题，具有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Global Optimality of Policy Gradient Methods in General Utility Reinforcement Learning](on_the_global_optimality_of_policy_gradient_methods_in_general_utility_reinforce.md)
+- [Sequential Multi-Agent Dynamic Algorithm Configuration](sequential_multi-agent_dynamic_algorithm_configuration.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Opinion: Towards Unified Expressive Policy Optimization for Robust Robot Learning](opinion_towards_unified_expressive_policy_optimization_for_robust_robot_learning.md)
+- [Extending NGU to Multi-Agent RL: A Preliminary Study](extending_ngu_to_multi-agent_rl_a_preliminary_study.md)
+
+<!-- RELATED:END -->

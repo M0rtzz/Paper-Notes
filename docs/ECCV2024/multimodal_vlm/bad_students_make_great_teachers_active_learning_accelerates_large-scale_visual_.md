@@ -149,3 +149,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ JFT-300M+ALIGN+Webli多数据集验证，缩放定律分析，丰富的消融
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，计算分析严谨，Pareto前沿图非常直观
 - 价值: ⭐⭐⭐⭐⭐ 对大规模训练具有直接实用价值，能显著降低训练成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Data Curation Effectively Distills Large-Scale Multimodal Models](../../CVPR2025/multimodal_vlm/active_data_curation_effectively_distills_large-scale_multimodal_models.md)
+- [UniCode: Learning a Unified Codebook for Multimodal Large Language Models](unicode_learning_a_unified_codebook_for_multimodal_large_language_models.md)
+- [Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
+- [Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models](groma_localized_visual_tokenization_for_grounding_multimodal_large_language_mode.md)
+- [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+
+<!-- RELATED:END -->

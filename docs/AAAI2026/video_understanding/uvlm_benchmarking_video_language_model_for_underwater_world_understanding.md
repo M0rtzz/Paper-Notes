@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 测试了多个闭源和开源模型，但缺少更多消融实验（如标注策略、数据量影响）
 - 写作质量: ⭐⭐⭐ 结构清晰，标注流程描述详尽，但整体行文偏冗长
 - 价值: ⭐⭐⭐⭐ 填补了重要空白，数据集和代码开源，对水下视觉社区有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics](pragworld_a_benchmark_evaluating_llms_local_world_model_under_minimal_linguistic.md)
+- [4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding](../../ICCV2025/video_understanding/4dbench_benchmarking_multimodal_large_language_models_for_4d.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+- [MLVU: Benchmarking Multi-task Long Video Understanding](../../CVPR2025/video_understanding/mlvu_benchmarking_multi-task_long_video_understanding.md)
+- [Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity](../../NeurIPS2025/video_understanding/lattice_boltzmann_model_for_learning_real-world_pixel_dynamicity.md)
+
+<!-- RELATED:END -->

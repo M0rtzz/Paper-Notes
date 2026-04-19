@@ -120,3 +120,15 @@ SERA 由两个互补模块组成，均采用 MoE 机制：
 - 实验充分度: ⭐⭐⭐⭐ (三大基准 + 消融 + 零样本泛化)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，专家设计有理论动机)
 - 价值: ⭐⭐⭐⭐ (为参数高效的密集预测提供新思路)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+- [DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
+- [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
+- [Generalizable Slum Detection from Satellite Imagery with Mixture-of-Experts](../../AAAI2026/segmentation/generalizable_slum_detection_from_satellite_imagery_with_mixture-of-experts.md)
+
+<!-- RELATED:END -->

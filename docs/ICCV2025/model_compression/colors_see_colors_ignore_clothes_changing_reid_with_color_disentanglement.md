@@ -140,3 +140,15 @@ $$\mathcal{L}_{DE} = \left| \frac{f_{CO}}{\|f_{CO}\|_2} \cdot \frac{f_{ReID}}{\|
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖4个数据集（图像+视频）、多种骨干网络、详尽消融
 - **写作质量**: ⭐⭐⭐⭐ 自注意力变体的对比分析清晰，数学推导完整
 - **价值**: ⭐⭐⭐⭐ 参数高效、无需标注、实用性强，对实际部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Color Matching Using Hypernetwork-Based Kolmogorov-Arnold Networks (cmKAN)](color_matching_using_hypernetwork-based_kolmogorov-arnold_networks.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [LSNet: See Large, Focus Small](../../CVPR2025/model_compression/lsnet_see_large_focus_small.md)
+- [Distilling Cross-Modal Knowledge via Feature Disentanglement](../../AAAI2026/model_compression/distilling_cross-modal_knowledge_via_feature_disentanglement.md)
+- [Dataset Color Quantization: A Training-Oriented Framework for Dataset-Level Compression](../../ICLR2026/model_compression/dataset_color_quantization_a_training-oriented_framework_for_dataset-level_compr.md)
+
+<!-- RELATED:END -->

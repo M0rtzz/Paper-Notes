@@ -123,3 +123,15 @@ Query + Retrieved Passages → **Step 1**: LLM 自适应生成内部知识 passa
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 数据集 × 3 模型 × 多种检索精度级别，分析非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析→方法设计的逻辑链条极为清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 RAG 鲁棒性有重大贡献，Google Cloud AI Research 出品
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diversity-oriented Data Augmentation with Large Language Models](diversity_data_augmentation.md)
+- [Taming Knowledge Conflicts in Language Models](../../ICML2025/llm_nlp/taming_knowledge_conflicts_in_language_models.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization](improving_contextual_faithfulness_of_large_language_models_via_retrieval_heads-i.md)
+- [Dynamic Knowledge Integration for Evidence-Driven Counter-Argument Generation with Large Language Models](dynamic_knowledge_integration_for_evidence-driven_counter-argument_generation_wi.md)
+
+<!-- RELATED:END -->

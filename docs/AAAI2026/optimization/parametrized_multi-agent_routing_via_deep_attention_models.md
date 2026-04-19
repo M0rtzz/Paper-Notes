@@ -132,3 +132,15 @@ $$\widehat{\nabla_{\mathcal{Y}^t} F_\beta} = \sum_{i=1}^N \rho_i \sum_{q=1}^L \h
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖可扩展性、对比基线、消融，但真实应用场景验证不足
 - 写作质量: ⭐⭐⭐⭐ — 问题formulation严谨，方法推导清楚，但符号较多增加阅读难度
 - 价值: ⭐⭐⭐⭐⭐ — 解决了ParaSDM的可扩展性核心瓶颈，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines](../../ICML2025/optimization/metaagent_automatically_constructing_multi-agent_systems_based_on_finite_state_m.md)
+- [Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives](../../NeurIPS2025/optimization/effective_policy_learning_for_multi-agent_online_coordination_beyond_submodular_.md)
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](../../ICML2025/optimization/in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+- [MOTIF: Multi-strategy Optimization via Turn-based Interactive Framework](motif_multi-strategy_optimization_via_turn-based_interactive_framework.md)
+- [Nonparametric Teaching of Attention Learners](../../ICLR2026/optimization/nonparametric_teaching_of_attention_learners.md)
+
+<!-- RELATED:END -->

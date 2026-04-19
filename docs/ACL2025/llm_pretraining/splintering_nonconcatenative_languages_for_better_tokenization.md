@@ -120,3 +120,15 @@ Schmidt et al. 指出压缩率不应是评估分词器的唯一标准。Splinter
 - 实验充分度: ⭐⭐⭐⭐ 3 种语言 x 7 种词表大小 x 2 种分词器 + 3 个下游任务，内在+外在评估完整
 - 写作质量: ⭐⭐⭐⭐ 语言学动机阐述清晰，案例分析直观有力
 - 价值: ⭐⭐⭐⭐ 对希伯来语/阿拉伯语 NLP 有直接实用价值，思路可推广到其他 NCL
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Tokenization](adversarial_tokenization.md)
+- [Tokenization is Sensitive to Language Variation](tokenization_is_sensitive_to_language_variation.md)
+- [Making LLMs Better Many-to-Many Speech-to-Text Translators with Curriculum Learning](making_llms_better_many-to-many_speech-to-text_translators_with_curriculum_learn.md)
+- [Evaluating Morphological Alignment of Tokenizers in 70 Languages](../../ICML2025/llm_pretraining/evaluating_morphological_alignment_of_tokenizers_in_70_languages.md)
+- [Incorporating Domain Knowledge into Materials Tokenization](incorporating_domain_knowledge_into_materials_tokenization.md)
+
+<!-- RELATED:END -->

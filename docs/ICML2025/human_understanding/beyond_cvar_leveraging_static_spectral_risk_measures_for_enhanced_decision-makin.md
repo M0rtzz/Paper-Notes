@@ -148,3 +148,15 @@ Cliff Walking（金融风格风险环境）：
 - 实验充分度: ⭐⭐⭐⭐ 多种风险谱和环境，但规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 风险理论+RL的交叉写作非常清晰
 - 价值: ⭐⭐⭐⭐⭐ 推进风险敏感决策的前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Decision-Making of Large Language Models via Actor-Critic](enhancing_decision-making_of_large_language_models_via_actor-critic.md)
+- [Preference-based Reinforcement Learning beyond Pairwise Comparisons: Benefits of Multiple Options](../../NeurIPS2025/human_understanding/preference-based_reinforcement_learning_beyond_pairwise_comparisons_benefits_of_.md)
+- [TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
+- [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
+- [Evolutionary Learning in Spatial Agent-Based Models for Physical Climate Risk Assessment](../../NeurIPS2025/human_understanding/evolutionary_learning_in_spatial_agent-based_models_for_physical_climate_risk_as.md)
+
+<!-- RELATED:END -->

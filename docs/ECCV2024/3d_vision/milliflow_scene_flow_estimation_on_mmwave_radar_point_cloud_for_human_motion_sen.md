@@ -128,3 +128,15 @@ EPE3D 从次优 0.107m 降至 0.046m（降幅 57%），Acc3D Relax 从 42.7% 提
 - 实验充分度: ⭐⭐⭐⭐⭐ 场景流 + 3 个下游任务、泛化测试、详细消融、运行时间分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，实验设计合理
 - 价值: ⭐⭐⭐⭐ 开辟了雷达场景流新方向，数据集和标注方案对社区有持续价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PCSTracker: Long-Term Scene Flow Estimation for Point Cloud Sequences](../../CVPR2026/3d_vision/pcstracker_long-term_scene_flow_estimation_for_point_cloud_sequences.md)
+- [Rectified Point Flow: Generic Point Cloud Pose Estimation](../../NeurIPS2025/3d_vision/rectified_point_flow_generic_point_cloud_pose_estimation.md)
+- [Floxels: Fast Unsupervised Voxel Based Scene Flow Estimation](../../CVPR2025/3d_vision/floxels_fast_unsupervised_voxel_based_scene_flow_estimation.md)
+- [Class-Partitioned VQ-VAE and Latent Flow Matching for Point Cloud Scene Generation](../../AAAI2026/3d_vision/class-partitioned_vq-vae_and_latent_flow_matching_for_point_cloud_scene_generati.md)
+- [RadarLLM: Empowering Large Language Models to Understand Human Motion from Millimeter-Wave Point Cloud Sequence](../../AAAI2026/3d_vision/radarllm_empowering_large_language_models_to_understand_human_motion_from_millim.md)
+
+<!-- RELATED:END -->

@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Pixel 全面，Strip/HL-LHC 待验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰
 - 价值: ⭐⭐⭐⭐⭐ 高能物理关键应用，30 倍加速意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Many Tokens Do 3D Point Cloud Transformer Architectures Really Need?](how_many_tokens_do_3d_point_cloud_transformer_architectures_really_need.md)
+- [ERUPT: Efficient Rendering with Unposed Patch Transformer](../../CVPR2025/3d_vision/erupt_efficient_rendering_with_unposed_patch_transformer.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [GGPT: Geometry-Grounded Point Transformer](../../CVPR2026/3d_vision/ggpt_geometry_grounded_point_transformer.md)
+- [ScatterFormer: Efficient Voxel Transformer with Scattered Linear Attention](../../ECCV2024/3d_vision/scatterformer_efficient_voxel_transformer_with_scattered_linear_attention.md)
+
+<!-- RELATED:END -->

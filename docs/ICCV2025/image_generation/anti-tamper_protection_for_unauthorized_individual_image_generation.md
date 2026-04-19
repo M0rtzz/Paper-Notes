@@ -139,3 +139,15 @@ ATP由两个组件构成：保护扰动$P_{Prot}$和授权扰动$P_{Auth}$。整
 - 实验充分度: ⭐⭐⭐⭐ 覆盖4种保护算法、3种净化方式、自适应攻击、美学影响等全面评估
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，图例直观，技术路线循序渐进
 - 价值: ⭐⭐⭐⭐ 为AI生成内容的版权保护提供了新的防御维度，具有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models](../../NeurIPS2025/image_generation/perturb_a_model_not_an_image_towards_robust_privacy_protection_via_anti-personal.md)
+- [StableGuard: Towards Unified Copyright Protection and Tamper Localization in Latent Diffusion Models](../../NeurIPS2025/image_generation/stableguard_towards_unified_copyright_protection_and_tamper_localization_in_late.md)
+- [ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation](../../NeurIPS2025/image_generation/imagesentinel_protecting_visual_datasets_from_unauthorized_retrieval-augmented_i.md)
+- [BlurGuard: A Simple Approach for Robustifying Image Protection Against AI-Powered Edit](../../NeurIPS2025/image_generation/blurguard_a_simple_approach_for_robustifying_image_protection_against_ai-powered.md)
+- [Holistic Tokenizer for Autoregressive Image Generation](holistic_tokenizer_for_autoregressive_image_generation.md)
+
+<!-- RELATED:END -->

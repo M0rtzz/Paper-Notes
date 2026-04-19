@@ -139,3 +139,15 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{MGCL} + \lambda_2 \mathcal{L}_{ITA} + \la
 - 实验充分度: ⭐⭐⭐⭐⭐ 16个数据集7种任务的大规模评测，覆盖面极广
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但部分技术细节放在附录中影响完整性
 - 价值: ⭐⭐⭐⭐⭐ 作为遥感领域的大统一基础模型，在实际地球观测任务中有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S5: Scalable Semi-Supervised Semantic Segmentation in Remote Sensing](../../AAAI2026/3d_vision/s5_scalable_semi-supervised_semantic_segmentation_in_remote_sensing.md)
+- [RayZer: A Self-supervised Large View Synthesis Model](rayzer_a_self-supervised_large_view_synthesis_model.md)
+- [UniVG: A Generalist Diffusion Model for Unified Image Generation and Editing](univg_a_generalist_diffusion_model_for_unified_image_generation_and_editing.md)
+- [UniEgoMotion: A Unified Model for Egocentric Motion Reconstruction, Forecasting, and Generation](uniegomotion_a_unified_model_for_egocentric_motion_reconstruction_forecasting_an.md)
+- [Glove2Hand: Synthesizing Natural Hand-Object Interaction from Multi-Modal Sensing Gloves](../../CVPR2026/3d_vision/glove2hand_synthesizing_natural_hand-object_interaction_from_multi-modal_sensing.md)
+
+<!-- RELATED:END -->

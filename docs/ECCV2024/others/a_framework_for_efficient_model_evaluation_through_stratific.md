@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 26+任务、多指标、多backbone、OOD、线性探测，覆盖极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 清晰、系统、理论推导完整，示例和图表辅助理解
 - 价值: ⭐⭐⭐⭐ 对需要大规模benchmark的CV研究有直接实用价值，但限于分类场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Guided Sampling of Conditional GANs](exploring_guided_sampling_of_conditional_gans.md)
+- [Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
+- [De-confounded Gaze Estimation](de-confounded_gaze_estimation.md)
+- [Active Measurement: Efficient Estimation at Scale](../../NeurIPS2025/others/active_measurement_efficient_estimation_at_scale.md)
+- [An Incremental Unified Framework for Small Defect Inspection](an_incremental_unified_framework_for_small_defect_inspection.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ E-RayZer在frozen-backbone设置下大幅领先所有基线，深度估计AbsRel
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个评测数据集、多任务（NVS/位姿/深度/光流）、消融全面、含与VGGT公平对比和scaling分析
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，motivation从RayZer缺陷自然引出，课程学习的动机图效果好
 - 价值: ⭐⭐⭐⭐⭐ 建立了3D视觉自监督预训练新范式，自监督预训练+有监督微调的互补性具有重大启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Formula-Supervised Visual-Geometric Pre-training (FSVGP)](../../ECCV2024/3d_vision/formula-supervised_visual-geometric_pre-training.md)
+- [3D sans 3D Scans: Scalable Pre-training from Video-Generated Point Clouds](3d_sans_3d_scans_scalable_pre-training_from_video-generated_point_clouds.md)
+- [Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron Computed Tomography Data](regularizing_inr_with_diffusion_prior_self-supervised_3d_reconstruction_of_neutr.md)
+- [RayZer: A Self-supervised Large View Synthesis Model](../../ICCV2025/3d_vision/rayzer_a_self-supervised_large_view_synthesis_model.md)
+- [4D Visual Pre-training for Robot Learning](../../ICCV2025/3d_vision/4d_visual_pretraining_for_robot_learning.md)
+
+<!-- RELATED:END -->

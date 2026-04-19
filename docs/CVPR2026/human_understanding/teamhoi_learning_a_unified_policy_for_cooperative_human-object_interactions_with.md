@@ -154,3 +154,15 @@ $$r_{\text{ang}} = \exp\!\left(-k_\theta \frac{1}{2}\left[(\Delta\phi_i^{\text{c
 - 实验充分度: ⭐⭐⭐⭐ — 10k 回合评估、多种几何形状、2-8人配置、重载测试、消融全面，缺少更多任务类型验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，公式推导完整，图示直观，问题动机阐述扎实
 - 价值: ⭐⭐⭐⭐ — 为可扩展多智能体物理协作提供了坚实基础，但需更多任务验证泛化性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HUMOTO: A 4D Dataset of Mocap Human Object Interactions](../../ICCV2025/human_understanding/humoto_a_4d_dataset_of_mocap_human_object_interactions.md)
+- [Unified Primitive Proxies for Structured Shape Completion](unified_primitive_proxies_for_structured_shape_completion.md)
+- [MDReID: Modality-Decoupled Learning for Any-to-Any Multi-Modal Object Re-Identification](../../NeurIPS2025/human_understanding/mdreid_modality-decoupled_learning_for_any-to-any_multi-modal_object_re-identifi.md)
+- [Team RAS in 10th ABAW Competition: Multimodal Valence and Arousal Estimation Approach](team_ras_in_10th_abaw_competition_multimodal_valence_and_arousal_estimation_appr.md)
+- [FlexAvatar: Learning Complete 3D Head Avatars with Partial Supervision](flexavatar_learning_complete_3d_head_avatars_with_partial_supervision.md)
+
+<!-- RELATED:END -->

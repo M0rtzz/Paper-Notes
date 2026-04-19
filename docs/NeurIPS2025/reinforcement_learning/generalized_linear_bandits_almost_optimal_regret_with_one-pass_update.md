@@ -141,3 +141,15 @@ $$\text{Reg}_T \lesssim dSR\sqrt{S^2R + \log T} \cdot \sqrt{\frac{T\log T}{\kapp
 - **实验充分性**: ★★★★☆ — 覆盖logistic、Poisson和真实数据
 - **实用价值**: ★★★★★ — $\mathcal{O}(1)$ 代价对在线系统极有价值
 - **写作质量**: ★★★★★ — 理论严谨，脉络清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [Tractable Multinomial Logit Contextual Bandits with Non-Linear Utilities](tractable_multinomial_logit_contextual_bandits_with_non-linear_utilities.md)
+- [Single Index Bandits: Generalized Linear Contextual Bandits with Unknown Reward Functions](../../ICLR2026/reinforcement_learning/single_index_bandits_generalized_linear_contextual_bandits_with_unknown_reward_f.md)
+- [Improved Regret and Contextual Linear Extension for Pandora's Box and Prophet Inequality](improved_regret_and_contextual_linear_extension_for_pandoras_box_and_prophet_ine.md)
+- [A Near-optimal, Scalable and Parallelizable Framework for Stochastic Bandits Robust to Adversarial Corruptions and Beyond](a_nearoptimal_scalable_and_parallelizable_framework_for_stoc.md)
+
+<!-- RELATED:END -->

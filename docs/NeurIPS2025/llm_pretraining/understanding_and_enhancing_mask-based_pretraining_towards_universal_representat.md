@@ -89,3 +89,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个域多种架构验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 理论和实用价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Training Data Attribution with Representational Optimization](enhancing_training_data_attribution_with_representational_optimization.md)
+- [Inductive Gradient Adjustment for Spectral Bias in Implicit Neural Representations](../../ICML2025/llm_pretraining/inductive_gradient_adjustment_for_spectral_bias_in_implicit_neural_representatio.md)
+- [Through the River: Understanding the Benefit of Schedule-Free Methods for Language Model Training](through_the_river_understanding_the_benefit_of_schedule-free_methods_for_languag.md)
+- [Breaking the Frozen Subspace: Importance Sampling for Low-Rank Optimization in LLM Pretraining](breaking_the_frozen_subspace_importance_sampling_for_low-rank_optimization_in_ll.md)
+- [Understanding and Improving Shampoo and SOAP via Kullback-Leibler Minimization](../../ICLR2026/llm_pretraining/understanding_and_improving_shampoo_and_soap_via_kullback-leibler_minimization.md)
+
+<!-- RELATED:END -->

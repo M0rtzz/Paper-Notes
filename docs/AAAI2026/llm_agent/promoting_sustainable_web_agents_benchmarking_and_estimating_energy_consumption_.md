@@ -131,3 +131,15 @@ tags:
 ⭐⭐⭐
 
 实用价值突出——首次为 Web Agent 领域建立了能耗基准，数据详实且实验设计合理。但作为研究贡献主要停留在测量和倡导层面，缺乏降低能耗的技术方案。理论估算方法的精度也有较大提升空间。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMTM: Benchmarking and Optimizing LLMs for Temporal Motif Analysis in Dynamic Graphs](llmtm_benchmarking_and_optimizing_llms_for_temporal_motif_analysis_in_dynamic_gr.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](../../ICLR2026/llm_agent/web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [Prune4Web: DOM Tree Pruning Programming for Web Agent](prune4web_dom_tree_pruning_programming_for_web_agent.md)
+- [COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis](coach_collaborative_agents_for_contextual_highlighting_--_a_multi-agent_framewor.md)
+- [CausalTrace: A Neurosymbolic Causal Analysis Agent for Smart Manufacturing](causaltrace_a_neurosymbolic_causal_analysis_agent_for_smart_manufacturing.md)
+
+<!-- RELATED:END -->

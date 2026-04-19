@@ -138,3 +138,15 @@ MotionStreamer 在 FID、R@3 和 MM-Dist 上均优于所有基线方法。
 - **技术深度**: ★★★★☆ — Two-Forward 策略和连续停止条件设计精巧
 - **实验质量**: ★★★★☆ — 在多个基准上全面验证，消融详尽
 - **写作质量**: ★★★★☆ — 结构清晰，图表表达力强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Less is More: Improving Motion Diffusion Models with Sparse Keyframes](less_is_more_improving_motion_diffusion_models_with_sparse_keyframes.md)
+- [EmotiCrafter: Text-to-Emotional-Image Generation based on Valence-Arousal Model](emoticrafter_text-to-emotional-image_generation_based_on_valence-arousal_model.md)
+- [MamTiff-CAD: Multi-Scale Latent Diffusion with Mamba+ for Complex Parametric Sequence](mamtiff-cad_multi-scale_latent_diffusion_with_mamba_for_complex_parametric_seque.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
+
+<!-- RELATED:END -->

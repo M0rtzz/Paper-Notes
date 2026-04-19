@@ -111,3 +111,15 @@ NeSyPr 分为两个阶段：
 ## 评分
 
 ⭐⭐⭐⭐ — 思路精巧（过程化知识编译），实用价值高（低延迟、小模型），三个基准一致验证了有效性。从认知科学借鉴设计原则是一大亮点。受限于当前信息量，详细机制的评估有待论文正文确认。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning](../../CVPR2026/robotics/cross-domain_demo-to-code_via_neurosymbolic_counterfactual_reasoning.md)
+- [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
+- [ThinkAct: Vision-Language-Action Reasoning via Reinforced Visual Latent Planning](thinkact_vision-language-action_reasoning_via_reinforced_visual_latent_planning.md)
+- [DynaNav: Dynamic Feature and Layer Selection for Efficient Visual Navigation](dynanav_dynamic_feature_and_layer_selection_for_efficient_visual_navigation.md)
+- [EgoThinker: Unveiling Egocentric Reasoning with Spatio-Temporal CoT](egothinker_unveiling_egocentric_reasoning_with_spatiotempora.md)
+
+<!-- RELATED:END -->

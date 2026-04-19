@@ -127,3 +127,15 @@ IOA 是一个三阶段流水线：Identifier（识别什么知识需要教）→
 - 实验充分度: ⭐⭐⭐⭐ 多模型多基准验证，但主实验结果放在附录较多
 - 写作质量: ⭐⭐⭐⭐ 教育学类比直观，但方法段公式偏多
 - 价值: ⭐⭐⭐⭐⭐ 为黑盒蒸馏提供了系统化的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Condensed Data Expansion Using Model Inversion for Knowledge Distillation](../../AAAI2026/model_compression/condensed_data_expansion_using_model_inversion_for_knowledge_distillation.md)
+- [AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution](amid_knowledge_distillation_for_llms_with_α-mixture_assistant_distribution.md)
+- [Distillation of Large Language Models via Concrete Score Matching](distillation_of_large_language_models_via_concrete_score_matching.md)
+- [PASER: Post-Training Data Selection for Efficient Pruned Large Language Model Recovery](paser_post-training_data_selection_for_efficient_pruned_large_language_model_rec.md)
+- [Knowledge Fusion of Large Language Models Via Modular Skillpacks](knowledge_fusion_of_large_language_models_via_modular_skillpacks.md)
+
+<!-- RELATED:END -->

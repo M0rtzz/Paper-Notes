@@ -178,3 +178,15 @@ $$\hat{r}_{c,b,t} = \hat{r}_c + b_t$$
 - **实验充分度**: ⭐⭐⭐⭐ — 模拟+真实流水线评估充分，消融详尽，但模拟环境可能偏理想化
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，但部分内容偏工程细节
 - **价值**: ⭐⭐⭐⭐ — 对大规模基因组工作流有直接的实际应用价值，但学术贡献相对有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LungNoduleAgent: A Collaborative Multi-Agent System for Precision Diagnosis of Lung Nodules](lungnoduleagent_a_collaborative_multi-agent_system_for_precision_diagnosis_of_lu.md)
+- [Knowledgeable Language Models as Black-Box Optimizers for Personalized Medicine](../../ICLR2026/medical_imaging/knowledgeable_language_models_as_black-box_optimizers_for_personalized_medicine.md)
+- [From Policy to Logic for Efficient and Interpretable Coverage Assessment](from_policy_to_logic_for_efficient_and_interpretable_coverage_assessment.md)
+- [Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification](federated_clip_for_resource-efficient_heterogeneous_medical_image_classification.md)
+- [SPACE: Your Genomic Profile Predictor is a Powerful DNA Foundation Model](../../ICML2025/medical_imaging/space_your_genomic_profile_predictor_is_a_powerful_dna_foundation_model.md)
+
+<!-- RELATED:END -->

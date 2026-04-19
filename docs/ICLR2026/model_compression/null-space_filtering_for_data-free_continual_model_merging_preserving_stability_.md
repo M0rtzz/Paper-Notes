@@ -156,3 +156,15 @@ NUFILT 在 ViT-B/32 的 8 任务设置上达到 83.6% ACC，比 OPCM 高 8.1%，
 - 实验充分度: ⭐⭐⭐⭐⭐ 视觉/NLP/多模态全面验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验组织清晰
 - 价值: ⭐⭐⭐⭐ 对隐私保护场景下的模型部署很有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking the Stability-Plasticity Trade-off in Continual Learning from an Architectural Perspective](../../ICML2025/model_compression/rethinking_the_stability-plasticity_trade-off_in_continual_learning_from_an_arch.md)
+- [Understanding Dataset Distillation via Spectral Filtering](understanding_dataset_distillation_via_spectral_filtering.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](../../NeurIPS2025/model_compression/accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+- [Preference-Aligned LoRA Merging: Preserving Subspace Coverage and Addressing Directional Anisotropy](../../CVPR2026/model_compression/preference-aligned_lora_merging_preserving_subspace_coverage_and_addressing_dire.md)
+- [LoRA Subtraction for Drift-Resistant Space in Exemplar-Free Continual Learning](../../CVPR2025/model_compression/lora_subtraction_for_drift-resistant_space_in_exemplar-free_continual_learning.md)
+
+<!-- RELATED:END -->

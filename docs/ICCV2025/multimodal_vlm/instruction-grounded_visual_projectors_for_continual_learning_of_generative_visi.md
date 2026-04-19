@@ -165,3 +165,15 @@ $\mathcal{L}_{bias}$ 是最关键的组件——移除后分类从 85.92% 暴跌
 - **实验充分度**: ⭐⭐⭐⭐ 两种 VLM、消融研究、时间步性能曲线、定性分析，但任务设置偏简单
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图示表达直观，但符号较多需要仔细阅读
 - **价值**: ⭐⭐⭐⭐ 对 VLM 持续学习是有意义的推进，但实际部署场景的验证不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMoLoRA: Exploring and Defying Dual Catastrophic Forgetting in Continual Visual Instruction Tuning](smolora_exploring_and_defying_dual_catastrophic_forgetting_in_continual_visual_i.md)
+- [Learning to Instruct for Visual Instruction Tuning](../../NeurIPS2025/multimodal_vlm/learning_to_instruct_for_visual_instruction_tuning.md)
+- [Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](../../CVPR2025/multimodal_vlm/continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](../../ICLR2026/multimodal_vlm/enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+
+<!-- RELATED:END -->

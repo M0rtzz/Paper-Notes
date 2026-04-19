@@ -108,3 +108,15 @@ $\mathcal{L} = \mathcal{L}_{TP} + \lambda \cdot \mathcal{L}_{PA}$。MAE-VQGAN ba
 - 实验充分度: ⭐⭐⭐⭐ 分割/检测/上色三任务，K值消融，融合方式对比
 - 写作质量: ⭐⭐⭐⭐ 协作 vs 竞争的叙事清晰
 - 价值: ⭐⭐⭐⭐ 对 Visual ICL 领域有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TeamLoRA: Boosting Low-Rank Adaptation with Expert Collaboration and Competition](../../ACL2025/model_compression/teamlora_boosting_low-rank_adaptation_with_expert_collaboration_and_competition.md)
+- [ECVC: Exploiting Non-Local Correlations in Multiple Frames for Contextual Video Compression](ecvc_exploiting_non-local_correlations_in_multiple_frames_for_contextual_video_c.md)
+- [NADER: Neural Architecture Design via Multi-Agent Collaboration](nader_neural_architecture_design_via_multi-agent_collaboration.md)
+- [Mamba-Adaptor: State Space Model Adaptor for Visual Recognition](mamba-adaptor_state_space_model_adaptor_for_visual_recognition.md)
+- [Context Tuning for In-Context Optimization](../../ICML2025/model_compression/context_tuning_for_in-context_optimization.md)
+
+<!-- RELATED:END -->

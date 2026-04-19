@@ -138,3 +138,15 @@ $$\mathcal{L}_{occ} = \mathcal{L}_{ce} + \mathcal{L}_{ls} + \mathcal{L}_{scal}^{
 - 实验充分度: ⭐⭐⭐ (消融完整但绝对性能偏低，缺少跨数据集实验)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图表丰富)
 - 价值: ⭐⭐⭐⭐ (开创四足机器人全景占据方向，数据集和基准有长期价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OneOcc: Semantic Occupancy Prediction for Legged Robots with a Single Panoramic Camera](oneocc_semantic_occupancy_prediction_for_legged_robots_with_a_single_panoramic_c.md)
+- [An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)
+- [CoIn3D: Revisiting Configuration-Invariant Multi-Camera 3D Object Detection](coin3d_revisiting_configuration-invariant_multi-camera_3d_object_detection.md)
+- [TT-Occ: Test-Time 3D Occupancy Prediction](test-time_3d_occupancy_prediction.md)
+- [Learning Geometric and Photometric Features from Panoramic LiDAR Scans for Outdoor Place Categorization](learning_geometric_and_photometric_features_from_p.md)
+
+<!-- RELATED:END -->

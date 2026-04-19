@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验规模小（2 个数据集、44 被试），统计检验仅 5min 段显著
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，数学推导完整，但作为 workshop paper 篇幅受限
 - 价值: ⭐⭐⭐⭐ 解决了跨通道数 EEG 域适应的实际问题，临床部署价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NOIR: Neural Operator Mapping for Implicit Representations](../../CVPR2025/medical_imaging/noir_neural_operator_mapping_for_implicit_representations.md)
+- [RadGPT: Constructing 3D Image-Text Tumor Datasets](../../ICCV2025/medical_imaging/radgpt_constructing_3d_image-text_tumor_datasets.md)
+- [EEG-Language Pretraining for Highly Label-Efficient Clinical Phenotyping](../../ICML2025/medical_imaging/eeg-language_pretraining_for_highly_label-efficient_clinical_phenotyping.md)
+- [MultiverSeg: Scalable Interactive Segmentation of Biomedical Imaging Datasets with In-Context Guidance](../../ICCV2025/medical_imaging/multiverseg_scalable_interactive_segmentation_of_biomedical_imaging_datasets_wit.md)
+- [Unmasking Biases and Reliability Concerns in Convolutional Neural Networks Analysis of Cancer Pathology Images](../../CVPR2025/medical_imaging/unmasking_biases_and_reliability_concerns_in_convolutional_neural_networks_analy.md)
+
+<!-- RELATED:END -->

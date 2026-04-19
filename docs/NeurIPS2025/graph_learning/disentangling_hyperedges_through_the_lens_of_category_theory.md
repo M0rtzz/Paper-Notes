@@ -138,3 +138,15 @@ $$\alpha_i^k = \sigma\left(\frac{h_{e_i}^k}{\|h_{e_i}^k\|_2} W_k \frac{\tilde{h}
 - 实验充分度: ⭐⭐⭐ 概念验证级别充实（6数据集+14 baseline+消融+泛化+敏感性），但应用领域单一
 - 写作质量: ⭐⭐⭐ 理论推导严谨但范畴论部分可读性受限、符号密度高
 - 价值: ⭐⭐⭐⭐ 为超图学习解耦提供了首个理论基础框架，功能上下文发现具有实际生物学意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Embodied Agents Meet Personalization: Investigating Challenges and Solutions Through the Lens of Memory Utilization](../../ICLR2026/graph_learning/embodied_agents_meet_personalization_investigating_challenges_and_solutions_thro.md)
+- [What Expressivity Theory Misses: Message Passing Complexity for GNNs](what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)
+- [Table as a Modality for Large Language Models](table_as_a_modality_for_large_language_models.md)
+- [Making Classic GNNs Strong Baselines Across Varying Homophily: A Smoothness-Generalization Perspective](making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)
+- [Relieving the Over-Aggregating Effect in Graph Transformers](relieving_the_over-aggregating_effect_in_graph_transformers.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ $$\text{MACs}(\theta) = \sum_{l=1}^{L}[D_{\text{MLP}}^{(l)} \cdot 2NE^2R^{(l)} +
 - **实验充分度**: ⭐⭐⭐⭐⭐ 13个数据集覆盖分类/分割/医学/遥感，消融全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式推导完整
 - **实用价值**: ⭐⭐⭐⭐⭐ 直接面向多设备部署场景，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Adaptation of Pre-Trained Vision Transformer Underpinned by Approximation Theory](efficient_adaptation_of_pre-trained_vision_transformer_underpinned_by_approximat.md)
+- [ViT-Linearizer: Distilling Quadratic Knowledge into Linear-Time Vision Models](vit-linearizer_distilling_quadratic_knowledge_into_linear-time_vision_models.md)
+- [BHViT: Binarized Hybrid Vision Transformer](../../CVPR2025/model_compression/bhvit_binarized_hybrid_vision_transformer.md)
+- [Context Guided Transformer Entropy Modeling for Video Compression](context_guided_transformer_entropy_modeling_for_video_compression.md)
+- [MixA-Q: Revisiting Activation Sparsity for Vision Transformers from a Mixed-Precision Quantization Perspective](mixa-q_revisiting_activation_sparsity_for_vision_transformers_from_a_mixed-preci.md)
+
+<!-- RELATED:END -->

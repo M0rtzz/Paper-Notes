@@ -116,3 +116,15 @@ tags:
 ## 补充说明
 - 序列级熔面积指标比单点熵更能捕捉推理过程中的不确定性动态，可作为 RL 训练中的辅助信号
 - 与过程奖励模型（PRM）结合可实现更精细的步骤级不确定性估计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TransMamba: A Sequence-Level Hybrid Transformer-Mamba Language Model](transmamba_a_sequence-level_hybrid_transformer-mamba_language_model.md)
+- [From Assumptions to Actions: Turning LLM Reasoning into Uncertainty-Aware Planning](../../ICLR2026/llm_nlp/from_assumptions_to_actions_turning_llm_reasoning_into_uncertainty-aware_plannin.md)
+- [Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
+- [Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
+- [Towards Harmonized Uncertainty Estimation for Large Language Models](../../ACL2025/llm_nlp/towards_harmonized_uncertainty_estimation_for_large_language_models.md)
+
+<!-- RELATED:END -->

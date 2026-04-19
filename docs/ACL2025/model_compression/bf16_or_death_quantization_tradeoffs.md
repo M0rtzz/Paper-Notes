@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 50 万次评估，覆盖学术/真实/文本/推理四维度，三种 GPU
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，发现明确，部署建议实用
 - 价值: ⭐⭐⭐⭐⭐ 对工业界量化部署决策有直接指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](moqae_mixed_precision_kv_cache.md)
+- [FlatQuant: Flatness Matters for LLM Quantization](../../ICML2025/model_compression/flatquant_flatness_matters_for_llm_quantization.md)
+- [Multi-View Encoders for Performance Prediction in LLM-Based Agentic Workflows](../../ICLR2026/model_compression/multi-view_encoders_for_performance_prediction_in_llm-based_agentic_workflows.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [Accurate KV Cache Quantization with Outlier Tokens Tracing](accurate_kv_cache_quantization_with_outlier_tokens_tracing.md)
+
+<!-- RELATED:END -->

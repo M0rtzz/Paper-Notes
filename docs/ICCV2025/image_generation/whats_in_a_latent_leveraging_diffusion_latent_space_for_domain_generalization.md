@@ -167,3 +167,15 @@ GUIDE 分两步：（1）用冻结的扩散模型提取特征并通过 K-Means++
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7 个数据集、6 种特征提取器、域 NMI + 类别 NMI 双维分析、多种训练策略消融
 - **写作质量**: ⭐⭐⭐⭐⭐ — 分析极其透彻，每个数据集的域偏移特性与特征空间优劣的对应关系清晰
 - **价值**: ⭐⭐⭐⭐ — 方法简单有效，但更大的价值在于对预训练特征空间的深入理解
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Space Imaging](../../CVPR2025/image_generation/latent_space_imaging.md)
+- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
+- [Latent Diffusion Models with Masked AutoEncoders](latent_diffusion_models_with_masked_autoencoders.md)
+- [Hessian Geometry of Latent Space in Generative Models](../../ICML2025/image_generation/hessian_geometry_of_latent_space_in_generative_models.md)
+- [Multimodal Latent Diffusion Model for Complex Sewing Pattern Generation](multimodal_latent_diffusion_model_for_complex_sewing_pattern_generation.md)
+
+<!-- RELATED:END -->

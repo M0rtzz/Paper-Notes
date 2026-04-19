@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四种场景全面验证+与多种基线对比，但缺乏新架构测试
 - 写作质量: ⭐⭐⭐⭐⭐ 理论定义严谨，可视化极其出色（Figure 2 是全文精华），行文流畅
 - 价值: ⭐⭐⭐⭐⭐ 对扩散模型安全和隐私保护有直接价值，零开销特性使其高度可部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Studying Classifier(-Free) Guidance From A Classifier-Centric Perspective](../../AAAI2026/image_generation/studying_classifier-free_guidance_from_a_classifier-centric_perspective.md)
+- [TeEFusion: Blending Text Embeddings to Distill Classifier-Free Guidance](../../ICCV2025/image_generation/teefusion_blending_text_embeddings_to_distill_classifier-free_guidance.md)
+- [Towards a Golden Classifier-Free Guidance Path via Foresight Fixed Point Iterations](../../NeurIPS2025/image_generation/towards_a_golden_classifier-free_guidance_path_via_foresight_fixed_point_iterati.md)
+- [DICE: Distilling Classifier-Free Guidance into Text Embeddings](../../AAAI2026/image_generation/dice_distilling_classifier-free_guidance_into_text_embedding.md)
+- [CFG-Ctrl: Control-Based Classifier-Free Diffusion Guidance](../../CVPR2026/image_generation/cfg-ctrl_control-based_classifier-free_diffusion_guidance.md)
+
+<!-- RELATED:END -->

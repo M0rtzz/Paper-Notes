@@ -177,3 +177,15 @@ $$\sqrt{T}(\hat{\theta}_T - \theta) \xrightarrow{d} \mathcal{N}(0, V)$$
 - **实验充分度**: ⭐⭐⭐⭐ — 4 个真实社会科学任务 × 2 种回归 × 多种基线 × 多种 LLM，但任务类型偏窄
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论部分推导清晰，直觉解释到位，"残差预测残差"的核心洞察表达精准
 - **价值**: ⭐⭐⭐⭐ — 为 LLM 合成数据在严肃统计分析中的使用提供了理论基础和实用方法，前瞻性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Language Models as Synthetic Data Generators](../../ACL2025/llm_nlp/evaluating_lms_synthetic_data_gen.md)
+- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](../../ACL2025/llm_nlp/difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
+- [Wider or Deeper: Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search](wider_or_deeper_scaling_llm_inference-time_compute_with_adaptive_branching_tree_.md)
+- [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](../../ACL2025/llm_nlp/astute_rag_knowledge_conflicts.md)
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](../../ACL2025/llm_nlp/nudging_inference_time_alignment.md)
+
+<!-- RELATED:END -->

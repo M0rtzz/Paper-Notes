@@ -147,3 +147,15 @@ $$\mathcal{L}_{3D} = \sum_{i=1}^{N} C_{i,1} \| \bar{X}_{i,1} - X_{i,1} \|_2 - \a
 - **实验充分度**: ⭐⭐⭐⭐ — 仿真+真实数据集评估全面，消融实验覆盖视图数和SNR，但50S数据集表现需要更多分析
 - **写作质量**: ⭐⭐⭐⭐ — 方法阐述清晰，从预备知识到方法的过渡自然，表格数据详实
 - **对我的价值**: ⭐⭐⭐ — 跨领域迁移的方法论有启发，但cryo-EM距我的研究方向较远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction](neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)
+- [GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule](gdkvm_echocardiography_video_segmentation_via_spatiotemporal_key-value_memory_wi.md)
+- [Controllable Latent Space Augmentation for Digital Pathology](controllable_latent_space_augmentation_for_digital_pathology.md)
+- [MultiverSeg: Scalable Interactive Segmentation of Biomedical Imaging Datasets with In-Context Guidance](multiverseg_scalable_interactive_segmentation_of_biomedical_imaging_datasets_wit.md)
+- [Semi-supervised Deep Transfer for Regression without Domain Alignment](semi-supervised_deep_transfer_for_regression_without_domain_alignment.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ MagicEraser 在三个数据集上 PSNR 指标大幅领先，OpenImages 上超过
 - **技术深度**: ⭐⭐⭐⭐ — 多阶段协同设计完整，每个组件有明确动机
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个数据集 + 商业产品对比 + 完整消融
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，与传统修复的区别阐述到位
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZipLoRA: Any Subject in Any Style by Effectively Merging LoRAs](ziplora_any_subject_in_any_style_by_effectively_merging_loras.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
+- [NeuSDFusion: A Spatial-Aware Generative Model for 3D Shape Completion, Reconstruction, and Generation](neusdfusion_a_spatial-aware_generative_model_for_3d_shape_completion_reconstruct.md)
+- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
+
+<!-- RELATED:END -->

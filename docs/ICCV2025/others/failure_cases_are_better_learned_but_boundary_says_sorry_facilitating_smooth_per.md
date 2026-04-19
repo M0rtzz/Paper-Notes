@@ -130,3 +130,15 @@ RPAT++ vs 12 个 SOTA 方法（PreActResNet-18）：
 - 实验充分度: ⭐⭐⭐⭐ 3 个数据集、3 种架构、4 个基线、12 个 SOTA、两种攻击范数
 - 写作质量: ⭐⭐⭐⭐⭐ 故事讲述极其流畅，从发现→分析→解决的逻辑链完美
 - 价值: ⭐⭐⭐⭐ 对 AT 社区有重要启发，且方法实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Complexity-Faithfulness Trade-off of Gradient-Based Explanations](on_the_complexity-faithfulness_trade-off_of_gradient-based_explanations.md)
+- [IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness](../../CVPR2026/others/irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a.md)
+- [FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases](fixtalk_taming_identity_leakage_for_high-quality_talking_head_generation_in_extr.md)
+- [Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](../../ICML2025/others/near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+- [IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization](iap_invisible_adversarial_patch_attack_through_perceptibility-aware_localization.md)
+
+<!-- RELATED:END -->

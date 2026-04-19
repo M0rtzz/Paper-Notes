@@ -182,3 +182,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ (CodeSearchNet+POJ104+BigCloneBench+CoIR，消融充分)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，图表直观，论证严密)
 - 价值: ⭐⭐⭐⭐⭐ (实际部署价值高，开源模型+数据集贡献大)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisit Self-Debugging with Self-Generated Tests for Code Generation](../../ACL2025/code_intelligence/revisit_self-debugging_with_self-generated_tests_for_code_generation.md)
+- [A Self-Improving Coding Agent](../../NeurIPS2025/code_intelligence/a_selfimproving_coding_agent.md)
+- [MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction](../../CVPR2026/code_intelligence/mm-recoder_advancing_chart-to-code_generation_with_reinforcement_learning_and_se.md)
+- [CodeDPO: Aligning Code Models with Self Generated and Verified Source Code](../../ACL2025/code_intelligence/codedpo_code_alignment.md)
+- [DiffBench Meets DiffAgent: End-to-End LLM-Driven Diffusion Acceleration Code Generation](diffbench_meets_diffagent_end-to-end_llm-driven_diffusion_ac.md)
+
+<!-- RELATED:END -->

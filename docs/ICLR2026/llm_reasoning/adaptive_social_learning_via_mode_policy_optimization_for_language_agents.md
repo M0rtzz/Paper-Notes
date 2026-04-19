@@ -116,3 +116,15 @@ ASL 分三步：(1) 设计四种推理模式（M1-M4，从简到复杂）；(2) 
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多基准、消融充分、人工评估、OOD 验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但公式较多偏密集
 - 价值: ⭐⭐⭐⭐ 自适应推理深度的思想有广泛适用性，社交智能方向的重要工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
+- [FastGRPO: Accelerating Policy Optimization via Concurrency-aware Speculative Decoding and Online Draft Learning](fastgrpo_accelerating_policy_optimization_via_concurrency-aware_speculative_deco.md)
+- [Estimating the Empowerment of Language Model Agents](estimating_the_empowerment_of_language_model_agents.md)
+- [Agentified Assessment of Logical Reasoning Agents](agentified_assessment_of_logical_reasoning_agents.md)
+- [ReForm: Reflective Autoformalization with Prospective Bounded Sequence Optimization](reform_reflective_autoformalization_with_prospective_bounded_sequence_optimizati.md)
+
+<!-- RELATED:END -->

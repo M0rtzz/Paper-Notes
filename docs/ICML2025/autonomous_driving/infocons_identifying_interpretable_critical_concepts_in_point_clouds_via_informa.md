@@ -126,3 +126,15 @@ $$\mathcal{L} = \mathcal{L}_{CE}(q(y|\hat{z}), y) + \beta \cdot D_{KL}(\hat{z} \
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个模型、3 个数据集、2 个下游应用、定性定量全面对比
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入透彻，Feature Analysis 部分对失败模式的诊断尤为出色
 - 价值: ⭐⭐⭐⭐ 对自动驾驶等安全关键场景的模型诊断有实际价值，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Dynamic Scenes in Egocentric 4D Point Clouds](../../AAAI2026/autonomous_driving/understanding_dynamic_scenes_in_ego_centric_4d_point_clouds.md)
+- [Robust 3D Object Detection using Probabilistic Point Clouds from Single-Photon LiDARs](../../ICCV2025/autonomous_driving/robust_3d_object_detection_using_probabilistic_point_clouds_from_single-photon_l.md)
+- [SFPNet: Sparse Focal Point Network for Semantic Segmentation on General LiDAR Point Clouds](../../ECCV2024/autonomous_driving/sfpnet_sparse_focal_point_network_for_semantic_segmentation_on_general_lidar_poi.md)
+- [CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking](../../AAAI2026/autonomous_driving/comptrack_information_bottleneckguided_lowrank_dynamic_token_compres.md)
+- [BuildAnyPoint: 3D Building Structured Abstraction from Diverse Point Clouds](../../CVPR2026/autonomous_driving/buildanypoint_3d_building_structured_abstraction_from_diverse_point_clouds.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ $$\mathcal{L}_{tunable} = (1-\beta_{\tilde{t}_2}) \cdot \mathcal{L}_{zero} + \be
 
 ## 评分 ⭐⭐⭐⭐
 创新性强（首个强度可调的 3D 风格迁移范式），实验全面，定量和用户研究均大幅领先。跨视图风格对齐设计精巧。但部分设计选择（量化级别、过滤比例）缺乏充分论证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+- [StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting](stochasticsplats_stochastic_rasterization_for_sorting-free_3d_gaussian_splatting.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+- [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+
+<!-- RELATED:END -->

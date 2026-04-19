@@ -135,3 +135,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaIRv2: Attentive State Space Restoration](mambairv2_attentive_state_space_restoration.md)
+- [Detail-Preserving Latent Diffusion for Stable Shadow Removal](detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
+- [PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining](../../ICCV2025/image_restoration/pre-mamba_a_4d_state_space_model_for_ultra-high-frequent_event_camera_deraining.md)
+- [Complexity Experts are Task-Discriminative Learners for Any Image Restoration](complexity_experts_are_task-discriminative_learners_for_any_image_restoration.md)
+- [MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration](../../NeurIPS2025/image_restoration/modem_a_morton-order_degradation_estimation_mechanism_for_adverse_weather_image_.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ Charades-STA: R1@0.5 = **48.1%**(ViT), ActivityNet: R1@0.5 = **30.5%**。
 - 实验充分度: ⭐⭐⭐⭐ 多backbone、消融充分，但数据集覆盖可更广
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述完整
 - 价值: ⭐⭐⭐⭐ 为TSGV领域提供了新的训练范式参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuidedQuant: Large Language Model Quantization via Exploiting End Loss Guidance](../../ICML2025/model_compression/guidedquant_large_language_model_quantization_via_exploiting_end_loss_guidance.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [Grounding and Enhancing Informativeness and Utility in Dataset Distillation](../../ICLR2026/model_compression/grounding_and_enhancing_informativeness_and_utility_in_dataset_distillation.md)
+- [Partial Forward Blocking: A Novel Data Pruning Paradigm for Lossless Training Acceleration](../../ICCV2025/model_compression/partial_forward_blocking_a_novel_data_pruning_paradigm_for_lossless_training_acc.md)
+- [Critical Patch-Aware Sparse Prompting with Decoupled Training for Continual Learning on the Edge](critical_patch-aware_sparse_prompting_with_decoupled_training_for_continual_lear.md)
+
+<!-- RELATED:END -->

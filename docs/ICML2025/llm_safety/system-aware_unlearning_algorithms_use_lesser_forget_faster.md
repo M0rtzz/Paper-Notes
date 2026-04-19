@@ -146,3 +146,15 @@ $$x_t^\top A_{t-1}^{-1} x_t > T^{-\kappa}$$
 - 实验充分度: ⭐⭐⭐ — 实验仅限线性分类，规模和场景有限
 - 写作质量: ⭐⭐⭐⭐ — 理论论述清晰，定义→框架→算法→理论→实验层层递进
 - 价值: ⭐⭐⭐⭐ — 为机器遗忘提供了新的理论范式，有望推动更实用的遗忘算法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning](../../ACL2025/llm_safety/answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md)
+- [Designing to Forget: Deep Semi-parametric Models for Unlearning](../../CVPR2026/llm_safety/designing_to_forget_deep_semi-parametric_models_for_unlearning.md)
+- [Forgetting Through Transforming: Enabling Federated Unlearning via Class-Aware Representation Transformation](../../ICCV2025/llm_safety/forgetting_through_transforming_enabling_federated_unlearning_via_class-aware_re.md)
+- [NegMerge: Sign-Consensual Weight Merging for Machine Unlearning](negmerge_sign-consensual_weight_merging_for_machine_unlearning.md)
+- [Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](../../ACL2025/llm_safety/which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)
+
+<!-- RELATED:END -->

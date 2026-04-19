@@ -107,3 +107,15 @@ tags:
 - 实验充分度: 8/10 — 多模型多方法多维度评估，但缺乏防御实验
 - 写作质量: 8/10 — 结构清晰，问题定义严谨
 - 价值: 8/10 — 对开源 LLM 安全具有重要警示和实践意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inoculation Prompting: Eliciting Traits from LLMs during Training Can Suppress Them at Test-Time](../../ICLR2026/ai_safety/inoculation_prompting_eliciting_traits_from_llms_during_training_can_suppress_th.md)
+- [Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs](../../ICML2025/ai_safety/emergent_misalignment_narrow_finetuning_can_produce_broadly_misaligned_llms.md)
+- [Editing Physiological Signals in Videos Using Latent Representations](../../CVPR2026/ai_safety/editing_physiological_signals_in_videos_using_latent_representations.md)
+- [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](../../NeurIPS2025/ai_safety/virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
+- [The Confidence Trap: Gender Bias and Predictive Certainty in LLMs](the_confidence_trap_gender_bias_and_predictive_certainty_in_llms.md)
+
+<!-- RELATED:END -->

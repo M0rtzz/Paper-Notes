@@ -124,3 +124,15 @@ BaSIC 将 NIC 的计算可扩展性问题分解为两个贝叶斯网络结构学
 - 实验充分度: ⭐⭐⭐ 消融实验较完整，但主实验的数据集和对比方法可以更丰富
 - 写作质量: ⭐⭐⭐⭐ 数学建模清晰，两个子问题的分解逻辑通顺
 - 价值: ⭐⭐⭐⭐ 全计算可扩展 NIC 对实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Einstein Fields: A Neural Perspective To Computational General Relativity](../../ICLR2026/model_compression/einstein_fields_a_neural_perspective_to_computational_general_relativity.md)
+- [Bidirectional Stereo Image Compression with Cross-Dimensional Entropy Model](bidirectional_stereo_image_compression_with_cross-dimensional_entropy_model.md)
+- [Basic Reading Distillation](../../ACL2025/model_compression/basic_reading_distillation.md)
+- [Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [ELSE: Efficient Deep Neural Network Inference through Line-based Sparsity Exploration](else_efficient_deep_neural_network_inference_through_line-based_sparsity_explora.md)
+
+<!-- RELATED:END -->

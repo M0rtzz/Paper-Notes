@@ -132,3 +132,15 @@ TabFact benchmark（小测试集，~2k 条事实-表对）的准确率对比：
 ⭐⭐⭐⭐
 
 系统设计精良——Source-Agnostic + 跨库跨表 + SQL 证据的组合在事实验证领域是首创。Agents-as-Tools 的架构设计干净务实，真实案例极具说服力。在 TabFact 上的 SOTA 结果令人信服。主要不足是 benchmark 未能充分展示系统的核心优势（跨库跨表），且部署成本较高。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FinRpt: Dataset, Evaluation System and LLM-based Multi-agent Framework for Equity Research Report Generation](finrpt_dataset_evaluation_system_and_llm-based_multi-agent_framework_for_equity_.md)
+- [Real-Time Trust Verification for Safe Agentic Actions Using TrustBench](real-time_trust_verification_for_safe_agentic_actions_using_trustbench.md)
+- [Parallelism Meets Adaptiveness: Scalable Documents Understanding in Multi-Agent LLM Systems](parallelism_meets_adaptiveness_scalable_documents_understanding_in_multi-agent_l.md)
+- [Think, Then Verify: A Hypothesis-Verification Multi-Agent Framework for Long Video Understanding](../../CVPR2026/llm_agent/think_then_verify_a_hypothesis-verification_multi-agent_framework_for_long_video.md)
+- [AquaSentinel: Next-Generation AI System Integrating Sensor Networks for Urban Underground Water Pipeline Anomaly Detection via Collaborative MoE-LLM Agent Architecture](aquasentinel_next-generation_ai_system_integrating_sensor_ne.md)
+
+<!-- RELATED:END -->

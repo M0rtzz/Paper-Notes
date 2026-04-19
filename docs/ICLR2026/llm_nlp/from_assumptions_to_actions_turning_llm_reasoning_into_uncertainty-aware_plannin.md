@@ -159,3 +159,15 @@ PCE 是纯推理时框架，无需训练。默认超参数：$D=3, \alpha=1, \be
 - 实验充分度: ⭐⭐⭐⭐⭐ — 双 benchmark、三骨干、组件消融、扩展分析、用户研究全覆盖
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，方法动机充分，与相关工作的区分精准
 - 价值: ⭐⭐⭐⭐⭐ — 实用性强（通信减少80%+），通用性好（多骨干一致提升），洞察深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](../../ACL2025/llm_nlp/plangenllms_planning_survey.md)
+- [Uncertainty Under the Curve: A Sequence-Level Entropy Area Metric for Reasoning LLMs](../../AAAI2026/llm_nlp/uncertainty_under_the_curve_a_sequence-level_entropy_area_metric_for_reasoning_l.md)
+- [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](../../CVPR2025/llm_nlp/bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
+- [Revisiting Common Assumptions about Arabic Dialects in NLP](../../ACL2025/llm_nlp/arabic_dialects_assumptions_revisited.md)
+- [Compositional-ARC: Assessing Systematic Generalization in Abstract Spatial Reasoning](compositional-arc_assessing_systematic_generalization_in_abstract_spatial_reason.md)
+
+<!-- RELATED:END -->

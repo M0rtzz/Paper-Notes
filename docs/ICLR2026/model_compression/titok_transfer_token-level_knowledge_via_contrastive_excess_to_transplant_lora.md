@@ -137,3 +137,15 @@ $$\mathcal{L}_{\text{TiTok}} = \sum \sum I_{k\%}(y_i) \cdot (-\log P_{\mathcal{M
 | 实验充分性 | ★★★★☆ |
 | 实用价值 | ★★★★☆ |
 | 写作质量 | ★★★★☆ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fuse Before Transfer: Knowledge Fusion for Heterogeneous Distillation](../../ICCV2025/model_compression/fuse_before_transfer_knowledge_fusion_for_heterogeneous_distillation.md)
+- [Token Distillation: Attention-Aware Input Embeddings for New Tokens](token_distillation_attention-aware_input_embeddings_for_new_tokens.md)
+- [AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution](amid_knowledge_distillation_for_llms_with_α-mixture_assistant_distribution.md)
+- [Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+- [Stress-Testing Alignment Audits with Prompt-Level Strategic Deception](stress-testing_alignment_audits_with_prompt-level_strategic_deception.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ DPT-Agent 由两个并行系统组成：(1) **System 1（快系统）**——FSM
 - 实验充分度: ⭐⭐⭐⭐⭐ 规则代理+真人实验+主观评估+消融+多模型对比
 - 写作质量: ⭐⭐⭐⭐ 动机分析数据驱动（Figure 2 的延迟-性能分析），框架图清晰
 - 价值: ⭐⭐⭐⭐⭐ 对实时人机协作和 LLM Agent 架构有重大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [EMULATE: A Multi-Agent Framework for Determining the Veracity of Atomic Claims by Emulating Human Actions](emulate_a_multi-agent_framework_for_determining_the_veracity_of_atomic_claims_by.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+- [OpenAgentSafety: A Comprehensive Framework for Evaluating Real-World AI Agent Safety](../../ICLR2026/llm_agent/openagentsafety_a_comprehensive_framework_for_evaluating_real-world_ai_agent_saf.md)
+- [Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)
+
+<!-- RELATED:END -->

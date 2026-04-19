@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型×多任务×多位置编码类型
 - 写作质量: ⭐⭐⭐⭐⭐ 可视化和分析清晰
 - 价值: ⭐⭐⭐⭐⭐ 对长上下文 LLM 有直接实用改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning](veracity_bias_llm_hidden_beliefs.md)
+- [On the Role of Hidden States of Modern Hopfield Network in Transformer](../../NeurIPS2025/llm_nlp/on_the_role_of_hidden_states_of_modern_hopfield_network_in_transformer.md)
+- [Computation Mechanism Behind LLM Position Generalization](computation_mechanism_behind_llm_position_generalization.md)
+- [AutoGUI: Scaling GUI Grounding with Automatic Functionality Annotations from LLMs](autogui_scaling_gui_grounding_with_automatic.md)
+- [Attention Speaks Volumes: Localizing and Mitigating Bias in Language Models](attention_speaks_volumes_localizing_and_mitigating_bias_in_language_models.md)
+
+<!-- RELATED:END -->

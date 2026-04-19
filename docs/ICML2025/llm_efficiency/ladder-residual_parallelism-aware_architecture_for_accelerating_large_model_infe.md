@@ -132,3 +132,15 @@ Ladder Residual 修改 Transformer 的残差连接方式：每个模块（Attent
 - 实验充分度: ⭐⭐⭐⭐⭐（覆盖 1B-405B 多种规模，从头训练+后训练适配两种场景）
 - 写作质量: ⭐⭐⭐⭐⭐（动机清晰，实验详尽，benchmark 设置合理）
 - 价值: ⭐⭐⭐⭐⭐（极高实用价值，适用于所有基于残差的模型）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](../../ICLR2026/llm_efficiency/semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
+- [Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
+- [LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](../../ICLR2026/llm_efficiency/lycheedecode_accelerating_long-context_llm_inference_via_hybrid-head_sparse_deco.md)
+- [Position: Theory of Mind Benchmarks are Broken for Large Language Models](position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
+- [Critical Batch Size Revisited: A Simple Empirical Approach to Large-Batch Language Model Training](../../NeurIPS2025/llm_efficiency/critical_batch_size_revisited_a_simple_empirical_approach_to_large-batch_languag.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ OphNet的构建分为三个阶段：(1) 数据收集与预处理——从YouTube
 - 实验充分度: ⭐⭐⭐⭐⭐ (四个任务全面评估，多种baseline对比)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，统计详实)
 - 价值: ⭐⭐⭐⭐⭐ (填补了眼科手术视频理解的重要数据空白，规模领先)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Omni-iEEG: A Large-Scale, Comprehensive iEEG Dataset and Benchmark for Epilepsy Research](../../ICLR2026/medical_imaging/omni-ieeg_a_large-scale_comprehensive_ieeg_dataset_and_benchmark_for_epilepsy_re.md)
+- [GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis](../../ICCV2025/medical_imaging/gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)
+- [THUNDER: Tile-level Histopathology image UNDERstanding benchmark](../../NeurIPS2025/medical_imaging/thunder_tile-level_histopathology_image_understanding_benchmark.md)
+- [MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding](../../CVPR2026/medical_imaging/medgrpo_multi-task_reinforcement_learning_for_heterogeneous_medical_video_unders.md)
+- [Rethinking Surgical Smoke: A Smoke-Type-Aware Laparoscopic Video Desmoking Method and Dataset](../../AAAI2026/medical_imaging/rethinking_surgical_smoke_a_smoke-type-aware_laparoscopic_video_desmoking_method.md)
+
+<!-- RELATED:END -->

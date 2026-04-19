@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个任务、详尽的消融（18 行对照），每个设计选择都有数据支撑
 - 写作质量: ⭐⭐⭐⭐ 方法讲解清晰，仿生动机吸引人，消融表格组织合理
 - 价值: ⭐⭐⭐⭐ 对区域级多模态理解有重要贡献，动态分辨率思路可推广到视频理解等领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks](hificl_high-fidelity_in-context_learning_for_multimodal_tasks.md)
+- [Mimic In-Context Learning for Multimodal Tasks](mimic_in-context_learning_for_multimodal_tasks.md)
+- [CLIPSym: Delving into Symmetry Detection with CLIP](../../ICCV2025/multimodal_vlm/clipsym_delving_into_symmetry_detection_with_clip.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](../../ACL2025/multimodal_vlm/multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [Efficient Quantification of Multimodal Interaction at Sample Level](../../ICML2025/multimodal_vlm/efficient_quantification_of_multimodal_interaction_at_sample_level.md)
+
+<!-- RELATED:END -->

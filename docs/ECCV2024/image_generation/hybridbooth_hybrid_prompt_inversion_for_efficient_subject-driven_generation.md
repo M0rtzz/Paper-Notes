@@ -186,3 +186,15 @@ $$\mathcal{L}_{\boldsymbol{M}} = \frac{1}{n}\sum_{i=1}^{n}\text{mean}(\boldsymbo
 - **实验充分度**: ★★★★☆ — 消融详尽，包含人脸和非人脸评估
 - **写作质量**: ★★★★☆ — 结构清楚，对比方法充分
 - **实用价值**: ★★★★★ — 仅 5 步迭代，兼容社区模型，落地门槛低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
+- [Soft Prompt Generation for Domain Generalization](soft_prompt_generation_for_domain_generalization.md)
+- [Prompting Future Driven Diffusion Model for Hand Motion Prediction](prompting_future_driven_diffusion_model_for_hand_motion_prediction.md)
+- [The Fabrication of Reality and Fantasy: Scene Generation with LLM-Assisted Prompt Interpretation](the_fabrication_of_reality_and_fantasy_scene_generation_with_llm-assisted_prompt.md)
+- [Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation](../../NeurIPS2025/image_generation/mind-the-glitch_visual_correspondence_for_detecting_inconsistencies_in_subject-d.md)
+
+<!-- RELATED:END -->

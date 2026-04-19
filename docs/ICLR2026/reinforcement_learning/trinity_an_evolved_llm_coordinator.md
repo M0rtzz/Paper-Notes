@@ -129,3 +129,15 @@ LiveCodeBench SOTA: **86.2% pass@1**（V1 train → V6 test）。
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个benchmark（4 in-dist + 4 zero-shot），全面的消融和理论分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精确，理论分析扎实，实验展示清晰
 - 价值: ⭐⭐⭐⭐⭐ LiveCodeBench SOTA，开创了超轻量coordination的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [References Improve LLM Alignment in Non-Verifiable Domains](references_improve_llm_alignment_in_non-verifiable_domains.md)
+- [How Far Can Unsupervised RLVR Scale LLM Training?](how_far_can_unsupervised_rlvr_scale_llm_training.md)
+- [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
+- [In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback](../../AAAI2026/reinforcement_learning/in-token_rationality_optimization_towards_accurate_and_concise_llm_reasoning_via.md)
+- [TowerMind: A Tower Defence Game Learning Environment and Benchmark for LLM as Agents](../../AAAI2026/reinforcement_learning/towermind_a_tower_defence_game_learning_environment_and_benchmark_for_llm_as_age.md)
+
+<!-- RELATED:END -->

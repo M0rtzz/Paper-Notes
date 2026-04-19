@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 大规模数据集+多模型对比+人类标注，受限于 abs-only 缺少消融细节
 - 写作质量: ⭐⭐⭐⭐ 问题表述清晰，Hivemind 隐喻精准
 - 价值: ⭐⭐⭐⭐⭐ NeurIPS Oral，数据集+发现对 AI safety 和 alignment 研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/signal_comm/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](../../ICML2025/signal_comm/sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
+- [Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](../../ICML2025/signal_comm/large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)
+- [Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)
+- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
+
+<!-- RELATED:END -->

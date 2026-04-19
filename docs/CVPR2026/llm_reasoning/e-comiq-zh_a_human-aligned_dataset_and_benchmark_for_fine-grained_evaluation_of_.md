@@ -126,3 +126,15 @@ SFT+GRPO两阶段训练优于单独任一阶段，Qwen2.5-VL-7B作为backbone比
 - 实验充分度: ⭐⭐⭐⭐⭐ — 对比全面（传统IQA/通用MLLM/专用评估器），消融清晰
 - 写作质量: ⭐⭐⭐⭐ — 问题-方案逻辑链清晰，图表信息量大
 - 价值: ⭐⭐⭐⭐ — 对电商AI生成内容质量控制有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection](../../CVPR2025/llm_reasoning/videoespresso_a_large-scale_chain-of-thought_dataset_for_fine-grained_video_reas.md)
+- [Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning](../../ICLR2026/llm_reasoning/fine-r1_make_multi-modal_llms_excel_in_fine-grained_visual_recognition_by_chain-.md)
+- [Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)
+- [EagleVision: A Dual-Stage Framework with BEV-grounding-based Chain-of-Thought for Spatial Intelligence](eaglevision_a_dual-stage_framework_with_bev-grounding-based_chain-of-thought_for.md)
+- [BLM-Guard: Explainable Multimodal Ad Moderation with Chain-of-Thought and Policy-Aligned Rewards](../../AAAI2026/llm_reasoning/blm-guard_explainable_multimodal_ad_moderation_with_chain-of.md)
+
+<!-- RELATED:END -->

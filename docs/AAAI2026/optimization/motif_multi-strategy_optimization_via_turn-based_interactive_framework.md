@@ -210,3 +210,15 @@ Innovation 新颖度最高但一致性最低；Learning 新颖度最低但一致
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3种框架、5种COP、详细消融和多样性分析
 - 写作质量: ⭐⭐⭐⭐ — 框架描述清晰，但公式较密集
 - 价值: ⭐⭐⭐⭐⭐ — 为 LLM 驱动的算法设计开辟多策略新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization](pareto-grid-guided_large_language_models_for_fast_and_high-quality_heuristics_de.md)
+- [Handling the Non-smooth Challenge in Tensor SVD: A Multi-objective Tensor Recovery Framework](../../ECCV2024/optimization/handling_the_non-smooth_challenge_in_tensor_svd_a_multi-objective_tensor_recover.md)
+- [Parametrized Multi-Agent Routing via Deep Attention Models](parametrized_multi-agent_routing_via_deep_attention_models.md)
+- [AutoOpt: A Dataset and a Unified Framework for Automating Optimization Problem Solving](../../NeurIPS2025/optimization/autoopt_a_dataset_and_a_unified_framework_for_automating_optimization_problem_so.md)
+- [MOBO-OSD: Batch Multi-Objective Bayesian Optimization via Orthogonal Search Directions](../../NeurIPS2025/optimization/mobo-osd_batch_multi-objective_bayesian_optimization_via_orthogonal_search_direc.md)
+
+<!-- RELATED:END -->

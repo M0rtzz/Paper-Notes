@@ -164,3 +164,15 @@ AGD20K-Seen上的模块消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ 图像+视频benchmark全面验证，12组消融实验详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，闭环流程阐述得当
 - 价值: ⭐⭐⭐⭐ 在所有指标上全面超越SOTA，闭环迁移思想具有推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blind2Sound: Self-Supervised Image Denoising without Residual Noise](blind2sound_self-supervised_image_denoising_without_residual_noise.md)
+- [Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise](../../CVPR2025/image_restoration/generalized_recorrupted-to-recorrupted_self-supervised_learning_beyond_gaussian_.md)
+- [TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation](../../ICML2025/image_restoration/timedart_a_diffusion_autoregressive_transformer_for_self-supervised_time_series_.md)
+- [MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](../../NeurIPS2025/image_restoration/moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
+- [Asymmetric Mask Scheme for Self-supervised Real Image Denoising](../../ECCV2024/image_restoration/asymmetric_mask_scheme_for_self-supervised_real_image_denoising.md)
+
+<!-- RELATED:END -->

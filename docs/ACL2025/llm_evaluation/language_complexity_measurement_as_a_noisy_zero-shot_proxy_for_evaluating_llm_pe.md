@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐ 样本量极小（N=6 模型），仅单语言，每任务单次运行
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，类比恰当，讨论到位
 - 价值: ⭐⭐⭐ 概念验证有趣但规模限制了说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Where Are We? Evaluating LLM Performance on African Languages](where_are_we_evaluating_llm_performance_on_african_languages.md)
+- [Predicting LLM Reasoning Performance with Small Proxy Model](../../ICLR2026/llm_evaluation/predicting_llm_reasoning_performance_with_small_proxy_model.md)
+- [Benchmarking Large Language Models for Zero-Shot and Few-Shot Phishing URL Detection](../../NeurIPS2025/llm_evaluation/benchmarking_large_language_models_for_zero-shot_and_few-shot_phishing_url_detec.md)
+- [A Conditional Probability Framework for Compositional Zero-shot Learning](../../ICCV2025/llm_evaluation/a_conditional_probability_framework_for_compositional_zerosh.md)
+- [AD-LLM: Benchmarking Large Language Models for Anomaly Detection](ad-llm_benchmarking_large_language_models_for_anomaly_detection.md)
+
+<!-- RELATED:END -->

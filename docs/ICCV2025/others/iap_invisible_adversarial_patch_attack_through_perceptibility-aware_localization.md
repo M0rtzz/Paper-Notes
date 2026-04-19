@@ -137,3 +137,15 @@ $$\delta_{t+1} = \delta_t - \eta \cdot \overline{\nabla_\delta} \mathcal{L}_T \o
 - 实验充分度: ⭐⭐⭐⭐⭐ （4 架构、2 数据集、6 防御、人类研究、黑盒、物理攻击）
 - 写作质量: ⭐⭐⭐⭐ （公式清晰，可视化出色）
 - 价值: ⭐⭐⭐⭐ （对安全研究社区有重要警示意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [C4D: 4D Made from 3D through Dual Correspondences](c4d_4d_made_from_3d_through_dual_correspondences.md)
+- [Sampling from Binary Quadratic Distributions via Stochastic Localization](../../ICML2025/others/sampling_from_binary_quadratic_distributions_via_stochastic_localization.md)
+- [NAPPure: Adversarial Purification for Robust Image Classification under Non-Additive Perturbations](nappure_adversarial_purification_for_robust_image_classification_under_non-addit.md)
+- [OrthoLoC: UAV 6-DoF Localization and Calibration Using Orthographic Geodata](../../NeurIPS2025/others/ortholoc_uav_6-dof_localization_and_calibration_using_orthographic_geodata.md)
+- [Optimal Welfare in Noncooperative Network Formation under Attack](../../AAAI2026/others/optimal_welfare_in_noncooperative_network_formation_under_attack.md)
+
+<!-- RELATED:END -->

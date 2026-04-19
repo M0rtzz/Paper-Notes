@@ -160,3 +160,15 @@ CRNet消融（SRD）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多数据集对比、详细消融、鲁棒性分析
 - **写作质量**: ⭐⭐⭐⭐ 物理分析深入，动机阐述清晰
 - **综合价值**: ⭐⭐⭐⭐ 为阴影去除提供了新的设计思路和SOTA基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangling and Integrating Relational and Sensory Information in Transformer Architectures](../../ICML2025/llm_evaluation/disentangling_and_integrating_relational_and_sensory_information_in_transformer_.md)
+- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+- [InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)
+- [BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](batclip_bimodal_online_test-time_adaptation_for_clip.md)
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+
+<!-- RELATED:END -->

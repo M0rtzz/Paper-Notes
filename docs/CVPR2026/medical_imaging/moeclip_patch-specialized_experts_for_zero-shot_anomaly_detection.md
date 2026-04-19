@@ -181,3 +181,15 @@ MoECLIP 图像级平均 AUROC 89.6%（+3.0%），AP 90.6%（+2.4%）。
 - 实验充分度: ⭐⭐⭐⭐⭐ 14个数据集（工业+医学）全面对比+消融+可视化+专家相似度量化，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述系统、可视化丰富
 - 价值: ⭐⭐⭐⭐ 对 ZSAD 和 MoE 功能冗余两个问题同时给出了优雅解法，可推广到其他 PEFT+MoE 场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+- [AA-CLIP: Enhancing Zero-Shot Anomaly Detection via Anomaly-Aware CLIP](../../CVPR2025/medical_imaging/aa-clip_enhancing_zero-shot_anomaly_detection_via_anomaly-aware_clip.md)
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [Dual Distillation for Few-Shot Anomaly Detection](../../ICLR2026/medical_imaging/dual_distillation_for_few-shot_anomaly_detection.md)
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversion-based_reconstruction-free_anomaly_detection_with_diffusion_model.md)
+
+<!-- RELATED:END -->

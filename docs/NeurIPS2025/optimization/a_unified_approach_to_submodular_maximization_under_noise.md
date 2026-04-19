@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作，理论结果紧致，但缺乏实验验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，动机自然，技术呈现严谨，证明思路易于跟随
 - 价值: ⭐⭐⭐⭐ 对子模优化理论社区有重要意义，统一了分散的结果并开辟了非单调的新领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Two-Stage Submodular Maximization](online_two-stage_submodular_maximization.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [Second-Order Optimization Under Heavy-Tailed Noise: Hessian Clipping and Sample Complexity](second-order_optimization_under_heavy-tailed_noise_hessian_clipping_and_sample_c.md)
+- [Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives](effective_policy_learning_for_multi-agent_online_coordination_beyond_submodular_.md)
+- [A Unified View on Learning Unnormalized Distributions via Noise-Contrastive Estimation](../../ICML2025/optimization/a_unified_view_on_learning_unnormalized_distributions_via_noise-contrastive_esti.md)
+
+<!-- RELATED:END -->

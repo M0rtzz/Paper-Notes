@@ -157,3 +157,15 @@ FastDINOv2 分为两个训练阶段：
 - 技术深度：★★★☆☆（方法简洁有效，但理论分析较浅，主要依赖经验观察）
 - 实验充分度：★★★★☆（多数据集、多任务、详细频率分析，但限于 ViT-B 规模）
 - 实用价值：★★★★★（即插即用，显著节省训练成本，对资源受限团队价值大）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Whitening Improves Sparse Autoencoder Learning](../../AAAI2026/interpretability/data_whitening_improves_sparse_autoencoder_learning.md)
+- [Adaptive Evidential Learning for Temporal-Semantic Robustness in Moment Retrieval](../../AAAI2026/interpretability/adaptive_evidential_learning_for_temporal-semantic_robustnes.md)
+- [Tokenizing Single-Channel EEG with Time-Frequency Motif Learning](../../ICLR2026/interpretability/tokenizing_single-channel_eeg_with_time-frequency_motif_learning.md)
+- [Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+
+<!-- RELATED:END -->

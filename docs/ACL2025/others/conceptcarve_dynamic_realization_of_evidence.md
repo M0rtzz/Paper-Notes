@@ -286,3 +286,15 @@ ConceptCarve 不需要任何训练或微调。它的核心优势在于：
 - **实验充分度**: 7/10 — 数据集较大且多样，但仅限 Reddit 平台；消融实验基本充分
 - **写作质量**: 8/10 — 问题定义清晰，Figure 1-3 的说明力强，整体结构良好
 - **价值**: 7/10 — 对社会科学和观点挖掘有实际应用价值，概念树的可解释性是重要卖点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [Dynamic Label Name Refinement for Few-Shot Dialogue Intent Classification](dynamic_label_name_refinement_for_few-shot_dialogue_intent_classification.md)
+- [Enhancing Hyperbole and Metaphor Detection with Their Bidirectional Dynamic Interaction and Emotion Knowledge](hyperbole_metaphor_detection.md)
+- [Contextual Dynamic Pricing with Heterogeneous Buyers](../../NeurIPS2025/others/contextual_dynamic_pricing_with_heterogeneous_buyers.md)
+- [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
+
+<!-- RELATED:END -->

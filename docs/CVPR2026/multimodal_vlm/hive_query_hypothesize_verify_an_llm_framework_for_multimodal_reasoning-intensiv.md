@@ -138,3 +138,15 @@ HIVE 在 29 个领域中的 28 个取得最佳成绩。表现最强的领域：G
 - 实验充分度: ⭐⭐⭐⭐⭐ 29 个领域的全面评估 + 5 个基础检索器的即插即用验证 + 组件消融 + 超参敏感性分析，非常充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验分析深入，领域级别的分析提供了有价值的洞察
 - 价值: ⭐⭐⭐⭐⭐ 无训练的即插即用设计实用性极高，14.1 点的绝对提升在检索领域是非常显著的
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Explore with Long-term Memory: A Benchmark and Multimodal LLM-based Reinforcement Learning Framework for Embodied Exploration](explore_with_long-term_memory_a_benchmark_and_multimodal_llm-based_reinforcement.md)
+- [Retrv-R1: A Reasoning-Driven MLLM Framework for Universal and Efficient Multimodal Retrieval](../../NeurIPS2025/multimodal_vlm/retrv-r1_a_reasoning-driven_mllm_framework_for_universal_and_efficient_multimoda.md)
+- [Reasoning-Driven Multimodal LLM for Domain Generalization](../../ICLR2026/multimodal_vlm/reasoning-driven_multimodal_llm_for_domain_generalization.md)
+- [TIGeR: A Unified Framework for Time, Images and Geo-location Retrieval](tiger_a_unified_framework_for_time_images_and_geo-location_retrieval.md)
+- [From Intuition to Investigation: A Tool-Augmented Reasoning MLLM Framework for Generalizable Face Anti-Spoofing](from_intuition_to_investigation_a_tool-augmented_reasoning_mllm_framework_for_ge.md)
+
+<!-- RELATED:END -->

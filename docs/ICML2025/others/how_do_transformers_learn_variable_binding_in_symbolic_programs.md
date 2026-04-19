@@ -114,3 +114,15 @@ Variable Scope网站提供所有实验的交互式可视化。
 
 ### “建立而非替代”的发现
 阶段3的系统性解引用机制不是替换了阶段2的启发式，而是在其之上叠加。这挑战了传统的phase transition叙事。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Variable Estimation in Bayesian Black-Litterman Models](latent_variable_estimation_in_bayesian_black-litterman_models.md)
+- [DSP: Dynamic Sequence Parallelism for Multi-Dimensional Transformers](dsp_dynamic_sequence_parallelism_for_multi-dimensional_transformers.md)
+- [Residual Matrix Transformers: Scaling the Size of the Residual Stream](residual_matrix_transformers_scaling_the_size_of_the_residual_stream.md)
+- [Do not Abstain! Identify and Solve the Uncertainty](../../ACL2025/others/do_not_abstain_identify_and_solve_the_uncertainty.md)
+- [CADReview: Automatically Reviewing CAD Programs with Error Detection and Correction](../../ACL2025/others/cadreview_automatically_reviewing_cad_programs_with_error_detection_and_correcti.md)
+
+<!-- RELATED:END -->

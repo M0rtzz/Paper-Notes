@@ -125,3 +125,15 @@ REOrder 是一个两阶段框架：
 - 实验充分度: ⭐⭐⭐⭐ 四种模型、两个数据集、六种排列、多种消融全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析严谨，行文流畅，图表设计精美
 - 价值: ⭐⭐⭐⭐ 对长序列视觉模型的社区有即时价值，但需扩展到更多任务和架构
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dense Backpropagation Improves Training for Sparse Mixture-of-Experts](dense_backpropagation_improves_training_for_sparse_mixture-of-experts.md)
+- [ViT-Linearizer: Distilling Quadratic Knowledge into Linear-Time Vision Models](../../ICCV2025/model_compression/vit-linearizer_distilling_quadratic_knowledge_into_linear-time_vision_models.md)
+- [Isomorphic Pruning for Vision Models](../../ECCV2024/model_compression/isomorphic_pruning_for_vision_models.md)
+- [Vision-centric Token Compression in Large Language Model](vision-centric_token_compression_in_large_language_model.md)
+- [Learning to Better Search with Language Models via Guided Reinforced Self-Training](learning_to_better_search_with_language_models_via_guided_reinforced_self-traini.md)
+
+<!-- RELATED:END -->

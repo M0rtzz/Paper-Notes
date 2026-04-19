@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — MLP+GPT、SGD+Adam、CE+MSE、SP+μP 全面交叉验证，理论预测与实验高度一致
 - 写作质量: ⭐⭐⭐⭐ — 逻辑严谨，主要结论清晰表述；但数学符号密集，对非理论背景读者有一定门槛
 - 价值: ⭐⭐⭐⭐⭐ — 解决了无穷宽理论与实践的长期矛盾，对大规模模型训练的超参数选择有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMRS: Advocating a Unified Reporting Standard for Surrogate Models in the Artificial Intelligence Era](smrs_advocating_a_unified_reporting_standard_for_surrogate_models_in_the_artific.md)
+- [Cover Learning for Large-Scale Topology Representation](../../ICML2025/others/cover_learning_for_large-scale_topology_representation.md)
+- [Statistical Inference Under Performativity](statistical_inference_under_performativity.md)
+- [Coresets for Clustering Under Stochastic Noise](coresets_for_clustering_under_stochastic_noise.md)
+- [EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination](an_evidence-based_post-hoc_adjustment_framework_for_anomaly_detection_under_data.md)
+
+<!-- RELATED:END -->

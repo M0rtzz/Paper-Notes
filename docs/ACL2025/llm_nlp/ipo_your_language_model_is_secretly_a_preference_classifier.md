@@ -120,3 +120,15 @@ DPO训练后的下游任务效果：
 - 实验充分度: ⭐⭐⭐⭐ 模型覆盖广泛，但DPO实验规模偏小
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据展示充分
 - 价值: ⭐⭐⭐⭐ 提供了一种低成本的偏好获取方案，有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
+- [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
+- [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](gapo_multi_objective_alignment.md)
+- [Are Your LLMs Capable of Stable Reasoning?](are_your_llms_capable_of_stable_reasoning.md)
+- [Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up](reversal_of_thought_enhancing_large_language.md)
+
+<!-- RELATED:END -->

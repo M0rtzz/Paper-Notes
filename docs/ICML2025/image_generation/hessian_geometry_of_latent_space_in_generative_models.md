@@ -140,3 +140,15 @@ $$L[\gamma(t)] = \int_0^1 \sqrt{\dot{\gamma}(t)^T g_F(\gamma(t)) \dot{\gamma}(t)
 - 实验充分度: ⭐⭐⭐⭐（精确可解模型验证充分，但扩散模型实验仅限 SD1.5 和 2D 切片）
 - 写作质量: ⭐⭐⭐⭐（理论推导清晰，但 LaTeX 排版中符号较密集）
 - 价值: ⭐⭐⭐⭐（为理解生成模型潜空间提供新视角，但实用性受维度限制）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space](dctdiff_intriguing_properties_of_image_generative_modeling_in_the_dct_space.md)
+- [Latent Space Imaging](../../CVPR2025/image_generation/latent_space_imaging.md)
+- [Reimagining Parameter Space Exploration with Diffusion Models](reimagining_parameter_space_exploration_with_diffusion_models.md)
+- [ETTA: Elucidating the Design Space of Text-to-Audio Models](etta_elucidating_the_design_space_of_text-to-audio_models.md)
+- [Stabilizing Self-Consuming Diffusion Models with Latent Space Filtering](../../AAAI2026/image_generation/stabilizing_self-consuming_diffusion_models_with_latent_space_filtering.md)
+
+<!-- RELATED:END -->

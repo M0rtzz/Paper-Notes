@@ -119,3 +119,15 @@ $$\mathcal{L}_{\text{adv}} = \underbrace{\mathbb{E}[\log P_\theta(\hat{\mathbf{y
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4个模型规模、7种攻击方法、多维度消融、成本分析，非常全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 可视化出色，ALO-ASR指标设计合理，审计部分值得社区关注
 - **价值**: ⭐⭐⭐⭐⭐ 为LLM对抗训练设立了新的强基线，对安全研究社区有直接影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distributional Adversarial Attacks and Training in Deep Hedging](distributional_adversarial_attacks_and_training_in_deep_hedging.md)
+- [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [Identifying and Understanding Cross-Class Features in Adversarial Training](../../ICML2025/ai_safety/identifying_and_understanding_cross-class_features_in_adversarial_training.md)
+- [CAVGAN: Unifying Jailbreak and Defense of LLMs via Generative Adversarial Attacks](../../ACL2025/ai_safety/cavgan_unifying_jailbreak_and_defense_of_llms_via_generative_adversarial_attacks.md)
+
+<!-- RELATED:END -->

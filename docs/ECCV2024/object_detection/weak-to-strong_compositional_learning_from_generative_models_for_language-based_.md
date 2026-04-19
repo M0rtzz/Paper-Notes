@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融极其详尽，数据规模、伪标框策略、描述长度等多维度分析
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，每个组件的动机和效果都有对应实验支撑
 - 价值: ⭐⭐⭐⭐ 模型无关框架，对语言引导检测领域有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Multi-task Learning for Few-Shot Object Detection](adaptive_multi-task_learning_for_few-shot_object_detection.md)
+- [Can OOD Object Detectors Learn from Foundation Models?](can_ood_object_detectors_learn_from_foundation_models.md)
+- [LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction](lami-detr_open-vocabulary_detection_with_language_model_instruction.md)
+- [SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding](shine_saliency-aware_hierarchical_negative_ranking_for_compositional_temporal_gr.md)
+- [MutDet: Mutually Optimizing Pre-training for Remote Sensing Object Detection](mutdet_mutually_optimizing_pre-training_for_remote_sensing_object_detection.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ GSO T2T 基准（泛化性测试）:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个基准测试+用户研究+完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、图示直观、问题阐述到位
 - 价值: ⭐⭐⭐⭐ 为 3D 纹理生成提供了工业可用的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Material Anything: Generating Materials for Any 3D Object via Diffusion](material_anything_generating_materials_for_any_3d_object_via_diffusion.md)
+- [3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement](3denhancer_consistent_multi-view_diffusion_for_3d_enhancement.md)
+- [MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model](mvgenmaster_scaling_multi-view_generation_from_any_image_via_3d_priors_enhanced_.md)
+- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
+- [DiffPortrait360: Consistent Portrait Diffusion for 360° View Synthesis](diffportrait360_consistent_portrait_diffusion_for_360_view_synthesis.md)
+
+<!-- RELATED:END -->

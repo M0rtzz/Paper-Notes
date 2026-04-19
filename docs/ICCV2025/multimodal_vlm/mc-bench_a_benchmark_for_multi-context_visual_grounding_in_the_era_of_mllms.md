@@ -195,3 +195,15 @@ MC-Bench 本身是评估基准，不涉及训练。微调基线使用方案：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 20+ 模型全面评测，含人类评估、agentic 基线和微调基线，多维度分析深入
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，分析详尽，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 作为基准数据集，对推动 MLLM 在多图实例级任务上的发展有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Intention Grounding for Egocentric Assistants](visual_intention_grounding_for_egocentric_assistants.md)
+- [ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering](reasonvqa_a_multi-hop_reasoning_benchmark_with_structural_knowledge_for_visual_q.md)
+- [DOGR: Towards Versatile Visual Document Grounding and Referring](dogr_towards_versatile_visual_document_grounding_and_referring.md)
+- [Generalizable Object Re-Identification via Visual In-Context Prompting](generalizable_object_re-identification_via_visual_in-context_prompting.md)
+- [Don't Just Chase "Highlighted Tokens" in MLLMs: Revisiting Visual Holistic Context Retention](../../NeurIPS2025/multimodal_vlm/dont_just_chase_highlighted_tokens_in_mllms_revisiting_visual_holistic_context_r.md)
+
+<!-- RELATED:END -->

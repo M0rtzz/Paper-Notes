@@ -119,3 +119,15 @@ $\mathcal{L}_{\text{IMSS}} = \lambda_{\text{seg}} \mathcal{L}_{\text{seg}}(\hat{
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多backbone、多模态组合、充分消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 遥感IMSS场景的实用方案，脆弱模态提升巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportion-aware_dynamic_adaptive_salient_object_detection_network_.md)
+- [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
+- [COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training](cosmos_cross-modality_self-distillation_for_vision_language_pre-training.md)
+- [MaSS13K: A Matting-level Semantic Segmentation Benchmark](mass13k_a_matting-level_semantic_segmentation_benchmark.md)
+- [A Distractor-Aware Memory for Visual Object Tracking with SAM2](a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
+
+<!-- RELATED:END -->

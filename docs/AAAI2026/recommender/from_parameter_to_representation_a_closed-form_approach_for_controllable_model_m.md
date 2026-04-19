@@ -119,3 +119,15 @@ ReACT 分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 8 数据集、多偏好设置、消融完整，但仅限分类和 ViT-B/32
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，可视化丰富，故事线流畅
 - 价值: ⭐⭐⭐⭐ 提供轻量优雅的可控合并方案，适用范围待扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpretable Reward Model via Sparse Autoencoder](interpretable_reward_model_via_sparse_autoencoder.md)
+- [Token-Efficient Item Representation via Images for LLM Recommender Systems](../../ICLR2026/recommender/token-efficient_item_representation_via_images_for_llm_recommender_systems.md)
+- [GoalRank: Group-Relative Optimization for a Large Ranking Model](../../ICLR2026/recommender/goalrank_group-relative_optimization_for_a_large_ranking_model.md)
+- [Measuring What Matters: Construct Validity in Large Language Model Benchmarks](../../NeurIPS2025/recommender/measuring_what_matters_construct_validity_in_large_language_model_benchmarks.md)
+- [Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](../../ICML2025/recommender/recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
+
+<!-- RELATED:END -->

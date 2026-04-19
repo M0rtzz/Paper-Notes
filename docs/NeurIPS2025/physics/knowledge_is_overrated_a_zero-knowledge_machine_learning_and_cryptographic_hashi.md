@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐ 仅在MNIST上做了build阶段的可行性基准，缺乏真实物理数据和在线延迟实测
 - 写作质量: ⭐⭐⭐⭐ 技术叙述清晰，密码学和物理背景兼顾
 - 价值: ⭐⭐⭐⭐ 框架设计具有前瞻性，为下一代LHC触发器指出了可能方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exoplanet Formation Inference Using Conditional Invertible Neural Networks](exoplanet_formation_inference_using_conditional_invertible_neural_networks.md)
+- [Simulation-Based Inference for Neutrino Interaction Model Parameter Tuning](simulation-based_inference_for_neutrino_interaction_model_parameter_tuning.md)
+- [ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers](../../ICCV2025/physics/resq_a_novel_framework_to_implement_residual_neural_networks_on_analog_rydberg_a.md)
+- [From Simulations to Surveys: Domain Adaptation for Galaxy Observations](from_simulations_to_surveys_domain_adaptation_for_galaxy_observations.md)
+- [Neural Deprojection of Galaxy Stellar Mass Profiles](neural_deprojection_of_galaxy_stellar_mass_profiles.md)
+
+<!-- RELATED:END -->

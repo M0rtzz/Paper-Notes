@@ -176,3 +176,15 @@ Slerp vs Lerp 的噪声对比：
 - **实验充分度**: ⭐⭐⭐⭐ - 多数据集验证 + 充分消融 + 定量漂移分析，但缺少高分辨率和条件生成实验
 - **写作质量**: ⭐⭐⭐⭐ - 问题动机清晰，图示直观（尤其 Figure 1-4），公式推导完整
 - **价值**: ⭐⭐⭐⭐ - 揭示了 reflow 的基本缺陷并给出简洁解决方案，对流匹配社区有实际意义；即插即用特性增加了工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Rectified Flow for Image Fusion](efficient_rectified_flow_for_image_fusion.md)
+- [GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer](guideflow3d_optimization-guided_rectified_flow_for_appearance_transfer.md)
+- [Taming Rectified Flow for Inversion and Editing](../../ICML2025/image_generation/taming_rectified_flow_for_inversion_and_editing.md)
+- [Straighten Viscous Rectified Flow via Noise Optimization](../../ICCV2025/image_generation/straighten_viscous_rectified_flow_via_noise_optimization.md)
+- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+
+<!-- RELATED:END -->

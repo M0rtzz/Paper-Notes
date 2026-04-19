@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集+零样本泛化+详尽消融+人类评估，非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义明确
 - 价值: ⭐⭐⭐⭐ 对AIGC图像质量评估和生成模型改进有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [OrderChain: Towards General Instruct-Tuning for Stimulating the Ordinal Understanding Ability of MLLM](../../ICCV2025/human_understanding/orderchain_towards_general_instruct-tuning_for_stimulating_the_ordinal_understan.md)
+- [From Logits to Hierarchies: Hierarchical Clustering made Simple](../../ICML2025/human_understanding/from_logits_to_hierarchies_hierarchical_clustering_made_simple.md)
+- [Theory of Mind for Explainable Human-Robot Interaction](../../AAAI2026/human_understanding/theory_of_mind_for_explainable_human-robot_interaction.md)
+- [Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems](../../ICML2025/human_understanding/erwin_a_tree-based_hierarchical_transformer_for_large-scale_physical_systems.md)
+
+<!-- RELATED:END -->

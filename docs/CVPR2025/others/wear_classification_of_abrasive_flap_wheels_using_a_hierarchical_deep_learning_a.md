@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (每级有独立评估，Grad-CAM分析深入，ROC/混淆矩阵完整)
 - 写作质量: ⭐⭐⭐⭐ (问题定义清晰，分析扎实)
 - 价值: ⭐⭐⭐ (偏工业应用，填补翻页轮磨损监测的研究空白)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning-Augmented Hierarchical Clustering](../../ICML2025/others/learning-augmented_hierarchical_clustering.md)
+- [Uncertainty Estimation by Flexible Evidential Deep Learning](../../NeurIPS2025/others/uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+- [A2Z-10M+: Geometric Deep Learning with A-to-Z BRep Annotations for AI-Assisted CAD Modeling and Reverse Engineering](a2z-10m_geometric_deep_learning_with_a-to-z_brep_annotations_for_ai-assisted_cad.md)
+- [Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](../../ICCV2025/others/is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
+
+<!-- RELATED:END -->

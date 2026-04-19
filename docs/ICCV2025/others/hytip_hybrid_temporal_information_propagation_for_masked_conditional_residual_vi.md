@@ -127,3 +127,15 @@ HyTIP 以 PSNR-RGB 衡量平均节省 26.5% BD-rate，超过 VTM 17.0，与 DCVC
 - **实验充分度**: ⭐⭐⭐⭐⭐ 7 个测试数据集，多种缓冲策略对比，缓冲大小/长序列训练/复杂度全面消融
 - **写作质量**: ⭐⭐⭐⭐ 论文结构清晰，RNN 类比恰当，图表丰富
 - **价值**: ⭐⭐⭐⭐ 对学习式视频编码的缓冲设计提供了重要参考，实际部署时显著降低内存带宽需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Residual Matrix Transformers: Scaling the Size of the Residual Stream](../../ICML2025/others/residual_matrix_transformers_scaling_the_size_of_the_residual_stream.md)
+- [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](../../ECCV2024/others/stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
+- [Value Residual Learning](../../ACL2025/others/value_residual_learning.md)
+- [Sheaf Cohomology of Linear Predictive Coding Networks](../../NeurIPS2025/others/sheaf_cohomology_of_linear_predictive_coding_networks.md)
+- [Kernel Conditional Tests from Learning-Theoretic Bounds](../../NeurIPS2025/others/kernel_conditional_tests_from_learning-theoretic_bounds.md)
+
+<!-- RELATED:END -->

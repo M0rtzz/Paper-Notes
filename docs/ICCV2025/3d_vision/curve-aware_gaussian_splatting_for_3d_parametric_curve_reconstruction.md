@@ -159,3 +159,15 @@ ABC-NEF 数据集（82 个 ABC 模型，DexiNed 边缘检测器）:
 - 技术深度: ⭐⭐⭐⭐ (完整的自适应拓扑策略)
 - 实验充分度: ⭐⭐⭐⭐ (多数据集+效率对比+消融)
 - 实用价值: ⭐⭐⭐⭐ (3分钟训练、紧凑输出，适合 CAD 管线)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curv.md)
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+- [CstNet: Constraint-Aware Feature Learning for Parametric Point Cloud](constraint-aware_feature_learning_for_parametric_point_cloud.md)
+- [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
+
+<!-- RELATED:END -->

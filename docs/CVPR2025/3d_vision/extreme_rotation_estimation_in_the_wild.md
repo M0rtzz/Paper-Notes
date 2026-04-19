@@ -128,3 +128,15 @@ wELP测试集（真实in-the-wild图像）。在无重叠对上，本文方法MG
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个测试集（sELP/wELP/全景裁剪），丰富的消融和基线比较
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据集构建过程描述详细
 - 价值: ⭐⭐⭐⭐ ELP数据集和渐进式学习方案对极端位姿估计研究有推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PersPose: 3D Human Pose Estimation with Perspective Encoding and Perspective Rotation](../../ICCV2025/3d_vision/perspose_3d_human_pose_estimation_with_perspective_encoding_and_perspective_rota.md)
+- [Amodal Depth Anything: Amodal Depth Estimation in the Wild](../../ICCV2025/3d_vision/amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
+- [EAG3R: Event-Augmented 3D Geometry Estimation for Dynamic and Extreme-Lighting Scenes](../../NeurIPS2025/3d_vision/eag3r_event-augmented_3d_geometry_estimation_for_dynamic_and_extreme-lighting_sc.md)
+- [Generative Multiview Relighting for 3D Reconstruction under Extreme Illumination Variation](generative_multiview_relighting_for_3d_reconstruction_under_extreme_illumination.md)
+- [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
+
+<!-- RELATED:END -->

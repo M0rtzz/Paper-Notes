@@ -136,3 +136,15 @@ ColorPeel在所有指标上均远超现有方法，$\Delta E$ 误差降低约55%
 - 实验充分度: ⭐⭐⭐⭐⭐ 定量指标+用户实验+消融+细粒度+泛化+插值，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，Fig.2的失败案例分析直观，定量指标设计合理
 - 价值: ⭐⭐⭐⭐ 实用性强，训练成本低（19分钟），对设计和创意领域有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Color Alignment in Diffusion](../../CVPR2025/image_generation/color_alignment_in_diffusion.md)
+- [GCC: Generative Color Constancy via Diffusing a Color Checker](../../CVPR2025/image_generation/gcc_generative_color_constancy_via_diffusing_a_color_checker.md)
+- [Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
+
+<!-- RELATED:END -->

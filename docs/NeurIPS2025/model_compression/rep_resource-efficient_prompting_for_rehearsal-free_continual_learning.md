@@ -148,3 +148,15 @@ REP 填补了提示学习方法在资源效率方面的空白。与 BudgetCL 和
 - 实验充分度: ⭐⭐⭐⭐⭐ 7种方法×3种模型×3个数据集+详尽消融+非提示方法扩展
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，实验组织系统化
 - 价值: ⭐⭐⭐⭐ 解决了提示学习在边缘设备部署的实际瓶颈，工程价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CL-LoRA: Continual Low-Rank Adaptation for Rehearsal-Free Class-Incremental Learning](../../CVPR2025/model_compression/cl-lora_continual_low-rank_adaptation_for_rehearsal-free_class-incremental_learn.md)
+- [Critical Patch-Aware Sparse Prompting with Decoupled Training for Continual Learning on the Edge](../../CVPR2026/model_compression/critical_patch-aware_sparse_prompting_with_decoupled_training_for_continual_lear.md)
+- [Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning](../../ICCV2025/model_compression/achieving_more_with_less_additive_prompt_tuning_for_rehearsal-free_class-increme.md)
+- [Train with Perturbation, Infer after Merging: A Two-Stage Framework for Continual Learning](train_with_perturbation_infer_after_merging_a_two-stage_framework_for_continual_.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+
+<!-- RELATED:END -->

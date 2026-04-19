@@ -134,3 +134,15 @@ Stage 1: 视觉投影器对齐（LCS-558K）。Stage 2: 自回归语言模型损
 - 实验充分度: ⭐⭐⭐⭐⭐ 视觉+语音+情感全面评估，消融充分，3种模型规模对比
 - 写作质量: ⭐⭐⭐⭐ 架构清晰，但训练细节略显分散
 - 价值: ⭐⭐⭐⭐⭐ 首个全面超越 GPT-4o 的开源全模态 LLM，方向意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Controllable Examination for Long-Context Language Models](../../NeurIPS2025/audio_speech/a_controllable_examination_for_longcontext_language_models.md)
+- [AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound](../../NeurIPS2025/audio_speech/audsemthinker_enhancing_audio-language_models_through_reasoning_over_semantics_o.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](../../ACL2025/audio_speech/audio_dialogue_benchmark.md)
+- [ControlLLM: Augment Language Models with Tools by Searching on Graphs](../../ECCV2024/audio_speech/controlllm_augment_language_models_with_tools_by_searching_on_graphs.md)
+
+<!-- RELATED:END -->

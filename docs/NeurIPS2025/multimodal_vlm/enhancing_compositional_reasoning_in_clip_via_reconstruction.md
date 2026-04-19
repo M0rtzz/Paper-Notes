@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 基准 + 与多种 CLIP 变体叠加 + 详细消融 + 定性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导清晰，公式完整，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对 CLIP 组合推理的实际改进显著，方法简洁可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Advancing Compositional Awareness in CLIP with Efficient Fine-Tuning](advancing_compositional_awareness_in_clip_with_efficient_fin.md)
+- [To See or To Read: User Behavior Reasoning in Multimodal LLMs](to_see_or_to_read_user_behavior_reasoning_in_multimodal_llms.md)
+- [TOMCAT: Test-time Comprehensive Knowledge Accumulation for Compositional Zero-Shot Learning](tomcat_test-time_comprehensive_knowledge_accumulation_for_compositional_zero-sho.md)
+- [Aligning by Misaligning: Boundary-aware Curriculum Learning for Multimodal Alignment](aligning_by_misaligning_boundaryaware_curriculum_learning_fo.md)
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+
+<!-- RELATED:END -->

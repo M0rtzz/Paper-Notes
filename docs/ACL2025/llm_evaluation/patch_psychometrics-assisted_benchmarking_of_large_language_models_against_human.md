@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型 x 56 人类群体
 - 写作质量: ⭐⭐⭐⭐⭐ 理论基础扎实
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 基准方法论有重大推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration](grace_a_granular_benchmark_for_evaluating_model_calibration_against_human_calibr.md)
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+- [CuLEmo: Cultural Lenses on Emotion - Benchmarking LLMs for Cross-Cultural Emotion Understanding](culemo_cultural_lenses_on_emotion_-_benchmarking_llms_for_cross-cultural_emotion.md)
+- [CulturalBench: A Robust, Diverse, and Challenging Cultural Benchmark by Human-AI CulturalTeaming](culturalbench_a_robust_diverse_and_challenging_cultural_benchmark_by_human-ai_cu.md)
+
+<!-- RELATED:END -->

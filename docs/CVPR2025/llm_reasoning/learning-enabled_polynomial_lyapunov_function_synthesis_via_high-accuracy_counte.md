@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 与 SMT-based 和传统 SOS 的对比充分，但实验系统规模和多样性有待扩展
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，Learner-Verifier框架描述规范
 - 价值: ⭐⭐⭐ 在AI4Science / 形式化验证交叉领域有贡献，但应用场景相对小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](../../ICLR2026/llm_reasoning/designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
+- [LogicPro: Improving Complex Logical Reasoning via Program-Guided Learning](../../ACL2025/llm_reasoning/logicpro_program_guided_reasoning.md)
+- [CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)
+- [Relation-R1: Progressively Cognitive Chain-of-Thought Guided Reinforcement Learning for Unified Relation Comprehension](../../AAAI2026/llm_reasoning/relation-r1_progressively_cognitive_chain-of-thought_guided_reinforcement_learni.md)
+- [Curriculum Abductive Learning](../../NeurIPS2025/llm_reasoning/curriculum_abductive_learning.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12 个模型 × 多窗口 × 概率评估
 - 写作质量: ⭐⭐⭐⭐ 分析深入，1.5 秒上限的发现有价值
 - 价值: ⭐⭐⭐⭐ 为神经科学和脑机接口社区提供了预测基准和可预测性边界的重要参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AERO: A Redirection-Based Optimization Framework Inspired by Judo for Robust Probabilistic Forecasting](aero_a_redirection-based_optimization_framework_inspired_by_judo_for_robust_prob.md)
+- [How Foundational are Foundation Models for Time Series Forecasting?](how_foundational_are_foundation_models_for_time_series_forecasting.md)
+- [SEMPO: Lightweight Foundation Models for Time Series Forecasting](sempo_lightweight_foundation_models_for_time_series_forecasting.md)
+- [Neural MJD: Neural Non-Stationary Merton Jump Diffusion for Time Series Prediction](neural_mjd_neural_non-stationary_merton_jump_diffusion_for_time_series_predictio.md)
+- [Learning Time-Scale Invariant Population-Level Neural Representations](learning_time-scale_invariant_population-level_neural_representations.md)
+
+<!-- RELATED:END -->

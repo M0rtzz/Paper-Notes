@@ -88,3 +88,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Occ3D/SurroundOcc/OpenOcc 三数据集
 - 写作质量: ⭐⭐⭐⭐ 理论与实践结合好
 - 价值: ⭐⭐⭐⭐ 实用且通用的时序融合方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProtoOcc: 3D Occupancy Prediction with Low-Resolution Queries via Prototype-aware View Transformation](3d_occupancy_prediction_with_low-resolution_queries_via_prototype-aware_view_tra.md)
+- [M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](m2-occ_resilient_3d_semantic_occupancy_prediction_for_autonomous_driving_with_in.md)
+- [UniScene: Unified Occupancy-centric Driving Scene Generation](uniscene_unified_occupancy-centric_driving_scene_generation.md)
+- [Semantic Causality-Aware Vision-Based 3D Occupancy Prediction](../../ICCV2025/autonomous_driving/semantic_causality-aware_vision-based_3d_occupancy_prediction.md)
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction_for_quadruped_robots.md)
+
+<!-- RELATED:END -->

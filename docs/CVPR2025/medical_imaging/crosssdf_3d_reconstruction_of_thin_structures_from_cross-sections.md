@@ -124,3 +124,15 @@ $$\mathcal{L}_{eik} = \mathbb{E}_{\mathbf{x}}[(|\nabla f(\mathbf{x})| - 1)^2]$$
 - 医学影像中薄血管重建是真实刚需，方法的实用价值高
 - 支持任意方向非平行截面，比仅处理平行截面的方法通用性更强
 - 方法核心是损失函数设计，网络架构无需特殊修改，可迁移到其他隐式场表示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](../../CVPR2026/medical_imaging/marker-based_3d_reconstruction_of_aggregates_with_a_comparative_analysis_of_2d_a.md)
+- [MindCross: Fast New Subject Adaptation with Limited Data for Cross-subject Video Reconstruction from Brain Signals](../../AAAI2026/medical_imaging/mindcross_fast_new_subject_adaptation_with_limited_data_for_cross-subject_video_.md)
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/medical_imaging/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](../../ICCV2025/medical_imaging/cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)
+- [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit.md)
+
+<!-- RELATED:END -->

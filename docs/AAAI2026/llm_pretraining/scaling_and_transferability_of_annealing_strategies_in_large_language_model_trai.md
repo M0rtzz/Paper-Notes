@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨batch/调度器/模型大小/数据集/步数的全面验证
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，实验设计系统
 - 价值: ⭐⭐⭐⭐⭐ 对LLM训练效率提升有直接实用价值，可省大量调参成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning](../../ACL2025/llm_pretraining/training_dynamics_underlying_language_model_scaling_laws_loss_deceleration_and_z.md)
+- [Metadata Conditioning Accelerates Language Model Pre-training](../../ICML2025/llm_pretraining/metadata_conditioning_accelerates_language_model_pre-training.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](../../ACL2025/llm_pretraining/towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](../../NeurIPS2025/llm_pretraining/gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [Large Vocabulary Size Improves Large Language Models](../../ACL2025/llm_pretraining/large_vocabulary_size_improves_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ LORex（图 2）分为四个模块：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4 个数据集、12 个基线、5 项消融、多种 LLM 变体、case study，极为详尽
 - **写作质量**: ⭐⭐⭐⭐ 框架描述清晰，算法伪代码完整，但公式符号较多
 - **价值**: ⭐⭐⭐⭐ 即插即用的设计对实际分类体系维护有直接价值，在 KG 领域有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+- [Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection](explaining_matters_leveraging_definitions_and_semantic_expansion_for_sexism_dete.md)
+- [SoRFT: Issue Resolving with Subtask-oriented Reinforced Fine-Tuning](sorft_issue_resolving_with_subtask-oriented_reinforced_fine-tuning.md)
+- [Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)
+- [ChuLo: Chunk-Level Key Information Representation for Long Document Understanding](chulo_chunk-level_key_information_representation_for_long_document_understanding.md)
+
+<!-- RELATED:END -->

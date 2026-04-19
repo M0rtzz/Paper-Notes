@@ -177,3 +177,15 @@ Ground-truth: 2条直接路径（sex→income, race→income）、25条间接路
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集、多baseline对比、超参数敏感性分析和公平性路径评估较为全面，但Recall偏低未深入分析
 - 写作质量: ⭐⭐⭐⭐ — 结构完整，动机清晰，公式规范，但部分讨论偏冗长
 - 价值: ⭐⭐⭐⭐ — 公平性+因果发现+LLM的交叉方向有实际意义，半合成基准对社区有贡献，但LLM可复现性问题限制了方法的广泛采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
+- [Rethinking Target Label Conditioning in Adversarial Attacks: A 2D Tensor-Guided Generative Approach](rethinking_target_label_conditioning_in_adversarial_attacks_a_2d_tensor-guided_g.md)
+- [BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models](../../ICLR2026/ai_safety/biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md)
+- [Principles2Plan: LLM-Guided System for Operationalising Ethical Principles into Plans](principles2plan_llm-guided_system_for_operationalising_ethical_principles_into_p.md)
+- [PSM: Prompt Sensitivity Minimization via LLM-Guided Black-Box Optimization](psm_prompt_sensitivity_minimization_via_llm-guided_black-box_optimization.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ DSBench数据建模：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个基准+多个模型大小+详细消融+超参数分析+跨域泛化测试
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，数据构建pipeline详细，但论文较长
 - 价值: ⭐⭐⭐⭐⭐ NbQA数据集和Jupiter框架均开源，对数据分析自动化社区有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trade-offs in Large Reasoning Models: An Empirical Analysis of Deliberative and Adaptive Reasoning over Foundational Capabilities](trade-offs_in_large_reasoning_models_an_empirical_analysis_of_deliberative_and_a.md)
+- [DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](../../ICLR2026/llm_reasoning/designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
+- [Enhancing Retrieval Systems with Inference-Time Logical Reasoning](../../ACL2025/llm_reasoning/enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)
+- [RPM-MCTS: Knowledge-Retrieval as Process Reward Model with Monte Carlo Tree Search for Code Generation](rpm-mcts_knowledge-retrieval_as_process_reward_model_with_monte_carlo_tree_searc.md)
+- [Improving Value-based Process Verifier via Low-Cost Variance Reduction](improving_value-based_process_verifier_via_low-cost_variance_reduction.md)
+
+<!-- RELATED:END -->

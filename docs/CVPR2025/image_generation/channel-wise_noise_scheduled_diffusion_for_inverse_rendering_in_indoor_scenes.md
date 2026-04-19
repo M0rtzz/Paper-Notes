@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实+用户研究+消融完整，但真实场景评估较少
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，消融设计有说服力
 - 价值: ⭐⭐⭐⭐ 通道级调度是可推广的技术，物体插入应用有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Diffusion Inverse Problem Solving with Decoupled Noise Annealing](improving_diffusion_inverse_problem_solving_with_decoupled_noise_annealing.md)
+- [Ouroboros: Single-step Diffusion Models for Cycle-consistent Forward and Inverse Rendering](../../ICCV2025/image_generation/ouroboros_single-step_diffusion_models_for_cycle-consistent_forward_and_inverse_.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
+- [CleanDIFT: Diffusion Features without Noise](cleandift_diffusion_features_without_noise.md)
+- [AMO Sampler: Enhancing Text Rendering with Overshooting](amo_sampler_enhancing_text_rendering_with_overshooting.md)
+
+<!-- RELATED:END -->

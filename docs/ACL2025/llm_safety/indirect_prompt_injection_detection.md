@@ -157,3 +157,15 @@ tags:
 - **技术深度**: ⭐⭐⭐⭐ — 方法设计合理，实验维度覆盖全面
 - **实用性**: ⭐⭐⭐⭐⭐ — 直接可部署为 LLM 应用的安全过滤层
 - **实验充分度**: ⭐⭐⭐⭐ — 检测/移除/过滤/过度防御多维评估
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Defense Against Prompt Injection Attack by Leveraging Attack Techniques](defense_prompt_injection.md)
+- [Language Models Can Subtly Deceive Without Lying: A Case Study on Strategic Phrasing](language_models_can_subtly_deceive_without_lying_a_case_study_on_strategic_phras.md)
+- [Enhancing Hallucination Detection through Noise Injection](../../ICLR2026/llm_safety/enhancing_hallucination_detection_through_noise_injection.md)
+- [From Misleading Queries to Accurate Answers: A Three-Stage Fine-Tuning Method for LLMs](from_misleading_queries_to_accurate_answers_a_three-stage_fine-tuning_method_for.md)
+- [CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP](cliperase_efficient_unlearning_of_visual-textual_associations_in_clip.md)
+
+<!-- RELATED:END -->

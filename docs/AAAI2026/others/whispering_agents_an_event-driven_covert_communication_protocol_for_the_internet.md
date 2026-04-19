@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 容量/鲁棒性/隐蔽性多维评估完整，但缺乏消融实验和更强对手测试
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化定义严谨，协议描述清晰，安全证明完整
 - 价值: ⭐⭐⭐⭐ 对 AI 安全社区有重要警示和防御研究价值，但应用场景相对小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Symbolic Planning and Multi-Agent Path Finding in Extremely Dense Environments with Unassigned Agents](symbolic_planning_and_multi-agent_path_finding_in_extremely_dense_environments_w.md)
+- [Speculative Actions: A Lossless Framework for Faster AI Agents](../../ICLR2026/others/speculative_actions_faster_ai_agents.md)
+- [Exact Learning of Arithmetic with Differentiable Agents](../../NeurIPS2025/others/exact_learning_of_arithmetic_with_differentiable_agents.md)
+- [General Agents Contain World Models](../../ICML2025/others/general_agents_contain_world_models.md)
+- [Provably Data-Driven Projection Method for Quadratic Programming](provably_data-driven_projection_method_for_quadratic_programming.md)
+
+<!-- RELATED:END -->

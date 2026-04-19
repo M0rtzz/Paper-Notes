@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐ position paper，无实验验证
 - 写作质量: ⭐⭐⭐⭐⭐ 行文风格独特、幽默而犀利，例子精心选择，可读性极强
 - 价值: ⭐⭐⭐⭐ 对关系学习社区有重要的反思价值，但对更广泛的 AI 社区影响力有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](../../NeurIPS2025/others/4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)
+- [Generating Synthetic Relational Tabular Data via Structural Causal Models](../../ACL2025/others/generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
+- [Predicting Through Generation: Why Generation Is Better for Prediction](../../ACL2025/others/predicting_through_generation_why_generation_is_better_for_prediction.md)
+- [General Agents Contain World Models](../../ICML2025/others/general_agents_contain_world_models.md)
+
+<!-- RELATED:END -->

@@ -174,3 +174,15 @@ CIDEr +3.5, F1 +1.7, R@1₀.₅ +2.4。
 - 实用性：⭐⭐⭐⭐ — 统一处理三类VTG子任务，但训练成本较高
 - 实验充分度：⭐⭐⭐⭐⭐ — 零样本+微调、四数据集、三类任务、详细消融
 - 写作质量：⭐⭐⭐⭐ — 图表清晰，公式严谨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
+- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
+- [Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding](hierarchical_event_memory_for_accurate_and_low-latency_online_video_temporal_gro.md)
+- [R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding](../../ECCV2024/video_understanding/r2tuning_efficient_imagetovideo_transfer_learning_for_video.md)
+- [OVG-HQ: Online Video Grounding with Hybrid-modal Queries](ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)
+
+<!-- RELATED:END -->

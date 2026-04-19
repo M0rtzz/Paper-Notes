@@ -146,3 +146,15 @@ SDXL Turbo 上各组件的增量效果：
 - 实用性：⭐⭐⭐⭐⭐ — 通用、快速、少步模型适配
 - 表现力：⭐⭐⭐⭐ — 重建质量大幅提升
 - 综合评分：8.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)
+
+<!-- RELATED:END -->

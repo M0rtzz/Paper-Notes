@@ -135,3 +135,15 @@ $$\mathcal{L}_{\text{dynamic}} = \mathbb{E}_t[\mathcal{L}_{\text{recon}} + \lamb
 - 实验充分度: ⭐⭐⭐⭐ 覆盖动态/静态多个基准，消融详尽，但缺少更长视频的评估
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，方法阐述逻辑性强，图表精美
 - 价值: ⭐⭐⭐⭐⭐ 1200×加速具有重要实用价值，开启在线动态重建新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OnlineHMR: Video-based Online World-Grounded Human Mesh Recovery](../../CVPR2026/3d_vision/onlinehmr_video-based_online_world-grounded_human_mesh_recovery.md)
+- [Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator](text-to-3d_by_stitching_a_multi-view_reconstruction_network_to_a_video_generator.md)
+- [OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting](../../CVPR2026/3d_vision/onlinepg_online_open-vocabulary_panoptic_mapping_with_3d_gaussian_splatting.md)
+- [OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects](../../NeurIPS2025/3d_vision/onlinesplatter_pose-free_online_3d_reconstruction_for_free-moving_objects.md)
+- [Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction](../../ICCV2025/3d_vision/dynamic_point_maps_a_versatile_representation_for_dynamic_3d_reconstruction.md)
+
+<!-- RELATED:END -->

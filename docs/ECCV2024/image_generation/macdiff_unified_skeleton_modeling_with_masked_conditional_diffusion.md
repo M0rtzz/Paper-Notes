@@ -116,3 +116,15 @@ $$\mathcal{L} = \mathbb{E}_{x_0, t, \epsilon}\left[\|\epsilon - \mathcal{D}(\sqr
 - **技术深度**: ⭐⭐⭐⭐⭐ — 互信息理论分析完整严谨，信息瓶颈设计精巧
 - **实验充分度**: ⭐⭐⭐⭐ — 三大数据集 + 多种评估协议 + 消融实验丰富
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，理论与实验结合紧密
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [ZigMa: A DiT-style Zigzag Mamba Diffusion Model](zigma_a_dit-style_zigzag_mamba_diffusion_model.md)
+
+<!-- RELATED:END -->

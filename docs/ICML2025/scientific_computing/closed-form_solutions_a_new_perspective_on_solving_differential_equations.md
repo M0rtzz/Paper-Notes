@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 基准较为基础，仅涉及线性 PDE，缺乏挑战性更高的测试
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法阐述系统
 - 价值: ⭐⭐⭐⭐ 为 AI for Science 中的符号计算开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards a Foundation Model for Partial Differential Equations Across Physics Domains](../../AAAI2026/scientific_computing/towards_a_foundation_model_for_partial_differential_equations_across_physics_dom.md)
+- [Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [OmniArch: Building Foundation Model For Scientific Computing](omniarch_building_foundation_model_for_scientific_computing.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/scientific_computing/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [SAOT: An Enhanced Locality-Aware Spectral Transformer for Solving PDEs](../../AAAI2026/scientific_computing/saot_an_enhanced_locality-aware_spectral_transformer_for_solving_pdes.md)
+
+<!-- RELATED:END -->

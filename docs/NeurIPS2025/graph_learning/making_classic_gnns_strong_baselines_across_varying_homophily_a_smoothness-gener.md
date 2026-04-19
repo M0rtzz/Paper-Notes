@@ -118,3 +118,15 @@ IGNN (Inceptive GNN) 基于三个最小设计原则构建在经典 GCN 之上：
 - 实验充分度: ⭐⭐⭐⭐⭐ 30 个基线的全面 benchmark
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，设计原则简洁
 - 价值: ⭐⭐⭐⭐⭐ 对 GNN 设计有重要指导意义，统一了多个长期争论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](../../AAAI2026/graph_learning/beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](../../ICML2025/graph_learning/llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+- [What Expressivity Theory Misses: Message Passing Complexity for GNNs](what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)
+- [Moscat: Mixture of Scope Experts at Test for Generalizing Deeper GNNs](mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)
+- [Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees](../../ICML2025/graph_learning/towards_graph_foundation_models_learning_generalities_across_graphs_via_task-tre.md)
+
+<!-- RELATED:END -->

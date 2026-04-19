@@ -121,3 +121,15 @@ L = L_seg（动作分割）+ L_eff（效果对齐 L2）+ L_CL（视觉-文本对
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集 + 详细消融，但场景较局限（仅厨房）
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，概率框架优雅
 - 价值: ⭐⭐⭐⭐ 为程序性视频理解提供了新方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Agents "Misremember" Collectively: Exploring the Mandela Effect in LLM-based Multi-Agent Systems](when_agents_misremember_collectively_exploring_the_mandela_effect_in_llm-based_m.md)
+- [Learning Procedural-aware Video Representations through State-Grounded Hierarchy Unfolding](../../AAAI2026/object_detection/learning_procedural-aware_video_representations_through_state-grounded_hierarchy.md)
+- [SAFE: Multitask Failure Detection for Vision-Language-Action Models](../../NeurIPS2025/object_detection/safe_multitask_failure_detection_for_vision-language-action_models.md)
+- [BeautyGRPO: Aesthetic Alignment for Face Retouching via Dynamic Path Guidance and Fine-Grained Preference Modeling](../../CVPR2026/object_detection/beautygrpo_aesthetic_alignment_for_face_retouching_via_dynamic_path_guidance_and.md)
+- [H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation](../../AAAI2026/object_detection/h-gar_a_hierarchical_interaction_framework_via_goal-driven_observation-action_re.md)
+
+<!-- RELATED:END -->

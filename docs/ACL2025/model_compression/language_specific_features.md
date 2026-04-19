@@ -177,3 +177,15 @@ $$v = \frac{1}{|\mathcal{X}_+|}\sum_{x \in \mathcal{X}_+} a_L(x) - \frac{1}{|\ma
 | 写作质量 | 8 | 层次递进清晰，图表直观 |
 | 实用价值 | 7 | 分析性贡献为主，steering vectors 应用场景偏窄 |
 | 总分 | 8 | 高质量的机制分析工作，对理解多语言 LLM 有重要意义 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [Persistent Topological Features in Large Language Models](../../ICML2025/model_compression/persistent_topological_features_in_large_language_models.md)
+- [500xCompressor: Generalized Prompt Compression for Large Language Models](500xcompressor_generalized_prompt_compression_for_large_language_models.md)
+- [BlockPruner: Fine-grained Pruning for Large Language Models](blockpruner_fine-grained_pruning_for_large_language_models.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+
+<!-- RELATED:END -->

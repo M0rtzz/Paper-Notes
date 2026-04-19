@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多 SOTA VLM + 人类基线 + 技能分解
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，结果分析细致
 - 价值: ⭐⭐⭐⭐ 为具身 AI 空间推理提供靶向基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Cultural Blind Spots: Analyzing the Limitations of mLLMs in Procedural Text Comprehension](unveiling_cultural_blind_spots_analyzing_the_limitations_of_mllms_in_procedural_.md)
+- [Do Vision-Language Models Have Internal World Models? Towards an Atomic Evaluation](do_vision-language_models_have_internal_world_models_towards_an_atomic_evaluatio.md)
+- [Hierarchical Safety Realignment: Lightweight Restoration of Safety in Pruned Large Vision-Language Models](hierarchical_safety_realignment_lightweight_restoration_of_safety_in_pruned_larg.md)
+- [Jailbreak Large Vision-Language Models Through Multi-Modal Linkage](jailbreak_large_vision-language_models_through_multi-modal_linkage.md)
+- [SpaRE: Enhancing Spatial Reasoning in Vision-Language Models with Synthetic Data](spare_enhancing_spatial_reasoning_in_vision-language_models_with_synthetic_data.md)
+
+<!-- RELATED:END -->

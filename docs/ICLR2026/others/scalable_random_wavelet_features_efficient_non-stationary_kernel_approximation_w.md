@@ -130,3 +130,15 @@ $$\Pr\left[\sup_{\mathbf{x}, \mathbf{y} \in \mathcal{X}} |\hat{k}(\mathbf{x}, \m
 - 理论深度: ⭐⭐⭐⭐⭐ — 正定性、无偏性、方差界、一致收敛全覆盖
 - 实验充分性: ⭐⭐⭐⭐ — 合成+语音+大尺度回归，但缺少更多实际应用
 - 实用价值: ⭐⭐⭐⭐ — 对需要非平稳建模且要求可扩展性的场景直接可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameterized Approximation Algorithms for TSP on Non-Metric Graphs](../../AAAI2026/others/parameterized_approximation_algorithms_for_tsp_on_non-metric_graphs.md)
+- [Consistent Low-Rank Approximation](consistent_low-rank_approximation.md)
+- [Active Learning for Decision Trees with Provable Guarantees](active_learning_for_decision_trees_with_provable_guarantees.md)
+- [Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
+- [Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)
+
+<!-- RELATED:END -->

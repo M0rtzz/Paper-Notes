@@ -234,3 +234,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 23个基准、多个模型规模和类型、子类别分析
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，可视化出色
 - 价值: ⭐⭐⭐⭐ 对多模态评测社区具有重要的方法论指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](../../NeurIPS2025/signal_comm/multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+- [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
+- [Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
+- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/signal_comm/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
+- [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+
+<!-- RELATED:END -->

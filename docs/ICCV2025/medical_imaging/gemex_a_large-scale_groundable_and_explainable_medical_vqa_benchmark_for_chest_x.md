@@ -143,3 +143,15 @@ V-score (mIoU) - 视觉定位：LLaVA-Med-GEMeX 在四种题型上分别达到 5
 - **实验充分度**: ⭐⭐⭐⭐⭐ 12 个模型的系统评估、多维度指标、迁移学习验证和详细 case study
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数据统计和分析详实
 - **价值**: ⭐⭐⭐⭐⭐ 为医学 VQA 研究提供了重要的基础设施，可解释性设计有实际临床意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RadZero: Similarity-Based Cross-Attention for Explainable Vision-Language Alignment in Chest X-ray](../../NeurIPS2025/medical_imaging/radzero_similarity-based_cross-attention_for_explainable_vision-language_alignme.md)
+- [Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset](../../CVPR2026/medical_imaging/instruction-guided_lesion_segmentation_for_chest_x-rays_with_automatically_gener.md)
+- [CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays](../../NeurIPS2025/medical_imaging/cxreasonbench_a_benchmark_for_evaluating_structured_diagnostic_reasoning_in_ches.md)
+- [CheXalign: Preference Fine-tuning in Chest X-ray Interpretation Models without Human Feedback](../../ACL2025/medical_imaging/chexalign_preference_finetuning.md)
+- [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
+
+<!-- RELATED:END -->

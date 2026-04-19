@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 17语言+层级分析+快捷方法
 - 写作质量: ⭐⭐⭐⭐⭐ 可视化和分析极其清晰
 - 价值: ⭐⭐⭐⭐⭐ 对多语言LLM研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+- [Semantic Aware Linear Transfer by Recycling Pre-trained Language Models for Cross-Lingual Transfer](semantic_aware_linear_transfer_by_recycling_pre-trained_language_models_for_cros.md)
+- [Cross-Lingual Generalization and Compression: From Language-Specific to Shared Neurons](cross_lingual_neurons_compression.md)
+- [Language Fusion for Parameter-Efficient Cross-lingual Transfer (FLARE)](flare_crosslingual_lora.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：理论贡献扎实优雅，核心洞察深刻（退火弥合 $L^2$ 与 MGF 之间的鸿沟，暖启动绕过不可能结果），实验虽规模有限但验证了核心思想。作为理论工作具有重要的概念性贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
+- [Adaptive Compressed Sensing with Diffusion-Based Posterior Sampling](../../ECCV2024/medical_imaging/adaptive_compressed_sensing_with_diffusionbased_posterior_sa.md)
+- [ConfRover: Simultaneous Modeling of Protein Conformation and Dynamics via Autoregression](confrover_simultaneous_modeling_of_protein_conformation_and_dynamics_via_autoreg.md)
+- [Semantic and Visual Crop-Guided Diffusion Models for Heterogeneous Tissue Synthesis in Histopathology](semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)
+- [Fractional Diffusion Bridge Models](fractional_diffusion_bridge_models.md)
+
+<!-- RELATED:END -->

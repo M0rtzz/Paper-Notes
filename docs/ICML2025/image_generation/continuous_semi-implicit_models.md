@@ -96,3 +96,15 @@ ImageNet 512×512：
 - 实验充分度: ⭐⭐⭐⭐ ImageNet 512 + 对比充分
 - 写作质量: ⭐⭐⭐⭐ 理论清晰
 - 价值: ⭐⭐⭐⭐ 推进扩散模型加速
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continuous Visual Autoregressive Generation via Score Maximization](continuous_visual_autoregressive_generation_via_score_maximization.md)
+- [Implicit Bias Injection Attacks against Text-to-Image Diffusion Models](../../CVPR2025/image_generation/implicit_bias_injection_attacks_against_text-to-image_diffusion_models.md)
+- [Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training](../../NeurIPS2025/image_generation/why_diffusion_models_dont_memorize_the_role_of_implicit_dynamical_regularization.md)
+- [Generative Audio Language Modeling with Continuous-Valued Tokens and Masked Next-Token Prediction](generative_audio_language_modeling_with_continuous-valued_tokens_and_masked_next.md)
+- [Continuous Diffusion Model for Language Modeling](../../NeurIPS2025/image_generation/continuous_diffusion_model_for_language_modeling.md)
+
+<!-- RELATED:END -->

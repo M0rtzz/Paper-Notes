@@ -126,3 +126,15 @@ GiT 的架构极度简洁：一个 window-based ViT（与 SAM 使用的相同结
 - 实验充分度: ⭐⭐⭐⭐ 5任务27数据集全面评估，消融充分，zero-shot验证完整
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，表格信息量大
 - 价值: ⭐⭐⭐⭐ 缩小视觉与语言架构差距的重要探索，对通用视觉基础模型有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rotary Position Embedding for Vision Transformer](rotary_position_embedding_for_vision_transformer.md)
+- [SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
+- [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [Locality-Attending Vision Transformer](../../ICLR2026/segmentation/locality-attending_vision_transformer.md)
+- [UniFS: Universal Few-Shot Instance Perception with Point Representations](unifs_universal_few-shot_instance_perception_with_point_representations.md)
+
+<!-- RELATED:END -->

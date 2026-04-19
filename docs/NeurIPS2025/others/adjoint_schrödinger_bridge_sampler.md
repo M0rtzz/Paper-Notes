@@ -119,3 +119,15 @@ ASBS 学习一个 SDE $dX_t = [f_t(X_t) + \sigma_t u_t^\theta(X_t)] dt + \sigma_
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成函数 + 分子模拟 + 大规模构象生成，覆盖面广，对比全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，动机清晰，关键公式有直觉解释
 - 价值: ⭐⭐⭐⭐⭐ 扩散采样器设计空间的重要突破，对分子模拟等领域有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modeling Cell Dynamics and Interactions with Unbalanced Mean Field Schrödinger Bridge](modeling_cell_dynamics_and_interactions_with_unbalanced_mean_field_schrödinger_b.md)
+- [Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free](learning_non-equilibrium_diffusions_with_schrödinger_bridges_from_exactly_solvab.md)
+- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
+- [LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](../../ACL2025/others/ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)
+- [DC-Solver: Improving Predictor-Corrector Diffusion Sampler via Dynamic Compensation](../../ECCV2024/others/dc-solver_improving_predictor-corrector_diffusion_sampler_via_dynamic_compensati.md)
+
+<!-- RELATED:END -->

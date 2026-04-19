@@ -201,3 +201,15 @@ $$O\left(n \cdot \max\left\{1, (\alpha_0(1-\alpha_0))^2 (\log n)^3\right\}\right
 - **超几何分布的集中性质在估值中的应用**：Key Observation 2 利用超几何分布的指数集中来减少需要估计的项数，这一技巧可推广到其他涉及子集采样的 combinatorial estimation 问题。
 - **小集合效用填充策略**：对于 LLM 等在小数据上无法有效训练的模型，注入非信息性数据的策略（灵感来自 machine unlearning）值得在其他需要处理 "small coalition" 的合作博弈场景中借鉴。
 - **可能的扩展方向**：(1) 动态分组场景下的 FGSV 更新；(2) 将 faithfulness 概念引入联邦学习中的贡献评估；(3) 大规模生成模型（如 LLM）训练数据的组级版权归属。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prediction via Shapley Value Regression (ViaSHAP)](../../ICML2025/others/prediction_via_shapley_value_regression.md)
+- [Equivariance by Contrast: Identifiable Equivariant Embeddings from Unlabeled Finite Group Actions](equivariance_by_contrast_identifiable_equivariant_embeddings_from_unlabeled_fini.md)
+- [Value Residual Learning](../../ACL2025/others/value_residual_learning.md)
+- [Using Shapley Interactions to Understand How Models Use Structure](../../ACL2025/others/using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [Inducing Lexicons of In-Group Language with Socio-Temporal Context](../../ACL2025/others/inducing_lexicons_of_in-group_language_with_socio-temporal_context.md)
+
+<!-- RELATED:END -->

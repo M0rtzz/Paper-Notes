@@ -112,3 +112,15 @@ NODE 使用标准的 MSE 损失训练，基于 JAX 的 Diffrax 库实现。cart-
 - 实验充分度: ⭐⭐⭐ 两个系统偏少，但消融分析（采样频率、噪声、变量选择）较系统
 - 写作质量: ⭐⭐⭐⭐ 实验设计清晰，failure mode 分析诚恳深入
 - 价值: ⭐⭐⭐ 对数据稀缺的科学发现流水线有参考意义，但需在更复杂系统上验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Superposition Yields Robust Neural Scaling](superposition_yields_robust_neural_scaling.md)
+- [Generalization Bounds for Rank-sparse Neural Networks](generalization_bounds_for_rank-sparse_neural_networks.md)
+- [Stochastic Self-Organization in Multi-Agent Systems](../../ICLR2026/llm_pretraining/stochastic_self-organization_in_multi-agent_systems.md)
+- [Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via Grokking](flatness_is_necessary_neural_collapse_is_not_rethinking_generalization_via_grokk.md)
+- [Learning to Flow from Generative Pretext Tasks for Neural Architecture Encoding](learning_to_flow_from_generative_pretext_tasks_for_neural_architecture_encoding.md)
+
+<!-- RELATED:END -->

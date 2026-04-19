@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个LLM、4数据集、多设置、特征分析+策略验证
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，从定义到检验到应用层层推进
 - 价值: ⭐⭐⭐⭐⭐ 为RAG和知识更新提供了坚实的诊断基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models](uniedit_a_unified_knowledge_editing_benchmark_for_large_language_models.md)
+- [Context-Robust Knowledge Editing for Language Models](../../ACL2025/knowledge_editing/context-robust_knowledge_editing_for_language_models.md)
+- [Structure-aware Domain Knowledge Injection for Large Language Models](../../ACL2025/knowledge_editing/structure-aware_domain_knowledge_injection_for_large_language_models.md)
+- [Neuron-Level Sequential Editing for Large Language Models](../../ACL2025/knowledge_editing/neuron-level_sequential_editing_for_large_language_models.md)
+- [A General Knowledge Injection Framework for ICD Coding](../../ACL2025/knowledge_editing/a_general_knowledge_injection_framework_for_icd_coding.md)
+
+<!-- RELATED:END -->

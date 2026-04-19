@@ -146,3 +146,15 @@ $$\mathcal{L}_{\text{IDPO}} = \mathbb{E}_{(x, \tau^+, \tau^-) \sim \mathcal{D}} 
 - 实验充分度: ⭐⭐⭐⭐ 三类任务覆盖全面，消融和即插即用实验充分
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，框架叙述条理分明
 - 价值: ⭐⭐⭐⭐ 对黑盒LLM增强有实用价值，即插即用特性尤为实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs](tokensqueeze_performance-preserving_compression_for_reasoning_llms.md)
+- [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [Benford's Curse: Tracing Digit Bias to Numerical Hallucination in LLMs](benfords_curse_tracing_digit_bias_to_numerical_hallucination_in_llms.md)
+- [Adaptive Kernel Design for Bayesian Optimization Is a Piece of CAKE with LLMs](adaptive_kernel_design_for_bayesian_optimization_is_a_piece_of_cake_with_llms.md)
+- [CodeGEMM: A Codebook-Centric Approach to Efficient GEMM in Quantized LLMs](codegemm_a_codebook-centric_approach_to_efficient_gemm_in_quantized_llms.md)
+
+<!-- RELATED:END -->

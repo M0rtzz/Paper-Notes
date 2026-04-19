@@ -143,3 +143,15 @@ AdamW优化器+余弦退火，学习率1e-5，2×A6000训练20k迭代，batch si
 - 实验充分度: ⭐⭐⭐⭐ 消融充分，但baselines仅两个（因为是新任务），跨域泛化验证有说服力
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法描述详细，但公式符号较多
 - 价值: ⭐⭐⭐⭐⭐ 开辟了全景affordance新方向，对服务机器人全局感知有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Towards Open Environments and Instructions: General Vision-Language Navigation via Fast-Slow Interactive Reasoning](towards_open_environments_and_instructions_general_vision-language_navigation_vi.md)
+- [ENC-Bench: A Benchmark for Evaluating MLLMs in Electronic Navigational Chart Understanding](enc-bench_a_benchmark_for_evaluating_multimodal_large_language_models_in_electro.md)
+- [RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](rcnf_robot_conditioned_normalizing_flow_anomaly.md)
+
+<!-- RELATED:END -->

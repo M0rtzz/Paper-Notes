@@ -168,3 +168,15 @@ KEA-RND-SAC 在 Walker Run 上提升 **119%**，Cheetah Run 提升 **51%**。
 - 实验充分度: ⭐⭐⭐⭐ — 多环境多基线，含泛化分析和敏感性分析，但缺少高维场景
 - 写作质量: ⭐⭐⭐⭐ — 问题可视化好，行文清晰，结构完整
 - 价值: ⭐⭐⭐ — 解决了SAC+新颖性探索的实际痛点，但适用范围限于off-policy方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptively Coordinating with Novel Partners via Learned Latent Strategies](../../NeurIPS2025/reinforcement_learning/adaptively_coordinating_with_novel_partners_via_learned_latent_strategies.md)
+- [EVOLvE: Evaluating and Optimizing LLMs For In-Context Exploration](evolve_evaluating_and_optimizing_llms_for_in-context_exploration.md)
+- [Leveraging Skills from Unlabeled Prior Data for Efficient Online Exploration](leveraging_skills_from_unlabeled_prior_data_for_efficient_online_exploration.md)
+- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+- [Ensemble++: Scalable Exploration via Ensemble](../../NeurIPS2025/reinforcement_learning/scalable_exploration_via_ensemble.md)
+
+<!-- RELATED:END -->

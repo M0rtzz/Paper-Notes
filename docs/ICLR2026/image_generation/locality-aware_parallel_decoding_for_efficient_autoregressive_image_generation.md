@@ -115,3 +115,15 @@ $$PTA_s = \frac{1}{N}\sum_{i=1}^N \frac{\sum_j \text{Attention}(T_i,T_j) \cdot \
 - 实验充分度: ⭐⭐⭐⭐ 系统对比充分，但缺少T2I和多模态实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，方法与其他方法的对比分析透彻
 - 价值: ⭐⭐⭐⭐⭐ 大幅降低自回归图像生成延迟，对统一多模态系统有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Autoregressive Image Generation with Randomized Parallel Decoding](autoregressive_image_generation_with_randomized_parallel_decoding.md)
+- [From Prediction to Perfection: Introducing Refinement to Autoregressive Image Generation](from_prediction_to_perfection_introducing_refinement_to_autoregressive_image_gen.md)
+- [Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss](condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo.md)
+- [Annealed Relaxation of Speculative Decoding for Faster Autoregressive Image Generation](../../AAAI2026/image_generation/annealed_relaxation_of_speculative_decoding_for_faster_autor.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+
+<!-- RELATED:END -->

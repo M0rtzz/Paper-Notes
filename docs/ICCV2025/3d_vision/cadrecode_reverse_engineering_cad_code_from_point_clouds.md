@@ -44,3 +44,15 @@
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集 + 下游应用(编辑/问答)
 - 写作质量: ⭐⭐⭐⭐ 摘要清晰，贡献明确
 - 对我的价值: ⭐⭐⭐ CAD领域，代码生成范式有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Inexact CAD Model Alignment from a Single Image](zero-shot_inexact_cad_model_alignment_from_a_single_image.md)
+- [CMT: A Cascade MAR with Topology Predictor for Multimodal Conditional CAD Generation](cmt_a_cascade_mar_with_topology_predictor_for_multimodal_conditional_cad_generat.md)
+- [GAP: Gaussianize Any Point Clouds with Text Guidance](gap_gaussianize_any_point_clouds_with_text_guidance.md)
+- [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
+- [RayletDF: Raylet Distance Fields for Generalizable 3D Surface Reconstruction from Point Clouds or Gaussians](rayletdf_raylet_distance_fields_for_generalizable_3d_surface_reconstruction_from.md)
+
+<!-- RELATED:END -->

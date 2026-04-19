@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+用户研究+消融+下游应用验证，比较全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示丰富
 - 价值: ⭐⭐⭐⭐ 多图一致编辑是实际需求，首个训练框架具有开创意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CARE-Edit: Condition-Aware Routing of Experts for Contextual Image Editing](care-edit_condition-aware_routing_of_experts_for_contextual_image_editing.md)
+- [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
+- [ChordEdit: One-Step Low-Energy Transport for Image Editing](chordedit_one-step_low-energy_transport_for_image_editing.md)
+- [SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images](simlbr_learning_to_detect_fake_images_by_learning_to_detect_real_images.md)
+- [Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
+
+<!-- RELATED:END -->

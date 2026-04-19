@@ -156,3 +156,15 @@ $$\mathcal{L}_\theta^{(\text{cida})} = \lambda_1 \mathcal{L}_\theta^{(\text{cid}
 - **技术深度**: 4 — CiD/CiDA的数学推导严谨，从VSD→SiD→CiD的演进逻辑清晰，各设计决策有消融验证。
 - **实验充分度**: 4 — 覆盖合成+真实数据集，13种IQA指标，用户研究和MLLM评估，详细消融（蒸馏策略/VAE通道/prompt策略），但缺少下游任务评估。
 - **写作质量**: 4 — 动机阐述清晰（Fig.2的可视化直观），方法推导层层递进，但notation较多需仔细跟。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Eliminating VAE for Fast and High-Resolution Generative Detail Restoration](eliminating_vae_for_fast_and_high-resolution_generative_detail_restoration.md)
+- [Bridging Degradation Discrimination and Generation for Universal Image Restoration](bridging_degradation_discrimination_and_generation_for_universal_image_restorati.md)
+- [LVTINO: LAtent Video consisTency INverse sOlver for High Definition Video Restoration](lvtino_latent_video_consistency_inverse_solver_for_high_definition_video_restora.md)
+- [Multi-Metric Preference Alignment for Generative Speech Restoration](../../AAAI2026/image_generation/multi-metric_preference_alignment_for_generative_speech_restoration.md)
+- [GenCP: Towards Generative Modeling Paradigm of Coupled Physics](gencp_towards_generative_modeling_paradigm_of_coupled_physics.md)
+
+<!-- RELATED:END -->

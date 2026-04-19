@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅 2 个模型有机体 + 4 种审计方法，范围偏窄但每个设置分析深入
 - 写作质量: ⭐⭐⭐⭐ 四个 findings 层次递进，红蓝队框架叙述清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 安全审计方法论有根本性警示——任何审计方法发布前都应经过类似压力测试
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [Modality-free Graph In-context Alignment](modality-free_graph_in-context_alignment.md)
+- [TiTok: Transfer Token-level Knowledge via Contrastive Excess to Transplant LoRA](titok_transfer_token-level_knowledge_via_contrastive_excess_to_transplant_lora.md)
+- [AlignDistil: Token-Level Language Model Alignment as Adaptive Policy Distillation](../../ACL2025/model_compression/aligndistil_token_level_alignment.md)
+- [HiFo-Prompt: Prompting with Hindsight and Foresight for LLM-based Automatic Heuristic Design](hifo-prompt_prompting_with_hindsight_and_foresight_for_llm-based_automatic_heuri.md)
+
+<!-- RELATED:END -->

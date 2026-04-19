@@ -135,3 +135,15 @@ tags:
 - 理论深度：⭐⭐⭐ — 以工程设计为主，缺乏形式化理论分析
 - 实验充分度：⭐⭐⭐⭐ — 多基线对比、消融完整、用户研究有说服力
 - 实用性：⭐⭐⭐⭐ — 无训练即用，但超参数调整有一定门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GradOT: Training-free Gradient-preserving Offsite-tuning for Large Language Models](../../ACL2025/llm_efficiency/gradot_offsite_tuning.md)
+- [Efficient Training-Free Online Routing for High-Volume Multi-LLM Serving](../../NeurIPS2025/llm_efficiency/efficient_training-free_online_routing_for_high-volume_multi-llm_serving.md)
+- [SparVAR: Exploring Sparsity in Visual Autoregressive Modeling for Training-Free Acceleration](../../CVPR2026/llm_efficiency/sparvar_exploring_sparsity_in_visual_autoregressive_modeling_for_training-free_a.md)
+- [Deep Compositional Phase Diffusion for Long Motion Sequence Generation](../../NeurIPS2025/llm_efficiency/deep_compositional_phase_diffusion_for_long_motion_sequence_generation.md)
+- [Retraining-Free Merging of Sparse MoE via Hierarchical Clustering](../../ICML2025/llm_efficiency/retraining-free_merging_of_sparse_moe_via_hierarchical_clustering.md)
+
+<!-- RELATED:END -->

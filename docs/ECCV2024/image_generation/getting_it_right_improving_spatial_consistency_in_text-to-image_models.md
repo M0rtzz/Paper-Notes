@@ -188,3 +188,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多基准、多消融、多分析维度，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 发现驱动的叙事结构清晰，实验设计周密
 - **价值**: ⭐⭐⭐⭐⭐ — SPRIGHT 数据集和 <500 图像 SOTA 方法论对社区贡献巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Right Looks, Wrong Reasons: Compositional Fidelity in Text-to-Image Generation](../../AAAI2026/image_generation/right_looks_wrong_reasons_compositional_fidelity_in_text-to-image_generation.md)
+- [NeuSDFusion: A Spatial-Aware Generative Model for 3D Shape Completion, Reconstruction, and Generation](neusdfusion_a_spatial-aware_generative_model_for_3d_shape_completion_reconstruct.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [TextDiffuser-2: Unleashing the Power of Language Models for Text Rendering](textdiffuser-2_unleashing_the_power_of_language_models_for_text_rendering.md)
+
+<!-- RELATED:END -->

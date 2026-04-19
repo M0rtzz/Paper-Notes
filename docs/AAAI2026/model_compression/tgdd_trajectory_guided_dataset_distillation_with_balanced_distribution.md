@@ -163,3 +163,15 @@ $$L_{overall} = L_{MMD} + \alpha L_{SDC}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 10 个数据集、跨架构、消融、超参分析、持续学习
 - 写作质量: ⭐⭐⭐⭐ — 表述清晰、可视化丰富
 - 价值: ⭐⭐⭐⭐ — DM 系列的重要改进，兼具性能和效率
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DP-GenG: Differentially Private Dataset Distillation Guided by DP-Generated Data](dp-geng_differentially_private_dataset_distillation_guided_by_dp-generated_data.md)
+- [Rethinking Long-tailed Dataset Distillation: A Uni-Level Framework with Unbiased Recovery and Relabeling](rethinking_long-tailed_dataset_distillation_a_uni-level_framework_with_unbiased_.md)
+- [Dataset Distillation via the Wasserstein Metric](../../ICCV2025/model_compression/dataset_distillation_via_the_wasserstein_metric.md)
+- [Dataset Distillation as Pushforward Optimal Quantization](../../ICLR2026/model_compression/dataset_distillation_as_pushforward_optimal_quantization.md)
+- [Rectified Decoupled Dataset Distillation: A Closer Look for Fair and Comprehensive Evaluation](../../ICLR2026/model_compression/rectified_decoupled_dataset_distillation_a_closer_look_for_fair_and_comprehensiv.md)
+
+<!-- RELATED:END -->

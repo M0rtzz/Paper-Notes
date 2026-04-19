@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 种实验设置 × 9 个下游任务 × 0-shot/5-shot × 3 种生成模式 + 注意力分析
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，图表精美，实验设计严谨（控制了 token 消耗量数量、上下文长度等混淆变量）
 - 价值: ⭐⭐⭐⭐ 对 LLM 预训练实践有直接指导意义，CFG 可控生成的发现为 metadata 开辟了新用途
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering Information Utility in Key-Value Memory for Language Model Post-Training](steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)
+- [LLM Probing with Contrastive Eigenproblems: Improving Understanding and Applicability of CCS](llm_probing_with_contrastive_eigenproblems_improving_understanding_and_applicabi.md)
+- [FastDINOv2: Frequency Based Curriculum Learning Improves Robustness and Training Speed](fastdinov2_frequency_based_curriculum_learning_improves_robustness_and_training_.md)
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [Curvature Tuning: Provable Training-free Model Steering From a Single Parameter](curvature_tuning_provable_training-free_model_steering_from_a_single_parameter.md)
+
+<!-- RELATED:END -->

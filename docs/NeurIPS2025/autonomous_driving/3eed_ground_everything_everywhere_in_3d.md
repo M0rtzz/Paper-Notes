@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 评估协议设计全面（域内/跨域/多目标/联合训练），消融充分，数据统计详尽
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，图表丰富，但内容冗长（含附录篇幅较大）
 - 价值: ⭐⭐⭐⭐ 数据集对领域有重要推动作用，揭示了跨平台 grounding 的关键挑战，但方法层面启发有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GSAlign: Geometric and Semantic Alignment Network for Aerial-Ground Person Re-Identification](gsalign_geometric_and_semantic_alignment_network_for_aerial-ground_person_re-ide.md)
+- [SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis](../../ICCV2025/autonomous_driving/leveraging_bev_paradigm_for_ground-to-aerial_image_synthesis.md)
+- [TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR](../../CVPR2026/autonomous_driving/terraseg_self-supervised_ground_segmentation_for_any_lidar.md)
+- [OpenBox: Annotate Any Bounding Boxes in 3D](openbox_annotate_any_bounding_boxes_in_3d.md)
+- [LabelAny3D: Label Any Object 3D in the Wild](labelany3d_label_any_object_3d_in_the_wild.md)
+
+<!-- RELATED:END -->

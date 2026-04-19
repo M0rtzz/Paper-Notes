@@ -124,3 +124,15 @@ NAVSIM 评估：
 - 实验充分度: ⭐⭐⭐⭐ 在两个基准上全面评估，消融详细，但缺少闭环评估
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，方法描述流畅，动机解释充分
 - 价值: ⭐⭐⭐⭐ 提供了一个高效的世界模型设计范式——只建模变化的部分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffusionDrive: Truncated Diffusion Model for End-to-End Autonomous Driving](../../CVPR2025/autonomous_driving/diffusiondrive_truncated_diffusion_model_for_end-to-end_autonomous_driving.md)
+- [World4Drive: End-to-End Autonomous Driving via Intention-aware Physical Latent World Model](../../ICCV2025/autonomous_driving/world4drive_end-to-end_autonomous_driving_via_intention-aware_physical_latent_wo.md)
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [Scaling-Aware Data Selection for End-to-End Autonomous Driving Systems](../../CVPR2026/autonomous_driving/scaling-aware_data_selection_for_end-to-end_autonomous_driving_systems.md)
+- [CausalVAD: De-confounding End-to-End Autonomous Driving via Causal Intervention](../../CVPR2026/autonomous_driving/causalvad_de-confounding_end-to-end_autonomous_driving_via_causal_intervention.md)
+
+<!-- RELATED:END -->

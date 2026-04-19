@@ -138,3 +138,15 @@ LH-Deception 是一个三角色多智能体仿真系统：**执行者**（perfor
 - 技术深度: ⭐⭐⭐⭐ 三维状态建模和概率事件系统设计扎实，但核心是 prompt engineering 而非算法创新
 - 写作质量: ⭐⭐⭐⭐ 从问题动机到实验发现的叙事逻辑清晰
 - 实用价值: ⭐⭐⭐⭐⭐ 对 LLM 部署安全评估有直接指导意义，框架可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Sensitivity of Differential Attention through the Lens of Adversarial Robustness](understanding_sensitivity_of_differential_attention_through_the_lens_of_adversar.md)
+- [LLM Targeted Underperformance Disproportionately Impacts Vulnerable Users](../../AAAI2026/llm_safety/llm_targeted_underperformance_disproportionately_impacts_vulnerable_users.md)
+- [PANDA: Patch and Distribution-Aware Augmentation for Long-Tailed Exemplar-Free Continual Learning](../../AAAI2026/llm_safety/panda_--_patch_and_distribution-aware_augmentation_for_long-tailed_exemplar-free.md)
+- [HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](../../ACL2025/llm_safety/halogen_hallucinations.md)
+- [Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](../../ACL2025/llm_safety/learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)
+
+<!-- RELATED:END -->

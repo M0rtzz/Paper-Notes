@@ -183,3 +183,15 @@ $$M_{\text{specificity}} = \frac{1}{2}[M_{\text{in}}^v + M_{\text{out}}^v]$$
 | 实验充分性 | ⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐ |
 | 总体推荐 | 7.5/10 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/affordbot_3d_fine-grained_embodied_reasoning_via_multimodal_large_language_model.md)
+- [Zina: Multimodal Fine-grained Hallucination Detection and Editing](../../CVPR2026/multimodal_vlm/zina_multimodal_fine-grained_hallucination_detection_and_editing.md)
+- [BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models](basic_boosting_visual_alignment_with_intrinsic_refined_embeddings_in_multimodal_.md)
+- [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](../../NeurIPS2025/multimodal_vlm/focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
+- [CapeLLM: Support-Free Category-Agnostic Pose Estimation with Multimodal Large Language Models](capellm_support-free_category-agnostic_pose_estimation_with_multimodal_large_lan.md)
+
+<!-- RELATED:END -->

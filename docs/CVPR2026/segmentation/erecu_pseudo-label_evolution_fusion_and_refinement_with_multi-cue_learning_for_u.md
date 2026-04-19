@@ -126,3 +126,15 @@ EReCu 在所有四个数据集上全面超越所有 UOS 和 UCOD 基线方法。
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集 + 全面消融 + 可视化分析，对比方法覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 框架图和可视化清晰，模块关系阐述明确，公式推导完整
 - 价值: ⭐⭐⭐⭐ 无监督伪装检测的重要进展，原生感知引导伪标签的思路有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation](discover_segment_and_select_a_progressive_mechanism_for_zero-shot_camouflaged_ob.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [Love Me, Love My Label: Rethinking the Role of Labels in Prompt Retrieval for Visual In-Context Learning](love_me_love_my_label_rethinking_the_role_of_labels_in_prompt_retrieval_for_visu.md)
+- [FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning](fcl-cod_weakly_supervised_camouflaged_object_detection_with_frequency-aware_and_.md)
+- [GeoSURGE: Geo-localization using Semantic Fusion with Hierarchy of Geographic Embeddings](geosurge_geo-localization_using_semantic_fusion_with_hierarchy_of_geographic_emb.md)
+
+<!-- RELATED:END -->

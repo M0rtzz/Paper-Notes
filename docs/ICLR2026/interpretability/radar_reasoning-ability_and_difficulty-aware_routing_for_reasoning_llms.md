@@ -120,3 +120,15 @@ $$\mathcal{L}_{2PL} = -\frac{1}{nk} \sum_{i=1}^n \sum_{j=1}^k [y_{ij} \log p_{ij
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个基准、35 个配置、175 万条数据，全面且严谨
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，公式推导完整，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 直接面向 RLM 实际部署的核心问题，节约成本效果显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
+- [ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
+- [When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
+- [MATA: A Trainable Hierarchical Automaton System for Multi-Agent Visual Reasoning](mata_a_trainable_hierarchical_automaton_system_for_multi-agent_visual_reasoning.md)
+- [Beyond Accuracy: Dissecting Mathematical Reasoning for LLMs Under Reinforcement Learning](../../NeurIPS2025/interpretability/beyond_accuracy_dissecting_mathematical_reasoning_for_llms_u.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ ResNet9 在 FashionMNIST 上的最终 NC 指标（越低越好）：
 - 实验充分度: ⭐⭐⭐⭐⭐ （3,900+ 运行，系统性变量控制，多数据集多架构）
 - 写作质量: ⭐⭐⭐⭐ （理论和实验结合紧密，结构清晰）
 - 价值: ⭐⭐⭐⭐ （对理解深度学习优化和表征几何有重要启示）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Collapse in Test-Time Adaptation](../../CVPR2026/others/neural_collapse_in_test-time_adaptation.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](../../NeurIPS2025/others/reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+- [The Publication Choice Problem](../../AAAI2026/others/the_publication_choice_problem.md)
+- [The Persistence of Neural Collapse Despite Low-Rank Bias](../../NeurIPS2025/others/the_persistence_of_neural_collapse_despite_low-rank_bias.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](../../ACL2025/others/distractor_gen_multiple_choice.md)
+
+<!-- RELATED:END -->

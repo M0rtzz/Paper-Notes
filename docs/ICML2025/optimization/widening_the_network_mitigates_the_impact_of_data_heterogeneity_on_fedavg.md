@@ -155,3 +155,15 @@ $$\theta_{\text{cen}}^{t'} = \theta^{t\tau}, \quad f(x, \theta_{\text{cen}}^{t'}
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献突出——首次定量建立宽度与异质性的关系，证明无穷宽等价性优雅且有意义。但理论与实践之间存在较大鸿沟（无穷宽假设、MSE+GD 限制、学习率趋零），实验规模偏小。对理论社区有重要价值，但实践指导力（"把网络变宽"）相对有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Butterfly Effect: Neural Network Training Trajectories Are Highly Sensitive to Initial Conditions](the_butterfly_effect_neural_network_training_trajectories_are_highly_sensitive_t.md)
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [Federated Continual Instruction Tuning](../../ICCV2025/optimization/federated_continual_instruction_tuning.md)
+- [Data Heterogeneity and Forgotten Labels in Split Federated Learning](../../AAAI2026/optimization/data_heterogeneity_and_forgotten_labels_in_split_federated_learning.md)
+- [Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients](../../NeurIPS2025/optimization/efficient_federated_learning_against_byzantine_attacks_and_data_heterogeneity_vi.md)
+
+<!-- RELATED:END -->

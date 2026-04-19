@@ -123,3 +123,15 @@ SAE由两个核心模块组成：(1) 语义校正模块——CLIP通用语义 + 
 | 技术深度 | ⭐⭐⭐⭐ | 双模块互补设计合理，理论支撑充分 |
 | 实验完整度 | ⭐⭐⭐⭐ | 9种CIL方法x多种攻击基线，消融充分 |
 | 实用价值 | ⭐⭐⭐ | 场景较特定，但对安全关键应用有重要警示 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning](../../CVPR2025/llm_nlp/sec-promptsemantic_complementary_prompting_for_few-shot_class-incremental_learni.md)
+- [Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
+- [Learning Spatial Decay for Vision Transformers](learning_spatial_decay_for_vision_transformers.md)
+- [GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization](../../ACL2025/llm_nlp/gapo_preferential_prompt.md)
+- [C²Prompt: Class-aware Client Knowledge Interaction for Federated Continual Learning](../../NeurIPS2025/llm_nlp/c2prompt_class-aware_client_knowledge_interaction_for_federated_continual_learni.md)
+
+<!-- RELATED:END -->

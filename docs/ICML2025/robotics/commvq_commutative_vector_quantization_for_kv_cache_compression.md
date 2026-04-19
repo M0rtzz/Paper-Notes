@@ -114,3 +114,15 @@ LLaMA-3.1 8B 长上下文基准：
 - 实验充分度: ⭐⭐⭐⭐ 多基准、1-bit/2-bit、内存分析
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 使长上下文 LLM 在消费级 GPU 上可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STAR: Learning Diverse Robot Skill Abstractions through Rotation-Augmented Vector Quantization](star_learning_diverse_robot_skill_abstractions_through_rotation-augmented_vector.md)
+- [VLA-Cache: Efficient Vision-Language-Action Manipulation via Adaptive Token Caching](../../NeurIPS2025/robotics/vla-cache_efficient_vision-language-action_manipulation_via_adaptive_token_cachi.md)
+- [VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers](../../ICCV2025/robotics/vq-vla_improving_vision-language-action_models_via_scaling_vector-quantized_acti.md)
+- [Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning](../../AAAI2026/robotics/attention_as_binding_a_vector-symbolic_perspective_on_transformer_reasoning.md)
+- [PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](../../ICLR2026/robotics/persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
+
+<!-- RELATED:END -->

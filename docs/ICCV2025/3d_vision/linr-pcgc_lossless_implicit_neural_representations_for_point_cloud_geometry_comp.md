@@ -182,3 +182,15 @@ AQ&MC 降低 8.1% bpp，SCE 进一步降低 3.1% bpp。
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集全面对比，含编码时间-码率曲线和详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但公式较密集
 - 价值: ⭐⭐⭐⭐ 填补了 INR 无损点云压缩的空白，分布无关性有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Compression for 3D Geometry Sets](neural_compression_for_3d_geometry_sets.md)
+- [End-to-End Implicit Neural Representations for Classification](../../CVPR2025/3d_vision/end-to-end_implicit_neural_representations_for_classification.md)
+- [SL2A-INR: Single-Layer Learnable Activation for Implicit Neural Representation](sl2a-inr_single-layer_learnable_activation_for_implicit_neural_representation.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
+
+<!-- RELATED:END -->

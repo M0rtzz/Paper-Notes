@@ -197,3 +197,15 @@ BackFlip 在 ATLAS 测试集上达到 0.80 的 Pearson 相关系数，接近 MD 
 | 实用价值 | 7 | 蛋白质设计的真实需求，但缺少生物实验功能验证 |
 | 写作质量 | 8 | 结构清晰、图表精美，动机阐述充分 |
 | **综合** | **8** | 开创性工作，方法优雅且经 MD 模拟充分验证 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvoFlows: Evolutionary Edit-Based Flow-Matching for Protein Engineering](../../ICLR2026/medical_imaging/evoflows_evolutionary_edit-based_flow-matching_for_protein_engineering.md)
+- [Protein Structure Tokenization: Benchmarking and New Recipe](protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [Empower Structure-Based Molecule Optimization with Gradient Guided Bayesian Flow Networks](empower_structure-based_molecule_optimization_with_gradient_guided_bayesian_flow.md)
+- [Efficient Molecular Conformer Generation with SO(3)-Averaged Flow Matching and Reflow](efficient_molecular_conformer_generation_with_so3-averaged_flow_matching_and_ref.md)
+- [Elucidating the Design Space of Multimodal Protein Language Models](elucidating_the_design_space_of_multimodal_protein_language_models.md)
+
+<!-- RELATED:END -->

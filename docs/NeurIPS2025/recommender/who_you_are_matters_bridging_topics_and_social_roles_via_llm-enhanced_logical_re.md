@@ -122,3 +122,15 @@ TagCF-expl 扩量40天后 LT7（次周DAU/留存）显著提升 0.037%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 在线A/B（亿级用户14天）+ 工业离线 + 2个公开数据集
 - 写作质量: ⭐⭐⭐⭐ 框架清晰但符号较多
 - 价值: ⭐⭐⭐⭐⭐ 已在工业级平台验证，对 LLM 增强推荐有重要参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Think before Recommendation: Autonomous Reasoning-enhanced Recommender](think_before_recommendation_autonomous_reasoning-enhanced_recommender.md)
+- [The More You Automate, the Less You See: Hidden Pitfalls of AI Scientist Systems](the_more_you_automate_the_less_you_see_hidden_pitfalls_of_ai_scientist_systems.md)
+- [Measuring What Matters: Construct Validity in Large Language Model Benchmarks](measuring_what_matters_construct_validity_in_large_language_model_benchmarks.md)
+- [In Agents We Trust, but Who Do Agents Trust? Latent Source Preferences Steer LLM Generations](../../ICLR2026/recommender/in_agents_we_trust_but_who_do_agents_trust_latent_source_preferences_steer_llm_g.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+
+<!-- RELATED:END -->

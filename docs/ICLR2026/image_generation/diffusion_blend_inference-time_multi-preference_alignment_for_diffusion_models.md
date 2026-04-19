@@ -130,3 +130,15 @@ DB-KLA 可以平滑控制 KL：$\lambda > 1$ 增强对齐但可能过拟合，$\
 - 实验充分度: ⭐⭐⭐⭐ 多种奖励组合、Pareto 分析、KL 控制实验全面，但仅 SD v1.5
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，图表直观，动机-理论-算法-实验逻辑紧凑
 - 价值: ⭐⭐⭐⭐⭐ 为扩散模型的多偏好部署提供了实用且理论扎实的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RNE: plug-and-play diffusion inference-time control and energy-based training](rne_plug-and-play_diffusion_inference-time_control_and_energy-based_training.md)
+- [Multi-Metric Preference Alignment for Generative Speech Restoration](../../AAAI2026/image_generation/multi-metric_preference_alignment_for_generative_speech_restoration.md)
+- [GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
+- [Unsupervised Conformal Inference: Bootstrapping and Alignment to Control LLM Uncertainty](unsupervised_conformal_inference_bootstrapping_and_alignment_to_control_llm_unce.md)
+- [Test-Time Iterative Error Correction for Efficient Diffusion Models](test-time_iterative_error_correction_for_efficient_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 核回归数值验证充分，LLM 实验(0.1B-1B)增强实践相关性
 - 写作质量: ⭐⭐⭐⭐⭐ FSL 各项的物理解释极为清晰，理论和实践的桥梁搭建出色
 - 价值: ⭐⭐⭐⭐⭐ 为理解和设计 LLM 学习率调度提供了坚实的理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
+- [Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](../../ICLR2026/optimization/convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?](../../ICLR2026/optimization/scaling_laws_of_signsgd_in_linear_regression_when_does_it_outperform_sgd.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+
+<!-- RELATED:END -->

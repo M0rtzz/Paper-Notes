@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型多数据集多场景（蒸馏/RL/OOD）全面验证，消融充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验组织合理
 - 价值: ⭐⭐⭐⭐ 即插即用的数据质量增强工具，对 CoT 数据集构建有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](../../ACL2025/llm_reasoning/tract_regression_cot.md)
+- [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](../../ACL2025/llm_reasoning/cot-valve_length-compressible_chain-of-thought_tuning.md)
+- [Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
+- [SafePath: Preventing Harmful Reasoning in Chain-of-Thought via Early Alignment](safepath_preventing_harmful_reasoning_in_chain-of-thought_via_early_alignment.md)
+- [Re-FORC: Adaptive Reward Prediction for Efficient Chain-of-Thought Reasoning](re-forc_adaptive_reward_prediction_for_efficient_chain-of-thought_reasoning.md)
+
+<!-- RELATED:END -->

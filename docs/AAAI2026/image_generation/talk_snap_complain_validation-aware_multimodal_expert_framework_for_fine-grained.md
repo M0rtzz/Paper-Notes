@@ -149,3 +149,15 @@ Validation MoE带来 **+8.2%** Aspect准确率提升（73.74%→81.94%）。
 - 实验充分度: ⭐⭐⭐⭐ — 消融充分、人工评估完整，但数据集规模和领域覆盖有限
 - 写作质量: ⭐⭐⭐ — 方法描述详尽但表述较冗长，符号系统复杂
 - 价值: ⭐⭐⭐ — 实际应用价值明确，但计算成本和数据局限性制约推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CharaConsist: Fine-Grained Consistent Character Generation](../../ICCV2025/image_generation/characonsist_fine-grained_consistent_character_generation.md)
+- [FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction](../../ECCV2024/image_generation/finematch_aspect-based_fine-grained_image_and_text_mismatch_detection_and_correc.md)
+- [TaxaDiffusion: Progressively Trained Diffusion Model for Fine-Grained Species Generation](../../ICCV2025/image_generation/taxadiffusion_progressively_trained_diffusion_model_for_fine-grained_species_gen.md)
+- [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](../../CVPR2025/image_generation/clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
+- [SegQuant: A Semantics-Aware and Generalizable Quantization Framework for Diffusion Models](../../CVPR2026/image_generation/segquant_diffusion_model_quantization.md)
+
+<!-- RELATED:END -->

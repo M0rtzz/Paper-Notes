@@ -110,3 +110,15 @@ tags:
 - **有效性**: ⭐⭐⭐⭐ 8 个模型 × 7 种语言的广泛实验、神经元探测提供内部机制证据、消融实验验证阈值
 - **意义**: ⭐⭐⭐⭐ 挑战"英语主导"假设，对多语言模型训练和评估有直接指导价值
 - **清晰度**: ⭐⭐⭐⭐ 框架图和四象限示例直观，符号体系清晰，但部分公式排版较密
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Large Language Models Have an English Accent? Evaluating and Improving the Naturalness of Multilingual LLMs](multilingual_llm_english_accent.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+- [M-RewardBench: Evaluating Reward Models in Multilingual Settings](m_rewardbench.md)
+- [Marco-Bench-MIF: On Multilingual Instruction-Following Capability of Large Language Models](marco_bench_multilingual_if.md)
+
+<!-- RELATED:END -->

@@ -161,3 +161,15 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{(s, m, g) \sim \mathcal{D}} \left[ \left( V_
 - 实验充分度: ⭐⭐⭐⭐ （长时间跨度基准上的优越表现）
 - 写作质量: ⭐⭐⭐⭐ （算法动机和理论分析清晰易懂）
 - 价值: ⭐⭐⭐⭐ （为GCRL值学习开辟了新范式）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Divide, Harmonize, Then Conquer It: Shooting Multi-Commodity Flow Problems with Multimodal Language Models](divide_harmonize_then_conquer_it_shooting_multi-commodity_flow_problems_with_mul.md)
+- [ROMI: Model-based Offline RL via Robust Value-Aware Model Learning with Implicitly Differentiable Adaptive Weighting](model-based_offline_rl_via_robust_value-aware_model_learning_with_implicitly_dif.md)
+- [Value Flows](value_flows.md)
+- [Divide and Conquer: Grounding LLMs as Efficient Decision-Making Agents via Offline Hierarchical Reinforcement Learning](../../ICML2025/reinforcement_learning/divide_and_conquer_grounding_llms_as_efficient_decision-making_agents_via_offlin.md)
+- [Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+
+<!-- RELATED:END -->

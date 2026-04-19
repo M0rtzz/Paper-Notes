@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ back-translation、3D估计对比、消融、用户研究、副产品验证，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 概念清晰、流程图直观、背景知识铺垫到位，论文结构非常好
 - 价值: ⭐⭐⭐⭐ 建立了Spoken2Sign 3D基线并释放词典数据，对后续研究有较好推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvSign: Sign Language Recognition and Translation with Streaming Events](evsign_sign_language_recognition_and_translation_with_streaming_events.md)
+- [SignAvatars: A Large-scale 3D Sign Language Holistic Motion Dataset and Benchmark](signavatars_a_large-scale_3d_sign_language_holistic_motion_dataset_and_benchmark.md)
+- [SCAPE: A Simple and Strong Category-Agnostic Pose Estimator](scape_a_simple_and_strong_category-agnostic_pose_estimator.md)
+- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](quar-vla_vision-language-action_model_for_quadruped_robots.md)
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+
+<!-- RELATED:END -->

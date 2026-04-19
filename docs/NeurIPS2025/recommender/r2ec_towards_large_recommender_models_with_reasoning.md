@@ -141,3 +141,15 @@ R²ec相对最佳基线的提升：CDs上H@5提升63.7%，N@10提升72.3%；Inst
 - 实验充分度: ⭐⭐⭐⭐⭐ 三数据集、多基线、9项分析极为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机论证充分
 - 价值: ⭐⭐⭐⭐⭐ 开辟了推理增强推荐的新范式，实际提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Think before Recommendation: Autonomous Reasoning-enhanced Recommender](think_before_recommendation_autonomous_reasoning-enhanced_recommender.md)
+- [Inference-Time Reward Hacking in Large Language Models](inference-time_reward_hacking_in_large_language_models.md)
+- [Radial Neighborhood Smoothing Recommender System](radial_neighborhood_smoothing_recommender_system.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+- [TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning](../../AAAI2026/recommender/travellama_a_multimodal_travel_assistant_with_large-scale_dataset_and_structured.md)
+
+<!-- RELATED:END -->

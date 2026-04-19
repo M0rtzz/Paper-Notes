@@ -144,3 +144,15 @@ VISAGE基于Mask2Former检测器构建，分为三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 四个基准全面对比，消融详尽(特征来源、α值、tracker设计)
 - 写作质量: ⭐⭐⭐⭐⭐ — 翻转图像实验的proof of concept设计精妙，算法流程清晰
 - 价值: ⭐⭐⭐⭐ — 提供了简单有效的VIS改进方案，具有很强的实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dataset Enhancement with Instance-Level Augmentations](dataset_enhancement_with_instance-level_augmentations.md)
+- [CAVIS: Context-Aware Video Instance Segmentation](../../ICCV2025/segmentation/cavis_context-aware_video_instance_segmentation.md)
+- [General and Task-Oriented Video Segmentation](general_and_task-oriented_video_segmentation.md)
+- [Segmentation-Guided Layer-Wise Image Vectorization with Gradient Fills](segmentation-guided_layer-wise_image_vectorization_with_gradient_fills.md)
+- [ProMerge: Prompt and Merge for Unsupervised Instance Segmentation](promerge_prompt_and_merge_for_unsupervised_instance_segmentation.md)
+
+<!-- RELATED:END -->

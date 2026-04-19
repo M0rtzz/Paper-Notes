@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐ Workshop paper，仅有 toy example，无 benchmark 实验
 - 写作质量: ⭐⭐⭐ 逻辑清晰但内容偏薄，形式化严谨
 - 价值: ⭐⭐⭐ 提供了有趣的理论视角但距离实用还有较大距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?](can_knowledge-graph-based_retrieval_augmented_generation_really_retrieve_what_yo.md)
+- [Graph Diffusion that can Insert and Delete](graph_diffusion_that_can_insert_and_delete.md)
+- [Graph-based Neural Space Weather Forecasting](graph-based_neural_space_weather_forecasting.md)
+- [Flatten Graphs as Sequences: Transformers are Scalable Graph Generators](flatten_graphs_as_sequences_transformers_are_scalable_graph_generators.md)
+- [Directed Graph Grammars for Sequence-based Learning](../../ICML2025/image_generation/directed_graph_grammars_for_sequence-based_learning.md)
+
+<!-- RELATED:END -->

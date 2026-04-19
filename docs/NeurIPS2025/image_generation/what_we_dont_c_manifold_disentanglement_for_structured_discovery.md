@@ -117,3 +117,15 @@ tags:
 - 技术贡献：⭐⭐⭐⭐ （方法简洁但有效）
 - 实验充分度：⭐⭐⭐⭐ （从玩具到真实数据的完整验证链）
 - 写作质量：⭐⭐⭐⭐⭐ （叙事流畅，图表出色）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery](score-informed_neural_operator_for_enhancing_ordering-based_causal_discovery.md)
+- [Generative Model Inversion Through the Lens of the Manifold Hypothesis](generative_model_inversion_through_the_lens_of_the_manifold_hypothesis.md)
+- [Diffusion-Based Electromagnetic Inverse Design of Scattering Structured Media](diffusion-based_electromagnetic_inverse_design_of_scattering_structured_media.md)
+- [Local Manifold Approximation and Projection for Manifold-Aware Diffusion Planning](../../ICML2025/image_generation/local_manifold_approximation_and_projection_for_manifold-aware_diffusion_plannin.md)
+- [StelLA: Subspace Learning in Low-rank Adaptation using Stiefel Manifold](stella_subspace_learning_in_low-rank_adaptation_using_stiefel_manifold.md)
+
+<!-- RELATED:END -->

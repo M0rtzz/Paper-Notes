@@ -206,3 +206,15 @@ ImageNet-1k 256×256（无 CFG）：
 - 实验充分度: ⭐⭐⭐⭐ （三个数据集验证，消融较全面，但缺少高分辨率/CFG 实验）
 - 写作质量: ⭐⭐⭐⭐ （理论推导清晰，实验呈现规范）
 - 价值: ⭐⭐⭐⭐ （揭示了 RF 中有益噪声的存在并提供了学习方法，有后续研究空间）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Straighten Viscous Rectified Flow via Noise Optimization](../../ICCV2025/image_generation/straighten_viscous_rectified_flow_via_noise_optimization.md)
+- [TAUE: Training-free Noise Transplant and Cultivation Diffusion Model](../../CVPR2026/image_generation/taue_training-free_noise_transplant_and_cultivation_diffusion_model.md)
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](../../ICLR2026/image_generation/flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [Editable Noise Map Inversion: Encoding Target-image into Noise For High-Fidelity Image Manipulation](../../ICML2025/image_generation/editable_noise_map_inversion_encoding_target-image_into_noise_for_high-fidelity_.md)
+- [Improved Noise Schedule for Diffusion Training](../../ICCV2025/image_generation/improved_noise_schedule_for_diffusion_training.md)
+
+<!-- RELATED:END -->

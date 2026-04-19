@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融全面，对比了多种架构和训练数据量，但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，实验设计严谨，统计检验完整
 - 价值: ⭐⭐⭐⭐ 为多模态人机交互提供了新的研究方向和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Co-speech Gestures in-the-wild](../../ICCV2025/human_understanding/understanding_co-speech_gestures_in-the-wild.md)
+- [HOP: Heterogeneous Topology-based Multimodal Entanglement for Co-Speech Gesture Generation](../../CVPR2025/human_understanding/hop_heterogeneous_topology-based_multimodal_entanglement_for_co-speech_gesture_g.md)
+- [Streaming Generation of Co-Speech Gestures via Accelerated Rolling Diffusion](../../AAAI2026/human_understanding/streaming_generation_of_co-speech_gestures_via_accelerated_rolling_diffusion.md)
+- [SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](../../ICCV2025/human_understanding/semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)
+- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](../../ICCV2025/human_understanding/semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
+
+<!-- RELATED:END -->

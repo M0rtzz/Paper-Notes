@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个模型、多种攻击（含专用去除）、放射性验证、消融完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法形式化严谨
 - 价值: ⭐⭐⭐⭐⭐ 对模型坍缩预防和生成内容追溯有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Watermarking Autoregressive Image Generation](watermarking_autoregressive_image_generation.md)
+- [EditInfinity: Image Editing with Binary-Quantized Generative Models](editinfinity_image_editing_with_binary-quantized_generative_models.md)
+- [Conditional Panoramic Image Generation via Masked Autoregressive Modeling](conditional_panoramic_image_generation_via_masked_autoregres.md)
+- [Shallow Diffuse: Robust and Invisible Watermarking through Low-Dimensional Subspaces in Diffusion Models](shallow_diffuse_robust_and_invisible_watermarking_through_low-dimensional_subspa.md)
+- [ThermalGen: Style-Disentangled Flow-Based Generative Models for RGB-to-Thermal Image Translation](thermalgen_style-disentangled_flow-based_generative_models_for_rgb-to-thermal_im.md)
+
+<!-- RELATED:END -->

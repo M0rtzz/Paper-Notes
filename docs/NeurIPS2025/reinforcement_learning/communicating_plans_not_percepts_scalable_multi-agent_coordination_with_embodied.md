@@ -152,3 +152,15 @@ LDC 在全观察 6×6 网格中的通信消融：
 - ⭐ 实用性：3/5 — 核心思想有价值但实验规模过于简化，实际部署路径不清晰
 - ⭐ 实验充分度：3/5 — 消融和对比清晰但仅限简单网格环境，缺乏与主流 MARL 方法对比
 - ⭐ 写作质量：4/5 — 问题动机和方法陈述清晰，图表设计良好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Oryx: a Scalable Sequence Model for Many-Agent Coordination in Offline MARL](oryx_a_scalable_sequence_model_for_many-agent_coordination_in_offline_marl.md)
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [Self-Improving Embodied Foundation Models](self-improving_embodied_foundation_models.md)
+- [Sequential Multi-Agent Dynamic Algorithm Configuration](sequential_multi-agent_dynamic_algorithm_configuration.md)
+- [VIKI-R: Coordinating Embodied Multi-Agent Cooperation via Reinforcement Learning](viki-r_coordinating_embodied_multi-agent_cooperation_via_reinforcement_learning.md)
+
+<!-- RELATED:END -->

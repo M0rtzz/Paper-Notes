@@ -150,3 +150,15 @@ $$T^* = \arg\max_{T_k \in \mathcal{T}} \ell_{T_k}(\tau_i)$$
 - **技术深度**: ⭐⭐⭐⭐ — 理论推导清晰，虽方法本身简洁
 - **实验充分性**: ⭐⭐⭐⭐ — 5 基准 + 消融全面，但模型规模有限
 - **实用性**: ⭐⭐⭐⭐⭐ — 零额外成本即可提升 RL 训练效果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
+- [Incentivizing Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](incentivizing_agentic_reasoning_in_llm_judges_via_tool-integrated_reinforcement_.md)
+- [BOTS: A Unified Framework for Bayesian Online Task Selection in LLM Reinforcement Finetuning](bots_a_unified_framework_for_bayesian_online_task_selection_in_llm_reinforcement.md)
+- [Human-LLM Collaborative Feature Engineering for Tabular Learning](human-llm_collaborative_feature_engineering_for_tabular_data.md)
+- [π-Flow: Policy-Based Few-Step Generation via Imitation Distillation](pi-flow_policy-based_few-step_generation_via_imitation_distillation.md)
+
+<!-- RELATED:END -->

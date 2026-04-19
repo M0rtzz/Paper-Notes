@@ -186,3 +186,15 @@ $$\hat{y}_i^{CLS} = \alpha^{CLS} y_i^{GAT} + (1-\alpha^{CLS}) y_i^{retrieved}$$
 - 实验: ⭐⭐⭐⭐⭐ — 跨数据集验证、临床用户研究、丰富消融
 - 写作: ⭐⭐⭐⭐ — 结构完整，伦理和部署讨论充分
 - 实用性: ⭐⭐⭐⭐⭐ — 真正面向低资源场景部署，临床验证，开源工具包
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIRAGE: Scaling Test-Time Inference with Parallel Graph-Retrieval-Augmented Reasoning Chains](mirage_scaling_test-time_inference_with_parallel_graph-retrieval-augmented_reaso.md)
+- [DeepGB-TB: A Risk-Balanced Cross-Attention Gradient-Boosted Convolutional Network for Rapid, Interpretable Tuberculosis Screening](deepgb-tb_a_risk-balanced_cross-attention_gradient-boosted_convolutional_network.md)
+- [MAPI-GNN: Multi-Activation Plane Interaction Graph Neural Network for Multimodal Medical Diagnosis](mapi-gnn_multi-activation_plane_interaction_graph_neural_network_for_multimodal_.md)
+- [Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics](dual-path_knowledge-augmented_contrastive_alignment_network_for_spatially_resolv.md)
+- [RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis](../../NeurIPS2025/medical_imaging/rad_towards_trustworthy_retrieval-augmented_multi-modal_clinical_diagnosis.md)
+
+<!-- RELATED:END -->

@@ -105,3 +105,15 @@ DiSCo 作为中间件，包含两个核心控制器：**分发控制器 (Dispatc
 | 实验充分度 | 8 |
 | 写作质量 | 7 |
 | 总体评分 | 8 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ $$\mathcal{L} = \mathcal{L}_d + \lambda \mathcal{L}_{VQ} = \text{MSE}(z, \tilde{
 - 实验充分度: ⭐⭐⭐⭐ 定量+用户研究+两个数据集+码率消融+生成验证，比较完整
 - 写作质量: ⭐⭐⭐⭐ 动机和理论基础阐述清晰，与编码理论的关联讲解到位
 - 价值: ⭐⭐⭐⭐ 提供了一种通用解耦范式，对视频编辑和生成有广泛启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [Video Motion Graphs](video_motion_graphs.md)
+- [SummDiff: Generative Modeling of Video Summarization with Diffusion](summdiff_generative_modeling_of_video_summarization_with_diffusion.md)
+- [WildVidFit: Video Virtual Try-On in the Wild via Image-Based Controlled Diffusion Models](../../ECCV2024/image_generation/wildvidfit_video_virtual_try-on_in_the_wild_via_image-based_controlled_diffusion.md)
+- [SMGDiff: Soccer Motion Generation using Diffusion Probabilistic Models](smgdiff_soccer_motion_generation_using_diffusion_probabilistic_models.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ $\lambda$同时控制：(1) 内层强凸性常数；(2) 内层解的有界性和
 - 实验充分度: ⭐⭐⭐ — 仅合成数据上的工具变量回归实验，验证了理论速率但缺乏实际应用
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论体系严谨完整，证明思路清晰，交换图等辅助说明到位
 - 价值: ⭐⭐⭐⭐ — 填补重要理论空白，技术贡献扎实，但实际影响有待后续随机/大规模扩展验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Adaptive Algorithm for Bilevel Optimization on Riemannian Manifolds](an_adaptive_algorithm_for_bilevel_optimization_on_riemannian_manifolds.md)
+- [Problem-Parameter-Free Decentralized Bilevel Optimization](problem-parameter-free_decentralized_bilevel_optimization.md)
+- [Kernel Learning with Adversarial Features: Numerical Efficiency and Adaptive Regularization](kernel_learning_with_adversarial_features_numerical_efficiency_and_adaptive_regu.md)
+- [Set Smoothness Unlocks Clarke Hyper-stationarity in Bilevel Optimization](set_smoothness_unlocks_clarke_hyper-stationarity_in_bilevel_optimization.md)
+- [A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)
+
+<!-- RELATED:END -->

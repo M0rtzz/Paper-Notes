@@ -114,3 +114,15 @@ DuoGPT 在相近加速比下比最优结构化剪枝方法 ShortGPT 高出 **9.1
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 LLaMA-2/3 全系列，消融实验完整，但缺少实际延迟测量
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨清晰，从理论到高效实现的层层推进非常流畅
 - 价值: ⭐⭐⭐⭐ — 对 LLM 部署优化有实际意义，双稀疏思路值得后续工作继续探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning](twilight_adaptive_attention_sparsity_with_hierarchical_top-p_pruning.md)
+- [MUSTAFAR: Promoting Unstructured Sparsity for KV Cache Pruning in LLM Inference](mustafar_promoting_unstructured_sparsity_for_kv_cache_pruning_in_llm_inference.md)
+- [MixA-Q: Revisiting Activation Sparsity for Vision Transformers from a Mixed-Precision Quantization Perspective](../../ICCV2025/model_compression/mixa-q_revisiting_activation_sparsity_for_vision_transformers_from_a_mixed-preci.md)
+- [Steering MoE LLMs via Expert (De)Activation](../../ICLR2026/model_compression/steering_moe_llms_via_expert_deactivation.md)
+- [Spark Transformer: Reactivating Sparsity in FFN and Attention](spark_transformer_reactivating_sparsity_in_ffn_and_attention.md)
+
+<!-- RELATED:END -->

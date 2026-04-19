@@ -151,3 +151,15 @@ $$L = L_{rgb} + \lambda_{geo}L_{geo} + \lambda_{obj}L_{obj} + \lambda_{road}L_{r
 - 技术深度：⭐⭐⭐⭐ — Octree Surfel + 三层解耦 + 完整标注流水线
 - 实验充分度：⭐⭐⭐⭐⭐ — 重建/下游/泛化/消融/与 LiDAR 对比，非常全面
 - 实用价值：⭐⭐⭐⭐⭐ — 直接支撑大规模自动驾驶数据标注，工程价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](6dopegs_online_6d_object_pose_estimation_using_gaussian_spla.md)
+- [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
+- [Vision-Only Gaussian Splatting for Collaborative Semantic Occupancy Prediction](../../AAAI2026/autonomous_driving/visiononly_gaussian_splatting_for_collaborative_semantic_occupancy_p.md)
+- [GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+
+<!-- RELATED:END -->

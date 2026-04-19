@@ -191,3 +191,15 @@ CRN++平均再提升1-2%。
 **优点**：问题定义清晰且重要，方法设计优雅，在真正challenging的OOD域上验证而非挑软柿子捏。三智能体架构的模块化设计便于理解和扩展。统计检验完备。
 
 **扣分点**：绝对准确率较低限制了实际应用价值；缺少与fine-tuning baseline的对比使得"zero-shot"定位的说服力打折；符号质量评估偏定性（仅用平均概率和GPT-o1打分），缺少更rigorous的量化指标（如幻觉率的精确定义和测量）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision-Language Models Encode Clinical Guidelines for Concept-Based Medical Reasoning](../../CVPR2026/multimodal_vlm/vision-language_models_encode_clinical_guidelines_for_concept-based_medical_reas.md)
+- [InEx: Hallucination Mitigation via Introspection and Cross-Modal Multi-Agent Collaboration](inex_hallucination_mitigation_via_introspection_and_cross-mo.md)
+- [Multi-Agent VLMs Guided Self-Training with PNU Loss for Low-Resource Offensive Content Detection](multi-agent_vlms_guided_self-training_with_pnu_loss_for_low-resource_offensive_c.md)
+- [Verb Mirage: Unveiling and Assessing Verb Concept Hallucinations in Multimodal Large Language Models](verb_mirage_unveiling_and_assessing_verb_concept_hallucinations_in_multimodal_la.md)
+- [RMAdapter: Reconstruction-based Multi-Modal Adapter for Vision-Language Models (Oral)](rmadapter_reconstructionbased_multimodal_adapter_for_visionlanguage.md)
+
+<!-- RELATED:END -->

@@ -153,3 +153,15 @@ MTF50 方面差距更显著：S24U Tele 2 上本方法 MTF50=2.00（即 SR 后 5
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9 款相机、6 个基线、参考+无参考双指标、相机特定+跨相机双场景、t-SNE 退化分布可视化，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 技术细节严谨，标定流程文档化完善，补充材料详尽
 - 价值: ⭐⭐⭐⭐ — 在手机计算摄影 SR 领域有直接工程价值，公开标定数据可促进后续研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [Spatially-Variant Degradation Model for Dataset-free Super-resolution](../../ECCV2024/image_restoration/spatially-variant_degradation_model_for_dataset-free_super-resolution.md)
+- [Audio Super-Resolution with Latent Bridge Models](../../NeurIPS2025/image_restoration/audio_super-resolution_with_latent_bridge_models.md)
+- [Bridging the Perception Gap in Image Super-Resolution Evaluation](bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+
+<!-- RELATED:END -->

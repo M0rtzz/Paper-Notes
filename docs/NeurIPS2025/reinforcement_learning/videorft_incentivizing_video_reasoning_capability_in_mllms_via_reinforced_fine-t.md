@@ -136,3 +136,15 @@ VideoRFT 遵循标准的两阶段 RFT 方案：
 - 实验充分度: ⭐⭐⭐⭐ 6 个基准、完整消融，但缺少更多 RL 算法对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，流水线图示直观
 - 价值: ⭐⭐⭐⭐⭐ 高质量 CoT 数据集和视觉锚定奖励对视频推理 MLLM 有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter Efficient Fine-tuning via Explained Variance Adaptation](parameter_efficient_fine-tuning_via_explained_variance_adaptation.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](learning_from_demonstrations_via_capability-aware_goal_sampling.md)
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+- [TextShield-R1: Reinforced Reasoning for Tampered Text Detection](../../AAAI2026/reinforcement_learning/textshield-r1_reinforced_reasoning_for_tampered_text_detection.md)
+
+<!-- RELATED:END -->

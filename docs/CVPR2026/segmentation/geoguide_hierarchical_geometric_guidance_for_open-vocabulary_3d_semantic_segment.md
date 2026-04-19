@@ -142,3 +142,15 @@ GeoGuide 在 ScanNet v2 上超出 SAS(stage1) +5.6 mIoU，在 nuScenes 上超出
 - 实验充分度: ⭐⭐⭐⭐⭐ 三大基准+长尾+跨域评估，消融完整，初步实验验证动机充分
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，模块设计逻辑连贯，图表信息量大
 - 价值: ⭐⭐⭐⭐ 在开放词表3D分割中引入层次化几何约束的方向有重要意义，不使用自蒸馏即超SOTA实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal 3D Shape Matching via Coarse-to-Fine Language Guidance](universal_3d_shape_matching_via_coarse-to-fine_language_guidance.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+- [Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation](looking_beyond_the_window_global-local_aligned_clip_for_training-free_open-vocab.md)
+- [COS3D: Collaborative Open-Vocabulary 3D Segmentation](../../NeurIPS2025/segmentation/cos3d_collaborative_open-vocabulary_3d_segmentation.md)
+
+<!-- RELATED:END -->

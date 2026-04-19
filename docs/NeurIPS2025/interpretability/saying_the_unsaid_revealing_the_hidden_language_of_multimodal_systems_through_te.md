@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （多系统对比、桥接实验丰富；受限于API成本，数据规模有限）
 - 写作质量: ⭐⭐⭐⭐⭐ （叙事流畅，隐喻恰当，可视化出色）
 - 价值: ⭐⭐⭐⭐ （为闭源系统可解释性提供了全新范式）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating LLMs in Open-Source Games](evaluating_llms_in_open-source_games.md)
+- [Hidden Breakthroughs in Language Model Training](../../ICLR2026/interpretability/hidden_breakthroughs_in_language_model_training.md)
+- [The Trilemma of Truth in Large Language Models](the_trilemma_of_truth_in_large_language_models.md)
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+- [Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2025/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
+
+<!-- RELATED:END -->

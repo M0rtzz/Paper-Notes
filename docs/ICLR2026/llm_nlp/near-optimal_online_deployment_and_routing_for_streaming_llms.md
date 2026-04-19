@@ -104,3 +104,15 @@ StageRoute 是一个两层分层算法，镜像问题的层级结构：
 - 实验充分度: ⭐⭐⭐ 仿真为主，缺乏真实部署验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，问题动机清晰
 - 价值: ⭐⭐⭐⭐ 对 LLM 服务系统设计有理论指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
+- [ICL-Router: In-Context Learned Model Representations for LLM Routing](../../AAAI2026/llm_nlp/icl-router_in-context_learned_model_representations_for_llm_routing.md)
+- [LLM as Effective Streaming Processor: Bridging Streaming-Batch Mismatches with Group Position Encoding](../../ACL2025/llm_nlp/llm_as_effective_streaming_processor_bridging_streaming-batch_mismatches_with_gr.md)
+- [DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services](../../ACL2025/llm_nlp/disco_device-server_collaborative_llm-based_text_streaming_services.md)
+- [d²Cache: Accelerating Diffusion-Based LLMs via Dual Adaptive Caching](d2cache_accelerating_diffusion-based_llms_via_dual_adaptive_caching.md)
+
+<!-- RELATED:END -->

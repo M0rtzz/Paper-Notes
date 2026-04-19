@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基准评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰
 - 价值: ⭐⭐⭐⭐ 有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement](../../ECCV2024/image_restoration/unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)
+- [Learning to Translate Noise for Robust Image Denoising](../../CVPR2026/image_restoration/learning_to_translate_noise_for_robust_image_denoising.md)
+- [SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning](../../NeurIPS2025/image_restoration/scan_self-denoising_monte_carlo_annotation_for_robust_process_reward_learning.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [A Physics-Informed Blur Learning Framework for Imaging Systems](a_physics-informed_blur_learning_framework_for_imaging_systems.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ $$|\hat{A}_{\text{mix}} - A| \leq \sqrt{2v\log\frac{2}{\delta}} + c\log\frac{2}{
 - 实验充分度: ⭐⭐⭐⭐ — 统计验证充分，但 agent 训练实验规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导严谨，实验设计合理
 - 价值: ⭐⭐⭐⭐⭐ — 对超人类任务的可扩展监督提供了实用可行的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
+- [ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models](toolweaver_weaving_collaborative_semantics_for_scalable_tool_use_in_large_langua.md)
+- [Parallelism Meets Adaptiveness: Scalable Documents Understanding in Multi-Agent LLM Systems](../../AAAI2026/llm_agent/parallelism_meets_adaptiveness_scalable_documents_understanding_in_multi-agent_l.md)
+- [AgentAuditor: Human-Level Safety and Security Evaluation for LLM Agents](../../NeurIPS2025/llm_agent/agentauditor_humanlevel_safety_and_security_evaluation_for_l.md)
+- [EMULATE: A Multi-Agent Framework for Determining the Veracity of Atomic Claims by Emulating Human Actions](../../ACL2025/llm_agent/emulate_a_multi-agent_framework_for_determining_the_veracity_of_atomic_claims_by.md)
+
+<!-- RELATED:END -->

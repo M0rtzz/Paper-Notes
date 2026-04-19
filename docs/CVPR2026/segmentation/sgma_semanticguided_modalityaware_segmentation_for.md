@@ -126,3 +126,15 @@ $$\mathcal{L}_{IMSS} = 2 \cdot \mathcal{L}_{SGF} + 1 \cdot \mathcal{L}_{MAS}$$
 - ⭐⭐⭐⭐⭐ 实验充分度: 3个遥感+1个自动驾驶数据集，2个backbone，详细消融+可视化分析
 - ⭐⭐⭐⭐ 写作质量: 问题分解清晰（模态不平衡/类内变异/跨模态冲突），方法与问题一一对应
 - ⭐⭐⭐⭐⭐ 价值: 对不完整多模态遥感分割有显著实用贡献，即插即用设计降低使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Task-Oriented Data Synthesis and Control-Rectify Sampling for Remote Sensing Semantic Segmentation](task-oriented_data_synthesis_and_control-rectify_sampling_for_remote_sensing_sem.md)
+- [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportionaware_dynamic_adaptive_sali.md)
+- [Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training](data_warmup_complexity-aware_curricula_for_efficient_diffusion_training.md)
+- [SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons](semlayer_semantic-aware_generative_segmentation_and_layer_construction_for_abstr.md)
+- [UnrealPose: Leveraging Game Engine Kinematics for Large-Scale Synthetic Human Pose Data](unrealpose_leveraging_game_engine_kinematics_for_large-scale_synthetic_human_pos.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、完整消融（损失面可视化、原型偏移分析、时间对比），结论solid
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰、图表精美（损失面、cosine similarity曲线），每个设计选择都有充分动机
 - 价值: ⭐⭐⭐⭐ 解决了adapter-based CIL的核心痛点（推理扩展性），实现精度-速度帕累托最优
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CL-LoRA: Continual Low-Rank Adaptation for Rehearsal-Free Class-Incremental Learning](cl-lora_continual_low-rank_adaptation_for_rehearsal-free_class-incremental_learn.md)
+- [Mixture of Noise for Pre-Trained Model-Based Class-Incremental Learning](../../NeurIPS2025/model_compression/mixture_of_noise_for_pre-trained_model-based_class-incremental_learning.md)
+- [Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning](../../ICCV2025/model_compression/integrating_task-specific_and_universal_adapters_for_pre-trained_model-based_cla.md)
+- [Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning](../../ICCV2025/model_compression/achieving_more_with_less_additive_prompt_tuning_for_rehearsal-free_class-increme.md)
+- [Incremental Object Keypoint Learning (KAMP)](incremental_object_keypoint_learning.md)
+
+<!-- RELATED:END -->

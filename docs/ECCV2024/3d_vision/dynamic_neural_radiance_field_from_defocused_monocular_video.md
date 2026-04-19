@@ -166,3 +166,15 @@ $D^2RF$ 在所有指标上全面超越，LPIPS 提升尤为显著（0.130 vs 次
 - **实验充分度**: ⭐⭐⭐ — 8场景合成数据集充分消融，但缺少真实数据验证
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，图示直观，公式与直觉解释并行
 - **价值**: ⭐⭐⭐⭐ — 解决实际拍摄中不可避免的散焦问题，具有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation](mesh2nerf_direct_mesh_supervision_for_neural_radiance_field_representation_and_g.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](../../NeurIPS2025/3d_vision/dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
+- [S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis](s3d-nerf_single-shot_speech-driven_neural_radiance_field_for_high_fidelity_talki.md)
+- [Lagrangian Hashing for Compressed Neural Field Representations](lagrangian_hashing_for_compressed_neural_field_representations.md)
+
+<!-- RELATED:END -->

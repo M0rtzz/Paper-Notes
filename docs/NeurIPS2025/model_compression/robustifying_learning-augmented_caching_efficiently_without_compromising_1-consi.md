@@ -151,3 +151,15 @@ Guard 是一个通用鲁棒化框架，可应用于任何 **RB-following**（松
 - 技术深度：⭐⭐⭐⭐⭐ (理论证明严谨完整)
 - 实验充分性：⭐⭐⭐⭐ (多数据集、多预测器验证)
 - 实用价值：⭐⭐⭐⭐⭐ (直接可集成到缓存系统)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Representation Consistency for Accurate and Coherent LLM Answer Aggregation](representation_consistency_for_accurate_and_coherent_llm_answer_aggregation.md)
+- [Elastic ViTs from Pretrained Models without Retraining](elastic_vits_from_pretrained_models_without_retraining.md)
+- [AutoJudge: Judge Decoding Without Manual Annotation](autojudge_judge_decoding_without_manual_annotation.md)
+- [LightMem: Lightweight and Efficient Memory-Augmented Generation](../../ICLR2026/model_compression/lightmem_lightweight_and_efficient_memory-augmented_generation.md)
+- [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](../../ICML2025/model_compression/lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ VLM 在图像理解任务上表现优异，但一个关键问题被忽略了：*
 - **实验充分度**: ★★★☆☆ — 分析深入但仅限于 LLaVA 架构的机制实验，且样本量有限
 - **写作质量**: ★★★★☆ — 逻辑清晰、图表直观，实验设计环环相扣
 - **价值**: ★★★★☆ — 揭示了 VLM 的根本性信息处理瓶颈，对模型设计有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision-Language Models Struggle to Align Entities across Modalities](vision-language_models_struggle_to_align_entities_across_modalities.md)
+- [Self-Supervised Spatial Correspondence Across Modalities](../../CVPR2025/multimodal_vlm/self-supervised_spatial_correspondence_across_modalities.md)
+- [A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks](../../CVPR2025/multimodal_vlm/a_closed-form_solution_for_debiasing_vision-language_models_with_utility_guarant.md)
+- [Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains](weaving_context_across_images_improving_vision-language_models_through_focus-cen.md)
+- [Insight Over Sight: Exploring the Vision-Knowledge Conflicts in Multimodal LLMs](conflictvis_vision_knowledge_conflict.md)
+
+<!-- RELATED:END -->

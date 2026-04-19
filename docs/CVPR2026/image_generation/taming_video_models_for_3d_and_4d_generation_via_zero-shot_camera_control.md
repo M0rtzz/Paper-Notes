@@ -128,3 +128,15 @@ WorldForge 提出一个完全无训练的推理时引导框架，通过三个协
 - 实验充分度: ⭐⭐⭐⭐⭐ 70+ 场景、50+ 视频、3D/4D 双任务、跨模型验证、完整消融
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但三个组件的符号较多，阅读有一定门槛
 - 价值: ⭐⭐⭐⭐⭐ 无训练即插即用的通用性使其有极高的实用价值，12+ 种应用展示令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiP: Taming Diffusion Models in Pixel Space](dip_taming_diffusion_models_in_pixel_space.md)
+- [AnyPortal: Zero-Shot Consistent Video Background Replacement](../../ICCV2025/image_generation/anyportal_zero-shot_consistent_video_background_replacement.md)
+- [V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)
+- [Taming Sampling Perturbations with Variance Expansion Loss for Latent Diffusion Models](taming_sampling_perturbations_with_variance_expansion_loss_for_latent_diffusion_.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+
+<!-- RELATED:END -->

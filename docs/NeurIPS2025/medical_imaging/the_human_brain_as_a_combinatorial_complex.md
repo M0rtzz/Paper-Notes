@@ -126,3 +126,15 @@ Rank-1 边的构建基于成对互信息，阈值 MI ≥ 0.02 以确保稀疏性
 - 实验充分度: ⭐⭐ 仅为概念验证，无真实数据、无下游任务、无与其他方法的定量对比
 - 写作质量: ⭐⭐⭐⭐ 数学框架清晰，动机阐述到位，pipeline 描述详细
 - 价值: ⭐⭐⭐ 方向前沿但距实际应用尚远，需要大量后续工作验证可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Brain-tuning Improves Generalizability and Efficiency of Brain Alignment in Speech Models](brain-tuning_improves_generalizability_and_efficiency_of_brain_alignment_in_spee.md)
+- [CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](../../ICML2025/medical_imaging/cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
+- [DesignX: Human-Competitive Algorithm Designer for Black-Box Optimization](designx_human-competitive_algorithm_designer_for_black-box_optimization.md)
+- [Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex](meta-learning_an_in-context_transformer_model_of_human_higher_visual_cortex.md)
+- [Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry](riemannian_flow_matching_for_brain_connectivity_matrices_via_pullback_geometry.md)
+
+<!-- RELATED:END -->

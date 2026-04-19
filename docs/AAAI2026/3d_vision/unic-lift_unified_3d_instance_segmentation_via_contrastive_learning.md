@@ -191,3 +191,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{rendering} + \lambda_{cluster} \mathcal{L}_
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、充分消融，缺少更大规模场景实验
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，玩具实验直观展示核心思想
 - **实用价值**: ⭐⭐⭐⭐⭐ — 20-30 倍加速使实际应用成为可能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PCF-Lift: Panoptic Lifting by Probabilistic Contrastive Fusion](../../ECCV2024/3d_vision/pcf-lift_panoptic_lifting_by_probabilistic_contrastive_fusion.md)
+- [ASSIST-3D: Adapted Scene Synthesis for Class-Agnostic 3D Instance Segmentation](assist-3d_adapted_scene_synthesis_for_class-agnostic_3d_instance_segmentation.md)
+- [Retrieving Objects from 3D Scenes with Box-Guided Open-Vocabulary Instance Segmentation](retrieving_objects_from_3d_scenes_with_box-guided_open-vocabulary_instance_segme.md)
+- [Learning Unified Representation of 3D Gaussian Splatting](../../ICLR2026/3d_vision/learning_unified_representation_of_3d_gaussian_splatting.md)
+- [Any3DIS: Class-Agnostic 3D Instance Segmentation by 2D Mask Tracking](../../CVPR2025/3d_vision/any3dis_class-agnostic_3d_instance_segmentation_by_2d_mask_tracking.md)
+
+<!-- RELATED:END -->

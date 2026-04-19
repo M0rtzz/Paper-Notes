@@ -140,3 +140,15 @@ FedAux的工作流程：
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个数据集、3种规模、丰富的baseline对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，理论分析严谨
 - 价值: ⭐⭐⭐⭐ 为子图FL提供了简洁高效的个性化方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees](../../ICML2025/optimization/understanding_the_statistical_accuracy-communication_trade-off_in_personalized_f.md)
+- [Multiplayer Federated Learning: Reaching Equilibrium with Less Communication](multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)
+
+<!-- RELATED:END -->

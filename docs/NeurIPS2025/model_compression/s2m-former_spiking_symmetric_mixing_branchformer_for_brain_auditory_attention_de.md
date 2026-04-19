@@ -130,3 +130,15 @@ $$H[t,c,n] = V[t-1,c,n] + \frac{1}{\tau_l[c]}(X[t,c,n] - (V[t-1,c,n] - V_{reset}
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集、三种评估设置、完整消融和能耗分析
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式展示规范
 - **价值**: ⭐⭐⭐⭐⭐ 为低功耗 BCI/助听设备提供极具前景的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
+- [Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing](synergy_between_the_strong_and_the_weak_spiking_neural_networks_are_inherently_s.md)
+- [BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG](barista_brain_scale_informed_spatiotemporal_representation_of_human_intracranial.md)
+- [AI-Generated Video Detection via Perceptual Straightening](ai-generated_video_detection_via_perceptual_straightening.md)
+- [DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning](dragon_guard_llm_unlearning_in_context_via_negative_detection_and_reasoning.md)
+
+<!-- RELATED:END -->

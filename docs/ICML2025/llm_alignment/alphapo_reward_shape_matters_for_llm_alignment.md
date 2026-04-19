@@ -136,3 +136,15 @@ $$\mathcal{L}_{\text{AlphaPO}} = -\mathbb{E}_{(x,y_w,y_l)} \left[\log \sigma\lef
 - 实验充分度: ⭐⭐⭐⭐ 两个基座模型上的主实验 + $\alpha$ 消融 + likelihood displacement 分析，整体充分；但缺大规模模型验证
 - 写作质量: ⭐⭐⭐⭐ 论文含 26 页 16 图，展示详尽；核心论点"reward shape matters"清晰有力
 - 价值: ⭐⭐⭐⭐ 对 DAA 社区有直接实用价值，$\alpha$ 参数可简单集成到现有训练流程中；但提升幅度相对 SimPO 不算巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Robustness of Reward Models for Language Model Alignment](on_the_robustness_of_reward_models_for_language_model_alignment.md)
+- [Improving LLM Safety Alignment with Dual-Objective Optimization](improving_llm_safety_alignment_with_dual-objective_optimization.md)
+- [Mechanism Design for LLM Fine-tuning with Multiple Reward Models](../../NeurIPS2025/llm_alignment/mechanism_design_for_llm_fine-tuning_with_multiple_reward_models.md)
+- [LLM Safety Alignment is Divergence Estimation in Disguise](../../NeurIPS2025/llm_alignment/llm_safety_alignment_is_divergence_estimation_in_disguise.md)
+- [Ask a Strong LLM Judge when Your Reward Model is Uncertain](../../NeurIPS2025/llm_alignment/ask_a_strong_llm_judge_when_your_reward_model_is_uncertain.md)
+
+<!-- RELATED:END -->

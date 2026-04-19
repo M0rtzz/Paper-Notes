@@ -138,3 +138,15 @@ MMBoundary 在所有数据集上全面领先：MECE 平均降低 7.5%，Cultural
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集（含 OOD）、8 个基线、详实消融、人工评估、统计检验齐全
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表直观，方法描述完整
 - 价值: ⭐⭐⭐⭐ — 解决了多模态推理中幻觉传播的实际痛点，框架具有较好的通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)
+- [COLING-UniA at SciVQA 2025: Few-Shot Example Retrieval and Confidence-Informed Ensembling for Multimodal Large Language Models](coling-unia_at_scivqa_2025_few-shot_example_retrieval_and_confidence-informed_en.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+- [Aria-UI: Visual Grounding for GUI Instructions](aria-ui_visual_grounding_for_gui_instructions.md)
+- [Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence](cracking_hallucination_vhd.md)
+
+<!-- RELATED:END -->

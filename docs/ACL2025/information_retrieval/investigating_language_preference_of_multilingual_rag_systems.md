@@ -162,3 +162,15 @@ DKM-RAG 消融（aya-expanse-8B）：
 - 实验充分度: ⭐⭐⭐⭐ 8 种语言、3 种重排序编码器、4 种生成器，实验覆盖检索+生成两个阶段，消融完整
 - 写作质量: ⭐⭐⭐⭐ RQ 驱动的结构清晰，分析层层递进，从现象到解决方案逻辑完整
 - 价值: ⭐⭐⭐⭐ 对多语言 RAG 系统的设计和部署有实际指导意义，MLRS 和 DKM-RAG 均可直接应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Ambiguity to Accuracy: The Transformative Effect of Coreference Resolution on RAG Systems](from_ambiguity_to_accuracy_the_transformative_effect_of_coreference_resolution_o.md)
+- [VoxRAG: A Step Toward Transcription-Free RAG Systems in Spoken Question Answering](voxrag_a_step_toward_transcription-free_rag_systems_in_spoken_question_answering.md)
+- [KnowShiftQA: How Robust are RAG Systems when Textbook Knowledge Shifts in K-12 Education?](knowshiftqa_rag_knowledge_shifts.md)
+- [Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
+- [GainRAG: Preference Alignment in Retrieval-Augmented Generation through Gain Signal Synthesis](gainrag_preference_alignment.md)
+
+<!-- RELATED:END -->

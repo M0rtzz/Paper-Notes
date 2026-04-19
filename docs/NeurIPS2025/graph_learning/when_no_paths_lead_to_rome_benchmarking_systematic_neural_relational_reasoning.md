@@ -150,3 +150,15 @@ tags:
 ⭐⭐⭐⭐⭐
 
 极其出色的benchmark工作。四维度难度量化精确且有洞察力。最核心贡献是实证表明所有现有模型——包括LRM——在非路径推理上本质性地失败，为新型推理架构的研发提供了清晰的方向。NoRA有潜力成为CLUTRR之后关系推理评估的新标准。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relatron: Automating Relational Machine Learning over Relational Databases](../../ICLR2026/graph_learning/relatron_automating_relational_machine_learning_over_relational_databases.md)
+- [Diagnosing and Addressing Pitfalls in KG-RAG Datasets: Toward More Reliable Benchmarking](diagnosing_and_addressing_pitfalls_in_kg-rag_datasets_toward_more_reliable_bench.md)
+- [MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [DuetGraph: Coarse-to-Fine Knowledge Graph Reasoning with Dual-Pathway Global-Local Fusion](duetgraph_coarse-to-fine_knowledge_graph_reasoning_with_dual-pathway_global-loca.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \mathcal{L}_{\text{re
 - 实验充分度: ⭐⭐⭐⭐⭐ （11个数据集 × 6个骨架，消融、可扩展性、过平滑分析齐全）
 - 写作质量: ⭐⭐⭐⭐ （理论推导清晰，结构完整，推论与实验对应良好）
 - 价值: ⭐⭐⭐⭐ （即插即用、理论扎实，对图学习社区实用价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Making Classic GNNs Strong Baselines Across Varying Homophily: A Smoothness-Generalization Perspective](../../NeurIPS2025/graph_learning/making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)
+- [Adaptive Riemannian Graph Neural Networks](adaptive_riemannian_graph_neural_networks.md)
+- [Posterior Label Smoothing for Node Classification](posterior_label_smoothing_for_node_classification.md)
+- [BugSweeper: Function-Level Detection of Smart Contract Vulnerabilities Using Graph Neural Networks](bugsweeper_function-level_detection_of_smart_contract_vulnerabilities_using_grap.md)
+- [Self-Adaptive Graph Mixture of Models](self-adaptive_graph_mixture_of_models.md)
+
+<!-- RELATED:END -->

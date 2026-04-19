@@ -125,3 +125,15 @@ MegaSynth 的数据生成流程分为三步：(1) 生成场景平面图——确
 - 实验充分度: ⭐⭐⭐⭐⭐ 全面的消融分析、多数据集验证、室内/室外分拆评估、跨任务迁移实验
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，实验充分，但数据生成管线的一些细节需查看附录
 - 价值: ⭐⭐⭐⭐⭐ 为 3D 重建社区提供了一种低成本高收益的数据扩展路径，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TokenUnify: Scaling Up Autoregressive Pretraining for Neuron Segmentation](../../ICCV2025/3d_vision/tokenunify_scaling_up_autoregressive_pretraining_for_neuron_segmentation.md)
+- [Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron CT Data](regularizing_inr_with_diffusion_prior_self-supervised_3d_reconstruction_of_neutr.md)
+- [RigAnyFace: Scaling Neural Facial Mesh Auto-Rigging with Unlabeled Data](../../NeurIPS2025/3d_vision/riganyface_scaling_neural_facial_mesh_auto-rigging_with_unlabeled_data.md)
+- [MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model](mvgenmaster_scaling_multi-view_generation_from_any_image_via_3d_priors_enhanced_.md)
+- [Decompositional Neural Scene Reconstruction with Generative Diffusion Prior](decompositional_neural_scene_reconstruction_with_generative_diffusion_prior.md)
+
+<!-- RELATED:END -->

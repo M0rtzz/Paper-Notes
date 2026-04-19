@@ -172,3 +172,15 @@ $$\mathcal{L}_{\text{hybrid}} = -\mathbb{E}_{\mathbf{X} \in p(\mathbf{X})}\left[
 - 实验充分度: ⭐⭐⭐⭐ 两个标准数据集、全面的SOTA对比、丰富的消融分析和编辑任务评估
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法图示直观，问题建模形式化严谨
 - 价值: ⭐⭐⭐⭐ 统一框架的思路具有方法论意义，对运动生成领域有明确推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatially-Variant Degradation Model for Dataset-free Super-resolution](spatially-variant_degradation_model_for_dataset-free_super-resolution.md)
+- [MambaIR: A Simple Baseline for Image Restoration with State-Space Model](mambair_a_simple_baseline_for_image_restoration_with_state-space_model.md)
+- [Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography](joint_rgb-spectral_decomposition_model_guided_image_enhancement_in_mobile_photog.md)
+- [MAD-Avatar: Motion-Aware Animatable Gaussian Avatars Deblurring](../../CVPR2026/image_restoration/motionaware_animatable_gaussian_avatars_deblurring.md)
+- [TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation](../../ICML2025/image_restoration/timedart_a_diffusion_autoregressive_transformer_for_self-supervised_time_series_.md)
+
+<!-- RELATED:END -->

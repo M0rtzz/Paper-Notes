@@ -176,3 +176,15 @@ $$
 - 实验充分度: ⭐⭐⭐⭐ — 9 个基线对比 + 消融 + OOD 泛化，较为全面
 - 写作质量: ⭐⭐⭐⭐ — 公式推导清晰，框架图直观，行文流畅
 - 价值: ⭐⭐⭐⭐ — 为 MetaBBO 领域引入离线 RL 新范式，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaBox-v2: A Unified Benchmark Platform for Meta-Black-Box Optimization](../../NeurIPS2025/reinforcement_learning/metabox-v2_a_unified_benchmark_platform_for_meta-black-box_optimization.md)
+- [Optimizing the Unknown: Black Box Bayesian Optimization with Energy-Based Model and Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/optimizing_the_unknown_black_box_bayesian_optimization_with_energy-based_model_a.md)
+- [Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning](graph-assisted_stitching_for_offline_hierarchical_reinforcement_learning.md)
+- [Graph-Supported Dynamic Algorithm Configuration for Multi-Objective Combinatorial Optimization](graph-supported_dynamic_algorithm_configuration_for_multi-objective_combinatoria.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+
+<!-- RELATED:END -->

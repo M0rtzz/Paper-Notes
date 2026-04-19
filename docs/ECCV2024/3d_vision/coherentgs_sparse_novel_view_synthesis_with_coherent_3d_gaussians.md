@@ -171,3 +171,15 @@ $$\Sigma^*,\phi^*,\mathbf{c}^* = \arg\min \sum_{\mathbf{p}} \mathcal{L}(R(\mathb
 - 实验充分度: ⭐⭐⭐⭐⭐ (多数据集、多输入配置、详细消融、视觉+数值对比)
 - 写作质量: ⭐⭐⭐⭐⭐ (逻辑清晰，motivation阐述充分，图表信息丰富)
 - 价值: ⭐⭐⭐⭐ (稀疏视图3DGS实用价值高，278fps推理速度有应用前景)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thermal3D-GS: Physics-induced 3D Gaussians for Thermal Infrared Novel-view Synthesis](thermal3d-gs_physics-induced_3d_gaussians_for_thermal_infrared_novel-view_synthe.md)
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+- [CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis](../../CVPR2025/3d_vision/comapgs_covisibility_map-based_gaussian_splatting_for_sparse_novel_view_synthesi.md)
+- [NGP-RT: Fusing Multi-Level Hash Features with Lightweight Attention for Real-Time Novel View Synthesis](ngp-rt_fusing_multi-level_hash_features_with_lightweight_attention_for_real-time.md)
+- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+
+<!-- RELATED:END -->

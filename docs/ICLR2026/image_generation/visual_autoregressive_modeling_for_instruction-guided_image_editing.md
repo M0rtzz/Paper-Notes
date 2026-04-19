@@ -129,3 +129,15 @@ EMU-Edit和PIE-Bench上的定量对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个benchmark、多种指标、与frontier模型对比
 - 写作质量: ⭐⭐⭐⭐ 分析清晰，从问题到解决方案的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 性能大幅超越SOTA，开创编辑新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+- [Early Timestep Zero-Shot Candidate Selection for Instruction-Guided Image Editing](../../ICCV2025/image_generation/early_timestep_zero-shot_candidate_selection_for_instruction-guided_image_editin.md)
+- [InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
+- [Training-Free Reward-Guided Image Editing via Trajectory Optimal Control](training-free_reward-guided_image_editing_via_trajectory_optimal_control.md)
+- [EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling](editscore_unlocking_online_rl_for_image_editing_via_high-fidelity_reward_modelin.md)
+
+<!-- RELATED:END -->

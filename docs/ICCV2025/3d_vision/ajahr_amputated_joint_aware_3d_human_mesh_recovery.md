@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 截肢/非截肢/遮挡多场景+大量消融，但真实截肢者数据仍有限
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述充分，方法描述清晰，结构完整
 - 价值: ⭐⭐⭐⭐ 包容性AI的开创性工作，合成数据管线和双Tokenizer思路有通用启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision](fish2mesh_transformer_3d_human_mesh_recovery_from_egocentric_vision.md)
+- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](../../CVPR2025/3d_vision/heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
+- [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](../../CVPR2025/3d_vision/mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
+- [Global-to-Pixel Regression for Human Mesh Recovery](../../ECCV2024/3d_vision/global-to-pixel_regression_for_human_mesh_recovery.md)
+- [Multi-HMR: Multi-Person Whole-Body Human Mesh Recovery in a Single Shot](../../ECCV2024/3d_vision/multi-hmr_multi-person_whole-body_human_mesh_recovery_in_a_single_shot.md)
+
+<!-- RELATED:END -->

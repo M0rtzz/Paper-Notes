@@ -157,3 +157,15 @@ DVLA-RL 包含两个核心模块：
 - 实验充分度: ⭐⭐⭐⭐⭐ (9 个基准，3 种场景，20+ 基线)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，公式完整)
 - 价值: ⭐⭐⭐⭐ (SOTA 结果显著，方法通用性好)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](../../AAAI2026/reinforcement_learning/vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
+- [Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts](../../NeurIPS2025/reinforcement_learning/zero-shot_context_generalization_in_reinforcement_learning_from_few_training_con.md)
+- [Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
+- [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](../../ICML2025/reinforcement_learning/zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
+- [Dual Goal Representations](dual_goal_representations.md)
+
+<!-- RELATED:END -->

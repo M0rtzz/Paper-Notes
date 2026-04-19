@@ -139,3 +139,15 @@ TopoMaskV3 的输入是多视角 RGB 图像，经过 backbone 提取透视视角
 - 实验充分度: ⭐⭐⭐⭐⭐ 多划分/多传感器/多距离的系统分析，消融极其详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，benchmark 分析透彻
 - 价值: ⭐⭐⭐⭐ 掩码范式升级+公平基准贡献双重价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TOD³Cap: Towards 3D Dense Captioning in Outdoor Scenes](../../ECCV2024/autonomous_driving/tod3cap_towards_3d_dense_captioning_in_outdoor_scenes.md)
+- [4D Contrastive Superflows are Dense 3D Representation Learners](../../ECCV2024/autonomous_driving/4d_contrastive_superflows_are_dense_3d_representation_learners.md)
+- [Minimum-Cost Network Flow with Dual Predictions](../../AAAI2026/autonomous_driving/minimum-cost_network_flow_with_dual_predictions.md)
+- [Multi-Head Low-Rank Attention (MLRA)](../../ICLR2026/autonomous_driving/multi-head_low-rank_attention.md)
+- [Fine-Grained Representation for Lane Topology Reasoning](../../AAAI2026/autonomous_driving/fine-grained_representation_for_lane_topology_reasoning.md)
+
+<!-- RELATED:END -->

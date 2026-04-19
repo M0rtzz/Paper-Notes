@@ -123,3 +123,15 @@ DPO 损失函数如上。Batch size 512，峰值学习率 1e-6 线性衰减至 1
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖多个基准、模型规模、反馈方式、数据量的全面消融，加上人类评估验证
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，实验分析到位，附录包含丰富细节
 - 价值: ⭐⭐⭐⭐⭐ 为 SLM 领域确立了偏好优化范式，SOTA 结果令人信服，框架可扩展到更多语音任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning](maporl_multi-agent_post-co-training_for_collaborative_large_language_models_with.md)
+- [ParaS2S: Benchmarking and Aligning Spoken Language Models for Paralinguistic-Aware Speech-to-Speech Interaction](../../ICLR2026/reinforcement_learning/paras2s_benchmarking_and_aligning_spoken_language_models_for_paralinguistic-awar.md)
+- [Behavior Injection: Preparing Language Models for Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/behavior_injection_preparing_language_models_for_reinforcement_learning.md)
+- [Checklists Are Better Than Reward Models For Aligning Language Models](../../NeurIPS2025/reinforcement_learning/checklists_are_better_than_reward_models_for_aligning_langua.md)
+- [Optimizing Language Models for Inference Time Objectives using Reinforcement Learning](../../ICML2025/reinforcement_learning/optimizing_language_models_for_inference_time_objectives_using_reinforcement_lea.md)
+
+<!-- RELATED:END -->

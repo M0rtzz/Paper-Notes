@@ -253,3 +253,15 @@ BenchRisk采用半自动化的打分流程：
 - 实用性：⭐⭐⭐⭐⭐ — 对基准选择和设计有直接指导价值
 - 严谨性：⭐⭐⭐⭐ — 分析全面但评分的主观性需关注
 - 影响力：⭐⭐⭐⭐ — 有望推动基准测试质量的提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BCWildfire: A Long-term Multi-factor Dataset and Deep Learning Benchmark for Boreal Wildfire Risk Prediction](../../AAAI2026/llm_evaluation/bcwildfire_a_long-term_multi-factor_dataset_and_deep_learning_benchmark_for_bore.md)
+- [Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](../../ICLR2026/llm_evaluation/mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)
+- [A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](../../ACL2025/llm_evaluation/a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)
+- [A Standardized Benchmark for Multilabel Antimicrobial Peptide Classification](a_standardized_benchmark_for_multilabel_antimicrobial_peptide_classification.md)
+- [CLIMB: Class-Imbalanced Learning Benchmark on Tabular Data](climb_class-imbalanced_learning_benchmark_on_tabular_data.md)
+
+<!-- RELATED:END -->

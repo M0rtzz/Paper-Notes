@@ -90,3 +90,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 规模偏小，需要更大模型验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，渐进式结构
 - 价值: ⭐⭐⭐⭐ 如果大规模验证成立将对Transformer设计有重大影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](../../ACL2025/others/attention_entropy_parallel_encoding.md)
+- [Value Residual Learning](../../ACL2025/others/value_residual_learning.md)
+- [Faithful Group Shapley Value](../../NeurIPS2025/others/faithful_group_shapley_value.md)
+- [The Price of Robustness: Stable Classifiers Need Overparameterization](the_price_of_robustness_stable_classifiers_need_overparameterization.md)
+- [Extreme Value Monte Carlo Tree Search for Classical Planning](../../AAAI2026/others/extreme_value_monte_carlo_tree_search_for_classical_planning.md)
+
+<!-- RELATED:END -->

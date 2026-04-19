@@ -111,3 +111,15 @@ QVLM 是一个三阶段架构：(1) LLM 解析自然语言问题并生成 Python
 - 实验充分度: ⭐⭐⭐⭐ (多模型/多 tier 对比全面，但只基于一个数据集)
 - 写作质量: ⭐⭐⭐⭐ (逻辑清晰，问题动机阐述有力)
 - 价值: ⭐⭐⭐⭐ (打开了定量空间推理的新范式，但泛化到其他领域需更多验证)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pixel-Level Reasoning Segmentation via Multi-turn Conversations](../../ACL2025/segmentation/pixel-level_reasoning_segmentation_via_multi-turn_conversations.md)
+- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_re.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearthsar_a_sarcentric_and_billionscale_geospa.md)
+- [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](../../NeurIPS2025/segmentation/unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
+- [CA-LoRA: Concept-Aware LoRA for Domain-Aligned Segmentation Dataset Generation](ca-lora_concept-aware_lora_for_domain-aligned_segmentation_dataset_generation.md)
+
+<!-- RELATED:END -->

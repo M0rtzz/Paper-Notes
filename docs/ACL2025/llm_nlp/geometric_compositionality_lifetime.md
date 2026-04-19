@@ -124,3 +124,15 @@ tags:
 - **技术深度**: ⭐⭐⭐⭐ — 实验设计严谨（受控数据集+自然数据，多模型规模+训练动态，shuffling 消融），理论动机清晰
 - **实用性**: ⭐⭐⭐ — 主要为理论洞察，直接应用场景有限，但为理解和改进 LM 表示提供了几何工具
 - **表达质量**: ⭐⭐⭐⭐⭐ — Yoshua Bengio 组出品，写作逻辑严密，图表直观，叙事极为清晰流畅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Strassen Attention, Split VC Dimension and Compositionality in Transformers](../../NeurIPS2025/llm_nlp/strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
+- [Evaluating Text Creativity across Diverse Domains: A Dataset and Large Language Model Evaluator](../../ICLR2026/llm_nlp/evaluating_text_creativity_across_diverse_domains_a_dataset_and_large_language_m.md)
+- [Convert Language Model into a Value-based Strategic Planner](convert_language_model_into_a_value-based_strategic_planner.md)
+- [Circuit Stability Characterizes Language Model Generalization](circuit_stability_characterizes_language_model_generalization.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+
+<!-- RELATED:END -->

@@ -162,3 +162,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 自建 Continual Bench + 多种 baseline 对比，但环境复杂度可进一步提升
 - 写作质量: ⭐⭐⭐⭐ 理论和实验兼顾，Spotlight 论文质量
 - 价值: ⭐⭐⭐⭐⭐ 为 CRL 提出了根本性的新思路，具有长远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [Position: Lifetime Tuning is Incompatible with Continual Reinforcement Learning](position_lifetime_tuning_is_incompatible_with_continual_reinforcement_learning.md)
+- [Mitigating Plasticity Loss in Continual Reinforcement Learning by Reducing Churn](mitigating_plasticity_loss_in_continual_reinforcement_learning_by_reducing_churn.md)
+- [Temporal-Difference Variational Continual Learning](../../NeurIPS2025/reinforcement_learning/temporal-difference_variational_continual_learning.md)
+
+<!-- RELATED:END -->

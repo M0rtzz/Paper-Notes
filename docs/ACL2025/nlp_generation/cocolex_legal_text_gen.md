@@ -145,3 +145,15 @@ CoCoLex vs CoLex（去掉置信度引导的静态插值版本）：
 - 实验充分度: ⭐⭐⭐⭐ 五个法律基准、两个模型、人类评估、CoCoLex+ 扩展、组合实验、推理时间分析，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式推导完整，实验分析详实
 - 价值: ⭐⭐⭐⭐ 法律 AI 的实际需求强烈，无训练解码策略的即插即用特性使其部署价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [Personalized Text Generation with Contrastive Activation Steering](personalized_text_generation_with_contrastive_activation_steering.md)
+- [Writing Like the Best: Exemplar-Based Expository Text Generation](writing_like_best_exemplar.md)
+- [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](dehumanizing_machines_anthropomorphic.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ SegAgent 将 referring expression segmentation 建模为人类标注员的迭代
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多模型组合对比，消融分析清晰，还引入了 HRES 高质量数据集
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，算法伪代码完整
 - 价值: ⭐⭐⭐⭐ 范式创新有启发性，但实际应用受限于推理时多步调用的效率开销
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_referential_consistency_in_pixel.md)
+- [Image Quality Assessment: From Human to Machine Preference](image_quality_assessment_from_human_to_machine_preference.md)
+- [Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
+- [Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation](exploring_clips_dense_knowledge_for_weakly_supervised_semantic_segmentation.md)
+- [DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
+
+<!-- RELATED:END -->

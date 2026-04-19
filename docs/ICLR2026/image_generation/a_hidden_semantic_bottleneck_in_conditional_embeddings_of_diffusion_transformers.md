@@ -116,3 +116,15 @@ N/A（分析论文，不训练模型）
 - 实验充分度: ⭐⭐⭐⭐⭐ 6+ 个模型、3 种任务、详细裁剪消融、训练动态追踪
 - 写作质量: ⭐⭐⭐⭐ 发现清晰但理论解释偏弱
 - 价值: ⭐⭐⭐⭐⭐ 对条件生成模型的理解产生根本性影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)
+- [HierLoc: Hyperbolic Entity Embeddings for Hierarchical Visual Geolocation](hierloc_hyperbolic_entity_embeddings_for_hierarchical_visual_geolocation.md)
+- [Conjuring Semantic Similarity](conjuring_semantic_similarity.md)
+- [Interpretable and Steerable Concept Bottleneck Sparse Autoencoders](../../CVPR2026/image_generation/interpretable_and_steerable_concept_bottleneck_sparse_autoencoders.md)
+- [FlowCast: Advancing Precipitation Nowcasting with Conditional Flow Matching](flowcast_advancing_precipitation_nowcasting_with_conditional_flow_matching.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 填补了表格+文本基准的重要空白。定性反例精准有力，基准策划规则清晰可复现。局限在于未测试更先进嵌入方法和超大规模模型。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TabSTAR: A Tabular Foundation Model for Tabular Data with Text Fields](../../NeurIPS2025/self_supervised/tabstar_a_tabular_foundation_model_for_tabular_data_with_text_fields.md)
+- [Beyond Sensor Data: Foundation Models of Behavioral Data from Wearables Improve Health Predictions](beyond_sensor_data_foundation_models_of_behavioral_data_from_wearables_improve_h.md)
+- [What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models](what_has_a_foundation_model_found_using_inductive_bias_to_probe_for_world_models.md)
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [Robust Tabular Foundation Models](../../AAAI2026/self_supervised/robust_tabular_foundation_models.md)
+
+<!-- RELATED:END -->

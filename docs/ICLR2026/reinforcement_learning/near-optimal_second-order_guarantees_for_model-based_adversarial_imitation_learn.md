@@ -184,3 +184,15 @@ MB-AIL 的核心假设是：策略空间 $\Pi$ 可以分解为奖励类 $\mathca
 - 实验充分度: ⭐⭐⭐ — GridWorld验证了理论，MuJoCo展示了实用性，但环境数量和规模偏少
 - 写作质量: ⭐⭐⭐⭐ — 理论严谨，39页内容详尽，但密度较高
 - 价值: ⭐⭐⭐⭐⭐ — 为模仿学习的理论基础做出了重要贡献，清晰回答了"在线交互的价值"这一核心问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+- [On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
+- [Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
+- [A Near-optimal, Scalable and Parallelizable Framework for Stochastic Bandits Robust to Adversarial Corruptions and Beyond](../../NeurIPS2025/reinforcement_learning/a_nearoptimal_scalable_and_parallelizable_framework_for_stoc.md)
+- [The Sample Complexity of Online Reinforcement Learning: A Multi-Model Perspective](the_sample_complexity_of_online_reinforcement_learning_a_multi-model_perspective.md)
+
+<!-- RELATED:END -->

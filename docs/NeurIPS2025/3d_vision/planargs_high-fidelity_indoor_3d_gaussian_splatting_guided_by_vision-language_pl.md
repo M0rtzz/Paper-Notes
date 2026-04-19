@@ -130,3 +130,15 @@ $\lambda_1=0.05, \lambda_2=0.5, \lambda_3=0.05, \lambda_4=0.2$。训练30K步，
 - 实验充分度: ⭐⭐⭐⭐ 三个室内数据集+消融，覆盖合成和真实场景
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详尽
 - 价值: ⭐⭐⭐⭐⭐ 室内重建的实用方法，大幅领先SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LangSplatV2: High-dimensional 3D Language Gaussian Splatting with 450+ FPS](langsplatv2_high-dimensional_3d_language_gaussian_splatting_with_450_fps.md)
+- [GazeGaussian: High-Fidelity Gaze Redirection with 3D Gaussian Splatting](../../ICCV2025/3d_vision/gazegaussian_high-fidelity_gaze_redirection_with_3d_gaussian_splatting.md)
+- [Plana3R: Zero-shot Metric Planar 3D Reconstruction via Feed-Forward Planar Splatting](plana3r_zero-shot_metric_planar_3d_reconstruction_via_feed-forward_planar_splatt.md)
+- [HAIF-GS: Hierarchical and Induced Flow-Guided Gaussian Splatting for Dynamic Scene](haif-gs_hierarchical_and_induced_flow-guided_gaussian_splatting_for_dynamic_scen.md)
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](../../CVPR2026/3d_vision/3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+
+<!-- RELATED:END -->

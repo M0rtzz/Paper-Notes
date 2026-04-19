@@ -145,3 +145,15 @@ GeoExplorer 的训练分为三个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ （4 个基准 + 新数据集 + 全面消融 + 丰富可视化）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，补充材料详尽）
 - 价值: ⭐⭐⭐⭐ （对搜救 UAV 部署有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Image Geo-Localization to Continent Level](../../NeurIPS2025/remote_sensing/scaling_image_geo-localization_to_continent_level.md)
+- [Information-Bottleneck Driven Binary Neural Network for Change Detection](information-bottleneck_driven_binary_neural_network_for_change_detection.md)
+- [RHO: Robust Holistic OSM-Based Metric Cross-View Geo-Localization](../../CVPR2026/remote_sensing/rho_robust_holistic_osm-based_metric_cross-view_geo-localization.md)
+- [ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations](../../ECCV2024/remote_sensing/congeo_robust_cross-view_geo-localization_across_ground_view_variations.md)
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+
+<!-- RELATED:END -->

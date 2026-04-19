@@ -154,3 +154,15 @@ $$a_{ijk} = \text{Softmax}_{j,k}\left(\frac{f_i g_j + g_j h_k + h_k f_i}{\sqrt{d
 - **写作质量**: ⭐⭐⭐⭐⭐ — 清晰的组织和精确的数学陈述
 - **实用价值**: ⭐⭐⭐ — 目前更偏理论，Strassen 注意力的实际应用前景需进一步探索
 - **综合**: ⭐⭐⭐⭐⭐ (9/10) — 顶级理论工作，优雅地连接了复杂度理论与 Transformer 架构设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CAT: Circular-Convolutional Attention for Sub-Quadratic Transformers](cat_circular-convolutional_attention_for_sub-quadratic_transformers.md)
+- [Spectral Conditioning of Attention Improves Transformer Performance](spectral_conditioning_of_attention_improves_transformer_performance.md)
+- [Vision Transformers are Circulant Attention Learners](../../AAAI2026/llm_nlp/vision_transformers_are_circulant_attention_learners.md)
+- [Linear Transformers Implicitly Discover Unified Numerical Algorithms](linear_transformers_implicitly_discover_unified_numerical_algorithms.md)
+- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](../../CVPR2025/llm_nlp/rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
+
+<!-- RELATED:END -->

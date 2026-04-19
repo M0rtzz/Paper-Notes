@@ -138,3 +138,15 @@ CAD 在全部 5 个基准上达到最优，CIFAR-10 上超 DIRK 2.70%，CIFAR-10
 - 实验充分度: ⭐⭐⭐⭐⭐ — 14 个基线、5 个数据集、纠缠专项分析、多维度可视化，非常充分
 - 写作质量: ⭐⭐⭐⭐ — 问题阐述清晰，图表丰富，但公式较密集
 - 价值: ⭐⭐⭐⭐ — 对弱监督学习中的类混淆问题提出有效解决方案，CAD-CAM 变体实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instance-wise Supervision-level Optimization in Active Learning](../../CVPR2025/others/instance-wise_supervision-level_optimization_in_active_learning.md)
+- [Revisiting Instance-Optimal Cluster Recovery in the Labeled Stochastic Block Model](../../ICML2025/others/revisiting_instance-optimal_cluster_recovery_in_the_labeled_stochastic_block_mod.md)
+- [Mitigating Shortcut Learning with InterpoLated Learning](../../ACL2025/others/mitigating_shortcut_learning_with_interpolated_learning.md)
+- [U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models](clipfree_label_free_unsupervised_concept_bottlenec.md)
+- [CaDrift: A Time-dependent Causal Generator of Drifting Data Streams](../../ICLR2026/others/cadrift_a_time-dependent_causal_generator_of_drifting_data_streams.md)
+
+<!-- RELATED:END -->

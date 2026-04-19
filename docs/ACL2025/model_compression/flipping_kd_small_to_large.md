@@ -110,3 +110,15 @@ SLM 教师（微调的 BERT-like 模型）→ 计算文本对相似度分数 →
 - 实验充分度: ⭐⭐⭐⭐ 多领域多模型，含线上部署验证
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐⭐ 范式转变有启发性，工业可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongReD: Mitigating Short-Text Degradation of Long-Context Large Language Models via Restoration Distillation](longred_mitigating_short-text_degradation_of_long-context_large_language_models_.md)
+- [QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks](../../NeurIPS2025/model_compression/quadenhancer_leveraging_quadratic_transformations_to_enhance_deep_neural_network.md)
+- [Data Laundering: Artificially Boosting Benchmark Results through Knowledge Distillation](data_laundering_artificially_boosting_benchmark_results_through_knowledge_distil.md)
+- [Distillation of Large Language Models via Concrete Score Matching](../../ICLR2026/model_compression/distillation_of_large_language_models_via_concrete_score_matching.md)
+- [Capture the Key in Reasoning to Enhance CoT Distillation Generalization](capture_key_cot_distillation.md)
+
+<!-- RELATED:END -->

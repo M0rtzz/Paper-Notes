@@ -184,3 +184,15 @@ $$\mathcal{L} = -E_{q(z|x;\phi)}[\log P^{nm}(c_1^N|\hat{c}_1) + \log P^{nm}(c_2^
 - **实验充分度**: ⭐⭐⭐⭐ — 4 个分解任务 × 8 种噪声水平 + 真实噪声数据 + 不确定性校准评估，非常系统
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，数学推导严谨，图表精美
 - **价值**: ⭐⭐⭐⭐ — 对荧光显微镜图像分析有直接实用价值，方法框架可推广到其他图像分解场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography](joint_rgb-spectral_decomposition_model_guided_image_enhancement_in_mobile_photog.md)
+- [Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution](pairwise_distance_distillation_for_unsupervised_real-world_image_super-resolutio.md)
+- [Statistical Characteristic-Guided Denoising for Rapid High-Resolution Transmission Electron Microscopy Imaging](../../CVPR2026/image_restoration/statistical_characteristic-guided_denoising_for_rapid_high-resolution_transmissi.md)
+- [TTT-MIM: Test-Time Training with Masked Image Modeling for Denoising Distribution Shifts](ttt-mim_test-time_training_with_masked_image_modeling_for_denoising_distribution.md)
+- [BluRef: Unsupervised Image Deblurring with Dense-Matching References](../../CVPR2026/image_restoration/bluref_unsupervised_image_deblurring_with_dense-matching_references.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ DIQ 将每个训练样本投射到二维空间：(1) **难度分数** — 模型
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9 个 benchmark、6 个数据集、多模型、完整消融+效率分析
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，实验丰富，动机论证有先导实验支撑
 - 价值: ⭐⭐⭐⭐ — 对医学 LLM 微调的实用性强，但标题中 VLM 部分验证不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thompson Sampling via Fine-Tuning of LLMs](../../ICLR2026/medical_imaging/thompson_sampling_via_fine-tuning_of_llms.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+- [G2L: From Giga-Scale to Cancer-Specific Large-Scale Pathology Foundation Models via Efficient Fine-Tuning](../../AAAI2026/medical_imaging/g2lfrom_giga-scale_to_cancer-specific_large-scale_pathology_foundation_models_vi.md)
+- [Parameter-efficient Prompt Tuning and Hierarchical Textual Guidance for Few-shot Whole Slide Image Classification](parameter-efficient_prompt_tuning_and_hierarchical_textual_guidance_for_few-shot.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilist.md)
+
+<!-- RELATED:END -->

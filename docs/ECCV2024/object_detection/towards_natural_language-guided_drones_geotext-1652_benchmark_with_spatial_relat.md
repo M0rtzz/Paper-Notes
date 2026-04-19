@@ -151,3 +151,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种基线对比、消融分析、训练集分析、旋转鲁棒性、真实场景泛化
 - 写作质量: ⭐⭐⭐⭐ 数据集构建流程描述详尽，方法部分条理清晰
 - 价值: ⭐⭐⭐⭐ 数据集对社区有持久价值，但绝对性能仍有较大提升空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReGround: Improving Textual and Spatial Grounding at No Cost](reground_improving_textual_and_spatial_grounding_at_no_cost.md)
+- [A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)
+- [Tensorial Template Matching for Fast Cross-Correlation with Rotations and Its Application for Tomography](tensorial_template_matching_for_fast_cross-correlation_with_rotations_and_its_ap.md)
+- [LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction](lami-detr_open-vocabulary_detection_with_language_model_instruction.md)
+- [DEIM: DETR with Improved Matching for Fast Convergence](../../CVPR2025/object_detection/deim_detr_with_improved_matching_for_fast_convergence.md)
+
+<!-- RELATED:END -->

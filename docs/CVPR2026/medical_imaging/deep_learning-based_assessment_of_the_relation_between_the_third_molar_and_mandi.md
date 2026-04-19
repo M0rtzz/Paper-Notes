@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 有三种范式的定量比较和 Grad-CAM 分析，但缺少多架构对比和人类基线
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题定义明确，实验设计合理
 - 价值: ⭐⭐⭐⭐ — 为牙科影像的多中心隐私保护协作提供了有价值的实证参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning](fedvg_gradient-guided_aggregation_for_enhanced_federated_learning.md)
+- [Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration](reinforcing_the_weakest_links_modernizing_siena_with_targeted_deep_learning_inte.md)
+
+<!-- RELATED:END -->

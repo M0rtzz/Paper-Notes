@@ -114,3 +114,15 @@ MExD 首次将生成式扩散模型应用于全切片图像（WSI）分类，通
 - 实验充分度: ⭐⭐⭐⭐ 三个benchmark全面评估，两种特征提取器验证，但消融不够详细
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，数学形式化完整，但公式较多增加阅读负担
 - 价值: ⭐⭐⭐⭐ 开辟了WSI分类的新范式，SOTA结果有力验证了生成式方法的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BiGain: Unified Token Compression for Joint Generation and Classification](bigain_unified_token_compression_for_joint_generation_and_classification.md)
+- [DPoser-X: Diffusion Model as Robust 3D Whole-Body Human Pose Prior](../../ICCV2025/image_generation/dposer-x_diffusion_model_as_robust_3d_whole-body_human_pose_prior.md)
+- [InterMimic: Towards Universal Whole-Body Control for Physics-Based Human-Object Interactions](intermimic_towards_universal_whole-body_control_for_physics-based_human-object_i.md)
+- [CaMiT: A Time-Aware Car Model Dataset for Classification and Generation](../../NeurIPS2025/image_generation/camit_a_time-aware_car_model_dataset_for_classification_and_generation.md)
+- [CamFreeDiff: Camera-free Image to Panorama Generation with Diffusion Model](camfreediff_camera-free_image_to_panorama_generation_with_diffusion_model.md)
+
+<!-- RELATED:END -->

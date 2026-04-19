@@ -157,3 +157,15 @@ CIRM 无缝插入在干预步骤与分类头之间，不需要修改原始 CBM/C
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、五种基础模型、多种消融、策略对齐分析、定性分析，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述清晰，问题—方案—实验逻辑链完整，图表丰富
 - 价值: ⭐⭐⭐⭐ 对 CBM 领域有实际推动作用，降低了人机协作的成本，但受限于 CBM 的整体适用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2025/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
+- [There Was Never a Bottleneck in Concept Bottleneck Models](../../ICLR2026/interpretability/there_was_never_a_bottleneck_in_concept_bottleneck_models.md)
+- [Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/interpretability/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [An Analysis of Concept Bottleneck Models: Measuring, Understanding, and Mitigating the Impact of Noisy Annotations](../../NeurIPS2025/interpretability/an_analysis_of_concept_bottleneck_models_measuring_understanding_and_mitigating_.md)
+
+<!-- RELATED:END -->

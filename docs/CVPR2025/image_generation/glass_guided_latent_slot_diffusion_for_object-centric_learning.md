@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多任务评估（发现/生成/组合/属性预测）、多数据集、跨数据集零样本
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ 对物体中心学习领域有重要推动，首次实现真实场景组合生成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment (CODA)](../../ICLR2026/image_generation/improved_object-centric_diffusion_learning_with_registers_and_contrastive_alignm.md)
+- [MTADiffusion: Mask Text Alignment Diffusion Model for Object Inpainting](mtadiffusion_mask_text_alignment_diffusion_model_for_object_inpainting.md)
+- [GenFlowRL: Shaping Rewards with Generative Object-Centric Flow in Visual Reinforcement Learning](../../ICCV2025/image_generation/genflowrl_shaping_rewards_with_generative_object-centric_flow_in_visual_reinforc.md)
+- [LEDiff: Latent Exposure Diffusion for HDR Generation](lediff_latent_exposure_diffusion_for_hdr_generation.md)
+- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
+
+<!-- RELATED:END -->

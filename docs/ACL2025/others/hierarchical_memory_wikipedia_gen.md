@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+消融+利用率分析+LLM评估，全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，记忆操作定义规范
 - 价值: ⭐⭐⭐⭐⭐ 对自动化知识库生成有重要实用价值，MOG 框架通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MindRef: Mimicking Human Memory for Hierarchical Reference Retrieval with Fine-Grained Location Awareness](mindref_mimicking_human_memory_hierarchical_reference_retrieval.md)
+- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
+- [Hierarchical Bracketing Encodings for Dependency Parsing as Tagging](hierarchical_bracketing_dep_parsing.md)
+
+<!-- RELATED:END -->

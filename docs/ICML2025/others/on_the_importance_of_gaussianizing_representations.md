@@ -147,3 +147,15 @@ $$y_i = x_i + z_i \cdot \xi \cdot s, \quad z_i \sim \mathcal{N}(0,1)$$
 - 实验充分度: ⭐⭐⭐⭐ — 多模型/数据集/配置消融全面，但缺少 NLP/大模型验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导严谨，行文逻辑清晰，细节充分
 - 价值: ⭐⭐⭐⭐ — 即插即用的通用归一化增强，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEXMA: Token-level Objectives Improve Sentence Representations](../../ACL2025/others/mexma_token-level_objectives_improve_sentence_representations.md)
+- [SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
+- [RNNs Perform Task Computations by Dynamically Warping Neural Representations](../../NeurIPS2025/others/rnns_perform_task_computations_by_dynamically_warping_neural_representations.md)
+- [Exchangeability of GNN Representations with Applications to Graph Retrieval](../../ICLR2026/others/exchangeability_gnn_representations.md)
+- [Learning Fair Representations with Kolmogorov-Arnold Networks](../../AAAI2026/others/learning_fair_representations_with_kolmogorov-arnold_networks.md)
+
+<!-- RELATED:END -->

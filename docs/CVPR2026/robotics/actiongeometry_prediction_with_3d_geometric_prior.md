@@ -87,3 +87,15 @@ $\mathcal{L} = \|a - \hat{a}\|_1 + \lambda\|\mathbf{f}_{t+N} - \hat{\mathbf{f}}_
 - 实验充分度: ⭐⭐⭐⭐⭐ 32个仿真任务+4个真实任务+数据效率+消融，评估极为全面
 - 写作质量: ⭐⭐⭐⭐ 方法叙述清晰，实验层次分明
 - 价值: ⭐⭐⭐⭐ 为RGB-only的3D感知双臂操作提供了实用范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Vision-Language-Action Finetuning with Feasible Action Neighborhood Prior](boosting_vision-language-action_finetuning_with_feasible_action_neighborhood_pri.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](../../ICLR2026/robotics/twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
+- [BiAssemble: Learning Collaborative Affordance for Bimanual Geometric Assembly](../../ICML2025/robotics/biassemble_learning_collaborative_affordance_for_bimanual_geometric_assembly.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+
+<!-- RELATED:END -->

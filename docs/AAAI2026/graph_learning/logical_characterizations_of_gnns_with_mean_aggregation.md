@@ -130,3 +130,15 @@ Mean 聚合在实践中广泛使用的原因包括：
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献扎实完整，系统性地填补了 Mean-GNN 逻辑刻画的空白。RML 和 AFML 的引入为后续研究提供了精确的分析工具。但纯理论性质限制了对实际 GNN 设计的直接指导作用，且部分翻译构造的实用性不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Logical Expressiveness in GNNs via Path-Neighbor Aggregation](enhancing_logical_expressiveness_in_graph_neural_networks_via_path-neighbor_aggr.md)
+- [Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity](connectivity-guided_sparsification_of_2-fwl_gnns_preserving_full_expressivity_wi.md)
+- [Adaptive Initial Residual Connections for GNNs with Theoretical Guarantees](adaptive_initial_residual_connections_for_gnns_with_theoretical_guarantees.md)
+- [RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA](rfkg-cot_relation-driven_adaptive_hop-count_selection_and_few-shot_path_guidance.md)
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+
+<!-- RELATED:END -->

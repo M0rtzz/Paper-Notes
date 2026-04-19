@@ -185,3 +185,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ — 验证充分但仅限单语言对，规模较小
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，产品应用展示生动
 - **价值**: ⭐⭐⭐⭐ — 有明确的应用场景和开源实现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Style Alignment in Cross-Cultural Translation](towards_style_alignment_in_cross-cultural_translation.md)
+- [Can Uniform Meaning Representation Help GPT-4 Translate from Indigenous Languages?](can_uniform_meaning_representation_help_gpt-4_translate_from_indigenous_language.md)
+- [CiteEval: Principle-Driven Citation Evaluation for Source Attribution](citeeval_principle-driven_citation_evaluation_for_source_attribution.md)
+- [RoToR: Towards More Reliable Responses for Order-Invariant Inputs](rotor_towards_more_reliable_responses_for_order-invariant_inputs.md)
+- [Identifying Reliable Evaluation Metrics for Scientific Text Revision](reliable_eval_metrics_scientific.md)
+
+<!-- RELATED:END -->

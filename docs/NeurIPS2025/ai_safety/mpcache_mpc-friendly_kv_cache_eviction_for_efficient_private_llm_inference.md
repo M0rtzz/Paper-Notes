@@ -137,3 +137,15 @@ MPCache基于三个关键观察设计：(1) 长序列的注意力图整体稀疏
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多个模型（7B/8B/13B）、多个任务（QA/摘要/Needle-in-Haystack）、完整的效率数据
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机清晰，观察驱动的设计思路，图表丰富且信息量大
 - **价值**: ⭐⭐⭐⭐ 对隐私LLM推理的实际部署有重要意义，但受限于MPC的应用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cascade: Token-Sharded Private LLM Inference](../../ICML2025/ai_safety/cascade_token-sharded_private_llm_inference.md)
+- [CryptoMoE: Privacy-Preserving and Scalable Mixture of Experts Inference via Balanced Expert Routing](cryptomoe_privacy-preserving_and_scalable_mixture_of_experts_inference_via_balan.md)
+- [DictPFL: Efficient and Private Federated Learning on Encrypted Gradients](dictpfl_efficient_and_private_federated_learning_on_encrypted_gradients.md)
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+- [An Efficient Private GPT Never Autoregressively Decodes](../../ICML2025/ai_safety/an_efficient_private_gpt_never_autoregressively_decodes.md)
+
+<!-- RELATED:END -->

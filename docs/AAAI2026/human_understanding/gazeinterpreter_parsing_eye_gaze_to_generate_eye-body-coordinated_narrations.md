@@ -180,3 +180,15 @@ GazeInterpreter 不需要传统意义上的模型训练，而是利用预训练 
 - 实验充分度: ⭐⭐⭐⭐ — 运动生成+下游任务+完整消融，但仅单一数据集
 - 写作质量: ⭐⭐⭐⭐ — 框架描述清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 揭示眼动在行为理解中的巨大潜力，具有长期影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-view Gaze Target Estimation](../../ICCV2025/human_understanding/multi-view_gaze_target_estimation.md)
+- [Learning From Design Procedure To Generate CAD Programs for Data Augmentation](../../NeurIPS2025/human_understanding/learning_from_design_procedure_to_generate_cad_programs_for_data_augmentation.md)
+- [Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels](../../CVPR2025/human_understanding/enhancing_3d_gaze_estimation_in_the_wild_using_weak_supervision_with_gaze_follow.md)
+- [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](../../ICCV2025/human_understanding/rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
+- [CIGPose: Causal Intervention Graph Neural Network for Whole-Body Pose Estimation](../../CVPR2026/human_understanding/cigpose_causal_intervention_graph_neural_network_for_whole-body_pose_estimation.md)
+
+<!-- RELATED:END -->

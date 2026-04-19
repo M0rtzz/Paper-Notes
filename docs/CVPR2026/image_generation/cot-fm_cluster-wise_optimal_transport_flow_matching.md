@@ -139,3 +139,15 @@ COT-FM 在预训练 FM 模型基础上交替优化两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 2D/图像/机器人三域验证，多基线对比，丰富消融（交替轮数/泛化/采样策略）
 - **写作质量**: ⭐⭐⭐⭐ 动机推导严谨，算法伪代码清晰，图示直观
 - **价值**: ⭐⭐⭐⭐⭐ 通用即插即用，不改架构不改推理流程，实用价值极高；低步数场景提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contrastive Flow Matching (ΔFM)](../../ICCV2025/image_generation/contrastive_flow_matching.md)
+- [On the Relation between Rectified Flows and Optimal Transport](../../NeurIPS2025/image_generation/on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [VeCoR — Velocity Contrastive Regularization for Flow Matching](vecor_--_velocity_contrastive_regularization_for_flow_matching.md)
+- [ChordEdit: One-Step Low-Energy Transport for Image Editing](chordedit_one-step_low-energy_transport_for_image_editing.md)
+- [Counterfactual Identifiability via Dynamic Optimal Transport](../../NeurIPS2025/image_generation/counterfactual_identifiability_via_dynamic_optimal_transport.md)
+
+<!-- RELATED:END -->

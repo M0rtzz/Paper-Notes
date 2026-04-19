@@ -151,3 +151,15 @@ Video-VER在10个基准中9个排名第一，平均比基座模型CoT提升+4.0%
 - 实验充分度: ⭐⭐⭐⭐⭐ — 10个基准、多个消融、定性分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，贝叶斯分析优雅
 - 价值: ⭐⭐⭐⭐☆ — VER思路通用性强，但局限于闭合式任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](../../ICCV2025/video_understanding/vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
+- [RAVEN: Robust Advertisement Video Violation Temporal Grounding via Reinforcement Reasoning](../../ACL2025/video_understanding/raven_robust_advertisement_video_violation_temporal_grounding_via_reinforcement_.md)
+- [VideoAuto-R1: Video Auto Reasoning via Thinking Once, Answering Twice](../../CVPR2026/video_understanding/videoauto-r1_video_auto_reasoning_via_thinking_once_answering_twice.md)
+- [Towards Video Thinking Test: A Holistic Benchmark for Advanced Video Reasoning and Understanding](../../ICCV2025/video_understanding/towards_video_thinking_test_a_holistic_benchmark_for_advanced_video_reasoning_an.md)
+- [Grounding Foundational Vision Models with 3D Human Poses for Robust Action Recognition](grounding_foundational_vision_models_with_3d_human_poses_for_robust_action_recog.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 多模型×多提示×多隐私滤镜的全面消融，但缺统计检验
 - 写作质量: ⭐⭐⭐⭐ — 条理清晰，形式推导完整
 - 价值: ⭐⭐⭐⭐ — 为隐私保护下的零样本监控异常检测提供了实用基线和工程指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Write Faithfully? An Agent-Based Evaluation of LLM-generated Islamic Content](can_llms_write_faithfully_an_agent-based_evaluation_of_llm-generated_islamic_con.md)
+- [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
+- [OpenLex3D: A Tiered Evaluation Benchmark for Open-Vocabulary 3D Scene Representations](openlex3d_a_tiered_evaluation_benchmark_for_open-vocabulary_3d_scene_representat.md)
+- [Learning from Videos for 3D World: Enhancing MLLMs with 3D Vision Geometry Priors](learning_from_videos_for_3d_world_enhancing_mllms_with_3d_vision_geometry_priors.md)
+- [Instant Video Models: Universal Adapters for Stabilizing Image-Based Networks](instant_video_models_universal_adapters_for_stabilizing_image-based_networks.md)
+
+<!-- RELATED:END -->

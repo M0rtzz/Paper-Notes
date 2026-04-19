@@ -118,3 +118,15 @@ tags:
 - **论证充分度** ⭐⭐⭐⭐⭐：三层结构清晰，每个问题都有数据支持和对应解法
 - **写作质量** ⭐⭐⭐⭐⭐：行文流畅、结构精巧、标题出色
 - **价值** ⭐⭐⭐⭐：对 LLM 评估社区具有重要的方向性指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wait, that's not an option: LLMs Robustness with Incorrect Multiple-Choice Options](llm_robustness_incorrect_mcq.md)
+- [SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation](skillverse_tree_eval.md)
+- [Which Demographics Do LLMs Default to During Annotation?](which_demographics_do_llms_default_to_during_annotation.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+
+<!-- RELATED:END -->

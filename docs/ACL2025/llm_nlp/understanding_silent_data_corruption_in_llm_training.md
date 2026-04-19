@@ -143,3 +143,15 @@ SDC影响在不同节点间差异巨大：Node 10/11失配频率高，而Node 2/
 - 实验充分度: ⭐⭐⭐⭐ 三层次分析全面，但模型规模和并行策略覆盖不够
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，问题定义精确，实验设计和分析逻辑性强
 - 价值: ⭐⭐⭐⭐⭐ 对大规模LLM训练的实践和理论均有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Big5-Chat: Shaping LLM Personalities Through Training on Human-Grounded Data](big5-chat_shaping_llm_personalities_through_training_on_human-grounded_data.md)
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+- [AAD-LLM: Neural Attention-Driven Auditory Scene Understanding](aad-llm_neural_attention-driven_auditory_scene_understanding.md)
+- [Structural Reasoning Improves Molecular Understanding of LLM](structural_reasoning_improves_molecular_understanding_of_llm.md)
+
+<!-- RELATED:END -->

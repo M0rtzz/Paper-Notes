@@ -163,3 +163,15 @@ $$\text{UCT}(n) = \frac{Q(n)}{N(n)} + c\sqrt{\frac{\ln N(n_p)}{N(n)}}$$
 - **实验充分度**: ⭐⭐⭐ — 用户研究规模小（N=8），自动评估提升有限（+0.5/-12），缺少与强baseline的对比
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机阐述充分，系统描述详细，安全性讨论有深度
 - **价值**: ⭐⭐⭐⭐ — 开源平台对学术社区有实际价值，人机协作设计理念有示范意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Completing A Systematic Review in Hours instead of Months with Interactive AI Agents](completing_a_systematic_review_in_hours.md)
+- [Research Borderlands: Analysing Writing Across Research Cultures](research_borderlands_analysing_writing_across_research_cultures.md)
+- [AutoSciDACT: Automated Scientific Discovery through Contrastive Embedding and Hypothesis Testing](../../NeurIPS2025/others/autoscidact_automated_scientific_discovery_through_contrastive_embedding_and_hyp.md)
+- [A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [Identifying Reliable Evaluation Metrics for Scientific Text Revision](reliable_eval_metrics_scientific.md)
+
+<!-- RELATED:END -->

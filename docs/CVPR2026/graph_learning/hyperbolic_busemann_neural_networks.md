@@ -188,3 +188,15 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 - ⭐⭐⭐⭐ 实验充分度：覆盖 4 类任务 20+ 数据集、两种双曲模型的系统对比，含效率分析；但图实验仅用经典小规模数据集，缺少 OGB 等大规模基准
 - ⭐⭐⭐⭐⭐ 写作质量：定理-证明结构严谨，对比表格清晰全面，欧式-双曲类比的叙述脉络流畅易懂
 - ⭐⭐⭐⭐ 实用性：代码已开源，BMLR/BFC 即插即用，Lorentz BMLR 速度接近欧式 MLR，实际部署门槛低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperbolic-PDE GNN: Spectral Graph Neural Networks in the Perspective of A System of Hyperbolic Partial Differential Equations](../../ICML2025/graph_learning/hyperbolic-pde_gnn_spectral_graph_neural_networks_in_the_perspective_of_a_system.md)
+- [Cooperative Sheaf Neural Networks](../../ICLR2026/graph_learning/cooperative_sheaf_neural_networks.md)
+- [Hyperbolic Continuous Structural Entropy for Hierarchical Clustering](../../AAAI2026/graph_learning/hyperbolic_continuous_structural_entropy_for_hierarchical_clustering.md)
+- [Adaptive Riemannian Graph Neural Networks](../../AAAI2026/graph_learning/adaptive_riemannian_graph_neural_networks.md)
+- [Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](../../ICLR2026/graph_learning/are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)
+
+<!-- RELATED:END -->

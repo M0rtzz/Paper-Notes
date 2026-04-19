@@ -172,3 +172,15 @@ PropVG在GREC上F1超SimVG +10.1%，"无目标"判别准确率超+18.1%。
 - 技术深度：4/5（CRS的双层对比学习、MTD的SPCA机制设计合理）
 - 实验充分度：5/5（10个数据集、丰富的消融、速度对比、与MLLM的参数量对比）
 - 写作质量：4/5（结构清晰，图示全面）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [taz2024full: Analysing German Newspapers for Gender Bias and Discrimination across Decades](../../ACL2025/social_computing/taz2024full_analysing_german_newspapers_for_gender_bias_and_discrimination_acros.md)
+- [DeepTraverse: A Depth-First Search Inspired Network for Algorithmic Visual Understanding](../../NeurIPS2025/social_computing/deeptraverse_a_depth-first_search_inspired_network_for_algorithmic_visual_unders.md)
+- [GRACE: Graph-Based Contextual Debiasing for Fair Visual Question Answering](../../ECCV2024/social_computing/grace_graph-based_contextual_debiasing_for_fair_visual_question_answering.md)
+- [Classifier-guided CLIP Distillation for Unsupervised Multi-label Classification](../../CVPR2025/social_computing/classifier-guided_clip_distillation_for_unsupervised_multi-label_classification.md)
+- [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](../../NeurIPS2025/social_computing/a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
+
+<!-- RELATED:END -->

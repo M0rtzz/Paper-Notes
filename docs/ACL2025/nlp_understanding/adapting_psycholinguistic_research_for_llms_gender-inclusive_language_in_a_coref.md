@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 概率+生成双验证，ANOVA统计严谨，但德语仅单模型试点
 - 写作质量: ⭐⭐⭐⭐ 实验设计描述清晰，统计报告规范（效应量+置信区间）
 - 价值: ⭐⭐⭐⭐ 对LLM公平性和多语言偏见研究有方法论贡献，实践意义在于推动包容性语言使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BookCoref: Coreference Resolution at Book Scale](bookcoref_book_scale.md)
+- [End-to-End Dialog Neural Coreference Resolution: Balancing Efficiency and Accuracy in Large-Scale Systems](end-to-end_dialog_neural_coreference_resolution_balancing_efficiency_and_accurac.md)
+- [Understanding Syllogistic Reasoning in LLMs from Formal and Natural Language Perspectives](../../AAAI2026/nlp_understanding/understanding_syllogistic_reasoning_in_llms_from_formal_and_natural_language_per.md)
+- [Analyzing Political Bias in LLMs via Target-Oriented Sentiment Classification](analyzing_political_bias_in_llms_via_target-oriented_sentiment_classification.md)
+- [Generating Diverse Training Samples for Relation Extraction with Large Language Models](generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+
+<!-- RELATED:END -->

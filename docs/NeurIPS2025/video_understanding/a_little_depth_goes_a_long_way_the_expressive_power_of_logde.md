@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验仅限 A₅ 状态追踪任务，图连通性缺乏实验验证，未测试 looped transformer
 - 写作质量: ⭐⭐⭐⭐⭐ 理论论文写作范本：问题动机清晰、定理陈述精确、证明思路先给 sketch 再附完整版，Figure 1 的三方比较图非常直观
 - 价值: ⭐⭐⭐⭐⭐ 为 Transformer 推理能力的根本限制提供了精确刻画，对模型架构设计和推理时计算策略都有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](../../ICCV2025/video_understanding/flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
+- [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](../../ICCV2025/video_understanding/vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
+- [KeyFace: Expressive Audio-Driven Facial Animation for Long Sequences via KeyFrame Interpolation](../../CVPR2025/video_understanding/keyface_expressive_audio-driven_facial_animation_for_long_sequences_via_keyframe.md)
+- [The Expressive Limits of Diagonal SSMs for State-Tracking](../../ICLR2026/video_understanding/the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+
+<!-- RELATED:END -->

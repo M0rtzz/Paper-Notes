@@ -130,3 +130,15 @@ $$\mathcal{L}_{\text{Overall}} = \mathcal{L}_{\text{MSE}} + \mathcal{L}_{\text{D
 - 实验充分度: ⭐⭐⭐⭐ 7 个指标、4 个对比方法、完整消融、用户研究，定量定性结合充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机-方法-实验逻辑链完整
 - 价值: ⭐⭐⭐⭐ 对电商/广告场景有直接应用价值，方法设计思路可迁移性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [Garments2Look: A Multi-Reference Dataset for High-Fidelity Outfit-Level Virtual Try-On with Clothing and Accessories](garments2look_a_multi-reference_dataset_for_high-fidelity_outfit-level_virtual_t.md)
+- [PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On](promo_promptable_virtual_tryon_efficient.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+
+<!-- RELATED:END -->

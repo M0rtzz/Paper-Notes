@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 个 LLM、6 种方法对比全面，消融充分
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 对证据综合自动化有实际意义，数据集填补了重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge](biore_llm_judge_evaluation.md)
+- [Demo: Guide-RAG: Evidence-Driven Corpus Curation for Retrieval-Augmented Generation in Long COVID](../../NeurIPS2025/medical_imaging/demo_guide-rag_evidence-driven_corpus_curation_for_retrieval-augmented_generatio.md)
+- [BiomedSQL: Text-to-SQL for Scientific Reasoning on Biomedical Knowledge Bases](../../ICLR2026/medical_imaging/biomedsql_text-to-sql_for_scientific_reasoning_on_biomedical_knowledge_bases.md)
+- [SECRET: Semi-supervised Clinical Trial Document Similarity Search](secret_semi-supervised_clinical_trial_document_similarity_search.md)
+- [ANGEL: Learning from Negative Samples in Biomedical Generative Entity Linking](learning_from_negative_samples_in_biomedical_generative_entity_linking.md)
+
+<!-- RELATED:END -->

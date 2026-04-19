@@ -135,3 +135,15 @@ CRAFT 以 VILA-U-7B 为替代模型时达到最优：**平均 68.58%，比 zero-
 - 实验充分度: ⭐⭐⭐⭐ — 10 个基准 × 5 个 backbone 的组合评测充分，消融完整，推理质量评测有说服力
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，Figure 1/2 直观对比连续 vs 离散方案，实验组织合理
 - 价值: ⭐⭐⭐⭐ — 对医学等资源受限领域的 LVLM 适配具有实用意义，解耦设计降低部署与维护成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+- [MedKCO: Medical Vision-Language Pretraining via Knowledge-Driven Cognitive Orchestration](medkco_medical_vision-language_pretraining_via_knowledge-driven_cognitive_orches.md)
+- [T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation](t-gated_adapter_a_lightweight_temporal_adapter_for_vision-language_medical_segme.md)
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+
+<!-- RELATED:END -->

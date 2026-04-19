@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据集覆盖两种 COP，定性+定量分析
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，ship 例子的物理发现很有说服力
 - 价值: ⭐⭐⭐⭐ 对路径分析、行为建模和异常检测有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trust Region Reward Optimization and Proximal Inverse Reward Optimization Algorithm](trust_region_reward_optimization_and_proximal_inverse_reward_optimization_algori.md)
+- [Complexity Scaling Laws for Neural Models using Combinatorial Optimization](complexity_scaling_laws_for_neural_models_using_combinatorial_optimization.md)
+- [Strategic Costs of Perceived Bias in Fair Selection](strategic_costs_of_perceived_bias_in_fair_selection.md)
+- [Dynamics-Aligned Latent Imagination in Contextual World Models for Zero-Shot Generalization](dynamics-aligned_latent_imagination_in_contextual_world_models_for_zero-shot_gen.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+
+<!-- RELATED:END -->

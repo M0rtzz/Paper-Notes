@@ -111,3 +111,15 @@ $\ell = d_{\mathcal{W}_2}^2(\rho_\theta^{t_K}, \rho_b) + \sum_m d_{\mathcal{W}_2
 - 实验充分度: ⭐⭐⭐⭐ 覆盖流形导航、分子动力学、多种图像任务，消融充分
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，但对非几何背景读者门槛较高
 - 价值: ⭐⭐⭐⭐⭐ 兼具理论深度和实用速度优势，是 SB 方向的重要进展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Branched Schrödinger Bridge Matching](branched_schrödinger_bridge_matching.md)
+- [Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges](../../NeurIPS2025/image_generation/grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)
+- [Schrödinger Bridge Matching for Tree-Structured Costs and Entropic Wasserstein Barycentres](../../NeurIPS2025/image_generation/schrödinger_bridge_matching_for_tree-structured_costs_and_entropic_wasserstein_b.md)
+- [Dynamic Diffusion Schrödinger Bridge in Astrophysical Observational Inversions](../../NeurIPS2025/image_generation/dynamic_diffusion_schrödinger_bridge_in_astrophysical_observational_inversions.md)
+- [Contact-Guided 3D Genome Structure Generation of E. coli via Diffusion Transformers](contact-guided_3d_genome_structure_generation_of_e_coli_via_diffusion_transforme.md)
+
+<!-- RELATED:END -->

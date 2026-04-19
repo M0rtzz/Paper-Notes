@@ -147,3 +147,15 @@ CompFlow 在 27 个任务中 24 个达到最优或并列，平均回报比最强
 | 实用价值 | ⭐⭐⭐⭐ |
 
 理论贡献突出，复合流架构设计巧妙。实验覆盖 27 个任务 + 真实场景，说服力强。主要缺憾是计算开销分析不足，且未在更复杂环境（如视觉 RL）中验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
+- [Elucidating Flow Matching ODE Dynamics via Data Geometry and Denoisers](../../ICML2025/image_generation/elucidating_flow_matching_ode_dynamics_with_respect_to_data_geometries_and_denoi.md)
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Value Gradient Guidance for Flow Matching Alignment](value_gradient_guidance_for_flow_matching_alignment.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](towards_robust_zero-shot_reinforcement_learning.md)
+
+<!-- RELATED:END -->

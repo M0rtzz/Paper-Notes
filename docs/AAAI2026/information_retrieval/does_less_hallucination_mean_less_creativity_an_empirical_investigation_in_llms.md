@@ -174,3 +174,15 @@ $$\text{Difference from Base}(\%) = \frac{M_{\text{method}} - M_{\text{baseline}
 - 实验充分度: ⭐⭐⭐⭐（跨模型/规模/基准全面评估，但缺少深入消融）
 - 写作质量: ⭐⭐⭐⭐⭐（逻辑清晰，实验组织出色）
 - 价值: ⭐⭐⭐⭐（对AI4Science有重要指导意义，但应用范围可能有限）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRAG: Distilling RAG for SLMs from LLMs to Transfer Knowledge and Mitigate Hallucination](../../ACL2025/information_retrieval/drag_distilling_rag_slm.md)
+- ["As Eastern Powers, I Will Veto." : An Investigation of Nation-Level Bias of Large Language Models in International Relations](as_eastern_powers_i_will_veto_an_investigation_of_nation-level_bias_of_large_lan.md)
+- [LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning](llms_for_game_theory_entropy-guided_in-context_learning_and_adaptive_cot_reasoni.md)
+- [N2N-GQA: Noise-to-Narrative for Graph-Based Table-Text Question Answering Using LLMs](n2n-gqa_noise-to-narrative_for_graph-based_table-text_question_answering_using_l.md)
+- [SR-KI: Scalable and Real-Time Knowledge Integration into LLMs via Supervised Attention](sr-ki_scalable_and_real-time_knowledge_integration_into_llms_via_supervised_atte.md)
+
+<!-- RELATED:END -->

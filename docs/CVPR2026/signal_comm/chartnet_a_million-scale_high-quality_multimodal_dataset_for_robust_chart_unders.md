@@ -137,3 +137,15 @@ ChartMimic-v2 代码生成（granite-vision-2B）：
 - **实验充分度**: 9/10 — 多模型、多规模、多任务、多 benchmark 的全面评估
 - **写作质量**: 8/10 — 结构清晰，对比表格详尽，贡献明确
 - **价值**: 9/10 — 作为最大的开源图表理解数据集，对社区价值极高，"2B > GPT-4o" 的结果令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Preference Alignment via Directional Neighborhood Consensus](../../ICLR2026/signal_comm/robust_preference_alignment_via_directional_neighborhood_consensus.md)
+- [Boosting Multimodal Learning via Disentangled Gradient Learning](../../ICCV2025/signal_comm/boosting_multimodal_learning_via_disentangled_gradient_learning.md)
+- [Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](../../NeurIPS2025/signal_comm/bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)
+- [Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks](../../CVPR2025/signal_comm/tuning_the_frequencies_robust_training_for_sinusoidal_neural_networks.md)
+- [Defect Spectrum: A Granular Look of Large-Scale Defect Datasets with Rich Semantics](../../ECCV2024/signal_comm/defect_spectrum_a_granular_look_of_large-scale_defect_datasets_with_rich_semanti.md)
+
+<!-- RELATED:END -->

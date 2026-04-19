@@ -143,3 +143,15 @@ tags:
 **关键词**: 信念一致性, 多智能体LLM, 群体心理学, 虚假信息传播, 社会偏见缓解
 
 ## 一句话总结
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Belief: A Hard Problem for LLMs](zero-shot_belief_a_hard_problem_for_llms.md)
+- [NewsInterview: a Dataset and a Playground to Evaluate LLMs' Grounding Gap via Informational Interviews](newsinterview_a_dataset_and_a_playground_to_evaluate_llms_grounding_gap_via_info.md)
+- [Theory of Mind in Large Language Models: Assessment and Enhancement](theory_of_mind_llm.md)
+- [A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)
+- [Team Anotheroption at SemEval-2025 Task 8: Bridging the Gap Between Open-Source and Proprietary LLMs in Table QA](team_anotheroption_at_semeval-2025_task_8_bridging_the_gap_between_open-source_a.md)
+
+<!-- RELATED:END -->

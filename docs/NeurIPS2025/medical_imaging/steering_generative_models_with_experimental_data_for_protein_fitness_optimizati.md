@@ -248,3 +248,15 @@ SGPO 分为两阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个蛋白质、多种模型和引导策略、自适应优化实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法分类图设计精良
 - 价值: ⭐⭐⭐⭐ 为蛋白质工程提供了实用的最佳实践指南
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering Protein Language Models](../../ICML2025/medical_imaging/steering_protein_language_models.md)
+- [Flow Density Control: Generative Optimization Beyond Entropy-Regularized Fine-Tuning](flow_density_control_generative_optimization_beyond_entropy-regularized_fine-tun.md)
+- [Is Sequence Information All You Need for Bayesian Optimization of Antibodies?](is_sequence_information_all_you_need_for_bayesian_optimization_of_antibodies.md)
+- [Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
+- [Protriever: End-to-End Differentiable Protein Homology Search for Fitness Prediction](../../ICML2025/medical_imaging/protriever_end-to-end_differentiable_protein_homology_search_for_fitness_predict.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ $$f_t = \arg\min_{f \in \mathcal{F}} \sum_{s \in [t]} (f(x_s,a_s) - r_s)^2, \qua
 - 实验充分度: ⭐⭐⭐ 纯理论工作，应用实例分析详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 概念清晰、定理精确、证明层层递进
 - 价值: ⭐⭐⭐⭐⭐ 解决了 bandit 理论中长期开放的基本问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+- [Exploration via Feature Perturbation in Contextual Bandits](exploration_via_feature_perturbation_in_contextual_bandits.md)
+- [Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis](learning_in_stackelberg_mean_field_games_a_non-asymptotic_analysis.md)
+- [Sequential Multi-Agent Dynamic Algorithm Configuration](sequential_multi-agent_dynamic_algorithm_configuration.md)
+- [Tractable Multinomial Logit Contextual Bandits with Non-Linear Utilities](tractable_multinomial_logit_contextual_bandits_with_non-linear_utilities.md)
+
+<!-- RELATED:END -->

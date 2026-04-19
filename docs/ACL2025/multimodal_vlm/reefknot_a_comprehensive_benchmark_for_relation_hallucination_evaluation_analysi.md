@@ -139,3 +139,15 @@ $$\mathbb{P}(\mathcal{H}_j | \mathcal{H}_{j-1}) = \text{softmax}(\phi(\mathcal{H
 ## 评分
 
 ⭐⭐⭐⭐ — 数据集构建规范且规模可观，评估维度全面，机理分析有深度；缓解方法简单有效但适用范围有限（仅判别式），开放域场景下的拓展是主要短板。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model](centurio_multilingual_vlm.md)
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+
+<!-- RELATED:END -->

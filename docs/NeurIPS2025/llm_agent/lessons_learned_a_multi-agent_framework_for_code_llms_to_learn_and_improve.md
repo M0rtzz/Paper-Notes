@@ -123,3 +123,15 @@ LessonL 框架的核心循环：初始解生成 → Lesson 提取 → Lesson 存
 - 实验充分度: ⭐⭐⭐⭐⭐ 多 benchmark、6 大消融项、成本分析、案例研究
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑递进清晰，案例生动
 - 价值: ⭐⭐⭐⭐⭐ 对多智能体学习的新视角，成本效益优势明显
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nerfify: A Multi-Agent Framework for Turning NeRF Papers into Code](../../CVPR2026/llm_agent/nerfify_multiagent_nerf_paper_to_code.md)
+- [Distilling LLM Agent into Small Models with Retrieval and Code Tools](distilling_llm_agent_into_small_models_with_retrieval_and_co.md)
+- [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
+- [AgentChangeBench: A Multi-Dimensional Evaluation Framework for Goal-Shift Robustness](agentchangebench_a_multi-dimensional_evaluation_framework_for_goal-shift_robustn.md)
+- [It's LIT! Reliability-Optimized LLMs with Inspectable Tools](its_lit_reliability-optimized_llms_with_inspectable_tools.md)
+
+<!-- RELATED:END -->

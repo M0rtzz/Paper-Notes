@@ -144,3 +144,15 @@ ECM 的单步推理时间与 NNM 相当（111ms vs 113ms），但效果远优；
 - 实验充分度: ⭐⭐⭐⭐ Argoverse 2 大规模验证，排行榜成绩，多指标消融
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，公式严谨，但符号略多
 - 价值: ⭐⭐⭐⭐ 效率提升显著，对扩散模型在自动驾驶中的部署有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Safe-Sim: Safety-Critical Closed-Loop Traffic Simulation with Diffusion-Controllable Adversaries](safe-sim_safety-critical_closed-loop_traffic_simulation_with_diffusion-controlla.md)
+- [UniTraj: A Unified Framework for Scalable Vehicle Trajectory Prediction](unitraj_a_unified_framework_for_scalable_vehicle_trajectory_prediction.md)
+- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](../../ICCV2025/autonomous_driving/generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
+- [DySeT: A Dynamic Masked Self-distillation Approach for Robust Trajectory Prediction](dyset_a_dynamic_masked_self-distillation_approach_for_robust_trajectory_predicti.md)
+- [Navigation Instruction Generation with BEV Perception and Large Language Models](navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
+
+<!-- RELATED:END -->

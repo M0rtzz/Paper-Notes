@@ -138,3 +138,15 @@ SD1.5 上的结果:
 - ⭐ 创新性: 7/10 — 两个改进虽有效但思路相对直接
 - ⭐ 实用性: 8/10 — 即插即用,开源代码,实用价值高
 - ⭐ 写作质量: 8/10 — 消融分析清晰,实验设计合理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](../../CVPR2025/llm_alignment/curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
+- [ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](../../ICML2025/llm_alignment/adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)
+- [DP²O-SR: Direct Perceptual Preference Optimization for Real-World Image Super-Resolution](dp2o-sr_direct_perceptual_preference_optimization_for_real-world_image_super-res.md)
+- [DiffPO: Diffusion Alignment with Direct Preference Optimization](../../ACL2025/llm_alignment/diffpo_diffusion_alignment.md)
+- [DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models](densedpo_finegrained_temporal_preference_optimization_for_vi.md)
+
+<!-- RELATED:END -->

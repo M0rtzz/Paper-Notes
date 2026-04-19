@@ -122,3 +122,15 @@ Relink包含三个核心组件：(1)异构知识源构建——高精度事实KG
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、9个baseline、详细消融、稀疏性鲁棒性测试、案例分析
 - 写作质量: ⭐⭐⭐⭐⭐ RQ驱动的实验组织清晰，Figure 1/4的范式对比图直观有力
 - 价值: ⭐⭐⭐⭐⭐ 对GraphRAG领域有重要推动，动态构建思路可广泛应用于RAG系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Complex Query Answering Really Complex?](../../ICML2025/graph_learning/is_complex_query_answering_really_complex.md)
+- [RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA](rfkg-cot_relation-driven_adaptive_hop-count_selection_and_few-shot_path_guidance.md)
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](../../ICML2025/graph_learning/toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+- [SPOT-Trip: Dual-Preference Driven Out-of-Town Trip Recommendation](../../NeurIPS2025/graph_learning/spot-trip_dual-preference_driven_out-of-town_trip_recommendation.md)
+- [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](../../NeurIPS2025/graph_learning/preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
+
+<!-- RELATED:END -->

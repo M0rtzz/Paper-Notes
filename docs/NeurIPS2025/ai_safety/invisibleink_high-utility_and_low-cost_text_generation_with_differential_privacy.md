@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个隐私敏感领域数据集，多种模型规模，全面的消融和下游评估
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，动机讲解清晰，图示直观（Fig.3 的 logit 分布对比一目了然）
 - 价值: ⭐⭐⭐⭐⭐ 将 DP 文本生成从 100 倍开销降到 4-8 倍，首次使其在实际规模下可行，开源代码进一步提升了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [Resource-Adaptive Federated Text Generation with Differential Privacy](../../ICLR2026/ai_safety/resource-adaptive_federated_text_generation_with_differential_privacy.md)
+- [Sequentially Auditing Differential Privacy](sequentially_auditing_differential_privacy.md)
+- [Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy](spectral_perturbation_bounds_for_low-rank_approximation_with_applications_to_pri.md)
+- [Multi-Class Support Vector Machine with Differential Privacy](multi-class_support_vector_machine_with_differential_privacy.md)
+
+<!-- RELATED:END -->

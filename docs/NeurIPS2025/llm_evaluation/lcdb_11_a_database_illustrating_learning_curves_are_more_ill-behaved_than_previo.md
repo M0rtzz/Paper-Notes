@@ -166,3 +166,15 @@ $$\epsilon_{\text{conv}} = \max\left(0, \max_{1 \leq h < i < j \leq N} (C(n_i) -
 - **实验严谨度**: ⭐⭐⭐⭐⭐ — 32 种学习器 × 265 数据集 × 3 种缩放 + 严格统计检验
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富，但内容密度较高
 - **推荐阅读指数**: ⭐⭐⭐⭐ — 做表格数据、AutoML、scaling law 研究必读
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thought Communication in Multiagent Collaboration](thought_communication_in_multiagent_collaboration.md)
+- [CLIMB: Class-Imbalanced Learning Benchmark on Tabular Data](climb_class-imbalanced_learning_benchmark_on_tabular_data.md)
+- [FinanceReasoning: Benchmarking Financial Numerical Reasoning More Credible, Comprehensive and Challenging](../../ACL2025/llm_evaluation/financereasoning_benchmarking_financial_numerical_reasoning_more.md)
+- [EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving](evalearn_quantifying_the_learning_capability_and_efficiency_of_llms_via_sequenti.md)
+- [WiCkeD: A Simple Method to Make Multiple Choice Benchmarks More Challenging](../../ACL2025/llm_evaluation/wicked_a_simple_method_to_make_multiple_choice_benchmarks_more_challenging.md)
+
+<!-- RELATED:END -->

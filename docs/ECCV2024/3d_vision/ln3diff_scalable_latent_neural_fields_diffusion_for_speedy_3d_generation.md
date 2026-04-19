@@ -153,3 +153,15 @@ $$\mathcal{L}(\phi, \psi) = \mathcal{L}_{\text{render}} + \lambda_{\text{geo}}\m
 - **实验充分度**: ⭐⭐⭐⭐⭐ 涵盖ShapeNet/FFHQ/Objaverse三大数据集，消融充分
 - **写作质量**: ⭐⭐⭐⭐ 方法论清晰，但journal版内容较多，部分冗余
 - **价值**: ⭐⭐⭐⭐ 为原生3D扩散模型提供了一个可扩展的范式，影响力较大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
+- [Compress3D: a Compressed Latent Space for 3D Generation from a Single Image](compress3d_a_compressed_latent_space_for_3d_generation_from_a_single_image.md)
+- [MeshFeat: Multi-Resolution Features for Neural Fields on Meshes](meshfeat_multi-resolution_features_for_neural_fields_on_meshes.md)
+- [IDOL: Unified Dual-Modal Latent Diffusion for Human-Centric Joint Video-Depth Generation](idol_unified_dual-modal_latent_diffusion_for_human-centric_joint_video-depth_gen.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+
+<!-- RELATED:END -->

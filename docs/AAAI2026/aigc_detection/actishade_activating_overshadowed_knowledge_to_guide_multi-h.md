@@ -116,3 +116,15 @@ ActiShade是一个迭代式多轮检索框架，每轮包含三个模块：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、三个LLM、多维度消融（检测方法/检索器训练/查询重构），还做了可解释性可视化和跨数据集泛化分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、方法描述详尽，Case Study很直观，但符号略多
 - 价值: ⭐⭐⭐⭐ 知识遮蔽是多跳RAG中的真实痛点，解决方案实用，但需要embedding-level访问限制了适用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning Compiler: LLM-Guided Optimizations for Efficient Model Serving](../../NeurIPS2025/aigc_detection/reasoning_compiler_llm-guided_optimizations_for_efficient_model_serving.md)
+- [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
+- [Optimized Algorithms for Text Clustering with LLM-Generated Constraints](optimized_algorithms_for_text_clustering_with_llm-generated_constraints.md)
+- [BAID: A Benchmark for Bias Assessment of AI Detectors](baid_a_benchmark_for_bias_assessment_of_ai_detectors.md)
+- [DMAP: A Distribution Map for Text](../../ICLR2026/aigc_detection/dmap_a_distribution_map_for_text.md)
+
+<!-- RELATED:END -->

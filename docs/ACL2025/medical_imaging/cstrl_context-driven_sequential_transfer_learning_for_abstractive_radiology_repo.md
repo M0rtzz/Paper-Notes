@@ -123,3 +123,15 @@ CSTRL 包含四个核心组件：(1) 优化的 GSG 预训练；(2) 基于 Fisher
 - **实验充分度**: ⭐⭐⭐⭐ — 消融实验充分，包含知识蒸馏、低资源场景、事实一致性评估
 - **写作质量**: ⭐⭐⭐ — 结构清晰，但公式呈现较冗长
 - **价值**: ⭐⭐⭐⭐ — 在放射学报告摘要这一实际应用领域有显著性能提升，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automated Structured Radiology Report Generation](automated_structured_radiology_report_generation.md)
+- [Online Iterative Self-Alignment for Radiology Report Generation](oisa_radiology_report_gen.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](radar_radiology_report_gen.md)
+- [SMMILE: An Expert-Driven Benchmark for Multimodal Medical In-Context Learning](../../NeurIPS2025/medical_imaging/smmile_an_expert-driven_benchmark_for_multimodal_medical_in-context_learning.md)
+- [Do Multiple Instance Learning Models Transfer?](../../ICML2025/medical_imaging/do_multiple_instance_learning_models_transfer.md)
+
+<!-- RELATED:END -->

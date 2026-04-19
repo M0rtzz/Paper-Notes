@@ -126,3 +126,15 @@ VisNumBench 由两部分组成：VisNumBench-Synthetic（合成数据，1011 题
 - 实验充分度: ⭐⭐⭐⭐ 17 个模型的全面测试，但缺乏改善方案
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表直观
 - 价值: ⭐⭐⭐⭐ 揭示了 MLLM 被忽视的能力缺陷，对社区有启发价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiVerse: A Multi-Turn Conversation Benchmark for Evaluating Large Vision and Language Models](multiverse_a_multi-turn_conversation_benchmark_for_evaluating_large_vision_and_l.md)
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](../../ACL2025/multimodal_vlm/alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+- [Evaluating Multimodal Large Language Models on Core Music Perception Tasks](../../NeurIPS2025/multimodal_vlm/evaluating_multimodal_large_language_models_on_core_music_perception_tasks.md)
+- [Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](../../ACL2025/multimodal_vlm/unsolvable_problem_detection.md)
+- [Jailbreaking Multimodal Large Language Models via Shuffle Inconsistency](jailbreaking_multimodal_large_language_models_via_shuffle_inconsistency.md)
+
+<!-- RELATED:END -->

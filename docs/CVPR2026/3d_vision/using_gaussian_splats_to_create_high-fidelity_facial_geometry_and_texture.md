@@ -145,3 +145,15 @@ $$\mathcal{L}_{\text{reg}} = \sum_i \left\| \mathbf{z}_i - \frac{1}{|\mathcal{E}
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面，多种对比方法，但缺少定量指标（PSNR/SSIM 等）和更大规模的用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ — 行文清晰，公式推导严谨，图示丰富且信息量大
 - 价值: ⭐⭐⭐⭐ — 对工业界（尤其 Epic/MetaHuman 生态）有直接落地价值，学术贡献在于系统化整合多项技术
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [GT2-GS: Geometry-aware Texture Transfer for Gaussian Splatting](../../AAAI2026/3d_vision/gt2-gs_geometry-aware_texture_transfer_for_gaussian_splatting.md)
+- [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](../../ECCV2024/3d_vision/texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+- [TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification](topomesh_high-fidelity_mesh_autoencoding_via_topological_unification.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ Dice 损失保证最终预测的空间重叠，MSDA 的 KL 散度损失在各解
 - **实验充分度**: ⭐⭐⭐⭐⭐ 7 个数据集，完整消融，backbone 对比，效率分析
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，模块解释充分
 - **价值**: ⭐⭐⭐⭐ 以解码器为中心的思路对社区有启发，MSDA 可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study](are_generalpurpose_vision_models_all_we_need_for_2.md)
+- [T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation](t-gated_adapter_a_lightweight_temporal_adapter_for_vision-language_medical_segme.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [Decoding with Structured Awareness: Integrating Directional, Frequency-Spatial, and Structural Attention for Medical Image Segmentation](../../AAAI2026/medical_imaging/decoding_with_structured_awareness_integrating_directional_frequency-spatial_and.md)
+
+<!-- RELATED:END -->

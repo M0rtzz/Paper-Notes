@@ -160,3 +160,15 @@ RDD 损失组合消融（MAD = 均值绝对偏差，衡量训练稳定性）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 九个数据集、三类场景全面覆盖，消融实验深入
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，但模块较多导致方法部分略紧凑
 - 价值: ⭐⭐⭐⭐ 对自动驾驶等需要跨域泛化的实际应用有较强指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection](../../ECCV2024/object_detection/openkd_opening_prompt_diversity_for_zero-_and_few-shot_keypoint_detection.md)
+- [Advancing Textual Prompt Learning with Anchored Attributes](advancing_textual_prompt_learning_with_anchored_attributes.md)
+- [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](revisiting_adversarial_patch_defenses_on_object_detectors_unified_evaluation_lar.md)
+- [Remedying Target-Domain Astigmatism for Cross-Domain Few-Shot Object Detection](../../CVPR2026/object_detection/remedying_target-domain_astigmatism_for_cross-domain_few-shot_object_detection.md)
+- [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
+
+<!-- RELATED:END -->

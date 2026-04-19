@@ -167,3 +167,15 @@ RankRefine 在实际可行的 0.50-0.95 排序准确率范围内优于 projectio
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 9 个分子数据集 + 3 个表格数据集 + 人工实验 + LLM 实验 + 大量消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-实验-分析逻辑链完整，公式推导清晰，实验设计周到
 - 价值: ⭐⭐⭐⭐ 对数据稀缺领域极具实用价值，但适用场景可能集中在科学计算领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+- [Training Language Model to Critique for Better Refinement](../../ACL2025/llm_nlp/training_language_model_to_critique_for_better_refinement.md)
+- [Unlocking Recursive Thinking of LLMs: Alignment via Refinement](../../ACL2025/llm_nlp/unlocking_recursive_thinking_of_llms_alignment_via_refinement.md)
+- [Ranking Unraveled: Recipes for LLM Rankings in Head-to-Head AI Combat](../../ACL2025/llm_nlp/ranking_unraveled_recipes_for_llm_rankings_in_head-to-head_ai_combat.md)
+- [RiOT: Efficient Prompt Refinement with Residual Optimization Tree](../../ACL2025/llm_nlp/riot_efficient_prompt_refinement_with_residual_optimization_tree.md)
+
+<!-- RELATED:END -->

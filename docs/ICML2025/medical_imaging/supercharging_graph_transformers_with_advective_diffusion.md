@@ -144,3 +144,15 @@ $$c_{uv} = \frac{\eta(\mathbf{z}_u(0), \mathbf{z}_v(0))}{\sum_{w \in \mathcal{V}
 - 实验充分度: ⭐⭐⭐⭐ — 合成+多领域真实数据（社交、蛋白质、分子），但缺少图分类任务
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论与直觉完美结合，物理类比深入浅出
 - 价值: ⭐⭐⭐⭐⭐ — 为图学习中的分布偏移泛化提供了理论基础和实用模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WDT-MD: Wavelet Diffusion Transformers for Microaneurysm Detection in Fundus Images](../../AAAI2026/medical_imaging/wdt-md_wavelet_diffusion_transformers_for_microaneurysm_detection_in_fundus_imag.md)
+- [ComRecGC: Global Graph Counterfactual Explainer through Common Recourse](comrecgc_global_graph_counterfactual_explainer_through_common_recourse.md)
+- [Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](../../NeurIPS2025/medical_imaging/generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
+- [MuViT: Multi-Resolution Vision Transformers for Learning Across Scales in Microscopy](../../CVPR2026/medical_imaging/muvit_multi-resolution_vision_transformers_for_learning_across_scales_in_microsc.md)
+- [Decentralized Attention Fails Centralized Signals: Rethinking Transformers for Medical Time Series](../../ICLR2026/medical_imaging/decentralized_attention_fails_centralized_signals_rethinking_transformers_for_me.md)
+
+<!-- RELATED:END -->

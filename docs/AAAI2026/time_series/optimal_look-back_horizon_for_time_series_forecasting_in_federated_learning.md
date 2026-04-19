@@ -160,3 +160,15 @@ $$H_k^*(\delta) = \max\{\ell_{\mathrm{AR},k}, T_k^{(\tau)}\}$$
 - 实验充分度: ⭐⭐ 仅有 SDG 验证实验，无真实联邦数据集上的对比实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，符号体系一致
 - 价值: ⭐⭐⭐ 理论贡献有意义，但实际指导意义有待实验验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting the Future: All-at-Once Event Sequence Forecasting with Horizon Matching](detecting_the_future_all-at-once_event_sequence_forecasting_with_horizon_matchin.md)
+- [iTimER: Reconstruction Error-Guided Irregularly Sampled Time Series Representation Learning](beyond_observations_reconstruction_error-guided_irregularly_sampled_time_series_.md)
+- [Harmonic Dataset Distillation for Time Series Forecasting](harmonic_dataset_distillation_for_time_series_forecasting.md)
+- [Counterfactual Explainable AI (XAI) Method for Deep Learning-Based Multivariate Time Series Classification](counterfactual_explainable_ai_xai_method_for_deep_learning-based_multivariate_ti.md)
+- [HN-MVTS: HyperNetwork-based Multivariate Time Series Forecasting](hn-mvts_hypernetwork-based_multivariate_time_series_forecasting.md)
+
+<!-- RELATED:END -->

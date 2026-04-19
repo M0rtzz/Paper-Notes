@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯概念分析，仅使用宏观统计数据做illustrative论证，缺乏定量验证
 - 写作质量: ⭐⭐⭐⭐ 论证清晰，历史类比有力，结构紧凑，5页短文完成有效论证
 - 价值: ⭐⭐⭐⭐ 对AGI社会影响研究提供了被忽视的重要视角，但缺乏可操作的政策指引
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Equivariant Operators for Robust Object Recognition: Promises and Challenges](latent_equivariant_operators_for_robust_object_recognition_promises_and_challeng.md)
+- [Probably Approximately Global Robustness Certification](../../ICML2025/others/probably_approximately_global_robustness_certification.md)
+- [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](../../ACL2025/others/literature_meets_data_hypothesis.md)
+- [Gaze Target Detection Based on Head-Local-Global Coordination](../../ECCV2024/others/gaze_target_detection_based_on_head-local-global_coordination.md)
+- [AutoSciDACT: Automated Scientific Discovery through Contrastive Embedding and Hypothesis Testing](../../NeurIPS2025/others/autoscidact_automated_scientific_discovery_through_contrastive_embedding_and_hyp.md)
+
+<!-- RELATED:END -->

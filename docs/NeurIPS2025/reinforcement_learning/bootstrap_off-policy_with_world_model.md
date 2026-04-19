@@ -140,3 +140,15 @@ BOOM 由三个紧密耦合的组件组成：**策略网络 π**、**在线规划
 - **实验充分度**: ⭐⭐⭐⭐ — 14 个高维任务覆盖全面，消融完整，但缺少真实场景和更多任务类型
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机-方法-理论-实验逻辑链条清晰，公式推导严谨
 - **价值**: ⭐⭐⭐⭐ — 对 planning + off-policy RL 范式的核心痛点给出实用方案，开源代码，具有较高实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bootstrap Off-policy with World Model](boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+- [Communicating Plans, Not Percepts: Scalable Multi-Agent Coordination with Embodied World Models](communicating_plans_not_percepts_scalable_multi-agent_coordination_with_embodied.md)
+- [The Physical Basis of Prediction: World Model Formation in Neural Organoids via an LLM-Generated Curriculum](the_physical_basis_of_prediction_world_model_formation_in_neural_organoids_via_a.md)
+
+<!-- RELATED:END -->

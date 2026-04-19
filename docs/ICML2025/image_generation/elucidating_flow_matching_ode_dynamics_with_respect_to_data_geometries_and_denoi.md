@@ -131,3 +131,15 @@ $$\langle m_\sigma(x) - x, \text{proj}_\Omega(x) - x \rangle > 0$$
 - 实验充分度: ⭐⭐⭐ — 以理论为主，实验主要用于验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，数学严谨，图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 为FM模型提供了坚实的理论基础，对采样策略优化有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Flow Matching by Aligning Flow Divergence](improving_flow_matching_by_aligning_flow_divergence.md)
+- [Composite Flow Matching for Reinforcement Learning with Shifted-Dynamics Data](../../NeurIPS2025/image_generation/composite_flow_matching_for_reinforcement_learning_with_shifted-dynamics_data.md)
+- [Gaussian Mixture Flow Matching Models](gaussian_mixture_flow_matching_models.md)
+- [ETTA: Elucidating the Design Space of Text-to-Audio Models](etta_elucidating_the_design_space_of_text-to-audio_models.md)
+- [ContinualFlow: Learning and Unlearning with Neural Flow Matching](continualflow_learning_and_unlearning_with_neural_flow_matching.md)
+
+<!-- RELATED:END -->

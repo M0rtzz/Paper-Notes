@@ -186,3 +186,15 @@ $$\mathbf{x}_{t-1} = \text{DPM-step}(\mathbf{x}_t, s_\theta) - \zeta_t \nabla_{\
 ## 评分
 
 ⭐⭐⭐⭐ 方法思路清晰且实用价值高，"预训练+微调"范式在 MRI 重建中的验证系统充分，临床 reader study 是重要亮点；不足在于仅 2× 加速且推理速度慢，距离真正临床部署仍有距离。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversion-based_reconstruction-free_anomaly_detection_with_diffusion_model.md)
+- [Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data](towards_efficient_medical_reasoning_with_minimal_fine-tuning_data.md)
+- [G2L: From Giga-Scale to Cancer-Specific Large-Scale Pathology Foundation Models via Efficient Fine-Tuning](../../AAAI2026/medical_imaging/g2lfrom_giga-scale_to_cancer-specific_large-scale_pathology_foundation_models_vi.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+- [cryoSENSE: Compressive Sensing Enables High-throughput Microscopy with Sparse and Generative Priors on the Protein Cryo-EM Image Manifold](cryosense_compressive_sensing_enables_high-throughput_microscopy_with_sparse_and.md)
+
+<!-- RELATED:END -->

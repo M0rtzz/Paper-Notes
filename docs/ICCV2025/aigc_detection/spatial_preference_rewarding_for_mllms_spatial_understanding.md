@@ -162,3 +162,15 @@ SPR 的提升随 IoU 阈值升高而显著增大——**在 0.9 阈值下 7B 模
 - **技术深度**: ⭐⭐⭐ — 方法简洁有效，但技术复杂度不高
 - **实用价值**: ⭐⭐⭐⭐⭐ — 低成本、即插即用，对 MLLM 空间理解有直接提升
 - **写作质量**: ⭐⭐⭐⭐ — 清晰系统，实验设计出色
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
+- [Are We in the AI-Generated Text World Already? Quantifying and Monitoring AIGT on Social Media](../../ACL2025/aigc_detection/aigt_social_media_monitoring.md)
+- [Who Writes What: Unveiling the Impact of Author Roles on AI-generated Text Detection](../../ACL2025/aigc_detection/who_writes_what_ai_detection.md)
+- [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../../NeurIPS2025/aigc_detection/classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
+- [Iron Sharpens Iron: Defending Against Attacks in Machine-Generated Text Detection with Adversarial Training](../../ACL2025/aigc_detection/greater_adversarial_mgt_detection.md)
+
+<!-- RELATED:END -->

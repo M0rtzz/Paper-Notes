@@ -143,3 +143,15 @@ SewingLDM 包含三个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐ 定量定性对比充分，包含用户研究和详尽消融
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ 对数字服装设计行业有重要的实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MamTiff-CAD: Multi-Scale Latent Diffusion with Mamba+ for Complex Parametric Sequence](mamtiff-cad_multi-scale_latent_diffusion_with_mamba_for_complex_parametric_seque.md)
+- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
+- [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](../../CVPR2025/image_generation/enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
+- [Latent Diffusion Models with Masked AutoEncoders](latent_diffusion_models_with_masked_autoencoders.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ tags:
 - 实验充分度: 4/5 — 生成质量（5项指标）+完整消融（逐条件去除）+两个下游应用验证，但仅单一术种（胆囊切除术）
 - 写作质量: 4/5 — 结构清晰、图表直观（红色叠加标注生成缺陷很直观），概念阐述到位
 - 价值: 4/5 — 为手术 AI 数据增强和手术仿真开辟了有前景的方向，12K 级标注数据集本身也有社区价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [World2Act: Latent Action Post-Training via Skill-Compositional World Models](world2act_latent_action_post-training_via_skill-compositional_world_models.md)
+- [How Far is Video Generation from World Model: A Physical Law Perspective](../../ICML2025/video_generation/how_far_is_video_generation_from_world_model_a_physical_law_perspective.md)
+- [DynamicScaler: Seamless and Scalable Video Generation for Panoramic Scenes](dynamicscaler_seamless_and_scalable_video_generation_for_panoramic_scenes.md)
+- [Infinity-RoPE: Action-Controllable Infinite Video Generation Emerges From Autoregressive Self-Rollout](../../CVPR2026/video_generation/infinity-rope_action-controllable_infinite_video_generation_emerges_from_autoreg.md)
+- [3D4D: An Interactive Editable 4D World Model via 3D Video Generation](../../AAAI2026/video_generation/3d4d_an_interactive_editable_4d_world_model_via_3d_video_generation.md)
+
+<!-- RELATED:END -->

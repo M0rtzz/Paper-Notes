@@ -108,3 +108,15 @@ MSFT 在 3 个 TSFM backbone（Moirai、Moment、UniTS）上均一致性超越 n
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个 backbone、多个数据集、多种微调方法对比、完善消融
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，因果分析和方法设计有机结合
 - 价值: ⭐⭐⭐⭐ 为 TSFM 微调提供了实用且有理论支撑的通用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Less is More: Unlocking Specialization of Time Series Foundation Models via Structured Pruning](less_is_more_unlocking_specialization_of_time_series_foundation_models_via_struc.md)
+- [Frequency Matters: When Time Series Foundation Models Fail Under Spectral Shift](frequency_matters_when_time_series_foundation_models_fail_under_spectral_shift.md)
+- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](../../AAAI2026/3d_vision/uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+- [FeDaL: Federated Dataset Learning for General Time Series Foundation Models](../../ICLR2026/3d_vision/fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
+- [Dissecting Chronos: Sparse Autoencoders Reveal Causal Feature Hierarchies in Time Series Foundation Models](../../ICLR2026/3d_vision/dissecting_chronos_sparse_autoencoders_reveal_causal_feature_hierarchies_in_time.md)
+
+<!-- RELATED:END -->

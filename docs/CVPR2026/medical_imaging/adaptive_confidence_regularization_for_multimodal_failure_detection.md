@@ -136,3 +136,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{out
 - 实验充分度: ⭐⭐⭐⭐ — 4 数据集、3 模态、多设置（分布偏移/不同骨干/OOD），消融充分
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，从观察到方法的逻辑流畅
 - 价值: ⭐⭐⭐⭐ — 填补多模态 FD 空白，框架通用性好，实际安全场景有应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [SVC 2026: The Second Multimodal Deception Detection Challenge and the First Domain Generalized Remote Physiological Measurement Challenge](svc_2026_the_second_multimodal_deception_detection_challenge_and_the_first_domai.md)
+- [SpaCRD: Multimodal Deep Fusion of Histology and Spatial Transcriptomics for Cancer Region Detection](../../AAAI2026/medical_imaging/spacrd_multimodal_deep_fusion_of_histology_and_spatial_transcriptomics_for_cance.md)
+- [Refine and Align: Confidence Calibration through Multi-Agent Interaction in VQA](../../AAAI2026/medical_imaging/refine_and_align_confidence_calibration_through_multi-agent_interaction_in_vqa.md)
+- [Architecture-Agnostic Untrained Network Priors for Image Reconstruction with Frequency Regularization](../../ECCV2024/medical_imaging/architecture-agnostic_untrained_network_priors_for_image_reconstruction_with_fre.md)
+
+<!-- RELATED:END -->

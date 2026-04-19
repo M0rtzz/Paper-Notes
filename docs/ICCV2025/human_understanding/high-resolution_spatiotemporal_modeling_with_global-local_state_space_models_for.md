@@ -168,3 +168,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 四个基准全面验证，消融非常细致（组件/扫描方向/分辨率/计算效率）
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式推导完整，可视化（激活图、对比）丰富
 - **价值**: ⭐⭐⭐⭐ 开辟 Mamba 在密集时空预测任务的新方向，计算效率优势突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation](../../CVPR2025/human_understanding/learning_phase_distortion_with_selective_state_space_models_for_video_turbulence.md)
+- [SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)
+- [HccePose(BF): Predicting Front & Back Surfaces to Construct Ultra-Dense 2D-3D Correspondences for Pose Estimation](hcceposebf_predicting_front_back_surfaces_to_construct_ultra-dense_2d-3d_corresp.md)
+- [E-3DPSM: A State Machine for Event-Based Egocentric 3D Human Pose Estimation](../../CVPR2026/human_understanding/e-3dpsm_a_state_machine_for_event-based_egocentric_3d_human_pose_estimation.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](../../CVPR2025/human_understanding/gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+
+<!-- RELATED:END -->

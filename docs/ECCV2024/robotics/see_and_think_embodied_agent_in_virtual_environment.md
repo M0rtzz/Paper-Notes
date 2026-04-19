@@ -144,3 +144,15 @@ STEVE 是一个基于 LLM 的多模态自主系统，接收视觉状态 $X^v$、
 - ⭐⭐⭐ 实验充分度：baseline 数量偏少（仅 AutoGPT 和 Voyager），缺少更多消融
 - ⭐⭐⭐ 写作质量：整体可读但符号定义有些冗余
 - ⭐⭐⭐⭐ 价值：STEVE-21K 数据集和完整框架设计对 Minecraft AI 社区有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](../../CVPR2026/robotics/learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [ReALFRED: An Embodied Instruction Following Benchmark in Photo-Realistic Environments](realfred_an_embodied_instruction_following_benchmark_in_photo-realistic_environm.md)
+- [DRAWER: Digital Reconstruction and Articulation with Environment Realism](../../CVPR2025/robotics/drawer_digital_reconstruction_and_articulation_with_environment_realism.md)
+- [DISCO: Embodied Navigation and Interaction via Differentiable Scene Semantics and Dual-Level Control](disco_embodied_navigation_and_interaction_via_differentiable_scene_semantics_and.md)
+- [Visual Planning: Let's Think Only with Images](../../ICLR2026/robotics/visual_planning_lets_think_only_with_images.md)
+
+<!-- RELATED:END -->

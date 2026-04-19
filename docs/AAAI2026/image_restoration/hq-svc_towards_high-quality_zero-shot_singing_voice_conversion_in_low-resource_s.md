@@ -160,3 +160,15 @@ HQ-SVC 在 STOI（+10%）、F0 RMSE（降低 50%）、FPC（+44%）、NISQA（+9
 - **实验充分度**: ⭐⭐⭐⭐ — 主实验+超分辨率+采样器对比+消融实验，主客观评估完整；但基线较少（仅 SaMoye-SVC 一个强基线）
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式完整，消融分析深入
 - **价值**: ⭐⭐⭐⭐ — 大幅降低零样本 SVC 门槛，对低资源场景有显著实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Reference Joint Low-Light Enhancement and Deblurring via Visual Autoregressive Modeling with VLM-Derived Modulation](zero-reference_joint_low-light_enhancement_and_deblurring_via_visual_autoregress.md)
+- [Temporal Inconsistency Guidance for Super-resolution Video Quality Assessment](temporal_inconsistency_guidance_for_super-resolution_video_quality_assessment.md)
+- [Decouple to Reconstruct: High Quality UHD Restoration via Active Feature Disentanglement and Reversible Fusion](../../ICCV2025/image_restoration/decouple_to_reconstruct_high_quality_uhd_restoration_via_active_feature_disentan.md)
+- [Real-World Adverse Weather Image Restoration via Dual-Level Reinforcement Learning with High-Quality Cold Start](../../NeurIPS2025/image_restoration/real-world_adverse_weather_image_restoration_via_dual-level_reinforcement_learni.md)
+- [ICLR: Inter-Chrominance and Luminance Interaction for Natural Color Restoration in Low-Light Image Enhancement](iclr_inter-chrominance_and_luminance_interaction_for_natural_color_restoration_i.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ MDT下DL vs Kriging：SSIM +18.2~33.5%，FAC2 +3.5~24.2%，NMSE -10.2~27.8%。
 ⭐⭐⭐⭐ (4/5)
 
 综合评价：方法层面无新架构创新，但实验设计极为全面（4方法×2策略×6传感器配置×扰动分析×QR优化×时序平均策略），在真实PIV数据上的系统性基准测试对建筑环境工程有高实用价值。代码开源，可复现性好。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_a.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_widefield_and_highdynamic_range.md)
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+
+<!-- RELATED:END -->

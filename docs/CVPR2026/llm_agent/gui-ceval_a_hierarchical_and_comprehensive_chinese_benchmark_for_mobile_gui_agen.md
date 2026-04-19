@@ -114,3 +114,15 @@ GUI-CEval 包含 4,194 个多模态 QA 任务和 4,028 个 Agent 应用任务，
 - 实验充分度: ⭐⭐⭐⭐⭐ 20个模型、47种配置的全面评测
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，任务定义明确
 - 价值: ⭐⭐⭐⭐ 对中文移动端Agent研究有很好的推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EchoTrail-GUI: Building Actionable Memory for GUI Agents via Critic-Guided Self-Exploration](echotrail-gui_building_actionable_memory_for_gui_agents_via_critic-guided_self-e.md)
+- [Towards GUI Agents: Vision-Language Diffusion Models for GUI Grounding](towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)
+- [HATS: Hardness-Aware Trajectory Synthesis for GUI Agents](hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)
+- [FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](../../ICLR2026/llm_agent/fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
+- [M²-Miner: Multi-Agent Enhanced MCTS for Mobile GUI Agent Data Mining](../../ICLR2026/llm_agent/m2-miner_multi-agent_enhanced_mcts_for_mobile_gui_agent_data_mining.md)
+
+<!-- RELATED:END -->

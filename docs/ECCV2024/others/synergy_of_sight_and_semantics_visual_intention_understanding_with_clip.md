@@ -125,3 +125,15 @@ IntCLIP 采用双分支图像编码和文本对齐的架构。输入图像同时
 - 实验充分度: ⭐⭐⭐⭐ MIU 和情感识别两个任务验证，消融实验详细
 - 写作质量: ⭐⭐⭐⭐ "Sight vs Semantic"的叙事贯穿全文，逻辑流畅
 - 价值: ⭐⭐⭐⭐ 为主观视觉理解任务利用 VLM 提供了通用范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpatialFormer: Towards Generalizable Vision Transformers with Explicit Spatial Understanding](spatialformer_towards_generalizable_vision_transformers_with_explicit_spatial_un.md)
+- [GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths](gazexplain_learning_to_predict_natural_language_explanations_of_visual_scanpaths.md)
+- [Dropout Mixture Low-Rank Adaptation for Visual Parameters-Efficient Fine-Tuning](dropout_mixture_low-rank_adaptation_for_visual_parameters-efficient_fine-tuning.md)
+- [U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models](../../CVPR2026/others/clipfree_label_free_unsupervised_concept_bottlenec.md)
+- [Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics](../../AAAI2026/others/data_complexity_of_querying_description_logic_knowledge_bases_under_cost-based_s.md)
+
+<!-- RELATED:END -->

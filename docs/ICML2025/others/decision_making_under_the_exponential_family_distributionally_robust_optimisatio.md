@@ -120,3 +120,15 @@ angle + ...$
 - **供应链管理**: 需求分布属于Poisson族，不确定集反映需求预测不确定性
 - **信号检测**: 噪声属于高斯族，DRO提供鲁棒检测阈值
 - **排队系统**: 到达率属于指数族，优化服务容量决策
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Voting or Consensus? Decision-Making in Multi-Agent Debate](../../ACL2025/others/voting_or_consensus_decision-making_in_multi-agent_debate.md)
+- [Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification](fixing_the_loose_brake_exponential-tailed_stopping_time_in_best_arm_identificati.md)
+- [To Each Metric Its Decoding: Post-Hoc Optimal Decision Rules of Probabilistic Hierarchical Classifiers](to_each_metric_its_decoding_post-hoc_optimal_decision_rules_of_probabilistic_hie.md)
+- [Fixed-Confidence Multiple Change Point Identification under Bandit Feedback](fixed-confidence_multiple_change_point_identification_under_bandit_feedback.md)
+- [Statistical Inference Under Performativity](../../NeurIPS2025/others/statistical_inference_under_performativity.md)
+
+<!-- RELATED:END -->

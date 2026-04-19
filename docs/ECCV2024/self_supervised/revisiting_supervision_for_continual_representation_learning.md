@@ -158,3 +158,15 @@ BatchNorm 贡献最大（+10.6 vs 不使用任何组件），完整 block 效果
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 4 数据集 × 多种 CL 和学习方法 × 8 个下游任务 × 丰富的消融和分析
 - **写作质量**: ⭐⭐⭐⭐ — 条理清晰，Figure 1 的直觉展示很好，分析部分深入
 - **价值**: ⭐⭐⭐⭐ — 对持续学习社区有重要的认知纠偏价值，方法简单可复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PromptCCD: Learning Gaussian Mixture Prompt Pool for Continual Category Discovery](promptccd_learning_gaussian_mixture_prompt_pool_for_continual_category_discovery.md)
+- [Fly-CL: A Fly-Inspired Framework for Enhancing Efficient Decorrelation and Reduced Training Time in Pre-trained Model-based Continual Representation Learning](../../ICLR2026/self_supervised/fly-cl_a_fly-inspired_framework_for_enhancing_efficient_decorrelation_and_reduce.md)
+- [Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision](../../AAAI2026/self_supervised/improving_region_representation_learning_from_urban_imagery_with_noisy_long-capt.md)
+- [Continuous Subspace Optimization for Continual Learning (CoSO)](../../NeurIPS2025/self_supervised/continuous_subspace_optimization_for_continual_learning.md)
+- [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ MiniMA（3B）vs 同规模竞争者在标准基准上的表现：
 - 技术深度: ⭐⭐⭐⭐ (实证驱动但有理论支撑，实验设计严谨)
 - 实验充分度: ⭐⭐⭐⭐⭐ (两个模型族 × 多数据规模 × 大规模外推验证)
 - 实用性: ⭐⭐⭐⭐⭐ (直接指导 LLM 蒸馏实践，MiniMA 模型已开源)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+- [Distilling Tool Knowledge into Language Models via Back-Translated Traces](../../ICML2025/model_compression/distilling_tool_knowledge_into_language_models_via_back-translated_traces.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models](scaling_laws_and_efficient_inference_for_ternary_language_models.md)
+- [LongReD: Mitigating Short-Text Degradation of Long-Context Large Language Models via Restoration Distillation](longred_mitigating_short-text_degradation_of_long-context_large_language_models_.md)
+
+<!-- RELATED:END -->

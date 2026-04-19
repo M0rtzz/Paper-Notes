@@ -182,3 +182,15 @@ Mean CD 从 73.47 降至 29.61（分布内），从 272.06 降至 80.23（OOD）
 | 写作质量 | ⭐⭐⭐⭐ |
 | 实用价值 | ⭐⭐⭐⭐ |
 | 总体评价 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Faceted Attack: Exposing Cross-Model Vulnerabilities in Defense-Equipped Vision-Language Models](multi-faceted_attack_exposing_cross-model_vulnerabilities_in_defense-equipped_vi.md)
+- [SC-Captioner: Improving Image Captioning with Self-Correction by Reinforcement Learning](../../ICCV2025/multimodal_vlm/sc-captioner_improving_image_captioning_with_self-correction_by_reinforcement_le.md)
+- [Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective](../../ICLR2026/multimodal_vlm/why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)
+- [OmniAlign-V: Towards Enhanced Alignment of MLLMs with Human Preference](../../ACL2025/multimodal_vlm/omnialign-v_towards_enhanced_alignment_of_mllms_with_human_preference.md)
+- [Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model](../../ACL2025/multimodal_vlm/centurio_multilingual_vlm.md)
+
+<!-- RELATED:END -->

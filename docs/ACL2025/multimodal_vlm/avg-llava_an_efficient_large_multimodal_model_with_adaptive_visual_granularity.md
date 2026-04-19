@@ -147,3 +147,15 @@ AVG-LLaVA 在 LLaVA-NeXT 的基础上新增两个模块：(1) 视觉粒度缩放
 - 实验充分度: ⭐⭐⭐⭐⭐ 11 个基准全面覆盖，消融实验涵盖 7 个维度，路由可视化和注意力图分析深入
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述层次分明，架构图和可视化丰富
 - 价值: ⭐⭐⭐⭐ 对 MLLM 推理效率有直接实用价值，RGLF 范式可迁移；但仅在 7B 规模验证，缺少更大模型的验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](../../ICCV2025/multimodal_vlm/llava-prumerge_adaptive_token_reduction_for_efficient_large_multimodal_models.md)
+- [HiDe-LLaVA: Hierarchical Decoupling for Continual Instruction Tuning of Multimodal Large Language Model](hidellava_hierarchical_decoupling_for_continual_instruction.md)
+- [Error-driven Data-efficient Large Multimodal Model Tuning](error-driven_data-efficient_large_multimodal_model_tuning.md)
+- [MadaKV: Adaptive Modality-Perception KV Cache Eviction for Efficient Multimodal Long-Context Inference](madakv_adaptive_modality-perception_kv_cache_eviction_for_efficient_multimodal_l.md)
+- [Adaptive Linguistic Prompting (ALP) Enhances Phishing Webpage Detection in Multimodal Large Language Models](adaptive_linguistic_prompting_alp_enhances_phishing_webpage_detection_in_multimo.md)
+
+<!-- RELATED:END -->

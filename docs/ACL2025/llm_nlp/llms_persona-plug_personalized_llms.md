@@ -137,3 +137,15 @@ $$\mathcal{L} = -\sum_u \sum_i \log p_{\text{LLM}}(y_i^u | \mathbf{X}_i^u)$$
 - **实验充分性**：8/10 — 全面的基线对比、消融、LLM/编码器分析
 - **实用价值**：9/10 — 部署友好，单模型服务多用户
 - **总体评分**：8/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiCUPID: Exploring the Potential of LLMs as Personalized Assistants](exploring_the_potential_of_llms_as.md)
+- [Beyond Profile: From Surface-Level Facts to Deep Persona Simulation in LLMs](beyond_profile_from_surface-level_facts_to_deep_persona_simulation_in_llms.md)
+- [Zero-Shot Belief: A Hard Problem for LLMs](zero-shot_belief_a_hard_problem_for_llms.md)
+- [Unintended Harms of Value-Aligned LLMs: Psychological and Empirical Insights](unintended_harms_of_value-aligned_llms_psychological_and_empirical_insights.md)
+- [MAPS: Motivation-Aware Personalized Search via LLM-Driven Consultation Alignment](maps_personalized_search.md)
+
+<!-- RELATED:END -->

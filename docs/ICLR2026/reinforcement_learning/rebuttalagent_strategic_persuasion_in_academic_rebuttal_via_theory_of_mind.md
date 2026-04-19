@@ -128,3 +128,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 问题定义新颖，将 rebuttal 建模为信息不对称的博弈并引入 ToM 是有创意的。TSR 框架设计逻辑清晰。主要concern 是排除了需实验的评论后任务难度降低，且实战效果需要更多验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Strategic Persuasion with Language Models](towards_strategic_persuasion_with_language_models.md)
+- [Unveiling the Cognitive Compass: Theory-of-Mind-Guided Multimodal Emotion Reasoning](unveiling_the_cognitive_compass_theory-of-mind-guided_multimodal_emotion_reasoni.md)
+- [FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning](fapo_flawed-aware_policy_optimization_for_efficient_and_reliable_reasoning.md)
+- [DiVE-k: Differential Visual Reasoning for Fine-grained Image Recognition](dive-k_differential_visual_reasoning_for_fine-grained_image_recognition.md)
+- [PreferThinker: Reasoning-based Personalized Image Preference Assessment](preferthinker_reasoning-based_personalized_image_preference_assessment.md)
+
+<!-- RELATED:END -->

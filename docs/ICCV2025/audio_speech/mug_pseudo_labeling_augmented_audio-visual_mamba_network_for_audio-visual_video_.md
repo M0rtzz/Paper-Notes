@@ -124,3 +124,15 @@ CMRC贡献最大（移除后Event@AV下降2.5%），MFE次之。
 - **实验充分度**: ⭐⭐⭐⭐ 消融全面，多基线验证CMRC有效性
 - **写作质量**: ⭐⭐⭐ 结构清晰但部分细节描述不够
 - **综合价值**: ⭐⭐⭐⭐ 为AVVP任务提供了有效的数据增强新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UWAV: Uncertainty-Weighted Weakly-Supervised Audio-Visual Video Parsing](../../CVPR2025/audio_speech/uwav_uncertainty-weighted_weakly-supervised_audio-visual_video_parsing.md)
+- [VGGSounder: Audio-Visual Evaluations for Foundation Models](vggsounder_audio-visual_evaluations_for_foundation_models.md)
+- [Label-Anticipated Event Disentanglement for Audio-Visual Video Parsing](../../ECCV2024/audio_speech/label-anticipated_event_disentanglement_for_audio-visual_video_parsing.md)
+- [CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing](../../ECCV2024/audio_speech/coleaf_a_contrastive-collaborative_learning_framework_for_weakly_supervised_audi.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+
+<!-- RELATED:END -->

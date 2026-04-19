@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基准多策略对比+丰富消融，rebuttal中补充了通用任务和更多baseline
 - 写作质量: ⭐⭐⭐ 核心想法清晰，但数学记号不够严谨、奖励分类有歧义
 - 价值: ⭐⭐⭐⭐ DLM是新兴方向，MRO提出了首个系统性的推理增强路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models](../../ICLR2026/image_restoration/wd1_weighted_policy_optimization_for_reasoning_in_diffusion_language_models.md)
+- [Rethinking Circuit Completeness in Language Models: AND, OR, and ADDER Gates](rethinking_circuit_completeness_in_language_models_and_or_and_adder_gates.md)
+- [Enhancing Infrared Vision: Progressive Prompt Fusion Network and Benchmark](enhancing_infrared_vision_progressive_prompt_fusion_network_and_benchmark.md)
+- [SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning](scan_self-denoising_monte_carlo_annotation_for_robust_process_reward_learning.md)
+- [Adaptive Discretization for Consistency Models](adaptive_discretization_for_consistency_models.md)
+
+<!-- RELATED:END -->

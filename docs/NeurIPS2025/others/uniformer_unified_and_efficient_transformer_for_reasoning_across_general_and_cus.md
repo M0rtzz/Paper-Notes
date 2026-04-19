@@ -115,3 +115,15 @@ tags:
 - 技术贡献：⭐⭐⭐⭐ （Triton 内核 + FPGA 实现完整）
 - 实验充分度：⭐⭐⭐ （任务种类偏少）
 - 写作质量：⭐⭐⭐⭐ （结构清晰，分析深入）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)
+- [SynWeather: Weather Observation Data Synthesis across Multiple Regions and Variables via a General Diffusion Transformer](../../AAAI2026/others/synweather_weather_observation_data_synthesis_across_multiple_regions_and_variab.md)
+- [Look-Ahead Reasoning on Learning Platforms](look-ahead_reasoning_on_learning_platforms.md)
+- [Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks](../../ACL2025/others/principled_generalization_arithmetic.md)
+- [A Unified Framework for Variable Selection in Model-Based Clustering with Missing Not at Random](a_unified_framework_for_variable_selection_in_modelbased_clu.md)
+
+<!-- RELATED:END -->

@@ -172,3 +172,15 @@ $$\hat{\sigma}^2(x,y) = \frac{1}{M}\sum_{i=1}^M (\text{S-IFD}_k(\ldots) - \hat{\
 - **写作质量**: ⭐⭐⭐⭐⭐ — 反例图解清晰，动机阐述优秀，易于理解
 - **实用价值**: ⭐⭐⭐⭐⭐ — 高效低成本，代码已开源，直接可用
 - **综合**: ⭐⭐⭐⭐ (8.5/10) — 非常实用的工作，以简洁的方法获得显著的性能提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Importance-Aware Data Selection for Efficient LLM Instruction Tuning](../../AAAI2026/llm_alignment/importance-aware_data_selection_for_efficient_llm_instruction_tuning.md)
+- [Improving Data Efficiency for LLM Reinforcement Fine-tuning Through Difficulty-targeted Online Data Selection and Rollout Replay](improving_data_efficiency_for_llm_reinforcement_fine-tuning_through_difficulty-t.md)
+- [Call for Rigor in Reporting Quality of Instruction Tuning Data](../../ACL2025/llm_alignment/call_for_rigor_in_reporting_quality_of_instruction_tuning_data.md)
+- [Federated Data-Efficient Instruction Tuning for Large Language Models](../../ACL2025/llm_alignment/federated_data-efficient_instruction_tuning_for_large_language_models.md)
+- [Instruction Tuning of Large Language Models for Tabular Data Generation—in One Day](../../ICML2025/llm_alignment/instruction_tuning_of_large_language_models_for_tabular_data_generation-in_one_d.md)
+
+<!-- RELATED:END -->

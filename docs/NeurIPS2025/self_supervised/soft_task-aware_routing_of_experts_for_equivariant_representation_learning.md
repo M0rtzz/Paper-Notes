@@ -158,3 +158,15 @@ STAR 在等变性度量上全面超越所有方法。
 - 实验充分度: ⭐⭐⭐⭐⭐ 分类/检测/少样本 + 专家分析 + 冗余分析 + 等变性评估，非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，分析部分有深度
 - 价值: ⭐⭐⭐⭐ 对等变表示学习有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+- [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
+- [MTL-UE: Learning to Learn Nothing for Multi-Task Learning](../../ICML2025/self_supervised/mtl-ue_learning_to_learn_nothing_for_multi-task_learning.md)
+- [Adv-SSL: Adversarial Self-Supervised Representation Learning with Theoretical Guarantees](adv-ssl_adversarial_self-supervised_representation_learning_with_theoretical_gua.md)
+- [TRIDENT: Tri-Modal Molecular Representation Learning with Taxonomic Annotations and Structural Relationships](trident_tri-modal_molecular_representation_learning_with_taxonomic_annotations_a.md)
+
+<!-- RELATED:END -->

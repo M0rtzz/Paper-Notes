@@ -101,3 +101,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+多backbone+详细消融+未见类别评估
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，图表信息量大，正样本定义的讨论周到
 - 价值: ⭐⭐⭐⭐ 对第一人称视觉理解有切实推动，方法即插即用的兼容性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VISA: Reasoning Video Object Segmentation via Large Language Models](visa_reasoning_video_object_segmentation_via_large_language_models.md)
+- [SOS: Segment Object System for Open-World Instance Segmentation With Object Priors](sos_segment_object_system_for_open-world_instance_segmentation_with_object_prior.md)
+- [General and Task-Oriented Video Segmentation](general_and_task-oriented_video_segmentation.md)
+- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
+- [VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement](visage_video_instance_segmentation_with_appearance-guided_enhancement.md)
+
+<!-- RELATED:END -->

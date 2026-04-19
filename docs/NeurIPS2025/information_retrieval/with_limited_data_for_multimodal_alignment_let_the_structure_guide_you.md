@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 24个数据集，3种对齐方法，数据缩放/扩展分析，多模型组合
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，核心 idea说明白，实验图表信息密度高
 - 价值: ⭐⭐⭐⭐⭐ 对资源受限领域（医疗/生物）的多模态对齐有重大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncovering Visual-Semantic Psycholinguistic Properties from the Distributional Structure of Text Embedding Space](../../ACL2025/information_retrieval/psycholinguistic_visual_semantic.md)
+- [MuRating: A High Quality Data Selecting Approach to Multilingual Large Language Model Pretraining](murating_a_high_quality_data_selecting_approach_to_multilingual_large_language_m.md)
+- [Generalized Contrastive Learning for Universal Multimodal Retrieval](generalized_contrastive_learning_for_universal_multimodal_re.md)
+- [Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+- [Benchmarking Retrieval-Augmented Multimodal Generation for Document Question Answering](benchmarking_retrievalaugmented_multimodal_generation_for_do.md)
+
+<!-- RELATED:END -->

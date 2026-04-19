@@ -149,3 +149,15 @@ RNE 在推理时控制场景下**不需要额外训练**（即插即用），在
 - 实验充分度: ⭐⭐⭐ — 概念验证充分，但大规模验证不足
 - 写作质量: ⭐⭐⭐⭐ — 理论清晰，框架统一
 - 价值: ⭐⭐⭐⭐ — 即插即用特性和理论统一性有重要的实用和学术价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework](../../CVPR2026/image_generation/taming_score-based_denoisers_in_admm_a_convergent_plug-and-play_framework.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [Unsupervised Conformal Inference: Bootstrapping and Alignment to Control LLM Uncertainty](unsupervised_conformal_inference_bootstrapping_and_alignment_to_control_llm_unce.md)
+- [Trans-Adapter: A Plug-and-Play Framework for Transparent Image Inpainting](../../ICCV2025/image_generation/trans-adapter_a_plug-and-play_framework_for_transparent_image_inpainting.md)
+- [Training-Free Reward-Guided Image Editing via Trajectory Optimal Control](training-free_reward-guided_image_editing_via_trajectory_optimal_control.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ CPM 引导的配对使学生在传输集上达到 86.70%，是随机配对的 2.
 - **实验** ⭐⭐⭐：异构设置设计合理，消融充分，但联邦规模小、绝对性能低、缺少主流 FL 方法对比
 - **写作** ⭐⭐⭐⭐：结构清晰，问题-方案-实验逻辑完整，安全分析和理论洞察自洽
 - **实用性** ⭐⭐⭐⭐：代码开源，框架通用性强，适用于跨组织 LLM 协作的实际场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](../../ACL2025/ai_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+- [Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures](ghost_in_the_transformer_detecting_model_reuse_with_invariant_spectral_signature.md)
+- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
+- [Robust Watermarking on Gradient Boosting Decision Trees](robust_watermarking_on_gradient_boosting_decision_trees.md)
+
+<!-- RELATED:END -->

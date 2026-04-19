@@ -120,3 +120,15 @@ POD 在 PCP(α=0.05) 上比纯优化基线 RSRD 提升超过 **32 个百分点**
 - **实验充分度**: ⭐⭐⭐⭐ 14个真实+5个合成物体，多维度消融分析
 - **写作质量**: ⭐⭐⭐⭐ 层次清晰，System 1/2 类比直观
 - **价值**: ⭐⭐⭐⭐ 为物体级4D理解提供了可扩展的自监督范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis](../../NeurIPS2025/medical_imaging/scalable_diffusion_transformer_for_conditional_4d_fmri_synthesis.md)
+- [HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?](hrscene_how_far_are_vlms_from_effective_high-resolution_image_understanding.md)
+- [An OpenMind for 3D Medical Vision Self-Supervised Learning](an_openmind_for_3d_medical_vision_self-supervised_learning.md)
+- [Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge](../../ACL2025/medical_imaging/biore_llm_judge_evaluation.md)
+- [iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](../../ICML2025/medical_imaging/idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
+
+<!-- RELATED:END -->

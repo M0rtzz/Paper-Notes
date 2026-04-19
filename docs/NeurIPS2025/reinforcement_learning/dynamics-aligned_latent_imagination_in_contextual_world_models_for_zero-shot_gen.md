@@ -124,3 +124,15 @@ DALI 在 DreamerV3 基础上增加一个 Transformer 结构的上下文编码器
 - 实验充分度: ⭐⭐⭐ 仅两个 DMC 任务，但包含多种泛化设置和反事实分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论与实验结合好，消融全面
 - 价值: ⭐⭐⭐⭐ 展示了自监督上下文推断在 model-based RL 中的潜力，"推断 > ground-truth"的发现有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts](zero-shot_context_generalization_in_reinforcement_learning_from_few_training_con.md)
+- [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](../../ICML2025/reinforcement_learning/zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [Inverse Optimization Latent Variable Models for Learning Costs Applied to Route Problems](inverse_optimization_latent_variable_models_for_learning_costs_applied_to_route_.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+
+<!-- RELATED:END -->

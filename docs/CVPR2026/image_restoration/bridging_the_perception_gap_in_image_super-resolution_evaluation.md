@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 大规模用户研究 + 系统性分析 + 多模型多数据集 + 作为损失函数
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析透彻，三个 Goal 的抽象精准
 - 价值: ⭐⭐⭐⭐⭐ 对 SR 评估领域有根本性推进，"PSNR/SSIM 负相关"将改变社区惯例
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [ClearAIR: A Human-Visual-Perception-Inspired All-in-One Image Restoration](../../AAAI2026/image_restoration/clearair_a_human-visual-perception-inspired_all-in-one_image_restoration.md)
+- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](raw-domain_degradation_models_for_realistic_smartphone_super-resolution.md)
+- [FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution](fidesr_high-fidelity_and_detail-preserving_one-step_diffusion_super-resolution.md)
+
+<!-- RELATED:END -->

@@ -193,3 +193,15 @@ $$\pi_{A \wedge B}(m) = \min\{\pi_A(m), \pi_B(m)\}, \quad \pi_{A \vee B}(m) = \m
 - **实验充分度**: ⭐⭐⭐⭐ — 三层递进验证，多模型多领域对比，但属性标注的可靠性和实验规模仍可加强
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学形式化严谨，概念清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ — 为理解 LLM 表示提供了深刻的理论框架，但缺乏下游任务验证限制了即时实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](../../ACL2025/llm_nlp/leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [Representation Bending for Large Language Model Safety](../../ACL2025/llm_nlp/repbend_representation_bending_safety.md)
+- [SR-LLM: Rethinking the Structured Representation in Large Language Model](../../ACL2025/llm_nlp/sr-llm_rethinking_the_structured_representation_in_large_language_model.md)
+- [Binary Hypothesis Testing for Softmax Models and Leverage Score Models](../../ICML2025/llm_nlp/binary_hypothesis_testing_for_softmax_models_and_leverage_score_models.md)
+- [The Lock-in Hypothesis: Stagnation by Algorithm](../../ICML2025/llm_nlp/the_lock-in_hypothesis_stagnation_by_algorithm.md)
+
+<!-- RELATED:END -->

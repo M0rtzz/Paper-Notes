@@ -136,3 +136,15 @@ TIP-Eval上5个I2V模型的多维评估（10维评估标准化后比较）：
 - **实验充分度**: ⭐⭐⭐⭐ 涵盖多模型比较、用户分析、检测实验，丰富全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，可视化丰富
 - **价值**: ⭐⭐⭐⭐⭐ 数据集+基准的组合对社区有持久贡献，170万规模的prompt具有广泛研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RealCam-I2V: Real-World Image-to-Video Generation with Interactive Complex Camera Control](realcam-i2v_real-world_image-to-video_generation_with_interactive_complex_camera.md)
+- [DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation](dh-facevid-1k_a_large-scale_high-quality_dataset_for_face_video_generation.md)
+- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+- [Prompt-A-Video: Prompt Your Video Diffusion Model via Preference-Aligned LLM](prompt-a-video_prompt_your_video_diffusion_model_via_preference-aligned_llm.md)
+- [Versatile Transition Generation with Image-to-Video Diffusion](versatile_transition_generation_with_image-to-video_diffusion.md)
+
+<!-- RELATED:END -->

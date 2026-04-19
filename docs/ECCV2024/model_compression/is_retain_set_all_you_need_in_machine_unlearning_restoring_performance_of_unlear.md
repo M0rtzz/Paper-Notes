@@ -172,3 +172,15 @@ SCAR 将 DNN $\Phi_\theta$ 分解为骨干 $\Phi_\psi$ 和最终全连接层 $\P
 - **实验充分度**: ⭐⭐⭐⭐ — 3个数据集 × 2个场景，多架构验证，消融全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，方法描述系统
 - **价值**: ⭐⭐⭐⭐ — 解决了隐私受限场景下的实际遗忘需求，Self-Forget变体极具前瞻性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reference-Guided Machine Unlearning](../../ICLR2026/model_compression/reference-guided_machine_unlearning.md)
+- [Uni-LoRA: One Vector is All You Need](../../NeurIPS2025/model_compression/uni-lora_one_vector_is_all_you_need.md)
+- [FreestyleRet: Retrieving Images from Style-Diversified Queries](freestyleret_retrieving_images_from_style-diversified_queries.md)
+- [SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images](spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)
+- [Adversarially Robust Distillation by Reducing the Student-Teacher Variance Gap](adversarially_robust_distillation_by_reducing_the_student-teacher_variance_gap.md)
+
+<!-- RELATED:END -->

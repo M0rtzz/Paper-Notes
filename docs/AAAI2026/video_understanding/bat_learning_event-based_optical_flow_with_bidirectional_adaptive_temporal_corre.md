@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两个基准全面对比+详细消融+未来预测实验
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐ — DSEC-Flow SOTA，未来光流预测有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](../../ICCV2025/video_understanding/unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
+- [LAOF: Robust Latent Action Learning with Optical Flow Constraints](../../CVPR2026/video_understanding/laof_robust_latent_action_learning_with_optical_flow_constraints.md)
+- [PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](../../ICCV2025/video_understanding/prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)
+- [EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation](../../CVPR2025/video_understanding/edcflow_exploring_temporally_dense_difference_maps_for_event-based_optical_flow_.md)
+- [Lifelong Domain Adaptive 3D Human Pose Estimation](lifelong_domain_adaptive_3d_human_pose_estimation.md)
+
+<!-- RELATED:END -->

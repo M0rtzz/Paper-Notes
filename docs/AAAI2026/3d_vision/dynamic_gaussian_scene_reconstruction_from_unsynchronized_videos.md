@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅在 DyNeRF 一个数据集上验证，场景多样性不足
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 实用性强，降低了动态场景采集的硬件门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction](sparse4dgs_4d_gaussian_splatting_for_sparse-frame_dynamic_scene_reconstruction.md)
+- [BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](../../ICCV2025/3d_vision/beziergs_dynamic_urban_scene_reconstruction_with_bezier_curv.md)
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](../../ICCV2025/3d_vision/beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](../../NeurIPS2025/3d_vision/dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [Mono4DGS-HDR: High Dynamic Range 4D Gaussian Splatting from Alternating-exposure Monocular Videos](../../ICLR2026/3d_vision/mono4dgs-hdr_high_dynamic_range_4d_gaussian_splatting_from_alternating-exposure_.md)
+
+<!-- RELATED:END -->

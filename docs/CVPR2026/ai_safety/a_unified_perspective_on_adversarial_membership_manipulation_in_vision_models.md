@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个数据集、多种MIA、多种扰动级别、消融和自适应攻击分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义严格（安全博弈形式化），理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 对AI安全和隐私审计领域有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)](../../ICLR2026/ai_safety/membership_inference_attacks_against_fine-tuned_diffusion_language_models.md)
+- [Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
+- [Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](../../NeurIPS2025/ai_safety/exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
+- [Staining and Locking Computer Vision Models without Retraining](../../ICCV2025/ai_safety/staining_and_locking_computer_vision_models_without_retraining.md)
+- [Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction](towards_highly_transferable_vision-language_attack_via_semantic-augmented_dynami.md)
+
+<!-- RELATED:END -->

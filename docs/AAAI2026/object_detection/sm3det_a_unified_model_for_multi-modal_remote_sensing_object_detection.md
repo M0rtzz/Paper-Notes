@@ -148,3 +148,15 @@ GradNorm通过调整各任务梯度大小来平衡学习。SM3Det的DSO则直接
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多骨干/多检测器/详尽消融/可视化分析非常全面
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，方法动机充分，实验组织有逻辑
 - 价值: ⭐⭐⭐⭐ — 对遥感多模态统一检测有开创性意义，方法可迁移至其他多模态场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fourier Angle Alignment for Oriented Object Detection in Remote Sensing](../../CVPR2026/object_detection/fourier_angle_alignment_for_oriented_object_detection_in_remote_sensing.md)
+- [OpenRSD: Towards Open-prompts for Object Detection in Remote Sensing Images](../../ICCV2025/object_detection/openrsd_towards_open-prompts_for_object_detection_in_remote_sensing_images.md)
+- [MutDet: Mutually Optimizing Pre-training for Remote Sensing Object Detection](../../ECCV2024/object_detection/mutdet_mutually_optimizing_pre-training_for_remote_sensing_object_detection.md)
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](../../CVPR2026/object_detection/learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [Small Target Detection Based on Mask-Enhanced Attention Fusion of Visible and Infrared Remote Sensing Images](../../CVPR2026/object_detection/small_target_detection_based_on_mask-enhanced_attention_fusion_of_visible_and_in.md)
+
+<!-- RELATED:END -->

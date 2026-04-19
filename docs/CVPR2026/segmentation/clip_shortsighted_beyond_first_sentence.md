@@ -220,3 +220,15 @@ DeBias-CLIP 沿用 Long-CLIP 的双对比损失框架：一个长 caption 损失
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多模型、多维度分析极为充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从诊断到解决层层递进
 - 价值: ⭐⭐⭐⭐ 对 CLIP 生态的理解和改进有实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](clip_is_shortsighted_paying_attention_beyond_the_first_sentence.md)
+- [Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation](looking_beyond_the_window_global-local_aligned_clip_for_training-free_open-vocab.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
+- [DPAD: Discriminative Perception via Anchored Description for Reasoning Segmentation](discriminative_perception_via_anchored_description_for_reasoning_segmentation.md)
+
+<!-- RELATED:END -->

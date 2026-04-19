@@ -149,3 +149,15 @@ SAM 扰动目标对比：
 - 实验充分度: ⭐⭐⭐⭐ 四个目标域的标准 benchmark + 详尽消融 + CKA/MMD 分析 + 可视化，但 ISIC 结果偏弱略显不足
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，从现象到解释到方法的逻辑链非常流畅，图表设计直观
 - 价值: ⭐⭐⭐⭐ 发现具有广泛适用性（不限于 CD-FSS），SAM-SVN 技术可迁移，但 ISIC 不稳定和超参敏感影响实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Disentanglement and Re-Composition for Cross-Domain Few-Shot Segmentation](self-disentanglement_and_re-composition_for_cross-domain_few-shot_segmentation.md)
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+- [Bridging Granularity Gaps: Hierarchical Semantic Learning for Cross-Domain Few-Shot Segmentation](../../AAAI2026/segmentation/bridging_granularity_gaps_hierarchical_semantic_learning_for_cross-domain_few-sh.md)
+- [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
+- [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](../../CVPR2025/segmentation/mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
+
+<!-- RELATED:END -->

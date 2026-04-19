@@ -141,3 +141,15 @@ VIGFace 包含两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5 个验证基准、多种数据规模对比、数据增强实验、身份泄露分析均完备
 - **写作质量**: ⭐⭐⭐⭐ 方法动机清晰，可视化丰富（t-SNE、相似度矩阵）
 - **价值**: ⭐⭐⭐⭐⭐ 解决人脸识别领域长期存在的隐私困境，具有重大现实意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniVTON: Training-Free Universal Virtual Try-On](omnivton_training-free_universal_virtual_try-on.md)
+- [Synthetic Face Datasets Generation via Latent Space Exploration from Brownian Identity Diffusion](../../ICML2025/image_generation/synthetic_face_datasets_generation_via_latent_space_exploration_from_brownian_id.md)
+- [NullSwap: Proactive Identity Cloaking Against Deepfake Face Swapping](nullswap_proactive_identity_cloaking_against_deepfake_face_swapping.md)
+- [GIF: Generative Inspiration for Face Recognition at Scale](../../CVPR2025/image_generation/gif_generative_inspiration_for_face_recognition_at_scale.md)
+- [CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
+
+<!-- RELATED:END -->

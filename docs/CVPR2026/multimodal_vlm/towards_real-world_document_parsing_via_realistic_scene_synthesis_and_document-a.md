@@ -146,3 +146,15 @@ tags:
 - **实验充分度** ⭐⭐⭐⭐⭐：OmniDocBench + Wild + XFUND 三基准，完整消融（RSS/ST/PTP），数据规模曲线
 - **写作质量** ⭐⭐⭐⭐：框架图清晰，数据构建流程详尽，消融设计严谨
 - **价值** ⭐⭐⭐⭐：1B 超越 235B 的结论令人信服，Wild 基准填补评估空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Document Parsing via Parallel Token Prediction](efficient_document_parsing_via_parallel_token_prediction.md)
+- [World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](rehearsevla_simulated_posttraining_world_model.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+- [Index-Preserving Lightweight Token Pruning for Efficient Document Understanding](../../ICLR2026/multimodal_vlm/index-preserving_lightweight_token_pruning_for_efficient_document_understanding_.md)
+
+<!-- RELATED:END -->

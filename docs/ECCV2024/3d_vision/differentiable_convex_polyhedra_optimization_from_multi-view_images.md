@@ -154,3 +154,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖形状重建、纹理重建、形状解析，消融实验充分
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 为凸多面体形状表示开辟了基于图像监督的新方向，有望影响物理仿真和碰撞检测等下游应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
+- [CrossScore: Towards Multi-View Image Evaluation and Scoring](crossscore_towards_multi-view_image_evaluation_and_scoring.md)
+- [MVDD: Multi-View Depth Diffusion Models](mvdd_multi-view_depth_diffusion_models.md)
+- [SparseSSP: 3D Subcellular Structure Prediction from Sparse-View Transmitted Light Images](sparsessp_3d_subcellular_structure_prediction_from_sparse-view_transmitted_light.md)
+- [CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images](canonicalfusion_generating_drivable_3d_human_avatars_from_multiple_images.md)
+
+<!-- RELATED:END -->

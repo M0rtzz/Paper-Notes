@@ -121,3 +121,15 @@ Clean Utility（VQAv2 准确率）在 CleanSight 下保持 62-68%，与无防御
 - 实验充分度: ⭐⭐⭐⭐⭐ 6种攻击×多个数据集×多个baseline，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰：观察→机制→方法→验证
 - 价值: ⭐⭐⭐⭐⭐ 首个LVLM test-time后门防御，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Attention Purification for Backdoored Large Vision Language Models](../../CVPR2026/multimodal_vlm/test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+- [Realistic Test-Time Adaptation of Vision-Language Models](realistic_test-time_adaptation_of_vision-language_models.md)
+- [TAPT: Test-Time Adversarial Prompt Tuning for Robust Inference in Vision-Language Models](tapt_test-time_adversarial_prompt_tuning_for_robust_inference_in_vision-language.md)
+- [What's in the Image? A Deep-Dive into the Vision of Vision Language Models](whats_in_the_image_a_deep-dive_into_the_vision_of_vision_language_models.md)
+- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+
+<!-- RELATED:END -->

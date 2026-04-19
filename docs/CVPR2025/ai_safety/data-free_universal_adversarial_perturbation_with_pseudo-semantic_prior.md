@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 白盒+黑盒+扩展模型+有数据对比
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰
 - 价值: ⭐⭐⭐⭐ 无数据 UAP 在实际攻击场景中更有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers](../../ICCV2025/ai_safety/semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf.md)
+- [DEAL: Data-Efficient Adversarial Learning for High-Quality Infrared Imaging](deal_data-efficient_adversarial_learning_for_high-quality_infrared_imaging.md)
+- [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](../../NeurIPS2025/ai_safety/adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [Model Inversion with Layer-Specific Modeling and Alignment for Data-Free Continual Learning](../../NeurIPS2025/ai_safety/model_inversion_with_layer-specific_modeling_and_alignment_for_data-free_continu.md)
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+
+<!-- RELATED:END -->

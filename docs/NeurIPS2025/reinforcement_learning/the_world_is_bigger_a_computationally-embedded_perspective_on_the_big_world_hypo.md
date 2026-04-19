@@ -136,3 +136,15 @@ $$J(\theta) = \sum_{k=1}^{T}\delta_{t+k}^2(z_t, \theta) - \delta_{t+k}^2(z_{t+k}
 - 实验充分度: ⭐⭐⭐ 实验规模受限于meta-gradient的计算开销，但足以验证核心观点
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰完整，从形式化定义到定理到实验验证一气呵成
 - 价值: ⭐⭐⭐⭐⭐ 为持续学习提供了全新的理论基础，"交互性论纲"具有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bootstrap Off-policy with World Model](boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [Meta-World+: An Improved, Standardized, RL Benchmark](meta-world_an_improved_standardized_rl_benchmark.md)
+- [Bootstrap Off-policy with World Model (BOOM)](bootstrap_off-policy_with_world_model.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](real-world_reinforcement_learning_of_active_perception_behaviors.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+
+<!-- RELATED:END -->

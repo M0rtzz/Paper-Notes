@@ -194,3 +194,15 @@ DRD 目标函数消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多数据集、多指标、深度消融（蒸馏层、目标函数、先验来源、融合方案）
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，分析层层递进，因果推理严谨
 - 价值: ⭐⭐⭐⭐⭐ — 在感知质量和内容保真之间取得最佳平衡，代码开源，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
+- [Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces](beyond_fact_retrieval_episodic_memory_for_rag_with_generative_semantic_workspace.md)
+- [Leveraging Textual Compositional Reasoning for Robust Change Captioning](leveraging_textual_compositional_reasoning_for_robust_change_captioning.md)
+- [Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints](mitigating_error_accumulation_in_co-speech_motion_generation_via_global_rotation.md)
+- [When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets](when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
+
+<!-- RELATED:END -->

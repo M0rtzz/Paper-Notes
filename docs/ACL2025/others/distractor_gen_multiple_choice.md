@@ -120,3 +120,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐（自动指标+人类评估+真实学生测试，评估全面）
 - **写作质量**: ⭐⭐⭐⭐（流程图清晰，动机阐述充分）
 - **价值**: ⭐⭐⭐⭐（实际教育场景有直接应用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Publication Choice Problem](../../AAAI2026/others/the_publication_choice_problem.md)
+- [Knowledge Tracing in Programming Education Integrating Students' Questions](knowledge_tracing_in_programming_education_integrating_students_questions.md)
+- [Optimizer Choice Matters for the Emergence of Neural Collapse](../../ICLR2026/others/optimizer_choice_matters_for_the_emergence_of_neural_collapse.md)
+- [Infogen: Generating Complex Statistical Infographics from Documents](infogen_generating_complex_statistical_infographics_from_documents.md)
+- [Cautious Next Token Prediction](cautious_next_token_prediction.md)
+
+<!-- RELATED:END -->

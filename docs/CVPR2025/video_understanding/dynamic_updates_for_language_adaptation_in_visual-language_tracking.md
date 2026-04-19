@@ -122,3 +122,15 @@ DUTrack由四个主要组件构成：(1) 多模态交互模块 — 使用one-str
 - 实验充分度: ⭐⭐⭐⭐ 6个benchmark + 多维degree消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，模块介绍条理分明
 - 价值: ⭐⭐⭐⭐ 为VL跟踪领域指明了"动态参考"的重要方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Unifying Specialized Visual Encoders for Video Language Models](../../ICML2025/video_understanding/unifying_specialized_visual_encoders_for_video_language_models.md)
+- [Coarse Correspondences Boost Spatial-Temporal Reasoning in Multimodal Language Models](coarse_correspondences_boost_spatial-temporal_reasoning_in_multimodal_language_m.md)
+- [DynFocus: Dynamic Cooperative Network Empowers LLMs with Video Understanding](dynfocus_dynamic_cooperative_network_empowers_llms_with_video_understanding.md)
+
+<!-- RELATED:END -->

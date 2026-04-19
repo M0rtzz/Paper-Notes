@@ -143,3 +143,15 @@ $$\mathbb{E}[W_1(\mu_S, \mu_{S_T})] \leq \tilde{O}\left(dD\left(\frac{\sqrt{\log
 - 实验充分度: ⭐⭐⭐ 模拟验证充分但真实数据实验规模有限（仅2类CIFAR-10）
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，与先前工作的对比和联系阐述得当
 - 价值: ⭐⭐⭐⭐ 填补了PE理论分析的重要空白，对实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Differentially Private Algorithms for Rank Aggregation](../../AAAI2026/others/improved_differentially_private_algorithms_for_rank_aggregation.md)
+- [Private Frequency Estimation via Residue Number Systems](../../AAAI2026/others/private_frequency_estimation_via_residue_number_systems.md)
+- [Missing Mass for Differentially Private Domain Discovery](../../ICLR2026/others/missing_mass_for_differentially_private_domain_discovery.md)
+- [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](../../ACL2025/others/personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)
+- [Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](../../ICLR2026/others/learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)
+
+<!-- RELATED:END -->

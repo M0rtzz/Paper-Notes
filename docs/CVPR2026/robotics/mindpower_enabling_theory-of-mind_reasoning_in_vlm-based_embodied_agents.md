@@ -138,3 +138,15 @@ Visual-RFT 和 LLaVA-CoT 提供通用的视觉推理增强方法。MindPower 的
 - 实验充分度: ⭐⭐⭐⭐ — 对比 10+ 基线 VLM，有消融和定性分析，但数据规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 框架清晰，图示丰富，层次分明
 - 价值: ⭐⭐⭐⭐ — 为具身 AI 的社会智能提供了重要基准和方法，但与真实机器人部署仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](../../NeurIPS2025/robotics/mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
+- [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](../../AAAI2026/robotics/adaptive_theory_of_mind_for_llm-based_multi-agent_coordination.md)
+- [Probabilistic Concept Graph Reasoning for Multimodal Misinformation Detection](probabilistic_concept_graph_reasoning_for_multimodal_misinformation_detection.md)
+
+<!-- RELATED:END -->

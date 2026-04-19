@@ -179,3 +179,15 @@ $$\rho(y) := \frac{F_\theta(y)}{F_\theta^{\text{ind}}(y)} < 1$$
 - **实验充分度**: ⭐⭐⭐ — 综述性质，无新实验，但覆盖面广
 - **写作质量**: ⭐⭐⭐⭐⭐ — 逻辑清晰，形式化严谨，层次分明
 - **价值**: ⭐⭐⭐⭐ — 为理解和解决T2I组合性问题提供了系统性路线图
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Erasure or Erosion? Evaluating Compositional Degradation in Unlearned Text-To-Image Diffusion Models](../../CVPR2026/image_generation/erasure_or_erosion_evaluating_compositional_degradation_in_unlearned_text-to-ima.md)
+- [Getting it Right: Improving Spatial Consistency in Text-to-Image Models](../../ECCV2024/image_generation/getting_it_right_improving_spatial_consistency_in_text-to-image_models.md)
+- [LongT2IBench: A Benchmark for Evaluating Long Text-to-Image Generation with Graph-structured Annotations](longt2ibench_a_benchmark_for_evaluating_long_text-to-image_generation_with_graph.md)
+- [Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation](../../NeurIPS2025/image_generation/evaluating_the_evaluators_metrics_for_compositional_text-to-image_generation.md)
+- [Infinite-Story: A Training-Free Consistent Text-to-Image Generation](infinite-story_a_training-free_consistent_text-to-image_gene.md)
+
+<!-- RELATED:END -->

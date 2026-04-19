@@ -112,3 +112,15 @@ PSNR 提升至少 4.16，SSIM 提升至少 0.152，全面领先。
 - 实验充分度: ⭐⭐⭐⭐ 对比和消融齐全，但测试集仅100个视频略少
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示详尽
 - 价值: ⭐⭐⭐⭐ 为可控角色视频合成提供了强有力的基准方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LeviTor: 3D Trajectory Oriented Image-to-Video Synthesis](levitor_3d_trajectory_oriented_image-to-video_synthesis.md)
+- [BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)
+- [AnimateAnything: Consistent and Controllable Animation for Video Generation](animateanything_consistent_and_controllable_animation_for_video_generation.md)
+- [SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization](../../ICCV2025/video_generation/sweettok_semantic-aware_spatial-temporal_tokenizer_for_compact_video_discretizat.md)
+- [InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
+
+<!-- RELATED:END -->

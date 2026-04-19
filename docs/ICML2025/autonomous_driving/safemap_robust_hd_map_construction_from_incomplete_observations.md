@@ -182,3 +182,15 @@ $$L = L_{\text{map}} + \lambda_1 L_{\text{Rec}} + \lambda_2 L_{\text{Cor}}$$
 | 实验充分性 | 5 | 双数据集、多基线、丰富消融、超参敏感性分析 |
 | 写作质量 | 4 | 结构清晰，动机阐述充分 |
 | 综合评价 | 4.5 | 实用性强、实验扎实的 ICML 工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAMap: Distance-aware MapNet for High Quality HD Map Construction](../../ICCV2025/autonomous_driving/damap_distance-aware_mapnet_for_high_quality_hd_map_construction.md)
+- [Stream Query Denoising for Vectorized HD-Map Construction](../../ECCV2024/autonomous_driving/stream_query_denoising_for_vectorized_hd-map_construction.md)
+- [MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction](../../CVPR2025/autonomous_driving/mapgclr_geospatial_contrastive_learning_of_representations_for_online_vectorized.md)
+- [SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction](../../NeurIPS2025/autonomous_driving/sdtagnet_leveraging_text-annotated_navigation_maps_for_online_hd_map_constructio.md)
+- [MapDistill: Boosting Efficient Camera-based HD Map Construction via Camera-LiDAR Fusion Model Distillation](../../ECCV2024/autonomous_driving/mapdistill_boosting_efficient_camera-based_hd_map_construction_via_camera-lidar_.md)
+
+<!-- RELATED:END -->

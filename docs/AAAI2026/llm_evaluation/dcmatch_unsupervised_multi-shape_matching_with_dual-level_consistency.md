@@ -185,3 +185,15 @@ $$\mathcal{L}_{cycle} = \sum_{i,j}^n (1 - \cos(\Pi_i^\top \widetilde{\Phi}_i \ma
 - 实验充分度: ⭐⭐⭐⭐⭐ (6个数据集 + 详细消融 + 稳定性分析 + 定性可视化)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图示直观)
 - 价值: ⭐⭐⭐⭐ (在多形状匹配上取得系统性改进，代码开源)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [Eliminating Warping Shakes for Unsupervised Online Video Stitching](../../ECCV2024/llm_evaluation/eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
+- [Learning Generalizable Shape Completion with SIM(3) Equivariance](../../NeurIPS2025/llm_evaluation/learning_generalizable_shape_completion_with_sim3_equivariance.md)
+- [Improved Runtime Guarantees for the SPEA2 Multi-Objective Optimizer](improved_runtime_guarantees_for_the_spea2_multi-objective_optimizer.md)
+- [MAPS: Multi-Agent Personality Shaping for Collaborative Reasoning](maps_multi-agent_personality_shaping_for_collaborative_reaso.md)
+
+<!-- RELATED:END -->

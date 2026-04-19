@@ -133,3 +133,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{denoise}} + \sum_{n=1}^{N}(w_{\text{mo}}\math
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 双数据集、多种深度类型、丰富的消融实验、计算复杂度分析
 - **写作质量**: ⭐⭐⭐⭐ — 论文结构清晰，图示直观
 - **实用价值**: ⭐⭐⭐⭐ — 在VR/AR、视频游戏等领域有应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LN3Diff: Scalable Latent Neural Fields Diffusion for Speedy 3D Generation](ln3diff_scalable_latent_neural_fields_diffusion_for_speedy_3d_generation.md)
+- [JointDiT: Enhancing RGB-Depth Joint Modeling with Diffusion Transformers](../../ICCV2025/3d_vision/jointdit_enhancing_rgb-depth_joint_modeling_with_diffusion_transformers.md)
+- [Compress3D: a Compressed Latent Space for 3D Generation from a Single Image](compress3d_a_compressed_latent_space_for_3d_generation_from_a_single_image.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+
+<!-- RELATED:END -->

@@ -198,3 +198,15 @@ $$A_{ij} = \frac{r_{ij} - \text{mean}(\{r_{11}, \ldots, r_{nG_n}\})}{\text{std}(
 - 实用性：⭐⭐⭐⭐ — 直接提升现有VLM的长视频能力，但延迟较高
 - 实验充分度：⭐⭐⭐⭐ — 4个基准、10个baseline、聚类/RL消融完整
 - 写作质量：⭐⭐⭐⭐ — 工作流图清晰，case study生动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](../../AAAI2026/video_understanding/tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+- [DynImg: Key Frames with Visual Prompts are Good Representation for Multi-Modal Video Understanding](dynimg_key_frames_with_visual_prompts_are_good_representation_for_multi-modal_vi.md)
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+- [Unleashing Hour-Scale Video Training for Long Video-Language Understanding](../../NeurIPS2025/video_understanding/unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
+
+<!-- RELATED:END -->

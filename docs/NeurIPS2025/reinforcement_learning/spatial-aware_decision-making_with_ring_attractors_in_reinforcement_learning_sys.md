@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Atari 100K 标准基准 + 两种实现方式 + 消融分析，但缺少连续控制任务
 - 写作质量: ⭐⭐⭐⭐ 生物背景详细、数学推导完整，但长度较长
 - 价值: ⭐⭐⭐⭐ 空间动作编码是有前景的方向，即插即用设计实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [Modulation of Temporal Decision-Making in a Deep Reinforcement Learning Agent under the Dual-Task Paradigm](modulation_of_temporal_decision-making_in_a_deep_reinforcement_learning_agent_un.md)
+- [Decision SpikeFormer: Spike-Driven Transformer for Decision Making](../../CVPR2025/reinforcement_learning/decision_spikeformer_spike-driven_transformer_for_decision_making.md)
+- [Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
+- [Divide and Conquer: Grounding LLMs as Efficient Decision-Making Agents via Offline Hierarchical Reinforcement Learning](../../ICML2025/reinforcement_learning/divide_and_conquer_grounding_llms_as_efficient_decision-making_agents_via_offlin.md)
+
+<!-- RELATED:END -->

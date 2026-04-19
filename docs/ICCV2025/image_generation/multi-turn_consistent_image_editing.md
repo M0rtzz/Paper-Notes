@@ -177,3 +177,15 @@ mask 中编辑区域用 $h_{\text{factor}} = 2.0$ 放大，非编辑区域用 $r
 - 实验充分度: ⭐⭐⭐⭐ (多指标、多baseline对比+消融充分，但数据集较小)
 - 写作质量: ⭐⭐⭐⭐ (逻辑清晰，公式推导完整，Figure设计直观)
 - 价值: ⭐⭐⭐⭐ (多轮编辑是一个重要且未被充分研究的方向，实用价值高)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CharaConsist: Fine-Grained Consistent Character Generation](characonsist_fine-grained_consistent_character_generation.md)
+- [MMAIF: Multi-task and Multi-degradation All-in-One for Image Fusion with Language Guidance](mmaif_multi-task_and_multi-degradation_all-in-one_for_image_fusion_with_language.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](../../CVPR2025/image_generation/consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting](omnipaint_mastering_object-oriented_editing_via_disentangled_insertion-removal_i.md)
+- [EEdit: Rethinking the Spatial and Temporal Redundancy for Efficient Image Editing](eedit_rethinking_the_spatial_and_temporal_redundancy_for_efficient_image_editing.md)
+
+<!-- RELATED:END -->

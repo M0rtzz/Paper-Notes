@@ -136,3 +136,15 @@ AutoOcc-V（纯相机）相比最佳自监督方法VEON：IoU提升25.09（+43.3
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集（nuScenes+KITTI）、三类方法对比（点云体素化/2D-3D投影/自监督）、零样本泛化、效率对比、消融实验、极端天气定性分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Table 1的方法对比一目了然，但方法部分公式较多，某些符号定义可以更简洁
 - 价值: ⭐⭐⭐⭐⭐ 解决了一个高度实用的问题（占据标注成本），效率提升数量级级别（30 GPU h vs 4000+人工h），开放式能力对自动驾驶安全至关重要，作为Highlight当之无愧
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Gaussian Map with Open-Set Semantic Grouping for Vision-Language Navigation](3d_gaussian_map_with_openset_semantic_grouping_for_visionlan.md)
+- [CLIP-GS: Unifying Vision-Language Representation with 3D Gaussian Splatting](clip-gs_unifying_vision-language_representation_with_3d_gaussian_splatting.md)
+- [PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors](../../NeurIPS2025/3d_vision/planargs_high-fidelity_indoor_3d_gaussian_splatting_guided_by_vision-language_pl.md)
+- [Online Language Splatting](online_language_splatting.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+
+<!-- RELATED:END -->

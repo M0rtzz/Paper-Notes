@@ -146,3 +146,15 @@ SignSGD 是 Adam 等自适应优化器的核心组件之一——它使用梯度
 - 实验充分度: ⭐⭐⭐⭐ — 极其彻底的理论分析+数值验证（89页），但缺少深度学习实验
 - 写作质量: ⭐⭐⭐⭐ — 理论严谨，但篇幅极长可能影响可读性
 - 价值: ⭐⭐⭐⭐ — 为理解自适应优化器的理论提供了重要洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
+- [Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules](../../NeurIPS2025/optimization/functional_scaling_laws_in_kernel_regression_loss_dynamics_and_learning_rate_sch.md)
+- [When to Restart? Exploring Escalating Restarts on Convergence](when_to_restart_exploring_escalating_restarts_on_convergence.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](../../NeurIPS2025/optimization/emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](../../NeurIPS2025/optimization/learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
+
+<!-- RELATED:END -->

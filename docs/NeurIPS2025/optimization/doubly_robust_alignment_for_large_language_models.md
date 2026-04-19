@@ -125,3 +125,15 @@ DRPO 借鉴因果推断中的双重稳健估计方法，提出一种偏好优化
 - 实验充分度: ⭐⭐⭐⭐ 合成实验完美验证理论，真实任务对比充分，但模型规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，方法动机层层递进，可视化辅助理解
 - 价值: ⭐⭐⭐⭐⭐ 为 RLHF 提供了理论上更优且实践中更鲁棒的新范式，有望成为重要参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Large Language Bayes](large_language_bayes.md)
+- [Training-Free Bayesianization for Low-Rank Adapters of Large Language Models](training-free_bayesianization_for_low-rank_adapters_of_large_language_models.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](../../ICML2025/optimization/subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+- [DynaAct: Large Language Model Reasoning with Dynamic Action Spaces](dynaact_large_language_model_reasoning_with_dynamic_action_spaces.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ GenCast 变体在太阳能 NREL 数据集上也超越所有基线，证明方法
 - ⭐⭐⭐⭐ 技术深度：LWR 速度重构、门控天气融合、熵正则空间分组等模块设计合理且有理论支撑
 - ⭐⭐⭐⭐⭐ 实验充分性：5 个数据集、多种分割策略（水平/垂直/环形）、不同无观测比例、跨领域迁移、详尽消融
 - ⭐⭐⭐⭐ 实用性：有开源代码，超参数跨数据集无需大量调优，可拓展至太阳能等其他空间预测领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Embracing Large Language Models in Traffic Flow Forecasting](../../ACL2025/autonomous_driving/embracing_large_language_models_in_traffic_flow_forecasting.md)
+- [RAST: A Retrieval Augmented Spatio-Temporal Framework for Traffic Prediction](rast_a_retrieval_augmented_spatio-temporal_framework_for_traffic_prediction.md)
+- [AI-based Traffic Modeling for Network Security and Privacy: Challenges Ahead](ai-based_traffic_modeling_for_network_security_and_privacy_challenges_ahead.md)
+- [Meta Dynamic Graph for Traffic Flow Prediction](meta_dynamic_graph_for_traffic_flow_prediction.md)
+- [TSBOW: Traffic Surveillance Benchmark for Occluded Vehicles Under Various Weather Conditions](tsbow_traffic_surveillance_benchmark_for_occluded_vehicles_under_various_weather.md)
+
+<!-- RELATED:END -->

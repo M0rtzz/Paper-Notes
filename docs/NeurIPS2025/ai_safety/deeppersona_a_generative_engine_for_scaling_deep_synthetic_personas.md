@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 内在+外在评估、多任务多指标、跨模型验证、人类评估，非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，但方法部分细节散落在附录中，主文偏长
 - 价值: ⭐⭐⭐⭐ 作为生成引擎而非一次性数据集，可持续扩展和定制
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distributional Adversarial Attacks and Training in Deep Hedging](distributional_adversarial_attacks_and_training_in_deep_hedging.md)
+- [Factor Decorrelation Enhanced Data Removal from Deep Predictive Models](factor_decorrelation_enhanced_data_removal_from_deep_predictive_models.md)
+- [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
+- [Unlearning as Ablation: Toward a Falsifiable Benchmark for Generative Scientific Discovery](unlearning_as_ablation_toward_a_falsifiable_benchmark_for_generative_scientific_.md)
+- [SynFER: Towards Boosting Facial Expression Recognition with Synthetic Data](../../ICCV2025/ai_safety/synfer_towards_boosting_facial_expression_recognition_with_synthetic_data.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ ACGD 贡献最大（Last +4.7, Forgetting -5.1），TSGR、原型迁移、视觉
 - 实验充分度: ⭐⭐⭐⭐⭐ — 五个基准全面 SOTA，包含详尽的蒸馏方案对比、消融、泛化分析
 - 写作质量: ⭐⭐⭐⭐ — 公式推导严谨，但符号较多，阅读门槛偏高
 - 价值: ⭐⭐⭐⭐⭐ — 为 VLM 持续学习提供了新的几何保持范式，无样本回放条件下大幅超越前作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](../../ICLR2026/multimodal_vlm/enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+- [Harnessing Textual Semantic Priors for Knowledge Transfer and Refinement in CLIP-Driven Continual Learning](../../AAAI2026/multimodal_vlm/harnessing_textual_semantic_priors_for_knowledge_transfer_and_refinement_in_clip.md)
+- [Branch, or Layer? Zeroth-Order Optimization for Continual Learning of Vision-Language Models](../../AAAI2026/multimodal_vlm/branch_or_layer_zeroth-order_optimization_for_continual_lear.md)
+- [On Token's Dilemma: Dynamic MoE with Drift-Aware Token Assignment for Continual Learning of Large Vision Language Models](on_tokens_dilemma_dynamic_moe_with_drift-aware_token_assignment_for_continual_le.md)
+- [BriMA: Bridged Modality Adaptation for Multi-Modal Continual Action Quality Assessment](brima_bridged_modality_adaptation_for_multi-modal_continual_action_quality_asses.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ LAMMA 后多模态特征差异性从 0.67 降到 0.05，验证了特征空间高
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：问题定义明确且有实际价值（模态失效在真实驾驶中不可避免），LAMMA 设计优雅（共享权重+加法融合+自然降级），PAFR 策略对模态竞争的理解有深度。消融实验充分证明了三个组件缺一不可。扣分点在于主实验仍基于仿真数据集，且多阶段训练增加了工程复杂度。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLC: Communication-Efficient Collaborative Perception with LiDAR Completion](../../CVPR2026/autonomous_driving/colc_communication-efficient_collaborative_perception_with_lidar_completion.md)
+- [Layer-wise Modality Decomposition for Interpretable Multimodal Sensor Fusion](../../NeurIPS2025/autonomous_driving/layer-wise_modality_decomposition_for_interpretable_multimodal_sensor_fusion.md)
+- [INSTINCT: Instance-Level Interaction Architecture for Query-Based Collaborative Perception](../../ICCV2025/autonomous_driving/instinct_instance-level_interaction_architecture_for_query-based_collaborative_p.md)
+- [Learning Mutual View Information Graph for Adaptive Adversarial Collaborative Perception](../../CVPR2026/autonomous_driving/learning_mutual_view_information_graph_for_adaptive_adversarial_collaborative_pe.md)
+- [x2-Fusion: Cross-Modality and Cross-Dimension Flow Estimation in Event Edge Space](../../CVPR2026/autonomous_driving/x2-fusion_cross-modality_and_cross-dimension_flow_estimation_in_event_edge_space.md)
+
+<!-- RELATED:END -->

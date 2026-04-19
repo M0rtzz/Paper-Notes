@@ -127,3 +127,15 @@ Word2Vec和GloVe等模型基于词共现概率 $P(i,j)$ 构建词嵌入 $W_i$，
 - 实验充分度: ⭐⭐⭐⭐☆ — 理论验证充分，合成+真实数据双重validation，但仅限经典词嵌入模型
 - 写作质量: ⭐⭐⭐⭐⭐ — 定理陈述清晰、证明简洁优雅
 - 价值: ⭐⭐⭐⭐☆ — 对理解表示学习的基本原理有深远意义，但与现代LLM的直接联系有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+- [Linear Differential Vision Transformer: Learning Visual Contrasts via Pairwise Differentials](linear_differential_vision_transformer_learning_visual_contrasts_via_pairwise_di.md)
+- [NPN: Non-Linear Projections of the Null-Space for Imaging Inverse Problems](npn_non-linear_projections_of_the_null-space_for_imaging_inverse_problems.md)
+- [Highlighting What Matters: Promptable Embeddings for Attribute-Focused Image Retrieval](highlighting_what_matters_promptable_embeddings_for_attribute-focused_image_retr.md)
+- [Preconditioned Langevin Dynamics with Score-Based Generative Models for Infinite-Dimensional Linear Bayesian Inverse Problems](preconditioned_langevin_dynamics_with_score-based_generative_models_for_infinite.md)
+
+<!-- RELATED:END -->

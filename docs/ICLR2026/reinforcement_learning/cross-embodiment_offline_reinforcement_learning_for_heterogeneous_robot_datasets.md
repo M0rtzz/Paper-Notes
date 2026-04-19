@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 16 种机器人、6 种数据集、8 种方法对比、全面消融
 - 写作质量: ⭐⭐⭐⭐⭐ 从发现问题→分析原因→验证假设→设计方案的逻辑链清晰完整
 - 价值: ⭐⭐⭐⭐ 为机器人基础模型的数据扩展提供了新方向，EG 策略简单实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
+- [Less is More: Clustered Cross-Covariance Control for Offline RL](less_is_more_clustered_cross-covariance_control_for_offline_rl.md)
+- [Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [Flow Actor-Critic for Offline Reinforcement Learning (FAC)](flow_actor-critic_for_offline_reinforcement_learning.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+
+<!-- RELATED:END -->

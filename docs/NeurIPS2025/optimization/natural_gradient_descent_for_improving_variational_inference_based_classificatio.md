@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 小规模但分析细致，复现了前期基准结果
 - 写作质量: ⭐⭐⭐⭐ — 背景知识讲解清晰，数学推导完整
 - 价值: ⭐⭐⭐ — 对射电天文 BNN 社区有直接参考价值，对更广泛 BNN 社区的洞察有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+- [Brain-like Variational Inference](brain-like_variational_inference.md)
+- [Least Squares Variational Inference](least_squares_variational_inference.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](neuro-symbolic_entity_alignment_via_variational_inference.md)
+
+<!-- RELATED:END -->

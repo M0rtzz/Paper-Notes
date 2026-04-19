@@ -177,3 +177,15 @@ tags:
 - **实验充分性**: ★★☆☆☆ — 纯理论工作，无数值实验
 - **写作质量**: ★★★★☆ — 理论清晰，表格式对比一目了然，但数学符号密集
 - **实用性**: ★★★☆☆ — 理论贡献重大，但具体应用场景（如实际博弈策略计算）的验证待开展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evolutionary Prediction Games](evolutionary_prediction_games.md)
+- [Optimism Without Regularization: Constant Regret in Zero-Sum Games](optimism_without_regularization_constant_regret_in_zero-sum_games.md)
+- [Persona Dynamics: Unveiling the Impact of Personality Traits on Agents in Text-Based Games](../../ACL2025/others/persona_dynamics_unveiling_the_impact_of_persona_traits_on_agents_in_text-based_.md)
+- [Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games](../../ICML2025/others/continuous-time_analysis_of_heavy_ball_momentum_in_min-max_games.md)
+- [Johnson-Lindenstrauss Lemma Beyond Euclidean Geometry](johnson-lindenstrauss_lemma_beyond_euclidean_geometry.md)
+
+<!-- RELATED:END -->

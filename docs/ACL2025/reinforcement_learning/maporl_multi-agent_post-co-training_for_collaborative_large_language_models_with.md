@@ -150,3 +150,15 @@ Phi-3 (3.4B) + Qwen2.5 (3B) 和 Phi-3 + Llama-3 (8B) 的异构配对通过 MAPoR
 ⭐⭐⭐⭐ (4/5)
 
 理论分析（博弈论视角）与实验验证结合扎实，首次提出多智能体 RL co-training 的后训练范式。但实验规模受限于计算资源（仅 3-4B 模型，QLoRA），且仅在两个 benchmark 上验证。激励机制的分析很有启发性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](../../NeurIPS2025/reinforcement_learning/repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+- [Post-training Large Language Models for Diverse High-Quality Responses](../../ICLR2026/reinforcement_learning/post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [Align-SLM: Textless Spoken Language Models with Reinforcement Learning from AI Feedback](align-slm_textless_spoken_language_models_with_reinforcement_learning_from_ai_fe.md)
+- [Training Language Models to Reason Efficiently](../../NeurIPS2025/reinforcement_learning/training_language_models_to_reason_efficiently.md)
+- [Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](../../ICLR2026/reinforcement_learning/co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
+
+<!-- RELATED:END -->

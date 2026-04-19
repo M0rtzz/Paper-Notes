@@ -50,3 +50,15 @@ tags:
 ## 局限与展望
 - 对极端色温场景的泛化性有待验证
 - 可以探索与相机 RAW 域白平衡的结合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FASA: Frequency-Aware Sparse Attention](../../ICLR2026/signal_comm/fasa_frequency-aware_sparse_attention.md)
+- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](../../ICML2025/signal_comm/fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
+- [Text-Guided Channel Perturbation and Pretrained Knowledge Integration for Unified Multi-Modality Image Fusion](../../AAAI2026/signal_comm/text-guided_channel_perturbation_and_pretrained_knowledge_integration_for_unifie.md)
+- [Neural Video Compression with Context Modulation](neural_video_compression_with_context_modulation.md)
+- [Continuous Space-Time Video Resampling with Invertible Motion Steganography](continuous_space-time_video_resampling_with_invertible_motion_steganography.md)
+
+<!-- RELATED:END -->

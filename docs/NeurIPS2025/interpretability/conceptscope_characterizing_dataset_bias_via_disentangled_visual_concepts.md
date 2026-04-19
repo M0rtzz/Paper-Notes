@@ -117,3 +117,15 @@ $$\mathcal{L} = \|z - \text{SAE}(z)\|_2^2 + \lambda \|z\|_1$$
 - ⭐ 实验充分度: 5/5 — 6 个属性数据集 + 3 个偏差基准 + 多个真实数据集 + 34 个模型鲁棒性分析
 - ⭐ 写作质量: 4/5 — 结构清晰，概念定义严谨
 - ⭐ 价值: 4/5 — 为数据集审计和模型诊断提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](../../ICLR2026/interpretability/exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+- [Bias Attribution in Filipino Language Models: Extending a Bias Interpretability Metric for Application on Agglutinative Languages](../../ACL2025/interpretability/bias_attribution_in_filipino_language_models_extending_a_bias_interpretability_m.md)
+- [EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis](../../CVPR2026/interpretability/emoverse_a_mllms-driven_emotion_representation_dataset_for_interpretable_visual_.md)
+- [Dataset Distillation for Pre-Trained Self-Supervised Vision Models](dataset_distillation_for_pre-trained_self-supervised_vision_models.md)
+- [Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](../../AAAI2026/interpretability/concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
+
+<!-- RELATED:END -->

@@ -165,3 +165,15 @@ SAGE 骨干可训练参数与 EMVP 相同（1.96M），仅额外增加 7.88M 的
 - ⭐⭐⭐⭐⭐ 实验充分度：8 个基准全面 SOTA，消融覆盖每个模块，含在线/离线对比和收敛分析
 - ⭐⭐⭐⭐ 实用性：冻结骨干+极少可训练参数，推理无额外开销，代码开源
 - ⭐⭐⭐⭐ 写作清晰度：图示直观，动机论述清楚，数学推导简洁
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](../../CVPR2026/object_detection/evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
+- [Traceable Evidence Enhanced Visual Grounded Reasoning: Evaluation and Method](traceable_evidence_enhanced_visual_grounded_reasoning_evaluation_and_methodology.md)
+- [Visual-RFT: Visual Reinforcement Fine-Tuning](../../ICCV2025/object_detection/visual-rft_visual_reinforcement_fine-tuning.md)
+- [CineSRD: Leveraging Visual, Acoustic, and Linguistic Cues for Open-World Visual Media Speaker Diarization](../../CVPR2026/object_detection/cinesrd_leveraging_visual_acoustic_and_linguistic_cues_for_open-world_visual_med.md)
+- [Zero-shot HOI Detection with MLLM-based Detector-agnostic Interaction Recognition](zero-shot_hoi_detection_with_mllm-based_detector-agnostic_interaction_recognitio.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ AutoMod 在最严格设置下整体召回率仅为 22%。隐性仇恨数据集 (
 - **实验充分度**: ⭐⭐⭐⭐⭐ 跨 4 个数据集、30 万条消息、过滤器分析、案例研究，极为全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 结构严谨，研究设计的形式化描述和实验流程清晰
 - **价值**: ⭐⭐⭐⭐⭐ 为内容审核系统的改进提供了重要的实证证据，具有社会影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter](hateday_global_hate_speech.md)
+- [ImpliHateVid: Implicit Hate Speech Detection in Videos](implihatevid_video_hate.md)
+- [STATE ToxiCN: A Benchmark for Span-level Target-Aware Toxicity Extraction in Chinese Hate Speech Detection](state_toxicn_a_benchmark_for_span-level_target-aware_toxicity_extraction_in_chin.md)
+- [Concept-Level Explainability for Auditing & Steering LLM Responses](../../NeurIPS2025/social_computing/concept-level_explainability_for_auditing_steering_llm_responses.md)
+- [Human or Machine? A Preliminary Turing Test for Speech-to-Speech Interaction](../../ICLR2026/social_computing/human_or_machine_a_preliminary_turing_test_for_speech-to-speech_interaction.md)
+
+<!-- RELATED:END -->

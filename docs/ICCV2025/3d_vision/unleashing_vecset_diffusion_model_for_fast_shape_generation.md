@@ -186,3 +186,15 @@ IoU 仅下降不到 1%，但速度提升 **45×**。
 ⭐⭐⭐⭐⭐ (5/5)
 
 工作非常扎实，从瓶颈分析、算法设计到实验验证形成完整闭环。VAE 加速和蒸馏两部分都有独立贡献，且已开源并集成到实际产品。32× 加速至 1 秒级生成是具有里程碑意义的成果。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [Demeter: A Parametric Model of Crop Plant Morphology from the Real World](demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
+- [JointDiT: Enhancing RGB-Depth Joint Modeling with Diffusion Transformers](jointdit_enhancing_rgb-depth_joint_modeling_with_diffusion_transformers.md)
+- [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
+
+<!-- RELATED:END -->

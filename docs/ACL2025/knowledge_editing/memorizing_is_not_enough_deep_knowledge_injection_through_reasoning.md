@@ -214,3 +214,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 框架清晰、实验系统全面、发现有实践指导价值（尤其是显式推理→多步泛化和通用指令配比），但仅用单一模型+CPT方法的实验广度不足，合成知识的生态效度也有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structure-aware Domain Knowledge Injection for Large Language Models](structure-aware_domain_knowledge_injection_for_large_language_models.md)
+- [A General Knowledge Injection Framework for ICD Coding](a_general_knowledge_injection_framework_for_icd_coding.md)
+- [Mitigating Negative Interference in Multilingual Sequential Knowledge Editing through Null-Space Constraints](mitigating_negative_interference_in_multilingual_sequential_knowledge_editing_th.md)
+- [ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains](chainedit_propagating_ripple_effects_in_llm.md)
+- [ToxEdit: Adaptive Detoxification Safeguarding General Capabilities of LLMs through Toxicity-Aware Knowledge Editing](adaptive_detoxification_safeguarding_general_capabilities_of_llms_through_toxici.md)
+
+<!-- RELATED:END -->

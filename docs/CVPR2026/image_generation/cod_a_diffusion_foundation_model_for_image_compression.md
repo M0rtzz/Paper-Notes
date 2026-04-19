@@ -127,3 +127,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{RF}} + \lambda \cdot \mathcal{L}_{\text{REPA}
 - **实验充分度**: ⭐⭐⭐⭐⭐ 像素/隐空间双线比较 + 多基准 + scaling law + 零样本控制 + 视觉对比
 - **写作质量**: ⭐⭐⭐⭐⭐ 从问题分析到方法设计再到实验验证环环相扣，insight 深刻
 - **价值**: ⭐⭐⭐⭐⭐ 0.3%训练成本+全开源数据+SOTA性能，对扩散压缩领域有基础性推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](dit-ic_aligned_diffusion_transformer_for_efficient_image_compression.md)
+- [Zatom-1: A Multimodal Flow Foundation Model for 3D Molecules and Materials](../../ICLR2026/image_generation/zatom-1_a_multimodal_flow_foundation_model_for_3d_molecules_and_materials.md)
+- [HINGE: Adapting a Pre-trained Single-Cell Foundation Model to Spatial Gene Expression Generation from Histology Images](adapting_a_pre-trained_single-cell_foundation_model_to_spatial_gene_expression_g.md)
+- [Steering One-Step Diffusion Model with Fidelity-Rich Decoder for Fast Image Compression](../../AAAI2026/image_generation/steering_one-step_diffusion_model_with_fidelity-rich_decoder_for_fast_image_comp.md)
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](../../ICML2025/image_generation/gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+
+<!-- RELATED:END -->

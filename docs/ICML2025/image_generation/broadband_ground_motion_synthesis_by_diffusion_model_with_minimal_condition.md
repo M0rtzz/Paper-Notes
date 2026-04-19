@@ -131,3 +131,15 @@ $$\mathcal{L}_{ours} = \mathbb{E}_{(X^{src}, X^{tgt}, \vec{c}_{tgt}), \epsilon, 
 - 实验充分度: ⭐⭐⭐⭐ — 三大洲数据集 + 多种地震学指标 + 消融实验，较为全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，地震学背景介绍充分
 - 价值: ⭐⭐⭐⭐ — 对地震工程和灾害预警有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How to Move Your Dragon: Text-to-Motion Synthesis for Large-Vocabulary Objects](how_to_move_your_dragon_text-to-motion_synthesis_for_large-vocabulary_objects.md)
+- [Model Immunization from a Condition Number Perspective](model_immunization_from_a_condition_number_perspective.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+- [Accelerating Diffusion Model Training under Minimal Budgets: A Condensation-Based Perspective](../../CVPR2026/image_generation/accelerating_diffusion_model_training_under_minimal_budgets_a_condensation-based.md)
+
+<!-- RELATED:END -->

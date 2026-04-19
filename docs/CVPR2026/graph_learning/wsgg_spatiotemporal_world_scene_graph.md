@@ -210,3 +210,15 @@ ActionGenome4D 上的关系预测（PredCls, DINOv2-L）：
 - 实验充分度: ⭐⭐⭐⭐ 三种方法对比 + 消融 + VLM 评估，但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐ 任务定义清晰，三种方法的对比设计合理
 - 价值: ⭐⭐⭐⭐⭐ 对具身智能有重要意义，数据集和任务定义将推动后续研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection](../../NeurIPS2025/graph_learning/spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)
+- [ESCA: Contextualizing Embodied Agents via Scene-Graph Generation](../../NeurIPS2025/graph_learning/esca_contextualizing_embodied_agents_via_scene-graph_generation.md)
+- [Unbiased Video Scene Graph Generation via Visual and Semantic Dual Debiasing](../../CVPR2025/graph_learning/unbiased_video_scene_graph_generation_via_visual_and_semantic_dual_debiasing.md)
+- [Fine-Grained Scene Graph Generation via Sample-Level Bias Prediction](../../ECCV2024/graph_learning/fine-grained_scene_graph_generation_via_sample-level_bias_prediction.md)
+- [Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](../../NeurIPS2025/graph_learning/interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
+
+<!-- RELATED:END -->

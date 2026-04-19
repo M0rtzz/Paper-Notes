@@ -120,3 +120,15 @@ $$\mathcal{L} = \mathcal{L}_{lattice} + \mathcal{L}_{coord}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖无条件生成、S.U.N.、条件生成三大任务，baselines全面
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，与FlowLLM的区别讨论充分
 - **价值**: ⭐⭐⭐⭐ 为材料科学提供了实用的混合框架，架构无关设计便于未来扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ObCLIP: Oblivious Cloud-Device Hybrid Image Generation with Privacy Preservation](obclip_oblivious_cloud-device_hybrid_image_generation_with_privacy_preservation.md)
+- [Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
+- [HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](../../ECCV2024/image_generation/hybridbooth_hybrid_prompt_inversion_for_efficient_subject-driven_generation.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](../../ICML2025/image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [The Fabrication of Reality and Fantasy: Scene Generation with LLM-Assisted Prompt Interpretation](../../ECCV2024/image_generation/the_fabrication_of_reality_and_fantasy_scene_generation_with_llm-assisted_prompt.md)
+
+<!-- RELATED:END -->

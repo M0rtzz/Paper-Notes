@@ -137,3 +137,15 @@ EI 提出在单模态嵌入（UIE）**之前**就注入跨模态语义引导（[
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、两个VFM、详尽的消融和超参分析，实验非常扎实
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机推导流畅，临床对比生动
 - 价值: ⭐⭐⭐⭐ 对多模态医学图像领域贡献显著，MoR 和 early intervention 的思路可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GLEAM: A Multimodal Imaging Dataset and HAMM for Glaucoma Classification](gleam_a_multimodal_imaging_dataset_and_hamm_for_glaucoma_classification.md)
+- [EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease](emad_evidence-centric_grounded_multimodal_diagnosis_for_alzheimers_disease.md)
+- [Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](multimodal_protein_language_models_for_enzyme_kine.md)
+- [Learning Patient-Specific Disease Dynamics with Latent Flow Matching for Longitudinal Imaging Generation](../../ICLR2026/medical_imaging/learning_patient-specific_disease_dynamics_with_latent_flow_matching_for_longitu.md)
+- [Resp-Agent: An Agent-Based System for Multimodal Respiratory Sound Generation and Disease Diagnosis](../../ICLR2026/medical_imaging/resp-agent_an_agent-based_system_for_multimodal_respiratory_sound_generation_and.md)
+
+<!-- RELATED:END -->

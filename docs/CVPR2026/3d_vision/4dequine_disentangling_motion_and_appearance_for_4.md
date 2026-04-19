@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集+多baseline+详细消融+零样本泛化+失败案例分析，非常完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但论文较长，supplementary内容丰富
 - 价值: ⭐⭐⭐ 在马科动物重建领域有实际价值，但应用面相对窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionScale: Reconstructing Appearance, Geometry, and Motion of Dynamic Scenes with Scalable 4D Gaussian Splatting](motionscale_reconstructing_appearance_geometry_and_motion_of_dynamic_scenes_with.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [MoVieS: Motion-Aware 4D Dynamic View Synthesis in One Second](movies_motion-aware_4d_dynamic_view_synthesis_in_one_second.md)
+- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
+- [BulletGen: Improving 4D Reconstruction with Bullet-Time Generation](bulletgen_improving_4d_reconstruction_with_bullet-time_generation.md)
+
+<!-- RELATED:END -->

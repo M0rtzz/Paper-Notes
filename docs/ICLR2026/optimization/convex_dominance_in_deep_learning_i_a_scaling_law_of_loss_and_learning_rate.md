@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 从 ResNet 到 12.5B GPT，跨越 170 倍模型大小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验展示清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 训练规划有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules](../../NeurIPS2025/optimization/functional_scaling_laws_in_kernel_regression_loss_dynamics_and_learning_rate_sch.md)
+- [Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?](scaling_laws_of_signsgd_in_linear_regression_when_does_it_outperform_sgd.md)
+- [DeepAFL: Deep Analytic Federated Learning](deepafl_deep_analytic_federated_learning.md)
+- [Rolling Ball Optimizer: Learning by Ironing Out Loss Landscape Wrinkles](rolling_ball_optimizer_learning_by_ironing_out_loss_landscape_wrinkles.md)
+- [Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding](deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding.md)
+
+<!-- RELATED:END -->

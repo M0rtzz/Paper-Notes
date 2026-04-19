@@ -167,3 +167,15 @@ $$\mathcal{R}(T) = \mathcal{O}\left(\sqrt{dT}\left(\sqrt{\log(KT)} \wedge \sqrt{
 | 实用价值 | 8 | 低计算开销+强实际表现，可直接部署于推荐/临床试验等场景 |
 | 写作质量 | 8 | 问题动机清晰，理论-实验对应关系好，Table 1 一目了然 |
 | **综合** | **8.2** | 理论与实践的完美统一，首次在批量线性 Bandit 中兼顾两体制最优性和实用性 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](../../NeurIPS2025/reinforcement_learning/thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update](../../NeurIPS2025/reinforcement_learning/generalized_linear_bandits_almost_optimal_regret_with_one-pass_update.md)
+- [Nearly-Optimal Bandit Learning in Stackelberg Games with Side Information](../../ICLR2026/reinforcement_learning/nearly-optimal_bandit_learning_in_stackelberg_games_with_side_information.md)
+- [Actor-Critics Can Achieve Optimal Sample Efficiency](actor-critics_can_achieve_optimal_sample_efficiency.md)
+- [Principal-Agent Bandit Games with Self-Interested and Exploratory Learning Agents](principal-agent_bandit_games_with_self-interested_and_exploratory_learning_agent.md)
+
+<!-- RELATED:END -->

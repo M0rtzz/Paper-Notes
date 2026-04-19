@@ -159,3 +159,15 @@ SHARE-8B 相比基线提升 14.80% (BIRD) 和 11.41% (SPIDER)。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4 个基准、多个生成器、跨方言测试、成本分析、低资源实验、开源教师模型实验，非常全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ 成本降低 10x 且效果提升 14.8%，极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STaR-SQL: Self-Taught Reasoner for Text-to-SQL](star-sql_self-taught_reasoner_for_text-to-sql.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [ComfyUI-Copilot: An Intelligent Assistant for Automated Workflow Development](comfyui-copilot_an_intelligent_assistant_for_automated_workflow_development.md)
+- [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+- [CADReview: Automatically Reviewing CAD Programs with Error Detection and Correction](cadreview_automatically_reviewing_cad_programs_with_error_detection_and_correcti.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ Cloud4D在所有指标上大幅超越卫星方法VIP-CT：LWC误差降低77%，L
 - **实验充分度**: ⭐⭐⭐⭐ — 两个月真实部署+12天积云数据评估充分，但云类型和场景多样性有限
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题定义清晰，物理动机充分，图示精美，定量定性对比全面
 - **价值**: ⭐⭐⭐⭐⭐ — 开辟了低成本高分辨率云观测新范式，对气象学和AI for Science均有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AllTracker: Efficient Dense Point Tracking at High Resolution](../../ICCV2025/video_understanding/alltracker_efficient_dense_point_tracking_at_high_resolution.md)
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](../../ICCV2025/video_understanding/memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [ConViS-Bench: Estimating Video Similarity Through Semantic Concepts](convis-bench_estimating_video_similarity_through_semantic_concepts.md)
+- [Coarse Correspondences Boost Spatial-Temporal Reasoning in Multimodal Language Models](../../CVPR2025/video_understanding/coarse_correspondences_boost_spatial-temporal_reasoning_in_multimodal_language_m.md)
+- [VCBench: A Streaming Counting Benchmark for Spatial-Temporal State Maintenance in Long Videos](../../CVPR2025/video_understanding/vcbench_a_streaming_counting_benchmark_for_spatial-temporal_state_maintenance_in.md)
+
+<!-- RELATED:END -->

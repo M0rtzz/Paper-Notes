@@ -125,3 +125,15 @@ FruitNinja 在 CLIP Score（语义对齐）上最高，KID/FID 比 PhysGaussian 
 - 实验充分度: ⭐⭐⭐ 仅 6 个物体，数据集较小，缺少与更多方法的对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图例直观
 - 价值: ⭐⭐⭐⭐ 对 VR/游戏交互场景有直接价值，开创了新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](../../ECCV2024/3d_vision/texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
+- [Mobile-GS: Real-time Gaussian Splatting for Mobile Devices](mobile-gs_real-time_gaussian_splatting_for_mobile_devices.md)
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
+- [GaussianUDF: Inferring Unsigned Distance Functions through 3D Gaussian Splatting](gaussianudf_inferring_unsigned_distance_functions_through_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

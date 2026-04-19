@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论论文，无实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，但符号密度高
 - 价值: ⭐⭐⭐⭐ 填补了主动学习理论中的重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Decision Trees through the Lens of Parameterized Local Search](../../NeurIPS2025/others/improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
+- [From Decision Trees to Boolean Logic: A Fast and Unified SHAP Algorithm](../../AAAI2026/others/from_decision_trees_to_boolean_logic_a_fast_and_unified_shap_algorithm.md)
+- [Instance-wise Supervision-level Optimization in Active Learning](../../CVPR2025/others/instance-wise_supervision-level_optimization_in_active_learning.md)
+- [From Sequential to Recursive: Enhancing Decision-Focused Learning with Bidirectional Feedback](../../AAAI2026/others/from_sequential_to_recursive_enhancing_decision-focused_learning_with_bidirectio.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](../../NeurIPS2025/others/reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+
+<!-- RELATED:END -->

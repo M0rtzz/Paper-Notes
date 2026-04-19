@@ -112,3 +112,15 @@ $$\Sigma_{cond} = \Sigma_p - \Sigma_{p,(t,d)} \Sigma_{(t,d)}^{-1} \Sigma_{p,(t,d
 - 实验充分度: ⭐⭐⭐⭐ 3数据集+SOTA对比+消融，但缺少更多真实世界场景验证
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨完备，从3DGS到6DGS到7DGS的逻辑线清晰
 - 价值: ⭐⭐⭐⭐⭐ 统一了动态+视角依赖的渲染框架，15%点数+5dB提升的实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatial-Temporal Aware Visuomotor Diffusion Policy Learning](spatial-temporal_aware_visuomotor_diffusion_policy_learning.md)
+- [UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling](ust-ssm_unified_spatio-temporal_state_space_models_for_point_cloud_video_modelin.md)
+- [CATSplat: Context-Aware Transformer with Spatial Guidance for Generalizable 3D Gaussian Splatting from A Single-View Image](catsplat_contextaware_transformer_with_spatial_guidance_for.md)
+- [Back on Track: Bundle Adjustment for Dynamic Scene Reconstruction](back_on_track_bundle_adjustment_for_dynamic_scene_reconstruction.md)
+- [4D Gaussian Splatting SLAM](4d_gaussian_splatting_slam.md)
+
+<!-- RELATED:END -->

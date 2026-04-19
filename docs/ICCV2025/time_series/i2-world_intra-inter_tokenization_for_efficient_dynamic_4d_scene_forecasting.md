@@ -137,3 +137,15 @@ $$\mathcal{L}_{gen} = \sum_{k=1}^K w_k \mathcal{L}_{mse}(\hat{B}_{t+k}', \hat{B}
 - 技术深度：⭐⭐⭐⭐ — 多尺度残差量化 + 时序量化 + 变换矩阵条件生成
 - 实验充分度：⭐⭐⭐⭐ — 主实验/消融/泛化/可视化齐全
 - 实用价值：⭐⭐⭐⭐⭐ — 极高效率，首个实时 4D occupancy world model
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens](../../CVPR2026/time_series/a_frame_is_worth_one_token_efficient_generative_world_modeling_with_delta_tokens.md)
+- [Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning](../../NeurIPS2025/time_series/universal_spectral_tokenization_via_self-supervised_panchromatic_representation_.md)
+- [Diffusion Transformers as Open-World Spatiotemporal Foundation Models](../../NeurIPS2025/time_series/diffusion_transformers_as_open-world_spatiotemporal_foundation_models.md)
+- [TQNet: Temporal Query Network for Efficient Multivariate Time Series Forecasting](../../ICML2025/time_series/temporal_query_network_for_efficient_multivariate_time_series_forecasting.md)
+- [Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework](../../ICLR2026/time_series/towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo.md)
+
+<!-- RELATED:END -->

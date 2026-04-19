@@ -136,3 +136,15 @@ DiffPure-VLM由两个组件串联构成：
 - 实验充分度: ⭐⭐⭐⭐ 三个基础模型、多攻击强度、详细消融，但VLM种类可更多
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从发现问题到解决问题层层推进
 - 价值: ⭐⭐⭐⭐ 揭示了VLM安全的重要盲区，防御框架实用且可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One Perturbation is Enough: On Generating Universal Adversarial Perturbations against Vision-Language Pre-training Models](one_perturbation_is_enough_on_generating_universal_adversarial_perturbations_aga.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [LLaVAShield: Safeguarding Multimodal Multi-Turn Dialogues in Vision-Language Models](../../CVPR2026/multimodal_vlm/llavashield_safeguarding_multimodal_multi-turn_dialogues_in_vision-language_mode.md)
+- [Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection](adaptive_prompt_learning_via_gaussian_outlier_synthesis_for_out-of-distribution_.md)
+- [4D LangSplat: 4D Language Gaussian Splatting via Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/4d_langsplat_4d_language_gaussian_splatting_via_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

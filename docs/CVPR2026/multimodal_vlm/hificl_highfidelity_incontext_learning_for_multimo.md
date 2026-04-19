@@ -137,3 +137,15 @@ HiFICL 在 Idefics2 上 VQAv2 超越 MimIC 达 2.79%，同时参数量仅为 LoR
 - 实验充分度: ⭐⭐⭐⭐ 消融和分析详尽，但仅在 2 个模型 3 个任务上测试，覆盖面可再扩大
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨流畅，从问题重构到方法设计逻辑链清晰
 - 价值: ⭐⭐⭐⭐ 提供了 ICL 近似的新理论视角和实用方法，参数效率极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parallel In-context Learning for Large Vision Language Models](parallel_in-context_learning_for_large_vision_language_models.md)
+- [MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models](masquant_modality-aware_smoothing_quantization_for_multimodal_large_language_mod.md)
+- [ChartNet: A Million-Scale, High-Quality Multimodal Dataset for Robust Chart Understanding](chartnet_a_million-scale_high-quality_multimodal_dataset_for_robust_chart_unders.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+
+<!-- RELATED:END -->

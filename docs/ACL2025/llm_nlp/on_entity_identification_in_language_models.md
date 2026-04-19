@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5个模型 + 多维度分析 + 维度诅咒控制
 - 写作质量: ⭐⭐⭐⭐ 分析系统化，发现描述清晰
 - 价值: ⭐⭐⭐⭐ 对理解 LLM 实体编码机制有重要贡献，支持线性表示和表示收敛假说
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ECLM: Entity Level Language Model for Spoken Language Understanding with Chain of Intent](eclm_entity_level_language_model_spoken_language_understanding.md)
+- [Recurrent Knowledge Identification and Fusion for Language Model Continual Learning](recurrent_kif_continual_learning.md)
+- [COSMIC: Generalized Refusal Direction Identification in LLM Activations](cosmic_generalized_refusal_direction_identification_in_llm_activations.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [Quantifying Semantic Emergence in Language Models](quantifying_semantic_emergence_in_language_models.md)
+
+<!-- RELATED:END -->

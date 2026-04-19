@@ -149,3 +149,15 @@ Baseline 在广角镜头上几乎完全失败（0.003），RSA 将其提升至 0
 - 实验充分度: ⭐⭐⭐⭐⭐ — 仿真+真实世界双轨验证，6+3 任务，消融实验设计严谨，控制变量清晰
 - 写作质量: ⭐⭐⭐⭐ — 三个RQ结构清晰，假设-验证-结论的组织方式易于跟随
 - 价值: ⭐⭐⭐⭐ — 为鱼眼数据集大规模采集提供了可直接执行的指南，RSA 策略简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empirical Study on Robustness and Resilience in Cooperative Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/empirical_study_on_robustness_and_resilience_in_cooperative_multi-agent_reinforc.md)
+- [Routing, Cascades, and User Choice for LLMs](../../ICLR2026/reinforcement_learning/routing_cascades_and_user_choice_for_llms.md)
+- [Time Reversal Symmetry for Efficient Robotic Manipulations in Deep Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/time_reversal_symmetry_for_efficient_robotic_manipulations_in_deep_reinforcement.md)
+- [MoMaGen: Generating Demonstrations under Soft and Hard Constraints for Multi-Step Bimanual Mobile Manipulation](../../ICLR2026/reinforcement_learning/momagen_generating_demonstrations_under_soft_and_hard_constraints_for_multi-step.md)
+- [ReFORM: Reflected Flows for On-support Offline RL via Noise Manipulation](../../ICLR2026/reinforcement_learning/reform_reflected_flows_for_on-support_offline_rl_via_noise_manipulation.md)
+
+<!-- RELATED:END -->

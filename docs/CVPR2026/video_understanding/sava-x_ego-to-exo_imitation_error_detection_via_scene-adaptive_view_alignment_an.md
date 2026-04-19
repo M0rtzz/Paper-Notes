@@ -154,3 +154,15 @@ SAVA-X 的 Mean AUPRC 较最强基线 Exo2EgoDVC 提升 +2.67（+13.56%），在
 - 实验充分度: ⭐⭐⭐⭐⭐ （消融极为详尽，组件分析全面）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，动机和方法阐述到位）
 - 价值: ⭐⭐⭐⭐ （实际应用场景明确，但绝对性能偏低）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-Agent Reinforcement Learning for Adaptive and Cost-Aware Visual-Inertial Odometry](dual-agent_reinforcement_learning_for_adaptive_and_cost-aware_visual-inertial_od.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_for_efficient_video_understanding.md)
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochat-m1_collaborative_policy_planning_for_video_understanding_via_multi-age.md)
+- [A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a_multi-agent_perception-action_alliance_for_efficient_long_video_reasoning.md)
+
+<!-- RELATED:END -->

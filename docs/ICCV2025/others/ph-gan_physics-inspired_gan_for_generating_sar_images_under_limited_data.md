@@ -154,3 +154,15 @@ $$\mathbf{p}^{(k)} = S_{\rho^{(k)}}(\mathbf{p}^{(k-1)} + t^{(k)} \mathbf{\Psi}^H
 - **实验充分度**: ⭐⭐⭐⭐ 三个数据集、两个基线架构、全面消融、与SAR专用方法对比
 - **写作质量**: ⭐⭐⭐⭐ 物理背景介绍清晰，方法推导严谨
 - **价值**: ⭐⭐⭐⭐ 对SAR图像生成社区有直接价值，物理集成范式可推广到其他领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auto-Regressively Generating Multi-View Consistent Images (MV-AR)](autoregressively_generating_multiview_consistent_images.md)
+- [CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](../../ECCV2024/others/clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)
+- [CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images](../../CVPR2025/others/cadcrafter_generating_computer-aided_design_models_from_unconstrained_images.md)
+- [A Closer Look at GAN Priors: Exploiting Intermediate Features for Enhanced Model Inversion Attacks](../../ECCV2024/others/a_closer_look_at_gan_priors_exploiting_intermediate_features.md)
+- [HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images](../../ECCV2024/others/hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu.md)
+
+<!-- RELATED:END -->

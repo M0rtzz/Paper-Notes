@@ -152,3 +152,15 @@ CafCor-SecLDP 在 f=5 时接近 CDP 性能，远超 LDP。
 - 实验充分度: ⭐⭐⭐⭐ — 多攻击类型、多威胁模型、多聚合方法对比
 - 写作质量: ⭐⭐⭐⭐ — 理论严谨，实验清晰
 - 价值: ⭐⭐⭐⭐⭐ — 解决了联邦学习中隐私+鲁棒性的核心痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
+- [Generalization in Federated Learning: A Conditional Mutual Information Framework](generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
+- [Federated In-Context Learning: Iterative Refinement for Improved Answer Quality](federated_in-context_learning_iterative_refinement_for_improved_answer_quality.md)
+- [FedSVD: Adaptive Orthogonalization for Private Federated Learning with LoRA](../../NeurIPS2025/ai_safety/fedsvd_adaptive_orthogonalization_for_private_federated_learning_with_lora.md)
+- [Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](../../ICLR2026/ai_safety/beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
+
+<!-- RELATED:END -->

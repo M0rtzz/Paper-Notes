@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 自建基准、多 baseline 对比、多应用扩展
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，观察-方法-验证的叙事流畅
 - 价值: ⭐⭐⭐⭐ 为概念定制技术开辟了知识感知的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_text-to-image_diffusion_via_region-aware_prompt_augme.md)
+- [ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](abra_teleporting_fine-tuned_knowledge_across_domains_for_open-vocabulary_object_.md)
+- [Small Target Detection Based on Mask-Enhanced Attention Fusion of Visible and Infrared Remote Sensing Images](small_target_detection_based_on_mask-enhanced_attention_fusion_of_visible_and_in.md)
+- [BACON: Improving Clarity of Image Captions via Bag-of-Concept Graphs](bacon_improving_clarity_of_image_captions_via_bag-of-concept_graphs.md)
+- [DreamVideo-Omni: Omni-Motion Controlled Multi-Subject Video Customization with Latent Identity Reinforcement Learning](dreamvideo-omni_omni-motion_controlled_multi-subject_video_customization_with_la.md)
+
+<!-- RELATED:END -->

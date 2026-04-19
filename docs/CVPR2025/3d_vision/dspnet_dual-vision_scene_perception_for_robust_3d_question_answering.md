@@ -122,3 +122,15 @@ DSPNet 输入 3D 点云、多视图图像和问题文本，输出答案。流程
 - 实验充分度: ⭐⭐⭐⭐ 两个标准数据集 + 详细消融 + 视图数量分析 + 定性对比
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰（Fig 1, 2 直观展示痛点），模块设计阐述完整
 - 价值: ⭐⭐⭐⭐ 为 3D QA 提供了有效利用多视图信息的范式，模块可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DepthCues: Evaluating Monocular Depth Perception in Large Vision Models](depthcues_evaluating_monocular_depth_perception_in_large_vision_models.md)
+- [Robust Neural Rendering in the Wild with Asymmetric Dual 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/robust_neural_rendering_in_the_wild_with_asymmetric_dual_3d_gaussian_splatting.md)
+- [Continuous 3D Perception Model with Persistent State](continuous_3d_perception_model_with_persistent_state.md)
+- [EventFly: Event Camera Perception from Ground to the Sky](eventfly_event_camera_perception_from_ground_to_the_sky.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+
+<!-- RELATED:END -->

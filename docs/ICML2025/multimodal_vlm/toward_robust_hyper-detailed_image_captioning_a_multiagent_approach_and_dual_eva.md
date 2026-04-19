@@ -123,3 +123,15 @@ $$H(u) = -\log(\min(p(\text{T}|x, Q(u)) - p(\text{F}|x, Q(u)), \epsilon))$$
 ## 评分
 
 ⭐⭐⭐⭐ — 问题切入精准（长序列幻觉检测失效），评估框架设计周全。CapMAS 方法直觉清晰、实效性好。双维评估和 VQA benchmark 的局限性揭示有独立价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DisCode: Distribution-Aware Score Decoder for Robust Automatic Evaluation of Image Captioning](../../AAAI2026/multimodal_vlm/discode_distribution-aware_score_decoder_for_robust_automatic_evaluation_of_imag.md)
+- [SC-Captioner: Improving Image Captioning with Self-Correction by Reinforcement Learning](../../ICCV2025/multimodal_vlm/sc-captioner_improving_image_captioning_with_self-correction_by_reinforcement_le.md)
+- [CaptionSmiths: Flexibly Controlling Language Pattern in Image Captioning](../../ICCV2025/multimodal_vlm/captionsmiths_flexibly_controlling_language_pattern_in_image_captioning.md)
+- [Robust Multimodal Large Language Models Against Modality Conflict](robust_multimodal_large_language_models_against_modality_conflict.md)
+- [CoMemo: LVLMs Need Image Context with Image Memory](comemo_lvlms_need_image_context_with_image_memory.md)
+
+<!-- RELATED:END -->

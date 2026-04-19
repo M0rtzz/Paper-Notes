@@ -161,3 +161,15 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{u \sim \mathcal{D}} \left[ \| f_\theta(u) - 
 - ⭐ 实验完备性：4/5 — 多架构多 PDE 验证充分，但主要限于 1D
 - ⭐ 实用价值：4/5 — 对评估范式和 benchmark 设计有直接指导意义
 - ⭐ 写作质量：5/5 — 论证层次分明，从理论到实验逐步推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integration Matters for Learning PDEs with Backward SDEs](integration_matters_for_learning_pdes_with_backward_sdes.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [F-Adapter: Frequency-Adaptive Parameter-Efficient Fine-Tuning in Scientific Machine Learning](f-adapter_frequency-adaptive_parameter-efficient_fine-tuning_in_scientific_machi.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](../../ICLR2026/scientific_computing/drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections](enforcing_governing_equation_constraints_in_neural_pde_solvers_via_training-free.md)
+
+<!-- RELATED:END -->

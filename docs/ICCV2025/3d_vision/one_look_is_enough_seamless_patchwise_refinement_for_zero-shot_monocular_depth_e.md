@@ -163,3 +163,15 @@ CE 降低 85.9%，证明 GPCT 显著消除了块间不连续问题。
 - **技术深度**: ⭐⭐⭐⭐ — 问题分析透彻，每个组件都有清晰的动机和验证
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4个数据集零样本评估 + 全面消融
 - **实用价值**: ⭐⭐⭐⭐⭐ — 12倍加速且质量更优，直接可用于部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+- [JointDiT: Enhancing RGB-Depth Joint Modeling with Diffusion Transformers](jointdit_enhancing_rgb-depth_joint_modeling_with_diffusion_transformers.md)
+- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [HORT: Monocular Hand-held Objects Reconstruction with Transformers](hort_monocular_hand-held_objects_reconstruction_with_transformers.md)
+- [SuperMat: Physically Consistent PBR Material Estimation at Interactive Rates](supermat_physically_consistent_pbr_material_estimation_at_interactive_rates.md)
+
+<!-- RELATED:END -->

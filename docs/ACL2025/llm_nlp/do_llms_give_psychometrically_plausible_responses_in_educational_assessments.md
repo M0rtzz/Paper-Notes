@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 18 个模型 × 2 数据集 × 3 学科 × 3 评估维度（KL/CTT/IRT），极为系统
 - 写作质量: ⭐⭐⭐⭐ 心理测量学概念解释清晰，对 NLP 读者友好
 - 价值: ⭐⭐⭐⭐ 为教育 AI 领域提供了重要的否定结论——零样本 LLM 不能替代人类预试验，标定了当前能力边界
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMs can Perform Multi-Dimensional Analytic Writing Assessments](llm_writing_assessment.md)
+- [LLM-Powered Test Case Generation for Detecting Bugs in Plausible Programs](llm_test_case_gen_bugs.md)
+- [Which Demographics Do LLMs Default to During Annotation?](which_demographics_do_llms_default_to_during_annotation.md)
+- [Do Language Models Mirror Human Confidence? Exploring Psychological Insights to Address Overconfidence in LLMs](do_language_models_mirror_human_confidence_exploring_psychological_insights_to_a.md)
+- [Do Language Models Understand Honorific Systems in Javanese?](do_language_models_understand_honorific_systems_in_javanese.md)
+
+<!-- RELATED:END -->

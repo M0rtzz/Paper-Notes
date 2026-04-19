@@ -134,3 +134,15 @@ DPO 训练后 VQA 性能几乎无损，得益于 KL 散度正则化。
 - **实用性**: ⭐⭐⭐⭐⭐ — 数据集和评估工具已完全开源，可直接用于提升任意 MLLM
 - **实验质量**: ⭐⭐⭐⭐ — 多基准全面验证，消融实验充分，但基准规模偏小
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表信息量大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](../../ACL2025/multimodal_vlm/mammoth_vl_multimodal_reasoning.md)
+- [Hints of Prompt: Enhancing Visual Representation for Multimodal LLMs in Autonomous Driving](hints_of_prompt_enhancing_visual_representation_for_multimodal_llms_in_autonomou.md)
+- [R1-VL: Learning to Reason with Multimodal Large Language Models via Step-wise Group Relative Policy Optimization](r1-vl_learning_to_reason_with_multimodal_large_language_models_via_step-wise_gro.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+- [SCAN: Bootstrapping Contrastive Pre-training for Data Efficiency](scan_bootstrapping_contrastive_pre-training_for_data_efficiency.md)
+
+<!-- RELATED:END -->

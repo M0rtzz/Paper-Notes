@@ -160,3 +160,15 @@ $$w_{\text{model}}(q_t) = \begin{cases} 0.10, & q_t < 0.05 \\ 0.20, & 0.05 \leq 
 - **写作质量** ⭐⭐⭐⭐：系统架构描述详细，BTC 策略的技术细节特别充分
 - **实用价值** ⭐⭐⭐⭐：框架设计有参考意义，MCP/A2A 协议选择有实践指导
 - **理论深度** ⭐⭐：偏工程实践，理论分析较少
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+- [Automated Composition of Agents: A Knapsack Approach for Agentic Component Selection](automated_composition_of_agents_a_knapsack_approach_for_agentic_component_select.md)
+- [Agentic Plan Caching: Test-Time Memory for Fast and Cost-Efficient LLM Agents](agentic_plan_caching_test-time_memory_for_fast_and_cost-efficient_llm_agents.md)
+- [Agentic NL2SQL to Reduce Computational Costs](agentic_nl2sql_to_reduce_computational_costs.md)
+
+<!-- RELATED:END -->

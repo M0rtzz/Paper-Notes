@@ -121,3 +121,15 @@ OddGridBench + OddGrid-GRPO 两部分。Benchmark 部分生成参数化网格图
 - 实验充分度: ⭐⭐⭐⭐ 19个模型评估，分析深入
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表精美
 - 价值: ⭐⭐⭐⭐ 揭示了MLLM底层感知的系统性缺陷
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReasonMap: Towards Fine-Grained Visual Reasoning from Transit Maps](reasonmap_towards_fine-grained_visual_reasoning_from_transit_maps.md)
+- [Zina: Multimodal Fine-grained Hallucination Detection and Editing](zina_multimodal_fine-grained_hallucination_detection_and_editing.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+- [MA-Bench: Towards Fine-grained Micro-Action Understanding](ma-bench_towards_fine-grained_micro-action_understanding.md)
+
+<!-- RELATED:END -->

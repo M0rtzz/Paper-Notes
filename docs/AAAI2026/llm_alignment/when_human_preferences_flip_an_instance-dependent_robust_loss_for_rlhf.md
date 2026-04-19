@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论分析深入但实验规模较小（数据集和模型规模有限）
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，与 cDPO/rDPO 的梯度对比分析极其清晰
 - 价值: ⭐⭐⭐⭐ 对鲁棒 RLHF 有重要理论推进，但实际大规模部署的验证不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diverging Preferences: When do Annotators Disagree and do Models Know?](../../ICML2025/llm_alignment/diverging_preferences_when_do_annotators_disagree_and_do_models_know.md)
+- [Capturing Individual Human Preferences with Reward Features](../../NeurIPS2025/llm_alignment/capturing_individual_human_preferences_with_reward_features.md)
+- [Robust LLM Alignment via Distributionally Robust Direct Preference Optimization](../../NeurIPS2025/llm_alignment/robust_llm_alignment_via_distributionally_robust_direct_preference_optimization.md)
+- [Smoothed Preference Optimization via ReNoise Inversion for Aligning Diffusion Models with Varied Human Preferences](../../ICML2025/llm_alignment/smoothed_preference_optimization_via_renoise_inversion_for_aligning_diffusion_mo.md)
+- [On the Exponential Convergence for Offline RLHF with Pairwise Comparisons](on_the_exponential_convergence_for_offline_rlhf_with_pairwise_comparisons.md)
+
+<!-- RELATED:END -->

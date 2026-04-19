@@ -128,3 +128,15 @@ CoRPLE 的整体 pipeline 由两大核心部分组成：（1）Contourlet 残差
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多倍率、多指标，还有下游任务评估
 - 写作质量: ⭐⭐⭐ 动机清晰但技术细节密集
 - 价值: ⭐⭐⭐⭐ 红外SR的专用方案需求明确，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [Enhancing Infrared Vision: Progressive Prompt Fusion Network and Benchmark](../../NeurIPS2025/image_restoration/enhancing_infrared_vision_progressive_prompt_fusion_network_and_benchmark.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](rethinking_image_super-resolution_from_training_data_perspectives.md)
+- [Overcoming Distribution Mismatch in Quantizing Image Super-Resolution Networks](overcoming_distribution_mismatch_in_quantizing_image_super-resolution_networks.md)
+- [Learning Exhaustive Correlation for Spectral Super-Resolution: Where Spatial-Spectral Attention Meets Linear Dependence](learning_exhaustive_correlation_for_spectral_super-resolution_where_spatial-spec.md)
+
+<!-- RELATED:END -->

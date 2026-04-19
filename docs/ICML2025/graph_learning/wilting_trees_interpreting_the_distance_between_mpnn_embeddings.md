@@ -139,3 +139,15 @@ WILT距离比固定权重的基线（WWL和WLOA）低一个数量级，size norm
 | 实用价值 | 7/10 | 为GNN解释提供了全局视角，化学领域验证有说服力 |
 | 写作质量 | 8/10 | 结构清晰，问题驱动，图示直观 |
 | 总评 | 8/10 | 从理论和实证两个角度出色地揭示了MPNN嵌入空间的度量结构 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixed-Curvature Decision Trees and Random Forests](mixed-curvature_decision_trees_and_random_forests.md)
+- [Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees](towards_graph_foundation_models_learning_generalities_across_graphs_via_task-tre.md)
+- [Predicate-Conditional Conformalized Answer Sets for Knowledge Graph Embeddings](../../ACL2025/graph_learning/predicate-conditional_conformalized_answer_sets_for_knowledge_graph_embeddings.md)
+- [Structurally Human, Semantically Biased: Detecting LLM-Generated References with Embeddings and GNNs](../../ICLR2026/graph_learning/structurally_human_semantically_biased_detecting_llm-generated_references_with_e.md)
+- [CoDy: Counterfactual Explainers for Dynamic Graphs](cody_counterfactual_explainers_for_dynamic_graphs.md)
+
+<!-- RELATED:END -->

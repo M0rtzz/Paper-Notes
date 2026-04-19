@@ -132,3 +132,15 @@ $$\mathcal{L}_{total} = 0.5 \cdot \mathcal{L}_{Smooth\text{-}L1} + 0.3 \cdot \ma
 - 实验充分度: ⭐⭐⭐⭐⭐ 三数据集 + 详细消融 + 跨域泛化 + 频域可视化
 - 写作质量: ⭐⭐⭐⭐ 物理动机清晰，模块设计逻辑严密
 - 对我的价值: ⭐⭐⭐⭐ 频域解耦思路可迁移到其他逆问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Binary Encoded Crime Linkage Analysis Using Siamese Network](enhancing_binary_encoded_crime_linkage_analysis_using_siamese_network.md)
+- [A Closer Look at Knowledge Distillation in Spiking Neural Network Training](a_closer_look_at_knowledge_distillation_in_spiking_neural_ne.md)
+- [ElementaryNet: A Non-Strategic Neural Network for Predicting Human Behavior in Normal-Form Games](elementarynet_a_non-strategic_neural_network_for_predicting_human_behavior_in_no.md)
+- [SHAP Values via Sparse Fourier Representation](../../NeurIPS2025/interpretability/shap_values_via_sparse_fourier_representation.md)
+- [Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences](../../NeurIPS2025/interpretability/deep_value_benchmark_measuring_whether_models_generalize_deep_values_or_shallow_.md)
+
+<!-- RELATED:END -->

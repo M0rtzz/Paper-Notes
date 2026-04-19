@@ -123,3 +123,15 @@ Trans-PEFT 发现基座模型更新（如 Qwen2→Qwen2.5）主要改变 FFN 层
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个模型 × 12个数据集 × 2种PEFT方法，覆盖非常全面
 - 写作质量: ⭐⭐⭐⭐ 分析清晰，从观察到方法到理论到实验的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 解决了一个实际且紧迫的工程问题，对LLM生态有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](state_offset_tuning_ssm_peft.md)
+- [Quaff: Quantized Parameter-Efficient Fine-Tuning under Outlier Spatial Stability Hypothesis](quaff_quantized_peft.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations](../../ICCV2025/model_compression/generalized_tensor-based_parameter-efficient_fine-tuning_via_lie_group_transform.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ ImageNet 25% 标签下 TRiCo 达到 88.3%，接近全监督大模型性能。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — CIFAR/SVHN/STL/ImageNet + few-shot + OOD + 详细消融
 - **写作质量**: ⭐⭐⭐⭐☆ — 结构清晰但公式较多，理论分析可以更直观
 - **价值**: ⭐⭐⭐⭐☆ — 在低标签 SSL 上效果显著，冻结编码器设计适合实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
+- [RoiRL: Efficient, Self-Supervised Reasoning with Offline Iterative Reinforcement Learning](roirl_efficient_self-supervised_reasoning_with_offline_iterative_reinforcement_l.md)
+- [VolleyBots: A Testbed for Multi-Drone Volleyball Game Combining Motion Control and Strategic Play](volleybots_a_testbed_for_multi-drone_volleyball_game_combining_motion_control_an.md)
+- [MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning](../../ACL2025/reinforcement_learning/maporl_multi-agent_post-co-training_for_collaborative_large_language_models_with.md)
+- [Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](../../ICLR2026/reinforcement_learning/co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
+
+<!-- RELATED:END -->

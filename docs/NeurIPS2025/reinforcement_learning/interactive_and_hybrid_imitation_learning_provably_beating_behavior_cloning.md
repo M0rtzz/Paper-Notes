@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ MuJoCo 验证虽简单但有效，缺乏更大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，直觉解释清晰，与 Foster et al. 的对比很有说服力
 - 价值: ⭐⭐⭐⭐ 对模仿学习理论有重要贡献，为混合 IL 实践提供理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robot-Gated Interactive Imitation Learning with Adaptive Intervention Mechanism](../../ICML2025/reinforcement_learning/robot-gated_interactive_imitation_learning_with_adaptive_intervention_mechanism.md)
+- [Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination](inner_speech_as_behavior_guides_steerable_imitation_of_diverse_behaviors_for_hum.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+- [The Burden of Interactive Alignment with Inconsistent Preferences](the_burden_of_interactive_alignment_with_inconsistent_preferences.md)
+
+<!-- RELATED:END -->

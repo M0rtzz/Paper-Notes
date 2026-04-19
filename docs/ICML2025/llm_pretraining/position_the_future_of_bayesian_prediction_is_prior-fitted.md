@@ -159,3 +159,15 @@ PFN 的核心流程分为两个阶段：
 - 实验充分度: ⭐⭐⭐ Position paper 主要引用已有结果，缺乏系统性新实证
 - 写作质量: ⭐⭐⭐⭐⭐ 论述结构清晰，逻辑链完整，极易理解
 - 价值: ⭐⭐⭐⭐ 系统梳理 PFN 方向，指明开放问题和未来方向，参考价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks](bayesian_neural_scaling_law_extrapolation_with_prior-data_fitted_networks.md)
+- [Density Ratio Estimation-based Bayesian Optimization with Semi-Supervised Learning](density_ratio_estimation-based_bayesian_optimization_with_semi-supervised_learni.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](../../ACL2025/llm_pretraining/pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [PRESCRIBE: Predicting Single-Cell Responses with Bayesian Estimation](../../NeurIPS2025/llm_pretraining/prescribe_predicting_single-cell_responses_with_bayesian_estimation.md)
+- [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{c}} + \mathcal{L}_
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个基准×多baseline×效率分析×大量消融（蒸馏/字典/教师/学生/阈值/数据分割）
 - 写作质量: ⭐⭐⭐⭐ 理论动机从充分表示切入清晰，方法描述结构化，图示直观
 - 价值: ⭐⭐⭐⭐ 同时推进GCD性能和效率前沿，对多模态表示学习和概念选择有广泛启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](../../CVPR2026/object_detection/mokus_leveraging_cross-modal_knowledge_transfer_for_knowledge-aware_concept_cust.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](../../CVPR2026/object_detection/noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](../../CVPR2026/object_detection/clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](../../CVPR2026/object_detection/learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [Breaking Scale Anchoring: Frequency Representation Learning for Accurate High-Resolution Inference from Low-Resolution Training](breaking_scale_anchoring_frequency_representation_learning_for_accurate_high-res.md)
+
+<!-- RELATED:END -->

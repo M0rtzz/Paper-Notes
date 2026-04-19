@@ -110,3 +110,15 @@ $$L(\theta) = -\sum_{i=1}^{\ell} \log P(s_i^{res} | s_{[1,...,i-1]}^{res}, s^{pr
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个基准+丰富消融（边数/分割质量/子图表示/训练策略/可扩展性）
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰系统，消融设计全面
 - 价值: ⭐⭐⭐⭐ 证明了语义关系对3D理解的重要性，高效推理对实际部署有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FROSS: Faster-than-Real-Time Online 3D Semantic Scene Graph Generation from RGB-D Images](fross_faster-than-real-time_online_3d_semantic_scene_graph_generation_from_rgb-d.md)
+- [Event-Driven Storytelling with Multiple Lifelike Humans in a 3D Scene](event-driven_storytelling_with_multiple_lifelike_humans_in_a_3d_scene.md)
+- [Global-Aware Monocular Semantic Scene Completion with State Space Models](global-aware_monocular_semantic_scene_completion_with_state_space_models.md)
+- [3D Gaussian Map with Open-Set Semantic Grouping for Vision-Language Navigation](3d_gaussian_map_with_openset_semantic_grouping_for_visionlan.md)
+- [HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
+
+<!-- RELATED:END -->

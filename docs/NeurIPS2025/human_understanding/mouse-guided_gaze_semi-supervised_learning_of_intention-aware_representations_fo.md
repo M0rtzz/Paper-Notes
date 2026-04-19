@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为 workshop paper 实验较完整，但数据规模和基线对比有限
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 面向辅助功能的实用场景，半监督策略可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
+- [Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization](../../ECCV2024/human_understanding/pose-aware_self-supervised_learning_with_viewpoint_trajectory_regularization.md)
+- [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
+- [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](../../ICCV2025/human_understanding/bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
+- [DevFD: Developmental Face Forgery Detection by Learning Shared and Orthogonal LoRA Subspaces](devfd_developmental_face_forgery_detection_by_learning_shared_and_orthogonal_lor.md)
+
+<!-- RELATED:END -->

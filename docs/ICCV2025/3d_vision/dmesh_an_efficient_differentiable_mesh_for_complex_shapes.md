@@ -136,3 +136,15 @@ DMesh++延续DMesh的概率化思想：每个点用 $(d+1)$ 维向量表示（$d
 - 实验充分度: ⭐⭐⭐⭐ 500+模型验证充分，但多视图重建的对比方法较少
 - 写作质量: ⭐⭐⭐⭐⭐ 层次分明，从理论到实现到实验逻辑严密
 - 价值: ⭐⭐⭐⭐ 解决了DMesh的核心瓶颈，使可微网格在复杂形状上变得实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [χ: Symmetry Understanding of 3D Shapes via Chirality Disentanglement](kh_symmetry_understanding_of_3d_shapes_via_chirality_disentanglement.md)
+- [Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models](representing_3d_shapes_with_64_latent_vectors_for_3d_diffusion_models.md)
+- [REPARO: Compositional 3D Assets Generation with Differentiable 3D Layout Alignment](reparo_compositional_3d_assets_generation_with_differentiable_3d_layout_alignmen.md)
+- [MeshAnything V2: Artist-Created Mesh Generation with Adjacent Mesh Tokenization](meshanything_v2_artist-created_mesh_generation_with_adjacent_mesh_tokenization.md)
+- [Gaussian-Augmented Physics Simulation and System Identification with Complex Colliders](../../NeurIPS2025/3d_vision/gaussian-augmented_physics_simulation_and_system_identification_with_complex_col.md)
+
+<!-- RELATED:END -->

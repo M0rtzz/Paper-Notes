@@ -157,3 +157,15 @@ $$L = L_{sh} + \alpha L_{ash}$$
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、详细消融、公平 GPU 统一测速
 - **论文写作**: ⭐⭐⭐⭐ — 数学推导详尽，结构清晰
 - **实用价值**: ⭐⭐⭐⭐⭐ — 无需预训练/教师模型、开源代码、速度优异，工程落地友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PicoSAM3: Real-Time In-Sensor Region-of-Interest Segmentation](picosam3_real-time_in-sensor_region-of-interest_segmentation.md)
+- [The Golden Subspace: Where Efficiency Meets Generalization in Continual Test-Time Adaptation](../../CVPR2026/segmentation/the_golden_subspace_where_efficiency_meets_generalization_in_continual_test-time.md)
+- [Condensing Action Segmentation Datasets via Generative Network Inversion](condensing_action_segmentation_datasets_via_generative_network_inversion.md)
+- [MaSS13K: A Matting-level Semantic Segmentation Benchmark](mass13k_a_matting-level_semantic_segmentation_benchmark.md)
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

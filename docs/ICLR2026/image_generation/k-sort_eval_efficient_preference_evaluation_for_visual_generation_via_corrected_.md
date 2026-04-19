@@ -113,3 +113,15 @@ $$i^* = \arg\max_i (U_{\text{unc}}^i + \alpha U_{\text{div}}^i)$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖 T2I/T2V、多个模型、压缩模型应用、完整消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论推导严谨
 - 价值: ⭐⭐⭐⭐⭐ 极强的实用价值，解决了视觉生成评估的实际痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Corrected Image Generation with Explainable Latent Rewards](../../CVPR2026/image_generation/self-corrected_image_generation_with_explainable_latent_rewards.md)
+- [Next Visual Granularity Generation](next_visual_granularity_generation.md)
+- [Pyramidal Patchification Flow for Visual Generation](pyramidal_patchification_flow_for_visual_generation.md)
+- [EVATok: Adaptive Length Video Tokenization for Efficient Visual Autoregressive Generation](../../CVPR2026/image_generation/evatok_adaptive_length_video_tokenization_for_eff.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+
+<!-- RELATED:END -->

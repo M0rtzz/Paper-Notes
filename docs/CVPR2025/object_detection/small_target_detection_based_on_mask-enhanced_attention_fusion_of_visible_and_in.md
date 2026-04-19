@@ -124,3 +124,15 @@ $\mathcal{L}_{total} = c_1 \mathcal{L}_{\text{det}} + c_2 \mathcal{L}_{SR}$
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多方法对比、模态消融、融合可视化完整
 - 写作质量: ⭐⭐⭐ 结构清晰但部分定义偏冗长
 - 价值: ⭐⭐⭐⭐ 轻量高效的实际方案对边缘部署有明确价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenRSD: Towards Open-prompts for Object Detection in Remote Sensing Images](../../ICCV2025/object_detection/openrsd_towards_open-prompts_for_object_detection_in_remote_sensing_images.md)
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_text-to-image_diffusion_via_region-aware_prompt_augme.md)
+- [Uncertainty-Aware Gradient Stabilization for Small Object Detection](../../ICCV2025/object_detection/uncertainty-aware_gradient_stabilization_for_small_object_detection.md)
+- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_cross-modal_knowledge_transfer_for_knowledge-aware_concept_cust.md)
+- [Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention](efficient_event-based_object_detection_a_hybrid_neural_network_with_spatial_and_.md)
+
+<!-- RELATED:END -->

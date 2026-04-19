@@ -155,3 +155,15 @@ SparseRM包含三个步骤：
 - 实验充分度: ⭐⭐⭐⭐ — 三个基准+三个backbone+详细消融，但任务维度有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，DenseRM对比分析深入
 - 价值: ⭐⭐⭐⭐⭐ — <1%参数的实用价值极高，推动高效对齐研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lightweight Optimal-Transport Harmonization on Edge Devices](lightweight_optimal-transport_harmonization_on_edge_devices.md)
+- [A Recovery Guarantee for Sparse Neural Networks](../../ICLR2026/model_compression/a_recovery_guarantee_for_sparse_neural_networks.md)
+- [FASA: Frequency-aware Sparse Attention](../../ICLR2026/model_compression/fasa_frequency-aware_sparse_attention.md)
+- [Preference-Aligned LoRA Merging: Preserving Subspace Coverage and Addressing Directional Anisotropy](../../CVPR2026/model_compression/preference-aligned_lora_merging_preserving_subspace_coverage_and_addressing_dire.md)
+- [LightMem: Lightweight and Efficient Memory-Augmented Generation](../../ICLR2026/model_compression/lightmem_lightweight_and_efficient_memory-augmented_generation.md)
+
+<!-- RELATED:END -->

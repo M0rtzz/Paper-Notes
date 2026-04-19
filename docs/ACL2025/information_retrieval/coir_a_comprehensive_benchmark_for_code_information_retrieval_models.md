@@ -130,3 +130,15 @@ CoIR 的设计遵循三个原则：多样性（4大任务 × 8子任务 × 10数
 - **实验充分度**: ⭐⭐⭐⭐ — 10个模型 × 10个数据集的完整评测，附带效率和过拟合分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，任务分类和数据集描述详尽
 - **价值**: ⭐⭐⭐⭐⭐ — 填补了代码检索评估的重大空白，对社区有长期推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AIR-Bench: Automated Heterogeneous Information Retrieval Benchmark](air-bench_automated_heterogeneous_information_retrieval_benchmark.md)
+- [HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation](hoh_a_dynamic_benchmark_for_evaluating_the_impact_of_outdated_information_on_ret.md)
+- [FlexRAG: A Flexible and Comprehensive Framework for Retrieval-Augmented Generation](flexrag_a_flexible_and_comprehensive_framework_for_retrieval-augmented_generatio.md)
+- [Pandora's Box or Aladdin's Lamp: A Comprehensive Analysis Revealing the Role of RAG Noise in Large Language Models](pandora_box_rag_noise.md)
+- [Logical Consistency is Vital: Neural-Symbolic Information Retrieval for Negative-Constraint Queries](logical_consistency_is_vital_neural-symbolic_information_retrieval_for_negative-.md)
+
+<!-- RELATED:END -->

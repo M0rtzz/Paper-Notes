@@ -136,3 +136,15 @@ DocOwl2的编码流程：高分辨率图片 → Shape-adaptive Cropping切为$R 
 - 实验充分度: ⭐⭐⭐⭐⭐ 10个单页+3个多页基准，充分消融，延迟分析，定性示例
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，消融设计系统，动机阐述到位
 - 价值: ⭐⭐⭐⭐ 为多页文档理解的token效率问题提供了实用且可复现的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Multi-Layered Transmission Matrices](../../CVPR2025/model_compression/understanding_multi-layered_transmission_matrices.md)
+- [TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [TableLoRA: Low-rank Adaptation on Table Structure Understanding for Large Language Models](table_lora_structure_understanding.md)
+
+<!-- RELATED:END -->

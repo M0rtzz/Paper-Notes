@@ -114,3 +114,15 @@ DTA-Llama2-7B（开源 7B 模型）的性能与 GPT-3.5 Parallel Function Callin
 - 实验充分度: ⭐⭐⭐⭐ StableToolBench 全面评估、效率分析、多模型泛化
 - 写作质量: ⭐⭐⭐⭐ 图表清晰，类比直观，方法描述系统
 - 价值: ⭐⭐⭐⭐ 为工具学习提供了实用的并行化方案和高质量数据集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification](taclr_a_scalable_and_efficient_retrieval-based_method_for_industrial_product_att.md)
+- [Verification-Guided Context Optimization for Tool Calling via Hierarchical LLMs-as-editors](../../AAAI2026/others/verification-guided_context_optimization_for_tool_calling_via_hierarchical_llms-.md)
+- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+- [Entropy-UID: A Method for Optimizing Information Density](entropy-uid_a_method_for_optimizing_information_density.md)
+
+<!-- RELATED:END -->

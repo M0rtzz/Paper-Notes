@@ -100,3 +100,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个数据集、线性探测/微调/跨域/鲁棒性/消融/可视化，实验极其全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机合理，图示直观，但部分技术细节需查附录
 - 价值: ⭐⭐⭐⭐ 为LiDAR预训练树立了新SOTA baseline，scaling发现有启发性，但受限于分割任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiMoE: Mixture of LiDAR Representation Learners from Automotive Scenes](../../CVPR2025/autonomous_driving/limoe_mixture_of_lidar_representation_learners_from_automotive_scenes.md)
+- [TOD³Cap: Towards 3D Dense Captioning in Outdoor Scenes](tod3cap_towards_3d_dense_captioning_in_outdoor_scenes.md)
+- [UniM2AE: Multi-modal Masked Autoencoders with Unified 3D Representation for 3D Perception in Autonomous Driving](unim2ae_multi-modal_masked_autoencoders_with_unified_3d_representation_for_3d_pe.md)
+- [ItTakesTwo: Leveraging Peer Representations for Semi-supervised LiDAR Semantic Segmentation](ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se.md)
+- [RAPiD-Seg: Range-Aware Pointwise Distance Distribution Networks for 3D LiDAR Segmentation](rapid-seg_range-aware_pointwise_distance_distribution_networks_for_3d_lidar_segm.md)
+
+<!-- RELATED:END -->

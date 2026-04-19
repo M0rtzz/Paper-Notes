@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9 个英语基准 + 跨语言 + 开放生成 + 消融 + Phi-2 验证，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 方法和实验阐述清晰，消融设计有说服力
 - 价值: ⭐⭐⭐⭐ 对模块化 LLM 和零样本迁移有直接贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Preference Extraction In LLMs By Identifying Latent Knowledge Through Classifying Probes](improving_preference_extraction_in_llms_by_identifying_latent_knowledge_through_.md)
+- [Self-Tuning: Instructing LLMs to Effectively Acquire New Knowledge through Self-Teaching](self-tuning_instructing_llms_to_effectively_acquire_new_knowledge_through_self-t.md)
+- [Analyzing LLMs' Knowledge Boundary Cognition Across Languages Through the Lens of Internal Representations](knowledge_boundary_crosslingual.md)
+- [Refuse Whenever You Feel Unsafe: Improving Safety in LLMs via Decoupled Refusal Training](derta_decoupled_refusal.md)
+- [A Training-free LLM-based Approach to General Chinese Character Error Correction](a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+
+<!-- RELATED:END -->

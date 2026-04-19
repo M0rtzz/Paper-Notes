@@ -135,3 +135,15 @@ CLAWS 本身是无训练的特征提取方法。在结合下游分类器（XGBoo
 - ⭐ 实用性：4/5 — 零额外计算开销的白盒检测方案，工程上易集成
 - ⭐ 实验充分度：4/5 — 5个模型、4个数据集、5种评估策略组合全面
 - ⭐ 写作质量：3/5 — 框架清晰但符号较多，部分实验细节需查阅附录
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [DuoLens: A Framework for Robust Detection of Machine-Generated Multilingual Text and Code](duolens_a_framework_for_robust_detection_of_machine-generated_multilingual_text_.md)
+- [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
+- [Reasoning Compiler: LLM-Guided Optimizations for Efficient Model Serving](reasoning_compiler_llm-guided_optimizations_for_efficient_model_serving.md)
+- [Low-Perplexity LLM-Generated Sequences and Where To Find Them](../../ACL2025/aigc_detection/low-perplexity_llm-generated_sequences_and_where_to_find_them.md)
+
+<!-- RELATED:END -->

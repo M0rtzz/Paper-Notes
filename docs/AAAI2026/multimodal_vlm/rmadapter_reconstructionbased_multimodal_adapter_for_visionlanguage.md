@@ -119,3 +119,15 @@ $$\mathcal{L} = \mathcal{L}_{ce} + \mathcal{L}_{con} + \mathcal{L}_{rec}$$
 - 实验充分度: ⭐⭐⭐⭐ 11 数据集 + 跨数据集 + 领域泛化 + 消融全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机和方法推导逻辑清晰
 - 价值: ⭐⭐⭐⭐ 证明 Adapter 方向被低估，提供通用 PEFT 设计范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-modal Proxy Evolving for OOD Detection with Vision-Language Models](cross-modal_proxy_evolving_for_ood_detection_with_vision-lan.md)
+- [ImageBindDC: Compressing Multi-modal Data with ImageBind-based Condensation](imagebinddc_compressing_multi-modal_data_with_imagebind-based_condensation.md)
+- [VaMP: Variational Multi-Modal Prompt Learning for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/vamp_variational_multi-modal_prompt_learning_for_vision-language_models.md)
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](../../ICLR2026/multimodal_vlm/multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+
+<!-- RELATED:END -->

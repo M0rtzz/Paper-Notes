@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个benchmark + 20+基线 + 4类方法对比 + 消融 + 难度分析 + 跨规模验证 + 时间分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但附录极长（7个appendix），主文可以更精炼
 - 价值: ⭐⭐⭐⭐⭐ 8B模型超70B RAG是非常有冲击力的结果，结构化推理范式对医学AI有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models](liecraft_a_multi-agent_framework_for_evaluating_deceptive_capabilities_in_langua.md)
+- [Beyond ReAct: A Planner-Centric Framework for Complex Tool-Augmented LLM Reasoning](beyond_react_a_planner-centric_framework_for_complex_tool-au.md)
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](../../ACL2025/llm_agent/toolhop_multi_hop_tool_use_benchmark.md)
+- [Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](../../ACL2025/llm_agent/theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)
+- [FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models](../../ACL2025/llm_agent/fact_audit_factcheck.md)
+
+<!-- RELATED:END -->

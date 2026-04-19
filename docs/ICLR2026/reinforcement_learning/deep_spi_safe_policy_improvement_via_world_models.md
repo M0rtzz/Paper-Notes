@@ -136,3 +136,15 @@ $$|V^{\bar{\pi}}(s_1) - V^{\bar{\pi}}(s_2)| \leq K_V \cdot \bar{d}(\phi(s_1), \p
 - **实验充分度**: ⭐⭐⭐⭐ — ALE-57全面但仅限Atari域
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导严谨，示例直观，但数学密度较高
 - **价值**: ⭐⭐⭐⭐⭐ — 为深度RL中的安全性提供了坚实的理论基础和实用算法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
+- [Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+- [PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](../../ICML2025/reinforcement_learning/pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
+- [WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [PolicyFlow: Policy Optimization with Continuous Normalizing Flow in Reinforcement Learning](policyflow_policy_optimization_with_continuous_normalizing_flow_in_reinforcement.md)
+
+<!-- RELATED:END -->

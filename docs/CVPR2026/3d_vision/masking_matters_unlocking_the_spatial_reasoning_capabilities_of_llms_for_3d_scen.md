@@ -236,3 +236,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个基准、4种LLM、详尽消融、多种掩码策略对比，非常充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导逻辑清晰，问题发掘犀利（因果掩码与3D场景的冲突），图示直观
 - 价值: ⭐⭐⭐⭐ 简单有效的即插即用方法，可直接迁移到所有对象中心3D LLM中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lifting Unlabeled Internet-level Data for 3D Scene Understanding](lifting_unlabeled_internet-level_data_for_3d_scene_understanding.md)
+- [Scalable Object Relation Encoding for Better 3D Spatial Reasoning in Large Language Models](scalable_object_relation_encoding_for_better_3d_spatial_reasoning_in_large_langu.md)
+- [Fast SceneScript: Fast and Accurate Language-Based 3D Scene Understanding via Multi-Token Prediction](fast_scenescript_fast_and_accurate_language-based_3d_scene_understanding_via_mul.md)
+- [Context-Nav: Context-Driven Exploration and Viewpoint-Aware 3D Spatial Reasoning for Instance Navigation](context-nav_context-driven_exploration_and_viewpoint-aware_3d_spatial_reasoning_.md)
+- [Omni-View: Unlocking How Generation Facilitates Understanding in Unified 3D Model based on Multiview images](../../ICLR2026/3d_vision/omni-view_unlocking_how_generation_facilitates_understanding_in_unified_3d_model.md)
+
+<!-- RELATED:END -->

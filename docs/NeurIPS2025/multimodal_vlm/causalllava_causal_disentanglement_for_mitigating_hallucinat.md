@@ -99,3 +99,15 @@ MLLM 的物体幻觉（描述不存在的物体）主要源于训练数据中的
 - 实验充分度: ⭐⭐⭐⭐ 10 个基准、多 backbone、大量可视化，但缺乏最新 MLLM 对比
 - 写作质量: ⭐⭐⭐⭐⭐ 分析驱动的研究范式优秀，从现象到原因到解决方案逻辑清晰
 - 价值: ⭐⭐⭐⭐ 为 MLLM 幻觉提供了有因果理论支撑的架构级解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+- [Learning Invariant Causal Mechanism from Vision-Language Models](../../ICML2025/multimodal_vlm/learning_invariant_causal_mechanism_from_vision-language_models.md)
+- [Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models](seeing_is_believing_mitigating_ocr_hallucinations_in_multimodal_large_language_m.md)
+- [When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations](when_semantics_mislead_vision_mitigating_large_multimodal_models_hallucinations_.md)
+- [AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models](affordbot_3d_fine-grained_embodied_reasoning_via_multimodal_large_language_model.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ AdaBet 是一个两阶段流程：(1) 层重要性评估——对未标注数据
 - 实验充分度: ⭐⭐⭐⭐ 4 个架构 × 4 个数据集，消融完整，但缺少与 LoRA 等 PEFT 方法对比
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，FI vs Betti 的对比可视化有说服力
 - 价值: ⭐⭐⭐⭐ 对边缘设备微调场景有实际意义，且方法简单易用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](../../ICLR2026/llm_evaluation/improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
+- [Improving the Effective Receptive Field of Message-Passing Neural Networks](../../ICML2025/llm_evaluation/improving_the_effective_receptive_field_of_message-passing_neural_networks.md)
+- [HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](../../NeurIPS2025/llm_evaluation/hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
+- [Fully Heteroscedastic Count Regression with Deep Double Poisson Networks](../../ICML2025/llm_evaluation/fully_heteroscedastic_count_regression_with_deep_double_poisson_networks.md)
+- [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](../../ICML2025/llm_evaluation/g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
+
+<!-- RELATED:END -->

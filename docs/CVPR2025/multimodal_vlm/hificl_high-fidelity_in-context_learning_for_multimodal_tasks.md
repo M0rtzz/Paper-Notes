@@ -129,3 +129,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，故事讲得好——从分析到方法到实验逻辑链完整
 - 价值: ⭐⭐⭐⭐ 对 ICL 近似和 PEFT 领域都有理论和实践贡献
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mimic In-Context Learning for Multimodal Tasks](mimic_in-context_learning_for_multimodal_tasks.md)
+- [Context-Aware Multimodal Pretraining](context-aware_multimodal_pretraining.md)
+- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
+- [DynRefer: Delving into Region-level Multimodal Tasks via Dynamic Resolution](dynrefer_delving_into_region-level_multimodal_tasks_via_dynamic_resolution.md)
+- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+
+<!-- RELATED:END -->

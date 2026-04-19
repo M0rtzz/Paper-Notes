@@ -120,3 +120,15 @@ $L_{total} = \alpha \cdot L_{moe} + (1-\alpha) \cdot L_{mc}$，其中 $\alpha = 
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集验证+消融完整，但跨中心实验缺失
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示说明充分
 - 价值: ⭐⭐⭐⭐ 对超声标准切面识别有临床应用价值，LP2025 数据集有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S2Drug: Bridging Protein Sequence and 3D Structure in Contrastive Representation Learning for Virtual Screening](s2drug_bridging_protein_sequence_and_3d_structure_in_contrastive_representation_.md)
+- [DFLMoE: Decentralized Federated Learning via Mixture of Experts for Medical Data](../../CVPR2025/medical_imaging/dflmoe_decentralized_federated_learning_via_mixture_of_experts_for_medical_data_.md)
+- [Dual Mixture-of-Experts Framework for Discrete-Time Survival Analysis](../../NeurIPS2025/medical_imaging/dual_mixture-of-experts_framework_for_discrete-time_survival_analysis.md)
+- [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
+- [Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics](dual-path_knowledge-augmented_contrastive_alignment_network_for_spatially_resolv.md)
+
+<!-- RELATED:END -->

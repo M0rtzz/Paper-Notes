@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 81 份回复样本量有限，但质性分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，发现与建议一一对应，立场声明示范性强
 - 价值: ⭐⭐⭐⭐ 对低资源语言 NLP 社区有直接实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When to Speak, When to Abstain: Contrastive Decoding with Abstention](when_to_speak_when_to_abstain.md)
+- [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
+- [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [A Practical Approach for Building Production-Grade Conversational Agents with Workflow Graphs](a_practical_approach_for_building_production-grade_conversational_agents_with_wo.md)
+
+<!-- RELATED:END -->

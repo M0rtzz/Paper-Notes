@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5个模型3个数据集的系统评估，统计检验完备，但缺少缓解策略
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，但部分符号可以更简洁
 - 价值: ⭐⭐⭐⭐ 对作者归因系统的负责任部署有重要警示意义，MAUI可直接采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Last-Click: An Optimal Mechanism for Ad Attribution](../../NeurIPS2025/ai_safety/beyond_last-click_an_optimal_mechanism_for_ad_attribution.md)
+- [Watermark-based Detection and Attribution of AI-Generated Content](../../ICLR2026/ai_safety/watermark-based_attribution_of_ai-generated_content.md)
+- [The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](tug_of_war_fairness_privacy.md)
+- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [FairI Tales: Evaluation of Fairness in Indian Contexts with a Focus on Bias and Stereotypes](fairi_tales_evaluation_of_fairness_in_indian_contexts_with_a_focus_on_bias_and_s.md)
+
+<!-- RELATED:END -->

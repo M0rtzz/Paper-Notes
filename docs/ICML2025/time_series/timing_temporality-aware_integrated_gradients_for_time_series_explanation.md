@@ -122,3 +122,15 @@ TIMING 相对 IG 的提升：MIMIC-III +8.7%、PAM +5.1%、Boiler +109.8%、Wafe
 - 实验充分度: ⭐⭐⭐⭐⭐ — 13 个基线、6 个真实数据集 + 2 个合成数据集、多指标评估
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、Figure 1 的 cancel-out 可视化非常直观
 - 价值: ⭐⭐⭐⭐ — CPD/CPP 指标有望成为时序 XAI 评估的新标准，TIMING 简洁有效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+- [Improving Time Series Forecasting via Instance-aware Post-hoc Revision (PIR)](../../NeurIPS2025/time_series/improving_time_series_forecasting_via_instance-aware_post-hoc_revision.md)
+- [A Unified Shape-Aware Foundation Model for Time Series Classification](../../AAAI2026/time_series/a_unified_shape-aware_foundation_model_for_time_series_class.md)
+- [ReCast: Reliability-aware Codebook Assisted Lightweight Time Series Forecasting](../../AAAI2026/time_series/recast_reliability-aware_codebook_assisted_lightweight_time_series_forecasting.md)
+
+<!-- RELATED:END -->

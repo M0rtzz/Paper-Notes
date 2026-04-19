@@ -114,3 +114,15 @@ VSPCN以预训练ViT-Base（ImageNet-1k）为骨干，输入包含5部分：CLS 
 - 实验充分度: ⭐⭐⭐⭐⭐ 三数据集+详细消融+超参分析+可视化+与生成式方法全面对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图表质量高
 - 价值: ⭐⭐⭐⭐ 在GZSL领域取得新SOTA，方法设计有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UNEM: UNrolled Generalized EM for Transductive Few-Shot Learning](unem_unrolled_generalized_em_for_transductive_few-shot_learning.md)
+- [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
+- [Vision-Language Model IP Protection via Prompt-based Learning](vision-language_model_ip_protection_via_prompt-based_learning.md)
+- [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
+- [Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](../../ECCV2024/multimodal_vlm/meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
+
+<!-- RELATED:END -->

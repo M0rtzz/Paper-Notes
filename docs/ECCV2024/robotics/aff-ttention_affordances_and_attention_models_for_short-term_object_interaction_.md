@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、详细消融、模块可迁移性验证、充分对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，但公式符号较多需要耐心阅读
 - 价值: ⭐⭐⭐⭐ 在 STA 任务上取得大幅领先，affordance 检索思路可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DISCO: Embodied Navigation and Interaction via Differentiable Scene Semantics and Dual-Level Control](disco_embodied_navigation_and_interaction_via_differentiable_scene_semantics_and.md)
+- [Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning](../../AAAI2026/robotics/attention_as_binding_a_vector-symbolic_perspective_on_transformer_reasoning.md)
+- [Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping](../../ICLR2026/robotics/constructive_distortion_improving_mllms_with_attention-guided_image_warping.md)
+- [Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](../../CVPR2025/robotics/influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)
+- [C-NAV: Towards Self-Evolving Continual Object Navigation in Open World](../../NeurIPS2025/robotics/c-nav_towards_self-evolving_continual_object_navigation_in_open_world.md)
+
+<!-- RELATED:END -->

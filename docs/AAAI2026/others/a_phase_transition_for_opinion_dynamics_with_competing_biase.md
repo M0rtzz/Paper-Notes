@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论工作模拟验证充分，但缺乏真实网络实验
 - 写作质量: ⭐⭐⭐⭐⭐ 数学表达严谨清晰，直觉解释到位，图示丰富
 - 价值: ⭐⭐⭐⭐ 对社交网络观点动力学和信息安全有重要理论贡献，但应用距离较远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models](lilad_learning_in-context_lyapunov-stable_adaptive_dynamics_models.md)
+- [Normalization in Attention Dynamics](../../NeurIPS2025/others/normalization_in_attention_dynamics.md)
+- [LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics](../../ICLR2026/others/latent_particle_world_models_self-supervised_object-centric_stochastic_dynamics_.md)
+- [Learning Dynamics of RNNs in Closed-Loop Environments](../../NeurIPS2025/others/learning_dynamics_of_rnns_in_closed-loop_environments.md)
+- [FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](../../NeurIPS2025/others/flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{hl} + \mathcal{L}_{moment}$$
 - **实验充分度**: ⭐⭐⭐⭐ 消融全面，含跨架构泛化和虚假相关性专项评估
 - **写作质量**: ⭐⭐⭐⭐ 问题阐述清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ 提出的框架简洁通用，虚假相关性的分析视角有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Augmenting Moment Retrieval: Zero-Dependency Two-Stage Learning](augmenting_moment_retrieval_zero-dependency_two-stage_learning.md)
+- [Beyond Caption-Based Queries for Video Moment Retrieval](../../CVPR2026/object_detection/beyond_caption-based_queries_for_video_moment_retrieval.md)
+- [Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need](../../CVPR2025/object_detection/boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)
+- [Diffusion-Classifier Synergy: Reward-Aligned Learning via Mutual Boosting Loop for FSCIL](../../NeurIPS2025/object_detection/diffusion-classifier_synergy_reward-aligned_learning_via_mutual_boosting_loop_fo.md)
+- [Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
+
+<!-- RELATED:END -->

@@ -164,3 +164,15 @@ OMD 方法训练时间约为 MLE 方法的 **1/3**，同时准确率更高。主
 - 实验充分度: ⭐⭐⭐⭐ 覆盖三种场景，有理论和实验双重验证，但规模有限（Llama-3 8B）
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，算法描述清晰，场景分类井然有序
 - 价值: ⭐⭐⭐⭐ 解决了 online RLHF 的核心计算瓶颈，对边缘部署和持续学习有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Greedy Sampling Is Provably Efficient for RLHF](greedy_sampling_is_provably_efficient_for_rlhf.md)
+- [ResponseRank: Data-Efficient Reward Modeling through Preference Strength Learning](responserank_data-efficient_reward_modeling_through_preference_strength_learning.md)
+- [Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective](../../ICML2025/llm_alignment/can_rlhf_be_more_efficient_with_imperfect_reward_models_a_policy_coverage_perspe.md)
+- [Reward Generalization in RLHF: A Topological Perspective](../../ACL2025/llm_alignment/reward_generalization_in_rlhf_a_topological_perspective.md)
+- [Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis](limited_preference_data_learning_better_reward_model_with_latent_space_synthesis.md)
+
+<!-- RELATED:END -->

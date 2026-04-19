@@ -125,3 +125,15 @@ SGDF在标准SGD+动量的基础上增加一个在线计算的增益 $K_t$。每
 - 实验充分度: ⭐⭐⭐⭐ 多架构多任务验证，但缺少NLP和大模型实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导详尽，但部分内容啰嗦
 - 价值: ⭐⭐⭐⭐ 为优化器设计提供了新的理论工具和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nonlinearly Preconditioned Gradient Methods: Momentum and Stochastic Analysis](../../NeurIPS2025/optimization/nonlinearly_preconditioned_gradient_methods_momentum_and_stochastic_analysis.md)
+- [SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data](../../AAAI2026/optimization/smofi_step-wise_momentum_fusion_for_split_federated_learning_on_heterogeneous_da.md)
+- [A Distributed Asynchronous Generalized Momentum Algorithm Without Delay Bounds](../../AAAI2026/optimization/a_distributed_asynchronous_generalized_momentum_algorithm_wi.md)
+- [DynaAct: Large Language Model Reasoning with Dynamic Action Spaces](../../NeurIPS2025/optimization/dynaact_large_language_model_reasoning_with_dynamic_action_spaces.md)
+- [Adaptive Rollout Allocation for Online RL with Verifiable Rewards (VIP)](../../ICLR2026/optimization/adaptive_rollout_allocation_for_online_reinforcement_learning_with_verifiable_re.md)
+
+<!-- RELATED:END -->

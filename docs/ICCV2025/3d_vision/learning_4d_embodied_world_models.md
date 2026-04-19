@@ -149,3 +149,15 @@ PointNet 编码 4D 点云 → 结合文本嵌入 → MLP 输出 7-DoF 动作
 - **实验充分度**: ★★★★☆ — 真实+合成域评估，下游任务验证
 - **实用性**: ★★★★☆ — 对机器人规划有实际促进
 - **总分**: 8.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4D Visual Pre-training for Robot Learning](4d_visual_pretraining_for_robot_learning.md)
+- [Wanderland: Geometrically Grounded Simulation for Open-World Embodied AI](../../CVPR2026/3d_vision/wanderland_geometrically_grounded_simulation_for_open-world_embodied_ai.md)
+- [Towards 3D Objectness Learning in an Open World](../../NeurIPS2025/3d_vision/towards_3d_objectness_learning_in_an_open_world.md)
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+- [4D Gaussian Splatting SLAM](4d_gaussian_splatting_slam.md)
+
+<!-- RELATED:END -->

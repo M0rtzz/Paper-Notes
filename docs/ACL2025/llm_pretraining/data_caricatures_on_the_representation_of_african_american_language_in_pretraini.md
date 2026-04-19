@@ -167,3 +167,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 12 个语料库、16 种过滤器、1,054 条人工标注、3 名母语标注员、定量+定性混合方法，证据极为充分
 - **写作质量**: ⭐⭐⭐⭐⭐ — 论文结构清晰（三个 RQ 层层推进），伦理讨论深入且负责，对 AAL 使用/生成的冲突有深刻反思
 - **价值**: ⭐⭐⭐⭐ — 对理解 LLM 偏见的数据根源有重要意义，但缺少"修复方案"（仅审计+建议），实际推动变革的可操作性有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation](emergent_abilities_continued_pt.md)
+- [Chameleon: A Flexible Data-mixing Framework for Language Model Pretraining and Finetuning](../../ICML2025/llm_pretraining/chameleon_a_flexible_data-mixing_framework_for_language_model_pretraining_and_fi.md)
+- [DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
+- [Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](stealing_training_data_from_large_language_models_in_decentralized_training_thro.md)
+
+<!-- RELATED:END -->

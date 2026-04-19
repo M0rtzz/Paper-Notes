@@ -113,3 +113,15 @@ Sinkhorn散度优化的不同参数组合效果：
 - 有效性：⭐⭐⭐⭐ — 用户研究大幅领先
 - 实用性：⭐⭐⭐ — 需要3D风格场景作为输入
 - 推荐度：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [Transferable 3D Adversarial Shape Completion using Diffusion Models](transferable_3d_adversarial_shape_completion_using_diffusion_models.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+
+<!-- RELATED:END -->

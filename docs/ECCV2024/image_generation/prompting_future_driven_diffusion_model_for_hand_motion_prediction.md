@@ -115,3 +115,15 @@ STEN使用标准扩散去噪损失 $\mathcal{L}_{STEN} = \mathbb{E}\|\epsilon - 
 - 实验充分度: ⭐⭐⭐ 只在两个数据集上验证，实时性分析缺失
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，各模块的动机阐释到位
 - 价值: ⭐⭐⭐ 手部运动预测场景较窄但对AR/VR有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+- [EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation](emdm_efficient_motion_diffusion_model_for_fast_and_high-quality_motion_generatio.md)
+
+<!-- RELATED:END -->

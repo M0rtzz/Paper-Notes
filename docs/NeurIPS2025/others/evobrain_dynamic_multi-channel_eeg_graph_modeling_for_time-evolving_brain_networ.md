@@ -280,3 +280,15 @@ $$\mathbf{x}_i^{\text{node}} = [\mathbf{h}_i^{\text{node}}; \mathbf{p}_i]$$
 - 实验充分度: ⭐⭐⭐⭐⭐ (两个数据集、检测+预测两个任务、12种baseline、消融实验充分、临床可视化分析、效率对比)
 - 写作质量: ⭐⭐⭐⭐ (理论部分严谨，方法描述清晰，图表信息量大；但符号较多，初读门槛略高)
 - 价值: ⭐⭐⭐⭐ (兼具理论贡献和实用价值，对动态GNN在EEG领域的应用有重要参考意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+- [DSP: Dynamic Sequence Parallelism for Multi-Dimensional Transformers](../../ICML2025/others/dsp_dynamic_sequence_parallelism_for_multi-dimensional_transformers.md)
+- [Fully Dynamic Euclidean Bi-Chromatic Matching in Sublinear Update Time](../../ICML2025/others/fully_dynamic_euclidean_bi-chromatic_matching_in_sublinear_update_time.md)
+- [SPACE: SPike-Aware Consistency Enhancement for Test-Time Adaptation in Spiking Neural Networks](space_spike-aware_consistency_enhancement_for_test-time_adaptation_in_spiking_ne.md)
+- [HEEGNet: Hyperbolic Embeddings for EEG](../../ICLR2026/others/heegnet_hyperbolic_embeddings_for_eeg.md)
+
+<!-- RELATED:END -->

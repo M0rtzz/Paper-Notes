@@ -113,3 +113,15 @@ tags:
 - 价值: ⭐⭐⭐⭐ 揭示了VLM评估范式依赖性的重要问题
 
 <!-- VAQUUM: 20,300 human ratings, 1,089 images, 5 quantifiers, 5 VLMs, 3 evaluation paradigms -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LAQuer: Localized Attribution Queries in Content-grounded Generation](laquer_localized_attribution.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning](aide_attribute-guided_multi-hop_data_expansion_for_data_scarcity_in_task-specifi.md)
+
+<!-- RELATED:END -->

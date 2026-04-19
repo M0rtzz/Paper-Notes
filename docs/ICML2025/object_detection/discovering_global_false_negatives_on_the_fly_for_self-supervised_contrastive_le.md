@@ -149,3 +149,15 @@ GloFND 可直接扩展到 CLIP 式的图像-文本对比学习：为每个实例
 - 实验充分度: ⭐⭐⭐ — 覆盖单模态/双模态/半监督，但缺少大规模数据集和消融
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，算法描述规范
 - 价值: ⭐⭐⭐⭐ — 即插即用的假阴性过滤模块，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FALCON: False-Negative Aware Learning of Contrastive Negatives in Vision-Language Alignment](../../CVPR2026/object_detection/falcon_false-negative_aware_learning_of_contrastive_negatives_in_vision-language.md)
+- [Global Context-aware Representation Learning for Spatially Resolved Transcriptomics](global_context-aware_representation_learning_for_spatially_resolved_transcriptom.md)
+- [The Complexity of Finding Local Optima in Contrastive Learning](../../NeurIPS2025/object_detection/the_complexity_of_finding_local_optima_in_contrastive_learning.md)
+- [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](../../NeurIPS2025/object_detection/sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
+- [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
+
+<!-- RELATED:END -->

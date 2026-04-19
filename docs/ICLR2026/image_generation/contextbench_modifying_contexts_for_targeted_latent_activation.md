@@ -126,3 +126,15 @@ SAE 激活任务（激活值归一化到训练集最大值的比例）：
 - 实验充分度: ⭐⭐⭐⭐ 715 个任务覆盖多种场景，但后门任务规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，安全视角贯穿始终，规格博弈的讨论深思熟虑
 - 价值: ⭐⭐⭐⭐ 对 AI 安全和可解释性社区有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Penalizing Boundary Activation for Object Completeness in Diffusion Models](../../ICCV2025/image_generation/penalizing_boundary_activation_for_object_completeness_in_diffusion_models.md)
+- [Latent Diffusion Model without Variational Autoencoder](latent_diffusion_model_without_variational_autoencoder.md)
+- [RAZOR: Ratio-Aware Layer Editing for Targeted Unlearning in Vision Transformers and Diffusion Models](../../CVPR2026/image_generation/razor_ratio_aware_unlearning_vit_diffusion.md)
+- [LinEAS: End-to-end Learning of Activation Steering with a Distributional Loss](../../NeurIPS2025/image_generation/lineas_end-to-end_learning_of_activation_steering_with_a_distributional_loss.md)
+- [MVCustom: Multi-View Customized Diffusion via Geometric Latent Rendering and Completion](mvcustom_multi-view_customized_diffusion_via_geometric_latent_rendering_and_comp.md)
+
+<!-- RELATED:END -->

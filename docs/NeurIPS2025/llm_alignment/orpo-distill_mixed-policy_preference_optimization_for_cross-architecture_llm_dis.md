@@ -178,3 +178,15 @@ $$L_{ORPO} = L_{SFT} + \lambda \cdot L_{OR}$$
 - **写作质量** ⭐⭐⭐⭐：简洁清晰，算法伪代码规范
 - **实用价值** ⭐⭐⭐⭐⭐：方法简单有效，易于在实际小模型部署中使用
 - **理论深度** ⭐⭐⭐：虽然有直觉解释（多样性 vs 质量），但缺少理论分析
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Debate, Reflect, and Distill: Multi-Agent Feedback with Tree-Structured Preference Optimization for Efficient Language Model Enhancement](../../ACL2025/llm_alignment/debate_reflect_and_distill_multi-agent_feedback_with_tree-structured_preference_.md)
+- [Human-assisted Robotic Policy Refinement via Action Preference Optimization](human-assisted_robotic_policy_refinement_via_action_preference_optimization.md)
+- [Robust LLM Alignment via Distributionally Robust Direct Preference Optimization](robust_llm_alignment_via_distributionally_robust_direct_preference_optimization.md)
+- [Simplicity Prevails: Rethinking Negative Preference Optimization for LLM Unlearning](simplicity_prevails_rethinking_negative_preference_optimization_for_llm_unlearni.md)
+- [ConfPO: Exploiting Policy Model Confidence for Critical Token Selection in Preference Optimization](../../ICML2025/llm_alignment/confpo_exploiting_policy_model_confidence_for_critical_token_selection_in_prefer.md)
+
+<!-- RELATED:END -->

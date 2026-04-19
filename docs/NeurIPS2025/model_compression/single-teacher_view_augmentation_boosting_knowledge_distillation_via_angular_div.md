@@ -154,3 +154,15 @@ Angular-KD以单教师的计算量超越了所有多教师方法。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 涵盖多数据集、多架构、多任务、消融、可视化、迁移、少样本等全面实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论分析与实验相辅，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 实用性强，即插即用特性降低使用门槛，单教师超越多教师有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Good Teacher Adapts Their Knowledge for Distillation](../../ICCV2025/model_compression/a_good_teacher_adapts_their_knowledge_for_distillation.md)
+- [Data Laundering: Artificially Boosting Benchmark Results through Knowledge Distillation](../../ACL2025/model_compression/data_laundering_artificially_boosting_benchmark_results_through_knowledge_distil.md)
+- [ATLAS: Autoformalizing Theorems through Lifting, Augmentation, and Synthesis of Data](atlas_autoformalizing_theorems_through_lifting_augmentation_and_synthesis_of_dat.md)
+- [KINDLE: Knowledge-Guided Distillation for Prior-Free Gene Regulatory Network Inference](kindle_knowledge-guided_distillation_for_prior-free_gene_regulatory_network_infe.md)
+- [A Token is Worth over 1,000 Tokens: Efficient Knowledge Distillation through Low-Rank Clone](a_token_is_worth_over_1000_tokens_efficient_knowledge_distillation_through_low-r.md)
+
+<!-- RELATED:END -->

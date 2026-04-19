@@ -112,3 +112,15 @@ ERBA的pipeline模拟真实催化机制的两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个端点×多PLM backbone×OOD测试×六类酶分析×详尽消融，覆盖非常全面
 - 写作质量: ⭐⭐⭐⭐ 公式体系完整，生物学背景解释到位，但论文偏长
 - 价值: ⭐⭐⭐⭐ 对计算生物学有实际应用价值，分布对齐思路可迁移到其他多模态任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EI: Early Intervention for Multimodal Imaging based Disease Recognition](ei_early_intervention_for_multimodal_imaging_based_disease_recognition.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection](moeclip_patch-specialized_experts_for_zero-shot_anomaly_detection.md)
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+
+<!-- RELATED:END -->

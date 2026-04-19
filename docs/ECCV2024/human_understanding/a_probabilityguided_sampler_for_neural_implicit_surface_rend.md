@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在多个数据集和多个基线方法上验证，消融实验完整
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法描述层次分明
 - 价值: ⭐⭐⭐⭐ 即插即用的采样改进策略，工程实用性强，但缺乏代码开源略减分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)
+- [WordRobe: Text-Guided Generation of Textured 3D Garments](wordrobe_text-guided_generation_of_textured_3d_garments.md)
+- [HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity](../../ICCV2025/human_understanding/hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu.md)
+- [VI3NR: Variance Informed Initialization for Implicit Neural Representations](../../CVPR2025/human_understanding/vi3nr_variance_informed_initialization_for_implicit_neural_representations.md)
+- [MANIKIN: Biomechanically Accurate Neural Inverse Kinematics for Human Motion Estimation](manikin_biomechanically_accurate_neural_inverse_kinematics_for_human_motion_esti.md)
+
+<!-- RELATED:END -->

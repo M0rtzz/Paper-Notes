@@ -168,3 +168,15 @@ BiCodec 在 <1kbps 低码率范围内几乎所有指标 SOTA。
 - **实验充分度**: ⭐⭐⭐⭐ — codec 重建/零样本 TTS/控制实验全面，但说话人相似度弱项需更多分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，系统描述完整
 - **价值**: ⭐⭐⭐⭐⭐ — 代码+模型+数据集全开源，VoxBox 100K 小时是重大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens](mms-llama_efficient_llm-based_audio-visual_speech_recognition_with_minimal_multi.md)
+- [Zero-Shot Text-to-Speech for Vietnamese](zero-shot_text-to-speech_for_vietnamese.md)
+- [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [Eta-WavLM: Efficient Speaker Identity Removal in Self-Supervised Speech Representations Using a Simple Linear Equation](eta-wavlm_efficient_speaker_identity_removal_in_self-supervised_speech_represent.md)
+
+<!-- RELATED:END -->

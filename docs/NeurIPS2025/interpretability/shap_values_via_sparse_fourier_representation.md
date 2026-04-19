@@ -131,3 +131,15 @@ FourierShap 比 KernelShap 快 10-10000×，且在 3/4 数据集上比 FastShap 
 - **实验充分度**: ⭐⭐⭐⭐ 黑盒和白盒两种设置，四个数据集，多个基线对比
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，但符号较多需仔细阅读
 - **价值**: ⭐⭐⭐⭐⭐ 解决了 SHAP 计算的核心瓶颈，对工业应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences](deep_value_benchmark_measuring_whether_models_generalize_deep_values_or_shallow_.md)
+- [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
+- [Do Different Prompting Methods Yield a Common Task Representation?](do_different_prompting_methods_yield_a_common_task_representation_in_language_mo.md)
+- [From Flat to Hierarchical: Extracting Sparse Representations with Matching Pursuit](from_flat_to_hierarchical_extracting_sparse_representations_with_matching_pursui.md)
+- [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)
+
+<!-- RELATED:END -->

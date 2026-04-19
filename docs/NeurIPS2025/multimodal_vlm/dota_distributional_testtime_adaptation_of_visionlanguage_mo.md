@@ -110,3 +110,15 @@ Dota在测试时流式处理样本：对每个新样本先用CLIP零样本分类
 - 实验充分度: ⭐⭐⭐⭐ 10个跨域数据集全面测试，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰方法简洁，图示直观
 - 价值: ⭐⭐⭐⭐ 实用性强的TTA方法，可广泛应用于VLM部署场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Illusion of Progress? A Critical Look at Test-Time Adaptation for Vision-Language Models](the_illusion_of_progress_a_critical_look_at_testtime_adaptat.md)
+- [Mint: A Simple Test-Time Adaptation of Vision-Language Models against Common Corruptions](mint_a_simple_testtime_adaptation_of_visionlanguage_models_a.md)
+- [LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](../../ICCV2025/multimodal_vlm/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
+- [Realistic Test-Time Adaptation of Vision-Language Models](../../CVPR2025/multimodal_vlm/realistic_test-time_adaptation_of_vision-language_models.md)
+- [TOMCAT: Test-time Comprehensive Knowledge Accumulation for Compositional Zero-Shot Learning](tomcat_test-time_comprehensive_knowledge_accumulation_for_compositional_zero-sho.md)
+
+<!-- RELATED:END -->

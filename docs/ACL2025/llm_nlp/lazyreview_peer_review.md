@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型 × 3 轮指南 × 多种 ICL 策略 × 数据混合消融 + 控制实验 + Bradley-Terry 排名，实验设计非常扎实
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，三轮迭代的叙事逻辑好，但表格和数字较多，部分地方略显冗长
 - 价值: ⭐⭐⭐⭐ 对改善 NLP 社区评审实践有直接意义，数据集和增强指南可直接被 ARR 采用，但受限于 NLP 领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Nature of NLP: Analyzing Contributions in NLP Papers](the_nature_of_nlp_analyzing_contributions_in_nlp_papers.md)
+- [Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning](veracity_bias_llm_hidden_beliefs.md)
+- [A Modular Dataset to Demonstrate LLM Abstraction Capability](a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
+- [Unlocking Recursive Thinking of LLMs: Alignment via Refinement](unlocking_recursive_thinking_of_llms_alignment_via_refinement.md)
+- [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ JEPA vs VideoMAE 改善：Active Matter **51%**，Shear Flow **43%**，Rayleigh-
 - 实验充分度: ⭐⭐⭐ 三个系统+数据效率分析有说服力，但系统和任务多样性可进一步扩展
 - 写作质量: ⭐⭐⭐⭐ 简洁清晰，核心信息突出，适合快速阅读
 - 价值: ⭐⭐⭐⭐ "隐空间预测优于像素预测"的发现对科学ML方向有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
+- [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+- [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
+- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](boss_a_bestofstrategies_selector_as_an_oracle_for.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ QueRE（Follow-up Question Representation Elicitation）的工作流程：
 - 实验充分度: ⭐⭐⭐⭐⭐ （5个模型、9个数据集、3大应用场景、完整消融）
 - 写作质量: ⭐⭐⭐⭐⭐ （表达清晰，实验设计逻辑性强，理论支撑恰到好处）
 - 价值: ⭐⭐⭐⭐⭐ （高实用价值，为黑盒LLM监控提供了优雅的解决方案）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foundations of the Theory of Performance-Based Ranking](../../CVPR2025/robotics/foundations_of_the_theory_of_performance-based_ranking.md)
+- [Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
+- [Zero-Shot Embedding Drift Detection: A Lightweight Defense Against Prompt Injections in LLMs](zero-shot_embedding_drift_detection_a_lightweight_defense_against_prompt_injecti.md)
+- [STAR: Learning Diverse Robot Skill Abstractions through Rotation-Augmented Vector Quantization](../../ICML2025/robotics/star_learning_diverse_robot_skill_abstractions_through_rotation-augmented_vector.md)
+- [Rolling the DICE on Idiomaticity: How LLMs Fail to Grasp Context](../../ACL2025/robotics/dice_idiomaticity.md)
+
+<!-- RELATED:END -->

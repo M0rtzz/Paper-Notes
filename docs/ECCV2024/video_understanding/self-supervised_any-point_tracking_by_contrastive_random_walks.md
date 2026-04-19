@@ -154,3 +154,15 @@ GMRW 在自监督方法中全面领先，Kubric AJ 超过 FlowWalk 4.8 点，DAV
 - 实验充分度: ⭐⭐⭐⭐ （四个 TAPVid 基准 + 多种自监督/有监督基线对比 + 完整消融）
 - 写作质量: ⭐⭐⭐⭐ （方法描述清晰，但论文较短）
 - 价值: ⭐⭐⭐⭐ （自监督点跟踪方向有潜力，但距实用还有距离）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DINO-Tracker: Taming DINO for Self-Supervised Point Tracking in a Single Video](dino-tracker_taming_dino_for_self-supervised_point_tracking_in_a_single_video.md)
+- [Local All-Pair Correspondence for Point Tracking](local_all-pair_correspondence_for_point_tracking.md)
+- [TimeCraft: Navigate Weakly-Supervised Temporal Grounded Video Question Answering via Bi-directional Reasoning](timecraft_navigate_weakly-supervised_temporal_grounded_video_question_answering_.md)
+- [IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map](iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex.md)
+- [Exploring the Feature Extraction and Relation Modeling For Light-Weight Transformer Tracking](exploring_the_feature_extraction_and_relation_modeling_for_light-weight_transfor.md)
+
+<!-- RELATED:END -->

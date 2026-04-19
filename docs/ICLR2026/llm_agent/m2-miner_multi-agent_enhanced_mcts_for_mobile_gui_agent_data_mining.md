@@ -137,3 +137,15 @@ M²-Miner 以 MCTS 为骨架，输入为初始意图 $I_0$ 和起始 GUI 状态 
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 benchmark、多组消融（多智能体/训练策略/数据结构/训练数据）、效率分析、成本对比，非常完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示丰富，但部分内容重复，论文较长
 - 价值: ⭐⭐⭐⭐⭐ 对 GUI agent 社区提供了极有价值的数据生产范式，且实际证明了自动挖掘可以超越人工标注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](../../ACL2025/llm_agent/gui_explorer_autonomous.md)
+- [GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents](../../CVPR2026/llm_agent/gui-ceval_a_hierarchical_and_comprehensive_chinese_benchmark_for_mobile_gui_agen.md)
+- [FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
+- [EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation](../../AAAI2026/llm_agent/ecoagent_an_efficient_device-cloud_collaborative_multi-agent.md)
+- [Efficient Agent Training for Computer Use](efficient_agent_training_for_computer_use.md)
+
+<!-- RELATED:END -->

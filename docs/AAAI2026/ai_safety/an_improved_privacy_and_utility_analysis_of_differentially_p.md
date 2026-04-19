@@ -102,3 +102,15 @@ $$\mathcal{O}\left(\max\left\{\frac{D^2 dL\log(1/\delta)}{\epsilon^2 n^2}, \frac
 - 实验充分度: ⭐⭐⭐ 理论验证到位但实验规模小（仅CIFAR10/ResNet-18），缺乏大规模实际应用验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，定理陈述严谨，与已有工作的对比（Table 1）一目了然
 - 价值: ⭐⭐⭐⭐ 为非凸DPSGD提供了目前最完整的隐私+效用理论保证，对隐私保护ML社区有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](../../NeurIPS2025/ai_safety/mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](../../ICML2025/ai_safety/clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
+- [Back to Square Roots: An Optimal Bound on the Matrix Factorization Error for Multi-Epoch Differentially Private SGD](../../ICLR2026/ai_safety/back_to_square_roots_an_optimal_bound_on_the_matrix_factorization_error_for_mult.md)
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+- [On the Sample Complexity of Differentially Private Policy Optimization](../../NeurIPS2025/ai_safety/on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+
+<!-- RELATED:END -->

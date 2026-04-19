@@ -146,3 +146,15 @@ GeoCAD 在文本-CAD 一致性指标上大幅领先：
 - 实验充分度: ⭐⭐⭐⭐ (定量+定性+消融完整，但缺少效率分析)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图表丰富)
 - 价值: ⭐⭐⭐⭐ (填补领域空白，工业应用前景好)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](../../ACL2025/llm_nlp/difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](../../ACL2025/llm_nlp/cadllm_cad_modeling_from_text.md)
+- [Segment-Level Diffusion: A Framework for Controllable Long-Form Generation with Diffusion Language Models](../../ACL2025/llm_nlp/segment_level_diffusion.md)
+- [The Rise of Parameter Specialization for Knowledge Storage in Large Language Models](the_rise_of_parameter_specialization_for_knowledge_storage_in_large_language_mod.md)
+- [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](../../ACL2025/llm_nlp/editext_diffusion_text_editing.md)
+
+<!-- RELATED:END -->

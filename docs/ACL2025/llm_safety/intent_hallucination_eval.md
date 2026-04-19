@@ -123,3 +123,15 @@ tags:
 - 实用性：⭐⭐⭐⭐（Constraint Score 可直接用于评估，FaithQA 开放使用）
 - 实验充分度：⭐⭐⭐⭐（7 个 SOTA 模型、多任务多难度、人工评估验证）
 - 写作质量：⭐⭐⭐⭐（定义清晰，示例丰富，但数学符号略重）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Truth Knows No Language: Evaluating Truthfulness Beyond English](truth_knows_no_language_evaluating_truthfulness_beyond_english.md)
+- [Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)
+- [Unveiling and Addressing Pseudo Forgetting in Large Language Models](unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)
+- [Opt-Out: Investigating Entity-Level Unlearning for Large Language Models via Optimal Transport](opt-out_investigating_entity-level_unlearning_for_large_language_models_via_opti.md)
+- [Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering](aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md)
+
+<!-- RELATED:END -->

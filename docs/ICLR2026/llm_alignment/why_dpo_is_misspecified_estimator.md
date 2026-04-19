@@ -124,3 +124,15 @@ AuxDPO loss: $\mathcal{L}(\theta, \delta) = -\frac{1}{n} \sum_i \log \sigma(m_i(
 - 实验充分度: ⭐⭐⭐⭐ 理论验证扎实，LLM 实验覆盖多模型，但规模偏小（最大 8B），缺少 PPO 对比
 - 写作质量: ⭐⭐⭐⭐⭐ 理论精炼，几何直觉图示清晰（Fig 1-3），证明严谨，附录完整
 - 价值: ⭐⭐⭐⭐⭐ 对 DPO 的根本性理论分析可影响整个 alignment 社区的方法选择，AuxDPO 实现简单可直接采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Displacement-Resistant Extensions of DPO with Nonconvex $f$-Divergences](displacement-resistant_extensions_of_dpo_with_nonconvex_f-divergences.md)
+- [DPO Meets PPO: Reinforced Token Optimization for RLHF](../../ICML2025/llm_alignment/dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
+- [Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs](uni-dpo_a_unified_paradigm_for_dynamic_preference_optimization_of_llms.md)
+- [Token-Importance Guided Direct Preference Optimization (TI-DPO)](token-importance_guided_direct_preference_optimization.md)
+- [g-DPO: Scalable Preference Optimization for Protein Language Models](../../NeurIPS2025/llm_alignment/g-dpo_scalable_preference_optimization_for_protein_language_models.md)
+
+<!-- RELATED:END -->

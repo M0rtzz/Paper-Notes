@@ -93,3 +93,15 @@ POLISH++是一个端到端CNN模型（基于WDSR架构），输入低分辨率di
 - 实验充分度: ⭐⭐⭐⭐⭐ 从源探测、形状估计、强引力透镜发现、PSF鲁棒性四个角度全面评估，实验设计与天文实际需求高度对齐
 - 写作质量: ⭐⭐⭐⭐ 背景介绍清晰完整，问题动机充分，但部分天文术语对CV读者不够友好
 - 价值: ⭐⭐⭐⭐ 对DSA等下一代射电望远镜有直接实用价值，强引力透镜发现数量的10倍提升是实质性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semi-Supervised High Dynamic Range Image Reconstructing via Bi-Level Uncertain Area Masking](../../AAAI2026/others/semi-supervised_high_dynamic_range_image_reconstructing_via_bi-level_uncertain_a.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)
+- [Image Demoiréing in RAW and sRGB Domains](../../ECCV2024/others/image_demoiréing_in_raw_and_srgb_domains.md)
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+
+<!-- RELATED:END -->

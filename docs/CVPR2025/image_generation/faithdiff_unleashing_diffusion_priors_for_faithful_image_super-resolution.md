@@ -130,3 +130,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 释放扩散先验的核心洞察有价值，联合优化策略有效，但像素级指标的退步是一个 trade-off
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Arbitrary-Steps Image Super-Resolution via Diffusion Inversion](arbitrary-steps_image_super-resolution_via_diffusion_inversion.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [Diffusion-4K: Ultra-High-Resolution Image Synthesis with Latent Diffusion Models](diffusion-4k_ultra-high-resolution_image_synthesis_with_latent_diffusion_models.md)
+- [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
+- [FreeScale: Unleashing the Resolution of Diffusion Models via Tuning-Free Scale Fusion](../../ICCV2025/image_generation/freescale_unleashing_the_resolution_of_diffusion_models_via_tuning-free_scale_fu.md)
+
+<!-- RELATED:END -->

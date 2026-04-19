@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ NYUv2和Occ-ScanNet验证全面，但室内数据集规模较小
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观
 - 价值: ⭐⭐⭐ 室内SSC方向改进，但应用场景相对狭窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Temporal Fusion Beyond the Field of View for Camera-based Semantic Scene Completion](../../AAAI2026/others/towards_temporal_fusion_beyond_the_field_of_view_for_camera-based_semantic_scene.md)
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+- [The Counting Power of Transformers](../../ICLR2026/others/the_counting_power_of_transformers.md)
+- [Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
+- [What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution](what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ $$\delta_t^{(i)} = \| v_\theta(\mathbf{z}_t^{(i)}, t, \mathbf{c}_{\text{tgt}}) -
 - 实验充分度: ⭐⭐⭐⭐ — 双 benchmark + 详细消融，但缺少用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机图示清晰，方法推导流畅
 - 价值: ⭐⭐⭐⭐ — 为形状编辑这一被忽视的子任务提供了系统解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-Free Reward-Guided Image Editing via Trajectory Optimal Control](training-free_reward-guided_image_editing_via_trajectory_optimal_control.md)
+- [DragFlow: Unleashing DiT Priors with Region Based Supervision for Drag Editing](dragflow_unleashing_dit_priors_with_region_based_supervision_for_drag_editing.md)
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](../../ECCV2024/image_generation/shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [PhysGen: Physically Grounded 3D Shape Generation for Industrial Design](../../CVPR2026/image_generation/physgen_physically_grounded_3d_shape_generation_for_industrial_design.md)
+
+<!-- RELATED:END -->

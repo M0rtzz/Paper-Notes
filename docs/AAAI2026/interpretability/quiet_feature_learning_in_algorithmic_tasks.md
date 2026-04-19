@@ -119,3 +119,15 @@ tags:
 - 该工作的方法论和实验设计对相关领域有参考价值
 - 后续工作可在更多场景和更大规模上验证方法的泛化性和可扩展性
 - 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Feature Selection Through Group Discovery](unsupervised_feature_selection_through_group_discovery.md)
+- [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
+- [Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
+- [Distribution-Based Feature Attribution for Explaining the Predictions of Any Classifier](distribution-based_feature_attribution_for_explaining_the_predictions_of_any_cla.md)
+- [Data Whitening Improves Sparse Autoencoder Learning](data_whitening_improves_sparse_autoencoder_learning.md)
+
+<!-- RELATED:END -->

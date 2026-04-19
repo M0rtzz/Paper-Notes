@@ -152,3 +152,15 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{\text{base}} + \underbrace{(\mathcal{L}_{\t
 - 实验充分度: ⭐⭐⭐⭐⭐ 从 0.6B 到 20B、LoRA 到全参、3 个 benchmark + 详尽消融 + 与 7 种基线对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学推导完整，表格丰富
 - 价值: ⭐⭐⭐⭐⭐ 首次在 20B 模型实现高质量 1-step 生成，对大模型推理成本有直接且显著的实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
+- [FALCON: Few-step Accurate Likelihoods for Continuous Flows](../../NeurIPS2025/image_generation/falcon_few-step_accurate_likelihoods_for_continuous_flows.md)
+- [Revisiting Diffusion Models: From Generative Pre-training to One-Step Generation](../../ICML2025/image_generation/revisiting_diffusion_models_from_generative_pre-training_to_one-step_generation.md)
+- [GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
+- [Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation](flow2gan_hybrid_flow_matching_and_gan_with_multi-resolution_network_for_few-step.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ QSTar 在总体准确率上超越前 SOTA QA-TIGER 1.36%，在 Audio QA 上超 2
 - **实验充分度**: ⭐⭐⭐⭐ 消融研究覆盖各模块和 query guidance 各阶段，但仅在 MUSIC-AVQA 上全面评估
 - **写作质量**: ⭐⭐⭐⭐ 动机阐述清晰（长笛案例很好），方法描述系统但公式较多
 - **价值**: ⭐⭐⭐⭐ 在音乐 AVQA 上达到新 SOTA，频域分析的引入对多模态理解有启发价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparsify: Learning Sparsity for Effective and Efficient Music Performance Question Answering](../../ACL2025/audio_speech/sparsify_music_avqa.md)
+- [AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
+- [End-to-end Contrastive Language-Speech Pretraining Model For Long-form Spoken Question Answering](../../AAAI2026/audio_speech/end-to-end_contrastive_language-speech_pretraining_model_for_long-form_spoken_qu.md)
+- [Efficient Audio-Visual Speech Separation with Discrete Lip Semantics and Multi-Scale Global-Local Attention](efficient_audio-visual_speech_separation_with_discrete_lip_semantics_and_multi-s.md)
+- [SyncTrack: Rhythmic Stability and Synchronization in Multi-Track Music Generation](synctrack_rhythmic_stability_and_synchronization_in_multi-track_music_generation.md)
+
+<!-- RELATED:END -->

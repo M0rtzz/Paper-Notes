@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个任务、两个模型、多种 Schema 生成方法的完整比较
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机阐述清晰，图示精心设计，方法层层推进
 - 价值: ⭐⭐⭐⭐ 为机械可解释性研究提供了更精确的工具和自动化流水线，有望成为标准实践
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Granular Concept Circuits: Toward a Fine-Grained Circuit Discovery for Concept Representations](../../ICCV2025/interpretability/granular_concept_circuits_toward_a_fine-grained_circuit_discovery_for_concept_re.md)
+- [Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees](../../ICLR2026/interpretability/formal_mechanistic_interpretability_automated_circuit_discovery_with_provable_gu.md)
+- [A Dual-Perspective NLG Meta-Evaluation Framework with Automatic Benchmark and Better Interpretability](a_dual-perspective_nlg_meta-evaluation_framework_with_automatic_benchmark_and_be.md)
+- [Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
+- [OrdShap: Feature Position Importance for Sequential Black-Box Models](../../NeurIPS2025/interpretability/ordshap_feature_position_importance_for_sequential_black-box_models.md)
+
+<!-- RELATED:END -->

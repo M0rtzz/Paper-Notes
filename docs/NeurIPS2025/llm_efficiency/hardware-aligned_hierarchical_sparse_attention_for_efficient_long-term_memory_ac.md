@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (多任务多长度评测全面，消融实验丰富，但大模型规模验证偏少)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，算法伪代码详尽，kernel 设计解释充分，与 NSA/MoBA 的本质区别分析到位)
 - 价值: ⭐⭐⭐⭐⭐ (解决 RNN 长上下文随机访问核心瓶颈，64M 外推能力突破性，开源代码可复现)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
+- [Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention](../../ACL2025/llm_efficiency/native_sparse_attention.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [The Emergence of Sparse Attention: Impact of Data Distribution and Benefits of Repetition](the_emergence_of_sparse_attention_impact_of_data_distribution_and_benefits_of_re.md)
+- [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](hierarchical_balance_packing_towards_efficient_supervised_fine-tuning_for_long-c.md)
+
+<!-- RELATED:END -->

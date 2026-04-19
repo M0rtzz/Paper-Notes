@@ -64,3 +64,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集+方差分析
 - 写作质量: ⭐⭐⭐⭐ 两阶段设计清晰
 - 价值: ⭐⭐⭐⭐ 无掩码阴影去除的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution](../../CVPR2026/image_restoration/fidesr_high-fidelity_and_detail-preserving_one-step_diffusion_super-resolution.md)
+- [MaIR: A Locality- and Continuity-Preserving Mamba for Image Restoration](mair_a_locality-_and_continuity-preserving_mamba_for_image_restoration.md)
+- [Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement](../../NeurIPS2025/image_restoration/latent_harmony_synergistic_unified_uhd_image_restoration_via_latent_space_regula.md)
+- [Efficient Diffusion as Low Light Enhancer (ReDDiT)](efficient_diffusion_as_low_light_enhancer.md)
+- [Audio Super-Resolution with Latent Bridge Models](../../NeurIPS2025/image_restoration/audio_super-resolution_with_latent_bridge_models.md)
+
+<!-- RELATED:END -->

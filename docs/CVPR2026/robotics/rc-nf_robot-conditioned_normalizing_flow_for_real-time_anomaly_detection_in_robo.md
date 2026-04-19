@@ -148,3 +148,15 @@ RCPQNet 作为仿射耦合层，包含两个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ — 定量（仿真基准+多基线对比+消融）和定性（真实世界π₀集成）兼备，消融分析透彻
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，方法描述完整，图表直观
 - 价值: ⭐⭐⭐⭐⭐ — 切中 VLA 部署的核心痛点，即插即用设计实用性强，<100ms 延迟满足实时需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning](fast-thinkact_efficient_vision-language-action_reasoning_via_verbalizable_latent.md)
+- [Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [ManipArena: Comprehensive Real-world Evaluation of Reasoning-Oriented Generalist Robot Manipulation](maniparena_comprehensive_real-world_evaluation_of_reasoning-oriented_generalist_.md)
+
+<!-- RELATED:END -->

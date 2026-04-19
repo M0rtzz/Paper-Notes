@@ -140,3 +140,15 @@ $$\mathcal{L}_{\text{stage2}} = \sum_{i=1}^{N} \mathcal{L}_{\text{rec}}(\hat{\ma
 
 ## 评分 ⭐⭐⭐⭐
 方法设计精巧，深度融合和两阶段优化策略有独创性，LPIPS 指标全面领先，实验充分。但对 DUSt3R 的依赖和多 GPU 需求是实际使用的瓶颈。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+- [StrandHead: Text to Hair-Disentangled 3D Head Avatars Using Human-Centric Priors](strandhead_text_to_hair-disentangled_3d_head_avatars_using_human-centric_priors.md)
+
+<!-- RELATED:END -->

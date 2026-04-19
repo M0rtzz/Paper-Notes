@@ -158,3 +158,15 @@ MINO 平均精度比次优方法 PsCo 高 2.85%，且接近有监督 MAML 上界
 - **实验充分度**: ⭐⭐⭐⭐⭐ 理论+多数据集+消融+噪声分析+3D扩展+超参敏感性
 - **写作质量**: ⭐⭐⭐⭐ 理论推导严谨, 实验组织合理, 但部分符号需要来回查阅
 - **价值**: ⭐⭐⭐⭐ 为元学习的理论理解和无监督应用提供了重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)
+- [Dynamic Label Name Refinement for Few-Shot Dialogue Intent Classification](../../ACL2025/others/dynamic_label_name_refinement_for_few-shot_dialogue_intent_classification.md)
+- [EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration](edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati.md)
+- [DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](../../CVPR2026/others/dirpa_addressing_prior_shift_in_imbalanced_few-shot_crop-type_classification.md)
+- [Meta-Learning Neural Mechanisms rather than Bayesian Priors](../../ACL2025/others/meta-learning_neural_mechanisms_rather_than_bayesian_priors.md)
+
+<!-- RELATED:END -->

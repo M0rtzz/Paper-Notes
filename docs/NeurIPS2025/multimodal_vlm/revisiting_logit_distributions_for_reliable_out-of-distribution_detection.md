@@ -130,3 +130,15 @@ LogitGap 可以作为插件替换现有方法的评分函数，与 CoOp、ID-Lik
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 zero-shot/few-shot/传统训练多种场景，多种 ID/OOD 组合，完整的组合实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析清晰，实验图表直观（Fig.1 的 score 分布对比特别有说服力）
 - 价值: ⭐⭐⭐⭐ 实用价值高（零成本替换），但理论贡献相对增量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection](../../ICCV2025/multimodal_vlm/adaptive_prompt_learning_via_gaussian_outlier_synthesis_for_out-of-distribution_.md)
+- [FA: Forced Prompt Learning of Vision-Language Models for Out-of-Distribution Detection](../../ICCV2025/multimodal_vlm/fa_forced_prompt_learning_of_vision-language_models_for_out-of-distribution_dete.md)
+- [LAION-C: An Out-of-Distribution Benchmark for Web-Scale Vision Models](../../ICML2025/multimodal_vlm/laion-c_an_out-of-distribution_benchmark_for_web-scale_vision_models.md)
+- [Playing the Fool: Jailbreaking LLMs and Multimodal LLMs with Out-of-Distribution Strategy](../../CVPR2025/multimodal_vlm/playing_the_fool_jailbreaking_llms_and_multimodal_llms_with_out-of-distribution_.md)
+- [AQuaMaM: An Autoregressive, Quaternion Manifold Model for Rapidly Estimating Complex SO(3) Distributions](aquamam_an_autoregressive_quaternion_manifold_model_for_rapidly_estimating_compl.md)
+
+<!-- RELATED:END -->

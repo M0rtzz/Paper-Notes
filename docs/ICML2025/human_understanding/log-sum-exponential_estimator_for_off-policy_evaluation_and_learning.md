@@ -122,3 +122,15 @@ $$\mathbb{E}\left[(w_\theta(A,X) R)^{1+\epsilon}\right] \leq \nu$$
 - 实验充分度: ⭐⭐⭐⭐ (多场景覆盖，消融充分，但规模偏小)
 - 写作质量: ⭐⭐⭐⭐ (理论与实验结合紧密，符号体系清晰)
 - 价值: ⭐⭐⭐⭐ (为离线强化学习提供了实用且有理论保障的新工具)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](../../NeurIPS2025/human_understanding/succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [Doubly Robust Fusion of Many Treatments for Policy Learning](doubly_robust_fusion_of_many_treatments_for_policy_learning.md)
+- [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
+- [Offline Policy Evaluation of Multi-Turn LLM Health Coaching with Real Users](../../NeurIPS2025/human_understanding/offline_policy_evaluation_of_multi-turn_llm_health_coaching_with_real_users.md)
+- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](../../NeurIPS2025/human_understanding/policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ $$\text{s.t.} \quad d\bm{x}_t^u = (b(\bm{x}_t^u, t) + u(\bm{x}_t^u, t)) dt + \si
 - 实验充分度: ⭐⭐⭐ — 四个任务覆盖面广，但基础模型较老、评估规模小、无用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，motivation 层层递进
 - 价值: ⭐⭐⭐⭐ — 为 reward-guided editing 提供了全新理论框架，但实际影响力取决于在现代大模型上的验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control](follow-your-shape_shape-aware_image_editing_via_trajectory-guided_region_control.md)
+- [EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+- [EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling](editscore_unlocking_online_rl_for_image_editing_via_high-fidelity_reward_modelin.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+
+<!-- RELATED:END -->

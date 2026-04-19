@@ -140,3 +140,15 @@ $$\min_{K,L} \|K \otimes L - B\|_2^2 + \lambda P_l(L) + \mu P_k(K)$$
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、多种噪声类型、消融完整、稳定性验证、插件实验，但缺少计算效率对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、逻辑连贯，图表说服力强
 - 价值: ⭐⭐⭐⭐ 传统方法在高噪场景打败 DL 方法，且 RGS 可通用插入，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blind Image Deblurring with Noise-Robust Kernel Estimation](../../ECCV2024/image_restoration/blind_image_deblurring_with_noise-robust_kernel_estimation.md)
+- [Efficient Concertormer for Image Deblurring and Beyond](efficient_concertormer_for_image_deblurring_and_beyond.md)
+- [Blind2Sound: Self-Supervised Image Denoising without Residual Noise](blind2sound_self-supervised_image_denoising_without_residual_noise.md)
+- [DynaGuide: Steering Diffusion Policies with Active Dynamic Guidance](../../NeurIPS2025/image_restoration/dynaguide_steering_diffusion_polices_with_active_dynamic_guidance.md)
+- [Efficient Visual State Space Model for Image Deblurring](../../CVPR2025/image_restoration/efficient_visual_state_space_model_for_image_deblurring.md)
+
+<!-- RELATED:END -->

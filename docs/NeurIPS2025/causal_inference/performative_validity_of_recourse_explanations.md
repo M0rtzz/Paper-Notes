@@ -157,3 +157,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 5 种合成 + 2 种真实数据全面验证理论，但实验设定有简化
 - 写作质量: ⭐⭐⭐⭐⭐ — 论文结构清晰，运行示例（GitHub 活动 vs 硕士学位）贯穿全文极具启发性
 - 价值: ⭐⭐⭐⭐ — 对 XAI/追索权实践有直接指导意义，但实际部署受因果知识可用性限制
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KTCF: Actionable Recourse in Knowledge Tracing via Counterfactual Explanations for Education](../../AAAI2026/causal_inference/ktcf_actionable_recourse_in_knowledge_tracing_via_counterfactual_explanations_fo.md)
+- [Practical do-Shapley Explanations with Estimand-Agnostic Causal Inference](practical_do-shapley_explanations_with_estimand-agnostic_causal_inference.md)
+- [Few-Shot Knowledge Distillation of LLMs With Counterfactual Explanations](few-shot_knowledge_distillation_of_llms_with_counterfactual_explanations.md)
+- [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](../../CVPR2025/causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
+- [Counterfactual Explanations on Robust Perceptual Geodesics](../../ICLR2026/causal_inference/counterfactual_explanations_on_robust_perceptual_geodesics.md)
+
+<!-- RELATED:END -->

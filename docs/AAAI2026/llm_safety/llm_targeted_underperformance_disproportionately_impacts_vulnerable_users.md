@@ -130,3 +130,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 研究问题极具社会意义，实验设计系统严谨，发现令人警醒。叠加效应的发现和Claude性别偏见的量化尤为有价值。不足在于缺乏机制分析和缓解方案，在技术贡献上偏轻，更像是重要的经验性发现。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](../../ACL2025/llm_safety/halogen_hallucinations.md)
+- [LH-Deception: Simulating and Understanding LLM Deceptive Behaviors in Long-Horizon Interactions](../../ICLR2026/llm_safety/lh-deception_simulating_and_understanding_llm_deceptive_behaviors_in_long-horizo.md)
+- [TreeCut: A Synthetic Unanswerable Math Word Problem Dataset for LLM Hallucination Evaluation](../../ACL2025/llm_safety/treecut_a_synthetic_unanswerable_math_word_problem_dataset_for_llm_hallucination.md)
+- [Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](../../ACL2025/llm_safety/which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)
+- [Designing Truthful Mechanisms for Asymptotic Fair Division](designing_truthful_mechanisms_for_asymptotic_fair_division.md)
+
+<!-- RELATED:END -->

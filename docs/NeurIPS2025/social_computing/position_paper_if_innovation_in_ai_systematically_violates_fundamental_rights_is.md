@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Position paper 不需要实验，但可加入更多定量证据
 - 写作质量: ⭐⭐⭐⭐⭐ 论证结构严密，层层递进，替代观点的回应公正且有理有据
 - 价值: ⭐⭐⭐⭐ 在当前去监管浪潮中提供了重要的反思视角，对政策制定者和 AI 从业者都有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Policy-as-Prompt: Turning AI Governance Rules into Guardrails for AI Agents](policy-as-prompt_turning_ai_governance_rules_into_guardrails_for_ai_agents.md)
+- [IF-GUIDE: Influence Function-Guided Detoxification of LLMs](if-guide_influence_function-guided_detoxification_of_llms.md)
+- [Don't Let It Fade: Preserving Edits in Diffusion Language Models via Token Timestep Allocation](dont_let_it_fade_preserving_edits_in_diffusion_language_mode.md)
+- [Factor(U,T): Controlling Untrusted AI by Monitoring their Plans](../../AAAI2026/social_computing/factorut_controlling_untrusted_ai_by_monitoring_their_plans.md)
+- [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
+
+<!-- RELATED:END -->

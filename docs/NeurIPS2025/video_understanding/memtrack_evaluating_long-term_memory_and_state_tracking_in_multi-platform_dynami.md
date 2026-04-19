@@ -167,3 +167,15 @@ MEMTRACK 是评估框架而非训练方法，重点在于指标设计：
 | 实用价值 | 4 | 对 agent 记忆研究有重要参考 |
 | 写作质量 | 3.5 | Workshop 论文，简洁但部分细节不足 |
 | **总评** | **3.5** | 有价值的 workshop 贡献 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LOOM: Personalized Learning Informed by Daily LLM Conversations Toward Long-Term Mastery via a Dynamic Learner Memory Graph](../../AAAI2026/video_understanding/loom_personalized_learning_informed_by_daily_llm_conversations_toward_long-term_.md)
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](../../CVPR2026/video_understanding/question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [Multi-modal Multi-platform Person Re-Identification: Benchmark and Method](../../ICCV2025/video_understanding/multi-modal_multi-platform_person_re-identification_benchmark_and_method.md)
+- [Agentic Persona Control and Task State Tracking for Realistic User Simulation](agentic_persona_control_and_task_state_tracking_for_realistic_user_simulation_in.md)
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+
+<!-- RELATED:END -->

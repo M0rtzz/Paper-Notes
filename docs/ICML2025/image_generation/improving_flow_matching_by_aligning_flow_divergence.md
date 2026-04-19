@@ -107,3 +107,15 @@ $$\mathcal{L}_{\text{FDM}} = \lambda_1 \mathcal{L}_{\text{CFM}} + \lambda_2 \mat
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实任务覆盖广，但缺少大规模视觉生成实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨，行文流畅
 - 价值: ⭐⭐⭐⭐ 对 FM 基础理论有重要推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gaussian Mixture Flow Matching Models](gaussian_mixture_flow_matching_models.md)
+- [ContinualFlow: Learning and Unlearning with Neural Flow Matching](continualflow_learning_and_unlearning_with_neural_flow_matching.md)
+- [Elucidating Flow Matching ODE Dynamics via Data Geometry and Denoisers](elucidating_flow_matching_ode_dynamics_with_respect_to_data_geometries_and_denoi.md)
+- [Contrastive Flow Matching (ΔFM)](../../ICCV2025/image_generation/contrastive_flow_matching.md)
+- [Flow Matching Neural Processes](../../NeurIPS2025/image_generation/flow_matching_neural_processes.md)
+
+<!-- RELATED:END -->

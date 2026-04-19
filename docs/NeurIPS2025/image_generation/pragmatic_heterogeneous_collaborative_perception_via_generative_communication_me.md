@@ -126,3 +126,15 @@ $$\mathcal{L}_{gen} = \sum_{j \in \mathcal{G}_i} \|\hat{\mathcal{F}}_j - \mathca
 - 技术深度：⭐⭐⭐⭐（扩散模型+可变形卷积设计合理）
 - 实验充分度：⭐⭐⭐⭐⭐（三个数据集、多种设定、全面消融）
 - 实用性：⭐⭐⭐⭐（可扩展性优异，但扩散推理速度待验证）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Pragmatic Jailbreak on Text-to-image Models](../../ACL2025/image_generation/multimodal_pragmatic_jailbreak_on_text-to-image_models.md)
+- [Janus-Pro-R1: Advancing Collaborative Visual Comprehension and Generation via Reinforcement Learning](janus-pro-r1_advancing_collaborative_visual_comprehension_and_generation_via_rei.md)
+- [Bridging Generalization Gap of Heterogeneous Federated Clients Using Generative Models](../../ICLR2026/image_generation/bridging_generalization_gap_of_heterogeneous_federated_clients_using_generative_.md)
+- [Heterogeneous Decentralized Diffusion Models](../../CVPR2026/image_generation/heterogeneous_decentralized_diffusion_models.md)
+- [Multimodal Generative Flows for LHC Jets](multimodal_generative_flows_for_lhc_jets.md)
+
+<!-- RELATED:END -->

@@ -157,3 +157,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 合成+真实基准，详尽的消融实验，定性定量全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，部分技术细节可更简洁
 - 价值: ⭐⭐⭐⭐⭐ — 在3D重光照任务上达到新SOTA，具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Multiview Relighting for 3D Reconstruction under Extreme Illumination Variation](../../CVPR2025/3d_vision/generative_multiview_relighting_for_3d_reconstruction_under_extreme_illumination.md)
+- [MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting](metags_a_meta-learned_gaussian-phong_model_for_out-of-distribution_3d_scene_reli.md)
+- [BecomingLit: Relightable Gaussian Avatars with Hybrid Neural Shading](becominglit_relightable_gaussian_avatars_with_hybrid_neural_shading.md)
+- [Orientation Matters: Making 3D Generative Models Orientation-Aligned](orientation_matters_making_3d_generative_models_orientation-aligned.md)
+- [URDF-Anything: Constructing Articulated Objects with 3D Multimodal Language Model](urdf-anything_constructing_articulated_objects_with_3d_multimodal_language_model.md)
+
+<!-- RELATED:END -->

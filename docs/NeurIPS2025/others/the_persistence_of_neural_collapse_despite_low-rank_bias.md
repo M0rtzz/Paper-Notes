@@ -115,3 +115,15 @@ $$\frac{1}{2}L\lambda \|X\|_{S_{2/L}}^{2/L} = \min \{\text{正则化项}\}$$
 - 实验充分度: ⭐⭐⭐⭐ 理论结果验证充分，但实验规模较小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论展开层层递进，定理陈述精确
 - 价值: ⭐⭐⭐⭐ 深化了对深度学习训练动态的理论理解
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLA: Collaborative Low-Rank Adaptation](../../ACL2025/others/cola_collaborative_low-rank_adaptation.md)
+- [Low-Rank Interconnected Adaptation across Layers](../../ACL2025/others/low-rank_interconnected_adaptation_across_layers.md)
+- [Consistent Low-Rank Approximation](../../ICLR2026/others/consistent_low-rank_approximation.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+- [Neural Collapse in Test-Time Adaptation](../../CVPR2026/others/neural_collapse_in_test-time_adaptation.md)
+
+<!-- RELATED:END -->

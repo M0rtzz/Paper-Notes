@@ -136,3 +136,15 @@ $$\mathbf{W}' = \mathbf{W}_0 + \tilde{\mathbf{B}} \tilde{\mathbf{A}}, \quad \til
 | 写作质量 | 4 | 逻辑清晰，从冗余分析到方法设计的推导自然流畅 |
 | 实用性 | 5 | 即插即用、无推理开销、参数更少性能更好，实际部署价值高 |
 | **总分** | **4.5** | 一篇扎实的 PEFT 改进工作，兼具理论洞见与工程实用性 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Faster Parameter-Efficient Tuning with Token Redundancy Reduction (FPET)](../../CVPR2025/model_compression/faster_parameter-efficient_tuning_with_token_redundancy_reduction.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](state_offset_tuning_ssm_peft.md)
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+
+<!-- RELATED:END -->

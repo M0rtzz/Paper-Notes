@@ -140,3 +140,15 @@ DiMA由两个主要组件组成：(1) 视觉端到端规划器（场景编码器
 - 实验充分度: ⭐⭐⭐⭐⭐ 多种评估协议、长尾场景分析、详细消融实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，但部分段落信息密度较高需要反复阅读
 - 价值: ⭐⭐⭐⭐⭐ 解决了LLM在自动驾驶中"好但慢"的核心矛盾，nuScenes SOTA，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Embracing Large Language Models in Traffic Flow Forecasting](../../ACL2025/autonomous_driving/embracing_large_language_models_in_traffic_flow_forecasting.md)
+- [Distilling Monocular Foundation Model for Fine-grained Depth Completion](distilling_monocular_foundation_model_for_fine-grained_depth_completion.md)
+- [Navigation Instruction Generation with BEV Perception and Large Language Models](../../ECCV2024/autonomous_driving/navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
+- [SOLVE: Synergy of Language-Vision and End-to-End Networks for Autonomous Driving](solve_synergy_of_language-vision_and_end-to-end_networks_for_autonomous_driving.md)
+- [Multi-modal Knowledge Distillation-based Human Trajectory Forecasting](multi-modal_knowledge_distillation-based_human_trajectory_forecasting.md)
+
+<!-- RELATED:END -->

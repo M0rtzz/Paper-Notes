@@ -195,3 +195,15 @@ Recall +9.56%，F1 +7.70%
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两个数据集、两种模型、多种消融、案例分析
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ — 实用价值高，可直接用于临床辅助决策
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIRAGE: Scaling Test-Time Inference with Parallel Graph-Retrieval-Augmented Reasoning Chains](mirage_scaling_test-time_inference_with_parallel_graph-retrieval-augmented_reaso.md)
+- [GP-MoLFormer-Sim: Test Time Molecular Optimization through Contextual Similarity Guidance](gp-molformer-sim_test_time_molecular_optimization_through_contextual_similarity_.md)
+- [Progressive Test Time Energy Adaptation for Medical Image Segmentation](../../ICCV2025/medical_imaging/progressive_test_time_energy_adaptation_for_medical_image_segmentation.md)
+- [SPEGC: Continual Test-Time Adaptation via Semantic-Prompt-Enhanced Graph Clustering for Medical Image Segmentation](../../CVPR2026/medical_imaging/spegc_continual_test-time_adaptation_via_semantic-prompt-enhanced_graph_clusteri.md)
+- [MindCross: Fast New Subject Adaptation with Limited Data for Cross-subject Video Reconstruction from Brain Signals](mindcross_fast_new_subject_adaptation_with_limited_data_for_cross-subject_video_.md)
+
+<!-- RELATED:END -->

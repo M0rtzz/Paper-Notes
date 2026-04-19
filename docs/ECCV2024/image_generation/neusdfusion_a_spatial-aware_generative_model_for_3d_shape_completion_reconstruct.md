@@ -134,3 +134,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ (4/5) — 三阶段管线设计清晰完整，NeuSDF 表示和空间感知 Transformer 均有实质创新，在四个任务上的全面评估令人信服，对 3D 生成领域有重要推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
+
+<!-- RELATED:END -->

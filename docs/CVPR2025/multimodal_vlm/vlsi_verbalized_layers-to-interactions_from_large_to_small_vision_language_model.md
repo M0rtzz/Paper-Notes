@@ -117,3 +117,15 @@ VLsI 的训练分三步走：(1) Verbalization Step：在大小 VLM 的中间目
 - 实验充分度: ⭐⭐⭐⭐⭐ 10个基准、大量消融、跨backbone验证、与闭源模型对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，verbalization 可视化效果好
 - 价值: ⭐⭐⭐⭐⭐ 为高效 VLM 提供了新的蒸馏范式，2B 模型即可超过许多 7B-13B 模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShortV: Efficient Multimodal Large Language Models by Freezing Visual Tokens in Ineffective Layers](../../ICCV2025/multimodal_vlm/shortv_efficient_multimodal_large_language_models_by_freezin.md)
+- [HotelMatch-LLM: Joint Multi-Task Training of Small and Large Language Models for Efficient Multimodal Hotel Retrieval](../../ACL2025/multimodal_vlm/hotelmatch_llm_retrieval.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)
+- [CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+
+<!-- RELATED:END -->

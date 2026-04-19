@@ -191,3 +191,15 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{\text{rec}} + \mathcal{L}_{\text{line}
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个benchmark全面评估，包含完整消融实验和Bad Case分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，可视化对比直观
 - 价值: ⭐⭐⭐⭐ DocDewarpHV数据集是持续贡献，双维度思路可推广到其他文档任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval](text-phase_synergy_network_with_dual_priors_for_unsupervised_cross-domain_image_.md)
+- [A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)](../../ICCV2025/self_supervised/a_tokenlevel_text_image_foundation_model_for_document_unders.md)
+- [CheXWorld: Image World Modeling for Radiograph Representation Learning](../../CVPR2025/self_supervised/chexworld_exploring_image_world_modeling_for_radiograph_representation_learning.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physica.md)
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+
+<!-- RELATED:END -->

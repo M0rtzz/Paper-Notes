@@ -158,3 +158,15 @@ Metadata分类实验：用prompt features做相机传感器分类准确率94.47%
 - 实验充分度: ⭐⭐⭐⭐⭐ SIDD/PolyU/Nam/SIDD+/MAI2021多数据集，噪声质量+去噪性能双评估，paired/unpaired两种设置，消融全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观，实验分析详尽。补充材料非常充实
 - 价值: ⭐⭐⭐⭐ 消除metadata依赖是实际应用中的真需求，跨域泛化能力使其在数据增强场景价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Translate Noise for Robust Image Denoising](learning_to_translate_noise_for_robust_image_denoising.md)
+- [The Surprising Effectiveness of Noise Pretraining for Implicit Neural Representations](the_surprising_effectiveness_of_noise_pretraining_for_implicit_neural_representa.md)
+- [NEC-Diff: Noise-Robust Event–RAW Complementary Diffusion for Seeing Motion in Extreme Darkness](nec-diff_noise-robust_event-raw_complementary_diffusion_for_seeing_motion_in_ext.md)
+- [Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise](../../CVPR2025/image_restoration/generalized_recorrupted-to-recorrupted_self-supervised_learning_beyond_gaussian_.md)
+- [Are Deep Speech Denoising Models Robust to Adversarial Noise?](../../ICLR2026/image_restoration/are_deep_speech_denoising_models_robust_to_adversarial_noise.md)
+
+<!-- RELATED:END -->

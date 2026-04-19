@@ -125,3 +125,15 @@ $$\mathcal{L} = \mathcal{L}^S + \mathcal{L}^T + \lambda_D \mathcal{L}^D + \lambd
 - 实验充分度: ⭐⭐⭐⭐⭐ （多方法/多架构/多基准/详细消融）
 - 写作质量: ⭐⭐⭐⭐ （动机阐述清晰，理论与实践结合好）
 - 价值: ⭐⭐⭐⭐⭐ （即插即用的通用UDA增强策略，实际价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
+- [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
+- [Bridging Granularity Gaps: Hierarchical Semantic Learning for Cross-Domain Few-Shot Segmentation](../../AAAI2026/segmentation/bridging_granularity_gaps_hierarchical_semantic_learning_for_cross-domain_few-sh.md)
+- [Dual form Complementary Masking for Domain-Adaptive Image Segmentation](../../ICML2025/segmentation/dual_form_complementary_masking_for_domain-adaptive_image_segmentation.md)
+- [Exploring Probabilistic Modeling Beyond Domain Generalization for Semantic Segmentation](../../ICCV2025/segmentation/exploring_probabilistic_modeling_beyond_domain_generalization_for_semantic_segme.md)
+
+<!-- RELATED:END -->

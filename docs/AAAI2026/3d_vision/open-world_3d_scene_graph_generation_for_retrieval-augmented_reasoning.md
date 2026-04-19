@@ -175,3 +175,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （覆盖四种交互任务，但每个任务的评估规模较小）
 - 写作质量: ⭐⭐⭐⭐ （框架描述清晰，但公式较多，部分定义可简化）
 - 价值: ⭐⭐⭐⭐ （开放世界 3D 理解的重要方向，零样本性能令人鼓舞）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2026/3d_vision/towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+- [TOSC: Task-Oriented Shape Completion for Open-World Dexterous Grasp Generation from Partial Point Clouds](tosc_task-oriented_shape_completion_for_open-world_dexterous_grasp_generation_fr.md)
+- [OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding](openscan_a_benchmark_for_generalized_open-vocabulary_3d_scene_understanding.md)
+- [Open-Vocabulary Octree-Graph for 3D Scene Understanding](../../ICCV2025/3d_vision/open-vocabulary_octree-graph_for_3d_scene_understanding.md)
+- [CORE-3D: Context-aware Open-vocabulary Retrieval by Embeddings in 3D](../../ICLR2026/3d_vision/core-3d_context-aware_open-vocabulary_retrieval_by_embeddings_in_3d.md)
+
+<!-- RELATED:END -->

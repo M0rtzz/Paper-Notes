@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多语言评估，但与最新方法对比不足
 - 写作质量: ⭐⭐⭐⭐⭐ 论证严谨，定理和证明清晰
 - 价值: ⭐⭐⭐⭐ 理论价值高，实用提升有限但方向正确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph](why_are_positional_encodings_nonessential_for_deep_autoregressive_transformers_r.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [MaCP: Minimal yet Mighty Adaptation via Hierarchical Cosine Projection](macp_minimal_yet_mighty_adaptation_via_hierarchical_cosine_projection.md)
+
+<!-- RELATED:END -->

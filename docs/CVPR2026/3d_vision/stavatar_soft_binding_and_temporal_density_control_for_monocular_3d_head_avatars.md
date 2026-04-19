@@ -194,3 +194,15 @@ $$E = (1 - \lambda_1)|\mathcal{L}_1| + \lambda_1 \mathcal{L}_{d\text{-}ssim}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ (4 数据集 22 身份、6 个 baseline、完整消融、效率分析)
 - 写作质量: ⭐⭐⭐⭐ (动机清晰、图示优秀，方法描述略密)
 - 价值: ⭐⭐⭐⭐ (在单目头部化身重建上推进了 SOTA，高训练效率有实用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysHead: Simulation-Ready Gaussian Head Avatars](physhead_simulation-ready_gaussian_head_avatars.md)
+- [Zero-Shot Reconstruction of Animatable 3D Avatars with Cloth Dynamics from a Single Image](zero-shot_reconstruction_of_animatable_3d_avatars_with_cloth_dynamics_from_a_sin.md)
+- [FastGHA: Generalized Few-Shot 3D Gaussian Head Avatars with Real-Time Animation](../../ICLR2026/3d_vision/fastgha_generalized_few-shot_3d_gaussian_head_avatars_with_real-time_animation.md)
+- [DC4GS: Directional Consistency-Driven Adaptive Density Control for 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/dc4gs_directional_consistency-driven_adaptive_density_control_for_3d_gaussian_sp.md)
+- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](../../ECCV2024/3d_vision/headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

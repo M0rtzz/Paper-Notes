@@ -143,3 +143,15 @@ $$\frac{1}{\sqrt{1+\varepsilon}} \cdot Q \subseteq P \subseteq \sqrt{d} \cdot Q$
 - 实验充分度: ⭐⭐⭐ 纯理论，无数值实验
 - 写作质量: ⭐⭐⭐⭐ 证明结构清晰，技术概览便于理解
 - 价值: ⭐⭐⭐⭐ 凸优化基础算法的实质性改进，广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning](k-decore_facilitating_knowledge_transfer_in_continual_structured_knowledge_reaso.md)
+- [Spatial Understanding from Videos: Structured Prompts Meet Simulation Data](spatial_understanding_from_videos_structured_prompts_meet_simulation_data.md)
+- [GUI-Rise: Structured Reasoning and History Summarization for GUI Navigation](gui-rise_structured_reasoning_and_history_summarization_for_gui_navigation.md)
+- [Streamline Without Sacrifice — Squeeze out Computation Redundancy in LMM](../../ICML2025/human_understanding/streamline_without_sacrifice_--_squeeze_out_computation_redundancy_in_lmm.md)
+- [Reflective Translation: Improving Low-Resource Machine Translation via Structured Self-Reflection](reflective_translation_improving_low-resource_machine_translation_via_structured.md)
+
+<!-- RELATED:END -->

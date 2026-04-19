@@ -132,3 +132,15 @@ MT-GenEval 评估句子和段落级别的性别翻译，但同样局限于有性
 - **实验充分度**: ⭐⭐⭐⭐ — 6种语言、多个模型、跨语言迁移实验完整，但缺少人工评估
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰、示例丰富、数据呈现直观
 - **价值**: ⭐⭐⭐⭐ — 数据集和微调模型均开源，对翻译公平性研究有直接推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [GG-BBQ: German Gender Bias Benchmark for Question Answering](gg-bbq_german_gender_bias_benchmark_for_question_answering.md)
+- [taz2024full: Analysing German Newspapers for Gender Bias and Discrimination across Decades](taz2024full_analysing_german_newspapers_for_gender_bias_and_discrimination_acros.md)
+- [BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses](../../ICLR2026/social_computing/biasfreebench_a_benchmark_for_mitigating_bias_in_large_language_model_responses.md)
+- [How does Misinformation Affect Large Language Model Behaviors and Preferences?](how_does_misinformation_affect_large_language.md)
+
+<!-- RELATED:END -->

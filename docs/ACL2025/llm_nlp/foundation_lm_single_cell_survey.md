@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 无原创实验，模型总结表格较完整但缺乏量化对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、分类体系完整、配图直观，适合快速入门
 - 对我的价值: ⭐⭐⭐ 对了解NLP与计算生物学交叉领域有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [Recent Advances in Speech Language Models: A Survey](recent_advances_in_speech_language_models_a_survey.md)
+- [A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+
+<!-- RELATED:END -->

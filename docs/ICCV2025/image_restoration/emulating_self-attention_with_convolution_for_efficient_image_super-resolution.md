@@ -153,3 +153,15 @@ ESC 在 Urban100×4 上超越 ATD-light 0.1 dB PSNR，同时快 **8.7倍**。
 - 实验充分度: ⭐⭐⭐⭐⭐ 从 DIV2K 到 DFLIP，从 ×2 到 ×4，包含延迟/内存/FLOPs 全面对比，LAM 和特征可视化深入
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，图表信息量大，但部分公式中的下标较多
 - 价值: ⭐⭐⭐⭐⭐ 解决了轻量级 SR 的实际部署痛点，Flash Attention 的引入和 ConvAttn 的设计具有很大的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Meets Attention: Efficient Remote Sensing Image Super-Resolution with Attention Spiking Neural Networks](../../NeurIPS2025/image_restoration/spiking_meets_attention_efficient_remote_sensing_image_super-resolution_with_att.md)
+- [Outlier-Aware Post-Training Quantization for Image Super-Resolution](outlier-aware_post-training_quantization_for_image_super-resolution.md)
+- [Efficient Concertormer for Image Deblurring and Beyond](efficient_concertormer_for_image_deblurring_and_beyond.md)
+- [Self-Calibrated Variance-Stabilizing Transformations for Real-World Image Denoising](self-calibrated_variance-stabilizing_transformations_for_real-world_image_denois.md)
+- [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
+
+<!-- RELATED:END -->

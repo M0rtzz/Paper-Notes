@@ -239,3 +239,15 @@ $\beta$ 越小，对高代价轨迹的惩罚越强。
 - 实验充分度: ⭐⭐⭐⭐（6个环境+多维敏感性分析）
 - 写作质量: ⭐⭐⭐⭐（问题定义清晰，理论与实验结合好）
 - 价值: ⭐⭐⭐⭐（实用性强，50条非偏好轨迹即可学安全策略）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Optimization for Offline Safe Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/online_optimization_for_offline_safe_reinforcement_learning.md)
+- [Deep SPI: Safe Policy Improvement via World Models](../../ICLR2026/reinforcement_learning/deep_spi_safe_policy_improvement_via_world_models.md)
+- [Forecasting in Offline Reinforcement Learning for Non-stationary Environments](../../NeurIPS2025/reinforcement_learning/forecasting_in_offline_reinforcement_learning_for_non-stationary_environments.md)
+- [Extreme Value Policy Optimization for Safe Reinforcement Learning](../../ICML2025/reinforcement_learning/extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
+- [Language Model Distillation: A Temporal Difference Imitation Learning Perspective](language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
+
+<!-- RELATED:END -->

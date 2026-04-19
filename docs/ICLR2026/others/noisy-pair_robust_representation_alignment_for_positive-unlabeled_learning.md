@@ -148,3 +148,15 @@ NcPU 在 BYOL 非对比学习框架基础上构建。输入为正样本集 $\mat
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个数据集（含 2 个实际应用）+ 11 个 baseline + 详尽消融 + 超参分析 + 训练稳定性验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨清晰，梯度分析的可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 将 PU 学习性能提升到接近监督学习水平是该领域的里程碑式进展，NoiSNCL 的通用性超出 PU 学习本身
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ANO: Faster is Better in Noisy Landscapes](ano_faster_is_better_in_noisy_landscape.md)
+- [Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
+- [Foster Adaptivity and Balance in Learning with Noisy Labels](../../ECCV2024/others/foster_adaptivity_and_balance_in_learning_with_noisy_labels.md)
+- [Joint Asymmetric Loss for Learning with Noisy Labels](../../ICCV2025/others/joint_asymmetric_loss_for_learning_with_noisy_labels.md)
+- [Cover Learning for Large-Scale Topology Representation](../../ICML2025/others/cover_learning_for_large-scale_topology_representation.md)
+
+<!-- RELATED:END -->

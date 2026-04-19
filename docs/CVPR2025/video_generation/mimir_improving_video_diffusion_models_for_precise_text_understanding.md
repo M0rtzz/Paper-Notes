@@ -117,3 +117,15 @@ Mimir 在标准 T2V 扩散模型（3D Causal VAE + DiT）基础上，增加 deco
 - 实验充分度: ⭐⭐⭐⭐⭐ VBench 量化 + 用户研究 + 详细消融 + t-SNE 可视化分析，实验设计全面透彻。
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，Figure 2/7 的核心概念与分析图非常有说服力。
 - 价值: ⭐⭐⭐⭐ 为 T2V 模型引入 LLM 提供了可行路径，Token Fuser 可复用于其他多源特征融合场景。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
+- [MotionPro: A Precise Motion Controller for Image-to-Video Generation](motionpro_a_precise_motion_controller_for_image-to-video_generation.md)
+- [NeuS-V: Neuro-Symbolic Evaluation of Text-to-Video Models using Formal Verification](neuro-symbolic_evaluation_of_text-to-video_models_using_formal_verification.md)
+- [Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer](../../ICCV2025/video_generation/decouple_and_track_benchmarking_and_improving_video_diffusion_transformers_for_m.md)
+- [InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
+
+<!-- RELATED:END -->

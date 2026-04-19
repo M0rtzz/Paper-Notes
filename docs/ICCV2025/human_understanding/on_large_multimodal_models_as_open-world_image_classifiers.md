@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 13 模型 × 10 数据集 × 4 指标，覆盖面极广
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，分析层层递进，图表丰富
 - 价值: ⭐⭐⭐⭐ 为 LMM 社区提供了急需的评估基础设施和有洞察力的错误分析
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
+- [GeoWorld: Geometric World Models](../../CVPR2026/human_understanding/geoworld_geometric_world_models.md)
+- [Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/human_understanding/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
+- [UDC-VIT: A Real-World Video Dataset for Under-Display Cameras](udc-vit_a_real-world_video_dataset_for_under-display_cameras.md)
+- [Scaling Large Motion Models with Million-Level Human Motions](../../ICML2025/human_understanding/scaling_large_motion_models_with_million-level_human_motions.md)
+
+<!-- RELATED:END -->

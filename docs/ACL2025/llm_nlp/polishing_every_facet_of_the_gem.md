@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 27 个模型 + 人类对比 + 经验知识增强 + 思考时间分析 + 解释质量评估
 - 写作质量: ⭐⭐⭐⭐ 分类法清晰，16 子类逐一分析深入，动机链完整
 - 价值: ⭐⭐⭐⭐ 对非英语语言能力评估有重要启示，"经验知识缺失"的发现对 LLM 能力理解有理论价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+- [How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian](conceptual_knowledge_org.md)
+- [From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
+- [Scaling Up Active Testing to Large Language Models](../../NeurIPS2025/llm_nlp/scaling_up_active_testing_to_large_language_models.md)
+
+<!-- RELATED:END -->

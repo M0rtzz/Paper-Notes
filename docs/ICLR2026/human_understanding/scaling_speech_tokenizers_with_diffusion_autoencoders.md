@@ -129,3 +129,15 @@ SiTok 在仅 200bps（所有基线最低比特率）下，WER 3.34%、SIM 0.682 
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖重建/理解/生成三大场景，丰富的消融（损失、码本、模型规模、解码步数），对比全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，motivation 论证充分，数学描述准确
 - 价值: ⭐⭐⭐⭐⭐ 在极低比特率下统一理解和生成的语音 tokenizer 对语音语言模型发展有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Streaming Generation of Co-Speech Gestures via Accelerated Rolling Diffusion](../../AAAI2026/human_understanding/streaming_generation_of_co-speech_gestures_via_accelerated_rolling_diffusion.md)
+- [Scaling Generalist Data-Analytic Agents](scaling_generalist_data-analytic_agents.md)
+- [P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
+- [DiffVax: Optimization-Free Image Immunization Against Diffusion-Based Editing](diffvax_optimization-free_image_immunization_against_diffusion-based_editing.md)
+- [The Devil behind the Mask: An Emergent Safety Vulnerability of Diffusion LLMs](the_devil_behind_the_mask_an_emergent_safety_vulnerability_of_diffusion_llms.md)
+
+<!-- RELATED:END -->

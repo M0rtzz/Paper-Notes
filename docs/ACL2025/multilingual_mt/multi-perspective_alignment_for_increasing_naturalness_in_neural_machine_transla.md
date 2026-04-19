@@ -169,3 +169,15 @@ $$\mathcal{L}(\theta; \mathcal{D}) = \mathbb{E}_{(x,y)\sim\mathcal{D}}[\beta \ma
 - **实验充分度**: ⭐⭐⭐⭐ — 多基线对比、消融充分、书级分析细致；但仅单一语言对
 - **写作质量**: ⭐⭐⭐⭐ — 框架描述清晰，算法伪代码规范，分析有深度
 - **价值**: ⭐⭐⭐⭐ — 提供了提升 MT 自然度的实用方案，对文学翻译和评测数据集构建有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memorization Inheritance in Sequence-Level Knowledge Distillation for Neural Machine Translation](memorization_inheritance_seqkd.md)
+- [Registering Source Tokens to Target Language Spaces in Multilingual Neural Machine Translation](registering_source_tokens_to_target_language_spaces_in_multilingual_neural_machi.md)
+- [THOR-MoE: Hierarchical Task-Guided and Context-Responsive Routing for Neural Machine Translation](thor-moe_hierarchical_task-guided_and_context-responsive_routing_for_neural_mach.md)
+- [M-MAD: Multidimensional Multi-Agent Debate for Advanced Machine Translation Evaluation](m-mad_multidimensional_multi-agent_debate_for_advanced_machine_translation_evalu.md)
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+
+<!-- RELATED:END -->

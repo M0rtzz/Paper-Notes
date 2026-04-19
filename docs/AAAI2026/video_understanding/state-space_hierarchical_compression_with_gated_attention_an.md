@@ -115,3 +115,15 @@ MambaMia 提出了基于双向 Mamba 的两阶段层次化视频 Token 压缩框
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个 benchmark、5 种压缩对比、多随机种子统计检验、成本分析，极其详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 方法描述精确，附录 13 节覆盖所有细节，可复现性极强
 - 价值: ⭐⭐⭐⭐⭐ 4.7K Token 处理小时级视频对社区有重大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval](apvr_hour-level_long_video_understanding_with_adaptive_pivot.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [Mamba-3: Improved Sequence Modeling using State Space Principles](../../ICLR2026/video_understanding/mamba-3_improved_sequence_modeling_using_state_space_principles.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](../../ECCV2024/video_understanding/videomamba_state_space_model_for_efficient_video_understanding.md)
+- [KineST: A Kinematics-guided Spatiotemporal State Space Model for Human Motion Tracking from Sparse Signals](kinest_a_kinematics-guided_spatiotemporal_state_space_model_for_human_motion_tra.md)
+
+<!-- RELATED:END -->

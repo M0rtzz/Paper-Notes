@@ -136,3 +136,15 @@ ARM 的实际实现是在每步 $t$ 对最近 $\tau$ 个快照的数据做均匀
 - 实验充分度: ⭐⭐⭐ 实验设置较简单（两个半合成环境），但理论结果足够支撑结论
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，Figure 1-3 直观展示了核心思想
 - 价值: ⭐⭐⭐⭐ 对 performative prediction 理论社区有显著贡献，下界技术有方法论价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Movie101v2: Improved Movie Narration Benchmark](../../ACL2025/llm_evaluation/movie101v2_improved_movie_narration_benchmark.md)
+- [Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
+- [Improved and Oracle-Efficient Online $\ell_1$-Multicalibration](../../ICML2025/llm_evaluation/improved_and_oracle-efficient_online_ell_1-multicalibration.md)
+- [Non-Clashing Teaching in Graphs: Algorithms, Complexity, and Bounds](../../ICLR2026/llm_evaluation/non-clashing_teaching_in_graphs_algorithms_complexity_and_bounds.md)
+- [Let the Experts Speak: Improving Survival Prediction & Calibration via Mixture-of-Experts Heads](let_the_experts_speak_improving_survival_prediction_calibration_via_mixture-of-e.md)
+
+<!-- RELATED:END -->

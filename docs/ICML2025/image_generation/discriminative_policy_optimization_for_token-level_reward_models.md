@@ -141,3 +141,15 @@ $$p(\tau^w \succeq \tau^l) = \sigma\left[\beta\left(\frac{1}{N}\sum_{t=0}^{N-1}Z
 - 实验充分度: ⭐⭐⭐⭐⭐ （4 个任务，多种 baseline，含 PPO 和 REINFORCE 两种 RL 框架）
 - 写作质量: ⭐⭐⭐⭐ （理论推导清晰，实验组织系统）
 - 价值: ⭐⭐⭐⭐⭐ （对 LLM 对齐中 token 级奖励建模有实质推动）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PPO-MI: Efficient Black-Box Model Inversion via Proximal Policy Optimization](ppo-mi_efficient_black-box_model_inversion_via_proximal_policy_optimization.md)
+- [Direct Discriminative Optimization: Your Likelihood-Based Visual Generative Model is also a GAN Discriminator](direct_discriminative_optimization_your_likelihood-based_visual_generative_model.md)
+- [ToMA: Token Merge with Attention for Diffusion Models](toma_token_merge_with_attention_for_diffusion_models.md)
+- [PCPO: Proportionate Credit Policy Optimization for Aligning Image Generation Models](../../ICLR2026/image_generation/pcpo_proportionate_credit_policy_optimization_for_aligning_image_generation_mode.md)
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+
+<!-- RELATED:END -->

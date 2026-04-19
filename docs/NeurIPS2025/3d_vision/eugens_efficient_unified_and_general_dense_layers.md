@@ -132,3 +132,15 @@ NeRF 蒸馏可在不重训练的情况下实现高达 **26%** 推理加速。
 - ⭐ 实验充分度: 4.5/5 — 横跨 NLP/CV/3D 四类任务，消融全面
 - ⭐ 写作质量: 4/5 — 理论与实验平衡好，结构清晰
 - ⭐ 价值: 4/5 — 通用高效层替换方案，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Image-Dense Annotation Generation Model for Underwater Scenes](../../CVPR2025/3d_vision/a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
+- [Locality-Sensitive Hashing-Based Efficient Point Transformer for Charged Particle Reconstruction](locality-sensitive_hashing-based_efficient_point_transformer_for_charged_particl.md)
+- [Generative Omnimatte: Learning to Decompose Video into Layers](../../CVPR2025/3d_vision/generative_omnimatte_learning_to_decompose_video_into_layers.md)
+- [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](../../CVPR2025/3d_vision/flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
+
+<!-- RELATED:END -->

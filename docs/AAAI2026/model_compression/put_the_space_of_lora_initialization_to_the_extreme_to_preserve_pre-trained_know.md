@@ -88,3 +88,15 @@ LoRA 微调虽然参数高效，但仍存在显著的 catastrophic forgetting。
 - 实验充分度: ⭐⭐⭐⭐ — 双模型、三任务、多 rank/calibration 消融，但场景可更丰富
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机推导清晰，理论与实验衔接紧密，图表设计优秀
 - 价值: ⭐⭐⭐⭐ — 对 LoRA 知识保留研究有直接指导意义，方法简单有效易复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers](compensating_distribution_drifts_in_class-incremental_learning_of_pre-trained_vi.md)
+- [PrefixGPT: Prefix Adder Optimization by a Generative Pre-trained Transformer](prefixgpt_prefix_adder_optimization_by_a_generative_pre-trained_transformer.md)
+- [Beyond Zero Initialization: Investigating the Impact of Non-Zero Initialization on LoRA Fine-Tuning Dynamics](../../ICML2025/model_compression/beyond_zero_initialization_investigating_the_impact_of_non-zero_initialization_o.md)
+- [Efficient Adaptation of Pre-Trained Vision Transformer Underpinned by Approximation Theory](../../ICCV2025/model_compression/efficient_adaptation_of_pre-trained_vision_transformer_underpinned_by_approximat.md)
+- [Random Initialization of Gated Sparse Adapters (RIGSA)](../../ICML2025/model_compression/random_initialization_of_gated_sparse_adapters.md)
+
+<!-- RELATED:END -->

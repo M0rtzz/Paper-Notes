@@ -164,3 +164,15 @@ Image-to-4D 对比：
 - **实验充分度**: ⭐⭐⭐⭐ 78人用户研究+VBench定量+详细消融，评估全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 流程图清晰，方法阐述系统性强，读者友好
 - **价值**: ⭐⭐⭐⭐⭐ 推动 4D 生成从物体级到场景级的跨越，免微调方案实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EEdit: Rethinking the Spatial and Temporal Redundancy for Efficient Image Editing](eedit_rethinking_the_spatial_and_temporal_redundancy_for_efficient_image_editing.md)
+- [SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency](../../NeurIPS2025/image_generation/scenedecorator_towards_scene-oriented_story_generation_with_scene_planning_and_s.md)
+- [SA-LUT: Spatial Adaptive 4D Look-Up Table for Photorealistic Style Transfer](sa-lut_spatial_adaptive_4d_look-up_table_for_photorealistic_style_transfer.md)
+- [Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers](lay-your-scene_natural_scene_layout_generation_with_diffusion_transformers.md)
+- [FreeScale: Unleashing the Resolution of Diffusion Models via Tuning-Free Scale Fusion](freescale_unleashing_the_resolution_of_diffusion_models_via_tuning-free_scale_fu.md)
+
+<!-- RELATED:END -->

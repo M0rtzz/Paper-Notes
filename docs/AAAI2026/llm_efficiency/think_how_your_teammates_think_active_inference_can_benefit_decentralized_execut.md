@@ -137,3 +137,15 @@ $$\mathcal{L}_{tot} = \mathcal{L}_{TD} + \mathcal{L}_{MD} + \mathcal{L}_{DF}$$
 - **OMG**：仅基于局部观测的智能体建模方法，但队友策略固定不更新；AIM 允许所有智能体同步训练，突破了协作效率上界。
 - **Theory of Mind (ToMnet)**：基于心智理论建模智能体心理状态，但需要访问被建模者的轨迹；AIM 完全基于局部观测，更符合去中心化要求。
 - **主动推理(Active Inference)**：源自 Friston 自由能原理的决策理论，AIM 借用其感知-信念-动作框架作为队友建模的结构，是该理论在 MARL 中的首次系统应用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How to Train Long-Context Language Models (Effectively)](../../ACL2025/llm_efficiency/train_long_context_effectively.md)
+- [Scaling Inference-Efficient Language Models](../../ICML2025/llm_efficiency/scaling_inference-efficient_language_models.md)
+- [From Shortcut to Induction Head: How Data Diversity Shapes Algorithm Selection in Transformers](../../NeurIPS2025/llm_efficiency/from_shortcut_to_induction_head_how_data_diversity_shapes_algorithm_selection_in.md)
+- [LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](../../ICLR2026/llm_efficiency/lycheedecode_accelerating_long-context_llm_inference_via_hybrid-head_sparse_deco.md)
+- [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](../../ICLR2026/llm_efficiency/semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
+
+<!-- RELATED:END -->

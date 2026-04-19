@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅在 1.5B 模型和数学推理上验证，规模和任务多样性有限
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融实验到位
 - 价值: ⭐⭐⭐⭐ 对推理效率优化有实际意义，熵引导的思路有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Let Me Think! A Long Chain-of-Thought Can Be Worth Exponentially Many Short Ones](let_me_think_a_long_chainofthought_can_be_worth_exponentiall.md)
+- [ARM: Adaptive Reasoning Model](arm_adaptive_reasoning_model.md)
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+- [Re-FORC: Adaptive Reward Prediction for Efficient Chain-of-Thought Reasoning](re-forc_adaptive_reward_prediction_for_efficient_chain-of-thought_reasoning.md)
+- [Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision](large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u.md)
+
+<!-- RELATED:END -->

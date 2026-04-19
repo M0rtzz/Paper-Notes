@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多任务验证、详尽的消融、缩放分析，但高分辨率评估有限
 - 写作质量: ⭐⭐⭐⭐⭐ 故事讲述极好，从理论动机到实验验证逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 可能改变跨模态生成的范式，缩放特性暗示更大规模下潜力巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrossOver: 3D Scene Cross-Modal Alignment](crossover_3d_scene_cross-modal_alignment.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [CMMLoc: Advancing Text-to-PointCloud Localization with Cauchy-Mixture-Model Based Framework](cmmloc_advancing_text-to-pointcloud_localization_with_cauchy-mixture-model_based.md)
+- [Hash3D: Training-free Acceleration for 3D Generation](hash3d_training-free_acceleration_for_3d_generation.md)
+- [Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization](evolving_high-quality_rendering_and_reconstruction_in_a_unified_framework_with_c.md)
+
+<!-- RELATED:END -->

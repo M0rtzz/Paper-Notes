@@ -154,3 +154,15 @@ $$\mathcal{L}(\theta) = -\mathbb{E}_{t,\mathbf{c},\mathbf{x}_0,q(\mathbf{x}_t|\m
 - 实验充分度: ⭐⭐⭐⭐⭐ (三个差异较大领域 + 丰富消融)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论推导清晰，实验组织有条理)
 - 价值: ⭐⭐⭐⭐⭐ (为离散扩散模型对齐建立了新基准)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ultra-Fast Language Generation via Discrete Diffusion Divergence Instruct](ultra-fast_language_generation_via_discrete_diffusion_divergence_instruct.md)
+- [Causal Interpretation of Neural Network Computations with Contribution Decomposition](causal_interpretation_of_neural_network_computations_with_contribution_decomposi.md)
+- [TAlignDiff: Automatic Tooth Alignment assisted by Diffusion-based Transformation Learning](../../AAAI2026/medical_imaging/taligndiff_automatic_tooth_alignment_assisted_by_diffusion-based_transformation_.md)
+- [Unified Biomolecular Trajectory Generation via Pretrained Variational Bridge](unified_biomolecular_trajectory_generation_via_pretrained_variational_bridge.md)
+- [GenMol: A Drug Discovery Generalist with Discrete Diffusion](../../ICML2025/medical_imaging/genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+
+<!-- RELATED:END -->

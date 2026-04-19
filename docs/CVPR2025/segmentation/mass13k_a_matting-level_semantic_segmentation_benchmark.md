@@ -120,3 +120,15 @@ MaSSFormer 基于 Mask2Former 架构，由像素编码器、像素解码器和 T
 ## 评分
 
 ⭐⭐⭐⭐ — 数据集贡献突出（首个 matting 级多类语义分割基准），模型设计合理且高效，新类泛化机制有价值。类别数量有限和标注成本问题限制了短期影响力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MatAnyone: Stable Video Matting with Consistent Memory Propagation](matanyone_stable_video_matting_with_consistent_memory_propagation.md)
+- [Pixel-Level Reasoning Segmentation via Multi-turn Conversations](../../ACL2025/segmentation/pixel-level_reasoning_segmentation_via_multi-turn_conversations.md)
+- [ZIM: Zero-Shot Image Matting for Anything](../../ICCV2025/segmentation/zim_zero-shot_image_matting_for_anything.md)
+- [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
+- [JoDiffusion: Jointly Diffusing Image with Pixel-Level Annotations for Semantic Segmentation Promotion](../../AAAI2026/segmentation/jodiffusion_jointly_diffusing_image_with_pixel-level_annotations_for_semantic_se.md)
+
+<!-- RELATED:END -->

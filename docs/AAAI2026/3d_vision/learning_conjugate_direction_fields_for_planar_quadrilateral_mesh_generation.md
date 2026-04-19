@@ -171,3 +171,15 @@ CDF生成时间对比（vs. 传统优化方法）：
 - 实验充分度: ⭐⭐⭐⭐ — 效率对比充分，消融完整，泛化测试到建筑和通用3D
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，数学推导严谨
 - 价值: ⭐⭐⭐⭐ — 对建筑设计CAD有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models](../../ICLR2026/3d_vision/quadgpt_native_quadrilateral_mesh_generation_with_autoregressive_models.md)
+- [Hierarchical Direction Perception via Atomic Dot-Product Operators for Rotation-Invariant Point Clouds Learning](hierarchical_direction_perception_via_atomic_dot-product_operators_for_rotation-.md)
+- [TG-Field: Geometry-Aware Radiative Gaussian Fields for Tomographic Reconstruction](tg-field_geometry-aware_radiative_gaussian_fields_for_tomographic_reconstruction.md)
+- [Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk](../../ICLR2026/3d_vision/topology-preserved_auto-regressive_mesh_generation_in_the_manner_of_weaving_silk.md)
+- [PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)
+
+<!-- RELATED:END -->

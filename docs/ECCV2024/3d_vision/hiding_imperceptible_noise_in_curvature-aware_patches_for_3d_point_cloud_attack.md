@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在多个模型和防御方法上评估，包含人类主观评分
 - 写作质量: ⭐⭐⭐⭐ 技术描述清晰，方法动机阐述充分
 - 价值: ⭐⭐⭐⭐ 对3D对抗鲁棒性研究提供了新视角，小波分析工具可迁移到其他3D任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FLAT: Flux-Aware Imperceptible Adversarial Attacks on 3D Point Clouds](flat_flux-aware_imperceptible_adversarial_attacks_on_3d_point_clouds.md)
+- [AEDNet: Adaptive Embedding and Multiview-Aware Disentanglement for Point Cloud Completion](aednet_adaptive_embedding_and_multiview-aware_disentanglement_for_point_cloud_co.md)
+- [P2P-Bridge: Diffusion Bridges for 3D Point Cloud Denoising](p2p-bridge_diffusion_bridges_for_3d_point_cloud_denoising.md)
+- [DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding](dg-pic_domain_generalized_point-in-context_learning_for_point_cloud_understandin.md)
+- [SegPoint: Segment Any Point Cloud via Large Language Model](segpoint_segment_any_point_cloud_via_large_language_model.md)
+
+<!-- RELATED:END -->

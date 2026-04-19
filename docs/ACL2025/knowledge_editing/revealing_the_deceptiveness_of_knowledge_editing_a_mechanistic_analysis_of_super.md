@@ -141,3 +141,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 三个模型、两个数据集、七种编辑方法的全面评估，消融实验深入到注意力头和 SVD 向量级别
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，从现象→假设→验证的递进结构，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 对知识编辑领域具有重要警示意义，指出了当前评估框架的不足和编辑方法的根本局限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ScEdit: Script-based Assessment of Knowledge Editing](scedit_script-based_assessment_of_knowledge_editing.md)
+- [SAKE: Steering Activations for Knowledge Editing](sake_steering_activations_for_knowledge_editing.md)
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [CompKe: Complex Question Answering under Knowledge Editing](compke_complex_question_answering_under_knowledge_editing.md)
+- [Efficient Knowledge Editing via Minimal Precomputation](efficient_knowledge_editing.md)
+
+<!-- RELATED:END -->

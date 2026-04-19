@@ -191,3 +191,15 @@ $$\rho[\mathbb{P}_{(P,\xi)|H}\{\mathsf{A}_{\mathrm{conv}}\}] \geq 1 - \Phi_{\lam
 | 实用性 | ⭐⭐⭐ | 理论突破显著，但训练难度大，尚难直接应用 |
 | 写作质量 | ⭐⭐⭐⭐ | 逻辑清晰，但技术门槛较高 |
 | 综合 | ⭐⭐⭐⭐ | 解决了 L2O 领域一个长期开放的理论问题 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization in Federated Learning: A Conditional Mutual Information Framework](generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](../../NeurIPS2025/optimization/learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Generalization and Robustness of the Tilted Empirical Risk](generalization_and_robustness_of_the_tilted_empirical_risk.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](../../NeurIPS2025/optimization/understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+
+<!-- RELATED:END -->

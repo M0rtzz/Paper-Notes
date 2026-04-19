@@ -128,3 +128,15 @@ VLA 操作成功率（RoboCasa）：TurnOffMicrowave 场景提升最大（约 +1
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个 VLM 对比（含闭源）、内外部基准、VLA 迁移、人类基线，非常完整
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，任务定义严谨，图表设计精美，分析深入
 - 价值: ⭐⭐⭐⭐⭐ 填补了 VLM 多视角空间推理的训练数据空白，VLA 迁移验证了实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ForgeDreamer: Industrial Text-to-3D Generation with Multi-Expert LoRA and Cross-View Hypergraph](forgedreamer_industrial_text-to-3d_generation_with_multi-expert_lora_and_cross-v.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_humanscene_reconstruction_from_multiperso.md)
+- [Scalable Object Relation Encoding for Better 3D Spatial Reasoning in Large Language Models](scalable_object_relation_encoding_for_better_3d_spatial_reasoning_in_large_langu.md)
+- [Masking Matters: Unlocking the Spatial Reasoning Capabilities of LLMs for 3D Scene-Language Understanding](masking_matters_unlocking_the_spatial_reasoning_capabilities_of_llms_for_3d_scen.md)
+- [BRepGaussian: CAD Reconstruction from Multi-View Images with Gaussian Splatting](brepgaussian_cad_reconstruction_from_multi-view_images_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ SPACE 在 18 项任务中 **11 项 SOTA**，且参数量远少于 NT-Multispecie
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三大基准、多物种、消融实验完整
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、方法推导严谨
 - 价值: ⭐⭐⭐⭐ — 对 DNA 基础模型社区的范式选择具有重要参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JanusDNA: A Powerful Bi-directional Hybrid DNA Foundation Model](../../NeurIPS2025/medical_imaging/janusdna_a_powerful_bi-directional_hybrid_dna_foundation_model.md)
+- [LDMol: A Text-to-Molecule Diffusion Model with Structurally Informative Latent Space Surpasses AR Models](ldmol_a_text-to-molecule_diffusion_model_with_structurally_informative_latent_sp.md)
+- [Elucidating the Design Space of Multimodal Protein Language Models](elucidating_the_design_space_of_multimodal_protein_language_models.md)
+- [Foundation Models for Clinical Records at Health System Scale](foundation_models_for_clinical_records_at_health_system_scale.md)
+- [NeurIPT: Foundation Model for Neural Interfaces](../../NeurIPS2025/medical_imaging/neuript_foundation_model_for_neural_interfaces.md)
+
+<!-- RELATED:END -->

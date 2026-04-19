@@ -158,3 +158,15 @@ TabRAG 的优势在不同 LLM 骨干下保持一致。
 - **表达质量**: 4/5 — 问题定义清晰，方法描述直观
 - **实用性**: 5/5 — 直接解决 RAG 系统的实际痛点
 - **综合评分**: 4/5
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection](../../ICCV2025/segmentation/beyond_single_images_retrieval_self-augmented_unsupervised_camouflaged_object_de.md)
+- [Follow the Saliency: Supervised Saliency for Retrieval-augmented Dense Video Captioning](../../CVPR2026/segmentation/follow_the_saliency_supervised_saliency_for_retrieval-augmented_dense_video_capt.md)
+- [Vista: Scene-Aware Optimization for Streaming Video Question Answering Under Post-Hoc Queries](../../AAAI2026/segmentation/vista_scene-aware_optimization_for_streaming_video_question_answering_under_post.md)
+- [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
+- [ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
+
+<!-- RELATED:END -->

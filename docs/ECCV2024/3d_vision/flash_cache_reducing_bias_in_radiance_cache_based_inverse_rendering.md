@@ -152,3 +152,15 @@ $$\mathcal{L}_{\text{reg}} = \mathcal{L}_{\text{normals}} + \mathcal{L}_{\text{B
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据集评估，消融完整，但真实场景数量有限
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨清晰，从体渲染到蒙特卡洛渲染的无偏性分析一气呵成，图示直观
 - 价值: ⭐⭐⭐⭐ 为逆渲染领域提供了理论更严谨的框架，在镜面材质分解上有实际提升，但实用性受限于整体计算开销
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields](omni-recon_harnessing_image-based_rendering_for_general-purpose_neural_radiance_.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](../../ICCV2025/3d_vision/geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+- [STAC: Plug-and-Play Spatio-Temporal Aware Cache Compression for Streaming 3D Reconstruction](../../CVPR2026/3d_vision/stac_plug-and-play_spatio-temporal_aware_cache_compression_for_streaming_3d_reco.md)
+- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](../../CVPR2025/3d_vision/iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
+- [LaRa: Efficient Large-Baseline Radiance Fields](lara_efficient_large-baseline_radiance_fields.md)
+
+<!-- RELATED:END -->

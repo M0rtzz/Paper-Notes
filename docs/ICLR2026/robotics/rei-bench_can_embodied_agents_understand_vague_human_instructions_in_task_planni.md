@@ -164,3 +164,15 @@ DialFRED采用"提问者-执行者"框架，通过53K问答对支持多轮交互
 | 技术深度 | ★★★☆☆ | 基准构建流水线完整，但核心方法(TOCC)仅是两步提示解耦，无模型训练或架构创新 |
 | 实验完整性 | ★★★★★ | 12个规划器(6 LLM × 4框架)、9种模糊等级、4种提示方法的全面消融；错误归因分析深入(目标遗漏 vs 执行错误) |
 | 实际影响 | ★★★★☆ | 揭示了LLM规划器在真实场景中被忽视的脆弱性，对HRI领域有直接启发；局限于简单任务和仿真环境 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Agents Fix Agent Issues?](../../NeurIPS2025/robotics/can_agents_fix_agent_issues.md)
+- [Test-Time Mixture of World Models for Embodied Agents in Dynamic Environments](test-time_mixture_of_world_models_for_embodied_agents_in_dynamic_environments.md)
+- [RoboPARA: Dual-Arm Robot Planning with Parallel Allocation and Recomposition Across Tasks](robopara_dual-arm_robot_planning_with_parallel_allocation_and_recomposition_acro.md)
+- [Towards Reliable Code-as-Policies: A Neuro-Symbolic Framework for Embodied Task Planning](../../NeurIPS2025/robotics/towards_reliable_code-as-policies_a_neuro-symbolic_framework_for_embodied_task_p.md)
+- [Theory of Space: Can Foundation Models Construct Spatial Beliefs through Active Exploration?](theory_of_space_can_foundation_models_construct_spatial_beliefs_through_active_e.md)
+
+<!-- RELATED:END -->

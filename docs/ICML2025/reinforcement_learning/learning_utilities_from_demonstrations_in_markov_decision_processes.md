@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论驱动的工作，实验以概念验证为主
 - 写作质量: ⭐⭐⭐⭐ 数学表述严谨清晰
 - 价值: ⭐⭐⭐⭐ 为 IRL/LfD 领域引入重要的建模维度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Generalized Bisimulation Metric of State Similarity between Markov Decision Processes: From Theoretical Propositions to Applications](../../NeurIPS2025/reinforcement_learning/a_generalized_bisimulation_metric_of_state_similarity_betwee.md)
+- [Solving Zero-Sum Convex Markov Games](solving_zero-sum_convex_markov_games.md)
+- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [Divide and Conquer: Grounding LLMs as Efficient Decision-Making Agents via Offline Hierarchical Reinforcement Learning](divide_and_conquer_grounding_llms_as_efficient_decision-making_agents_via_offlin.md)
+- [SkillMimic: Learning Basketball Interaction Skills from Demonstrations](../../CVPR2025/reinforcement_learning/skillmimic_learning_basketball_interaction_skills_from_demonstrations.md)
+
+<!-- RELATED:END -->

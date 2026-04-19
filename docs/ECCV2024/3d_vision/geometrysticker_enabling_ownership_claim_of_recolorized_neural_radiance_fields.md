@@ -168,3 +168,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{cont} + \mathcal{L}_{msg} + \mathcal{L}_{cl
 - 实验充分度: ⭐⭐⭐⭐⭐ 多架构×多重着色方案×多扰动类型×对抗攻击/模型净化分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，三大设计原则贯穿全文
 - 价值: ⭐⭐⭐⭐ 解决了实际安全问题，但受限于NeRF生态的实际应用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [G2fR: Frequency Regularization in Grid-Based Feature Encoding Neural Radiance Fields](g2fr_frequency_regularization_in_grid-based_feature_encoding_neural_radiance_fie.md)
+- [BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream](benerf_neural_radiance_fields_from_a_single_blurry_image_and_event_stream.md)
+- [Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields](omni-recon_harnessing_image-based_rendering_for_general-purpose_neural_radiance_.md)
+- [LaRa: Efficient Large-Baseline Radiance Fields](lara_efficient_large-baseline_radiance_fields.md)
+- [Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多尺度模型、多框架、完整消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，数学形式化规范
 - 价值: ⭐⭐⭐⭐⭐ Spotlight当之无愧，开启表征感知生成的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space](../../ICML2025/image_generation/dctdiff_intriguing_properties_of_image_generative_modeling_in_the_dct_space.md)
+- [IRGen: Generative Modeling for Image Retrieval](../../ECCV2024/image_generation/irgen_generative_modeling_for_image_retrieval.md)
+- [Mind the Gap: Aligning Vision Foundation Models to Image Feature Matching](../../ICCV2025/image_generation/mind_the_gap_aligning_vision_foundation_models_to_image_feature_matching.md)
+- [GenIR: Generative Visual Feedback for Mental Image Retrieval](genir_generative_visual_feedback_for_mental_image_retrieval.md)
+- [Image Super-Resolution with Guarantees via Conformalized Generative Models](image_super-resolution_with_guarantees_via_conformalized_generative_models.md)
+
+<!-- RELATED:END -->

@@ -184,3 +184,15 @@ CulturalTeaming 数据收集流水线分三步：
 - **实验充分度**: ⭐⭐⭐⭐⭐ (29个模型，区域分析，问题类型分析，启发式基线分析，时间版本分析)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰，分析全面，相关工作对比充分)
 - **价值**: ⭐⭐⭐⭐⭐ (高质量开源基准，揭示LLM文化知识的系统性弱点，方法论可复用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+- [CuLEmo: Cultural Lenses on Emotion - Benchmarking LLMs for Cross-Cultural Emotion Understanding](culemo_cultural_lenses_on_emotion_-_benchmarking_llms_for_cross-cultural_emotion.md)
+- [GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration](grace_a_granular_benchmark_for_evaluating_model_calibration_against_human_calibr.md)
+- [FinanceReasoning: Benchmarking Financial Numerical Reasoning More Credible, Comprehensive and Challenging](financereasoning_benchmarking_financial_numerical_reasoning_more.md)
+
+<!-- RELATED:END -->

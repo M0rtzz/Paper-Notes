@@ -115,3 +115,15 @@ This work is supported by STI 2030-Major Projects 2022ZD0209400, Beijing Academy
 - 实验充分度: ⭐⭐⭐⭐⭐ 多维度基准+全身肌骨+与多种基线对比
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰
 - 价值: ⭐⭐⭐⭐⭐ 对高维RL有根本性突破
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable In-Context Q-Learning](scalable_in-context_q-learning.md)
+- [AMPED: Adaptive Multi-objective Projection for balancing Exploration and skill Diversification](amped_adaptive_multi-objective_projection_for_balancing_exploration_and_skill_di.md)
+- [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
+- [What Limits Virtual Agent Application? OmniBench: A Scalable Multi-Dimensional Benchmark for Essential Virtual Agent Capabilities](../../ICML2025/human_understanding/what_limits_virtual_agent_application_omnibench_a_scalable_multi-dimensional_ben.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+
+<!-- RELATED:END -->

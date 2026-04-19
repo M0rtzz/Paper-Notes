@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多控制+单控制+消融+用户研究+定性分析，全面
 - 写作质量: ⭐⭐⭐⭐ 三个挑战→三个解决方案的对应清晰，方法图好
 - 价值: ⭐⭐⭐⭐ 对可控图像生成有直接应用价值，统一框架设计实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [Collaborative Control for Geometry-Conditioned PBR Image Generation](collaborative_control_for_geometry-conditioned_pbr_image_generation.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
+- [Generating Human Interaction Motions in Scenes with Text Control](generating_human_interaction_motions_in_scenes_with_text_control.md)
+
+<!-- RELATED:END -->

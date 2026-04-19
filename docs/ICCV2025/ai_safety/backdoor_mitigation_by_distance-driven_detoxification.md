@@ -150,3 +150,15 @@ D3平均ASR仅0.46%，远优于SAU的1.04%和FT-SAM的3.91%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 7种攻击×3个数据集×3种架构×8种对比方法，含自适应攻击分析
 - 写作质量: ⭐⭐⭐⭐⭐ 从问题观察→理论解释→方法设计→实验验证的逻辑链完整流畅
 - 价值: ⭐⭐⭐⭐ 方法简洁高效，实际部署门槛低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation](controllable_feature_whitening_for_hyperparameter-free_bias_mitigation.md)
+- [Reconstruction and Secrecy under Approximate Distance Queries](../../NeurIPS2025/ai_safety/reconstruction_and_secrecy_under_approximate_distance_queries.md)
+- [Robust Graph Condensation via Classification Complexity Mitigation](../../NeurIPS2025/ai_safety/robust_graph_condensation_via_classification_complexity_mitigation.md)
+- [OmniFC: Rethinking Federated Clustering via Lossless and Secure Distance Reconstruction](../../NeurIPS2025/ai_safety/omnifc_rethinking_federated_clustering_via_lossless_and_secure_distance_reconstr.md)
+- [OFMU: Optimization-Driven Framework for Machine Unlearning](../../ICLR2026/ai_safety/ofmu_optimization-driven_framework_for_machine_unlearning.md)
+
+<!-- RELATED:END -->

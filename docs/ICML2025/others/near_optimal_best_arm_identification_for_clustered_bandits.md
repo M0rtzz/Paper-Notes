@@ -122,3 +122,15 @@ $$\mathbb{E}[T_\delta^\nu(\mathcal{A})] \gtrsim \max\{M(K-M),\; N\} \cdot \frac{
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实数据（MovieLens, Yelp），验证理论预测
 - 写作质量: ⭐⭐⭐⭐ — 理论分析清晰，算法描述规范
 - 价值: ⭐⭐⭐⭐ — 为聚类联邦BAI提供了近最优的算法框架和完整理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification](fixing_the_loose_brake_exponential-tailed_stopping_time_in_best_arm_identificati.md)
+- [Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+- [Fixed-Confidence Multiple Change Point Identification under Bandit Feedback](fixed-confidence_multiple_change_point_identification_under_bandit_feedback.md)
+- [Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 在真实场景验证但定量比较可能受限于数据集规模
 - 写作质量: ⭐⭐⭐⭐ 系统描述清晰，模块设计合理
 - 价值: ⭐⭐⭐⭐ 具有很强的实用价值，降低了自由视点视频的技术门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ET: The Exceptional Trajectories - Text-to-Camera-Trajectory Generation with Character Awareness](et_the_exceptional_trajectories_text-to-camera-trajectory_generation_with_charac.md)
+- [Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
+- [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
+- [Real-Data-Driven 2000 FPS Color Video from Mosaicked Chromatic Spikes](real-data-driven_2000_fps_color_video_from_mosaicked_chromatic_spikes.md)
+- [Power Variable Projection for Initialization-Free Large-Scale Bundle Adjustment](power_variable_projection_for_initialization-free_large-scale_bundle_adjustment.md)
+
+<!-- RELATED:END -->

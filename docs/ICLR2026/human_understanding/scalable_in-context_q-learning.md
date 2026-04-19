@@ -144,3 +144,15 @@ S-ICQL 在所有 6 个环境中均取得最佳表现。在复杂环境（Cheetah
 - 提示长度与采样轨迹长度绑定，在长 horizon 交互问题中可能过长
 - 世界模型需要额外的预训练阶段，增加了训练流程的复杂度
 - 仅在标准 RL benchmark 上验证，未涉及更复杂的实际决策场景（如机器人操作的 sim-to-real）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning](egohandicl_egocentric_3d_hand_reconstruction_with_in-context_learning.md)
+- [COLD-Steer: Steering Large Language Models via In-Context One-step Learning Dynamics](cold-steer_steering_large_language_models_via_in-context_one-step_learning_dynam.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/human_understanding/in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow](scalable_exploration_for_high-dimensional_continuous_control_via_value-guided_fl.md)
+- [Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning](../../NeurIPS2025/human_understanding/counteractive_rl_rethinking_core_principles_for_efficient_and_scalable_deep_rein.md)
+
+<!-- RELATED:END -->

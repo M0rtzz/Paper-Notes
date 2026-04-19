@@ -189,3 +189,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 MLLM × 4 benchmarks × 4 modes + 多种消融 + 统计检验
 - 写作质量: ⭐⭐⭐⭐ 控制实验设计精良，结论清晰
 - 价值: ⭐⭐⭐⭐ 对 multilingual LLM 部署有直接指导，LRL 场景收益最大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GrammaMT: Improving Machine Translation with Grammar-Informed In-Context Learning](grammamt_improving_machine_translation_with_grammar-informed_in-context_learning.md)
+- [How Data Mixing Shapes In-Context Learning: Asymptotic Equivalence for Transformers with MLPs](../../NeurIPS2025/multilingual_mt/how_data_mixing_shapes_in-context_learning_asymptotic_equivalence_for_transforme.md)
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+- [LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation](laca_crosslingual_absa.md)
+- [Lost in Multilinguality: Dissecting Cross-lingual Factual Inconsistency in Transformer Language Models](lost_in_multilinguality_dissecting_cross-lingual_factual_inconsistency_in_transf.md)
+
+<!-- RELATED:END -->

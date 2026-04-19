@@ -78,3 +78,15 @@ IRT-Router 借鉴心理测量学的项目反应理论（IRT），将 LLM 视为"
 - 实验充分度: ⭐⭐⭐⭐⭐ 20 个 LLM × 12 个数据集 × ID+OOD 场景
 - 写作质量: ⭐⭐⭐⭐ IRT 理论介绍清晰，可解释性分析充分
 - 价值: ⭐⭐⭐⭐⭐ 对多 LLM 部署场景有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Safety is Not Only About Refusal: Reasoning-Enhanced Fine-tuning for Interpretable LLM Safety](safety_is_not_only_about_refusal_reasoning-enhanced_fine-tuning_for_interpretabl.md)
+- [Sloth: Scaling Laws for LLM Skills to Predict Multi-Benchmark Performance Across Families](../../NeurIPS2025/interpretability/sloth_scaling_laws_for_llm_skills_to_predict_multi-benchmark_performance_across_.md)
+- [Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar](../../ICML2025/interpretability/foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)
+- [iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](../../AAAI2026/interpretability/imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)
+- [Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](shortcut_neuron_eval.md)
+
+<!-- RELATED:END -->

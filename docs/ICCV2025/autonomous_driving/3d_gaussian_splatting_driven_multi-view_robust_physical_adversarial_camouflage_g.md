@@ -122,3 +122,15 @@ PGA包含三个模块：**重建模块** → **渲染模块** → **攻击模块
 - 实验充分度: ⭐⭐⭐⭐⭐ 数字域+物理域+消融+红外扩展，非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，但公式符号较多
 - 价值: ⭐⭐⭐⭐ 推进physical attack SOTA，也给防御研究提供参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow](gaussianflowocc_sparse_and_weakly_supervised_occupancy_estimation_using_gaussian.md)
+- [A Constrained Optimization Approach for Gaussian Splatting from Coarsely-posed Images and Noisy Lidar Point Clouds](a_constrained_optimization_approach_for_gaussian_splatting_f.md)
+- [IGL-Nav: Incremental 3D Gaussian Localization for Image-goal Navigation](igl-nav_incremental_3d_gaussian_localization_for_image-goal_navigation.md)
+- [PBCAT: Patch-Based Composite Adversarial Training against Physically Realizable Attacks on Object Detection](pbcat_patch-based_composite_adversarial_training_against_physically_realizable_a.md)
+- [CCL-LGS: Contrastive Codebook Learning for 3D Language Gaussian Splatting](ccl-lgs_contrastive_codebook_learning_for_3d_language_gaussian_splatting.md)
+
+<!-- RELATED:END -->

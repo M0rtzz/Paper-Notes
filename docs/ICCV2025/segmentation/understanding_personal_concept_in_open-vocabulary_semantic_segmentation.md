@@ -145,3 +145,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 两个模型+三个数据集+详细消融+定性分析，缺少与更多个性化方法的对比
 - **写作质量**: ⭐⭐⭐⭐ 问题阐述清楚，方法描述直观，图表有说服力
 - **价值**: ⭐⭐⭐⭐ 开辟了个性化OVSS新赛道，基准和方法都有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-Free Class Purification for Open-Vocabulary Semantic Segmentation](training-free_class_purification_for_open-vocabulary_semantic_segmentation.md)
+- [FLOSS: Free Lunch in Open-vocabulary Semantic Segmentation](floss_free_lunch_in_openvocabulary_semantic_segmentation.md)
+- [Stepping Out of Similar Semantic Space for Open-Vocabulary Segmentation](stepping_out_of_similar_semantic_space_for_open-vocabulary_segmentation.md)
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](../../CVPR2025/segmentation/effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+- [Auto-Vocabulary Semantic Segmentation](auto-vocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

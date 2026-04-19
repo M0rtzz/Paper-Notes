@@ -232,3 +232,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 层层递进的消融设计极其清晰，从基线到完整模型每一步都有量化贡献
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，记号统一，图示直观
 - 价值: ⭐⭐⭐⭐ 对心理语言学方法论有重要警示作用，但对 NLP 社区的直接实用价值有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [Decoding Reading Goals from Eye Movements](decoding_reading_goals_from_eye_movements.md)
+- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+
+<!-- RELATED:END -->

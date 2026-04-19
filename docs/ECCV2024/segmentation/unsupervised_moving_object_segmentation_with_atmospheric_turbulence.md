@@ -119,3 +119,15 @@ Refine-Net 训练分两阶段。初始化阶段（20-30 epochs）：$\mathcal{L}
 - 实验充分度: ⭐⭐⭐⭐ 提供了首个专用数据集 DOST，对比和消融充分
 - 写作质量: ⭐⭐⭐⭐ 方法流程清晰，各模块动机明确
 - 价值: ⭐⭐⭐⭐ 开拓了湍流视频理解的新方向，数据集是重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProMerge: Prompt and Merge for Unsupervised Instance Segmentation](promerge_prompt_and_merge_for_unsupervised_instance_segmentation.md)
+- [Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation](un-evimo_unsupervised_event-based_independent_motion_segmentation.md)
+- [SOS: Segment Object System for Open-World Instance Segmentation With Object Priors](sos_segment_object_system_for_open-world_instance_segmentation_with_object_prior.md)
+- [unMORE: Unsupervised Multi-Object Segmentation via Center-Boundary Reasoning](../../ICML2025/segmentation/unmore_unsupervised_multi-object_segmentation_via_center-boundary_reasoning.md)
+- [ActionVOS: Actions as Prompts for Video Object Segmentation](actionvos_actions_as_prompts_for_video_object_segmentation.md)
+
+<!-- RELATED:END -->

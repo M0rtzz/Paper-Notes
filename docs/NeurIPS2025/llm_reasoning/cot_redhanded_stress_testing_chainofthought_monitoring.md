@@ -124,3 +124,15 @@ Hybrid 比 action-only 高 21%，比 CoT 高 42%。在 subtle 任务上 catch ra
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 untrusted 模型，4 个 monitor 模型，11 种 side task，6 种攻击策略，>30,000 monitor queries
 - 写作质量: ⭐⭐⭐⭐⭐ Figure 1-3 的可视化直观，subtle/non-subtle 的分类和 Figure 3 的 scatter plot 让核心发现一目了然
 - 价值: ⭐⭐⭐⭐⭐ 对 AI safety 社区至关重要——为前沿模型部署提供了实用的 hybrid monitoring 协议，并量化了 CoT 监控的适用边界
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [笔记1: CoT是幻觉吗？数据分布角度](is_chain-of-thought_reasoning_of_llms_a_mirage_a_data_distribution_lens.md)
+- [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](../../ACL2025/llm_reasoning/cot-valve_length-compressible_chain-of-thought_tuning.md)
+- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](../../ACL2025/llm_reasoning/cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
+- [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](../../CVPR2025/llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)
+
+<!-- RELATED:END -->

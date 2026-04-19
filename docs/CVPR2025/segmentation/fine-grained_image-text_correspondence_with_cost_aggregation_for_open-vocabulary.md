@@ -116,3 +116,15 @@ PartCATSeg 基于 CAT-Seg 架构进行扩展。输入一张图像和类别文本
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集 + 跨数据集评估 + 详尽的消融实验，结果令人信服
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富，动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 在所有基准上实现了 10%+ 的 h-IoU 提升，为 OVPS 领域设立了新的强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+- [Seg4Diff: Unveiling Open-Vocabulary Segmentation in Text-to-Image Diffusion Transformers](../../NeurIPS2025/segmentation/seg4diff_unveiling_open-vocabulary_segmentation_in_text-to-image_diffusion_trans.md)
+- [PartNeXt: A Next-Generation Dataset for Fine-Grained and Hierarchical 3D Part Understanding](../../NeurIPS2025/segmentation/partnext_a_next-generation_dataset_for_fine-grained_and_hierarchical_3d_part_und.md)
+- [LangHOPS: Language Grounded Hierarchical Open-Vocabulary Part Segmentation](../../NeurIPS2025/segmentation/langhops_language_grounded_hierarchical_open-vocabulary_part_segmentation.md)
+- [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
+
+<!-- RELATED:END -->

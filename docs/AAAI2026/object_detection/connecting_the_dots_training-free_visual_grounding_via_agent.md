@@ -149,3 +149,15 @@ GroundingAgent 是一个两阶段 pipeline：**候选生成（Candidate Generati
 - 实验充分度: ⭐⭐⭐⭐ 消融全面，oracle 分析、LLM 消融、检测器消融、self-consistency、分割扩展、失败分析都有，但缺少推理效率数据和更多数据集验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义准确，实验分析有深度，但部分内容在正文和附录间重复
 - 价值: ⭐⭐⭐ 作为 training-free baseline 有参考意义，但 65.1% 的绝对性能和高推理成本限制了实用价值；最大贡献是证明了 "caption 是瓶颈" 这一洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CompAgent: An Agentic Framework for Visual Compliance Verification](../../CVPR2026/object_detection/compagent_an_agentic_framework_for_visual_compliance_verification.md)
+- [PET-DINO: Unifying Visual Cues into Grounding DINO with Prompt-Enriched Training](../../CVPR2026/object_detection/pet-dino_unifying_visual_cues_into_grounding_dino_with_prompt-enriched_training.md)
+- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](../../CVPR2026/object_detection/just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
+- [ChartPoint: Guiding MLLMs with Grounding Reflection for Chart Reasoning](../../ICCV2025/object_detection/chartpoint_guiding_mllms_with_grounding_reflection_for_chart_reasoning.md)
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](../../CVPR2026/object_detection/training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+
+<!-- RELATED:END -->

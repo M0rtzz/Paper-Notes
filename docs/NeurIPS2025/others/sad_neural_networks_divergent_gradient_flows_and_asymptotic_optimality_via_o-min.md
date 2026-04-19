@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验主要是概念验证，规模和多样性有限
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，但对不熟悉模型论的读者门槛较高
 - 价值: ⭐⭐⭐⭐ 提供了理解梯度动力学的新理论视角，SAD 框架有后续研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points](hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)
+- [Addressing Divergent Representations from Causal Interventions on Neural Networks](../../ICLR2026/others/addressing_divergent_representations_causal.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
+- [SPACE: SPike-Aware Consistency Enhancement for Test-Time Adaptation in Spiking Neural Networks](space_spike-aware_consistency_enhancement_for_test-time_adaptation_in_spiking_ne.md)
+
+<!-- RELATED:END -->

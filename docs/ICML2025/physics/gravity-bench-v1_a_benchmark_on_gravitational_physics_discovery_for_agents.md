@@ -138,3 +138,15 @@ Gravity-Bench-v1 由三部分组成：
 - **实用性**: ⭐⭐⭐⭐ — 对评估和改进 AI 科学发现能力有重要参考价值
 - **写作质量**: ⭐⭐⭐⭐⭐ — 案例分析清晰，失败模式讨论深入
 - **综合评分**: 8/10 — 填补了物理发现 Agent 评估的重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Discovery of High-Redshift Galaxy Populations with Variational Autoencoders](../../NeurIPS2025/physics/unsupervised_discovery_of_high-redshift_galaxy_populations_with_variational_auto.md)
+- [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](../../NeurIPS2025/physics/polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
+- [Finetuning Stellar Spectra Foundation Models with LoRA](finetuning_stellar_spectra_foundation_models_with_lora.md)
+- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
+- [Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
+
+<!-- RELATED:END -->

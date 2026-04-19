@@ -126,3 +126,15 @@ $$\mathcal{R}_{\text{ECPv2},f}(n) \leq k \cdot \text{diam}(\mathcal{X}) \cdot \l
 - 实验充分度: ⭐⭐⭐⭐ — 涵盖多维度基准和详尽消融，但缺乏真实应用场景验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，理论推导严谨，定义-引理-定理体系完整
 - 价值: ⭐⭐⭐⭐ — 显著推进了Lipschitz优化的可扩展性，解决了ECP的实际部署瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ScaleBiO: Scalable Bilevel Optimization for LLM Data Reweighting](../../ACL2025/optimization/scalebio_bilevel_data_reweighting.md)
+- [Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization](pareto-grid-guided_large_language_models_for_fast_and_high-quality_heuristics_de.md)
+- [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
+- [BlazeFL: Fast and Deterministic Federated Learning Simulation](../../CVPR2026/optimization/blazefl_fast_and_deterministic_federated_learning_simulation.md)
+- [Memory-Efficient 4-bit Preconditioned Stochastic Optimization](../../ICCV2025/optimization/memory-efficient_4-bit_preconditioned_stochastic_optimization.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ $$\mathcal{L} = -\sum_{t=1}^{T} \log P_\theta(y_t | y_{<t}, x)$$
 - 实验充分度: ⭐⭐⭐ Workshop paper 规模，消融较完整但基准有限
 - 写作质量: ⭐⭐⭐⭐ 流水线描述清晰，动机阐述到位
 - 价值: ⭐⭐⭐⭐ 解决了 TIR 部署依赖的实际问题，具有广泛推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards the Law of Capacity Gap in Distilling Language Models](../../ACL2025/model_compression/law_of_capacity_gap_distilling_language_models.md)
+- [Distilling Balanced Knowledge from a Biased Teacher](../../CVPR2026/model_compression/distilling_balanced_knowledge_from_a_biased_teacher.md)
+- [ViT-Linearizer: Distilling Quadratic Knowledge into Linear-Time Vision Models](../../ICCV2025/model_compression/vit-linearizer_distilling_quadratic_knowledge_into_linear-time_vision_models.md)
+- [From Language Models over Tokens to Language Models over Characters](from_language_models_over_tokens_to_language_models_over_characters.md)
+- [Distilling Cross-Modal Knowledge via Feature Disentanglement](../../AAAI2026/model_compression/distilling_cross-modal_knowledge_via_feature_disentanglement.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ TACO评估集（竞赛编程），Best-of-N提升：
 - 实验充分度: ⭐⭐⭐⭐ 多baseline、多评估指标、迭代分析充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，伪代码完整
 - 价值: ⭐⭐⭐⭐⭐ 对代码评估和自动化测试有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
+- [On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
+- [Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+
+<!-- RELATED:END -->

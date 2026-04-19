@@ -135,3 +135,15 @@ $$\min_{\boldsymbol{\zeta}} \left\{ \frac{1}{2n} \sum_{a \in \mathcal{A}} \sum_{
 - 实验充分度: ⭐⭐⭐⭐ — 仿真+真实医疗数据，但缺少更多大规模场景
 - 写作质量: ⭐⭐⭐⭐ — 理论陈述清晰，符号体系完整
 - 价值: ⭐⭐⭐⭐ — 解决了精准医学中的实际痛点，方法实用且有理论支撑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
+- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](../../NeurIPS2025/human_understanding/policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](../../NeurIPS2025/human_understanding/succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)
+- [A Practical Guide for Incorporating Symmetry in Diffusion Policy](../../NeurIPS2025/human_understanding/a_practical_guide_for_incorporating_symmetry_in_diffusion_policy.md)
+
+<!-- RELATED:END -->

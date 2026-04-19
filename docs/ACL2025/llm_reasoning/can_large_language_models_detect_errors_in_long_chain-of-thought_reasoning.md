@@ -123,3 +123,15 @@ DeltaBench的构建流程：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖了PRM+Critic两类模型，多维度分析（错误类型/CoT长度/自评vs互评/反思效率）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据可视化丰富，发现阐述明确
 - 价值: ⭐⭐⭐⭐⭐ 对理解和改进o1类模型有重要指导意义，数据集已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking General Long Chain-of-Thought Reasoning Capabilities of Large Language Models via Representation Engineering](glore_long_cot_representation.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)
+- [Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision](../../NeurIPS2025/llm_reasoning/large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u.md)
+- [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](safe_math_reasoning.md)
+
+<!-- RELATED:END -->

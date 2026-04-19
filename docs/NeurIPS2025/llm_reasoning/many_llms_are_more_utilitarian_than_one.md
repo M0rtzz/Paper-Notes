@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6款模型×多种困境集×CNI分析×缓解实验×人工校验，极为充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，心理学工具使用规范
 - 价值: ⭐⭐⭐⭐⭐ 对多Agent AI对齐的重要警示，提供可操作的缓解策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One Token Embedding Is Enough to Deadlock Your Large Reasoning Model](one_token_embedding_is_enough_to_deadlock_your_large_reasoning_model.md)
+- [Let Me Think! A Long Chain-of-Thought Can Be Worth Exponentially Many Short Ones](let_me_think_a_long_chainofthought_can_be_worth_exponentiall.md)
+- [On Generalization across Measurement Systems: LLMs Entail More Test-Time Compute for Underrepresented Cultures](../../ACL2025/llm_reasoning/on_generalization_across_measurement_systems_llms_entail_more_test-time_compute_.md)
+- [Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+
+<!-- RELATED:END -->

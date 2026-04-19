@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集 + 消融 + 误导/正常双场景
 - 写作质量: ⭐⭐⭐⭐ 方法清晰
 - 价值: ⭐⭐⭐⭐ 对 LLM 鲁棒性有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+- [On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)
+- [SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)
+- [HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)
+- [UAQFact: Evaluating Factual Knowledge Utilization of LLMs on Unanswerable Questions](uaqfact_evaluating_factual_knowledge_utilization_of_llms_on_unanswerable_questio.md)
+
+<!-- RELATED:END -->

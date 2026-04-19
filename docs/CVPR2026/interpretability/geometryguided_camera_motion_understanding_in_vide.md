@@ -87,3 +87,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (benchmarking + probing + 蒸馏 + 定性分析)
 - 写作质量: ⭐⭐⭐⭐ (逻辑清晰，图表专业)
 - 价值: ⭐⭐⭐ (面向影视视频理解场景)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-guided Fine-Grained Video Anomaly Understanding](text-guided_fine-grained_video_anomaly_understanding.md)
+- [Missing No More: Dictionary-Guided Cross-Modal Image Fusion under Missing Infrared](missing_no_more_dictionary-guided_cross-modal_image_fusion_under_missing_infrare.md)
+- [Reallocating Attention Across Layers to Reduce Multimodal Hallucination](reallocating_attention_reduce_hallucination.md)
+- [SubspaceAD: Training-Free Few-Shot Anomaly Detection via Subspace Modeling](subspacead_training-free_few-shot_anomaly_detection_via_subspace_modeling.md)
+- [Edit-As-Act: Goal-Regressive Planning for Open-Vocabulary 3D Indoor Scene Editing](edit-as-act_goal-regressive_planning_for_open-vocabulary_3d_indoor_scene_editing.md)
+
+<!-- RELATED:END -->

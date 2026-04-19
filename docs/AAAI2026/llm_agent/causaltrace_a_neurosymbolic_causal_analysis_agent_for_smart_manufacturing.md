@@ -120,3 +120,15 @@ C3AN 原则评估综合得分：**4.59 / 5**
 ⭐⭐⭐⭐ (4/5)
 
 系统工程做得完整，从因果发现到知识增强到用户界面都有考虑。C3AN 评估框架本身也有参考价值。扣一分因为实验场景偏简单（学术测试平台），且因果发现方法的假设较强，对真实工业环境的泛化能力有待验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis](coach_collaborative_agents_for_contextual_highlighting_--_a_multi-agent_framewor.md)
+- [LLMTM: Benchmarking and Optimizing LLMs for Temporal Motif Analysis in Dynamic Graphs](llmtm_benchmarking_and_optimizing_llms_for_temporal_motif_analysis_in_dynamic_gr.md)
+- [A Multi-Agent LLM Framework for Multi-Domain Low-Resource In-Context NER via Knowledge Retrieval, Disambiguation and Reflective Analysis](a_multi-agent_llm_framework_for_multi-domain_low-resource_in.md)
+- [SMART: Self-Aware Agent for Tool Overuse Mitigation](../../ACL2025/llm_agent/smart_self-aware_agent_for_tool_overuse_mitigation.md)
+- [Promoting Sustainable Web Agents: Benchmarking and Estimating Energy Consumption Through Empirical and Theoretical Analysis](promoting_sustainable_web_agents_benchmarking_and_estimating_energy_consumption_.md)
+
+<!-- RELATED:END -->

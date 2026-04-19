@@ -153,3 +153,15 @@ CroPS 在 CT 上比最强 baseline（TriSampler）提升 9.3%，在 QR 上比 FS
 **4/5 ⭐**
 
 扎实的工业系统论文。问题定位精准、方法设计系统完整、线上部署验证充分。扣分主要因为数据集非公开难以复现，且核心判别器和标签设计缺少充分的敏感性分析。HLA + H-InfoNCE 的层级对比学习框架对稠密检索领域有明确的方法论贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling](semi-supervised_synthetic_data_generation_with_fine-grained_relevance_control_fo.md)
+- [Search Arena: Analyzing Search-Augmented LLMs](../../ICLR2026/recommender/search_arena_analyzing_search-augmented_llms.md)
+- [Length-Adaptive Interest Network for Balancing Long and Short Sequence Modeling in CTR Prediction](length-adaptive_interest_network_for_balancing_long_and_short_sequence_modeling_.md)
+- [Rejuvenating Cross-Entropy Loss in Knowledge Distillation for Recommender Systems](../../ICLR2026/recommender/rejuvenating_cross-entropy_loss_in_knowledge_distillation_for_recommender_system.md)
+- [QuRe: Query-Relevant Retrieval through Hard Negative Sampling in Composed Image Retrieval](../../ICML2025/recommender/qure_query-relevant_retrieval_through_hard_negative_sampling_in_composed_image_r.md)
+
+<!-- RELATED:END -->

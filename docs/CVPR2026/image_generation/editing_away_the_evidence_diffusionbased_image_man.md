@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论分析出色，但实验数据为hypothetical而非真实运行
 - 写作质量: ⭐⭐⭐⭐ 论文结构完整，理论推导清晰，相关工作覆盖全面
 - 价值: ⭐⭐⭐⭐ 对水印社区和内容溯源生态系统有重要警示和指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rel-Zero: Harnessing Patch-Pair Invariance for Robust Zero-Watermarking Against AI Editing](rel-zero_harnessing_patch-pair_invariance_for_robust_zero-watermarking_against_a.md)
+- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking](trace_structure-aware_character_encoding_for_robust_and_generalizable_document_w.md)
+- [Image Generation as a Visual Planner for Robotic Manipulation](image_generation_as_a_visual_planner_for_robotic_manipulation.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ MAoP 将规划分为预规划（Pre-Planning）和方面感知规划（Aspect-Aw
 - 实验充分度: ⭐⭐⭐⭐ 7城市 × 16旅行者类型 = 112 场景，蒸馏+扩展性分析完整
 - 写作质量: ⭐⭐⭐⭐ 长/宽视野对比论述清晰，框架图表直观
 - 价值: ⭐⭐⭐⭐ 对 LLM 规划方法设计和评测范式都有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisionArena: 230k Real World User-VLM Conversations with Preference Labels](../../CVPR2025/recommender/visionarena_230k_real_world_user-vlm_conversations_with_preference_labels.md)
+- [Validating LLM-as-a-Judge Systems under Rating Indeterminacy](validating_llm-as-a-judge_systems_under_rating_indeterminacy.md)
+- [Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
+- [ASAP: An Agentic Solution to Auto-Optimize Performance of Large-Scale LLM Training](asap_an_agentic_solution_to_auto-optimize_performance_of_large-scale_llm_trainin.md)
+- [Who You Are Matters: Bridging Topics and Social Roles via LLM-Enhanced Logical Recommendation](who_you_are_matters_bridging_topics_and_social_roles_via_llm-enhanced_logical_re.md)
+
+<!-- RELATED:END -->

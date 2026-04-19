@@ -162,3 +162,15 @@ TALON 估计类别数最接近真实值，有效缓解类别爆炸。
 - 实验充分度: ⭐⭐⭐⭐ — 7 个数据集、2 种 backbone、2 种评估协议、丰富消融和可视化
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、公式完整、伪代码规范
 - 价值: ⭐⭐⭐⭐ — 对 OCD 任务有实质性推动，缓解类别爆炸的方案实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning through Creation: A Hash-Free Framework for On-the-Fly Category Discovery](learning_through_creation_a_hash-free_framework_for_on-the-fly_category_discover.md)
+- [Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery](../../ECCV2024/model_compression/category_adaptation_meets_projected_distillation_in_generalized_continual_catego.md)
+- [Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing](../../AAAI2026/model_compression/towards_test-time_efficient_visual_place_recognition_via_asymmetric_query_proces.md)
+- [Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](../../ICLR2026/model_compression/specialization_after_generalization_towards_understanding_test-time_training_in_.md)
+- [Correcting False Alarms from Unseen: Adapting Graph Anomaly Detectors at Test Time](../../AAAI2026/model_compression/correcting_false_alarms_from_unseen_adapting_graph_anomaly_detectors_at_test_tim.md)
+
+<!-- RELATED:END -->

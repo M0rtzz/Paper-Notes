@@ -160,3 +160,15 @@ $$\mathbf{x}_{t+1} = \arg\max_{\mathbf{x} \in \mathcal{X}} \pi_{\hat{\mathbf{C}}
 - 实验充分度: ⭐⭐⭐⭐ — 涵盖合成、超参优化、NAS、高维搜索等多个场景，消融实验较充分
 - 写作质量: ⭐⭐⭐ — 结构清晰但篇幅较长，公式推导详尽但可读性一般
 - 价值: ⭐⭐⭐ — 对 DRE-BO 社区有实用价值，但该方向整体上仍是 BO 的小众分支
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
+- [A Square Peg in a Square Hole: Meta-Expert for Long-Tailed Semi-Supervised Learning](a_square_peg_in_a_square_hole_meta-expert_for_long-tailed_semi-supervised_learni.md)
+- [PRESCRIBE: Predicting Single-Cell Responses with Bayesian Estimation](../../NeurIPS2025/llm_pretraining/prescribe_predicting_single-cell_responses_with_bayesian_estimation.md)
+- [LLM Data Selection and Utilization via Dynamic Bi-level Optimization](llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
+- [Position: The Future of Bayesian Prediction Is Prior-Fitted](position_the_future_of_bayesian_prediction_is_prior-fitted.md)
+
+<!-- RELATED:END -->

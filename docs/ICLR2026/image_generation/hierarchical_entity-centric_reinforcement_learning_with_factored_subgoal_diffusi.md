@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多环境、消融、泛化、可视化全面
 - 写作质量: ⭐⭐⭐⭐ 动机和方法阐述清晰
 - 价值: ⭐⭐⭐⭐ 对多实体离线RL具有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HierLoc: Hyperbolic Entity Embeddings for Hierarchical Visual Geolocation](hierloc_hyperbolic_entity_embeddings_for_hierarchical_visual_geolocation.md)
+- [Hierarchical Reinforcement Learning with Uncertainty-Guided Diffusional Subgoals](../../ICML2025/image_generation/hierarchical_reinforcement_learning_with_uncertainty-guided_diffusional_subgoals.md)
+- [RIDER: 3D RNA Inverse Design with Reinforcement Learning-Guided Diffusion](rider_3d_rna_inverse_design_with_reinforcement_learning-guided_diffusion.md)
+- [Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment (CODA)](improved_object-centric_diffusion_learning_with_registers_and_contrastive_alignm.md)
+- [Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
+
+<!-- RELATED:END -->

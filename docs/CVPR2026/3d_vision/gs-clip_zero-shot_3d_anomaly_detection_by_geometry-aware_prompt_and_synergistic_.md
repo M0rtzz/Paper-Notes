@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、两种设置、详细消融、多模态扩展、参数敏感性分析
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，渲染图vs深度图的互补性用直观图例说明
 - 价值: ⭐⭐⭐⭐ ZS3DAD是新兴且实用的方向，提升显著且跨数据集泛化性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
+- [FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](../../ECCV2024/3d_vision/falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)
+- [VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection](virpro_visual-referred_probabilistic_prompt_learning_for_weakly-supervised_monoc.md)
+- [CASL: Curvature-Augmented Self-supervised Learning for 3D Anomaly Detection](../../AAAI2026/3d_vision/casl_curvature-augmented_self-supervised_learning_for_3d_anomaly_detection.md)
+- [A Semantically Disentangled Unified Model for Multi-category 3D Anomaly Detection](a_semantically_disentangled_unified_model_for_multi-category_3d_anomaly_detectio.md)
+
+<!-- RELATED:END -->

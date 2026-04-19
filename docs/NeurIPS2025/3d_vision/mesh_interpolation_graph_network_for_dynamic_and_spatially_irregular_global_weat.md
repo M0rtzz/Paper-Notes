@@ -129,3 +129,15 @@ MIGN 采用 **编码器-处理器-解码器** 架构：
 - 实验充分度: ⭐⭐⭐⭐ — 13个基线对比、泛化实验、消融实验均充分
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 对实际天气站网络预报有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UGM2N: An Unsupervised and Generalizable Mesh Movement Network via M-Uniform Loss](ugm2n_an_unsupervised_and_generalizable_mesh_movement_network_via_m-uniform_loss.md)
+- [Global Motion Corresponder for 3D Point-Based Scene Interpolation under Large Motion](../../ICCV2025/3d_vision/global_motion_corresponder_for_3d_point-based_scene_interpolation_under_large_mo.md)
+- [Global-Aware Edge Prioritization for Pose Graph Initialization](../../CVPR2026/3d_vision/global-aware_edge_prioritization_for_pose_graph_initialization.md)
+- [CA-I2P: Channel-Adaptive Registration Network with Global Optimal Selection](../../ICCV2025/3d_vision/ca-i2p_channel-adaptive_registration_network_with_global_optimal_selection.md)
+- [Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span](gaze_beyond_the_frame_forecasting_egocentric_3d_visual_span.md)
+
+<!-- RELATED:END -->

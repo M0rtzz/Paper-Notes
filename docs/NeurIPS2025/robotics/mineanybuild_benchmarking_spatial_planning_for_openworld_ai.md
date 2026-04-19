@@ -115,3 +115,15 @@ MLLM-based Agent 能否将空间理解能力转化为具体的、可执行的空
 - 实验充分度: ⭐⭐⭐⭐ 4000 任务 × 13 模型 × 5 维度评估 + 详细的失败案例分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，任务定义严谨，可视化丰富
 - 对我的价值: ⭐⭐⭐ Agent 空间规划能力评估的重要参考；Implementation Gap 概念可迁移到其他 Agent 研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [C-NAV: Towards Self-Evolving Continual Object Navigation in Open World](c-nav_towards_self-evolving_continual_object_navigation_in_open_world.md)
+- [Magma: A Foundation Model for Multimodal AI Agents](../../CVPR2025/robotics/magma_a_foundation_model_for_multimodal_ai_agents.md)
+- [Rethinking the Simulation vs. Rendering Dichotomy: No Free Lunch in Spatial World Modelling](rethinking_the_simulation_vs_rendering_dichotomy_no_free_lunch_in_spatial_world_.md)
+- [UniDomain: Pretraining a Unified PDDL Domain from Real-World Demonstrations for Generalizable Task Planning](pretraining_a_unified_pddl_domain_from_real-world_demonstrations_for_generalizab.md)
+- [Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
+
+<!-- RELATED:END -->

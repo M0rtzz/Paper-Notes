@@ -135,3 +135,15 @@ $$\theta_{\text{perturbed}} = (1 - \alpha) \theta_{\text{suppressed}} + \alpha \
 ## 启发与关联
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Unlearning with LLM Beliefs](../../ICLR2026/human_understanding/llm_unlearning_with_llm_beliefs.md)
+- [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](../../ICCV2025/human_understanding/cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
+- [Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](../../ICML2025/human_understanding/efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)
+- [AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition](../../ECCV2024/human_understanding/adadistill_adaptive_knowledge_distillation_for_deep_face_rec.md)
+- [Self-Correction Distillation for Structured Data Question Answering](../../AAAI2026/human_understanding/self-correction_distillation_for_structured_data_question_answering.md)
+
+<!-- RELATED:END -->

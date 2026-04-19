@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个互补任务设计精巧，load-bearing 验证严谨，但监控器复杂度有限
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机引人入胜，隐写层次分类清晰，实验叙事线逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 安全有根本性警示意义——过程监督可能适得其反，CoT 透明性不可靠
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ThinkSound: Chain-of-Thought Reasoning in Multimodal Large Language Models for Audio Generation and Editing](thinksound_chain-of-thought_reasoning_in_multimodal_large_language_models_for_au.md)
+- [Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](../../ACL2025/llm_reasoning/can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)
+- [Transformers Provably Learn Chain-of-Thought Reasoning with Length Generalization](transformers_provably_learn_chain-of-thought_reasoning_with_length_generalizatio.md)
+- [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](adaptive_dual_reasoner_large_reasoning_models_can_think_efficiently_by_hybrid_re.md)
+- [ProofSketch: Efficient Verified Reasoning for Large Language Models](proofsketch_efficient_verified_reasoning_for_large_language_models.md)
+
+<!-- RELATED:END -->

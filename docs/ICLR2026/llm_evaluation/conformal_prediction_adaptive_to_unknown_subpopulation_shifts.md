@@ -140,3 +140,15 @@ ImageNet 上 100 个测试环境的覆盖率分布（26 domains, ViT, LAC score,
 - 实验充分度: ⭐⭐⭐⭐ 视觉+LLM 双领域验证，多模型多 score function 多偏移度；A3 缺理论分析。
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，假设链条逻辑自洽；Algorithm 伪代码易读。
 - 价值: ⭐⭐⭐⭐ 对 CP 在实际部署中的可靠性有直接贡献，LLM 幻觉检测应用有潜力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semi-Supervised Conformal Prediction With Unlabeled Nonconformity Score](../../CVPR2026/llm_evaluation/semi-supervised_conformal_prediction_with_unlabeled_nonconformity_score.md)
+- [On Temperature Scaling and Conformal Prediction of Deep Classifiers](../../ICML2025/llm_evaluation/on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)
+- [Multi-LLM Adaptive Conformal Inference for Reliable LLM Responses](multi-llm_adaptive_conformal_inference_for_reliable_llm_responses.md)
+- [Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](../../NeurIPS2025/llm_evaluation/conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
+- [Truthfulness Despite Weak Supervision: Evaluating and Training LLMs Using Peer Prediction](truthfulness_despite_weak_supervision_evaluating_and_training_llms_using_peer_pr.md)
+
+<!-- RELATED:END -->

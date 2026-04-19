@@ -115,3 +115,15 @@ tags:
 - 技术贡献：⭐⭐⭐⭐⭐ （理论严谨 + 工程完整 + 优势明显）
 - 实验充分度：⭐⭐⭐⭐⭐ （8 个目标模型、多基线对比、多维度评估）
 - 写作质量：⭐⭐⭐⭐ （表述清晰，推导详尽）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [Large Language Bayes](large_language_bayes.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](neuro-symbolic_entity_alignment_via_variational_inference.md)
+- [Training-Free Bayesianization for Low-Rank Adapters of Large Language Models](training-free_bayesianization_for_low-rank_adapters_of_large_language_models.md)
+
+<!-- RELATED:END -->

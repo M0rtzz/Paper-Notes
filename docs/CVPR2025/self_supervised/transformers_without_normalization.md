@@ -100,3 +100,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 横跨视觉/语言/扩散/语音/自监督五大领域
 - 写作质量: ⭐⭐⭐⭐⭐ 简洁优雅
 - 价值: ⭐⭐⭐⭐⭐ 有望改变 Transformer 架构设计的基本范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PDE-Transformer: Efficient and Versatile Transformers for Physics Simulations](../../ICML2025/self_supervised/pde-transformer_efficient_and_versatile_transformers_for_physics_simulations.md)
+- [Test-Time Training Provably Improves Transformers as In-Context Learners](../../ICML2025/self_supervised/test-time_training_provably_improves_transformers_as_in-context_learners.md)
+- [CObL: Toward Zero-Shot Ordinal Layering without User Prompting](../../ICCV2025/self_supervised/cobl_toward_zero-shot_ordinal_layering_without_user_prompting.md)
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](../../CVPR2026/self_supervised/diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+- [Vision Transformers Need More Than Registers](../../CVPR2026/self_supervised/vision_transformers_need_more_than_registers.md)
+
+<!-- RELATED:END -->

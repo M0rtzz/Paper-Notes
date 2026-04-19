@@ -201,3 +201,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 12位顶级专家盲评，6个系统对比，极为充分
 - **写作质量**: ⭐⭐⭐⭐ — 条理清晰，背景铺垫详实
 - **价值**: ⭐⭐⭐⭐ — 对科学AI的发展方向有重要启发，问题集和评估框架可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluation of Attribution Bias in Generator-Aware Retrieval-Augmented Large Language Models](../../ACL2025/information_retrieval/evaluation_of_attribution_bias_in_generator-aware_retrieval-augmented_large_lang.md)
+- [MuRating: A High Quality Data Selecting Approach to Multilingual Large Language Model Pretraining](../../NeurIPS2025/information_retrieval/murating_a_high_quality_data_selecting_approach_to_multilingual_large_language_m.md)
+- [Unanswerability Evaluation for Retrieval Augmented Generation](../../ACL2025/information_retrieval/unanswerability_evaluation_for_retrieval_augmented_generation.md)
+- [GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation](../../ACL2025/information_retrieval/garage_a_benchmark_with_grounding_annotations_for_rag_evaluation.md)
+- [Rethinking Addressing in Language Models via Contextualized Equivariant Positional Encoding](rethinking_addressing_in_language_models_via_contexualized_equivariant_positiona.md)
+
+<!-- RELATED:END -->

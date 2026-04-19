@@ -162,3 +162,15 @@ Flickerformer在全部三个指标上均取得最优，PSNR超越第二名AST +0
 - 实验充分度: ⭐⭐⭐⭐ 对比16种SOTA方法覆盖6个任务类型，三组消融实验逐模块验证，配有特征可视化分析；但仅在单个数据集上评测
 - 写作质量: ⭐⭐⭐⭐ 物理特性→模块设计的逻辑链条清晰，图1的相位交换实验直观有说服力，公式推导严谨
 - 价值: ⭐⭐⭐⭐⭐ 首个burst去闪烁专用架构，3.92M参数超越20M+的通用方法，"物理先验嵌入网络"的方法论对结构化退化修复有广泛启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Adverse Weather Removal via Spectral-based Spatial Grouping (SSGformer)](../../ICCV2025/image_restoration/robust_adverse_weather_removal_via_spectral-based_spatial_grouping.md)
+- [Mechanism of Task-oriented Information Removal in In-context Learning](../../ICLR2026/image_restoration/mechanism_of_task-oriented_information_removal_in_in-context_learning.md)
+- [Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](../../ICCV2025/image_restoration/benchmarking_burst_superresolution_for_polarization_images_n.md)
+- [OAPT: Offset-Aware Partition Transformer for Double JPEG Artifacts Removal](../../ECCV2024/image_restoration/oapt_offset-aware_partition_transformer_for_double_jpeg_artifacts_removal.md)
+- [Detail-Preserving Latent Diffusion for Stable Shadow Removal](../../CVPR2025/image_restoration/detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
+
+<!-- RELATED:END -->

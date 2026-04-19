@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作无实验，但应用推论丰富
 - 写作质量: ⭐⭐⭐⭐ 定义清晰，证明思路流畅，但符号密度较高
 - 价值: ⭐⭐⭐⭐⭐ 为理论与实践的根本鸿沟提供了结构性解释，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)
+- [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
+- [Residual Matrix Transformers: Scaling the Size of the Residual Stream](../../ICML2025/others/residual_matrix_transformers_scaling_the_size_of_the_residual_stream.md)
+- [The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets](the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)
+- [Generating Synthetic Relational Tabular Data via Structural Causal Models](../../ACL2025/others/generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
+
+<!-- RELATED:END -->

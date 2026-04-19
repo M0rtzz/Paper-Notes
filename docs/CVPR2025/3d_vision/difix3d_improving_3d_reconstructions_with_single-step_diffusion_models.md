@@ -117,3 +117,15 @@ Difix3D+ 管线分三步：(1) Difix 模型：微调 SD-Turbo 去除渲染图像
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、两种3D表示、详细消融、驾驶场景验证，极为充分
 - 写作质量: ⭐⭐⭐⭐⭐ NVIDIA 出品的典型高质量论文，逻辑清晰、图示精美
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强——通用、高效、开源，对任何 3D 重建工作都有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BokehDiff: Neural Lens Blur with One-Step Diffusion](../../ICCV2025/3d_vision/bokehdiff_neural_lens_blur_with_one-step_diffusion.md)
+- [Improving Gaussian Splatting with Localized Points Management](improving_gaussian_splatting_with_localized_points_management.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [DiffPortrait360: Consistent Portrait Diffusion for 360° View Synthesis](diffportrait360_consistent_portrait_diffusion_for_360_view_synthesis.md)
+- [Linearly Constrained Diffusion Implicit Models](../../NeurIPS2025/3d_vision/linearly_constrained_diffusion_implicit_models.md)
+
+<!-- RELATED:END -->

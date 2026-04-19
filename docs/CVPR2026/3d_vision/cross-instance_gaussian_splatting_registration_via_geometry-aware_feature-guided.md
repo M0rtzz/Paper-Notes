@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实数据，同物体+跨实例，完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ 推导清晰，层层递进，可读性强
 - 价值: ⭐⭐⭐⭐⭐ 开创性工作，解锁新应用方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CMHANet: A Cross-Modal Hybrid Attention Network for Point Cloud Registration](cmhanet_a_crossmodal_hybrid_attention_network_for.md)
+- [ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
+- [Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](../../ECCV2024/3d_vision/learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
+- [EmoTaG: Emotion-Aware Talking Head Synthesis on Gaussian Splatting with Few-Shot Personalization](emotag_emotion-aware_talking_head_synthesis_on_gaussian_splatting_with_few-shot_.md)
+- [Hierarchical Visual Relocalization with Nearest View Synthesis from Feature Gaussian Splatting](hierarchical_visual_relocalization_with_nearest_view_synthesis_from_feature_gaus.md)
+
+<!-- RELATED:END -->

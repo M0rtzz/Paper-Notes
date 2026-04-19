@@ -10,46 +10,46 @@ description: >-
 
 **🧠 NeurIPS2025** · **11** 篇论文解读
 
-**[Adaptive Originality Filtering Rejection Based Prompting And Riddlescore For Cul](adaptive_originality_filtering_rejection_based_prompting_and_riddlescore_for_cul.md)**
+**[Adaptive Originality Filtering: Rejection-Based Prompting and RiddleScore for Culturally Grounded Multilingual Riddle Generation](adaptive_originality_filtering_rejection_based_prompting_and_riddlescore_for_cul.md)**
 
 :   提出 Adaptive Originality Filtering (AOF)——一种基于语义拒绝采样的提示策略，通过 MiniLM 嵌入的余弦相似度过滤重复/模板化输出，强制 LLM 生成更新颖、多样且文化匹配的多语言谜语；同时提出 RiddleScore 复合评估指标（Novelty + Diversity + Fluency + Alignment），与人类评分相关性达 $\rho=0.83$。
 
-**[Dcad-2000 A Multilingual Dataset Across 2000 Languages With Data Cleaning As Ano](dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)**
+**[DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)**
 
 :   构建覆盖2282种语言、46.72TB文本的多语言数据集DCAD-2000，提出将数据清洗重构为异常检测问题的语言无关框架，通过8维统计特征+Isolation Forest动态过滤噪声数据，在多个多语言benchmark上验证效果，尤其对低资源语言提升显著。
 
-**[Enhancing Multilingual Llm Pretraining With Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)**
+**[Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)**
 
 :   提出一套透明、简洁、高效的多语言模型驱动数据筛选框架，利用 FastText 和 Transformer（XLM-RoBERTa）嵌入分类器识别结构化且知识丰富的样本，在 FineWeb-2 数据集上仅用 15% 的 token 即可匹配基线 MMLU 分数，并将该框架扩展至 20 种语言并公开发布了精炼的预训练数据集。
 
-**[Exploring The Translation Mechanism Of Large Language Models](exploring_the_translation_mechanism_of_large_language_models.md)**
+**[Exploring the Translation Mechanism of Large Language Models](exploring_the_translation_mechanism_of_large_language_models.md)**
 
 :   提出 subspace-intervened path patching 方法对 LLM 翻译机制进行精细因果分析，发现翻译由不到 5% 的稀疏 attention head 驱动——分为 source head、indicator head、positional head 三类功能角色，MLP 将其特征整合为以英语为中心的中间表示，仅微调 64 个关键 head 即可匹配全参数微调性能。
 
-**[Helpsteer3-Preference Open Human-Annotated Preference Data Across Diverse Tasks ](helpsteer3-preference_open_human-annotated_preference_data_across_diverse_tasks_.md)**
+**[HelpSteer3-Preference: Open Human-Annotated Preference Data across Diverse Tasks and Languages](helpsteer3-preference_open_human-annotated_preference_data_across_diverse_tasks_.md)**
 
 :   NVIDIA 发布的 40K+ 开源人工标注偏好数据集，覆盖通用/STEM/代码/多语言（13 种语言），训练的奖励模型在 RM-Bench 上达 82.4%（+10%），CC-BY-4.0 许可对商业友好。
 
-**[How Data Mixing Shapes In-Context Learning Asymptotic Equivalence For Transforme](how_data_mixing_shapes_in-context_learning_asymptotic_equivalence_for_transforme.md)**
+**[How Data Mixing Shapes In-Context Learning: Asymptotic Equivalence for Transformers with MLPs](how_data_mixing_shapes_in-context_learning_asymptotic_equivalence_for_transforme.md)**
 
 :   在高维渐近框架下证明了带非线性MLP头的Transformer在ICL误差上等价于结构化多项式预测器，揭示了非线性MLP对非线性任务的增益机制，以及多源数据混合中低噪声和结构化协方差是高质量数据源的关键特征。
 
-**[Mergebench A Benchmark For Merging Domain-Specialized Llms](mergebench_a_benchmark_for_merging_domain-specialized_llms.md)**
+**[MergeBench: A Benchmark for Merging Domain-Specialized LLMs](mergebench_a_benchmark_for_merging_domain-specialized_llms.md)**
 
 :   MergeBench 是首个全面评估大规模领域特化 LLM 合并的基准套件，覆盖 Llama 和 Gemma 系列最大 9B 模型、五大任务领域和八种合并方法，从多任务性能、遗忘、运行效率三个维度提供系统化评估和实用指南。
 
-**[Merit Multilingual Semantic Retrieval With Interleaved Multi-Condition Query](merit_multilingual_semantic_retrieval_with_interleaved_multi-condition_query.md)**
+**[MERIT: Multilingual Semantic Retrieval with Interleaved Multi-Condition Query](merit_multilingual_semantic_retrieval_with_interleaved_multi-condition_query.md)**
 
 :   提出首个多语言交错多条件语义检索数据集 MERIT（320K queries, 135K products, 5种语言, 7大品类），揭示现有检索模型仅关注全局语义而忽略条件细节的瓶颈，并设计 Coral 微调框架通过嵌入重建+对比学习将检索性能提升 45.9%。
 
-**[Parallelprompt Extracting Parallelism From Large Language Model Queries](parallelprompt_extracting_parallelism_from_large_language_model_queries.md)**
+**[ParallelPrompt: Extracting Parallelism from Large Language Model Queries](parallelprompt_extracting_parallelism_from_large_language_model_queries.md)**
 
 :   构建了首个查询内并行（intra-query parallelism）基准数据集ParallelPrompt，包含37000+条真实用户提示的结构化分解标注，证明约10%的用户查询包含可并行的潜在结构，并行执行可实现最高5.7×的延迟加速且质量损失有限。
 
-**[Quantifying Climate Policy Action And Its Links To Development Outcomes A Cross-](quantifying_climate_policy_action_and_its_links_to_development_outcomes_a_cross-.md)**
+**[Quantifying Climate Policy Action and Its Links to Development Outcomes: A Cross-National Data-Driven Analysis](quantifying_climate_policy_action_and_its_links_to_development_outcomes_a_cross-.md)**
 
 :   本文构建了一个NLP-计量经济学一体化框架，先用微调的多语言DistilBERT对全球气候政策文档按主题（减缓/适应/灾害风险管理/损失与损害）自动分类（F1=0.90），再与世界银行发展指标做固定效应面板回归，发现减缓政策与较高GDP/GNI显著正相关，而损失与损害政策全球仍然缺乏实质性实施。
 
-**[Zero-Shot Performance Prediction For Probabilistic Scaling Laws](zero-shot_performance_prediction_for_probabilistic_scaling_laws.md)**
+**[Zero-Shot Performance Prediction for Probabilistic Scaling Laws](zero-shot_performance_prediction_for_probabilistic_scaling_laws.md)**
 
 :   将 NLP 学习曲线预测建模为多任务学习问题，利用潜变量多输出高斯过程（MaGP）捕捉数据集中的双层层次结构和任务间相关性，实现学习曲线的零样本预测，并通过蒙特卡洛模拟推导概率化的 Scaling Laws。

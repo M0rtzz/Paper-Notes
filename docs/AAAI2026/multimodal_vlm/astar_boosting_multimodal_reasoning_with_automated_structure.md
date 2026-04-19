@@ -95,3 +95,15 @@ MLLM在复杂视觉推理任务上表现不佳。现有增强方法分两类：(
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个benchmark+4种维度验证(性能/效率/灵活性/迁移性)+详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，motivation强，每个设计都有理论依据(VOC/metareasoning)
 - 价值: ⭐⭐⭐⭐⭐ training-free+极低数据需求+超越GPT-4o，实用价值和学术贡献都极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SophiaVL-R1: Reinforcing MLLMs Reasoning with Thinking Reward](../../ICLR2026/multimodal_vlm/sophiavl-r1_reinforcing_mllms_reasoning_with_thinking_reward.md)
+- [PET2Rep: Towards Vision-Language Model-Driven Automated Radiology Report Generation for Positron Emission Tomography](pet2rep_towards_vision-language_model-drived_automated_radiology_report_generati.md)
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](../../CVPR2026/multimodal_vlm/reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+- [Boosting MLLM Reasoning with Text-Debiased Hint-GRPO](../../ICCV2025/multimodal_vlm/boosting_mllm_reasoning_with_text-debiased_hint-grpo.md)
+- [iFinder: Structured Zero-Shot VLM Grounding for Dash-Cam Video Reasoning](../../NeurIPS2025/multimodal_vlm/ifinder_structured_zero-shot_vision-based_llm_grounding_for_dash-cam_video_reaso.md)
+
+<!-- RELATED:END -->

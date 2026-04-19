@@ -122,3 +122,15 @@ SPFSplat无需位姿监督即超越了依赖几何先验的SOTA方法。
 - 技术深度: ⭐⭐⭐⭐⭐ (反馈循环分析+重投影损失设计精妙)
 - 实验充分度: ⭐⭐⭐⭐⭐ (与三类方法全面对比)
 - 实用价值: ⭐⭐⭐⭐⭐ (真正无位姿,可扩展到无标注数据)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PCR-GS: COLMAP-Free 3D Gaussian Splatting via Pose Co-Regularizations](pcr-gs_colmap-free_3d_gaussian_splatting_via_pose_co-regularizations.md)
+- [RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration](reggs_unposed_sparse_views_gaussian_splatting_with_3dgs_registration.md)
+- [IncEventGS: Pose-Free Gaussian Splatting from a Single Event Camera](../../CVPR2025/3d_vision/inceventgs_pose-free_gaussian_splatting_from_a_single_event_camera.md)
+- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
+- [S3E: Self-Supervised State Estimation for Radar-Inertial System](s3e_self-supervised_state_estimation_for_radar-inertial_system.md)
+
+<!-- RELATED:END -->

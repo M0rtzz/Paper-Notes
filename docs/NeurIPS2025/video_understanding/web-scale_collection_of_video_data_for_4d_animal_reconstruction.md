@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 数据规模令人印象深刻，基准全面，但缺乏 3D 定量评估
 - 写作质量: ⭐⭐⭐⭐ 管线描述详尽清晰，分析深刻
 - 价值: ⭐⭐⭐⭐⭐ 数据集和管线对社区价值巨大，有望推动 4D 动物重建领域发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Collection-Free Masked Video Modeling](../../ECCV2024/video_understanding/data_collection-free_masked_video_modeling.md)
+- [Unleashing Hour-Scale Video Training for Long Video-Language Understanding](unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
+- [MUVR: A Multi-Modal Untrimmed Video Retrieval Benchmark with Multi-Level Visual Correspondence](muvr_a_multi-modal_untrimmed_video_retrieval_benchmark_with_multi-level_visual_c.md)
+- [4D-Bench: Benchmarking Multi-Modal Large Language Models for 4D Object Understanding](../../ICCV2025/video_understanding/4d-bench_benchmarking_multi-modal_large_language_models_for_4d_object_understand.md)
+- [CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing](cleverbirds_a_multiple-choice_benchmark_for_fine-grained_human_knowledge_tracing.md)
+
+<!-- RELATED:END -->

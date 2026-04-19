@@ -120,3 +120,15 @@ SA-GFN 的核心修改极其简洁：在现有 GFlowNet 管线中，仅将奖励
 - 实验充分度: ⭐⭐⭐⭐ 合成图完美验证理论，分子任务展示实际价值，但领域覆盖有限
 - 写作质量: ⭐⭐⭐⭐⭐ 从问题定义到理论推导到实验验证的逻辑链极其清晰
 - 价值: ⭐⭐⭐⭐ 所有GFlowNet图生成工作的必要修正，推荐为默认配置
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
+- [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [Time-Aware World Model for Adaptive Prediction and Control](time-aware_world_model_for_adaptive_prediction_and_control.md)
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+- [Sparse Training from Random Initialization: Aligning Lottery Ticket Masks using Weight Symmetry](sparse_training_from_random_initialization_aligning_lottery_ticket_masks_using_w.md)
+
+<!-- RELATED:END -->

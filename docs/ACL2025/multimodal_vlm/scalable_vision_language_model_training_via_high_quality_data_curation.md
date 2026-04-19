@@ -156,3 +156,15 @@ SFT-Instruction数据集质量最高，但SFT-Preference因复杂度过高反而
 - 实验充分度: ⭐⭐⭐⭐⭐ — 655B token预训练、18个基准评测、多组消融实验，工程量极大
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，方法论阐述系统
 - 价值: ⭐⭐⭐⭐ — 对VLM训练的数据工程提供了实用指导，缩放定律和课程SFT策略有广泛参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Data Curation Effectively Distills Large-Scale Multimodal Models](../../CVPR2025/multimodal_vlm/active_data_curation_effectively_distills_large-scale_multimodal_models.md)
+- [Error-driven Data-efficient Large Multimodal Model Tuning](error-driven_data-efficient_large_multimodal_model_tuning.md)
+- [Effective Training Data Synthesis for Improving MLLM Chart Understanding](../../ICCV2025/multimodal_vlm/effective_training_data_synthesis_for_improving_mllm_chart_understanding.md)
+- [R-VLM: Region-Aware Vision Language Model for Precise GUI Grounding](r-vlm_region-aware_vision_language_model_for_precise_gui_grounding.md)
+- [SCAN: Bootstrapping Contrastive Pre-training for Data Efficiency](../../ICCV2025/multimodal_vlm/scan_bootstrapping_contrastive_pre-training_for_data_efficiency.md)
+
+<!-- RELATED:END -->

@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ImageNet-C连续TTA、多标注预算、消融完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述简洁
 - 价值: ⭐⭐⭐⭐ 对实际部署中的边缘设备TTA有显著意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Entropy: Region Confidence Proxy for Wild Test-Time Adaptation](../../ICML2025/others/beyond_entropy_region_confidence_proxy_for_wild_test-time_adaptation.md)
+- [X-Turing: Towards an Enhanced and Efficient Turing Test for Long-Term Dialogue Agents](../../ACL2025/others/xturing_enhanced_turing_test.md)
+- [Test-Time Augmentation Improves Efficiency in Conformal Prediction](test-time_augmentation_improves_efficiency_in_conformal_prediction.md)
+- [Neural Collapse in Test-Time Adaptation](../../CVPR2026/others/neural_collapse_in_test-time_adaptation.md)
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](open_set_label_shift_with_test_time_out-of-distribution_reference.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ DoF-Gaussian 在去模糊指标上全面最优或次优，且是唯一基于 3DG
 - 实验充分度: ⭐⭐⭐⭐ 真实+合成数据集，消融全面，交互应用展示丰富
 - 写作质量: ⭐⭐⭐⭐ 物理推导清晰，图示与算法伪代码规范
 - 价值: ⭐⭐⭐⭐ 填补了3DGS可控景深的空白，对摄影和电影渲染有直接应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DepthSplat: Connecting Gaussian Splatting and Depth](depthsplat_connecting_gaussian_splatting_and_depth.md)
+- [3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes](3d_convex_splatting_radiance_field_rendering_with_3d_smooth_convexes.md)
+- [FantasyStyle: Controllable Stylized Distillation for 3D Gaussian Splatting](../../AAAI2026/3d_vision/fantasystyle_controllable_stylized_distillation_for_3d_gaussian_splatting.md)
+- [DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds](dashgaussian_optimizing_3d_gaussian_splatting_in_200_seconds.md)
+- [Hardware-Rasterized Ray-Based Gaussian Splatting](hardware-rasterized_ray-based_gaussian_splatting.md)
+
+<!-- RELATED:END -->

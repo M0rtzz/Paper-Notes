@@ -152,3 +152,15 @@ CoMind获得9枚奖牌（5金），相对此前SOTA AIDE提升125%。
 - 实验充分度: ⭐⭐⭐⭐⭐ （20个历史竞赛 + 4个活跃竞赛 + 新颖性评估 + 消融 + 代码复杂度分析）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，但部分实验数据的呈现可以更紧凑）
 - 价值: ⭐⭐⭐⭐⭐ （开辟社区感知Agent新方向，对Data Science自动化有重大意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MLRC-Bench: Can Language Agents Solve Machine Learning Research Challenges?](../../NeurIPS2025/llm_agent/mlrc-bench_can_language_agents_solve_machine_learning_research_challenges.md)
+- [Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](agentic_context_engineering_evolving_contexts_for_self-improving_language_models.md)
+- [Reducing Belief Deviation in Reinforcement Learning for Active Reasoning of LLM Agents](reducing_belief_deviation_in_reinforcement_learning_for_active_reasoning.md)
+- [Solving the Granularity Mismatch: Hierarchical Preference Learning for Long-Horizon LLM Agents](solving_the_granularity_mismatch_hierarchical_preference_learning_for_long-horiz.md)
+- [Reflection-Driven Control for Trustworthy Code Agents](../../AAAI2026/llm_agent/reflection-driven_control_for_trustworthy_code_agents.md)
+
+<!-- RELATED:END -->

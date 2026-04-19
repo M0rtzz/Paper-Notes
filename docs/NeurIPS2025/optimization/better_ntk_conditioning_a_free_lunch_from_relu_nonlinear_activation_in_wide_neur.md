@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 数值验证充分但都在小尺度上，缺乏大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论表述清晰优美，75.5° 的结果令人印象深刻
 - 价值: ⭐⭐⭐⭐⭐ 对深度学习优化理论有重要基础贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Celo2: Towards Learned Optimization Free Lunch](../../ICLR2026/optimization/celo2_towards_learned_optimization_free_lunch.md)
+- [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Training Robust Graph Neural Networks by Modeling Noise Dependencies](training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)
+- [Exploring Landscapes for Better Minima along Valleys](exploring_landscapes_for_better_minima_along_valleys.md)
+
+<!-- RELATED:END -->

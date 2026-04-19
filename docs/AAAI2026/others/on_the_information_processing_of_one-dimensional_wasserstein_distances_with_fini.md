@@ -159,3 +159,15 @@ Wasserstein距离嵌入的径向排序与已知疏水性排序的相关性显著
 - **创新性**: ★★★★☆ — 填补了有限样本Wasserstein距离信息处理能力的理论空白
 - **实用性**: ★★★☆☆ — 理论洞察有深度，但直接应用场景相对有限
 - **综合**: 7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShortageSim: Simulating Drug Shortages under Information Asymmetry](shortagesim_simulating_drug_shortages_under_information_asymmetry.md)
+- [On Support Samples of Next Word Prediction](../../ACL2025/others/on_support_samples_of_next_word_prediction.md)
+- [DiffMM: Efficient Method for Accurate Noisy and Sparse Trajectory Map Matching via One Step Diffusion](diffmm_efficient_method_for_accurate_noisy_and_sparse_trajectory_map_matching_vi.md)
+- [Learning Distances from Data with Normalizing Flows and Score Matching](../../ICML2025/others/learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
+- [Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](../../NeurIPS2025/others/brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
+
+<!-- RELATED:END -->

@@ -197,3 +197,15 @@ PatchCore(FPFH) 引入 PAM 后 O-AUROC 提升 24.6%，P-AUROC 提升 28.7%，效
 - **实验充分度**: ⭐⭐⭐⭐ — 两个数据集、多个基线、详细消融和定性结果
 - **实用价值**: ⭐⭐⭐⭐ — 检测+修复的统一框架在制造业场景中有直接应用价值
 - **综合评分**: ⭐⭐⭐⭐ (8/10)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PASDF: Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation](bridging_3d_anomaly_localization_and_repair_via_highquality.md)
+- [RayletDF: Raylet Distance Fields for Generalizable 3D Surface Reconstruction from Point Clouds or Gaussians](rayletdf_raylet_distance_fields_for_generalizable_3d_surface_reconstruction_from.md)
+- [Momentum-GS: Momentum Gaussian Self-Distillation for High-Quality Large Scene Reconstruction](momentum-gs_momentum_gaussian_self-distillation_for_high-quality_large_scene_rec.md)
+- [Bridging Diffusion Models and 3D Representations: A 3D Consistent Super-Resolution Framework](bridging_diffusion_models_and_3d_representations_a_3d_consistent_super-resolutio.md)
+- [3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](bridging_diffusion_models_and_3d_representations_a_3d_consis.md)
+
+<!-- RELATED:END -->

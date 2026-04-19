@@ -172,3 +172,15 @@ MF-LAL 在 40 个生成化合物的扩展评估中：BRD4(2) 平均 ABFE **-6.3*
 | 实验充分性 | 4 | 两个真实蛋白靶标、13 个基线、充分消融、统计检验 |
 | 实用价值 | 4 | 首次在生成模型中成功利用金标准 ABFE，有实际药物发现价值 |
 | 写作质量 | 4 | 结构清晰，方法描述详尽，图示直观 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Amortized Active Generation of Pareto Sets](../../NeurIPS2025/medical_imaging/amortized_active_generation_of_pareto_sets.md)
+- [Generating Multi-Table Time Series EHR from Latent Space with Minimal Preprocessing](../../NeurIPS2025/medical_imaging/generating_multi-table_time_series_ehr_from_latent_space_with_minimal_preprocess.md)
+- [Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](../../NeurIPS2025/medical_imaging/towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
+- [Controllable Latent Space Augmentation for Digital Pathology](../../ICCV2025/medical_imaging/controllable_latent_space_augmentation_for_digital_pathology.md)
+- [GFlowNets for Learning Better Drug-Drug Interaction Representations](../../NeurIPS2025/medical_imaging/gflownets_for_learning_better_drug-drug_interaction_representations.md)
+
+<!-- RELATED:END -->

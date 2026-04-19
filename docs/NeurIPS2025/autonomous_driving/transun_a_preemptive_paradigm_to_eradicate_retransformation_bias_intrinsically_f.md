@@ -127,3 +127,15 @@ tags:
 - ⭐⭐⭐⭐ 理论深度：无偏性证明严格，GTS 统一框架提供深入理论洞见
 - ⭐⭐⭐⭐⭐ 实验充分度：合成 + 公开 + 工业数据三层验证，含大规模线上部署
 - ⭐⭐⭐⭐⭐ 实用价值：已在淘宝核心场景上线，DAU 3 亿+，工业影响力突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neurosymbolic Diffusion Models](neurosymbolic_diffusion_models.md)
+- [Causality Meets Locality: Provably Generalizable and Scalable Policy Learning for Networked Systems](causality_meets_locality_provably_generalizable_and_scalable_policy_learning_for.md)
+- [Prioritizing Perception-Guided Self-Supervision: A New Paradigm for Causal Modeling in End-to-End Autonomous Driving](prioritizing_perception-guided_self-supervision_a_new_paradigm_for_causal_modeli.md)
+- [SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis](../../ICCV2025/autonomous_driving/leveraging_bev_paradigm_for_ground-to-aerial_image_synthesis.md)
+- [SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving](sqs_enhancing_sparse_perception_models_via_query-based_splatting_in_autonomous_d.md)
+
+<!-- RELATED:END -->

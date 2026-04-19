@@ -164,3 +164,15 @@ Decide 模块将语言嵌入与数值观测融合到 RL 策略中：
 - 实验充分度: ⭐⭐⭐⭐ — 三种场景、多种基线、详细消融，但仅限于一个环境
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，符号表统一，但公式较多
 - 价值: ⭐⭐⭐⭐ — 为语言增强的经济决策提供了有前景的方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+- [MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management](mars_a_meta-adaptive_reinforcement_learning_framework_for_risk-aware_multi-agent.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](../../ICML2025/reinforcement_learning/counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [Beyond Monotonicity: Revisiting Factorization Principles in Multi-Agent Q-Learning](beyond_monotonicity_revisiting_factorization_principles_in_multi-agent_q-learnin.md)
+
+<!-- RELATED:END -->

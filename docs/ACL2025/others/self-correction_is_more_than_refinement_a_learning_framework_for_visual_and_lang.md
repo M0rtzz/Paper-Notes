@@ -147,3 +147,15 @@ $$\mathcal{L}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}[\log\sigma(\beta(\log\
 - **实验充分度**: ⭐⭐⭐⭐ 多个 VLM、8 个基准测试、多个基线对比、消融实验完整
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，RQ 驱动的研究设计使论文结构紧凑
 - **价值**: ⭐⭐⭐⭐ 方法简单有效、成本低，为 VLM 自我改进提供了实用范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Reason Over Time: Timeline Self-Reflection for Temporal Reasoning](tiser_timeline_self_reflection_temporal.md)
+- [Are Any-to-Any Models More Consistent Across Modality Transfers Than Specialists?](are_any-to-any_models_more_consistent_across_modality_transfers_than_specialists.md)
+- [Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks](principled_generalization_arithmetic.md)
+- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
+- [Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning](micro_act_knowledge_conflict_reasoning.md)
+
+<!-- RELATED:END -->

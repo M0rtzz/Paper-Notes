@@ -94,3 +94,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据集全面测试，消融实验覆盖所有模块，效率对比详实
 - 写作质量: ⭐⭐⭐⭐ 动机图(Fig.1)直观有力，整体逻辑清晰
 - 价值: ⭐⭐⭐⭐ 为扩散SR的效率优化提供了一个有效且通用的思路，跳步码本+回归器的方案可插件式使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
+- [DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](../../AAAI2026/image_generation/mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
+
+<!-- RELATED:END -->

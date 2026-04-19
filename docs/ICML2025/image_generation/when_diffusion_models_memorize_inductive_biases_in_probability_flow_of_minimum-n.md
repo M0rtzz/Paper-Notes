@@ -121,3 +121,15 @@ $$\mathcal{A} = \left\{\sum_{n \in \mathcal{I}} \mathbf{x}_n \mid \mathcal{I} \s
 - 实验充分度: ⭐⭐⭐⭐ （合成数据验证充分，但缺少真实图像实验）
 - 写作质量: ⭐⭐⭐⭐ （定理-证明结构清晰，直觉解释到位）
 - 价值: ⭐⭐⭐⭐ （对理解扩散模型记忆化/泛化机制有重要理论价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding and Mitigating Memorization in Generative Models via Sharpness of Probability Landscapes](understanding_and_mitigating_memorization_in_generative_models_via_sharpness_of_.md)
+- [When Are Concepts Erased From Diffusion Models?](../../NeurIPS2025/image_generation/when_are_concepts_erased_from_diffusion_models.md)
+- [Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training](../../NeurIPS2025/image_generation/why_diffusion_models_dont_memorize_the_role_of_implicit_dynamical_regularization.md)
+- [ContinualFlow: Learning and Unlearning with Neural Flow Matching](continualflow_learning_and_unlearning_with_neural_flow_matching.md)
+- [Flow Matching Neural Processes](../../NeurIPS2025/image_generation/flow_matching_neural_processes.md)
+
+<!-- RELATED:END -->

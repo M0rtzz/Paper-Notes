@@ -158,3 +158,15 @@ SAE包含三个步骤：
 - 实验充分度: ⭐⭐⭐⭐⭐（11个数据集、3个领域、5种baseline、抗噪方法、噪声鲁棒性）
 - 写作质量: ⭐⭐⭐⭐⭐（动机清晰、类比直观、实验设计合理）
 - 价值: ⭐⭐⭐⭐⭐（简单通用有效，实用价值极高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-Aware NIR-to-Visible Translation](object-aware_nir-to-visible_translation.md)
+- [Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept.md)
+- [Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation](bidirectional_uncertainty-based_active_learning_for_open-set_annotation.md)
+- [ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting](abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou.md)
+- [The Counting Power of Transformers](../../ICLR2026/others/the_counting_power_of_transformers.md)
+
+<!-- RELATED:END -->

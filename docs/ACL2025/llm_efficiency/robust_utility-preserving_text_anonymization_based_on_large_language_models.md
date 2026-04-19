@@ -122,3 +122,15 @@ RUPTA框架包含三个基于LLM的核心组件，形成迭代优化循环：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、多种LLM backbone、蒸馏实验、人工评估、可视化分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，形式化定义严谨，图示直观
 - 价值: ⭐⭐⭐⭐ 首次系统性研究LLM语境下匿名化与下游效用的关系，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GradOT: Training-free Gradient-preserving Offsite-tuning for Large Language Models](gradot_offsite_tuning.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
+- [Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
+- [Entailment-Preserving First-order Logic Representations in Natural Language Entailment](entailment-preserving_first-order_logic_representations_in_natural_language_enta.md)
+
+<!-- RELATED:END -->

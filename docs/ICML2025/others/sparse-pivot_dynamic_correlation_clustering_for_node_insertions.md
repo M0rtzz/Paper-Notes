@@ -143,3 +143,15 @@ Reference Clustering 本身是 5-近似，因此总近似比为 $4 \times 5 \tim
 - 实验充分度: ⭐⭐⭐ (数据集较小，缺乏参数分析)
 - 写作质量: ⭐⭐⭐⭐ (理论分析清晰，节点分类体系有条理)
 - 价值: ⭐⭐⭐⭐ (填补了动态 CC 近似比的空白)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](../../NeurIPS2025/others/improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)
+- [Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
+- [DSP: Dynamic Sequence Parallelism for Multi-Dimensional Transformers](dsp_dynamic_sequence_parallelism_for_multi-dimensional_transformers.md)
+- [Learning-Augmented Hierarchical Clustering](learning-augmented_hierarchical_clustering.md)
+- [TANGO: Clustering with Typicality-Aware Nonlocal Mode-Seeking and Graph-Cut Optimization](tango_clustering_with_typicality-aware_nonlocal_mode-seeking_and_graph-cut_optim.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ OptScale 在 AMC23 上达到了 100% 准确率，同时 token 消耗降低了约
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多个 benchmark 和多个模型（7B/8B/32B），但缺乏非数学推理任务的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰完整，从框架到实现逻辑自洽
 - 价值: ⭐⭐⭐⭐ 理论+实践双重贡献，免训练版本实用价值高，但 i.i.d. 假设限制了理论的严格适用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Temperature Scaling and Conformal Prediction of Deep Classifiers](../../ICML2025/llm_evaluation/on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
+- [In-Context Learning of Temporal Point Processes with Foundation Inference Models](../../ICLR2026/llm_evaluation/in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
+- [Multi-LLM Adaptive Conformal Inference for Reliable LLM Responses](../../ICLR2026/llm_evaluation/multi-llm_adaptive_conformal_inference_for_reliable_llm_responses.md)
+
+<!-- RELATED:END -->

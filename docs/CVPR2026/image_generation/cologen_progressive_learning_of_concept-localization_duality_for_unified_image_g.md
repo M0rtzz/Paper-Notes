@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖编辑/可控/个性化三大任务线，6 个基准，消融深入
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，图示质量高，训练策略描述详尽
 - **价值**: ⭐⭐⭐⭐ 为统一图像生成提供了有理论基础的实用方案，PRW 可迁移到其他多任务场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PureCC: Pure Learning for Text-to-Image Concept Customization](purecc_pure_learning_for_text-to-image_concept_customization.md)
+- [EchoGen: Cycle-Consistent Learning for Unified Layout-Image Generation and Understanding](../../AAAI2026/image_generation/echogen_cycle-consistent_learning_for_unified_layout-image_generation_and_unders.md)
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [The Diffusion Duality](../../ICML2025/image_generation/the_diffusion_duality.md)
+- [BiGain: Unified Token Compression for Joint Generation and Classification](bigain_token_compression.md)
+
+<!-- RELATED:END -->

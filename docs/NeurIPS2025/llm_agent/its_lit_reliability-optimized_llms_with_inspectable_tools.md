@@ -169,3 +169,15 @@ $$\text{Cost}(S) = \sum_{t \in S} \text{Cost}(t) = \sum_{t \in S} (P_t + D_t + C
 3. **用户调试效率的人类实验**：补充严格的用户研究，量化 LIT 选出的透明方案是否真的让人类用户更快定位和修复错误。
 4. **与强化学习结合**：将成本函数作为 reward signal 融入 RLHF/DPO 训练，让模型内化对可靠工具的偏好，而非依赖 prompt。
 5. **动态成本调整**：根据上下文（如数据分布是否平稳）动态调整工具成本，而非使用静态预设值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Judge Reliability Harness: Stress Testing the Reliability of LLM Judges](../../ICLR2026/llm_agent/judge_reliability_harness_stress_testing_the_reliability_of_llm_judges.md)
+- [Lessons Learned: A Multi-Agent Framework for Code LLMs to Learn and Improve](lessons_learned_a_multi-agent_framework_for_code_llms_to_learn_and_improve.md)
+- [Distilling LLM Agent into Small Models with Retrieval and Code Tools](distilling_llm_agent_into_small_models_with_retrieval_and_co.md)
+- [Attractive Metadata Attack: Inducing LLM Agents to Invoke Malicious Tools](attractive_metadata_attack_inducing_llm_agents_to_invoke_malicious_tools.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+
+<!-- RELATED:END -->

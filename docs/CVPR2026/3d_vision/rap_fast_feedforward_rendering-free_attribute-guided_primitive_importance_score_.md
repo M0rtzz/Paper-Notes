@@ -141,3 +141,15 @@ $$\mathcal{L}_{\text{entropy}} = 1 - \text{EntropyNorm}(S)$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多数据集 + 多任务（后处理剪枝/训练中剪枝/压缩）
 - 写作质量: ⭐⭐⭐⭐ — 观察驱动的特征设计动机清晰
 - 价值: ⭐⭐⭐⭐ — 对 3DGS 的实际部署有切实帮助
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fast SceneScript: Fast and Accurate Language-Based 3D Scene Understanding via Multi-Token Prediction](fast_scenescript_fast_and_accurate_language-based_3d_scene_understanding_via_mul.md)
+- [Let it Snow! Animating 3D Gaussian Scenes with Dynamic Weather Effects via Physics-Guided Score Distillation](let_it_snow_animating_3d_gaussian_scenes_with_dynamic_weather_effects_via_physic.md)
+- [Cross-Instance Gaussian Splatting Registration via Geometry-Aware Feature-Guided Alignment](cross-instance_gaussian_splatting_registration_via_geometry-aware_feature-guided.md)
+- [E2EGS: Event-to-Edge Gaussian Splatting for Pose-Free 3D Reconstruction](e2egs_event-to-edge_gaussian_splatting_for_pose-free_3d_reconstruction.md)
+- [3DGEER: 3D Gaussian Rendering Made Exact and Efficient for Generic Cameras](../../ICLR2026/3d_vision/3dgeer_3d_gaussian_rendering_made_exact_and_efficient_for_generic_cameras.md)
+
+<!-- RELATED:END -->

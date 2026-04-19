@@ -165,3 +165,15 @@ BlindFed的整体流程分为三个阶段：
 - 实验充分度: ⭐⭐⭐ ViT-Base较小，只做了图像分类，实际FHE实验也较有限
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，框架描述条理分明，数学严谨
 - 实用价值: ⭐⭐⭐ 理念很好但计算代价极高，距离实际部署还很远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedMeNF: Privacy-Preserving Federated Meta-Learning for Neural Fields](fedmenf_privacy-preserving_federated_meta-learning_for_neural_fields.md)
+- [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
+- [Ask and Remember: A Questions-Only Replay Strategy for Continual Visual Question Answering](ask_and_remember_a_questions-only_replay_strategy_for_continual_visual_question_.md)
+- [FRET: Feature Redundancy Elimination for Test Time Adaptation](fret_feature_redundancy_elimination_for_test_time_adaptation.md)
+- [Staining and Locking Computer Vision Models without Retraining](staining_and_locking_computer_vision_models_without_retraining.md)
+
+<!-- RELATED:END -->

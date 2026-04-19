@@ -154,3 +154,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融详尽（6种配置），对比覆盖训练型+零样本方法，有场景穿越等创意实验
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，各模块的必要性通过消融逐步论证
 - 价值: ⭐⭐⭐⭐ 零样本+无需训练+通用场景的组合极具实用潜力，为扩散模型的3D应用开辟新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+- [MVDD: Multi-View Depth Diffusion Models](mvdd_multi-view_depth_diffusion_models.md)
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+
+<!-- RELATED:END -->

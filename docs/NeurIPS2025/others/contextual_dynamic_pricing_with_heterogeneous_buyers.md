@@ -119,3 +119,15 @@ $d=1$ 时，结合方差感知置信区间的自适应离散化：
 - **vs Cesa-Bianchi et al. (2019)**: 非上下文异质定价的先驱工作，但遗憾依赖实例参数 $V$ 可在最坏情形下爆炸。ZoomV 通过方差感知消除了该依赖
 - **vs Krishnamurthy et al. (2023)**: 腐败鲁棒上下文搜索（$C=o(T)$ 个腐败响应），不适用于真正大规模异质种群
 - Composite disagreement coefficient 分解可迁移到其他结构化 contextual bandits（如分段线性收益的拍卖设计、推荐系统中的异质用户建模）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
+- [ConceptCarve: Dynamic Realization of Evidence](../../ACL2025/others/conceptcarve_dynamic_realization_of_evidence.md)
+- [You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception](../../ICCV2025/others/you_share_beliefs_i_adapt_progressive_heterogeneous_collaborative_perception.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
+- [Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](../../AAAI2026/others/area-optimal_control_strategies_for_heterogeneous_multi-agen.md)
+
+<!-- RELATED:END -->

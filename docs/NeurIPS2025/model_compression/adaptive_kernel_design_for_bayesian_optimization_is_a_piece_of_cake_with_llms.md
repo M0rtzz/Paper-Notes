@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 60 个超参数优化任务 + 控制器调参 + 光子芯片设计，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，食物主题命名有趣 (CAKE/BAKER)
 - 价值: ⭐⭐⭐⭐ 对 BO 实践者有直接价值，但依赖 LLM API 限制了部分场景的应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)
+- [Joker: Joint Optimization Framework for Lightweight Kernel Machines](../../ICML2025/model_compression/joker_joint_optimization_framework_for_lightweight_kernel_machines.md)
+- [AutoDiscovery: Open-ended Scientific Discovery via Bayesian Surprise](autodiscovery_open-ended_scientific_discovery_via_bayesian_surprise.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+
+<!-- RELATED:END -->

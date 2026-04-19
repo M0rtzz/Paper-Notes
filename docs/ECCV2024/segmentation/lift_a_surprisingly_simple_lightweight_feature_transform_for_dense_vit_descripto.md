@@ -152,3 +152,15 @@ LiFT 在所有任务、所有分辨率上全面超越基线方法。尤为突出
 | 实用性 | 9 | 训练快速、部署轻量、即插即用、backbone 无关，工程落地门槛极低 |
 | 写作质量 | 8 | 结构清晰，Fig.3 的性能-计算权衡曲线展示方式值得借鉴 |
 | 总评 | 8 | 典型的"小巧但有效"工作，实验扎实，洞察深刻，对实际应用价值极大 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Simple Latent Diffusion Approach for Panoptic Segmentation and Mask Inpainting](a_simple_latent_diffusion_approach_for_panoptic_segmentation_and_mask_inpainting.md)
+- [Self-supervised Co-salient Object Detection via Feature Correspondences at Multiple Scales](self-supervised_co-salient_object_detection_via_feature_correspondences_at_multi.md)
+- [Eliminating Feature Ambiguity for Few-Shot Segmentation](eliminating_feature_ambiguity_for_few-shot_segmentation.md)
+- [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [FREST: Feature Restoration for Semantic Segmentation under Multiple Adverse Conditions](frest_feature_restoration_for_semantic_segmentation_under_multiple_adverse_condi.md)
+
+<!-- RELATED:END -->

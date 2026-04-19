@@ -151,3 +151,15 @@ FlowSeek (L) 在 Sintel Final 上相对 SEA-RAFT (L) 提升 **35%**，在 KITTI 
 - 技术深度：⭐⭐⭐⭐ — 消融全面、设计考量充分
 - 实验充分度：⭐⭐⭐⭐⭐ — 多数据集、多骨干、多模型规模的系统评估
 - 实用性：⭐⭐⭐⭐⭐ — 单 GPU 训练，极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow4Agent: Long-form Video Understanding via Motion Prior from Optical Flow](flow4agent_long-form_video_understanding_via_motion_prior_from_optical_flow.md)
+- [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
+- [PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [Estimating 2D Camera Motion with Hybrid Motion Basis](estimating_2d_camera_motion_with_hybrid_motion_basis.md)
+
+<!-- RELATED:END -->

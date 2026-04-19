@@ -155,3 +155,15 @@ $$\mathcal{L}_{VAE} = \mathcal{L}_{Fit} + 0.3 \cdot \mathcal{L}_{Corr} + 0.1 \cd
 - 实验充分度: ⭐⭐⭐⭐⭐ — VBench + 用户研究 + 全面消融 + 多基线对比 + 效率分析
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰、公式推导完整、图表丰富
 - 价值: ⭐⭐⭐⭐ — 表示层面的贡献有普适性，可迁移到其他运动生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [Vinedresser3D: Agentic Text-guided 3D Editing](vinedresser3d_agentic_text-guided_3d_editing.md)
+- [ReAlign: Text-to-Motion Generation via Step-Aware Reward-Guided Alignment](../../AAAI2026/image_generation/realign_text-to-motion_generation_via_step-aware_reward-guided_alignment.md)
+- [TeRA: Rethinking Text-guided Realistic 3D Avatar Generation](../../ICCV2025/image_generation/tera_rethinking_text-guided_realistic_3d_avatar_generation.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](../../ECCV2024/image_generation/local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+
+<!-- RELATED:END -->

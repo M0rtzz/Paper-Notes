@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 推理 + 指令跟随 + 长上下文三大领域，8 个以上 baseline，消融充分
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，实验分析到位
 - 价值: ⭐⭐⭐⭐ 对多 RM 使用场景有直接实践价值，计算效率优势明显
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ResponseRank: Data-Efficient Reward Modeling through Preference Strength Learning](responserank_data-efficient_reward_modeling_through_preference_strength_learning.md)
+- [AMoPO: Adaptive Multi-objective Preference Optimization without Reward Models and Reference Models](../../ACL2025/llm_alignment/amopo_adaptive_multi-objective_preference_optimization_without_reward_models_and.md)
+- [Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis](limited_preference_data_learning_better_reward_model_with_latent_space_synthesis.md)
+- [Reinforcement Learning Finetunes Small Subnetworks in Large Language Models](reinforcement_learning_finetunes_small_subnetworks_in_large_language_models.md)
+- [Generalizing while Preserving Monotonicity in Comparison-based Preference Learning Models](generalizing_while_preserving_monotonicity_in_comparison-based_preference_learni.md)
+
+<!-- RELATED:END -->

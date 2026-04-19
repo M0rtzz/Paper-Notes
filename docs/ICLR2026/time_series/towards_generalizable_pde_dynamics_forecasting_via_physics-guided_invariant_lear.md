@@ -128,3 +128,15 @@ iMOOE 的整体 pipeline：输入是过去 $H$ 步的观测轨迹 $\mathbf{I}^e 
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个模拟系统+2个真实数据集，4种神经算子兼容性验证，多种OOD场景覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 理论-方法-实验的衔接流畅，公式推导清晰，SCM图辅助理解
 - 价值: ⭐⭐⭐⭐ 为神经算子的 OOD 泛化提供了通用即插即用框架，物理先验+不变学习的结合范式有广泛参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IonCast: A Deep Learning Framework for Forecasting Ionospheric Dynamics](../../NeurIPS2025/time_series/ioncast_a_deep_learning_framework_for_forecasting_ionospheric_dynamics.md)
+- [CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time.md)
+- [HiVid: LLM-Guided Video Saliency For Content-Aware VOD And Live Streaming](hivid_llm-guided_video_saliency_for_content-aware_vod_and_live_streaming.md)
+- [Learning Time-Scale Invariant Population-Level Neural Representations](../../NeurIPS2025/time_series/learning_time-scale_invariant_population-level_neural_representations.md)
+- [Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
+
+<!-- RELATED:END -->

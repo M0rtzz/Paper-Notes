@@ -137,3 +137,15 @@ $$\mathcal{L}_{SSL} = w_1 \mathcal{L}_{band} + w_2 \mathcal{L}_{phase} + w_3 \ma
 ⭐⭐⭐⭐⭐ (5/5)
 
 视野宏大，将 Bitter Lesson 理念系统性地引入脑信号领域。方法设计兼具神经科学洞察和工程实用性。Scaling 证据令人信服，多个"首次"结果（跨数据集聚合、新被试泛化、匹配手术性能）具有里程碑意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity](../../NeurIPS2025/medical_imaging/scaling_laws_and_pathologies_of_single-layer_pinns_network_width_and_pde_nonline.md)
+- [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
+- [The Four Color Theorem for Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)
+- [Protein Structure Tokenization: Benchmarking and New Recipe](protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+
+<!-- RELATED:END -->

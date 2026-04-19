@@ -46,3 +46,15 @@
 - 实验充分度: ⭐⭐⭐⭐ 理解+生成多基准
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 统一视频理解+生成的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphGPT-o: Synergistic Multimodal Comprehension and Generation on Graphs](graphgpt-o_synergistic_multimodal_comprehension_and_generation_on_graphs.md)
+- [Holistic Tokenizer for Autoregressive Image Generation](../../ICCV2025/image_generation/holistic_tokenizer_for_autoregressive_image_generation.md)
+- [EvoTok: A Unified Image Tokenizer via Residual Latent Evolution for Visual Understanding and Generation](evotok_a_unified_image_tokenizer_via_residual_latent_evolution_for_visual_unders.md)
+- [Spectral Image Tokenizer](../../ICCV2025/image_generation/spectral_image_tokenizer.md)
+- [Janus-Pro-R1: Advancing Collaborative Visual Comprehension and Generation via Reinforcement Learning](../../NeurIPS2025/image_generation/janus-pro-r1_advancing_collaborative_visual_comprehension_and_generation_via_rei.md)
+
+<!-- RELATED:END -->

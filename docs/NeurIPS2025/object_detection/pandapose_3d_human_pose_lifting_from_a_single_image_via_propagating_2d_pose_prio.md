@@ -160,3 +160,15 @@ MPI-INF-3DHP 困难子集：PCK 提升 9.8%，AUC 提升 9.3%，MPJPE 降低 14.
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集 + 困难子集 + 丰富消融 + 跨数据集泛化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示详尽，方法描述完整
 - 价值: ⭐⭐⭐⭐ 困难场景大幅改进，对实际应用有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection](../../ICCV2025/object_detection/3dmood_lifting_2d_to_3d_for_monocular_openset_object_detecti.md)
+- [VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions](../../ICCV2025/object_detection/voccl3d_a_video_benchmark_dataset_for_3d_human_pose_and_shape_estimation_under_r.md)
+- [Robust Long-term Test-Time Adaptation for 3D Human Pose Estimation through Motion Discretization](../../AAAI2026/object_detection/robust_long-term_test-time_adaptation_for_3d_human_pose_estimation_through_motio.md)
+- [All You Need is One: Capsule Prompt Tuning with a Single Vector](all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
+- [Any6D: Model-free 6D Pose Estimation of Novel Objects](../../CVPR2025/object_detection/any6d_model-free_6d_pose_estimation_of_novel_objects.md)
+
+<!-- RELATED:END -->

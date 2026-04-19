@@ -111,3 +111,15 @@ VideoSafety-R1 是一个后训练框架，包含三个创新组件：VideoSafety
 - 实验充分度: ⭐⭐⭐⭐⭐ 21 个模型评估 + 4 个安全基准 + 多组件消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，三组件层层递进
 - 价值: ⭐⭐⭐⭐⭐ 为视频 LLM 安全研究奠定基准和方法基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Reward Hacking in Large Language Models](../../NeurIPS2025/recommender/inference-time_reward_hacking_in_large_language_models.md)
+- [Inference-Aware Prompt Optimization for Aligning Black-Box Large Language Models](../../AAAI2026/recommender/inference-aware_prompt_optimization_for_aligning_black-box_large_language_models.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+- [R²ec: Towards Large Recommender Models with Reasoning](../../NeurIPS2025/recommender/r2ec_towards_large_recommender_models_with_reasoning.md)
+- [Measuring What Matters: Construct Validity in Large Language Model Benchmarks](../../NeurIPS2025/recommender/measuring_what_matters_construct_validity_in_large_language_model_benchmarks.md)
+
+<!-- RELATED:END -->

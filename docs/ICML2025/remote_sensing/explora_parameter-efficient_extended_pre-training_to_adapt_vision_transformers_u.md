@@ -121,3 +121,15 @@ ExPLoRA（M-[1,L]-r32）在仅 29.7M 预训练参数、320 GPU 小时下达到 6
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面（block 选择、秩大小、LoRA 位置），多数据集验证，计算成本对比详尽
 - 写作质量: ⭐⭐⭐⭐ — 符号清晰，算法伪代码简洁，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ — 为资源受限场景下的域适配提供了立即可用的高效方案，遥感领域实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-Learning Hyperparameters for Parameter Efficient Fine-Tuning](../../CVPR2025/remote_sensing/meta-learning_hyperparameters_for_parameter_efficient_fine-tuning.md)
+- [ChA-MAEViT: Unifying Channel-Aware Masked Autoencoders and Multi-Channel Vision Transformers for Improved Cross-Channel Learning](../../NeurIPS2025/remote_sensing/chamaevit_unifying_channelaware_masked_autoencoders_and_mult.md)
+- [Towards a Unified Copernicus Foundation Model for Earth Vision](../../ICCV2025/remote_sensing/towards_a_unified_copernicus_foundation_model_for_earth_vision.md)
+- [RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](../../ICCV2025/remote_sensing/rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
+- [AVION: Aerial Vision-Language Instruction from Offline Teacher to Prompt-Tuned Network](../../CVPR2026/remote_sensing/avion_aerial_vision-language_instruction_from_offline_teacher_to_prompt-tuned_ne.md)
+
+<!-- RELATED:END -->

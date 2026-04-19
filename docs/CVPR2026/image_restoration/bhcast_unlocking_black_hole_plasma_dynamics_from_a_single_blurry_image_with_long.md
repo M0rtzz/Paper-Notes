@@ -117,3 +117,15 @@ BHCast从单张模糊的EHT黑洞图像出发，通过U-Net动力学代理模型
 - 实验充分度: ⭐⭐⭐⭐ Sgr A*详尽评估+M87*泛化验证，消融完整
 - 写作质量: ⭐⭐⭐⭐⭐ 背景铺垫充分，物理直觉与方法设计呼应紧密
 - 价值: ⭐⭐⭐⭐⭐ 为科学成像逆问题提供了可复制的范式，真实数据验证有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gyro-based Neural Single Image Deblurring](../../CVPR2025/image_restoration/gyro-based_neural_single_image_deblurring.md)
+- [ProtoTS: Learning Hierarchical Prototypes for Explainable Time Series Forecasting](../../ICLR2026/image_restoration/protots_learning_hierarchical_prototypes_for_explainable_time_series_forecasting.md)
+- [Beyond the Ground Truth: Enhanced Supervision for Image Restoration](beyond_the_ground_truth_enhanced_supervision_for_image_restoration.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_wide-field_and_high-dynamic_range_interferometric_image_recons.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+
+<!-- RELATED:END -->

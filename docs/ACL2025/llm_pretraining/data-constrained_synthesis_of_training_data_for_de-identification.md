@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: 9/10 — 双语言验证、五折交叉验证、多维度消融（数据量、模型规模、合成量、隐私）非常全面
 - **写作质量**: 8/10 — 结构清晰，实验设计逻辑性强，图表直观
 - **价值**: 8/10 — 对临床NLP和隐私保护社区有直接实用价值，资源受限机构的参考指南
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimizing Pre-Training Data Mixtures with Mixtures of Data Expert Models](optimizing_pre-training_data_mixtures_with_mixtures_of_data_expert_models.md)
+- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
+- [Synthesizing Post-Training Data for LLMs through Multi-Agent Simulation](synthesizing_post-training_data_for_llms_through_multi-agent_simulation.md)
+- [Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](stealing_training_data_from_large_language_models_in_decentralized_training_thro.md)
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
+
+<!-- RELATED:END -->

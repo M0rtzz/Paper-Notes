@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实数据，详尽消融，每个组件都单独验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，方法直觉解释到位
 - 价值: ⭐⭐⭐⭐⭐ 解决了从网络图片重建高质量3D的关键障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ROGR: Relightable 3D Objects using Generative Relighting](../../NeurIPS2025/3d_vision/rogr_relightable_3d_objects_using_generative_relighting.md)
+- [Extreme Rotation Estimation in the Wild](extreme_rotation_estimation_in_the_wild.md)
+- [Decompositional Neural Scene Reconstruction with Generative Diffusion Prior](decompositional_neural_scene_reconstruction_with_generative_diffusion_prior.md)
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](../../ECCV2024/3d_vision/generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
+
+<!-- RELATED:END -->

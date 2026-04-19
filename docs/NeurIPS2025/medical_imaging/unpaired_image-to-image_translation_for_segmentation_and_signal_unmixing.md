@@ -128,3 +128,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{adv}} + \lambda_{\text{cyc}}\mathcal{L}_{\tex
 - 实验充分度: ⭐⭐⭐⭐ 两个应用场景+完整消融，但缺少更多baseline
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，理论-方法-实验衔接紧密
 - 价值: ⭐⭐⭐⭐ IF解混的实用价值高，域适应方法实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pancakes: Consistent Multi-Protocol Image Segmentation Across Biomedical Domains](pancakes_consistent_multi-protocol_image_segmentation_across_biomedical_domains.md)
+- [LoMix: Learnable Weighted Multi-Scale Logits Mixing for Medical Image Segmentation](lomix_learnable_weighted_multi-scale_logits_mixing_for_medical_image_segmentatio.md)
+- [PhysioWave: A Multi-Scale Wavelet-Transformer for Physiological Signal Representation](physiowave_a_multi-scale_wavelet-transformer_for_physiological_signal_representa.md)
+- [VQ-Seg: Vector-Quantized Token Perturbation for Semi-Supervised Medical Image Segmentation](vq-seg_vector-quantized_token_perturbation_for_semi-supervised_medical_image_seg.md)
+- [Mamba Goes HoME: Hierarchical Soft Mixture-of-Experts for 3D Medical Image Segmentation](mamba_goes_home_hierarchical_soft_mixture-of-experts_for_3d_medical_image_segmen.md)
+
+<!-- RELATED:END -->

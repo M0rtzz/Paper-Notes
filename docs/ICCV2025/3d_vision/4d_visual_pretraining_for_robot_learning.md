@@ -131,3 +131,15 @@ FVP在真实世界任务上实现15%~55%的绝对成功率提升。
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个真实任务、4种机器人、仿真+真实、多种编码器、VLA扩展、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、实验组织有条理，部分符号和描述可以更简洁
 - 价值: ⭐⭐⭐⭐⭐ 简洁有效的通用方法、大规模真实验证、对3D机器人学习社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+- [RoboPearls: Editable Video Simulation for Robot Manipulation](robopearls_editable_video_simulation_for_robot_manipulation.md)
+- [Towards More Diverse and Challenging Pre-training for Point Cloud Learning: Self-Supervised Cross Reconstruction with Decoupled Views](towards_more_diverse_and_challenging_pre-training_for_point_cloud_learning_self-.md)
+- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
+- [Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis](gaussian_variation_field_diffusion_for_high-fidelity_video-to-4d_synthesis.md)
+
+<!-- RELATED:END -->

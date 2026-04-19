@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个数据集13个场景，4个基线方法，详细的运行时分析和消融实验
 - 写作质量: ⭐⭐⭐⭐ 表述清晰，算法伪代码完整，并行化策略图示直观
 - 价值: ⭐⭐⭐⭐ 20%的无损加速具有实际意义，与其他加速方法的正交性增强了实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RobustSplat: Decoupling Densification and Dynamics for Transient-Free 3DGS](robustsplat_decoupling_densification_and_dynamics_for_transient-free_3dgs.md)
+- [Faster and Better 3D Splatting via Group Training](faster_and_better_3d_splatting_via_group_training.md)
+- [Gaussian Splatting with Discretized SDF for Relightable Assets](gaussian_splatting_with_discretized_sdf_for_relightable_assets.md)
+- [GazeGaussian: High-Fidelity Gaze Redirection with 3D Gaussian Splatting](gazegaussian_high-fidelity_gaze_redirection_with_3d_gaussian_splatting.md)
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+
+<!-- RELATED:END -->

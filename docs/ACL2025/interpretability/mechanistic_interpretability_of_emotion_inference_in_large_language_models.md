@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 10 个模型、三种 MI 技术、多重鲁棒性验证、控制实验，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 公式推导清晰，图表直观，但部分符号较密集
 - 价值: ⭐⭐⭐⭐⭐ — 对 LLM 情感安全和可控性研究有重要意义，方法论可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning Circuits in Language Models: A Mechanistic Interpretation of Syllogistic Inference](reasoning_circuits_in_language_models_a_mechanistic_interpretation_of_syllogisti.md)
+- [Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework](towards_explainable_temporal_reasoning_in_large_language_models_a_structure-awar.md)
+- [Inference-Time Decomposition of Activations (ITDA): A Scalable Approach to Interpreting Large Language Models](../../ICML2025/interpretability/inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)
+- [The Trilemma of Truth in Large Language Models](../../NeurIPS2025/interpretability/the_trilemma_of_truth_in_large_language_models.md)
+- [MIB: A Mechanistic Interpretability Benchmark](../../ICML2025/interpretability/mib_a_mechanistic_interpretability_benchmark.md)
+
+<!-- RELATED:END -->

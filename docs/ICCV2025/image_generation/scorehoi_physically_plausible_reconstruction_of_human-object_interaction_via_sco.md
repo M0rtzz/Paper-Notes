@@ -147,3 +147,15 @@ ScoreHOI 利用 score-based 扩散模型作为优化器，结合 DDIM 逆向-正
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融全面（模块/条件/引导/超参数），多数据集验证
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，公式推导详细
 - 价值: ⭐⭐⭐⭐ 对 HOI 重建领域有实际推进，方法论可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](../../CVPR2025/image_generation/an_image-like_diffusion_method_for_human-object_interaction_detection.md)
+- [ViHOI: Human-Object Interaction Synthesis with Visual Priors](../../CVPR2026/image_generation/vihoi_human-object_interaction_synthesis_with_visual_priors.md)
+- [A Unified Framework for Motion Reasoning and Generation in Human Interaction](a_unified_framework_for_motion_reasoning_and_generation_in_human_interaction.md)
+- [HPSv3: Towards Wide-Spectrum Human Preference Score](hpsv3_towards_wide-spectrum_human_preference_score.md)
+- [InterAct: Advancing Large-Scale Versatile 3D Human-Object Interaction Generation](../../CVPR2025/image_generation/interact_advancing_large-scale_versatile_3d_human-object_interaction_generation.md)
+
+<!-- RELATED:END -->

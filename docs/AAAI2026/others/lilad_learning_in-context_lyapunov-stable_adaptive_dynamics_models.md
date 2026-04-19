@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5个基准系统涵盖不同维度，但缺少真实物理系统验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，但篇幅较长
 - 价值: ⭐⭐⭐⭐ 对安全关键系统的自适应建模有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Phase Transition for Opinion Dynamics with Competing Biases](a_phase_transition_for_opinion_dynamics_with_competing_biase.md)
+- [LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics](../../ICLR2026/others/latent_particle_world_models_self-supervised_object-centric_stochastic_dynamics_.md)
+- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [In-Context Algebra](../../ICLR2026/others/in-context_algebra.md)
+- [Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation](../../ICML2025/others/sassha_sharpness-aware_adaptive_second-order_optimization_with_stable_hessian_ap.md)
+
+<!-- RELATED:END -->

@@ -63,3 +63,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个基准+最大数据集+消融
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐⭐ 对机器人灵巧操作有重大推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InterMimic: Towards Universal Whole-Body Control for Physics-Based Human-Object Interactions](intermimic_towards_universal_whole-body_control_for_physics-based_human-object_i.md)
+- [CustAny: Customizing Anything from A Single Example](custany_customizing_anything_from_a_single_example.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+- [Orient Anything V2: Unifying Orientation and Rotation Understanding](../../NeurIPS2025/image_generation/orient_anything_v2_unifying_orientation_and_rotation_understanding.md)
+- [Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges](../../NeurIPS2025/image_generation/grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)
+
+<!-- RELATED:END -->

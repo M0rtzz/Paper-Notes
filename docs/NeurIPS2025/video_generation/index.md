@@ -10,94 +10,94 @@ description: >-
 
 **🧠 NeurIPS2025** · **23** 篇论文解读
 
-**[Autoregressive Adversarial Posttraining For Realtime Interac](autoregressive_adversarial_posttraining_for_realtime_interac.md)**
+**[Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation](autoregressive_adversarial_posttraining_for_realtime_interac.md)**
 
 :   提出 AAPT（Autoregressive Adversarial Post-Training），通过三阶段后训练流程（扩散适配→一致性蒸馏→对抗训练）将预训练的 8B 视频扩散 Transformer 转化为单步自回归实时视频生成器，利用 student-forcing 训练策略有效抑制误差累积，在单张 H100 上以 24fps/736×416 流式生成长达一分钟（1440帧）的视频，同时支持姿态控制和相机控制等实时交互应用。
 
-**[Dismo Disentangled Motion Representations For Openworld Moti](dismo_disentangled_motion_representations_for_openworld_moti.md)**
+**[DisMo: Disentangled Motion Representations for Open-World Motion Transfer](dismo_disentangled_motion_representations_for_openworld_moti.md)**
 
 :   DisMo 通过双流架构（运动提取器 + 帧生成器）和图像空间重建目标，从原始视频中学习与外观、姿态、类别无关的抽象运动表征，实现跨类别/跨视角的开放世界运动迁移，并在零样本动作分类上大幅超越 V-JEPA 等视频表征模型。
 
-**[Force Prompting Video Generation Models Can Learn And Generalize Physics-Based C](force_prompting_video_generation_models_can_learn_and_generalize_physics-based_c.md)**
+**[Force Prompting: Video Generation Models Can Learn and Generalize Physics-based Control Signals](force_prompting_video_generation_models_can_learn_and_generalize_physics-based_c.md)**
 
 :   提出Force Prompting，将物理力（局部点力和全局风力）作为视频生成模型的控制信号，仅用~15K合成训练视频（Blender旗帜和滚球）和单日4xA100训练，即可在多样真实场景图像上展现跨物体/材质/几何的惊人泛化，包括初步的质量理解能力。
 
-**[Foresight Adaptive Layer Reuse For Accelerated And Highquali](foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)**
+**[Foresight: Adaptive Layer Reuse for Accelerated and High-Quality Text-to-Video Generation](foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)**
 
 :   提出 Foresight，一种训练无关的自适应层复用框架，通过在 warmup 阶段建立逐层 MSE 阈值、在 reuse 阶段按阈值动态决策每层是复用缓存还是重新计算，在 5 个视频生成模型上实现了比静态方法更高质量和更快速度的推理加速（最高 2.23×）。
 
-**[Lemica Lexicographic Minimax Path Caching For Efficient Diffusion-Based Video Ge](lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)**
+**[LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation](lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)**
 
 :   提出 LeMiCa，一种免训练的扩散视频生成加速框架，将缓存调度建模为有向无环图上的字典序极小极大路径优化问题，通过全局误差控制实现速度和质量的双重提升（Latte 上 2.9× 加速，Open-Sora 上 LPIPS 低至 0.05）。
 
-**[Magcache Fast Video Generation With Magnitudeaware Cache](magcache_fast_video_generation_with_magnitudeaware_cache.md)**
+**[MagCache: Fast Video Generation with Magnitude-Aware Cache](magcache_fast_video_generation_with_magnitudeaware_cache.md)**
 
 :   发现视频扩散模型中相邻时间步残差输出的幅度比（magnitude ratio）遵循一条跨模型、跨 prompt 普遍成立的单调递减规律（"统一幅度定律"），由此提出 MagCache：基于幅度比对跳步误差进行精确累积建模，自适应跳过冗余时间步并复用缓存，仅需 1 个样本校准，即可在 Open-Sora、CogVideoX、Wan 2.1、HunyuanVideo 等模型上实现 2.10–2.68× 加速，且在 LPIPS/SSIM/PSNR 三个指标上全面优于 TeaCache 等已有方法。
 
-**[Photography Perspective Composition Towards Aesthetic Perspective Recommendation](photography_perspective_composition_towards_aesthetic_perspective_recommendation.md)**
+**[Photography Perspective Composition: Towards Aesthetic Perspective Recommendation](photography_perspective_composition_towards_aesthetic_perspective_recommendation.md)**
 
 :   提出"摄影透视构图"(PPC) 新范式，超越传统裁剪方法，通过 3D 重建构建透视变换数据集 + Image-to-Video 生成推荐视角 + RLHF 对齐人类偏好 + PQA 模型评估透视质量。
 
-**[Physctrl Generative Physics For Controllable And Physicsgrou](physctrl_generative_physics_for_controllable_and_physicsgrou.md)**
+**[PhysCtrl: Generative Physics for Controllable and Physics-Grounded Video Generation](physctrl_generative_physics_for_controllable_and_physicsgrou.md)**
 
 :   PhysCtrl用扩散模型学习四种材料（弹性/沙/橡皮泥/刚体）的物理动力学分布，将动态表示为3D点轨迹，在55万合成动画上训练含时空注意力+物理约束的扩散模型，生成的轨迹驱动预训练视频模型实现力和材料参数可控的高保真物理视频生成。
 
-**[Posecrafter Extreme Pose Estimation With Hybrid Video Synthesis](posecrafter_extreme_pose_estimation_with_hybrid_video_synthesis.md)**
+**[PoseCrafter: Extreme Pose Estimation with Hybrid Video Synthesis](posecrafter_extreme_pose_estimation_with_hybrid_video_synthesis.md)**
 
 :   提出 PoseCrafter，一种无需训练的极端位姿估计框架：通过混合视频生成（HVG，DynamiCrafter+ViewCrafter双阶段）合成高保真中间帧解决极小/无重叠图像对的位姿估计，配合特征匹配选择器（FMS）高效选取最有用的中间帧，在四个数据集上显著提升极端位姿估计精度。
 
-**[Radial Attention Onlog N Sparse Attention With Energy Decay For Long Video Gener](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)**
+**[Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)**
 
 :   Radial Attention 发现了视频扩散模型中注意力分数随时空距离指数衰减的"时空能量衰减"现象，据此设计了一种 O(n log n) 复杂度的静态稀疏注意力掩码，在 HunyuanVideo/Wan2.1 等模型上实现最高 3.7× 推理加速，并通过 LoRA 微调支持 4× 更长视频生成。
 
-**[Rlgf Reinforcement Learning With Geometric Feedback For Autonomous Driving Video](rlgf_reinforcement_learning_with_geometric_feedback_for_autonomous_driving_video.md)**
+**[RLGF: Reinforcement Learning with Geometric Feedback for Autonomous Driving Video Generation](rlgf_reinforcement_learning_with_geometric_feedback_for_autonomous_driving_video.md)**
 
 :   本文首次系统量化自动驾驶视频生成中的几何失真问题，提出 RLGF 框架通过层次化几何奖励（消失点-车道线-深度-占用）和潜空间滑动窗口优化策略，将 3D 目标检测 mAP 提升 12.7 个绝对百分点（25.75→31.42），大幅缩小合成数据与真实数据的性能差距。
 
-**[S2Q-Vdit Accurate Quantized Video Diffusion Transformer With Salient Data And Sp](s2q-vdit_accurate_quantized_video_diffusion_transformer_with_salient_data_and_sp.md)**
+**[S²Q-VDiT: Accurate Quantized Video Diffusion Transformer with Salient Data and Sparse Token Distillation](s2q-vdit_accurate_quantized_video_diffusion_transformer_with_salient_data_and_sp.md)**
 
 :   针对视频扩散 Transformer 的超长 token 序列导致的量化校准高方差和学习困难问题，提出 S²Q-VDiT 框架，利用 Hessian 感知的显著数据选择和注意力引导的稀疏 token 蒸馏两项技术，首次在 W4A6 设置下实现无损量化，带来 3.9× 模型压缩和 1.3× 推理加速。
 
-**[Safesora Safe Texttovideo Generation Via Graphical Watermark](safesora_safe_texttovideo_generation_via_graphical_watermark.md)**
+**[Safe-Sora: Safe Text-to-Video Generation via Graphical Watermarking](safesora_safe_texttovideo_generation_via_graphical_watermark.md)**
 
 :   Safe-Sora 首次将**图形水印**（如logo图像）直接嵌入到视频生成管线中，通过分层粗到细自适应匹配将水印patch分配到视觉最相似的帧和区域，并设计3D小波变换增强Mamba架构实现时空融合，在视频质量（FVD 3.77 vs 次优154.35）和水印保真度上大幅超越所有基线。
 
-**[Scaling Rl To Long Videos](scaling_rl_to_long_videos.md)**
+**[Scaling RL to Long Videos](scaling_rl_to_long_videos.md)**
 
 :   提出 LongVILA-R1 全栈框架，通过 104K 长视频推理数据集、两阶段 CoT-SFT + RL 训练管线、以及 MR-SP 多模态强化序列并行系统，将 VLM 的推理能力扩展到长视频（最高 8192 帧），在 VideoMME 上达到 65.1%/71.1%。
 
-**[Seeing The Wind From A Falling Leaf](seeing_the_wind_from_a_falling_leaf.md)**
+**[Seeing the Wind from a Falling Leaf](seeing_the_wind_from_a_falling_leaf.md)**
 
 :   提出端到端可微逆图形学框架，通过联合建模物体几何/物理属性、力场表示和物理过程，从视频中反向传播恢复不可见的力场（如风场），并支持基于物理的视频生成和编辑。
 
-**[Self Forcing Bridging The Train-Test Gap In Autoregressive Video Diffusion](self_forcing_bridging_the_train-test_gap_in_autoregressive_video_diffusion.md)**
+**[Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion](self_forcing_bridging_the_train-test_gap_in_autoregressive_video_diffusion.md)**
 
 :   提出 Self Forcing 训练范式，通过在训练时执行自回归自展开（self-rollout）并使用整体视频级分布匹配损失（DMD/SiD/GAN），消除了 Teacher Forcing 和 Diffusion Forcing 中训练-推理分布不匹配导致的暴露偏差问题，基于 Wan2.1-1.3B 实现了单 GPU 上 17 FPS 实时流式视频生成，同时质量匹敌甚至超越慢几十倍的双向扩散模型。
 
-**[Stable Cinemetrics Structured Taxonomy And Evaluation For Professional Video Gen](stable_cinemetrics_structured_taxonomy_and_evaluation_for_professional_video_gen.md)**
+**[Stable Cinemetrics: Structured Taxonomy and Evaluation for Professional Video Generation](stable_cinemetrics_structured_taxonomy_and_evaluation_for_professional_video_gen.md)**
 
 :   提出 SCINE（Stable Cinemetrics），首个面向专业视频制作的结构化评估框架，定义了 76 个细粒度电影控制节点的分层分类体系，配合大规模专业人员评估（80+ 影视从业者、20K+ 视频、248K 标注），揭示当前最强 T2V 模型在专业控制上的显著不足。
 
-**[Training-Free Efficient Video Generation Via Dynamic Token Carving](training-free_efficient_video_generation_via_dynamic_token_carving.md)**
+**[Training-Free Efficient Video Generation via Dynamic Token Carving (Jenga)](training-free_efficient_video_generation_via_dynamic_token_carving.md)**
 
 :   提出 Jenga，一种即插即用的视频扩散 Transformer 推理加速管线，通过 3D 空间填充曲线驱动的动态注意力剪裁和渐进分辨率生成的协同设计，在多个 Video DiT 模型上实现 6-9 倍加速且几乎无质量损失。
 
-**[Video Diffusion Models Excel At Tracking Similar-Looking Objects Without Supervi](video_diffusion_models_excel_at_tracking_similar-looking_objects_without_supervi.md)**
+**[Video Diffusion Models Excel at Tracking Similar-Looking Objects Without Supervision](video_diffusion_models_excel_at_tracking_similar-looking_objects_without_supervi.md)**
 
 :   发现预训练视频扩散模型在高噪声去噪阶段天然学到了适合追踪的运动表示，提出 TED 框架融合运动和外观特征，在追踪外观相似物体时比现有自监督方法提升多达 10 个百分点。
 
-**[Video Killed The Energy Budget Characterizing The Latency And Power Regimes Of O](video_killed_the_energy_budget_characterizing_the_latency_and_power_regimes_of_o.md)**
+**[Video Killed the Energy Budget: Characterizing the Latency and Power Regimes of Open Text-to-Video Models](video_killed_the_energy_budget_characterizing_the_latency_and_power_regimes_of_o.md)**
 
 :   对开源文本到视频 (T2V) 模型进行系统性延迟和能耗分析，建立了基于 FLOP 的计算分析模型预测 WAN2.1 的缩放规律（空间/时间维度二次缩放、去噪步数线性缩放），并在 7 个 T2V 模型上提供跨模型能耗基准。
 
-**[Vmdt Decoding The Trustworthiness Of Video Foundation Models](vmdt_decoding_the_trustworthiness_of_video_foundation_models.md)**
+**[VMDT: Decoding the Trustworthiness of Video Foundation Models](vmdt_decoding_the_trustworthiness_of_video_foundation_models.md)**
 
 :   提出 VMDT（Video-Modal DecodingTrust），首个统一评估 T2V 和 V2T 视频基础模型在安全、幻觉、公平、隐私和对抗鲁棒性五个维度上可信度的基准平台，涵盖 7 个 T2V 和 19 个 V2T 模型的大规模评测，揭示了模型规模与可信度之间的复杂关系。
 
-**[Vorta Efficient Video Diffusion Via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)**
+**[VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)**
 
 :   提出VORTA框架，通过桶化核心集注意力（建模长程依赖）和信号感知路由机制（自适应选择稀疏注意力分支），在不损失生成质量的前提下实现视频扩散Transformer端到端1.76×加速，并可与缓存和蒸馏方法叠加达到14.41×加速。
 
-**[Vsa Faster Video Diffusion With Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)**
+**[VSA: Faster Video Diffusion with Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)**
 
 :   提出 VSA (Video Sparse Attention)，一种端到端可训练的硬件对齐稀疏注意力机制，通过粗粒度阶段（cube 池化预测关键 token）和细粒度阶段（在预测的块稀疏区域执行 token 级注意力）的层次化设计，在视频 DiT 的训练和推理中同时实现加速：从头预训练实现 2.53× 训练 FLOPs 减少且无质量损失，适配 Wan2.1-1.3B 实现注意力 6× 加速和端到端推理从 31s 降至 18s。

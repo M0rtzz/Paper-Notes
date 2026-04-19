@@ -147,3 +147,15 @@ $$\mathcal{L}_{key} = \sum_{l=1}^{L} \lambda_l \left( \mathcal{L}_{color}^l + \l
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集+自建数据集、6个对比方法、4组消融、多平台效率测试、稳定性验证，非常完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、动机明确、图表丰富，不过公式较密集，部分标记不够直观
 - 价值: ⭐⭐⭐⭐⭐ 直击体积视频流媒体部署的核心痛点（多码率+移动端实时），工程价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learned Image Compression with Hierarchical Progressive Context Modeling](../../ICCV2025/model_compression/learned_image_compression_with_hierarchical_progressive_context_modeling.md)
+- [Eyes Wide Open: Ego Proactive Video-LLM for Streaming Video](eyes_wide_open_ego_proactive_videollm_for_streaming_video.md)
+- [Smooth Regularization for Efficient Video Recognition](smooth_regularization_for_efficient_video_recognition.md)
+- [Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning](twilight_adaptive_attention_sparsity_with_hierarchical_top-p_pruning.md)
+- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ $$\mathcal{D}_S = \{\mathcal{D}_U^j \mid j \in \text{TopK}_{i}(-\Omega_i)\}$$
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 方法轻量优雅、效果惊人，32 个标注样本接近全监督上界，在幻觉检测领域意义重大。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning](dragon_guard_llm_unlearning_in_context_via_negative_detection_and_reasoning.md)
+- [BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](../../ICLR2026/model_compression/biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
+- [Benford's Curse: Tracing Digit Bias to Numerical Hallucination in LLMs](../../NeurIPS2025/model_compression/benfords_curse_tracing_digit_bias_to_numerical_hallucination_in_llms.md)
+- [Position: LLM Social Simulations Are a Promising Research Method](llm_social_simulations_are_a_promising_research_method.md)
+- [Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation](sketch_to_adapt_fine-tunable_sketches_for_efficient_llm_adaptation.md)
+
+<!-- RELATED:END -->

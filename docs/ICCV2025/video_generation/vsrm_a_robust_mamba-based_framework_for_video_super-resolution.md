@@ -257,3 +257,15 @@ VSRM 在 REDS4 上比 IART 提升 0.21dB（16帧设置），在 Vid4 上提升 0
 - **实验充分度**: ⭐⭐⭐⭐⭐ 消融覆盖每个模块，多指标多数据集对比
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐ 为 Mamba 在低级视觉的应用提供了坚实 baseline
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compressed-Domain-Aware Online Video Super-Resolution](../../CVPR2026/video_generation/compressed-domain-aware_online_video_super-resolution.md)
+- [RealViformer: Investigating Attention for Real-World Video Super-Resolution](../../ECCV2024/video_generation/realviformer_investigating_attention_for_real-world_video_super-resolution.md)
+- [BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](../../CVPR2025/video_generation/bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)
+- [Kalman-Inspired Feature Propagation for Video Face Super-Resolution](../../ECCV2024/video_generation/kalman-inspired_feature_propagation_for_video_face_super-resolution.md)
+- [FuXi-RTM: A Physics-Guided Prediction Framework with Radiative Transfer Modeling](fuxi-rtm_a_physics-guided_prediction_framework_with_radiative_transfer_modeling.md)
+
+<!-- RELATED:END -->

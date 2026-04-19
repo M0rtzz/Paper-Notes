@@ -128,3 +128,15 @@ HFP-SAM 提出分层频率提示的 SAM 框架，通过频率引导适配器（F
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、20+ 对比方法、SAM/SAM2 双版本验证
 - 写作质量: ⭐⭐⭐ 公式详尽但部分描述冗长
 - 价值: ⭐⭐⭐ 海洋动物分割领域有用，频率提示思路有一定通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+- [SAM-R1: Leveraging SAM for Reward Feedback in Multimodal Segmentation via Reinforcement Learning](../../NeurIPS2025/segmentation/sam-r1_leveraging_sam_for_reward_feedback_in_multimodal_segmentation_via_reinfor.md)
+- [E-SAM: Training-Free Segment Every Entity Model](../../ICCV2025/segmentation/e-sam_training-free_segment_every_entity_model.md)
+- [LEMMA: Laplacian Pyramids for Efficient Marine Semantic Segmentation](../../CVPR2026/segmentation/lemma_laplacian_pyramids_for_efficient_marine_semantic_segmentation.md)
+- [Frequency Dynamic Convolution for Dense Image Prediction](frequency_dynamic_convolution_for_dense_image_prediction.md)
+
+<!-- RELATED:END -->

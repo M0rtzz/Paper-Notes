@@ -117,3 +117,15 @@ ROS-Cam 提出仅用单个RGB视频作为监督的动态场景相机参数（焦
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集（3真实+1合成+1iPhone）、NVS+位姿+运行时间多维评估、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，理论分析扎实
 - 价值: ⭐⭐⭐⭐ 对casually captured动态视频的3D/4D重建有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [D$^2$USt3R: Enhancing 3D Reconstruction for Dynamic Scenes](d2ust3r_enhancing_3d_reconstruction_for_dynamic_scenes.md)
+- [EAG3R: Event-Augmented 3D Geometry Estimation for Dynamic and Extreme-Lighting Scenes](eag3r_event-augmented_3d_geometry_estimation_for_dynamic_and_extreme-lighting_sc.md)
+- [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [Galactification: Painting Galaxies onto Dark Matter Only Simulations Using a Transformer-Based Model](galactification_painting_galaxies_onto_dark_matter_only_simulations_using_a_tran.md)
+- [Joint Optimization of Neural Radiance Fields and Continuous Camera Motion from a Monocular Video](../../CVPR2025/3d_vision/joint_optimization_of_neural_radiance_fields_and_continuous_camera_motion_from_a.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ $$\max \text{R2C}(S) = (\varkappa \cdot \text{REV}(S)) / \text{COST}(S)$$
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 非常全面的实验和消融
 - **写作质量**: ⭐⭐⭐⭐ — 组织结构清晰
 - **实用性**: ⭐⭐⭐⭐⭐ — 对社区极具价值的基准工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphOmni: A Comprehensive and Extensible Benchmark Framework for Large Language Models on Graph-theoretic Tasks](graphomni_a_comprehensive_and_extensible_benchmark_framework_for_large_language_.md)
+- [Bi-Level Contextual Bandits for Individualized Resource Allocation under Delayed Feedback](../../AAAI2026/reinforcement_learning/bi-level_contextual_bandits_for_individualized_resource_allocation_under_delayed.md)
+- [Meta-World+: An Improved, Standardized, RL Benchmark](../../NeurIPS2025/reinforcement_learning/meta-world_an_improved_standardized_rl_benchmark.md)
+- [How LLMs Learn to Reason: A Complex Network Perspective](how_llms_learn_to_reason_a_complex_network_perspective.md)
+- [Discounted Cuts: A Stackelberg Approach to Network Disruption](../../AAAI2026/reinforcement_learning/discounted_cuts_a_stackelberg_approach_to_network_disruption.md)
+
+<!-- RELATED:END -->

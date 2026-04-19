@@ -135,3 +135,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 三个数据集 + 详细消融 + ERF/相关性可视化
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，可视化丰富
 - **价值**: ⭐⭐⭐⭐ 在效率-性能权衡上取得了新的 SOTA，具有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learned Image Compression with Dictionary-based Entropy Model](learned_image_compression_with_dictionary-based_entropy_model.md)
+- [Learned Image Compression with Hierarchical Progressive Context Modeling](../../ICCV2025/model_compression/learned_image_compression_with_hierarchical_progressive_context_modeling.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](../../NeurIPS2025/model_compression/linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
+- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ ExPO-HM 首次让 Explain-then-Detect 系统全面超越直接检测的 SOTA（R
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，实验组织有序
 - **实用价值**: ⭐⭐⭐⭐ — 对内容审核有直接应用价值
 - **综合推荐**: ⭐⭐⭐⭐ (4/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language Models Can Explain Visual Features via Steering](../../CVPR2026/interpretability/language_models_can_explain_visual_features_via_steering.md)
+- [Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+- [When Machine Learning Gets Personal: Evaluating Prediction and Explanation](when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
+- [SubspaceAD: Training-Free Few-Shot Anomaly Detection via Subspace Modeling](../../CVPR2026/interpretability/subspacead_training-free_few-shot_anomaly_detection_via_subspace_modeling.md)
+- [Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement](decoupling_dynamical_richness_from_representation_learning_towards_practical_mea.md)
+
+<!-- RELATED:END -->

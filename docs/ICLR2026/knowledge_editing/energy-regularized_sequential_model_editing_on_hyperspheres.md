@@ -135,3 +135,15 @@ LLaMA3-8B 上 15000 次序列编辑（ZsRE / CounterFact）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 两模型两数据集、通用能力、即插即用、计算开销、超参敏感性分析一应俱全
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，但数学符号较多，阅读门槛稍高
 - **价值**: ⭐⭐⭐⭐⭐ 即插即用一行代码提升 38.71%，在模型编辑领域非常实用，理论贡献也很扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fine-tuning Done Right in Model Editing](fine-tuning_done_right_in_model_editing.md)
+- [Bilinear Representation Mitigates Reversal Curse and Enables Consistent Model Editing](bilinear_representation_mitigates_reversal_curse_and_enables_consistent_model_ed.md)
+- [Multiplicative Orthogonal Sequential Editing for Language Models (MOSE)](../../AAAI2026/knowledge_editing/multiplicative_orthogonal_sequential_editing_for_language_models.md)
+- [EAMET: Robust Massive Model Editing via Embedding Alignment Optimization](eamet_robust_massive_model_editing_via_embedding_alignment_optimization.md)
+- [Neuron-Level Sequential Editing for Large Language Models](../../ACL2025/knowledge_editing/neuron-level_sequential_editing_for_large_language_models.md)
+
+<!-- RELATED:END -->

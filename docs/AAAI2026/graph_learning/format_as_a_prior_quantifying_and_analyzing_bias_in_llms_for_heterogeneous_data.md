@@ -160,3 +160,15 @@ $$a'_j = \frac{\bar{m}}{m_k + \varepsilon} \cdot a_j, \quad j \in I_k$$
 ⭐⭐⭐⭐ (4/5)
 
 问题定义新颖且重要，实验设计系统全面，混淆因素控制严格。三阶段递进式分析逻辑清晰，从现象到因素到机制再到干预形成完整闭环。主要扣分在于注意力干预方法相对简单，以及缺乏对偏差方向性根因的深入分析。对图学习社区来说，本文揭示了 KG 等结构化知识在与 LLM 交互时可能被系统性低估，具有重要的实践警示意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Heterogeneous Graph Attention Networks](spiking_heterogeneous_graph_attention_networks.md)
+- [Assessing LLMs for Serendipity Discovery in Knowledge Graphs: A Case for Drug Repurposing](assessing_llms_for_serendipity_discovery_in_knowledge_graphs_a_case_for_drug_rep.md)
+- [EchoLess: Label-Based Pre-Computation for Memory-Efficient Heterogeneous Graph Learning](echoless_label-based_pre-computation_for_memory-efficient_heterogeneous_graph_le.md)
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [NOTAM-Evolve: A Knowledge-Guided Self-Evolving Optimization Framework with LLMs for NOTAM Interpretation](notam-evolve_a_knowledge-guided_self-evolving_optimization_framework_with_llms_f.md)
+
+<!-- RELATED:END -->

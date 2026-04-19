@@ -153,3 +153,15 @@ $$\mathcal{L}_{\text{sCM}} = \mathbb{E}_{x_t, t} \left[ \frac{e^{w_\phi(t)}}{D} 
 ## 评分 ⭐⭐⭐⭐⭐
 
 工程价值极高的工作。Flow→TrigFlow 无损转换消除了 sCM 对专用预训练的依赖，降低了连续时间一致性蒸馏的门槛；混合蒸馏的创新组合在速度-质量帕累托前沿取得了显著突破。0.6B 参数量下 1 步 FID 7.04 / GenEval 0.72 的成绩令人印象深刻，对消费级 GPU 部署有直接推动作用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Joint Diffusion Models in Continual Learning](joint_diffusion_models_in_continual_learning.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
+
+<!-- RELATED:END -->

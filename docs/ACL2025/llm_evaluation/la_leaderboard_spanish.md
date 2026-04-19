@@ -117,3 +117,15 @@ Top-10排名最频繁的模型（按进入Top-10的任务数排列）：
 - 实验充分度: ⭐⭐⭐⭐ 50个模型×66个数据集×多维分析
 - 写作质量: ⭐⭐⭐⭐ 方法论描述详尽，为其他语言社区提供了参考框架
 - 价值: ⭐⭐⭐⭐ 对西班牙语NLP社区有重要的基础设施贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TUMLU: A Unified and Native Language Understanding Benchmark for Turkic Languages](tumlu_a_unified_and_native_language_understanding_benchmark_for_turkic_languages.md)
+- [Where Are We? Evaluating LLM Performance on African Languages](where_are_we_evaluating_llm_performance_on_african_languages.md)
+- [Bayesian Evaluation of Large Language Model Behavior](../../NeurIPS2025/llm_evaluation/bayesian_evaluation_of_large_language_model_behavior.md)
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [BESSTIE: A Benchmark for Sentiment and Sarcasm Classification for Varieties of English](besstie_a_benchmark_for_sentiment_and_sarcasm_classification_for_varieties_of_en.md)
+
+<!-- RELATED:END -->

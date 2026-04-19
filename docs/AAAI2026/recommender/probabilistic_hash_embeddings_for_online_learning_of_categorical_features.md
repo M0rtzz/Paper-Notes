@@ -123,3 +123,15 @@ PHE 作为即插即用模块在不同任务上的应用效果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖分类、序列建模、推荐三大场景，公开数据集，有理论+实验双重验证
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，理论推导完整，动机和直觉解释充分
 - 价值: ⭐⭐⭐⭐ 解决了一个实际且普遍的工业问题，即插即用设计实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiTab: A Scalable Foundation for Multitask Learning on Tabular Data](multitab_a_scalable_foundation_for_multitask_learning_on_tabular_data.md)
+- [LCRON: Learning Cascade Ranking as One Network](../../ICML2025/recommender/learning_cascade_ranking_as_one_network.md)
+- [C2AL: Cohort-Contrastive Auxiliary Learning for Large-scale Recommendation Systems](../../ICLR2026/recommender/c2al_cohort-contrastive_auxiliary_learning_for_large-scale_recommendation_system.md)
+- [Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](../../NeurIPS2025/recommender/transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
+- [Not All Explanations for Deep Learning Phenomena Are Equally Valuable](../../ICML2025/recommender/not_all_explanations_for_deep_learning_phenomena_are_equally_valuable.md)
+
+<!-- RELATED:END -->

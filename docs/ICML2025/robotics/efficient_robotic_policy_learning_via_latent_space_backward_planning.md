@@ -187,3 +187,15 @@ LBP 采用**三阶段分别训练**：
 | 写作质量 | 4 | 动机清晰，图示直观，逻辑连贯 |
 | 实用价值 | 4 | 轻量 MLP 实现，适合实时部署 |
 | **总分** | **4.0** | 一篇解决实际问题的扎实工作，反向规划范式值得在更多场景推广 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Closed-loop Long-horizon Robotic Planning via Equilibrium Sequence Modeling](closed-loop_long-horizon_robotic_planning_via_equilibrium_sequence_modeling.md)
+- [Domain Expansion: A Latent Space Construction Framework for Multi-Task Learning](../../ICLR2026/robotics/domain_expansion_a_latent_space_construction_framework_for_multi-task_learning.md)
+- [Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning](../../CVPR2026/robotics/fast-thinkact_efficient_vision-language-action_reasoning_via_verbalizable_latent.md)
+- [Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](../../ICCV2025/robotics/resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)
+- [ThinkAct: Vision-Language-Action Reasoning via Reinforced Visual Latent Planning](../../NeurIPS2025/robotics/thinkact_vision-language-action_reasoning_via_reinforced_visual_latent_planning.md)
+
+<!-- RELATED:END -->

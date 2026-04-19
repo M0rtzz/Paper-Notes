@@ -135,3 +135,15 @@ SingRef6D包含三个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集覆盖不同挑战，深度和位姿均有详细评估，消融完整
 - 写作质量: ⭐⭐⭐⭐ 方法动机和对比表1清晰展示了与现有方法的差异
 - 价值: ⭐⭐⭐⭐ 在低资源场景下有很强的实用价值，特别是透明/反光物体的位姿估计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](../../ICCV2025/3d_vision/unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
+- [Rectified Point Flow: Generic Point Cloud Pose Estimation](rectified_point_flow_generic_point_cloud_pose_estimation.md)
+- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](../../ICCV2025/3d_vision/boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
+- [Reconstruct, Inpaint, Test-Time Finetune: Dynamic Novel-View Synthesis from Monocular Videos](reconstruct_inpaint_test-time_finetune_dynamic_novel-view_synthesis_from_monocul.md)
+- [GeoComplete: Geometry-Aware Diffusion for Reference-Driven Image Completion](geocomplete_geometry-aware_diffusion_for_reference-driven_image_completion.md)
+
+<!-- RELATED:END -->

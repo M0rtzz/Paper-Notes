@@ -131,3 +131,15 @@ $$W^* = \arg\min_W \mathbb{E} [(y - \text{SM}(Z, W))^2]$$
 ## 评分 ⭐⭐⭐⭐
 
 **理论贡献突出**：首次为 TTT 提升 ICL 提供严格理论保障，三要素统一框架清晰优雅。**实验不够丰富**：主要依赖 TabPFN 这一特殊场景验证，缺少更广泛的 NLP/视觉任务实验。**实用指导有价值**：冷/暖启动的理论分析和 o(d) 突破对实践有直接指导意义。整体是一篇理论驱动的扎实工作，但存在线性假设与实际的差距。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [PDE-Transformer: Efficient and Versatile Transformers for Physics Simulations](pde-transformer_efficient_and_versatile_transformers_for_physics_simulations.md)
+- [AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation](../../CVPR2026/self_supervised/actta_rethinking_test-time_adaptation_via_dynamic_activation.md)
+- [Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](../../ICLR2026/self_supervised/spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
+- [Transformers without Normalization](../../CVPR2025/self_supervised/transformers_without_normalization.md)
+
+<!-- RELATED:END -->

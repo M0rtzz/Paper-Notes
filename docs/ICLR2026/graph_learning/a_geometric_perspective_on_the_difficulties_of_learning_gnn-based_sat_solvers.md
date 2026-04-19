@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论验证、重布线消融和启发式评估覆盖全面，但缺乏大规模工业基准
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，从简单命题到主定理层层递进
 - 价值: ⭐⭐⭐⭐ 为理解和改进神经组合求解器提供了新的几何视角，但尚未转化为实际的架构改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperbolic-PDE GNN: Spectral Graph Neural Networks in the Perspective of A System of Hyperbolic Partial Differential Equations](../../ICML2025/graph_learning/hyperbolic-pde_gnn_spectral_graph_neural_networks_in_the_perspective_of_a_system.md)
+- [Relatron: Automating Relational Machine Learning over Relational Databases](relatron_automating_relational_machine_learning_over_relational_databases.md)
+- [Geometric Imbalance in Semi-Supervised Node Classification](../../NeurIPS2025/graph_learning/geometric_imbalance_in_semi-supervised_node_classification.md)
+- [GRAPHITE: Graph Homophily Booster — Reimagining the Role of Discrete Features in Heterophilic Graph Learning](graph_homophily_booster_reimagining_the_role_of_discrete_features_in_heterophili.md)
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](../../ICML2025/graph_learning/llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+
+<!-- RELATED:END -->

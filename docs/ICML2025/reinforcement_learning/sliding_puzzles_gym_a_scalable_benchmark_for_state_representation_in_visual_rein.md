@@ -140,3 +140,15 @@ $$D = \frac{\sum_{i,j} |u_{i,j} - u^*_{i,j}| + |v_{i,j} - v^*_{i,j}|}{\sum_{i,j}
 ⭐⭐⭐⭐ (4/5)
 
 SPGym 设计精巧，成功隔离了视觉表征学习挑战。"所有方法都在记忆化"的发现具有重要警示意义。但基准本身偏简单（拼图任务），且开箱即用的评估可能低估了方法潜力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Cooperative Multi-Agent Reinforcement Learning with State Modelling and Adversarial Exploration](enhancing_cooperative_multi-agent_reinforcement_learning_with_state_modelling_an.md)
+- [Reasoning as Representation: Rethinking Visual Reinforcement Learning in Image Quality Assessment](../../ICLR2026/reinforcement_learning/reasoning_as_representation_rethinking_visual_reinforcement_learning_in_image_qu.md)
+- [Reasoning Gym: Reasoning Environments for Reinforcement Learning with Verifiable Rewards](../../NeurIPS2025/reinforcement_learning/reasoning_gym_reasoning_environments_for_reinforcement_learning_with_verifiable_.md)
+- [Benchmarking Quantum Reinforcement Learning](benchmarking_quantum_reinforcement_learning.md)
+- [Meta-World+: An Improved, Standardized, RL Benchmark](../../NeurIPS2025/reinforcement_learning/meta-world_an_improved_standardized_rl_benchmark.md)
+
+<!-- RELATED:END -->

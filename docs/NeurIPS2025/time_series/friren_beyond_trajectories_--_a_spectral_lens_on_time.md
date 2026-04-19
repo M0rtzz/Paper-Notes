@@ -158,3 +158,15 @@ Rössler 上 Fern MSE 仅为 TimeMixer 的 0.62%、PatchTST 的 0.47%、DLinear 
 - 实验充分度: ⭐⭐⭐⭐ (混沌实验充分，但标准基准对比方法偏少)
 - 写作质量: ⭐⭐⭐⭐ (兼具 position paper 和 model paper，结构清晰但信息量大)
 - 价值: ⭐⭐⭐⭐ (评估方法论和谱可解释性对社区有长期影响)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning](universal_spectral_tokenization_via_self-supervised_panchromatic_representation_.md)
+- [Sonnet: Spectral Operator Neural Network for Multivariable Time Series Forecasting](../../AAAI2026/time_series/sonnet_spectral_operator_neural_network_for_multivariable_time_series_forecastin.md)
+- [Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](../../ICLR2026/time_series/routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
+- [Selective Learning for Deep Time Series Forecasting](selective_learning_for_deep_time_series_forecasting.md)
+- [Time-O1: Time-Series Forecasting Needs Transformed Label Alignment](time-o1_time-series_forecasting_needs_transformed_label_alignment.md)
+
+<!-- RELATED:END -->

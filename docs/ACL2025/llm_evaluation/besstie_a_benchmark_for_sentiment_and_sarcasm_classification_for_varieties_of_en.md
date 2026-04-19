@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9 个模型、双来源、双任务、跨变体实验，数据质量验证充分
 - 写作质量: ⭐⭐⭐⭐ 数据构建流程严谨，实验设计合理
 - 价值: ⭐⭐⭐⭐ 为英语变体公平性研究提供了基础评测工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Standardized Benchmark for Multilabel Antimicrobial Peptide Classification](../../NeurIPS2025/llm_evaluation/a_standardized_benchmark_for_multilabel_antimicrobial_peptide_classification.md)
+- [La Leaderboard: A Large Language Model Leaderboard for Spanish Varieties and Languages of Spain and Latin America](la_leaderboard_spanish.md)
+- [HalluLens: LLM Hallucination Benchmark](hallulens_llm_hallucination_benchmark.md)
+- [PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning](physreason_a_comprehensive_benchmark_towards_physics-based_reasoning.md)
+- [MisMatched: A Benchmark for Scientific Natural Language Inference](a_mismatched_benchmark_for_scientific_natural_language_inference.md)
+
+<!-- RELATED:END -->

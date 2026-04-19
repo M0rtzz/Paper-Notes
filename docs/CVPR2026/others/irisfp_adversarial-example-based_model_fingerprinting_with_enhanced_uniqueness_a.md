@@ -134,3 +134,15 @@ IrisFP包含两个主流程：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5数据集、3架构、6种攻击、4个基线、详细消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法层层递进，但符号较多
 - 价值: ⭐⭐⭐ 模型知识产权保护的实际需求明确，但应用场景相对窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Closer Look at GAN Priors: Exploiting Intermediate Features for Enhanced Model Inversion Attacks](../../ECCV2024/others/a_closer_look_at_gan_priors_exploiting_intermediate_features.md)
+- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](your_classifier_can_do_more_towards_balancing_the_gaps_in_classification_robustn.md)
+- [Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training](../../ICCV2025/others/failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per.md)
+- [Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures](../../ICML2025/others/maximum_coverage_in_turnstile_streams_with_applications_to_fingerprinting_measur.md)
+- [Multi-Facet Blending for Faceted Query-by-Example Retrieval](../../ACL2025/others/multi-facet_blending_for_faceted_query-by-example_retrieval.md)
+
+<!-- RELATED:END -->

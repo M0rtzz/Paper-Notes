@@ -177,3 +177,15 @@ AvisC 在 InstructBLIP 上提升尤为显著：Random 设置 F1 提升 **+5.92**
 - **实验充分度**: ⭐⭐⭐ — POPE/MME/AMBER 基准覆盖较好，但测试模型有限
 - **写作质量**: ⭐⭐⭐⭐⭐ — 标题精妙、动机清晰、图例直观、逻辑链完整
 - **价值**: ⭐⭐⭐⭐ — 免训练的即插即用方案有高实用价值，blind token 发现对 LVLM 研究有启示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMSafeAware: Can't See the Forest for the Trees: Benchmarking Multimodal Safety Awareness for Multimodal LLMs](cant_see_the_forest_for_the.md)
+- [Robust Calibration of Large Vision-Language Adapters](../../ECCV2024/multimodal_vlm/robust_calibration_of_large_vision-language_adapters.md)
+- [VLMInferSlow: Evaluating the Efficiency Robustness of Large Vision-Language Models as a Service](vlminferslow_evaluating_the_efficiency_robustness_of.md)
+- [Jailbreak Large Vision-Language Models Through Multi-Modal Linkage](jailbreak_large_vision-language_models_through_multi-modal_linkage.md)
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+
+<!-- RELATED:END -->

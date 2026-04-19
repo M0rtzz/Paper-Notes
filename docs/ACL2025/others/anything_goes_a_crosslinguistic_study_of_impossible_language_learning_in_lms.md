@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12种语言、多种打乱方式、多个分析维度，但受限于GPT-2 small
 - 写作质量: ⭐⭐⭐⭐ 研究问题清晰，方法论严谨，讨论深入
 - 价值: ⭐⭐⭐⭐ 对LLM作为认知模型的争论提供了重要实证，ΔGenScore方法有方法论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Little Human Data Goes A Long Way](a_little_human_data_goes_a_long_way.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [What Matters in Evaluating Book-Length Stories? A Systematic Study of Long Story Evaluation](what_matters_in_evaluating_book-length_stories_a_systematic_study_of_long_story_.md)
+- [Understanding Common Ground Misalignment in Goal-Oriented Dialog: A Case-Study with Ubuntu Chat Logs](understanding_common_ground_misalignment_in_goal-oriented_dialog_a_case-study_wi.md)
+- [Inducing Lexicons of In-Group Language with Socio-Temporal Context](inducing_lexicons_of_in-group_language_with_socio-temporal_context.md)
+
+<!-- RELATED:END -->

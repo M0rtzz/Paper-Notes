@@ -150,3 +150,15 @@ DSP 与模块计算逻辑解耦，具有优异的通用性：
 - 实验充分度: ⭐⭐⭐⭐ 在视频生成和蛋白质预测多个场景验证，吞吐提升显著，涵盖多种 baseline 对比
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化定义清晰，状态转换体系优雅，图示直观，整体逻辑流畅
 - 价值: ⭐⭐⭐⭐ 对多维 Transformer 的分布式训练/推理具有很高的实用价值，尤其在视频生成和多模态大模型快速发展的当下
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InspireDebate: Multi-Dimensional Evaluation-Guided Reasoning for Debating](../../ACL2025/others/inspiredebate_multidim_evaluation_debating.md)
+- [How Do Transformers Learn Variable Binding in Symbolic Programs?](how_do_transformers_learn_variable_binding_in_symbolic_programs.md)
+- [Residual Matrix Transformers: Scaling the Size of the Residual Stream](residual_matrix_transformers_scaling_the_size_of_the_residual_stream.md)
+- [Sparse-Pivot: Dynamic Correlation Clustering for Node Insertions](sparse-pivot_dynamic_correlation_clustering_for_node_insertions.md)
+- [Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 五个真实世界基准、多GPU推理时间对比、详尽消融、训练策略普适性验证
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富，消融系统有说服力
 - **价值**: ⭐⭐⭐⭐⭐ 对立体匹配实际部署有直接推动，三阶段训练策略有广泛参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WMGStereo: What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zerosh.md)
+- [What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zero-shot_stereo_matching.md)
+- [PromptStereo: Zero-Shot Stereo Matching via Structure and Motion Prompts](promptstereo_zero-shot_stereo_matching_via_structure_and_motion_prompts.md)
+- [PIP-Stereo: Progressive Iterations Pruner for Iterative Optimization based Stereo Matching](pip-stereo_progressive_iterations_pruner_for_iterative_optimization_based_stereo.md)
+- [RobuSTereo: Robust Zero-Shot Stereo Matching under Adverse Weather](../../ICCV2025/3d_vision/robustereo_robust_zero-shot_stereo_matching_under_adverse_weather.md)
+
+<!-- RELATED:END -->

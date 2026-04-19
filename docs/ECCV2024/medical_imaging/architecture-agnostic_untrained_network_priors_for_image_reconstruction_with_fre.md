@@ -164,3 +164,15 @@ $$\min_{\Theta, K} \mathcal{L}(\mathbf{y}; \mathbf{AG_\Theta(z)}) + \lambda \sum
 - 实验充分度: ⭐⭐⭐⭐ （MRI 实验全面，自然图像略少）
 - 写作质量: ⭐⭐⭐⭐⭐ （动机清晰，逻辑链完整，图表丰富）
 - 价值: ⭐⭐⭐⭐ （解决实际痛点，实现简单，即插即用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Domesticating SAM for Breast Ultrasound Image Segmentation via Spatial-Frequency Fusion and Uncertainty Correction](domesticating_sam_for_breast_ultrasound_image_segmentation_via_spatial-frequency.md)
+- [Brain-ID: Learning Contrast-agnostic Anatomical Representations for Brain Imaging](brain-id_learning_contrast-agnostic_anatomical_representations_for_brain_imaging.md)
+- [Adaptive Confidence Regularization for Multimodal Failure Detection](../../CVPR2026/medical_imaging/adaptive_confidence_regularization_for_multimodal_failure_detection.md)
+- [Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer](../../ICLR2026/medical_imaging/brain-it_image_reconstruction_from_fmri_via_brain-interaction_transformer.md)
+- [FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation](../../AAAI2026/medical_imaging/funkan_functional_kolmogorov-arnold_network_for_medical_image_enhancement_and_se.md)
+
+<!-- RELATED:END -->

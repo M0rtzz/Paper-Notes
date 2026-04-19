@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 10+ 模型和两个 benchmark，结果全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表信息量大
 - 价值: ⭐⭐⭐⭐ 工程实用性强，即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-free Online Video Step Grounding](training-free_online_video_step_grounding.md)
+- [Exploiting Vision Language Model for Training-Free 3D Point Cloud OOD Detection](../../ICCV2025/multimodal_vlm/exploiting_vision_language_model_for_training-free_3d_point_cloud_ood_detection_.md)
+- [To See or To Read: User Behavior Reasoning in Multimodal LLMs](to_see_or_to_read_user_behavior_reasoning_in_multimodal_llms.md)
+- [Training-Free Personalization via Retrieval and Reasoning on Fingerprints](../../ICCV2025/multimodal_vlm/training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
+- [Nautilus: A Large Multimodal Model for Underwater Scene Understanding](nautilus_a_large_multimodal_model_for_underwater_scene_understanding.md)
+
+<!-- RELATED:END -->

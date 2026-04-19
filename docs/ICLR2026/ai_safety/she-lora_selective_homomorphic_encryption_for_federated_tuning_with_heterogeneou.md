@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型多任务，安全性/效率/性能三维度全面
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，motivation chain严密
 - 价值: ⭐⭐⭐⭐ 对联邦LLM微调的实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LoRA-FAIR: Federated LoRA Fine-Tuning with Aggregation and Initialization Refinement](../../ICCV2025/ai_safety/lora-fair_federated_lora_fine-tuning_with_aggregation_and_initialization_refinem.md)
+- [Co-LoRA: Collaborative Model Personalization on Heterogeneous Multi-Modal Clients](co-lora_collaborative_model_personalization_on_heterogeneous_multi-modal_clients.md)
+- [Adaptive LoRA Experts Allocation and Selection for Federated Fine-Tuning](../../NeurIPS2025/ai_safety/adaptive_lora_experts_allocation_and_selection_for_federated_fine-tuning.md)
+- [FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA](../../AAAI2026/ai_safety/fedalt_federated_fine-tuning_through_adaptive_local_training_with_rest-of-world_.md)
+- [FedSVD: Adaptive Orthogonalization for Private Federated Learning with LoRA](../../NeurIPS2025/ai_safety/fedsvd_adaptive_orthogonalization_for_private_federated_learning_with_lora.md)
+
+<!-- RELATED:END -->

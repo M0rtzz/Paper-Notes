@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在多个基准上验证，消融完整，但缺少更多真实场景测试
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，数学形式化完善，但公式化过度使部分内容显得冗余
 - 价值: ⭐⭐⭐⭐ 展示了MLLM在零样本多模态定位中的潜力，对训练范式的反思有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [Filter, Correlate, Compress: Training-Free Token Reduction for MLLM Acceleration](../../AAAI2026/multimodal_vlm/filter_correlate_compress_training-free_token_reduction_for_.md)
+- [Training-Free Personalization via Retrieval and Reasoning on Fingerprints](../../ICCV2025/multimodal_vlm/training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
+- [From Intuition to Investigation: A Tool-Augmented Reasoning MLLM Framework for Generalizable Face Anti-Spoofing](from_intuition_to_investigation_a_tool-augmented_reasoning_mllm_framework_for_ge.md)
+- [LLMind: Bio-inspired Training-free Adaptive Visual Representations for Vision-Language Models](llmind_bio-inspired_training-free_adaptive_visual_representations_for_vision-lan.md)
+
+<!-- RELATED:END -->

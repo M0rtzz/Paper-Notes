@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ MeViS+Ref-YT-VOS+ReVOS+ReasonVOS多数据集评估，消融全面
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，Table 1对比前人方法的帧采样策略一目了然
 - 价值: ⭐⭐⭐⭐ 为RefVOS的MLLM方法建立了强基线，在最难的MeViS上大幅提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VISA: Reasoning Video Object Segmentation via Large Language Models](../../ECCV2024/segmentation/visa_reasoning_video_object_segmentation_via_large_language_models.md)
+- [DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment](dinov2_meets_text_a_unified_framework_for_image-_and_pixel-level_vision-language.md)
+- [EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
+- [Advancing Visual Large Language Model for Multi-granular Versatile Perception](../../ICCV2025/segmentation/advancing_visual_large_language_model_for_multi-granular_versatile_perception.md)
+- [Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
+
+<!-- RELATED:END -->

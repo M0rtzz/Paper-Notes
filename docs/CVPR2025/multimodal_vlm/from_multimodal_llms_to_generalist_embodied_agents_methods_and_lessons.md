@@ -116,3 +116,15 @@ Stage 1：标准自回归 cross-entropy loss on actions，学习率 1e-5，AdamW
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 个数据集、10 个评测基准、大量消融分析（数据、模型、RL策略），极其充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法和实验的 lessons 提炼到位
 - 价值: ⭐⭐⭐⭐ 为构建通用具身智能体提供了清晰的 recipe 和重要的实证结论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios](homesafe-bench_evaluating_vision-language_models_on_unsafe_action_detection_for_.md)
+- [Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices](multi-layer_visual_feature_fusion_in_multimodal_llms_methods_analysis_and_best_p.md)
+- [Playing the Fool: Jailbreaking LLMs and Multimodal LLMs with Out-of-Distribution Strategy](playing_the_fool_jailbreaking_llms_and_multimodal_llms_with_out-of-distribution_.md)
+- [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
+- [ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models](espire_a_diagnostic_benchmark_for_embodied_spatial_reasoning_of_vision-language_.md)
+
+<!-- RELATED:END -->

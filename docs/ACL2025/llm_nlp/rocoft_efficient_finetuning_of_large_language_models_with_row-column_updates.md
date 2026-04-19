@@ -152,3 +152,15 @@ RoCoFT3 以仅 0.249M 参数（约 LoRA 的 28%）达到所有方法的最高平
 - **实验全面性**：从中等模型到大模型，覆盖 NLU/推理/摘要等多种任务（+0.5）
 - **实用性**：实现简单、无额外开销、对选择策略鲁棒（+0.5）
 - **扣分**：未在超大模型上验证、与 QLoRA 等组合未探索、某些复杂任务的适用性未知（-1）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
+- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+
+<!-- RELATED:END -->

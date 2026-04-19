@@ -122,3 +122,15 @@ MoE 推理时，router 为每个 token 选择 top-k 专家。Capacity-Aware Infe
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个 MoE 模型 + 多模态实验 + 评分函数消融 + 效率分析 + 设备级变体
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 对已部署 MoE 模型的推理优化有直接实用价值，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](../../CVPR2026/multimodal_vlm/quant_experts_token-aware_adaptive_error_reconstruction_with_mixture_of_experts_.md)
+- [MoE-GRPO: Optimizing Mixture-of-Experts via Reinforcement Learning in Vision-Language Models](../../CVPR2026/multimodal_vlm/moe-grpo_optimizing_mixture-of-experts_via_reinforcement_learning_in_vision-lang.md)
+- [MoDES: Accelerating Mixture-of-Experts Multimodal Large Language Models via Dynamic Expert Skipping](../../CVPR2026/multimodal_vlm/modes_accelerating_mixture-of-experts_multimodal_large_language_models_via_dynam.md)
+- [MCMoE: Completing Missing Modalities with Mixture of Experts for Incomplete Multimodal Action Quality Assessment](../../AAAI2026/multimodal_vlm/mcmoe_completing_missing_modalities_with_mixture_of_experts_for_incomplete_multi.md)
+- [Dynamic Mixture of Curriculum LoRA Experts for Continual Multimodal Instruction Tuning](../../ICML2025/multimodal_vlm/dynamic_mixture_of_curriculum_lora_experts_for_continual_multimodal_instruction_.md)
+
+<!-- RELATED:END -->

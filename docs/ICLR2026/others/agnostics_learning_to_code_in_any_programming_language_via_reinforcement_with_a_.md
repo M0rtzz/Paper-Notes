@@ -121,3 +121,15 @@ Agnostics分两大阶段：(1) **数据准备**——用LLM将现有数据集（
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种低资源语言×多个模型×两个基准+自建新基准Ag-LCB-X，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 清晰有组织，系统设计决策都有合理解释
 - 价值: ⭐⭐⭐⭐⭐ 对低资源编程语言的LLM后训练提供了完整的基础设施级解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Single Architecture for Representing Invariance Under Any Space Group](a_single_architecture_for_representing_invariance_under_any_space_group.md)
+- [Computable Universal Online Learning](../../NeurIPS2025/others/computable_universal_online_learning.md)
+- [AnyUp: Universal Feature Upsampling](anyup_universal_feature_upsampling.md)
+- [DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces](distributions_as_actions_a_unified_framework_for_diverse_action_spaces.md)
+- [Jackpot: Optimal Budgeted Rejection Sampling for Extreme Actor-Policy Mismatch RL](jackpot_optimal_budgeted_rejection_sampling_for_extreme_actor-policy_mismatch_re.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ $$\mathcal{L}^{RB-Sig}(\theta, \phi; t, b_{rel}) = \sum_{i} \log(1+\exp(-t\langl
 - 实验充分度: ⭐⭐⭐⭐ (理论为主，合成+真实模型验证充分，但缺少大规模训练实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (数学严谨，图示直观，写作清晰)
 - 价值: ⭐⭐⭐⭐⭐ (对对比学习理论基础贡献重大，实践建议有用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning](../../ACL2025/llm_pretraining/training_dynamics_underlying_language_model_scaling_laws_loss_deceleration_and_z.md)
+- [Implicit Bias and Loss of Plasticity in Matrix Completion: Depth Promotes Low-Rank](../../ICLR2026/llm_pretraining/implicit_bias_and_loss_of_plasticity_in_matrix_completion_depth_promotes_low-ran.md)
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [Superposition Yields Robust Neural Scaling](superposition_yields_robust_neural_scaling.md)
+- [Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
+
+<!-- RELATED:END -->

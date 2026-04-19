@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6模型×59配置×3数据集×180万生成，规模非常大
 - 写作质量: ⭐⭐⭐⭐ 框架清晰（两场景三方法），但数学部分略重
 - 价值: ⭐⭐⭐⭐ 为文本生成评估提供了系统化工具箱，对解码策略选择有实用指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [TagRouter: Learning Route to LLMs through Tags for Open-Domain Text Generation Tasks](tagrouter_learning_route_to_llms_through_tags_for_open-domain_text_generation_ta.md)
+- [PerSphere: A Comprehensive Framework for Multi-Faceted Perspective Retrieval and Summarization](persphere_a_comprehensive_framework_for_multi-faceted_perspective_retrieval_and_.md)
+- [Rethinking Evaluation Metrics for Grammatical Error Correction: Why Use a Different Evaluation Process than Human?](rethinking_evaluation_metrics_for_grammatical_error_correction_why_use_a_differe.md)
+- [gec-metrics: A Unified Library for Grammatical Error Correction Evaluation](gec-metrics_a_unified_library_for_grammatical_error_correction_evaluation.md)
+
+<!-- RELATED:END -->

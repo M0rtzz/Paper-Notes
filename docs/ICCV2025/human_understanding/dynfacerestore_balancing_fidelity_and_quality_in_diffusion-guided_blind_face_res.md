@@ -139,3 +139,15 @@ $$x_{t-1} = x'_{t-1} - A_t \times \nabla_{x_t} \| \acute{y} - k_t \otimes x^0_t 
 - **实验充分度**: ⭐⭐⭐⭐⭐ 合成和真实数据集均有评估，消融研究详尽
 - **写作质量**: ⭐⭐⭐⭐ 框架图清晰，公式推导严谨
 - **价值**: ⭐⭐⭐⭐ 对扩散引导修复领域有重要贡献，但推理速度限制了实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)
+- [Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)
+- [HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity](hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu.md)
+- [Degradation-Modeled Multipath Diffusion for Tunable Metalens Photography](degradation-modeled_multipath_diffusion_for_tunable_metalens_photography.md)
+- [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
+
+<!-- RELATED:END -->

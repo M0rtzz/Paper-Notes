@@ -142,3 +142,15 @@ CoDy 的搜索流程：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多 TGNN、充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 社交网络例子极其直观
 - 价值: ⭐⭐⭐⭐ 开辟了动态图可解释性的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](../../NeurIPS2025/graph_learning/dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)
+- [Positional Encoding meets Persistent Homology on Graphs](positional_encoding_meets_persistent_homology_on_graphs.md)
+- [Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees](towards_graph_foundation_models_learning_generalities_across_graphs_via_task-tre.md)
+- [Entropy-Guided Dynamic Tokens for Graph-LLM Alignment in Molecular Understanding](../../ICLR2026/graph_learning/entropy-guided_dynamic_tokens_for_graph-llm_alignment_in_molecular_understanding.md)
+- [Extending Complex Logical Queries on Uncertain Knowledge Graphs](../../ACL2025/graph_learning/extending_complex_logical_queries_uncertain_knowledge_graphs.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ NASCA 与 XNLI 零样本迁移性能的皮尔逊相关达 0.9326，与 BMLAMA-53
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多模型、多数据集、多语言，相关性分析全面，包含检索和迁移两类任务
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机自然，可视化丰富
 - 价值: ⭐⭐⭐⭐ 提供了高效且有效的跨语言对齐评估工具，对多语言 LLM 研究有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeAL: Decoding-time Alignment for Large Language Models](deal_decoding_time_alignment.md)
+- [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
+- [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](gapo_multi_objective_alignment.md)
+- [Direct Confidence Alignment: Aligning Verbalized Confidence with Internal Confidence In Large Language Models](direct_confidence_alignment_aligning_verbalized_confidence_with_internal_confide.md)
+- [DICE-Bench: Evaluating the Tool-Use Capabilities of Large Language Models in Multi-Round, Multi-Party Dialogues](dice-bench_evaluating_the_tool-use_capabilities_of_large_language_models_in_mult.md)
+
+<!-- RELATED:END -->

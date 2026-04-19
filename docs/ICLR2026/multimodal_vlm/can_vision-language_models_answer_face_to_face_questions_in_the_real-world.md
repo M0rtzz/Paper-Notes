@@ -124,3 +124,15 @@ QIVD 是一个数据集+benchmark+streaming baseline 的组合工作。数据来
 - 实验充分度: ⭐⭐⭐⭐⭐ 20+ 模型全面评估，streaming/offline/音频消融/微调/时机分析面面俱到
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 直指实时 AI 助手/机器人的核心能力缺口，对领域发展有引导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Vision-Language Model in Face Forensics: Multi-Modal Interpretable Forged Face Detector](../../CVPR2025/multimodal_vlm/rethinking_vision-language_model_in_face_forensics_multi-modal_interpretable_for.md)
+- [Can Vision–Language Models Assess Graphic Design Aesthetics? A Benchmark, Evaluation, and Dataset Perspective](can_vision_language_models_assess_graphic_design_aesthetics_a_benchmark_evaluati.md)
+- [Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verification](../../CVPR2026/multimodal_vlm/demographic_fairness_in_multimodal_llms_a_benchmark_of_gender_and_ethnicity_bias.md)
+- [Bongard-RWR+: Real-World Representations of Fine-Grained Concepts in Bongard Problems](bongard-rwr_real-world_representations_of_fine-grained_concepts_in_bongard_probl.md)
+- [From Intuition to Investigation: A Tool-Augmented Reasoning MLLM Framework for Generalizable Face Anti-Spoofing](../../CVPR2026/multimodal_vlm/from_intuition_to_investigation_a_tool-augmented_reasoning_mllm_framework_for_ge.md)
+
+<!-- RELATED:END -->

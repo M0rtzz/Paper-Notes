@@ -123,3 +123,15 @@ VGEnt 是无训练 (training-free) 的框架，不涉及额外微调或损失函
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个模型 × 3个基准 × 充分消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图文并茂
 - 价值: ⭐⭐⭐⭐ 即插即用框架，实用性强；3B 模型超 7B 的结果很有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaVideoRAG: Omni-Contextual Adaptive Retrieval-Augmented Efficient Long Video Understanding](adavideorag_omnicontextual_adaptive_retrievalaugmented_effic.md)
+- [RAGTrack: Language-aware RGBT Tracking with Retrieval-Augmented Generation](../../CVPR2026/video_understanding/ragtrack_language-aware_rgbt_tracking_with_retrieval-augmented_generation.md)
+- [Tool-Augmented Spatiotemporal Reasoning for Streamlining Video Question Answering Task](toolaugmented_spatiotemporal_reasoning_for_streamlining_vide.md)
+- [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](../../ECCV2024/video_understanding/rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+
+<!-- RELATED:END -->

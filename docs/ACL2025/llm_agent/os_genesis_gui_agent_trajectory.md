@@ -111,3 +111,15 @@ OS-Genesis 包含三个核心阶段：(1) **交互驱动的功能发现** ——
 | 实验充分度 | 9 |
 | 写作质量 | 8 |
 | 总体评分 | 8 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_survey_mllm.md)
+- [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [HATS: Hardness-Aware Trajectory Synthesis for GUI Agents](../../CVPR2026/llm_agent/hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)
+
+<!-- RELATED:END -->

@@ -166,3 +166,15 @@ $$x_{ij} = \frac{\log(b_{ij}) + c}{nC} + \frac{nC - \sum_k(\log(b_{kj}) + c)}{n^
 - 实验充分度: ⭐⭐（纯理论，无实验验证）
 - 写作质量: ⭐⭐⭐⭐⭐（证明结构清晰，直觉解释到位）
 - 价值: ⭐⭐⭐⭐（理论意义重大，但实际应用有限）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Designing to Forget: Deep Semi-parametric Models for Unlearning](../../CVPR2026/llm_safety/designing_to_forget_deep_semi-parametric_models_for_unlearning.md)
+- [A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing](../../NeurIPS2025/llm_safety/a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)
+- [PANDA: Patch and Distribution-Aware Augmentation for Long-Tailed Exemplar-Free Continual Learning](panda_--_patch_and_distribution-aware_augmentation_for_long-tailed_exemplar-free.md)
+- [LLM Targeted Underperformance Disproportionately Impacts Vulnerable Users](llm_targeted_underperformance_disproportionately_impacts_vulnerable_users.md)
+- [Hallucination Stations: On Some Basic Limitations of Transformer-Based Language Models](hallucination_stations_on_some_basic_limitations_of_transformer-based_language_m.md)
+
+<!-- RELATED:END -->

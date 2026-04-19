@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多旋转类型、多假设检验，实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 叙述清晰，图表丰富，结论有说服力
 - 价值: ⭐⭐⭐⭐ 为理解和改进自适应优化器提供重要实验基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [Exploring Landscapes for Better Minima along Valleys](exploring_landscapes_for_better_minima_along_valleys.md)
+- [In Search of Adam's Secret Sauce](in_search_of_adams_secret_sauce.md)
+- [Projecting Assumptions: The Duality Between Sparse Autoencoders and Concept Geometry](projecting_assumptions_the_duality_between_sparse_autoencoders_and_concept_geome.md)
+- [The Rich and the Simple: On the Implicit Bias of Adam and SGD](the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ AVRobustBench 包含：
 
 ⭐⭐⭐⭐ (4/5)
 基准构建扎实全面，实验覆盖面广，但提出的 AV2C 方法改进有限，更多是暴露问题而非解决问题。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [E-BATS: Efficient Backpropagation-Free Test-Time Adaptation for Speech Foundation Models](e-bats_efficient_backpropagation-free_test-time_adaptation_for_speech_foundation.md)
+- [Instance-Specific Test-Time Training for Speech Editing in the Wild](instance-specific_test-time_training_for_speech_editing_in_the_wild.md)
+- [MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition](mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](../../ACL2025/audio_speech/audio_dialogue_benchmark.md)
+- [The Impact of Scaling Training Data on Adversarial Robustness](the_impact_of_scaling_training_data_on_adversarial_robustness.md)
+
+<!-- RELATED:END -->

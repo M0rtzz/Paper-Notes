@@ -109,3 +109,15 @@ $\mathcal{L} = \mathcal{L}_{real} + \mathcal{L}_{syn}$，T cycle 用 token-level
 - 实验充分度: ⭐⭐⭐⭐ 风格+身份两类任务、配对/无配对对比、循环消融
 - 写作质量: ⭐⭐⭐⭐ 循环概念讲解清楚
 - 价值: ⭐⭐⭐⭐ 对统一生成模型的域适应开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
+- [Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](../../NeurIPS2025/image_generation/diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
+- [Generative Multimodal Pretraining with Discrete Diffusion Timestep Tokens](generative_multimodal_pretraining_with_discrete_diffusion_timestep_tokens.md)
+- [Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation](../../NeurIPS2025/image_generation/vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)
+- [UniCom: Unified Multimodal Modeling via Compressed Continuous Semantic Representations](unicom_unified_multimodal_modeling_via_compressed_continuous_semantic_representa.md)
+
+<!-- RELATED:END -->

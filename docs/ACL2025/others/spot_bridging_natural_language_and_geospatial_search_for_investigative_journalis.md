@@ -108,3 +108,15 @@ SPOT 包含四个核心组件：(1) OSM 标签捆绑构建与索引 → (2) 合�
 
 <!-- SPOT: open-source NL-to-OSM geospatial search tool for investigative journalism -->
 <!-- Fine-tuned LLaMA 3 with synthetic data pipeline and semantic tag bundling -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QualiSpeech: A Speech Quality Assessment Dataset with Natural Language Reasoning](qualispeech_a_speech_quality_assessment_dataset_with_natural_language_reasoning_.md)
+- [GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths](../../ECCV2024/others/gazexplain_learning_to_predict_natural_language_explanations_of_visual_scanpaths.md)
+- [HASH-RAG: Bridging Deep Hashing with Retriever for Efficient, Fine Retrieval and Augmented Generation](hash-rag_bridging_deep_hashing_with_retriever_for_efficient_fine_retrieval_and_a.md)
+- [ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](arise_risk_adaptive_search.md)
+- [Inducing Lexicons of In-Group Language with Socio-Temporal Context](inducing_lexicons_of_in-group_language_with_socio-temporal_context.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ VIST3A在物体级(T3Bench)和场景级(SceneBench)合成上全面超越所有ba
 - **写作质量** ⭐⭐⭐⭐：问题动机清晰，方法叙述完整，图表精美，论文结构规范
 - **实用性** ⭐⭐⭐⭐：即插即用框架，可直接受益于未来更强的视频模型和3D模型的发展
 - **可复现性** ⭐⭐⭐：提供了项目页面但代码开放程度有待确认，LoRA + reward微调的细节在附录中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUSt3R: Multi-view Network for Stereo 3D Reconstruction](../../CVPR2025/3d_vision/must3r_multi-view_network_for_stereo_3d_reconstruction.md)
+- [Peering into the Unknown: Active View Selection with Neural Uncertainty Maps for 3D Reconstruction](peering_into_the_unknown_active_view_selection_with_neural_uncertainty_maps_for_.md)
+- [GaussFusion: Improving 3D Reconstruction in the Wild with A Geometry-Informed Video Generator](../../CVPR2026/3d_vision/gaussfusion_improving_3d_reconstruction_in_the_wild_with_a_geometry-informed_vid.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](../../CVPR2026/3d_vision/coherent_humanscene_reconstruction_from_multiperso.md)
+- [StreamSplat: Towards Online Dynamic 3D Reconstruction from Uncalibrated Video Streams](streamsplat_towards_online_dynamic_3d_reconstruction_from_uncalibrated_video_str.md)
+
+<!-- RELATED:END -->

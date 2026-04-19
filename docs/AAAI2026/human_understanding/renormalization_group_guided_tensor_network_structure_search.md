@@ -122,3 +122,15 @@ RGTN 在 RE=0.1 时比 SVDinsTN 压缩率好 2.96×（Bunny）和 1.60×（Knigh
 - 实验充分度: ⭐⭐⭐⭐ 涵盖结构发现、光场、高阶张量、视频四类任务，但消融不够系统
 - 写作质量: ⭐⭐⭐⭐ 理论推导完整严谨，附录详尽，但物理术语门槛较高
 - 价值: ⭐⭐⭐⭐ 提供了 TN-SS 新范式并取得显著加速，但领域偏小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Personality-guided Public-Private Domain Disentangled Hypergraph-Former Network for Multimodal Depression Detection](personality-guided_public-private_domain_disentangled_hypergraph-former_network_.md)
+- [TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search](../../NeurIPS2025/human_understanding/tensorrl-qas_reinforcement_learning_with_tensor_networks_for_improved_quantum_ar.md)
+- [ParaRevSNN: A Parallel Reversible Spiking Neural Network for Efficient Training and Inference](pararevsnn_a_parallel_reversible_spiking_neural_network_for_efficient_training_a.md)
+- [AHAN: Asymmetric Hierarchical Attention Network for Identical Twin Face Verification](ahan_asymmetric_hierarchical_attention_network_for_identical.md)
+- [MVGD-Net: A Novel Motion-aware Video Glass Surface Detection Network](mvgd-net_a_novel_motion-aware_video_glass_surface_detection_network.md)
+
+<!-- RELATED:END -->

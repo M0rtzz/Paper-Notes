@@ -166,3 +166,15 @@ DINOv2 mask 池化特征远优于 CLIP 和其他池化策略。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 两个数据集分割、多基线对比、完整消融（模块/描述子/几何约束）、任务级分析
 - **写作质量**: ⭐⭐⭐⭐ 方法直观易懂，架构图清晰，实验分析细致
 - **价值**: ⭐⭐⭐⭐⭐ 1% 参数达 SOTA、问题重定义思想对跨视角理解任务有广泛启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Precise Affordances from Egocentric Videos for Robotic Manipulation](learning_precise_affordances_from_egocentric_videos_for_robotic_manipulation.md)
+- [HiMTok: Learning Hierarchical Mask Tokens for Image Segmentation with Large Multimodal Model](himtok_learning_hierarchical_mask_tokens_for_image_segmentation_with_large_multi.md)
+- [Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction](../../CVPR2026/segmentation/learning_cross-view_object_correspondence_via_cycle-consistent_mask_prediction.md)
+- [Robust Egocentric Referring Video Object Segmentation via Dual-Modal Causal Intervention](../../NeurIPS2025/segmentation/robust_egocentric_referring_video_object_segmentation_via_dual-modal_causal_inte.md)
+- [Refer to Any Segmentation Mask Group With Vision-Language Prompts](refer_to_any_segmentation_mask_group_with_vision-language_prompts.md)
+
+<!-- RELATED:END -->

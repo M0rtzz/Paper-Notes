@@ -316,3 +316,15 @@ $$E(\hat{\mathbf{y}}, \mathbf{y}) = \sum_{i} h_i^{\text{LF}}(\mathbf{y}) \hat{\m
 - 实验充分度: ⭐⭐⭐⭐ — 分子+自旋两类系统，多模型验证，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导严谨优雅，直觉解释到位，图示启发性强
 - 价值: ⭐⭐⭐⭐⭐ — 提供了一个通用且实用的框架，可直接改善现有分子生成流程
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LinEAS: End-to-end Learning of Activation Steering with a Distributional Loss](lineas_end-to-end_learning_of_activation_steering_with_a_distributional_loss.md)
+- [Aligning Compound AI Systems via System-level DPO](aligning_compound_ai_systems_via_system-level_dpo.md)
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](../../CVPR2025/image_generation/hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+- [Hephaestus: Mixture Generative Modeling with Energy Guidance for Large-scale QoS Degradation](hephaestus_mixture_generative_modeling_with_energy_guidance_for_large-scale_qos_.md)
+- [Planning with Diffusion Models for Target-Oriented Dialogue Systems](../../ACL2025/image_generation/difftod_diffusion_dialogue_planning.md)
+
+<!-- RELATED:END -->

@@ -100,3 +100,15 @@ VLM在2D对抗扰动、风格变化等方面的鲁棒性已被研究，但真实
 - 实验充分度: ⭐⭐⭐⭐⭐ 分类/描述/VQA三任务+物理实验+基准+消融，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ RQ驱动的实验设计，每个发现都有清晰的take-away
 - 对我的价值: ⭐⭐⭐⭐ VLM鲁棒性评估方法论有参考价值，3D偏差发现很重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Vision Language Models Ready for Clinical Diagnosis? A 3D Medical Benchmark for Tumor-centric Visual Question Answering](../../NeurIPS2025/multimodal_vlm/are_vision_language_models_ready_for_clinical_diagnosis_a_3d_medical_benchmark_f.md)
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](../../ACL2025/multimodal_vlm/real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+- [Can Vision-Language Models Answer Face to Face Questions in the Real-World?](../../ICLR2026/multimodal_vlm/can_vision-language_models_answer_face_to_face_questions_in_the_real-world.md)
+- [Exploiting Vision Language Model for Training-Free 3D Point Cloud OOD Detection](exploiting_vision_language_model_for_training-free_3d_point_cloud_ood_detection_.md)
+- [Towards Real-World Adverse Weather Image Restoration: Enhancing Clearness and Semantics with Vision-Language Models](../../ECCV2024/multimodal_vlm/towards_real-world_adverse_weather_image_restoration_enhancing_clearness_and_sem.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ CineSRD 仅用双模态（AV）已超过 EC2P 的三模态（AVT）结果。
 - **技术深度**: ★★★☆☆ — 免训练方案技术深度有限，但工程设计巧妙
 - **实验充分性**: ★★★★☆ — 自建基准+传统基准验证，消融充分
 - **写作清晰度**: ★★★★☆ — 问题刻画清晰，方法流程图表达力强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PET-DINO: Unifying Visual Cues into Grounding DINO with Prompt-Enriched Training](pet-dino_unifying_visual_cues_into_grounding_dino_with_prompt-enriched_training.md)
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [Drift-Resilient Temporal Priors for Visual Tracking](drift-resilient_temporal_priors_for_visual_tracking.md)
+- [CompAgent: An Agentic Framework for Visual Compliance Verification](compagent_an_agentic_framework_for_visual_compliance_verification.md)
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](evaluating_fewshot_pill_recognition_under_visual_d.md)
+
+<!-- RELATED:END -->

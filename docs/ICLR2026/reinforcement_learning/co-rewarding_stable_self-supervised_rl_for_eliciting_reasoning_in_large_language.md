@@ -126,3 +126,15 @@ Co-rewarding 提出自监督 RL 框架，通过数据侧（对比改写问题的
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型系列(Qwen3/Llama)、多基准、训练稳定性可视化、充分消融
 - 写作质量: ⭐⭐⭐⭐ 概念阐述清晰，三个版本的递进关系好，但公式较多
 - 价值: ⭐⭐⭐⭐⭐ 无标签RL训练的稳定性问题是实际中的痛点，本文提出了可行的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
+- [VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
+- [AWM: Accurate Weight-Matrix Fingerprint for Large Language Models](awm_accurate_weight-matrix_fingerprint_for_large_language_models.md)
+- [TROLL: Trust Regions improve Reinforcement Learning for Large Language Models](troll_trust_regions_improve_reinforcement_learning_for_large_language_models.md)
+
+<!-- RELATED:END -->

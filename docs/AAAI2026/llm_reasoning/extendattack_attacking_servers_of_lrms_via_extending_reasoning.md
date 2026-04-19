@@ -122,3 +122,15 @@ tags:
 
 ## 补充说明
 - 防御方向：在推理前做输入规范化（将 ASCII 编码还原为原始字符）可能是成本最低的缓解措施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Let LRMs Break Free from Overthinking via Self-Braking Tuning](../../NeurIPS2025/llm_reasoning/let_lrms_break_free_from_overthinking_via_self-braking_tuning.md)
+- [Trade-offs in Large Reasoning Models: An Empirical Analysis of Deliberative and Adaptive Reasoning over Foundational Capabilities](trade-offs_in_large_reasoning_models_an_empirical_analysis_of_deliberative_and_a.md)
+- [A Reasoning Paradigm for Named Entity Recognition](a_reasoning_paradigm_for_named_entity_recognition.md)
+- [Text-to-Scene with Large Reasoning Models](text-to-scene_with_large_reasoning_models.md)
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+
+<!-- RELATED:END -->

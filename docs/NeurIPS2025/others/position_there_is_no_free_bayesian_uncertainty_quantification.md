@@ -156,3 +156,15 @@ $$\mathbb{P}((X^v, Y^v) \text{ s.t. } R((X,Y), \hat{q}) \leq \alpha + C(\epsilon
 - **实验充分性**: ⭐⭐⭐ — 仅有线性回归模拟实验，缺乏复杂模型和真实数据验证
 - **实用价值**: ⭐⭐⭐ — 校准算法简单通用，但实际应用中的数值问题需要解决
 - **写作质量**: ⭐⭐⭐⭐ — 论述清晰，逻辑链条完整
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncertainty Quantification for Reduced-Order Surrogate Models Applied to Cloud Microphysics](uncertainty_quantification_for_reduced-order_surrogate_models_applied_to_cloud_m.md)
+- [Adjusted Count Quantification Learning on Graphs](adjusted_count_quantification_learning_on_graphs.md)
+- [Uncertainty Estimation by Flexible Evidential Deep Learning](uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+- [Latent Variable Estimation in Bayesian Black-Litterman Models](../../ICML2025/others/latent_variable_estimation_in_bayesian_black-litterman_models.md)
+- [Weight Weaving: Parameter Pooling for Data-Free Model Merging](weight_weaving_parameter_pooling_for_data-free_model_merging.md)
+
+<!-- RELATED:END -->

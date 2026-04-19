@@ -118,3 +118,15 @@ VQ-VAE 阶段：重建损失（原始表征 + 关节位置 + 旋转速度）+ co
 - 实验充分度: ⭐⭐⭐⭐ 追踪和理解两个方向都有完整对比和消融，VQ-VAE 参数搜索详尽
 - 写作质量: ⭐⭐⭐⭐ 框架动机清晰，多任务统一的论述有说服力
 - 价值: ⭐⭐⭐⭐ 对 AR/VR 中的自我中心交互有直接应用价值，多模态统一建模范式有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Vision-Language Model in Face Forensics: Multi-Modal Interpretable Forged Face Detector](rethinking_vision-language_model_in_face_forensics_multi-modal_interpretable_for.md)
+- [MMRL: Multi-Modal Representation Learning for Vision-Language Models](mmrl_multi-modal_representation_learning_for_vision-language_models.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [GeoMM: On Geodesic Perspective for Multi-Modal Learning](geomm_on_geodesic_perspective_for_multi-modal_learning.md)
+- [InternLM-XComposer2.5-Reward: A Simple Yet Effective Multi-Modal Reward Model](../../ACL2025/multimodal_vlm/internlm-xcomposer25-reward_a_simple_yet_effective_multi-modal_reward_model.md)
+
+<!-- RELATED:END -->

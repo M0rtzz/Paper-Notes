@@ -103,3 +103,15 @@ Cool-SD本身不需要额外训练，只改变SD的验证和重采样策略。Dr
 - 实验充分度: ⭐⭐⭐⭐ 两个target模型、多种比较方法、消融分析全面，但缺少非图像域的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验展示清晰，理论到实践的过渡自然
 - 价值: ⭐⭐⭐⭐ 为松弛SD提供了首个理论框架，最优重采样分布的即插即用性对社区有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Grouped Speculative Decoding for Autoregressive Image Generation](../../ICCV2025/image_generation/grouped_speculative_decoding_for_autoregressive_image_generation.md)
+- [SJD-PAC: Accelerating Speculative Jacobi Decoding via Proactive Drafting and Adaptive Continuation](../../CVPR2026/image_generation/sjd-pac_accelerating_speculative_jacobi_decoding_via_proactive_drafting_and_adap.md)
+- [Autoregressive Image Generation with Randomized Parallel Decoding](../../ICLR2026/image_generation/autoregressive_image_generation_with_randomized_parallel_decoding.md)
+- [Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation](../../ICLR2026/image_generation/locality-aware_parallel_decoding_for_efficient_autoregressive_image_generation.md)
+- [From Prediction to Perfection: Introducing Refinement to Autoregressive Image Generation](../../ICLR2026/image_generation/from_prediction_to_perfection_introducing_refinement_to_autoregressive_image_gen.md)
+
+<!-- RELATED:END -->

@@ -108,3 +108,15 @@ $\mathcal{L}_{\text{TI-DPO}} = \mathcal{L}_{\text{DPO-w}} + \gamma \mathcal{L}_{
 - 实验充分度: ⭐⭐⭐⭐⭐ 6基准×3模型×详尽消融+噪声实验
 - 写作质量: ⭐⭐⭐⭐ 理论动机清晰
 - 价值: ⭐⭐⭐⭐ token级DPO的实用改进，可解释性是差异化优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs](uni-dpo_a_unified_paradigm_for_dynamic_preference_optimization_of_llms.md)
+- [Swap-guided Preference Learning for Personalized RLHF (SPL)](swap-guided_preference_learning_for_personalized_reinforcement_learning_from_hum.md)
+- [DPO Meets PPO: Reinforced Token Optimization for RLHF](../../ICML2025/llm_alignment/dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
+- [Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
+- [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](../../CVPR2026/llm_alignment/φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+
+<!-- RELATED:END -->

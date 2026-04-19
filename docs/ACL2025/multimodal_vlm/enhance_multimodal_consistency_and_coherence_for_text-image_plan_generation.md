@@ -180,3 +180,15 @@ Goal: [描述]
 | 总评 | 4 |
 
 框架设计优雅，问题定义明确，消融实验充分。pPDDL 的引入是一个巧妙的跨领域借鉴。主要不足在于视觉评估指标的间接性和图像编辑模型的固有局限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](code_guided_text_rich_image.md)
+- [Multimodal LLMs as Customized Reward Models for Text-to-Image Generation](../../ICCV2025/multimodal_vlm/multimodal_llms_as_customized_reward_models_for_text-to-image_generation.md)
+- [CoMM: A Coherent Interleaved Image-Text Dataset for Multimodal Understanding and Generation](../../CVPR2025/multimodal_vlm/comm_a_coherent_interleaved_image-text_dataset_for_multimodal_understanding_and_.md)
+- [CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?](cordial_can_multimodal_large_language_models_effectively_understand_coherence_re.md)
+
+<!-- RELATED:END -->

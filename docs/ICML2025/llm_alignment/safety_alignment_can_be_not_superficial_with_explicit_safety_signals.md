@@ -164,3 +164,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖多种攻击类型、多基线对比、丰富消融实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，challenge-solution形式组织佳，但LaTeX公式稍显冗余
 - 价值: ⭐⭐⭐⭐ — 安全对齐是重要问题，方法实用且可叠加现有方案，但多模态扩展性未验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Superficial Safety Alignment Hypothesis](../../ICLR2026/llm_alignment/superficial_safety_alignment_hypothesis.md)
+- [Improving LLM Safety Alignment with Dual-Objective Optimization](improving_llm_safety_alignment_with_dual-objective_optimization.md)
+- [Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons](../../NeurIPS2025/llm_alignment/towards_understanding_safety_alignment_a_mechanistic_perspective_from_safety_neu.md)
+- [LSSF: Safety Alignment via Low-Rank Safety Subspace Fusion](../../ACL2025/llm_alignment/lssf_safety_subspace.md)
+- [Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models](layer-wise_alignment_examining_safety_alignment_across_image_encoder_layers_in_v.md)
+
+<!-- RELATED:END -->

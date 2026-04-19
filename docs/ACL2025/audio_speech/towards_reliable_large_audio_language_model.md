@@ -149,3 +149,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖三个音频模态、四种方法、跨模态实验和超参数分析，但只在一个数据集上验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义明确，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ 为 LALM 可靠性研究开辟了新方向，RGI 指标和跨模态迁移发现具有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](audio_dialogue_benchmark.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [AHAMask: Reliable Task Specification for Large Audio Language Models without Instructions](../../AAAI2026/audio_speech/ahamask_reliable_task_specification_for_large_audio_language.md)
+- [Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models](who_can_withstand_chat-audio_attacks_an_evaluation_benchmark_for_large_audio-lan.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+
+<!-- RELATED:END -->

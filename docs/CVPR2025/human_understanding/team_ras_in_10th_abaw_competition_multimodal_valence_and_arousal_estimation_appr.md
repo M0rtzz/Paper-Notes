@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 模态消融充分，但仅单数据集，无与其他参赛队的横向对比
 - 写作质量: ⭐⭐⭐ — 结构清晰但公式符号较多，部分细节冗长
 - 价值: ⭐⭐⭐ — 为情感计算社区展示了 VLM 集成的可行路径，竞赛性能有竞争力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Perceive What Matters: Relevance-Driven Scheduling for Multimodal Streaming Perception](perceive_what_matters_relevance-driven_scheduling_for_multimodal_streaming_perce.md)
+- [NBAvatar: Neural Billboards Avatars with Realistic Hand-Face Interaction](nbavatar_neural_billboards_avatars_with_realistic_hand-face_interaction.md)
+- [MM-CondChain: A Programmatically Verified Benchmark for Visually Grounded Deep Compositional Reasoning](mm-condchain_a_programmatically_verified_benchmark_for_visually_grounded_deep_co.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
+- [Co-op: Correspondence-Based Novel Object Pose Estimation](co-op_correspondence-based_novel_object_pose_estimation.md)
+
+<!-- RELATED:END -->

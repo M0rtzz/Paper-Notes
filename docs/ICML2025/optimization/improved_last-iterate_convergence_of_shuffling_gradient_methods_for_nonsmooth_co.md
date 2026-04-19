@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，无实验验证
 - 写作质量: ⭐⭐⭐⭐⭐ Table 1 结果总结极清晰，定理陈述严谨
 - 价值: ⭐⭐⭐⭐ 为shuffling gradient理论填补关键空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Sample Complexity for Private Nonsmooth Nonconvex Optimization](improved_sample_complexity_for_private_nonsmooth_nonconvex_optimization.md)
+- [From Average-Iterate to Last-Iterate Convergence in Games: A Reduction and Its Applications](../../NeurIPS2025/optimization/from_average-iterate_to_last-iterate_convergence_in_games_a_reduction_and_its_ap.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+- [A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization](a_near-optimal_single-loop_stochastic_algorithm_for_convex_finite-sum_coupled_co.md)
+- [A Generalization Result for Convergence in Learning-to-Optimize](a_generalization_result_for_convergence_in_learning-to-optimize.md)
+
+<!-- RELATED:END -->

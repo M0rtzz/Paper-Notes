@@ -121,3 +121,15 @@ MPD 仅需 3 次查询（P=3 个提示）和 3.5 秒训练，比 BBT 快 462 倍
 - 实验充分度: ⭐⭐⭐⭐ (9个数据集、3个shot设置、充分消融)
 - 写作质量: ⭐⭐⭐⭐ (方法阐述清晰，图表直观)
 - 价值: ⭐⭐⭐⭐ (对MaaS实际应用有明确指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
+- [Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](virsci_multi_agent_idea_gen.md)
+- [Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs](input_dependent_soft_prompting.md)
+- [Explain-then-Process: Using Grammar Prompting to Enhance Grammatical Acceptability Judgments](explain-then-process_using_grammar_prompting_to_enhance_grammatical_acceptabilit.md)
+- [ChronoSense: Exploring Temporal Understanding in Large Language Models with Time Intervals of Events](chronosense_exploring_temporal_understanding_in_large_language_models_with_time_.md)
+
+<!-- RELATED:END -->

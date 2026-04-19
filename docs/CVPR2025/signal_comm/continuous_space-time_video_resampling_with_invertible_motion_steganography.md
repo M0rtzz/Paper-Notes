@@ -52,3 +52,15 @@ tags:
 ## 局限与展望
 - 可逆网络的计算开销较大
 - 在高压缩率传输后隐藏信息的鲁棒性有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Video Compression with Context Modulation](neural_video_compression_with_context_modulation.md)
+- [Angular Steering: Behavior Control via Rotation in Activation Space](../../NeurIPS2025/signal_comm/angular_steering_behavior_control_via_rotation_in_activation_space.md)
+- [AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation](../../CVPR2026/signal_comm/actta_rethinking_test-time_adaptation_via_dynamic_activation.md)
+- [ABC-Former: Auxiliary Bimodal Cross-domain Transformer with Interactive Channel Attention](abc-former_auxiliary_bimodal_cross-domain_transformer_with_interactive_channel_a.md)
+- [Radio Frequency Ray Tracing with Neural Object Representation for Enhanced RF Modeling](radio_frequency_ray_tracing_with_neural_object_representation_for_enhanced_rf_mo.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ VBench 评测，5秒和60秒视频生成（表格为60秒数据）：
 - **技术深度**: ★★★★☆ — 三个组件设计完整、互相配合，机理分析充分
 - **实验充分度**: ★★★★☆ — VBench 多时长全面评测，但缺少用户研究
 - **实用性**: ★★★★★ — 训练免调、即插即用，实际部署潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion](../../NeurIPS2025/video_generation/self_forcing_bridging_the_train-test_gap_in_autoregressive_video_diffusion.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+- [SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](../../CVPR2025/video_generation/saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)
+- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
+
+<!-- RELATED:END -->

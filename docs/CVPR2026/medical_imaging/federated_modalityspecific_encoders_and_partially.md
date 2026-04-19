@@ -125,3 +125,15 @@ HD95 指标也显示一致优势：BraTS 2018 上 Avg HD95 从次优方法的 18
 - 实验充分度: ⭐⭐⭐⭐ 两个 BraTS 基准、10 种对比方法、完整消融，但仅限脑肿瘤分割单一任务
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、公式完整、图示直观
 - 价值: ⭐⭐⭐⭐ 对联邦学习在多模态医学影像中的实际应用具有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+- [Deep Learning-based Assessment of the Relation Between the Third Molar and Mandibular Canal on Panoramic Radiographs using Local, Centralized, and Federated Learning](deep_learning-based_assessment_of_the_relation_between_the_third_molar_and_mandi.md)
+- [MUST: Modality-Specific Representation-Aware Transformer for Diffusion-Enhanced Survival Prediction with Missing Modality](must_modality-specific_representation-aware_transformer_for_diffusion-enhanced_s.md)
+- [PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation](pgr-net_prior-guided_roi_reasoning_network_for_brain_tumor_mri_segmentation.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi.md)
+
+<!-- RELATED:END -->

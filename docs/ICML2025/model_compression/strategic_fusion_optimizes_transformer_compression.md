@@ -184,3 +184,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 14种策略x9数据集覆盖面广，但缺乏与 DistilBERT 等强基线和大模型的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学定义和生物学类比增强可读性
 - 价值: ⭐⭐⭐ 方法简洁有效但仅限 BERT + 分类场景，实用性受限于未在大模型上验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context Guided Transformer Entropy Modeling for Video Compression](../../ICCV2025/model_compression/context_guided_transformer_entropy_modeling_for_video_compression.md)
+- [DLF: Extreme Image Compression with Dual-generative Latent Fusion](../../ICCV2025/model_compression/dlf_extreme_image_compression_with_dual-generative_latent_fusion.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [Text-to-LoRA: Instant Transformer Adaption](text-to-lora_instant_transformer_adaption.md)
+- [BHViT: Binarized Hybrid Vision Transformer](../../CVPR2025/model_compression/bhvit_binarized_hybrid_vision_transformer.md)
+
+<!-- RELATED:END -->

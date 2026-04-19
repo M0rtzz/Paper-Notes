@@ -179,3 +179,15 @@ LogicQA 在 AUROC 上提升 1.6%，F1-max 上提升 3.3%。在 splicing connecto
 | 实验充分度 | ⭐⭐⭐⭐ | 公开+工业数据集，多VLM消融，人工评估 |
 | 写作质量 | ⭐⭐⭐⭐ | 流程清晰，图表丰富 |
 | 实用价值 | ⭐⭐⭐⭐⭐ | 对工业视觉检测有直接应用前景 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harnessing Vision-Language Models for Time Series Anomaly Detection](../../AAAI2026/multimodal_vlm/harnessing_vision-language_models_for_time_series_anomaly_detection.md)
+- [Teaching Vision-Language Models to Ask: Resolving Ambiguity in Visual Questions](teaching_vlm_ask_ambiguity.md)
+- [AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/aigi-holmes_towards_explainable_and_generalizable_ai-generated_image_detection_v.md)
+- [Towards Zero-Shot Anomaly Detection and Reasoning with Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/towards_zero-shot_anomaly_detection_and_reasoning_with_multimodal_large_language.md)
+- [MoniTor: Exploiting Large Language Models with Instruction for Online Video Anomaly Detection](../../NeurIPS2025/multimodal_vlm/monitor_exploiting_large_language_models_with_instruction_for_online_video_anoma.md)
+
+<!-- RELATED:END -->

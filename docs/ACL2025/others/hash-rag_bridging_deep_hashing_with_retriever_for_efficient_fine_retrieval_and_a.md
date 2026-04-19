@@ -150,3 +150,15 @@ HbR 查询时间仅为 DPR 的 ~9%，索引大小仅为 DPR 的 ~7%，且 Recall
 - **实验充分度**: ⭐⭐⭐⭐ — 三个 QA 数据集、多种基线对比、编码器版本/分块策略/提示优化全面消融，但缺少更多下游任务
 - **写作质量**: ⭐⭐⭐ — 公式推导详细但部分地方符号混乱，整体结构清晰但引言部分有些冗余
 - **价值**: ⭐⭐⭐⭐ — 对大规模 RAG 部署有直接应用价值，10 倍加速的实际意义显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
+- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [HATA: Trainable and Hardware-Efficient Hash-Aware Top-k Attention for Scalable Large Model Inference](hata_trainable_and_hardware-efficient_hash-aware_top-k_attention_for_scalable_la.md)
+- [ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](arise_risk_adaptive_search.md)
+
+<!-- RELATED:END -->

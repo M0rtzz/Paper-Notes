@@ -139,3 +139,15 @@ AstroLoc的训练流程包含两个并行分支：
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个原始+6个扩展测试集、3个跨域任务、详尽消融、全球搜索实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述引人入胜，问题重要性论证有力，图表清晰
 - 价值: ⭐⭐⭐⭐⭐ 已实际部署、解决NASA真实需求的系统，学术价值和实用价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WildSAT: Learning Satellite Image Representations from Wildlife Observations](wildsat_learning_satellite_image_representations_from_wildlife_observations.md)
+- [Weakly-Supervised Camera Localization by Ground-to-Satellite Image Registration](../../ECCV2024/remote_sensing/weakly-supervised_camera_localization_by_ground-to-satellite_image_registration.md)
+- [ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations](../../ECCV2024/remote_sensing/congeo_robust_cross-view_geo-localization_across_ground_view_variations.md)
+- [Scaling Image Geo-Localization to Continent Level](../../NeurIPS2025/remote_sensing/scaling_image_geo-localization_to_continent_level.md)
+- [RHO: Robust Holistic OSM-Based Metric Cross-View Geo-Localization](../../CVPR2026/remote_sensing/rho_robust_holistic_osm-based_metric_cross-view_geo-localization.md)
+
+<!-- RELATED:END -->

@@ -108,3 +108,15 @@ CANEFT 在已见和未见域上都超越 Full FT 和 LoRA。
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个LLM+10域+De→En和Zh→En+未见域泛化
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，理论推导完整
 - 价值: ⭐⭐⭐⭐ 实用的无额外参数 PEFT 方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Content Effects on Reasoning in Language Models through Fine-Grained Activation Steering](mitigating_content_effects_on_reasoning_in_language_models_through_fine-grained_.md)
+- [Focusing on Language: Revealing and Exploiting Language Attention Heads in Multilingual Large Language Models](focusing_on_language_revealing_and_exploiting_language_attention_heads_in_multil.md)
+- [Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models](../../ACL2025/multilingual_mt/statement-tuning_enables_efficient_cross-lingual_generalization_in_encoder-only_.md)
+- [Exploring the Translation Mechanism of Large Language Models](../../NeurIPS2025/multilingual_mt/exploring_the_translation_mechanism_of_large_language_models.md)
+- [Multi-perspective Alignment for Increasing Naturalness in Neural Machine Translation](../../ACL2025/multilingual_mt/multi-perspective_alignment_for_increasing_naturalness_in_neural_machine_transla.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ FashionIQ 上 CIReVL + SoFT 平均 R@50 提升至 52.53（+3.96）。
 ## 评分
 
 ⭐⭐⭐⭐ — 思路清晰，双重约束的动机自然且有效，即插即用设计实用性强；数据集流水线是重要的评估方法贡献。主要局限在于对外部 LLM 的依赖和 CLIP 在细粒度场景下的表示瓶颈。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](../../ACL2025/llm_nlp/atrie_legal_interpretation.md)
+- [STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model](stem_efficient_relative_capability_evaluation_of_llms_through_structured_transit.md)
+- [SConU: Selective Conformal Uncertainty in Large Language Models](../../ACL2025/llm_nlp/sconu_selective_conformal_uncertainty_in_large_language_models.md)
+- [Math Neurosurgery: Isolating Language Models' Math Reasoning Abilities Using Only Forward Passes](../../ACL2025/llm_nlp/mathneuro_math_reasoning_isolation.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](../../ACL2025/llm_nlp/boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+
+<!-- RELATED:END -->

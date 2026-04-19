@@ -134,3 +134,15 @@ CES 作为即插即用模块在不同规模 Executor 上均显著提升：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个benchmark、多规模泛化、详细消融、失败案例分析、预实验验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，预实验设计巧妙
 - 价值: ⭐⭐⭐⭐ — 即插即用的高层调度模块对 GUI Agent 社区有实用价值，分阶段训练思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AMemGym: Interactive Memory Benchmarking for Assistants in Long-Horizon Conversations](../../ICLR2026/human_understanding/amemgym_interactive_memory_benchmarking_for_assistants_in_long-horizon_conversat.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [AVATAR: Reinforcement Learning to See, Hear, and Reason Over Video](avatar_reinforcement_learning_to_see_hear_and_reason_over_video.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
+- [LASER: Layer-wise Scale Alignment for Training-Free Streaming 4D Reconstruction](laser_layer-wise_scale_alignment_for_training-free_streaming_4d_reconstruction.md)
+
+<!-- RELATED:END -->

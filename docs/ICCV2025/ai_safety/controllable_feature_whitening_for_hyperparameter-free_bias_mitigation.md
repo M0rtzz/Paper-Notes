@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、多种偏差比例、对比方法全面、消融详细
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验分析系统
 - 价值: ⭐⭐⭐⭐ 无超参数的去偏方法实用性强，适合工业场景快速部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Backdoor Mitigation by Distance-Driven Detoxification](backdoor_mitigation_by_distance-driven_detoxification.md)
+- [FRET: Feature Redundancy Elimination for Test Time Adaptation](fret_feature_redundancy_elimination_for_test_time_adaptation.md)
+- [Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers](semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf.md)
+- [Robust Graph Condensation via Classification Complexity Mitigation](../../NeurIPS2025/ai_safety/robust_graph_condensation_via_classification_complexity_mitigation.md)
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](../../CVPR2025/ai_safety/a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ tags:
 - **vs ResearchTown (Yu et al., 2024)**：ResearchTown 使用合成的个人资料和协作网络；VirSci 坚持使用真实数据，结论更可迁移
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Red-Teaming LLM Multi-Agent Systems via Communication Attacks](red-teaming_llm_multi-agent_systems_via_communication_attacks.md)
+- [Multi-Prompting Decoder Helps Better Language Understanding](multi-prompting_decoder_helps_better_language_understanding.md)
+- [LongDPO: Unlock Better Long-form Generation Abilities for LLMs via Critique-augmented Stepwise Information](longdpo_unlock_better_long-form_generation_abilities_for_llms_via_critique-augme.md)
+- [Triplets Better Than Pairs: Towards Stable and Effective Self-Play Fine-Tuning for LLMs](../../NeurIPS2025/llm_nlp/triplets_better_than_pairs_towards_stable_and_effective_self-play_fine-tuning_fo.md)
+- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+
+<!-- RELATED:END -->

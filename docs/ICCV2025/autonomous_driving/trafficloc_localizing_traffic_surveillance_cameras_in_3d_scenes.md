@@ -121,3 +121,15 @@ $$L = \lambda_1 L_{Att} + \lambda_2 L_{det} + \lambda_3 L_{coarse} + \lambda_4 L
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集验证+详细消融+可视化分析+Sim2Real测试
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ 交通相机定位是智慧交通的关键基础能力，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing the Temporal Potential of Stereo Event Cameras for Continuous-Time 3D Perception](unleashing_the_temporal_potential_of_stereo_event_cameras_for_continuous-time_3d.md)
+- [TSBOW: Traffic Surveillance Benchmark for Occluded Vehicles Under Various Weather Conditions](../../AAAI2026/autonomous_driving/tsbow_traffic_surveillance_benchmark_for_occluded_vehicles_under_various_weather.md)
+- [Long-term Traffic Simulation with Interleaved Autoregressive Motion and Scenario Generation](long-term_traffic_simulation_with_interleaved_autoregressive_motion_and_scenario.md)
+- [EV-3DOD: Pushing the Temporal Boundaries of 3D Object Detection with Event Cameras](../../CVPR2025/autonomous_driving/ev-3dod_pushing_the_temporal_boundaries_of_3d_object_detection_with_event_camera.md)
+- [CCL-LGS: Contrastive Codebook Learning for 3D Language Gaussian Splatting](ccl-lgs_contrastive_codebook_learning_for_3d_language_gaussian_splatting.md)
+
+<!-- RELATED:END -->

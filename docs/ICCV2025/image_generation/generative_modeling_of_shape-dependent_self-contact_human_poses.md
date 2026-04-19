@@ -169,3 +169,15 @@ FID比BUDDI*降低53%，Recall（覆盖度）从0.488提升到0.708。
 - 实验：⭐⭐⭐⭐⭐（包含生成评估+估计refinement+消融+形状插值定性分析，数据集本身是重要贡献）
 - 写作：⭐⭐⭐⭐（逻辑清晰，问题动机明确，Algorithm 1的refinement流程描述精炼）
 - 实用性：⭐⭐⭐⭐（先验模型可插拔到任何SMPL-X估计器后，无需重训练，但数据集未开源限制复现）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamDance: Animating Human Images by Enriching 3D Geometry Cues from 2D Poses](dreamdance_animating_human_images_by_enriching_3d_geometry_cues_from_2d_poses.md)
+- [SummDiff: Generative Modeling of Video Summarization with Diffusion](summdiff_generative_modeling_of_video_summarization_with_diffusion.md)
+- [Direct Reward Fine-Tuning on Poses for Single Image to 3D Human in the Wild](../../ICLR2026/image_generation/direct_reward_fine-tuning_on_poses_for_single_image_to_3d_human_in_the_wild.md)
+- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [Aether: Geometric-Aware Unified World Modeling](aether_geometric-aware_unified_world_modeling.md)
+
+<!-- RELATED:END -->

@@ -211,3 +211,15 @@ $$\mathcal{L} = \| \mathcal{S}(\mathcal{V}_t, t, \mathcal{M}(\mathcal{V}_t, t, I
 - **技术深度**: 8/10 — S2D + warp 的显式运动建模设计扎实，多适配器组合方案合理
 - **实验充分度**: 8/10 — 对比实验和消融实验较全面，但缺少定量的长视频评估
 - **影响力**: 7/10 — 为可控视频生成提供了实用的统一框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
+- [Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion](videoshop_localized_semantic_video_editing_with_noise-extrapolated_diffusion_inv.md)
+- [MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing](magdiff_multi-alignment_diffusion_for_high-fidelity_video_generation_and_editing.md)
+- [Prompt-A-Video: Prompt Your Video Diffusion Model via Preference-Aligned LLM](../../ICCV2025/video_generation/prompt-a-video_prompt_your_video_diffusion_model_via_preference-aligned_llm.md)
+- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](../../ICCV2025/video_generation/efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+
+<!-- RELATED:END -->

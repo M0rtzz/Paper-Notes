@@ -156,3 +156,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{cls}} + \lambda_{\text{kl}} \mathcal{L}_{\tex
 - 技术深度：★★★★☆ — 三个模块设计精细，数学严谨
 - 实验充分度：★★★☆☆ — 仅一个数据集，但消融和可解释性分析非常充分
 - 写作质量：★★★★☆ — 结构清晰，图文配合好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Heterogeneous Graph Attention Networks](../../AAAI2026/graph_learning/spiking_heterogeneous_graph_attention_networks.md)
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](../../ICML2025/graph_learning/llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+- [Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)
+- [LogicXGNN: Grounded Logical Rules for Explaining Graph Neural Networks](logicxgnn_grounded_logical_rules_for_explaining_graph_neural_networks.md)
+- [Cooperative Sheaf Neural Networks](cooperative_sheaf_neural_networks.md)
+
+<!-- RELATED:END -->

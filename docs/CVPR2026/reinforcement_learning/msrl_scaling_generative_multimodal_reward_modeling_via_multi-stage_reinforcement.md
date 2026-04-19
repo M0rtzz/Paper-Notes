@@ -122,3 +122,15 @@ VL-RewardBench: +9.3, Multimodal RewardBench: +4.3, GenAI-Bench: +5.5。
 - 实验充分度: ⭐⭐⭐⭐⭐ VL-RewardBench/MM-RewardBench/GenAI-Bench+跨规模+充分消融
 - 写作质量: ⭐⭐⭐⭐ 多阶段设计清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了多模态奖励建模的数据瓶颈问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RM-R1: Reward Modeling as Reasoning](../../ICLR2026/reinforcement_learning/rm-r1_reward_modeling_as_reasoning.md)
+- [RewardMap: Tackling Sparse Rewards in Fine-grained Visual Reasoning via Multi-Stage Reinforcement Learning](../../ICLR2026/reinforcement_learning/rewardmap_tackling_sparse_rewards_in_fine-grained_visual_reasoning_via_multi-sta.md)
+- [UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings](../../ICLR2026/reinforcement_learning/ume-r1_exploring_reasoning-driven_generative_multimodal_embeddings.md)
+- [CCCaption: Dual-Reward Reinforcement Learning for Complete and Correct Image Captioning](cccaption_dual-reward_reinforcement_learning_for_complete_and_correct_image_capt.md)
+- [MVR: Multi-view Video Reward Shaping for Reinforcement Learning](../../ICLR2026/reinforcement_learning/mvr_multi-view_video_reward_shaping_for_reinforcement_learning.md)
+
+<!-- RELATED:END -->

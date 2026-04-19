@@ -110,3 +110,15 @@ SUS可视化验证（"record"一词）：
 - 实验充分度: ⭐⭐⭐ 数据集和语言覆盖有限
 - 写作质量: ⭐⭐⭐⭐ 数学框架清晰，可视化出色
 - 价值: ⭐⭐⭐⭐ 为语义变迁检测提供了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](../../NeurIPS2025/others/variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
+- [LaCoOT: Layer Collapse through Optimal Transport](../../ICCV2025/others/lacoot_layer_collapse_through_optimal_transport.md)
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](../../ICML2025/others/hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+- [S3 - Semantic Signal Separation](s3_-_semantic_signal_separation.md)
+- [Neuron Empirical Gradient: Discovering and Quantifying Neurons' Global Linear Controllability](neuron_empirical_gradient_discovering_and_quantifying_neurons_global_linear_cont.md)
+
+<!-- RELATED:END -->

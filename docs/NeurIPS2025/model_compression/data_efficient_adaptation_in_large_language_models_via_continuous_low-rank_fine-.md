@@ -155,3 +155,15 @@ rank 8 已捕获大部分任务特定变化，继续增大收益递减。
 - ⭐ 实验充分度: 4/5 — 15 个数据集 + 两个模型骨干 + 完整消融
 - ⭐ 写作质量: 3/5 — 公式推导详尽但部分符号超载，可读性一般
 - ⭐ 价值: 4/5 — 解决了 LoRA 持续学习中的实际痛点，推理零开销
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [C-LoRA: Contextual Low-Rank Adaptation for Uncertainty Estimation in Large Language Models](c-lora_contextual_low-rank_adaptation_for_uncertainty_estimation_in_large_langua.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+
+<!-- RELATED:END -->

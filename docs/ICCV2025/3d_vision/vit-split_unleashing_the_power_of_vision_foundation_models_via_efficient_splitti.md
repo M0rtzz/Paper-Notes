@@ -205,3 +205,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 分割/检测/深度/VQA 四个任务 + 详尽消融 + 训练效率分析
 - **写作质量**: ⭐⭐⭐⭐ — 观察和方法描述清晰，图示信息量大
 - **价值**: ⭐⭐⭐⭐⭐ — 为 VFM 适配提供了高效范式，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAViD: Data-efficient and Accurate Vision Models from Synthetic Data](david_data-efficient_and_accurate_vision_models_from_synthetic_data.md)
+- [Sapiens: Foundation for Human Vision Models](../../ECCV2024/3d_vision/sapiens_foundation_for_human_vision_models.md)
+- [Gaussian Eigen Models for Human Heads](../../CVPR2025/3d_vision/gaussian_eigen_models_for_human_heads.md)
+- [Parameter-Free Fine-tuning via Redundancy Elimination for Vision Foundation Models](../../AAAI2026/3d_vision/parameter-free_fine-tuning_via_redundancy_elimination_for_vision_foundation_mode.md)
+- [GIQ: Benchmarking 3D Geometric Reasoning of Vision Foundation Models with Simulated and Real Polyhedra](../../ICLR2026/3d_vision/giq_benchmarking_3d_geometric_reasoning_of_vision_foundation_models_with_simulat.md)
+
+<!-- RELATED:END -->

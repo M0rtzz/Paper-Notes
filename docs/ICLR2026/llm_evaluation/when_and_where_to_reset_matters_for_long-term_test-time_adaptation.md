@@ -131,3 +131,15 @@ CCC-Hard上比SOTA提升 **44.12%**。
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个benchmark、多个基线方法组合、详细消融、多架构验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清楚（Fig.1极为直观）、方法图解清晰（Fig.2）、统计严谨
 - 价值: ⭐⭐⭐⭐⭐ CCC-Hard 44.12%提升是实质性突破，即插即用的设计具有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Adaptation by Causal Trimming](../../NeurIPS2025/llm_evaluation/test-time_adaptation_by_causal_trimming.md)
+- [MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](../../AAAI2026/llm_evaluation/moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
+- [BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](../../ICCV2025/llm_evaluation/batclip_bimodal_online_test-time_adaptation_for_clip.md)
+- [Distribution Alignment for Fully Test-Time Adaptation with Dynamic Online Data Streams](../../ECCV2024/llm_evaluation/distribution_alignment_for_fully_test-time_adaptation_with_dynamic_online_data_s.md)
+- [When Priors Backfire: On the Vulnerability of Unlearnable Examples to Pretraining](when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_pretraining.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ BU 难度度量组件消融（McASP 模型，CTB5）：
 - **实用性**: ⭐⭐⭐⭐ — 性能提升 + 训练加速 27% 的双重收益具有实际工程价值，且模型无关设计易于落地
 - **实验充分度**: ⭐⭐⭐⭐ — 多数据集、多模型、完整消融实验和跨任务泛化，但数据集规模偏小
 - **写作质量**: ⭐⭐⭐ — 结构清晰但符号较繁琐，部分公式排版可更精简
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Incorporating Domain Knowledge into Materials Tokenization](incorporating_domain_knowledge_into_materials_tokenization.md)
+- [Making LLMs Better Many-to-Many Speech-to-Text Translators with Curriculum Learning](making_llms_better_many-to-many_speech-to-text_translators_with_curriculum_learn.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [How Do LLMs Acquire New Knowledge? A Knowledge Circuits Perspective on Continual Pre-Training](how_do_llms_acquire_new_knowledge_a_knowledge_circuits_perspective_on_continual_.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+
+<!-- RELATED:END -->

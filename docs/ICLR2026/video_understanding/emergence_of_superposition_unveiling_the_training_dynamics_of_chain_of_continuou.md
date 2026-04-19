@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ 实验规模有限，主要作为理论验证，缺少大规模模型和真实推理任务
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，图示直观，但前置知识要求较高
 - **价值**: ⭐⭐⭐⭐ 为理解连续 CoT 工作原理提供了坚实理论基础，对 latent reasoning 方向有广泛启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NerVE: Nonlinear Eigenspectrum Dynamics in LLM Feed-Forward Networks](nerve_nonlinear_eigenspectrum_dynamics_in_llm_feed-forward_networks.md)
+- [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](../../AAAI2026/video_understanding/distillation_dynamics_towards_understanding_feature-based_di.md)
+- [FlashVID: Efficient Video Large Language Models via Training-free Tree-Based Spatiotemporal Token Merging](flashvid_efficient_video_large_language_models_via_training-free_tree-based_spat.md)
+- [Motion-prior Contrast Maximization for Dense Continuous-Time Motion Estimation](../../ECCV2024/video_understanding/motion-prior_contrast_maximization_for_dense_continuous-time_motion_estimation.md)
+- [An Empirical Study of Autoregressive Pre-training from Videos](../../ICCV2025/video_understanding/an_empirical_study_of_autoregressive_pre-training_from_videos.md)
+
+<!-- RELATED:END -->

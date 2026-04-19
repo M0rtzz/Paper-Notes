@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅合成场景，缺少真实数据验证
 - 写作质量: ⭐⭐⭐⭐ 清晰，问题定义到位
 - 价值: ⭐⭐⭐⭐ 为动态场景建模开辟连续动力学方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decompositional Neural Scene Reconstruction with Generative Diffusion Prior](decompositional_neural_scene_reconstruction_with_generative_diffusion_prior.md)
+- [EigenGS: Representation from Eigenspace to Gaussian Image Space](eigengs_representation_from_eigenspace_to_gaussian_image_space.md)
+- [Continuous 3D Perception Model with Persistent State](continuous_3d_perception_model_with_persistent_state.md)
+- [Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
+- [HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos](hawor_world-space_hand_motion_reconstruction_from_egocentric_videos.md)
+
+<!-- RELATED:END -->

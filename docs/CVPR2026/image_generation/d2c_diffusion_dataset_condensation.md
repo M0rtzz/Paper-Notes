@@ -267,3 +267,15 @@ D2C在512²、CIFAR-10上也work：CIFAR-10 gFID 3.95 (random 9.72)。
 - 实验充分度: ⭐⭐⭐⭐⭐ 3种数据比例、2种分辨率、2种架构(DiT/SiT)、5种基线、详尽消融
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰,理论推导与实验紧密配合,附录极其详尽
 - 价值: ⭐⭐⭐⭐⭐ 233×加速+数据极端压缩——定义了扩散模型训练效率的新标杆
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Accelerating Diffusion Model Training under Minimal Budgets: A Condensation-Based Perspective](accelerating_diffusion_model_training_under_minimal_budgets_a_condensation-based.md)
+- [One Model, Many Budgets: Elastic Latent Interfaces for Diffusion Transformers](one_model_many_budgets_elastic_latent_interfaces_f.md)
+- [TAUE: Training-free Noise Transplant and Cultivation Diffusion Model](taue_training-free_noise_transplant_and_cultivation_diffusion_model.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [SJD-PAC: Accelerating Speculative Jacobi Decoding via Proactive Drafting and Adaptive Continuation](sjd-pac_accelerating_speculative_jacobi_decoding_via_proactive_drafting_and_adap.md)
+
+<!-- RELATED:END -->

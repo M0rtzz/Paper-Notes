@@ -137,3 +137,15 @@ SAM FTI-FDet 提出基于轻量 SAM 的自动提示实例分割框架，通过 T
 - 实验充分度: ⭐⭐⭐⭐ 消融全面（prompt/backbone/层/冻结/通道），多角度验证
 - 写作质量: ⭐⭐⭐ 结构完整但部分描述过于详细
 - 价值: ⭐⭐⭐ 铁路工业检测领域的实用贡献，方法通用性有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HFP-SAM: Hierarchical Frequency Prompted SAM for Efficient Marine Animal Segmentation](hfp-sam_hierarchical_frequency_prompted_sam_for_efficient_marine_animal_segmenta.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)
+- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+- [EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
+- [GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation](glus_global-local_reasoning_unified_into_a_single_large_language_model_for_video.md)
+
+<!-- RELATED:END -->

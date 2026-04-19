@@ -169,3 +169,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8编码器benchmark + 8个下游任务 + 详细消融 + 编码器贡献分析 + 与集成方式对比,极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 从分析到方法到实验的逻辑链条非常完整,motivation强,图表专业
 - 价值: ⭐⭐⭐⭐⭐ 证明了视觉端scaling的重要性,MEQ-Former设计简洁高效可复用,对VLM社区有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastVLM: Efficient Vision Encoding for Vision Language Models](../../CVPR2025/multimodal_vlm/fastvlm_efficient_vision_encoding_for_vision_language_models.md)
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+- [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+- [Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
+- [Unified Multimodal Understanding via Byte-Pair Visual Encoding](../../ICCV2025/multimodal_vlm/unified_multimodal_understanding_via_byte-pair_visual_encoding.md)
+
+<!-- RELATED:END -->

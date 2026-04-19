@@ -152,3 +152,15 @@ $$\mathcal{L}_{m \to n}(\mathcal{S}) = -\frac{1}{|\mathcal{S}|} \sum_{i \in \mat
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖分类/分割/VQA/检索/微调多任务，三种骨干网络验证模型无关性，消融极为详尽
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融设计合理，但部分表格较密集
 - 价值: ⭐⭐⭐⭐ 提供了一种低成本提升3D-文本对比学习的通用策略，具有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VA-GS: Enhancing the Geometric Representation of Gaussian Splatting via View Alignment](va-gs_enhancing_the_geometric_representation_of_gaussian_splatting_via_view_alig.md)
+- [CrossOver: 3D Scene Cross-Modal Alignment](../../CVPR2025/3d_vision/crossover_3d_scene_cross-modal_alignment.md)
+- [Learning from Videos for 3D World: Enhancing MLLMs with 3D Vision Geometry Priors](learning_from_videos_for_3d_world_enhancing_mllms_with_3d_vision_geometry_priors.md)
+- [AtlasGS: Atlanta-world Guided Surface Reconstruction with Implicit Structured Gaussians](atlasgs_atlanta-world_guided_surface_reconstruction_with_implicit_structured_gau.md)
+- [DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](../../CVPR2026/3d_vision/dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
+
+<!-- RELATED:END -->

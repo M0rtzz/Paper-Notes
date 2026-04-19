@@ -117,3 +117,15 @@ tags:
 - 选用RepVGG-A2（23层，~26M参数，76.4% ImageNet acc）作为起始架构，因其无跨非线性层的残差连接但性能与ResNet50相当
 - $L_{0.5}$ 正则化使用子二次惩罚，比 $L_1$ 更强地推动参数向1收敛，实现更彻底的线性化
 - 本文的核心洞察对Transformer架构也有启发：Transformer中的残差连接可能同样提供超越可训练性的归纳偏好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I Am Big, You Are Little; I Am Right, You Are Wrong](../../ICCV2025/others/i_am_big_you_are_little_i_am_right_you_are_wrong.md)
+- [You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception](../../ICCV2025/others/you_share_beliefs_i_adapt_progressive_heterogeneous_collaborative_perception.md)
+- [Meta-Learning Neural Mechanisms rather than Bayesian Priors](../../ACL2025/others/meta-learning_neural_mechanisms_rather_than_bayesian_priors.md)
+- [Byte Latent Transformer: Patches Scale Better Than Tokens](../../ACL2025/others/byte_latent_transformer.md)
+- [The Knowledge Microscope: Features as Better Analytical Lenses than Neurons](../../ACL2025/others/the_knowledge_microscope_features_as_better_analytical_lenses_than_neurons.md)
+
+<!-- RELATED:END -->

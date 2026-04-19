@@ -135,3 +135,15 @@ $$\arg\min_{\mathcal{F}} \sum_i^N \left\{ \left|\sum_j^{M_i} F_i^j\right| + \lef
 ## 评分 ⭐⭐⭐⭐
 
 选题新颖，首次实现文本到物理稳定砖块结构，方法设计巧妙，物理约束集成合理。数据集规模大且质量高。实验全面，消融清晰证明各组件贡献。可直接物理组装的验证增加说服力。局限在于分辨率和类别覆盖，但作为开创性工作已很出色。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stable Score Distillation](stable_score_distillation.md)
+- [SuperMat: Physically Consistent PBR Material Estimation at Interactive Rates](supermat_physically_consistent_pbr_material_estimation_at_interactive_rates.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+- [Bolt3D: Generating 3D Scenes in Seconds](bolt3d_generating_3d_scenes_in_seconds.md)
+- [A Recipe for Generating 3D Worlds from a Single Image](a_recipe_for_generating_3d_worlds_from_a_single_image.md)
+
+<!-- RELATED:END -->

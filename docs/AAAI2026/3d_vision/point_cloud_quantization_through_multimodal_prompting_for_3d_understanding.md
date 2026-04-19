@@ -197,3 +197,15 @@ $$\mathcal{L}_{\text{Sep}} = \sum_{i \neq j} \exp(-\|\mathbf{h}^T_i - \mathbf{h}
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 分类、few-shot、分割、跨数据集、消融、可视化全面
 - **写作质量**: ⭐⭐⭐⭐ — 从原型理论出发的动机论述有深度，技术细节清晰
 - **实用价值**: ⭐⭐⭐⭐ — 参数高效且效果好，特别在低数据场景优势明显
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](../../ICCV2025/3d_vision/upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
+- [Deformation-based In-Context Learning for Point Cloud Understanding](../../CVPR2026/3d_vision/deformation-based_in-context_learning_for_point_cloud_understanding.md)
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning](../../CVPR2026/3d_vision/adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning.md)
+
+<!-- RELATED:END -->

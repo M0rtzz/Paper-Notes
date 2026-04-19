@@ -166,3 +166,15 @@ $$\mathcal{L}(\mathbf{x}, \hat{\mathbf{x}}) = \begin{cases} 0.5\mathbf{a}^2, & \
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4+ 个数据集、9 个基线、泛化性测试、零样本实验、真实病例研究，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，形式化严谨，实验设计合理
 - 价值: ⭐⭐⭐⭐ — 在计算生物学和临床决策支持领域有重要应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrossNovo: Bidirectional Representations Augmented Autoregressive Biological Sequence Generation](../../NeurIPS2025/medical_imaging/bidirectional_representations_augmented_autoregressive_biological_sequence_gener.md)
+- [Improved Off-policy Reinforcement Learning in Biological Sequence Design](../../ICML2025/medical_imaging/improved_off-policy_reinforcement_learning_in_biological_sequence_design.md)
+- [Characterizing Human Semantic Navigation in Concept Production as Trajectories in Embedding Space](characterizing_human_semantic_navigation_in_concept_production_as_trajectories_i.md)
+- [Extending Sequence Length is Not All You Need: Effective Integration of Multimodal Signals for Gene Expression Prediction](extending_sequence_length_is_not_all_you_need_effective_integration_of_multimoda.md)
+- [Benchmarking ECG FMs: A Reality Check Across Clinical Tasks](benchmarking_ecg_fms_a_reality_check_across_clinical_tasks.md)
+
+<!-- RELATED:END -->

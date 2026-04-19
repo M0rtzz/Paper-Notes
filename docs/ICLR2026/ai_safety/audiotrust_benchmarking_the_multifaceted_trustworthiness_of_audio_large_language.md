@@ -121,3 +121,15 @@ AudioTrust 将可信度评估解耦为六个正交维度，每个维度设计独
 - 实验充分度: ⭐⭐⭐⭐⭐ 14 个模型、6 大维度、26 子任务、双评估器、人工验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰系统，但表格密集导致可读性有一定负担
 - 价值: ⭐⭐⭐⭐⭐ 对 ALLM 安全部署有直接指导意义，将推动音频 AI 安全的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StyleBreak: Revealing Alignment Vulnerabilities in Large Audio-Language Models via Style-Aware Audio Jailbreak](../../AAAI2026/ai_safety/stylebreak_revealing_alignment_vulnerabilities_in_large_audio-language_models_vi.md)
+- [Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark](measuring_physical-world_privacy_awareness_of_large_language_models_an_evaluatio.md)
+- [BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models](biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md)
+- [SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC](secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_models.md)
+- [Gender Bias in Emotion Recognition by Large Language Models](../../AAAI2026/ai_safety/gender_bias_in_emotion_recognition_by_large_language_models.md)
+
+<!-- RELATED:END -->

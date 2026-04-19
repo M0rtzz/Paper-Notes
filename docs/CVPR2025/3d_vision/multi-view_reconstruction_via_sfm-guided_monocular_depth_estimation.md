@@ -162,3 +162,15 @@ LCM 蒸馏后单步推理仅需 0.84 秒/视图，F-Score 仍达 0.828。
 - 实用性：⭐⭐⭐⭐⭐ — 在多种真实场景中表现优异，支持灵活的速度-质量权衡
 - 实验充分度：⭐⭐⭐⭐⭐ — 覆盖 5 种场景类型、多种基线方法、详细消融实验
 - 写作清晰度：⭐⭐⭐⭐⭐ — 方法动机清晰、流程图优秀、消融设计精心
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Gaussian Inpainting with Depth-Guided Cross-View Consistency](3d_gaussian_inpainting_with_depth-guided_cross-view_consistency.md)
+- [MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion](mp-sfm_monocular_surface_priors_for_robust_structure-from-motion.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](../../ICCV2025/3d_vision/depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+- [IMFine: 3D Inpainting via Geometry-guided Multi-view Refinement](imfine_3d_inpainting_via_geometry-guided_multi-view_refinement.md)
+- [Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera](depth_any_camera_zero-shot_metric_depth_estimation_from_any_camera.md)
+
+<!-- RELATED:END -->

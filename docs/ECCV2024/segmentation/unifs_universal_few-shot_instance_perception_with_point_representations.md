@@ -162,3 +162,15 @@ UniFS包含三个全共享组件（无任务特定设计）：
 - 实验充分度: ⭐⭐⭐⭐ — COCO-UniFS基准全面，但仅基于ResNet-101，未验证更强backbone
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，方法直观，SAPL的几何解释优雅
 - 价值: ⭐⭐⭐⭐⭐ — 开创性工作，统一问题定义和基准对领域发展意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Eliminating Feature Ambiguity for Few-Shot Segmentation](eliminating_feature_ambiguity_for_few-shot_segmentation.md)
+- [Point-Supervised Panoptic Segmentation via Estimating Pseudo Labels from Learnable Distance](point-supervised_panoptic_segmentation_via_estimating_pseudo_labels_from_learnab.md)
+- [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
+- [GiT: Towards Generalist Vision Transformer through Universal Language Interface](git_towards_generalist_vision_transformer_through_universal_language_interface.md)
+- [Empowering DINO Representations for Underwater Instance Segmentation via Aligner and Prompter](../../AAAI2026/segmentation/empowering_dino_representations_for_underwater_instance_segmentation_via_aligner.md)
+
+<!-- RELATED:END -->

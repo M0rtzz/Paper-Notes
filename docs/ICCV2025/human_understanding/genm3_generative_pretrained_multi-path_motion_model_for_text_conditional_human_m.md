@@ -181,3 +181,15 @@ GenM3 包含两个核心组件和三阶段训练流程：
 - **实验充分度**: ⭐⭐⭐⭐ HumanML3D 和 IDEA400 评估、VQ 方法对比、组件消融
 - **写作质量**: ⭐⭐⭐⭐ 框架图清晰，训练阶段阐述有条理
 - **价值**: ⭐⭐⭐⭐⭐ FID 0.035 大幅刷新 SOTA，11 个统一数据集对社区有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KinMo: Kinematic-Aware Human Motion Understanding and Generation](kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
+- [GENMO: A GENeralist Model for Human MOtion](genmo_a_generalist_model_for_human_motion.md)
+- [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
+- [SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
+- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](../../CVPR2026/human_understanding/molingo_motion-language_alignment_for_text-to-motion_generation.md)
+
+<!-- RELATED:END -->

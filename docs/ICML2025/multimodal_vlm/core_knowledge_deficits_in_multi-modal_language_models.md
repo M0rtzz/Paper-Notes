@@ -178,3 +178,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 230模型×11 prompt，消融全面，统计检验充分
 - 写作质量: ⭐⭐⭐⭐ — 哲学引入精彩但篇幅略长，主体结构清晰
 - 价值: ⭐⭐⭐⭐⭐ — 对MLLM根本局限的深刻诊断，具有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [Evaluating Multimodal Large Language Models on Core Music Perception Tasks](../../NeurIPS2025/multimodal_vlm/evaluating_multimodal_large_language_models_on_core_music_perception_tasks.md)
+- [MMRL: Multi-Modal Representation Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/mmrl_multi-modal_representation_learning_for_vision-language_models.md)
+- [Vision-Language Models Create Cross-Modal Task Representations](vision-language_models_create_cross-modal_task_representations.md)
+- [Efficient Multi-modal Large Language Models via Progressive Consistency Distillation](../../NeurIPS2025/multimodal_vlm/efficient_multi-modal_large_language_models_via_progressive_consistency_distilla.md)
+
+<!-- RELATED:END -->

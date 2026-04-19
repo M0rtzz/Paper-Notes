@@ -131,3 +131,15 @@ $$V_{new} = \text{Softmax}(\frac{Q_z K_g^T}{\sqrt{d_k}}) V_g$$
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义清晰，无辅助工具的设计实用性强，CLIP 补偿思路新颖；缺点是像素保真度指标偏低，且实验对比方法不全覆盖最新 diffusion editing 方法。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
+- [GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)
+- [Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)](multi-modal_vision_pre-training_for_medical_image_analysis.md)
+- [RadEdit: Stress-Testing Biomedical Vision Models via Diffusion Image Editing](../../ECCV2024/medical_imaging/radedit_stress-testing_biomedical_vision_models_via_diffusion_image_editing.md)
+- [Exploring and Leveraging Class Vectors for Classifier Editing](../../NeurIPS2025/medical_imaging/exploring_and_leveraging_class_vectors_for_classifier_editing.md)
+
+<!-- RELATED:END -->

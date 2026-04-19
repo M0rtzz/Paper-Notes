@@ -123,3 +123,15 @@ tags:
 - 值得关注该团队后续发表的相关扩展工作
 - 对于理论方向的初学者，本文的 proof sketch 部分提供了很好的技术路线图
 - 从方法论角度，本文展示了如何通过精心的数学建模将复杂问题简化为可分析的框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empirical Study on Robustness and Resilience in Cooperative Multi-Agent Reinforcement Learning](empirical_study_on_robustness_and_resilience_in_cooperative_multi-agent_reinforc.md)
+- [Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis](learning_in_stackelberg_mean_field_games_a_non-asymptotic_analysis.md)
+- [Last Iterate Convergence in Monotone Mean Field Games](last_iterate_convergence_in_monotone_mean_field_games.md)
+- [Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics](solving_continuous_mean_field_games_deep_reinforcement_learning_for_non-stationa.md)
+- [Scalable Neural Incentive Design with Parameterized Mean-Field Approximation](scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)
+
+<!-- RELATED:END -->

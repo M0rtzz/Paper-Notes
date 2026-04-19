@@ -125,3 +125,15 @@ EDformer 采用逐事件（event-by-event）的处理方式，对输入的事件
 - **实验充分度**: ⭐⭐⭐⭐ 多数据集对比、消融实验、实际应用验证
 - **写作质量**: ⭐⭐⭐ 问题动机阐述清晰，数据集构建有体系性
 - **价值**: ⭐⭐⭐⭐ ED24 数据集对社区的长期价值高，方法在实际场景中有用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [OAPT: Offset-Aware Partition Transformer for Double JPEG Artifacts Removal](oapt_offset-aware_partition_transformer_for_double_jpeg_artifacts_removal.md)
+- [Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)](../../ICCV2025/image_restoration/generic_event_boundary_detection_via_denoising_diffusion.md)
+
+<!-- RELATED:END -->

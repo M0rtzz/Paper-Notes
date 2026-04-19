@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 作为理论工作可以接受，但大规模验证欠缺
 - 写作质量: ⭐⭐⭐⭐ — 数学严谨、论述清晰，但对非数学背景读者有一定门槛
 - 价值: ⭐⭐⭐⭐ — 基础理论贡献重要，与剪枝的联系具有实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Global Minimizers of ℓp-Regularized Objectives Yield the Sparsest ReLU Neural Networks](../../NeurIPS2025/model_compression/global_minimizers_of_ellp-regularized_objectives_yield_the_sparsest_relu_neural_.md)
+- [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
+- [Boomerang Distillation Enables Zero-Shot Model Size Interpolation](boomerang_distillation_enables_zero-shot_model_size_interpolation.md)
+- [A Recovery Guarantee for Sparse Neural Networks](a_recovery_guarantee_for_sparse_neural_networks.md)
+- [The Geometry of LLM Quantization: GPTQ as Babai's Nearest Plane Algorithm](the_geometry_of_llm_quantization_gptq_as_babais_nearest_plane_algorithm.md)
+
+<!-- RELATED:END -->

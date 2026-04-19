@@ -149,3 +149,15 @@ $$\mathcal{L}_\text{Smoothness}(Z_m^\alpha) = \frac{1}{K} \sum_{k=1}^{K} \|Z_m^\
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 2D/3D 重建、生成、分类、插值、消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 公式推导详细，但数学符号较多，阅读门槛较高
 - 价值: ⭐⭐⭐⭐ 为任务无关编码提供了高效且强大的框架，具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Task-Agnostic Pre-training and Task-Guided Fine-tuning for Versatile Diffusion Planner](../../ICML2025/image_generation/task-agnostic_pre-training_and_task-guided_fine-tuning_for_versatile_diffusion_p.md)
+- [InfGen: A Resolution-Agnostic Paradigm for Scalable Image Synthesis](infgen_a_resolution-agnostic_paradigm_for_scalable_image_synthesis.md)
+- [UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation](../../NeurIPS2025/image_generation/utilgen_utility-centric_generative_data_augmentation_with_dual-level_task_adapta.md)
+- [The Silent Assistant: NoiseQuery as Implicit Guidance for Goal-Driven Image Generation](the_silent_assistant_noisequery_as_implicit_guidance_for_goal-driven_image_gener.md)
+- [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+
+<!-- RELATED:END -->

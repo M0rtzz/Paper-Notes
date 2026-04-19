@@ -135,3 +135,15 @@ $$\alpha_{v \to k}^{(t)} \propto \text{Softmax}_k(\langle \mathbf{h}_{u,k}^{\mat
 ⭐⭐⭐⭐ (4/5)
 
 方法设计精巧，理论支撑充分（两个 Proposition），实验全面且鲁棒性提升显著。但系统复杂度较高，可能限制实际应用；缺少更多领域的验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Your Own Prompt](graph_your_own_prompt.md)
+- [Towards Unsupervised Open-Set Graph Domain Adaptation via Dual Reprogramming](towards_unsupervised_open-set_graph_domain_adaptation_via_dual_reprogramming.md)
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [Graph Counselor: Adaptive Graph Exploration via Multi-Agent Synergy to Enhance LLM Reasoning](../../ACL2025/model_compression/graph_counselor_multiagent_graphrag.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+
+<!-- RELATED:END -->

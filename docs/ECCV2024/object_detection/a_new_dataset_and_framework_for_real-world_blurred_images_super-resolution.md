@@ -115,3 +115,15 @@ PBaSR在三种不同架构（CNN: Real-ESRGAN, VQVAE: FeMaSR, Transformer: SRFor
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种架构验证、多指标评估、丰富消融（数据扩展性/通信频率/融合比例/对比蒸馏等）、与GAC方法对比
 - 写作质量: ⭐⭐⭐⭐ 动机论证扎实有数据支撑，流程清晰，但部分公式符号较多
 - 价值: ⭐⭐⭐⭐ 数据集+框架双贡献，框架即插即用且开源，但应用场景相对垂直
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](../../ICCV2025/object_detection/revisiting_adversarial_patch_defenses_on_object_detectors_unified_evaluation_lar.md)
+- [A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)
+- [Zero-Shot Detection of AI-Generated Images](zero-shot_detection_of_ai-generated_images.md)
+- [MRD: Multi-resolution Retrieval-Detection Fusion for High-Resolution Image Understanding](../../CVPR2026/object_detection/mrd_multi-resolution_retrieval-detection_fusion_for_high-resolution_image_unders.md)
+- [VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions](../../ICCV2025/object_detection/voccl3d_a_video_benchmark_dataset_for_3d_human_pose_and_shape_estimation_under_r.md)
+
+<!-- RELATED:END -->

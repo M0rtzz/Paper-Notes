@@ -158,3 +158,15 @@ $$\kappa = \frac{\hat{\bar{\alpha}}}{\frac{1}{B}\sum_{i=1}^{B} Z_{\text{approx}}
 - 实验充分度: ⭐⭐⭐ 数学推理任务验证充分，但缺乏代码/对话等多样化任务
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，图表丰富，算法伪代码完整
 - 价值: ⭐⭐⭐⭐ 对降低 LLM RL 训练成本有直接工程意义，提供了解耦 rollout 的可行路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training](evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t.md)
+- [DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces](distributions_as_actions_a_unified_framework_for_diverse_action_spaces.md)
+- [Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)
+- [Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
+- [Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search](enhancing_generative_auto_bidding.md)
+
+<!-- RELATED:END -->

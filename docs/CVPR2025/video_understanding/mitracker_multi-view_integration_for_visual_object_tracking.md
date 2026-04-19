@@ -114,3 +114,15 @@ $$L_{track} = L_{cls} + \lambda_{giou}L_{giou} + \lambda_{L_1}L_1 + \lambda_{bev
 - 实验充分度: ⭐⭐⭐⭐⭐ MVTrack + GMTD 双数据集，消融、恢复能力、可视化分析全面
 - 写作质量: ⭐⭐⭐⭐ 数据集和方法描述清晰，图示直观，但部分变量符号需要对照多处才能理解
 - 价值: ⭐⭐⭐⭐ 数据集的长期价值高于方法本身，为多视角跟踪提供了首个完整的训练评估基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+- [Dynamic Updates for Language Adaptation in Visual-Language Tracking](dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
+- [HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](../../CVPR2026/video_understanding/herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
+- [MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking](must_the_first_dataset_and_unified_framework_for_multispectral_uav_single_object.md)
+- [PlugTrack: Multi-Perceptive Motion Analysis for Adaptive Fusion in Multi-Object Tracking](../../AAAI2026/video_understanding/plugtrack_multi-perceptive_motion_analysis_for_adaptive_fusion_in_multi-object_t.md)
+
+<!-- RELATED:END -->

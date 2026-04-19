@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 细粒度控制、音色迁移、零样本生成三种应用全覆盖
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，应用案例生动直观
 - 价值: ⭐⭐⭐⭐⭐ 为 Foley 创作实践提供了急需的细粒度控制工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls](../../CVPR2025/audio_speech/video-guided_foley_sound_generation_with_multimodal_controls.md)
+- [Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)
+- [PACE: Pretrained Audio Continual Learning](pace_pretrained_audio_continual_learning.md)
+- [OmniSonic: Towards Universal and Holistic Audio Generation from Video and Text](../../CVPR2026/audio_speech/omnisonic_towards_universal_and_holistic_audio_generation_from_video_and_text.md)
+- [FlexiCodec: A Dynamic Neural Audio Codec for Low Frame Rates](flexicodec_a_dynamic_neural_audio_codec_for_low_frame_rates.md)
+
+<!-- RELATED:END -->

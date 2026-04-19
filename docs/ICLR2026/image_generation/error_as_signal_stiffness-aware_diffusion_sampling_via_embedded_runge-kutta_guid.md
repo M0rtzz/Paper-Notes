@@ -139,3 +139,15 @@ $$\hat{\mathbf{x}}^{\text{Heun}}_{\sigma_{i+1}} = \mathbf{x}^{\text{Heun}}_{\sig
 - 实验充分度: ⭐⭐⭐⭐ （ImageNet/FFHQ/PixArt 多数据集、多求解器验证，但缺少更多架构）
 - 写作质量: ⭐⭐⭐⭐⭐ （理论推导清晰，从 2D toy 到真实数据层层递进）
 - 价值: ⭐⭐⭐⭐ （零成本即插即用的实用方法，低步数场景价值突出）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Iterative Error Correction for Efficient Diffusion Models](test-time_iterative_error_correction_for_efficient_diffusion_models.md)
+- [Stochastic Self-Guidance for Training-Free Enhancement of Diffusion Models](stochastic_self-guidance_for_training-free_enhancement_of_diffusion_models.md)
+- [System-Embedded Diffusion Bridge Models](../../NeurIPS2025/image_generation/system-embedded_diffusion_bridge_models.md)
+- [Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations](contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas.md)
+- [Loopholing Discrete Diffusion: Deterministic Bypass of the Sampling Wall](loopholing_discrete_diffusion_deterministic_bypass_of_the_sampling_wall.md)
+
+<!-- RELATED:END -->

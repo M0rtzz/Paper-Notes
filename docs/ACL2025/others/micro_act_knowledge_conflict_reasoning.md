@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个基准、4个模型、3种冲突类型、消融+鲁棒性+case study全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论分析与实验紧密结合
 - 价值: ⭐⭐⭐⭐ 解决了RAG系统的关键痛点，零样本即可用，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](arise_risk_adaptive_search.md)
+- [Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
+- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
+- [Learning to Reason Over Time: Timeline Self-Reflection for Temporal Reasoning](tiser_timeline_self_reflection_temporal.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+
+<!-- RELATED:END -->

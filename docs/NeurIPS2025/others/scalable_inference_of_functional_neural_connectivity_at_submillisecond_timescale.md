@@ -112,3 +112,15 @@ MC模型使用带自适应步长（backtracking line search）的梯度下降，
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成数据（多配置）+ 真实海马体数据，时间-精度-规模全面对比
 - 写作质量: ⭐⭐⭐⭐⭐ 从离散GLM到连续的过渡逻辑清晰，数学推导严谨但不晦涩
 - 价值: ⭐⭐⭐⭐ 对计算神经科学领域有直接实用价值，开源代码可推动快速采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Condition: A Neural Heuristic for Scalable MPE Inference](learning_to_condition_a_neural_heuristic_for_scalable_mpe_inference.md)
+- [Generalized Linear Mode Connectivity for Transformers](generalized_linear_mode_connectivity_for_transformers.md)
+- [Statistical Inference Under Performativity](statistical_inference_under_performativity.md)
+- [Statistical Inference for Gradient Boosting Regression](statistical_inference_for_gradient_boosting_regression.md)
+- [Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
+
+<!-- RELATED:END -->

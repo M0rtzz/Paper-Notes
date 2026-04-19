@@ -143,3 +143,15 @@ Neural Collapse（NC）是深度网络训练末期出现的一种引人注目的
 - 实验充分度: ⭐⭐⭐ — MNIST验证清晰，ResNet实验有启发性，但规模和场景覆盖有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 二分类到多分类的递进式展开极为清晰，理论与直觉兼顾
 - 价值: ⭐⭐⭐⭐ — 理论贡献突出，对理解NC机制有重要推动，但强假设限制了直接应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Alternating Gradient Flows: A Theory of Feature Learning in Two-layer Neural Networks](alternating_gradient_flows_a_theory_of_feature_learning_in_two-layer_neural_netw.md)
+- [Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via Grokking](flatness_is_necessary_neural_collapse_is_not_rethinking_generalization_via_grokk.md)
+- [Generalization Bounds for Rank-sparse Neural Networks](generalization_bounds_for_rank-sparse_neural_networks.md)
+- [Learning to Flow from Generative Pretext Tasks for Neural Architecture Encoding](learning_to_flow_from_generative_pretext_tasks_for_neural_architecture_encoding.md)
+- [Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks](../../ICML2025/llm_pretraining/bayesian_neural_scaling_law_extrapolation_with_prior-data_fitted_networks.md)
+
+<!-- RELATED:END -->

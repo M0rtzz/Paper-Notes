@@ -195,3 +195,15 @@ DAWN 采用双扩散模型层级结构：
 | 写作质量 | 4 | 结构清晰，动机和对比分析充分 |
 | 实用价值 | 4 | 数据效率高、可解释、模块化可部署 |
 | 总分 | 4.0 | 以小模型和少数据实现 SOTA 的实用框架 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiP: Taming Diffusion Models in Pixel Space](dip_taming_diffusion_models_in_pixel_space.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [Causal Motion Diffusion Models for Autoregressive Motion Generation](causal_motion_diffusion_models_for_autoregressive_motion_generation.md)
+- [Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?](../../NeurIPS2025/image_generation/can_knowledge-graph-based_retrieval_augmented_generation_really_retrieve_what_yo.md)
+- [Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
+
+<!-- RELATED:END -->

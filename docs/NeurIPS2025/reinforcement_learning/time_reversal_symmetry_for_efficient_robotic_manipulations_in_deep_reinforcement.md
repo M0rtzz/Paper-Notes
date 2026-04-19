@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Robosuite+MetaWorld 两个标准基准，单/多任务设定，详细消融
 - 写作质量: ⭐⭐⭐⭐ FTR/PTR 的概念和示例清晰，方法流程图直观
 - 价值: ⭐⭐⭐⭐ 对具有配对对称结构的机器人任务有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcement Learning Teachers of Test Time Scaling](reinforcement_learning_teachers_of_test_time_scaling.md)
+- [Confounding Robust Deep Reinforcement Learning: A Causal Approach](confounding_robust_deep_reinforcement_learning_a_causal_approach.md)
+- [Mind the GAP! The Challenges of Scale in Pixel-based Deep Reinforcement Learning](mind_the_gap_the_challenges_of_scale_in_pixel-based_deep_reinforcement_learning.md)
+- [Enhancing Interpretability in Deep Reinforcement Learning through Semantic Clustering](enhancing_interpretability_in_deep_reinforcement_learning_through_semantic_clust.md)
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+
+<!-- RELATED:END -->

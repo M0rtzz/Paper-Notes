@@ -125,3 +125,15 @@ AgentChangeBench 由数据集 + 评估协议两部分组成：数据集包含 31
 - 实验充分度: ⭐⭐⭐⭐ 315 任务 × 3 模型 × 5 persona × 4 指标，分析充分
 - 写作质量: ⭐⭐⭐⭐ 指标定义严谨，failure mode 分析清晰
 - 价值: ⭐⭐⭐⭐ 对企业 agent 部署决策有直接指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CORE: Full-Path Evaluation of LLM Agents Beyond Final State](core_full-path_evaluation_of_llm_agents_beyond_final_state.md)
+- [FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models](../../ACL2025/llm_agent/fact_audit_factcheck.md)
+- [AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](agentdam_privacy_leakage_evaluation_for_autonomous_web_agent.md)
+- [AgentAuditor: Human-Level Safety and Security Evaluation for LLM Agents](agentauditor_humanlevel_safety_and_security_evaluation_for_l.md)
+- [FinRpt: Dataset, Evaluation System and LLM-based Multi-agent Framework for Equity Research Report Generation](../../AAAI2026/llm_agent/finrpt_dataset_evaluation_system_and_llm-based_multi-agent_framework_for_equity_.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ $$\mathcal{L}_\text{EBFR}(\theta) = \mathbb{E}_t \lambda(t) \mathbb{E}_{\bar{\ma
 - 实验充分度: ⭐⭐⭐⭐ — 多框架(UViT/DiT)、多数据集、多采样器全面验证，消融实验充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰，理论证明严谨，流程图直观
 - 价值: ⭐⭐⭐⭐ — 提供了像素/潜空间之外的第三条可行路径，对高分辨率生成特别有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hessian Geometry of Latent Space in Generative Models](hessian_geometry_of_latent_space_in_generative_models.md)
+- [Compositional Scene Understanding through Inverse Generative Modeling](compositional_scene_understanding_through_inverse_generative_modeling.md)
+- [Boosting Generative Image Modeling via Joint Image-Feature Synthesis](../../NeurIPS2025/image_generation/boosting_generative_image_modeling_via_joint_imagefeature_sy.md)
+- [Action-Minimization Meets Generative Modeling: Efficient Transition Path Sampling with the Onsager-Machlup Functional](action-minimization_meets_generative_modeling_efficient_transition_path_sampling.md)
+- [Efficient Generative Modeling with Residual Vector Quantization-Based Tokens](efficient_generative_modeling_with_residual_vector_quantization-based_tokens.md)
+
+<!-- RELATED:END -->

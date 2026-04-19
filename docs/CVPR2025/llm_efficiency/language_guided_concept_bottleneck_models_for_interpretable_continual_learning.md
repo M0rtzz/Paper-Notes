@@ -86,3 +86,15 @@ tags:
 - 概念相似度阈值需要手动设定，不同数据集可能需要不同阈值
 - 当前验证主要在图像分类任务上，检测/分割等密集预测任务的扩展有待探索
 - 可以探索让用户在线修正概念的交互式持续学习模式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KAC: Kolmogorov-Arnold Classifier for Continual Learning](kac_kolmogorov-arnold_classifier_for_continual_learning.md)
+- [Attention Retention for Continual Learning with Vision Transformers](../../AAAI2026/llm_efficiency/attention_retention_for_continual_learning_with_vision_transformers.md)
+- [Learning Like Humans: Analogical Concept Learning for Generalized Category Discovery](../../CVPR2026/llm_efficiency/learning_like_humans_analogical_concept_learning_for_generalized_category_discov.md)
+- [Expert Divergence Learning for MoE-based Language Models](../../ICLR2026/llm_efficiency/expert_divergence_learning_for_moe-based_language_models.md)
+- [Learning from the Undesirable: Robust Adaptation of Language Models without Forgetting](../../AAAI2026/llm_efficiency/learning_from_the_undesirable_robust_adaptation_of_language_models_without_forge.md)
+
+<!-- RELATED:END -->

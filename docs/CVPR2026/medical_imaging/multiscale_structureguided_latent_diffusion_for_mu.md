@@ -118,3 +118,15 @@ MSG-LDM在VAE的潜空间中工作。给定多模态输入 $\{X_j\}_{j=1}^M$：
 - 实验充分度: ⭐⭐⭐ 两个数据集+消融，但对比方法较少（仅3个）且数据规模不大
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，方法描述明确
 - 价值: ⭐⭐⭐⭐ 解决临床MRI缺失模态问题有实际意义，代码开源有利于复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUST: Modality-Specific Representation-Aware Transformer for Diffusion-Enhanced Survival Prediction with Missing Modality](must_modality-specific_representation-aware_transformer_for_diffusion-enhanced_s.md)
+- [CoCoLIT: ControlNet-Conditioned Latent Image Translation for MRI to Amyloid PET Synthesis](../../AAAI2026/medical_imaging/cocolit_controlnet-conditioned_latent_image_translation_for_mri_to_amyloid_pet_s.md)
+- [PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation](pgr-net_prior-guided_roi_reasoning_network_for_brain_tumor_mri_segmentation.md)
+- [CLoE: Expert Consistency Learning for Missing Modality Segmentation](cloe_expert_consistency_learning_for_missing_modality_segmentation.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilist.md)
+
+<!-- RELATED:END -->

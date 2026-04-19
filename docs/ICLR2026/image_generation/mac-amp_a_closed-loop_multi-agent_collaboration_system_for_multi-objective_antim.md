@@ -130,3 +130,15 @@ $$L = L_{policy} + c_v L_{value} - c_e L_{ent}$$
 - 技术深度：⭐⭐⭐⭐ — 模块化设计精细，多层次验证充分
 - 实验完整性：⭐⭐⭐⭐ — 五种细菌目标、四个基线、多维消融
 - 实用价值：⭐⭐⭐⭐ — 可扩展至其他分子设计任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [Pareto-Conditioned Diffusion Models for Offline Multi-Objective Optimization](pareto-conditioned_diffusion_models_for_offline_multi-objective_optimization.md)
+- [JointDiff: Bridging Continuous and Discrete in Multi-Agent Trajectory Generation](jointdiff_bridging_continuous_and_discrete_in_multi-agent_trajectory_generation.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2026/image_generation/codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+- [Conditional Diffusion Model for Multi-Agent Dynamic Task Decomposition](../../AAAI2026/image_generation/conditional_diffusion_model_for_multi-agent_dynamic_task_dec.md)
+
+<!-- RELATED:END -->

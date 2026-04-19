@@ -157,3 +157,15 @@ $$F_{\text{global}}(R) = \frac{F_{\text{fact}}(R) \cdot F_{\text{logic}}(R)}{F_{
 | 实验充分性 | ★★★★☆ |
 | 实用价值 | ★★★★☆ |
 | 写作质量 | ★★★☆☆ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TokMem: One-Token Procedural Memory for Large Language Models](tokmem_one-token_procedural_memory_for_large_language_models.md)
+- [Representation Shift: Unifying Token Compression with FlashAttention](../../ICCV2025/information_retrieval/representation_shift_unifying_token_compression_with_flashattention.md)
+- [Query-Level Uncertainty in Large Language Models](query-level_uncertainty_in_large_language_models.md)
+- [Digging Deeper: Learning Multi-Level Concept Hierarchies](digging_deeper_learning_multi-level_concept_hierarchies.md)
+- [Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs](../../AAAI2026/information_retrieval/does_less_hallucination_mean_less_creativity_an_empirical_investigation_in_llms.md)
+
+<!-- RELATED:END -->

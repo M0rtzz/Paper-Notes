@@ -103,3 +103,15 @@ $$\|\mathbb{E}_{\mu_\delta}[f] - \mathbb{E}_{\nu_\delta}[f]\| \leq C \cdot L \cd
 - 实验充分度: ⭐⭐⭐⭐ (ImageNet-1K 多 IPC 多架构，但缺少更多数据集)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论推导严谨，算法描述清晰)
 - 价值: ⭐⭐⭐⭐⭐ (为数据集蒸馏提供理论基础，方法简洁高效)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](../../NeurIPS2025/model_compression/optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
+- [Dataset Color Quantization: A Training-Oriented Framework for Dataset-Level Compression](dataset_color_quantization_a_training-oriented_framework_for_dataset-level_compr.md)
+- [Compute-Optimal Quantization-Aware Training](compute-optimal_quantization-aware_training.md)
+- [Understanding Dataset Distillation via Spectral Filtering](understanding_dataset_distillation_via_spectral_filtering.md)
+- [Post Training Quantization for Efficient Dataset Condensation](../../AAAI2026/model_compression/post_training_quantization_for_efficient_dataset_condensation.md)
+
+<!-- RELATED:END -->

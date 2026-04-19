@@ -114,3 +114,15 @@ SPPO 提供了偏好优化的博弈论框架，但原始 SPPO 需要外部偏好
 - 实验充分度: ⭐⭐⭐⭐ — 6 语言、多基线对比、消融分析充分，但缺少真正低资源语言验证
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，公式推导完整，案例分析直观
 - 价值: ⭐⭐⭐⭐ — 为低资源多语言翻译提供了全新范式，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Machine Translation Models are Zero-Shot Detectors of Translation Direction](machine_translation_models_are_zero-shot_detectors_of_translation_direction.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+- [Exploring the Translation Mechanism of Large Language Models](../../NeurIPS2025/multilingual_mt/exploring_the_translation_mechanism_of_large_language_models.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+
+<!-- RELATED:END -->

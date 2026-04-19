@@ -115,3 +115,15 @@ $$\text{ver}_{V,\mu}(\theta) := \Pr_{x \sim \mu, y \sim P_\theta(x)} [\langle V,
 - 实验充分度: ⭐⭐⭐ 实验仅在 GCD 这一个小任务上验证，规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，概念清晰，理论发展层次分明
 - 价值: ⭐⭐⭐⭐⭐ RLVF 已被广泛采用为 LLM 后训练的标准方法（如 RLVR），影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [Checklists Are Better Than Reward Models For Aligning Language Models](checklists_are_better_than_reward_models_for_aligning_langua.md)
+- [Self-Improving Embodied Foundation Models](self-improving_embodied_foundation_models.md)
+- [Training Language Models to Reason Efficiently](training_language_models_to_reason_efficiently.md)
+- [Complexity Scaling Laws for Neural Models using Combinatorial Optimization](complexity_scaling_laws_for_neural_models_using_combinatorial_optimization.md)
+
+<!-- RELATED:END -->

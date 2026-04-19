@@ -147,3 +147,15 @@ $$\mathcal{M}(\mathcal{T}_i, \mathcal{T}_j) = \frac{1}{N} \sum_{n=1}^{N} [\alpha
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个 DiT 基模型验证 + 详尽消融 + 新基准新指标
 - 写作质量: ⭐⭐⭐⭐ 可视化分析驱动的方法设计逻辑清晰
 - 价值: ⭐⭐⭐⭐ 为 DiT 时代的运动迁移提供了基础方法和评估体系
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+- [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](../../CVPR2025/video_generation/conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
+- [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
+- [DisMo: Disentangled Motion Representations for Open-World Motion Transfer](../../NeurIPS2025/video_generation/dismo_disentangled_motion_representations_for_openworld_moti.md)
+- [Mimir: Improving Video Diffusion Models for Precise Text Understanding](../../CVPR2025/video_generation/mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
+
+<!-- RELATED:END -->

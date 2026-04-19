@@ -118,3 +118,15 @@ CAPO 在 GRPO 的基础上增加一个轻量级数据筛选层：每次梯度更
 - 实验充分度: ⭐⭐⭐⭐ 30× 提升显著，8 个评估基准，但模型规模有限
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，实验展示清晰，motivation 到 method 的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM RL 训练效率有直接实践意义，可大幅降低计算成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](../../CVPR2026/video_understanding/videochatm1_collaborative_policy_planning_for_vide.md)
+- [Coordinated Humanoid Robot Locomotion with Symmetry Equivariant Reinforcement Learning Policy](../../AAAI2026/video_understanding/coordinated_humanoid_robot_locomotion_with_symmetry_equivariant_reinforcement_le.md)
+- [Log Probability Tracking of LLM APIs](log_probability_tracking_of_llm_apis.md)
+- [EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception](../../ICCV2025/video_understanding/egoadapt_adaptive_multisensory_distillation_and_policy_learning_for_efficient_eg.md)
+- [Reinforcement Learning with Backtracking Feedback](../../NeurIPS2025/video_understanding/reinforcement_learning_with_backtracking_feedback.md)
+
+<!-- RELATED:END -->

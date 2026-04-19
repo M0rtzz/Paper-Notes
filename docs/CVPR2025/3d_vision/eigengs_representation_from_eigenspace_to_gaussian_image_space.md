@@ -126,3 +126,15 @@ FFHQ 数据集（512×512），20,000 高斯点：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、跨域、消融实验充分，但缺少与更多基线的对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，图表直观，论文结构好
 - 价值: ⭐⭐⭐ 应用场景偏窄（2D 高斯图像表示），对主流 3DGS 场景重建的启发有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic Masks](maskgaussian_adaptive_3d_gaussian_representation_from_probabilistic_masks.md)
+- [Weight Space Representation Learning on Diverse NeRF Architectures](../../ICLR2026/3d_vision/weight_space_representation_learning_on_diverse_nerf_architectures.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [Discretized Gaussian Representation for Tomographic Reconstruction](../../ICCV2025/3d_vision/discretized_gaussian_representation_for_tomographic_reconstruction.md)
+- [Gaussian Splatting for Efficient Satellite Image Photogrammetry (EOGS)](gaussian_splatting_for_efficient_satellite_image_photogrammetry.md)
+
+<!-- RELATED:END -->

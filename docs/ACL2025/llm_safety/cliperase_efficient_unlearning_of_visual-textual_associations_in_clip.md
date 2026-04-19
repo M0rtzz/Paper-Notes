@@ -118,3 +118,15 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{RM} + \lambda_2 \mathcal{L}_{FM} + \lambd
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖5个下游任务、3个数据集、扩散模型和BLIP扩展，消融和可视化完善
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分，图表设计直观
 - 价值: ⭐⭐⭐⭐ 解决多模态隐私合规的实际需求，模型无关框架有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZJUKLAB at SemEval-2025 Task 4: Unlearning via Model Merging](zjuklab_at_semeval-2025_task_4_unlearning_via_model_merging.md)
+- [SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
+- [Demystifying Language Model Forgetting with Low-Rank Example Associations](../../NeurIPS2025/llm_safety/demystifying_language_model_forgetting_with_low-rank_example_associations.md)
+- [SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)
+- [Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)
+
+<!-- RELATED:END -->

@@ -97,3 +97,15 @@ ImageNet ResNet-50 预测集大小↓（$\alpha$=0.01）：
 - 实验充分度: ⭐⭐⭐⭐ ImageNet 多尺度评估，分布偏移
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰优雅
 - 价值: ⭐⭐⭐⭐ 为不确定性估计社区提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Effortless Active Labeling for Long-Term Test-Time Adaptation](effortless_active_labeling_for_long-term_test-time_adaptation.md)
+- [One Sample is Enough to Make Conformal Prediction Robust](../../NeurIPS2025/others/one_sample_is_enough_to_make_conformal_prediction_robust.md)
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](open_set_label_shift_with_test_time_out-of-distribution_reference.md)
+- [Time-Aware World Model for Adaptive Prediction and Control](../../ICML2025/others/time-aware_world_model_for_adaptive_prediction_and_control.md)
+- [Neural Collapse in Test-Time Adaptation](../../CVPR2026/others/neural_collapse_in_test-time_adaptation.md)
+
+<!-- RELATED:END -->

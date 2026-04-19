@@ -121,3 +121,15 @@ $$\nabla_\theta\mathcal{L}_{SE} = \mathbb{E}[\omega(t)(\epsilon_\phi^*(\mathbf{x
 - 技术深度: ⭐⭐⭐⭐ (预条件优化+语义分析深入)
 - 实验充分度: ⭐⭐⭐⭐ (定量+用户研究+消融)
 - 实用价值: ⭐⭐⭐⭐⭐ (直接兼容主流建模软件)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenVDM: Generating Vector Displacement Maps From a Single Image](../../CVPR2025/3d_vision/genvdm_generating_vector_displacement_maps_from_a_single_image.md)
+- [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
+- [SegmentDreamer: Towards High-Fidelity Text-to-3D Synthesis with Segmented Consistency Trajectory Distillation](segmentdreamer_towards_high-fidelity_text-to-3d_synthesis_with_segmented_consist.md)
+- [ExCap3D: Expressive 3D Scene Understanding via Object Captioning with Varying Detail](excap3d_expressive_3d_scene_understanding_via_object_captioning_with_varying_det.md)
+- [Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction](dynamic_point_maps_a_versatile_representation_for_dynamic_3d_reconstruction.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个模型 × 2 个 KE × 2 个数据集，附录有大量泛化实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，方法推导严谨
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全防御有重大实用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Agents Persuade: Propaganda Generation and Mitigation in LLMs](when_agents_persuade_propaganda_generation_and_mitigation_in_llms.md)
+- [Enhancing Instruction Following of LLMs via Activation Steering with Dynamic Rejection](enhancing_instruction_following_of_llms_via_activation_steering_with_dynamic_rej.md)
+- [String Seed of Thought: Prompting LLMs for Distribution-Faithful and Diverse Generation](string_seed_of_thought_prompting_llms_for_distribution-faithful_and_diverse_gene.md)
+- [One Demo Is All It Takes: Planning Domain Derivation with LLMs from A Single Demonstration](one_demo_is_all_it_takes_planning_domain_derivation_with_llms_from_a_single_demo.md)
+- [What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering](whats_the_plan_metrics_for_implicit_planning_in_llms_and_their_application_to_rh.md)
+
+<!-- RELATED:END -->

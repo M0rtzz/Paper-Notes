@@ -144,3 +144,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 11 个基准、3 个 LLaVA 变体、合成数据验证、消融实验、统计检验均覆盖，但缺少非 LLaVA 架构验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 从动机假设验证到理论推导到实验分析，逻辑链条清晰严谨，图表设计专业
 - **价值**: ⭐⭐⭐⭐ — Training-free 即插即用、有理论保证的 token 裁剪方法，对 MLLM 高效推理有直接实用价值，OT 视角也为后续工作打开了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Estimation of Stochastic Optimal Transport Maps](../../NeurIPS2025/optimization/estimation_of_stochastic_optimal_transport_maps.md)
+- [Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](../../NeurIPS2025/optimization/bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)
+- [Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift](fed-ade_adaptive_learning_rate_for_federated_post-adaptation_under_distribution_.md)
+- [CogFlow: Bridging Perception and Reasoning through Knowledge Internalization for Visual Mathematical Problem Solving](../../ICLR2026/optimization/cogflow_bridging_perception_and_reasoning_through_knowledge_internalization_for_.md)
+- [Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](../../CVPR2025/optimization/automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)
+
+<!-- RELATED:END -->

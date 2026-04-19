@@ -123,3 +123,15 @@ Seam 在所有攻击强度下有害性最低，高强度攻击触发模型自毁
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种LLM、多种攻击配置、全面的消融和对比
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，理论推导严密，实验充分
 - 价值: ⭐⭐⭐⭐⭐ 对LLM安全有重大实用价值，可直接应用于模型部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Forgetting in Large Language Model Pre-Training](../../ACL2025/llm_safety/exploring_forgetting_in_large_language_model_pre-training.md)
+- [Demystifying Language Model Forgetting with Low-Rank Example Associations](../../NeurIPS2025/llm_safety/demystifying_language_model_forgetting_with_low-rank_example_associations.md)
+- [Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training](../../ACL2025/llm_safety/hallucination_detox_send.md)
+- [On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](../../ACL2025/llm_safety/on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)
+- [SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](../../ACL2025/llm_safety/saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
+
+<!-- RELATED:END -->

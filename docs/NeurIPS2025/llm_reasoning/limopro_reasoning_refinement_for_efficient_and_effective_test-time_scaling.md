@@ -100,3 +100,15 @@ PIR框架包含四个阶段的流水线：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据源×三个基准×多模型规模×消融实验，非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验结果展示规范，表格信息量大
 - 价值: ⭐⭐⭐⭐ 对LLM推理效率优化有直接实用价值，方法简单可复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sampling-Efficient Test-Time Scaling: Self-Estimating the Best-of-N Sampling in Early Decoding](sampling-efficient_test-time_scaling_self-estimating_the_best-of-n_sampling_in_e.md)
+- [Rethinking Optimal Verification Granularity for Compute-Efficient Test-Time Scaling](rethinking_optimal_verification_granularity_for_compute-efficient_test-time_scal.md)
+- [Atom of Thoughts for Markov LLM Test-Time Scaling](atom_of_thoughts_for_markov_llm_testtime_scaling.md)
+- [Towards Thinking-Optimal Scaling of Test-Time Compute for LLM Reasoning](towards_thinking-optimal_scaling_of_test-time_compute_for_llm_reasoning.md)
+- [TTS-VAR: A Test-Time Scaling Framework for Visual Auto-Regressive Generation](tts-var_a_test-time_scaling_framework_for_visual_auto-regressive_generation.md)
+
+<!-- RELATED:END -->

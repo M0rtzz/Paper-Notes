@@ -135,3 +135,15 @@ pass@50 改进（平均跨 Llama-3.2-3B, Qwen2.5-3B, Gemma-3-27B）：
 - **实验充分度**: ⭐⭐⭐⭐ 多基准多模型、理论分析、后训练实验丰富，但主要集中在 3B 模型
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，AM-GM 的 motivating example 极好，但部分细节（如概念定义的精确性）可以更明确
 - **价值**: ⭐⭐⭐⭐ 在推理时计算扩展领域有实际价值，但领域限制（需要良定义的概念）降低了通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
+- [Draft-based Approximate Inference for LLMs](draft-based_approximate_inference_for_llms.md)
+- [Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](specialization_after_generalization_towards_understanding_test-time_training_in_.md)
+- [Inference-Time Hyper-Scaling with KV Cache Compression](../../NeurIPS2025/model_compression/inference-time_hyper-scaling_with_kv_cache_compression.md)
+- [zip2zip: Inference-Time Adaptive Tokenization via Online Compression](../../NeurIPS2025/model_compression/zip2zip_inference-time_adaptive_tokenization_via_online_compression.md)
+
+<!-- RELATED:END -->

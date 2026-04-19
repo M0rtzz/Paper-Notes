@@ -133,3 +133,15 @@ Li等人也用代码执行做时间问答，但仅基于短文本，不涉及记
 - 实验充分度: ⭐⭐⭐⭐ — 3个LLM×6种方法，消融完整，含case study和执行失败率分析
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，Table 3/4的对比直观展示记忆差异，整体结构良好
 - 价值: ⭐⭐⭐⭐ — 多会话对话时间推理是实际需求，框架和基准均有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents](membench_towards_more_comprehensive_evaluation_on_the_memory_of_llm-based_agents.md)
+- [SynapticRAG: Enhancing Temporal Memory Retrieval in Large Language Models through Synaptic Mechanisms](synapticrag_enhancing_temporal_memory_retrieval_in_large_language_models_through.md)
+- [Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](../../AAAI2026/llm_nlp/scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
+- [DICE-Bench: Evaluating the Tool-Use Capabilities of Large Language Models in Multi-Round, Multi-Party Dialogues](dice-bench_evaluating_the_tool-use_capabilities_of_large_language_models_in_mult.md)
+- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
+
+<!-- RELATED:END -->

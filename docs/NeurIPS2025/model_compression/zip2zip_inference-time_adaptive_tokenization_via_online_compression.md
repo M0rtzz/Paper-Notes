@@ -183,3 +183,15 @@ Byte-level 困惑度（越低越好）：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了多模型多领域多维度的评估（Token 效率、困惑度、下游任务、推理吞吐），但 GSM8K 的严重退化需要更深入分析
 - 写作质量: ⭐⭐⭐⭐⭐ 概念阐述清晰，图示直观易懂，理论和实验结合紧密，LZW 工作流程的可视化尤其出色
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高——10 GPU-hours 即可升级现有模型，开源完整工具链，即插即用的推理加速方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Hyper-Scaling with KV Cache Compression](inference-time_hyper-scaling_with_kv_cache_compression.md)
+- [When Worse is Better: Navigating the Compression-Generation Trade-off in Visual Tokenization](when_worse_is_better_navigating_the_compression-generation_tradeoff_in_visual_to.md)
+- [A Partition Cover Approach for Tokenization](a_partition_cover_approach_to_tokenization.md)
+- [CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs](casspec_cascade_adaptive_selfspeculative_decoding_for_onthef.md)
+- [Online Mixture of Experts: No-Regret Learning for Optimal Collective Decision-Making](online_mixture_of_experts_no-regret_learning_for_optimal_collective_decision-mak.md)
+
+<!-- RELATED:END -->

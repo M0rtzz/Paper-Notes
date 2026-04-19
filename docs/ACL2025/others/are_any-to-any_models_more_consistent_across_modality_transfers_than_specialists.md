@@ -148,3 +148,15 @@ Any-to-any 生成模型旨在用统一框架同时理解和生成多种模态（
 - **实用性**: ★★★★☆ — ACON 数据集对 any-to-any 模型开发有直接指导价值
 - **实验充分度**: ★★★★★ — 8 个模型、3 种评估标准、多方向组合，非常全面
 - **写作质量**: ★★★★☆ — 数学形式化清晰，动机论述充分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CORAL: Learning Consistent Representations across Multi-step Training with Lighter Speculative Drafter](coral_speculative_drafting.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit](one_for_all_update_parameterized_knowledge_across_multiple_models_with_once_edit.md)
+- [A Single Architecture for Representing Invariance Under Any Space Group](../../ICLR2026/others/a_single_architecture_for_representing_invariance_under_any_space_group.md)
+- [I0T: Embedding Standardization Method Towards Zero Modality Gap](i0t_embedding_standardization_method_towards_zero_modality_gap.md)
+
+<!-- RELATED:END -->

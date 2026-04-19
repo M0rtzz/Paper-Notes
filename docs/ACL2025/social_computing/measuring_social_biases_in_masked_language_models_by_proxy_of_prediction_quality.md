@@ -148,3 +148,15 @@ BERT、RoBERTa 等掩码语言模型（MLM）在各种 NLP 任务上取得了 SO
 - 实验充分度: ⭐⭐⭐⭐ 两个基准、四个模型、七个度量的系统比较，统计检验严谨
 - 写作质量: ⭐⭐⭐ 公式密集，符号系统复杂，阅读门槛较高
 - 价值: ⭐⭐⭐⭐ 对MLM偏见评估方法论有重要贡献，BSRT对偏见缓解研究很实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BanStereoSet: A Dataset to Measure Stereotypical Social Biases in LLMs for Bangla](banstereoset_a_dataset_to_measure_stereotypical_social_biases_in_llms_for_bangla.md)
+- [Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
+- [A Survey on Proactive Defense Strategies Against Misinformation in Large Language Models](a_survey_on_proactive_defense_strategies_against_misinformation_in_large_languag.md)
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents](../../NeurIPS2025/social_computing/os-harm_a_benchmark_for_measuring_safety_of_computer_use_agents.md)
+
+<!-- RELATED:END -->

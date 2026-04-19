@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个模型 × 四个预算 × 六个 benchmark，消融充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法推导严谨
 - 价值: ⭐⭐⭐⭐ 对资源受限场景下的 LRM 部署有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [REP: Resource-Efficient Prompting for Rehearsal-Free Continual Learning](rep_resource-efficient_prompting_for_rehearsal-free_continual_learning.md)
+- [QSVD: Efficient Low-Rank Approximation for Unified Query-Key-Value Weight Compression](qsvd_efficient_low-rank_approximation_for_unified_query-key-value_weight_compres.md)
+- [TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs](tokensqueeze_performance-preserving_compression_for_reasoning_llms.md)
+- [Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression](learning_grouped_lattice_vector_quantizers_for_low-bit_llm_compression.md)
+
+<!-- RELATED:END -->

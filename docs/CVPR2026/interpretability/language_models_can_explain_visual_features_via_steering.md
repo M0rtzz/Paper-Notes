@@ -125,3 +125,15 @@ SAE训练使用标准TopK目标，在ImageNet上训练。干预强度α在500个
 - 实验充分度: ⭐⭐⭐⭐ 多指标、多VLM、规模效应分析，但缺少人工评估
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法直观，但LaTeX公式渲染有问题
 - 价值: ⭐⭐⭐⭐ 对视觉模型自动可解释性研究有重要推动，方法可扩展性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
+- [Semantic Regexes: Auto-Interpreting LLM Features with a Structured Language](../../ICLR2026/interpretability/semantic_regexes_auto-interpreting_llm_features_with_a_structured_language.md)
+- [Finding the Translation Switch: Discovering and Exploiting the Task-Initiation Features in LLMs](../../AAAI2026/interpretability/finding_the_translation_switch_discovering_and_exploiting_the_task-initiation_fe.md)
+- [Draft and Refine with Visual Experts](draft_and_refine_with_visual_experts.md)
+- [Fantastic Features and Where to Find Them: A Probing Method to Combine Features from Multiple Foundation Models](../../NeurIPS2025/interpretability/fantastic_features_and_where_to_find_them_a_probing_method_to_combine_features_f.md)
+
+<!-- RELATED:END -->

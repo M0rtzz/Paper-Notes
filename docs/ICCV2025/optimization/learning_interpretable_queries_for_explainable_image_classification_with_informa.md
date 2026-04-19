@@ -133,3 +133,15 @@ K-Learned优于或可比4种SOTA概念瓶颈模型。
 - **实验充分度**: ⭐⭐⭐⭐ 6个数据集，多种初始化和优化策略对比
 - **写作质量**: ⭐⭐⭐⭐⭐ 理论推导严谨，与经典方法的联系深入
 - **综合价值**: ⭐⭐⭐⭐ 为可解释分类器的查询设计提供了原则性的学习方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cooperative Pseudo Labeling for Unsupervised Federated Classification](cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)
+- [Generalization in Federated Learning: A Conditional Mutual Information Framework](../../ICML2025/optimization/generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
+- [Synonymous Variational Inference for Perceptual Image Compression](../../ICML2025/optimization/synonymous_variational_inference_for_perceptual_image_compression.md)
+- [From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD](../../NeurIPS2025/optimization/from_information_to_generative_exponent_learning_rate_induces_phase_transitions_.md)
+- [Learning Orthogonal Multi-Index Models: A Fine-Grained Information Exponent Analysis](../../NeurIPS2025/optimization/learning_orthogonal_multi-index_models_a_fine-grained_information_exponent_analy.md)
+
+<!-- RELATED:END -->

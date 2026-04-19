@@ -125,3 +125,15 @@ LocoTrack采用两阶段架构：**Track初始化阶段**使用全局2D相关性
 - 实验充分度: ⭐⭐⭐⭐⭐ 在所有TAP-Vid基准上全面评测，消融实验覆盖了核心设计的每个组件
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从2D/4D的对比到局部化的动机，再到编码器和Transformer的设计，层层推进
 - 价值: ⭐⭐⭐⭐⭐ 在精度和效率上全面超越SOTA，实用性强，对后续点跟踪研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Any-Point Tracking by Contrastive Random Walks](self-supervised_any-point_tracking_by_contrastive_random_walks.md)
+- [DINO-Tracker: Taming DINO for Self-Supervised Point Tracking in a Single Video](dino-tracker_taming_dino_for_self-supervised_point_tracking_in_a_single_video.md)
+- [TrackingWorld: World-centric Monocular 3D Tracking of Almost All Pixels](../../NeurIPS2025/video_understanding/trackingworld_world-centric_monocular_3d_tracking_of_almost_all_pixels.md)
+- [Real-World Point Tracking with Verifier-Guided Pseudo-Labeling](../../CVPR2026/video_understanding/real-world_point_tracking_with_verifier-guided_pseudo-labeling.md)
+- [Online Dense Point Tracking with Streaming Memory](../../ICCV2025/video_understanding/online_dense_point_tracking_with_streaming_memory.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ $$\text{Recovery}(\%) = \frac{\|\Delta_{patch}\|}{\|\Delta_{strike}\|} \cdot \te
 - 实验充分度: ⭐⭐⭐ （方法论完整但样本量过小，仅一对对比视频，泛化性不足）
 - 写作质量: ⭐⭐⭐⭐ （逻辑清晰，从观察到因果的叙述连贯，图表设计合理）
 - 价值: ⭐⭐⭐⭐ （对 AI 安全和可信部署有重要启示，方法论有迁移价值，但需要大规模验证）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Head Gating: A Framework for Interpreting Roles of Attention Heads in Transformers](../../NeurIPS2025/interpretability/causal_head_gating_a_framework_for_interpreting_roles_of_attention_heads_in_tran.md)
+- [Learning to Focus: Causal Attention Distillation via Gradient-Guided Token Pruning](../../NeurIPS2025/interpretability/learning_to_focus_causal_attention_distillation_via_gradient-guided_token_prunin.md)
+- [Enhancing Binary Encoded Crime Linkage Analysis Using Siamese Network](enhancing_binary_encoded_crime_linkage_analysis_using_siamese_network.md)
+- [Why Is Attention Sparse in Particle Transformer?](../../NeurIPS2025/interpretability/why_is_attention_sparse_in_particle_transformer.md)
+- [Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees](../../ICLR2026/interpretability/formal_mechanistic_interpretability_automated_circuit_discovery_with_provable_gu.md)
+
+<!-- RELATED:END -->

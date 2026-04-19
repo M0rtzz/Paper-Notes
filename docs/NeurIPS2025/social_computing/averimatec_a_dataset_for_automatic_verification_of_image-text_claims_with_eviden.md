@@ -122,3 +122,15 @@ AVerImaTeC 构建了首个带完整证据标注的图文事实核查数据集—
 ### 方法补充说明
 - **5 阶段标注的人力成本**：每条声明需要 ~45 分钟标注（5 阶段合计），1297 条约 975 小时人工——这是高质量数据的代价
 - **充分性检查的淘汰率**：~15% 的 QA 对在 Phase 3 被判不充分需要返回 Phase 4 精炼——这个质量门槛保证了推理路径的自足性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Precise Information Control in Long-Form Text Generation](precise_information_control_in_long-form_text_generation.md)
+- [HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter](../../ACL2025/social_computing/hateday_global_hate_speech.md)
+- [DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts](../../ICML2025/social_computing/defame_dynamic_evidence-based_fact-checking_with_multimodal_experts.md)
+- [BanStereoSet: A Dataset to Measure Stereotypical Social Biases in LLMs for Bangla](../../ACL2025/social_computing/banstereoset_a_dataset_to_measure_stereotypical_social_biases_in_llms_for_bangla.md)
+- [Beyond Detection: Exploring Evidence-based Multi-Agent Debate for Misinformation Intervention and Persuasion](../../AAAI2026/social_computing/beyond_detection_exploring_evidence-based_multi-agent_debate_for_misinformation_.md)
+
+<!-- RELATED:END -->

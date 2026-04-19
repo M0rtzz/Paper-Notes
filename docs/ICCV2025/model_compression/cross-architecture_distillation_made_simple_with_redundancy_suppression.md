@@ -131,3 +131,15 @@ RSD作为logit蒸馏器：
 - 实验充分度: ⭐⭐⭐⭐⭐ 12+15对异构模型，CIFAR+ImageNet验证，消融/兼容性/可视化全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，动机推导自然，与OFA的对比分析透彻
 - 价值: ⭐⭐⭐⭐⭐ 简单有效的方法对社区价值极大，有望成为CAKD的强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification](competitive_distillation_a_simple_learning_strategy_for_improving_visual_classif.md)
+- [Universal Cross-Tokenizer Distillation via Approximate Likelihood Matching](../../NeurIPS2025/model_compression/universal_cross-tokenizer_distillation_via_approximate_likelihood_matching.md)
+- [DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation](../../CVPR2025/model_compression/delt_a_simple_diversity-driven_earlylate_training_for_dataset_distillation.md)
+- [Knowledge Distillation with Refined Logits](knowledge_distillation_with_refined_logits.md)
+- [Simple Unsupervised Knowledge Distillation With Space Similarity](../../ECCV2024/model_compression/simple_unsupervised_knowledge_distillation_with_space_similarity.md)
+
+<!-- RELATED:END -->

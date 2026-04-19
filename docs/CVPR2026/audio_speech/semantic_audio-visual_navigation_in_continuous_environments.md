@@ -110,3 +110,15 @@ Clean 环境下，MAGNet 相比 SAVi 提升 12.1% SR（绝对值），SWS 提升
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融全面，GDN评估、因素分析、轨迹可视化俱全
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，任务定义明确
 - 价值: ⭐⭐⭐⭐ 为音视觉导航提供了更真实的连续环境基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalizing Analogical Inference from Boolean to Continuous Domains](../../AAAI2026/audio_speech/generalizing_analogical_inference_from_boolean_to_continuous_domains.md)
+- [MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing](../../ICCV2025/audio_speech/mug_pseudo_labeling_augmented_audio-visual_mamba_network_for_audio-visual_video_.md)
+- [RedTeamCUA: Realistic Adversarial Testing of Computer-Use Agents in Hybrid Web-OS Environments](../../ICLR2026/audio_speech/redteamcua_adversarial_testing_agents.md)
+- [VGGSounder: Audio-Visual Evaluations for Foundation Models](../../ICCV2025/audio_speech/vggsounder_audio-visual_evaluations_for_foundation_models.md)
+- [Towards Open-Vocabulary Audio-Visual Event Localization](../../CVPR2025/audio_speech/towards_open-vocabulary_audio-visual_event_localization.md)
+
+<!-- RELATED:END -->

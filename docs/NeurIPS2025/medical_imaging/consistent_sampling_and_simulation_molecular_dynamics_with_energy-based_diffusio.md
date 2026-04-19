@@ -205,3 +205,15 @@ MoE 将推理时间减半（仅需运行小模型进行模拟），但 FP 正则
 - **实验充分度**: ⭐⭐⭐⭐ — 玩具系统+丙氨酸二肽+跨二肽迁移，层层递进
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导清晰，实验结果呈现系统
 - **实用性**: ⭐⭐⭐⭐ — 代码开源（JAX/PyTorch），对计算化学社区有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Posterior Sampling by Combining Diffusion Models with Annealed Langevin Dynamics](posterior_sampling_by_combining_diffusion_models_with_annealed_langevin_dynamics.md)
+- [Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling](energy_matching_unifying_flow_matching_and_energy-based_models_for_generative_mo.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [JAMUN: Bridging Smoothed Molecular Dynamics and Score-Based Learning for Conformational Ensembles](jamun_bridging_smoothed_molecular_dynamics_and_score-based_learning_for_conforma.md)
+- [ConfRover: Simultaneous Modeling of Protein Conformation and Dynamics via Autoregression](confrover_simultaneous_modeling_of_protein_conformation_and_dynamics_via_autoreg.md)
+
+<!-- RELATED:END -->

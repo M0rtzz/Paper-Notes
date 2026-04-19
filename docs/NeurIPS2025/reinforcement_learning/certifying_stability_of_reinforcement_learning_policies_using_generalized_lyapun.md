@@ -127,3 +127,15 @@ $$V(\mathbf{x};\boldsymbol{\theta}_1) = |J_\gamma^{\boldsymbol{\pi}_{\text{RL}}}
 - 实验充分度: ⭐⭐⭐⭐ — 线性/非线性、post-hoc/联合合成均有验证，但缺乏高维实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 从 LQR 直觉到非线性推广的叙事结构非常清晰
 - 价值: ⭐⭐⭐⭐ — 弥合了 RL 与控制理论稳定性分析的重要差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Single Index Bandits: Generalized Linear Contextual Bandits with Unknown Reward Functions](../../ICLR2026/reinforcement_learning/single_index_bandits_generalized_linear_contextual_bandits_with_unknown_reward_f.md)
+- [Certifying Concavity and Monotonicity in Games via Sum-of-Squares Hierarchies](certifying_concavity_and_monotonicity_in_games_via_sum-of-squares_hierarchies.md)
+- [Actor-Free Continuous Control via Structurally Maximizable Q-Functions](actorfree_continuous_control_via_structurally_maximizable_qf.md)
+- [Learning Intractable Multimodal Policies with Reparameterization and Diversity Regularization](learning_intractable_multimodal_policies_with_reparameterization_and_diversity_r.md)
+- [Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update](generalized_linear_bandits_almost_optimal_regret_with_one-pass_update.md)
+
+<!-- RELATED:END -->

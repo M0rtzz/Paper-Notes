@@ -165,3 +165,15 @@ Animal Kingdom 数据集结果（5 类超类，1-shot）：
 | 写作质量 | 3.5 |
 | 实用价值 | 4 |
 | 总评 | 3.5 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
+- [Dynamic Label Name Refinement for Few-Shot Dialogue Intent Classification](../../ACL2025/others/dynamic_label_name_refinement_for_few-shot_dialogue_intent_classification.md)
+- [Zero-Shot Conversational Stance Detection: Dataset and Approaches](../../ACL2025/others/zero-shot_conversational_stance_detection_dataset_and_approaches.md)
+- [Neural Force Field: Few-shot Learning of Generalized Physical Reasoning](../../ICLR2026/others/neural_force_field_few-shot_learning_of_generalized_physical_reasoning.md)
+- [Optimized Learned Count-Min Sketch](../../NeurIPS2025/others/optimized_learned_count-min_sketch.md)
+
+<!-- RELATED:END -->

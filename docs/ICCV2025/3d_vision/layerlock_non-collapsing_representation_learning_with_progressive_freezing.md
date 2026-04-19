@@ -154,3 +154,15 @@ RoPE 独立贡献约 2.8% SSv2 提升，与 LayerLock 互补叠加。
 
 ## 评分 ⭐⭐⭐⭐⭐
 观察深刻，方法简洁优雅，理论动机清晰。在像素预测和潜变量预测两种主流范式上都有一致改进，且兼顾计算效率。消融实验极其全面（冻结调度、patch子采样、崩溃验证、RoPE等），为大规模视频自监督学习提供了新的训练范式。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discretized Gaussian Representation for Tomographic Reconstruction](discretized_gaussian_representation_for_tomographic_reconstruction.md)
+- [SL2A-INR: Single-Layer Learnable Activation for Implicit Neural Representation](sl2a-inr_single-layer_learnable_activation_for_implicit_neural_representation.md)
+- [Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes](relative_illumination_fields_learning_medium_and_light_independent_underwater_sc.md)
+- [StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting](stochasticsplats_stochastic_rasterization_for_sorting-free_3d_gaussian_splatting.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

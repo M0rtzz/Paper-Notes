@@ -140,3 +140,15 @@ Pipeline: 多来源图像 → 数据特定prompt设计 → GPT4-Vision生成100K
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个benchmark全面评估，消融实验系统（数据阶段、数据量、encoder解冻层数、caption质量对比），非常详尽
 - 写作质量: ⭐⭐⭐⭐☆ 逻辑清晰、图表丰富，故事线完整
 - 价值: ⭐⭐⭐⭐⭐ ShareGPT4V数据集已成为后续多个LMM工作的标准预训练数据，实际影响力巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CompCap: Improving Multimodal Large Language Models with Composite Captions](../../ICCV2025/multimodal_vlm/compcap_improving_multimodal_large_language_models_with_composite_captions.md)
+- [m&m's: A Benchmark to Evaluate Tool-Use for Multi-step Multi-modal Tasks](m_ampmaposs_a_benchmark_to_evaluate_tool-use_for_multi-step_multi-modal_tasks.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [MathVerse: Does Your Multi-modal LLM Truly See the Diagrams in Visual Math Problems?](mathverse_does_your_multi-modal_llm_truly_see_the_diagrams_in_visual_math_proble.md)
+- [MMBench: Is Your Multi-modal Model an All-Around Player?](mmbench_is_your_multi-modal_model_an_all-around_player.md)
+
+<!-- RELATED:END -->

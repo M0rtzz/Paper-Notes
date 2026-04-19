@@ -121,3 +121,15 @@ M4-RAG 的评估框架包含四种配置：(a) 无 RAG 基线：VLM 直接处理
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个模型、6种检索配置、42种语言的系统评估非常全面，分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，发现表述精确，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 揭示的"RAG与模型规模反向关系"和"跨语言证据整合瓶颈"对社区有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval](beyond_global_similarity_towards_fine-grained_multi-condition_multimodal_retriev.md)
+- [Investigating Language Preference of Multilingual RAG Systems](../../ACL2025/information_retrieval/investigating_language_preference_of_multilingual_rag_systems.md)
+- [REAP: Enhancing RAG with Recursive Evaluation and Adaptive Planning for Multi-Hop Question Answering](../../AAAI2026/information_retrieval/reap_enhancing_rag_with_recursive_evaluation_and_adaptive_planning_for_multi-hop.md)
+- [MAIN-RAG: Multi-Agent Filtering Retrieval-Augmented Generation](../../ACL2025/information_retrieval/main-rag_multi-agent_filtering_retrieval-augmented_generation.md)
+- [Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA](../../ACL2025/information_retrieval/mitigating_lost-in-retrieval_problems_in_retrieval_augmented_multi-hop_question_.md)
+
+<!-- RELATED:END -->

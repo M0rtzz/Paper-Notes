@@ -139,3 +139,15 @@ RETA在所有数据集×所有IPC×所有backbone（ResNet-18/50/101）上均取
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集×3个IPC×3个backbone+跨架构+corruption鲁棒性+消融+超参敏感性+持续学习应用+可视化，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论→方法→实验的叙事完整，TDA部分可能对不熟悉的读者有一定阅读门槛
 - 价值: ⭐⭐⭐⭐ 在数据蒸馏领域取得一致的SOTA，DRC和PTA的设计思路（自适应anchor选择+拓扑保持）有较好的通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Perceive, Act and Correct: Confidence Is Not Enough for Hyperspectral Classification](../../AAAI2026/object_detection/perceive_act_and_correct_confidence_is_not_enough_for_hyperspectral_classificati.md)
+- [AR²-4FV: Anchored Referring and Re-identification for Long-Term Grounding in Fixed-View Videos](ar2-4fv_anchored_referring_and_re-identification_for_long-term_grounding_in_fixe.md)
+- [Beyond Caption-Based Queries for Video Moment Retrieval](beyond_caption-based_queries_for_video_moment_retrieval.md)
+- [FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition](fusionagent_a_multimodal_agent_with_dynamic_model_selection_for_human_recognitio.md)
+- [BurstDeflicker: A Benchmark Dataset for Flicker Removal in Dynamic Scenes](../../NeurIPS2025/object_detection/delving_into_cascaded_instability_a_lipschitz_continuity_view_on_image_restorati.md)
+
+<!-- RELATED:END -->

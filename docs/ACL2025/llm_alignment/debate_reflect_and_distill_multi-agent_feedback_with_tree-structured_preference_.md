@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多 benchmark + 多消融 + 不同 student 模型 + 效率分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，pipeline 各阶段逻辑连贯
 - 价值: ⭐⭐⭐⭐ 为多智能体蒸馏提供了系统化方法，T-DPO 可复用于其他场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Expectation Confirmation Preference Optimization for Multi-Turn Conversational Recommendation Agent](expectation_confirmation_preference_optimization_for_multi-turn_conversational_r.md)
+- [M³HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality](../../ICML2025/llm_alignment/m3hf_multi-agent_reinforcement_learning_from_multi-phase_human_feedback_of_mixed.md)
+- [QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language](queryattack_jailbreaking_aligned_large_language_models_using_structured_non-natu.md)
+- [ORPO-Distill: Mixed-Policy Preference Optimization for Cross-Architecture LLM Distillation](../../NeurIPS2025/llm_alignment/orpo-distill_mixed-policy_preference_optimization_for_cross-architecture_llm_dis.md)
+- [AgentRM: Enhancing Agent Generalization with Reward Modeling](agentrm_enhancing_agent_generalization_with_reward_modeling.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ Concertormer 采用多尺度 U-Net 架构。输入图像通过双线性下采样
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验极为详尽，包括扩散指数和 LAM 可视化
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，但符号繁多需要反复对照
 - 价值: ⭐⭐⭐⭐ CSA 的即插即用特性和线性复杂度使其有较好的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Visual State Space Model for Image Deblurring](../../CVPR2025/image_restoration/efficient_visual_state_space_model_for_image_deblurring.md)
+- [Blind Noisy Image Deblurring Using Residual Guidance Strategy](blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
+- [Emulating Self-Attention with Convolution for Efficient Image Super-Resolution](emulating_self-attention_with_convolution_for_efficient_image_super-resolution.md)
+- [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
+- [Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration](devil_is_in_the_uniformity_exploring_diverse_learners_within_transformer_for_ima.md)
+
+<!-- RELATED:END -->

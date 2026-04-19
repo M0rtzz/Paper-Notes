@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 种 GNN × 8 个数据集 × Oracle 分析 × 丰富消融，统计上令人信服
 - 写作质量: ⭐⭐⭐⭐⭐ 理论动机→实证验证→方法设计的逻辑链极为流畅，Figure 1/2 的示意图精准传达核心洞察
 - 价值: ⭐⭐⭐⭐⭐ 对 GNN 深度困境提供了根本性的新理解，方法通用性强、即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S'MoRE: Structural Mixture of Residual Experts for Parameter-Efficient LLM Fine-tuning](smore_structural_mixture_of_residual_experts_for_parameter-efficient_llm_fine-tu.md)
+- [MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
+- [What Expressivity Theory Misses: Message Passing Complexity for GNNs](what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)
+- [Making Classic GNNs Strong Baselines Across Varying Homophily: A Smoothness-Generalization Perspective](making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)
+- [Self-Adaptive Graph Mixture of Models](../../AAAI2026/graph_learning/self-adaptive_graph_mixture_of_models.md)
+
+<!-- RELATED:END -->

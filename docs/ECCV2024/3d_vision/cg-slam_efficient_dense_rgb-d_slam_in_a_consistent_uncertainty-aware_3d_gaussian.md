@@ -153,3 +153,15 @@ tags:
 - 实用性: ⭐⭐⭐⭐⭐ — 15Hz实时、精度SOTA
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3个数据集,6+方法对比,完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰,数学严谨,实验全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [I²-SLAM: Inverting Imaging Process for Robust Photorealistic Dense SLAM](i2-slam_inverting_imaging_process_for_robust_photorealistic_dense_slam.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](../../CVPR2026/3d_vision/varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [Deep Patch Visual SLAM](deep_patch_visual_slam.md)
+- [Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting](pixel-gs_density_control_with_pixel-aware_gradient_for_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

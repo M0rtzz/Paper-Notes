@@ -120,3 +120,15 @@ IAC 模块在退化条件下贡献最大——弱/强增强一致性直接提升
 - 实验充分度: ⭐⭐⭐ 仅 2 个数据集，实验规模偏小
 - 写作质量: ⭐⭐⭐ 方法描述清晰
 - 价值: ⭐⭐⭐ 对极少标注医学分割有实用参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interactive Medical Image Segmentation: A Benchmark Dataset and Baseline](interactive_medical_image_segmentation_a_benchmark_dataset_and_baseline.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [Interactive Medical Image Analysis with Concept-based Similarity Reasoning](interactive_medical_image_analysis_with_concept-based_similarity_reasoning.md)
+- [Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis](latent_drifting_in_diffusion_models_for_counterfactual_medical_image_synthesis.md)
+- [Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)](multi-modal_vision_pre-training_for_medical_image_analysis.md)
+
+<!-- RELATED:END -->

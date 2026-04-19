@@ -138,3 +138,15 @@ $$\mathcal{L} = \mathcal{L}_{local} + \lambda_1 \mathcal{L}_{global} + \lambda_2
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集 + 全面指标，但消融实验细节不够量化
 - 写作质量: ⭐⭐⭐⭐ 动机充分，"VLM vs PLM"的对比框架清晰
 - 价值: ⭐⭐⭐⭐ 对工业 3D 检测有实用价值，PLM 路线有潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
+- [CLIPoint3D: Language-Grounded Few-Shot Unsupervised 3D Point Cloud Domain Adaptation](clipoint3d_language-grounded_few-shot_unsupervised_3d_point_cloud_domain_adaptat.md)
+- [A Semantically Disentangled Unified Model for Multi-category 3D Anomaly Detection](a_semantically_disentangled_unified_model_for_multi-category_3d_anomaly_detectio.md)
+- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](../../ICCV2025/3d_vision/accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
+- [Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments](few-shot_incremental_3d_object_detection_in_dynamic_indoor_environments.md)
+
+<!-- RELATED:END -->

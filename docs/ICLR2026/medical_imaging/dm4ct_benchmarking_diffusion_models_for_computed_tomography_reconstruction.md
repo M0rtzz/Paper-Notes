@@ -148,3 +148,15 @@ DM4CT从贝叶斯视角组织扩散方法：后验分布 $p(\boldsymbol{x}|\bold
 | 实验充分性 | ★★★★★ |
 | 实用价值 | ★★★★★ |
 | 写作质量 | ★★★★☆ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](../../CVPR2026/medical_imaging/invad_inversionbased_reconstructionfree_anomaly_de.md)
+- [Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography](../../ICCV2025/medical_imaging/coordinate-based_speed_of_sound_recovery_for_aberration-corrected_photoacoustic_.md)
+- [Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer](brain-it_image_reconstruction_from_fmri_via_brain-interaction_transformer.md)
+- [Fine-Tuning Diffusion Models via Intermediate Distribution Shaping](fine-tuning_diffusion_models_via_intermediate_distribution_shaping.md)
+- [Protein Counterfactuals via Diffusion-Guided Latent Optimization](protein_counterfactuals_via_diffusion-guided_latent_optimization.md)
+
+<!-- RELATED:END -->

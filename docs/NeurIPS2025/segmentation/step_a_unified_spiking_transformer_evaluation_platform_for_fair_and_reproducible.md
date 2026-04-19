@@ -117,3 +117,15 @@ STEP 是一个模块化的基准测试框架，而非一种新模型。其架构
 - **实验充分度**: ⭐⭐⭐⭐ 分类消融详尽，但分割/检测实验相对有限
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，消融设计合理，能耗分析部分公式略多
 - **价值**: ⭐⭐⭐⭐⭐ 对 STs 社区的发展方向有重要指导意义，平台实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling the Spatial-Temporal Effective Receptive Fields of Spiking Neural Networks](unveiling_the_spatial-temporal_effective_receptive_fields_of_spiking_neural_netw.md)
+- [MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans](multihuman-testbench_benchmarking_image_generation_for_multiple_humans.md)
+- [HAODiff: Human-Aware One-Step Diffusion via Dual-Prompt Guidance](haodiff_human-aware_one-step_diffusion_via_dual-prompt_guidance.md)
+- [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
+- [Locality-Attending Vision Transformer](../../ICLR2026/segmentation/locality-attending_vision_transformer.md)
+
+<!-- RELATED:END -->

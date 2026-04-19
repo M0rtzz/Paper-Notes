@@ -170,3 +170,15 @@ DictPFL 包含两个核心模块：
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集、多模型、多场景消融，隐私攻击验证完整
 - 写作质量: ⭐⭐⭐⭐ — 图示清晰，动机和方法逻辑连贯
 - 价值: ⭐⭐⭐⭐⭐ — 解决了 HE-FL 的核心实用性瓶颈，对实际部署有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedSVD: Adaptive Orthogonalization for Private Federated Learning with LoRA](fedsvd_adaptive_orthogonalization_for_private_federated_learning_with_lora.md)
+- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+- [Enabling Differentially Private Federated Learning for Speech Recognition: Benchmarks, Adaptive Optimizers and Gradient Clipping](enabling_differentially_private_federated_learning_for_speech_recognition_benchm.md)
+- [Differentially Private Federated Low Rank Adaptation Beyond Fixed-Matrix](differentially_private_federated_low_rank_adaptation_beyond_fixed-matrix.md)
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+
+<!-- RELATED:END -->

@@ -195,3 +195,15 @@ Qwen2.5-Math-Base-7B + GRPO：
 - 实验充分度: ⭐⭐⭐⭐ — 分析深入、基准多样，但模型覆盖不足
 - 写作质量: ⭐⭐⭐⭐⭐ — 图表精美，分析层层递进，One-line-of-code的亮点突出
 - 价值: ⭐⭐⭐⭐⭐ — 方法极其易用且效果显著，对RLVR社区的实际指导价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploration vs Exploitation: Rethinking RLVR through Clipping, Entropy, and Spurious Reward](../../ICLR2026/reinforcement_learning/exploration_vs_exploitation_rethinking_rlvr_through_clipping_entropy_and_spuriou.md)
+- [Reasoning or Memorization? Unreliable Results of Reinforcement Learning Due to Data Contamination](reasoning_or_memorization_unreliable_results_of_reinforcement_learning_due_to_da.md)
+- [Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning](../../ICLR2026/reinforcement_learning/controllable_exploration_in_hybrid-policy_rlvr_for_multi-modal_reasoning.md)
+- [Language Model Distillation: A Temporal Difference Imitation Learning Perspective](language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
+- [How LLMs Learn to Reason: A Complex Network Perspective](../../ICLR2026/reinforcement_learning/how_llms_learn_to_reason_a_complex_network_perspective.md)
+
+<!-- RELATED:END -->

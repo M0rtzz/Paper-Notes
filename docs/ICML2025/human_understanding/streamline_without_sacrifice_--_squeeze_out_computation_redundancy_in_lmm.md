@@ -125,3 +125,15 @@ ProxyV 沿用标准 decoder-only LMM 架构（视觉编码器 → 投影层 → 
 | 实用性 | ⭐⭐⭐⭐⭐ | 即插即用，与 FlashAttention 和 token reduction 兼容，落地门槛低 |
 | 写作质量 | ⭐⭐⭐⭐ | 动机清晰，实验设计循序渐进 |
 | **综合** | **⭐⭐⭐⭐** | 在 LMM 效率优化领域提供了重要的正交优化维度 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Faster Algorithms for Structured John Ellipsoid Computation](../../NeurIPS2025/human_understanding/faster_algorithm_for_structured_john_ellipsoid_computation.md)
+- [SPROD: Spurious-Aware Prototype Refinement for Reliable Out-of-Distribution Detection](../../NeurIPS2025/human_understanding/spurious-aware_prototype_refinement_for_reliable_out-of-distribution_detection.md)
+- [Cut Out the Middleman: Revisiting Pose-Based Gait Recognition](../../ECCV2024/human_understanding/cut_out_the_middleman_revisiting_pose-based_gait_recognition.md)
+- [Seeing without Pixels: Perception from Camera Trajectories](../../CVPR2026/human_understanding/seeing_without_pixels_perception_from_camera_trajectories.md)
+- [Neural Multi-View Self-Calibrated Photometric Stereo without Photometric Stereo Cues](../../ICCV2025/human_understanding/neural_multi-view_self-calibrated_photometric_stereo_without_photometric_stereo_.md)
+
+<!-- RELATED:END -->

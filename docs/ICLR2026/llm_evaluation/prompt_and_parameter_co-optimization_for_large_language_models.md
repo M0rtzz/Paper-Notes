@@ -132,3 +132,15 @@ MetaTuner-J 相对 BetterTogether 平均提升 10.15%（7B backbone），在 MAT
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个数据集、10+ 基线、详细消融、泛化实验、超参分析全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 公式化推导清晰，从问题到方法到实验逻辑连贯，但 Section 3 的符号较重
 - 价值: ⭐⭐⭐⭐ 为 LLM 后训练提供了新范式，在多个任务上大幅提升，但计算成本和 pipeline 复杂度可能限制实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ASIDE: Architectural Separation of Instructions and Data in Language Models](aside_architectural_separation_of_instructions_and_data_in_language_models.md)
+- [Mis-prompt: Benchmarking Large Language Models for Proactive Error Handling](../../ACL2025/llm_evaluation/mis-prompt_benchmarking_large_language_models_for_proactive_error_handling.md)
+- [Spectral Attention Steering for Prompt Highlighting](spectral_attention_steering_for_prompt_highlighting.md)
+- [Hyperband-based Bayesian Optimization for Black-box Prompt Selection](../../ICML2025/llm_evaluation/hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
+- [NeSTR: A Neuro-Symbolic Abductive Framework for Temporal Reasoning in Large Language Models](../../AAAI2026/llm_evaluation/nestr_a_neuro-symbolic_abductive_framework_for_temporal_reasoning_in_large_langu.md)
+
+<!-- RELATED:END -->

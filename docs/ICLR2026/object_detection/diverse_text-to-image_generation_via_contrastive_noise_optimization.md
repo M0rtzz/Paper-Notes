@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{CNO}} = -\frac{1}{B}\sum_{i=1}^{B}\log\frac{\exp(\text{sim}
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 SD1.5/SDXL/SD3/FLUX 多个模型，消融实验完整，Pareto 分析有说服力
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法推导流畅，图表质量高
 - **价值**: ⭐⭐⭐⭐ — 即插即用的实用性强，对扩散模型生成多样性问题提供了一个干净的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAGA: Learning Signal-Aligned Distributions for Improved Text-to-Image Generation](../../AAAI2026/object_detection/saga_learning_signal-aligned_distributions_for_improved_text-to-image_generation.md)
+- [Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models](../../CVPR2026/object_detection/neighbor_grpo_contrastive_ode_policy_optimization_aligns_flow_models.md)
+- [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation](../../CVPR2025/object_detection/mccd_multi-agent_collaboration-based_compositional_diffusion_for_complex_text-to.md)
+- [SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation](serum_simple_efficient_robust_and_unifying_marking_for_diffusion-based_image_gen.md)
+
+<!-- RELATED:END -->

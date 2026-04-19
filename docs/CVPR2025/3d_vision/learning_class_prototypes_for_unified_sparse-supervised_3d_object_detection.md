@@ -152,3 +152,15 @@ Moderate 上比 CoIn++ 提升 **+2.7 AP**，达全监督 **96%**。
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义有价值（首次统一室内外），方法设计完整（原型挖掘 + 多标签精化），实验全面（3 个数据集 + 多基线）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
+- [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](../../ICCV2025/3d_vision/unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
+- [MonoPlace3D: Learning 3D-Aware Object Placement for 3D Monocular Detection](monoplace3d_learning_3d-aware_object_placement_for_3d_monocular_detection.md)
+- [P-SLCR: Unsupervised Point Cloud Semantic Segmentation via Prototypes Structure Learning and Consistent Reasoning](p-slcr_unsupervised_point_cloud_semantic_segmentation_via_prototypes_structure_l.md)
+- [MoST: Efficient Monarch Sparse Tuning for 3D Representation Learning](most_efficient_monarch_sparse_tuning_for_3d_representation_learning.md)
+
+<!-- RELATED:END -->

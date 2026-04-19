@@ -108,3 +108,15 @@ Object HalBench幻觉减少约92%，AMBER减少约65%，同时在VQAv2、Science
 - 实验充分度: ⭐⭐⭐⭐⭐ 幻觉基准+通用能力基准全面覆盖，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 动机分析到方法设计的逻辑链条清晰
 - 价值: ⭐⭐⭐⭐⭐ 低成本、模型无关、不损害通用能力的幻觉缓解方案，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Systematic Reward Gap Optimization for Mitigating VLM Hallucinations](../../NeurIPS2025/multimodal_vlm/systematic_reward_gap_optimization_for_mitigating_vlm_hallucinations.md)
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+- [DALR: Dual-level Alignment Learning for Multimodal Sentence Representation Learning](../../ACL2025/multimodal_vlm/dalr_dual-level_alignment_learning_for_multimodal_sentence_representation_learni.md)
+- [GLSim: Detecting Object Hallucinations in LVLMs via Global-Local Similarity](../../NeurIPS2025/multimodal_vlm/glsim_detecting_object_hallucinations_in_lvlms_via_globalloc.md)
+- [Generalizable Object Re-Identification via Visual In-Context Prompting](generalizable_object_re-identification_via_visual_in-context_prompting.md)
+
+<!-- RELATED:END -->

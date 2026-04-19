@@ -140,3 +140,15 @@ tags:
 - ⭐⭐⭐⭐ 技术深度：从样本级到分布级的完整理论链条，证明严谨
 - ⭐⭐⭐⭐ 实验充分度：覆盖4种攻击、多种模型和数据集，消融实验充分
 - ⭐⭐⭐ 实用性：理论 promising 但水印长度范围限制和鲁棒性问题制约实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training](toxictextclip_text-based_poisoning_and_backdoor_attacks_on_clip_pre-training.md)
+- [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
+- [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
+- [Perturb Your Data: Paraphrase-Guided Training Data Watermarking](../../AAAI2026/ai_safety/perturb_your_data_paraphrase-guided_training_data_watermarking.md)
+- [Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](../../ACL2025/ai_safety/robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)
+
+<!-- RELATED:END -->

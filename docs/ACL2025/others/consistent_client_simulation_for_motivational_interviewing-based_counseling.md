@@ -186,3 +186,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 在心理咨询客户模拟这一细分方向上做出了有深度的工作，一致性的多维度定义很有价值，配合度可控是亮点。评估充分（自动 + 专家），但实验限于单一数据集和单一咨询方法，且仍未弥合模拟与真实客户的差距。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hanging in the Balance: Pivotal Moments in Crisis Counseling Conversations](hanging_in_the_balance_pivotal_moments_in_crisis_counseling_conversations.md)
+- [GA-S3: Comprehensive Social Network Simulation with Group Agents](ga-s3_comprehensive_social_network_simulation_with_group_agents.md)
+- [QG-SMS: Enhancing Test Item Analysis via Student Modeling and Simulation](qg-sms_enhancing_test_item_analysis_via_student_modeling_and_simulation.md)
+- [Are Any-to-Any Models More Consistent Across Modality Transfers Than Specialists?](are_any-to-any_models_more_consistent_across_modality_transfers_than_specialists.md)
+- [CORAL: Learning Consistent Representations across Multi-step Training with Lighter Speculative Drafter](coral_speculative_drafting.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ ShortV+FastV叠加（LLaVA-1.5-7B）:
 - 实验充分度: ⭐⭐⭐⭐ 4个模型变体，7个benchmark，丰富消融（层数、选择策略、冻结类型），实测加速
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，LC指标的讨论（vs perplexity vs cosine sim）非常透彻
 - 价值: ⭐⭐⭐⭐ 揭示了MLLM中视觉token层级冗余的本质，与token剪枝正交的新加速维度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+- [SparseMM: Head Sparsity Emerges from Visual Concept Responses in MLLMs](sparsemm_head_sparsity_emerges_from_visual_concept_responses.md)
+- [LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](llavaprumerge_adaptive_token_reduction_for_efficient_large_m.md)
+- [FALCON: Resolving Visual Redundancy and Fragmentation in High-resolution Multimodal Large Language Models via Visual Registers](falcon_resolving_visual_redundancy_and_fragmentation_in_high.md)
+- [Visual-Oriented Fine-Grained Knowledge Editing for MultiModal Large Language Models](visual-oriented_fine-grained_knowledge_editing_for_multimodal_large_language_mod.md)
+
+<!-- RELATED:END -->

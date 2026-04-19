@@ -169,3 +169,15 @@ $$[N_s^{(p)}, K^{(p)}] = (1-p) \cdot [N_{\text{init}}, K_{\text{init}}] + p \cdo
 ## 总结
 
 D3S框架通过sample-level advantage方差最大化和token-level熵-advantage加权选择，在双层级精选最有价值的训练数据，配合动态调度策略平衡效率与泛化。理论分析严谨地建立了advantage方差与梯度范数上界的正相关关系，实验在7个数学推理benchmark上验证了一致的性能提升和显著的训练加速（最高5.51×）。该方法对RLHF中的数据利用效率问题提供了系统性解决方案，未来可进一步拓展到更多任务类型和更大规模模型。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation](dual-ipo_dual-iterative_preference_optimization_for_text-to-video_generation.md)
+- [PURGE: Reinforcement Unlearning via Group Relative Policy Optimization](reinforcement_unlearning_via_group_relative_policy_optimization.md)
+- [Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective](../../ICML2025/llm_alignment/can_rlhf_be_more_efficient_with_imperfect_reward_models_a_policy_coverage_perspe.md)
+- [Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs](uni-dpo_a_unified_paradigm_for_dynamic_preference_optimization_of_llms.md)
+- [Greedy Sampling Is Provably Efficient for RLHF](../../NeurIPS2025/llm_alignment/greedy_sampling_is_provably_efficient_for_rlhf.md)
+
+<!-- RELATED:END -->

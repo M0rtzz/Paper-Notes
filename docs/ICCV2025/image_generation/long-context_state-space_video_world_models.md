@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Memory Maze + Minecraft 双数据集，完善的消融和效率分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，动机充分，Tab.1 的复杂度对比一目了然
 - 价值: ⭐⭐⭐⭐⭐ 解决了视频世界模型中长期记忆这一关键瓶颈，为可交互式持久世界模拟奠定架构基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/image_generation/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [RLVR-World: Training World Models with Reinforcement Learning](../../NeurIPS2025/image_generation/rlvr-world_training_world_models_with_reinforcement_learning.md)
+- [AnimeGamer: Infinite Anime Life Simulation with Next Game State Prediction](animegamer_infinite_anime_life_simulation_with_next_game_state_prediction.md)
+- [Aether: Geometric-Aware Unified World Modeling](aether_geometric-aware_unified_world_modeling.md)
+- [Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction](../../CVPR2025/image_generation/efficient_long_video_tokenization_via_coordinate-based_patch_reconstruction.md)
+
+<!-- RELATED:END -->

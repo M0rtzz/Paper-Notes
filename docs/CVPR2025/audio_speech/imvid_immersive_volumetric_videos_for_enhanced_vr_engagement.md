@@ -86,3 +86,15 @@ $\mathcal{L} = (1-\lambda_1)L_1 + \lambda_1 D_{SSIM}$。60 帧分段训练。
 - 实验充分度: ⭐⭐⭐⭐ 渲染对比+用户研究+音频评估
 - 写作质量: ⭐⭐⭐⭐ 数据集描述详尽
 - 价值: ⭐⭐⭐⭐ 为 VR 内容创作和自由视角渲染提供了关键资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent-INR: A Flexible Framework for Implicit Representations of Videos with Discriminative Semantics](../../ECCV2024/audio_speech/latent-inr_a_flexible_framework_for_implicit_representations_of_videos_with_disc.md)
+- [Dynamic Parameter Memory: Temporary LoRA-Enhanced LLM for Long-Sequence Emotion Recognition in Conversation](../../ICLR2026/audio_speech/dynamic_parameter_memory_temporary_lora-enhanced_llm_for_long-sequence_emotion_r.md)
+- [DistinctAD: Distinctive Audio Description Generation in Contexts](distinctad_distinctive_audio_description_generation_in_contexts.md)
+- [UWAV: Uncertainty-Weighted Weakly-Supervised Audio-Visual Video Parsing](uwav_uncertainty-weighted_weakly-supervised_audio-visual_video_parsing.md)
+- [Exploring Timeline Control for Facial Motion Generation](exploring_timeline_control_for_facial_motion_generation.md)
+
+<!-- RELATED:END -->

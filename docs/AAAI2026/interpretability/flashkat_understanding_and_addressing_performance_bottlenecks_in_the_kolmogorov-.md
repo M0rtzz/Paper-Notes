@@ -194,3 +194,15 @@ Warp 状态分析对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ — Nsight Compute 深度 profiling、多尺度模型、精度/速度/误差全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 从问题发现到诊断到方案的叙事逻辑极其清晰，堪称系统优化论文的范例
 - 价值: ⭐⭐⭐⭐⭐ — 从 123 倍慢到仅 25% 慢，直接使 KAT 成为可行的竞争方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Initialization Schemes for Kolmogorov-Arnold Networks: An Empirical Study](../../ICLR2026/interpretability/initialization_schemes_for_kolmogorov-arnold_networks_an_empirical_study.md)
+- [Noise Stability of Transformer Models](../../ICLR2026/interpretability/noise_stability_of_transformer_models.md)
+- [FineVAU: A Novel Human-Aligned Benchmark for Fine-Grained Video Anomaly Understanding](finevau_a_novel_human-aligned_benchmark_for_fine-grained_video_anomaly_understan.md)
+- [Voices, Faces, and Feelings: Multi-modal Emotion-Cognition Captioning for Mental Health Understanding](voices_faces_and_feelings_multi-modal_emotion-cognition_captioning_for_mental_he.md)
+- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](../../NeurIPS2025/interpretability/born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
+
+<!-- RELATED:END -->

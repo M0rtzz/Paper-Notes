@@ -104,3 +104,15 @@ LLM存在一个基本的泛化失败——反转诅咒：训练时学到"Tom Smi
 - 实验充分度: ⭐⭐⭐⭐⭐ 从发现到假说到验证到应用，实验链条完整
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事精彩，从惊人发现到深入分析层层推进
 - 价值: ⭐⭐⭐⭐⭐ 对理解和改进LLM的基础性研究，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Kolmogorov Complexity and Deep Learning: Asymptotically Optimal Description Length Objectives for Transformers](bridging_kolmogorov_complexity_and_deep_learning_asymptotically_optimal_descript.md)
+- [Basic Reading Distillation](../../ACL2025/model_compression/basic_reading_distillation.md)
+- [Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](specialization_after_generalization_towards_understanding_test-time_training_in_.md)
+- [Stronger Normalization-Free Transformers](../../CVPR2026/model_compression/stronger_normalization-free_transformers.md)
+- [Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models](scaling_reasoning_hop_exposes_weaknesses_demystifying_and_improving_hop_generali.md)
+
+<!-- RELATED:END -->

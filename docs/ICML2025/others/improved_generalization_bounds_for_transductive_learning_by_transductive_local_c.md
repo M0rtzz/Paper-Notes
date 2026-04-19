@@ -126,3 +126,15 @@ $$\tilde{T}_n(h) \coloneqq \inf_{f_1,f_2 \in \mathcal{F}: \ell_{f_1} - \ell_{f_2
 - 实验充分度: ⭐⭐ — 纯理论工作，无实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，主要结果摘要明确，但证明细节较重
 - 价值: ⭐⭐⭐⭐⭐ — 学习理论领域的重要推进，建立转导与归纳学习的紧密联系
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Learning via k-DTW: A Novel Dissimilarity Measure for Curves](improved_learning_via_k-dtw_a_novel_dissimilarity_measure_for_curves.md)
+- [Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](../../NeurIPS2025/others/military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
+- [The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets](../../NeurIPS2025/others/the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)
+- [Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures](maximum_coverage_in_turnstile_streams_with_applications_to_fingerprinting_measur.md)
+- [Kernel Conditional Tests from Learning-Theoretic Bounds](../../NeurIPS2025/others/kernel_conditional_tests_from_learning-theoretic_bounds.md)
+
+<!-- RELATED:END -->

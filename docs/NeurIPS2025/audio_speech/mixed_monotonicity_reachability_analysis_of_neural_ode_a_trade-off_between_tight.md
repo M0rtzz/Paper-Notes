@@ -159,3 +159,15 @@ tags:
 - 实验充分度：★★★☆☆（仅 2D 示例，缺乏高维验证）
 - 实用价值：★★★★☆（为安全关键系统提供轻量化验证）
 - 写作质量：★★★★☆（清晰系统，理论表述严谨）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sound Logical Explanations for Mean Aggregation Graph Neural Networks](sound_logical_explanations_for_mean_aggregation_graph_neural_networks.md)
+- [DeepASA: An Object-Oriented Multi-Purpose Network for Auditory Scene Analysis](deepasa_an_object-oriented_multi-purpose_network_for_auditory_scene_analysis.md)
+- [Slimmable NAM: Neural Amp Models with Adjustable Runtime Computational Cost](slimmable_nam_neural_amp_models_with_adjustable_runtime_computational_cost.md)
+- [Towards Lossless Implicit Neural Representation via Bit Plane Decomposition](../../CVPR2025/audio_speech/towards_lossless_implicit_neural_representation_via_bit_plane_decomposition.md)
+- [Tri-Subspaces Disentanglement for Multimodal Sentiment Analysis](../../CVPR2026/audio_speech/tri-subspaces_disentanglement_for_multimodal_sentiment_analysis.md)
+
+<!-- RELATED:END -->

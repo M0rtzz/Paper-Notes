@@ -193,3 +193,15 @@ LiVi-LLM-7B 在 Video-MME 和 VideoEval-Pro 上取得最佳成绩，说明领域
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 评测 24 个模型，包含闭源和开源，覆盖多个通用基准
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富，但部分细节可以更精简
 - **价值**: ⭐⭐⭐⭐⭐ — 填补重要空白，基准和模型都很有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Video Thinking Test: A Holistic Benchmark for Advanced Video Reasoning and Understanding](../../ICCV2025/video_understanding/towards_video_thinking_test_a_holistic_benchmark_for_advanced_video_reasoning_an.md)
+- [RecToM: A Benchmark for Evaluating Machine Theory of Mind in LLM-based Conversational Recommender Systems](rectom_a_benchmark_for_evaluating_machine_theory_of_mind_in_llm-based_conversati.md)
+- [EmoVid: A Multimodal Emotion Video Dataset for Emotion-Centric Video Understanding and Generation](emovid_a_multimodal_emotion_video_dataset_for_emotion-centric_video_understandin.md)
+- [PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics](pragworld_a_benchmark_evaluating_llms_local_world_model_under_minimal_linguistic.md)
+- [ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding](reason_reinforced_causal_search_with_information_bottleneck_for_video_understand.md)
+
+<!-- RELATED:END -->

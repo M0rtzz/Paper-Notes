@@ -188,3 +188,15 @@ SAAS-B+ vs SAM2-B+：YouMVOS +5.9% $\mathcal{J\&F}$，Cut-VOS +5.5% $\mathcal{J\
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个基准、全面消融、切换类型分析、TMA 通用性验证、超参实验）
 - 写作质量: ⭐⭐⭐⭐⭐ （问题阐述有说服力，切换类型可视化清晰，算法伪代码完整）
 - 价值: ⭐⭐⭐⭐⭐ （开辟了 MVOS 新方向，Cut-VOS 将推动后续研究，TMA 策略通用性强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Segment and Matte Anything in a Unified Model (SAMA)](segment_and_matte_anything_in_a_unified_model.md)
+- [SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model](saq-sam_semantically-aligned_quantization_for_segment_anything_model.md)
+- [SAM-DAQ: Segment Anything Model with Depth-guided Adaptive Queries for RGB-D Video Salient Object Detection](sam-daq_segment_anything_model_with_depth-guided_adaptive_queries_for_rgb-d_vide.md)
+- [OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation](../../ICCV2025/segmentation/omnisam_omnidirectional_segment_anything_model_for_uda_in_panoramic_semantic_seg.md)
+- [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、多种设置（3/6/9 views、masked input），但缺少一些常见基线和运行时间对比
 - 写作质量: ⭐⭐⭐⭐ 叙事逻辑清晰，方法描述到位，部分细节略有冗余
 - 价值: ⭐⭐⭐⭐ 首次证明 GS 可在稀疏视图下匹敌 NeRF SOTA，循环融合思路有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+- [HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos](hawor_world-space_hand_motion_reconstruction_from_egocentric_videos.md)
+- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
+- [Generating 3D-Consistent Videos from Unposed Internet Photos](generating_3d-consistent_videos_from_unposed_internet_photos.md)
+- [Orientation-anchored Hyper-Gaussian for 4D Reconstruction from Casual Videos](../../NeurIPS2025/3d_vision/orientation-anchored_hyper-gaussian_for_4d_reconstruction_from_casual_videos.md)
+
+<!-- RELATED:END -->

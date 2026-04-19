@@ -147,3 +147,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 理论-实验对照完整，三维度缩放验证 + 7 模型对比
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，理论推导详细，表格和图表信息量大
 - **价值**: ⭐⭐⭐⭐ 为 T2V 可持续部署提供了重要参考数据和优化指南
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
+- [DisMo: Disentangled Motion Representations for Open-World Motion Transfer](dismo_disentangled_motion_representations_for_openworld_moti.md)
+- [Mimir: Improving Video Diffusion Models for Precise Text Understanding](../../CVPR2025/video_generation/mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
+- [VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](../../ICCV2025/video_generation/vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [Multi-subject Open-set Personalization in Video Generation](../../CVPR2025/video_generation/multi-subject_open-set_personalization_in_video_generation.md)
+
+<!-- RELATED:END -->

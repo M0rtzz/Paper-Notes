@@ -174,3 +174,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 25场景5数据集，消融详细，含压缩对比和大规模场景
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，图表丰富，消融逻辑严密
 - 价值: ⭐⭐⭐⭐ 实用性强，20×压缩+质量提升+实时性能的三重达标具有重要工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Neural Exposure Fields for View Synthesis](learning_neural_exposure_fields_for_view_synthesis.md)
+- [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
+- [High Dynamic Range Novel View Synthesis with Single Exposure](../../ICML2025/3d_vision/high_dynamic_range_novel_view_synthesis_with_single_exposure.md)
+- [Novel View Synthesis from A Few Glimpses via Test-Time Natural Video Completion](novel_view_synthesis_from_a_few_glimpses_via_test-time_natural_video_completion.md)
+- [Reconstruct, Inpaint, Test-Time Finetune: Dynamic Novel-View Synthesis from Monocular Videos](reconstruct_inpaint_test-time_finetune_dynamic_novel-view_synthesis_from_monocul.md)
+
+<!-- RELATED:END -->

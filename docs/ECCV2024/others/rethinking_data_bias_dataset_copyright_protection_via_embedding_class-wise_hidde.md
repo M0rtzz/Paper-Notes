@@ -121,3 +121,15 @@ Undercover Bias 的工作流程分为三个阶段：(1) 水印嵌入：为数据
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多模型验证、扩展到分割任务、水印强度分析等较为充分
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法的多个优势属性对比明确
 - 价值: ⭐⭐⭐⭐ 数据集版权保护是实际但被忽视的重要问题，本文提供了实用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Estimation of Tokenisation Bias](../../ACL2025/others/causal_tokenisation_bias.md)
+- [Are Bias Evaluation Methods Biased?](../../ACL2025/others/are_bias_evaluation_methods_biased.md)
+- [ABC Easy as 123: A Blind Counter for Exemplar-Free Multi-Class Class-Agnostic Counting](abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou.md)
+- [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)
+- [Implicit Bias of Per-sample Adam on Separable Data: Departure from the Full-batch Regime](../../ICLR2026/others/implicit_bias_of_per-sample_adam_on_separable_data_departure_from_the_full-batch.md)
+
+<!-- RELATED:END -->

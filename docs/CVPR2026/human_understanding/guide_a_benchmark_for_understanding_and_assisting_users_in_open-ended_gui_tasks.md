@@ -112,3 +112,15 @@ GUIDE 的构建分为三个阶段：(1) 视频收集——54 名新手用户在 
 - 实验充分度: ⭐⭐⭐⭐ 8 个模型、多种上下文配置、在线/离线设置，但缺少训练实验
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，表格丰富，理论对齐（Norman/Bloom）增加说服力
 - 价值: ⭐⭐⭐⭐⭐ 揭示了当前 MLLM 在用户理解上的巨大差距，为协助型智能体指明方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bias Association Discovery Framework for Open-Ended LLM Generations](../../AAAI2026/human_understanding/bias_association_discovery_framework_for_open-ended_llm_generations.md)
+- [See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles](see_think_act_teaching_multimodal_agents_to_effectively_interact_with_gui_by_ide.md)
+- [OMG-Bench: A New Challenging Benchmark for Skeleton-based Online Micro Hand Gesture Recognition](omg-bench_a_new_challenging_benchmark_for_skeleton-based_online_micro_hand_gestu.md)
+- [SteelDefectX: A Coarse-to-Fine Vision-Language Dataset and Benchmark for Generalizable Steel Surface Defect Detection](steeldefectx_a_coarse-to-fine_vision-language_dataset_and_benchmark_for_generali.md)
+- [Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants](../../NeurIPS2025/human_understanding/face-human-bench_a_comprehensive_benchmark_of_face_and_human_understanding_for_m.md)
+
+<!-- RELATED:END -->

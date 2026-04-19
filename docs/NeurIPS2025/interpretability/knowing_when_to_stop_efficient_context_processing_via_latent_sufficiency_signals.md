@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个数据集、3个模型族、1B-70B规模全覆盖，消融分析全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述条理分明，图示直观
 - 价值: ⭐⭐⭐⭐ 在推理效率领域提供新范式，工程实用性强，但适用场景有一定局限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition](h-splid_hsic-based_saliency_preserving_latent_information_decomposition.md)
+- [Latent Principle Discovery for Language Model Self-Improvement](latent_principle_discovery_for_language_model_self-improvement.md)
+- [Base Models Know How to Reason, Thinking Models Learn When](base_models_know_how_to_reason_thinking_models_learn_when.md)
+- [Partial Information Decomposition via Normalizing Flows in Latent Gaussian Distributions](partial_information_decomposition_via_normalizing_flows_in_latent_gaussian_distr.md)
+- [On the Power of Context-Enhanced Learning in LLMs](../../ICML2025/interpretability/on_the_power_of_context-enhanced_learning_in_llms.md)
+
+<!-- RELATED:END -->

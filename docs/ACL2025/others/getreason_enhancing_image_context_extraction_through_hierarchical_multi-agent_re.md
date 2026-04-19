@@ -134,3 +134,15 @@ GETReason 由三层架构组成：场景图生成层 → 提示生成层 → 多
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、三个模型、多种基线对比，消融研究充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，GREAT 指标定义详尽
 - 价值: ⭐⭐⭐ 实际应用场景明确（新闻、存档），但成本和依赖闭源模型限制了其实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
+- [Graph-Structured Trajectory Extraction from Travelogues](graph-structured_trajectory_extraction_from_travelogues.md)
+- [InspireDebate: Multi-Dimensional Evaluation-Guided Reasoning for Debating](inspiredebate_multidim_evaluation_debating.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+
+<!-- RELATED:END -->

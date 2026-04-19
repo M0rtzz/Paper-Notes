@@ -142,3 +142,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ — 无实验，但文献分析系统且论据有力
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，逻辑连贯，挑战划分合理
 - **价值**: ⭐⭐⭐⭐ — 对 NetS&P 社区具有较好的导向性和启发性，尤其是数据质量和部署挑战的讨论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalising Traffic Forecasting to Regions without Traffic Observations](generalising_traffic_forecasting_to_regions_without_traffic_observations.md)
+- [Minimum-Cost Network Flow with Dual Predictions](minimum-cost_network_flow_with_dual_predictions.md)
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+- [Unlocking Efficient Vehicle Dynamics Modeling via Analytic World Models](unlocking_efficient_vehicle_dynamics_modeling_via_analytic_world_models.md)
+- [Dual-branch Spatial-Temporal Self-supervised Representation for Enhanced Road Network Learning](dual-branch_spatial-temporal_self-supervised_representation_for_enhanced_road_ne.md)
+
+<!-- RELATED:END -->

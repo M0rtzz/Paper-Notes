@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四种范式×五个数据集×大量消融，实验极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，Table I/II的统一建模可视化很赞，方法讲解循序渐进
 - 价值: ⭐⭐⭐⭐ 实用价值高（0.07%开销换显著性能提升），但需验证在更大模型上的效果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaNAT: Exploring Adaptive Policy for Token-Based Image Generation](adanat_exploring_adaptive_policy_for_token-based_image_generation.md)
+- [Editable Image Elements for Controllable Synthesis](editable_image_elements_for_controllable_synthesis.md)
+- [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
+- [Dense Policy: Bidirectional Autoregressive Learning of Actions](../../ICCV2025/image_generation/dense_policy_bidirectional_autoregressive_learning_of_actions.md)
+- [FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis](fouriscale_a_frequency_perspective_on_training-free_high-resolution_image_synthe.md)
+
+<!-- RELATED:END -->

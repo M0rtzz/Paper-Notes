@@ -130,3 +130,15 @@ $$\boldsymbol{z}_t \sim q_{\boldsymbol{\phi}}(\boldsymbol{z}_t | H_t), \quad \ha
 - 实验充分度: ⭐⭐⭐⭐⭐ (Meta-RL + 物理DR + 视觉DR + OOD + 多骨干验证，7种子)
 - 写作质量: ⭐⭐⭐⭐ (理论推导清晰，符号体系完整，结构合理)
 - 价值: ⭐⭐⭐⭐ (为风险规避 RL 提供了高效且简洁的任务采样方案)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Noise Attenuation via Adaptive Pooling of Transformer Outputs](robust_noise_attenuation_via_adaptive_pooling_of_transformer_outputs.md)
+- [Mastering Massive Multi-Task Reinforcement Learning via Mixture-of-Expert Decision Transformer](mastering_massive_multi-task_reinforcement_learning_via_mixture-of-expert_decisi.md)
+- [Modulation of Temporal Decision-Making in a Deep Reinforcement Learning Agent under the Dual-Task Paradigm](../../NeurIPS2025/reinforcement_learning/modulation_of_temporal_decision-making_in_a_deep_reinforcement_learning_agent_un.md)
+- [Learning Intractable Multimodal Policies with Reparameterization and Diversity Regularization](../../NeurIPS2025/reinforcement_learning/learning_intractable_multimodal_policies_with_reparameterization_and_diversity_r.md)
+- [Exploring Large Action Sets with Hyperspherical Embeddings using von Mises-Fisher Sampling](exploring_large_action_sets_with_hyperspherical_embeddings_using_von_mises-fishe.md)
+
+<!-- RELATED:END -->

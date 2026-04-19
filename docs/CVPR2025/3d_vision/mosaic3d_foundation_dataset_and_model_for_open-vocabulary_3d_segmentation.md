@@ -133,3 +133,15 @@ $$\mathcal{L}_{mask} = \lambda_{obj}\mathcal{L}_{obj} + \lambda_{dice}\mathcal{L
 ## 评分
 
 ⭐⭐⭐⭐ — 工程系统性极强，数据引擎 + 模型设计完整，SOTA结果全面覆盖多个benchmark；单阶段实例分割是重要创新；但核心学术新颖度偏向工程整合。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
+- [GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding](great_geometry-intention_collaborative_inference_for_open-vocabulary_3d_object_a.md)
+- [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
+- [Segment then Splat: Unified 3D Open-Vocabulary Segmentation via Gaussian Splatting](../../NeurIPS2025/3d_vision/segment_then_splat_unified_3d_open-vocabulary_segmentation_via_gaussian_splattin.md)
+- [3D Dental Model Segmentation with Geometrical Boundary Preserving](3d_dental_model_segmentation_with_geometrical_boundary_preserving.md)
+
+<!-- RELATED:END -->

@@ -162,3 +162,15 @@ Re-TASK 框架将 LLM 任务分解为四个层次概念：
 - 实验充分度: ⭐⭐⭐ — 覆盖 5 个数据集 3 个领域，但数据集规模偏小，未在闭源大模型上验证
 - 写作质量: ⭐⭐⭐⭐ — 理论框架层次清晰，定义严谨，但部分概念（如能力项与 few-shot 示例的本质区别）可更明确
 - 价值: ⭐⭐⭐⭐ — 提供了分析和增强 LLM 领域任务能力的系统性方法论，实用且易推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability](compositional_generalization_instruction.md)
+- [A Modular Dataset to Demonstrate LLM Abstraction Capability](a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
+- [Enhancing Open-Domain Task-Solving Capability of LLMs via Autonomous Tool Integration from GitHub](paper_2312_17294.md)
+- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+- [ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch](unleashing_llm_reasoning_capability_via_scalable.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ $$\mathcal{L}_{\text{physics}} = \sum_{i=1}^{N}\sum_{j \neq i}^{N} \mathcal{L}_{
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：问题定义清晰，双重表示+可微分优化的设计思路优雅，自一致性解码方法新颖。实验显示在物理合理性上有质的飞跃。主要局限是对闭源模型的依赖和评估体系的主观性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
+- [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
+- [HiSpatial: Taming Hierarchical 3D Spatial Understanding in Vision-Language Models](../../CVPR2026/multimodal_vlm/hispatial_taming_hierarchical_3d_spatial_understanding_in_vision-language_models.md)
+- [Balanced Token Pruning: Accelerating Vision Language Models Beyond Local Optimization](../../NeurIPS2025/multimodal_vlm/balanced_token_pruning_accelerating_vision_language_models_b.md)
+- [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](../../NeurIPS2025/multimodal_vlm/better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
+
+<!-- RELATED:END -->

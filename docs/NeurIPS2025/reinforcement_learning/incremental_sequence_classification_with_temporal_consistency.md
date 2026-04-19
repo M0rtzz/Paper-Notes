@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多基线、多指标、含理论验证，但模型规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，与 RL 的类比直观，实验展示有说服力
 - 价值: ⭐⭐⭐⭐⭐ 方法简单通用，对 LLM verification/test-time scaling 有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal-Difference Variational Continual Learning](temporal-difference_variational_continual_learning.md)
+- [Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling](robust_adversarial_reinforcement_learning_in_stochastic_games_via_sequence_model.md)
+- [Oryx: a Scalable Sequence Model for Many-Agent Coordination in Offline MARL](oryx_a_scalable_sequence_model_for_many-agent_coordination_in_offline_marl.md)
+- [When Sensors Fail: Temporal Sequence Models for Robust PPO under Sensor Drift](../../ICLR2026/reinforcement_learning/when_sensors_fail_temporal_sequence_models_for_robust_ppo_under_sensor_drift.md)
+- [STAIR: Addressing Stage Misalignment through Temporal-Aligned Preference Reinforcement Learning](stair_addressing_stage_misalignment_through_temporal-aligned_preference_reinforc.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ MAS-Verify 是最关键组件——去掉后性能暴跌 21.70%。Oracle verifie
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个 LLM backbone，3 个领域（推理/编程/搜索），11 个 baseline，全面消融，Pareto 分析，标准差报告
 - 写作质量: ⭐⭐⭐⭐⭐ Figure 1-3 的概念对比和 Pareto 图极其清晰，框架描述条理分明
 - 价值: ⭐⭐⭐⭐⭐ 揭示了"简单策略有时最强"和"验证集方法不可靠"的重要 insight，开源代码有直接复用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](../../ACL2025/others/beyond_frameworks_multi_agent_collaboration.md)
+- [Optimism Without Regularization: Constant Regret in Zero-Sum Games](optimism_without_regularization_constant_regret_in_zero-sum_games.md)
+- [Zero-Shot Conversational Stance Detection: Dataset and Approaches](../../ACL2025/others/zero-shot_conversational_stance_detection_dataset_and_approaches.md)
+- [I0T: Embedding Standardization Method Towards Zero Modality Gap](../../ACL2025/others/i0t_embedding_standardization_method_towards_zero_modality_gap.md)
+- [Designing Incident Reporting Systems for Harms from General-Purpose AI](../../AAAI2026/others/designing_incident_reporting_systems_for_harms_from_general-purpose_ai.md)
+
+<!-- RELATED:END -->

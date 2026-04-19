@@ -113,3 +113,15 @@ $$\boldsymbol{G}(\boldsymbol{x}, \Gamma) = \int_0^\Gamma \gamma^2 \mathbb{E}\lef
 - 实验充分度: ⭐⭐⭐⭐ 全面的基准比较和可视化分析，但缺少大尺度应用
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨优美，插图直观有力
 - 价值: ⭐⭐⭐⭐⭐ 为感知度量学习提供了全新的理论框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Spacetime of Diffusion Models: An Information Geometry Perspective](the_spacetime_of_diffusion_models_an_information_geometry_perspective.md)
+- [MMG: Mutual Information Estimation via the MMSE Gap in Diffusion](../../NeurIPS2025/image_generation/mmg_mutual_information_estimation_via_the_mmse_gap_in_diffusion.md)
+- [Diffusion Reconstruction-Based Data Likelihood Estimation for Core-Set Selection](../../AAAI2026/image_generation/diffusion_reconstruction-based_data_likelihood_estimation_for_core-set_selection.md)
+- [DMin: Scalable Training Data Influence Estimation for Diffusion Models](../../CVPR2026/image_generation/dmin_scalable_training_data_influence_estimation_for_diffusion_models.md)
+- [Monocular Normal Estimation via Shading Sequence Estimation](monocular_normal_estimation_via_shading_sequence_estimation.md)
+
+<!-- RELATED:END -->

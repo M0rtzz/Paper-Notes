@@ -163,3 +163,15 @@ $$\mathbf{x}_{t_0} = \sum_{n=1}^{N} w_n \mathbf{s}_{t_n} + w_y \mathbf{y}$$
 | 实验充分性 | ⭐⭐⭐⭐ | 两个数据集 + 详细消融，但缺少更多任务验证 |
 | 写作质量 | ⭐⭐⭐⭐ | 逻辑清晰，理论推导完整 |
 | 总评 | ⭐⭐⭐⭐½ | 理论洞察深刻，实践指导性强，是扩散模型理解的重要工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [MF-Speech: Achieving Fine-Grained and Compositional Control in Speech Generation via Factor Disentanglement](mf-speech_achieving_fine-grained_and_compositional_control_in_speech_generation_.md)
+- [Cash Flow Underwriting with Bank Transaction Data: Advancing MSME Financial Inclusion in Malaysia](cash_flow_underwriting_with_bank_transaction_data_advancing_msme_financial_inclu.md)
+- [Controllable Financial Market Generation with Diffusion Guided Meta Agent](controllable_financial_market_generation_with_diffusion_guided_meta_agent.md)
+- [DiffMM: Efficient Method for Accurate Noisy and Sparse Trajectory Map Matching via One Step Diffusion](diffmm_efficient_method_for_accurate_noisy_and_sparse_trajectory_map_matching_vi.md)
+
+<!-- RELATED:END -->

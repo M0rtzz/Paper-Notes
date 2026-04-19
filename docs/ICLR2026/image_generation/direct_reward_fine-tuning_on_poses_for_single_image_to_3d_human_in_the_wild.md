@@ -132,3 +132,15 @@ DrPose 包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 三个基准 + 新提出的困难姿态基准 MixamoRP + 定性 in-the-wild 验证
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，算法伪代码完整
 - 价值: ⭐⭐⭐⭐ 有效解决动态姿态下 3D 人体重建的质量瓶颈，后训练范式轻量可扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+- [Diffusion Fine-Tuning via Reparameterized Policy Gradient of the Soft Q-Function](diffusion_fine-tuning_via_reparameterized_policy_gradient_of_the_soft_q-function.md)
+- [GeneMAN: Generalizable Single-Image 3D Human Reconstruction from Multi-Source Human Data](../../NeurIPS2025/image_generation/geneman_generalizable_single-image_3d_human_reconstruction_from_multi-source_hum.md)
+- [DreamDance: Animating Human Images by Enriching 3D Geometry Cues from 2D Poses](../../ICCV2025/image_generation/dreamdance_animating_human_images_by_enriching_3d_geometry_cues_from_2d_poses.md)
+- [DEFT: Decompositional Efficient Fine-Tuning for Text-to-Image Models](../../NeurIPS2025/image_generation/deft_decompositional_efficient_finetuning_for_texttoimage_mo.md)
+
+<!-- RELATED:END -->

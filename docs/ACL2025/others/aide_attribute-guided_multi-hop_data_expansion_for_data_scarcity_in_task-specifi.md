@@ -134,3 +134,15 @@ AIDE微调vs人工数据微调的平均相对提升：Mistral-7B +7.0%，Llama-3
 - 实验充分度: ⭐⭐⭐⭐ 多个基准、多个基线模型、充分消融，但主实验集中在Mistral-7B
 - 写作质量: ⭐⭐⭐⭐ 方法描述形式化且清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对低数据场景的LLM微调具有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruction-Tuning Data Synthesis from Scratch via Web Reconstruction](instruction-tuning_data_synthesis_from_scratch_via_web_reconstruction.md)
+- [ConECT Dataset: Overcoming Data Scarcity in Context-Aware E-Commerce MT](conect_dataset_overcoming_data_scarcity_in_context-aware_e-commerce_mt.md)
+- [Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
+- [SoRFT: Issue Resolving with Subtask-oriented Reinforced Fine-Tuning](sorft_issue_resolving_with_subtask-oriented_reinforced_fine-tuning.md)
+- [DoMIX: An Efficient Framework for Exploiting Domain Knowledge in Fine-Tuning](domix_an_efficient_framework_for_exploiting.md)
+
+<!-- RELATED:END -->

@@ -162,3 +162,15 @@ EgoExo-Fitness 是一个**数据集+基准**贡献，核心包含三个部分：
 - 技术深度: ⭐⭐⭐ — 数据集贡献为主，方法创新有限
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5个任务+多维度分析+详尽的视角影响研究
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，统计可视化丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](../../CVPR2025/human_understanding/learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
+- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](quar-vla_vision-language-action_model_for_quadruped_robots.md)
+- [HUMOS: Human Motion Model Conditioned on Body Shape](humos_human_motion_model_conditioned_on_body_shape.md)
+- [Bridging the Gap Between Human Motion and Action Semantics via Kinematic Phrases](bridging_the_gap_between_human_motion_and_action_semantics_via_kinematic_phrases.md)
+
+<!-- RELATED:END -->

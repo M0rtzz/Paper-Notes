@@ -134,3 +134,15 @@ STARC-9 训练模型在 Stanford 上 Dice 高约 14%，在 TCGA-CRC 上高约 30
 - 实验充分度: ⭐⭐⭐⭐⭐ 21 个模型基准测试，多验证集，分类+分割任务，对比极为充分
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，实验详尽，但篇幅偏长
 - 价值: ⭐⭐⭐⭐⭐ 数据集、框架、基准模型全部开源，对计算病理学社区有重大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic and Visual Crop-Guided Diffusion Models for Heterogeneous Tissue Synthesis in Histopathology](semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)
+- [MATCH: Multi-faceted Adaptive Topo-Consistency for Semi-Supervised Histopathology Segmentation](match_multi-faceted_adaptive_topo-consistency_for_semi-supervised_histopathology.md)
+- [EDBench: Large-Scale Electron Density Data for Molecular Modeling](edbench_large-scale_electron_density_data_for_molecular_modeling.md)
+- [RAM-W600: A Multi-Task Wrist Dataset and Benchmark for Rheumatoid Arthritis](ram-w600_a_multi-task_wrist_dataset_and_benchmark_for_rheumatoid_arthritis.md)
+- [PhysioWave: A Multi-Scale Wavelet-Transformer for Physiological Signal Representation](physiowave_a_multi-scale_wavelet-transformer_for_physiological_signal_representa.md)
+
+<!-- RELATED:END -->

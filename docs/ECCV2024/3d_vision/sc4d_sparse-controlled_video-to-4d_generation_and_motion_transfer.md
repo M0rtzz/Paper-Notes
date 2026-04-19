@@ -139,3 +139,15 @@ AG初始化和GA损失的消融：
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+用户研究+多种消融
 - 写作质量: ⭐⭐⭐ 方法描述尚可但冗长
 - 价值: ⭐⭐⭐⭐ 显著优于现有方法且有创新应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction](splatfields_neural_gaussian_splats_for_sparse_3d_and_4d_reconstruction.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+- [Shape of Motion: 4D Reconstruction from a Single Video](../../ICCV2025/3d_vision/shape_of_motion_4d_reconstruction_from_a_single_video.md)
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](../../CVPR2026/3d_vision/4dequine_disentangling_motion_and_appearance_for_4.md)
+- [TrackNeRF: Bundle Adjusting NeRF from Sparse and Noisy Views via Feature Tracks](tracknerf_bundle_adjusting_nerf_from_sparse_and_noisy_views_via_feature_tracks.md)
+
+<!-- RELATED:END -->

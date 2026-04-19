@@ -140,3 +140,15 @@ Base-to-Novel 泛化 (14 数据集平均):
 - 实验充分度: ⭐⭐⭐⭐⭐ 14 数据集、7 个 K-shot 设置、多 backbone 交叉验证、消融全面
 - 写作质量: ⭐⭐⭐⭐ 框架图和公式清晰，但部分推导跳跃较大
 - 价值: ⭐⭐⭐⭐⭐ 对生物医学 VLM 的少样本适配有重要实用价值，UK Biobank 验证增强可信度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives](bica_effective_biomedical_dense_retrieval_with_citation-aware_hard_negatives.md)
+- [VLM-SubtleBench: How Far Are VLMs from Human-Level Subtle Comparative Reasoning?](../../ICLR2026/medical_imaging/vlm-subtlebench_how_far_are_vlms_from_human-level_subtle_comparative_reasoning.md)
+- [Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering](expert-guided_prompting_and_retrieval-augmented_generation_for_emergency_medical.md)
+- [Residual SODAP: Residual Self-Organizing Domain-Adaptive Prompting with Structural Knowledge Preservation for Continual Learning](../../CVPR2026/medical_imaging/residual_sodap_residual_self-organizing_domain-adaptive_prompting_with_structura.md)
+- [A Variational Manifold Embedding Framework for Nonlinear Dimensionality Reduction](../../NeurIPS2025/medical_imaging/a_variational_manifold_embedding_framework_for_nonlinear_dimensionality_reductio.md)
+
+<!-- RELATED:END -->

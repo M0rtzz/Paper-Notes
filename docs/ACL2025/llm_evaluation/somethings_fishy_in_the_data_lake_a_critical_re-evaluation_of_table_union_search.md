@@ -134,3 +134,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 9 个基准、多种基线和 SOTA 方法、重叠度量化分析
 - **写作质量**: ⭐⭐⭐⭐ 论述逻辑严密，从假设到验证的结构清晰
 - **价值**: ⭐⭐⭐⭐⭐ 对 TUS 领域的基准建设具有警示和指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+- [Beyond One-Size-Fits-All: Tailored Benchmarks for Efficient Evaluation](beyond_one-size-fits-all_tailored_benchmarks_for_efficient_evaluation.md)
+- [RealHiTBench: A Comprehensive Realistic Hierarchical Table Benchmark for Evaluating LLM-Based Table Analysis](realhitbench_a_comprehensive_realistic_hierarchical_table_benchmark_for_evaluati.md)
+- [AntiLeakBench: Preventing Data Contamination by Automatically Constructing Benchmarks with Updated Real-World Knowledge](antileakbench_preventing_data_contamination_by_automatically_constructing_benchm.md)
+- [HPSS: Heuristic Prompting Strategy Search for LLM Evaluators](hpss_heuristic_prompting_strategy_search_for_llm_evaluators.md)
+
+<!-- RELATED:END -->

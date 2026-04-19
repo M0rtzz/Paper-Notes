@@ -122,3 +122,15 @@ MATH 数据集：
 - 实验充分度: ⭐⭐⭐ 三个数据集但仅2种 LLM，缺乏更大规模和更多样化场景的验证。
 - 写作质量: ⭐⭐⭐⭐ 研全清晰，RQ驱动的评估结构化，图表丰富。
 - 价值: ⭐⭐⭐⭐ 成本感知是多 Agent 系统实际部署的关键需求，BAMAS 提出了一个可行的解决方案。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management](mars_a_meta-adaptive_reinforcement_learning_framework_for_risk-aware_multi-agent.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+- [Learning to Generate and Extract: A Multi-Agent Collaboration Framework for Zero-shot Document-level Event Arguments Extraction](learning_to_generate_and_extract_a_multi-agent_collaboration_framework_for_zero-.md)
+- [Multi-Agent Collaboration via Evolving Orchestration](../../NeurIPS2025/reinforcement_learning/multi-agent_collaboration_via_evolving_orchestration.md)
+- [Spatial-Aware Decision-Making with Ring Attractors in Reinforcement Learning Systems](../../NeurIPS2025/reinforcement_learning/spatial-aware_decision-making_with_ring_attractors_in_reinforcement_learning_sys.md)
+
+<!-- RELATED:END -->

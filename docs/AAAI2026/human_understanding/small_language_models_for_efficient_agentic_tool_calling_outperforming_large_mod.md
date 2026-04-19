@@ -162,3 +162,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 有6类别评估，但缺少消融和多规模对比
 - 写作质量: ⭐⭐⭐ — 结论清晰但部分分析偏主观
 - 价值: ⭐⭐⭐⭐ — 对SLM在专用任务上的潜力提供了有力实证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Anti-adversarial Learning: Desensitizing Prompts for Large Language Models](anti-adversarial_learning_desensitizing_prompts_for_large_la.md)
+- [Failures to Surface Harmful Contents in Video Large Language Models](failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](../../ICLR2026/human_understanding/antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
+- [PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models](pathmind_a_retrieve-prioritize-reason_framework_for_knowledge_graph_reasoning_wi.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](../../NeurIPS2025/human_understanding/graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+
+<!-- RELATED:END -->

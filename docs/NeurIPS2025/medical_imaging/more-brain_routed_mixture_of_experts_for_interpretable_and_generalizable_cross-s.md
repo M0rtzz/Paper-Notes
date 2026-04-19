@@ -160,3 +160,15 @@ MoRE-Brain 用不到一半的参数达到了竞争性能。瓶颈分析显示 Mo
 - 实验充分度: ⭐⭐⭐⭐ 瓶颈分析、消融、跨被试、可解释性分析全面，但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、方法严谨、可视化丰富，神经科学解读有深度
 - 价值: ⭐⭐⭐⭐⭐ 在 fMRI 解码领域推动了可解释性和跨被试泛化的同步进展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zebra: Towards Zero-Shot Cross-Subject Generalization for Universal Brain Visual Decoding](zebra_towards_zero-shot_cross-subject_generalization_for_universal_brain_visual_.md)
+- [Towards Interpretable Visual Decoding with Attention to Brain Representations](../../ICLR2026/medical_imaging/towards_interpretable_visual_decoding_with_attention_to_brain_representations.md)
+- [I2MoE: Interpretable Multimodal Interaction-aware Mixture-of-Experts](../../ICML2025/medical_imaging/i2moe_interpretable_multimodal_interaction-aware_mixture-of-experts.md)
+- [Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding](../../CVPR2026/medical_imaging/meta-learning_in-context_enables_training-free_cross_subject_brain_decoding.md)
+- [Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI](../../ICCV2025/medical_imaging/beyond_brain_decoding_visualsemantic_reconstructions_to_ment.md)
+
+<!-- RELATED:END -->

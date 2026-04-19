@@ -123,3 +123,15 @@ GRPO组相对优化，复合奖励 = 对齐奖励 + min(关键词奖励, 2.0)。
 - 该工作的方法论和实验设计对相关领域有参考价值
 - 后续工作可在更多场景和更大规模上验证方法的泛化性和可扩展性
 - 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reducing Belief Deviation in Reinforcement Learning for Active Reasoning of LLM Agents](../../ICLR2026/llm_agent/reducing_belief_deviation_in_reinforcement_learning_for_active_reasoning.md)
+- [ARCANE: A Multi-Agent Framework for Interpretable and Configurable Alignment](arcane_a_multi-agent_framework_for_interpretable_and_configurable_alignment.md)
+- [History-Aware Reasoning for GUI Agents](history-aware_reasoning_for_gui_agents.md)
+- [NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](../../ICLR2026/llm_agent/newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
+- [Beyond ReAct: A Planner-Centric Framework for Complex Tool-Augmented LLM Reasoning](beyond_react_a_planner-centric_framework_for_complex_tool-au.md)
+
+<!-- RELATED:END -->

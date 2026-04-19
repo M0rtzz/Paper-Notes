@@ -155,3 +155,15 @@ UCI数据集上GraphMixer按平均交互间隔分组：
 ⭐⭐⭐⭐
 
 方法简洁有效，实验极为扎实（16个数据集、3种负采样策略、2种TGNN集成）。对时序图交互异质性的分析填补了重要gap。对数变换和链接历史两个模块虽简单但直觉清晰、效果显著。主要不足是理论分析相对简单，且方法的技术创新性有限（本质是log变换+pair-level记忆）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)
+- [Learnable Spatial-Temporal Positional Encoding for Link Prediction](../../ICML2025/graph_learning/learnable_spatial-temporal_positional_encoding_for_link_prediction.md)
+- [OCN: Effectively Utilizing Higher-Order Common Neighbors for Better Link Prediction](ocn_effectively_utilizing_higher-order_common_neighbors_for_better_link_predicti.md)
+- [Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection](spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)
+- [Revisiting Node Affinity Prediction in Temporal Graphs](../../ICLR2026/graph_learning/revisiting_node_affinity_prediction_in_temporal_graphs.md)
+
+<!-- RELATED:END -->

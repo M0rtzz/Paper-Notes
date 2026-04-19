@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 BS/Heston/General Affine Diffusion 模型，真实市场数据验证，消融实验详尽
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，理论和实验结合好，符号一致
 - 价值: ⭐⭐⭐⭐ 对金融 ML 实践有直接意义，框架可推广到其他数据驱动决策问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MixAT: Combining Continuous and Discrete Adversarial Training for LLMs](mixat_combining_continuous_and_discrete_adversarial_training_for_llms.md)
+- [ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training](toxictextclip_text-based_poisoning_and_backdoor_attacks_on_clip_pre-training.md)
+- [Identifying and Understanding Cross-Class Features in Adversarial Training](../../ICML2025/ai_safety/identifying_and_understanding_cross-class_features_in_adversarial_training.md)
+- [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
+- [DeepPersona: A Generative Engine for Scaling Deep Synthetic Personas](deeppersona_a_generative_engine_for_scaling_deep_synthetic_personas.md)
+
+<!-- RELATED:END -->

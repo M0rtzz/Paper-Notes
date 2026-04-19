@@ -172,3 +172,15 @@ U-MARVEL单模型63.2%已接近LamRA的双模型63.7%，验证了蒸馏策略的
 - 实验充分度: ⭐⭐⭐⭐⭐ 详尽消融覆盖每个维度
 - 实用性: ⭐⭐⭐⭐⭐ 直接可操作指导
 - 综合: ⭐⭐⭐⭐ 实用贡献大于理论突破
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal Retrieval for Multimodal Trajectory Modeling](../../ICML2025/multimodal_vlm/universal_retrieval_for_multimodal_trajectory_modeling.md)
+- [MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval](../../ACL2025/multimodal_vlm/megapairs_massive_data_synthesis_for_universal_multimodal_retrieval.md)
+- [PPE: Positional Preservation Embedding for Token Compression in Multimodal Large Language Models](ppe_positional_preservation_embedding_for_token_compression_in_multimodal_large_.md)
+- [Retrv-R1: A Reasoning-Driven MLLM Framework for Universal and Efficient Multimodal Retrieval](../../NeurIPS2025/multimodal_vlm/retrv-r1_a_reasoning-driven_mllm_framework_for_universal_and_efficient_multimoda.md)
+- [Reasoning-Driven Multimodal LLM for Domain Generalization](reasoning-driven_multimodal_llm_for_domain_generalization.md)
+
+<!-- RELATED:END -->

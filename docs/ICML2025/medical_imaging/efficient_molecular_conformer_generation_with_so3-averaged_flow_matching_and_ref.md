@@ -146,3 +146,15 @@ $$\mathcal{L}_{\text{AvgFlow}}(\theta) = \mathbb{E}\left[\|v_t^\theta(x_t) - u_t
 - 实验充分度: ⭐⭐⭐⭐ (两个标准数据集、两种架构、完整消融，但缺少能量评估)
 - 写作质量: ⭐⭐⭐⭐ (数学推导清晰，图表直观)
 - 价值: ⭐⭐⭐⭐ (单步生成对工业级虚拟筛选有实际意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Generation of Spatial Transcriptomics from Histology Images via Whole-Slide Flow Matching](scalable_generation_of_spatial_transcriptomics_from_histology_images_via_whole-s.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling](../../NeurIPS2025/medical_imaging/energy_matching_unifying_flow_matching_and_energy-based_models_for_generative_mo.md)
+- [Learning Patient-Specific Disease Dynamics with Latent Flow Matching for Longitudinal Imaging Generation](../../ICLR2026/medical_imaging/learning_patient-specific_disease_dynamics_with_latent_flow_matching_for_longitu.md)
+- [EvoFlows: Evolutionary Edit-Based Flow-Matching for Protein Engineering](../../ICLR2026/medical_imaging/evoflows_evolutionary_edit-based_flow-matching_for_protein_engineering.md)
+
+<!-- RELATED:END -->

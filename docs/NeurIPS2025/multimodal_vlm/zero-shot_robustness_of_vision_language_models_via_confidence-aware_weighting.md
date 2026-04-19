@@ -137,3 +137,15 @@ CAW使用冻结的原始CLIP模型和可微调的目标CLIP模型（仅微调图
 - 实验充分度: ⭐⭐⭐⭐ 15个数据集评估、多种攻击方式、内存对比
 - 写作质量: ⭐⭐⭐⭐ 简洁明了，方法公式清晰
 - 价值: ⭐⭐⭐⭐ 提供了一种低资源消耗的CLIP鲁棒性增强方案，实际部署意义大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Spectrum-Aware Latent Steering for Zero-Shot Generalization in Vision-Language Models](test-time_spectrum-aware_latent_steering_for_zero-shot_generalization_in_vision-.md)
+- [iFinder: Structured Zero-Shot VLM Grounding for Dash-Cam Video Reasoning](ifinder_structured_zero-shot_vision-based_llm_grounding_for_dash-cam_video_reaso.md)
+- [TOMCAT: Test-time Comprehensive Knowledge Accumulation for Compositional Zero-Shot Learning](tomcat_test-time_comprehensive_knowledge_accumulation_for_compositional_zero-sho.md)
+- [AGFT: Alignment-Guided Fine-Tuning for Zero-Shot Adversarial Robustness of Vision-Language Models](../../CVPR2026/multimodal_vlm/agft_alignment-guided_fine-tuning_for_zero-shot_adversarial_robustness_of_vision.md)
+- [RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models](../../ACL2025/multimodal_vlm/rate-nav_region-aware_termination_enhancement_for_zero-shot_object_navigation_wi.md)
+
+<!-- RELATED:END -->

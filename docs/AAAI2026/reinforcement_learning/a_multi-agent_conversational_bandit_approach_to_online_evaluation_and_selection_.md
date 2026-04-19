@@ -111,3 +111,15 @@ StyleEval 数据集上不同 embedding 模型和 agent 数量的累积 regret：
 - 实验充分度: ⭐⭐⭐⭐ 多个 embedding 模型、多个数据集、多个参数配置
 - 写作质量: ⭐⭐⭐ 结构清晰，但符号较多
 - 价值: ⭐⭐⭐⭐ 理论和实用价值均高，适用于 LLM 服务平台
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Provably Efficient Multi-Objective Bandit Algorithms under Preference-Centric Customization](provably_efficient_multi-objective_bandit_algorithms_under_preference-centric_cu.md)
+- [Perturbing Best Responses in Zero-Sum Games](perturbing_best_responses_in_zero-sum_games.md)
+- [BAMAS: Structuring Budget-Aware Multi-Agent Systems](bamas_structuring_budget-aware_multi-agent_systems.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+- [Discounted Cuts: A Stackelberg Approach to Network Disruption](discounted_cuts_a_stackelberg_approach_to_network_disruption.md)
+
+<!-- RELATED:END -->

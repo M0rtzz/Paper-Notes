@@ -142,3 +142,15 @@ First-Step GCG 速度快约 20 倍，攻击效果强 3-4 倍。
 - **实验充分度**: ⭐⭐⭐⭐ — 三个模型、两个数据集、三种评估器、多种攻击类型和基线，但生成长度固定
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题清晰、分析深入、理论与实验结合紧密
 - **价值**: ⭐⭐⭐⭐⭐ — 随着 MDLM 逐步进入实际应用，本文的安全发现和防御方案具有高度实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
+- [wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models](wd1_weighted_policy_optimization_for_reasoning_in_diffusion_language_models.md)
+- [Horizon Imagination: Efficient On-Policy Rollout in Diffusion World Models](horizon_imagination_efficient_on-policy_rollout_in_diffusion_world_models.md)
+- [Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution](trust_but_verify_adaptive_conditioning_for_reference-based_diffusion_super-resol.md)
+- [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](../../NeurIPS2025/image_restoration/mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ $$\text{bias} = \|\text{Fil}(U_\Delta) - \mu_C\|_2 \leq \beta \cdot \|\Sigma_C\|
 ## 评分 ⭐⭐⭐⭐
 
 问题定义新颖，实验设计严谨，揭示了 FL 中水印的根本性矛盾。虽然未提出解决方案，但为后续研究指明了方向。与视频理解领域关联较弱，更偏向安全与联邦学习交叉方向。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoNSA: Native Sparse Attention Scales Video Understanding](videonsa_native_sparse_attention_scales_video_understanding.md)
+- [A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
+- [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
+- [Let's Split Up: Zero-Shot Classifier Edits for Fine-Grained Video Understanding](lets_split_up_zero-shot_classifier_edits_for_fine-grained_video_understanding.md)
+- [FlashVID: Efficient Video Large Language Models via Training-free Tree-Based Spatiotemporal Token Merging](flashvid_efficient_video_large_language_models_via_training-free_tree-based_spat.md)
+
+<!-- RELATED:END -->

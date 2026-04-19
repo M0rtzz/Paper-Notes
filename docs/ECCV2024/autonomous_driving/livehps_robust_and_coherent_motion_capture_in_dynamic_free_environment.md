@@ -171,3 +171,15 @@ SMPL solver 损失：$\mathcal{L}_{smpl} = \lambda_6 \mathcal{L}_{mse}(\mathbf{J
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4个数据集（含自建 NoiseMotion），5项指标，丰富的定量/定性对比和详尽消融
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，每个模块的设计理由解释充分，消融分析有深度
 - **价值**: ⭐⭐⭐⭐ — 显著推进了 LiDAR 动作捕捉在真实噪声环境下的实用性，FreeMotion-OBJ 抖动降低 69% 具有很强的应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Data Fusion to Capture Dynamic Interactions between Built Environment and Vulnerable Older Adults](../../AAAI2026/autonomous_driving/multimodal_data_fusion_to_capture_dynamic_interactions_between_built_environment.md)
+- [DySeT: A Dynamic Masked Self-distillation Approach for Robust Trajectory Prediction](dyset_a_dynamic_masked_self-distillation_approach_for_robust_trajectory_predicti.md)
+- [Train Till You Drop: Towards Stable and Robust Source-free Unsupervised 3D Domain Adaptation](train_till_you_drop_towards_stable_and_robust_source-free_unsupervised_3d_domain.md)
+- [Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather](rethinking_data_augmentation_for_robust_lidar_semantic_segmentation_in_adverse_w.md)
+- [MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection](monowad_weather-adaptive_diffusion_model_for_robust_monocular_3d_object_detectio.md)
+
+<!-- RELATED:END -->

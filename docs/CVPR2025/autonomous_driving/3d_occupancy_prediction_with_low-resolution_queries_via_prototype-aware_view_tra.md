@@ -113,3 +113,15 @@ ProtoOcc作为即插即用模块一致性提升所有基线。
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个基准+多分辨率设定+效率分析+丰富消融+可视化，非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述系统，图示质量高
 - 价值: ⭐⭐⭐⭐⭐ 解决了3DOP实时部署的核心效率问题，75%减少计算几乎无损性能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GDFusion: Rethinking Temporal Fusion with a Unified Gradient Descent View for 3D Semantic Occupancy Prediction](rethinking_temporal_fusion_with_a_unified_gradient_descent_view_for_3d_semantic_.md)
+- [ProOOD: Prototype-Guided Out-of-Distribution 3D Occupancy Prediction](../../CVPR2026/autonomous_driving/proood_prototype-guided_out-of-distribution_3d_occupancy_prediction.md)
+- [Semantic Causality-Aware Vision-Based 3D Occupancy Prediction](../../ICCV2025/autonomous_driving/semantic_causality-aware_vision-based_3d_occupancy_prediction.md)
+- [GaussianFormer-2: Probabilistic Gaussian Superposition for Efficient 3D Occupancy Prediction](gaussianformer-2_probabilistic_gaussian_superposition_for_efficient_3d_occupancy.md)
+- [VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)
+
+<!-- RELATED:END -->

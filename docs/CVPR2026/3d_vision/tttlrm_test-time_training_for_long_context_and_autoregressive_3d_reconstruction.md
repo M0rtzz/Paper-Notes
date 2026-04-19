@@ -180,3 +180,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{RGB}} + \lambda_{\text{depth}} \mathcal{L}_{\
 ⭐⭐⭐⭐⭐ (5/5)
 
 这是一篇极具前瞻性的工作。将 TTT 机制引入3D重建是一个自然而深刻的创新，线性复杂度使长上下文和自回归建模成为可能。实验全面且有说服力，在物体和场景级均达到 SOTA。从 NVS 预训练迁移到显式3D重建的策略优雅实用。架构设计的统一性和可扩展性为未来实时3D感知系统奠定了基础。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongStream: Long-Sequence Streaming Autoregressive Visual Geometry](longstream_long-sequence_streaming_autoregressive_visual_geometry.md)
+- [Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation](ada3drift_adaptive_trainingtime_drifting_for_onest.md)
+- [PixARMesh: Autoregressive Mesh-Native Single-View Scene Reconstruction](pixarmesh_autoregressive_mesh-native_single-view_scene_reconstruction.md)
+- [VGG-T3: Offline Feed-Forward 3D Reconstruction at Scale](vgg-t3_offline_feed-forward_3d_reconstruction_at_scale.md)
+- [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
+
+<!-- RELATED:END -->

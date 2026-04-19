@@ -135,3 +135,15 @@ QUART 在所有任务上均超越 baseline，尤其在高难度任务（Crawl/Un
 - 实验充分度: ⭐⭐⭐⭐ 多任务/泛化/sim2real全面评估，但缺少与更多VLA方法的对比
 - 写作质量: ⭐⭐⭐ 结构清晰但部分表述重复
 - 价值: ⭐⭐⭐⭐ 为四足机器人智能化开辟了VLA方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](../../CVPR2026/human_understanding/when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
+- [ShowUI: One Vision-Language-Action Model for GUI Visual Agent](../../CVPR2025/human_understanding/showui_one_vision-language-action_model_for_gui_visual_agent.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](../../CVPR2026/human_understanding/quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding](egoexo-fitness_towards_egocentric_and_exocentric_full-body_action_understanding.md)
+- [10 Open Challenges Steering the Future of Vision-Language-Action Models](../../AAAI2026/human_understanding/10_open_challenges_steering_the_future_of_vision-language-ac.md)
+
+<!-- RELATED:END -->

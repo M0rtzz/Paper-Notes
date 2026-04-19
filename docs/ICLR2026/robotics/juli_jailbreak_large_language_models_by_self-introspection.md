@@ -118,3 +118,15 @@ BiasNet $F_\theta$ 接收目标 LLM 的 log probability 输出 $\log p_\alpha(x_
 - 实验充分度: ⭐⭐⭐⭐ 多模型（含闭源）× 多场景 × 多评估指标 × 含 SOTA 防御
 - 写作质量: ⭐⭐⭐⭐ 清晰，Harmful Info Score 有方法论贡献
 - 价值: ⭐⭐⭐⭐ 对 API 安全设计有直接警示——是否应该返回 log probability 需重新评估
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sysformer: Safeguarding Frozen Large Language Models with Adaptive System Prompts](sysformer_safeguarding_frozen_large_language_models_with_adaptive_system_prompts.md)
+- [SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
+- [SELF-PERCEPT: Introspection Improves LLMs' Detection of Multi-Person Mental Manipulation in Conversations](../../ACL2025/robotics/self_percept_manipulation_detection.md)
+- [MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
+- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+
+<!-- RELATED:END -->

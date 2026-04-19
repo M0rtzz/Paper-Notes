@@ -194,3 +194,15 @@ $$\hat{c} = \arg\max_{c_{i,j} \in \mathcal{C}_{test}} p(c_{i,j}|x) + p(a_i|x, v_
 | 写作质量 | 4 | 逻辑清晰，可视化丰富，有失败案例分析 |
 | 实用价值 | 4 | 框架通用可扩展，代码已开源，推理速度快 |
 | **综合** | **4.0** | 概率分解视角 + 简洁设计 + 全面实验的优秀工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)
+- [Imbalance in Balance: Online Concept Balancing in Generation Models](imbalance_in_balance_online_concept_balancing_in_generation_models.md)
+- [Supercharging Floorplan Localization with Semantic Rays](supercharging_floorplan_localization_with_semantic_rays.md)
+- [ForCenNet: Foreground-Centric Network for Document Image Rectification](forcennet_foreground-centric_network_for_document_image_rectification.md)
+- [OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)
+
+<!-- RELATED:END -->

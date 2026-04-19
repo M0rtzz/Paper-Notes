@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、多种基线、推理类型分析、跨域分析，但绝对EPR值偏低
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义严谨，指标定义清晰，分析层层递进
 - 价值: ⭐⭐⭐⭐ 为"用FOL做自然语言推理"这个长期难题提供了新的研究框架和基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Utility-Preserving Text Anonymization Based on Large Language Models](robust_utility-preserving_text_anonymization_based_on_large_language_models.md)
+- [GradOT: Training-free Gradient-preserving Offsite-tuning for Large Language Models](gradot_offsite_tuning.md)
+- [How to Train Long-Context Language Models (Effectively)](train_long_context_effectively.md)
+- [A Content-Preserving Secure Linguistic Steganography](../../AAAI2026/llm_efficiency/a_content-preserving_secure_linguistic_steganography.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
+
+<!-- RELATED:END -->

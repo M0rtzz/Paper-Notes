@@ -136,3 +136,15 @@ HQLT 在每个时间步接收输入 $\mathbf{x}_t$，同时维护两类记忆：
 - 实验充分度: ⭐⭐⭐⭐ 语言建模 + 合成任务 + RL 三线验证，但训练规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 从背景理论到方法设计到实验验证的逻辑链完整，概念解释清晰
 - 价值: ⭐⭐⭐⭐ 对 Transformer 架构设计和记忆系统理论都有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+- [Learning Memory-Enhanced Improvement Heuristics for Flexible Job Shop Scheduling](learning_memory-enhanced_improvement_heuristics_for_flexible_job_shop_scheduling.md)
+- [Spatial-Aware Decision-Making with Ring Attractors in Reinforcement Learning Systems](spatial-aware_decision-making_with_ring_attractors_in_reinforcement_learning_sys.md)
+
+<!-- RELATED:END -->

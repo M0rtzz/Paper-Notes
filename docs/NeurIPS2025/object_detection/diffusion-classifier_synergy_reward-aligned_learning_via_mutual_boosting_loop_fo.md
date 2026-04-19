@@ -121,3 +121,15 @@ DCS 的核心思想是在扩散模型 $D$ 和 FSCIL 分类器 $\sigma$ 之间建
 - 实验充分度: 7/10 — 三个标准基准 + 详细消融，但缺少更复杂场景验证和计算开销分析
 - 写作质量: 8/10 — 问题动机清晰，方法推导严谨，图表辅助理解
 - 价值: 7/10 — 为 FSCIL 中利用生成模型提供了新范式，但实际部署受限于扩散模型开销
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning](sample_complexity_of_distributionally_robust_average-reward_reinforcement_learni.md)
+- [The Devil is in the Spurious Correlations: Boosting Moment Retrieval with Dynamic Learning](../../ICCV2025/object_detection/the_devil_is_in_the_spurious_correlations_boosting_moment_retrieval_with_dynamic.md)
+- [Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need](../../CVPR2025/object_detection/boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)
+- [SAGA: Learning Signal-Aligned Distributions for Improved Text-to-Image Generation](../../AAAI2026/object_detection/saga_learning_signal-aligned_distributions_for_improved_text-to-image_generation.md)
+- [Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension](video-rag_visually-aligned_retrieval-augmented_long_video_comprehension.md)
+
+<!-- RELATED:END -->

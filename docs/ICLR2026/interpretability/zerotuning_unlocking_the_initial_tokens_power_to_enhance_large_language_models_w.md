@@ -144,3 +144,15 @@ LogiQA 上 Deepseek-R1-14B: 27.80 → 35.60（+7.80%）。
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 15 个数据集、4 个模型、多维度分析
 - **写作质量**: ⭐⭐⭐⭐⭐ — 逻辑递进，由理论到方法到实验的完整故事
 - **实用性**: ⭐⭐⭐⭐⭐ — 4 行代码即可部署，无训练无额外内存
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal Properties of Activation Sparsity in Modern Large Language Models](universal_properties_of_activation_sparsity_in_modern_large_language_models.md)
+- [Probabilistic Token Alignment for Large Language Model Fusion](../../NeurIPS2025/interpretability/probabilistic_token_alignment_for_large_language_model_fusion.md)
+- [Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
+- [Evolution of Concepts in Language Model Pre-Training](evolution_of_concepts_in_language_model_pre-training.md)
+- [The Trilemma of Truth in Large Language Models](../../NeurIPS2025/interpretability/the_trilemma_of_truth_in_large_language_models.md)
+
+<!-- RELATED:END -->

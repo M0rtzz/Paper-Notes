@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两数据集+新基准+新指标+消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题定义和方法层层递进
 - 价值: ⭐⭐⭐⭐⭐ WIPER-Bench + TokSim 对社区有持久价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing](effecterase_joint_video_object_removal_and_insertion_for_high-quality_effect_era.md)
+- [Precise Object and Effect Removal with Adaptive Target-Aware Attention](precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+- [ViHOI: Human-Object Interaction Synthesis with Visual Priors](vihoi_human-object_interaction_synthesis_with_visual_priors.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [CountSteer: Steering Attention for Object Counting in Diffusion Models](../../AAAI2026/image_generation/countsteer_steering_attention_for_object_counting_in_diffusion_models.md)
+
+<!-- RELATED:END -->

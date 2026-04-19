@@ -118,3 +118,15 @@ MoME在所有压缩率下全面超越基线，同时活跃参数少2-4倍。
 - 实验充分度: ⭐⭐⭐⭐⭐ （LRS2+LRS3、3种任务、详细消融+可视化）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，实验图表丰富）
 - 价值: ⭐⭐⭐⭐⭐ （弹性推理+SOTA性能，端侧部署价值大）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEGADance: Mixture-of-Experts Architecture for Genre-Aware 3D Dance Generation](megadance_mixture-of-experts_architecture_for_genre-aware_3d_dance_generation.md)
+- [AVRobustBench: Benchmarking the Robustness of Audio-Visual Recognition Models at Test-Time](textttavrobustbench_benchmarking_the_robustness_of_audio-visual_recognition_mode.md)
+- [MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens](../../ACL2025/audio_speech/mms-llama_efficient_llm-based_audio-visual_speech_recognition_with_minimal_multi.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [Dialectal Coverage and Generalization in Arabic Speech Recognition](../../ACL2025/audio_speech/dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
+
+<!-- RELATED:END -->

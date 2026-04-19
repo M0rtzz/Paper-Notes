@@ -163,3 +163,15 @@ $$\tau_{k,i} = \begin{cases} \tau, & l_i \geq k \\ \frac{\tau}{\alpha^{k-l_i}}, 
 - 新颖性：★★★★☆ — 残差分裂概念新颖且直觉清晰，但整体框架仍在3D-GS改良范畴
 - 技术深度：★★★★☆ — 三个组件的协同设计精巧，消融实验充分揭示了各自作用
 - 实用性：★★★★★ — 即插即用、提升显著、训练高效，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+- [StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting](stochasticsplats_stochastic_rasterization_for_sorting-free_3d_gaussian_splatting.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 18~128语言+多模型+多分组策略消融，但模型规模偏小
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，Figure 2 的三步流程图直观
 - 价值: ⭐⭐⭐⭐⭐ 对多语言 LLM 的容量扩展和语言特化有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Less, but Better: Efficient Multilingual Expansion for LLMs via Layer-wise Mixture-of-Experts](less_but_better_efficient_multilingual_expansion.md)
+- [Multilingual Routing in Mixture-of-Experts](../../ICLR2026/multilingual_mt/multilingual_routing_in_mixture-of-experts.md)
+- [mOSCAR: A Large-scale Multilingual and Multimodal Document-level Corpus](moscar_a_large-scale_multilingual_and_multimodal_document-level_corpus.md)
+- [Towards Global AI Inclusivity: A Large-Scale Multilingual Terminology Dataset (GIST)](towards_global_ai_inclusivity_a_large-scale_multilingual_terminology_dataset_gis.md)
+- [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+
+<!-- RELATED:END -->

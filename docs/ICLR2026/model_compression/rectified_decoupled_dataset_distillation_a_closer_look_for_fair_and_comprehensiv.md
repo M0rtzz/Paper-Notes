@@ -122,3 +122,15 @@ $$\theta_{\mathcal{S}}^{t+1} = \arg\min_{\theta \in \Theta} L_{KL}(f_{\theta_\ma
 | 实用性 | ⭐⭐⭐⭐⭐ | 为社区提供公平评估标准，直接推动领域规范化 |
 | 实验充分性 | ⭐⭐⭐⭐⭐ | 6 个数据集，8 个方法，IPC 1-100 全面覆盖 |
 | 写作质量 | ⭐⭐⭐⭐ | 论证清晰，图表有说服力 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Dataset Distillation via Spectral Filtering](understanding_dataset_distillation_via_spectral_filtering.md)
+- [Dataset Distillation as Pushforward Optimal Quantization](dataset_distillation_as_pushforward_optimal_quantization.md)
+- [Grounding and Enhancing Informativeness and Utility in Dataset Distillation](grounding_and_enhancing_informativeness_and_utility_in_dataset_distillation.md)
+- [TGDD: Trajectory Guided Dataset Distillation with Balanced Distribution](../../AAAI2026/model_compression/tgdd_trajectory_guided_dataset_distillation_with_balanced_distribution.md)
+- [BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
+
+<!-- RELATED:END -->

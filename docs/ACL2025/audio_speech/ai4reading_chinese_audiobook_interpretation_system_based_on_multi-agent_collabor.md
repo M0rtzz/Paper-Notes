@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐ 评估规模太小（5人），缺少消融实验和更多基线对比
 - 写作质量: ⭐⭐⭐⭐ 系统设计描述详细，公式化表达清晰，但实验部分薄弱
 - 价值: ⭐⭐⭐ 系统思路有参考价值，但评估不充分限制了结论的可信度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sensorium Arc: AI Agent System for Oceanic Data Exploration and Interactive Eco-Art](../../NeurIPS2025/audio_speech/sensorium_arc_ai_agent_system_for_oceanic_data_exploration_and_interactive_eco-a.md)
+- [DeepDebater: A Superpersuasive Autonomous Policy Debating System](../../AAAI2026/audio_speech/a_superpersuasive_autonomous_policy_debating_system.md)
+- [Double Entendre: Robust Audio-Based AI-Generated Lyrics Detection via Multi-View Fusion](double_entendre_robust_audio-based_ai-generated_lyrics_detection_via_multi-view_.md)
+- [GigaSpeech 2: An Evolving, Large-Scale and Multi-domain ASR Corpus for Low-Resource Languages](gigaspeech2_low_resource_asr.md)
+- [From Generation to Attribution: Music AI Agent Architectures for the Post-Streaming Era](../../NeurIPS2025/audio_speech/from_generation_to_attribution_music_ai_agent_architectures_for_the_post-streami.md)
+
+<!-- RELATED:END -->

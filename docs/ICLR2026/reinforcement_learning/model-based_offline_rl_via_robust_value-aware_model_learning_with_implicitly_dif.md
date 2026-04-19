@@ -109,3 +109,15 @@ NeoRL（9 个任务总分）：**472.2**（vs RAMBO 382.8，vs CQL 466.3）。
 - 实验充分度: ⭐⭐⭐⭐ D4RL + NeoRL 全面覆盖，稳定性分析充分
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，RAMBO 失败原因分析深入
 - 价值: ⭐⭐⭐⭐ 为模型基离线 RL 的保守性控制提供了稳定可靠的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BA-MCTS: Bayes Adaptive Monte Carlo Tree Search for Offline Model-based RL](bayes_adaptive_monte_carlo_tree_search_for_offline_model-based_reinforcement_lea.md)
+- [Transitive RL: Value Learning via Divide and Conquer](transitive_rl_value_learning_via_divide_and_conquer.md)
+- [From Observations to Events: Event-Aware World Model for Reinforcement Learning](from_observations_to_events_event-aware_world_model_for_reinforcement_learning.md)
+- [Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+
+<!-- RELATED:END -->

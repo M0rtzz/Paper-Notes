@@ -138,3 +138,15 @@ V2X-Radar 数据集包含三个子集：
 - 实验充分度: ⭐⭐⭐⭐ 三个子集 × 多种检测方法 × 同步/异步设置
 - 写作质量: ⭐⭐⭐⭐ 数据集论文标准写法，细节翔实
 - 价值: ⭐⭐⭐⭐ 对推动 4D 雷达在协同感知中的研究有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UrbanIng-V2X: A Large-Scale Multi-Vehicle Multi-Infrastructure Dataset Across Multiple Intersections for Cooperative Perception](urbaning-v2x_a_large-scale_multi-vehicle_multi-infrastructure_dataset_across_mul.md)
+- [RadarMP: Motion Perception for 4D mmWave Radar in Autonomous Driving](../../AAAI2026/autonomous_driving/radarmp_motion_perception_for_4d_mmwave_radar_in_autonomous_driving.md)
+- [H-V2X: A Large Scale Highway Dataset for BEV Perception](../../ECCV2024/autonomous_driving/h-v2x_a_large_scale_highway_dataset_for_bev_perception.md)
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](../../ICCV2025/autonomous_driving/cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [AdaRadar: Rate Adaptive Spectral Compression for Radar-based Perception](../../CVPR2026/autonomous_driving/adaradar_rate_adaptive_spectral_compression_for_radar-based_perception.md)
+
+<!-- RELATED:END -->

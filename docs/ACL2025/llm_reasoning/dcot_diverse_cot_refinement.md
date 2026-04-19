@@ -132,3 +132,15 @@ Response: [Answer 1] CoT₁ [Answer 2] CoT₂ ... [Answer k] CoTₖ [Final answe
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨模型家族(Phi, LLaMA)、跨尺度(1.3B-70B)、跨任务类型，还有人工评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验设计严谨
 - 价值: ⭐⭐⭐⭐ 实用性强，可直接应用到现有指令微调pipeline中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](tract_regression_cot.md)
+- [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](cot-valve_length-compressible_chain-of-thought_tuning.md)
+- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
+- [Towards Safety Reasoning in LLMs: AI-agentic Deliberation for Policy-embedded CoT Data Creation](towards_safety_reasoning_in_llms_ai-agentic_deliberation_for_policy-embedded_cot.md)
+- [Enhancing Retrieval Systems with Inference-Time Logical Reasoning](enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)
+
+<!-- RELATED:END -->

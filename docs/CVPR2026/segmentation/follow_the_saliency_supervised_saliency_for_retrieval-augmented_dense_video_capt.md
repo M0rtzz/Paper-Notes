@@ -126,3 +126,15 @@ STaRC 在 YouCook2 和 ViTT 上大多数指标达到 SOTA。
 - 实验充分度: ⭐⭐⭐⭐ 组件消融、超参分析、定性对比全面；但跨数据集泛化测试不足
 - 写作质量: ⭐⭐⭐⭐ 动机清晰（相关性分析图很有说服力），结构紧凑
 - 价值: ⭐⭐⭐⭐ DVC 领域的实质性进展，统一显著性范式有推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection](../../ICCV2025/segmentation/beyond_single_images_retrieval_self-augmented_unsupervised_camouflaged_object_de.md)
+- [TabRAG: Improving Tabular Document Question Answering for Retrieval Augmented Generation via Structured Representations](../../NeurIPS2025/segmentation/tabrag_improving_tabular_document_question_answering_for_retrieval_augmented_gen.md)
+- [Joint Self-Supervised Video Alignment and Action Segmentation](../../ICCV2025/segmentation/joint_self-supervised_video_alignment_and_action_segmentation.md)
+- [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](../../NeurIPS2025/segmentation/exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
+- [Love Me, Love My Label: Rethinking the Role of Labels in Prompt Retrieval for Visual In-Context Learning](love_me_love_my_label_rethinking_the_role_of_labels_in_prompt_retrieval_for_visu.md)
+
+<!-- RELATED:END -->

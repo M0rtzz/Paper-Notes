@@ -134,3 +134,15 @@ $$h^{\text{out}} = \alpha_0 W_0 h^{\text{in}} + \sum_{i=1}^4 \alpha_i B_i A_i h^
 ⭐⭐⭐⭐ (4/5)
 
 理论严谨、实验全面的出色工作。SDMDP框架优雅地解决了VRP变体指数增长的难题，MoSES实现简洁有效。主要不足是推理效率开销和基础变体定义的人工依赖性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Efficient Inference Attacks: Shadow Model Sharing via Mixture-of-Experts](toward_efficient_inference_attacks_shadow_model_sharing_via_mixture-of-experts.md)
+- [LD-MoLE: Learnable Dynamic Routing for Mixture of LoRA Experts](../../ICLR2026/model_compression/ld-mole_learnable_dynamic_routing_for_mixture_of_lora_experts.md)
+- [Dense Backpropagation Improves Training for Sparse Mixture-of-Experts](dense_backpropagation_improves_training_for_sparse_mixture-of-experts.md)
+- [Online Mixture of Experts: No-Regret Learning for Optimal Collective Decision-Making](online_mixture_of_experts_no-regret_learning_for_optimal_collective_decision-mak.md)
+- [A Granular Study of Safety Pretraining under Model Abliteration](a_granular_study_of_safety_pretraining_under_model_abliteration.md)
+
+<!-- RELATED:END -->

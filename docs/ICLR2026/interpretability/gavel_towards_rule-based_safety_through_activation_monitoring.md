@@ -130,3 +130,15 @@ CE 检测器 $g$ 采用 3 层 GRU（256 单元）多标签 RNN，处理 5-token 
 - 实验充分度: ⭐⭐⭐⭐ 9 类误用 × 14950 对话 × 8 基线 × 跨模型/跨语言/对抗评估，但仅限小模型且数据为合成
 - 写作质量: ⭐⭐⭐⭐⭐ 从网安类比出发的动机链条极为清晰，框架呈现层次分明
 - 价值: ⭐⭐⭐⭐⭐ 可落地的 AI 安全治理框架，CE+规则解耦对工业部署有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Linear Probes: Dynamic Safety Monitoring for Language Models](beyond_linear_probes_dynamic_safety_monitoring_for_language_models.md)
+- [ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
+- [Narrow Finetuning Leaves Clearly Readable Traces in Activation Differences](narrow_finetuning_leaves_clearly_readable_traces_in_activation_differences.md)
+- [Universal Properties of Activation Sparsity in Modern Large Language Models](universal_properties_of_activation_sparsity_in_modern_large_language_models.md)
+- [Safety is Not Only About Refusal: Reasoning-Enhanced Fine-tuning for Interpretable LLM Safety](../../ACL2025/interpretability/safety_is_not_only_about_refusal_reasoning-enhanced_fine-tuning_for_interpretabl.md)
+
+<!-- RELATED:END -->

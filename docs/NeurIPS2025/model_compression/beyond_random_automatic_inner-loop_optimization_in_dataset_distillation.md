@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个数据集 + 完整消融 + 计算效率分析
 - 写作质量: ⭐⭐⭐⭐ 三阶段框架清晰
 - 价值: ⭐⭐⭐⭐ 对数据蒸馏社区有直接实用价值，低秩 Hessian 贡献独立有用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperbolic Dataset Distillation](hyperbolic_dataset_distillation.md)
+- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
+- [Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation](rectifying_soft-label_entangled_bias_in_long-tailed_dataset_distillation.md)
+- [Dataset Distillation via the Wasserstein Metric](../../ICCV2025/model_compression/dataset_distillation_via_the_wasserstein_metric.md)
+- [From Fewer Samples to Fewer Bits: Reframing Dataset Distillation as Joint Optimization of Precision and Compactness](../../CVPR2026/model_compression/from_fewer_samples_to_fewer_bits_reframing_dataset_distillation_as_joint_optimiz.md)
+
+<!-- RELATED:END -->

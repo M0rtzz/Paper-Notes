@@ -130,3 +130,15 @@ DAC 在保持性能的同时将压缩比翻倍；MSA 和 TNGR 分别贡献稳定
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 LLM(7B/13B+新架构)、NLP、视觉、多模态四大类，含消融和分布分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，理论推导与实验分析并重，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 对多模型部署有直接实用价值，无数据约束使其即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Label-Free Cross-Task LoRA Merging with Null-Space Compression](../../CVPR2026/multimodal_vlm/label-free_cross-task_lora_merging_with_null-space_compression.md)
+- [ApET: Approximation-Error Guided Token Compression for Efficient VLMs](../../CVPR2026/multimodal_vlm/apet_approximation-error_guided_token_compression_for_efficient_vlms.md)
+- [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](../../ICCV2025/multimodal_vlm/dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [AirCache: Activating Inter-Modal Relevancy KV Cache Compression for Efficient Large Vision-Language Model Inference](../../ICCV2025/multimodal_vlm/aircache_activating_inter-modal_relevancy_kv_cache_compression_for_efficient_lar.md)
+- [CoIDO: Efficient Data Selection for Visual Instruction Tuning via Coupled Importance-Diversity Optimization](coido_efficient_data_selection_for_visual_instruction_tuning_via_coupled_importa.md)
+
+<!-- RELATED:END -->

@@ -201,3 +201,15 @@ AIGI-Holmes 在所有生成器上均达到 98%+ 的准确率，Mean Acc. 比 AID
 - 实验充分度: ⭐⭐⭐⭐⭐ （三个协议、鲁棒性测试、解释质量评估、消融全面）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，但部分细节需查附录）
 - 价值: ⭐⭐⭐⭐⭐ （可解释+泛化的 AIGI 检测是重要且实用的方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](../../ICML2025/multimodal_vlm/unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)
+- [DocThinker: Explainable Multimodal Large Language Models with Rule-based Reinforcement Learning for Document Understanding](docthinker_explainable_multimodal_large_language_models_with.md)
+- [CompCap: Improving Multimodal Large Language Models with Composite Captions](compcap_improving_multimodal_large_language_models_with_composite_captions.md)
+- [Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval](bidirectional_likelihood_estimation_with_multi-modal_large_language_models_for_t.md)
+- [Generalizable Object Re-Identification via Visual In-Context Prompting](generalizable_object_re-identification_via_visual_in-context_prompting.md)
+
+<!-- RELATED:END -->

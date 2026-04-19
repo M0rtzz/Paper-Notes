@@ -142,3 +142,15 @@ DPV-SLAM 以 DPVO 视觉里程计为基础，引入两种回环检测机制：(1
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 4 个数据集（室内/室外）、多种速度/内存对比、与 10+ 方法比较
 - 写作质量: ⭐⭐⭐⭐ 系统论文逻辑清晰，问题定义精确，开源完整
 - 价值: ⭐⭐⭐⭐ 对需要实时相机位姿的下游应用（视图合成、3D重建）具有很高的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [I²-SLAM: Inverting Imaging Process for Robust Photorealistic Dense SLAM](i2-slam_inverting_imaging_process_for_robust_photorealistic_dense_slam.md)
+- [CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field](cg-slam_efficient_dense_rgb-d_slam_in_a_consistent_uncertainty-aware_3d_gaussian.md)
+- [Benchmarking Egocentric Visual-Inertial SLAM at City Scale](../../ICCV2025/3d_vision/benchmarking_egocentric_visualinertial_slam_at_city_scale.md)
+- [The NeRFect Match: Exploring NeRF Features for Visual Localization](the_nerfect_match_exploring_nerf_features_for_visual_localization.md)
+
+<!-- RELATED:END -->

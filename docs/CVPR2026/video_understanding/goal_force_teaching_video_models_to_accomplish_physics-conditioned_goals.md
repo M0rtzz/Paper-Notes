@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 人类研究 + 准确率 + 多样性 + 质量感知，验证全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 足球罚球的类比精准，Fig.3 对比 direct vs. goal force 一目了然
 - 价值: ⭐⭐⭐⭐⭐ — 开辟了物理条件视频规划的新方向，潜在应用广泛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hear What Matters! Text-conditioned Selective Video-to-Audio Generation](hear_what_matters_text-conditioned_selective_video-to-audio_generation.md)
+- [Learning to Assist: Physics-Grounded Human-Human Control via Multi-Agent Reinforcement Learning](learning_to_assist_physics-grounded_human-human_control_via_multi-agent_reinforc.md)
+- [Decoding Open-Ended Information Seeking Goals from Eye Movements in Reading](../../ICLR2026/video_understanding/decoding_open-ended_information_seeking_goals_from_eye_movements_in_reading.md)
+- [UFVideo: Towards Unified Fine-Grained Video Cooperative Understanding with Large Language Models](ufvideo_towards_unified_fine-grained_video_cooperative_understanding_with_large_.md)
+- [Understanding Temporal Logic Consistency in Video-Language Models through Cross-Modal Attention Discriminability](understanding_temporal_logic_consistency_in_video-language_models_through_cross-.md)
+
+<!-- RELATED:END -->

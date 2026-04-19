@@ -119,3 +119,15 @@ Disco4D 采用自底向上的构建方式：(1) 使用 SMPL-X 参数化模型表
 - 实验充分度: ⭐⭐⭐⭐ 多数据集定量评估+用户研究，但缺少更多真实场景demo
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、方法描述详细
 - 价值: ⭐⭐⭐⭐⭐ 实际应用价值很高，为虚拟试衣等领域提供了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [DAGSM: Disentangled Avatar Generation with GS-enhanced Mesh](dagsm_disentangled_avatar_generation_with_gs-enhanced_mesh.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [GenVDM: Generating Vector Displacement Maps From a Single Image](genvdm_generating_vector_displacement_maps_from_a_single_image.md)
+
+<!-- RELATED:END -->

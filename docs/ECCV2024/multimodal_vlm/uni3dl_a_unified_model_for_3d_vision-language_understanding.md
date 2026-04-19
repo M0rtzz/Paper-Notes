@@ -186,3 +186,15 @@ Uni3DL 在 6 大任务上的表现（Table 3）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 大任务、5 个数据集、详细消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Table 1 的任务-方法对比一目了然
 - 价值: ⭐⭐⭐⭐ 为 3D 统一建模提供了强 baseline，但未利用 2D 预训练限制了实际竞争力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniCode: Learning a Unified Codebook for Multimodal Large Language Models](unicode_learning_a_unified_codebook_for_multimodal_large_language_models.md)
+- [UMBRAE: Unified Multimodal Brain Decoding](umbrae_unified_multimodal_brain_decoding.md)
+- [UniTok: A Unified Tokenizer for Visual Generation and Understanding](../../NeurIPS2025/multimodal_vlm/unitok_a_unified_tokenizer_for_visual_generation_and_understanding.md)
+- [HiSpatial: Taming Hierarchical 3D Spatial Understanding in Vision-Language Models](../../CVPR2026/multimodal_vlm/hispatial_taming_hierarchical_3d_spatial_understanding_in_vision-language_models.md)
+- [UniHM: Unified Dexterous Hand Manipulation with Vision Language Model](../../ICLR2026/multimodal_vlm/unihm_unified_dexterous_hand_manipulation_with_vision_language_model.md)
+
+<!-- RELATED:END -->

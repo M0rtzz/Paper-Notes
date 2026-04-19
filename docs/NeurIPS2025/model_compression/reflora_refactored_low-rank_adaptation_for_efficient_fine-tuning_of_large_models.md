@@ -140,3 +140,15 @@ $$A_{t+1} = A_t - \eta \nabla \ell(W_t) B_t \tilde{S}_t^{-1}, \quad B_{t+1} = B_
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 NLU/推理/图像生成，含充分消融和开销分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，从问题定义到解的推导逻辑流畅
 - 价值: ⭐⭐⭐⭐ 实用性强，几乎无额外开销即可提升 LoRA 性能，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [C-LoRA: Contextual Low-Rank Adaptation for Uncertainty Estimation in Large Language Models](c-lora_contextual_low-rank_adaptation_for_uncertainty_estimation_in_large_langua.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+
+<!-- RELATED:END -->

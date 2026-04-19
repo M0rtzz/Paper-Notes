@@ -110,3 +110,15 @@ $$\hat{F}_t = F(\mathcal{D}_t) + \frac{f(s_t)}{q_t(s_t)}, \quad s_t \sim q_t$$
 ## 评分
 
 ⭐⭐⭐⭐ — 理论扎实（无偏性、一致性、最优性均有严格证明），实际应用价值高，跨领域实验验证充分，但整体创新更偏统计方法。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
+- [Uncertainty Estimation by Flexible Evidential Deep Learning](uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+- [A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](../../ECCV2024/others/a_framework_for_efficient_model_evaluation_through_stratific.md)
+- [A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
+- [HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild](houselayout3d_a_benchmark_and_training-free_baseline_for_3d_layout_estimation_in.md)
+
+<!-- RELATED:END -->

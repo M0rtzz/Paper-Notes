@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多个数据集+详细消融，但缺少更多非人群类别的定量评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，三阶段 pipeline 层层递进，图表设计好
 - 价值: ⭐⭐⭐⭐ 打开了用生成模型做无标注计数的新方向，实际应用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [Learn from the Learnt: Source-Free Active Domain Adaptation via Contrastive Sampling and Visual Persistence](learn_from_the_learnt_source-free_active_domain_adaptation_via_contrastive_sampl.md)
+- [All You Need is One: Capsule Prompt Tuning with a Single Vector](../../NeurIPS2025/object_detection/all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
+- [Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need](../../CVPR2025/object_detection/boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)
+- [DISTIL: Data-Free Inversion of Suspicious Trojan Inputs via Latent Diffusion](../../ICCV2025/object_detection/distil_data-free_inversion_of_suspicious_trojan_inputs_via_latent_diffusion.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据，消融充分，但缺少与更多 mesh 生成基线的对比
 - 写作质量: ⭐⭐⭐⭐⭐ 写作清晰，方法动机-设计-实验的逻辑链非常完整
 - 价值: ⭐⭐⭐⭐⭐ 开辟了 mesh-native 场景重建的新范式，对后续工作有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models](../../ICLR2026/3d_vision/quadgpt_native_quadrilateral_mesh_generation_with_autoregressive_models.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_human-scene_reconstruction_from_multi-person_multi-view_video_in_a_sing.md)
+- [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
+- [DirectFisheye-GS: Enabling Native Fisheye Input in Gaussian Splatting with Cross-View Joint Optimization](directfisheye-gs_enabling_native_fisheye_input_in_gaussian_splatting_with_cross-.md)
+- [AvatarPointillist: AutoRegressive 4D Gaussian Avatarization](avatarpointillist_autoregressive_4d_gaussian_avatarization.md)
+
+<!-- RELATED:END -->

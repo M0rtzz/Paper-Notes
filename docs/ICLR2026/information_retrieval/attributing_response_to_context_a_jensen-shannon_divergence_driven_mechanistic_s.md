@@ -140,3 +140,15 @@ ARC-JSD分两大模块：(1) 基于JSD的上下文归因（定位关键句子）
 - 实验充分度: ⭐⭐⭐⭐ 3数据集4+2模型，多角度消融和验证，结果一致性好
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，公式推导连贯，case study直观
 - 价值: ⭐⭐⭐⭐ 即插即用的归因方法+机制分析洞见，对RAG透明化有实际推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ARC-JSD: Attributing Response to Context via Jensen-Shannon Divergence Driven Mechanistic Study](../../NeurIPS2025/information_retrieval/attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)
+- [Embedding-Based Context-Aware Reranker](embedding-based_context-aware_reranker.md)
+- [Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
+- [G-reasoner: Foundation Models for Unified Reasoning over Graph-structured Knowledge](g-reasoner_foundation_models_for_unified_reasoning_over_graph-structured_knowled.md)
+- [Bayesian Attention Mechanism: A Probabilistic Framework for Positional Encoding and Context Length Extrapolation](bayesian_attention_mechanism_a_probabilistic_framework_for_positional_encoding_a.md)
+
+<!-- RELATED:END -->

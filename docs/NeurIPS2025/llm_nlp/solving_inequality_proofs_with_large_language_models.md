@@ -147,3 +147,15 @@ $$C^* = \sup\{C \in \mathbb{R} : f(\mathbf{x}) \geq C \cdot g(\mathbf{x}), \fora
 - **实验充分度** ⭐⭐⭐⭐⭐：29 个模型系统评估
 - **影响力** ⭐⭐⭐⭐⭐：揭示 LLM 数学推理根本缺陷
 - **写作质量** ⭐⭐⭐⭐⭐：逻辑清晰，图表精美
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Perspective Transition of Large Language Models for Solving Subjective Tasks](../../ACL2025/llm_nlp/perspective_transition_of_large_language_models_for_solving_subjective_tasks.md)
+- [Large Language Models Miss the Multi-Agent Mark](large_language_models_miss_the_multi-agent_mark.md)
+- [Scaling Up Active Testing to Large Language Models](scaling_up_active_testing_to_large_language_models.md)
+- [The Rise of Parameter Specialization for Knowledge Storage in Large Language Models](the_rise_of_parameter_specialization_for_knowledge_storage_in_large_language_mod.md)
+- [GeoCAD: Local Geometry-Controllable CAD Generation with Large Language Models](geocad_local_geometry-controllable_cad_generation_with_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ $$\text{Adv}(\mathcal{A}, \text{Ul}) = \frac{1}{|\mathcal{S}_\alpha|} \left| \su
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多架构、多消融、与多种baseline对比，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 定理清晰、证明完整、discussion透彻，写作水平很高
 - 价值: ⭐⭐⭐⭐ 为遗忘评估提供了更可靠的工具，但受限于SOTA MIA的能力和i.i.d.假设
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SIMU: Selective Influence Machine Unlearning](simu_selective_influence_machine_unlearning.md)
+- [NegMerge: Sign-Consensual Weight Merging for Machine Unlearning](../../ICML2025/llm_safety/negmerge_sign-consensual_weight_merging_for_machine_unlearning.md)
+- [Unlearning Evaluation through Subset Statistical Independence](../../ICLR2026/llm_safety/unlearning_evaluation_through_subset_statistical_independence.md)
+- [SineProject: Machine Unlearning for Stable Vision–Language Alignment](../../CVPR2026/llm_safety/sineproject_machine_unlearning_for_stable_vision_language_alignment.md)
+- [Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](../../ACL2025/llm_safety/chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)
+
+<!-- RELATED:END -->

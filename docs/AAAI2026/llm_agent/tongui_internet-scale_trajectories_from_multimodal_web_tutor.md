@@ -125,3 +125,15 @@ TongUI 框架包含四个阶段：教程爬取 → 教程处理 → 轨迹生成
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个 offline benchmark + 1 个 online benchmark + 用户研究 + 消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，流程描述详尽
 - 价值: ⭐⭐⭐⭐⭐ 完全开源的百万级 GUI 数据集对社区价值很大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [History-Aware Reasoning for GUI Agents](history-aware_reasoning_for_gui_agents.md)
+- [Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents](../../ACL2025/llm_agent/explorer_scaling_exploration-driven_web_trajectory_synthesis_for_multimodal_web_.md)
+- [Co-EPG: A Framework for Co-Evolution of Planning and Grounding in Autonomous GUI Agents](co-epg_a_framework_for_co-evolution_of_planning_and_groundin.md)
+- [ProBench: Benchmarking GUI Agents with Accurate Process Information](probench_benchmarking_gui_agents_with_accurate_process_infor.md)
+- [D-GARA: A Dynamic Benchmarking Framework for GUI Agent Robustness in Real-World Anomalies](d-gara_a_dynamic_benchmarking_framework_for_gui_agent_robust.md)
+
+<!-- RELATED:END -->

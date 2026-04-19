@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 自动化指标+大规模人类评估，消融设计合理
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，pipeline描述详尽
 - 价值: ⭐⭐⭐⭐ 在AR/VR和机器人领域有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
+- [Bolt3D: Generating 3D Scenes in Seconds](../../ICCV2025/3d_vision/bolt3d_generating_3d_scenes_in_seconds.md)
+- [Generating 3D-Consistent Videos from Unposed Internet Photos](generating_3d-consistent_videos_from_unposed_internet_photos.md)
+- [Functionality Understanding and Segmentation in 3D Scenes](functionality_understanding_and_segmentation_in_3d_scenes.md)
+- [Material Anything: Generating Materials for Any 3D Object via Diffusion](material_anything_generating_materials_for_any_3d_object_via_diffusion.md)
+
+<!-- RELATED:END -->

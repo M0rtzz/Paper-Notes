@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为理论工作有一定的实验验证，但实际应用验证可以更充分
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，问题阐述清晰，开放问题的设置增加了影响力
 - 价值: ⭐⭐⭐ 对多视图几何理论有贡献，但直接应用范围较窄，主要影响 SfM 领域的理论研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Alignment via Birkhoff Relaxation](../../NeurIPS2025/others/graph_alignment_via_birkhoff_relaxation.md)
+- [On Topological Descriptors for Graph Products](../../NeurIPS2025/others/on_topological_descriptors_for_graph_products.md)
+- [Structural Approach to Guiding a Present-Biased Agent](../../AAAI2026/others/structural_approach_to_guiding_a_present-biased_agent.md)
+- [Graph-Structured Trajectory Extraction from Travelogues](../../ACL2025/others/graph-structured_trajectory_extraction_from_travelogues.md)
+- [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](../../ACL2025/others/literature_meets_data_hypothesis.md)
+
+<!-- RELATED:END -->

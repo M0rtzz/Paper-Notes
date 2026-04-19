@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多方法对比充分，消融清晰，但缺少定量的视角一致性指标
 - 写作质量: ⭐⭐⭐⭐ 结构完整、图示有效，但方法部分略繁冗
 - 价值: ⭐⭐⭐⭐ 在风格化 3D 肖像生成领域有明确应用价值，但受限于人头特定领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement](3denhancer_consistent_multi-view_diffusion_for_3d_enhancement.md)
+- [AerialMegaDepth: Learning Aerial-Ground Reconstruction and View Synthesis](aerialmegadepth_learning_aerial-ground_reconstruction_and_view_synthesis.md)
+- [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](../../ICCV2025/3d_vision/spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
+- [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](../../NeurIPS2025/3d_vision/nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
+- [MVPaint: Synchronized Multi-View Diffusion for Painting Anything 3D](mvpaint_synchronized_multi-view_diffusion_for_painting_anything_3d.md)
+
+<!-- RELATED:END -->

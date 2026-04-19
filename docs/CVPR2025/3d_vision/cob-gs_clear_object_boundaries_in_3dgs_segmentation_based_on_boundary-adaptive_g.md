@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+消融完整，多场景验证
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，方法推导清晰
 - 价值: ⭐⭐⭐⭐ 对3DGS分割的边界质量提升有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Dental Model Segmentation with Geometrical Boundary Preserving](3d_dental_model_segmentation_with_geometrical_boundary_preserving.md)
+- [BFANet: Revisiting 3D Semantic Segmentation with Boundary Feature Analysis](bfanet_revisiting_3d_semantic_segmentation_with_boundary_feature_analysis.md)
+- [Mobile-GS: Real-time Gaussian Splatting for Mobile Devices](mobile-gs_real-time_gaussian_splatting_for_mobile_devices.md)
+- [Blurry-Edges: Photon-Limited Depth Estimation from Defocused Boundaries](blurry-edges_photon-limited_depth_estimation_from_defocused_boundaries.md)
+- [Horizon-GS: Unified 3D Gaussian Splatting for Large-Scale Aerial-to-Ground Scenes](horizon-gs_unified_3d_gaussian_splatting_for_large-scale_aerial-to-ground_scenes.md)
+
+<!-- RELATED:END -->

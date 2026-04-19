@@ -121,3 +121,15 @@ $$\sup_{\bm{z}}\sup_t \|U(\bm{z})_t - \bar{U}_W(\bm{z})_t\| \leq \varepsilon$$
 - 实验充分度: ⭐⭐☆☆☆ — 纯理论工作，无实验验证
 - 写作质量: ⭐⭐⭐⭐☆ — 结构清晰，主要结果陈述精确
 - 价值: ⭐⭐⭐⭐☆ — 为量子机器学习时序任务奠定理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compact Matrix Quantum Group Equivariant Neural Networks](../../ICML2025/physics/compact_matrix_quantum_group_equivariant_neural_networks.md)
+- [Sublinear Time Quantum Algorithm for Attention Approximation](sublinear_time_quantum_algorithm_for_attention_approximation.md)
+- [ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
+- [ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers](../../ICCV2025/physics/resq_a_novel_framework_to_implement_residual_neural_networks_on_analog_rydberg_a.md)
+- [Neural Deprojection of Galaxy Stellar Mass Profiles](../../NeurIPS2025/physics/neural_deprojection_of_galaxy_stellar_mass_profiles.md)
+
+<!-- RELATED:END -->

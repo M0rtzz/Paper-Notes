@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集评测，冗余分析深入，训练动态可视化有说服力；ImageNet-1K优势不显著
 - 写作质量: ⭐⭐⭐⭐⭐ 动机论述清晰，问题定义精确，冗余分析可视化优秀
 - 价值: ⭐⭐⭐⭐ 冗余诊断框架对整个领域有启发，但在大规模数据集上尚需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](../../ICCV2025/image_generation/cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
+- [Taming Diffusion for Dataset Distillation with High Representativeness (D³HR)](../../ICML2025/image_generation/taming_diffusion_for_dataset_distillation_with_high_representativeness.md)
+- [Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](pluggable_pruning_with_contiguous_layer_distillation_for_diffusion_transformers.md)
+- [Prototype-Guided Concept Erasure in Diffusion Models](prototype-guided_concept_erasure_in_diffusion_models.md)
+- [BioVITA: Biological Dataset, Model, and Benchmark for Visual-Textual-Acoustic Alignment](biovita_biological_dataset_model_and_benchmark_for_visual-textual-acoustic_align.md)
+
+<!-- RELATED:END -->

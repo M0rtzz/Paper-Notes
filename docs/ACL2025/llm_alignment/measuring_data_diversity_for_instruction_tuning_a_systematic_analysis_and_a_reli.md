@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 53 个数据集 x 2 个模型 x 11 种指标，极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，发现-设计-验证的叙事线完整
 - 价值: ⭐⭐⭐⭐⭐ 为指令微调数据工程提供了可量化的多样性指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Call for Rigor in Reporting Quality of Instruction Tuning Data](call_for_rigor_in_reporting_quality_of_instruction_tuning_data.md)
+- [JsonTuning: Towards Generalizable, Robust, and Controllable Instruction Tuning](jsontuning_towards_generalizable_robust_and_controllable_instruction_tuning.md)
+- [TableDreamer: Progressive and Weakness-Guided Data Synthesis from Scratch for Table Instruction Tuning](tabledreamer_progressive_and_weakness-guided_data_synthesis_from_scratch_for_tab.md)
+- [Rethinking Table Instruction Tuning](rethinking_table_instruction_tuning.md)
+- [Federated Data-Efficient Instruction Tuning for Large Language Models](federated_data-efficient_instruction_tuning_for_large_language_models.md)
+
+<!-- RELATED:END -->

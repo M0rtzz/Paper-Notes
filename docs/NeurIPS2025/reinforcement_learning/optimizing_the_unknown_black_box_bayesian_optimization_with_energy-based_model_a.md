@@ -142,3 +142,15 @@ $\alpha = 0$ 时退化为标准regret。
 ⭐⭐⭐⭐ (4/5)
 
 方法设计创新性强——GP+EBM+PPO的三模块协同是BO领域的新范式。实验全面且说服力强（6个基准+消融+真实任务）。不足在于理论保证依赖较强假设，EBM训练在低数据量下的可靠性存疑，且整体框架较为复杂。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaBox-v2: A Unified Benchmark Platform for Meta-Black-Box Optimization](metabox-v2_a_unified_benchmark_platform_for_meta-black-box_optimization.md)
+- [Meta-Black-Box-Optimization through Offline Q-function Learning (Q-Mamba)](../../ICML2025/reinforcement_learning/meta-black-box-optimization_through_offline_q-function_learning.md)
+- [Improved Regret Bounds for GP-UCB in Bayesian Optimization](improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+- [Online Optimization for Offline Safe Reinforcement Learning](online_optimization_for_offline_safe_reinforcement_learning.md)
+
+<!-- RELATED:END -->

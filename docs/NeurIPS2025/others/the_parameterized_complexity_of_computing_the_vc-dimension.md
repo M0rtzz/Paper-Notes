@@ -260,3 +260,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 理论贡献扎实，完整描绘参数化复杂性景观，证明技术精巧，是计算学习理论与参数化复杂性交叉的优质工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Structural Complexity of Matrix-Vector Multiplication](the_structural_complexity_of_matrix-vector_multiplication.md)
+- [How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension](how_many_domains_suffice_for_domain_generalization_a_tight_characterization_via_.md)
+- [UniFormer: Unified and Efficient Transformer for Reasoning Across General and Custom Computing](uniformer_unified_and_efficient_transformer_for_reasoning_across_general_and_cus.md)
+- [Improving Decision Trees through the Lens of Parameterized Local Search](improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
+- [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
+
+<!-- RELATED:END -->

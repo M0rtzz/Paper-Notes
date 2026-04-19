@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多骨干、多度量、多折数分析详尽，但仅限于一个主数据集
 - 写作质量: ⭐⭐⭐⭐⭐ 统计推理严谨，结论有力，数据呈现清晰
 - 价值: ⭐⭐⭐⭐⭐ 对AU检测乃至更广泛社区的评估实践有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inside-Out: Measuring Generalization in Vision Transformers Through Inner Workings](inside-out_measuring_generalization_in_vision_transformers_through_inner_working.md)
+- [Noise Stability of Transformer Models](../../ICLR2026/interpretability/noise_stability_of_transformer_models.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+- [EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis](emoverse_mllm_emotion_representation_dataset.md)
+- [Near-Optimal Decision Trees in a SPLIT Second](../../ICML2025/interpretability/near_optimal_decision_trees_in_a_split_second.md)
+
+<!-- RELATED:END -->

@@ -208,3 +208,15 @@ KV-Cache 使推理大幅加速：推理时间从 213ms 降至 85ms，FLOPS 从 1
 | 综合推荐 | ⭐⭐⭐⭐⭐ |
 
 > 将 KV-Cache 重新解释为隐式 3D 表示是一个漂亮的设计，重建驱动生成的范式为统一 3D 理解提供了实时可行的新路径。实验全面，在多个任务上均达到 SOTA，且推理速度比扩散方法快两个数量级。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GGPT: Geometry-Grounded Point Transformer](ggpt_geometry_grounded_point_transformer.md)
+- [LitePT: Lighter Yet Stronger Point Transformer](litept_lighter_yet_stronger_point_transformer.md)
+- [MimiCAT: Mimic with Correspondence-Aware Cascade-Transformer for Category-Free 3D Pose Transfer](mimicat_mimic_with_correspondence-aware_cascade-transformer_for_category-free_3d.md)
+- [PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis](pr-iqa_partial-reference_image_quality_assessment_for_diffusion-based_novel_view.md)
+- [InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes](../../ICCV2025/3d_vision/instascene_towards_complete_3d_instance_decomposition_and_reconstruction_from_cl.md)
+
+<!-- RELATED:END -->

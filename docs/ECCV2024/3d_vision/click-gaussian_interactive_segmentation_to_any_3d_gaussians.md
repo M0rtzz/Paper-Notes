@@ -148,3 +148,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{cont}} + \lambda_1 \mathcal{L}
 - 实验充分度: ⭐⭐⭐⭐⭐ (多数据集、多基线、完整消融、应用演示)
 - 写作质量: ⭐⭐⭐⭐ (逻辑清晰，公式规范)
 - 价值: ⭐⭐⭐⭐ (10ms交互分割有很高实用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [iSegMan: Interactive Segment-and-Manipulate 3D Gaussians](../../CVPR2025/3d_vision/isegman_interactive_segment-and-manipulate_3d_gaussians.md)
+- [Interactive 3D Object Detection with Prompts](interactive_3d_object_detection_with_prompts.md)
+- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians](coherentgs_sparse_novel_view_synthesis_with_coherent_3d_gaussians.md)
+- [FlashSplat: 2D to 3D Gaussian Splatting Segmentation Solved Optimally](flashsplat_2d_to_3d_gaussian_splatting_segmentation_solved_optimally.md)
+
+<!-- RELATED:END -->

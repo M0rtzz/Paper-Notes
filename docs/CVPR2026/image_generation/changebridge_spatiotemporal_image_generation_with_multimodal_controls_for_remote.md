@@ -175,3 +175,15 @@ $\mathcal{L}_{asy} = \mathbb{E}[\|\tilde{m}_t(\mathbf{z}_a - \mathbf{z}_b) + \sq
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集、3种条件、UNet+DiT变体、下游任务验证
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导完整，图示清晰
 - 价值: ⭐⭐⭐⭐⭐ 对遥感时空模拟和变化检测数据增强有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [ConsistCompose: Unified Multimodal Layout Control for Image Composition](consistcompose_multimodal_layout_control.md)
+- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dualconditioned_di.md)
+- [Mixture of States: Routing Token-Level Dynamics for Multimodal Generation](mixture_of_states_routing_token-level_dynamics_for_multimodal_generation.md)
+- [CaReFlow: Cyclic Adaptive Rectified Flow for Multimodal Fusion](careflow_cyclic_adaptive_rectified_flow_for_multimodal_fusion.md)
+
+<!-- RELATED:END -->

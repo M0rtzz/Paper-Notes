@@ -142,3 +142,15 @@ tags:
 | 实用性 | 6 | 战略放松方向有指导意义，但缺乏具体可执行的算法和实证验证 |
 | 写作质量 | 8 | 逻辑清晰、架构工整，从直觉到形式化的过渡自然流畅 |
 | **综合** | **7** | 优秀的理论 position paper，为对齐研究提供了有价值的概念框架和复杂度视角，但需要后续实证工作来落地 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Challenges and Future Directions of Data-Centric AI Alignment](../../ICML2025/llm_alignment/challenges_and_future_directions_of_data-centric_ai_alignment.md)
+- [A Systematic Evaluation of Preference Aggregation in Federated RLHF for Pluralistic Alignment of LLMs](a_systematic_evaluation_of_preference_aggregation_in_federated_rlhf_for_pluralis.md)
+- [Greedy Sampling Is Provably Efficient for RLHF](greedy_sampling_is_provably_efficient_for_rlhf.md)
+- [Beyond RLHF and NLHF: Population-Proportional Alignment under an Axiomatic Framework](../../ICLR2026/llm_alignment/beyond_rlhf_and_nlhf_population-proportional_alignment_under_an_axiomatic_framew.md)
+- [Inference-time Alignment in Continuous Space](inference-time_alignment_in_continuous_space.md)
+
+<!-- RELATED:END -->

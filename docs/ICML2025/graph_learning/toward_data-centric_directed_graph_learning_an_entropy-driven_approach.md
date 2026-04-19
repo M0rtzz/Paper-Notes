@@ -139,3 +139,15 @@ EDEN 的 pipeline 分为三步：(1) **知识发现**——先用有向拓扑结
 - 实验充分度: ⭐⭐⭐⭐⭐ 14 个数据集、4 个下游任务、即插即用验证、消融实验、效率分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨详尽，但公式密集可能影响可读性
 - 价值: ⭐⭐⭐⭐ 数据中心视角和即插即用特性使其有实际应用价值，但核心贡献的不可替代性需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatio-Temporal Directed Graph Learning for Account Takeover Fraud Detection](../../NeurIPS2025/graph_learning/spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)
+- [Principled Data Augmentation for Learning to Solve Quadratic Programming Problems](../../NeurIPS2025/graph_learning/principled_data_augmentation_for_learning_to_solve_quadratic_programming_problem.md)
+- [Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](../../NeurIPS2025/graph_learning/interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
+- [Does Graph Prompt Work? A Data Operation Perspective with Theoretical Analysis](does_graph_prompt_work_a_data_operation_perspective_with_theoretical_analysis.md)
+- [Diss-l-ECT: Dissecting Graph Data with Local Euler Characteristic Transforms](diss-l-ect_dissecting_graph_data_with_local_euler_characteristic_transforms.md)
+
+<!-- RELATED:END -->

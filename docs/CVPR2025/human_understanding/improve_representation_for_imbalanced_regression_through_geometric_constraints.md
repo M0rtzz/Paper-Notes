@@ -124,3 +124,15 @@ UCI-Airfoil数据集上（MAE）：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集验证+可视化分析丰富，但缺少大规模数据集实验
 - 写作质量: ⭐⭐⭐⭐⭐ 类比直觉、数学严谨、可视化出色
 - 价值: ⭐⭐⭐⭐ 为DIR领域开辟了表征学习的新视角，几何约束思路有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Affine Correspondences by Integrating Geometric Constraints](learning_affine_correspondences_by_integrating_geometric_constraints.md)
+- [Design2GarmentCode: Turning Design Concepts to Tangible Garments Through Program Synthesis](design2garmentcode_turning_design_concepts_to_tangible_garments_through_program_.md)
+- [Learning Dense Hand Contact Estimation from Imbalanced Data](../../NeurIPS2025/human_understanding/learning_dense_hand_contact_estimation_from_imbalanced_data.md)
+- [Combinative Matching for Geometric Shape Assembly](../../ICCV2025/human_understanding/combinative_matching_for_geometric_shape_assembly.md)
+- [Neural Collapse in Cumulative Link Models for Ordinal Regression: An Analysis with Unconstrained Feature Model](../../NeurIPS2025/human_understanding/neural_collapse_in_cumulative_link_models_for_ordinal_regression_an_analysis_wit.md)
+
+<!-- RELATED:END -->

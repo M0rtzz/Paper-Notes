@@ -113,3 +113,15 @@ HyperGaussians是一个即插即用的表示增强模块。原始pipeline（如F
 - 实验充分度: ⭐⭐⭐⭐⭐ 29个受试者6个数据集非常充分，含消融、速度对比、单目/多视图设置
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰优雅，贝叶斯视角的统一分析尤其出色
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的表示升级，通用性强，逆协方差技巧有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+- [ProgressiveAvatars: Progressive Animatable 3D Gaussian Avatars](progressiveavatars_progressive_animatable_3d_gaussian_avatars.md)
+- [Motion-Aware Animatable Gaussian Avatars Deblurring](motion-aware_animatable_gaussian_avatars_deblurring.md)
+- [TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification](topomesh_high-fidelity_mesh_autoencoding_via_topological_unification.md)
+- [LangSplatV2: High-dimensional 3D Language Gaussian Splatting with 450+ FPS](../../NeurIPS2025/3d_vision/langsplatv2_high-dimensional_3d_language_gaussian_splatting_with_450_fps.md)
+
+<!-- RELATED:END -->

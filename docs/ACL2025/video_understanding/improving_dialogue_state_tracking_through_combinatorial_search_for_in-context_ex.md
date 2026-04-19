@@ -167,3 +167,15 @@ Oracle 设置（无检索错误，Llama-3-8B）——JGA 上界：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多设置（闭源/开源/oracle/跨域/共指）实验极其全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 逻辑严密，图表清晰，问题-方案-实验的推进流畅
 - **价值**: ⭐⭐⭐⭐ — 20倍数据效率和 12% 上界提升对 DST 领域有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeltaProduct: Improving State-Tracking in Linear RNNs via Householder Products](../../NeurIPS2025/video_understanding/deltaproduct_improving_state-tracking_in_linear_rnns_via_householder_products.md)
+- [From Teacher to Student: Tracking Memorization Through Model Distillation](from_teacher_to_student_tracking_memorization_through_model_distillation.md)
+- [ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)
+- [FinePseudo: Improving Pseudo-Labelling through Temporal-Alignability for Semi-Supervised Fine-Grained Action Recognition](../../ECCV2024/video_understanding/finepseudo_improving_pseudo-labelling_through_temporal-alignablity_for_semi-supe.md)
+- [Agentic Persona Control and Task State Tracking for Realistic User Simulation](../../NeurIPS2025/video_understanding/agentic_persona_control_and_task_state_tracking_for_realistic_user_simulation_in.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ GRPO 主要提升 Recall（+1.5），F1 提升 0.9。
 - **实验充分度**: ⭐⭐⭐⭐ — 4 种编码器、详尽消融、RL 微调、级联精炼、遮挡分析，但仅 nuScenes 单数据集
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，伪代码和 PR 曲线直观，动机论述充分
 - **价值**: ⭐⭐⭐⭐ — 打通了 3D 检测与序列建模生态的桥梁，推理速度是实用化的主要障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Prediction-as-Perception Framework for 3D Object Detection](a_predictionasperception_framework_for_3d_object_d.md)
+- [CoIn3D: Revisiting Configuration-Invariant Multi-Camera 3D Object Detection](coin3d_revisiting_configuration-invariant_multi-camera_3d_object_detection.md)
+- [R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](r4det_4d_radar-camera_fusion_for_high-performance_3d_object_detection.md)
+- [CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection](ccf_complementary_collaborative_fusion_for_domain_generalized_multi-modal_3d_obj.md)
+- [Difficulty-Aware Label-Guided Denoising for Monocular 3D Object Detection](../../AAAI2026/autonomous_driving/difficulty-aware_label-guided_denoising_for_monocular_3d_object_detection.md)
+
+<!-- RELATED:END -->

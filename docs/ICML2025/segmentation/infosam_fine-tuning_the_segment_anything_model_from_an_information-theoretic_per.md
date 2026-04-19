@@ -114,3 +114,15 @@ $$\mathcal{L} = \mathcal{L}_{ce} + \lambda_1 \mathcal{L}_r + \lambda_2 \mathcal{
 - 实验充分度: ⭐⭐⭐⭐ — 4 个领域 8 个数据集，SAM+SAM2，对比充分
 - 写作质量: ⭐⭐⭐⭐ — 信息论公式清晰，图示直观
 - 价值: ⭐⭐⭐⭐ — 提供了 SAM 微调的新视角，即插即用的蒸馏方案有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation](../../ICCV2025/segmentation/omnisam_omnidirectional_segment_anything_model_for_uda_in_panoramic_semantic_seg.md)
+- [Segment and Matte Anything in a Unified Model (SAMA)](../../AAAI2026/segmentation/segment_and_matte_anything_in_a_unified_model.md)
+- [EdgeTAM: On-Device Track Anything Model](../../CVPR2025/segmentation/edgetam_on-device_track_anything_model.md)
+- [SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model](../../AAAI2026/segmentation/saq-sam_semantically-aligned_quantization_for_segment_anything_model.md)
+- [InfoCLIP: Bridging Vision-Language Pretraining and Open-Vocabulary Semantic Segmentation via Information-Theoretic Alignment Transfer](../../AAAI2026/segmentation/infoclip_bridging_vision-language_pretraining_and_open-vocab.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个数据集 × 3 类保证 × 多算法对比，但限于小型视觉模型
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，定义-命题-算法的结构清晰，Siamese 编码图示直观
 - 价值: ⭐⭐⭐⭐⭐ 为 MI 建立了形式化基础，是电路发现领域的重要理论进步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position-aware Automatic Circuit Discovery](../../ACL2025/interpretability/position-aware_automatic_circuit_discovery.md)
+- [MIB: A Mechanistic Interpretability Benchmark](../../ICML2025/interpretability/mib_a_mechanistic_interpretability_benchmark.md)
+- [Mechanistic Interpretability of Emotion Inference in Large Language Models](../../ACL2025/interpretability/mechanistic_interpretability_of_emotion_inference_in_large_language_models.md)
+- [Enhancing Automated Interpretability with Output-Centric Feature Descriptions](../../ACL2025/interpretability/output_centric_interpretability.md)
+- [Granular Concept Circuits: Toward a Fine-Grained Circuit Discovery for Concept Representations](../../ICCV2025/interpretability/granular_concept_circuits_toward_a_fine-grained_circuit_discovery_for_concept_re.md)
+
+<!-- RELATED:END -->

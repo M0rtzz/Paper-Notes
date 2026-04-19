@@ -168,3 +168,15 @@ tags:
 ## 评分 ⭐⭐⭐⭐
 
 生物学知识融合深度突出，设计理念清晰，实验结果强劲（1B胜40B）。但代码未公开、部分设计选择（如GRC门控函数）讨论不充分，且CDS基准仅覆盖原核。整体是DNA基础模型领域的有价值贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images](../../ICML2025/medical_imaging/context_matters_query-aware_dynamic_long_sequence_modeling_of_gigapixel_images.md)
+- [eccDNAMamba: A Pre-Trained Model for Ultra-Long eccDNA Sequence Analysis](../../ICML2025/medical_imaging/eccdnamamba_a_pre-trained_model_for_ultra-long_eccdna_sequence_analysis.md)
+- [AntigenLM: Structure-Aware DNA Language Modeling for Influenza](../../ICLR2026/medical_imaging/antigenlm_structure-aware_dna_language_modeling_for_influenza.md)
+- [Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?](../../CVPR2026/medical_imaging/can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy.md)
+- [JanusDNA: A Powerful Bi-directional Hybrid DNA Foundation Model](../../NeurIPS2025/medical_imaging/janusdna_a_powerful_bi-directional_hybrid_dna_foundation_model.md)
+
+<!-- RELATED:END -->

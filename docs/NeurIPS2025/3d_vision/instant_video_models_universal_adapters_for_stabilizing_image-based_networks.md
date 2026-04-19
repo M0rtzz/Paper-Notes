@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖去噪/增强/深度/分割四种任务，多种腐蚀类型+恶劣天气，消融彻底
 - 写作质量: ⭐⭐⭐⭐⭐ 理论清晰，实验组织有条理，图表信息丰富
 - 价值: ⭐⭐⭐⭐⭐ 解决了将图像模型部署到视频的核心痛点，通用性和实用性俱佳
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Styl3R: Instant 3D Stylized Reconstruction for Arbitrary Scenes and Styles](styl3r_instant_3d_stylized_reconstruction_for_arbitrary_scenes_and_styles.md)
+- [High Resolution UDF Meshing via Iterative Networks](high_resolution_udf_meshing_via_iterative_networks.md)
+- [Copresheaf Topological Neural Networks: A Generalized Deep Learning Framework](copresheaf_topological_neural_networks_a_generalized_deep_learning_framework.md)
+- [CLIPGaussian: Universal and Multimodal Style Transfer Based on Gaussian Splatting](clipgaussian_universal_and_multimodal_style_transfer_based_on_gaussian_splatting.md)
+- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+
+<!-- RELATED:END -->

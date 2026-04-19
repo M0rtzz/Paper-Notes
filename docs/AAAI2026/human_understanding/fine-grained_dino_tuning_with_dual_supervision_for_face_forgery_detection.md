@@ -185,3 +185,15 @@ $$\mathcal{L} = \lambda_0 \mathcal{L}_{bce} + \lambda_1 \mathcal{L}_{ftc}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 跨数据集、跨伪造方法、身份受限等多维度评估
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，消融详尽
 - **实用价值**: ⭐⭐⭐⭐⭐ — 3.5M 参数、单卡训练、SOTA 性能，直接可部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning](clip-fti_fine-grained_face_template_inversion_via_clip-driven_attribute_conditio.md)
+- [DEIG: Detail-Enhanced Instance Generation with Fine-Grained Semantic Control](deig_detail-enhanced_instance_generation_with_fine-grained_semantic_control.md)
+- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](finextrol_controllable_motion_generation_via_fine-grained_text.md)
+- [DevFD: Developmental Face Forgery Detection by Learning Shared and Orthogonal LoRA Subspaces](../../NeurIPS2025/human_understanding/devfd_developmental_face_forgery_detection_by_learning_shared_and_orthogonal_lor.md)
+- [Forensics Adapter: Adapting CLIP for Generalizable Face Forgery Detection](../../CVPR2025/human_understanding/forensics_adapter_adapting_clip_for_generalizable_face_forgery_detection.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验覆盖合成/NLP/图像/围棋多场景，但规模偏小且缺乏与基线的定量对比
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，定理-推论链条清晰，但符号较多读起来有一定门槛
 - 价值: ⭐⭐⭐⭐ 为 XAI 归因方法提供了重要的理论基础，但计算复杂度限制了实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Minimizing False-Positive Attributions in Explanations of Non-Linear Models](../../NeurIPS2025/interpretability/minimizing_false-positive_attributions_in_explanations_of_non-linear_models.md)
+- [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](../../CVPR2026/interpretability/feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
+- [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](../../AAAI2026/interpretability/shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
+- [Foundation Molecular Grammar: Multi-Modal Foundation Models Induce Interpretable Molecular Grammar](foundation_molecular_grammar_multi-modal_foundation_models_induce_interpretable_.md)
+- [Do Sparse Autoencoders Generalize? A Case Study of Answerability](do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)
+
+<!-- RELATED:END -->

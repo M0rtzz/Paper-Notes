@@ -159,3 +159,15 @@ LLaVA-1.5-7B 上的组件消融：
 - 实验充分度: ⭐⭐⭐⭐ 五个基准、两个模型规模、完整消融和对比图像类型分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，数学推导严谨，但部分符号较为密集
 - 价值: ⭐⭐⭐⭐ 对多模态偏好优化的理论基础做出了实质性贡献，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](../../ACL2025/llm_alignment/probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
+- [Mitigating Mismatch within Reference-based Preference Optimization](../../ICLR2026/llm_alignment/mitigating_mismatch_within_reference-based_preference_optimization.md)
+- [D-Fusion: Direct Preference Optimization for Aligning Diffusion Models with Visually Consistent Samples](../../ICML2025/llm_alignment/d-fusion_direct_preference_optimization_for_aligning_diffusion_models_with_visua.md)
+- [MagicID: Hybrid Preference Optimization for ID-Consistent and Dynamic-Preserved Video Customization](../../ICCV2025/llm_alignment/magicid_hybrid_preference_optimization_for_id-consistent_and_dynamic-preserved_v.md)
+- [g-DPO: Scalable Preference Optimization for Protein Language Models](g-dpo_scalable_preference_optimization_for_protein_language_models.md)
+
+<!-- RELATED:END -->

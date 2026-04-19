@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多电路验证 + 超参扰动实验 + 消融 + 困难 corner 分析，较为全面
 - 写作质量: ⭐⭐⭐⭐ Tuning Barrier 的概念提炼和 learned vs engineered prior 的叙事线清晰有力
 - 价值: ⭐⭐⭐⭐⭐ 零调参 + 毫秒推断的实用价值极高，对 EDA 工程实践有直接影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenFS: Multi-Hand-Capable Fingerspelling Recognition with Implicit Signing-Hand Detection and Frame-Wise Letter-Conditioned Synthesis](openfs_multi-hand-capable_fingerspelling_recognition_with_implicit_signing-hand_.md)
+- [Face Time Traveller: Travel Through Ages Without Losing Identity](face_time_traveller_travel_through_ages_without_losing_identity.md)
+- [FOZO: Forward-Only Zeroth-Order Prompt Optimization for Test-Time Adaptation](fozo_forward-only_zeroth-order_prompt_optimization_for_test-time_adaptation.md)
+- [CIGPose: Causal Intervention Graph Neural Network for Whole-Body Pose Estimation](cigpose_causal_intervention_graph_neural_network_for_whole-body_pose_estimation.md)
+- [DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation](decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 46 个模型、11 个家族、9 个任务的全面评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，统计分析严谨
 - 价值: ⭐⭐⭐⭐⭐ 对 AI for Science 的 benchmark 方法论有深远影响，实际工具（代码+API）已可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoDiscovery: Open-ended Scientific Discovery via Bayesian Surprise](autodiscovery_open-ended_scientific_discovery_via_bayesian_surprise.md)
+- [Beyond Random: Automatic Inner-Loop Optimization in Dataset Distillation](beyond_random_automatic_inner-loop_optimization_in_dataset_distillation.md)
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](../../ACL2025/model_compression/sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+- [Binary Quadratic Quantization: Beyond First-Order Quantization for Real-Valued Matrix Compression](binary_quadratic_quantization_beyond_first-order_quantization_for_real-valued_ma.md)
+- [Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation](beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ tags:
 - 实验充分度：⭐⭐⭐⭐☆ — 系统性扫描充分，但仅限单层/一维/三种PDE
 - 写作质量：⭐⭐⭐⭐⭐ — 论述逻辑清晰，从假设到验证层层递进
 - 价值：⭐⭐⭐⭐☆ — 为PINN社区建立了重要的定量基准和方法论模板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](../../ICML2025/medical_imaging/the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
+- [LLM-Assisted Emergency Triage Benchmark: Bridging Hospital-Rich and MCI-Like Field Simulation](llm-assisted_emergency_triage_benchmark_bridging_hospital-rich_and_mci-like_fiel.md)
+- [RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification](raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica.md)
+- [Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis](scalable_diffusion_transformer_for_conditional_4d_fmri_synthesis.md)
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+
+<!-- RELATED:END -->

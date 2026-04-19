@@ -116,3 +116,15 @@ DAM使用长尾分布加权的softmax损失（灵感来自Balanced Softmax）；
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、多IF和IPC设置、详细消融，但缺大规模实验
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，图示清晰（特别是Figure 3和5）
 - 价值: ⭐⭐⭐⭐⭐ 填补了DD领域在长尾场景的空白，实际应用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation](../../NeurIPS2025/model_compression/rectifying_soft-label_entangled_bias_in_long-tailed_dataset_distillation.md)
+- [Rethinking Long-tailed Dataset Distillation: A Uni-Level Framework with Unbiased Recovery and Relabeling](../../AAAI2026/model_compression/rethinking_long-tailed_dataset_distillation_a_uni-level_framework_with_unbiased_.md)
+- [Distilling Balanced Knowledge from a Biased Teacher](../../CVPR2026/model_compression/distilling_balanced_knowledge_from_a_biased_teacher.md)
+- [Towards the Law of Capacity Gap in Distilling Language Models](../../ACL2025/model_compression/law_of_capacity_gap_distilling_language_models.md)
+- [Distilling Tool Knowledge into Language Models via Back-Translated Traces](../../ICML2025/model_compression/distilling_tool_knowledge_into_language_models_via_back-translated_traces.md)
+
+<!-- RELATED:END -->

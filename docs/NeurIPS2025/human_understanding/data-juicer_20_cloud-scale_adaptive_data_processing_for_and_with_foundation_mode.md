@@ -119,3 +119,15 @@ Data-Juicer 2.0 是面向基础模型的云规模多模态数据处理系统，1
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多规模多引擎的全面评估
 - 写作质量: ⭐⭐⭐ 内容丰富但略冗长
 - 价值: ⭐⭐⭐⭐ 作为开源基础设施对数据处理生态有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Dense Hand Contact Estimation from Imbalanced Data](learning_dense_hand_contact_estimation_from_imbalanced_data.md)
+- [Spatial Understanding from Videos: Structured Prompts Meet Simulation Data](spatial_understanding_from_videos_structured_prompts_meet_simulation_data.md)
+- [PoseSyn: Synthesizing Diverse 3D Pose Data from In-the-Wild 2D Data](../../ICCV2025/human_understanding/posesyn_synthesizing_diverse_3d_pose_data_from_in-the-wild_2d_data.md)
+- [Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/human_understanding/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
+- [Learning From Design Procedure To Generate CAD Programs for Data Augmentation](learning_from_design_procedure_to_generate_cad_programs_for_data_augmentation.md)
+
+<!-- RELATED:END -->

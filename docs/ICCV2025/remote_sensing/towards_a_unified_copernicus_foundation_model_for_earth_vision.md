@@ -147,3 +147,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 数据集1870万、模型全面消融、15任务基准、气候应用探索
 - **写作质量**: ⭐⭐⭐⭐ 三组件结构清晰，但信息量极大导致部分细节需看附录
 - **价值**: ⭐⭐⭐⭐⭐ 数据集+模型+基准的组合贡献对EO社区有重大推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoLink: Empowering Remote Sensing Foundation Model with OpenStreetMap Data](../../NeurIPS2025/remote_sensing/geolink_empowering_remote_sensing_foundation_model_with_openstreetmap_data.md)
+- [RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
+- [Pan-Crafter: Learning Modality-Consistent Alignment for Pan-Sharpening](pan-crafter_learning_modality-consistent_alignment_for_pan-sharpening.md)
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+- [WildSAT: Learning Satellite Image Representations from Wildlife Observations](wildsat_learning_satellite_image_representations_from_wildlife_observations.md)
+
+<!-- RELATED:END -->

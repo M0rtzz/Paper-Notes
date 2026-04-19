@@ -151,3 +151,15 @@ MMOA-RAG 将 RAG 建模为 $\langle \mathcal{G}, \mathcal{O}, \mathcal{A}, \math
 - 实验充分度: ⭐⭐⭐⭐ 三数据集 + 多 baseline + agent 消融 + 配置泛化实验 + 不同检索器验证
 - 写作质量: ⭐⭐⭐⭐ 公式推导完整，框架图清晰，尤其 agent 元素定义严谨
 - 价值: ⭐⭐⭐⭐ 为复杂 RAG 系统优化提供了可复制的通用框架，开放源码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAdaRAG: Task Adaptive Retrieval-Augmented Generation via On-the-Fly Knowledge Graph Construction](../../AAAI2026/reinforcement_learning/tadarag_task_adaptive_retrieval-augmented_generation_via_on-the-fly_knowledge_gr.md)
+- [Robust and Diverse Multi-Agent Learning via Rational Policy Gradient](robust_and_diverse_multi-agent_learning_via_rational_policy_gradient.md)
+- [Sequential Multi-Agent Dynamic Algorithm Configuration](sequential_multi-agent_dynamic_algorithm_configuration.md)
+- [Extending NGU to Multi-Agent RL: A Preliminary Study](extending_ngu_to_multi-agent_rl_a_preliminary_study.md)
+- [Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering](knowledge-based_visual_question_answer_with_multimodal_processing_retrieval_and_.md)
+
+<!-- RELATED:END -->

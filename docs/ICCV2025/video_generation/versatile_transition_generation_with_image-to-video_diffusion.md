@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四类任务各有基准+TransitBench新基准
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法组件逻辑连贯
 - 价值: ⭐⭐⭐⭐ 过渡生成的统一范式，对视频编辑和电影制作有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-identity Human Image Animation with Structural Video Diffusion](multi-identity_human_image_animation_with_structural_video_diffusion.md)
+- [Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)
+- [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
+- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+- [MotionStone: Decoupled Motion Intensity Modulation with Diffusion Transformer for Image-to-Video Generation](../../CVPR2025/video_generation/motionstone_decoupled_motion_intensity_modulation_with_diffusion_transformer_for.md)
+
+<!-- RELATED:END -->

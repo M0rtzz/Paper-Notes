@@ -119,3 +119,15 @@ tags:
 - **实验充分度**: 5/5 — 4基准×3设置×多模型×多参数扫描，消融彻底
 - **写作质量**: 5/5 — 理论与实验衔接清晰，问题动机阐述充分
 - **实用性**: 5/5 — 额外开销仅2ms，可直接集成到SGLang等系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](../../ACL2025/llm_efficiency/kv_latent_cache_reduction.md)
+- [One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning](one-prompt_strikes_back_sparse_mixture_of_experts_for_prompt-based_continual_lea.md)
+- [Judge Q: Trainable Queries for Optimized Information Retention in KV Cache Eviction](../../AAAI2026/llm_efficiency/judge_q_trainable_queries_for_optimized_information_retention_in_kv_cache_evicti.md)
+- [Learning Like Humans: Analogical Concept Learning for Generalized Category Discovery](../../CVPR2026/llm_efficiency/learning_like_humans_analogical_concept_learning_for_generalized_category_discov.md)
+
+<!-- RELATED:END -->

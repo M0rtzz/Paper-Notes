@@ -162,3 +162,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 两组实验精准说明了问题，但覆盖面偏窄
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰、论证层层递进、问题与原则一一对应
 - 价值: ⭐⭐⭐⭐ — 为 Causal ML 社区的实验规范提供了重要参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+- [Characterization and Learning of Causal Graphs from Hard Interventions](../../NeurIPS2025/causal_inference/characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [Do-PFN: In-Context Learning for Causal Effect Estimation](../../NeurIPS2025/causal_inference/do-pfn_in-context_learning_for_causal_effect_estimation.md)
+- [Learning Subgroups with Maximum Treatment Effects without Causal Heuristics](../../AAAI2026/causal_inference/learning_subgroups_with_maximum_treatment_effects_without_causal_heuristics.md)
+- [Differentiable Structure Learning and Causal Discovery for General Binary Data](../../NeurIPS2025/causal_inference/differentiable_structure_learning_and_causal_discovery_for_general_binary_data.md)
+
+<!-- RELATED:END -->

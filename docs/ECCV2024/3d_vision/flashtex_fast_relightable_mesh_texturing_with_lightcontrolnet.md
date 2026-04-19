@@ -136,3 +136,15 @@ FlashTex采用两阶段pipeline：**Stage 1**通过多视图视觉提示（Multi
 - 实验充分度: ⭐⭐⭐⭐⭐ 定量+用户研究+多个消融实验覆盖几乎所有设计选择
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Pipeline图直观，方法描述完整
 - 价值: ⭐⭐⭐⭐ 在速度-质量-可重光照三角中找到较好平衡，对3D内容创作有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
+- [Track Everything Everywhere Fast and Robustly](track_everything_everywhere_fast_and_robustly.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting](repaint123_fast_and_high-quality_one_image_to_3d_generation_with_progressive_con.md)
+
+<!-- RELATED:END -->

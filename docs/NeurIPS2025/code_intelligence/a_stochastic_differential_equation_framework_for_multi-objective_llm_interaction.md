@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅一个应用场景，评分函数过于简化，400 个会话样本量有限
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，理论与实验的对应关系说明充分
 - 价值: ⭐⭐⭐ 提供了分析多目标 LLM 交互的理论视角，但实验验证和实用性需要加强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EquaCode: A Multi-Strategy Jailbreak Approach for Large Language Models via Equation Solving and Code Completion](../../AAAI2026/code_intelligence/equacode_a_multi-strategy_jailbreak_approach_for_large_language_models_via_equat.md)
+- [VeriMaAS: Automated Multi-Agent Workflows for RTL Design](automated_multi-agent_workflows_for_rtl_design.md)
+- [Extracting Events Like Code: A Multi-Agent Programming Framework for Zero-Shot Event Extraction](../../AAAI2026/code_intelligence/extracting_events_like_code_a_multi-agent_programming_framework_for_zero-shot_ev.md)
+- [Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning](co-evolving_llm_coder_and_unit_tester_via_reinforcement_learning.md)
+- [Preserving LLM Capabilities through Calibration Data Curation: From Analysis to Optimization](preserving_llm_capabilities_through_calibration_data_curation_from_analysis_to_o.md)
+
+<!-- RELATED:END -->

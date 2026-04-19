@@ -165,3 +165,15 @@ MoLE 在训练阶段和推理阶段具有不同结构：
 - 实验充分度: ⭐⭐⭐⭐ [多规模、多消融、含效率分析和量化实验，但最大规模仅1B，缺少大模型验证]
 - 写作质量: ⭐⭐⭐⭐⭐ [逻辑清晰，从动机到方法到消融环环相扣，图表设计合理]
 - 价值: ⭐⭐⭐⭐ [为VRAM受限场景的MoE部署提供了全新方向，但需大规模验证后才能确认实用价值]
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoH: Multi-Head Attention as Mixture-of-Head Attention](moh_multi-head_attention_as_mixture-of-head_attention.md)
+- [On the Expressive Power of Mixture-of-Experts for Structured Complex Tasks](../../NeurIPS2025/llm_efficiency/on_the_expressive_power_of_mixture-of-experts_for_structured_complex_tasks.md)
+- [Autonomy-of-Experts Models (AoE)](autonomy-of-experts_models.md)
+- [GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](../../ACL2025/llm_efficiency/gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)
+- [One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning](../../ICLR2026/llm_efficiency/one-prompt_strikes_back_sparse_mixture_of_experts_for_prompt-based_continual_lea.md)
+
+<!-- RELATED:END -->

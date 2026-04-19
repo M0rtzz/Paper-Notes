@@ -121,3 +121,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 写作清晰，可视化出色，项目页面极好
 - 价值: ⭐⭐⭐⭐⭐ 对世界模型和可控视频生成领域的方向性贡献，开源全套资源
 <!-- NeurIPS 2025 | video_understanding -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysCtrl: Generative Physics for Controllable and Physics-Grounded Video Generation](physctrl_generative_physics_for_controllable_and_physicsgrou.md)
+- [Motion Prompting: Controlling Video Generation with Motion Trajectories](../../CVPR2025/video_generation/motion_prompting_controlling_video_generation_with_motion_trajectories.md)
+- [Can Text-to-Video Generation Help Video-Language Alignment?](../../CVPR2025/video_generation/can_text-to-video_generation_help_video-language_alignment.md)
+- [VMDT: Decoding the Trustworthiness of Video Foundation Models](vmdt_decoding_the_trustworthiness_of_video_foundation_models.md)
+- [LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation](lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)
+
+<!-- RELATED:END -->

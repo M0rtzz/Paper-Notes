@@ -127,3 +127,15 @@ SCNP 与任意损失函数组合使用，论文中主要使用 $\mathcal{L}_{CED
 - 实验充分度: ⭐⭐⭐⭐⭐ — 13 数据集 × 3 框架 × 8 损失函数，消融和敏感性分析详尽
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，理论推导完整，算法伪代码简洁
 - 价值: ⭐⭐⭐⭐ — 即插即用 3 行代码的拓扑改进方案，极具实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion](3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros.md)
+- [MatAnyone 2: Scaling Video Matting via a Learned Quality Evaluator](matanyone_2_scaling_video_matting_via_a_learned_quality_evaluator.md)
+- [Image Quality Assessment: From Human to Machine Preference](../../CVPR2025/segmentation/image_quality_assessment_from_human_to_machine_preference.md)
+- [UDiffText: A Unified Framework for High-quality Text Synthesis in Arbitrary Images via Character-aware Diffusion Models](../../ECCV2024/segmentation/udifftext_a_unified_framework_for_high-quality_text_synthesis_in_arbitrary_image.md)
+- [QMamba: On First Exploration of Vision Mamba for Image Quality Assessment](../../ICML2025/segmentation/qmamba_on_first_exploration_of_vision_mamba_for_image_quality_assessment.md)
+
+<!-- RELATED:END -->

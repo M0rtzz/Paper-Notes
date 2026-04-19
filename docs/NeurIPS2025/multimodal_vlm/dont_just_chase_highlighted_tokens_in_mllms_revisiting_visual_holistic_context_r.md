@@ -156,3 +156,15 @@ $$F \approx 1 - (1-R)^2 = 2R - R^2$$
 - ⭐ 实验充分度: 5/5 — 9 个基准、多种剪枝率、多种架构、丰富的消融和可视化分析
 - ⭐ 写作质量: 4/5 — 图表精美，论证层层递进，分析深入
 - ⭐ 价值: 4/5 — 提供了简洁实用的推理加速方案，对 MLLM 部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MC-Bench: A Benchmark for Multi-Context Visual Grounding in the Era of MLLMs](../../ICCV2025/multimodal_vlm/mc-bench_a_benchmark_for_multi-context_visual_grounding_in_the_era_of_mllms.md)
+- [Revisiting Logit Distributions for Reliable Out-of-Distribution Detection](revisiting_logit_distributions_for_reliable_out-of-distribution_detection.md)
+- [From Holistic to Localized: Local Enhanced Adapters for Efficient Visual Instruction Fine-Tuning](../../ICCV2025/multimodal_vlm/from_holistic_to_localized_local_enhanced_adapters_for_efficient_visual_instruct.md)
+- [DynamicVL: Benchmarking MLLMs for Dynamic City Understanding](dynamicvl_benchmarking_multimodal_large_language_models_for_dynamic_city_underst.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](video-r1_reinforcing_video_reasoning_in_mllms.md)
+
+<!-- RELATED:END -->

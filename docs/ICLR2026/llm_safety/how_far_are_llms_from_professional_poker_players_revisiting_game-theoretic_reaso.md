@@ -121,3 +121,15 @@ $R_{tool}$ 的设计特别重要：不仅奖励“调用了工具”，还奖励
 - 实验充分度: ⭐⭐⭐⭐ 多种传统方法对战+推理质量评估
 - 写作质量: ⭐⭐⭐⭐ 三阶段递进明晰
 - 价值: ⭐⭐⭐⭐ Tool-augmented LLM 在博弈论场景的典范
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [System-Aware Unlearning Algorithms: Use Lesser, Forget Faster](../../ICML2025/llm_safety/system-aware_unlearning_algorithms_use_lesser_forget_faster.md)
+- [Teaming LLMs to Detect and Mitigate Hallucinations](../../NeurIPS2025/llm_safety/teaming_llms_to_detect_and_mitigate_hallucinations.md)
+- [Empowering LLMs to Understand and Generate Complex Vector Graphics](../../CVPR2025/llm_safety/empowering_llms_to_understand_and_generate_complex_vector_graphics.md)
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](../../ACL2025/llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+- [SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](../../ACL2025/llm_safety/seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)
+
+<!-- RELATED:END -->

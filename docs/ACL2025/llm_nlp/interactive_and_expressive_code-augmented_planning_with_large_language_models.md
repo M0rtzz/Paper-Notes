@@ -145,3 +145,15 @@ REPL-Plan在不使用外部记忆的情况下达到97.0%成功率，超过所有
 ## 评分
 
 ⭐⭐⭐⭐ — 设计思路精巧且直觉明确，将人类交互式编程经验（REPL）系统化地融入LLM规划，在真实网页导航任务中展现了独特优势。递归REPL的设计优雅，但API调用成本和演示依赖需关注。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [INTERACT: Enabling Interactive, Question-Driven Learning in Large Language Models](interact_enabling_interactive_question-driven_learning_in_large_language_models.md)
+- [On the Limit of Language Models as Planning Formalizers](limit_llm_planning_formalizer.md)
+- [WarriorCoder: Learning from Expert Battles to Augment Code Large Language Models](warriorcoder_learning_from_expert_battles_to_augment_code_large_language_models.md)
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_code_empowered_tool_learning.md)
+- [MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments](mirage_exploring_how_large_language_models_perform_in_complex_social_interactive.md)
+
+<!-- RELATED:END -->

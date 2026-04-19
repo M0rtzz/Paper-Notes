@@ -10,166 +10,166 @@ description: >-
 
 **📹 ICCV2025** · **41** 篇论文解读
 
-**[Aczerots Active Learning For Zeroshot Tissue Segmentation In](aczerots_active_learning_for_zeroshot_tissue_segmentation_in.md)**
+**[AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images](aczerots_active_learning_for_zeroshot_tissue_segmentation_in.md)**
 
 :   提出AcZeroTS框架，将主动学习与基于VLM的原型引导零样本分割模型ProZS结合，通过同时考虑不确定性、多样性和原型覆盖unseen类的能力来选择最有价值的标注样本，以最少标注实现seen和unseen组织类型的高质量分割。
 
-**[Alleviating Textual Reliance In Medical Language-Guided Segmentation Via Prototy](alleviating_textual_reliance_in_medical_language-guided_segmentation_via_prototy.md)**
+**[Alleviating Textual Reliance in Medical Language-guided Segmentation via Prototype-driven Semantic Approximation](alleviating_textual_reliance_in_medical_language-guided_segmentation_via_prototy.md)**
 
 :   提出ProLearn框架，首次通过原型驱动的语义近似（PSA）模块从根本上缓解医学语言引导分割对文本的依赖——仅需少量图文配对数据初始化原型空间，训练和推理均可无文本输入，在1%文本可用性下仍保持强劲性能（QaTa-COV19 Dice=0.857），且参数量比LLM方案减少1000倍，推理速度快100倍。
 
-**[An Openmind For 3D Medical Vision Self-Supervised Learning](an_openmind_for_3d_medical_vision_self-supervised_learning.md)**
+**[An OpenMind for 3D Medical Vision Self-Supervised Learning](an_openmind_for_3d_medical_vision_self-supervised_learning.md)**
 
 :   发布了最大的公开 3D 医学影像预训练数据集 OpenMind（114k 脑部 MRI），并系统性地对比了多种 3D 自监督学习方法在 CNN（ResEnc-L）和 Transformer（Primus-M）上的表现，证明 MAE 预训练在分割任务上最优、对比学习在分类任务上最优，且首次展示预训练 Transformer 可在部分数据集上超越从头训练的 CNN。
 
-**[An Openmind For 3D Medical Vision Selfsupervised Learning](an_openmind_for_3d_medical_vision_selfsupervised_learning.md)**
+**[An OpenMind for 3D Medical Vision Self-supervised Learning](an_openmind_for_3d_medical_vision_selfsupervised_learning.md)**
 
 :   发布了最大的公开3D医学影像预训练数据集OpenMind（114k脑MRI体积），并在该数据集上系统性benchmark了现有3D SSL方法在最先进CNN（ResEnc-L）和Transformer（Primus-M）架构上的表现，明确了3D医学图像SSL的当前SOTA。
 
-**[Beyond Brain Decoding Visualsemantic Reconstructions To Ment](beyond_brain_decoding_visualsemantic_reconstructions_to_ment.md)**
+**[Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI](beyond_brain_decoding_visualsemantic_reconstructions_to_ment.md)**
 
 :   提出NeuroCreat——一种结合LLM视觉与文本能力的脑多模态架构，将fMRI解码从单一的视觉刺激重建扩展到**图像重建 + 文本描述（captioning）+ 心理创造（creation）**三个层次，通过Prompt Variant Alignment模块有效弥合fMRI低分辨率信号与高级语义表征之间的鸿沟。
 
-**[Boosting Vision Semantic Density With Anatomy Normality Mode](boosting_vision_semantic_density_with_anatomy_normality_mode.md)**
+**[Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_mode.md)**
 
 :   提出 ViSD-Boost，通过疾病级视觉对比学习增强视觉语义 + VQ-VAE 建模解剖正常性分布来放大异常信号，解决医学 VLP 中视觉语义密度低导致的对齐偏差，在腹部 CT 54 种疾病零样本诊断达到 84.9% AUC。
 
-**[Boosting Vision Semantic Density With Anatomy Normality Modeling For Medical Vis](boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)**
+**[Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)**
 
 :   提出 ViSD-Boost 方法，通过疾病级视觉对比学习增强视觉语义、以及基于 VQ-VAE 的解剖正常性建模来放大异常信号，解决医学视觉语言预训练中视觉模态语义密度低导致的对齐偏差问题，在 15 个器官 54 种疾病的零样本诊断上达到 84.9% AUC。
 
-**[Coin Confidence Score-Guided Distillation For Annotation-Free Cell Segmentation](coin_confidence_score-guided_distillation_for_annotation-free_cell_segmentation.md)**
+**[COIN: Confidence Score-Guided Distillation for Annotation-Free Cell Segmentation](coin_confidence_score-guided_distillation_for_annotation-free_cell_segmentation.md)**
 
 :   提出COIN框架，通过无监督语义分割+最优传输的像素级细胞传播、基于模型-SAM一致性的实例级置信度评分、以及置信度引导的递归自蒸馏三步策略，解决了无标注细胞实例分割中"无错误实例缺失"的关键问题，在MoNuSeg和TNBC上超越半监督/弱监督方法。
 
-**[Controllable Latent Space Augmentation For Digital Pathology](controllable_latent_space_augmentation_for_digital_pathology.md)**
+**[Controllable Latent Space Augmentation for Digital Pathology](controllable_latent_space_augmentation_for_digital_pathology.md)**
 
 :   提出HistAug——一种基于Transformer的轻量级潜在空间增强模型，通过条件式跨注意力机制在特征空间中模拟真实图像变换（色相、腐蚀等），以极低计算开销为病理MIL训练提供可控且高效的数据增强。
 
-**[Coordinate-Based Speed Of Sound Recovery For Aberration-Corrected Photoacoustic ](coordinate-based_speed_of_sound_recovery_for_aberration-corrected_photoacoustic_.md)**
+**[Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography](coordinate-based_speed_of_sound_recovery_for_aberration-corrected_photoacoustic_.md)**
 
 :   本文提出一种高效的自监督联合重建方法，通过将声速（SOS）参数化为像素网格或神经场，并通过可微成像前向模型反向传播梯度来恢复SOS和高质量光声图像，在精度上超越现有SOTA的同时实现35倍加速（40秒 vs 23分钟）。
 
-**[Cryofastar Fast Cryo-Em Ab Initio Reconstruction Made Easy](cryofastar_fast_cryo-em_ab_initio_reconstruction_made_easy.md)**
+**[CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](cryofastar_fast_cryo-em_ab_initio_reconstruction_made_easy.md)**
 
 :   提出CryoFastAR，首个面向冷冻电镜（cryo-EM）的几何基础模型，通过ViT架构直接从多视图噪声粒子图像前馈式预测Fourier Planar Map实现位姿估计，在合成和真实数据集上达到可比质量的同时实现10倍以上加速。
 
-**[Cryofastar Fast Cryoem Ab Initio Reconstruction Made Easy](cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)**
+**[CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](cryofastar_fast_cryoem_ab_initio_reconstruction_made_easy.md)**
 
 :   首个将DUSt3R式的几何基础模型范式引入冷冻电镜(cryo-EM)领域的工作，通过ViT编码器+跨视图注意力解码器直接从大量含噪粒子图像前馈预测姿态（无需迭代优化），实现了比传统方法快10-33倍的ab initio蛋白质三维重建。
 
-**[Cumperlay Learning Cubical Multiparameter Persistence Vectorizations](cumperlay_learning_cubical_multiparameter_persistence_vectorizations.md)**
+**[CuMPerLay: Learning Cubical Multiparameter Persistence Vectorizations](cumperlay_learning_cubical_multiparameter_persistence_vectorizations.md)**
 
 :   提出 CuMPerLay，一个可微的立方多参数持久同调 (Cubical Multiparameter Persistence, CMP) 向量化层，将 CMP 分解为多条可学习的单参数持久同调线，通过联合学习双滤过 (bifiltration) 函数实现端到端训练，嵌入 Swin Transformer 后在医学图像分类和语义分割任务上（尤其小数据场景）取得显著提升。
 
-**[Dictas A Framework For Class-Generalizable Few-Shot Anomaly Segmentation Via Dic](dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)**
+**[DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)**
 
 :   受人类检查员"查字典"直觉启发，提出 DictAS 框架，将少样本异常分割重新定义为字典查询任务——若查询特征无法从正常样本字典中检索到则判定为异常——通过自监督训练获得类别无关的字典查询能力，在 7 个工业和医学数据集上的 FSAS 性能和推理速度均达到 SOTA。
 
-**[G2Pdiffusion Cross-Species Genotype-To-Phenotype Prediction Via Evolutionary Dif](g2pdiffusion_cross-species_genotype-to-phenotype_prediction_via_evolutionary_dif.md)**
+**[G2PDiffusion: Cross-Species Genotype-to-Phenotype Prediction via Evolutionary Diffusion](g2pdiffusion_cross-species_genotype-to-phenotype_prediction_via_evolutionary_dif.md)**
 
 :   提出G2PDiffusion，首个基于扩散模型的跨物种基因型到表型预测框架，通过进化信号（多序列比对MSA和环境上下文）条件化生成形态学图像，实现从DNA序列预测物种外观。
 
-**[Gdkvm Echocardiography Video Segmentation Via Spatiotemporal Key-Value Memory Wi](gdkvm_echocardiography_video_segmentation_via_spatiotemporal_key-value_memory_wi.md)**
+**[GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule](gdkvm_echocardiography_video_segmentation_via_spatiotemporal_key-value_memory_wi.md)**
 
 :   提出 GDKVM，一种基于线性键值关联和门控 Delta 规则的心脏超声视频分割架构，通过高效的内存管理和多尺度特征融合，在 CAMUS 和 EchoNet-Dynamic 上实现 SOTA 性能，同时保持实时推理速度。
 
-**[Gecko Gigapixel Vision-Concept Contrastive Pretraining In Histopathology](gecko_gigapixel_vision-concept_contrastive_pretraining_in_histopathology.md)**
+**[GECKO: Gigapixel Vision-Concept Contrastive Pretraining in Histopathology](gecko_gigapixel_vision-concept_contrastive_pretraining_in_histopathology.md)**
 
 :   提出GECKO，一种无需额外临床数据模态的WSI级MIL聚合器预训练方法，通过从H&E WSI自动提取可解释的概念先验(Concept Prior)并与深度特征对比对齐，在5个分类任务上超越现有单模态和多模态预训练方法，同时提供病理学家可解释的WSI级描述。
 
-**[Gemex A Large-Scale Groundable And Explainable Medical Vqa Benchmark For Chest X](gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)**
+**[GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis](gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)**
 
 :   构建了当前最大的胸部X光 VQA 数据集 GEMeX（151K 图像、1.6M 问题），首次同时提供文本推理解释和视觉区域定位，涵盖四种问题类型，并系统评估了 12 个代表性大视觉语言模型。
 
-**[Hrscene How Far Are Vlms From Effective High-Resolution Image Understanding](hrscene_how_far_are_vlms_from_effective_high-resolution_image_understanding.md)**
+**[HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?](hrscene_how_far_are_vlms_from_effective_high-resolution_image_understanding.md)**
 
 :   提出 HRScene 基准，涵盖 25 个真实场景和 2 个诊断数据集（分辨率 1K-35K），评估 28 个 VLM 后发现：当前最强模型在真实高分辨率任务上平均准确率仅约 50%，且存在显著的区域差异和 lost-in-middle 问题。
 
-**[Idf Iterative Dynamic Filtering Networks For Generalizable Image Denoising](idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)**
+**[IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)**
 
 :   提出迭代动态滤波网络 (IDF)，仅用约 0.04M 参数，通过逐像素动态核预测 + 自适应迭代精炼策略，仅在单一级别高斯噪声上训练即可泛化到各种未见噪声类型（高斯/泊松/椒盐/蒙特卡洛渲染/真实噪声），实现出色的 OOD 去噪性能。
 
-**[Integrating Biological Knowledge For Robust Microscopy Image Profiling On De Nov](integrating_biological_knowledge_for_robust_microscopy_image_profiling_on_de_nov.md)**
+**[Integrating Biological Knowledge for Robust Microscopy Image Profiling on De Novo Cell Lines](integrating_biological_knowledge_for_robust_microscopy_image_profiling_on_de_nov.md)**
 
 :   提出将外部生物知识（蛋白质互作图谱+单细胞基础模型的转录组特征）整合到显微图像预训练中，显式解耦扰动特异性和细胞系特异性表征，提升模型在未见细胞系上的扰动筛查泛化能力。
 
-**[Mrgen Segmentation Data Engine For Underrepresented Mri Modalities](mrgen_segmentation_data_engine_for_underrepresented_mri_modalities.md)**
+**[MRGen: Segmentation Data Engine for Underrepresented MRI Modalities](mrgen_segmentation_data_engine_for_underrepresented_mri_modalities.md)**
 
 :   针对稀缺 MRI 模态缺乏分割标注的难题，构建了大规模放射影像数据集 MRGen-DB（~25 万张切片、100+ 模态），并训练了可控扩散数据引擎 MRGen，通过文本+掩码双条件控制生成目标模态的高质量 MR 图像用于训练分割模型，在 10 对跨模态实验中平均 DSC 从 10%~27% 提升至 43%~45%，实现了标注稀缺模态的"零样本"分割。
 
-**[Multiverseg Scalable Interactive Segmentation Of Biomedical Imaging Datasets Wit](multiverseg_scalable_interactive_segmentation_of_biomedical_imaging_datasets_wit.md)**
+**[MultiverSeg: Scalable Interactive Segmentation of Biomedical Imaging Datasets with In-Context Guidance](multiverseg_scalable_interactive_segmentation_of_biomedical_imaging_datasets_wit.md)**
 
 :   提出 MultiverSeg，一个渐进式交互分割系统：用户每标注一张图像，后续图像所需的交互次数就会减少，通过将已分割图像作为上下文输入模型实现"越用越好"的效果，在 12 个未见数据集上相比 ScribblePrompt 将点击数减少 36%、涂鸦步骤减少 25%。
 
-**[Neurons Emulating The Human Visual Cortex Improves Fidelity And Interpretability](neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)**
+**[NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction](neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)**
 
 :   提出 NEURONS 框架，受人类视觉皮层层级结构启发，将 fMRI 到视频的重建解耦为四个子任务（关键物体分割、概念识别、场景描述、模糊视频重建），模拟 V1/V2/V4/ITC 等脑区的功能特化，在视频一致性（26.6%）和语义准确度（19.1%）上显著超越 SOTA。
 
-**[Predict-Optimize-Distill A Self-Improving Cycle For 4D Object Understanding](predict-optimize-distill_a_self-improving_cycle_for_4d_object_understanding.md)**
+**[Predict-Optimize-Distill: A Self-Improving Cycle for 4D Object Understanding](predict-optimize-distill_a_self-improving_cycle_for_4d_object_understanding.md)**
 
 :   提出 Predict-Optimize-Distill (POD) 框架，通过预测-优化-蒸馏的自改进循环，从单目长视频中恢复铰接物体的4D部件姿态，性能随视频长度和迭代次数持续提升。
 
-**[Progait A Multi-Purpose Video Dataset And Benchmark For Transfemoral Prosthesis ](progait_a_multi-purpose_video_dataset_and_benchmark_for_transfemoral_prosthesis_.md)**
+**[ProGait: A Multi-Purpose Video Dataset and Benchmark for Transfemoral Prosthesis Users](progait_a_multi-purpose_video_dataset_and_benchmark_for_transfemoral_prosthesis_.md)**
 
 :   提出ProGait——首个面向大腿截肢假肢用户的多用途视频数据集，支持视频目标分割、2D人体姿态估计和步态分析三项任务，并提供基线模型证明数据集对改善假肢检测的有效性。
 
-**[Progressive Test Time Energy Adaptation For Medical Image Segmentation](progressive_test_time_energy_adaptation_for_medical_image_segmentation.md)**
+**[Progressive Test Time Energy Adaptation for Medical Image Segmentation](progressive_test_time_energy_adaptation_for_medical_image_segmentation.md)**
 
 :   提出一种基于能量模型的渐进式测试时自适应方法，训练一个形状能量模型作为分布内/外判别器，在测试时通过最小化能量值引导分割模型适应目标域，在心脏、脊髓、肺部等 8 个公共数据集上持续超越基线。
 
-**[Pvchat Personalized Video Chat With One-Shot Learning](pvchat_personalized_video_chat_with_one-shot_learning.md)**
+**[PVChat: Personalized Video Chat with One-Shot Learning](pvchat_personalized_video_chat_with_one-shot_learning.md)**
 
 :   提出 PVChat，首个支持从单个参考视频进行个性化主体学习的视频大语言模型，通过 ReLU 路由混合注意力头（ReMoH）机制、系统化的数据增强管道和渐进式图像到视频训练策略，实现身份感知的视频问答，在医疗、电视剧、动漫等多种场景中超越现有 SOTA ViLLM。
 
-**[Radgpt Constructing 3D Image-Text Tumor Datasets](radgpt_constructing_3d_image-text_tumor_datasets.md)**
+**[RadGPT: Constructing 3D Image-Text Tumor Datasets](radgpt_constructing_3d_image-text_tumor_datasets.md)**
 
 :   本文提出 RadGPT——一个解剖感知的 VL AI 管线，通过将放射科医师修订的肿瘤分割 mask 经由确定性算法转化为结构化报告、再由 LLM 适配为叙述性报告，构建了首个大规模公开腹部 CT 图文肿瘤数据集 AbdomenAtlas 3.0（9,262 例 CT、每体素标注 + 报告），并证明分割辅助可显著提升 AI 报告中的肿瘤检测率。
 
-**[Scaling Tumor Segmentation Best Lessons From Real And Synthetic Data](scaling_tumor_segmentation_best_lessons_from_real_and_synthetic_data.md)**
+**[Scaling Tumor Segmentation: Best Lessons from Real and Synthetic Data](scaling_tumor_segmentation_best_lessons_from_real_and_synthetic_data.md)**
 
 :   通过在大规模私有数据集上系统研究数据缩放定律，发现合成肿瘤可大幅降低真实标注需求（从 1500 降至 500 例），并据此构建了 AbdomenAtlas 2.0——首个涵盖 6 种器官肿瘤的万级 CT 大规模人工标注数据集，在分布内和分布外测试上均取得显著提升。
 
-**[Scivid Cross-Domain Evaluation Of Video Models In Scientific Applications](scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)**
+**[SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)**
 
 :   提出 SciVid 基准，包含动物行为分类、组织追踪、天气预测等 5 个跨学科科学视频任务，系统评估 6 类视频基础模型（ViFM），发现用简单可训练 readout 适配冻结的 ViFM backbone 即可在多个科学应用中达到 SOTA，首次证明通用 ViFM 在科学领域的可迁移性。
 
-**[Seganypet Universal Promptable Segmentation From Positron Emission Tomography Im](seganypet_universal_promptable_segmentation_from_positron_emission_tomography_im.md)**
+**[SegAnyPET: Universal Promptable Segmentation from Positron Emission Tomography Images](seganypet_universal_promptable_segmentation_from_positron_emission_tomography_im.md)**
 
 :   本文构建了迄今最大的PET分割数据集PETS-5k（5731例3D全身PET图像，超130万张2D切片），并提出SegAnyPET——首个针对PET影像的3D可提示分割基础模型，通过跨提示置信学习（CPCL）策略处理标注质量不一致问题，在已见和未见目标上均大幅超越现有基础模型和任务专用模型。
 
-**[Semi-Supervised Deep Transfer For Regression Without Domain Alignment](semi-supervised_deep_transfer_for_regression_without_domain_alignment.md)**
+**[Semi-supervised Deep Transfer for Regression without Domain Alignment](semi-supervised_deep_transfer_for_regression_without_domain_alignment.md)**
 
 :   提出 CRAFT（Contradistinguisher-based Regularization Approach for Flexible Training），一种无需源数据、无需域对齐的半监督迁移学习框架，专门面向回归任务，通过联合优化监督损失和基于 Contradistinguisher 的无监督正则项在标签稀缺场景下显著提升预测性能。
 
-**[Sic Similarity-Based Interpretable Image Classification With Neural Networks](sic_similarity-based_interpretable_image_classification_with_neural_networks.md)**
+**[SIC: Similarity-Based Interpretable Image Classification with Neural Networks](sic_similarity-based_interpretable_image_classification_with_neural_networks.md)**
 
 :   提出 SIC，一个同时提供局部、全局和忠实解释的内在可解释神经网络：通过从训练图像中提取类别代表性的支持向量，基于 B-cos 变换计算输入与支持向量的相似度进行分类，在保持与黑盒模型相当准确率的同时，提供像素级贡献图和基于案例推理的全局解释，在 FunnyBirds 基准上 9 项可解释性指标中 8 项超越 ProtoPNet。
 
-**[Simmlm A Simple Framework For Multi-Modal Learning With Missing Modality](simmlm_a_simple_framework_for_multi-modal_learning_with_missing_modality.md)**
+**[SimMLM: A Simple Framework for Multi-modal Learning with Missing Modality](simmlm_a_simple_framework_for_multi-modal_learning_with_missing_modality.md)**
 
 :   提出 SimMLM，一个简洁高效的多模态缺失学习框架，由动态模态专家混合架构（DMoME）和 More vs. Fewer（MoFe）排序损失组成，在脑肿瘤分割和多模态分类任务上以更少参数和计算量全面超越 SOTA，同时提供模态重要性可解释性。
 
-**[Teethgenerator A Two-Stage Framework For Paired Pre- And Post-Orthodontic 3D Den](teethgenerator_a_two-stage_framework_for_paired_pre-_and_post-orthodontic_3d_den.md)**
+**[TeethGenerator: A Two-Stage Framework for Paired Pre- and Post-Orthodontic 3D Dental Data Generation](teethgenerator_a_two-stage_framework_for_paired_pre-_and_post-orthodontic_3d_den.md)**
 
 :   提出 TeethGenerator，一个两阶段框架用于生成配对的正畸前后 3D 牙齿点云模型，Stage I 用 VQ-VAE+扩散模型生成矫正后牙齿形态，Stage II 用 Transformer 根据风格模型生成对应的矫正前牙齿排列。
 
-**[Toward Long-Tailed Online Anomaly Detection Through Class-Agnostic Concepts](toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)**
+**[Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)**
 
 :   本文提出长尾在线异常检测（LTOAD）新任务和benchmark，核心创新是用可学习的"类无关概念集"替代传统的类标签依赖，结合Concept VQ-VAE和综合prompt学习框架，在不需要类标签的情况下于offline和online场景下均达到SOTA。
 
-**[Ukbob One Billion Mri Labeled Masks For Generalizable 3D Medical Image Segmentat](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)**
+**[UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)**
 
 :   本文构建了UKBOB——迄今最大的标注医学影像分割数据集（51,761个MRI 3D样本，72类器官，13.7亿2D分割mask），提出Specialized Organ Label Filter (SOLF)清洗自动标注和Entropy Test-Time Adaptation (ETTA)处理带噪标签的域迁移，训练的Swin-BOB基础模型在BRATS和BTCV基准上达到SOTA。
 
-**[Vector Contrastive Learning For Pixel-Wise Pretraining In Medical Vision](vector_contrastive_learning_for_pixel-wise_pretraining_in_medical_vision.md)**
+**[Vector Contrastive Learning for Pixel-wise Pretraining in Medical Vision](vector_contrastive_learning_for_pixel-wise_pretraining_in_medical_vision.md)**
 
 :   提出向量对比学习（Vector CL），将标准对比学习从二值优化问题重新表述为向量回归问题，通过建模特征距离来量化分散程度，解决像素级医学视觉预训练中的"过度分散"问题，在 8 个下游任务上显著优于 17 种方法。
 
-**[Victr Vital Consistency Transfer For Pathology Aware Image Synthesis](victr_vital_consistency_transfer_for_pathology_aware_image_synthesis.md)**
+**[ViCTr: Vital Consistency Transfer for Pathology Aware Image Synthesis](victr_vital_consistency_transfer_for_pathology_aware_image_synthesis.md)**
 
 :   > 提出 ViCTr 两阶段框架，结合 Rectified Flow 与 Tweedie 校正的扩散过程实现高保真的病理感知医学图像合成，将推理步数从50步降至3-4步，并首次实现分级严重程度的腹部MRI病理合成。
 
-**[Visual Surface Wave Elastography Revealing Subsurface Physical Properties Via Vi](visual_surface_wave_elastography_revealing_subsurface_physical_properties_via_vi.md)**
+**[Visual Surface Wave Elastography: Revealing Subsurface Physical Properties via Visible Surface Waves](visual_surface_wave_elastography_revealing_subsurface_physical_properties_via_vi.md)**
 
 :   本文提出 VSWE（Visual Surface Wave Elastography），仅通过一段表面波传播的视频，提取色散关系并结合基于物理的有限元优化，推断介质的亚表面厚度和刚度参数，在模拟和真实明胶实验中均实现了高精度的参数恢复，为居家健康监测提供了概念验证。

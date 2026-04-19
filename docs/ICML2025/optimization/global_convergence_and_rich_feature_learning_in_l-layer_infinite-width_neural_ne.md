@@ -155,3 +155,15 @@ $$\text{Cov}(\hat{Z}^{W_0^l \delta x_s^{l-1}(\xi)}, \hat{Z}^{W_0^l \delta x_t^{l
 - 实验充分度: ⭐⭐⭐ — 仅 CIFAR-10 + 3 层 MLP，规模有限但足以验证理论
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，技术路线阐述到位，符号记法稍显密集
 - 价值: ⭐⭐⭐⭐⭐ — 对深度学习基础理论有重要推进意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantitative Convergence of Trained Single Layer Neural Networks to Gaussian Processes](../../NeurIPS2025/optimization/quantitative_convergence_of_trained_single_layer_neural_networks_to_gaussian_pro.md)
+- [Random Feature Representation Boosting](random_feature_representation_boosting.md)
+- [Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks](../../ICLR2026/optimization/directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two.md)
+- [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](../../NeurIPS2025/optimization/learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
+- [Layer-wise Quantization for Quantized Optimistic Dual Averaging](layer-wise_quantization_for_quantized_optimistic_dual_averaging.md)
+
+<!-- RELATED:END -->

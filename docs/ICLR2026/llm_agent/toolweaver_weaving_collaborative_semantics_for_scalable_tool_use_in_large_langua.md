@@ -131,3 +131,15 @@ ToolWeaver在检索和任务完成上全面领先，同时语言模型退化从1
 - 实验充分度: ⭐⭐⭐⭐ 47000工具规模、多种消融、语言能力评估全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融分析充分
 - 价值: ⭐⭐⭐⭐⭐ 解决了生成式工具使用的核心可扩展性瓶颈，对Agent系统有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](../../ACL2025/llm_agent/meco_metacognition_tool_use.md)
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](../../ACL2025/llm_agent/toolhop_multi_hop_tool_use_benchmark.md)
+- [AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/llm_agent/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](agentic_context_engineering_evolving_contexts_for_self-improving_language_models.md)
+
+<!-- RELATED:END -->

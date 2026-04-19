@@ -107,3 +107,15 @@ OSRM 提升约 10% 多任务性能，同时保持甚至提升单任务性能。
 - 实验充分度: ⭐⭐⭐⭐ 8 数据集、5 模型，与多种合并方法组合验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析透彻，数学推导严谨
 - 价值: ⭐⭐⭐⭐ 为 LoRA 模型合并提供了简洁有效的即插即用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization](drpruning_robust_pruning.md)
+- [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](../../NeurIPS2025/model_compression/robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [Task Vector Quantization for Memory-Efficient Model Merging](../../ICCV2025/model_compression/task_vector_quantization_for_memory-efficient_model_merging.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](../../NeurIPS2025/model_compression/accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+
+<!-- RELATED:END -->

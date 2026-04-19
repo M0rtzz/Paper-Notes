@@ -123,3 +123,15 @@ $$\mathcal{L}_{total} = \frac{1}{M}\sum_{I_i \in \mathcal{G}}(\mathcal{L}_{corr}
 - 实验充分度: ⭐⭐⭐⭐⭐ HPatches/MegaDepth/IMC2020三个benchmark，消融完整，运行时间分析详细
 - 写作质量: ⭐⭐⭐⭐ 动机论述深入，架构图清晰，但符号较多，部分公式可进一步简化
 - 价值: ⭐⭐⭐⭐⭐ 对SfM/SLAM的核心环节有本质改进，可直接集成到现有管线中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MV-RoMa: From Pairwise Matching into Multi-View Track Reconstruction](../../CVPR2026/3d_vision/mv-roma_from_pairwise_matching_into_multi-view_track_reconstruction.md)
+- [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
+- [MVSAnywhere: Zero-Shot Multi-View Stereo](mvsanywhere_zero-shot_multi-view_stereo.md)
+- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
+- [MVBoost: Boost 3D Reconstruction with Multi-View Refinement](mvboost_boost_3d_reconstruction_with_multi-view_refinement.md)
+
+<!-- RELATED:END -->

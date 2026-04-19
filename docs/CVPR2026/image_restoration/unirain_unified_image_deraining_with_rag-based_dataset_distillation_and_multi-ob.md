@@ -115,3 +115,15 @@ UniRain 在所有四种退化类型和所有真实世界基准上均以显著优
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义有实际价值，RAG 数据蒸馏和多目标优化的组合逻辑清晰有效；统一框架的实用性强，但 RAG 流程的可扩展性和泛化到其他退化类型有待验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EVLF: Early Vision-Language Fusion for Generative Dataset Distillation](evlf_early_vision-language_fusion_for_generative_dataset_distillation.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [UCAN: Unified Convolutional Attention Network for Expansive Receptive Fields in Lightweight Super-Resolution](ucan_unified_convolutional_attention_network_for_expansive_receptive_fields_in_l.md)
+- [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](../../NeurIPS2025/image_restoration/mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
+- [SD-PSFNet: Sequential and Dynamic Point Spread Function Network for Image Deraining](../../AAAI2026/image_restoration/sd-psfnet_sequential_and_dynamic_point_spread_function_netwo.md)
+
+<!-- RELATED:END -->

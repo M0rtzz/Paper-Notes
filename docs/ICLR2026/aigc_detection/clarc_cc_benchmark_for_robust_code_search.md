@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6 个模型 × 4 种场景 × 3 种依赖复杂度 + 假设检验验证
 - 写作质量: ⭐⭐⭐⭐ Pipeline 描述详细，统计验证严谨
 - 价值: ⭐⭐⭐⭐⭐ 数据集贡献对代码检索和安全社区有持续价值，揭示了模型的关键弱点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DuoLens: A Framework for Robust Detection of Machine-Generated Multilingual Text and Code](../../NeurIPS2025/aigc_detection/duolens_a_framework_for_robust_detection_of_machine-generated_multilingual_text_.md)
+- [BAID: A Benchmark for Bias Assessment of AI Detectors](../../AAAI2026/aigc_detection/baid_a_benchmark_for_bias_assessment_of_ai_detectors.md)
+- [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](../../ACL2025/aigc_detection/chatgpt_user_ai_text_detection.md)
+- [Synthesizing Performance Constraints for Evaluating and Improving Code Efficiency](../../NeurIPS2025/aigc_detection/synthesizing_performance_constraints_for_evaluating_and_improving_code_efficienc.md)
+- [MultiSocial: Multilingual Benchmark of Machine-Generated Text Detection of Social-Media Texts](../../ACL2025/aigc_detection/multisocial_mgt_detection.md)
+
+<!-- RELATED:END -->

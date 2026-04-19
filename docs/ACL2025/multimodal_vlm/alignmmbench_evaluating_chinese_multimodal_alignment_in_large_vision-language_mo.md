@@ -126,3 +126,15 @@ AlignMMBench 包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 评估了 15+ 模型，评估器做了充分对比验证
 - 写作质量: ⭐⭐⭐⭐ 数据构建流程清晰，评估方法论完整
 - 价值: ⭐⭐⭐⭐ 对中文 VLM 社区有重要实用价值，CritiqueVLM 可直接复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMSciBench: Benchmarking Language Models on Chinese Multimodal Scientific Problems](mmscibench_benchmarking_language_models_on_chinese_multimodal_scientific_problem.md)
+- [VLMInferSlow: Evaluating the Efficiency Robustness of Large Vision-Language Models as a Service](vlminferslow_evaluating_the_efficiency_robustness_of.md)
+- [Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](unsolvable_problem_detection.md)
+- [Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search](mcts_video_captioning_eval.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](effivlm_bench_vlm_acceleration.md)
+
+<!-- RELATED:END -->

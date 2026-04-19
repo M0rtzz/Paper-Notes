@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融细致，统计分析有深度
 - 写作质量: ⭐⭐⭐⭐ 方法清晰，但部分细节在附录
 - 价值: ⭐⭐⭐⭐ 启发性强，但3D草图应用相对小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NTK-Guided Implicit Neural Teaching](ntk-guided_implicit_neural_teaching.md)
+- [ArtLLM: Generating Articulated Assets via 3D LLM](artllm_generating_articulated_assets_via_3d_llm.md)
+- [LaVCa: LLM-assisted Visual Cortex Captioning](../../ICLR2026/3d_vision/lavca_llm-assisted_visual_cortex_captioning.md)
+- [UniC-Lift: Unified 3D Instance Segmentation via Contrastive Learning](../../AAAI2026/3d_vision/unic-lift_unified_3d_instance_segmentation_via_contrastive_learning.md)
+- [PCF-Lift: Panoptic Lifting by Probabilistic Contrastive Fusion](../../ECCV2024/3d_vision/pcf-lift_panoptic_lifting_by_probabilistic_contrastive_fusion.md)
+
+<!-- RELATED:END -->

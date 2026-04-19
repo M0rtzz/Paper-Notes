@@ -151,3 +151,15 @@ $$\mathcal{L}_W = \underbrace{\ell_{re}}_{\text{重建}} + \underbrace{\ell_{ac}
 - 实验充分度: ⭐⭐⭐⭐ （R2R-CE / RxR-CE + 多基线 + 充分消融）
 - 写作质量: ⭐⭐⭐⭐ （框架图清晰，推导完整）
 - 价值: ⭐⭐⭐⭐ （对 VLN-CE 领域有明确推进）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [C-NAV: Towards Self-Evolving Continual Object Navigation in Open World](../../NeurIPS2025/robotics/c-nav_towards_self-evolving_continual_object_navigation_in_open_world.md)
+- [COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation](cosmo_combination_of_selective_memorization_for_low-cost_vision-and-language_nav.md)
+- [DexVLG: Dexterous Vision-Language-Grasp Model at Scale](dexvlg_dexterous_vision-language-grasp_model_at_scale.md)
+- [CombatVLA: An Efficient Vision-Language-Action Model for Combat Tasks in 3D Action Role-Playing Games](combatvla_an_efficient_vision-language-action_model_for_combat_tasks_in_3d_actio.md)
+- [Towards Open Environments and Instructions: General Vision-Language Navigation via Fast-Slow Interactive Reasoning](../../CVPR2026/robotics/towards_open_environments_and_instructions_general_vision-language_navigation_vi.md)
+
+<!-- RELATED:END -->

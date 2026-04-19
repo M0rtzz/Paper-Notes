@@ -136,3 +136,15 @@ PolicyFlow在多数IsaacLab任务上与PPO持平或更优，在G1人形机器人
 PolicyFlow的核心贡献在于找到了一种**在不牺牲训练效率的前提下使用高表达力流模型做在线RL**的方法路径。重要性比率的近似方案很巧妙——利用了PPO裁剪范围本身就限制了策略更新幅度这一事实，使得一阶近似在实践中足够精确。布朗正则器虽然理论上不完全严格，但从"让速度场指向熵增方向"这个设计意图来看是合理的，且实验效果确实显著。
 
 对后续研究的启示：(1) 这套框架可以直接用于LLM的RLHF——如果将语言模型视为流式策略，PolicyFlow的重要性比率近似可能提供比标准PPO更表达力的策略更新方式；(2) 布朗正则化的思路可以推广到其他需要避免模式坍缩的场景（如多样化文本生成）；(3) 插值路径的选择提示了一个有趣的方向——不同的插值族可能适合不同的任务特性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow Actor-Critic for Offline Reinforcement Learning (FAC)](flow_actor-critic_for_offline_reinforcement_learning.md)
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](../../NeurIPS2025/reinforcement_learning/sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form](safe_continuous-time_multi-agent_reinforcement_learning_via_epigraph_form.md)
+- [Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning](rethinking_policy_diversity_in_ensemble_policy_gradient_in_large-scale_reinforce.md)
+- [Thinking on the Fly: Test-Time Reasoning Enhancement via Latent Thought Policy Optimization](thinking_on_the_fly_test-time_reasoning_enhancement_via_latent_thought_policy_op.md)
+
+<!-- RELATED:END -->

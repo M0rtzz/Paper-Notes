@@ -124,3 +124,15 @@ BrainMVP提出首个多模态视觉预训练范式，通过跨模态掩码重建
 - 实验充分度: ⭐⭐⭐⭐⭐ 10个下游任务（6分割+4分类）+标签效率实验+多种backbone对比，非常全面
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，各模块的动机和设计逻辑连贯
 - 价值: ⭐⭐⭐⭐⭐ 首个多模态MRI视觉预训练范式，对医学图像SSL具有范式级影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](../../ICCV2025/medical_imaging/boosting_vision_semantic_density_with_anatomy_normality_modeling_for_medical_vis.md)
+- [Interactive Medical Image Analysis with Concept-based Similarity Reasoning](interactive_medical_image_analysis_with_concept-based_similarity_reasoning.md)
+- [Boltzmann Attention Sampling for Image Analysis with Small Objects](boltzmann_attention_sampling_for_image_analysis_with_small_objects.md)
+- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](../../NeurIPS2025/medical_imaging/endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
+- [Multimodal 3D Genome Pre-training](../../NeurIPS2025/medical_imaging/multimodal_3d_genome_pre-training.md)
+
+<!-- RELATED:END -->

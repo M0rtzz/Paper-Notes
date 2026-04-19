@@ -186,3 +186,15 @@ $$\mathcal{L}_{mse} = \frac{1}{M} \sum_{i=1}^{M} (y_i - x_i)^2$$
 - **实验充分度**: ⭐⭐⭐⭐ — 3个下游任务，丰富消融（模块/深度/步长/epoch/数据量）
 - **写作质量**: ⭐⭐⭐⭐ — 信息熵分析铺垫动机，整体逻辑清晰
 - **价值**: ⭐⭐⭐⭐ — 为红外视觉社区提供了标准化的基础模型和数据集，具有基础设施价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MarineInst: A Foundation Model for Marine Image Analysis with Instance Visual Description](marineinst_a_foundation_model_for_marine_image_analysis_with_instance_visual_des.md)
+- [Griffin: Towards a Graph-Centric Relational Database Foundation Model](../../ICML2025/self_supervised/griffin_towards_a_graph-centric_relational_database_foundation_model.md)
+- [MOMO: Mars Orbital Model — Foundation Model for Mars Orbital Applications](../../CVPR2026/self_supervised/momo_mars_orbital_model_foundation_model_for_mars_orbital_applications.md)
+- [Spikingformer: A Key Foundation Model for Spiking Neural Networks](../../AAAI2026/self_supervised/spikingformer_a_key_foundation_model_for_spiking_neural_networks.md)
+- [Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](../../ICML2025/self_supervised/foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+
+<!-- RELATED:END -->

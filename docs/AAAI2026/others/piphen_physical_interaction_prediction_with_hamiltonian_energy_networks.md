@@ -171,3 +171,15 @@ PIPHEN在所有关键指标上均达到最佳性能，成功率较LLaMAR提升13
 - **理论深度**: ⭐⭐⭐⭐ — 哈密顿力学的引入有理论支撑，但部分细节在附录中
 - **实用价值**: ⭐⭐⭐⭐ — 通信效率提升95%以上，对实际部署有直接意义
 - **综合评分**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deadline-Aware, Energy-Efficient Control of Domestic Immersion Hot Water Heaters](deadline-aware_energy-efficient_control_of_domestic_immersion_hot_water_heater.md)
+- [A Fast Heuristic Search Approach for Energy-Optimal Profile Routing for Electric Vehicles](a_fast_heuristic_search_approach_for_energy-optimal_profile_.md)
+- [Persistent Homology of Topic Networks for the Prediction of Reader Curiosity](../../ACL2025/others/persistent_homology_of_topic_networks_for_the_prediction_of_reader_curiosity.md)
+- [Formal Abductive Latent Explanations for Prototype-Based Networks](formal_abductive_latent_explanations_for_prototype-based_networks.md)
+- [Learning Fair Representations with Kolmogorov-Arnold Networks](learning_fair_representations_with_kolmogorov-arnold_networks.md)
+
+<!-- RELATED:END -->

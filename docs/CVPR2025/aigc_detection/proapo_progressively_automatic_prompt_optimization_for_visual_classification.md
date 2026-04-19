@@ -53,3 +53,15 @@ tags:
 ## 局限与展望
 - LLM 生成的候选质量决定了优化上界
 - 评估阶段需要验证集，零标注场景下需要替代评估指标
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Few-Shot Class-Incremental Learning via Training-Free Bi-Level Modality Calibration](enhancing_few-shot_class-incremental_learning_via_training-free_bi-level_modalit.md)
+- [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
+- ["Jutters"](../../NeurIPS2025/aigc_detection/jutters.md)
+- [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](../../ACL2025/aigc_detection/chatgpt_user_ai_text_detection.md)
+- [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../../NeurIPS2025/aigc_detection/classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
+
+<!-- RELATED:END -->

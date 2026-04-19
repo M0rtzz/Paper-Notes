@@ -139,3 +139,15 @@ DynamicLimit-Exp 在 Argument Structure（67.7% vs 44.8%）、Case（95.2% vs 70
 ⭐⭐⭐⭐（4/5）
 
 本文巧妙地将认知科学的 Less-is-More 假说通过 ALiBi 的动态斜率衰减引入语言模型，概念优雅、实验设计合理。结果提供了关键期工作记忆发展假说的间接计算证据。主要不足在于模型和数据规模较小，以及工作记忆-注意力的对应关系简化。作为认知启发的 NLP 研究，质量很高。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+- [STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond](stricta_structured_reasoning_in_critical_text_assessment_for_peer_review_and_bey.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](distractor_gen_multiple_choice.md)
+- [EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)
+
+<!-- RELATED:END -->

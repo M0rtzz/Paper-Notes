@@ -207,3 +207,15 @@ M2V-UGAD 在缺失率从 10% 到 50% 的范围内性能几乎不变（0.93→0.9
 - 实验充分度: ⭐⭐⭐⭐ — 7个数据集、25种基线组合、多缺失率、消融和敏感性分析全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，motivation 有说服力，公式符号统一
 - 价值: ⭐⭐⭐⭐ — 解决了一个实际且重要的问题，但工业落地需更多大规模验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sim-to-Real: An Unsupervised Noise Layer for Screen-Camera Watermarking Robustness](sim-to-real_an_unsupervised_noise_layer_for_screen-camera_watermarking_robustnes.md)
+- [Generalizing Fair Clustering to Multiple Groups: Algorithms and Applications](generalizing_fair_clustering_to_multiple_groups_algorithms_and_applications.md)
+- [From Static Benchmarks to Dynamic Protocol: Agent-Centric Text Anomaly Detection for Evaluating LLM Reasoning](../../ICLR2026/ai_safety/from_static_benchmarks_to_dynamic_protocol_agent-centric_text_anomaly_detection_.md)
+- [Argumentative Debates for Transparent Bias Detection](argumentative_debates_for_transparent_bias_detection_technic.md)
+- [Privacy-protected Retrieval-Augmented Generation for Knowledge Graph Question Answering](privacy-protected_retrieval-augmented_generation_for_knowledge_graph_question_an.md)
+
+<!-- RELATED:END -->

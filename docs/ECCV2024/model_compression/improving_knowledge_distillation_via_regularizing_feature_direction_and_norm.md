@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了分类和检测任务，多种师生组合，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法简洁，论证有条理
 - 价值: ⭐⭐⭐⭐⭐ 即插即用涨点显著，实用价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Simple Unsupervised Knowledge Distillation With Space Similarity](simple_unsupervised_knowledge_distillation_with_space_similarity.md)
+- [Distilling Cross-Modal Knowledge via Feature Disentanglement](../../AAAI2026/model_compression/distilling_cross-modal_knowledge_via_feature_disentanglement.md)
+- [Improving Zero-Shot Generalization for CLIP with Variational Adapter](improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
+- [Leveraging Hierarchical Feature Sharing for Efficient Dataset Condensation](leveraging_hierarchical_feature_sharing_for_efficient_dataset_condensation.md)
+- [Knowledge Distillation with Refined Logits](../../ICCV2025/model_compression/knowledge_distillation_with_refined_logits.md)
+
+<!-- RELATED:END -->

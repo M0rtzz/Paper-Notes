@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3 模型 × 2 数据集 × 4 种文档组合 × 3 种 RAG 模式
 - 写作质量: ⭐⭐⭐⭐⭐ 指标定义严谨，实验设计逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 RAG 系统的可信度和公平性有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RARE: Retrieval-Augmented Reasoning Enhancement for Large Language Models](rare_retrieval_augmented_reasoning.md)
+- [REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [VISA: Retrieval Augmented Generation with Visual Source Attribution](visa_retrieval_augmented_generation_with_visual_source_attribution.md)
+- [Pandora's Box or Aladdin's Lamp: A Comprehensive Analysis Revealing the Role of RAG Noise in Large Language Models](pandora_box_rag_noise.md)
+
+<!-- RELATED:END -->

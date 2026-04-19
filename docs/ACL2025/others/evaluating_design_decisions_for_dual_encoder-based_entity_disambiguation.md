@@ -159,3 +159,15 @@ VerbalizED 的 Dual Encoder 架构包含：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融极为详尽，5项设计选择各自对比，9个测试集覆盖多领域，定量+定性分析齐全
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，每个消融都有明确结论，表格设计规范，related work全面
 - **价值**: ⭐⭐⭐⭐ — 消融发现对实体消歧和 dense retrieval 社区有直接指导意义，ZELDA上SOTA有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Entity Framing and Role Portrayal in the News](entity_framing_and_role_portrayal_in_the_news.md)
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+- [Synthia: Novel Concept Design with Affordance Composition](synthia_novel_concept_design_with_affordance_composition.md)
+- [Unveiling Dual Quality in Product Reviews: An NLP-Based Approach](unveiling_dual_quality_in_product_reviews_an_nlp-based_approach.md)
+- [Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ S.MID（混合固态LiDAR）对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 四种 LiDAR 类型的全面验证，新数据集贡献，实验设计严谨
 - 写作质量: ⭐⭐⭐⭐ — 归纳偏置的分析框架清晰，但方法描述偏数学化
 - 价值: ⭐⭐⭐⭐ — 通用 LiDAR 分割的实际需求明确，新数据集有持续价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ItTakesTwo: Leveraging Peer Representations for Semi-supervised LiDAR Semantic Segmentation](ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se.md)
+- [Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather](rethinking_data_augmentation_for_robust_lidar_semantic_segmentation_in_adverse_w.md)
+- [RoofDiffusion: Constructing Roofs from Severely Corrupted Point Data via Diffusion](roofdiffusion_constructing_roofs_from_severely_corrupted_point_data_via_diffusio.md)
+- [Understanding Dynamic Scenes in Egocentric 4D Point Clouds](../../AAAI2026/autonomous_driving/understanding_dynamic_scenes_in_ego_centric_4d_point_clouds.md)
+- [RAPiD-Seg: Range-Aware Pointwise Distance Distribution Networks for 3D LiDAR Segmentation](rapid-seg_range-aware_pointwise_distance_distribution_networks_for_3d_lidar_segm.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ ProLearn = PSA模块 + Language-guided U-Net。PSA模块一次性从少量图文
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集五种文本比例+效率对比+超参数分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精准，motivation链完整，图示清晰
 - 价值: ⭐⭐⭐⭐⭐ 具有重要的临床实用价值，解决了阻碍语言引导分割落地的核心瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_mode.md)
+- [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](../../CVPR2025/medical_imaging/evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
+- [Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](../../AAAI2026/medical_imaging/bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)
+- [Magical: Medical Lay Language Generation via Semantic Invariance and Layperson-tailored Adaptation](../../NeurIPS2025/medical_imaging/magical_medical_lay_language_generation_via_semantic_invariance_and_layperson-ta.md)
+- [Divide, Conquer and Unite: Hierarchical Style-Recalibrated Prototype Alignment for Federated Medical Segmentation](../../AAAI2026/medical_imaging/divide_conquer_and_unite_hierarchical_style-recalibrated_prototype_alignment_for.md)
+
+<!-- RELATED:END -->

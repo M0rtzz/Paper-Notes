@@ -140,3 +140,15 @@ $$\text{s.t.} \quad |FN(h, v_i) - FN(h, v_j)| \leq \tau, \quad \forall i \neq j$
 - 实验充分度: ⭐⭐ 作为理论/框架型论文，完全没有自己的实验验证，仅引用已有实证结果，说服力有限
 - 写作质量: ⭐⭐⭐⭐ 综述部分系统全面，数学符号规范，论述逻辑清晰，跨学科引用丰富
 - 价值: ⭐⭐⭐ 三支柱框架对公共部门算法部署有实用指导价值，容差约束思想简洁实用，但缺乏实验验证削弱了整体贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Truth, Justice, and Secrecy: Cake Cutting Under Privacy Constraints](truth_justice_and_secrecy_cake_cutting_under_privacy_constraints.md)
+- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
+- [PSM: Prompt Sensitivity Minimization via LLM-Guided Black-Box Optimization](psm_prompt_sensitivity_minimization_via_llm-guided_black-box_optimization.md)
+- [Revisiting (Un)Fairness in Recourse by Minimizing Worst-Case Social Burden](revisiting_unfairness_in_recourse_by_minimizing_worst-case_social_burden.md)
+- [CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation](core-fed_bridging_collaborative_and_representation_fairness_via_federated_embedd.md)
+
+<!-- RELATED:END -->

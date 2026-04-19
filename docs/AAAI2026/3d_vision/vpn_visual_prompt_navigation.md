@@ -173,3 +173,15 @@ VPN 在 val unseen 达 96.68% SR，远超 DUET 的 81%，且仅用 1/3 的 Scale
 - **实验充分度**: ⭐⭐⭐⭐ — 消融全面，缺少真实世界实验
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，图示直观
 - **实用价值**: ⭐⭐⭐⭐ — 交互方式友好，连续环境性能有待提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](../../ECCV2024/3d_vision/falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)
+- [VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection](../../CVPR2026/3d_vision/virpro_visual-referred_probabilistic_prompt_learning_for_weakly-supervised_monoc.md)
+- [CtrlFuse: Mask-Prompt Guided Controllable Infrared and Visible Image Fusion](ctrlfuse_mask-prompt_guided_controllable_infrared_and_visible_image_fusion.md)
+- [OpenFly: A Comprehensive Platform for Aerial Vision-Language Navigation](../../ICLR2026/3d_vision/openfly_a_comprehensive_platform_for_aerial_vision-language_navigation.md)
+- [MR-CoSMo: Visual-Text Memory Recall and Direct Cross-Modal Alignment Method for Query-Driven 3D Segmentation](mr-cosmo_visual-text_memory_recall_and_direct_cross-modal_alignment_method_for_q.md)
+
+<!-- RELATED:END -->

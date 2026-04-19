@@ -183,3 +183,15 @@ GIFT-SW 在不同数据预算下表现出与全参微调相当的稳定性，而
 ## 评分 ⭐⭐⭐⭐
 
 方法设计简洁有效，实验完整且有说服力，特别是统一敏感度指标和噪声注入的双重角色设计颇有洞察力。在极低位量化场景下优势显著。不足之处在于模型覆盖面有限，且理论分析深度可以进一步加强。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](refining_salience-aware_sparse_fine-tuning_strategies_for_language_models.md)
+- [SPACE: Noise Contrastive Estimation Stabilizes Self-Play Fine-Tuning for Large Language Models](../../NeurIPS2025/llm_nlp/space_noise_contrastive_estimation_stabilizes_self-play_fine-tuning_for_large_la.md)
+- [GORP: Continual Gradient Low-Rank Projection Fine-Tuning for LLMs](gorp_continual_gradient_projection.md)
+- [Zeroth-Order Fine-Tuning of LLMs in Random Subspaces](../../ICCV2025/llm_nlp/zeroth-order_fine-tuning_of_llms_in_random_subspaces.md)
+- [HFT: Half Fine-Tuning for Large Language Models](hft_half_fine-tuning_for_large_language_models.md)
+
+<!-- RELATED:END -->

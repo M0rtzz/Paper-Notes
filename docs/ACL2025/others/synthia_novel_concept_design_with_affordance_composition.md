@@ -131,3 +131,15 @@ Synthia 在新颖性和连贯性上分别取得 **25.1% 和 14.7%** 的人工评
 - **实验充分度**: ⭐⭐⭐⭐ — 自动+人工评估全面，消融实验充分
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，示意图直观
 - **价值**: ⭐⭐⭐⭐ — 对 AI 辅助设计有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph-guided Cross-composition Feature Disentanglement for Compositional Zero-shot Learning](graph-guided_cross-composition_feature_disentanglement_for_compositional_zero-sh.md)
+- [All That Glitters is Not Novel: Plagiarism in AI Generated Research](plagiarism_ai_generated_research.md)
+- [Partial Colexifications Improve Concept Embeddings](partial_colexifications_improve_concept_embeddings.md)
+- [Evaluating Design Decisions for Dual Encoder-based Entity Disambiguation](evaluating_design_decisions_for_dual_encoder-based_entity_disambiguation.md)
+- [Enhancing the Comprehensibility of Text Explanations via Unsupervised Concept Discovery](enhancing_the_comprehensibility_of_text_explanations_via_unsupervised_concept_di.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ ROI 对比：RLTHF 相对于 Random 标注的投资回报率在 HH-RLHF 上高 1
 - 实验充分度: ⭐⭐⭐⭐ 消融充分，超参数分析详尽，但数据集仅两个
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对降低RLHF标注成本具有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: Towards Bidirectional Human-AI Alignment](../../NeurIPS2025/recommender/position_towards_bidirectional_human-ai_alignment.md)
+- [Align³GR: Unified Multi-Level Alignment for LLM-based Generative Recommendation](../../AAAI2026/recommender/align3gr_unified_multi-level_alignment_for_llm-based_generat.md)
+- [Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
+- [Preference is More Than Comparisons: Rethinking Dueling Bandits with Augmented Human Feedback](../../AAAI2026/recommender/preference_is_more_than_comparisons_rethinking_dueling_bandits_with_augmented_hu.md)
+- [Moral Change or Noise? On Problems of Aligning AI With Temporally Unstable Human Feedback](../../AAAI2026/recommender/moral_change_or_noise_on_problems_of_aligning_ai_with_temporally_unstable_human_.md)
+
+<!-- RELATED:END -->

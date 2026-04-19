@@ -152,3 +152,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4个模型×5个数据集的全面验证，消融实验细致（7组配置），阈值敏感性分析完整
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，图表丰富，但公式较多，部分符号可精简
 - **价值**: ⭐⭐⭐⭐⭐ — 实际意义重大，即插即用的域适应方案，+7.54dB的最大提升在图像恢复领域非常有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TTT-MIM: Test-Time Training with Masked Image Modeling for Denoising Distribution Shifts](ttt-mim_test-time_training_with_masked_image_modeling_for_denoising_distribution.md)
+- [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+- [Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement](unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)
+- [Blind Image Deblurring with Noise-Robust Kernel Estimation](blind_image_deblurring_with_noise-robust_kernel_estimation.md)
+- [Exploiting Dual-Correlation for Multi-frame Time-of-Flight Denoising](exploiting_dual-correlation_for_multi-frame_time-of-flight_denoising.md)
+
+<!-- RELATED:END -->

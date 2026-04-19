@@ -157,3 +157,15 @@ BoN采样在PPO基础上进一步提升性能，且平均token长度仅从274增
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖3个RM基准和12+个下游任务，消融和应用验证完整
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，表格和可视化丰富
 - 价值: ⭐⭐⭐⭐ — 填补了开源多模态RM的空白，为社区提供了实用的基础工具和数据构建范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Frustratingly Simple Yet Highly Effective Attack Baseline: Over 90% Success Rate Against the Strong Black-box Models of GPT-4.5/4o/o1](../../NeurIPS2025/multimodal_vlm/a_frustratingly_simple_yet_highly_effective_attack_baseline.md)
+- [Controlling Multimodal LLMs via Reward-guided Decoding](../../ICCV2025/multimodal_vlm/controlling_multimodal_llms_via_rewardguided_decoding.md)
+- [VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism](vrest_tree_search_vlm_reasoning.md)
+- [Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents](agent_rewardbench.md)
+- [The Devil Is in the Details: Tackling Unimodal Spurious Correlations for Generalizable Multimodal Reward Models](../../ICML2025/multimodal_vlm/the_devil_is_in_the_details_tackling_unimodal_spurious_correlations_for_generali.md)
+
+<!-- RELATED:END -->

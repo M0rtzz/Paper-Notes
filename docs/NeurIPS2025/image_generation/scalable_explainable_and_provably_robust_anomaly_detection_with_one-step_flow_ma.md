@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 47 数据集 × 45 方法 × 5 seeds = 10575 次实验，极其全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，理论和实验结合紧密
 - 价值: ⭐⭐⭐⭐ 对表格数据异常检测社区有实际价值，方法简单有效可部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow Matching Neural Processes](flow_matching_neural_processes.md)
+- [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
+- [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
+- [Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
+- [FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](../../ICLR2026/image_generation/flowcast_trajectory_forecasting_for_scalable_zero-cost_speculative_flow_matching.md)
+
+<!-- RELATED:END -->

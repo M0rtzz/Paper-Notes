@@ -140,3 +140,15 @@ $$\mathcal{L}_{\text{pretrain}} = \mathcal{L}_{\text{SARE}} + \lambda \mathcal{L
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三大任务、多个数据集、完整消融，结果一致且显著
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，物理建模公式严谨，可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ — 数据集+框架+SOTA，对 SAR 社区有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Masked Representation Modeling for Domain-Adaptive Segmentation](mrm_masked_representation_modeling_domain_adaptive.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)
+- [AFRO: Bootstrap Dynamic-Aware 3D Visual Representation for Scalable Robot Learning](bootstrap_dynamic-aware_3d_visual_representation_for_scalable_robot_learning.md)
+- [AMLRIS: Alignment-aware Masked Learning for Referring Image Segmentation](../../ICLR2026/segmentation/amlris_alignment-aware_masked_learning_for_referring_image_segmentation.md)
+- [Region-based Cluster Discrimination for Visual Representation Learning](../../ICCV2025/segmentation/region-based_cluster_discrimination_for_visual_representation_learning.md)
+
+<!-- RELATED:END -->

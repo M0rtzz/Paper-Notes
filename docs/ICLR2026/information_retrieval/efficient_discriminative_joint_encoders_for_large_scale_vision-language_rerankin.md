@@ -113,3 +113,15 @@ EDJE分为离线和在线两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨多种骨干网络验证、详细消融、语义可视化、效率分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精准，动机阐述极其清晰，瓶颈分析有数据支撑
 - 价值: ⭐⭐⭐⭐⭐ 高实用价值，填补了多模态检索中联合编码器重排器的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms](../../ACL2025/information_retrieval/llm_reranking_harmful_content.md)
+- [Joint Vision-Language Social Bias Removal for CLIP](../../CVPR2025/information_retrieval/joint_vision-language_social_bias_removal_for_clip.md)
+- [TokMem: One-Token Procedural Memory for Large Language Models](tokmem_one-token_procedural_memory_for_large_language_models.md)
+- [Query-Level Uncertainty in Large Language Models](query-level_uncertainty_in_large_language_models.md)
+- [RAEE: A Robust Retrieval-Augmented Early Exit Framework for Efficient Inference](raee_a_robust_retrieval-augmented_early_exit_framework_for_efficient_inference.md)
+
+<!-- RELATED:END -->

@@ -186,3 +186,15 @@ SEA 在提升真实性的同时保持了信息量和多样性（Diversity 也是
 - **实用价值**: ⭐⭐⭐⭐ — 即插即用形式有实用潜力，但计算开销限制了大规模部署
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法直观，可视化丰富
 - **综合评分**: ⭐⭐⭐⭐⭐ (9/10)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time](../../ICML2025/llm_alignment/bounded_rationality_for_llms_satisficing_alignment_at_inference-time.md)
+- [Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis](limited_preference_data_learning_better_reward_model_with_latent_space_synthesis.md)
+- [Position: The Complexity of Perfect AI Alignment -- Formalizing the RLHF Trilemma](position_the_complexity_of_perfect_ai_alignment_--_formalizing_the_rlhf_trilemma.md)
+- [Robust LLM Alignment via Distributionally Robust Direct Preference Optimization](robust_llm_alignment_via_distributionally_robust_direct_preference_optimization.md)
+- [Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons](towards_understanding_safety_alignment_a_mechanistic_perspective_from_safety_neu.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 真实和模拟数据均有评估，消融全面，但真实数据缺乏定量 GT 对比
 - 写作质量: ⭐⭐⭐⭐⭐ SEM 物理背景介绍清晰，方法推导严谨，图示精美
 - 价值: ⭐⭐⭐⭐⭐ 对材料科学和生物学的微观 3D 表征有重要应用价值，开创了 SEM + 神经场交叉领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMGauss: Continuous Slice-to-3D Reconstruction via Dynamic Gaussian Modeling in Volume Electron Microscopy](emgauss_continuous_slice-to-3d_reconstruction_via_dynamic_gaussian_modeling_in_v.md)
+- [Neu-PiG: Neural Preconditioned Grids for Fast Dynamic Surface Reconstruction on Long Sequences](neu-pig_neural_preconditioned_grids_for_fast_dynamic_surface_reconstruction_on_l.md)
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+- [LiTo: Surface Light Field Tokenization](../../ICLR2026/3d_vision/lito_surface_light_field_tokenization.md)
+- [Surface-Based Visibility-Guided Uncertainty for Continuous Active 3D Neural Reconstruction](../../AAAI2026/3d_vision/surface-based_visibility-guided_uncertainty_for_continuous_active_3d_neural_reco.md)
+
+<!-- RELATED:END -->

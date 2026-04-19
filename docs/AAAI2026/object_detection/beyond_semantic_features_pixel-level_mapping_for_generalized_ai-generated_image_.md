@@ -154,3 +154,15 @@ $$T_c \sim \mathcal{U}(-1, 1)^{256}, \quad c \in \{0, 1, 2\}$$
 - **技术深度**: ⭐⭐⭐ — 方法本身简单，但分析（频谱、t-SNE、随机映射验证）较为深入
 - **实验充分性**: ⭐⭐⭐⭐ — 覆盖 GAN/Diffusion 两大类生成模型，多数据集多对比方法
 - **实用价值**: ⭐⭐⭐⭐⭐ — 零成本预处理步骤可直接集成到任何检测器，实用性极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI](../../CVPR2025/object_detection/co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai.md)
+- [Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated](your_ai-generated_image_detector_can_secretly_achieve_sota_accuracy_if_calibrate.md)
+- [Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces](beyond_fact_retrieval_episodic_memory_for_rag_with_generative_semantic_workspace.md)
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](../../CVPR2026/object_detection/beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](../../CVPR2025/object_detection/generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+
+<!-- RELATED:END -->

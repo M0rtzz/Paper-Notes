@@ -172,3 +172,15 @@ Qurating开创了LLM-as-judge的数据质量评估范式，但仅适用于文本
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 11数据集×3任务×多模型+基础模型微调+数据裁剪+多消融(编码器/维度/LLM)
 - **写作质量**: ⭐⭐⭐⭐ — 框架描述清晰,验证环节扎实,数学符号规范
 - **实用价值**: ⭐⭐⭐⭐ — 对TS数据策展和基础模型微调有直接应用价值,元训练模型可复用降低部署门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finding Time Series Anomalies using Granular-ball Vector Data Description](../../AAAI2026/time_series/finding_time_series_anomalies_using_granular-ball_vector_data_description.md)
+- [SwiftTS: A Swift Selection Framework for Time Series Pre-trained Models via Multi-task Meta-Learning](swiftts_a_swift_selection_framework_for_time_series_pre-trained_models_via_multi.md)
+- [GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+- [AirDDE: Multifactor Neural Delay Differential Equations for Air Quality Forecasting](../../AAAI2026/time_series/airdde_multifactor_neural_delay_differential_equations_for_air_quality_forecasti.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ OAKINK2数据集：FVD从CosHand的68.76降至46.31，MPJPE从14.49降至7.01。
 - 实验充分度: ⭐⭐⭐⭐⭐ DexYCB+OAKINK2两个数据集，条件消融、下游验证、零样本迁移，实验非常扎实
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，问题定义明确
 - 价值: ⭐⭐⭐⭐⭐ 对具身AI的合成数据生成有很高实用价值，证明了sim-to-real HOI视频生成的可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoSA: Motion-Coherent Human Video Generation via Structure-Appearance Decoupling](../../ICLR2026/video_generation/mosa_motion-coherent_human_video_generation_via_structure-appearance_decoupling.md)
+- [StreamDiT: Real-Time Streaming Text-to-Video Generation](streamdit_real-time_streaming_text-to-video_generation.md)
+- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](../../ICLR2026/video_generation/motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+- [PerformRecast: Expression and Head Pose Disentanglement for Portrait Video Editing](performrecast_expression_and_head_pose_disentanglement_for_portrait_video_editin.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+
+<!-- RELATED:END -->

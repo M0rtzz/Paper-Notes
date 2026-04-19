@@ -123,3 +123,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐ 作为心理治疗 LLM 领域首个系统分类综述具有重要组织价值和方向指引意义，但缺乏统一定量对比且覆盖时间有限，对虚拟治疗师的安全和伦理问题讨论深度不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Recent Advances in Speech Language Models: A Survey](recent_advances_in_speech_language_models_a_survey.md)
+- [Pragmatics in the Era of Large Language Models: A Survey on Datasets, Evaluation, Opportunities and Challenges](pragmatics_survey.md)
+
+<!-- RELATED:END -->

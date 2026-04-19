@@ -145,3 +145,15 @@ MinCD-PnP 由两部分组成：(1) 理论层面的三重近似（Triple Approxim
 - 实验充分度: ⭐⭐⭐⭐⭐ （4个数据集，跨场景+跨数据集，多方法对比）
 - 写作质量: ⭐⭐⭐⭐ （理论推导清晰，但部分数学符号较重）
 - 价值: ⭐⭐⭐⭐ （I2P 配准的实用改进，即插即用模块设计值得借鉴）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3×2: 3D Object Part Segmentation by 2D Semantic Correspondences](../../ECCV2024/3d_vision/3x2_3d_object_part_segmentation_by_2d_semantic_correspondenc.md)
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+- [Self-supervised Learning of Hybrid Part-aware 3D Representations of 2D Gaussians and Superquadrics](self-supervised_learning_of_hybrid_part-aware_3d_representations_of_2d_gaussians.md)
+- [Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images](amodal3r_amodal_3d_reconstruction_from_occluded_2d_images.md)
+- [Towards Scalable Spatial Intelligence via 2D-to-3D Data Lifting](towards_scalable_spatial_intelligence_via_2d-to-3d_data_lifting.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ PEMP 基于冻结的 CLIP 模型，包含三个学习过程：
 - 实验充分度: ⭐⭐⭐⭐ 三个临床任务、五个数据集、完整消融实验、可视化分析，但缺乏与更多 VLM 的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述合理，图示直观
 - 价值: ⭐⭐⭐⭐ 对少样本病理图像分析有实际临床价值，可解释性强，适合实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing the Power of Prompt-driven Nucleus Instance Segmentation](unleashing_the_power_of_prompt-driven_nucleus_instance_segmentation.md)
+- [Parameter-efficient Prompt Tuning and Hierarchical Textual Guidance for Few-shot Whole Slide Image Classification](../../CVPR2026/medical_imaging/parameter-efficient_prompt_tuning_and_hierarchical_textual_guidance_for_few-shot.md)
+- [Exploiting Low-Dimensional Manifold of Features for Few-Shot Whole Slide Image Classification](../../ICLR2026/medical_imaging/exploiting_low-dimensional_manifold_of_features_for_few-shot_whole_slide_image_c.md)
+- [MUSE: Harnessing Precise and Diverse Semantics for Few-Shot Whole Slide Image Classification](../../CVPR2026/medical_imaging/muse_harnessing_precise_and_diverse_semantics_for_few-shot_whole_slide_image_cla.md)
+- [TIP: Tabular-Image Pre-training for Multimodal Classification with Incomplete Data](tip_tabular-image_pre-training_for_multimodal_classification_with_incomplete_dat.md)
+
+<!-- RELATED:END -->

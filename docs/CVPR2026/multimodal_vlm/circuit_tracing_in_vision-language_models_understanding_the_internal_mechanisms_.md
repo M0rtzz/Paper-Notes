@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多维度分析+因果干预验证，但仅覆盖单个模型，缺少定量基准对比
 - 写作质量: ⭐⭐⭐⭐⭐ 案例分析深刻且引人入胜，方法论阐述清晰，图示丰富
 - 价值: ⭐⭐⭐⭐⭐ 为 VLM 可解释性奠定了标准化分析框架，六指幻觉等洞察具有直接的实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Overthinking Causes Hallucination: Tracing Confounder Propagation in Vision Language Models](overthinking_causes_hallucination_tracing_confounder_propagation_in_vision_langu.md)
+- [Understanding Task Transfer in Vision-Language Models](understanding_task_transfer_in_vision-language_models.md)
+- [Visual Symbolic Mechanisms: Emergent Symbol Processing in Vision Language Models](../../ICLR2026/multimodal_vlm/visual_symbolic_mechanisms_vlm.md)
+- [Thinking in Dynamics: How Multimodal Large Language Models Perceive, Track, and Reason Dynamics in Physical 4D World](thinking_in_dynamics_how_multimodal_large_language_models_perceive_track_and_rea.md)
+- [HiSpatial: Taming Hierarchical 3D Spatial Understanding in Vision-Language Models](hispatial_taming_hierarchical_3d_spatial_understanding_in_vision-language_models.md)
+
+<!-- RELATED:END -->

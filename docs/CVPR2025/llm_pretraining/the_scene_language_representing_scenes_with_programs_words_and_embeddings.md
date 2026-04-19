@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 3D/4D 生成、图像条件、多渲染器、编辑，但定量对比对象有限
 - 写作质量: ⭐⭐⭐⭐⭐ 概念清晰，DSL 设计精炼
 - 价值: ⭐⭐⭐⭐⭐ 为场景表示提出了全新范式，training-free 路线极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZEUS: Zero-shot Embeddings for Unsupervised Separation of Tabular Data](../../NeurIPS2025/llm_pretraining/zeus_zero-shot_embeddings_for_unsupervised_separation_of_tabular_data.md)
+- [ACE-G: Improving Generalization of Scene Coordinate Regression Through Query Pre-Training](../../ICCV2025/llm_pretraining/aceg_improving_generalization_of_scene_coordinate_regression.md)
+- [Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation](../../ACL2025/llm_pretraining/emergent_abilities_continued_pt.md)
+- [Tokenization is Sensitive to Language Variation](../../ACL2025/llm_pretraining/tokenization_is_sensitive_to_language_variation.md)
+- [Scalable Fingerprinting of Large Language Models](../../NeurIPS2025/llm_pretraining/scalable_fingerprinting_of_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ TextFlow基于FLUX-Kontext的流匹配架构构建。输入包括源图像、源
 - 实验充分度: ⭐⭐⭐⭐ ScenePair数据集上全面评估，消融覆盖每个模块和超参数
 - 写作质量: ⭐⭐⭐⭐ 方法描述数学化且清晰，框架图直观
 - 价值: ⭐⭐⭐⭐ 免训练方法达到训练方法水平的里程碑，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition](pixel-level_scene_understanding_in_one_token_visual_states_need_what-is-where_co.md)
+- [Vulnerability of LLMs to Vertically Aligned Text Manipulations](../../ACL2025/robotics/vulnerability_of_llms_to_vertically_aligned_text_manipulations.md)
+- [Gaming the Answer Matcher: Examining the Impact of Text Manipulation on Automated Judgment](../../AAAI2026/robotics/gaming_the_answer_matcher_examining_the_impact_of_text_manipulation_on_automated.md)
+- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](../../ICLR2026/robotics/robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+- [PanoNav: Mapless Zero-Shot Object Navigation with Panoramic Scene Parsing and Dynamic Memory](../../AAAI2026/robotics/panonav_mapless_zero-shot_object_navigation_with_panoramic_scene_parsing_and_dyn.md)
+
+<!-- RELATED:END -->

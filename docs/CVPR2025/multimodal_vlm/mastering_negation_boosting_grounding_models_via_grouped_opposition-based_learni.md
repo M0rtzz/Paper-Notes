@@ -143,3 +143,15 @@ D-Negation 测试集（mAP）:
 - **实验充分度**: ⭐⭐⭐⭐ 多模型、多基准、消融充分，跨域泛化也有验证
 - **写作质量**: ⭐⭐⭐⭐ 问题动机清晰，方法描述详细，数据集构建流程透明
 - **价值**: ⭐⭐⭐⭐ 高实用价值，否定语义是 VLM 的关键短板，方法高效易部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?](can_large_vision-language_models_correct_semantic_grounding_errors_by_themselves.md)
+- [LLaVA-Critic: Learning to Evaluate Multimodal Models](llava-critic_learning_to_evaluate_multimodal_models.md)
+- [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+
+<!-- RELATED:END -->

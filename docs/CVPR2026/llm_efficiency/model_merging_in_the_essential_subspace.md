@@ -129,3 +129,15 @@ ESM 不涉及训练，仅需 32 个无标签代理样本做一次前向传播。
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融详尽、代理数据鲁棒性分析、缩放系数可视化、计算开销报告齐全
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富，但极化缩放部分的实验动机展示略冗长
 - 价值: ⭐⭐⭐⭐ 视觉模型合并 SOTA，但缺少语言模型验证限制了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation](ace-merging_data-free_model_merging_with_adaptive_covariance_estimation.md)
+- [Retraining-Free Merging of Sparse MoE via Hierarchical Clustering](../../ICML2025/llm_efficiency/retraining-free_merging_of_sparse_moe_via_hierarchical_clustering.md)
+- [3-Model Speculative Decoding (PyramidSD)](../../NeurIPS2025/llm_efficiency/3model_speculative_decoding.md)
+- [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](../../ICLR2026/llm_efficiency/semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
+- [Boosting Quantitive and Spatial Awareness for Zero-Shot Object Counting](boosting_quantitive_and_spatial_awareness_for_zero-shot_object_counting.md)
+
+<!-- RELATED:END -->

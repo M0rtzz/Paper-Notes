@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验设计精巧但场景较少（仅IOI+GPT-2），lacks breadth
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑层层递进，问题动机阐述清晰，Spotlight水平的写作
 - 价值: ⭐⭐⭐⭐ 对可解释性方法论基础的反思极具价值，但缺乏建设性替代方案略减分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Minimizing False-Positive Attributions in Explanations of Non-Linear Models](minimizing_false-positive_attributions_in_explanations_of_non-linear_models.md)
+- [MIB: A Mechanistic Interpretability Benchmark](../../ICML2025/interpretability/mib_a_mechanistic_interpretability_benchmark.md)
+- [Mechanistic Interpretability of Emotion Inference in Large Language Models](../../ACL2025/interpretability/mechanistic_interpretability_of_emotion_inference_in_large_language_models.md)
+- [Causal Head Gating: A Framework for Interpreting Roles of Attention Heads in Transformers](causal_head_gating_a_framework_for_interpreting_roles_of_attention_heads_in_tran.md)
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+
+<!-- RELATED:END -->

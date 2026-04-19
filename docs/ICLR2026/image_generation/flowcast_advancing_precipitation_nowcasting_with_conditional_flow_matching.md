@@ -116,3 +116,15 @@ SEVIR数据集（美国雷达），8成员集合预测：
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多个指标、CFM vs 扩散消融、步数敏感性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述清晰，实验设计科学，代码开源
 - 价值: ⭐⭐⭐⭐ 对气象预测领域有直接影响，证明CFM是扩散的强替代方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](flowcast_trajectory_forecasting_for_scalable_zero-cost_speculative_flow_matching.md)
+- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [HazeMatching: Dehazing Light Microscopy Images with Guided Conditional Flow Matching](../../CVPR2026/image_generation/hazematching_dehazing_light_microscopy_images_with_guided_conditional_flow_match.md)
+- [Improving Posterior Inference of Galaxy Properties with Image-Based Conditional Flow Matching](../../NeurIPS2025/image_generation/improving_posterior_inference_of_galaxy_properties_with_image-based_conditional_.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 757组实验，多模型大小/bit-width/token数，工程量巨大
 - 写作质量: ⭐⭐⭐⭐⭐ 图表设计精美，逻辑推导清晰，变量选择有充分动机说明
 - 价值: ⭐⭐⭐⭐⭐ 对LLM量化训练的实际计划有直接指导价值，Apple出品质量保证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scheduling Weight Transitions for Quantization-Aware Training](../../ICCV2025/model_compression/scheduling_weight_transitions_for_quantization-aware_training.md)
+- [Dataset Distillation as Pushforward Optimal Quantization](dataset_distillation_as_pushforward_optimal_quantization.md)
+- [TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
+- [PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](../../ACL2025/model_compression/efficientqat.md)
+
+<!-- RELATED:END -->

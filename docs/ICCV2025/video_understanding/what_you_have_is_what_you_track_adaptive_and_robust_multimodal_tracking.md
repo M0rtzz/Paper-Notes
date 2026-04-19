@@ -168,3 +168,15 @@ $$\mathcal{L}_{all} = \lambda_1 \mathcal{L}_{aux} + \lambda_2 \mathcal{L}_{cls} 
 - 实用性：⭐⭐⭐⭐⭐ — 直接面向传感器不完美的现实场景，工程价值高
 - 实验充分度：⭐⭐⭐⭐⭐ — 9个基准、完整+缺失两种设置、详细消融
 - 写作质量：⭐⭐⭐⭐ — 问题定义清晰，masking策略的伪代码直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering](../../CVPR2026/video_understanding/do_you_see_what_i_am_pointing_at_gesture-based_egocentric_video_question_answeri.md)
+- [XTrack: Multimodal Training Boosts RGB-X Video Object Trackers](xtrack_multimodal_training_boosts_rgb-x_video_object_trackers.md)
+- [UMDATrack: Unified Multi-Domain Adaptive Tracking Under Adverse Weather Conditions](umdatrack_unified_multi-domain_adaptive_tracking_under_adverse_weather_condition.md)
+- [AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)
+- [EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception](egoadapt_adaptive_multisensory_distillation_and_policy_learning_for_efficient_eg.md)
+
+<!-- RELATED:END -->

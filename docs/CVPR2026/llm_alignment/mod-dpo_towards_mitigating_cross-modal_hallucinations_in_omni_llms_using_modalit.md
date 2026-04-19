@@ -137,3 +137,14 @@ $$\mathcal{L}_{\text{MoD-DPO}} = \mathcal{L}_{\text{DPO}} + \alpha \cdot \mathca
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法推导严谨
 - 价值: ⭐⭐⭐⭐ 切中 Omni LLM 的核心痛点，方法可推广到更多多模态场景
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Mismatch within Reference-based Preference Optimization](../../ICLR2026/llm_alignment/mitigating_mismatch_within_reference-based_preference_optimization.md)
+- [Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs](../../ICLR2026/llm_alignment/uni-dpo_a_unified_paradigm_for_dynamic_preference_optimization_of_llms.md)
+- [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+- [Displacement-Resistant Extensions of DPO with Nonconvex $f$-Divergences](../../ICLR2026/llm_alignment/displacement-resistant_extensions_of_dpo_with_nonconvex_f-divergences.md)
+- [Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization](../../NeurIPS2025/llm_alignment/mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)
+
+<!-- RELATED:END -->

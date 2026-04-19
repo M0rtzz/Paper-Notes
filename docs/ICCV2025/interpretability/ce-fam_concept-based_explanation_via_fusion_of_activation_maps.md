@@ -172,3 +172,15 @@ ImageNet-S数据集上（ViT-B/16分类器）：
 - **实验充分度**: ⭐⭐⭐⭐ Broden和ImageNet-S两数据集+多分类器+多VLM+消融+定性分析
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，评估指标设计有理有据
 - **实用价值**: ⭐⭐⭐⭐ 框架通用，可用于模型调试和误分类诊断
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Granular Concept Circuits: Toward a Fine-Grained Circuit Discovery for Concept Representations](granular_concept_circuits_toward_a_fine-grained_circuit_discovery_for_concept_re.md)
+- [ArgoTweak: Towards Self-Updating HD Maps through Structured Priors](argotweak_towards_self-updating_hd_maps_through_structured_priors.md)
+- [Separating Tongue from Thought: Activation Patching Reveals Language-Agnostic Concept Representations in Transformers](../../ACL2025/interpretability/separating_tongue_from_thought_activation_patching_reveals_language-agnostic_con.md)
+- [When Machine Learning Gets Personal: Evaluating Prediction and Explanation](../../ICLR2026/interpretability/when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
+- [Probabilistic Token Alignment for Large Language Model Fusion](../../NeurIPS2025/interpretability/probabilistic_token_alignment_for_large_language_model_fusion.md)
+
+<!-- RELATED:END -->

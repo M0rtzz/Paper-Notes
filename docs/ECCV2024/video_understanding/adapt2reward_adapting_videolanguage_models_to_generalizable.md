@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 环境泛化、任务泛化、消融都做了，但缺少真实机器人实验
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述系统，图表设计合理
 - 价值: ⭐⭐⭐⭐ 对 VLM→机器人奖励函数这条路线提供了有效方案，failure prompt 思想可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition](../../ICML2025/video_understanding/moma_modulating_mamba_for_adapting_image_foundation_models_to_video_recognition.md)
+- [Vamos: Versatile Action Models for Video Understanding](vamos_versatile_action_models_for_video_understanding.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
+- [Causality Matters: How Temporal Information Emerges in Video Language Models](../../AAAI2026/video_understanding/causality_matters_how_temporal_information_emerges_in_video_language_models.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+
+<!-- RELATED:END -->

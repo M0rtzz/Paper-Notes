@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 27种生成器、5个测试集、完善的偏差分析和增强消融
 - 写作质量: ⭐⭐⭐⭐⭐ Fig.2的偏差可视化极其有力，问题动机清晰
 - 价值: ⭐⭐⭐⭐⭐ 为AI生成图像检测提供了可靠的训练范式，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Learner Generalizes Across AI-Generated Image Detection](../../ICML2025/object_detection/few-shot_learner_generalizes_across_ai-generated_image_detection.md)
+- [Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation](../../ICCV2025/object_detection/is_less_more_exploring_token_condensation_as_training-free_test-time_adaptation.md)
+- [Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](../../NeurIPS2025/object_detection/dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](../../CVPR2026/object_detection/training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+- [Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI](co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai.md)
+
+<!-- RELATED:END -->

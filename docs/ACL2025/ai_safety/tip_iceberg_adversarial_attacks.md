@@ -132,3 +132,15 @@ TIP 攻击由两个组件构成：任务指令 x_task（要求模型处理编码
 - **技术深度**: ⭐⭐⭐ — 攻击设计不复杂，但理论分析清晰
 - **实用性**: ⭐⭐⭐⭐ — 对 LLM 安全评估有直接指导意义
 - **实验充分度**: ⭐⭐⭐⭐ — 6 个模型 × 10 种编码 × 3 难度，覆盖面广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CAVGAN: Unifying Jailbreak and Defense of LLMs via Generative Adversarial Attacks](cavgan_unifying_jailbreak_and_defense_of_llms_via_generative_adversarial_attacks.md)
+- [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](../../NeurIPS2025/ai_safety/on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
+- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](../../NeurIPS2025/ai_safety/bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [MixAT: Combining Continuous and Discrete Adversarial Training for LLMs](../../NeurIPS2025/ai_safety/mixat_combining_continuous_and_discrete_adversarial_training_for_llms.md)
+
+<!-- RELATED:END -->

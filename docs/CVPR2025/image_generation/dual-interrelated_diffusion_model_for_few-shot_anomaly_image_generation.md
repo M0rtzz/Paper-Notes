@@ -115,3 +115,15 @@ $$\mathcal{L} = \mathbb{E}_{\mathcal{E}(I),\epsilon,t}\left[\|\epsilon - \epsilo
 ⭐⭐⭐⭐
 
 问题定义精准(小样本异常生成+掩码对齐)，双流同步生成的设计巧妙且有效。下游任务指标达到 SOTA，实用价值高。BCM 对小样本过拟合的解决方案也值得参考。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation](../../ICCV2025/image_generation/hypdae_hyperbolic_diffusion_autoencoders_for_hierarchical_few-shot_image_generat.md)
+- [Dual Diffusion for Unified Image Generation and Understanding](dual_diffusion_for_unified_image_generation_and_understanding.md)
+- [V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)
+- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](../../CVPR2026/image_generation/uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
+- [Diffusion Self-Distillation for Zero-Shot Customized Image Generation](diffusion_self-distillation_for_zero-shot_customized_image_generation.md)
+
+<!-- RELATED:END -->

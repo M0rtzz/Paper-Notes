@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ (7个数据集、详尽消融、定性定量+用户研究)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，动机论证充分)
 - 价值: ⭐⭐⭐⭐ (视频立体匹配新标杆，泛化能力突出)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TC-Stereo: Temporally Consistent Stereo Matching](../../ECCV2024/3d_vision/temporally_consistent_stereo_matching.md)
+- [BANet: Bilateral Aggregation Network for Mobile Stereo Matching](banet_bilateral_aggregation_network_for_mobile_stereo_matchi.md)
+- [ZeroStereo: Zero-shot Stereo Matching from Single Images](zerostereo_zero-shot_stereo_matching_from_single_images.md)
+- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [FoundationStereo: Zero-Shot Stereo Matching](../../CVPR2025/3d_vision/foundationstereo_zero-shot_stereo_matching.md)
+
+<!-- RELATED:END -->

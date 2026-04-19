@@ -115,3 +115,15 @@ tags:
 
 ### 综合评价
 本文最有说服力的地方不是性能数字本身，而是 1M vs 85M 参数、21K vs 3.75M 数据量的极端对比——这直接证明了在有明确结构的问题上，正确的归纳偏置（超图建模群体交互）比暴力堆叠数据和参数更有效。这对多智能体学习、图神经网络和大模型时代的"大力出奇迹"思维都是有价值的反思。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](../../AAAI2026/graph_learning/s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [Assemble Your Crew: Automatic Multi-agent Communication Topology Design via Autoregressive Graph Generation](../../AAAI2026/graph_learning/assemble_your_crew_automatic_multi-agent_communication_topol.md)
+- [Cooperative Sheaf Neural Networks](cooperative_sheaf_neural_networks.md)
+- [Beyond Simple Graphs: Neural Multi-Objective Routing on Multigraphs](beyond_simple_graphs_neural_multi-objective_routing_on_multigraphs.md)
+- [Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)
+
+<!-- RELATED:END -->

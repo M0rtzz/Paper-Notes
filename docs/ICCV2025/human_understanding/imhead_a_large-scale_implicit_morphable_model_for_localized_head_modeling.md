@@ -150,3 +150,15 @@ imHead 在两个数据集上全面超越所有基线，同时隐式空间仅 256
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖重建/生成/编辑/对应关系等多维度，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ 技术细节清晰，公式推导完整
 - **价值**: ⭐⭐⭐⭐⭐ 大规模隐式头部模型 + 局部编辑能力，对 3D 人脸/头部领域有基础性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](../../NeurIPS2025/human_understanding/graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [PetFace: A Large-Scale Dataset and Benchmark for Animal Identification](../../ECCV2024/human_understanding/petface_a_large-scale_dataset_and_benchmark_for_animal_identification.md)
+- [Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems](../../ICML2025/human_understanding/erwin_a_tree-based_hierarchical_transformer_for_large-scale_physical_systems.md)
+- [Controllable and Expressive One-Shot Video Head Swapping](controllable_and_expressive_one-shot_video_head_swapping.md)
+
+<!-- RELATED:END -->

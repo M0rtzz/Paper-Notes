@@ -137,3 +137,15 @@ ECSO是完全训练无关（training-free）的推理时方法，不涉及任何
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个MLLM、3个安全基准、3个utility基准、详细消融，非常充分
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰：观察→insight→方法→验证，图表精美易懂
 - 价值: ⭐⭐⭐⭐ 训练无关的即插即用方案有实用价值，但本质上是"绕过问题"而非"解决问题"
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal LLMs as Customized Reward Models for Text-to-Image Generation](../../ICCV2025/multimodal_vlm/multimodal_llms_as_customized_reward_models_for_text-to-image_generation.md)
+- [Merlin: Empowering Multimodal LLMs with Foresight Minds](merlin_empowering_multimodal_llms_with_foresight_minds.md)
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+- [Enhance Multimodal Consistency and Coherence for Text-Image Plan Generation](../../ACL2025/multimodal_vlm/enhance_multimodal_consistency_and_coherence_for_text-image_plan_generation.md)
+- [MMSafeAware: Can't See the Forest for the Trees: Benchmarking Multimodal Safety Awareness for Multimodal LLMs](../../ACL2025/multimodal_vlm/cant_see_the_forest_for_the.md)
+
+<!-- RELATED:END -->

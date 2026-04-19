@@ -127,3 +127,15 @@ THINGS-EEG数据集上200-way跨被试检索（LOSO协议，平均所有fold和3
 - 实验充分度: ⭐⭐⭐⭐ 多编码器验证、详细消融、hubness分析充分，但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，实验递增对比清楚展示了每个组件的贡献
 - 价值: ⭐⭐⭐⭐ 编码器无关的即插即用校准层很有实用价值，但应用领域较窄（脑机接口）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](../../AAAI2026/llm_evaluation/graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [Free-Grained Hierarchical Visual Recognition](free-grained_hierarchical_visual_recognition.md)
+- [Cross-Scale Pansharpening via ScaleFormer and the PanScale Benchmark](cross-scale_pansharpening_via_scaleformer_and_the_panscale_benchmark.md)
+- [Test-Time Adaptation by Causal Trimming](../../NeurIPS2025/llm_evaluation/test-time_adaptation_by_causal_trimming.md)
+- [GranAlign: Granularity-Aware Alignment Framework for Zero-Shot Video Moment Retrieval](../../AAAI2026/llm_evaluation/granalign_granularity-aware_alignment_framework_for_zero-shot_video_moment_retri.md)
+
+<!-- RELATED:END -->

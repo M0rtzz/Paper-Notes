@@ -200,3 +200,15 @@ $$\mathcal{L}_{\text{final}} = \mathcal{L}_{\text{recon}} + w_{\text{var}} \math
 - **实验质量**: ★★★★★ — 三大任务、九个数据集配置、充分消融，单模态超多模态有说服力
 - **实用性**: ★★★★★ — 单一 RGB 模型、推理时不需骨架提取、可作冻结特征，高度实用
 - **表达清晰度**: ★★★★☆ — 整体清晰，但先验定义部分符号较多，初读有一定门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
+- [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](../../ECCV2024/human_understanding/videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
+- [Soft Equivariance Regularization for Invariant Self-Supervised Learning](../../ICLR2026/human_understanding/soft_equivariance_regularization_for_invariant_self-supervised_learning.md)
+- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](../../ECCV2024/human_understanding/self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
+- [Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization](../../ECCV2024/human_understanding/pose-aware_self-supervised_learning_with_viewpoint_trajectory_regularization.md)
+
+<!-- RELATED:END -->

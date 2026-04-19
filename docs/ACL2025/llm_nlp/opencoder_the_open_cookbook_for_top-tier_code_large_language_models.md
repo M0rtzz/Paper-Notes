@@ -165,3 +165,15 @@ OpenCoder-8B-Instruct的HumanEval Pass@1达83.5，超越所有完全开源（含
 - **实验充分性**：⭐⭐⭐⭐⭐ 大量消融实验验证每个设计决策
 - **实用价值**：⭐⭐⭐⭐⭐ 完全开源的顶级代码LLM+可复现数据流水线
 - **写作质量**：⭐⭐⭐⭐⭐ 每一步决策的动机和效果都有清晰论述
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WarriorCoder: Learning from Expert Battles to Augment Code Large Language Models](warriorcoder_learning_from_expert_battles_to_augment_code_large_language_models.md)
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_a_systematic_code-empowered_tool_learning_framework_for_large_language.md)
+- [To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization](to_code_or_not_to_code_adaptive_tool_integration_for_math_language_models_via_ex.md)
+- [Open-Set Living Need Prediction with Large Language Models](open-set_living_need_prediction_with_large_language_models.md)
+- [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
+
+<!-- RELATED:END -->

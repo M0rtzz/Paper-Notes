@@ -165,3 +165,15 @@ $$\mathcal{L}_\theta = \mathbb{E}_{\boldsymbol{x}, \epsilon, t} \left\| \epsilon
 ⭐⭐⭐⭐ (4/5)
 
 创新性强，方法优雅，组合泛化的动机令人信服。分布外目标发现的提升显著。但推理效率和评估规模是明显短板，零样本实验设置过于简单。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space](dctdiff_intriguing_properties_of_image_generative_modeling_in_the_dct_space.md)
+- [Understanding and Mitigating Memorization in Generative Models via Sharpness of Probability Landscapes](understanding_and_mitigating_memorization_in_generative_models_via_sharpness_of_.md)
+- [Efficient Generative Modeling with Residual Vector Quantization-Based Tokens](efficient_generative_modeling_with_residual_vector_quantization-based_tokens.md)
+- [Action-Minimization Meets Generative Modeling: Efficient Transition Path Sampling with the Onsager-Machlup Functional](action-minimization_meets_generative_modeling_efficient_transition_path_sampling.md)
+- [Enhancing Vision-Language Compositional Understanding with Multimodal Synthetic Data (SPARCL)](../../CVPR2025/image_generation/enhancing_vision-language_compositional_understanding_with_multimodal_synthetic_.md)
+
+<!-- RELATED:END -->

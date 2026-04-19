@@ -135,3 +135,15 @@ $$\mathbf{s} = \mathbf{q} \odot \mathbf{k}$$
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖推理/分类/代码/指令跟随多任务，多模型多基线对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，动机到方法论述流畅
 - 价值: ⭐⭐⭐⭐ — 填补微调计算效率空白，与现有内存优化方法正交可组合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EffiCoder: Enhancing Code Generation in Large Language Models through Efficiency-Aware Fine-tuning](efficoder_enhancing_code_generation_in_large_language_models_through_efficiency-.md)
+- [GiFT: Gibbs Fine-Tuning for Code Generation](../../ACL2025/code_intelligence/gift_gibbs_fine_tuning_code_gen.md)
+- [Principled Fine-tuning of LLMs from User-Edits: A Medley of Preference, Supervision, and Reward](../../NeurIPS2025/code_intelligence/principled_fine-tuning_of_llms_from_user-edits_a_medley_of_preference_supervisio.md)
+- [IMSE: Intrinsic Mixture of Spectral Experts Fine-tuning for Test-Time Adaptation](../../ICLR2026/code_intelligence/imse_intrinsic_mixture_of_spectral_experts_fine-tuning_for_test-time_adaptation.md)
+- [A Stochastic Differential Equation Framework for Multi-Objective LLM Interactions](../../NeurIPS2025/code_intelligence/a_stochastic_differential_equation_framework_for_multi-objective_llm_interaction.md)
+
+<!-- RELATED:END -->

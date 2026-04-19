@@ -134,3 +134,15 @@ MRPC 和 RTE 任务几乎恢复到稠密基线水平。
 - ⭐⭐⭐⭐ 实用性：10 分钟/7B 单 GPU、与 LoRA 正交、可扩展至超大模型，工程部署友好
 - ⭐⭐⭐⭐ 实验充分度：4 个模型系列、3 种稀疏模式、困惑度+下游任务+效率+延迟+消融全覆盖
 - ⭐⭐⭐ 写作质量：方法描述清晰但部分实验图表不够直观，零样本结果部分任务反而下降未充分解释
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+- [Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
+
+<!-- RELATED:END -->

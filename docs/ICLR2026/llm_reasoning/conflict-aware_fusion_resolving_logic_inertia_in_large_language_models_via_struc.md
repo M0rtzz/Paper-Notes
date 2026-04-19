@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 评估规模太小（100 组），模型规模也小，缺乏大规模验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，双过程架构的动机推导合理
 - 价值: ⭐⭐⭐⭐ 揭示了 LLM 推理的根本性缺陷，对 AI 安全和可靠推理有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
+- [DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
+- [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](../../ACL2025/llm_reasoning/safe_math_reasoning.md)
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+- [Efficient Test-Time Scaling for Small Vision-Language Models](efficient_test-time_scaling_for_small_vision-language_models.md)
+
+<!-- RELATED:END -->

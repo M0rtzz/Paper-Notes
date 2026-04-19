@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作无需实验，但缺少对实际benchmark结构特征的实证验证
 - 写作质量: ⭐⭐⭐⭐ 理论叙述清晰，动机阐述充分，证明结构合理，但部分证明细节较为技术性
 - 价值: ⭐⭐⭐⭐ 对函数综合社区有重要的理论指导意义，为理解实践工具的能力边界提供了基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Counting Power of Transformers](../../ICLR2026/others/the_counting_power_of_transformers.md)
+- [Tokenisation is NP-Complete](../../ACL2025/others/tokenisation_is_np-complete.md)
+- [SynWeather: Weather Observation Data Synthesis across Multiple Regions and Variables via a General Diffusion Transformer](synweather_weather_observation_data_synthesis_across_multiple_regions_and_variab.md)
+- [Scalable Inference of Functional Neural Connectivity at Submillisecond Timescales](../../NeurIPS2025/others/scalable_inference_of_functional_neural_connectivity_at_submillisecond_timescale.md)
+- [Non-parametric Sensor Noise Modeling and Synthesis](../../ECCV2024/others/non-parametric_sensor_noise_modeling_and_synthesis.md)
+
+<!-- RELATED:END -->

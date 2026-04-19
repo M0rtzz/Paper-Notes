@@ -160,3 +160,15 @@ NPO 在弱记忆化数据上过度遗忘，强记忆化数据上不足遗忘。
 - 实验充分度: ⭐⭐⭐⭐⭐ TOFU+MUSE+WMDP 三基准，合成实验，重学习攻击，梯度分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析从直觉到数学到实验层层深入
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 遗忘实践有直接指导价值，SimNPO 简单易用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Direct Preference Optimization in Diffusion Models](rethinking_direct_preference_optimization_in_diffusion_models.md)
+- [Robust LLM Alignment via Distributionally Robust Direct Preference Optimization](robust_llm_alignment_via_distributionally_robust_direct_preference_optimization.md)
+- [Atyaephyra at SemEval-2025 Task 4: Low-Rank Negative Preference Optimization](../../ACL2025/llm_alignment/atyaephyra_at_semeval-2025_task_4_low-rank_negative_preference_optimization.md)
+- [ORPO-Distill: Mixed-Policy Preference Optimization for Cross-Architecture LLM Distillation](orpo-distill_mixed-policy_preference_optimization_for_cross-architecture_llm_dis.md)
+- [Rethinking Table Instruction Tuning](../../ACL2025/llm_alignment/rethinking_table_instruction_tuning.md)
+
+<!-- RELATED:END -->

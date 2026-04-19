@@ -152,3 +152,15 @@ LLM 大幅超越微调模型，pipeline 策略一致优于 direct，few-shot 进
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了多种模型、策略、增强方式，包含人工评估和详细错误分析
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，动机阐述充分，教育场景的关联性强
 - 价值: ⭐⭐⭐⭐ 为语言教育中的 NLP 应用提供了有价值的基线和分析，但实际部署仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+- [Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon](cross-lingual_transfer_of_cultural_knowledge_an_asymmetric_phenomenon.md)
+- [Cross-Lingual Auto Evaluation for Assessing Multilingual LLMs](cross-lingual_auto_evaluation_for_assessing_multilingual_llms.md)
+- [Language Fusion for Parameter-Efficient Cross-lingual Transfer (FLARE)](flare_crosslingual_lora.md)
+- [Cross-Lingual Generalization and Compression: From Language-Specific to Shared Neurons](cross_lingual_neurons_compression.md)
+
+<!-- RELATED:END -->

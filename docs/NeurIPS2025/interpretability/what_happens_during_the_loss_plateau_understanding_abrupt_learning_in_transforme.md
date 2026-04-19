@@ -180,3 +180,15 @@ $$\text{APM} = \frac{\sum_{(i,j) \in \Omega} |A_{ij}|}{\sum_{(i,j)} |A_{ij}|}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多任务验证、干预实验、多种度量、LLM 验证，极为充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，图表精美，量化指标设计巧妙
 - 价值: ⭐⭐⭐⭐⭐ — 对理解 Transformer 训练动态具有基础性贡献，对 LLM 训练实践有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Do Transformers Learn Implicit Reasoning?](how_do_transformers_learn_implicit_reasoning.md)
+- [Causal Head Gating: A Framework for Interpreting Roles of Attention Heads in Transformers](causal_head_gating_a_framework_for_interpreting_roles_of_attention_heads_in_tran.md)
+- [What Makes an Ensemble (Un)interpretable?](../../ICML2025/interpretability/what_makes_an_ensemble_un_interpretable.md)
+- [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
+- [How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](../../ICLR2026/interpretability/how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 评测了 20+ 模型，包含瓶颈分析、CoT/Self-Reflection、Fine-tuning 等多角度实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，图表设计直观，发现归纳层层递进
 - 价值: ⭐⭐⭐⭐ 揭示了现有 benchmark 忽略的可信度维度，对 LMM 安全对齐有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token Pruning in Multimodal Large Language Models: Are We Solving the Right Problem?](token_pruning_in_multimodal_large_language_models_are_we_solving_the_right_probl.md)
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+- [Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search](mcts_video_captioning_eval.md)
+- [Adaptive Linguistic Prompting (ALP) Enhances Phishing Webpage Detection in Multimodal Large Language Models](adaptive_linguistic_prompting_alp_enhances_phishing_webpage_detection_in_multimo.md)
+- [VLMInferSlow: Evaluating the Efficiency Robustness of Large Vision-Language Models as a Service](vlminferslow_evaluating_the_efficiency_robustness_of.md)
+
+<!-- RELATED:END -->

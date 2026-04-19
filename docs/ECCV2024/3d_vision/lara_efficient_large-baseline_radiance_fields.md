@@ -152,3 +152,15 @@ $$\mathcal{L}_{\text{Reg}} = \gamma_d \mathcal{L}_d + \gamma_n \mathcal{L}_n$$
 - **实验充分度**: ⭐⭐⭐⭐ — 多数据集 + 零样本泛化 + 网格提取 + 详细消融
 - **写作质量**: ⭐⭐⭐⭐ — 框架图清晰，各组件逻辑连贯
 - **价值**: ⭐⭐⭐⭐⭐ — 效果强、训练经济、可复现性高，对前馈3D重建方向极具参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeometrySticker: Enabling Ownership Claim of Recolorized Neural Radiance Fields](geometrysticker_enabling_ownership_claim_of_recolorized_neural_radiance_fields.md)
+- [G2fR: Frequency Regularization in Grid-Based Feature Encoding Neural Radiance Fields](g2fr_frequency_regularization_in_grid-based_feature_encoding_neural_radiance_fie.md)
+- [BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream](benerf_neural_radiance_fields_from_a_single_blurry_image_and_event_stream.md)
+- [SlotLifter: Slot-guided Feature Lifting for Learning Object-centric Radiance Fields](slotlifter_slot-guided_feature_lifting_for_learning_object-centric_radiance_fiel.md)
+- [Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields](omni-recon_harnessing_image-based_rendering_for_general-purpose_neural_radiance_.md)
+
+<!-- RELATED:END -->

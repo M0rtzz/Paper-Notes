@@ -174,3 +174,15 @@ $$L = L_{diff} + \alpha \cdot L_{ntp}$$
 - **实验充分度**: ⭐⭐⭐⭐ — 多种真实机器人多任务评估，但缺少仿真基准和充分的消融实验
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，但部分实验细节需要在附录补充
 - **价值**: ⭐⭐⭐⭐⭐ — 高实用价值，82Hz 实时推理 + 可解释决策 + 强泛化能力对机器人部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+- [Synthetic Perception: Can Generated Images Unlock Latent Visual Prior for Text-Centric Reasoning?](synthetic_perception_can_generated_images_unlock_latent_visual_prior_for_text-ce.md)
+- [CoD: A Diffusion Foundation Model for Image Compression](../../CVPR2026/image_generation/cod_a_diffusion_foundation_model_for_image_compression.md)
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](../../NeurIPS2025/image_generation/emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+- [Probing and Bridging Geometry–Interaction Cues for Affordance Reasoning in Vision Foundation Models](../../CVPR2026/image_generation/probing_and_bridging_geometry-interaction_cues_for_affordance_reasoning_in_visio.md)
+
+<!-- RELATED:END -->

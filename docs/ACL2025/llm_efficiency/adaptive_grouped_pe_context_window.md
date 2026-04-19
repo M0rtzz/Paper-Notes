@@ -186,3 +186,15 @@ LaMPE 在 RULER 128K 上达到 59.48，是第二名 SelfExtend (35.97) 的 **1.6
 - 实验充分度: ⭐⭐⭐⭐⭐ 五大基准（LongBench/L-Eval/∞Bench/RULER/PG-19）全覆盖，消融实验和超参分析完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，经验观察→数学建模→实验验证的逻辑线流畅，图表直观
 - 价值: ⭐⭐⭐⭐ 无训练长上下文扩展是刚需方向，即插即用+自适应+兼容FlashAttention2的特性实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing](scaling_context_not_parameters_training_a_compact_7b_language_model_for_efficien.md)
+- [Mitigating Posterior Salience Attenuation in Long-Context LLMs with Positional Contrastive Decoding](mitigating_posterior_salience_attenuation_in_long-context_llms_with_positional_c.md)
+- [NExtLong: Toward Effective Long-Context Training without Long Documents](../../ICML2025/llm_efficiency/nextlong_toward_effective_long-context_training_without_long_documents.md)
+- [KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](kv_latent_cache_reduction.md)
+- [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](smarter_better_faster_longer_a_modern_bidirectional_encoder_for_fast_memory_effi.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ $$F_{\text{AB}(j)}(x_{t+k}) = \sum_{i=1}^{j} (-1)^{i+1} \binom{j}{i} F(x_{t+k+i}
 - 技术深度：⭐⭐⭐⭐（等变性保持的理论分析扎实）
 - 实验充分度：⭐⭐⭐⭐（系统的消融和组合实验）
 - 实用性：⭐⭐⭐⭐⭐（免训练即插即用，实际加速效果显著）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamCache: Finetuning-Free Lightweight Personalized Image Generation via Feature Caching](../../CVPR2025/image_generation/dreamcache_finetuning-free_lightweight_personalized_image_generation_via_feature.md)
+- [ProCache: Constraint-Aware Feature Caching with Selective Computation for Diffusion Transformer Acceleration](../../AAAI2026/image_generation/procache_constraint-aware_feature_caching_with_selective_computation_for_diffusi.md)
+- [LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching](../../ICCV2025/image_generation/lazymar_accelerating_masked_autoregressive_models_via_feature_caching.md)
+- [Training-Free Constrained Generation with Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)
+- [MatchDiffusion: Training-free Generation of Match-Cuts](../../ICCV2025/image_generation/matchdiffusion_training-free_generation_of_match-cuts.md)
+
+<!-- RELATED:END -->

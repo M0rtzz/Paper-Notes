@@ -188,3 +188,15 @@ $$W_{j,i}^{HCNR} = \begin{cases} W_{j,i}^{orig} + [\sum_{k \in A_j^{task}} c_{j,
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5 个 LLM 家族、4 个微调数据集、5 个诚实基准、详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 叙事流畅，从观察到方法到验证逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ — 对 LLM 安全部署有直接实用价值，方法高效实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thompson Sampling via Fine-Tuning of LLMs](../../ICLR2026/medical_imaging/thompson_sampling_via_fine-tuning_of_llms.md)
+- [G2L: From Giga-Scale to Cancer-Specific Large-Scale Pathology Foundation Models via Efficient Fine-Tuning](g2lfrom_giga-scale_to_cancer-specific_large-scale_pathology_foundation_models_vi.md)
+- [Unsupervised Multi-Parameter Inverse Solving for Reducing Ring Artifacts in 3D X-Ray CBCT](unsupervised_multi-parameter_inverse_solving_for_reducing_ring_artifacts_in_3d_x.md)
+- [Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification](federated_clip_for_resource-efficient_heterogeneous_medical_image_classification.md)
+- [Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data](../../CVPR2026/medical_imaging/towards_efficient_medical_reasoning_with_minimal_fine-tuning_data.md)
+
+<!-- RELATED:END -->

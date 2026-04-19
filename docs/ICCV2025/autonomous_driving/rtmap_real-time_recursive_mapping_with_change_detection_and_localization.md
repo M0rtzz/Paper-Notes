@@ -189,3 +189,15 @@ RTMap对变化类别的召回率更高，实用中更高召回能确保安全。
 - **实验完整性**：⭐⭐⭐⭐（多数据集多任务评估完整，但缺乏真实多次遍历大规模验证）
 - **实用价值**：⭐⭐⭐⭐⭐（直接面向产业级自动驾驶众包地图场景）
 - **总体推荐**：⭐⭐⭐⭐⭐（系统性极强的工作，有望推动在线HD建图进入众包时代）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting](gs-livm_real-time_photo-realistic_lidar-inertial-visual_mapping_with_gaussian_sp.md)
+- [When Every Millisecond Counts: Real-Time Anomaly Detection via the Multimodal Asynchronous Hybrid Network](../../ICML2025/autonomous_driving/when_every_millisecond_counts_real-time_anomaly_detection_via_the_multimodal_asy.md)
+- [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](../../NeurIPS2025/autonomous_driving/chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
+- [Adaptive Dual Uncertainty Optimization: Boosting Monocular 3D Object Detection under Test-Time Shifts](adaptive_dual_uncertainty_optimization_boosting_monocular_3d_object_detection_un.md)
+- [LookOut: Real-World Humanoid Egocentric Navigation](lookout_real-world_humanoid_egocentric_navigation.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ $$\text{下游贝叶斯测试误差} \lesssim \text{下游自由能} \lesssim \t
 ## 评分
 
 ⭐⭐⭐⭐ — 理论优美且有实际指导价值，将经典贝叶斯模型选择与迁移学习连接，统一解释多个已知经验规律。主要局限在实验规模偏小和自由能近似计算的实际可操作性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+- [Uncertainty-Guided Model Selection for Tabular Foundation Models in Biomolecule Efficacy Prediction](../../NeurIPS2025/self_supervised/uncertainty-guided_model_selection_for_tabular_foundation_models_in_biomolecule_.md)
+- [Griffin: Towards a Graph-Centric Relational Database Foundation Model](griffin_towards_a_graph-centric_relational_database_foundation_model.md)
+- [Towards Reliable and Holistic Visual In-Context Learning Prompt Selection](../../NeurIPS2025/self_supervised/towards_reliable_and_holistic_visual_in-context_learning_prompt_selection.md)
+- [What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models](what_has_a_foundation_model_found_using_inductive_bias_to_probe_for_world_models.md)
+
+<!-- RELATED:END -->

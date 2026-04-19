@@ -137,3 +137,15 @@ TLP 作为即插即用模块应用于其他方法的效果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个基准、全面消融、即插即用验证、像素精度补充报告，非常完整
 - 写作质量: ⭐⭐⭐⭐⭐ 从观察→insight→方法形成清晰的逻辑链，数学推导严谨且在概念上讲得很清楚
 - 价值: ⭐⭐⭐⭐ 将训练免 OVSS 性能推到超过使用辅助骨干的方法，实际应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation](looking_beyond_the_window_global-local_aligned_clip_for_training-free_open-vocab.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+- [Training-Free Class Purification for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/training-free_class_purification_for_open-vocabulary_semantic_segmentation.md)
+- [INSID3: Training-Free In-Context Segmentation with DINOv3](insid3_training-free_in-context_segmentation_with_dinov3.md)
+- [GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation](geoguide_hierarchical_geometric_guidance_for_open-vocabulary_3d_semantic_segment.md)
+
+<!-- RELATED:END -->

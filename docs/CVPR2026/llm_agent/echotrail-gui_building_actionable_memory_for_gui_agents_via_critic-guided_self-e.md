@@ -176,3 +176,15 @@ $$\text{Score}(\tau, I) = \alpha \cdot S_{dense}(\tau, I) + (1-\alpha) \cdot S_{
 - 实验充分度: ⭐⭐⭐⭐⭐ 双基准(AndroidWorld+AndroidLab)、双backbone(GPT-4o+Qwen)、四维度指标、完整消融+敏感性分析+探索质量追踪
 - 写作质量: ⭐⭐⭐⭐ 三阶段架构图清晰，Algorithm 1完整，消融分析层次分明
 - 价值: ⭐⭐⭐⭐⭐ Training-free即超越微调方法，对GUI自动化有直接实用推动；EchoTrail-4K数据集也有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents](gui-ceval_a_hierarchical_and_comprehensive_chinese_benchmark_for_mobile_gui_agen.md)
+- [GUI-Xplore: Empowering Generalizable GUI Agents with One Exploration](../../CVPR2025/llm_agent/gui-xplore_empowering_generalizable_gui_agents_with_one_exploration.md)
+- [HATS: Hardness-Aware Trajectory Synthesis for GUI Agents](hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)
+- [Towards GUI Agents: Vision-Language Diffusion Models for GUI Grounding](towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](../../ACL2025/llm_agent/gui_explorer_autonomous.md)
+
+<!-- RELATED:END -->

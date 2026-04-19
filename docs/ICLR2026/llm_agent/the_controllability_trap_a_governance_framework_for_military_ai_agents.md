@@ -145,3 +145,15 @@ $$\text{CQS}(t) = \min(n_1(t), n_2(t), n_3(t), n_4(t), n_5(t), n_6(t))$$
 - 实验充分度: ⭐⭐ (仅一个工作场景演示，无真实系统实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，逻辑严密，概念定义精确)
 - 价值: ⭐⭐⭐⭐ (对AI agent治理领域有重要的框架贡献，但实际部署验证仍需后续工作)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenAgentSafety: A Comprehensive Framework for Evaluating Real-World AI Agent Safety](openagentsafety_a_comprehensive_framework_for_evaluating_real-world_ai_agent_saf.md)
+- [Toward a Dynamic Stackelberg Game-Theoretic Framework for Agentic AI Defense Against LLM Jailbreaking](toward_a_dynamic_stackelberg_game-theoretic_framework_for_agentic_ai_defense_aga.md)
+- [SR-Scientist: Scientific Equation Discovery With Agentic AI](sr-scientist_scientific_equation_discovery_with_agentic_ai.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](../../ACL2025/llm_agent/bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+- [With Great Capabilities Come Great Responsibilities: Introducing the Agentic Risk & Capability Framework for Governing Agentic AI Systems](../../AAAI2026/llm_agent/with_great_capabilities_come_great_responsibilities_introducing_the_agentic_risk.md)
+
+<!-- RELATED:END -->

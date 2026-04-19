@@ -139,3 +139,15 @@ $$\mathcal{L}(D, W, N) = \mathcal{L}_0 + aD^{-\alpha} + bW^{-\beta} + cN^{-\gamm
 
 ## 评分
 ⭐⭐⭐⭐⭐ (5/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+- [PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models](../../ACL2025/llm_nlp/plugin_finetuning_bridge.md)
+- [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
+- [LoopLLM: Transferable Energy-Latency Attacks in LLMs via Repetitive Generation](../../AAAI2026/llm_nlp/loopllm_transferable_energy-latency_attacks_in_llms_via_repetitive_generation.md)
+- [TransMamba: A Sequence-Level Hybrid Transformer-Mamba Language Model](../../AAAI2026/llm_nlp/transmamba_a_sequence-level_hybrid_transformer-mamba_language_model.md)
+
+<!-- RELATED:END -->

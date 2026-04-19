@@ -124,3 +124,15 @@ WeSTAR 在所有数据集上均达到最优，Sintel 上 δ₁ 提升 7.4%（74.
 - 实验充分度: ⭐⭐⭐⭐⭐ 9 个数据集 + 损坏基准 + 多种基线比较，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 实用的深度基础模型适应方案，成本低效果好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Domain Generalization in Self-Supervised Monocular Depth Estimation via Stabilized Adversarial Training](../../ECCV2024/3d_vision/improving_domain_generalization_in_self-supervised_monocular_depth_estimation_vi.md)
+- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+- [Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation](../../CVPR2026/3d_vision/rewis3d_reconstruction_improves_weaklysupervised_s.md)
+- [Adapt-As-You-Walk Through the Clouds: Training-Free Online Test-Time Adaptation of 3D Vision-Language Foundation Models](adapt-as-you-walk_through_the_clouds_training-free_online_te.md)
+- [High-Precision Self-Supervised Monocular Depth Estimation with Rich-Resource Prior](../../ECCV2024/3d_vision/high-precision_self-supervised_monocular_depth_estimation_with_rich-resource_pri.md)
+
+<!-- RELATED:END -->

@@ -105,3 +105,15 @@ Ano 的更新规则：$x_{k+1} = x_k - \frac{\eta_k}{\sqrt{\hat{v}_k} + \epsilon
 - 实验充分度: ⭐⭐⭐⭐ 噪声注入实验有说服力，RL 实验验证核心场景
 - 写作质量: ⭐⭐⭐⭐ 算法描述清晰，理论分析完整
 - 价值: ⭐⭐⭐⭐ 为噪声优化环境提供了实用的替代优化器
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Speculative Actions: A Lossless Framework for Faster AI Agents](speculative_actions_faster_ai_agents.md)
+- [Noisy-Pair Robust Representation Alignment for Positive-Unlabeled Learning](noisy-pair_robust_representation_alignment_for_positive-unlabeled_learning.md)
+- [Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables](../../AAAI2026/others/faster_certified_symmetry_breaking_using_orders_with_auxiliary_variables.md)
+- [Generation from Noisy Examples](../../ICML2025/others/generation_from_noisy_examples.md)
+- [Better Embeddings with Coupled Adam](../../ACL2025/others/better_embeddings_with_coupled_adam.md)
+
+<!-- RELATED:END -->

@@ -64,3 +64,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 扩散模型+分类模型+多种 Winograd 配置
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻
 - 价值: ⭐⭐⭐⭐⭐ 解决了 Winograd 量化的核心瓶颈，对 CPU 部署有重大价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing](beyond_convolution_a_taxonomy_of_structured_operators_for_learning-based_image_p.md)
+- [BooW-VTON: Boosting In-the-Wild Virtual Try-On via Mask-Free Pseudo Data Training](boow-vton_boosting_in-the-wild_virtual_try-on_via_mask-free_pseudo_data_training.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
+- [MixerMDM: Learnable Composition of Human Motion Diffusion Models](mixermdm_learnable_composition_of_human_motion_diffusion_models.md)
+- [Efficient Personalization of Quantized Diffusion Model without Backpropagation (ZOODiP)](efficient_personalization_of_quantized_diffusion_model_without_backpropagation.md)
+
+<!-- RELATED:END -->

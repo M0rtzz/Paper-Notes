@@ -129,3 +129,15 @@ C-LoRA 在标准 LoRA 的 $\mathbf{B} \in \mathbb{R}^{d \times r}$ 和 $\mathbf{
 - **实验充分度**: ⭐⭐⭐ — 6 个数据集 + OOD + 消融较全面，但仅限 7B 模型和分类任务，缺乏生成任务和计算效率的详细分析
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，框架图（Figure 1）直观对比了 BLoB 和 C-LoRA，表格丰富
 - **价值**: ⭐⭐⭐⭐ — 为 LLM 的不确定性感知微调提供了实用且高效的方案，M=0 的竞争力使其部署友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [DenseLoRA: Dense Low-Rank Adaptation of Large Language Models](../../ACL2025/model_compression/denselora_dense_low-rank_adaptation_of_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集验证，有消融实验和跨模型泛化实验，但缺少视野外区域的单独定量评估
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，方法描述完整，图表质量高
 - 价值: ⭐⭐⭐⭐ 对自动驾驶中的安全关键感知有实际意义，模块即插即用的特性增加了实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments](../../CVPR2026/others/adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet.md)
+- [Expressive Temporal Specifications for Reward Monitoring](expressive_temporal_specifications_for_reward_monitoring.md)
+- [CAE: Hierarchical Semantic Alignment for Image Clustering](hierarchical_semantic_alignment_for_image_clustering.md)
+- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval](leanrag_knowledge-graph-based_generation_with_semantic_aggregation_and_hierarchi.md)
+
+<!-- RELATED:END -->

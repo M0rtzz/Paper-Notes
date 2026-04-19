@@ -132,3 +132,15 @@ SeFlow 提出将传统的基于 ray-casting 的动态点分类融入自监督场
 - 实验充分度: ⭐⭐⭐⭐⭐ 双数据集验证+详细消融+数据效率分析+定性可视化，非常充分
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，图示直观（尤其 Fig.3 解释 Chamfer 失败原因）
 - 价值: ⭐⭐⭐⭐ 自监督场景流 SOTA，实时可用，代码开源，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](../../ICCV2025/autonomous_driving/ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
+- [Neural Volumetric World Models for Autonomous Driving](neural_volumetric_world_models_for_autonomous_driving.md)
+- [Risk-Aware Self-Consistent Imitation Learning for Trajectory Planning in Autonomous Driving](risk-aware_self-consistent_imitation_learning_for_trajectory_planning_in_autonom.md)
+- [Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection](equivariant_spatio-temporal_self-supervision_for_lidar_object_detection.md)
+- [BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images](../../CVPR2026/autonomous_driving/bev-sld_self-supervised_scene_landmark_detection_for_global_localization_with_li.md)
+
+<!-- RELATED:END -->

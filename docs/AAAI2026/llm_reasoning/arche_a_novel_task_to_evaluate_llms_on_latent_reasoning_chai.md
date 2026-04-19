@@ -143,3 +143,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 10个LLM、多维度分析 (按推理类型/步数效率/领域)，但数据量偏小
 - **写作质量**: ⭐⭐⭐⭐ 任务动机、形式化定义和名称寓意都很用心
 - **实用价值**: ⭐⭐⭐⭐ 为理解LLM推理本质提供了新视角，trade-off frontier 有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [L2V-CoT: Cross-Modal Transfer of Chain-of-Thought Reasoning via Latent Intervention](l2v-cot_cross-modal_transfer_of_chain-of-thought_reasoning_v.md)
+- [Latent Chain-of-Thought for Visual Reasoning](../../NeurIPS2025/llm_reasoning/latent_chain-of-thought_for_visual_reasoning.md)
+- [Dynamics Within Latent Chain-of-Thought: An Empirical Study of Causal Structure](../../ICLR2026/llm_reasoning/dynamics_within_latent_chain-of-thought_an_empirical_study_of_causal_structure.md)
+- [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](../../ICLR2026/llm_reasoning/are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
+- [TopoBench: Benchmarking LLMs on Hard Topological Reasoning](../../ICLR2026/llm_reasoning/topobench_benchmarking_llms_on_hard_topological_reasoning.md)
+
+<!-- RELATED:END -->

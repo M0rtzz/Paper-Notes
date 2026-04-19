@@ -160,3 +160,15 @@ MEGen 的语义相似度远超所有基线（>99%），隐蔽性最强。
 - **实验充分度**: ⭐⭐⭐⭐ — 5 个任务、多种指标（ASR/CP/FTR）、隐蔽性分析，较全面
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，框架图直观，对比实验具有说服力
 - **价值**: ⭐⭐⭐⭐⭐ — 对 LLM 安全领域具有重要的警示意义，展示了新型攻击面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structure-aware Domain Knowledge Injection for Large Language Models](structure-aware_domain_knowledge_injection_for_large_language_models.md)
+- [Neuron-Level Sequential Editing for Large Language Models](neuron-level_sequential_editing_for_large_language_models.md)
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models](../../NeurIPS2025/knowledge_editing/uniedit_a_unified_knowledge_editing_benchmark_for_large_language_models.md)
+- [DocMEdit: Towards Document-Level Model Editing](docmedit_towards_document-level_model_editing.md)
+
+<!-- RELATED:END -->

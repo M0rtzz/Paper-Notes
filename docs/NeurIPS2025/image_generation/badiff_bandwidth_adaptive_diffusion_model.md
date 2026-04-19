@@ -150,3 +150,15 @@ BADiff 在低码率下比级联方案快 **1.7×**，同时 FID 显著更优。
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集 × 三种码率 × 两种骨干，消融完整，补充了高分辨率和 T2I 实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法推导严谨，公式与算法伪代码完备
 - 价值: ⭐⭐⭐⭐ 对云端图像流式传输场景有明确实际价值，范式思路可推广到视频生成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+- [BlurDM: A Blur Diffusion Model for Image Deblurring](blurdm_a_blur_diffusion_model_for_image_deblurring.md)
+- [Accelerating Parallel Diffusion Model Serving with Residual Compression](accelerating_parallel_diffusion_model_serving_with_residual_compression.md)
+- [ItDPDM: Information-Theoretic Discrete Poisson Diffusion Model](itdpdm_information-theoretic_discrete_poisson_diffusion_model.md)
+- [Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
+
+<!-- RELATED:END -->

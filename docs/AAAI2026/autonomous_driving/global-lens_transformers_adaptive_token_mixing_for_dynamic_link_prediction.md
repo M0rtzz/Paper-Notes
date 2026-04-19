@@ -147,3 +147,15 @@ GLFormer 的 pipeline：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 数据集、5 骨干网络、AP+AUC-ROC 双指标、完整消融
 - 写作质量: ⭐⭐⭐⭐ — 动机论证严密，初步实验设计精巧
 - 价值: ⭐⭐⭐⭐ — 为动态图学习提供了高效替代方案，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking](comptrack_information_bottleneckguided_lowrank_dynamic_token_compres.md)
+- [Meta Dynamic Graph for Traffic Flow Prediction](meta_dynamic_graph_for_traffic_flow_prediction.md)
+- [FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
+- [CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction](catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving.md)
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+
+<!-- RELATED:END -->

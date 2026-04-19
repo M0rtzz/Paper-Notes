@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为 Workshop 短论文，实验设置合理但深度不足，缺少关键消融（如 $k$ 值、分形数量、不同编码器架构的对比）和与其他自监督方法的对比。
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，背景介绍到位，方法描述简洁准确，图表设计专业，但受篇幅限制部分细节不够充分。
 - 价值: ⭐⭐⭐⭐ 为数据受限的科学计算领域提供了一个简洁有效的方法论模板，合成数据预训练的思路具有广泛的跨领域应用潜力，但当前验证仅限于单一任务和模拟数据。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
+- [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](../../ECCV2024/segmentation/sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [Joint Self-Supervised Video Alignment and Action Segmentation](../../ICCV2025/segmentation/joint_self-supervised_video_alignment_and_action_segmentation.md)
+- [SiLC: Improving Vision Language Pretraining with Self-Distillation](../../ECCV2024/segmentation/silc_improving_vision_language_pretraining_with_self-distillation.md)
+- [Vision Transformers with Self-Distilled Registers](vision_transformers_with_self-distilled_registers.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ LoPE(r=4) 在噪声数据上相比 HydraLoRA 平均提升 1.34%（MMLU），ARC-
 - **实验充分度**: ⭐⭐⭐⭐ 多任务多配置验证，消融充分，但缺乏与专用降噪方法的直接对比
 - **写作质量**: ⭐⭐⭐⭐ 流程图清晰，三阶段流水线描述有条理
 - **价值**: ⭐⭐⭐⭐ 提供了PEFT中噪声鲁棒性的新范式，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auto-Search and Refinement: An Automated Framework for Gender Bias Mitigation in LLMs](auto-search_and_refinement_an_automated_framework_for_gender_bias_mitigation_in_.md)
+- [Learning Survival Distributions with the Asymmetric Laplace Distribution](../../ICML2025/social_computing/learning_survival_distributions_with_the_asymmetric_laplace_distribution.md)
+- [Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System](../../AAAI2026/social_computing/fact2fiction_targeted_poisoning_attack_to_agentic_fact-check.md)
+- [SceneJailEval: A Scenario-Adaptive Multi-Dimensional Framework for Jailbreak Evaluation](../../AAAI2026/social_computing/scenejaileval_a_scenario-adaptive_multi-dimensional_framework_for_jailbreak_eval.md)
+- [Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](../../ACL2025/social_computing/explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
+
+<!-- RELATED:END -->

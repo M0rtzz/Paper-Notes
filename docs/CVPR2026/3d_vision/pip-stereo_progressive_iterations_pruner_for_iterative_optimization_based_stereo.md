@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 域内+域外+不同硬件+性能计数器分析，极其充分
 - 写作质量: ⭐⭐⭐⭐ 文笔略显冗长，但技术细节扎实
 - 价值: ⭐⭐⭐⭐⭐ 首次让迭代立体匹配在边缘设备上实时运行，对自动驾驶部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [Consistency-aware Self-Training for Iterative-based Stereo Matching](../../CVPR2025/3d_vision/consistency-aware_self-training_for_iterative-based_stereo_matching.md)
+- [WMGStereo: What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zerosh.md)
+- [PromptStereo: Zero-Shot Stereo Matching via Structure and Motion Prompts](promptstereo_zero-shot_stereo_matching_via_structure_and_motion_prompts.md)
+- [TC-Stereo: Temporally Consistent Stereo Matching](../../ECCV2024/3d_vision/temporally_consistent_stereo_matching.md)
+
+<!-- RELATED:END -->

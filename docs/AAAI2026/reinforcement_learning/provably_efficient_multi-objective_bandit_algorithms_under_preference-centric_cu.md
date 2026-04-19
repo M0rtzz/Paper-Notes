@@ -184,3 +184,15 @@ $$R(T) = O(KN\delta \log T + KN\delta D^2)$$
 | 实用性 | 3.5 | 推荐/评分系统有应用前景，但线性假设限制较大 |
 | 写作质量 | 4 | 结构清晰，动机图示直观，理论推导严谨 |
 | **总分** | **4** | 理论贡献扎实的 MO-MAB 偏好定制化先驱工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Multi-Agent Conversational Bandit Approach to Online Evaluation and Selection of User-Aligned LLM Responses](a_multi-agent_conversational_bandit_approach_to_online_evaluation_and_selection_.md)
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](../../NeurIPS2025/reinforcement_learning/thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation](scalable_multi-objective_and_meta_reinforcement_learning_via_gradient_estimation.md)
+- [Object-Centric Latent Action Learning](object-centric_latent_action_learning.md)
+- [Object-Centric World Models for Causality-Aware Reinforcement Learning](object-centric_world_models_for_causality-aware_reinforcement_learning.md)
+
+<!-- RELATED:END -->

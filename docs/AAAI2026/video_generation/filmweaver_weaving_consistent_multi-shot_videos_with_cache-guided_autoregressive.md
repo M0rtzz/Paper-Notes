@@ -150,3 +150,15 @@ FilmWeaver 在一致性和角色文本对齐指标上取得 SOTA，同时 Incept
 - **实验充分度**: ⭐⭐⭐⭐ — 定量+定性对比全面，消融充分，但评测规模较小
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，逻辑流畅，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 多镜头视频生成是重要问题，框架实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing](../../ICML2025/video_generation/ca2-vdm_efficient_autoregressive_video_diffusion_model_with_causal_generation_an.md)
+- [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](../../CVPR2026/video_generation/rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
+- [MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
+- [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](../../ICLR2026/video_generation/lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
+- [ActivityForensics: A Comprehensive Benchmark for Localizing Manipulated Activity in Videos](../../CVPR2026/video_generation/activityforensics_a_comprehensive_benchmark_for_localizing_manipulated_activity_.md)
+
+<!-- RELATED:END -->

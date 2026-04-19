@@ -119,3 +119,15 @@ Co-Instruct在Q-Bench^PAIR-A1上：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多基准全面评估，消融实验详细，包含人类对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、结构完整、图表丰富
 - 价值: ⭐⭐⭐⭐ 在图像质量评估和LMM多图理解两个方向上都有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenING: A Comprehensive Benchmark for Judging Open-ended Interleaved Image-Text Generation](../../CVPR2025/multimodal_vlm/opening_a_comprehensive_benchmark_for_judging_open-ended_interleaved_image-text_.md)
+- [CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](../../ACL2025/multimodal_vlm/craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)
+- [MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models](../../NeurIPS2025/multimodal_vlm/mm-opera_benchmarking_open-ended_association_reasoning_for_large_vision-language.md)
+- [SToLa: Self-Adaptive Touch-Language Framework with Tactile Commonsense Reasoning in Open-Ended Scenarios](../../AAAI2026/multimodal_vlm/stola_self-adaptive_touch-language_framework_with_tactile_commonsense_reasoning_.md)
+- [O3SLM: Open Weight, Open Data, and Open Vocabulary Sketch-Language Model](../../AAAI2026/multimodal_vlm/o3slm_open_weight_open_data_and_open_vocabulary_sketch-language_model.md)
+
+<!-- RELATED:END -->

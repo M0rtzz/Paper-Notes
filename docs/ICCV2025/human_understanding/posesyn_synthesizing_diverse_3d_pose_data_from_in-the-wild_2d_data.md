@@ -153,3 +153,15 @@ MSM 对 TPE 训练的影响（3DCrowdNet，Mean MPJPE↓）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种TPE×六个数据集的全面评估，消融设计严谨
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法流程图直观
 - 价值: ⭐⭐⭐⭐ 提供了一种无需3D标注的通用数据增强范式，对工业部署有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HccePose(BF): Predicting Front & Back Surfaces to Construct Ultra-Dense 2D-3D Correspondences for Pose Estimation](hcceposebf_predicting_front_back_surfaces_to_construct_ultra-dense_2d-3d_corresp.md)
+- [Data-Juicer 2.0: Cloud-Scale Adaptive Data Processing for and with Foundation Models](../../NeurIPS2025/human_understanding/data-juicer_20_cloud-scale_adaptive_data_processing_for_and_with_foundation_mode.md)
+- [ReMoGen: Real-time Human Interaction-to-Reaction Generation via Modular Learning from Diverse Data](../../CVPR2026/human_understanding/remogen_real-time_human_interaction-to-reaction_generation_via_modular_learning_.md)
+- [Learning From Design Procedure To Generate CAD Programs for Data Augmentation](../../NeurIPS2025/human_understanding/learning_from_design_procedure_to_generate_cad_programs_for_data_augmentation.md)
+- [Monocular Facial Appearance Capture in the Wild](monocular_facial_appearance_capture_in_the_wild.md)
+
+<!-- RELATED:END -->

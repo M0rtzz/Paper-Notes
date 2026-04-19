@@ -161,3 +161,15 @@ HPFF 由两个互补组件构成：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 跨三种方法、四个数据集、多种网络、消融+CKA+t-SNE+分层分析，实验极为充分
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，实验分析透彻，可视化有说服力
 - **价值**: ⭐⭐⭐⭐ — 使局部学习首次在大规模数据集上超越 BP，对并行训练和节能计算有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Momentum Auxiliary Network for Supervised Local Learning](momentum_auxiliary_network_for_supervised_local_learning.md)
+- [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](../../NeurIPS2025/others/depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
+- [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)
+- [3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)
+- [Align before Collaborate: Mitigating Feature Misalignment for Robust Multi-Agent Perception](align_before_collaborate_mitigating_feature_misalignment_for_robust_multi-agent_.md)
+
+<!-- RELATED:END -->

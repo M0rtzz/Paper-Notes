@@ -126,3 +126,15 @@ $$\mathcal{L} = \sum_{i=1}^{n+N} \ell_{regr}(i,1) + \ell_{regr}(i,i)$$
 - ⭐ 实验完备性：9/10 — VO/位姿/重建/深度四个下游任务全面验证
 - ⭐ 实用价值：9/10 — 无标定+高帧率+SfM/VO统一，工程价值极高
 - ⭐ 总体：8.5/10 — DUSt3R系列的重要进化，真正将密集3D重建推向实时无标定应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVSAnywhere: Zero-Shot Multi-View Stereo](mvsanywhere_zero-shot_multi-view_stereo.md)
+- [MVBoost: Boost 3D Reconstruction with Multi-View Refinement](mvboost_boost_3d_reconstruction_with_multi-view_refinement.md)
+- [Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator](../../ICLR2026/3d_vision/text-to-3d_by_stitching_a_multi-view_reconstruction_network_to_a_video_generator.md)
+- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
+- [3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement](3denhancer_consistent_multi-view_diffusion_for_3d_enhancement.md)
+
+<!-- RELATED:END -->

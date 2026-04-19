@@ -152,3 +152,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖三个任务、三个模型家族、跨架构设置，消融全面，但模型规模偏小（≤3B）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验组织合理，但附录过多（A-L），部分关键细节被推入附录影响主文完整性
 - 价值: ⭐⭐⭐⭐ 对 AI 安全实践有直接指导意义，"小模型对齐大模型"思路很有产业价值，但跨架构和大规模场景的适用性存疑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [De-mark: Watermark Removal in Large Language Models](de-mark_watermark_removal_in_large_language_models.md)
+- [Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
+- [Ferret: Federated Full-Parameter Tuning at Scale for Large Language Models](ferret_federated_full-parameter_tuning_at_scale_for_large_language_models.md)
+- [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+- [CROW: Eliminating Backdoors from Large Language Models via Internal Consistency Regularization](crow_eliminating_backdoors_from_large_language_models_via_internal_consistency_r.md)
+
+<!-- RELATED:END -->

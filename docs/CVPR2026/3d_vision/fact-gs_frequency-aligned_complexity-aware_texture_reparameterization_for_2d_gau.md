@@ -143,3 +143,15 @@ $$\mathcal{L} = \eta \mathcal{L}_1 + (1-\eta)\mathcal{L}_{\text{SSIM}} + \mathca
 - 实验充分度: ⭐⭐⭐⭐ 五个benchmark+完整消融，低预算场景对比有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，自适应采样理论的引入非常自然
 - 价值: ⭐⭐⭐⭐ 在参数受限场景实用意义大，原则具有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GT2-GS: Geometry-aware Texture Transfer for Gaussian Splatting](../../AAAI2026/3d_vision/gt2-gs_geometry-aware_texture_transfer_for_gaussian_splatting.md)
+- [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](../../ECCV2024/3d_vision/texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
+- [DropAnSH-GS: Dropping Anchor and Spherical Harmonics for Sparse-view Gaussian Splatting](dropping_anchor_and_spherical_harmonics_for_sparse-view_gaussian_splatting.md)
+- [DirectFisheye-GS: Enabling Native Fisheye Input in Gaussian Splatting with Cross-View Joint Optimization](directfisheye-gs_enabling_native_fisheye_input_in_gaussian_splatting_with_cross-.md)
+- [SGI: Structured 2D Gaussians for Efficient and Compact Large Image Representation](sgi_structured_2d_gaussians_for_efficient_and_compact_large_image_representation.md)
+
+<!-- RELATED:END -->

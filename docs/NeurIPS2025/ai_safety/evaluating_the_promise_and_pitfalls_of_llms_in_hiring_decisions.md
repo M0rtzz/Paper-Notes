@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 10K真实数据、9个模型、多维公平性指标，比较充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，结果呈现直观，讨论建设性
 - 价值: ⭐⭐⭐⭐ 对 AI 招聘监管和实践有直接参考价值，证明了领域专用模型+偏见审计的必要性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties](trans-env_a_framework_for_evaluating_the_linguistic_robustness_of_llms_against_e.md)
+- [Distributive Fairness in Large Language Models: Evaluating Alignment with Human Values](distributive_fairness_in_large_language_models_evaluating_alignment_with_human_v.md)
+- [Probabilistic Reasoning with LLMs for K-Anonymity Estimation](probabilistic_reasoning_with_llms_for_k-anonymity_estimation.md)
+- [On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks](on_the_robustness_of_verbal_confidence_of_llms_in_adversarial_attacks.md)
+- [Contextual Integrity in LLMs via Reasoning and Reinforcement Learning](contextual_integrity_in_llms_via_reasoning_and_reinforcement_learning.md)
+
+<!-- RELATED:END -->

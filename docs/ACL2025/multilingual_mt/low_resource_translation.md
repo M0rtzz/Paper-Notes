@@ -159,3 +159,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个模型、2个数据集、多维度消融实验，覆盖检索和应用两阶段
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验设计受控，分析细致
 - 价值: ⭐⭐⭐⭐ 为极低资源翻译提供了可行的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multilingual Encoder Knows More Than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages](multilingual_encoder_knows_more_than_you_realize_shared_weights_pretraining_for_.md)
+- [The Esethu Framework: Reimagining Sustainable Dataset Governance and Curation for Low-Resource Languages](the_esethu_framework_reimagining_sustainable_dataset_governance_and_curation_for.md)
+- [Dictionaries to the Rescue: Cross-Lingual Vocabulary Transfer for Low-Resource Languages Using Bilingual Dictionaries](dictionaries_to_the_rescue_cross-lingual_vocabulary_transfer_for_low-resource_la.md)
+- [GrammaMT: Improving Machine Translation with Grammar-Informed In-Context Learning](grammamt_improving_machine_translation_with_grammar-informed_in-context_learning.md)
+- [KnowCoder-X: Boosting Multilingual Information Extraction via Code](knowcoder-x_boosting_multilingual_information_extraction_via_code.md)
+
+<!-- RELATED:END -->

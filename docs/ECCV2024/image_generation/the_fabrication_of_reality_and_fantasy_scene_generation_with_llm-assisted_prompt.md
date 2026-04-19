@@ -191,3 +191,15 @@ RFNet 在 GPT4Score 上比 Stable Diffusion 提升 33%，在 Creativity & Imagin
 - **有效性**: ⭐⭐⭐⭐ — 在自动和人工评估中均显著优于 SOTA 方法
 - **工程价值**: ⭐⭐⭐ — Training-free 但流程较复杂，依赖多个预训练模型
 - **推荐度**: ⭐⭐⭐⭐ — 基准数据集和评估方法对社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EchoScene: Indoor Scene Generation via Information Echo over Scene Graph Diffusion](echoscene_indoor_scene_generation_via_information_echo_over_scene_graph_diffusio.md)
+- [HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](hybridbooth_hybrid_prompt_inversion_for_efficient_subject-driven_generation.md)
+- [Soft Prompt Generation for Domain Generalization](soft_prompt_generation_for_domain_generalization.md)
+- [Mutual Learning for Acoustic Matching and Dereverberation via Visual Scene-driven Diffusion](mutual_learning_for_acoustic_matching_and_dereverberation_via_visual_scene-drive.md)
+- [DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
+
+<!-- RELATED:END -->

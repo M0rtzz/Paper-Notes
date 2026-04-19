@@ -82,3 +82,15 @@ Exposure-slot采用编码器-解码器架构，在编码器和解码器之间引
 - 对极端欠曝（几乎全黑）场景效果可能受限于信息丢失
 - 层次化注意力增加了计算开销，实时应用场景可能需要轻量化
 - 未来可结合RAW域信息进一步提升矫正质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TestCase-Eval: A Systematic Evaluation of Fault Coverage and Exposure](../../ACL2025/llm_nlp/testcase_eval_llm_test_gen.md)
+- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
+- [Uncertainty Unveiled: Can Exposure to More In-context Examples Mitigate Uncertainty for Large Language Models?](../../ACL2025/llm_nlp/uncertainty_unveiled_can_exposure_to_more_in-context_examples_mitigate_uncertain.md)
+- [Learning Textual Prompts for Open-World Semi-Supervised Learning](learning_textual_prompts_for_open-world_semi-supervised_learning.md)
+- [Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
+
+<!-- RELATED:END -->

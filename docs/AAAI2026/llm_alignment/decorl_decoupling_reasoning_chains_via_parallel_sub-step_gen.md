@@ -132,3 +132,15 @@ DeCoRL 将 CoT 推理从单体顺序处理转变为"交响乐团式"的模块化
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个benchmark×多尺度模型×效率分析×可解释性×消融×可扩展性
 - 写作质量: ⭐⭐⭐⭐ 交响乐团的类比生动，形式化严谨
 - 价值: ⭐⭐⭐⭐⭐ 对推理系统的效率、可解释性和可扩展性都有重大贡献，适合工业部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Chain-of-Jailbreak Attack for Image Generation Models via Editing Step by Step](../../ACL2025/llm_alignment/chain-of-jailbreak_attack_for_image_generation_models_via_editing_step_by_step.md)
+- [From Classification to Ranking: Enhancing LLM Reasoning for MBTI Personality Detection](from_classification_to_ranking_enhancing_llm_reasoning_capabilities_for_mbti_per.md)
+- [On the Exponential Convergence for Offline RLHF with Pairwise Comparisons](on_the_exponential_convergence_for_offline_rlhf_with_pairwise_comparisons.md)
+- [When Human Preferences Flip: An Instance-Dependent Robust Loss for RLHF](when_human_preferences_flip_an_instance-dependent_robust_loss_for_rlhf.md)
+- [EPO: Diverse and Realistic Protein Ensemble Generation via Energy Preference Optimization](epo_diverse_and_realistic_protein_ensemble_generation_via_energy_preference_opti.md)
+
+<!-- RELATED:END -->

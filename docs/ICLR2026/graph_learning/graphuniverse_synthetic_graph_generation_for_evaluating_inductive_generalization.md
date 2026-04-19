@@ -119,3 +119,15 @@ GraphUniverse 的核心优势在于同时支持多图生成和跨图语义一致
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4 个研究问题覆盖全面，验证体系严谨，真实数据对比令人信服
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机充分，技术细节完善
 - 价值: ⭐⭐⭐⭐ — 对图学习评测范式的反思具有长远价值，开源工具链对社区贡献显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inductive Transfer Learning for Graph-Based Recommenders](../../NeurIPS2025/graph_learning/inductive_transfer_learning_for_graph-based_recommenders.md)
+- [RAS: Retrieval-And-Structuring for Knowledge-Intensive LLM Generation](ras_retrieval-and-structuring_for_knowledge-intensive_llm_generation.md)
+- [WSGG: Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2026/graph_learning/wsgg_spatiotemporal_world_scene_graph.md)
+- [Making Classic GNNs Strong Baselines Across Varying Homophily: A Smoothness-Generalization Perspective](../../NeurIPS2025/graph_learning/making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)
+- [Assemble Your Crew: Automatic Multi-agent Communication Topology Design via Autoregressive Graph Generation](../../AAAI2026/graph_learning/assemble_your_crew_automatic_multi-agent_communication_topol.md)
+
+<!-- RELATED:END -->

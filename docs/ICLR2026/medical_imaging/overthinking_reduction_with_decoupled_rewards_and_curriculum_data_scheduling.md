@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7基准+2模型规模+骨干泛化+5个研究问题分析，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，分析透彻，可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ 解决推理型LLM的核心效率问题，50%+压缩无损性能的实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](../../NeurIPS2025/medical_imaging/ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+- [CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation](../../CVPR2026/medical_imaging/cure_curriculum-guided_multi-task_training_for_reliable_anatomy_grounded_report_.md)
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](../../AAAI2026/medical_imaging/fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
+- [Distributional Consistency Loss: Beyond Pointwise Data Terms in Inverse Problems](distributional_consistency_loss_beyond_pointwise_data_terms_in_inverse_problems.md)
+- [Advancing Safe Mechanical Ventilation Using Offline RL With Hybrid Actions and Clinically Aligned Rewards](../../AAAI2026/medical_imaging/advancing_safe_mechanical_ventilation_using_offline_rl_with_.md)
+
+<!-- RELATED:END -->

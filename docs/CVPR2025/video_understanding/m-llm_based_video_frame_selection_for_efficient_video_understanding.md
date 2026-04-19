@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个基准、4 个下游模型、丰富消融，非常完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述详细，但部分LaTeX公式排版不够规范
 - 价值: ⭐⭐⭐⭐ 即插即用的实用设计，对工业界视频 QA 系统有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Q-Frame: Query-aware Frame Selection and Multi-Resolution Adaptation for Video-LLMs](../../ICCV2025/video_understanding/q-frame_query-aware_frame_selection_and_multi-resolution_adaptation_for_video-ll.md)
+- [Generative Frame Sampler for Long Video Understanding](../../ACL2025/video_understanding/generative_frame_sampler_for_long_video_understanding.md)
+- [Wavelet-based Frame Selection by Detecting Semantic Boundary for Long Video Understanding](../../CVPR2026/video_understanding/wavelet-based_frame_selection_by_detecting_semantic_boundary_for_long_video_unde.md)
+- [MLVU: Benchmarking Multi-task Long Video Understanding](mlvu_benchmarking_multi-task_long_video_understanding.md)
+- [A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](../../ICLR2026/video_understanding/air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
+
+<!-- RELATED:END -->

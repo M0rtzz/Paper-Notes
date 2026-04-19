@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖预训练动态、上下文依赖、幻觉检测、退化检测、压力测试等多个角度
 - 写作质量: ⭐⭐⭐⭐⭐ 从物理直觉到数学定义到语言学解释层层递进，可读性极佳
 - 价值: ⭐⭐⭐⭐⭐ 提供了困惑度无法替代的补充视角，对LLM训练监控和生成质量控制有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [Restoring Pruned Large Language Models via Lost Component Compensation](restoring_pruned_large_language_models_via_lost_component_compensation.md)
+- [The Structure of Relation Decoding Linear Operators in Large Language Models](the_structure_of_relation_decoding_linear_operators_in_large_language_models.md)
+- [LayerIF: Estimating Layer Quality for Large Language Models using Influence Functions](layerif_estimating_layer_quality_for_large_language_models_using_influence_funct.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+
+<!-- RELATED:END -->

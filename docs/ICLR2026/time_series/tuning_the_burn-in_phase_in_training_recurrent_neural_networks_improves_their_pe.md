@@ -120,3 +120,15 @@ $$P(0, \theta^*; D) - P(h_0^b, \theta^b; D) \leq E_2 \cdot \sqrt{\frac{(S-1)\lam
 ## 评分 ⭐⭐⭐⭐
 
 理论扎实、实验充分、实用性强。将一个被忽视的训练超参数提升为有理论指导的核心调参项，对 RNN 训练实践有直接帮助。缺点是实验规模偏小，未涉及现代大规模序列模型。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
+- [SwiftTS: A Swift Selection Framework for Time Series Pre-trained Models via Multi-task Meta-Learning](swiftts_a_swift_selection_framework_for_time_series_pre-trained_models_via_multi.md)
+- [Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
+- [Test-Time Efficient Pretrained Model Portfolios for Time Series Forecasting](test-time_efficient_pretrained_model_portfolios_for_time_series_forecasting.md)
+- [T1: One-to-One Channel-Head Binding for Multivariate Time-Series Imputation](t1_one-to-one_channel-head_binding_for_multivariate_time-series_imputation.md)
+
+<!-- RELATED:END -->

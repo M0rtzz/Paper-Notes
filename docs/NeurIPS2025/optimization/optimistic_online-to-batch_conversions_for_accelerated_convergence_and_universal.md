@@ -124,3 +124,15 @@ tags:
 ### 与经典方法的精确对应
 - Algorithm 2 在 $\alpha_t=t$, $\eta=1/(4L)$ 时与 NAG 的梯度下降+外推两步精确对应
 - 之前的 stabilized O2B 方法（Cutkosky/Kavis/Joulani）则对应于 Polyak Heavy-Ball + 校正梯度变体
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Two-Stage Submodular Maximization](online_two-stage_submodular_maximization.md)
+- [Beyond Õ(√T) Constraint Violation for Online Convex Optimization with Adversarial Constraints](beyond_tildeosqrtt_constraint_violation_for_online_convex_optimization_with_adve.md)
+- [MOBO-OSD: Batch Multi-Objective Bayesian Optimization via Orthogonal Search Directions](mobo-osd_batch_multi-objective_bayesian_optimization_via_orthogonal_search_direc.md)
+- [Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives](effective_policy_learning_for_multi-agent_online_coordination_beyond_submodular_.md)
+- [Layer-wise Quantization for Quantized Optimistic Dual Averaging](../../ICML2025/optimization/layer-wise_quantization_for_quantized_optimistic_dual_averaging.md)
+
+<!-- RELATED:END -->

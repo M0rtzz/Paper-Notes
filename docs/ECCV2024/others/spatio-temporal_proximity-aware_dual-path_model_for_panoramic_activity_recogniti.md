@@ -151,3 +151,15 @@ $$\mathcal{L} = \mathcal{L}_{idv} + \mathcal{L}_R + \mathcal{L}_{aux} + \lambda_
 - 实验充分度: ⭐⭐⭐⭐ — 消融实验非常全面，覆盖了每个模块的贡献；但仅在单一数据集上验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，方法描述和实验分析都很到位
 - 综合价值: ⭐⭐⭐⭐ — 在 PAR 这一新兴任务上取得显著突破，对社交场景理解有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [Operational Open-Set Recognition and PostMax Refinement](operational_open-set_recognition_and_postmax_refinement.md)
+- [A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior](../../ACL2025/others/a_spatio-temporal_point_process_for_fine-grained_modeling_of_reading_behavior.md)
+- [Raindrop Clarity: A Dual-Focused Dataset for Day and Night Raindrop Removal](raindrop_clarity_a_dual-focused_dataset_for_day_and_night_raindrop_removal.md)
+- [Object-Aware NIR-to-Visible Translation](object-aware_nir-to-visible_translation.md)
+
+<!-- RELATED:END -->

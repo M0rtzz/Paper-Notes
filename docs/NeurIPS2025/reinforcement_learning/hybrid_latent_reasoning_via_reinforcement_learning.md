@@ -123,3 +123,15 @@ HRPO 在 LLM 的推理阶段（`<think>` 到 `</think>` 之间）引入混合输
 - 实验充分度: ⭐⭐⭐⭐ 10 个基准 + 多模型 + 详细消融 + 显著性检验，但仅限小模型
 - 写作质量: ⭐⭐⭐⭐ 整体清晰，但部分符号定义可以更紧凑
 - 价值: ⭐⭐⭐⭐ 开辟了 RL-based 潜在推理新方向，但实际应用价值需在更大模型上验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decoder-Hybrid-Decoder Architecture for Efficient Reasoning with Long Generation](decoderhybriddecoder_architecture_for_efficient_reasoning_wi.md)
+- [Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics](robot-r1_reinforcement_learning_for_enhanced_embodied_reasoning_in_robotics.md)
+- [Reasoning Gym: Reasoning Environments for Reinforcement Learning with Verifiable Rewards](reasoning_gym_reasoning_environments_for_reinforcement_learning_with_verifiable_.md)
+- [Interactive and Hybrid Imitation Learning: Provably Beating Behavior Cloning](interactive_and_hybrid_imitation_learning_provably_beating_behavior_cloning.md)
+- [SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution](swe-rl_advancing_llm_reasoning_via_reinforcement_learning_on_open_software_evolu.md)
+
+<!-- RELATED:END -->

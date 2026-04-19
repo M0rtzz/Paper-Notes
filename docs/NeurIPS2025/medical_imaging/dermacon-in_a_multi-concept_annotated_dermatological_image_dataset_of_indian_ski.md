@@ -128,3 +128,15 @@ Swin Transformer 在所有指标上一致最优。
 - 实验充分度: ⭐⭐⭐⭐ 多架构对比+CBM 探索+Grad-CAM 定性分析，全面
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，相关工作对比表格详尽
 - 价值: ⭐⭐⭐⭐⭐ 数据集贡献对公平性研究和全球适用性有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interactive Medical Image Analysis with Concept-based Similarity Reasoning](../../CVPR2025/medical_imaging/interactive_medical_image_analysis_with_concept-based_similarity_reasoning.md)
+- [RAM-W600: A Multi-Task Wrist Dataset and Benchmark for Rheumatoid Arthritis](ram-w600_a_multi-task_wrist_dataset_and_benchmark_for_rheumatoid_arthritis.md)
+- [STARC-9: A Large-scale Dataset for Multi-Class Tissue Classification for CRC Histopathology](starc-9_a_large-scale_dataset_for_multi-class_tissue_classification_for_crc_hist.md)
+- [Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson's Disease Gait Assessment](care-pd_a_multi-site_anonymized_clinical_dataset_for_parkinsons_disease_gait_ass.md)
+- [Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
+
+<!-- RELATED:END -->

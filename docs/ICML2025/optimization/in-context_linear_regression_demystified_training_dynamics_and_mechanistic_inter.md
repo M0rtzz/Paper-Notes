@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 实验设计精细，验证了理论预测
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事流畅，理论-实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 对理解 transformer ICL 机制有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [Can Transformers Learn Full Bayesian Inference In Context?](can_transformers_learn_full_bayesian_inference_in_context.md)
+- [On Understanding Attention-Based In-Context Learning for Categorical Data](on_understanding_attention-based_in-context_learning_for_categorical_data.md)
+- [Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](../../NeurIPS2025/optimization/multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+
+<!-- RELATED:END -->

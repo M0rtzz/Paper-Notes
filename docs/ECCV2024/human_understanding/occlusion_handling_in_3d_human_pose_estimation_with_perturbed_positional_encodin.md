@@ -139,3 +139,15 @@ PerturbPE建立在MöbiusGCN之上。整体流程：(1) 给定可能有边缺失
 - 实验充分度: ⭐⭐⭐⭐ 完整骨架和多种缺失场景下都有实验，但2D输入源偏少
 - 写作质量: ⭐⭐⭐⭐ 理论推导完整，但数学符号较重，阅读门槛高
 - 价值: ⭐⭐⭐⭐ 解决了一个重要且常被忽视的实际问题，思想可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RePOSE: 3D Human Pose Estimation via Spatio-Temporal Depth Relational Consistency](repose_3d_human_pose_estimation_via_spatio-temporal_depth_relational_consistency.md)
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+- [UPose3D: Uncertainty-Aware 3D Human Pose Estimation with Cross-View and Temporal Cues](upose3d_uncertainty-aware_3d_human_pose_estimation_with_cross-view_and_temporal_.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+
+<!-- RELATED:END -->

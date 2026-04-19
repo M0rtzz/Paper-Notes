@@ -140,3 +140,15 @@ $$\tilde{z}_t = \alpha \cdot (z_t - \bar{z}_t) + \bar{z}_t$$
 - ⭐ 创新性: 9/10 — 发现极简但被忽视的改善方向,洞察力强
 - ⭐ 实用性: 9/10 — 零计算开销,即插即用
 - ⭐ 写作质量: 8/10 — 可视化效果好,理论分析直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SparseDiT: Token Sparsification for Efficient Diffusion Transformer](sparsedit_token_sparsification_for_efficient_diffusion_transformer.md)
+- [Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation](../../ICCV2025/image_generation/dense2moe_restructuring_diffusion_transformer_to_moe_for_eff.md)
+- [Linear Differential Vision Transformer: Learning Visual Contrasts via Pairwise Differentials](linear_differential_vision_transformer_learning_visual_contrasts_via_pairwise_di.md)
+- [Your Text Encoder Can Be An Object-Level Watermarking Controller](../../ICCV2025/image_generation/your_text_encoder_can_be_an_object-level_watermarking_controller.md)
+- [LaVin-DiT: Large Vision Diffusion Transformer](../../CVPR2025/image_generation/lavin-dit_large_vision_diffusion_transformer.md)
+
+<!-- RELATED:END -->

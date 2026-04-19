@@ -141,3 +141,15 @@ $$G(u^j) = \frac{\|\tilde{h}_{u^j}^{(l)} - \tilde{\mu}_{y^{u^j}}\|^2}{\sum_{\mat
 - 实验充分度: ⭐⭐⭐⭐ — 8 数据集、3 骨干、多种不平衡设置，消融和敏感性分析完整；但部分设置提升有限
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，结构清晰，符号体系虽多但定义明确
 - 价值: ⭐⭐⭐⭐ — 为图不平衡学习提供了新的理论视角和实用工具，自训练框架可扩展性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncertain Knowledge Graph Completion via Semi-Supervised Confidence Distribution Learning](uncertain_knowledge_graph_completion_via_semi-supervised_confidence_distribution.md)
+- [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
+- [Posterior Label Smoothing for Node Classification](../../AAAI2026/graph_learning/posterior_label_smoothing_for_node_classification.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+
+<!-- RELATED:END -->

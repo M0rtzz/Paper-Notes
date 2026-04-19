@@ -149,3 +149,15 @@ $$\mathcal{L}_{\text{semi}} = \lambda_{\text{sup}} \mathcal{L}_{\text{sup}} + \l
 - 实验充分度: ⭐⭐⭐ 消融清晰但仅在 MapTRv2 一个模型上验证，缺少与其他半监督方法的直接对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述规范，图表直观
 - 价值: ⭐⭐⭐⭐ 解决标注瓶颈的实用方案，思路可推广到更多空间感知任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMDUL: Expanding mmWave Datasets for Human Pose Estimation with Unlabeled Data and LiDAR Datasets](expanding_mmwave_datasets_for_human_pose_estimation_with_unlabeled_data_and_lida.md)
+- [ReScene4D: Temporally Consistent Semantic Instance Segmentation of Evolving Indoor 3D Scenes](rescene4d_temporally_consistent_semantic_instance_segmentation_of_evolving_indoo.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_openvocabulary_occupancy_predi.md)
+- [Failure Modes for Deep Learning-Based Online Mapping: How to Measure and Address Them](failure_modes_for_deep_learning-based_online_mapping_how_to_measure_and_address_.md)
+- [Learning Mutual View Information Graph for Adaptive Adversarial Collaborative Perception](learning_mutual_view_information_graph_for_adaptive_adversarial_collaborative_pe.md)
+
+<!-- RELATED:END -->

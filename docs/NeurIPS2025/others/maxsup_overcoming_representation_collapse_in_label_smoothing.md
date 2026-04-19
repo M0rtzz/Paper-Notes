@@ -125,3 +125,15 @@ MaxSup 在所有 CNN 和 Transformer 架构上均一致超越 LS 和其他变体
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖多种架构（CNN/ViT）、多种任务（分类/分割/迁移/细粒度/长尾/鲁棒性）
 - **写作质量**: ⭐⭐⭐⭐⭐ 理论推导清晰，从问题发现到方案设计逻辑严密
 - **价值**: ⭐⭐⭐⭐ 作为 LS 的即插即用替代品，简单有效，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Persistence of Neural Collapse Despite Low-Rank Bias](the_persistence_of_neural_collapse_despite_low-rank_bias.md)
+- [A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
+- [ADPretrain: Advancing Industrial Anomaly Detection via Anomaly Representation Pretraining](adpretrain_advancing_industrial_anomaly_detection_via_anomaly_representation_pre.md)
+- [HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+
+<!-- RELATED:END -->

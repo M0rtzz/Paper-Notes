@@ -164,3 +164,15 @@ $$h_{\text{output}}(v_i) = \text{FFN}([h_{\text{local}}(v_i) \| h_{\text{global}
 - 技术深度：★★★★☆ — 设计精细，各组件有理论依据
 - 实验充分度：★★★★★ — 21 个任务、多个基线、完整消融
 - 写作质量：★★★★☆ — 结构清晰，图示出色
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relatron: Automating Relational Machine Learning over Relational Databases](relatron_automating_relational_machine_learning_over_relational_databases.md)
+- [Wavy Transformer](../../NeurIPS2025/graph_learning/wavy_transformer.md)
+- [MyGram: Modality-aware Graph Transformer with Global Distribution for Multi-modal Entity Alignment](../../AAAI2026/graph_learning/mygram_modality-aware_graph_transformer_with_global_distribution_for_multi-modal.md)
+- [NTSFormer: A Self-Teaching Graph Transformer for Multimodal Isolated Cold-Start Node Classification](../../AAAI2026/graph_learning/ntsformer_a_self-teaching_graph_transformer_for_multimodal_isolated_cold-start_n.md)
+- [GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](../../AAAI2026/graph_learning/gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
+
+<!-- RELATED:END -->

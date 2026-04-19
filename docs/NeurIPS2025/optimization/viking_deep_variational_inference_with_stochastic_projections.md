@@ -118,3 +118,15 @@ VIKING（Variational Inference with Kernel- and Image-spaces of numerical Gauss-
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多基线比较，但缺少大模型实验
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 为贝叶斯深度学习提供了新的有效范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Brain-like Variational Inference](brain-like_variational_inference.md)
+- [Least Squares Variational Inference](least_squares_variational_inference.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](neuro-symbolic_entity_alignment_via_variational_inference.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+
+<!-- RELATED:END -->

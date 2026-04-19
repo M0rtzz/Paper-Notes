@@ -121,3 +121,15 @@ BabyLLaVA沿用LLaVA的标准训练流程，在编译的发展数据上训练。
 - 实验充分度: ⭐⭐⭐⭐ 消融实验详实，多角度分析模型行为与语言发展理论的对应
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分，跨学科表述到位
 - 价值: ⭐⭐⭐ 更偏认知科学导向，直接工程应用有限，但为数据高效训练提供了新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaLRS: Loss-Guided Adaptive Learning Rate Search for Efficient Foundation Model Pretraining](../../NeurIPS2025/multimodal_vlm/adalrs_lossguided_adaptive_learning_rate_search_for_efficien.md)
+- [DASH: Detection and Assessment of Systematic Hallucinations of VLMs](dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)
+- [Context-Aware Multimodal Pretraining](../../CVPR2025/multimodal_vlm/context-aware_multimodal_pretraining.md)
+- [Learning Shared Representations from Unpaired Data](../../NeurIPS2025/multimodal_vlm/learning_shared_representations_from_unpaired_data.md)
+- [GTA-CLIP: Generate, Transduct, Adapt — Iterative Transduction with VLMs](generate_transduct_adapt_iterative_transduction_with_vlms.md)
+
+<!-- RELATED:END -->

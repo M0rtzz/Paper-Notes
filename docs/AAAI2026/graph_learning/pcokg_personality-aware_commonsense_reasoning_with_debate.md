@@ -207,3 +207,15 @@ PCoKGM 全面超越 COMET 和大型LLM的1-shot推理，证明了人格信息和
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 数据集多维验证（可读性/AMI/人类评估）+模型实验+消融+规模分析+应用
 - **写作质量**: ⭐⭐⭐⭐ — 结构完整，但部分表述偏冗长
 - **实用价值**: ⭐⭐⭐⭐ — 开源数据集和代码，管线可复用，但MBTI本身争议限制了直接应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUG: Meta-path-aware Universal Heterogeneous Graph Pre-Training](mug_meta-path-aware_universal_heterogeneous_graph_pre-training.md)
+- [RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA](rfkg-cot_relation-driven_adaptive_hop-count_selection_and_few-shot_path_guidance.md)
+- [MyGram: Modality-aware Graph Transformer with Global Distribution for Multi-modal Entity Alignment](mygram_modality-aware_graph_transformer_with_global_distribution_for_multi-modal.md)
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](../../ICML2025/graph_learning/graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+
+<!-- RELATED:END -->

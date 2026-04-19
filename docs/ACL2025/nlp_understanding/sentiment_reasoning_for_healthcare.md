@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖三类架构、多种理据格式、人工/ASR 两种转录、端到端模型，消融较完整；但缺少与更多 LLM（如 LLaMA、GPT 系列）的对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，任务定义形式化严谨，数据构建流程描述详尽
 - 价值: ⭐⭐⭐⭐ — 数据集贡献显著（最大多模态多语言医疗情感数据集），任务定义对医疗 AI 可解释性有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Order Template Prediction for Generative Aspect-Based Sentiment Analysis](dot_absa_template.md)
+- [Analyzing Political Bias in LLMs via Target-Oriented Sentiment Classification](analyzing_political_bias_in_llms_via_target-oriented_sentiment_classification.md)
+- [Multi-Hop Reasoning for Question Answering with Hyperbolic Representations](multi-hop_reasoning_for_question_answering_with_hyperbolic_representations.md)
+- [Self-Critique Guided Iterative Reasoning for Multi-hop Question Answering](self-critique_guided_iterative_reasoning_for_multi-hop_question_answering.md)
+- [SynGraph: A Dynamic Graph-LLM Synthesis Framework for Sparse Streaming User Sentiment Analysis](syngraph_a_dynamic_graph-llm_synthesis_framework_for_sparse_streaming_user_senti.md)
+
+<!-- RELATED:END -->

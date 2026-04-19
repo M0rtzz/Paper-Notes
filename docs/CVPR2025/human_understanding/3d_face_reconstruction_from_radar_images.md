@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成数据实验充分（多种输入模态、encoder vs autoencoder对比），但真实数据仅4人且diversity不足
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，motivation到method的推导逻辑通顺，图表质量高
 - 价值: ⭐⭐⭐ 开创性工作有启发意义，但受限于数据规模和真实效果，离实用还有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](../../NeurIPS2025/human_understanding/raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [FRESA: Feedforward Reconstruction of Personalized Skinned Avatars from Few Images](fresa_feedforward_reconstruction_of_personalized_skinned_avatars_from_few_images.md)
+- [ShowMak3r: Compositional TV Show Reconstruction](showmak3r_compositional_tv_show_reconstruction.md)
+- [Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](../../ICCV2025/human_understanding/hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+
+<!-- RELATED:END -->

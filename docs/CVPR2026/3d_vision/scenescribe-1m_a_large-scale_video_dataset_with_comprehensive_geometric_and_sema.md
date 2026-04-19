@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖6个下游任务的全面验证，但每个任务仅用一个模型验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，表格对比充分，统计分析详实
 - 价值: ⭐⭐⭐⭐⭐ 填补了大规模几何+语义联合标注视频数据集的空白，对WFM研究有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ego-1K: A Large-Scale Multiview Video Dataset for Egocentric Vision](ego-1k_--_a_large-scale_multiview_video_dataset_for_egocentric_vision.md)
+- [FaceCam: Portrait Video Camera Control via Scale-Aware Conditioning](facecam_portrait_video_camera_control_via_scale-aware_conditioning.md)
+- [VerseCrafter: Dynamic Realistic Video World Model with 4D Geometric Control](versecrafter_dynamic_realistic_video_world_model_with_4d_geometric_control.md)
+- [Indoor Asset Detection in Large Scale 360° Drone-Captured Imagery via 3D Gaussian Splatting](indoor_asset_detection_in_large_scale_360_drone-captured_imagery_via_3d_gaussian.md)
+- [Pano360: Perspective to Panoramic Vision with Geometric Consistency](pano360_perspective_to_panoramic_vision_with_geome.md)
+
+<!-- RELATED:END -->

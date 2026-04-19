@@ -112,3 +112,15 @@ tags:
 - **写作质量**: ⭐⭐⭐⭐ 跨领域叙事流畅，认知科学背景介绍到位
 - **价值**: ⭐⭐⭐⭐ 开辟了DRL与认知科学交叉研究的新方向，但距离实际应用较远
 - **总体**: ⭐⭐⭐⭐ 跨学科研究亮点突出，涌现行为令人信服，机制分析有待深化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [Spatial-Aware Decision-Making with Ring Attractors in Reinforcement Learning Systems](spatial-aware_decision-making_with_ring_attractors_in_reinforcement_learning_sys.md)
+- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](../../ICML2025/reinforcement_learning/counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [Decision SpikeFormer: Spike-Driven Transformer for Decision Making](../../CVPR2025/reinforcement_learning/decision_spikeformer_spike-driven_transformer_for_decision_making.md)
+- [Temporal-Difference Variational Continual Learning](temporal-difference_variational_continual_learning.md)
+
+<!-- RELATED:END -->

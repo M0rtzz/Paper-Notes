@@ -129,3 +129,15 @@ $$Var[\hat{\mu}_{PPI}] - Var[\hat{\mu}_h] = \mathbb{E}[\lambda]^2 \cdot (\tfrac{
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集验证 + 理论分析互相印证，但 LLM 评估仅一个指标
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，动机阐述充分，图表设计直观
 - 价值: ⭐⭐⭐⭐ — 对少标签自动评估有直接实用价值，LLM 评估是热门方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Statistical Inference for Gradient Boosting Regression](../../NeurIPS2025/others/statistical_inference_for_gradient_boosting_regression.md)
+- [Prediction via Shapley Value Regression (ViaSHAP)](prediction_via_shapley_value_regression.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [Regression Trees Know Calculus](../../NeurIPS2025/others/regression_trees_know_calculus.md)
+- [To Each Metric Its Decoding: Post-Hoc Optimal Decision Rules of Probabilistic Hierarchical Classifiers](to_each_metric_its_decoding_post-hoc_optimal_decision_rules_of_probabilistic_hie.md)
+
+<!-- RELATED:END -->

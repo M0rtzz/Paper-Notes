@@ -140,3 +140,15 @@ EPDMS子指标分解（OpenScene, 4000 clips）：
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多基线、多预算、细粒度指标分解、鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐ 问题建模清晰，算法描述规范，但部分数学符号可更简化
 - 价值: ⭐⭐⭐⭐ 对数据高效训练有实用指导意义，framework通用性强，但验证场景可更广泛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CausalVAD: De-confounding End-to-End Autonomous Driving via Causal Intervention](causalvad_de-confounding_end-to-end_autonomous_driving_via_causal_intervention.md)
+- [Unraveling the Effects of Synthetic Data on End-to-End Autonomous Driving](../../ICCV2025/autonomous_driving/unraveling_the_effects_of_synthetic_data_on_end-to-end_autonomous_driving.md)
+- [DriveSuprim: Towards Precise Trajectory Selection for End-to-End Planning](../../AAAI2026/autonomous_driving/drivesuprim_towards_precise_trajectory_selection_for_end-to-end_planning.md)
+- [ResWorld: Temporal Residual World Model for End-to-End Autonomous Driving](../../ICLR2026/autonomous_driving/resworld_temporal_residual_world_model_for_end-to-end_autonomous_driving.md)
+- [MeanFuser: Fast One-Step Multi-Modal Trajectory Generation and Adaptive Reconstruction via MeanFlow for End-to-End Autonomous Driving](meanfuser_fast_one-step_multi-modal_trajectory_generation_and_adaptive_reconstru.md)
+
+<!-- RELATED:END -->

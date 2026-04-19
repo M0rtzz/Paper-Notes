@@ -169,3 +169,15 @@ Weblab 使用的是**未修改的英语 tokenizer**，导致：
 - **实用性**：⭐⭐⭐ — 揭示了重要问题但未提供完整解决方案
 - **实验充分性**：⭐⭐⭐⭐ — 困惑度+翻译双重验证，一致分词消融实验设计精巧
 - **写作质量**：⭐⭐⭐⭐⭐ — 语言学背景介绍清晰，实验叙事逻辑严密
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation](emergent_abilities_continued_pt.md)
+- [Large Vocabulary Size Improves Large Language Models](large_vocabulary_size_improves_large_language_models.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ WebQA和MultimodalQA两个数据集，多个基线对比，丰富消融分析
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，实验分析全面，可视化丰富
 - **价值**: ⭐⭐⭐⭐ 对MRAG系统的实际部署有直接指导意义，自评估流水线开箱即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation](../../ACL2025/information_retrieval/towards_adaptive_memory-based_optimization_for_enhanced_retrieval-augmented_gene.md)
+- [Benchmarking Retrieval-Augmented Multimodal Generation for Document Question Answering](benchmarking_retrievalaugmented_multimodal_generation_for_do.md)
+- [SeaKR: Self-aware Knowledge Retrieval for Adaptive Retrieval Augmented Generation](../../ACL2025/information_retrieval/seakr_self-aware_knowledge_retrieval_for_adaptive_retrieval_augmented_generation.md)
+- [Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](../../ACL2025/information_retrieval/accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)
+- [Retrieval-Augmented Generation for Reliable Interpretation of Radio Regulations](retrieval-augmented_generation_for_reliable_interpretation_of_radio_regulations.md)
+
+<!-- RELATED:END -->

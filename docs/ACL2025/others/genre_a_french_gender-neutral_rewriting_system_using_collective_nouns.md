@@ -130,3 +130,15 @@ GeNRe 系统包含三种方案：（1）规则系统（RBS）；（2）微调语
 - **实验充分度**: ⭐⭐⭐⭐ — 三种方案对比、多维度错误分析、两个语料库评估，设计全面
 - **写作质量**: ⭐⭐⭐⭐ — 语言学背景介绍详尽，法语实例丰富，但对非法语读者门槛稍高
 - **价值**: ⭐⭐⭐⭐ — 对法语 NLP 社区和性别偏见缓解研究有实际推动作用，词典和数据集的开源尤为可贵
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [Unlocking Speech Instruction Data Potential with Query Rewriting](unlocking_speech_instruction_data_potential_with_query_rewriting.md)
+- [IRIS: Interactive Research Ideation System for Accelerating Scientific Discovery](iris_interactive_research_ideation_system_for_accelerating_scientific_discovery.md)
+- [DocAgent: A Multi-Agent System for Automated Code Documentation Generation](docagent_a_multi-agent_system_for_automated_code_documentation_generation.md)
+- [A Topological Rewriting of Tarski's Mereogeometry](../../AAAI2026/others/a_topological_rewriting_of_tarskis_mereogeometry.md)
+
+<!-- RELATED:END -->

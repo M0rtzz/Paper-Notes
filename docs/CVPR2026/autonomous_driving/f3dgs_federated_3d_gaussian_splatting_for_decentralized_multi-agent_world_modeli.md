@@ -153,3 +153,15 @@ $$\mathcal{L}_k = \sum_{t \in \mathcal{I}_k} [(1-\lambda)\|I_t - \hat{I}_t\|_1 +
 - 实验充分度: ⭐⭐⭐ 仅在自建数据集上验证，缺少与集中式训练的对比baseline
 - 写作质量: ⭐⭐⭐⭐ 问题定义和方法描述清晰
 - 价值: ⭐⭐⭐⭐ 面向多智能体协作的实际需求，具有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Equivariant Transformer for Self-Driving Agent Modeling](efficient_equivariant_transformer_for_self-driving_agent_modeling.md)
+- [LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction](lrsgs_robust_lidarreflectanceguided_salient_gaussi.md)
+- [U4D: Uncertainty-Aware 4D World Modeling from LiDAR Sequences](u4d_uncertainty-aware_4d_world_modeling_from_lidar_sequences.md)
+- [Regret Lower Bounds for Decentralized Multi-Agent Stochastic Shortest Path Problems](../../NeurIPS2025/autonomous_driving/regret_lower_bounds_for_decentralized_multi-agent_stochastic_shortest_path_probl.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](../../ICCV2025/autonomous_driving/3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ $$S^* = \arg\max_{S \subseteq A} p_\tau(S) \quad \text{s.t.} \quad \sum_{a_i \in
 - 实验充分度: ⭐⭐⭐⭐ 5 数据集 × 7 模型 × 多预算档 + Pareto 分析 + 多次运行方差验证
 - 写作质量: ⭐⭐⭐⭐ 四种 Composer 层层递进，问题形式化到算法设计逻辑链完整
 - 价值: ⭐⭐⭐⭐ 对 Agent 系统工程中工具/子 Agent 选择有直接实用指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [Automated Multi-Agent Workflows for RTL Design](automated_multi-agent_workflows_for_rtl_design.md)
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [AutoTool: Efficient Tool Selection for Large Language Model Agents](../../AAAI2026/llm_agent/autotool_efficient_tool_selection_for_large_language_model_a.md)
+
+<!-- RELATED:END -->

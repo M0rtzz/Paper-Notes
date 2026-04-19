@@ -126,3 +126,15 @@ CIFAR-100 200 epochs。MergeMix 在所有模型规模上都大幅领先，DeiT-S
 - 实验充分度: ⭐⭐⭐⭐ 涵盖 5 个分类数据集和 16 个 MLLM benchmark，实验全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，两个场景的描述连贯，公式推导详细
 - 价值: ⭐⭐⭐⭐ 图像分类和 MLLM 两个场景都有实际意义，统一范式的想法有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NoisyRollout: Reinforcing Visual Reasoning with Data Augmentation](../../NeurIPS2025/reinforcement_learning/noisyrollout_reinforcing_visual_reasoning_with_data_augmenta.md)
+- [Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning](controllable_exploration_in_hybrid-policy_rlvr_for_multi-modal_reasoning.md)
+- [TPRU: Advancing Temporal and Procedural Understanding in Large Multimodal Models](tpru_advancing_temporal_and_procedural_understanding_in_large_multimodal_models.md)
+- [Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+- [Chain-of-Context Learning: Dynamic Constraint Understanding for Multi-Task VRPs](chain-of-context_learning_dynamic_constraint_understanding_for_multi-task_vrps.md)
+
+<!-- RELATED:END -->

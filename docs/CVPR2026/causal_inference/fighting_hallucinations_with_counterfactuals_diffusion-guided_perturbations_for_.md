@@ -176,3 +176,15 @@ CIPHER 吞吐量与标准 Greedy 解码完全一致（0.70 items/s），远超 O
 ## 评分
 
 ⭐⭐⭐⭐ — 方法简洁优雅且实验有效，"用幻觉图像对抗幻觉"的反事实构思新颖，四个基准全面验证说服力强。主要不足是静态投影缺乏自适应性，以及联合扰动失效的原因分析欠缺。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Retrieving Counterfactuals Improves Visual In-Context Learning](retrieving_counterfactuals_improves_visual_in-context_learning.md)
+- [MaskDiME: Adaptive Masked Diffusion for Precise and Efficient Visual Counterfactual Explanations](maskdime_adaptive_masked_diffusion_for_precise_and_efficient_visual_counterfactu.md)
+- [Action-Guided Attention for Video Action Anticipation](../../ICLR2026/causal_inference/action-guided_attention_for_video_action_anticipation.md)
+- [Copy-Paste to Mitigate Large Language Model Hallucinations](../../ICLR2026/causal_inference/copy-paste_to_mitigate_large_language_model_hallucinations.md)
+- [Causally-Grounded Dual-Path Attention Intervention for Object Hallucination Mitigation in LVLMs](../../AAAI2026/causal_inference/causally-grounded_dual-path_attention_intervention_for_objec.md)
+
+<!-- RELATED:END -->

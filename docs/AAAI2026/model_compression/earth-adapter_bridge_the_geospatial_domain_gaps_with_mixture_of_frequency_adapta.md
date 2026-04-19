@@ -170,3 +170,15 @@ SS 均值超越 Rein **+1.2%**。
 - 技术深度: ⭐⭐⭐⭐ — DFT 分解 + 多适配器路由 + 跨域训练框架整合到位
 - 实验充分度: ⭐⭐⭐⭐⭐ — 12 个基准、3 种设定、多种骨干、多种 PEFT 对比，极为全面
 - 写作质量: ⭐⭐⭐⭐ — 可视化丰富（PCA、预测图对比），动机清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension](../../ICLR2026/model_compression/freqkv_key-value_compression_in_frequency_domain_for_context_window_extension.md)
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](../../ACL2025/model_compression/sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+- [Towards Unsupervised Open-Set Graph Domain Adaptation via Dual Reprogramming](../../NeurIPS2025/model_compression/towards_unsupervised_open-set_graph_domain_adaptation_via_dual_reprogramming.md)
+- [AdaFuse: Accelerating Dynamic Adapter Inference via Token-Level Pre-Gating and Fused Kernel Optimization](adafuse_accelerating_dynamic_adapter_inference_via_token-lev.md)
+- [Prototype-Based Semantic Consistency Alignment for Domain Adaptive Retrieval](prototype-based_semantic_consistency_alignment_for_domain_adaptive_retrieval.md)
+
+<!-- RELATED:END -->

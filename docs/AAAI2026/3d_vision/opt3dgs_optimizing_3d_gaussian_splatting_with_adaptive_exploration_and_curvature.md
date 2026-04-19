@@ -188,3 +188,15 @@ $$L_{total} = (1-\lambda_{ssim}) \times L_1 + \lambda_{ssim} \times L_{ssim} + \
 - 实验充分度: ⭐⭐⭐⭐⭐ （标准/随机初始化/高分辨率/少高斯，条件覆盖全面）
 - 写作质量: ⭐⭐⭐⭐⭐ （理论推导严谨，贝叶斯视角分析清晰，图示直观）
 - 价值: ⭐⭐⭐⭐⭐ （框架通用性强，可作为 3DGS 优化的标准组件）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OceanSplat: Object-aware Gaussian Splatting with Trinocular View Consistency for Underwater Scene Reconstruction](oceansplat_object-aware_gaussian_splatting_with_trinocular_view_consistency_for_.md)
+- [DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds](../../CVPR2025/3d_vision/dashgaussian_optimizing_3d_gaussian_splatting_in_200_seconds.md)
+- [GT2-GS: Geometry-aware Texture Transfer for Gaussian Splatting](gt2-gs_geometry-aware_texture_transfer_for_gaussian_splatting.md)
+- [Prune Wisely, Reconstruct Sharply: Compact 3D Gaussian Splatting via Adaptive Pruning and Difference-of-Gaussian Primitives](../../CVPR2026/3d_vision/prune_wisely_reconstruct_sharply_compact_3d_gaussian_splatting_via_adaptive_prun.md)
+- [Gaussian Blending: Rethinking Alpha Blending in 3D Gaussian Splatting](gaussian_blending_rethinking_alpha_blending_in_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

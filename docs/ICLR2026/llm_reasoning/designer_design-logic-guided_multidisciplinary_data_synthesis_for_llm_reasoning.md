@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Qwen3 + Llama3 多模型、多基准评测 + 数据质量分析 + 消融
 - 写作质量: ⭐⭐⭐⭐ 流水线描述清晰，但论文偏工程化，理论分析较少
 - 价值: ⭐⭐⭐⭐⭐ 470 万道多学科推理题 + 12.5万条 Design Logic，对 LLM 后训练社区极有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning](on_the_design_of_kl-regularized_policy_gradient_algorithms_for_llm_reasoning.md)
+- [Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](../../AAAI2026/llm_reasoning/jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
+- [Nudging the Boundaries of LLM Reasoning](nudging_the_boundaries_of_llm_reasoning.md)
+- [DAG-Math: Graph-of-Thought Guided Mathematical Reasoning in LLMs](dag-math_graph-of-thought_guided_mathematical_reasoning_in_llms.md)
+- [Conflict-Aware Fusion: Resolving Logic Inertia in Large Language Models via Structured Cognitive Priors](conflict-aware_fusion_resolving_logic_inertia_in_large_language_models_via_struc.md)
+
+<!-- RELATED:END -->

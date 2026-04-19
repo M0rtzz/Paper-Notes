@@ -122,3 +122,15 @@ AutoOpt 构建了首个优化问题图像到代码的端到端框架——11554 
 - **与 Wolfram Alpha/Mathematica 的区别**：这些工具需要文本输入，AutoOpt 直接从图像端到端求解
 
 - **评分详细说明**：AutoOpt开创了优化问题OCR到求解的完整工作流，数据和代码均已公开，但仅处理单页公式和中等规模问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Problem-Parameter-Free Decentralized Bilevel Optimization](problem-parameter-free_decentralized_bilevel_optimization.md)
+- [GHOST: Solving the Traveling Salesman Problem on Graphs of Convex Sets](../../AAAI2026/optimization/ghost_solving_the_traveling_salesman_problem_on_graphs_of_convex_sets.md)
+- [Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)
+- [A Unified Approach to Submodular Maximization Under Noise](a_unified_approach_to_submodular_maximization_under_noise.md)
+- [CogFlow: Bridging Perception and Reasoning through Knowledge Internalization for Visual Mathematical Problem Solving](../../ICLR2026/optimization/cogflow_bridging_perception_and_reasoning_through_knowledge_internalization_for_.md)
+
+<!-- RELATED:END -->

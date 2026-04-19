@@ -161,3 +161,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量对比、用户研究、跨数据集泛化、消融分析覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法表述完整，图示丰富
 - 价值: ⭐⭐⭐⭐ 工业应用价值高，view-composited 纹理生成思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TELA: Text to Layer-wise 3D Clothed Human Generation](tela_text_to_layer-wise_3d_clothed_human_generation.md)
+- [CoMo: Controllable Motion Generation Through Language Guided Pose Code Editing](como_controllable_motion_generation_through_language_guided_pose_code_editing.md)
+- [A Probability-guided Sampler for Neural Implicit Surface Rendering](a_probabilityguided_sampler_for_neural_implicit_surface_rend.md)
+- [FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+
+<!-- RELATED:END -->

@@ -183,3 +183,15 @@ Personal-Protective 价值集合上：
 - **写作质量**: ⭐⭐⭐⭐⭐ — 研究问题清晰，结构优秀
 - **实用价值**: ⭐⭐⭐⭐ — 为 LLM 对齐评估提供新工具和新视角
 - **综合推荐**: ⭐⭐⭐⭐ (4/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ConflictScope: Generative Value Conflicts Reveal LLM Priorities](quamo_quaternion_motions_for_vision-based_3d_human_kinematics_capture.md)
+- [How Catastrophic is Your LLM? Certifying Risk in Conversation](how_catastrophic_is_your_llm_certifying_risk_in_conversation.md)
+- [PT2-LLM: Post-Training Ternarization for Large Language Models](pt2-llm_post-training_ternarization_for_large_language_models.md)
+- [From Assumptions to Actions: Turning LLM Reasoning into Uncertainty-Aware Planning](from_assumptions_to_actions_turning_llm_reasoning_into_uncertainty-aware_plannin.md)
+- [KVComm: Enabling Efficient LLM Communication through Selective KV Sharing](kvcomm_enabling_efficient_llm_communication_through_selective_kv_sharing.md)
+
+<!-- RELATED:END -->

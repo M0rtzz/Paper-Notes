@@ -137,3 +137,15 @@ $$\mathcal{L}_{MSE} = \frac{1}{T_i} \sum_{j=0}^{T_i-1} \frac{1}{V_i} \sum_{k=0}^
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、多种消融、用户研究，但缺少与 NFR 的直接对比
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 实用价值高，直接解决了领域痛点，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identifying and Evaluating Inactive Heads in Pretrained LLMs](../../ICLR2026/llm_pretraining/identifying_and_evaluating_inactive_heads_in_pretrained_llms.md)
+- [3D Prior is All You Need: Cross-Task Few-shot 2D Gaze Estimation](../../CVPR2025/llm_pretraining/3d_prior_is_all_you_need_cross-task_few-shot_2d_gaze_estimation.md)
+- [Plan, Posture and Go: Towards Open-Vocabulary Text-to-Motion Generation](plan_posture_and_go_towards_open-vocabulary_text-to-motion_generation.md)
+- [DragAPart: Learning a Part-Level Motion Prior for Articulated Objects](dragapart_learning_a_part-level_motion_prior_for_articulated_objects.md)
+- [Scaling Backwards: Minimal Synthetic Pre-training?](scaling_backwards_minimal_synthetic_pre-training.md)
+
+<!-- RELATED:END -->

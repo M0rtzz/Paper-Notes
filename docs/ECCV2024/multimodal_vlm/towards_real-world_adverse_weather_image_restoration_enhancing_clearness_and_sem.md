@@ -140,3 +140,15 @@ $$\mathcal{L} = \mathcal{L}_{sup} + w_1 \mathcal{L}_{ps} + w_2 \mathcal{L}_{wpl}
 - 实验充分度: ⭐⭐⭐⭐ 消融实验系统完整，但缺少下游任务验证
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，图表配合良好
 - 价值: ⭐⭐⭐⭐ 为真实场景图像复原提供了有前景的VLM辅助训练范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization](addressclip_empowering_vision-language_models_for_city-wide_image_address_locali.md)
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+- [Can Vision-Language Models Answer Face to Face Questions in the Real-World?](../../ICLR2026/multimodal_vlm/can_vision-language_models_answer_face_to_face_questions_in_the_real-world.md)
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](../../ACL2025/multimodal_vlm/real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+- [AdvDreamer Unveils: Are Vision-Language Models Truly Ready for Real-World 3D Variations?](../../ICCV2025/multimodal_vlm/advdreamer_unveils_are_visionlanguage_models_truly_ready_for.md)
+
+<!-- RELATED:END -->

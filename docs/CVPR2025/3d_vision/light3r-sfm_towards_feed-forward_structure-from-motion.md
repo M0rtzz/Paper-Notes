@@ -139,3 +139,15 @@ Light3R-SfM提出了首个前馈式端到端SfM框架，通过可学习的潜在
 - 实验充分度: ⭐⭐⭐⭐ 多种图像数设置+多个baseline对比+运行时间分析，但缺少更多数据集验证
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，motivation论述有力
 - 价值: ⭐⭐⭐⭐⭐ 开创前馈SfM新方向，对大规模3D重建有重要实际价值，49倍加速令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dense-SfM: Structure from Motion with Dense Consistent Matching](dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
+- [MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion](mp-sfm_monocular_surface_priors_for_robust_structure-from-motion.md)
+- [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
+- [MegaSaM: Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos](megasam_accurate_fast_and_robust_structure_and_motion_from_casual_dynamic_videos.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](../../CVPR2026/3d_vision/more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+
+<!-- RELATED:END -->

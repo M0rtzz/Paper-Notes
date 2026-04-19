@@ -122,3 +122,15 @@ FreeTTA 完全无需训练——不进行梯度反传、不优化任何参数。
 - 实验充分度: ⭐⭐⭐⭐⭐ 15 个数据集、跨域和 OOD 两种设置、多个 backbone、详细消融
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，框架图清晰，但部分符号较冗长
 - 价值: ⭐⭐⭐⭐ 方法简洁高效，但影响力取决于 TTA 在实际部署中的需求强度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realistic Test-Time Adaptation of Vision-Language Models](realistic_test-time_adaptation_of_vision-language_models.md)
+- [LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](../../ICCV2025/multimodal_vlm/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
+- [DOTA: DistributiOnal Test-time Adaptation of Vision-Language Models](../../NeurIPS2025/multimodal_vlm/dota_distributional_testtime_adaptation_of_visionlanguage_mo.md)
+- [The Illusion of Progress? A Critical Look at Test-Time Adaptation for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/the_illusion_of_progress_a_critical_look_at_testtime_adaptat.md)
+- [Panda: Test-Time Adaptation with Negative Data Augmentation](../../AAAI2026/multimodal_vlm/panda_test-time_adaptation_with_negative_data_augmentation.md)
+
+<!-- RELATED:END -->

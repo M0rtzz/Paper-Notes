@@ -132,3 +132,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 单主体/多主体/风景/无人机多场景验证，消融充分
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图示丰富
 - **价值**: ⭐⭐⭐⭐ 对计算摄影领域有开创意义，但实用性受 3D 重建质量限制
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Far is Video Generation from World Model: A Physical Law Perspective](../../ICML2025/video_generation/how_far_is_video_generation_from_world_model_a_physical_law_perspective.md)
+- [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](../../ICLR2026/video_generation/lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](../../CVPR2026/video_generation/cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+- [Safe-Sora: Safe Text-to-Video Generation via Graphical Watermarking](safesora_safe_texttovideo_generation_via_graphical_watermark.md)
+- [VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)
+
+<!-- RELATED:END -->

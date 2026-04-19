@@ -168,3 +168,15 @@ MSG-LDM 在所有设置下全面 SOTA。BraTS2020 上 PSNR 平均提升 ~1 dB，
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多种缺失模态场景、完整消融和可视化
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融分析系统
 - 价值: ⭐⭐⭐ MRI 合成的增量改进，核心 insight（结构引导扩散）有一定通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUST: Modality-Specific Representation-Aware Transformer for Diffusion-Enhanced Survival Prediction with Missing Modality](must_modality-specific_representation-aware_transformer_for_diffusion-enhanced_s.md)
+- [CoCoLIT: ControlNet-Conditioned Latent Image Translation for MRI to Amyloid PET Synthesis](../../AAAI2026/medical_imaging/cocolit_controlnet-conditioned_latent_image_translation_for_mri_to_amyloid_pet_s.md)
+- [PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation](pgr-net_prior-guided_roi_reasoning_network_for_brain_tumor_mri_segmentation.md)
+- [CLoE: Expert Consistency Learning for Missing Modality Segmentation](cloe_expert_consistency_learning_for_missing_modality_segmentation.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilist.md)
+
+<!-- RELATED:END -->

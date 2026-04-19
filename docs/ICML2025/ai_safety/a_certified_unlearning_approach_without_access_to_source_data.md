@@ -199,3 +199,15 @@ $$\|\boldsymbol{w}_r^* - \hat{\boldsymbol{w}}_r\|_2 \leq \Delta = \frac{2\gamma 
 | 实用性 | ⭐⭐⭐⭐ | KL 估计方案使方法可落地，但强凸假设限制适用范围 |
 | 写作质量 | ⭐⭐⭐⭐ | 逻辑清晰，理论到实践过渡自然 |
 | 综合推荐 | ⭐⭐⭐⭐☆ | 理论贡献突出，是认证遗忘领域的重要进展 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](../../NeurIPS2025/ai_safety/rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Do Not Mimic My Voice: Speaker Identity Unlearning for Zero-Shot Text-to-Speech](do_not_mimic_my_voice_speaker_identity_unlearning_for_zero-shot_text-to-speech.md)
+- [Align-then-Unlearn: Embedding Alignment for LLM Unlearning](align-then-unlearn_embedding_alignment_for_llm_unlearning.md)
+- [Efficiently Identifying Watermarked Segments in Mixed-Source Texts](../../ACL2025/ai_safety/watermark_segment_detection.md)
+- [Staining and Locking Computer Vision Models without Retraining](../../ICCV2025/ai_safety/staining_and_locking_computer_vision_models_without_retraining.md)
+
+<!-- RELATED:END -->

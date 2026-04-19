@@ -140,3 +140,15 @@ $$\hat{v}_c = \arg\max_{v_c} \sum_i \text{IoU}(E(v_c \cdot v_i), m_i) + \alpha \
 - **实验充分度**: ★★★★★ — 多基准、多 backbone、详细消融和可视化分析
 - **实用性**: ★★★★★ — 单向量检索，兼容标准检索流程
 - **总体推荐**: ★★★★☆
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models](vessa_video-based_object-centric_self-supervised_adaptation_for_visual_foundatio.md)
+- [Incremental Object Keypoint Learning (KAMP)](../../CVPR2025/model_compression/incremental_object_keypoint_learning.md)
+- [Graph Your Own Prompt](graph_your_own_prompt.md)
+- [Unlocking ImageNet's Multi-Object Nature: Automated Large-Scale Multilabel Annotation](../../CVPR2026/model_compression/unlocking_imagenets_multi-object_nature_automated_large-scale_multilabel_annotat.md)
+- [Mitigating Semantic Collapse in Partially Relevant Video Retrieval](mitigating_semantic_collapse_in_partially_relevant_video_retrieval.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ Stage 1：$\mathcal{L}_{\text{implicit}} = \|2D_e(x_{\text{vis}}) - 2D_e^{\text{
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个仿真benchmark+真实场景+30+任务+详细消融+泛化测试+扩展性分析
 - 写作质量: ⭐⭐⭐⭐ 方法动机推导清晰，两阶段框架描述完整
 - 价值: ⭐⭐⭐⭐⭐ 解决了3D操控中利用2D预训练知识的核心问题，具有很强的实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-MVP: 3D Multiview Pretraining for Robotic Manipulation](3d-mvp_3d_multiview_pretraining_for_manipulation.md)
+- [RoboCerebra: A Large-scale Benchmark for Long-horizon Robotic Manipulation Evaluation](../../NeurIPS2025/robotics/robocerebra_a_large-scale_benchmark_for_long-horizon_robotic_manipulation_evalua.md)
+- [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
+
+<!-- RELATED:END -->

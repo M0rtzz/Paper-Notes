@@ -128,3 +128,15 @@ MergeBarrier保护的模型单独使用时准确率损失可忽略。
 ⭐⭐⭐⭐ (4/5)
 
 理论动机清晰，方法设计精巧，数学推导严谨。正交投影的无损特性和LWE安全保证是亮点。但实验规模偏小（仅13B），自适应攻击分析可以更充分。对开源模型知识产权保护有重要实际价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model](stem_efficient_relative_capability_evaluation_of_llms_through_structured_transit.md)
+- [An Invariant Latent Space Perspective on Language Model Inversion](an_invariant_latent_space_perspective_on_language_model_inve.md)
+- [TransMamba: A Sequence-Level Hybrid Transformer-Mamba Language Model](transmamba_a_sequence-level_hybrid_transformer-mamba_language_model.md)
+- [ICL-Router: In-Context Learned Model Representations for LLM Routing](icl-router_in-context_learned_model_representations_for_llm_routing.md)
+- [Team Anotheroption at SemEval-2025 Task 8: Bridging the Gap Between Open-Source and Proprietary LLMs in Table QA](../../ACL2025/llm_nlp/team_anotheroption_at_semeval-2025_task_8_bridging_the_gap_between_open-source_a.md)
+
+<!-- RELATED:END -->

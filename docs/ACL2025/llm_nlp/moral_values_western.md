@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 主实验和分析扎实但仅测一个 LLM，跨模型泛化性未知
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰、分析层次分明，从宏观到微观层层深入
 - 价值: ⭐⭐⭐⭐ 为 LLM 道德对齐提供了新的间接评估范式，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+- [Probabilistic Aggregation and Targeted Embedding Optimization for Collective Moral Reasoning](probabilistic_aggregation_and_targeted_embedding_optimization_for_collective_mor.md)
+- [Can Language Models Reason about Individualistic Human Values and Preferences?](can_language_models_reason_about_individualistic_human_values_and_preferences.md)
+- [Zero-Shot Belief: A Hard Problem for LLMs](zero-shot_belief_a_hard_problem_for_llms.md)
+- [Unintended Harms of Value-Aligned LLMs: Psychological and Empirical Insights](unintended_harms_of_value-aligned_llms_psychological_and_empirical_insights.md)
+
+<!-- RELATED:END -->

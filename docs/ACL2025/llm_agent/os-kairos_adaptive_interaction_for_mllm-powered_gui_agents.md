@@ -163,3 +163,15 @@ OS-Kairos 的 pipeline 分三步：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 3 个数据集 + 真实设备动态评估 + 6 项消融（Critic 模型 / 数据规模 / 模型规模 / 阈值 / 交互范式 / prompt-based 对比），非常全面
 - **写作质量**: ⭐⭐⭐⭐ 问题分类（三类过度执行场景）清晰，Pilot 实验有说服力，整体逻辑通顺；公式表述有些冗余
 - **价值**: ⭐⭐⭐⭐⭐ 直击 GUI Agent 实际部署的核心痛点（安全性），88% TSR vs 14% 的提升有强说服力，阈值控制的灵活性对工业落地友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_a_survey_on_mllm-based_agents_for_general_computing_devices_use.md)
+- [Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](../../ICML2025/llm_agent/aguvis_unified_pure_vision_agents_for_autonomous_gui_interaction.md)
+- [UIPro: Unleashing Superior Interaction Capability for GUI Agents](../../ICCV2025/llm_agent/uipro_unleashing_superior_interaction_capability_for_gui_agents.md)
+- [OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis](os_genesis_gui_agent_trajectory.md)
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](gui_explorer_autonomous.md)
+
+<!-- RELATED:END -->

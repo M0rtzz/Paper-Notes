@@ -125,3 +125,15 @@ GPOcc 的核心 idea：沿相机射线将预测的表面点向内延伸，生成
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集×两种先验+细致的消融（K、τ、效率对比），实验设计严谨全面
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，Figure 1 的三种方法对比一目了然，公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ DPT 版本 28 FPS+97.95M 参数的效率使其有实际部署价值，框架兼容不同先验的特性使其具有长期生命力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fully Sparse 3D Occupancy Prediction](../../ECCV2024/autonomous_driving/fully_sparse_3d_occupancy_prediction.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction.md)
+- [ProOOD: Prototype-Guided Out-of-Distribution 3D Occupancy Prediction](proood_prototype-guided_out-of-distribution_3d_occupancy_prediction.md)
+- [An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)
+
+<!-- RELATED:END -->

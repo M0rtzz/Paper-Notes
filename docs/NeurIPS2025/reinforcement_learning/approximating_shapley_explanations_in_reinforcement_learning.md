@@ -132,3 +132,15 @@ FastSVERL 将近似问题分解为两个层次：
 ## 评分
 
 ⭐⭐⭐⭐ 理论优雅、框架完整，系统性地解决了 Shapley 值在 RL 中的扩展性问题，单样本近似是亮眼贡献，但实验规模偏小。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcement Learning with Action Chunking](reinforcement_learning_with_action_chunking.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Learning to Clean: Reinforcement Learning for Noisy Label Correction](learning_to_clean_reinforcement_learning_for_noisy_label_correction.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+- [Continual Knowledge Adaptation for Reinforcement Learning](continual_knowledge_adaptation_for_reinforcement_learning.md)
+
+<!-- RELATED:END -->

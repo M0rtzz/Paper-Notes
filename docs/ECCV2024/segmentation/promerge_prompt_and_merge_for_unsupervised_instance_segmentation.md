@@ -119,3 +119,15 @@ ProMerge是一种纯推理时方法，不涉及训练。关键超参数包括：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集评估、速度比较和伪标签应用的评估较全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，每个步骤的动机说明充分
 - 价值: ⭐⭐⭐⭐ 大幅提升推理效率的同时保持性能，具有良好的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
+- [Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation](un-evimo_unsupervised_event-based_independent_motion_segmentation.md)
+- [Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation](../../ICCV2025/segmentation/hierarchical_visual_prompt_learning_for_continual_video_instance_segmentation.md)
+- [VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement](visage_video_instance_segmentation_with_appearance-guided_enhancement.md)
+- [SOS: Segment Object System for Open-World Instance Segmentation With Object Priors](sos_segment_object_system_for_open-world_instance_segmentation_with_object_prior.md)
+
+<!-- RELATED:END -->

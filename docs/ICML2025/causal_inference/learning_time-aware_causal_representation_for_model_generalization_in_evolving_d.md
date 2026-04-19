@@ -166,3 +166,15 @@ $$\mathcal{L}_{SYNC} = \mathcal{L}_{evolve} + \alpha_1 \mathcal{L}_{MI} + \alpha
 - 实验充分度: ⭐⭐⭐⭐ — 7 个数据集 + 20 个基线 + 完整消融 + 可视化分析，但缺少大规模数据集验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论推导严谨，图示辅助理解效果好
 - 价值: ⭐⭐⭐⭐ — 为 EDG 领域引入因果视角，方法论贡献扎实，实用性有待更多场景验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integrating Markov Blanket Discovery into Causal Representation Learning for Domain Generalization](../../ECCV2024/causal_inference/integrating_markov_blanket_discovery_into_causal_representation_learning_for_dom.md)
+- [E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)
+- [Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes](classifier_reconstruction_through_counterfactual-aware_wasserstein_prototypes.md)
+- [Sparse Additive Model Pruning for Order-Based Causal Structure Learning](../../AAAI2026/causal_inference/sparse_additive_model_pruning_for_order-based_causal_structure_learning.md)
+- [LLM Interpretability with Identifiable Temporal-Instantaneous Representation](../../NeurIPS2025/causal_inference/llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
+
+<!-- RELATED:END -->

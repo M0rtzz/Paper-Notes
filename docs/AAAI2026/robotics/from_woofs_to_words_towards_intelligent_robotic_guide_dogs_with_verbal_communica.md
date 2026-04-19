@@ -161,3 +161,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 真人实验有价值但样本量太小；仿真实验设计合理
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，系统描述完整
 - 价值: ⭐⭐⭐⭐ — 对辅助机器人和视障辅助具有重要社会意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Graph Navigation for Intelligent Subgraph Matching](neural_graph_navigation_for_intelligent_subgraph_matching.md)
+- [SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation](spatialactor_exploring_disentangled_spatial_representations_for_robust_robotic_m.md)
+- [CLIP Behaves like a Bag-of-Words Model Cross-modally but not Uni-modally](../../ICLR2026/robotics/clip_behaves_like_a_bag-of-words_model_cross-modally_but_not_uni-modally.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2026/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [RoboInter: A Holistic Intermediate Representation Suite Towards Robotic Manipulation](../../ICLR2026/robotics/robointer_a_holistic_intermediate_representation_suite_towards_robotic_manipulat.md)
+
+<!-- RELATED:END -->

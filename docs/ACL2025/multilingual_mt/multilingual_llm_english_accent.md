@@ -120,3 +120,15 @@ DPO 自然度对齐效果（中文）:
 - 实验充分度: ⭐⭐⭐⭐ 6个模型3种语言，但 DPO 改进只在中文上充分验证
 - 写作质量: ⭐⭐⭐⭐⭐ 类比巧妙，指标设计动机清晰，跨学科（语言学+NLP）结合好
 - 价值: ⭐⭐⭐⭐⭐ 对多语言 LLM 评估和改进有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+- [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+- [M-RewardBench: Evaluating Reward Models in Multilingual Settings](m_rewardbench.md)
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+
+<!-- RELATED:END -->

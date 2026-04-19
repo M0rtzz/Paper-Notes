@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅一个数据集一个模型，虽然参数扫描全面但场景单一
 - 写作质量: ⭐⭐⭐⭐⭐ 论文组织清晰，问题-方法-理论-实验逻辑紧密，定理陈述规范
 - 价值: ⭐⭐⭐⭐ 填补了完全异步动量优化的理论空白，但受限于强凸+对角占优假设，实际应用范围有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data](smofi_step-wise_momentum_fusion_for_split_federated_learning_on_heterogeneous_da.md)
+- [Integer Programming for Generalized Causal Bootstrap Designs](../../ICML2025/optimization/integer_programming_for_generalized_causal_bootstrap_designs.md)
+- [Dynamic Momentum Recalibration in Online Gradient Learning](../../CVPR2026/optimization/dynamic_momentum_recalibration_in_online_gradient_learning.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](../../NeurIPS2025/optimization/perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](../../NeurIPS2025/optimization/fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
+
+<!-- RELATED:END -->

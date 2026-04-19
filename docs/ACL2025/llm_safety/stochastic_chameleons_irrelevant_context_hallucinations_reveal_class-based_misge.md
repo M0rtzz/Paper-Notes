@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 106M 数据点 + 人工标注 + PMI 统计 + 三种机械可解释性方法
 - 写作质量: ⭐⭐⭐⭐ 推理链清晰，Figure 1 直观
 - 价值: ⭐⭐⭐⭐⭐ 对理解幻觉机制有重要理论意义，对 RAG 设计有直接启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+- [Teaming LLMs to Detect and Mitigate Hallucinations](../../NeurIPS2025/llm_safety/teaming_llms_to_detect_and_mitigate_hallucinations.md)
+- [Factual Knowledge in Language Models: Robustness and Anomalies under Simple Temporal Context Variations](factual_knowledge_in_language_models_robustness_and_anomalies_under_simple_tempo.md)
+- [HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](halogen_hallucinations.md)
+- [Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning](answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md)
+
+<!-- RELATED:END -->

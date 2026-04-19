@@ -114,3 +114,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 动机分析和可视化做得好
 - 价值: ⭐⭐⭐⭐ 即插即用的 PTQ 改进，实用价值高
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models](masquant_modality-aware_smoothing_quantization_for_multimodal_large_language_mod.md)
+- [Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](quant_experts_token-aware_adaptive_error_reconstruction_with_mixture_of_experts_.md)
+- [FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
+- [Quantization without Tears](../../CVPR2025/multimodal_vlm/quantization_without_tears.md)
+- [EagleNet: Energy-Aware Fine-Grained Relationship Learning Network for Text-Video Retrieval](eaglenet_energy-aware_fine-grained_relationship_learning_network_for_text-video_.md)
+
+<!-- RELATED:END -->

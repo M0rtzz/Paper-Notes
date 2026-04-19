@@ -199,3 +199,15 @@ $$PW_{i,j}^t = \begin{cases} \sum_{i=1}^{S_t} \frac{M_{i,j}^t}{M_j^{t+1}} PW_{i,
 - 实验充分度: ⭐⭐⭐⭐（4数据集、10个对比方法、多种异质性设置、消融全面）
 - 写作质量: ⭐⭐⭐（整体结构清晰，但公式符号有时前后不一致）
 - 价值: ⭐⭐⭐⭐（对联邦学习在资源受限场景下的部署有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning](resource_efficient_sleep_staging_via_multi-level_masking_and_prompt_learning.md)
+- [SABRE-FL: Selective and Accurate Backdoor Rejection for Federated Prompt Learning](../../ICLR2026/object_detection/sabre-fl_selective_and_accurate_backdoor_rejection_for_federated_prompt_learning.md)
+- [Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward](actor-critic_for_continuous_action_chunks_a_reinforcement_le.md)
+- [TRACE: A Generalizable Drift Detector for Streaming Data-Driven Optimization](trace_a_generalizable_drift_detector_for_streaming_data-driven_optimization.md)
+- [Long-Context Generalization with Sparse Attention](../../ICLR2026/object_detection/long-context_generalization_with_sparse_attention.md)
+
+<!-- RELATED:END -->

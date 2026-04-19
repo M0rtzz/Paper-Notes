@@ -133,3 +133,15 @@ DMLoRA的整体框架是一个针对预训练视觉Transformer（如ViT）的参
 - 实验充分度: ⭐⭐⭐⭐ VTAB-1k 19个任务和FGVC 5个数据集的全面评估很充分
 - 写作质量: ⭐⭐⭐ 方法描述清晰，动机论证合理
 - 价值: ⭐⭐⭐ 为LoRA提供了一种鲁棒性更强的变体，对视觉PEFT社区有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Low-Rank Interconnected Adaptation across Layers](../../ACL2025/others/low-rank_interconnected_adaptation_across_layers.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
+- [MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](../../ACL2025/others/more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
+- [CoLA: Collaborative Low-Rank Adaptation](../../ACL2025/others/cola_collaborative_low-rank_adaptation.md)
+- [Functional Transform-Based Low-Rank Tensor Factorization for Multi-Dimensional Data Recovery](functional_transform-based_low-rank_tensor_factorization_for_multi-dimensional_d.md)
+
+<!-- RELATED:END -->

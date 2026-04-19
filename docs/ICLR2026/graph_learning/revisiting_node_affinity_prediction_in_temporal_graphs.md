@@ -118,3 +118,15 @@ NAViS 比 TGNv2（最佳 TGNN）在 tgbn-trade 上提升 +12.8%。
 - 实验充分度: ⭐⭐⭐⭐ TGB 标准 benchmark + 合成实验 + 消融，但数据集数量有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，问题设置精确，动机逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 解决了时序图中长期存在的"启发式优于 TGNN"之谜
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](../../NeurIPS2025/graph_learning/tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)
+- [Learnable Spatial-Temporal Positional Encoding for Link Prediction](../../ICML2025/graph_learning/learnable_spatial-temporal_positional_encoding_for_link_prediction.md)
+- [Graph Tokenization for Bridging Graphs and Transformers](graph_tokenization_for_bridging_graphs_and_transformers.md)
+- [Towards Improved Sentence Representations using Token Graphs](towards_improved_sentence_representations_using_token_graphs.md)
+- [GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](../../AAAI2026/graph_learning/gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
+
+<!-- RELATED:END -->

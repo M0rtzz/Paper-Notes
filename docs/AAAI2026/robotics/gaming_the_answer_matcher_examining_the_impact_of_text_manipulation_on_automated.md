@@ -154,3 +154,15 @@ Matcher 模型（评判者）：GPT-4.1 mini, Qwen2.5-7B-IT, Qwen3-4B, Gemma-2-2
 - 实验充分度: ⭐⭐⭐⭐ — 32 组全面实验覆盖多模型、多数据集、多评判模式
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，假设-实验-结论逻辑严密
 - 价值: ⭐⭐⭐⭐ — 为 answer matching 作为可靠评估方法提供了信心
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Training-Free Scene Text Editing](../../CVPR2026/robotics/towards_training-free_scene_text_editing.md)
+- [Vulnerability of LLMs to Vertically Aligned Text Manipulations](../../ACL2025/robotics/vulnerability_of_llms_to_vertically_aligned_text_manipulations.md)
+- [AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling](../../NeurIPS2025/robotics/autotom_scaling_model-based_mental_inference_via_automated_agent_modeling.md)
+- [SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation](spatialactor_exploring_disentangled_spatial_representations_for_robust_robotic_m.md)
+- [Affordance-Guided Coarse-to-Fine Exploration for Base Placement in Open-Vocabulary Mobile Manipulation](affordance-guided_coarse-to-fine_exploration_for_base_placem.md)
+
+<!-- RELATED:END -->

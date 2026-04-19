@@ -124,3 +124,15 @@ LazyDiffusion 解耦生成过程为两个步骤：
 - **实用性**: ⭐⭐⭐⭐⭐ — 10× 加速使扩散模型首次可用于交互式编辑管线
 - **实验充分度**: ⭐⭐⭐⭐ — 定量+用户研究+渐进式生成 demo，但缺少开源基线对比
 - **论文质量**: ⭐⭐⭐⭐⭐ — 写作清晰，图示丰富，动机→方法→实验逻辑严密
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [WildVidFit: Video Virtual Try-On in the Wild via Image-Based Controlled Diffusion Models](wildvidfit_video_virtual_try-on_in_the_wild_via_image-based_controlled_diffusion.md)
+- [Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
+- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
+
+<!-- RELATED:END -->

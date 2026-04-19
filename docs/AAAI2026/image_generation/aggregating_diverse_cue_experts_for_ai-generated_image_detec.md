@@ -102,3 +102,15 @@ GenImage上特别突出的单子集结果：
 - 实验充分度: ⭐⭐⭐⭐⭐ (三个benchmark全面对比，消融详尽，可视化有说服力)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，CI的物理推导完整；部分符号可以更统一)
 - 价值: ⭐⭐⭐⭐ (在AI生成图像检测领域贡献显著，CI和MoEA均有推广价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](aedr_training-free_ai-generated_image_attribution_via_autoen.md)
+- [Any-Resolution AI-Generated Image Detection by Spectral Learning](../../CVPR2025/image_generation/any-resolution_ai-generated_image_detection_by_spectral_learning.md)
+- [Epistemic Uncertainty for Generated Image Detection](../../NeurIPS2025/image_generation/epistemic_uncertainty_for_generated_image_detection.md)
+- [CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images](causalclip_causally-informed_feature_disentanglement_and_filtering_for_generaliz.md)
+- [Physics-Driven Spatiotemporal Modeling for AI-Generated Video Detection](../../NeurIPS2025/image_generation/physics-driven_spatiotemporal_modeling_for_ai-generated_video_detection.md)
+
+<!-- RELATED:END -->

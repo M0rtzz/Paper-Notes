@@ -112,3 +112,15 @@ $$H_{cwr}^{(t)} = \sigma((I - \hat{L})(H_{cwr}^{(t-1)} \odot K)W_{cwr}^{(t)})$$
 - 技术深度：⭐⭐⭐⭐⭐ （理论分析+方法设计+广泛实验）
 - 实验充分性：⭐⭐⭐⭐⭐ （8个数据集，多种baseline，详细消融）
 - 写作质量：⭐⭐⭐⭐ （逻辑清晰，图表丰富）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ADPretrain: Advancing Industrial Anomaly Detection via Anomaly Representation Pretraining](adpretrain_advancing_industrial_anomaly_detection_via_anomaly_representation_pre.md)
+- [Prediction-Powered Semi-Supervised Learning with Online Power Tuning](prediction-powered_semi-supervised_learning_with_online_power_tuning.md)
+- [Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](../../CVPR2025/others/distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+- [EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination](an_evidence-based_post-hoc_adjustment_framework_for_anomaly_detection_under_data.md)
+
+<!-- RELATED:END -->

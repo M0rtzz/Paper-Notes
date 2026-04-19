@@ -132,3 +132,15 @@ $$\mathcal{L} = \mathcal{L}_{GC} + \alpha\mathcal{L}_{dim} + \beta\mathcal{L}_{c
 - **实验充分度**: ⭐⭐⭐⭐ 五个数据集、多种攻击类型/预算、多种凝缩比、与10种基线对比
 - **写作质量**: ⭐⭐⭐⭐ Q&A驱动的论文结构引人入胜，理论和实验衔接紧密
 - **价值**: ⭐⭐⭐⭐ 对GC在对抗环境下的实际部署有重要意义，推动了鲁棒GC的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Graph Classification Robustness with Singular Pooling](enhancing_graph_classification_robustness_with_singular_pooling.md)
+- [On the Sample Complexity of Differentially Private Policy Optimization](on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+- [Improved Balanced Classification with Theoretically Grounded Loss Functions](improved_balanced_classification_with_theoretically_grounded_loss_functions.md)
+- [Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
+- [DESIGN: Encrypted GNN Inference via Server-Side Input Graph Pruning](design_encrypted_gnn_inference_via_server-side_input_graph_pruning.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ xCPD 在所有 10 个设定中取得最优。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 9数据集×4 backbone×144设定＋短期/零样本/效率/消融/可视化，极为全面
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，理论推导严谨（两个定理），图表丰富
 - **价值**: ⭐⭐⭐⭐ 作为通用即插即用插件对时序预测社区有直接实用价值，线性复杂度适合部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
+- [TimeSliver: Symbolic-Linear Decomposition for Explainable Time Series Classification](timesliver_symbolic-linear_decomposition_for_explainable_time_series_classificat.md)
+- [T1: One-to-One Channel-Head Binding for Multivariate Time-Series Imputation](t1_one-to-one_channel-head_binding_for_multivariate_time-series_imputation.md)
+- [CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time.md)
+- [Sonnet: Spectral Operator Neural Network for Multivariable Time Series Forecasting](../../AAAI2026/time_series/sonnet_spectral_operator_neural_network_for_multivariable_time_series_forecastin.md)
+
+<!-- RELATED:END -->

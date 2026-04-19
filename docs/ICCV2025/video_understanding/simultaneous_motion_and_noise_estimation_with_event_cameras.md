@@ -186,3 +186,15 @@ DND21 去噪基准（AUC↑）：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集验证+多任务应用展示
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，物理直觉强
 - 价值: ⭐⭐⭐⭐ 开辟了事件相机研究的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
+- [EMoTive: Event-Guided Trajectory Modeling for 3D Motion Estimation](emotive_event-guided_trajectory_modeling_for_3d_motion_estimation.md)
+- [egoPPG: Heart Rate Estimation from Eye-Tracking Cameras in Egocentric Systems to Benefit Downstream Vision Tasks](egoppg_heart_rate_estimation_from_eye-tracking_cameras_in_egocentric_systems_to_.md)
+- [EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation](../../CVPR2025/video_understanding/edcflow_exploring_temporally_dense_difference_maps_for_event-based_optical_flow_.md)
+- [Estimating 2D Camera Motion with Hybrid Motion Basis](estimating_2d_camera_motion_with_hybrid_motion_basis.md)
+
+<!-- RELATED:END -->

@@ -153,3 +153,15 @@ CLIP-based FSC 在 CIFAR100/ImageNet 上的 Δ@2（平均）：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 四种 FSC 方法、三个数据集、两种任务类型，加上数据效率/时间效率/跨方法迁移等深入分析
 - 写作质量: ⭐⭐⭐⭐ — 问题引入清晰，公式推导完整；表格较密集但信息量大
 - 综合价值: ⭐⭐⭐⭐ — 开创了"阻碍学习"这一新方向，对 AI 安全领域有重要启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning](../../ICML2025/llm_pretraining/revisiting_continuity_of_image_tokens_for_cross-domain_few-shot_learning.md)
+- [Prompting Language-Informed Distribution for Compositional Zero-Shot Learning](prompting_language-informed_distribution_for_compositional_zero-shot_learning.md)
+- [DragAPart: Learning a Part-Level Motion Prior for Articulated Objects](dragapart_learning_a_part-level_motion_prior_for_articulated_objects.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+- [3D Prior is All You Need: Cross-Task Few-shot 2D Gaze Estimation](../../CVPR2025/llm_pretraining/3d_prior_is_all_you_need_cross-task_few-shot_2d_gaze_estimation.md)
+
+<!-- RELATED:END -->

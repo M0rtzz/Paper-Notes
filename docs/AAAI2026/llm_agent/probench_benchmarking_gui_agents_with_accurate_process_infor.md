@@ -122,3 +122,15 @@ ProBench 包含三个模块：(1) Task Curation（任务构建）；(2) Dynamic 
 - 实验充分度: ⭐⭐⭐⭐ 9个模型 + 3类错误分析 + 应用类别分析 + 评估管线验证，但缺少直接改进实验
 - 写作质量: ⭐⭐⭐⭐⭐ 错误案例分析生动直观，问题定义清晰，附录包含所有任务列表和 prompt
 - 价值: ⭐⭐⭐⭐⭐ 揭示了"最强模型<50%成功率"的现实，三大错误模式总结对社区有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [D-GARA: A Dynamic Benchmarking Framework for GUI Agent Robustness in Real-World Anomalies](d-gara_a_dynamic_benchmarking_framework_for_gui_agent_robust.md)
+- [History-Aware Reasoning for GUI Agents](history-aware_reasoning_for_gui_agents.md)
+- [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](../../NeurIPS2025/llm_agent/benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
+- [Promoting Sustainable Web Agents: Benchmarking and Estimating Energy Consumption Through Empirical and Theoretical Analysis](promoting_sustainable_web_agents_benchmarking_and_estimating_energy_consumption_.md)
+- [Co-EPG: A Framework for Co-Evolution of Planning and Grounding in Autonomous GUI Agents](co-epg_a_framework_for_co-evolution_of_planning_and_groundin.md)
+
+<!-- RELATED:END -->

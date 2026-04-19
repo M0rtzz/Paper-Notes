@@ -132,3 +132,15 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{focal} + \mathcal{L}_{lov} + \mathcal{L}_
 - **实验充分度**: ⭐⭐⭐⭐ 多维度消融实验全面，Look-Back评估设计巧妙
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，方法描述详实，图表精心设计
 - **价值**: ⭐⭐⭐⭐ 为具身智能的场景理解提供了实用方案，开源代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Causality-Aware Vision-Based 3D Occupancy Prediction](semantic_causality-aware_vision-based_3d_occupancy_prediction.md)
+- [GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
+- [GaussianFormer: Scene as Gaussians for Vision-Based 3D Semantic Occupancy Prediction](../../ECCV2024/autonomous_driving/gaussianformer_scene_as_gaussians_for_vision-based_3d_semantic_occupancy_predict.md)
+- [Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation](hermes_a_unified_self-driving_world_model_for_simultaneous_3d_scene_understandin.md)
+- [AGO: Adaptive Grounding for Open World 3D Occupancy Prediction](ago_adaptive_grounding_for_open_world_3d_occupancy_predictio.md)
+
+<!-- RELATED:END -->

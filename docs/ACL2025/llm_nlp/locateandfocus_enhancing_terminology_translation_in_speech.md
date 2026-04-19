@@ -120,3 +120,15 @@ tags:
 - 开放问题: 如何在实时场景下平衡定位精度和推理速度？
 - 影响力: 为语音翻译中的术语处理提供了新的多模态知识利用范式
 - 发展方向: 可组合CTC或维特比解码进一步改进术语定位精度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Recent Advances in Speech Language Models: A Survey](recent_advances_in_speech_language_models_a_survey.md)
+- [Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues](enhancing_spoken_discourse_modeling_in_language_models_using_gestural_cues.md)
+- [Language-Codec: Bridging Discrete Codec Representations and Speech Language Models](language_codec_bridging_discrete_codec_speech_language_models.md)
+
+<!-- RELATED:END -->

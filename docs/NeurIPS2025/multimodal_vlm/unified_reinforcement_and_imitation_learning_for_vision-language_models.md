@@ -137,3 +137,15 @@ RIL 包含三个核心组件：学生 VLM（Generator）、判别器（Discrimin
 - 实验充分度: ⭐⭐⭐⭐⭐ 14个benchmark、多种模型尺寸(1B-8B)、多教师组合、完整消融
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但表格密集度较高，关键创新点需要反复阅读才能准确理解
 - 价值: ⭐⭐⭐⭐⭐ 提供了一条不增加推理成本就能大幅提升小VLM性能的实用路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+- [Praxis-VLM: Vision-Grounded Decision Making via Text-Driven Reinforcement Learning](praxisvlm_visiongrounded_decision_making_via_textdriven_rein.md)
+- [MoE-GRPO: Optimizing Mixture-of-Experts via Reinforcement Learning in Vision-Language Models](../../CVPR2026/multimodal_vlm/moe-grpo_optimizing_mixture-of-experts_via_reinforcement_learning_in_vision-lang.md)
+- [DocThinker: Explainable Multimodal Large Language Models with Rule-based Reinforcement Learning for Document Understanding](../../ICCV2025/multimodal_vlm/docthinker_explainable_multimodal_large_language_models_with.md)
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+
+<!-- RELATED:END -->

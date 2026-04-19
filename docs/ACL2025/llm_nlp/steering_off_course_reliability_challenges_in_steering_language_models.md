@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 36个模型、14个家族、广泛超参数搜索、多任务评估，覆盖极为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析深入，但内容偏"负面结果"可能降低部分读者兴趣
 - 价值: ⭐⭐⭐⭐⭐ 对引导方法领域的重要警示，对社区的实验规范化具有推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Attribute Steering of Language Models via Targeted Intervention](multi_attribute_steering.md)
+- [CogSteer: Cognition-Inspired Selective Layer Intervention for Efficiently Steering Large Language Models](cogsteer_cognition-inspired_selective_layer_intervention_for_efficiently_steerin.md)
+- [Fine-Grained Activation Steering: Steering Less, Achieving More](../../ICLR2026/llm_nlp/fine-grained_activation_steering_steering_less_achieving_more.md)
+- [Beyond Prompt Engineering: Robust Behavior Control in LLMs via Steering Target Atoms](beyond_prompt_engineering_robust_behavior_control_in_llms_via_steering_target_at.md)
+- [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](contrastive_prompting_embeddings.md)
+
+<!-- RELATED:END -->

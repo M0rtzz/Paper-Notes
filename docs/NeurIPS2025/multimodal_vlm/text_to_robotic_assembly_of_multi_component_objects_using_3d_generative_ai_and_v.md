@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 用户研究规模适中但物体种类有限，缺少VLM推理失败案例分析
 - 写作质量: ⭐⭐⭐⭐ 流水线描述清晰，prompt设计透明
 - 实用价值: ⭐⭐⭐ 概念验证阶段，受限于闭源工具和有限组件类型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scene-Aware Urban Design: A Human-AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models](scene-aware_urban_design_a_human-ai_recommendation_framework_using_co-occurrence.md)
+- [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
+- [FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges](finegrain_evaluating_failure_modes_of_text-to-image_models_with_vision_language_.md)
+- [Instruction-Grounded Visual Projectors for Continual Learning of Generative Vision-Language Models](../../ICCV2025/multimodal_vlm/instruction-grounded_visual_projectors_for_continual_learning_of_generative_visi.md)
+- [AntiGrounding: Lifting Robotic Actions into VLM Representation Space for Decision Making](antigrounding_lifting_robotic_actions_into_vlm_representatio.md)
+
+<!-- RELATED:END -->

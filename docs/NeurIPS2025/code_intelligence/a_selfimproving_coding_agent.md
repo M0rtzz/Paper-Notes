@@ -111,3 +111,15 @@ SICA的核心循环类似ADAS但有本质区别：
 - 实验充分度: ⭐⭐⭐⭐ 多benchmark、15轮迭代、推理任务对比、详细的改进日志，但SWE-Bench只用了50题子集
 - 写作质量: ⭐⭐⭐⭐⭐ 论文写得非常清晰，动机、方法、实验、安全讨论层次分明，附录的agent trace极具参考价值
 - 价值: ⭐⭐⭐⭐ 验证了自改进Agent的可行性，开源代码，但实际可复现性受限于高成本($7k/run)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VeriMaAS: Automated Multi-Agent Workflows for RTL Design](automated_multi-agent_workflows_for_rtl_design.md)
+- [Revisit Self-Debugging with Self-Generated Tests for Code Generation](../../ACL2025/code_intelligence/revisit_self-debugging_with_self-generated_tests_for_code_generation.md)
+- [UTBoost: Rigorous Evaluation of Coding Agents on SWE-Bench](../../ACL2025/code_intelligence/utboost_rigorous_evaluation_of_coding_agents_on_swe-bench.md)
+- [Improving Code Localization with Repository Memory](../../ICLR2026/code_intelligence/improving_code_localization_with_repository_memory.md)
+- [KV Cache Transform Coding for Compact Storage in LLM Inference](../../ICLR2026/code_intelligence/kv_cache_transform_coding_for_compact_storage_in_llm_inference.md)
+
+<!-- RELATED:END -->

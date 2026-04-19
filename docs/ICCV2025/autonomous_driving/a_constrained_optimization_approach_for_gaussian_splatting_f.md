@@ -198,3 +198,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pixel}} + 0.2 \cdot \mathcal{L
 - **实验**：⭐⭐⭐⭐ — 自建数据集+2个公开基准，消融充分，GarageWorld噪声鲁棒性实验设计合理
 - **写作**：⭐⭐⭐⭐ — 动机充分，公式推导完整，补充材料详尽
 - **综合**：8.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow](gaussianflowocc_sparse_and_weakly_supervised_occupancy_estimation_using_gaussian.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+- [IGL-Nav: Incremental 3D Gaussian Localization for Image-goal Navigation](igl-nav_incremental_3d_gaussian_localization_for_image-goal_navigation.md)
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+- [Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering](leveraging_2d_priors_and_sdf_guidance_for_urban_scene_rendering.md)
+
+<!-- RELATED:END -->

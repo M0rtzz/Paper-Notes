@@ -140,3 +140,15 @@ CASL 仅用 832 个样本预训练，在 OBJ-BG（92.08%）和 OBJ-ONLY（91.05%
 - 实验充分度: 8/10 — 异常检测+分类+分割多任务验证，消融实验完整
 - 写作质量: 8/10 — 动机清晰，从观察到方法的逻辑链条紧凑
 - 价值: 8/10 — 提供了通用 3D 表征学习的新视角，异常检测结果显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Concerto: Joint 2D-3D Self-Supervised Learning Emerges Spatial Representations](../../NeurIPS2025/3d_vision/concerto_joint_2d-3d_self-supervised_learning_emerges_spatial_representations.md)
+- [Real-Time 3D Object Detection with Inference-Aligned Learning](real-time_3d_object_detection_with_inference-aligned_learning.md)
+- [GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](../../CVPR2026/3d_vision/gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
+- [Point-SRA: Self-Representation Alignment for 3D Representation Learning](point-sra_self-representation_alignment_for_3d_representation_learning.md)
+- [VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection](../../CVPR2026/3d_vision/virpro_visual-referred_probabilistic_prompt_learning_for_weakly-supervised_monoc.md)
+
+<!-- RELATED:END -->

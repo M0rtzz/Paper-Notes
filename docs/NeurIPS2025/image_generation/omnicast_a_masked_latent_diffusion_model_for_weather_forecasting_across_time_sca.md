@@ -143,3 +143,15 @@ OmniCast 推理速度比 Gencast 快 **10-20 倍**（且使用更弱的硬件）
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖中期/S2S、确定性/概率/物理指标、全面消融、效率对比
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰，方法推导完整，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 对气象和 AI for Science 社区有重要贡献，开源代码和模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph-based Neural Space Weather Forecasting](graph-based_neural_space_weather_forecasting.md)
+- [Probabilistic Weather Forecasting with Deterministic Guidance-Based Diffusion Model](../../ECCV2024/image_generation/probabilistic_weather_forecasting_with_deterministic_guidance-based_diffusion_mo.md)
+- [Latent Diffusion Models with Masked AutoEncoders](../../ICCV2025/image_generation/latent_diffusion_models_with_masked_autoencoders.md)
+- [StableGuard: Towards Unified Copyright Protection and Tamper Localization in Latent Diffusion Models](stableguard_towards_unified_copyright_protection_and_tamper_localization_in_late.md)
+- [MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction](mge-ldm_joint_latent_diffusion_for_simultaneous_music_generation_and_source_extr.md)
+
+<!-- RELATED:END -->

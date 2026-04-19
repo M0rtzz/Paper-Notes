@@ -143,3 +143,15 @@ PSNR 比 GaussianMarker 高 5.4 dB，LPIPS 低 87%。
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计巧妙，CLIP 解耦和 SH-only 嵌入两个核心设计都有洞察力支撑；实验全面，覆盖容量/保真度/鲁棒性/安全性/效率五个维度。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
+- [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
+- [Where, What, Why: Toward Explainable 3D-GS Watermarking](../../CVPR2026/3d_vision/where_what_why_toward_explainable_3d-gs_watermarking.md)
+
+<!-- RELATED:END -->

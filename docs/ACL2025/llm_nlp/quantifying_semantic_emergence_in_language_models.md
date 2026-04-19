@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 涵盖了 ICL 和自然句子两类场景及多种模型，但模型规模受限
 - 写作质量: ⭐⭐⭐⭐ 从理论到实验逻辑清晰，数学推导严谨，但公式密度较高
 - 价值: ⭐⭐⭐⭐ 为 LLM 可解释性、幻觉检测、AI 文本鉴别等提供了新工具和新视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)
+- [Beyond Induction Heads: In-Context Meta Learning Induces Multi-Phase Circuit Emergence](../../ICML2025/llm_nlp/beyond_induction_heads_in-context_meta_learning_induces_multi-phase_circuit_emer.md)
+- [PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models](plugin_finetuning_bridge.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [Steering off Course: Reliability Challenges in Steering Language Models](steering_off_course_reliability_challenges_in_steering_language_models.md)
+
+<!-- RELATED:END -->

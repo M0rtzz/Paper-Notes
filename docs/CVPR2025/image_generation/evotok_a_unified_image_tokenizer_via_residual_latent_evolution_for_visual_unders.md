@@ -130,3 +130,15 @@ $$\mathcal{L}_{\text{total}} = \underbrace{(\mathcal{L}_R + \lambda_P \mathcal{L
 - 实验充分度: ⭐⭐⭐⭐ 理解/生成/重建三方面 + 消融 + 可视化分析
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，可视化分析有洞察力
 - 价值: ⭐⭐⭐⭐⭐ 统一 tokenizer 的新范式，简洁有效，影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual Diffusion for Unified Image Generation and Understanding](dual_diffusion_for_unified_image_generation_and_understanding.md)
+- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+- [Spectral Image Tokenizer](../../ICCV2025/image_generation/spectral_image_tokenizer.md)
+- [JanusFlow: Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding and Generation](janusflow_harmonizing_autoregression_and_rectified_flow_for_unified_multimodal_u.md)
+- [Holistic Tokenizer for Autoregressive Image Generation](../../ICCV2025/image_generation/holistic_tokenizer_for_autoregressive_image_generation.md)
+
+<!-- RELATED:END -->

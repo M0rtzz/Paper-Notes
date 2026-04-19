@@ -115,3 +115,15 @@ DeRS范式三步走：Decompose（将N个专家权重分解为$W_{base} + \Delta
 - 实验充分度: ⭐⭐⭐⭐⭐ 三任务六架构、训练+压缩双场景、消融极其详细
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Decompose-Replace-Synthesis三步走命名直观
 - 价值: ⭐⭐⭐⭐ 对upcycled MoE部署有直接价值，2270倍压缩令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Super Experts in Mixture-of-Experts Large Language Models](../../ICLR2026/model_compression/unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
+- [Dense Backpropagation Improves Training for Sparse Mixture-of-Experts](../../NeurIPS2025/model_compression/dense_backpropagation_improves_training_for_sparse_mixture-of-experts.md)
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
+- [Toward Efficient Inference Attacks: Shadow Model Sharing via Mixture-of-Experts](../../NeurIPS2025/model_compression/toward_efficient_inference_attacks_shadow_model_sharing_via_mixture-of-experts.md)
+- [LD-MoLE: Learnable Dynamic Routing for Mixture of LoRA Experts](../../ICLR2026/model_compression/ld-mole_learnable_dynamic_routing_for_mixture_of_lora_experts.md)
+
+<!-- RELATED:END -->

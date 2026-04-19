@@ -125,3 +125,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型对比、消融实验、长度控制分析、微调分析、人类评估，维度全面  
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构极为清晰，动机-方法-评估逻辑通畅，图表设计精美  
 - **价值**: ⭐⭐⭐⭐ — 填补了专利描述自动生成的基准空白，开放数据和代码，对法律 AI 和长文档生成社区均有直接帮助
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving the Calibration of Confidence Scores in Text Generation Using the Output Distribution's Characteristics](calibration_confidence_text_gen.md)
+- [FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching](../../ICML2025/llm_evaluation/fedtail_federated_long-tailed_domain_generalization_with_sharpness-guided_gradie.md)
+- [Keep It on a Leash: Controllable Pseudo-label Generation Towards Realistic Long-Tailed Semi-Supervised Learning](../../NeurIPS2025/llm_evaluation/keep_it_on_a_leash_controllable_pseudo-label_generation_towards_realistic_long-t.md)
+- [Atomic Calibration of LLMs in Long-Form Generations](atomic_calibration_of_llms_in_long-form_generations.md)
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+
+<!-- RELATED:END -->

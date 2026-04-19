@@ -132,3 +132,15 @@ $$L_{Lap} = \log(2b) + |\mathbf{D}^{gt} - \hat{\mathbf{D}}| / b$$
 - **技术质量**: 9/10 — 理论分析 + 大规模实验 + 消融充分
 - **实用性**: 9/10 — 零样本泛化、小模型、快速推理、开源
 - **写作质量**: 8/10 — 问题分析透彻，方法动机清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [Focal Split: Untethered Snapshot Depth from Differential Defocus](../../CVPR2025/others/focal_split_untethered_snapshot_depth_from_differential_defocus.md)
+- [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](../../NeurIPS2025/others/depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
+- [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](../../ACL2025/others/inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
+- [Depth-Synergized Mamba Meets Memory Experts for All-Day Image Reflection Separation](../../AAAI2026/others/depth-synergized_mamba_meets_memory_experts_for_all-day_image_reflection_separat.md)
+
+<!-- RELATED:END -->

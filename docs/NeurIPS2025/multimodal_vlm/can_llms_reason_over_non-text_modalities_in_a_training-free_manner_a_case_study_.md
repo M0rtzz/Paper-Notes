@@ -190,3 +190,15 @@ OT-PCA+ICL 在 ESOL 上提升 **16.6%** Pearson r。
 ⭐⭐⭐⭐ (4/5)
 
 新颖的问题设定（训练无关跨模态推理），理论分析（线性投影保持几何）和机制分析（双运行模式）有深度。实验虽在分子领域为主但全面系统。主要不足是性能差距仍大，且"训练无关"的优势在不同场景下需权衡。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VT-FSL: Bridging Vision and Text with LLMs for Few-Shot Learning](vt-fsl_bridging_vision_and_text_with_llms_for_few-shot_learning.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](../../ACL2025/multimodal_vlm/table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [What Can RL Bring to VLA Generalization? An Empirical Study](what_can_rl_bring_to_vla_generalization_an_empirical_study.md)
+- [Can LLMs Deceive CLIP? Benchmarking Adversarial Compositionality of Pre-trained Multimodal Representation via Text Updates](../../ACL2025/multimodal_vlm/adversarial_compositionality_clip.md)
+- [Training-free Online Video Step Grounding](training-free_online_video_step_grounding.md)
+
+<!-- RELATED:END -->

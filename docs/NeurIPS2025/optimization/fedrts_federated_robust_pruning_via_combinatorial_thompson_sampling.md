@@ -129,3 +129,15 @@ FedRTS 采用双循环训练过程。内循环固定拓扑 $m$，每 $\Delta T$ 
 - 实验充分度: ⭐⭐⭐⭐ CV+NLP 覆盖全、消融完整，但缺大模型实验
 - 写作质量: ⭐⭐⭐⭐ 从 CMAB 建模到 TS 解法推导自然流畅
 - 价值: ⭐⭐⭐⭐ 为资源受限联邦学习提供实用高效的稀疏训练方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Oracle-Efficient Combinatorial Semi-Bandits](oracle-efficient_combinatorial_semi-bandits.md)
+- [Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)
+- [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
+- [Robust Estimation Under Heterogeneous Corruption Rates](robust_estimation_under_heterogeneous_corruption_rates.md)
+- [Preference Learning with Response Time: Robust Losses and Guarantees](preference_learning_with_response_time_robust_losses_and_guarantees.md)
+
+<!-- RELATED:END -->

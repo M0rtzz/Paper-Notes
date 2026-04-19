@@ -150,3 +150,15 @@ NanoVDR-S-Multi（69M）在 v2/v3 上超过 DSE-Qwen2（2B）和 ColPali（3B）
 - **实验充分度**: ⭐⭐⭐⭐⭐ 22 数据集 × 3 版本 × 6 损失 × 3 backbone 的完整消融，跨语言分析设计精巧
 - **写作质量**: ⭐⭐⭐⭐⭐ 结构清晰，每个分析有数据支撑，附录详尽，可复现性好
 - **实用价值**: ⭐⭐⭐⭐⭐ 69M 模型 + CPU 推理 + 13h 训练，解决了 VDR 落地的核心痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RobustVisRAG: Causality-Aware Vision-Based Retrieval-Augmented Generation under Visual Degradations](robustvisrag_causality-aware_vision-based_retrieval-augmented_generation_under_v.md)
+- [Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval](beyond_global_similarity_towards_fine-grained_multi-condition_multimodal_retriev.md)
+- [Explaining CLIP Zero-shot Predictions Through Concepts](explaining_clip_zero-shot_predictions_through_concepts.md)
+- [Mind the Way You Select Negative Texts: Pursuing the Distance Consistency in OOD Detection with VLMs](mind_the_way_you_select_negative_texts_pursuing_the_distance_consistency_in_ood_.md)
+- [M4-RAG: A Massive-Scale Multilingual Multi-Cultural Multimodal RAG](m4-rag_a_massive-scale_multilingual_multi-cultural_multimodal_rag.md)
+
+<!-- RELATED:END -->

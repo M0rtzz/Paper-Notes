@@ -132,3 +132,15 @@ $$\tilde{d}(v_1 \to v_2) = d(v_1 \to v_2) \times \max(1, c_{\text{dist}} \cdot \
 - **技术深度**: ⭐⭐⭐⭐ — FER 设计精巧，三种经验类型的划分有充分动机
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 9 个环境，全面对比 7 个基线，消融详尽
 - **实用价值**: ⭐⭐⭐⭐ — 在复杂长时程任务上显著优于现有方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcement Learning for Long-Horizon Multi-Turn Search Agents](../../NeurIPS2025/reinforcement_learning/reinforcement_learning_for_long-horizon_multi-turn_search_agents.md)
+- [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+- [ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation](../../AAAI2026/reinforcement_learning/manilong-shot_interaction-aware_one-shot_imitation_learning_for_long-horizon_man.md)
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+- [LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts](loongrl_rl_for_reasoning_long_contexts.md)
+
+<!-- RELATED:END -->

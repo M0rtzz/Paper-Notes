@@ -144,3 +144,15 @@ Pancakes 在所有 7 个 held-out 数据集上超越基线，通常领先 20+ Di
 - **实验充分度**: ⭐⭐⭐⭐ 7 个 held-out 数据集 + 消融 + 效率分析，全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题动机阐述极为清晰，图表信息丰富
 - **价值**: ⭐⭐⭐⭐⭐ 解决了基础模型在生物医学应用中的核心痛点，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Orochi: Versatile Biomedical Image Processor](orochi_versatile_biomedical_image_processor.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](../../CVPR2025/medical_imaging/biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [LoMix: Learnable Weighted Multi-Scale Logits Mixing for Medical Image Segmentation](lomix_learnable_weighted_multi-scale_logits_mixing_for_medical_image_segmentatio.md)
+- [Unpaired Image-to-Image Translation for Segmentation and Signal Unmixing](unpaired_image-to-image_translation_for_segmentation_and_signal_unmixing.md)
+- [MultiCogEval: Evaluating LLMs Across Multi-Cognitive Levels](../../ICML2025/medical_imaging/evaluating_llms_across_multi-cognitive_levels_from_medical_knowledge_mastery_to_.md)
+
+<!-- RELATED:END -->

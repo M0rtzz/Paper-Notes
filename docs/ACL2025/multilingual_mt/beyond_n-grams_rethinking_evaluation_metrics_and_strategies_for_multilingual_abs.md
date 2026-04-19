@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8语言、~20K标注、p值报告、多维消融，堪称评估类论文的标杆
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，语言类型学背景介绍充分
 - 价值: ⭐⭐⭐⭐ 对多语言 NLG 研究社区有重要警示意义——别再无脑用 ROUGE 评非英语生成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Evaluation Metrics for Grammatical Error Correction: Why Use a Different Evaluation Process than Human?](rethinking_evaluation_metrics_for_grammatical_error_correction_why_use_a_differe.md)
+- [Cross-Lingual Auto Evaluation for Assessing Multilingual LLMs](cross-lingual_auto_evaluation_for_assessing_multilingual_llms.md)
+- [M2rc-Eval: Massively Multilingual Repository-level Code Completion Evaluation](m2rc-eval_massively_multilingual_repository-level_code_completion_evaluation.md)
+- [Team ACK at SemEval-2025 Task 2: Beyond Word-for-Word Machine Translation for English-Korean Pairs](team_ack_at_semeval-2025_task_2_beyond_word-for-word_machine_translation_for_eng.md)
+- [LEMONADE: A Large Multilingual Expert-Annotated Abstractive Event Dataset for the Real World](lemonade_a_large_multilingual_expert-annotated_abstractive_event_dataset_for_the.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ RoBERTa 上也有一致提升，所有结果均通过 Cochran's Q 检验（p < 0
 - **实验充分度**: ⭐⭐⭐⭐ — 3 模型 × 4 数据集 × 5 基线的系统对比，统计检验充分
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，算法伪代码规范
 - **价值**: ⭐⭐⭐ — 改进幅度有限（~1%），但方法简洁，易于集成到现有微调管道
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [Autalic: A Dataset for Anti-Autistic Ableist Language In Context](autalic_a_dataset_for_anti-autistic_ableist_language_in_context.md)
+- [Mitigating Confounding in Speech-Based Dementia Detection through Weight Masking](mitigating_confounding_in_speech-based_dementia_detection_through_weight_masking.md)
+- [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+
+<!-- RELATED:END -->

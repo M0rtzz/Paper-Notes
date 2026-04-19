@@ -110,3 +110,15 @@ LLM 驱动的假设生成（hypothesis generation）是 AI for Science 的重要
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个数据集 × 2 个模型 × OOD/IND × 自动/人类评估，还有跨模型迁移和新颖性分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分，case study 展示直观
 - 价值: ⭐⭐⭐⭐ 为假设生成建立了一套完整的评估范式，首次人类实验验证具有里程碑意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+- [Theorem Prover as a Judge for Synthetic Data Generation](theorem_prover_as_a_judge_for_synthetic_data_generation.md)
+- [Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](bone_soups_multi_objective_gen.md)
+- [Consultant Decoding: Yet Another Synergistic Mechanism](consultant_decoding_yet_another_synergistic_mechanism.md)
+- [Synergistic Weak-Strong Collaboration by Aligning Preferences](synergistic_weak-strong_collaboration_by_aligning_preferences.md)
+
+<!-- RELATED:END -->

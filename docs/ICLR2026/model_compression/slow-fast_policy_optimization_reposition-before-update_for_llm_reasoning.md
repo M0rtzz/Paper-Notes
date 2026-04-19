@@ -139,3 +139,15 @@ $$\mathcal{J}_{GRPO}(\theta) = \frac{1}{G}\sum_{i=1}^G \frac{1}{|o_i|}\sum_{t=1}
 - **技术深度**: ⭐⭐⭐⭐ — 理论推导完整，从曲率分析到近端优化再到自适应调度
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 5 个模型、6 个基准、2 种训练集、效率与训练动态全面分析
 - **实用性**: ⭐⭐⭐⭐⭐ — 即插即用、无额外显存、显著提速，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
+- [Incentivizing Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](incentivizing_agentic_reasoning_in_llm_judges_via_tool-integrated_reinforcement_.md)
+- [A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
+- [ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
+- [π-Flow: Policy-Based Few-Step Generation via Imitation Distillation](pi-flow_policy-based_few-step_generation_via_imitation_distillation.md)
+
+<!-- RELATED:END -->

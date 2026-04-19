@@ -144,3 +144,15 @@ BiTTA 平均超越 SOTA 基线 **13.3%p**。
 ⭐⭐⭐⭐
 
 问题设定新颖实用（二元反馈 TTA），方法设计合理（RL + 双路径），实验结果令人印象深刻（超越全标签 active TTA）。MC-dropout 的多角色复用是一个巧妙的工程决策。不过核心技术（REINFORCE + 交叉熵）相对直接，缺乏更深入的理论分析。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcement Learning Teachers of Test Time Scaling](../../NeurIPS2025/reinforcement_learning/reinforcement_learning_teachers_of_test_time_scaling.md)
+- [ReVISE: Learning to Refine at Test-Time via Intrinsic Self-Verification](revise_learning_to_refine_at_test-time_via_intrinsic_self-verification.md)
+- [Aligning Machiavellian Agents: Behavior Steering via Test-Time Policy Shaping](../../AAAI2026/reinforcement_learning/aligning_machiavellian_agents_behavior_steering_via_test-tim.md)
+- [Thinking on the Fly: Test-Time Reasoning Enhancement via Latent Thought Policy Optimization](../../ICLR2026/reinforcement_learning/thinking_on_the_fly_test-time_reasoning_enhancement_via_latent_thought_policy_op.md)
+- [Continual Knowledge Adaptation for Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/continual_knowledge_adaptation_for_reinforcement_learning.md)
+
+<!-- RELATED:END -->

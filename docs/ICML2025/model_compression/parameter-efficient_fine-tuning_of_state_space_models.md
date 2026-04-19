@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 6 种 PEFT 方法、3 种 SSM 架构、多种下游任务，消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，基准测试部分为实践者提供了直接可用的指导
 - 价值: ⭐⭐⭐⭐ 对 SSM 社区有重要参考价值，SDT 思路可推广到其他结构化参数的模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [MoRAgent: Parameter Efficient Agent Tuning with Mixture-of-Roles](moragent_parameter_efficient_agent_tuning_with_mixture-of-roles.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](../../ACL2025/model_compression/l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [Memba: Membrane-driven Parameter-Efficient Fine-Tuning for Mamba](../../ICLR2026/model_compression/memba_membrane-driven_parameter-efficient_fine-tuning_for_mamba.md)
+
+<!-- RELATED:END -->

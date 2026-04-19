@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个模型、6 类 VQA 任务、多组对照实验，结论一致性强，但缺少非 LLaVA 架构验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，从简单到复杂层层推进，图表直观易懂
 - 价值: ⭐⭐⭐⭐ 对多模态模型的可解释性研究有重要贡献，发现可直接指导 token 压缩和模型设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowCut: Rethinking Redundancy via Information Flow for Efficient Vision-Language Models](../../NeurIPS2025/multimodal_vlm/flowcut_rethinking_redundancy_via_information_flow_for_effic.md)
+- [Vision-Language Models Create Cross-Modal Task Representations](../../ICML2025/multimodal_vlm/vision-language_models_create_cross-modal_task_representations.md)
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](../../NeurIPS2025/multimodal_vlm/on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+- [Cross-Modal Unlearning via Influential Neuron Path Editing in Multimodal Large Language Models](../../AAAI2026/multimodal_vlm/cross-modal_unlearning_via_influential_neuron_path_editing_i.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+
+<!-- RELATED:END -->

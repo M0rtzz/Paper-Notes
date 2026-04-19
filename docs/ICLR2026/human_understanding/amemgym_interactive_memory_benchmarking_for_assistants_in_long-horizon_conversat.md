@@ -130,3 +130,15 @@ AMemGym分四步：(1) 结构化数据生成（用户画像→状态schema→状
 - 实验充分度: ⭐⭐⭐⭐⭐ 多种记忆系统+多种LLM+配置消融+诊断分析+元评估，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，框架图示直观，诊断分析有深度
 - 价值: ⭐⭐⭐⭐⭐ 对LLM记忆系统研究定义了新的评估范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Training High-Level Schedulers with Execution-Feedback Reinforcement Learning for Long-Horizon GUI Automation](../../CVPR2026/human_understanding/training_high-level_schedulers_with_execution-feedback_reinforcement_learning_fo.md)
+- [Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval](evoking_user_memory_personalizing_llm_via_recollection-familiarity_adaptive_retr.md)
+- [Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation](think-while-generating_on-the-fly_reasoning_for_personalized_long-form_generatio.md)
+- [Miburi: Towards Expressive Interactive Gesture Synthesis](../../CVPR2026/human_understanding/miburi_towards_expressive_interactive_gesture_synthesis.md)
+
+<!-- RELATED:END -->

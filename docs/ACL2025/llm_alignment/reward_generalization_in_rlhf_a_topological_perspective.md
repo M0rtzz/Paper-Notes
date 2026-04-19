@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个任务 + PPO/RFT 两种解码器验证，但模型规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，macro/micro 两层分析逻辑清晰，46页完整附录
 - 价值: ⭐⭐⭐⭐⭐ 理论+实用双重贡献，"免费提升"的拓扑设计思路对产业有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Reward Fairness in RLHF: From a Resource Allocation Perspective](reward_fairness_rlhf.md)
+- [AgentRM: Enhancing Agent Generalization with Reward Modeling](agentrm_enhancing_agent_generalization_with_reward_modeling.md)
+- [Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective](../../ICML2025/llm_alignment/can_rlhf_be_more_efficient_with_imperfect_reward_models_a_policy_coverage_perspe.md)
+- [What Makes a Reward Model a Good Teacher? An Optimization Perspective](../../NeurIPS2025/llm_alignment/what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+- [Provably Efficient Online RLHF with One-Pass Reward Modeling](../../NeurIPS2025/llm_alignment/provably_efficient_online_rlhf_with_one-pass_reward_modeling.md)
+
+<!-- RELATED:END -->

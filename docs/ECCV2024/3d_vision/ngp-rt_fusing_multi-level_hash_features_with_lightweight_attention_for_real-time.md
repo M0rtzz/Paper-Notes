@@ -148,3 +148,15 @@ Separate-Att(V)在质量上接近MLP但**速度快4倍以上**，证明轻量注
 - **实验充分度**: ⭐⭐⭐⭐ — 在标准Mip-NeRF 360全面评测，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ — 对MLP功能的分析清晰，与SNeRG/MERF的对比图直觉明了
 - **价值**: ⭐⭐⭐⭐ — 推动了NeRF实时渲染的工程实用性，但3DGS的竞争压力较大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Compact Dynamic 3D Gaussian Representation for Real-Time Dynamic View Synthesis](a_compact_dynamic_3d_gaussian_representation_for_realtime_dy.md)
+- [MegaScenes: Scene-Level View Synthesis at Scale](megascenes_scene-level_view_synthesis_at_scale.md)
+- [CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians](coherentgs_sparse_novel_view_synthesis_with_coherent_3d_gaussians.md)
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+- [MeshFeat: Multi-Resolution Features for Neural Fields on Meshes](meshfeat_multi-resolution_features_for_neural_fields_on_meshes.md)
+
+<!-- RELATED:END -->

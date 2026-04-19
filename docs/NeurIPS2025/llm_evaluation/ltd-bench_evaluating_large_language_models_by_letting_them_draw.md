@@ -150,3 +150,15 @@ LTD-Bench 包含 **183 个任务**，设计了三个核心原则：
 - 实验充分度: ⭐⭐⭐ 测试了 7 个模型，但数据集仅 183 题，统计显著性有限
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，动机阐述到位，视觉示例很有说服力
 - 价值: ⭐⭐⭐⭐ 揭示了 LLM 空间推理的重要能力差距，为未来评估方向提供了参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](../../ACL2025/llm_evaluation/batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [Creativity or Brute Force? Using Brainteasers as a Window into the Problem-Solving Abilities of Large Language Models](creativity_or_brute_force_using_brainteasers_as_a_window_into_the_problem-solvin.md)
+- [SeedBench: A Multi-task Benchmark for Evaluating Large Language Models in Seed Science](../../ACL2025/llm_evaluation/seedbench_a_multi-task_benchmark_for_evaluating_large_language_models_in_seed_sc.md)
+- [Can Large Language Models Master Complex Card Games?](can_large_language_models_master_complex_card_games.md)
+- [ConfTuner: Training Large Language Models to Express Their Confidence Verbally](conftuner_training_large_language_models_to_express_their_confidence_verbally.md)
+
+<!-- RELATED:END -->

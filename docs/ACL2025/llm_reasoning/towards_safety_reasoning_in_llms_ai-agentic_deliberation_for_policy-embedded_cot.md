@@ -156,3 +156,15 @@ CAI 用 AI 反馈替代人类反馈实现安全对齐，但缺乏显式的策略
 - 实验充分度: ⭐⭐⭐⭐ 数据质量评估（3 维度 + 忠实度 + pairwise）+ 下游训练（2 模型 × 4 基准）+ 偏好数据分析，全链路验证充分
 - 写作质量: ⭐⭐⭐⭐ 框架设计清晰，各阶段动机和设计选择解释到位，ethical consideration 部分坦诚讨论了 ear-whisperer 的潜在滥用风险
 - 价值: ⭐⭐⭐⭐⭐ 为开源 LLM 的安全推理训练提供了完整的数据生成 pipeline，5000 样本即实现域外安全泛化 54.95pp 提升——实际应用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fine-Tuning on Diverse Reasoning Chains Drives Within-Inference CoT Refinement in LLMs](dcot_diverse_cot_refinement.md)
+- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
+- [笔记1: CoT是幻觉吗？数据分布角度](../../NeurIPS2025/llm_reasoning/is_chain-of-thought_reasoning_of_llms_a_mirage_a_data_distribution_lens.md)
+- [SQL-of-Thought: Multi-agentic Text-to-SQL with Guided Error Correction](../../NeurIPS2025/llm_reasoning/sql-of-thought_multi-agentic_text-to-sql_with_guided_error_correction.md)
+- [Ad-Hoc Human-AI Coordination Challenge (AH2AC2)](../../ICML2025/llm_reasoning/ad-hoc_human-ai_coordination_challenge.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ ComoRAG 的核心差异在于引入了显式的记忆工作空间和目标导向
 - 实验充分度: 8/10 — 四个数据集、多类基线、详尽消融和分析，但缺少效率对比
 - 写作质量: 8/10 — 类比清晰，结构完整，用哈利波特的例子很形象
 - 价值: 7/10 — 即插即用的特性有工程价值，但应用场景偏窄（叙事理解）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cog-RAG: Cognitive-Inspired Dual-Hypergraph with Theme Alignment Retrieval-Augmented Generation](cog-rag_cognitive-inspired_dual-hypergraph_with_theme_alignment_retrieval-augmen.md)
+- [PRIME: Planning and Retrieval-Integrated Memory for Enhanced Reasoning](prime_planning_and_retrieval-integrated_memory_for_enhanced_reasoning.md)
+- [Mem-PAL: Towards Memory-based Personalized Dialogue Assistants for Long-term User-Agent Interaction](mem-pal_towards_memory-based_personalized_dialogue_assistants_for_long-term_user.md)
+- [Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](../../ICLR2026/information_retrieval/beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
+- [N2N-GQA: Noise-to-Narrative for Graph-Based Table-Text Question Answering Using LLMs](n2n-gqa_noise-to-narrative_for_graph-based_table-text_question_answering_using_l.md)
+
+<!-- RELATED:END -->

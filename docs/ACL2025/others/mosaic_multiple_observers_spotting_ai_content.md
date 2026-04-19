@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多生成器×多域×多语言+消融+鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，Algorithm 1 清晰，与 Binoculars 的统一视角精妙
 - 价值: ⭐⭐⭐⭐⭐ 解决了生成器无关检测的鲁棒性核心痛点，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LAQuer: Localized Attribution Queries in Content-grounded Generation](laquer_localized_attribution.md)
+- [Principled Content Selection to Generate Diverse and Personalized Multi-Document Summaries](dpp_diverse_multidoc_summary.md)
+- [Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
+- [AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
+- [Spotting Out-of-Character Behavior: Atomic-Level Evaluation of Persona Fidelity in Open-Ended Generation](spotting_out-of-character_behavior_atomic-level_evaluation_of_persona_fidelity_i.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ tags:
 - 实验充分度: 9/10 — 多尺度模型、OOD 多维度评测、消融实验、定性分析俱全
 - 写作质量: 8/10 — 结构清晰，图表丰富，motivation 阐述自然
 - 价值: 8/10 — 为 agent 训练提供了可扩展的通用环境生成方案，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MatchED: Crisp Edge Detection Using End-to-End, Matching-based Supervision](../../CVPR2026/human_understanding/matched_crisp_edge_detection_using_end-to-end_matching-based_supervision.md)
+- [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](../../CVPR2026/human_understanding/unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
+- [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](../../ICML2025/human_understanding/sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
+- [CryptoFace: End-to-End Encrypted Face Recognition](../../CVPR2025/human_understanding/cryptoface_end-to-end_encrypted_face_recognition.md)
+- [Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos](../../ECCV2024/human_understanding/avatar_fingerprinting_for_authorized_use_of_synthetic_talking-head_videos.md)
+
+<!-- RELATED:END -->

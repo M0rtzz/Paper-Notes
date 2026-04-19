@@ -143,3 +143,15 @@ tags:
 - 实验充分度：⭐⭐⭐⭐ — 覆盖预测改进、低/高维活跃子空间、可视化等多维度验证
 - 写作质量：⭐⭐⭐⭐⭐ — 记号清晰，从直觉到理论到实验层层推进
 - 价值：⭐⭐⭐⭐ — 连接树模型与微分工具的桥梁性工作，开启多个有趣的后续方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Statistical Inference for Gradient Boosting Regression](statistical_inference_for_gradient_boosting_regression.md)
+- [Improving Decision Trees through the Lens of Parameterized Local Search](improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
+- [Prediction via Shapley Value Regression (ViaSHAP)](../../ICML2025/others/prediction_via_shapley_value_regression.md)
+- [Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination](information-computation_tradeoffs_for_noiseless_linear_regression_with_oblivious.md)
+- [An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
+
+<!-- RELATED:END -->

@@ -199,3 +199,15 @@ PKU-SafeRLHF 对齐模型 vs Alpaca 原始模型的胜率：
 - **标注设计**：双偏好+严重程度的创新标注方案有理论和实践意义（+0.5）
 - **开源贡献**：数据集和模型完全开源，有利于社区研究（+0.5）
 - **扣分**：数据规模相对有限、危害类别间重叠难以完全消除、仅限英语（-1）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](synthesizeme_persona_prompts.md)
+- [Dynamic Scaling of Unit Tests for Code Reward Modeling](dynamic_scaling_of_unit_tests_for_code_reward_modeling.md)
+- [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
+- [AgentAlign: Navigating Safety Alignment in the Shift from Informative to Agentic LLMs](agentalign_navigating_safety_alignment_in_the_shift_from_informative_to_agentic_.md)
+- [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
+
+<!-- RELATED:END -->

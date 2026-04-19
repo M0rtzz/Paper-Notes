@@ -102,3 +102,15 @@ $$\mathcal{L}_{sem} = 1 - \cos(f_{adv}^{(l,t)}, f^{(l,t)}) + \cos(f_{adv}^{(l,t)
 - 实验充分度: ⭐⭐⭐⭐ — 双数据集、消融、迁移性、商业API、user study 全面覆盖
 - 写作质量: ⭐⭐⭐⭐ — 动机分析清晰，方法推导完整
 - 价值: ⭐⭐⭐⭐ — 对 AI 安全和隐私保护有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Defense against Customization via Protective Perturbation Resistant to Diffusion-based Purification](../../ICCV2025/image_generation/towards_robust_defense_against_customization_via_protective_perturbation_resista.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2026/image_generation/codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+- [DCT-Shield: A Robust Frequency Domain Defense against Malicious Image Editing](../../ICCV2025/image_generation/dct-shield_a_robust_frequency_domain_defense_against_malicious_image_editing.md)
+- [T2I-RiskyPrompt: A Benchmark for Safety Evaluation, Attack, and Defense on Text-to-Image Model](t2i-riskyprompt_a_benchmark_for_safety_evaluation_attack_and_defense_on_text-to-.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](../../NeurIPS2025/image_generation/understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+
+<!-- RELATED:END -->

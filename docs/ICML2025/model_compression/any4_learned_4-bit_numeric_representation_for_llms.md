@@ -116,3 +116,15 @@ Llama-3 系列 perplexity 对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型系列、多规模、完整对比
 - 写作质量: ⭐⭐⭐⭐ 背景清晰，方法简洁
 - 价值: ⭐⭐⭐⭐⭐ 实用且已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpecQuant: Spectral Decomposition and Adaptive Truncation for Ultra-Low-Bit LLMs Quantization](../../AAAI2026/model_compression/specquant_spectral_decomposition_and_adaptive_truncation_for_ultra-low-bit_llms_.md)
+- [Q-Palette: Fractional-Bit Quantizers Toward Optimal Bit Allocation for Efficient LLM Deployment](../../NeurIPS2025/model_compression/q-palette_fractional-bit_quantizers_toward_optimal_bit_allocation_for_efficient_.md)
+- [Representation Consistency for Accurate and Coherent LLM Answer Aggregation](../../NeurIPS2025/model_compression/representation_consistency_for_accurate_and_coherent_llm_answer_aggregation.md)
+- [Generalization Bounds via Meta-Learned Model Representations: PAC-Bayes and Sample Compression Hypernetworks](generalization_bounds_via_meta-learned_model_representations_pac-bayes_and_sampl.md)
+- [MSQ: Memory-Efficient Bit Sparsification Quantization](../../ICCV2025/model_compression/msq_memory-efficient_bit_sparsification_quantization.md)
+
+<!-- RELATED:END -->

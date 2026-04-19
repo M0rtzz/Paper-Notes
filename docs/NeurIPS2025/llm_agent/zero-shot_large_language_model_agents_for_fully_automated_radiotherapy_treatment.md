@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 20 例样本、单一病种、单一机构的验证规模偏小；消融实验设计合理但缺乏与 RL/KBP 的直接对比。
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰详细，案例分析中 Agent 推理链的展示增强了可读性和可信度。
 - 价值: ⭐⭐⭐⭐ — 对放射治疗自动化领域有直接实用价值，零样本特性解决了数据稀缺和跨机构部署的痛点，具有较好的转化潜力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentTTS: Large Language Model Agent for Test-time Compute-optimal Scaling Strategy in Complex Tasks](agenttts_large_language_model_agent_for_testtime_computeopti.md)
+- [Agent3D-Zero: An Agent for Zero-shot 3D Understanding](../../ECCV2024/llm_agent/agent3d-zero_an_agent_for_zero-shot_3d_understanding.md)
+- [TrajAgent: An LLM-Agent Framework for Trajectory Modeling via Large-and-Small Model Collaboration](trajagent_an_llm-agent_framework_for_trajectory_modeling_via_large-and-small_mod.md)
+- [Are Large Language Models Sensitive to the Motives Behind Communication?](are_large_language_models_sensitive_to_the_motives_behind_communication.md)
+- [Play2Prompt: Zero-shot Tool Instruction Optimization for LLM Agents via Tool Play](../../ACL2025/llm_agent/play2prompt_zero-shot_tool_instruction_optimization_for_llm_agents_via_tool_play.md)
+
+<!-- RELATED:END -->

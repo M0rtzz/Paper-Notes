@@ -139,3 +139,15 @@ Stage 2: 梯度引导的下游适配（模型适配者）
 - 实验充分度: ⭐⭐ — Position paper 无实验，理论分析依赖强假设，说服力有限
 - 写作质量: ⭐⭐⭐⭐ — 论述逻辑清晰，从动机到理论到实践路径完整，notation 一致
 - 价值: ⭐⭐⭐ — 理念有启发性但缺乏实证落地，梯度蓝图需要社区采纳才有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memory Mosaics at Scale](memory_mosaics_at_scale.md)
+- [Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via Grokking](flatness_is_necessary_neural_collapse_is_not_rethinking_generalization_via_grokk.md)
+- [Language Model Developers Should Report Train-Test Overlap](../../ICML2025/llm_pretraining/language_model_developers_should_report_train-test_overlap.md)
+- [A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
+- [Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](language_model_behavioral_phases_are_consistent_across_archi.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ SRPO-7B 在所有基准上全面超越同规模开源推理模型；SRPO-32B 在
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8 个基准、7B/32B 两个规模、详细消融和对比
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，公式完整，图表丰富
 - 价值: ⭐⭐⭐⭐ — 为多模态推理中的自我反思提供了可复现的训练范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unified Reinforcement and Imitation Learning for Vision-Language Models](unified_reinforcement_and_imitation_learning_for_vision-language_models.md)
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](../../CVPR2026/multimodal_vlm/reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+- [First SFT, Second RL, Third UPT: Continual Improving Multi-Modal LLM Reasoning via Unsupervised Post-Training](first_sft_second_rl_third_upt_continual_improving_multi-modal_llm_reasoning_via_.md)
+- [Praxis-VLM: Vision-Grounded Decision Making via Text-Driven Reinforcement Learning](praxisvlm_visiongrounded_decision_making_via_textdriven_rein.md)
+- [Enhancing Outcome Reward-Based RL Training of MLLMs with Self-Consistency Sampling](enhancing_the_outcome_reward-based_rl_training_of_mllms_with_self-consistency_sa.md)
+
+<!-- RELATED:END -->

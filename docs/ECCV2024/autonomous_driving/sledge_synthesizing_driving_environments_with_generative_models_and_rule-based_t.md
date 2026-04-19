@@ -171,3 +171,15 @@ SLEDGE 的生成流程分为两大阶段：(1) 训练 Raster-to-Vector Autoencod
 - **实验充分度**: ⭐⭐⭐⭐ 系统的表示对比、生成质量评估、scaling 分析、下游仿真验证，指标体系完善
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义清晰，方法展开条理分明，图表精美直观
 - **实用价值**: ⭐⭐⭐⭐⭐ 500 倍存储压缩极具实用意义，开源代码，显著降低研究门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Volumetric World Models for Autonomous Driving](neural_volumetric_world_models_for_autonomous_driving.md)
+- [OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multi-modal_3d_occupancy_prediction_for_autonomous_driving.md)
+- [SimWorld-Robotics: Synthesizing Photorealistic and Dynamic Urban Environments for Multimodal Robot Navigation and Collaboration](../../NeurIPS2025/autonomous_driving/simworld-robotics_synthesizing_photorealistic_and_dynamic_urban_environments_for.md)
+- [ReconDreamer++: Harmonizing Generative and Reconstructive Models for Driving Scene Representation](../../ICCV2025/autonomous_driving/recondreamer_harmonizing_generative_and_reconstructive_models_for_driving_scene_.md)
+- [DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](../../ICLR2026/autonomous_driving/drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
+
+<!-- RELATED:END -->

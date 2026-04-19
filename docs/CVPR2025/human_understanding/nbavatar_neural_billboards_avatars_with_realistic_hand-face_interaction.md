@@ -125,3 +125,15 @@ SSIM 更高，但 PSNR 低于 IA（预处理差异导致）。定性对比显示
 - 实验充分度: ⭐⭐⭐ (仅 Decaf 数据集 4 个受试者)
 - 写作质量: ⭐⭐⭐⭐ (方法动机和消融清晰)
 - 价值: ⭐⭐⭐⭐ (推进手脸交互渲染质量)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Reconstruction of Hand-Object Interaction with Distributed Force-aware Contact Representation](../../ICCV2025/human_understanding/dynamic_reconstruction_of_hand-object_interaction_with_distributed_force-aware_c.md)
+- [FRESA: Feedforward Reconstruction of Personalized Skinned Avatars from Few Images](fresa_feedforward_reconstruction_of_personalized_skinned_avatars_from_few_images.md)
+- [GigaHands: A Massive Annotated Dataset of Bimanual Hand Activities](gigahands_a_massive_annotated_dataset_of_bimanual_hand_activities.md)
+- [GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)
+- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
+
+<!-- RELATED:END -->

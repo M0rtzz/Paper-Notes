@@ -152,3 +152,15 @@ $$\mathcal{L}_{\text{CRC}} = \mathcal{L}_P + \lambda_{UP} \mathcal{L}_{UP} + \la
 - 实验充分度: ⭐⭐⭐⭐ (两个数据集、完整消融、定性分析、统计显著性检验)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰、图示直观、任务定义规范)
 - 价值: ⭐⭐⭐ (垂直应用场景限制了影响力，但 CRC loss 思路有一定通用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
+- [Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)
+- [LAQuer: Localized Attribution Queries in Content-grounded Generation](../../ACL2025/others/laquer_localized_attribution.md)
+- [Description Logics with Two Types of Definite Descriptions: Complexity, Expressiveness, and Automated Deduction](../../AAAI2026/others/description_logics_with_two_types_of_definite_descriptions_complexity_expressive.md)
+- [Towards Text-Image Interleaved Retrieval](../../ACL2025/others/towards_text-image_interleaved_retrieval.md)
+
+<!-- RELATED:END -->

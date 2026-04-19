@@ -149,3 +149,15 @@ Hamming距离阈值消融（SEDD-small，Euler，32步）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三种backbone、三种任务（文本/图像/合成）、充分消融
 - **写作质量**: ⭐⭐⭐⭐ 技术呈现清晰，与相关工作的区别阐述充分
 - **价值**: ⭐⭐⭐⭐⭐ 训练成本极低、推理零开销、大幅提升低步数生成质量，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [Beyond Masked and Unmasked: Discrete Diffusion Models via Partial Masking](beyond_masked_and_unmasked_discrete_diffusion_models_via_par.md)
+- [Distillation of Discrete Diffusion through Dimensional Correlations (Di4C)](../../ICML2025/image_generation/distillation_of_discrete_diffusion_through_dimensional_correlations.md)
+
+<!-- RELATED:END -->

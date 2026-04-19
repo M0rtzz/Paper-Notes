@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5种任务、4个模型验证、分析→假设→验证闭环完整，但任务类型主要限于多选QA
 - 写作质量: ⭐⭐⭐⭐⭐ 研究问题分解清晰，图示直观（尤其Fig.1的流程蓝图），发现递进式展现有很强的叙事逻辑
 - 价值: ⭐⭐⭐⭐ 对VideoLLM架构设计、注意力稀疏化、推理加速有直接指导意义，失败模式分析指出了改进方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decoding Open-Ended Information Seeking Goals from Eye Movements in Reading](decoding_open-ended_information_seeking_goals_from_eye_movements_in_reading.md)
+- [Video Streaming Thinking: VideoLLMs Can Watch and Think Simultaneously](../../CVPR2025/video_understanding/video_streaming_thinking_videollms_can_watch_and_think_simultaneously.md)
+- [ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding](../../AAAI2026/video_understanding/reason_reinforced_causal_search_with_information_bottleneck_for_video_understand.md)
+- [Causality Matters: How Temporal Information Emerges in Video Language Models](../../AAAI2026/video_understanding/causality_matters_how_temporal_information_emerges_in_video_language_models.md)
+- [ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](../../ACL2025/video_understanding/icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)
+
+<!-- RELATED:END -->

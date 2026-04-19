@@ -186,3 +186,15 @@ DepthAnything 优于 ZoeDepth，且可学习的深度精化策略进一步提升
 - **实验充分度**: ⭐⭐⭐⭐ — 两个数据集验证 + 详细消融（深度融合/深度模型/多尺度/数据规模），分析充分
 - **写作质量**: ⭐⭐⭐⭐ — 问题分析清晰，室内 vs 户外的差异论述有说服力
 - **价值**: ⭐⭐⭐⭐ — Occ-ScanNet 数据集的长期价值较高，方法为室内 3D 感知提供了强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Monocular Open Vocabulary Occupancy Prediction for Indoor Scenes (LegoOcc)](../../CVPR2026/autonomous_driving/monocular_open_vocabulary_occupancy_prediction_for_indoor_scenes.md)
+- [UniTraj: A Unified Framework for Scalable Vehicle Trajectory Prediction](unitraj_a_unified_framework_for_scalable_vehicle_trajectory_prediction.md)
+- [Fully Sparse 3D Occupancy Prediction](fully_sparse_3d_occupancy_prediction.md)
+- [GaussianFormer: Scene as Gaussians for Vision-Based 3D Semantic Occupancy Prediction](gaussianformer_scene_as_gaussians_for_vision-based_3d_semantic_occupancy_predict.md)
+- [OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving](occgen_generative_multi-modal_3d_occupancy_prediction_for_autonomous_driving.md)
+
+<!-- RELATED:END -->

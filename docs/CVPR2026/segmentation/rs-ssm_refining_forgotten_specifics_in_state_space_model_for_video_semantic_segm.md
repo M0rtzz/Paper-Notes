@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个基准覆盖面广，但缓存中具体数值截断，更新门可视化提供了直观验证
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，双路径架构和频域分析的可视化清晰
 - 价值: ⭐⭐⭐⭐ 为 SSM 在像素级视觉任务中的应用提供了系统性解决方案，对 Mamba 在视觉领域的发展有推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](../../CVPR2025/segmentation/exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
+- [DefMamba: Deformable Visual State Space Model](../../CVPR2025/segmentation/defmamba_deformable_visual_state_space_model.md)
+- [GroupMamba: Efficient Group-Based Visual State Space Model](../../CVPR2025/segmentation/groupmamba_efficient_group-based_visual_state_space_model.md)
+- [VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](videomt_encoder_only_video_segmentation.md)
+- [RobotSeg: A Model and Dataset for Segmenting Robots in Image and Video](robotseg_a_model_and_dataset_for_segmenting_robots_in_image_and_video.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ SharpV是一个两阶段即插即用框架：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多模型、多基准、详细消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机论证充分
 - 价值: ⭐⭐⭐⭐ — Flash Attention兼容性有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfoCom: Kilobyte-Scale Communication-Efficient Collaborative Perception with Information-Aware Feature Compression](infocom_kilobyte-scale_communication-efficient_collaborative_perception_with_inf.md)
+- [A State-Transition Framework for Efficient LLM Reasoning](../../ICLR2026/model_compression/a_state-transition_framework_for_efficient_llm_reasoning.md)
+- [Efficient Reasoning for Large Reasoning Language Models via Certainty-Guided Reflection Suppression](efficient_reasoning_for_large_reasoning_language_models_via_certainty-guided_ref.md)
+- [FastVAR: Linear Visual Autoregressive Modeling via Cached Token Pruning](../../ICCV2025/model_compression/fastvar_linear_visual_autoregressive_modeling_via_cached_token_pruning.md)
+- [Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing](towards_test-time_efficient_visual_place_recognition_via_asymmetric_query_proces.md)
+
+<!-- RELATED:END -->

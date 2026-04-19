@@ -125,3 +125,15 @@ Open-MeDe 由两个核心组件构成：（1）跨批次元优化方案，通过
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖in-context和out-of-context多种设置，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 动机分析深刻，但公式符号偶有冗余
 - 价值: ⭐⭐⭐⭐ 对OVAR领域的静态偏置问题有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking](attention_to_trajectory_trajectory-aware_open-vocabulary_tracking.md)
+- [Seeing Beyond the Scene: Analyzing and Mitigating Background Bias in Action Recognition](../../NeurIPS2025/video_understanding/seeing_beyond_the_scene_analyzing_and_mitigating_background_bias_in_action_recog.md)
+- [Decompose and Transfer: CoT-Prompting Enhanced Alignment for Open-Vocabulary Temporal Action Detection](../../CVPR2026/video_understanding/decompose_and_transfer_cot-prompting_enhanced_alignment_for_open-vocabulary_temp.md)
+- [Beyond Label Semantics: Language-Guided Action Anatomy for Few-shot Action Recognition](beyond_label_semantics_language-guided_action_anatomy_for_few-shot_action_recogn.md)
+- [Adaptive Hyper-Graph Convolution Network for Skeleton-Based Human Action Recognition](adaptive_hyper-graph_convolution_network_for_skeleton-based_human_action_recogni.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成实验验证了理论，但缺少真实LLM场景的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，直觉解释清晰，证明sketch有效传达了核心思想
 - 价值: ⭐⭐⭐⭐ 对RLHF理论有重要推进，对算法设计简化有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Provably Efficient Online RLHF with One-Pass Reward Modeling](provably_efficient_online_rlhf_with_one-pass_reward_modeling.md)
+- [Position: The Complexity of Perfect AI Alignment -- Formalizing the RLHF Trilemma](position_the_complexity_of_perfect_ai_alignment_--_formalizing_the_rlhf_trilemma.md)
+- [GASP: Efficient Black-Box Generation of Adversarial Suffixes for Jailbreaking LLMs](gasp_efficient_black-box_generation_of_adversarial_suffixes_for_jailbreaking_llm.md)
+- [ResponseRank: Data-Efficient Reward Modeling through Preference Strength Learning](responserank_data-efficient_reward_modeling_through_preference_strength_learning.md)
+- [Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective](../../ICML2025/llm_alignment/can_rlhf_be_more_efficient_with_imperfect_reward_models_a_policy_coverage_perspe.md)
+
+<!-- RELATED:END -->

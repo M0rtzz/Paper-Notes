@@ -133,3 +133,15 @@ R-IB 和 D-IB 在格问题（5状态）和 Othello 上的表现（1为完美，0
 这是一篇视角独特、方法严谨的研究工作。归纳偏置探针框架的提出是对基础模型评估工具箱的重要补充，跨领域实验设计精妙，"模型学的是下一 token 分区而非世界模型"这一发现深刻且具有广泛影响力。不足在于模型规模较小、无建设性改进方案、部分实验（如轨道力学的符号回归）可复现性待考量。
 
 进一步来看，本文的发现对 AI Safety 有重要启示：如果模型仅学到表面启发式而非真正的世界模型，那么在面对分布外场景时可能做出看似合理但本质错误的决策。这也和"Grokking"现象（模型在过拟合后突然泛化）形成有趣对比——本文的模型虽然达到了极高的预测精度（$R^2 > 0.9999$），但泛化测试表明它并未真正理解底层规律。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaWorld: Learning Adaptable World Models with Latent Actions](adaworld_learning_adaptable_world_models_with_latent_actions.md)
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [Griffin: Towards a Graph-Centric Relational Database Foundation Model](griffin_towards_a_graph-centric_relational_database_foundation_model.md)
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+
+<!-- RELATED:END -->

@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个机器人、150+任务(仿真+真实)、多baseline、OOD测试
 - 写作质量: ⭐⭐⭐⭐ 认知科学动机清晰，架构图直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了VLA领域的关键缺失（时序记忆），实验效果convincing
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](../../CVPR2026/robotics/sapave_active_perception_manipulation_vla_roboti.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](../../CVPR2026/robotics/lada_robotic_manipulation.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2026/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [When would Vision-Proprioception Policies Fail in Robotic Manipulation?](when_would_vision-proprioception_policies_fail_in_robotic_manipulation.md)
+
+<!-- RELATED:END -->

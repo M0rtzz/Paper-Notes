@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 医学+CIFAR+ImageNet，多基线对比充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰
 - 价值: ⭐⭐⭐⭐⭐ 对医疗 AI 等资源受限场景有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I2MoE: Interpretable Multimodal Interaction-aware Mixture-of-Experts](i2moe_interpretable_multimodal_interaction-aware_mixture-of-experts.md)
+- [Empower Structure-Based Molecule Optimization with Gradient Guided Bayesian Flow Networks](empower_structure-based_molecule_optimization_with_gradient_guided_bayesian_flow.md)
+- [Enhancing Statistical Validity and Power in Hybrid Controlled Trials: A Randomization Inference Approach with Conformal Selective Borrowing](enhancing_statistical_validity_and_power_in_hybrid_controlled_trials_a_randomiza.md)
+- [Is Sequence Information All You Need for Bayesian Optimization of Antibodies?](../../NeurIPS2025/medical_imaging/is_sequence_information_all_you_need_for_bayesian_optimization_of_antibodies.md)
+- [Multimodal Bayesian Network for Robust Assessment of Casualties in Autonomous Triage](../../NeurIPS2025/medical_imaging/multimodal_bayesian_network_for_robust_assessment_of_casualties_in_autonomous_tr.md)
+
+<!-- RELATED:END -->

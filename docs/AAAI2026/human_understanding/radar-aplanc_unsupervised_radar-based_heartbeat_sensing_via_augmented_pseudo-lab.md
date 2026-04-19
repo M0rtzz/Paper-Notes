@@ -171,3 +171,15 @@ $$\mathcal{L}_{NCT} = \underbrace{\frac{1}{K^2}\sum_{i,j}\|S_{PL}[i] - S_P[j]\|^
 - 实验充分度: ⭐⭐⭐⭐（两个数据集、跨数据集测试、公平性分析全面）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，动机论述充分）
 - 价值: ⭐⭐⭐⭐⭐（解决实际痛点，新数据集+代码开源）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [mmPred: Radar-based Human Motion Prediction in the Dark](mmpred_radar-based_human_motion_prediction_in_the_dark.md)
+- [3D Face Reconstruction From Radar Images](../../CVPR2025/human_understanding/3d_face_reconstruction_from_radar_images.md)
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](../../NeurIPS2025/human_understanding/raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [Modality-Aware Bias Mitigation and Invariance Learning for Unsupervised Visible-Infrared Person Re-Identification](modality-aware_bias_mitigation_and_invariance_learning_for_unsupervised_visible-.md)
+- [Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer](enhancing_noise_resilience_in_face_clustering_via_sparse_differential_transforme.md)
+
+<!-- RELATED:END -->

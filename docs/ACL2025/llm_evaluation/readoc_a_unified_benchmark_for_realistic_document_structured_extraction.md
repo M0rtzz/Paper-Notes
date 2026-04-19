@@ -154,3 +154,15 @@ READoc 包含两大部分：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 14 种系统、3 个子集、多维能力评测、精细分析（布局/长度/深度/效率），极其全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富，对比分析透彻
 - **价值**: ⭐⭐⭐⭐⭐ 对文档 AI 社区和 RAG 工程实践有重大推动价值，填补了评估真空
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following](structflowbench_a_structured_flow_benchmark_for_multi-turn_instruction_following.md)
+- [TUMLU: A Unified and Native Language Understanding Benchmark for Turkic Languages](tumlu_a_unified_and_native_language_understanding_benchmark_for_turkic_languages.md)
+- [KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding](kitab-bench_a_comprehensive_multi-domain_benchmark_for_arabic_ocr_and_document_u.md)
+- [MDBench: A Synthetic Multi-Document Reasoning Benchmark Generated with Knowledge Guidance](mdbench_a_synthetic_multi-document_reasoning_benchmark_generated_with_knowledge_.md)
+- [RealHiTBench: A Comprehensive Realistic Hierarchical Table Benchmark for Evaluating LLM-Based Table Analysis](realhitbench_a_comprehensive_realistic_hierarchical_table_benchmark_for_evaluati.md)
+
+<!-- RELATED:END -->

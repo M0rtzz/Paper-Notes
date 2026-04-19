@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （模拟实验很系统地验证了理论预测，真实数据实验使用WoofNette也不错，但缺少更多领域的验证）
 - 写作质量: ⭐⭐⭐⭐⭐ （论文结构清晰，理论和实验紧密对应，动机阐述充分）
 - 价值: ⭐⭐⭐⭐ （为人机协作AI设计提供了新的理论基础和实用框架，对HCI和可信AI领域有较好启发）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis](intrinsic_barriers_and_practical_pathways_for_human-ai_alignment_an_agreement-ba.md)
+- [When to Speak, When to Abstain: Contrastive Decoding with Abstention](../../ACL2025/others/when_to_speak_when_to_abstain.md)
+- [How Hard Is It to Rig a Tournament When Few Players Can Beat or Be Beaten by the Favorite?](how_hard_is_it_to_rig_a_tournament_when_few_players_can_beat_or_be_beaten_by_the.md)
+- [When to Retrain after Drift: A Data-Only Test of Post-Drift Data Size Sufficiency](../../ICLR2026/others/when_to_retrain_after_drift_a_data-only_test_of_post-drift_data_size_sufficiency.md)
+- [LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models](lilad_learning_in-context_lyapunov-stable_adaptive_dynamics_models.md)
+
+<!-- RELATED:END -->

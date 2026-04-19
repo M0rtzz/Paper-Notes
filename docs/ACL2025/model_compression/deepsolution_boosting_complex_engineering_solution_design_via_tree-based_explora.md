@@ -136,3 +136,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 8 领域全面测试+消融+树深度分析+剪枝有效性验证
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图示直观，任务定义明确
 - **实用价值**: ⭐⭐⭐ — 基准和系统有实际工程参考意义，但 GPT-4o 评估成本较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+- [Soft Reasoning: Navigating Solution Spaces in Large Language Models through Controlled Embedding Exploration](../../ICML2025/model_compression/soft_reasoning_navigating_solution_spaces_in_large_language_models_through_contr.md)
+- [TeamLoRA: Boosting Low-Rank Adaptation with Expert Collaboration and Competition](teamlora_boosting_low-rank_adaptation_with_expert_collaboration_and_competition.md)
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [Data Laundering: Artificially Boosting Benchmark Results through Knowledge Distillation](data_laundering_artificially_boosting_benchmark_results_through_knowledge_distil.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ $$\mathcal{L}_{\text{rCM}}(\theta) = \mathcal{L}_{\text{sCM}}(\theta) + \lambda 
 - 实验充分度: ⭐⭐⭐⭐⭐ 验证规模前所未有（14B参数、T2I+T2V、多步消融）
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析清晰，工程细节详尽
 - 价值: ⭐⭐⭐⭐⭐ 解决了大规模扩散模型加速的核心问题，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](../../ICCV2025/image_generation/sana-sprint_one-step_diffusion_with_continuous-time_consistency_distillation.md)
+- [Motion Prior Distillation in Time Reversal Sampling for Generative Inbetweening](motion_prior_distillation_in_time_reversal_sampling_for_generative_inbetweening.md)
+- [Compositional amortized inference for large-scale hierarchical Bayesian models](compositional_amortized_inference_for_large-scale_hierarchical_bayesian_models.md)
+- [Inference-Time Diffusion Model Distillation](../../ICCV2025/image_generation/inference-time_diffusion_model_distillation.md)
+- [HierarchicalPrune: Position-Aware Compression for Large-Scale Diffusion Models](../../AAAI2026/image_generation/hierarchicalprune_position-aware_compression_for_large-scale_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ MimiCAT 接受源角色的姿态网格和目标角色的标准姿态网格作为
 - 实验充分度: ⭐⭐⭐⭐ 同类内和跨类别两种评估，消融完整，下游应用展示充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，图示丰富
 - 价值: ⭐⭐⭐⭐ 新数据集和方法对 3D 动画和角色迁移领域有显著推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [E2EGS: Event-to-Edge Gaussian Splatting for Pose-Free 3D Reconstruction](e2egs_event-to-edge_gaussian_splatting_for_pose-free_3d_reconstruction.md)
+- [Global-Aware Edge Prioritization for Pose Graph Initialization](global-aware_edge_prioritization_for_pose_graph_initialization.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [RnG: A Unified Transformer for Complete 3D Modeling from Partial Observations](rng_a_unified_transformer_for_complete_3d_modeling_from_partial_observations.md)
+- [GGPT: Geometry-Grounded Point Transformer](ggpt_geometry_grounded_point_transformer.md)
+
+<!-- RELATED:END -->

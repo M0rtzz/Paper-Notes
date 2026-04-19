@@ -159,3 +159,15 @@ LLaMA-3 在诊断准确性上达到 3.98/5，接近人类专家水平。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 12 个模型 × 2 数据集 × 4 评测任务 × 10 指标，消融和扩展性分析完善
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，实验组织系统，但 LaTeX 公式排版较密集
 - 价值: ⭐⭐⭐⭐ — 建立了 ECG 报告生成的标准化研究框架，对医学信号 + LLM 方向有实际推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](../../ICCV2025/multimodal_vlm/metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](mammoth_vl_multimodal_reasoning.md)
+- [Enhancing Multimodal Continual Instruction Tuning with BranchLoRA](branchlora_continual_instruction.md)
+- [HiDe-LLaVA: Hierarchical Decoupling for Continual Instruction Tuning of Multimodal Large Language Model](hidellava_hierarchical_decoupling_for_continual_instruction.md)
+- [Visual Instruction Bottleneck Tuning](../../NeurIPS2025/multimodal_vlm/visual_instruction_bottleneck_tuning.md)
+
+<!-- RELATED:END -->

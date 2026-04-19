@@ -143,3 +143,15 @@ $$\mathcal{L}(u,W) = \sum_{L=1}^{L_{\max}} \frac{1}{|I_L|} \sum_{n \in I_L} \log
 - 实验充分度: ⭐⭐⭐ 合成实验验证理论，但规模偏小
 - 写作质量: ⭐⭐⭐⭐ 理论清晰，两阶段结构条理分明
 - 价值: ⭐⭐⭐⭐ 为理解 Transformer 训练机制和 CoT 原理提供重要理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Transformers Learn Full Bayesian Inference In Context?](can_transformers_learn_full_bayesian_inference_in_context.md)
+- [The Rich and the Simple: On the Implicit Bias of Adam and SGD](../../NeurIPS2025/optimization/the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)
+- [Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](../../NeurIPS2025/optimization/multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
+- [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](../../NeurIPS2025/optimization/a_theoretical_study_on_bridging_internal_probability_and_sel.md)
+
+<!-- RELATED:END -->

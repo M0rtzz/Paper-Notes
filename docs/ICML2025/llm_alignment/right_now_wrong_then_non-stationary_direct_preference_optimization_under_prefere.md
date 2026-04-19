@@ -141,3 +141,15 @@ NS-DPO 的核心思路非常优雅：在标准 DPO 损失函数中引入一个**
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4个数据集、2种LLM、突变/渐变/文化漂移、合成验证理论，覆盖全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论推导严谨，实验说明清晰，问题动机论述compelling
 - **实用价值**: ⭐⭐⭐⭐ — 改动极简且无副作用，但实际数据缺乏时间戳是落地障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [D-Fusion: Direct Preference Optimization for Aligning Diffusion Models with Visually Consistent Samples](d-fusion_direct_preference_optimization_for_aligning_diffusion_models_with_visua.md)
+- [TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization](tgdpo_harnessing_token-level_reward_guidance_for_enhancing_direct_preference_opt.md)
+- [Rethinking Direct Preference Optimization in Diffusion Models](../../NeurIPS2025/llm_alignment/rethinking_direct_preference_optimization_in_diffusion_models.md)
+- [ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)
+- [On Extending Direct Preference Optimization to Accommodate Ties](../../NeurIPS2025/llm_alignment/on_extending_direct_preference_optimization_to_accommodate_ties.md)
+
+<!-- RELATED:END -->

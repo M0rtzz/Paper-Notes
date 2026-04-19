@@ -138,3 +138,15 @@ DMD3C采用两阶段蒸馏框架：第一阶段通过数据生成策略从无标
 - 实验充分度: ⭐⭐⭐⭐ 多数据集评估、多架构验证、零样本泛化实验都很全面，但仅限两个主基准
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但数学符号在某些地方略显冗余
 - 价值: ⭐⭐⭐⭐⭐ KITTI第一名是最有力的证明，且方法的通用性和即插即用特性极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling Multi-modal Large Language Models for Autonomous Driving](distilling_multi-modal_large_language_models_for_autonomous_driving.md)
+- [PTC-Depth: Pose-Refined Monocular Depth Estimation with Temporal Consistency](../../CVPR2026/autonomous_driving/ptc-depth_pose-refined_monocular_depth_estimation_with_temporal_consistency.md)
+- [Fine-Grained Representation for Lane Topology Reasoning](../../AAAI2026/autonomous_driving/fine-grained_representation_for_lane_topology_reasoning.md)
+- [HoloLLM: Multisensory Foundation Model for Language-Grounded Human Sensing and Reasoning](../../NeurIPS2025/autonomous_driving/holollm_multisensory_foundation_model_for_language-grounded_human_sensing_and_re.md)
+- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
+
+<!-- RELATED:END -->

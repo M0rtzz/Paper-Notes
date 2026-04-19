@@ -113,3 +113,15 @@ Bandit设定下每轮观察1-sub-Gaussian奖励$X_i(t)$，均值$\mathbf{U}(w_i,
 - 实验充分度: ⭐⭐⭐ 纯理论论文，无实验验证
 - 写作质量: ⭐⭐⭐⭐ 定义和定理陈述清楚，但证明主要在附录，正文对intuition解释充分
 - 价值: ⭐⭐⭐⭐⭐ 完整解决了并列偏好匹配的近似比问题，建立了bandit设定的基础框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning-Augmented Online Bipartite Fractional Matching](learning-augmented_online_bipartite_fractional_matching.md)
+- [Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation](../../ICML2025/others/sassha_sharpness-aware_adaptive_second-order_optimization_with_stable_hessian_ap.md)
+- [Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)
+- [Learning Distances from Data with Normalizing Flows and Score Matching](../../ICML2025/others/learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
+- [LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models](../../AAAI2026/others/lilad_learning_in-context_lyapunov-stable_adaptive_dynamics_models.md)
+
+<!-- RELATED:END -->

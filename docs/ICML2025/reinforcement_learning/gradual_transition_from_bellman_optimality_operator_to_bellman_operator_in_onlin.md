@@ -173,3 +173,15 @@ AQ-L 在所有测试任务上均显著优于对应基线方法，尤其在训练
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖多种 MuJoCo 任务和两种基线框架，超参数鲁棒性分析完善，但缺少更复杂场景的验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 预备实验的动机推导清晰流畅，从简单到复杂的叙事结构优秀
 - 价值: ⭐⭐⭐⭐ — 实用价值高（即插即用、工程友好），但理论深度较浅，对社区的长期影响需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [Spectral Bellman Method: Unifying Representation and Exploration in RL](../../ICLR2026/reinforcement_learning/spectral_bellman_method_unifying_representation_and_exploration_in_rl.md)
+- [Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
+- [Continual Reinforcement Learning by Planning with Online World Models](continual_reinforcement_learning_by_planning_with_online_world_models.md)
+
+<!-- RELATED:END -->

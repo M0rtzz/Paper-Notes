@@ -138,3 +138,15 @@ Lumos-1 基于标准 Llama 架构，使用 Cosmos 离散 tokenizer（$8 \times 8
 - 实验充分度: ⭐⭐⭐⭐ — T2I/I2V/T2V 三任务验证，但受限于资源，绝对性能有差距
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题分析透彻，图示精美，公式清晰
 - 价值: ⭐⭐⭐⭐⭐ — 开源且实用性强，为 LLM 统一视频生成提供了重要的技术路线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Streaming Autoregressive Video Generation via Diagonal Distillation](streaming_autoregressive_video_generation_via_diagonal_distillation.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](../../CVPR2026/video_generation/cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+- [JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
+- [How Far is Video Generation from World Model: A Physical Law Perspective](../../ICML2025/video_generation/how_far_is_video_generation_from_world_model_a_physical_law_perspective.md)
+- [QuantSparse: Comprehensively Compressing Video Diffusion Transformer with Model Quantization and Attention Sparsification](quantsparse_comprehensively_compressing_video_diffusion_transformer_with_model_q.md)
+
+<!-- RELATED:END -->

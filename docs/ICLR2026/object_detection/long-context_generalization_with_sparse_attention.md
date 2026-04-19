@@ -139,3 +139,15 @@ Associative Recall 任务（训练长度 64）的长度外推准确率：
 - **实验充分度**: ⭐⭐⭐⭐ — 合成任务和语言建模均有覆盖，1000× 外推结果令人印象深刻，但缺乏大规模模型验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论推导清晰，概念层次分明，dispersion 的定义和可视化非常直观
 - **价值**: ⭐⭐⭐⭐ — 为长上下文 LLM 提供了一个理论上有保证的新方向，但工程落地仍需解决效率和兼容性问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
+- [Context Tokens are Anchors: Understanding the Repetition Curse in dMLLMs from an Information Flow Perspective](context_tokens_are_anchors_understanding_the_repetition_curse_in_dmllms_from_an_.md)
+- [Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward](../../AAAI2026/object_detection/actor-critic_for_continuous_action_chunks_a_reinforcement_le.md)
+- [SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection](spwood_sparse_partial_weakly-supervised_oriented_object_detection.md)
+- [Beyond Linearity in Attention Projections: The Case for Nonlinear Queries](beyond_linearity_in_attention_projections_the_case_for_nonlinear_queries.md)
+
+<!-- RELATED:END -->

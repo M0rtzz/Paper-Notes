@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 方法和模型数量有限，无定量排名相关性指标
 - 写作质量: ⭐⭐⭐⭐ 问题定义有力，案例分析深入
 - 价值: ⭐⭐⭐⭐ 对偏见评测的方法论可靠性有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+- [Causal Estimation of Tokenisation Bias](causal_tokenisation_bias.md)
+- [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+
+<!-- RELATED:END -->

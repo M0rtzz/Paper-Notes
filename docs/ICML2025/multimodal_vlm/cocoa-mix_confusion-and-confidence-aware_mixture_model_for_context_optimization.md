@@ -191,3 +191,15 @@ Table 4 对比了不同 loss (CE, Focal, SupCon, CoA-loss) × 不同 mixing (nai
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个任务、11 个数据集、完整消融、梯度可视化、参数效率对比
 - 写作质量: ⭐⭐⭐⭐ — 理论-方法-实验逻辑链清晰，公式较多但结构合理
 - 价值: ⭐⭐⭐⭐ — 对 prompt tuning 社区有实际贡献，代码开源，可复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context-Aware Multimodal Pretraining](../../CVPR2025/multimodal_vlm/context-aware_multimodal_pretraining.md)
+- [Handling Imbalanced Pseudolabels for Vision-Language Models with Concept Alignment and Confusion-Aware Calibrated Margin](handling_imbalanced_pseudolabels_for_vision-language_models_with_concept_alignme.md)
+- [CAPT: Confusion-Aware Prompt Tuning for Reducing Vision-Language Misalignment](../../CVPR2026/multimodal_vlm/capt_confusion-aware_prompt_tuning_for_reducing_vision-language_misalignment.md)
+- [MMInference: Accelerating Pre-filling for Long-Context VLMs via Modality-Aware Permutation Sparse Attention](mminference_accelerating_pre-filling_for_long-context_vlms_via_modality-aware_pe.md)
+- [Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](../../NeurIPS2025/multimodal_vlm/zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+
+<!-- RELATED:END -->

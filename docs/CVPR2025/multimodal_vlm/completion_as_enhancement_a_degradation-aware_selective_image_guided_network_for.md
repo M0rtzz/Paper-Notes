@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基准评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰
 - 价值: ⭐⭐⭐⭐ 有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Vision-Language Latents for Zero-Label Image Caption Enhancement](../../NeurIPS2025/multimodal_vlm/unifying_vision-language_latents_for_zero-label_image_caption_enhancement.md)
+- [RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models](../../ACL2025/multimodal_vlm/rate-nav_region-aware_termination_enhancement_for_zero-shot_object_navigation_wi.md)
+- [GeoRanker: Distance-Aware Ranking for Worldwide Image Geolocalization](../../NeurIPS2025/multimodal_vlm/georanker_distance-aware_ranking_for_worldwide_image_geolocalization.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/cosyn_code_guided_synthetic_data.md)
+- [Context-Aware Multimodal Pretraining](context-aware_multimodal_pretraining.md)
+
+<!-- RELATED:END -->

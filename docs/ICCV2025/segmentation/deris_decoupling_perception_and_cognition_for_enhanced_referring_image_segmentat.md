@@ -119,3 +119,15 @@ NSC增强效果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集全面验证，分析实验丰富深入，瓶颈分析有说服力
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题驱动的叙事方式引人入胜
 - 价值: ⭐⭐⭐⭐⭐ 认知瓶颈的发现对RIS领域有指导意义，方法SOTA且通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Expression Generation for Referring Image Segmentation and Grounding](latent_expression_generation_for_referring_image_segmentation_and_grounding.md)
+- [TinyViM: Frequency Decoupling for Tiny Hybrid Vision Mamba](tinyvim_frequency_decoupling_for_tiny_hybrid_vision_mamba.md)
+- [TopoTTA: Topology-Enhanced Test-Time Adaptation for Tubular Structure Segmentation](topotta_topology-enhanced_test-time_adaptation_for_tubular_structure_segmentatio.md)
+- [Enhancing Transformers Through Conditioned Embedded Tokens](enhancing_transformers_through_conditioned_embedded_tokens.md)
+- [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
+
+<!-- RELATED:END -->

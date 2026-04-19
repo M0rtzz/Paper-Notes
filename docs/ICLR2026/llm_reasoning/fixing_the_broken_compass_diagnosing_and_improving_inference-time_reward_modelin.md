@@ -103,3 +103,15 @@ CRISP 是纯推理时方法，不需要任何训练。策略模型使用 Qwen2.5
 ## 评分
 
 ⭐⭐⭐⭐ — 问题诊断系统深入，CRISP 设计有针对性且实验全面，在推理时优化方向有重要实践价值，但适用范围（需精确答案匹配）限制了通用性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Chain-of-Thought Pruning with Latent Informativeness Signals](../../NeurIPS2025/llm_reasoning/inference-time_chain-of-thought_pruning_with_latent_informativeness_signals.md)
+- [Dynamic and Generalizable Process Reward Modeling (DG-PRM)](../../ACL2025/llm_reasoning/dgprm_dynamic_process_reward.md)
+- [Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](../../AAAI2026/llm_reasoning/jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
+- [DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
+- [mR3: Multilingual Rubric-Agnostic Reward Reasoning Models](mr3_multilingual_rubric-agnostic_reward_reasoning_models.md)
+
+<!-- RELATED:END -->

@@ -168,3 +168,15 @@ Authentic-Dubber包含三个核心模块：（1）多模态参考素材构建—
 - 实验充分度: ⭐⭐⭐⭐⭐ （主实验+12组消融+检索分析+相似度度量分析+频谱可视化，非常全面）
 - 写作质量: ⭐⭐⭐⭐ （"导演-演员"的隐喻贯穿全文，叙事流畅）
 - 价值: ⭐⭐⭐⭐ （对电影配音和情感语音合成领域有推动作用，RAG与多模态情感的结合有启发性）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts](../../ECCV2024/multimodal_vlm/clap_isolating_content_from_style_through_contrastive_learning_with_augmented_pr.md)
+- [Efficient Quantification of Multimodal Interaction at Sample Level](../../ICML2025/multimodal_vlm/efficient_quantification_of_multimodal_interaction_at_sample_level.md)
+- [GenDoP: Auto-regressive Camera Trajectory Generation as a Director of Photography](../../ICCV2025/multimodal_vlm/gendop_auto-regressive_camera_trajectory_generation_as_a_director_of_photography.md)
+- [RAP: Retrieval-Augmented Personalization for Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/rap_retrieval-augmented_personalization_for_multimodal_large_language_models.md)
+- [AkaCE: A Multimodal Multi-party Dataset for Emotion Recognition in Movie Dialogues](../../ACL2025/multimodal_vlm/akan_cinematic_emotions_ace_a_multimodal_multi-party_dataset_for_emotion_recogni.md)
+
+<!-- RELATED:END -->

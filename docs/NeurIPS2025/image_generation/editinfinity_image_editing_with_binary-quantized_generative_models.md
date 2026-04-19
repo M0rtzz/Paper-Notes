@@ -187,3 +187,15 @@ Infinity 与 FLUX 生成能力相当（0.66 vs 0.66），但 EditInfinity 大幅
 - 实验充分性：⭐⭐⭐⭐⭐（9 类编辑任务、8+ 对比方法、用户研究、运行时间、消融）
 - 实用性：⭐⭐⭐⭐⭐（3.6s 单次编辑极具实用价值，代码开源）
 - 表达清晰度：⭐⭐⭐⭐⭐（算法伪代码清晰，图示丰富，对比全面）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BitMark: Watermarking Bitwise Autoregressive Image Generative Models](bitmark_watermarking_bitwise_autoregressive_image_generative_models.md)
+- [QVGen: Pushing the Limit of Quantized Video Generative Models](../../ICLR2026/image_generation/qvgen_pushing_the_limit_of_quantized_video_generative_models.md)
+- [ThermalGen: Style-Disentangled Flow-Based Generative Models for RGB-to-Thermal Image Translation](thermalgen_style-disentangled_flow-based_generative_models_for_rgb-to-thermal_im.md)
+- [SplitFlow: Flow Decomposition for Inversion-Free Text-to-Image Editing](splitflow_flow_decomposition_for_inversion-free_text-to-image_editing.md)
+- [CAMILA: Context-Aware Masking for Image Editing with Language Alignment](camila_contextaware_masking_for_image_editing_with_language.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{C3L}} + \mathcal{L}_{\text{rec
 - 实验充分度: ⭐⭐⭐⭐ Real3D-AD 12类详细对比+消融+可视化
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机极其清晰，图表精致
 - 价值: ⭐⭐⭐⭐ 对工业3D质检有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
+- [GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
+- [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](../../ICCV2025/3d_vision/unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
+- [CASL: Curvature-Augmented Self-supervised Learning for 3D Anomaly Detection](../../AAAI2026/3d_vision/casl_curvature-augmented_self-supervised_learning_for_3d_anomaly_detection.md)
+- [Changes in Real Time: Online Scene Change Detection with Multi-View Fusion](changes_in_real_time_online_scene_change_detection_with_multi-view_fusion.md)
+
+<!-- RELATED:END -->

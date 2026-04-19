@@ -174,3 +174,15 @@ SocialHarmBench 的构建包括三个核心阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8个模型、6种攻击、时间地理分析、影响函数溯源，极为全面
 - 写作质量: ⭐⭐⭐⭐ — 内容丰富但篇幅较长，核心发现有时被细节淹没
 - 价值: ⭐⭐⭐⭐⭐ — 对AI安全社区的政策制定和防御研究有直接指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Unlearning with LLM Beliefs](llm_unlearning_with_llm_beliefs.md)
+- [Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
+- [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates](inference-time_backdoors_via_hidden_instructions_in_llm_chat_templates.md)
+- [Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval](evoking_user_memory_personalizing_llm_via_recollection-familiarity_adaptive_retr.md)
+- [One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
+
+<!-- RELATED:END -->

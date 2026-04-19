@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 17 任务 × 5 分割 × 5 种子，消融/少样本/扩展性/多骨干全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，实验叙述完整，动机铺垫充分
 - 价值: ⭐⭐⭐⭐ 开源平台设计有望推动材料科学模块化知识共享
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Intrinsic Training Dynamics of Deep Neural Networks](intrinsic_training_dynamics_of_deep_neural_networks.md)
+- [A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
+- [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](../../ICML2025/llm_pretraining/algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+- [Position: The Future of Bayesian Prediction Is Prior-Fitted](../../ICML2025/llm_pretraining/position_the_future_of_bayesian_prediction_is_prior-fitted.md)
+- [Pre-training LLM without Learning Rate Decay Enhances Supervised Fine-Tuning](pre-training_llm_without_learning_rate_decay_enhances_supervised_fine-tuning.md)
+
+<!-- RELATED:END -->

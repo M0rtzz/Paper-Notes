@@ -128,3 +128,15 @@ DriveGATr 将场景中的所有元素（agent 和地图节点）编码为 2D 射
 - 实验充分度: ⭐⭐⭐⭐ （WOSAC 基准评估、扩展性分析、消融实验充分）
 - 写作质量: ⭐⭐⭐⭐⭐ （数学推导清晰，架构描述详尽）
 - 价值: ⭐⭐⭐⭐⭐ （解决了等变 agent 建模的效率瓶颈，有很强的应用前景）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [F3DGS: Federated 3D Gaussian Splatting for Decentralized Multi-Agent World Modeling](f3dgs_federated_3d_gaussian_splatting_for_decentralized_multi-agent_world_modeli.md)
+- [CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction](../../AAAI2026/autonomous_driving/catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving.md)
+- [Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection](../../ECCV2024/autonomous_driving/equivariant_spatio-temporal_self-supervision_for_lidar_object_detection.md)
+- [Unlocking Efficient Vehicle Dynamics Modeling via Analytic World Models](../../AAAI2026/autonomous_driving/unlocking_efficient_vehicle_dynamics_modeling_via_analytic_world_models.md)
+- [LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction](lr-sgs_robust_lidar-reflectance-guided_salient_gaussian_splatting_for_self-drivi.md)
+
+<!-- RELATED:END -->

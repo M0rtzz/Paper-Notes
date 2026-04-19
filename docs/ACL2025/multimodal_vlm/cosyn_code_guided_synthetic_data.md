@@ -120,3 +120,15 @@ tags:
 - **技术深度**: ★★★★☆ — 20条管线 × 11种工具的系统化设计，工程壁垒高
 - **实验充分性**: ★★★★★ — 7个基准 + 多维消融 + 新任务适应 + 偏差分析 + pointing
 - **实用价值**: ★★★★★ — 直接产出可用的 400K 合成数据集和通用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+- [Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](code_guided_text_rich_image.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](mammoth_vl_multimodal_reasoning.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+
+<!-- RELATED:END -->

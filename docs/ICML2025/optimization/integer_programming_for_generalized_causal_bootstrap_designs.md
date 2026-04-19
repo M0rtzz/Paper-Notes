@@ -148,3 +148,15 @@ $$(-1)^b \sum_i X_{ik}^{(a)} \left(\frac{Z_i}{P_i} - \frac{1-Z_i}{1-P_i}\right) 
 - 实验充分度: ⭐⭐⭐ — IMF GDP 数据模拟设计合理，但仅一个数据集，缺少更多实际应用场景验证
 - 写作质量: ⭐⭐⭐⭐ — 从简单到一般的展开清晰，理论证明完整
 - 价值: ⭐⭐⭐⭐ — 对地理实验等小样本因果推断场景有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Constraint Matters: Multi-Modal Representation for Reducing Mixed-Integer Linear programming](../../ICLR2026/optimization/constraint_matters_multi-modal_representation_for_reducing_mixed-integer_linear_.md)
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [SDP-CROWN: Efficient Bound Propagation for Neural Network Verification with Tightness of Semidefinite Programming](sdp-crown_efficient_bound_propagation_for_neural_network_verification_with_tight.md)
+- [A Distributed Asynchronous Generalized Momentum Algorithm Without Delay Bounds](../../AAAI2026/optimization/a_distributed_asynchronous_generalized_momentum_algorithm_wi.md)
+- [Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding](../../ICLR2026/optimization/deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding.md)
+
+<!-- RELATED:END -->

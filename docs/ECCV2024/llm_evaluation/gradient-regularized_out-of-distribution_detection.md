@@ -146,3 +146,15 @@ GReg+ 在 ImageNet 上将最佳对比方法的 FPR95 降低了 4% 以上。
 - **实验充分度**: ⭐⭐⭐⭐ — 多架构、多数据集、多消融的全面实验，还展示了对不同方法的通用性
 - **写作质量**: ⭐⭐⭐⭐ — 动机直观（Figure 1 的 2D 示例），理论推导清晰
 - **价值**: ⭐⭐⭐⭐ — 梯度正则化是即插即用的改进，实用价值高；但 ImageNet 实验规模偏小
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Out-of-Distribution Detection with Extended Logit Normalization](../../CVPR2026/llm_evaluation/enhancing_out-of-distribution_detection_with_extended_logit_normalization.md)
+- [DisCoPatch: Taming Adversarially-driven Batch Statistics for Improved Out-of-Distribution Detection](../../ICCV2025/llm_evaluation/discopatch_taming_adversarially-driven_batch_statistics_for_improved_out-of-dist.md)
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](../../AAAI2026/llm_evaluation/graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [Distribution Alignment for Fully Test-Time Adaptation with Dynamic Online Data Streams](distribution_alignment_for_fully_test-time_adaptation_with_dynamic_online_data_s.md)
+- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](../../ICCV2025/llm_evaluation/odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+
+<!-- RELATED:END -->

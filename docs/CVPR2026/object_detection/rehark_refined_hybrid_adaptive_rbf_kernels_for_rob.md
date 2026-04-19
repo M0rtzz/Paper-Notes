@@ -91,3 +91,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 11个基准、多维度消融充分，但缺乏few-shot和多backbone对比
 - 写作质量: ⭐⭐⭐ 结构清晰但部分公式重复，被动语态过多影响可读性
 - 价值: ⭐⭐⭐⭐ 在one-shot VLM适应这个实用场景有明确价值，训练免设计适合实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection](mining_instance-centric_vision-language_contexts_for_human-object_interaction_de.md)
+- [Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward](saliency-r1_enforcing_interpretable_and_faithful_vision-language_reasoning_via_s.md)
+- [Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition](learning_by_neighbor-aware_semantics_deciding_by_open-form_flows_towards_robust_.md)
+- [CD-Buffer: Complementary Dual-Buffer Framework for Test-Time Adaptation in Adverse Weather Object Detection](cd-buffer_complementary_dual-buffer_framework_for_test-time_adaptation_in_advers.md)
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
+
+<!-- RELATED:END -->

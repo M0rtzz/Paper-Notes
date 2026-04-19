@@ -109,3 +109,15 @@ LLaMA-2 因参数量更大、训练数据更多，对齐度更高。左脑半球
 | 实验充分度 | ★★★★☆ |
 | 写作质量 | ★★★★☆ |
 | 总评 | ★★★★☆ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
+- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+
+<!-- RELATED:END -->

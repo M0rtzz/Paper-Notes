@@ -130,3 +130,15 @@ OpenPSG 包含三个组件：(1) Object Segmenter：使用预训练的 OpenSeeD 
 - 实验充分度: ⭐⭐⭐⭐ PSG和VG双数据集、闭集开集双设定、细致消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 开放集关系预测是重要方向，为后续研究建立了基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VISA: Reasoning Video Object Segmentation via Large Language Models](visa_reasoning_video_object_segmentation_via_large_language_models.md)
+- [DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](../../CVPR2026/segmentation/dsflash_panoptic_scene_graph_realtime.md)
+- [SPADE: Spatial-Aware Denoising Network for Open-vocabulary Panoptic Scene Graph Generation](../../ICCV2025/segmentation/spade_spatial-aware_denoising_network_for_open-vocabulary_panoptic_scene_graph_g.md)
+- [Diffusion Models for Open-Vocabulary Segmentation](diffusion_models_for_open-vocabulary_segmentation.md)
+- [A Simple Latent Diffusion Approach for Panoptic Segmentation and Mask Inpainting](a_simple_latent_diffusion_approach_for_panoptic_segmentation_and_mask_inpainting.md)
+
+<!-- RELATED:END -->

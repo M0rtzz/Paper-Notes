@@ -131,3 +131,15 @@ $$\hat{\sigma}_{BV}^2 = \frac{n_v}{n_m-1}\left((\hat{\mu}_X-s_L)(s_H-\hat{\mu}_X
 - 实验充分度: ⭐⭐⭐⭐ — 22 个测试、86K 文件，但图像/视频领域覆盖不足
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导严谨清晰，从基本假设到闭式解逻辑连贯
 - 价值: ⭐⭐⭐⭐ — 为质量评估研究者提供实用的性能天花板判断工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deconstructing the Failure of Ideal Noise Correction: A Three-Pillar Diagnosis](deconstructing_the_failure_of_ideal_noise_correction_a_three-pillar_diagnosis.md)
+- [Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)
+- [What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution](what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_.md)
+- [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+- [WildCap: Facial Albedo Capture in the Wild via Hybrid Inverse Rendering](wildcap_facial_albedo_capture_in_the_wild_via_hybrid_inverse_rendering.md)
+
+<!-- RELATED:END -->

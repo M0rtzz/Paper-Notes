@@ -116,3 +116,15 @@ SIG（Score-based Instruction Generation）管线分三步：(1) 视频源收集
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个开源模型 + 3 个闭源模型，5 个 VQA 数据集，消融分析全面且有洞察
 - 写作质量: ⭐⭐⭐⭐ 管线描述清晰，但 Related Work 篇幅过长，正文与附录之间内容分配可优化
 - 价值: ⭐⭐⭐⭐ 提出了可复现的自动化数据管线，对视频 LMM 的质量理解能力提升有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiFlowDubber: Discrete Flow Matching for Automated Video Dubbing via Cross-Modal Alignment and Synchronization](diflowdubber_discrete_flow_matching_for_automated_video_dubbing_via_cross-modal_.md)
+- [EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing](effecterase_joint_video_object_removal_and_insertion_for_high-quality_effect_era.md)
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [Video Color Grading via Look-Up Table Generation](../../ICCV2025/image_generation/video_color_grading_via_look-up_table_generation.md)
+- [PSDesigner: Automated Graphic Design with a Human-Like Creative Workflow](psdesigner_automated_graphic_design_with_a_human-like_creative_workflow.md)
+
+<!-- RELATED:END -->

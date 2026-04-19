@@ -132,3 +132,15 @@ FRAPPE 在 RTE 上较 WHAM 降低 **96%**，WBCE 降低 **91%**。
 ## 评分
 
 ⭐⭐⭐⭐ — 数据集工程量大、实验全面（虚拟人+真实机器人），洞察有价值；方法侧偏基线设计较简单，可在融合机制上进一步深入。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](../../AAAI2026/3d_vision/presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)
+- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
+- [Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span](../../NeurIPS2025/3d_vision/gaze_beyond_the_frame_forecasting_egocentric_3d_visual_span.md)
+- [Gaussian Eigen Models for Human Heads](gaussian_eigen_models_for_human_heads.md)
+- [Cue3D: Quantifying the Role of Image Cues in Single-Image 3D Generation](../../NeurIPS2025/3d_vision/cue3d_quantifying_the_role_of_image_cues_in_single-image_3d_generation.md)
+
+<!-- RELATED:END -->

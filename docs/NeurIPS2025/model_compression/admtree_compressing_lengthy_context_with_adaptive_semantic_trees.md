@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ LongBench 全面评估，两个 LLM，多类型任务对比
 - 写作质量: ⭐⭐⭐⭐ 前置实验（Figure 1）动机分析到位，方法描述系统完整
 - 价值: ⭐⭐⭐⭐⭐ 大幅超越 SOTA（+10%），解决了长上下文压缩的核心问题，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference](chunkkv_semanticpreserving_kv_cache_compression_for_efficien.md)
+- [Semantic Exploration with Adaptive Gating for Efficient Problem Solving with Language Models](../../ACL2025/model_compression/semantic_exploration_adaptive_gating.md)
+- [One-Step Diffusion-Based Image Compression with Semantic Distillation](one-step_diffusion-based_image_compression_with_semantic_distillation.md)
+- [Mitigating Semantic Collapse in Partially Relevant Video Retrieval](mitigating_semantic_collapse_in_partially_relevant_video_retrieval.md)
+- [Prototype-Based Semantic Consistency Alignment for Domain Adaptive Retrieval](../../AAAI2026/model_compression/prototype-based_semantic_consistency_alignment_for_domain_adaptive_retrieval.md)
+
+<!-- RELATED:END -->

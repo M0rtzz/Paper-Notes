@@ -166,3 +166,15 @@ tags:
 - **实验充分性**：⭐⭐⭐⭐⭐ 6个模型、3个数据集、详细消融，数据极其充分
 - **写作质量**：⭐⭐⭐⭐⭐ 数学推导严谨，实验逻辑层层递进
 - **实用性**：⭐⭐⭐⭐⭐ 直接可用于任何黑盒LLM API的长度控制场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Instructed Derived Prompt Generation Meets In-Context Learning: Unlocking New Potential of Black-Box LLMs](self-instructed_derived_prompt_generation_meets_in-context_learning_unlocking_ne.md)
+- [Contrastive Perplexity for Controlled Generation: An Application in Detoxifying Large Language Models](contrastive_perplexity_controlled_gen.md)
+- [PRESTO: Preimage-Informed Instruction Optimization for Prompting Black-Box LLMs](../../NeurIPS2025/llm_nlp/presto_preimage-informed_instruction_optimization_for_prompting_black-box_llms.md)
+- [MergePrint: Merge-Resistant Fingerprints for Robust Black-box Ownership Verification of Large Language Models](mergeprint_fingerprint_ownership.md)
+- [Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings](../../ICML2025/llm_nlp/towards_universal_offline_black-box_optimization_via_learning_language_model_emb.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ $$C^*({\hat{z}_{1|t}}) = \frac{\alpha_t \cdot p_{\text{data}}(\hat{z}_{1|t})}{\a
 - 实验充分度: ⭐⭐⭐⭐ — 4 个数据集 + 消融实验，公平对比设计好，但缺少非图领域验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 脉络清晰，理论推导完整，图示直观
 - 价值: ⭐⭐⭐⭐ — 对离散扩散社区有重要贡献，训练免费升级的实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Generative Pre-trained Transformer (G2PT)](graph_generative_pre-trained_transformer.md)
+- [IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)
+- [LiT: Delving into a Simple Linear Diffusion Transformer for Image Generation](../../ICCV2025/image_generation/lit_delving_into_a_simple_linear_diffusion_transformer_for_image_generation.md)
+- [PepTune: De Novo Generation of Therapeutic Peptides with Multi-Objective-Guided Discrete Diffusion](peptune_de_novo_generation_of_therapeutic_peptides_with_multi-objective-guided_d.md)
+- [Constrained Discrete Diffusion](../../NeurIPS2025/image_generation/constrained_discrete_diffusion.md)
+
+<!-- RELATED:END -->

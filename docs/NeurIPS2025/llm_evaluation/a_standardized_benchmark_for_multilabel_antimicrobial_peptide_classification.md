@@ -143,3 +143,15 @@ ESCAPE 的贡献分三个层级：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7 种方法公平对比、3 种随机种子、消融实验、预测结构敏感性分析，评估非常全面。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰、动机充分、图表丰富，但部分技术细节（如损失函数选择）可更明确。
 - **价值**: ⭐⭐⭐⭐⭐ — 对 AI 驱动的抗菌肽研究具有基础设施性的贡献价值，数据集和基准将推动社区发展。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BESSTIE: A Benchmark for Sentiment and Sarcasm Classification for Varieties of English](../../ACL2025/llm_evaluation/besstie_a_benchmark_for_sentiment_and_sarcasm_classification_for_varieties_of_en.md)
+- [Runtime Analysis of Evolutionary NAS for Multiclass Classification](../../ICML2025/llm_evaluation/runtime_analysis_of_evolutionary_nas_for_multiclass_classification.md)
+- [RGB-to-Polarization Estimation: A New Task and Benchmark Study](rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)
+- [CLIMB: Class-Imbalanced Learning Benchmark on Tabular Data](climb_class-imbalanced_learning_benchmark_on_tabular_data.md)
+- [RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases](rdb2g-bench_a_comprehensive_benchmark_for_automatic_graph_modeling_of_relational.md)
+
+<!-- RELATED:END -->

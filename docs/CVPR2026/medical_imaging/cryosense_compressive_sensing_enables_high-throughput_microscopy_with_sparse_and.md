@@ -137,3 +137,15 @@ cryoSENSE 解决逆问题：从 $\mathbf{y} = \mathcal{A}(\mathbf{x}^*) + \bolds
 - 实验充分度: ⭐⭐⭐⭐⭐ 极其详尽——多种先验×多种采样×多种压缩率×下游生物学验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，实验设计系统
 - 价值: ⭐⭐⭐⭐⭐ 对 cryo-EM 高通量成像有变革性潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multiscale Guidance of Protein Structure Prediction with Heterogeneous Cryo-EM Data](../../NeurIPS2025/medical_imaging/multiscale_guidance_of_protein_structure_prediction_with_heterogeneous_cryo-em_d.md)
+- [Solving a Nonlinear Blind Inverse Problem for Tagged MRI with Physics and Deep Generative Priors](solving_a_nonlinear_blind_inverse_problem_for_tagged_mri_with_physics_and_deep_g.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+- [Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding](meta-learning_in-context_enables_training-free_cross_subject_brain_decoding.md)
+- [X-WIN: Building Chest Radiograph World Model via Predictive Sensing](x-win_building_chest_radiograph_world_model_via_predictive_sensing.md)
+
+<!-- RELATED:END -->

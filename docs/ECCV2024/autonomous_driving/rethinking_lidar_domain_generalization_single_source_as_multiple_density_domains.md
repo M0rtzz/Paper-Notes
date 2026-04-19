@@ -152,3 +152,15 @@ LiDomAug 设定下的比较（MinkNet42 backbone, voxel=5cm）：
 - **实验充分度**: ⭐⭐⭐⭐ — 两种实验设定，多种 backbone 验证
 - **实用性**: ⭐⭐⭐⭐⭐ — 轻量即插即用，单帧无需额外数据
 - **总体推荐**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather](rethinking_data_augmentation_for_robust_lidar_semantic_segmentation_in_adverse_w.md)
+- [SimPB: A Single Model for 2D and 3D Object Detection from Multiple Cameras](simpb_a_single_model_for_2d_and_3d_object_detection_from_multiple_cameras.md)
+- [Train Till You Drop: Towards Stable and Robust Source-free Unsupervised 3D Domain Adaptation](train_till_you_drop_towards_stable_and_robust_source-free_unsupervised_3d_domain.md)
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+- [Open-Vocabulary Domain Generalization in Urban-Scene Segmentation](../../CVPR2026/autonomous_driving/open-vocabulary_domain_generalization_in_urban-scene_segmentation.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ LBM 在 BFT 上 OWTA 达 50.3、在 OVT-B 上 TETA 达 41.2，均为无额外训
 ## 启发与关联
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
+- [LiveStar: Live Streaming Assistant for Real-World Online Video Understanding](livestar_live_streaming_assistant_for_real-world_online_video_understanding.md)
+- [Real-World Point Tracking with Verifier-Guided Pseudo-Labeling](../../CVPR2026/video_understanding/realworld_point_tracking_with_verifierguided_pseud.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](../../ECCV2024/video_understanding/pite_pixel-temporal_alignment_for_large_video-language_model.md)
+- [Open-World Drone Active Tracking with Goal-Centered Rewards](open-world_drone_active_tracking_with_goal-centered_rewards.md)
+
+<!-- RELATED:END -->

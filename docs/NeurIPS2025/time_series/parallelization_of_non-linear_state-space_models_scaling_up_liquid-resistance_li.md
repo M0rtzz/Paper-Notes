@@ -117,3 +117,15 @@ LrcSSM 架构包含：输入编码器 → 归一化层 → 多层非线性 LRC S
 - **实验充分度**: ⭐⭐⭐⭐ 6 个数据集 + 多模型对角化对比 + 消融，但任务类型单一
 - **写作质量**: ⭐⭐⭐⭐ 生物背景和数学推导清晰，架构图直观
 - **价值**: ⭐⭐⭐⭐ 为非线性 RNN 的复兴提供了切实可行的并行化路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RiverMamba: A State Space Model for Global River Discharge and Flood Forecasting](rivermamba_a_state_space_model_for_global_river_discharge_and_flood_forecasting.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](../../ICML2025/time_series/timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+- [Scaling LLM Speculative Decoding: Non-Autoregressive Forecasting in Large-Batch Scenarios](../../AAAI2026/time_series/scaling_llm_speculative_decoding_non-autoregressive_forecasting_in_large-batch_s.md)
+- [Physics-informed Reduced Order Modeling of Time-dependent PDEs via Differentiable Solvers](physics-informed_reduced_order_modeling_of_time-dependent_pdes_via_differentiabl.md)
+- [Simple and Efficient Heterogeneous Temporal Graph Neural Network](simple_and_efficient_heterogeneous_temporal_graph_neural_network.md)
+
+<!-- RELATED:END -->

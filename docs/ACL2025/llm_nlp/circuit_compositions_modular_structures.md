@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Tracr 验证、10 个操作、跨任务分析、节点重叠、组合实验，但模型规模受限
 - 写作质量: ⭐⭐⭐⭐⭐ 数学形式化清晰，实验设计严谨，可视化丰富
 - 价值: ⭐⭐⭐⭐ 对机械可解释性领域有重要理论贡献，为理解神经网络的模块化和组合性提供了新工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Circuit Stability Characterizes Language Model Generalization](circuit_stability_characterizes_language_model_generalization.md)
+- [A Systematic Study of Compositional Syntactic Transformer Language Models](a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
+- [A Modular Dataset to Demonstrate LLM Abstraction Capability](a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
+- [AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer](../../ICLR2026/llm_nlp/assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](cadllm_cad_modeling_from_text.md)
+
+<!-- RELATED:END -->

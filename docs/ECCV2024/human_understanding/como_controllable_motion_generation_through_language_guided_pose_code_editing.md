@@ -140,3 +140,15 @@ CoMo 的关键区分点在于：可解释的离散表示使 LLM 能直接"读懂
 - 实验充分度: ⭐⭐⭐⭐ — 生成实验覆盖两个数据集，编辑有 54 人用户研究，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，概念解释到位，图表丰富
 - 价值: ⭐⭐⭐⭐ — 可控动作生成是实际需求，语义离散表示+LLM 编辑的范式有较强借鉴意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference](../../CVPR2026/human_understanding/lamogen_language_to_motion_generation_through_llm-guided_symbolic_inference.md)
+- [Motion Mamba: Efficient and Long Sequence Motion Generation](motion_mamba_efficient_and_long_sequence_motion_generation.md)
+- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](../../AAAI2026/human_understanding/finextrol_controllable_motion_generation_via_fine-grained_text.md)
+- [WordRobe: Text-Guided Generation of Textured 3D Garments](wordrobe_text-guided_generation_of_textured_3d_garments.md)
+- [Large Motion Model for Unified Multi-Modal Motion Generation](large_motion_model_for_unified_multi-modal_motion_generation.md)
+
+<!-- RELATED:END -->

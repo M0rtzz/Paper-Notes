@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个模型、360 对话、6 种指标、混合效应模型统计分析，但缺少与 fine-tuning 对比
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，分析深入，limitations 讨论诚实全面
 - 价值: ⭐⭐⭐⭐ alignment drift 的发现对 LLM 应用有广泛启示，不仅限于语言教学
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](nudging_inference_time_alignment.md)
+- [Towards Enhanced Immersion and Agency for LLM-based Interactive Drama](towards_enhanced_immersion_and_agency_for_llm-based_interactive_drama.md)
+- [Unlocking Recursive Thinking of LLMs: Alignment via Refinement](unlocking_recursive_thinking_of_llms_alignment_via_refinement.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+- [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
+
+<!-- RELATED:END -->

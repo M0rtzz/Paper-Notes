@@ -137,3 +137,15 @@ UNICBench为评测基准，不涉及模型训练。评估指标定义：
 - 实验充分度: ⭐⭐⭐⭐⭐ 45个模型全面评测，三维度交叉分析
 - 写作质量: ⭐⭐⭐⭐ 分类体系清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐ 揭示了MLLM计数能力的系统性缺陷，基准有长期使用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniM: A Unified Any-to-Any Interleaved Multimodal Benchmark](unim_a_unified_any-to-any_interleaved_multimodal_benchmark.md)
+- [USE: A Unified Model for Universal Sound Separation and Extraction](../../AAAI2026/audio_speech/use_a_unified_model_for_universal_sound_separation_and_extraction.md)
+- [MMSU: A Massive Multi-task Spoken Language Understanding and Reasoning Benchmark](../../ICLR2026/audio_speech/mmsu_a_massive_multi-task_spoken_language_understanding_and_reasoning_benchmark.md)
+- [OmniRet: Efficient and High-Fidelity Omni Modality Retrieval](omniret_efficient_and_high-fidelity_omni_modality_retrieval.md)
+- [EchoMind: An Interrelated Multi-level Benchmark for Evaluating Empathetic Speech Language Models](../../ICLR2026/audio_speech/echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ RAG 主要关注信息检索和组合，而 Deep Information Synthesis 要求模
 - 实验充分度: ⭐⭐⭐⭐⭐ 11 个模型/agent、多维指标、工具消融、Best-of-N 分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据构建过程描述详尽
 - 价值: ⭐⭐⭐⭐ 为 deep research agent 发展指明了方向和差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents](st-webagentbench_a_benchmark_for_evaluating_safety_and_trustworthiness_in_web_ag.md)
+- [FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
+- [ProBench: Benchmarking GUI Agents with Accurate Process Information](../../AAAI2026/llm_agent/probench_benchmarking_gui_agents_with_accurate_process_infor.md)
+- [SoMe: A Realistic Benchmark for LLM-based Social Media Agents](../../AAAI2026/llm_agent/some_a_realistic_benchmark_for_llm-based_social_media_agents.md)
+
+<!-- RELATED:END -->

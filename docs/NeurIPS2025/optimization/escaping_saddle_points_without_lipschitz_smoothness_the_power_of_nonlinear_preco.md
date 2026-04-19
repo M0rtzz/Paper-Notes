@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论论文，无数值实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，反例和应用验证使理论不枯燥
 - 价值: ⭐⭐⭐⭐ 对非凸优化理论有重要推进，特别是弥合了理论假设与实际问题之间的鸿沟
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Extragradient Method for $(L_0, L_1)$-Lipschitz Root-finding Problems](extragradient_method_for_l_0_l_1-lipschitz_root-finding_problems.md)
+- [Set Smoothness Unlocks Clarke Hyper-stationarity in Bilevel Optimization](set_smoothness_unlocks_clarke_hyper-stationarity_in_bilevel_optimization.md)
+- [Unveiling the Power of Multiple Gossip Steps: A Stability-Based Generalization Analysis in Decentralized Training](unveiling_the_power_of_multiple_gossip_steps_a_stability-based_generalization_an.md)
+- [From Linear to Nonlinear: Provable Weak-to-Strong Generalization through Feature Learning](from_linear_to_nonlinear_provable_weak-to-strong_generalization_through_feature_.md)
+- [Saddle-to-Saddle Dynamics Explains A Simplicity Bias Across Neural Network Architectures](../../ICLR2026/optimization/saddle-to-saddle_dynamics_explains_a_simplicity_bias_across_neural_network_archi.md)
+
+<!-- RELATED:END -->

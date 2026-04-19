@@ -132,3 +132,15 @@ VideoCoF 基于 VideoDiT（如 WAN-14B）构建统一视频编辑框架。输入
 - 实验充分度: ⭐⭐⭐⭐ 消融全面（CoF、RoPE、推理帧格式），但主要在自建 benchmark 上评估
 - 写作质量: ⭐⭐⭐⭐⭐ 方法阐述清晰，类比 CoT 的叙事引人入胜，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 推理帧+RoPE 对齐的设计思路可广泛迁移到其他视觉生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation](unitalking_a_unified_audio-video_framework_for_talking_portrait_generation.md)
+- [UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions](uniavgen_unified_audio_and_video_generation_with_asymmetric_cross-modal_interact.md)
+- [TEAR: Temporal-aware Automated Red-teaming for Text-to-Video Models](tear_temporal-aware_automated_red-teaming_for_text-to-video_models.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+
+<!-- RELATED:END -->

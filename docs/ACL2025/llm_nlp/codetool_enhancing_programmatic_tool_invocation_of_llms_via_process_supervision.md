@@ -162,3 +162,15 @@ CodeTool 在开源和闭源 LLM 上均显著超越现有方法。
 - **实验完整性**：⭐⭐⭐⭐ — 多基线对比充分，消融实验清晰，但数据集有限
 - **实用价值**：⭐⭐⭐⭐ — 代码生成模型免训练降低了使用门槛
 - **写作质量**：⭐⭐⭐⭐ — 框架图清晰，但公式符号较多
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Open-Domain Task-Solving Capability of LLMs via Autonomous Tool Integration from GitHub](paper_2312_17294.md)
+- [Language Models, Graph Searching, and Supervision Adulteration: When More Supervision is Less and How to Make More More](lm_graph_search_supervision.md)
+- [SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation](skillverse_tree_eval.md)
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_code_empowered_tool_learning.md)
+- [SCoP: Evaluating the Comprehension Process of Large Language Models from a Cognitive View](scop_evaluating_the_comprehension_process_of_large_language_models_from_a_cognit.md)
+
+<!-- RELATED:END -->

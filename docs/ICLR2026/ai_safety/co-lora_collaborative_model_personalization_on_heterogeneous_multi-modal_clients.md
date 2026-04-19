@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 40 任务 benchmark 全面，消融充分，但缺少更大规模模型实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法推导严谨，但篇幅很长
 - 价值: ⭐⭐⭐⭐⭐ 为异构联邦学习提供了可行的实用方案，DRAKE benchmark 有持续价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA](she-lora_selective_homomorphic_encryption_for_federated_tuning_with_heterogeneou.md)
+- [Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](../../CVPR2026/ai_safety/multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
+- [Towards Multi-modal Transformers in Federated Learning](../../ECCV2024/ai_safety/towards_multi-modal_transformers_in_federated_learning.md)
+- [Private Model Personalization Revisited](../../ICML2025/ai_safety/private_model_personalization_revisited.md)
+- [FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](../../CVPR2026/ai_safety/fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)
+
+<!-- RELATED:END -->

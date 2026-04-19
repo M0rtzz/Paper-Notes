@@ -122,3 +122,15 @@ $$E[Bit(s,t)] = (b_N - b_1) \cdot |2 \cdot \frac{t}{SL} - 1|$$
 - **实验充分度**: ⭐⭐⭐ — 消融实验完整但模型/任务覆盖偏少，缺少生成任务评估
 - **实用性**: ⭐⭐⭐⭐⭐ — 8 GPU hours 训练一次即可覆盖多种部署需求，实用价值极高
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机→方法→实验逻辑链完整，理论分析严谨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quaff: Quantized Parameter-Efficient Fine-Tuning under Outlier Spatial Stability Hypothesis](quaff_quantized_peft.md)
+- [Uni-LoRA: One Vector is All You Need](../../NeurIPS2025/model_compression/uni-lora_one_vector_is_all_you_need.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](state_offset_tuning_ssm_peft.md)
+- [LoRA Fine-Tuning Without GPUs: A CPU-Efficient Meta-Generation Framework for LLMs](../../ICML2025/model_compression/lora_fine-tuning_without_gpus_a_cpu-efficient_meta-generation_framework_for_llms.md)
+- [CodeGEMM: A Codebook-Centric Approach to Efficient GEMM in Quantized LLMs](../../NeurIPS2025/model_compression/codegemm_a_codebook-centric_approach_to_efficient_gemm_in_quantized_llms.md)
+
+<!-- RELATED:END -->

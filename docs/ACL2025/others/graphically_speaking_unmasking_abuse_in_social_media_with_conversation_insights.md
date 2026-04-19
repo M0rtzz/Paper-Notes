@@ -187,3 +187,15 @@ L 层 GAT 后，将目标节点的图嵌入 $\mathbf{x}_i^{(L)}$ 与原始文本
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰、案例分析生动、图示优秀
 - **实用价值**: ⭐⭐⭐⭐⭐ — 轻量高效、可解释、适合大规模部署
 - **局限**: 仅一个数据集、纯文本模态、Reddit 特定策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal Reasoning for Timeline Summarisation in Social Media](temporal_reasoning_for_timeline_summarisation_in_social_media.md)
+- [Narrative Media Framing in Political Discourse](narrative_media_framing_in_political_discourse.md)
+- [REP: Keys to Robust Edits — From Theoretical Insights to Practical Advances](rep_robust_knowledge_editing.md)
+- [GA-S3: Comprehensive Social Network Simulation with Group Agents](ga-s3_comprehensive_social_network_simulation_with_group_agents.md)
+- [Explicit and Implicit Data Augmentation for Social Event Detection](explicit_and_implicit_data_augmentation_for_social_event_detection.md)
+
+<!-- RELATED:END -->

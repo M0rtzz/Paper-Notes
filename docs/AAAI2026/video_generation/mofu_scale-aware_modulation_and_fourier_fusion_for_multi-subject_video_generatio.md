@@ -220,3 +220,15 @@ $$\mathcal{L}_{\text{perm}} = \frac{1}{P} \sum_{p=1}^{P} \|F(\mathcal{R}_p) - F(
 - **实验充分度**: ⭐⭐⭐⭐ — 定量和定性全面，但消融中 SPSL 未独立消融
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，方法阐述系统
 - **价值**: ⭐⭐⭐⭐ — 首次系统性解决多主体生成的尺度和排列问题，基准和方法都有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-subject Open-set Personalization in Video Generation](../../CVPR2025/video_generation/multi-subject_open-set_personalization_in_video_generation.md)
+- [BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration](../../ICLR2026/video_generation/bindweave_subject-consistent_video_generation_via_cross-modal_integration.md)
+- [FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion](filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)
+- [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](../../CVPR2026/video_generation/rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
+- [Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)
+
+<!-- RELATED:END -->

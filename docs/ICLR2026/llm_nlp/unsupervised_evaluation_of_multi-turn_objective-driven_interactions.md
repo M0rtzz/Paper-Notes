@@ -184,3 +184,15 @@ $$P_{D'}(\texttt{end} \mid c) > P_{D'}(\texttt{end} \mid c')$$
 - 实验充分度: ⭐⭐⭐⭐ — 6 个数据集、多个消融，但响应树缺乏直接效果验证
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，形式化严谨，附录详尽
 - 综合价值: ⭐⭐⭐⭐ — 填补了多轮目标驱动对话无监督评估的空白，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery](llema_evolutionary_search_with_llms_for_multi-objective_materials_discovery.md)
+- [Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](../../AAAI2026/llm_nlp/conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
+- [PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](../../NeurIPS2025/llm_nlp/pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)
+- [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](../../ACL2025/llm_nlp/gapo_multi_objective_alignment.md)
+- [STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model](../../AAAI2026/llm_nlp/stem_efficient_relative_capability_evaluation_of_llms_through_structured_transit.md)
+
+<!-- RELATED:END -->

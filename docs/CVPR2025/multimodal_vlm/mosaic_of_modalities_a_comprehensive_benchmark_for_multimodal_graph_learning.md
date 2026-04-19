@@ -114,3 +114,15 @@ MM-Graph包含7个数据集（3个链接预测+2个节点分类+2个知识图谱
 - 实验充分度: ⭐⭐⭐⭐⭐ 全组合实验非常详尽，覆盖7数据集×多种方法×多种编码器
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，发现总结到位
 - 价值: ⭐⭐⭐⭐ 基准贡献和关键发现对社区有长期推动作用，但缺乏方法创新
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRAB: A Challenging GRaph Analysis Benchmark for Large Multimodal Models](../../ICCV2025/multimodal_vlm/grab_a_challenging_graph_analysis_benchmark_for_large_multimodal_models.md)
+- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](../../CVPR2026/multimodal_vlm/graphvlm_benchmark_vlm_graph_learning.md)
+- [OpenING: A Comprehensive Benchmark for Judging Open-ended Interleaved Image-Text Generation](opening_a_comprehensive_benchmark_for_judging_open-ended_interleaved_image-text_.md)
+- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](../../ACL2025/multimodal_vlm/longdocurl_multimodal_long_doc.md)
+- [MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness](../../NeurIPS2025/multimodal_vlm/mmperspective_do_mllms_understand_perspective_a_comprehensive_benchmark_for_pers.md)
+
+<!-- RELATED:END -->

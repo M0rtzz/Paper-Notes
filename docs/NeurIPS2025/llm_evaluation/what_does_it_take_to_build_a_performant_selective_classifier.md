@@ -144,3 +144,15 @@ $$D_{\text{rank}}(c) = \Pr(X \in A_c^* \setminus A_c) + \Pr(X \in A_c \setminus 
 - 实验充分度: ⭐⭐⭐⭐⭐ 从 two moons 到 CIFAR-10C/100N 到 Camelyon17，逐一验证每个误差项
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰，图 1 直观，每节末尾的 Takeaway 非常有用
 - 价值: ⭐⭐⭐⭐⭐ 提供了可操作的设计指南，对任何需要可靠预测的实际部署场景都有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention](generalization_error_analysis_for_selective_state-space_models_through_the_lens_.md)
+- [Keep It on a Leash: Controllable Pseudo-label Generation Towards Realistic Long-Tailed Semi-Supervised Learning](keep_it_on_a_leash_controllable_pseudo-label_generation_towards_realistic_long-t.md)
+- [LCA: Local Classifier Alignment for Continual Learning](../../ICLR2026/llm_evaluation/lca_local_classifier_alignment_for_continual_learning.md)
+- [ConfTuner: Training Large Language Models to Express Their Confidence Verbally](conftuner_training_large_language_models_to_express_their_confidence_verbally.md)
+- [Semi-Supervised Regression with Heteroscedastic Pseudo-Labels](semi-supervised_regression_with_heteroscedastic_pseudo-labels.md)
+
+<!-- RELATED:END -->

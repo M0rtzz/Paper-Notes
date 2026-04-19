@@ -169,3 +169,15 @@ p 值：$P = 1 - \Phi\left(\frac{\hat{\theta}-\tau}{\sigma}\right)$
 - 实验充分度: ⭐⭐⭐⭐ — 蛋白质+RNA两个生物设计任务，已知/估计密度比两种场景
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，方法描述精准，Figure 1提供极佳的直觉引导
 - 价值: ⭐⭐⭐⭐⭐ — 解决生物设计领域的核心实践痛点，具有广泛推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multivariate Conformal Selection](multivariate_conformal_selection.md)
+- [Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](../../NeurIPS2025/medical_imaging/pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
+- [Improved Off-policy Reinforcement Learning in Biological Sequence Design](improved_off-policy_reinforcement_learning_in_biological_sequence_design.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [DistMLIP: A Distributed Inference Platform for Machine Learning Interatomic Potentials](../../ICLR2026/medical_imaging/distmlip_a_distributed_inference_platform_for_machine_learning_interatomic_poten.md)
+
+<!-- RELATED:END -->

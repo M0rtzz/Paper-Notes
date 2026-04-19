@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ CUTEst benchmark全面对比，但实际ML应用的验证偏少
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，结构清晰，关键insight解释到位
 - 价值: ⭐⭐⭐⭐⭐ 填补了重要的理论空白，算法设计优雅且实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](../../ICCV2025/human_understanding/samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)
+- [L2GTX: From Local to Global Time Series Explanations](../../CVPR2025/human_understanding/l2gtx_from_local_to_global_time_series_explanations.md)
+- [High-Resolution Spatiotemporal Modeling with Global-Local State Space Models for Video-Based Human Pose Estimation](../../ICCV2025/human_understanding/high-resolution_spatiotemporal_modeling_with_global-local_state_space_models_for.md)
+- [PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization](parco_parallel_autoregressive_models_for_multi-agent_combinatorial_optimization.md)
+- [Cycle-Sync: Robust Global Camera Pose Estimation through Enhanced Cycle-Consistent Synchronization](cycle-sync_robust_global_camera_pose_estimation_through_enhanced_cycle-consisten.md)
+
+<!-- RELATED:END -->

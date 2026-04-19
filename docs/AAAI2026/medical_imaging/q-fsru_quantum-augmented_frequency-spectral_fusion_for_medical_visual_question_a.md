@@ -186,3 +186,15 @@ Q-FSRU 模型由四个核心模块组成（见图1）：
 - **技术深度**: ⭐⭐ — 方法设计相对简单，"量子"部分更多是命名上的新颖，实质为经典计算
 - **实用性**: ⭐⭐ — 仅在小规模数据集上做二分类，缺乏与 SOTA 直接对比，实际临床价值有限
 - **清晰度**: ⭐⭐⭐ — 数学表述清晰，但实验部分缺乏对比基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedEyes: Learning Dynamic Visual Focus for Medical Progressive Diagnosis](medeyes_learning_dynamic_visual_focus_for_medical_progressive_diagnosis.md)
+- [Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering](expert-guided_prompting_and_retrieval-augmented_generation_for_emergency_medical.md)
+- [Rethinking Bias in Generative Data Augmentation for Medical AI: a Frequency Recalibration Approach](rethinking_bias_in_generative_data_augmentation_for_medical_ai_a_frequency_recal.md)
+- [Decoding with Structured Awareness: Integrating Directional, Frequency-Spatial, and Structural Attention for Medical Image Segmentation](decoding_with_structured_awareness_integrating_directional_frequency-spatial_and.md)
+- [Self-supervised Multiplex Consensus Mamba for General Image Fusion](self-supervised_multiplex_consensus_mamba_for_general_image_fusion.md)
+
+<!-- RELATED:END -->

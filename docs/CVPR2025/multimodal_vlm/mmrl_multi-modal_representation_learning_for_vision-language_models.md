@@ -115,3 +115,15 @@ MMRL 基于冻结的 CLIP 模型，引入一个共享可学习表征空间 $\mat
 - 实验充分度: ⭐⭐⭐⭐⭐ 15 数据集、4 种评测设置、详尽消融（6 个维度）
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，方法描述详尽
 - 价值: ⭐⭐⭐⭐ 在 CLIP 高效迁移这一拥挤赛道上仍取得了稳定的 SOTA 提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VaMP: Variational Multi-Modal Prompt Learning for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/vamp_variational_multi-modal_prompt_learning_for_vision-language_models.md)
+- [Rethinking Vision-Language Model in Face Forensics: Multi-Modal Interpretable Forged Face Detector](rethinking_vision-language_model_in_face_forensics_multi-modal_interpretable_for.md)
+- [GeoMM: On Geodesic Perspective for Multi-Modal Learning](geomm_on_geodesic_perspective_for_multi-modal_learning.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](../../NeurIPS2025/multimodal_vlm/on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+
+<!-- RELATED:END -->

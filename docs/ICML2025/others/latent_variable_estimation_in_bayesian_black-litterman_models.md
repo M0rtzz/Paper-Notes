@@ -145,3 +145,15 @@ $$p(\theta | F, \Omega^F) = N\!\left(\theta;\; (G^F)^{-1}[\Sigma_0^{-1}\theta_0 
 - 实验充分度: ⭐⭐⭐ (长期真实数据但缺少现代基准和 FIV-BL 实验)
 - 写作质量: ⭐⭐⭐⭐ (理论推导清晰，但 LaTeX 符号密集，FIV-BL 的近似处理较仓促)
 - 价值: ⭐⭐⭐⭐ (对量化金融实践有直接意义，理论贡献扎实)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
+- [How Do Transformers Learn Variable Binding in Symbolic Programs?](how_do_transformers_learn_variable_binding_in_symbolic_programs.md)
+- [LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](../../ACL2025/others/latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
+- [Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
+- [On Fine-Grained Distinct Element Estimation](on_fine-grained_distinct_element_estimation.md)
+
+<!-- RELATED:END -->

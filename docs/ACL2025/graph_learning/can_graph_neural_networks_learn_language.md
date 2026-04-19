@@ -120,3 +120,15 @@ $$\mathcal{L}_{G \rightarrow T} = -\frac{1}{B}\sum_{i=1}^{B} \log \frac{\exp(\ma
 | 写作质量 | ⭐⭐⭐⭐ |
 | 实用价值 | ⭐⭐⭐⭐ |
 | 总评 | 7.5/10 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphNarrator: Generating Textual Explanations for Graph Neural Networks](graphnarrator.md)
+- [Extending Complex Logical Queries on Uncertain Knowledge Graphs](extending_complex_logical_queries_uncertain_knowledge_graphs.md)
+- [Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](kg_llm_trustworthy_qa.md)
+- [Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](../../NeurIPS2025/graph_learning/dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)
+- [Graph Neural Networks for Interferometer Simulations](../../NeurIPS2025/graph_learning/graph_neural_networks_for_interferometer_simulations.md)
+
+<!-- RELATED:END -->

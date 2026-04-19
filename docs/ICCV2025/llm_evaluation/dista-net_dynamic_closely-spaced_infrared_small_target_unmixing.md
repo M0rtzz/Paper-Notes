@@ -127,3 +127,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{discrepancy}} + \gamma \mathcal{L}_{\text{con
 - 实验充分度: ⭐⭐⭐⭐ 多种基线对比全面，消融充分，但缺少真实数据验证
 - 写作质量: ⭐⭐⭐⭐ 问题建模清晰，从物理模型到深度网络的推导完整
 - 价值: ⭐⭐⭐⭐ 建立了全新的研究生态，对红外目标检测领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Evaluation of Infrared Small Target Detection](../../NeurIPS2025/llm_evaluation/rethinking_evaluation_of_infrared_small_target_detection.md)
+- [InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)
+- [Generative Zoo](generative_zoo.md)
+- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+
+<!-- RELATED:END -->

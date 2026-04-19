@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3 模型×3 强度×多特征组合，paraphrasing 攻击评估充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，表格信息密度高
 - 价值: ⭐⭐⭐⭐ 对 LLM 水印鲁棒性研究有直接贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
+- [MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
+- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](from_tradeoff_to_synergy_a_versatile.md)
+- [ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](dialect_fairness_robustness.md)
+
+<!-- RELATED:END -->

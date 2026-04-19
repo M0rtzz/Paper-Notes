@@ -130,3 +130,15 @@ InceptionV3 在所有条件下均优于 OpenPhenom，后者可能受限于训练
 - 实验充分度: ⭐⭐⭐⭐ 多层次指标 + 两个数据域对照 + 两个特征提取器，但仅一个 Cell Painting 数据集
 - 写作质量: ⭐⭐⭐⭐ 简洁清晰，动机和结论都很明确，图表直观
 - 价值: ⭐⭐⭐⭐ 为表型药物发现社区提供了关于 SD-VAE 可用性的实证证据和评估框架模板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenMol: A Drug Discovery Generalist with Discrete Diffusion](../../ICML2025/medical_imaging/genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+- [Interpreting GFlowNets for Drug Discovery: Extracting Actionable Insights for Medicinal Chemistry](interpreting_gflownets_for_drug_discovery_extracting_actionable_insights_for_med.md)
+- [Online Feedback Efficient Active Target Discovery in Partially Observable Environments](online_feedback_efficient_active_target_discovery_in_partially_observable_enviro.md)
+- [GFlowNets for Learning Better Drug-Drug Interaction Representations](gflownets_for_learning_better_drug-drug_interaction_representations.md)
+- [CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays](cxreasonbench_a_benchmark_for_evaluating_structured_diagnostic_reasoning_in_ches.md)
+
+<!-- RELATED:END -->

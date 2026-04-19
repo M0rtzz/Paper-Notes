@@ -168,3 +168,15 @@ $$L_{Stage1} = L_{VAE} + \lambda_{Inv} L_{Inv} + \lambda_{Eqv} L_{Eqv}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 多种退化、多种骨干、标准/UHD 分辨率、泛化测试、$\alpha$ 分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析(Sec 3)极为深入，图2的频域分析令人信服
 - 价值: ⭐⭐⭐⭐⭐ 为 VAE 在修复任务中的应用提供了范式级方法论，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
+- [Detail-Preserving Latent Diffusion for Stable Shadow Removal](../../CVPR2025/image_restoration/detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
+- [MS-BART: Unified Modeling of Mass Spectra and Molecules for Structure Elucidation](ms-bart_unified_modeling_of_mass_spectra_and_molecules_for_structure_elucidation.md)
+- [EQ-Reg: A Regularization-Guided Equivariant Approach for Image Restoration](../../CVPR2025/image_restoration/a_regularization-guided_equivariant_approach_for_image_restoration.md)
+- [Rethinking Nighttime Image Deraining via Learnable Color Space Transformation](rethinking_nighttime_image_deraining_via_learnable_color_space_transformation.md)
+
+<!-- RELATED:END -->

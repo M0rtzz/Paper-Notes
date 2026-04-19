@@ -129,3 +129,15 @@ FicGCN聚焦推理阶段加速，不改变模型训练流程。GCN模型使用Ad
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、四种SOTA对比、完整消融实验
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，图示辅助理解好
 - 价值: ⭐⭐⭐⭐ 对隐私保护GCN推理有实际加速意义，大规模图场景尤其有用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA](../../ICLR2026/ai_safety/she-lora_selective_homomorphic_encryption_for_federated_tuning_with_heterogeneou.md)
+- [Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](../../NeurIPS2025/ai_safety/influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
+- [Solving Probabilistic Verification Problems of Neural Networks Using Branch and Bound](solving_probabilistic_verification_problems_of_neural_networks_using_branch_and_.md)
+- [Breaking the n^{1.5} Additive Error Barrier for Private and Efficient Graph Sparsification](breaking_the_n15_additive_error_barrier_for_private_and_efficient_graph_sparsifi.md)
+- [Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](../../ECCV2024/ai_safety/unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
+
+<!-- RELATED:END -->

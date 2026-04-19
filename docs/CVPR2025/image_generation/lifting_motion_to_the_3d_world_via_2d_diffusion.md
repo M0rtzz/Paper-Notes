@@ -137,3 +137,15 @@ Stage 1：$\mathcal{L} = \mathbb{E}[\|\hat{X}_\theta - X_0\|_1] + \mathcal{L}_{\
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集+3个领域(人/动物/交互)+人类感知实验+详细消融
 - 写作质量: ⭐⭐⭐⭐ 四阶段框架清晰，但细节较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐⭐ 解决了长期的"2D→3D运动lifting without 3D supervision"问题，具有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Move-in-2D: 2D-Conditioned Human Motion Generation](move-in-2d_2d-conditioned_human_motion_generation.md)
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [MirrorVerse: Pushing Diffusion Models to Realistically Reflect the World](mirrorverse_pushing_diffusion_models_to_realistically_reflect_the_world.md)
+- [DreamDance: Animating Human Images by Enriching 3D Geometry Cues from 2D Poses](../../ICCV2025/image_generation/dreamdance_animating_human_images_by_enriching_3d_geometry_cues_from_2d_poses.md)
+- [Diffusion-based 3D Hand Motion Recovery with Intuitive Physics](../../ICCV2025/image_generation/diffusion-based_3d_hand_motion_recovery_with_intuitive_physics.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ PyOperon 以复杂度仅 9 的表达式 $M_{\text{disk}} = 0.1188 - 0.1430 \time
 - 实验充分度: ⭐⭐⭐ — 对比全面（9 个 SR 变体 + 3 个文献公式），但训练/测试集规模小且有重叠
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，公式完整，附录详尽（含 ChatGPT prompt 全文）
 - 价值: ⭐⭐⭐⭐ — 对多信使天文学有直接应用价值，发现的替代预测变量集可能开启新的 EoS 约束路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Learning for Subspace Regression](../../ICLR2026/scientific_computing/deep_learning_for_subspace_regression.md)
+- [GyroSwin: 5D Surrogates for Gyrokinetic Plasma Turbulence Simulations](gyroswin_5d_surrogates_for_gyrokinetic_plasma_turbulence_simulations.md)
+- [EddyFormer: Accelerated Neural Simulations of Three-Dimensional Turbulence at Scale](eddyformer_accelerated_neural_simulations_of_three-dimensional_turbulence_at_sca.md)
+- [Closed-form Symbolic Solutions: A New Perspective on Solving Partial Differential Equations](../../ICML2025/scientific_computing/closed-form_solutions_a_new_perspective_on_solving_differential_equations.md)
+- [One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](../../ICLR2026/scientific_computing/one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
+
+<!-- RELATED:END -->

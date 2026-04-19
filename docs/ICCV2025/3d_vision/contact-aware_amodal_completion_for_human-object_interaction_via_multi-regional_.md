@@ -144,3 +144,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 两个数据集+用户研究+丰富消融+3D应用，但数据集偏限（室内）
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，流水线图示直观，公式推导完整
 - **价值**: ⭐⭐⭐⭐ HOI理解和3D重建的实用工具，开创了新的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Amodal Depth Anything: Amodal Depth Estimation in the Wild](amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
+- [Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images](amodal3r_amodal_3d_reconstruction_from_occluded_2d_images.md)
+- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
+- [Human Interaction-Aware 3D Reconstruction from a Single Image](../../CVPR2026/3d_vision/human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [Zero-Shot Multi-Object Scene Completion](../../ECCV2024/3d_vision/zero-shot_multi-object_scene_completion.md)
+
+<!-- RELATED:END -->

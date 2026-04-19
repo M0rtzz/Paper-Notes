@@ -115,3 +115,15 @@ TexTok 在 512 分辨率下仅用 32 个 token 就超越了原始 DiT 使用 409
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多分辨率、多 token 数、多任务，消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，实验展示逻辑性强
 - 价值: ⭐⭐⭐⭐⭐ 为高效图像生成提供新范式，93.5× 加速极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](../../ICCV2025/image_generation/efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [Representative Language Generation](../../ICML2025/image_generation/representative_language_generation.md)
+- [Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction](efficient_long_video_tokenization_via_coordinate-based_patch_reconstruction.md)
+- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](dit-ic_aligned_diffusion_transformer_for_efficient_image_compression.md)
+- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
+
+<!-- RELATED:END -->

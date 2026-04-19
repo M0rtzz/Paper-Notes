@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+生物数据覆盖全面，有精确解做基准
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，符号统一，逻辑链清晰
 - 价值: ⭐⭐⭐⭐ 在计算生物学和生成模型领域都有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adjoint Schrödinger Bridge Sampler](adjoint_schrödinger_bridge_sampler.md)
+- [Modeling Cell Dynamics and Interactions with Unbalanced Mean Field Schrödinger Bridge](modeling_cell_dynamics_and_interactions_with_unbalanced_mean_field_schrödinger_b.md)
+- [Non-Clairvoyant Scheduling with Progress Bars](non-clairvoyant_scheduling_with_progress_bars.md)
+- [Directional Non-Commutative Monoidal Structures for Compositional Embeddings in Machine Learning](directional_non-commutative_monoidal_structures_for_compositional_embeddings_in_.md)
+- [Position: There Is No Free Bayesian Uncertainty Quantification](position_there_is_no_free_bayesian_uncertainty_quantification.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ $$\text{Acc}_j = \mathbb{E}_{x,y,\mathbf{s}}\left[\mathbf{1}\left[\phi_j(x,y) = 
 - 实验充分度: ⭐⭐⭐ — 单数据集、单模型、workshop 篇幅，实验规模有限但覆盖了关键维度
 - 写作质量: ⭐⭐⭐⭐ — 问题形式化清晰，实验结果呈现直观
 - 价值: ⭐⭐⭐⭐ — 为 LLM 审计提供了高效实用的工具框架，98% 标注节省具有显著实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [DATE-LM: Benchmarking Data Attribution Evaluation for Large Language Models](date-lm_benchmarking_data_attribution_evaluation_for_large_language_models.md)
+- [A Survey on Proactive Defense Strategies Against Misinformation in Large Language Models](../../ACL2025/social_computing/a_survey_on_proactive_defense_strategies_against_misinformation_in_large_languag.md)
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](../../ACL2025/social_computing/biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [Raising the Bar: Investigating the Values of Large Language Models via Generative Evolving Testing](../../ICML2025/social_computing/raising_the_bar_investigating_the_values_of_large_language_models_via_generative.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ NWM独立规划的ATE比最好的导航策略低40%。
 ## 评分
 
 ⭐⭐⭐⭐ — CDiT架构设计高效优雅，跨环境导航世界模型的概念有前瞻性，独立规划的ATE显著优于专门训练的导航策略。来自Meta FAIR和NYU的强团队（Yann LeCun共同作者）。约束规划实验展示了世界模型独特的优势。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [World2Act: Latent Action Post-Training via Skill-Compositional World Models](world2act_latent_action_post-training_via_skill-compositional_world_models.md)
+- [Disentangled World Models: Learning to Transfer Semantic Knowledge from Distracting Videos for Reinforcement Learning](../../ICCV2025/video_generation/disentangled_world_models_learning_to_transfer_semantic_knowledge_from_distracti.md)
+- [From Slow Bidirectional to Fast Autoregressive Video Diffusion Models](from_slow_bidirectional_to_fast_autoregressive_video_diffusion_models.md)
+- [InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
+- [Mimir: Improving Video Diffusion Models for Precise Text Understanding](mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ $$l^i(u,v) = -\log \frac{\exp(\text{sim}(\mathbf{f}_u^i, \mathbf{f}_v^i) / \tau)
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个不同任务、21种模态组合、极其详细的消融实验，说服力极强
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰完整，三阶段流程可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了多模态分割中的实际痛点，统一参数的设计对临床部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Self-Supervised Foundation Models for Critical Care Time Series](towards_self-supervised_foundation_models_for_critical_care_time_series.md)
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+- [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [Mamba Goes HoME: Hierarchical Soft Mixture-of-Experts for 3D Medical Image Segmentation](mamba_goes_home_hierarchical_soft_mixture-of-experts_for_3d_medical_image_segmen.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ UMAP 潜在空间可视化显示不同阈值 $T$ 形成清晰聚类。
 - 理论 ⭐⭐⭐⭐⭐：四个定理覆盖近似比、KL收敛、无归一化、奖励一致性
 - 实验 ⭐⭐⭐⭐：大规模真实网络上效果突出
 - 工程价值 ⭐⭐⭐：系统复杂但在大规模场景下有明确优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large-Scale Training Data Attribution for Music Generative Models via Unlearning](large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
+- [UltraHR-100K: Enhancing UHR Image Synthesis with A Large-Scale High-Quality Dataset](ultrahr-100k_enhancing_uhr_image_synthesis_with_a_large-scale_high-quality_datas.md)
+- [Diffusion Generative Modeling on Lie Group Representations](diffusion_generative_modeling_on_lie_group_representations.md)
+- [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+- [Energy Loss Functions for Physical Systems](energy_loss_functions_for_physical_systems.md)
+
+<!-- RELATED:END -->

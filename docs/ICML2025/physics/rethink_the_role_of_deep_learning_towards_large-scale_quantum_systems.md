@@ -136,3 +136,15 @@ $$n_{\text{pre}} \times M_{\text{pre}} + n_{\text{sft}} \times M_{\text{sft}} = 
 - 实验充分度: ⭐⭐⭐⭐ — 多模型、多任务、多尺度（最大 127 qubit），含随机化测试
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、问题驱动，但部分记号较密集
 - 价值: ⭐⭐⭐⭐ — 对量子 ML 社区有重要警示：不要盲目追求 DL 复杂度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Complete Merger Identification at Cosmic Noon with Deep Learning](../../NeurIPS2025/physics/toward_complete_merger_identification_at_cosmic_noon_with_deep_learning.md)
+- [TITAN: A Trajectory-Informed Technique for Adaptive Parameter Freezing in Large-Scale VQE](../../NeurIPS2025/physics/titan_a_trajectory-informed_technique_for_adaptive_parameter_freezing_in_large-s.md)
+- [Galaxy Walker: Geometry-aware VLMs For Galaxy-scale Understanding](../../CVPR2025/physics/galaxy_walker_geometry-aware_vlms_for_galaxy-scale_understanding.md)
+- [Transfer Learning Beyond the Standard Model](../../NeurIPS2025/physics/transfer_learning_beyond_the_standard_model.md)
+- [Compact Matrix Quantum Group Equivariant Neural Networks](compact_matrix_quantum_group_equivariant_neural_networks.md)
+
+<!-- RELATED:END -->

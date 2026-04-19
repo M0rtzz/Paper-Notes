@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，缺少数值验证
 - 写作质量: ⭐⭐⭐⭐ Table 1/2的对照清晰，定理陈述严谨
 - 价值: ⭐⭐⭐⭐ 对能量模型学习和NCE理论的重要统一贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Approach to Submodular Maximization Under Noise](../../NeurIPS2025/optimization/a_unified_approach_to_submodular_maximization_under_noise.md)
+- [FSL-SAGE: Accelerating Federated Split Learning via Smashed Activation Gradient Estimation](fsl-sage_accelerating_federated_split_learning_via_smashed_activation_gradient_e.md)
+- [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](../../NeurIPS2025/optimization/covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
+- [Near-Exponential Savings for Mean Estimation with Active Learning](../../NeurIPS2025/optimization/near-exponential_savings_for_mean_estimation_with_active_learning.md)
+- [Clipping Improves Adam-Norm and AdaGrad-Norm when the Noise Is Heavy-Tailed](clipping_improves_adam-norm_and_adagrad-norm_when_the_noise_is_heavy-tailed.md)
+
+<!-- RELATED:END -->

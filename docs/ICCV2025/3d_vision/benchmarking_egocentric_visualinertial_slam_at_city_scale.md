@@ -121,3 +121,15 @@ LaMAria 是第一个同时覆盖大规模、第一人称、厘米精度、多种
 - 实验充分度: ⭐⭐⭐⭐⭐（8+ 系统、多传感器配置、分级实验、变异性分析、短片段分析一应俱全）
 - 写作质量: ⭐⭐⭐⭐⭐（结构清晰，对 SLAM 和测绘专业知识的融合讲解很好）
 - 价值: ⭐⭐⭐⭐⭐（填补了重要的基准空白，数据集公开，对 SLAM 社区有长期影响力）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoProg3D: Compositional Visual Reasoning for City-Scale 3D Language Fields](geoprog3d_compositional_visual_reasoning_for_city-scale_3d_language_fields.md)
+- [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
+- [Outdoor Monocular SLAM with Global Scale-Consistent 3D Gaussian Pointmaps](outdoor_monocular_slam_with_global_scale-consistent_3d_gaussian_pointmaps.md)
+- [Benchmarking and Learning Multi-Dimensional Quality Evaluator for Text-to-3D Generation](benchmarking_and_learning_multi-dimensional_quality_evaluator_for_text-to-3d_gen.md)
+- [Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span](../../NeurIPS2025/3d_vision/gaze_beyond_the_frame_forecasting_egocentric_3d_visual_span.md)
+
+<!-- RELATED:END -->

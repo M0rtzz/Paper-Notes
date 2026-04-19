@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成和真实数据验证齐全，但定量比较的基线方法较少
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述有层次，从物理原理到算法实现逻辑通顺
 - 价值: ⭐⭐⭐ 面向脉冲相机这一小众方向，但方法论思路（自监督去噪+渐进配准）有通用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Free-Viewpoint Video of Outdoor Sports Using a Flying Camera](free-viewpoint_video_of_outdoor_sports_using_a_flying_camera.md)
+- [Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
+- [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
+- [Provably Data-Driven Projection Method for Quadratic Programming](../../AAAI2026/others/provably_data-driven_projection_method_for_quadratic_programming.md)
+- [Capacity Matters: A Proof-of-Concept for Transformer Memorization on Real-World Data](../../ACL2025/others/capacity_matters_a_proof-of-concept_for_transformer_memorization_on_real-world_d.md)
+
+<!-- RELATED:END -->

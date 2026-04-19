@@ -123,3 +123,15 @@ tags:
 - 新颖性: ⭐⭐⭐⭐ 首个真实社媒投票基准
 - 实验充分度: ⭐⭐⭐⭐ 15模型双语
 - 价值: ⭐⭐⭐⭐ 对社媒分析有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Faster and Stronger: When ANN-SNN Conversion Meets Parallel Spiking Calculation](../../ICML2025/llm_evaluation/faster_and_stronger_when_ann-snn_conversion_meets_parallel_spiking_calculation.md)
+- [When Priors Backfire: On the Vulnerability of Unlearnable Examples to Pretraining](../../ICLR2026/llm_evaluation/when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_pretraining.md)
+- [InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](../../ICCV2025/llm_evaluation/intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)
+- [AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite](../../ICLR2026/llm_evaluation/astabench_benchmarking_ai_agents.md)
+- [When and Where to Reset Matters for Long-Term Test-Time Adaptation](../../ICLR2026/llm_evaluation/when_and_where_to_reset_matters_for_long-term_test-time_adaptation.md)
+
+<!-- RELATED:END -->

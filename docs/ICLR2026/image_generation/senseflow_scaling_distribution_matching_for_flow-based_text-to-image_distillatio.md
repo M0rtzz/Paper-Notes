@@ -141,3 +141,15 @@ IDA 是 SD 3.5 收敛的关键；ISG 是 FLUX 收敛的额外必要条件。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个不同规模和架构的模型、多个基准（COCO-5K/GenEval/T2I-CompBench）、充分的消融
 - **写作质量**: ⭐⭐⭐⭐ — 问题分析清晰，但方法描述的数学符号较多
 - **价值**: ⭐⭐⭐⭐⭐ — 解决了大规模 flow 模型蒸馏的实际瓶颈，对产业应用有直接推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
+- [DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment](densegrpo_from_sparse_to_dense_reward_for_flow_matching_model_alignment.md)
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+
+<!-- RELATED:END -->

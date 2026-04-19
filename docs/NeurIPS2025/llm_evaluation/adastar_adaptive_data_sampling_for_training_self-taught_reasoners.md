@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 基准 × 3 模型族，大量 baseline，FLOPs 和准确率双指标，充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析深入（训练不平衡的量化+持久性），方法描述精确（算法伪代码+复杂度分析）
 - 价值: ⭐⭐⭐⭐⭐ 对广泛使用的 STaR/RFT 训练范式的实用改进，58.6% 效率提升意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning](../../ACL2025/llm_evaluation/guessarena_guess_who_i_am_a.md)
+- [Efficient Semantic Uncertainty Quantification in Language Models via Diversity-Steered Sampling](efficient_semantic_uncertainty_quantification_in_language_models_via_diversity-s.md)
+- [HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
+- [Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training](exploiting_vocabulary_frequency_imbalance_in_language_model_pre-training.md)
+- [CLIMB: Class-Imbalanced Learning Benchmark on Tabular Data](climb_class-imbalanced_learning_benchmark_on_tabular_data.md)
+
+<!-- RELATED:END -->

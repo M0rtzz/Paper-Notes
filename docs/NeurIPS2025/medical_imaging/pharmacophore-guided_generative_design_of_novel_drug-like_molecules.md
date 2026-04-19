@@ -131,3 +131,15 @@ AI驱动的早期药物发现正在变革制药范式，但现有方法存在明
 - 实验充分度: ⭐⭐⭐ 单靶点、缺少与同类方法的对比、无实验验证
 - 写作质量: ⭐⭐⭐ 结构清晰但部分细节不够深入
 - 价值: ⭐⭐⭐ 为药效团引导的分子生成提供了实用框架，但验证有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](../../ICML2025/medical_imaging/unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
+- [Manipulating 3D Molecules in a Fixed-Dimensional E(3)-Equivariant Latent Space](manipulating_3d_molecules_in_a_fixed-dimensional_e3-equivariant_latent_space.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [GFlowNets for Learning Better Drug-Drug Interaction Representations](gflownets_for_learning_better_drug-drug_interaction_representations.md)
+- [Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number](prior-guided_flow_matching_for_target-aware_molecule_design_with_learnable_atom_.md)
+
+<!-- RELATED:END -->

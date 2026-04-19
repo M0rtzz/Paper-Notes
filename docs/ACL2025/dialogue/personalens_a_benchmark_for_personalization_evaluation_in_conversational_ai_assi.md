@@ -144,3 +144,15 @@ PersonaLens 桥接了任务导向对话（MultiWOZ, SGD）和个性化评估（L
 - **实验充分度**: ⭐⭐⭐⭐ — 7 个模型系列、单/跨领域对比、消融实验、人类验证、领域级分析，全面深入
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，形式化定义规范，与相关工作的对比（Table 2）非常有用
 - **价值**: ⭐⭐⭐⭐ — 为"个性化 AI 助手离实用还有多远"提供了定量答案（2/4 分），消融结果对产品设计有直接启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Know Your Mistakes: Towards Preventing Overreliance on Task-Oriented Conversational AI Through Accountability Modeling](know_your_mistakes_towards_preventing_overreliance_on_task-oriented_conversation.md)
+- [Agent WARPP: Workflow Adherence via Runtime Parallel Personalization](../../ICML2025/dialogue/agent_warpp_workflow_adherence_via_runtime_parallel_personalization.md)
+- [SciArena: An Open Evaluation Platform for Non-Verifiable Scientific Literature-Grounded Tasks](../../NeurIPS2025/dialogue/sciarena_an_open_evaluation_platform_for_non-verifiable_scientific_literature-gr.md)
+- [ReIn: Conversational Error Recovery with Reasoning Inception](../../ICLR2026/dialogue/rein_conversational_error_recovery_with_reasoning_inception.md)
+- [Enabling Chatbots with Eyes and Ears: An Immersive Multimodal Conversation System](enabling_chatbots_with_eyes_and_ears_an_immersive_multimodal_conversation_system.md)
+
+<!-- RELATED:END -->

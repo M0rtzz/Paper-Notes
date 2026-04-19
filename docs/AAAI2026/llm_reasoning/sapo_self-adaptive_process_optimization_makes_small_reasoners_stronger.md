@@ -130,3 +130,15 @@ SAPO采用迭代式探索-利用范式：每轮迭代中，验证器预打分→
 - 实验充分度: ⭐⭐⭐⭐ 三个backbone×两个任务类型×多个baseline，消融和效率分析全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，从problem→method→experiment逻辑完整
 - 价值: ⭐⭐⭐⭐ 对SLM自演化和过程监督效率化有明确的实用贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Social Learning via Mode Policy Optimization for Language Agents](../../ICLR2026/llm_reasoning/adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
+- [SERL: Self-Examining Reinforcement Learning on Open-Domain](serl_self-examining_reinforcement_learning_on_open-domain.md)
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+- [Improving Value-based Process Verifier via Low-Cost Variance Reduction](improving_value-based_process_verifier_via_low-cost_variance_reduction.md)
+- [Trade-offs in Large Reasoning Models: An Empirical Analysis of Deliberative and Adaptive Reasoning over Foundational Capabilities](trade-offs_in_large_reasoning_models_an_empirical_analysis_of_deliberative_and_a.md)
+
+<!-- RELATED:END -->

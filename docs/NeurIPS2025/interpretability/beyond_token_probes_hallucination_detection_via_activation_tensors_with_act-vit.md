@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 15个组合、多种设置（单模型/多模型/零样本/少样本/迁移）、完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ 类比直观，Figure 1设计精美，实验分析系统性强
 - 价值: ⭐⭐⭐⭐⭐ 为幻觉检测提供了高效通用的新范式，跨LLM迁移能力是重要突破
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+- [Beyond Linear Probes: Dynamic Safety Monitoring for Language Models](../../ICLR2026/interpretability/beyond_linear_probes_dynamic_safety_monitoring_for_language_models.md)
+- [CBMAS: Cognitive Behavioral Modeling via Activation Steering](cbmas_cognitive_behavioral_modeling_via_activation_steering.md)
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [Probabilistic Token Alignment for Large Language Model Fusion](probabilistic_token_alignment_for_large_language_model_fusion.md)
+
+<!-- RELATED:END -->

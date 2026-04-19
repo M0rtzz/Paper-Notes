@@ -128,3 +128,15 @@ SF-RecSAM继承了SAM的整体架构（ViT图像编码器+prompt编码器+掩码
 - 实验充分度: ⭐⭐⭐ 两个数据集验证充分，但消融实验可以更细致
 - 写作质量: ⭐⭐⭐ 方法描述清晰，问题动机well-motivated
 - 价值: ⭐⭐⭐⭐ 为SAM在医学超声领域的应用提供了有效的适配方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decoding with Structured Awareness: Integrating Directional, Frequency-Spatial, and Structural Attention for Medical Image Segmentation](../../AAAI2026/medical_imaging/decoding_with_structured_awareness_integrating_directional_frequency-spatial_and.md)
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](../../CVPR2026/medical_imaging/a_semisupervised_framework_for_breast_ultrasound_s.md)
+- [Architecture-Agnostic Untrained Network Priors for Image Reconstruction with Frequency Regularization](architecture-agnostic_untrained_network_priors_for_image_reconstruction_with_fre.md)
+- [I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)
+- [Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation](alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)
+
+<!-- RELATED:END -->

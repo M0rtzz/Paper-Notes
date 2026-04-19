@@ -132,3 +132,15 @@ token 选择策略消融（像素级）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 四个基准、多种 MLLM 对比（含 GPT-4 系列）、详细消融，说服力强
 - **写作质量**: ⭐⭐⭐⭐ — 动机阐述清晰，但公式符号较多需要仔细跟踪
 - **价值**: ⭐⭐⭐⭐⭐ — 显著降低工业异常检测的标注成本，为 MLLM 在工业质检中的应用打开新路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CCCaption: Dual-Reward Reinforcement Learning for Complete and Correct Image Captioning](cccaption_dual-reward_reinforcement_learning_for_complete_and_correct_image_capt.md)
+- [PreferThinker: Reasoning-based Personalized Image Preference Assessment](../../ICLR2026/reinforcement_learning/preferthinker_reasoning-based_personalized_image_preference_assessment.md)
+- [Reasoning as Representation: Rethinking Visual Reinforcement Learning in Image Quality Assessment](../../ICLR2026/reinforcement_learning/reasoning_as_representation_rethinking_visual_reinforcement_learning_in_image_qu.md)
+- [TextShield-R1: Reinforced Reasoning for Tampered Text Detection](../../AAAI2026/reinforcement_learning/textshield-r1_reinforced_reasoning_for_tampered_text_detection.md)
+- [AceTone: Bridging Words and Colors for Conditional Image Grading](acetone_bridging_words_and_colors_for_conditional_image_grading.md)
+
+<!-- RELATED:END -->

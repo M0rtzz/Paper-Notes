@@ -94,3 +94,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 三个模型但仅仿真验证
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，设计动机说明充分
 - 价值: ⭐⭐⭐⭐ 对 MoE 硬件部署有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Framework for Establishing the Universal Approximation of Transformer-Type Architectures](a_unified_framework_for_establishing_the_universal_approxima.md)
+- [Efficient Training-Free Online Routing for High-Volume Multi-LLM Serving](efficient_training-free_online_routing_for_high-volume_multi-llm_serving.md)
+- [The PokeAgent Challenge: Competitive and Long-Context Learning at Scale](the_pokeagent_challenge_competitive_and_long-context_learning_at_scale.md)
+- [Advancing Expert Specialization for Better MoE](advancing_expert_specialization_for_better_moe.md)
+- [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](../../ICLR2026/llm_efficiency/semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
+
+<!-- RELATED:END -->

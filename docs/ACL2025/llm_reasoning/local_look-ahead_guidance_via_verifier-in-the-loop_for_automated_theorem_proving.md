@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种方法对比+详细消融+速度分析
 - 写作质量: ⭐⭐⭐⭐ 方法和实验描述清晰
 - 价值: ⭐⭐⭐⭐ 对ATP和密集奖励RL都有借鉴意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProofCompass: Enhancing Specialized Provers with LLM Guidance](../../ICML2025/llm_reasoning/proofcompass_enhancing_specialized_provers_with_llm_guidance.md)
+- [Improving Value-based Process Verifier via Low-Cost Variance Reduction](../../AAAI2026/llm_reasoning/improving_value-based_process_verifier_via_low-cost_variance_reduction.md)
+- [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](safe_math_reasoning.md)
+- [Improve Vision Language Model Chain-of-thought Reasoning](improve_vlm_cot_reasoning.md)
+- [SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](softcot_soft_chain_of_thought.md)
+
+<!-- RELATED:END -->

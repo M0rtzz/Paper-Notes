@@ -130,3 +130,15 @@ HAIF-GS 提出基于稀疏运动锚点的动态 3DGS 框架，通过锚点过滤
 - 实验充分度: ⭐⭐⭐⭐ 标准基准上的全面对比和消融，但缺少大规模场景实验
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，公式严谨，但部分模块（如分层传播细节）可以更详细
 - 价值: ⭐⭐⭐⭐ 对动态 3DGS 的效率和精度均有提升，组件设计可复用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VA-GS: Enhancing the Geometric Representation of Gaussian Splatting via View Alignment](va-gs_enhancing_the_geometric_representation_of_gaussian_splatting_via_view_alig.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors](planargs_high-fidelity_indoor_3d_gaussian_splatting_guided_by_vision-language_pl.md)
+- [Flux4D: Flow-based Unsupervised 4D Reconstruction](flux4d_flow-based_unsupervised_4d_reconstruction.md)
+- [BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](../../ICCV2025/3d_vision/beziergs_dynamic_urban_scene_reconstruction_with_bezier_curv.md)
+
+<!-- RELATED:END -->

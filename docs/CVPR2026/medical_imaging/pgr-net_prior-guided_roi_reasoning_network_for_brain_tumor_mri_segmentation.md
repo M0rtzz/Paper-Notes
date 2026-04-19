@@ -141,3 +141,15 @@ BraTS-2019 / BraTS-2023 Dice (%) 消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、三次重复、完整消融（6 个配置渐进添加）、效率对比、定性可视化
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从临床观察到先验构建到网络设计的推导自然
 - 价值: ⭐⭐⭐⭐ 用最小参数达到 SOTA 的思路在医学影像分割社区有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](multiscale_structureguided_latent_diffusion_for_mu.md)
+- [Virtual Full-stack Scanning of Brain MRI via Imputing Any Quantised Code](virtual_full-stack_scanning_of_brain_mri_via_imputing_any_quantised_code.md)
+- [CodeBrain: Virtual Full-stack Scanning of Brain MRI via Imputing Any Quantised Code](virtual_fullstack_scanning_of_brain_mri_via_imputi.md)
+
+<!-- RELATED:END -->

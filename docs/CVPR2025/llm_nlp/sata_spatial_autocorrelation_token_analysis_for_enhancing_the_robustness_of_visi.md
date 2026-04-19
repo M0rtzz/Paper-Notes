@@ -84,3 +84,15 @@ SATA作为即插即用模块应用于预训练ViT的推理阶段：(1) 从ViT的
 - 计算空间自相关统计量的额外推理开销（约5-10%）
 - 对高分辨率输入（大量token）开销可能更显著
 - 未来可结合频域分析进一步增强异常token检测
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [L-SWAG: Layer-Sample Wise Activation with Gradients Information for Zero-Shot NAS on Vision Transformers](l-swag_layer-sample_wise_activation_with_gradients_information_for_zero-shot_nas.md)
+- [Learning Spatial Decay for Vision Transformers](../../AAAI2026/llm_nlp/learning_spatial_decay_for_vision_transformers.md)
+- [Spiking Transformer with Spatial-Temporal Attention](spiking_transformer_with_spatial-temporal_attention.md)
+- [Building Vision Models upon Heat Conduction](building_vision_models_upon_heat_conduction.md)
+- [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
+
+<!-- RELATED:END -->

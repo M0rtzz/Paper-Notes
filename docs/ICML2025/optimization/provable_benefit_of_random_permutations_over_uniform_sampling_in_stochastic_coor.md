@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 数值实验充分验证理论，支持猜想
 - 写作质量: ⭐⭐⭐⭐ 68 页长文，理论严谨，组织清晰
 - 价值: ⭐⭐⭐⭐⭐ 对优化理论有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Random Feature Representation Boosting](random_feature_representation_boosting.md)
+- [Provable In-Context Vector Arithmetic via Retrieving Task Concepts](provable_in-context_vector_arithmetic_via_retrieving_task_concepts.md)
+- [FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling](../../NeurIPS2025/optimization/fedrts_federated_robust_pruning_via_combinatorial_thompson_sampling.md)
+- [Learning Mixtures of Experts with EM: A Mirror Descent Perspective](learning_mixtures_of_experts_with_em_a_mirror_descent_perspective.md)
+- [A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization](a_near-optimal_single-loop_stochastic_algorithm_for_convex_finite-sum_coupled_co.md)
+
+<!-- RELATED:END -->

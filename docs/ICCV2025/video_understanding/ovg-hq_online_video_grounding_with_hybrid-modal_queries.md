@@ -158,3 +158,15 @@ $$\mathcal{L}_d = \frac{1}{N}\sum_{i=1}^{N}\left(\mathcal{L}_{\text{KL}}(\mathbf
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集，多种查询类型，充分的消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义明确
 - 价值: ⭐⭐⭐⭐ 推动在线多模态视频理解发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding](hierarchical_event_memory_for_accurate_and_low-latency_online_video_temporal_gro.md)
+- [Cross-modal Causal Relation Alignment for Video Question Grounding](../../CVPR2025/video_understanding/cross-modal_causal_relation_alignment_for_video_question_grounding.md)
+- [Estimating 2D Camera Motion with Hybrid Motion Basis](estimating_2d_camera_motion_with_hybrid_motion_basis.md)
+- [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
+- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
+
+<!-- RELATED:END -->

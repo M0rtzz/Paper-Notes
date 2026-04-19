@@ -145,3 +145,15 @@ CropMAE的训练pipeline：输入一张图像 $I$ → 生成两个裁剪视图 $
 - 实验充分度: ⭐⭐⭐⭐ 三个下游任务+详尽消融+训练速度+注意力可视化，但缺少分类评估
 - 写作质量: ⭐⭐⭐⭐ 论证逻辑清晰，"任务可解性"的分析透彻
 - 价值: ⭐⭐⭐⭐ 大幅降低自监督预训练的数据和计算门槛，对资源受限场景有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
+- [From Prototypes to General Distributions: An Efficient Curriculum for Masked Image Modeling](../../CVPR2025/self_supervised/from_prototypes_to_general_distributions_an_efficient_curriculum_for_masked_imag.md)
+- [Fly-CL: A Fly-Inspired Framework for Enhancing Efficient Decorrelation and Reduced Training Time in Pre-trained Model-based Continual Representation Learning](../../ICLR2026/self_supervised/fly-cl_a_fly-inspired_framework_for_enhancing_efficient_decorrelation_and_reduce.md)
+- [MarineInst: A Foundation Model for Marine Image Analysis with Instance Visual Description](marineinst_a_foundation_model_for_marine_image_analysis_with_instance_visual_des.md)
+- [From Linearity to Non-Linearity: How Masked Autoencoders Capture Spatial Correlations](../../ICCV2025/self_supervised/from_linearity_to_non-linearity_how_masked_autoencoders_capture_spatial_correlat.md)
+
+<!-- RELATED:END -->

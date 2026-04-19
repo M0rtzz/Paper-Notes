@@ -152,3 +152,15 @@ tags:
 | 技术深度 | ⭐⭐⭐⭐ | 多维评估框架设计合理，延迟优化出色 |
 | 实验完整度 | ⭐⭐⭐⭐⭐ | TrustBench 规模大、场景全面 |
 | 实用价值 | ⭐⭐⭐⭐⭐ | 直接解决 Agent 部署的安全刚需 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thucy: An LLM-based Multi-Agent System for Claim Verification across Relational Databases](thucy_an_llm-based_multi-agent_system_for_claim_verification_across_relational_d.md)
+- [D-GARA: A Dynamic Benchmarking Framework for GUI Agent Robustness in Real-World Anomalies](d-gara_a_dynamic_benchmarking_framework_for_gui_agent_robust.md)
+- [Leveraging Dual Process Theory in Language Agent Framework for Real-time Simultaneous Human-AI Collaboration](../../ACL2025/llm_agent/dpt_agent_dual_process.md)
+- [Agentic Plan Caching: Test-Time Memory for Fast and Cost-Efficient LLM Agents](../../NeurIPS2025/llm_agent/agentic_plan_caching_test-time_memory_for_fast_and_cost-efficient_llm_agents.md)
+- [With Great Capabilities Come Great Responsibilities: Introducing the Agentic Risk & Capability Framework for Governing Agentic AI Systems](with_great_capabilities_come_great_responsibilities_introducing_the_agentic_risk.md)
+
+<!-- RELATED:END -->

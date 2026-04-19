@@ -155,3 +155,15 @@ VisualSync不是学习型方法，而是基于优化的框架：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 四个多样化数据集、完整消融、下游应用验证
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，数学推导严谨
 - **价值**: ⭐⭐⭐⭐ 解决了多相机4D重建的基础性问题，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Multi-View Spatial Reasoning from Cross-View Relations](../../CVPR2026/3d_vision/learning_multi-view_spatial_reasoning_from_cross-view_relations.md)
+- [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](../../ICCV2025/3d_vision/image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
+- [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [Exploring Surround-View Fisheye Camera 3D Object Detection](../../AAAI2026/3d_vision/exploring_surround-view_fisheye_camera_3d_object_detection.md)
+
+<!-- RELATED:END -->

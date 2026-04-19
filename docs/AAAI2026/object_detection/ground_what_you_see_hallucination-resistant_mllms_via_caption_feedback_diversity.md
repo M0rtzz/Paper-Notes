@@ -151,3 +151,15 @@ $$\Delta\log\pi^t(\mathbf{y}_u|\mathbf{x}_o) \propto \eta \cdot \mathcal{A}^t(x_
 - 实验充分度: ⭐⭐⭐⭐ — 消融完整，但基准范围可更广
 - 写作质量: ⭐⭐⭐⭐ — 问题分析清晰，三模块逻辑连贯
 - 价值: ⭐⭐⭐⭐ — 系统性解决 RL 训练中的 MLLM 幻觉问题，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Scalable Web Accessibility Audit with MLLMs as Copilots](towards_scalable_web_accessibility_audit_with_mllms_as_copilots.md)
+- [YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information](../../ECCV2024/object_detection/yolov9_learning_what_you_want_to_learn_using_programmable_gradient_information.md)
+- [Beyond Caption-Based Queries for Video Moment Retrieval](../../CVPR2026/object_detection/beyond_caption-based_queries_for_video_moment_retrieval.md)
+- [PASE: Leveraging the Phonological Prior of WavLM for Low-Hallucination Generative Speech Enhancement](pase_leveraging_the_phonological_prior_of_wavlm_for_low-hallucination_generative.md)
+- [ConFu: Contemplate the Future for Better Speculative Sampling](../../ICLR2026/object_detection/confu_contemplate_the_future_for_better_speculative_sampling.md)
+
+<!-- RELATED:END -->

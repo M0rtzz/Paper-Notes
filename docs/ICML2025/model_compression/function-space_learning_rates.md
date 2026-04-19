@@ -142,3 +142,15 @@ $$\eta^\ell = \eta_0 \cdot \frac{\|\Delta_\ell \mathbf{f}\|_{\text{RMS}}^{\text{
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖宽度/深度/初始化/LoRA四个维度，含多种架构和消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导清晰，从动机到算法逻辑自然
 - 价值: ⭐⭐⭐⭐ — 对大模型训练的超参数调优有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LoRA Subtraction for Drift-Resistant Space in Exemplar-Free Continual Learning](../../CVPR2025/model_compression/lora_subtraction_for_drift-resistant_space_in_exemplar-free_continual_learning.md)
+- [Dataset Distillation with Neural Characteristic Function: A Minmax Perspective](../../CVPR2025/model_compression/dataset_distillation_with_neural_characteristic_function_a_minmax_perspective.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](../../ICLR2026/model_compression/topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
+- [Heavy Labels Out! Dataset Distillation with Label Space Lightening](../../ICCV2025/model_compression/heavy_labels_out_dataset_distillation_with_label_space_lightening.md)
+
+<!-- RELATED:END -->

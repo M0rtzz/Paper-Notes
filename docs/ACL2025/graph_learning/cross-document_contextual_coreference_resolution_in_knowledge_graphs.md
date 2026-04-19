@@ -157,3 +157,15 @@ $$\mathbf{h}_i^{(t+1)} = \sum_{v_j \in \mathcal{N}(v_i)} \mathbf{W} \cdot \mathb
 - **实验充分度**: ⭐⭐⭐ — 数据集较多但部分实验设计不够严谨，消融不够细粒度
 - **写作质量**: ⭐⭐⭐ — 结构完整但部分公式符号不够清晰，related work 描述偏冗长
 - **价值**: ⭐⭐⭐ — 提供了跨文档 CR 的知识图谱增强思路，但改进幅度不够突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Evaluate Complex Attribution in QA? Automatic Benchmarking using Knowledge Graphs](paper_2401_14640.md)
+- [Extending Complex Logical Queries on Uncertain Knowledge Graphs](extending_complex_logical_queries_uncertain_knowledge_graphs.md)
+- [SimGRAG: Leveraging Similar Subgraphs for Knowledge Graphs Driven Retrieval-Augmented Generation](simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)
+- [Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](kg_llm_trustworthy_qa.md)
+- [Deliberation on Priors: Trustworthy Reasoning of LLMs on Knowledge Graphs](../../NeurIPS2025/graph_learning/deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)
+
+<!-- RELATED:END -->

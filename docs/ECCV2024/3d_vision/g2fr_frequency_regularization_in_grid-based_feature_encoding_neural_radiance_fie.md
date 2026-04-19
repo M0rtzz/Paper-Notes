@@ -139,3 +139,15 @@ G²fR的整体框架包含以下核心步骤：
 - 实验充分度: ⭐⭐⭐⭐ 多种GFE方法、多个任务、多个数据集的全面验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验分析详尽
 - 价值: ⭐⭐⭐⭐ 为GFE-NeRF的正则化提供了通用且有理论基础的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeometrySticker: Enabling Ownership Claim of Recolorized Neural Radiance Fields](geometrysticker_enabling_ownership_claim_of_recolorized_neural_radiance_fields.md)
+- [SlotLifter: Slot-guided Feature Lifting for Learning Object-centric Radiance Fields](slotlifter_slot-guided_feature_lifting_for_learning_object-centric_radiance_fiel.md)
+- [BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream](benerf_neural_radiance_fields_from_a_single_blurry_image_and_event_stream.md)
+- [Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields](omni-recon_harnessing_image-based_rendering_for_general-purpose_neural_radiance_.md)
+- [LaRa: Efficient Large-Baseline Radiance Fields](lara_efficient_large-baseline_radiance_fields.md)
+
+<!-- RELATED:END -->

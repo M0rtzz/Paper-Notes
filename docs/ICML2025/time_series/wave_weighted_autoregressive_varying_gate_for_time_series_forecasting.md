@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个数据集、5种注意力机制的全面交叉验证、层数消融、回看长度分析、计算成本对比、可视化分析——非常充分
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰、公式推导严谨、可视化分析直观，但部分符号较多需仔细阅读
 - 价值: ⭐⭐⭐⭐ 为自回归Transformer在TSF中的应用提供了坚实的理论和实践基础，ARMA结构作为即插即用模块有较好的通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting](breaking_silos_adaptive_model_fusion_unlocks_better_time_series_forecasting.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+- [When Will It Fail?: Anomaly to Prompt for Forecasting Future Anomalies in Time Series](when_will_it_fail_anomaly_to_prompt_for_forecasting_future_anomalies_in_time_ser.md)
+- [Scaling LLM Speculative Decoding: Non-Autoregressive Forecasting in Large-Batch Scenarios](../../AAAI2026/time_series/scaling_llm_speculative_decoding_non-autoregressive_forecasting_in_large-batch_s.md)
+- [HyperIMTS: Hypergraph Neural Network for Irregular Multivariate Time Series Forecasting](hyperimts_hypergraph_neural_network_for_irregular_multivariate_time_series_forec.md)
+
+<!-- RELATED:END -->

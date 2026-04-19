@@ -116,3 +116,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，prompt模板示例直观
 - 价值: ⭐⭐⭐⭐ 为3D场景理解提供了高效的图-LLM融合范式，对具身智能有实际意义
 - 总评: 扎实的工作，在紧凑表示和语义建模之间找到了好的平衡点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open-Vocabulary Octree-Graph for 3D Scene Understanding](open-vocabulary_octree-graph_for_3d_scene_understanding.md)
+- [HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
+- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](articulate3d_holistic_understanding_of_3d_scenes_as_universa.md)
+- [ExCap3D: Expressive 3D Scene Understanding via Object Captioning with Varying Detail](excap3d_expressive_3d_scene_understanding_via_object_captioning_with_varying_det.md)
+- [Monocular Semantic Scene Completion via Masked Recurrent Networks](monocular_semantic_scene_completion_via_masked_recurrent_networks.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ STAR-MD 在所有指标上均达 SOTA。
 - 实验充分度: ⭐⭐⭐⭐⭐ 多时间尺度评估（100ns/250ns/1μs）+全面消融+结构质量/覆盖/动力学多维度指标
 - 写作质量: ⭐⭐⭐⭐ 理论和方法描述清晰，但符号密集需要领域背景
 - 价值: ⭐⭐⭐⭐⭐ 对蛋白质动力学模拟有重大推进，可能开启生成模型驱动的药物发现新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein Counterfactuals via Diffusion-Guided Latent Optimization](protein_counterfactuals_via_diffusion-guided_latent_optimization.md)
+- [Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis](../../NeurIPS2025/medical_imaging/scalable_diffusion_transformer_for_conditional_4d_fmri_synthesis.md)
+- [Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?](../../CVPR2026/medical_imaging/can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy.md)
+- [ConfRover: Simultaneous Modeling of Protein Conformation and Dynamics via Autoregression](../../NeurIPS2025/medical_imaging/confrover_simultaneous_modeling_of_protein_conformation_and_dynamics_via_autoreg.md)
+- [Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+
+<!-- RELATED:END -->

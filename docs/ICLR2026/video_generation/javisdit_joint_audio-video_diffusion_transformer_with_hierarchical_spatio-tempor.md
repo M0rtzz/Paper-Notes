@@ -129,3 +129,15 @@ JavisDiT 在传统基准（FVD、KVD、FAD 指标）上也显著优于 MM-Diffus
 - 实验充分度: ⭐⭐⭐⭐ — 新基准 + 新指标 + 多方法对比，但部分基线未开源
 - 写作质量: ⭐⭐⭐⭐ — 结构完整，图示清晰，但部分细节在附录中
 - 价值: ⭐⭐⭐⭐ — JAVG 是重要但尚未成熟的方向，本文推进了该领域的标准化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
+- [QuantSparse: Comprehensively Compressing Video Diffusion Transformer with Model Quantization and Attention Sparsification](quantsparse_comprehensively_compressing_video_diffusion_transformer_with_model_q.md)
+- [UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation](../../CVPR2026/video_generation/unitalking_a_unified_audio-video_framework_for_talking_portrait_generation.md)
+- [BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration](bindweave_subject-consistent_video_generation_via_cross-modal_integration.md)
+- [MoSA: Motion-Coherent Human Video Generation via Structure-Appearance Decoupling](mosa_motion-coherent_human_video_generation_via_structure-appearance_decoupling.md)
+
+<!-- RELATED:END -->

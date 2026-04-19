@@ -114,3 +114,15 @@ $$\mathcal{L} = \mathcal{L}_{image} + \mathcal{L}_{geom} + \mathcal{L}_{op}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种任务+丰富消融+极端视角/表情测试+对比INSTA
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，对比公平
 - 价值: ⭐⭐⭐⭐ 10MB+300FPS的头像对移动端应用有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GASP: Gaussian Avatars with Synthetic Priors](gasp_gaussian_avatars_with_synthetic_priors.md)
+- [PhysHead: Simulation-Ready Gaussian Head Avatars](../../CVPR2026/3d_vision/physhead_simulation-ready_gaussian_head_avatars.md)
+- [StrandHead: Text to Hair-Disentangled 3D Head Avatars Using Human-Centric Priors](../../ICCV2025/3d_vision/strandhead_text_to_hair-disentangled_3d_head_avatars_using_human-centric_priors.md)
+- [HyPlaneHead: Rethinking Tri-plane-like Representations in Full-Head Image Synthesis](../../NeurIPS2025/3d_vision/hyplanehead_rethinking_tri-plane-like_representations_in_full-head_image_synthes.md)
+- [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
+
+<!-- RELATED:END -->

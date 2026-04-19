@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ BLV 教育者 + 视力正常者 + VLM 评判 + 自动指标的四维评估极为全面，消融设计周到
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，效应量分析严谨，表格丰富但部分符号系统较复杂
 - 价值: ⭐⭐⭐⭐⭐ 填补 BLV 对齐数据集的重要空白，数据集已公开且支持多任务训练
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [USDC: A Dataset of User Stance and Dogmatism in Long Conversations](usdc_a_dataset_of_underlineuser_underlinestance_and_underlinedogmatism_in_long_u.md)
+- [FEAT: A Preference Feedback Dataset through a Cost-Effective Auto-Generation and Labeling Framework for English AI Tutoring](feat_a_preference_feedback_dataset_through_a_cost-effective_auto-generation_and_.md)
+- [A Practical Approach for Building Production-Grade Conversational Agents with Workflow Graphs](a_practical_approach_for_building_production-grade_conversational_agents_with_wo.md)
+- [Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection](explaining_matters_leveraging_definitions_and_semantic_expansion_for_sexism_dete.md)
+- [Building Better: Avoiding Pitfalls in Developing Language Resources when Data is Scarce](building_better_avoiding_pitfalls_in_developing_language_resources_when_data_is_.md)
+
+<!-- RELATED:END -->

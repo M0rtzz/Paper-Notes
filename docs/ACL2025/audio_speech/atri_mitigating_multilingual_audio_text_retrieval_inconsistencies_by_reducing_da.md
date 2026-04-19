@@ -131,3 +131,15 @@ ATRI 方案的核心思想是：通过理论分析证明不一致性的根源是
 - 实验充分度: ⭐⭐⭐⭐ 8种语言、2个数据集、多种指标、一致性分析全面，但缺少原生多语言数据
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验分析详尽，图示直观
 - 价值: ⭐⭐⭐⭐ 对多语言音频检索领域有实质性推进，理论发现具有更广泛的指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
+- [CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages](clamp_3_universal_music_information_retrieval_across_unaligned_modalities_and_un.md)
+- [WavRAG: Audio-Integrated Retrieval Augmented Generation for Spoken Dialogue Models](wavrag_audio-integrated_retrieval_augmented_generation_for_spoken_dialogue_model.md)
+- [In-the-wild Audio Spatialization with Flexible Text-guided Localization](tas_audio_spatialization.md)
+- [Distilling an End-to-End Voice Assistant Without Instruction Training Data](distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
+
+<!-- RELATED:END -->

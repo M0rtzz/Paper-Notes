@@ -127,3 +127,15 @@ RAG benchmark (Dyn-VQA, F1-Recall):
 - 实验充分度: ⭐⭐⭐⭐ 覆盖8个benchmark+1个RAG benchmark，多个基线模型，消融完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，四阶段pipeline的描述很系统
 - 价值: ⭐⭐⭐⭐ 填补了多模态agent调优数据集不足的空白，对社区有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools](toolvqa_a_dataset_for_multistep_reasoning_vqa_with_external.md)
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](../../ACL2025/multimodal_vlm/mammoth_vl_multimodal_reasoning.md)
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)
+- [Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/situat3dchange_situated_3d_change_understanding_dataset_for_multimodal_large_lan.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+
+<!-- RELATED:END -->

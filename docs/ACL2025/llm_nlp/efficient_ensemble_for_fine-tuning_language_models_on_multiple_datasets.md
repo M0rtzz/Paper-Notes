@@ -161,3 +161,15 @@ $$h_X(s, y) \approx h_{\theta^*}(s, y) + [\nabla_X h_{\theta^*}(s, y)]^{\top}(X 
 ⭐⭐⭐⭐⭐ (5/5)
 
 这是一篇技术贡献非常扎实的工作。核心观察（PEFT 权重极接近基础模型）简洁而深刻，由此推导出的方法既有理论保证又在实践中高效。实验覆盖面广，从 1B 到 34B 模型、从 10 到 500 个数据集均有验证。在多数据集微调这一实际且重要的场景中给出了实用的解决方案。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [HFT: Half Fine-Tuning for Large Language Models](hft_half_fine-tuning_for_large_language_models.md)
+- [GORP: Continual Gradient Low-Rank Projection Fine-Tuning for LLMs](gorp_continual_gradient_projection.md)
+- [PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models](plugin_finetuning_bridge.md)
+
+<!-- RELATED:END -->

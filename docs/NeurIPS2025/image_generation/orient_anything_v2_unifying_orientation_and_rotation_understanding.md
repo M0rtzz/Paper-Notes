@@ -156,3 +156,15 @@ V2 在所有数据集上显著优于 V1，ARKitScenes 上中位误差从 77.58°
 - 实验充分度：⭐⭐⭐⭐⭐ — 11 个 benchmark，全面的消融
 - 实用价值：⭐⭐⭐⭐⭐ — 方向/旋转/对称性统一理解的基础模型
 - 总体推荐：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Kuramoto Orientation Diffusion Models](kuramoto_orientation_diffusion_models.md)
+- [CustAny: Customizing Anything from A Single Example](../../CVPR2025/image_generation/custany_customizing_anything_from_a_single_example.md)
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
+
+<!-- RELATED:END -->

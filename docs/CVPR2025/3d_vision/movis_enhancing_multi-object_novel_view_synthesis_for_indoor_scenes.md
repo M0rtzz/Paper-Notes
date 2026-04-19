@@ -132,3 +132,15 @@ MOVIS 在 IoU（物体放置准确性）上提升 **72%**（vs Zero-1-to-3），
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义清晰，三个设计点互相正交且从消融中验证了各自贡献；时间步调度器的洞察尤为有趣。泛化性在真实数据上还需进一步验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis](comapgs_covisibility_map-based_gaussian_splatting_for_sparse_novel_view_synthesi.md)
+- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
+- [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](../../NeurIPS2025/3d_vision/nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
+- [Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](../../ICCV2025/3d_vision/boosting_multiview_indoor_3d_object_detection_via_adaptive_3.md)
+- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ IMU 设备缺失鲁棒性 (遮掩 2/4 个 IMU)：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多数据集 + 详细消融 + 三种挑战场景 + 跨数据集泛化，极其全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，但部分符号可以更简化
 - **价值**: ⭐⭐⭐⭐ — 为穿戴式设备的动作识别提供了有效的多模态学习范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-Guided Video Masked Autoencoder](text-guided_video_masked_autoencoder.md)
+- [Data Collection-Free Masked Video Modeling](data_collection-free_masked_video_modeling.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
+- [Occluded Gait Recognition with Mixture of Experts: An Action Detection Perspective](occluded_gait_recognition_with_mixture_of_experts_an_action_detection_perspectiv.md)
+
+<!-- RELATED:END -->

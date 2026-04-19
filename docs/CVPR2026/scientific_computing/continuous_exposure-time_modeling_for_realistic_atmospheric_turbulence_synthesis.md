@@ -158,3 +158,15 @@ ET-Turb 在全部 4 个模型 × 2 个指标共 8 项评测中取得 7 项最优
 ⭐⭐⭐⭐ 4/5
 
 在湍流合成这个相对窄的领域做出了扎实的物理建模贡献。ET-MTF 的推导有清晰的物理根基，数据集设计周全，实验评估充分（4个SOTA模型×3个数据集的交叉验证）。扣分点在于这是一个数据集/仿真工具论文，缺少模型架构创新；此外消融实验中指标提升幅度有限（NIQE 从 4.297→4.212），虽然视觉效果差异更明显。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysSkin: Real-Time and Generalizable Physics-Based Skin Simulation](physskin_real-time_and_generalizable_physics-based_animation_via_self-supervised.md)
+- [EHETM: High-Quality and Efficient Turbulence Mitigation with Events](high-quality_and_efficient_turbulence_mitigation_with_events.md)
+- [GyroSwin: 5D Surrogates for Gyrokinetic Plasma Turbulence Simulations](../../NeurIPS2025/scientific_computing/gyroswin_5d_surrogates_for_gyrokinetic_plasma_turbulence_simulations.md)
+- [EddyFormer: Accelerated Neural Simulations of Three-Dimensional Turbulence at Scale](../../NeurIPS2025/scientific_computing/eddyformer_accelerated_neural_simulations_of_three-dimensional_turbulence_at_sca.md)
+- [Physics-Guided Machine Learning for Uncertainty Quantification in Turbulence Models](../../NeurIPS2025/scientific_computing/physics-guided_machine_learning_for_uncertainty_quantification_in_turbulence_mod.md)
+
+<!-- RELATED:END -->

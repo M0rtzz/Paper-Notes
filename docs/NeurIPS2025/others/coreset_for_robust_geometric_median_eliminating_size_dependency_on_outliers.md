@@ -116,3 +116,15 @@ Assumption 1.4 的条件 2（$\max_p \text{dist}(p, C^*)^z \leq 4k \cdot \text{a
 - **vs Feldman & Langberg [27]**: 早期构造要求指数级大小 $(k+m)^{O(k+m)}$，实际不可用
 - 非逐分量误差分析可推广到其他"部分数据可删除"的压缩问题
 - Ball range space 论证首次用于异常值点，为 robust clustering coreset 提供新技术工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distributionally Robust Feature Selection](distributionally_robust_feature_selection.md)
+- [Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
+- [Hierarchical Bracketing Encodings for Dependency Parsing as Tagging](../../ACL2025/others/hierarchical_bracketing_dep_parsing.md)
+- [Softmax is not Enough (for Sharp Size Generalisation)](../../ICML2025/others/softmax_is_not_enough_for_sharp_size_generalisation.md)
+- [One Sample is Enough to Make Conformal Prediction Robust](one_sample_is_enough_to_make_conformal_prediction_robust.md)
+
+<!-- RELATED:END -->

@@ -153,3 +153,15 @@ Rationale 对聚合指标影响有限，但保留以增强可解释性。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 主实验+外部基准+策略自适应+消融+红队脆弱性分析+组件贡献分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题定义和三大风险特征的归纳到位
 - 价值: ⭐⭐⭐⭐ — 填补了多模态多轮对话安全审核的空白，数据集和方法具有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [Diagnosing and Repairing Unsafe Channels in Vision-Language Models via Causal Discovery and Dual-Modal Safety Subspace Projection](diagnosing_and_repairing_unsafe_channels_in_vision-language_models_via_causal_di.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [StructXLIP: Enhancing Vision-Language Models with Multimodal Structural Cues](structxlip_enhancing_vision-language_models_with_multimodal_structural_cues.md)
+- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](graphvlm_benchmarking_vision_language_models_for_multimodal_graph_learning.md)
+
+<!-- RELATED:END -->

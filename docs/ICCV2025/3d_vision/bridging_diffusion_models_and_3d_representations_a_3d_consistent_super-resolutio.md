@@ -136,3 +136,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 两个数据集、多指标、多基线对比全面，但缺少消融表格
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，算法伪代码有助理解
 - **价值**: ⭐⭐⭐⭐ 为3D场景的高质量渲染提供了通用框架，实际应用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](bridging_diffusion_models_and_3d_representations_a_3d_consis.md)
+- [From Image to Video: An Empirical Study of Diffusion Representations](from_image_to_video_an_empirical_study_of_diffusion_representations.md)
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+- [Textured 3D Regenerative Morphing with 3D Diffusion Prior](textured_3d_regenerative_morphing_with_3d_diffusion_prior.md)
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨越视觉、语音、DNA、语言四个领域，消融极其详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 从属性分析到函数搜索到最终方案的逻辑链非常清晰
 - 价值: ⭐⭐⭐⭐ 证明逐点函数可超越归一化层是重要的研究信号，Derf本身是实用的drop-in替代
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](ppcl_pluggable_pruning_dit_distillation.md)
+- [SeeDNorm: Self-Rescaled Dynamic Normalization](../../ICLR2026/model_compression/seednorm_self-rescaled_dynamic_normalization.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
+- [Dependency Parsing is More Parameter-Efficient with Normalization](../../NeurIPS2025/model_compression/dependency_parsing_is_more_parameter-efficient_with_normalization.md)
+
+<!-- RELATED:END -->

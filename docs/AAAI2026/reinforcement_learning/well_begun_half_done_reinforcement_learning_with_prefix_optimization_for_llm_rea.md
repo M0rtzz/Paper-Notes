@@ -195,3 +195,15 @@ $$R_i = \sum_{j=1}^{G} \mathbb{1}(\hat{y}_{\mathbf{c}_j} = a) + \mathbb{1}(\hat{
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3 种模型规模、5 个基准、4 种基线方法、多维度消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机-发现-方法-验证的逻辑链完整流畅
 - 价值: ⭐⭐⭐⭐⭐ — 对 RLVR 训练效率有实际指导意义，BLE 发现可影响后续大量研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback](in-token_rationality_optimization_towards_accurate_and_concise_llm_reasoning_via.md)
+- [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](../../ICLR2026/reinforcement_learning/textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
+- [Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
+- [Reasoning or Memorization? Unreliable Results of Reinforcement Learning Due to Data Contamination](reasoning_or_memorization_unreliable_results_of_reinforcement_learning_due_to_da.md)
+- [FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning](../../ICLR2026/reinforcement_learning/fapo_flawed-aware_policy_optimization_for_efficient_and_reliable_reasoning.md)
+
+<!-- RELATED:END -->

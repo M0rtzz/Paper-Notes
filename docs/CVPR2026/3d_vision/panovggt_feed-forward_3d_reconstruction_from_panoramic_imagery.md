@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个数据集、多任务评估、跨域泛化、消融完整，且贡献了高质量数据集
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据集构建和方法设计都描述得很充分
 - 价值: ⭐⭐⭐⭐⭐ PanoCity 数据集 + 全景前馈重建范式对社区影响大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pano3DComposer: Feed-Forward Compositional 3D Scene Generation from Single Panoramic Image](pano3dcomposer_feed-forward_compositional_3d_scene_generation_from_single_panora.md)
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [VGG-T3: Offline Feed-Forward 3D Reconstruction at Scale](vgg-t3_offline_feed-forward_3d_reconstruction_at_scale.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+
+<!-- RELATED:END -->

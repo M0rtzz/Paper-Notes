@@ -148,3 +148,15 @@ Entropy-UID 是一种解码时 token 选择策略，在每个生成步骤中：
 | 实验充分度 | 2 | 缺乏人类评估、现代基线对比和生成文本展示 |
 | 写作质量 | 3 | 表述清晰但深度不足，分析偏浅 |
 | 价值 | 2.5 | 概念有启发性但实验支撑不足，实用价值待验证 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Optimizing Decomposition for Optimal Claim Verification](optimizing_decomposition_for_optimal_claim_verification.md)
+- [The Harmonic Structure of Information Contours](the_harmonic_structure_of_information_contours.md)
+- [Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
+- [An Information-Theoretic Framework For Optimizing Experimental Design To Distinguish Probabilistic Neural Codes](../../ICLR2026/others/an_information-theoretic_framework_for_optimizing_experimental_design_to_disting.md)
+
+<!-- RELATED:END -->

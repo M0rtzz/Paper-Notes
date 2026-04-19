@@ -194,3 +194,15 @@ PASM 贡献最大（Color +3.42%, Texture +5.7%），APU 进一步精调（Compl
 - 实验充分度: ⭐⭐⭐⭐ (三个基准、详细消融、效率分析、工具规模扩展实验)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，方法表述规范，可视化丰富)
 - 价值: ⭐⭐⭐⭐ (对 agent 工具选择有直接指导意义，框架具有通用性)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
+- [AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
+- [Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization](exploratory_memory-augmented_llm_agent_via_hybrid_on-_and_off-policy_optimizatio.md)
+- [HAMLET: A Hierarchical and Adaptive Multi-Agent Framework for Live Embodied Theatre](hamlet_a_hierarchical_and_adaptive_multi-agent_framework_for_live_embodied_theat.md)
+- [M²-Miner: Multi-Agent Enhanced MCTS for Mobile GUI Agent Data Mining](m2-miner_multi-agent_enhanced_mcts_for_mobile_gui_agent_data_mining.md)
+
+<!-- RELATED:END -->

@@ -152,3 +152,15 @@ HRScene 包含两大部分：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 28 个模型、27 个数据集、人类性能对比、诊断分析
 - **写作质量**: ⭐⭐⭐⭐ 分类体系清晰，发现的问题表述明确
 - **价值**: ⭐⭐⭐⭐⭐ 为 VLM 高分辨率理解提供了急需的系统性评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VLM-SubtleBench: How Far Are VLMs from Human-Level Subtle Comparative Reasoning?](../../ICLR2026/medical_imaging/vlm-subtlebench_how_far_are_vlms_from_human-level_subtle_comparative_reasoning.md)
+- [Predict-Optimize-Distill: A Self-Improving Cycle for 4D Object Understanding](predict-optimize-distill_a_self-improving_cycle_for_4d_object_understanding.md)
+- [A Cephalometric Landmark Regression Method Based on Dual-Encoder for High-Resolution X-Ray Image](../../ECCV2024/medical_imaging/a_cephalometric_landmark_regression_method_based_on_dual-encoder_for_high-resolu.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](../../CVPR2026/medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+- [THUNDER: Tile-level Histopathology image UNDERstanding benchmark](../../NeurIPS2025/medical_imaging/thunder_tile-level_histopathology_image_understanding_benchmark.md)
+
+<!-- RELATED:END -->

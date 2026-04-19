@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融充分但只在 MVRefer 上评测，缺少其他多视图语义理解基准对比
 - 写作质量: ⭐⭐⭐⭐⭐ 问题引入清晰，FGD 的数学分析深入浅出，图表设计优秀
 - 价值: ⭐⭐⭐⭐⭐ 对 Embodied AI 和 3D 场景理解有重要推动，MV-3DRES 可能成为新的标准任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GGPT: Geometry-Grounded Point Transformer](ggpt_geometry_grounded_point_transformer.md)
+- [Quantized Visual Geometry Grounded Transformer](../../ICLR2026/3d_vision/quantized_visual_geometry_grounded_transformer.md)
+- [LongStream: Long-Sequence Streaming Autoregressive Visual Geometry](longstream_long-sequence_streaming_autoregressive_visual_geometry.md)
+- [HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation](hyperbolic_multiview_pretraining_for_robotic_manipulation.md)
+- [RnG: A Unified Transformer for Complete 3D Modeling from Partial Observations](rng_a_unified_transformer_for_complete_3d_modeling_from_partial_observations.md)
+
+<!-- RELATED:END -->

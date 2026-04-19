@@ -150,3 +150,15 @@ DirGINE 将其扩展为双向消息传递，分别沿入边和出边聚合邻居
 - 实验充分度: ⭐⭐⭐⭐ — 分类、泛化、掩码、隐空间聚类多维度验证，但缺少与其他 GNN 架构的对比
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学背景与 ML 方法衔接流畅，行文清晰
 - 价值: ⭐⭐⭐⭐ — 展示了 ML 辅助数学研究的完整流程，但定理本身独立性打折
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+- [Balancing Efficiency and Expressiveness: Subgraph GNNs with Walk-Based Centrality](balancing_efficiency_and_expressiveness_subgraph_gnns_with_walk-based_centrality.md)
+- [TINED: GNNs-to-MLPs by Teacher Injection and Dirichlet Energy Distillation](tined_gnns-to-mlps_by_teacher_injection_and_dirichlet_energy_distillation.md)
+- [Logical Characterizations of GNNs with Mean Aggregation](../../AAAI2026/graph_learning/logical_characterizations_of_gnns_with_mean_aggregation.md)
+- [Moscat: Mixture of Scope Experts at Test for Generalizing Deeper GNNs](../../NeurIPS2025/graph_learning/mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)
+
+<!-- RELATED:END -->

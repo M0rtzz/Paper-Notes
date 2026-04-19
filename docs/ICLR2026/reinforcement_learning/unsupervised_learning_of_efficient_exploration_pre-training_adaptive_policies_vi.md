@@ -273,3 +273,15 @@ $$\mathcal{L}_{DP}(\phi) = \frac{1}{|B_g|} \sum_{(g, \xi, \tilde{d}) \in B_g} (\
 - **实验充分性**: ⭐⭐⭐⭐ — 多维度评估，但环境难度有限
 - **写作质量**: ⭐⭐⭐⭐ — 方法和实验组织清晰
 - **实用性**: ⭐⭐⭐ — 突破性应用还需进一步扩展到更复杂环境
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Far Can Unsupervised RLVR Scale LLM Training?](how_far_can_unsupervised_rlvr_scale_llm_training.md)
+- [Stop Unnecessary Reflection: Training LRMs for Efficient Reasoning with Adaptive Reflection and Length Coordinated Penalty](stop_unnecessary_reflection_training_lrms_for_efficient_reasoning_with_adaptive_.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](../../ICML2025/reinforcement_learning/online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+
+<!-- RELATED:END -->

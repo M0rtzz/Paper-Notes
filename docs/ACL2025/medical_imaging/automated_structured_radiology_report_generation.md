@@ -156,3 +156,15 @@ SRR-BERT使用CXR-BERT作为预训练骨干，在StructUtterances数据集上进
 - 实验充分度: ⭐⭐⭐⭐ 多模型基准测试、详细的分类对比、人工审阅验证，但缺乏端到端训练实验
 - 写作质量: ⭐⭐⭐⭐ 论文结构完整，数据集统计详尽，但部分表格较密集
 - 价值: ⭐⭐⭐⭐ 为放射学报告生成提供了标准化框架和更好的评估工具，具有实际临床意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Iterative Self-Alignment for Radiology Report Generation](oisa_radiology_report_gen.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](radar_radiology_report_gen.md)
+- [The Impact of Auxiliary Patient Data on Automated Chest X-Ray Report Generation and How to Incorporate It](auxiliary_patient_data_xray.md)
+- [CSTRL: Context-Driven Sequential Transfer Learning for Abstractive Radiology Report Summarization](cstrl_context-driven_sequential_transfer_learning_for_abstractive_radiology_repo.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](../../CVPR2026/medical_imaging/prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+
+<!-- RELATED:END -->

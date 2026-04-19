@@ -168,3 +168,15 @@ $$\mathbf{s} = s_{min} \cdot \sigma(\mathbf{s}_o) + s_{max} \cdot (1 - \sigma(\m
 - 实验充分度: ⭐⭐⭐⭐⭐ 稀疏视图重建+单图to3D+文本to3D+用户研究+详尽消融，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，对比公平，展示充分
 - 价值: ⭐⭐⭐⭐⭐ 在速度和质量上同时大幅超越已有方法，是feed-forward 3D重建的里程碑式工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GS-LRM: Large Reconstruction Model for 3D Gaussian Splatting](gs-lrm_large_reconstruction_model_for_3d_gaussian_splatting.md)
+- [AnimatableDreamer: Text-Guided Non-rigid 3D Model Generation and Reconstruction with Canonical Score Distillation](animatabledreamer_text-guided_non-rigid_3d_model_generation_and_reconstruction_w.md)
+- [SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction](splatfields_neural_gaussian_splats_for_sparse_3d_and_4d_reconstruction.md)
+- [LGM: Large Multi-View Gaussian Model for High-Resolution 3D Content Creation](lgm_large_multi-view_gaussian_model_for_high-resolution_3d_content_creation.md)
+- [LaRa: Efficient Large-Baseline Radiance Fields](lara_efficient_large-baseline_radiance_fields.md)
+
+<!-- RELATED:END -->

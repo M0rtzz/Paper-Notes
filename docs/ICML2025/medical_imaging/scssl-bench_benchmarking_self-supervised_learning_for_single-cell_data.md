@@ -162,3 +162,15 @@ $$Total = 0.6 \times Bio + 0.4 \times Batch$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 19 方法 × 9 数据集 × 3 任务 + 大量消融实验，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，实验设计合理，结论有数据支撑
 - 价值: ⭐⭐⭐⭐ — 为单细胞 SSL 社区提供了标准化评估平台和可操作的实践建议，揭示了多个重要的反直觉发现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An OpenMind for 3D Medical Vision Self-supervised Learning](../../ICCV2025/medical_imaging/an_openmind_for_3d_medical_vision_selfsupervised_learning.md)
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](../../NeurIPS2025/medical_imaging/ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+- [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](../../NeurIPS2025/medical_imaging/self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](../../CVPR2025/medical_imaging/addressing_data_scarcity_in_3d_trauma_detection_through_self-supervised_and_semi.md)
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
+
+<!-- RELATED:END -->

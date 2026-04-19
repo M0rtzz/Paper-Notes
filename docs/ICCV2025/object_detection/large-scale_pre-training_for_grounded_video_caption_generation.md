@@ -157,3 +157,15 @@ GROVE 系统由两部分组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 五个数据集、详细的数据缩放分析、自动标注各阶段的消融
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，贡献明确，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 数据集(HowToGround1M + iGround)和标注方法的贡献对社区有长久价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](revisiting_adversarial_patch_defenses_on_object_detectors_unified_evaluation_lar.md)
+- [Beyond Caption-Based Queries for Video Moment Retrieval](../../CVPR2026/object_detection/beyond_caption-based_queries_for_video_moment_retrieval.md)
+- [MutDet: Mutually Optimizing Pre-training for Remote Sensing Object Detection](../../ECCV2024/object_detection/mutdet_mutually_optimizing_pre-training_for_remote_sensing_object_detection.md)
+- [Adversarial Attention Perturbations for Large Object Detection Transformers](adversarial_attention_perturbations_for_large_object_detection_transformers.md)
+- [DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](../../CVPR2025/object_detection/diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
+
+<!-- RELATED:END -->

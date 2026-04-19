@@ -126,3 +126,15 @@ SceneAssistant 零训练。3D资产由 Hunyuan3D 生成（Z-Image→去背→Hun
 - 实验充分度: ⭐⭐⭐⭐ 人类评估+消融完整，但缺少自动化指标有些遗憾
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，API设计表格和流程图直观
 - 价值: ⭐⭐⭐⭐ 开放词汇3D场景生成的实用框架，但依赖闭源VLM限制了可复现性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REALM: An MLLM-Agent Framework for Open World 3D Reasoning Segmentation and Editing on Gaussian Splatting](realm_mllm_agent_3d_reasoning_gaussian.md)
+- [WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [Nerfify: A Multi-Agent Framework for Turning NeRF Papers into Code](nerfify_multiagent_nerf_paper_to_code.md)
+- [CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare](carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)
+- [Think, Then Verify: A Hypothesis-Verification Multi-Agent Framework for Long Video Understanding](think_then_verify_a_hypothesis-verification_multi-agent_framework_for_long_video.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 消融+对比+主观听测，评估维度全面
 - 写作质量: ⭐⭐⭐⭐☆ — 方法描述详尽，流水线清晰
 - 价值: ⭐⭐⭐⭐☆ — 填补音频编辑的重要空白，开源模型可直接使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Describe, Don't Dictate: Semantic Image Editing with Natural Language Intent](../../ICCV2025/image_generation/describe_dont_dictate_semantic_image_editing_with_natural_language_intent.md)
+- [FlexiClip: Locality-Preserving Free-Form Character Animation](../../ICML2025/image_generation/flexiclip_locality-preserving_free-form_character_animation.md)
+- [Language-Free Generative Editing from One Visual Example](../../CVPR2026/image_generation/language-free_generative_editing_from_one_visual_example.md)
+- [Long-Form Speech Generation with Spoken Language Models](../../ICML2025/image_generation/long-form_speech_generation_with_spoken_language_models.md)
+- [DiffEye: Diffusion-Based Continuous Eye-Tracking Data Generation Conditioned on Natural Images](diffeye_diffusion-based_continuous_eye-tracking_data_generation_conditioned_on_n.md)
+
+<!-- RELATED:END -->

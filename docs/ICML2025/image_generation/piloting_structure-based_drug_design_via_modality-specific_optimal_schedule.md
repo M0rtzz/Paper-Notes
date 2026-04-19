@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ CrossDock + PoseBusters OOD 验证
 - 写作质量: ⭐⭐⭐⭐ 理论+实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 对 SBDD 和多模态生成有广泛意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structure-based RNA Design by Step-wise Optimization of Latent Diffusion Model](../../AAAI2026/image_generation/structure-based_rna_design_by_step-wise_optimization_of_latent_diffusion_model.md)
+- [Improved Noise Schedule for Diffusion Training](../../ICCV2025/image_generation/improved_noise_schedule_for_diffusion_training.md)
+- [ETTA: Elucidating the Design Space of Text-to-Audio Models](etta_elucidating_the_design_space_of_text-to-audio_models.md)
+- [Compositional Flows for 3D Molecule and Synthesis Pathway Co-design](compositional_flows_for_3d_molecule_and_synthesis_pathway_co-design.md)
+- [From Elements to Design: A Layered Approach for Automatic Graphic Design Composition](../../CVPR2025/image_generation/from_elements_to_design_a_layered_approach_for_automatic_graphic_design_composit.md)
+
+<!-- RELATED:END -->

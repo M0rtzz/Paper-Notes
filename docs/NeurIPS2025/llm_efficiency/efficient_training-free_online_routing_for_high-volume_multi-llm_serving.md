@@ -127,3 +127,15 @@ PORT 在三个 benchmark 上相对近似最优分别达到 84.66%、75.99%、76.
 - **ANNS 作为通用特征估计器**：不依赖任务特定的训练模型，而是用近邻检索做非参数估计，天然支持增量更新和分布漂移。这种思路可应用于任何需要实时特征估计的在线系统。
 - **与 MoE 路由的关联**：PORT 的路由权重学习与 MoE 的 gating 机制有相似之处（都是学习将输入分配到不同专家/模型），但 PORT 在系统级而非层级做路由，且有预算约束。
 - **探索-利用的工程化**：2.5% 探索比例 + PAC 随机路由是经典在线学习理论的工程化实践，为在线 ML 系统设计提供了参考范式。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vocabulary Customization for Efficient Domain-Specific LLM Deployment](vocabulary_customization_for_efficient_domain-specific_llm_deployment.md)
+- [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](hierarchical_balance_packing_towards_efficient_supervised_fine-tuning_for_long-c.md)
+- [Mozart: Modularized and Efficient MoE Training on 3.5D Wafer-Scale Chiplet Architectures](mozart_modularized_and_efficient_moe_training_on_35d_wafer-scale_chiplet_archite.md)
+- [Stroke2Sketch: Harnessing Stroke Attributes for Training-Free Sketch Generation](../../ICCV2025/llm_efficiency/stroke2sketch_harnessing_stroke_attributes_for_training-free_sketch_generation.md)
+- [OmniDraft: A Cross-Vocabulary Online Adaptive Drafter for On-Device Speculative Decoding](omnidraft_a_cross-vocabulary_online_adaptive_drafter_for_on-device_speculative_d.md)
+
+<!-- RELATED:END -->

@@ -201,3 +201,15 @@ SR3A 模块（无 LoRA 注入版本）应用到 CogVideoX-2B/5B 上：
 **不足**：自建评测集规模小且多角色仅定性评估，奇偶层分离缺乏理论支撑，6秒视频限制了故事表达力，整体仍受限于 CogVideoX 骨干能力。
 
 **总评**：一篇工程性和系统性很强的故事视频生成工作，将 RAG、区域注意力、LoRA 定制三个技术组件有机整合。虽然单个模块的新颖性有限，但组合效果显著且实验扎实。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
+- [MotionAgent: Fine-grained Controllable Video Generation via Motion Field Agent](../../ICCV2025/video_generation/motionagent_fine-grained_controllable_video_generation_via_motion_field_agent.md)
+- [Training-free Motion Factorization for Compositional Video Generation](../../CVPR2026/video_generation/training-free_motion_factorization_for_compositional_video_generation.md)
+- [ETVA: Evaluation of Text-to-Video Alignment via Fine-Grained Question Generation and Answering](../../ICCV2025/video_generation/etva_evaluation_of_text-to-video_alignment_via_fine-grained_question_generation_.md)
+- [TTOM: Test-Time Optimization and Memorization for Compositional Video Generation](../../ICLR2026/video_generation/ttom_test-time_optimization_and_memorization_for_compositional_video_generation.md)
+
+<!-- RELATED:END -->

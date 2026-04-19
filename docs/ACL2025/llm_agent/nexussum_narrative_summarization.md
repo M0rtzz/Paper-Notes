@@ -114,3 +114,15 @@ MENSA 数据集上各模块贡献（逐步累加）：
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集全面评估，有消融和人类评估，但人类评估规模过小
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表设计合理
 - 价值: ⭐⭐⭐ 叙事摘要是较窄的应用领域，BERTScore 大幅提升但可读性不佳暴露了评估问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solving the Granularity Mismatch: Hierarchical Preference Learning for Long-Horizon LLM Agents](../../ICLR2026/llm_agent/solving_the_granularity_mismatch_hierarchical_preference_learning_for_long-horiz.md)
+- [Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding](../../NeurIPS2025/llm_agent/deep_video_discovery_agentic_search_with_tool_use_for_longfo.md)
+- [Self-Taught Agentic Long-Context Understanding](self_taught_agentic_long_ctx.md)
+- [Multiple LLM Agents Debate for Equitable Cultural Alignment](multiple_llm_agents_debate_for_equitable.md)
+- [Beyond Numeric Rewards: In-Context Dueling Bandits with LLM Agents](beyond_numeric_rewards_in-context_dueling_bandits_with_llm_agents.md)
+
+<!-- RELATED:END -->

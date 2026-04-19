@@ -131,3 +131,15 @@ RefreshKV维护两个KV缓存：
 - 实验充分度: ⭐⭐⭐⭐⭐ 语言建模、短输出、长输出、合成任务全覆盖，消融设计精准
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述清晰，Chain-of-key任务设计直观，伪代码简洁
 - 价值: ⭐⭐⭐⭐ 填补了KV缓存方法在长文本生成任务上的评测空白，方法可直接用于现有LLM
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](kv_latent_cache_reduction.md)
+- [SpindleKV: A Novel KV Cache Reduction Method Balancing Both Shallow and Deep Layers](spindlekv_layered_kv_cache.md)
+- [Judge Q: Trainable Queries for Optimized Information Retention in KV Cache Eviction](../../AAAI2026/llm_efficiency/judge_q_trainable_queries_for_optimized_information_retention_in_kv_cache_evicti.md)
+- [Deep Compositional Phase Diffusion for Long Motion Sequence Generation](../../NeurIPS2025/llm_efficiency/deep_compositional_phase_diffusion_for_long_motion_sequence_generation.md)
+- [Rejecting Hallucinated State Targets during Planning](../../ICML2025/llm_efficiency/rejecting_hallucinated_state_targets_during_planning.md)
+
+<!-- RELATED:END -->

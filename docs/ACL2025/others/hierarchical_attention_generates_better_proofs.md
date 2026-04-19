@@ -136,3 +136,15 @@ Single-pass sampling 改进更显著：miniF2F test 从 23.36% → 27.87%（+4.5
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 miniF2F 和 ProofNet 两个基准，BFS/SPS 两种策略，注意力可视化充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、框架图优美、数学表述简洁严谨
 - 价值: ⭐⭐⭐⭐ 方法轻量可推广，但绝对性能提升幅度有限，需更大规模验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
+- [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
+- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+
+<!-- RELATED:END -->

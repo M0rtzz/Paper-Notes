@@ -225,3 +225,15 @@ Waymo NVS上的消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个大规模数据集、5个baseline、全面消融（损失项+轨迹表示替换）、计算效率分析、附录含完整实现细节和算法伪代码
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图示直观；统一视角的讨论（bbox是特例）加分；LaTeX HTML渲染有小瑕疵但不影响理解
 - 价值: ⭐⭐⭐⭐ 对自动驾驶仿真有直接实用价值，消除标注依赖是大规模部署的关键痛点；88.7 FPS可满足实时闭环仿真需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+- [Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction](curve-aware_gaussian_splatting_for_3d_parametric_curve_reconstruction.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+- [DeGauss: Dynamic-Static Decomposition with Gaussian Splatting for Distractor-free 3D Reconstruction](degauss_dynamic-static_decomposition_with_gaussian_splatting_for_distractor-free.md)
+- [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
+
+<!-- RELATED:END -->

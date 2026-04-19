@@ -137,3 +137,15 @@ FUEL 在14个数据集中的10个上取得最佳性能，平均排名 2.4 远超
 - 实验充分度: ⭐⭐⭐⭐⭐ — 14个数据集、15个基线、分类+聚类两个下游任务、完整的消融实验和设计目标验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机-分析-方法-验证的叙事线流畅，理论部分易于理解
 - 价值: ⭐⭐⭐⭐ — 在无标签+非同配图这个实际痛点上给出了简洁有效的解决方案，平均排名大幅领先
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
+- [UniHR: Hierarchical Representation Learning for Unified Knowledge Graph Link Prediction](unihr_hierarchical_representation_learning_for_unified_knowledge_graph_link_pred.md)
+- [Banyan: Improved Representation Learning with Explicit Structure](../../ICML2025/graph_learning/banyan_improved_representation_learning_with_explicit_structure.md)
+- [Posterior Label Smoothing for Node Classification](posterior_label_smoothing_for_node_classification.md)
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](../../ICML2025/graph_learning/toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+
+<!-- RELATED:END -->

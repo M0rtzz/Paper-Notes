@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 15 个 LLM、11 个任务、586 个联盟、三级基线、成本分析，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 三级基线设计优雅，分析逻辑清晰，图表直观
 - 价值: ⭐⭐⭐⭐ 黑盒即插即用，对 LLM 部署有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stochastic Chameleons: Irrelevant Context Hallucinations Reveal Class-Based (Mis)Generalization in LLMs](../../ACL2025/llm_safety/stochastic_chameleons_irrelevant_context_hallucinations_reveal_class-based_misge.md)
+- [HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](../../ACL2025/llm_safety/halogen_hallucinations.md)
+- [HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](../../ACL2025/llm_safety/hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)
+- [Empowering LLMs to Understand and Generate Complex Vector Graphics](../../CVPR2025/llm_safety/empowering_llms_to_understand_and_generate_complex_vector_graphics.md)
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](../../ACL2025/llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+
+<!-- RELATED:END -->

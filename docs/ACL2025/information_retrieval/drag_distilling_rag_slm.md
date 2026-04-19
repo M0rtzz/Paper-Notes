@@ -138,3 +138,15 @@ Teacher 模型对比（Student: Qwen2.5-3B，ARC-C）：
 - 实验充分度: ⭐⭐⭐⭐ 多个基准、多种 teacher/student 组合、丰富的消融实验
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，流程图直观
 - 价值: ⭐⭐⭐⭐ 免微调的 RAG 蒸馏在实际部署中有很强的实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs](../../AAAI2026/information_retrieval/does_less_hallucination_mean_less_creativity_an_empirical_investigation_in_llms.md)
+- [CoRe-MMRAG: Cross-Source Knowledge Reconciliation for Multimodal RAG](core_mmrag_knowledge_reconciliation.md)
+- [Divide-Then-Align: Honest Alignment based on the Knowledge Boundary of RAG](divide_then_align_rag_knowledge_boundary.md)
+- [KnowShiftQA: How Robust are RAG Systems when Textbook Knowledge Shifts in K-12 Education?](knowshiftqa_rag_knowledge_shifts.md)
+- [REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)
+
+<!-- RELATED:END -->

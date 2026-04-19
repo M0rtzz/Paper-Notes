@@ -117,3 +117,15 @@ BoltzNCE 用 Score Matching + InfoNCE 混合训练 Energy-Based Model 来近似 
 - 实验充分度: ⭐⭐⭐⭐ 2D 合成 + 丙氨酸二肽 + 7 二肽泛化
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，2D 实验直观展示了互补性
 - 价值: ⭐⭐⭐⭐ 对分子模拟和自由能计算有重要实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [FALCON: Few-step Accurate Likelihoods for Continuous Flows](falcon_few-step_accurate_likelihoods_for_continuous_flows.md)
+- [Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](../../ECCV2024/image_generation/learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
+- [Inference-Time Scaling for Flow Models via Stochastic Generation and Rollover Budget Forcing](inference-time_scaling_for_flow_models_via_stochastic_generation_and_rollover_bu.md)
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+
+<!-- RELATED:END -->

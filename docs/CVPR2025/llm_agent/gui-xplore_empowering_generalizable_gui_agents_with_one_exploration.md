@@ -126,3 +126,15 @@ Xplore-Agent 是一个两阶段框架：(1) **Action-aware GUI Modeling** 阶段
 - 实验充分度: ⭐⭐⭐⭐ 跨应用和跨任务两个维度的评估全面，消融完整，但部分实验细节（如 GPT 聚类的 prompt）不够透明
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，框架图直观，但 Section 3/4 的组织略显冗余
 - 价值: ⭐⭐⭐⭐ 提出了 GUI Agent 泛化的新范式和配套 benchmark，对后续研究有明确指引
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpiritSight Agent: Advanced GUI Agent with One Look](spiritsight_agent_advanced_gui_agent_with_one_look.md)
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](../../ACL2025/llm_agent/gui_explorer_autonomous.md)
+- [Less is More: Empowering GUI Agent with Context-Aware Simplification](../../ICCV2025/llm_agent/less_is_more_empowering_gui_agent_with_context-aware_simplification.md)
+- [EchoTrail-GUI: Building Actionable Memory for GUI Agents via Critic-Guided Self-Exploration](../../CVPR2026/llm_agent/echotrail-gui_building_actionable_memory_for_gui_agents_via_critic-guided_self-e.md)
+- [GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents](../../CVPR2026/llm_agent/gui-ceval_a_hierarchical_and_comprehensive_chinese_benchmark_for_mobile_gui_agen.md)
+
+<!-- RELATED:END -->

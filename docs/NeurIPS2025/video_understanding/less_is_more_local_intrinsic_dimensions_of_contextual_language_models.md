@@ -150,3 +150,15 @@ $$\text{LID}(v) = \text{TwoNN}(\mathcal{N}_L(v; \mathbb{T}))$$
 ## 启发与关联
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaVideoRAG: Omni-Contextual Adaptive Retrieval-Augmented Efficient Long Video Understanding](adavideorag_omnicontextual_adaptive_retrievalaugmented_effic.md)
+- [Steering When Necessary: Flexible Steering Large Language Models with Backtracking](steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)
+- [SAMA: Towards Multi-Turn Referential Grounded Video Chat with Large Language Models](sama_towards_multi-turn_referential_grounded_video_chat_with_large_language_mode.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Deceptron: Learned Local Inverses for Fast and Stable Physics Inversion](deceptron_learned_local_inverses_for_fast_and_stable_physics_inversion.md)
+
+<!-- RELATED:END -->

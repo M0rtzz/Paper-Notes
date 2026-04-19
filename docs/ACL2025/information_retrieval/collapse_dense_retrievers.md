@@ -173,3 +173,15 @@ tags:
 | 写作质量 | 8 | 结构清晰，图表丰富直观 |
 | 实际影响 | 9 | 对RAG系统安全和检索器改进有直接指导价值 |
 | **总分** | **8.4** | 揭示稠密检索器关键脆弱性的优秀实证工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers](drama_diverse_augmentation_from_large_language_models_to_smaller_dense_retriever.md)
+- [When Should Dense Retrievers Be Updated in Evolving Corpora? Detecting Out-of-Distribution Corpora Using GradNormIR](when_should_dense_retrievers_be_updated_in_evolving_corpora_detecting_out-of-dis.md)
+- [Maximal Matching Matters: Preventing Representation Collapse for Robust Cross-Modal Retrieval](maximal_matching_matters_preventing_representation_collapse_for_robust_cross-mod.md)
+- [LDIR: Low-Dimensional Dense and Interpretable Text Embeddings with Relative Representations](ldir_low-dimensional_dense_and_interpretable_text_embeddings_with_relative_repre.md)
+- [HELIOS: Harmonizing Early Fusion, Late Fusion, and LLM Reasoning for Multi-Granular Table-Text Retrieval](helios_harmonizing_early_fusion_late_fusion_and_llm_reasoning_for_multi-granular.md)
+
+<!-- RELATED:END -->

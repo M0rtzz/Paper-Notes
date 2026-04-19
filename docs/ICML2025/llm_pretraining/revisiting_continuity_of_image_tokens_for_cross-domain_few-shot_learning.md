@@ -121,3 +121,15 @@ ReCIT (Re-visiting Continuity of Image Tokens) 在训练和推理时对图像 to
 3. 探索与强化学习、在线学习结合的可能性，实现动态适应
 4. 开发自动化评估和优化工具，降低方法的使用门槛
 5. 考虑与 LLM alignment 研究的交叉，探索安全性和性能的协同优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Obstruct Few-Shot Image Classification over Restricted Classes](../../ECCV2024/llm_pretraining/learning_to_obstruct_few-shot_image_classification_over_restricted_classes.md)
+- [3D Prior is All You Need: Cross-Task Few-shot 2D Gaze Estimation](../../CVPR2025/llm_pretraining/3d_prior_is_all_you_need_cross-task_few-shot_2d_gaze_estimation.md)
+- [Cross-Domain Learning for Video Anomaly Detection with Limited Supervision](../../ECCV2024/llm_pretraining/cross-domain_learning_for_video_anomaly_detection_with_limited_supervision.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+- [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+
+<!-- RELATED:END -->

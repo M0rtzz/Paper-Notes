@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 16 种设置 × 3 基准 × 2 数据集 × 2 模型，系统性强
 - 写作质量: ⭐⭐⭐⭐ 论述逻辑清晰，问题-证据-建议的三段式结构有说服力
 - 价值: ⭐⭐⭐⭐⭐ 对整个 IT 数据质量研究方向具有深远的方法论影响，值得社区广泛关注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Table Instruction Tuning](rethinking_table_instruction_tuning.md)
+- [Federated Data-Efficient Instruction Tuning for Large Language Models](federated_data-efficient_instruction_tuning_for_large_language_models.md)
+- [Measuring Data Diversity for Instruction Tuning: A Systematic Analysis and A Reliable Metric](measuring_data_diversity_for_instruction_tuning_a_systematic_analysis_and_a_reli.md)
+- [TableDreamer: Progressive and Weakness-Guided Data Synthesis from Scratch for Table Instruction Tuning](tabledreamer_progressive_and_weakness-guided_data_synthesis_from_scratch_for_tab.md)
+- [T-SHIRT: Token-Selective Hierarchical Data Selection for Instruction Tuning](../../NeurIPS2025/llm_alignment/t-shirt_token-selective_hierarchical_data_selection_for_instruction_tuning.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ $$\bm{v}_t^{\text{dsg}} = \bm{v}_t + \eta(\bm{v}_t - \bm{v}_{\bm{\theta}+\Delta\
 - 实验充分度: 9/10 — 多基准、多指标、多基线、消融完整，提出新基准
 - 写作质量: 8/10 — 结构清晰，数学推导与直觉解释结合良好
 - 价值: 8/10 — 无训练方法实用性强，ComplexCompo 基准有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Does YOLO Really Need to See Every Training Image in Every Epoch?](../../CVPR2026/object_detection/does_yolo_really_need_to_see_every_training_image_in_every_epoch.md)
+- [How Many Experts Are Enough? Towards Optimal Semantic Specialization for Mixture-of-Experts](../../AAAI2026/object_detection/how_many_experts_are_enough_towards_optimal_semantic_specialization_for_mixture-.md)
+- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](../../CVPR2026/object_detection/slice_semantic_latent_injection_via_compartmentali.md)
+- [Diverse Text-to-Image Generation via Contrastive Noise Optimization](diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
+- [SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation](serum_simple_efficient_robust_and_unifying_marking_for_diffusion-based_image_gen.md)
+
+<!-- RELATED:END -->

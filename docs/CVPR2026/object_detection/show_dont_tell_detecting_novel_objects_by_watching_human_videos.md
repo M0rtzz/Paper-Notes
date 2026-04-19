@@ -142,3 +142,15 @@ tags:
 - **实验充分度** ⭐⭐⭐：数据集规模有限，缺少标准基准评估，消融实验不够系统
 - **写作质量** ⭐⭐⭐⭐："Show vs Tell" 类比直观有记忆点，SODC 管线讲解清晰
 - **价值** ⭐⭐⭐⭐：对机器人快速部署有直接实用价值，降低非专业用户使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+- [FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition](fusionagent_a_multimodal_agent_with_dynamic_model_selection_for_human_recognitio.md)
+
+<!-- RELATED:END -->

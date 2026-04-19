@@ -192,3 +192,15 @@ POPE 数据集消融（F1-score）：
 - 实验充分度: ⭐⭐⭐（三个模型四个数据集，但缺少长上下文、效率分析）
 - 写作质量: ⭐⭐⭐⭐（公式推导详细，图示清晰）
 - 价值: ⭐⭐⭐⭐（无训练即插即用方案实用性高，但提升幅度还需更多场景验证）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging the Gap Between Human Motion and Action Semantics via Kinematic Phrases](../../ECCV2024/human_understanding/bridging_the_gap_between_human_motion_and_action_semantics_via_kinematic_phrases.md)
+- [Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer](enhancing_noise_resilience_in_face_clustering_via_sparse_differential_transforme.md)
+- [ParaRevSNN: A Parallel Reversible Spiking Neural Network for Efficient Training and Inference](pararevsnn_a_parallel_reversible_spiking_neural_network_for_efficient_training_a.md)
+- [W2S-AlignTree: Weak-to-Strong Inference-Time Alignment for Large Language Models via Monte Carlo Tree Search](w2s-aligntree_weak-to-strong_inference-time_alignment_for_large_language_models_.md)
+- [AdvMark: Decoupling Defense Strategies for Robust Image Watermarking](../../CVPR2026/human_understanding/decoupling_defense_strategies_for_robust_image_watermarking.md)
+
+<!-- RELATED:END -->

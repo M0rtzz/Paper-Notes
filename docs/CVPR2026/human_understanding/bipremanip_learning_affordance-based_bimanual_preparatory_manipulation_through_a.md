@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 仿真 + 真实世界、18 个类别、多基线多消融
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 推动了双臂操作向更实用场景的发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](../../CVPR2025/human_understanding/maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
+- [HandX: Scaling Bimanual Motion and Interaction Generation](handx_scaling_bimanual_motion_and_interaction_generation.md)
+- [LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference](lamogen_language_to_motion_generation_through_llm-guided_symbolic_inference.md)
+- [FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift](feddap_domain-aware_prototype_learning_for_federated_learning_under_domain_shift.md)
+- [AVATAR: Reinforcement Learning to See, Hear, and Reason Over Video](avatar_reinforcement_learning_to_see_hear_and_reason_over_video.md)
+
+<!-- RELATED:END -->

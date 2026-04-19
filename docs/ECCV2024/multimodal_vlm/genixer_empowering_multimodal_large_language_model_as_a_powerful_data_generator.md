@@ -149,3 +149,15 @@ $$\max \sum_{i=1}^{L} \log p_\theta(x_i | X_G, X_S, X_I, X_{o,<i})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ (12+8 个基准、统计/人工/消融/用户研究六维度评估非常全面)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图表丰富，流水线描述完整，部分符号稍冗余)
 - 价值: ⭐⭐⭐⭐ (为数据生成提供了不依赖商业模型的可行路径，对资源受限团队实用价值高)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Merlin: Empowering Multimodal LLMs with Foresight Minds](merlin_empowering_multimodal_llms_with_foresight_minds.md)
+- [CAT: Enhancing Multimodal Large Language Model to Answer Questions in Dynamic Audio-Visual Scenarios](cat_enhancing_multimodal_large_language_model_to_answer_questions_in_dynamic_aud.md)
+- [Error-driven Data-efficient Large Multimodal Model Tuning](../../ACL2025/multimodal_vlm/error-driven_data-efficient_large_multimodal_model_tuning.md)
+- [ACT as Human: Multimodal Large Language Model Data Annotation with Critical Thinking](../../NeurIPS2025/multimodal_vlm/act_as_human_multimodal_large_language_model_data_annotation.md)
+- [FreeMotion: MoCap-Free Human Motion Synthesis with Multimodal Large Language Models](freemotion_mocap-free_human_motion_synthesis_with_multimodal_large_language_mode.md)
+
+<!-- RELATED:END -->

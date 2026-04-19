@@ -127,3 +127,15 @@ Segment then Splat 的流程分为四个阶段：（1）鲁棒目标跟踪模块
 - 实验充分度: ⭐⭐⭐⭐ 覆盖静态/动态数据集，消融充分，但缺少大规模场景实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 统一静态/动态场景的3D开放词汇分割，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](../../CVPR2025/3d_vision/jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
+- [OpenLex3D: A Tiered Evaluation Benchmark for Open-Vocabulary 3D Scene Representations](openlex3d_a_tiered_evaluation_benchmark_for_open-vocabulary_3d_scene_representat.md)
+- [OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting](../../CVPR2026/3d_vision/onlinepg_online_open-vocabulary_panoptic_mapping_with_3d_gaussian_splatting.md)
+- [Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation](../../CVPR2025/3d_vision/mosaic3d_foundation_dataset_and_model_for_open-vocabulary_3d_segmentation.md)
+- [Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](../../ECCV2024/3d_vision/open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)
+
+<!-- RELATED:END -->

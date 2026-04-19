@@ -139,3 +139,15 @@ $$\theta_{\text{TE}} = \cos\left(\psi(s_{\text{opt}}) - \psi(s_{\text{cur}}),\ \
 - 实验充分度: ⭐⭐⭐⭐⭐ — 涵盖 locomotion/navigation/manipulation，state/visual，5 项消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图示直观，公式完整
 - 价值: ⭐⭐⭐⭐⭐ — 在离线 HRL 拼接任务上实现数量级提升，实用意义显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+- [Hierarchical Reinforcement Learning with Targeted Causal Interventions](hierarchical_reinforcement_learning_with_targeted_causal_interventions.md)
+- [Hierarchical Reinforcement Learning with Uncertainty-Guided Diffusional Subgoals](hierarchical_reinforcement_learning_with_uncertainty-guided_diffusional_subgoals.md)
+- [Divide and Conquer: Grounding LLMs as Efficient Decision-Making Agents via Offline Hierarchical Reinforcement Learning](divide_and_conquer_grounding_llms_as_efficient_decision-making_agents_via_offlin.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+
+<!-- RELATED:END -->

@@ -161,3 +161,15 @@ $M=4$ 在性能和计算成本之间取得最佳平衡。
 ## 评分 ⭐⭐⭐⭐
 
 将 GRPO 扩展到 MLLM 的合理且有效的工作。步级奖励设计简洁实用，消融实验清晰。在多个基准上的一致性提升令人信服。主要不足是评估范围偏向数学推理，且关键步提取依赖外部大模型。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](../../ACL2025/multimodal_vlm/mammoth_vl_multimodal_reasoning.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](../../ACL2025/multimodal_vlm/spatialmqa_mllm_spatial_relations.md)
+- [SC-Captioner: Improving Image Captioning with Self-Correction by Reinforcement Learning](sc-captioner_improving_image_captioning_with_self-correction_by_reinforcement_le.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+
+<!-- RELATED:END -->

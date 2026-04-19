@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖分类和生成两大类任务，多种蒸馏方法
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导规范
 - 价值: ⭐⭐⭐⭐ 对AI安全和知识产权保护有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Knowledge Distillation Works in Generative Models: A Minimal Working Explanation](why_knowledge_distillation_works_in_generative_models_a_minimal_working_explanat.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [Epistemic Uncertainty for Generated Image Detection](epistemic_uncertainty_for_generated_image_detection.md)
+- [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
+- [Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?](can_knowledge-graph-based_retrieval_augmented_generation_really_retrieve_what_yo.md)
+
+<!-- RELATED:END -->

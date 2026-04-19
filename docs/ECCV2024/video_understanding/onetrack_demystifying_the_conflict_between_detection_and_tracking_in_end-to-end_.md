@@ -119,3 +119,15 @@ OneTrack基于标准的查询式3D检测+跟踪框架。输入是多视角相机
 - 实验充分度: ⭐⭐⭐⭐⭐ 大规模nuScenes验证+详细消融+组件贡献清晰
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精准，分析逻辑严密，实验设计完整
 - 价值: ⭐⭐⭐⭐ 对端到端跟踪领域有重要推动，冲突协调思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training](boosting_3d_single_object_tracking_with_2d_matching_distillation_and_3d_pre-trai.md)
+- [SPAMming Labels: Efficient Annotations for the Trackers of Tomorrow](spamming_labels_efficient_annotations_for_the_trackers_of_tomorrow.md)
+- [Bayesian Evidential Deep Learning for Online Action Detection](bayesian_evidential_deep_learning_for_online_action_detection.md)
+- [On the Utility of 3D Hand Poses for Action Recognition](on_the_utility_of_3d_hand_poses_for_action_recognition.md)
+- [Occluded Gait Recognition with Mixture of Experts: An Action Detection Perspective](occluded_gait_recognition_with_mixture_of_experts_an_action_detection_perspectiv.md)
+
+<!-- RELATED:END -->

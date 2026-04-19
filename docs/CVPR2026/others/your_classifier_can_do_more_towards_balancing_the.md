@@ -144,3 +144,15 @@ WRN28-10 backbone；lr=0.01；5 步对抗采样；$\ell_\infty$ 约束 $\epsilon
 - **实验充分度** ⭐⭐⭐⭐：与 AT/JEM/能量 AT/数据增强 AT 四类方法全面对比，消融清晰，但缺完整 ImageNet
 - **写作质量** ⭐⭐⭐⭐⭐：从能量景观分析自然引出方法，逻辑链极清晰
 - **价值** ⭐⭐⭐⭐⭐：首次在三个维度同时达到顶尖水平，为"分类器还能做什么"给出了令人信服的答案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness](irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a.md)
+- [DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)
+- [What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
+- [Next-Scale Autoregressive Models for Text-to-Motion Generation](next-scale_autoregressive_models_for_text-to-motion_generation.md)
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+
+<!-- RELATED:END -->

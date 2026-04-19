@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 种域偏移场景+2 种backbone+交叉验证+样本量消融+case study，非常系统
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表直观，但部分符号略显冗余
 - 价值: ⭐⭐⭐⭐ 方法实用性极强，CPE 指标对整个不确定性估计领域有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VirtueBench: Evaluating Trustworthiness under Uncertainty in Long Video Understanding](virtuebench_evaluating_trustworthiness_under_uncertainty_in_long_video_understan.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT](rethinking_twostage_referringbytracking_in_referri.md)
+- [EgoXtreme: A Dataset for Robust Object Pose Estimation in Egocentric Views under Extreme Conditions](egoxtreme_a_dataset_for_robust_object_pose_estimation_in_egocentric_views_under_.md)
+- [SpikeTrack: A Spike-driven Framework for Efficient Visual Tracking](spiketrack_a_spike-driven_framework_for_efficient_visual_tracking.md)
+
+<!-- RELATED:END -->

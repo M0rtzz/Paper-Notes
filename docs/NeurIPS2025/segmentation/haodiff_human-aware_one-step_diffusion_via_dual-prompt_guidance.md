@@ -153,3 +153,15 @@ HMB-R（运动模糊残留比）仅0.1167，是OSDHuman的一半，说明HAODiff
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据、多指标、消融齐全
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ 人体复原的实用性强，新基准有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prompt Guidance and Human Proximal Perception for HOT Prediction with Regional Joint Loss](../../ICCV2025/segmentation/prompt_guidance_and_human_proximal_perception_for_hot_prediction_with_regional_j.md)
+- [HopaDIFF: Holistic-Partial Aware Fourier Conditioned Diffusion for Referring Human Action Segmentation in Multi-Person Scenarios](hopadiff_holistic-partial_aware_fourier_conditioned_diffusion_for_referring_huma.md)
+- [STEP: A Unified Spiking Transformer Evaluation Platform for Fair and Reproducible Benchmarking](step_a_unified_spiking_transformer_evaluation_platform_for_fair_and_reproducible.md)
+- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](../../CVPR2025/segmentation/dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+- [Robust Egocentric Referring Video Object Segmentation via Dual-Modal Causal Intervention](robust_egocentric_referring_video_object_segmentation_via_dual-modal_causal_inte.md)
+
+<!-- RELATED:END -->

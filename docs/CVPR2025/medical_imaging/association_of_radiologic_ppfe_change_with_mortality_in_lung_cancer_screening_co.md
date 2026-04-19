@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （双队列 16000+ 例，多变量校正完备，多种临床结局）
 - 写作质量: ⭐⭐⭐⭐ （临床论文风格，统计方法描述严谨）
 - 价值: ⭐⭐⭐⭐ （对肺癌筛查的附加价值有直接临床启示，可影响筛查流程设计）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Novel Architecture of RPA In Oral Cancer Lesion Detection](novel_architecture_of_rpa_in_oral_cancer_lesion_detection.md)
+- [Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)
+- [NOIR: Neural Operator Mapping for Implicit Representations](noir_neural_operator_mapping_for_implicit_representations.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
+
+<!-- RELATED:END -->

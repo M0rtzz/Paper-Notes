@@ -108,3 +108,15 @@ LVLM（如LLaVA系列）已成为许多AI应用的基础模型，但其内部工
 - 实验充分度: ⭐⭐⭐⭐ 三层递进分析相互验证，跳层实验设计巧妙，但缺乏因果验证
 - 写作质量: ⭐⭐⭐⭐ 分析路径清晰（概率→分布→特征），图示丰富直观
 - 价值: ⭐⭐⭐⭐ 为模型压缩、幻觉缓解和高效微调提供理论依据，但未落地具体算法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VILA-M3: Enhancing Vision-Language Models with Medical Expert Knowledge](vila-m3_enhancing_vision-language_models_with_medical_expert_knowledge.md)
+- [Thinking in Space: How Multimodal Large Language Models See, Remember, and Recall Spaces](thinking_in_space_how_multimodal_large_language_models_see_remember_and_recall_s.md)
+- [FlySearch: Exploring how vision-language models explore](../../NeurIPS2025/multimodal_vlm/flysearch_exploring_how_vision-language_models_explore.md)
+- [EventGPT: Event Stream Understanding with Multimodal Large Language Models](eventgpt_event_stream_understanding_with_multimodal_large_language_models.md)
+- [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
+
+<!-- RELATED:END -->

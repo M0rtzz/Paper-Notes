@@ -198,3 +198,15 @@ PGB 模块消融：
 - **实验充分度**: ⭐⭐⭐⭐ — 三个环境、多基线对比、架构消融和模块消融完整
 - **写作质量**: ⭐⭐⭐⭐ — 动机论证清晰，方法描述详细
 - **价值**: ⭐⭐⭐⭐ — 为 AHT 提供了新的技术路线，35% 的提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Discrete Diffusion Unmasking Policies Beyond Explicit Reference Policies (UPO)](../../ICLR2026/image_generation/improving_discrete_diffusion_unmasking_policies_beyond_explicit_reference_polici.md)
+- [Compose Your Policies! Improving Diffusion-based or Flow-based Robot Policies via Test-time Distribution-level Composition](../../ICLR2026/image_generation/compose_your_policies_improving_diffusion-based_or_flow-based_robot_policies_via.md)
+- [Offline Reinforcement Learning with Generative Trajectory Policies](../../ICLR2026/image_generation/offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [Failure Prediction at Runtime for Generative Robot Policies](../../NeurIPS2025/image_generation/failure_prediction_at_runtime_for_generative_robot_policies.md)
+- [BADiff: Bandwidth Adaptive Diffusion Model](../../NeurIPS2025/image_generation/badiff_bandwidth_adaptive_diffusion_model.md)
+
+<!-- RELATED:END -->

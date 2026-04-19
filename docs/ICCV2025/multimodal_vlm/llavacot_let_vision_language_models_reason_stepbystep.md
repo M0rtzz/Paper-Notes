@@ -95,3 +95,15 @@ LLaVA-CoT基于Llama-3.2-11B-Vision-Instruct进行微调。输入为图像和问
 - 实验充分度: ⭐⭐⭐⭐ 6个benchmark全面验证，消融实验充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，demo展示有说服力
 - 价值: ⭐⭐⭐⭐⭐ 开源的多模态推理方案，影响力大（2.1k stars），实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R1-VL: Learning to Reason with Multimodal Large Language Models via Step-wise Group Relative Policy Optimization](r1-vl_learning_to_reason_with_multimodal_large_language_models_via_step-wise_gro.md)
+- [ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools](toolvqa_a_dataset_for_multistep_reasoning_vqa_with_external.md)
+- [Can Multi-Modal LLMs Provide Live Step-by-Step Task Guidance?](../../NeurIPS2025/multimodal_vlm/can_multi-modal_llms_provide_live_step-by-step_task_guidance.md)
+- [Unveiling Chain of Step Reasoning for Vision-Language Models with Fine-grained Rewards](../../NeurIPS2025/multimodal_vlm/unveiling_chain_of_step_reasoning_for_visionlanguage_models.md)
+- [Training-free Online Video Step Grounding](../../NeurIPS2025/multimodal_vlm/training-free_online_video_step_grounding.md)
+
+<!-- RELATED:END -->

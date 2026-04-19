@@ -126,3 +126,15 @@ DSM Loss 在量化后 LID 估计偏差更小，因为不依赖梯度计算（量
 - 实验充分度: ⭐⭐⭐⭐ 合成流形+SD3.5/SD2+量化实验覆盖全面，但规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰严谨，直觉解释到位
 - 价值: ⭐⭐⭐⭐ 理论价值高，实用性好（免费 LID 估计），但应用场景相对小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Balanced Image Stylization with Style Matching Score](../../ICCV2025/image_generation/balanced_image_stylization_with_style_matching_score.md)
+- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery](score-informed_neural_operator_for_enhancing_ordering-based_causal_discovery.md)
+- [FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies](ferretnet_efficient_synthetic_image_detection_via_local_pixel_dependencies.md)
+- [Expressive Score-Based Priors for Distribution Matching with Geometry-Preserving Regularization](../../ICML2025/image_generation/expressive_score-based_priors_for_distribution_matching_with_geometry-preserving.md)
+
+<!-- RELATED:END -->

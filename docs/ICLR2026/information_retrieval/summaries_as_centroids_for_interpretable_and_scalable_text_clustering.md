@@ -133,3 +133,15 @@ $$\min_{C_1, \ldots, C_k} \sum_{j=1}^k \sum_{i \in [C_j]} \|\mathbf{x}_i - \bold
 - **技术深度**: ⭐⭐⭐ — 方法直觉清晰，理论分析较少
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 4 数据集 × 4 嵌入 × 5 LLM × 3 NLP 方法，极其全面
 - **实用性**: ⭐⭐⭐⭐⭐ — 即插即用、可解释、可扩展，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Concept-based Interpretable Models](hierarchical_concept-based_interpretable_models.md)
+- [Hybrid Deep Searcher: Scalable Parallel and Sequential Search Reasoning](hybrid_deep_searcher_scalable_parallel_and_sequential_search_reasoning.md)
+- [LDIR: Low-Dimensional Dense and Interpretable Text Embeddings with Relative Representations](../../ACL2025/information_retrieval/ldir_low-dimensional_dense_and_interpretable_text_embeddings_with_relative_repre.md)
+- [Beyond Perplexity: Let the Reader Select Retrieval Summaries via Spectrum Projection Score](../../AAAI2026/information_retrieval/beyond_perplexity_let_the_reader_select_retrieval_summaries_via_spectrum_project.md)
+- [HUME: Measuring the Human-Model Performance Gap in Text Embedding Tasks](hume_measuring_the_human-model_performance_gap_in_text_embedding_tasks.md)
+
+<!-- RELATED:END -->

@@ -152,3 +152,15 @@ Text-to-multi-view 对比（GSO 300 样本）：
 - 实验充分度: ⭐⭐⭐⭐ （NVS+文本+3D重建多任务评估充分，但缺少与更多可控生成方法的对比）
 - 写作质量: ⭐⭐⭐⭐ （方法描述清晰，可视化丰富，但部分对比实验可更详细）
 - 价值: ⭐⭐⭐⭐ （多模态可控多视角生成方向有实际需求，对 3D 内容创建有推动作用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MV-Adapter: Multi-view Consistent Image Generation Made Easy](mv-adapter_multi-view_consistent_image_generation_made_easy.md)
+- [Compass Control: Multi Object Orientation Control for Text-to-Image Generation](../../CVPR2025/3d_vision/compass_control_multi_object_orientation_control_for_text-to-image_generation.md)
+- [MaterialMVP: Illumination-Invariant Material Generation via Multi-view PBR Diffusion](materialmvp_illumination-invariant_material_generation_via_multi-view_pbr_diffus.md)
+- [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+
+<!-- RELATED:END -->

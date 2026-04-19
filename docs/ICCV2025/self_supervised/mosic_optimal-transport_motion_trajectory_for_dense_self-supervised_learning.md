@@ -134,3 +134,15 @@ MoSiC-B14（85M 参数）进一步提升：Pascal VOC in-context (1/128) 达 65.
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6 个数据集、4 个评估基准、多种 backbone 泛化实验、全面的消融
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，公式规范，图示直观
 - **价值**: ⭐⭐⭐⭐ 为视频数据如何增强图像表征提供了有效方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Clustering Properties of Self-Supervised Learning](../../ICML2025/self_supervised/clustering_properties_of_self-supervised_learning.md)
+- [SMILE: Infusing Spatial and Motion Semantics in Masked Video Learning](../../CVPR2025/self_supervised/smile_infusing_spatial_and_motion_semantics_in_masked_video_learning.md)
+- [Collapse-Proof Non-Contrastive Self-Supervised Learning](../../ICML2025/self_supervised/collapse-proof_non-contrastive_self-supervised_learning.md)
+- [T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning](../../NeurIPS2025/self_supervised/t-regs_minimum_spanning_tree_regularization_for_self-supervised_learning.md)
+- [Understanding Ice Crystal Habit Diversity with Self-Supervised Learning](../../NeurIPS2025/self_supervised/understanding_ice_crystal_habit_diversity_with_self-supervised_learning.md)
+
+<!-- RELATED:END -->

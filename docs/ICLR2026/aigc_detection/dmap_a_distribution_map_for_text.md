@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个应用场景展示充分（参数验证、检测方法分析、SFT指纹），但作为独立检测器的定量对比偏弱
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导简洁严谨，直觉解释清晰，附录极为详尽（提示敏感性、收敛分析、对抗鲁棒性都有覆盖）
 - 价值: ⭐⭐⭐⭐⭐ 发现了多篇顶会论文的系统性数据错误，为文本分析和检测方法设计提供了严格的理论工具和新原则
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimized Algorithms for Text Clustering with LLM-Generated Constraints](../../AAAI2026/aigc_detection/optimized_algorithms_for_text_clustering_with_llm-generated_constraints.md)
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text](../../NeurIPS2025/aigc_detection/asciibench_evaluating_language-model-based_understanding_of_visually-oriented_te.md)
+- [DuoLens: A Framework for Robust Detection of Machine-Generated Multilingual Text and Code](../../NeurIPS2025/aigc_detection/duolens_a_framework_for_robust_detection_of_machine-generated_multilingual_text_.md)
+- [Comparing LLM-generated and human-authored news text using formal syntactic theory](../../ACL2025/aigc_detection/llm_vs_human_formal_syntax.md)
+
+<!-- RELATED:END -->

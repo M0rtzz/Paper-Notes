@@ -143,3 +143,15 @@ Qwen3-4B 的显著提升：MATH500 从 60.2% 提升到 78.5%
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5 个模型 × 6 个数据集 × 多种基线，30 个设置全面覆盖，零训练失败令人印象深刻
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，理论证明完整，框架图直观；但方法部分符号较密集
 - **价值**: ⭐⭐⭐⭐⭐ — 解决了 TTRL 中的核心问题（多数投票陷阱），稳定性和通用性使其有望成为 TTRL 的默认方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
+- [SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
+- [ReVISE: Learning to Refine at Test-Time via Intrinsic Self-Verification](../../ICML2025/reinforcement_learning/revise_learning_to_refine_at_test-time_via_intrinsic_self-verification.md)
+- [Metis-SPECS: Decoupling Multimodal Learning via Self-distilled Preference-based Cold Start](metis-specs_decoupling_multimodal_learning_via_self-distilled_preference-based_c.md)
+- [SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
+
+<!-- RELATED:END -->

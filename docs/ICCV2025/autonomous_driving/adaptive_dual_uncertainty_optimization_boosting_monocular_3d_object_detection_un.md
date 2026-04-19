@@ -160,3 +160,15 @@ Car 类别：DUO 达到 24.73 Avg，相比 MonoTTA 的 22.57 提升 +2.2。
 - 实验充分度：⭐⭐⭐⭐ — 覆盖13种腐蚀类型和4种真实场景，两个基线模型，消融充分；但测试集和检测器多样性可进一步扩展
 - 写作质量：⭐⭐⭐⭐ — 动机清晰，观察→方法→验证的叙述逻辑流畅
 - 推荐度：⭐⭐⭐⭐ — 在3D TTA领域具有显著贡献，理论和实验均扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detect Anything 3D in the Wild](detect_anything_3d_in_the_wild.md)
+- [MonoSOWA: Scalable Monocular 3D Object Detector Without Human Annotations](monosowa_scalable_monocular_3d_object_detector_without_human_annotations.md)
+- [MAESTRO: Task-Relevant Optimization via Adaptive Feature Enhancement and Suppression for Multi-task 3D Perception](maestro_task-relevant_optimization_via_adaptive_feature_enhancement_and_suppress.md)
+- [EVT: Efficient View Transformation for Multi-Modal 3D Object Detection](evt_efficient_view_transformation_for_multi-modal_3d_object_detection.md)
+- [DuET: Dual Incremental Object Detection via Exemplar-Free Task Arithmetic](duet_dual_incremental_object_detection_via_exemplar-free_task_arithmetic.md)
+
+<!-- RELATED:END -->

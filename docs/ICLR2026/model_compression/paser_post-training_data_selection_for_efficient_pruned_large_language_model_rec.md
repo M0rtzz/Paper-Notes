@@ -134,3 +134,15 @@ Step 3: 负面效应缓解（NTEM）→ 概念一致性图过滤冲突数据
 - 实验充分度: ⭐⭐⭐⭐⭐ 4种剪枝方案、7款LLM、2种数据集规模、多个数据选择基线，极为全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述详尽，代码公开
 - 价值: ⭐⭐⭐⭐⭐ 对LLM剪枝+恢复的实际工作流有直接指导意义，"少即是多"的发现有重要实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+- [Restoring Pruned Large Language Models via Lost Component Compensation](../../NeurIPS2025/model_compression/restoring_pruned_large_language_models_via_lost_component_compensation.md)
+- [Post Training Quantization for Efficient Dataset Condensation](../../AAAI2026/model_compression/post_training_quantization_for_efficient_dataset_condensation.md)
+- [PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
+- [A Recovery Guarantee for Sparse Neural Networks](a_recovery_guarantee_for_sparse_neural_networks.md)
+
+<!-- RELATED:END -->

@@ -110,3 +110,15 @@ GenDeg基于InstructPix2Pix架构，输入为干净图像 $c_{img}$ + 文本prom
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个不同模型、6种退化、多个OoD/域内数据集、t-SNE可视化，非常全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，数据分析详实，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 提供了可直接使用的75万样本数据集和退化合成工具，对社区有直接推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMAIF: Multi-task and Multi-degradation All-in-One for Image Fusion with Language Guidance](../../ICCV2025/image_generation/mmaif_multi-task_and_multi-degradation_all-in-one_for_image_fusion_with_language.md)
+- [Bridging Degradation Discrimination and Generation for Universal Image Restoration](../../ICLR2026/image_generation/bridging_degradation_discrimination_and_generation_for_universal_image_restorati.md)
+- [Face2Scene: Using Facial Degradation as an Oracle for Diffusion-Based Scene Restoration](../../CVPR2026/image_generation/face2scene_using_facial_degradation_as_an_oracle_for_diffusion-based_scene_resto.md)
+- [Multi-focal Conditioned Latent Diffusion for Person Image Synthesis](multi-focal_conditioned_latent_diffusion_for_person_image_synthesis.md)
+- [Navigating Image Restoration with VAR's Distribution Alignment Prior](navigating_image_restoration_with_vars_distribution_alignment_prior.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ Directo 构建在离散流匹配（DFM）框架之上。生成过程从噪声分
 - **实验**：⭐⭐⭐⭐⭐ 合成+真实数据集全面评测，消融充分
 - **写作**：⭐⭐⭐⭐ 结构清晰，benchmark 设计合理
 - **实用性**：⭐⭐⭐⭐ 提供了完整评测框架和代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-Solver: A Generalized ODE Solver for Diffusion Models with Dual Prediction](dual-solver_a_generalized_ode_solver_for_diffusion_models_with_dual_prediction.md)
+- [Video Motion Graphs](../../ICCV2025/image_generation/video_motion_graphs.md)
+- [Directed Graph Grammars for Sequence-based Learning](../../ICML2025/image_generation/directed_graph_grammars_for_sequence-based_learning.md)
+- [TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking](../../CVPR2026/image_generation/trace_structure-aware_character_encoding_for_robust_and_generalizable_document_w.md)
+- [TruthfulRAG: Resolving Factual-level Conflicts in Retrieval-Augmented Generation with Knowledge Graphs](../../AAAI2026/image_generation/truthfulrag_resolving_factual-level_conflicts_in_retrieval-augmented_generation_.md)
+
+<!-- RELATED:END -->

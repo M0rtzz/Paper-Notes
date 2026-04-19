@@ -108,3 +108,15 @@ TempSamp-R1基于GRPO框架，对每个查询采样$G$个解（$G-1$个on-policy
 - 实验充分度: ⭐⭐⭐⭐ 3个benchmark SOTA + 详细消融 + few-shot评估
 - 写作质量: ⭐⭐⭐⭐ 问题分析到位，动机-方案逻辑链清晰
 - 价值: ⭐⭐⭐⭐ 为视频时序理解提供了实用的RL微调框架，Mixed CoT设计可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](enhancing_temporal_understanding_in_videollms_through_stacke.md)
+- [R-AVST: Empowering Video-LLMs with Fine-Grained Spatio-Temporal Reasoning in Complex Audio-Visual Scenarios](../../AAAI2026/video_understanding/r-avst_empowering_video-llms_with_fine-grained_spatio-temporal_reasoning_in_comp.md)
+- [RAVEN: Robust Advertisement Video Violation Temporal Grounding via Reinforcement Reasoning](../../ACL2025/video_understanding/raven_robust_advertisement_video_violation_temporal_grounding_via_reinforcement_.md)
+- [Reinforcement Learning with Backtracking Feedback](reinforcement_learning_with_backtracking_feedback.md)
+- [R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding](../../ECCV2024/video_understanding/r2tuning_efficient_imagetovideo_transfer_learning_for_video.md)
+
+<!-- RELATED:END -->

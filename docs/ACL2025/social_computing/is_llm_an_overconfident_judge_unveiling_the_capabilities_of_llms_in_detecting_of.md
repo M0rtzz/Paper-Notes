@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12个LLM覆盖闭源/开源，zero-shot/few-shot/微调三种范式，多指标互相验证
 - 写作质量: ⭐⭐⭐⭐ 研究问题清晰，发现按层次递进展开
 - 价值: ⭐⭐⭐⭐ 对LLM-as-Judge实践有重要警示意义，分层评估框架可广泛推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluation of LLM Vulnerabilities to Being Misused for Personalized Disinformation Generation](llm_personalized_disinformation.md)
+- [Exploring the Impact of Instruction-Tuning on LLMs' Susceptibility to Misinformation](exploring_the_impact_of_instruction-tuning_on_llms_susceptibility_to_misinformat.md)
+- [BanStereoSet: A Dataset to Measure Stereotypical Social Biases in LLMs for Bangla](banstereoset_a_dataset_to_measure_stereotypical_social_biases_in_llms_for_bangla.md)
+- [Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](llm_label_propagation.md)
+- [Concept-Level Explainability for Auditing & Steering LLM Responses](../../NeurIPS2025/social_computing/concept-level_explainability_for_auditing_steering_llm_responses.md)
+
+<!-- RELATED:END -->

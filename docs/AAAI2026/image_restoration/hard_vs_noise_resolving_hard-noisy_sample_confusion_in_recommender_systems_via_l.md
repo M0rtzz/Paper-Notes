@@ -125,3 +125,15 @@ LLMHNI 包含两个核心模块：
 - 实验充分度: 8/10 — 三数据集两骨干、消融完整、噪声鲁棒性验证充分，但缺非 GNN 骨干验证
 - 写作质量: 7/10 — 动机阐述清晰，但公式符号较多、部分表述冗长
 - 价值: 7/10 — 解决实际问题但 LLM 成本限制了大规模部署的实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework](large_language_models_meet_extreme_multi-label_classification_scaling_and_multi-.md)
+- [Activation Steering for Masked Diffusion Language Models](../../ICLR2026/image_restoration/activation_steering_for_masked_diffusion_language_models.md)
+- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](../../ICLR2026/image_restoration/toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+- [wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models](../../ICLR2026/image_restoration/wd1_weighted_policy_optimization_for_reasoning_in_diffusion_language_models.md)
+- [Are Deep Speech Denoising Models Robust to Adversarial Noise?](../../ICLR2026/image_restoration/are_deep_speech_denoising_models_robust_to_adversarial_noise.md)
+
+<!-- RELATED:END -->

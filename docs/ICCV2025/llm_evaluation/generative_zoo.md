@@ -132,3 +132,15 @@ S-MPJPE 从 374.9 降至 160.1（降幅 57%），仅使用合成数据训练。
 - **实验充分度**: ⭐⭐⭐⭐ 多维消融详尽，感知实验有说服力，但缺少更多物种的真实世界验证
 - **写作质量**: ⭐⭐⭐⭐ 流水线描述清晰，动机充分
 - **价值**: ⭐⭐⭐⭐ 百万级数据集和流水线的开源对动物行为分析社区有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](../../ICML2025/llm_evaluation/g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
+- [ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer](shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md)
+- [A Conditional Probability Framework for Compositional Zero-shot Learning](a_conditional_probability_framework_for_compositional_zerosh.md)
+- [Imbalance in Balance: Online Concept Balancing in Generation Models](imbalance_in_balance_online_concept_balancing_in_generation_models.md)
+- [A Real-world Display Inverse Rendering Dataset](a_realworld_display_inverse_rendering_dataset.md)
+
+<!-- RELATED:END -->

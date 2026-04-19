@@ -142,3 +142,15 @@ LoReTTA 分两步走：**Step 1 稀疏化**（移除高影响力边）→ **Step
 
 ## 评分
 ⭐⭐⭐⭐ — 在 CTDG 对抗攻击这个新兴方向上做了系统性工作。无代理模型 + 约束感知的设计哲学非常务实，16 种启发式的全面对比提供了有价值的图脆弱性分析。攻防评估的完整度在安全会议中都算出色。不足在于防御端没有提出新方法，且在高模块化图上负采样的反作用值得深究。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Task-Aware Retrieval Augmentation for Dynamic Recommendation](task-aware_retrieval_augmentation_for_dynamic_recommendation.md)
+- [Are LLMs Prescient? A Continuous Evaluation using Daily News as the Oracle](../../ICML2025/time_series/are_llms_prescient_a_continuous_evaluation_using_daily_news_as_the_oracle.md)
+- [GAICo: A Deployed and Extensible Framework for Evaluating Diverse and Multimodal Generative AI Outputs](gaico_a_deployed_and_extensible_framework_for_evaluating_diverse_and_multimodal_.md)
+- [MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series](../../NeurIPS2025/time_series/maestro_adaptive_sparse_attention_and_robust_learning_for_multimodal_dynamic_tim.md)
+- [Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework](../../ICLR2026/time_series/towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ SFT 和 BAM 在 10 项中 8 项超越通用多模态 LLM。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三种模型变体、多任务+迁移+描述符消融，分析全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，数据呈现直观，但部分细节需查阅附录
 - 价值: ⭐⭐⭐⭐ — 填补统一行为理解基准的空白，为社区提供重要研究基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedXpertQA: Benchmarking Expert-Level Medical Reasoning and Understanding](../../ICML2025/medical_imaging/medxpertqa_benchmarking_expert-level_medical_reasoning_and_understanding.md)
+- [A Unified Solution to Video Fusion: From Multi-Frame Learning to Benchmarking](../../NeurIPS2025/medical_imaging/a_unified_solution_to_video_fusion_from_multi-frame_learning_to_benchmarking.md)
+- [DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction](dm4ct_benchmarking_diffusion_models_for_computed_tomography_reconstruction.md)
+- [Unified Biomolecular Trajectory Generation via Pretrained Variational Bridge](unified_biomolecular_trajectory_generation_via_pretrained_variational_bridge.md)
+- [Boosting Medical Visual Understanding From Multi-Granular Language Learning](boosting_medical_visual_understanding_from_multi-granular_language_learning.md)
+
+<!-- RELATED:END -->

@@ -113,3 +113,15 @@ Bézier Splatting 将 Gaussian Splatting 框架与 Bézier 曲线结合，沿曲
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+消融+速度对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰
 - 价值: ⭐⭐⭐⭐ 大幅推进矢量化渲染效率
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uni-LoRA: One Vector is All You Need](uni-lora_one_vector_is_all_you_need.md)
+- [Trajectory Balance with Asynchrony: Decoupling Exploration and Learning for Fast, Scalable LLM Post-Training](trajectory_balance_with_asynchrony_decoupling_exploration_and_learning_for_fast_.md)
+- [Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression](learning_grouped_lattice_vector_quantizers_for_low-bit_llm_compression.md)
+- [Deterministic Continuous Replacement: Fast and Stable Module Replacement in Pretrained Transformers](deterministic_continuous_replacement_fast_and_stable_module_replacement_in_pretr.md)
+- [Task Vector Quantization for Memory-Efficient Model Merging](../../ICCV2025/model_compression/task_vector_quantization_for_memory-efficient_model_merging.md)
+
+<!-- RELATED:END -->

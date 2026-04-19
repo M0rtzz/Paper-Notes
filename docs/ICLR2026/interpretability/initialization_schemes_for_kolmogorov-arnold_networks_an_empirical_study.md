@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 12.6万+模型实例的超大规模网格搜索，NTK分析+Feynman验证三层递进
 - 写作质量: ⭐⭐⭐⭐ 理论推导与实验分析衔接紧密，图表设计清晰
 - 价值: ⭐⭐⭐⭐ 为KAN社区提供了即插即用的实用初始化策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlashKAT: Understanding and Addressing Performance Bottlenecks in the Kolmogorov-Arnold Transformer](../../AAAI2026/interpretability/flashkat_understanding_and_addressing_performance_bottlenecks_in_the_kolmogorov-.md)
+- [Modal Logical Neural Networks for Financial AI](modal_logical_neural_networks_for_financial_ai.md)
+- [SALVE: Sparse Autoencoder-Latent Vector Editing for Mechanistic Control of Neural Networks](salve_sparse_autoencoder-latent_vector_editing_for_mechanistic_control_of_neural.md)
+- [Do Sparse Autoencoders Generalize? A Case Study of Answerability](../../ICML2025/interpretability/do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)
+- [Deep Modularity Networks with Diversity-Preserving Regularization](../../NeurIPS2025/interpretability/deep_modularity_networks_with_diversity-preserving_regularization.md)
+
+<!-- RELATED:END -->

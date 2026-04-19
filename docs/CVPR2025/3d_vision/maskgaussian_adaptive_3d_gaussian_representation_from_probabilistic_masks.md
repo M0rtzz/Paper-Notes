@@ -120,3 +120,15 @@ MaskGaussian 为每个高斯维护一个存在概率分布（2 个可学习 mask
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集全面对比，消融详尽（mask 应用位置、损失形式、超参数），但缺少户外大场景
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，梯度推导严谨，可视化对比（轮胎充气嘴、枯藤等细节）极具说服力
 - 价值: ⭐⭐⭐⭐ 为 3DGS 效率优化提供了新思路，masked-rasterization 作为通用 mask 接口有更广泛的应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EigenGS: Representation from Eigenspace to Gaussian Image Space](eigengs_representation_from_eigenspace_to_gaussian_image_space.md)
+- [Discretized Gaussian Representation for Tomographic Reconstruction](../../ICCV2025/3d_vision/discretized_gaussian_representation_for_tomographic_reconstruction.md)
+- [CLIP-GS: Unifying Vision-Language Representation with 3D Gaussian Splatting](../../ICCV2025/3d_vision/clip-gs_unifying_vision-language_representation_with_3d_gaussian_splatting.md)
+- [DC4GS: Directional Consistency-Driven Adaptive Density Control for 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/dc4gs_directional_consistency-driven_adaptive_density_control_for_3d_gaussian_sp.md)
+- [COB-GS: Clear Object Boundaries in 3DGS Segmentation Based on Boundary-Adaptive Gaussian Splitting](cob-gs_clear_object_boundaries_in_3dgs_segmentation_based_on_boundary-adaptive_g.md)
+
+<!-- RELATED:END -->

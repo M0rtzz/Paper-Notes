@@ -199,3 +199,15 @@ $$L_\text{actor}(\psi^i) = -\beta_H \cdot H(\pi_{\psi^i}(a_t^i \mid h_t^i, z_t^i
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三大基准、大量消融、t-SNE 可视化、AM 过滤器可解释性分析、运行时间对比，极其充分
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰、理论与直觉兼顾，但符号较多导致部分推导可读性略差
 - 价值: ⭐⭐⭐⭐⭐ — 解决了公认的开放挑战，方法高效可扩展，代码开源，对 MARL 社区价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+- [Adversarial Cooperative Rationalization: The Risk of Spurious Correlations in Even Clean Datasets](adversarial_cooperative_rationalization_the_risk_of_spurious_correlations_in_eve.md)
+- [Empirical Study on Robustness and Resilience in Cooperative Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/empirical_study_on_robustness_and_resilience_in_cooperative_multi-agent_reinforc.md)
+- [Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](../../ICLR2026/reinforcement_learning/distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+- [Learning to Incentivize in Repeated Principal-Agent Problems with Adversarial Agent Arrivals](learning_to_incentivize_in_repeated_principal-agent_problems_with_adversarial_ag.md)
+
+<!-- RELATED:END -->

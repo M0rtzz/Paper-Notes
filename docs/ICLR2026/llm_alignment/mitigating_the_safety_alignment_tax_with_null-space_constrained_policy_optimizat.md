@@ -128,3 +128,15 @@ GRPO 目标函数 + 零空间投影（去掉 KL 项）。仅使用 PKU-SafeRLHF 
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 安全+7 通用 benchmark，两个模型，多消融
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验全面
 - 价值: ⭐⭐⭐⭐⭐ 解决了安全对齐领域的核心痛点，方法简洁高效可落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AlphaSteer: Learning Refusal Steering with Principled Null-Space Constraint](alphasteer_learning_refusal_steering_with_principled_null-space_constraint.md)
+- [A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models](a2d_any-order_any-step_safety_alignment_for_diffusion_language_models.md)
+- [Mitigating Mismatch within Reference-based Preference Optimization](mitigating_mismatch_within_reference-based_preference_optimization.md)
+- [Superficial Safety Alignment Hypothesis](superficial_safety_alignment_hypothesis.md)
+- [Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
+
+<!-- RELATED:END -->

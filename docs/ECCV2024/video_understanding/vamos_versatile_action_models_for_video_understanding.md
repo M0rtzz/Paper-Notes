@@ -141,3 +141,15 @@ $$\mathbf{z}_v = \mathcal{F}_{\text{proj}}(\mathcal{E}(v_1, \ldots, v_{N_v})) \i
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个互补基准、系统表征对比、多 LLM 消融、TBM 分析极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，实验设计严谨，可视化分析直观
 - 价值: ⭐⭐⭐⭐⭐ 揭示了文本即表征的强大潜力，对视频理解范式有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimizing Factorized Encoder Models: Time and Memory Reduction for Scalable and Efficient Action Recognition](optimizing_factorized_encoder_models_time_and_memory_reduction_for_scalable_and_.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
+- [Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
+- [Adapt2Reward: Adapting Video-Language Models to Generalizable Robotic Rewards via Failure Prompts](adapt2reward_adapting_videolanguage_models_to_generalizable.md)
+
+<!-- RELATED:END -->

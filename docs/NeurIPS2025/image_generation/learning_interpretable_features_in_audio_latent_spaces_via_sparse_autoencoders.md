@@ -165,3 +165,15 @@ $s_t^{(a)} \in [0, 1]$ 衡量从初始噪声 ($t=0$) 到最终音频结构 ($t=T
 - 实验充分度: ⭐⭐⭐ — 覆盖三种编码器和一种生成模型，但声学属性有限，缺少质量评估
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，可视化丰富，框架描述简洁易懂
 - 价值: ⭐⭐⭐⭐ — 开辟了音频生成可解释性的新方向，框架可扩展性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpretable and Steerable Concept Bottleneck Sparse Autoencoders](../../CVPR2026/image_generation/interpretable_and_steerable_concept_bottleneck_sparse_autoencoders.md)
+- [MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction](mge-ldm_joint_latent_diffusion_for_simultaneous_music_generation_and_source_extr.md)
+- [Guided Diffusion Sampling on Function Spaces with Applications to PDEs](guided_diffusion_sampling_on_function_spaces_with_applications_to_pdes.md)
+- [Exploring Variational Graph Autoencoders for Distribution Grid Data Generation](exploring_variational_graph_autoencoders_for_distribution_grid_data_generation.md)
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+
+<!-- RELATED:END -->

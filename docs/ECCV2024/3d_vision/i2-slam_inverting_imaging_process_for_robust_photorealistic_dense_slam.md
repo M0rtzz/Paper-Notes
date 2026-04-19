@@ -118,3 +118,15 @@ I²-SLAM是一个通用模块，可以挂载到任何基于图像输入的dense 
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实数据集，RGB+RGBD模式，多种基线对比，详尽的消融
 - 写作质量: ⭐⭐⭐⭐⭐ 公式推导清晰，物理建模和SLAM集成的衔接流畅
 - 价值: ⭐⭐⭐⭐ 解决了实际部署中的核心痛点，模块化设计便于集成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field](cg-slam_efficient_dense_rgb-d_slam_in_a_consistent_uncertainty-aware_3d_gaussian.md)
+- [Deep Patch Visual SLAM](deep_patch_visual_slam.md)
+- [MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](../../CVPR2025/3d_vision/mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
+- [Hyperion: A Fast, Versatile Symbolic Gaussian Belief Propagation Framework for Continuous-Time SLAM](hyperion_-_a_fast_versatile_symbolic_gaussian_belief_propagation_framework_for_c.md)
+
+<!-- RELATED:END -->

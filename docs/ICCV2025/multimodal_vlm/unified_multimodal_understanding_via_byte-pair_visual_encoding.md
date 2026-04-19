@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多个 benchmark + 详细消融 + 可视化分析，但缺少生成任务验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论和实践的衔接自然
 - 价值: ⭐⭐⭐⭐ 证明了离散 token 路线的可行性，为统一多模态表示提供了实践路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harmonizing Visual Representations for Unified Multimodal Understanding and Generation](harmonizing_visual_representations_for_unified_multimodal_un.md)
+- [MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding](muse-vl_modeling_unified_vlm_through_semantic_discrete_encoding.md)
+- [UniTok: A Unified Tokenizer for Visual Generation and Understanding](../../NeurIPS2025/multimodal_vlm/unitok_a_unified_tokenizer_for_visual_generation_and_understanding.md)
+- [Customized Visual Storytelling with Unified Multimodal LLMs](../../CVPR2026/multimodal_vlm/customized_visual_storytelling_with_unified_multimodal_llms.md)
+- [BRAVE: Broadening the Visual Encoding of Vision-Language Models](../../ECCV2024/multimodal_vlm/brave_broadening_the_visual_encoding_of_vision-language_models.md)
+
+<!-- RELATED:END -->

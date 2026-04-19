@@ -151,3 +151,15 @@ DiffeoCFM在所有fMRI数据集上$\alpha,\beta$-F1大幅领先；在EEG上与Ri
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5个真实数据集、多种基线、质量+分类+神经生理三层评估体系
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，图表专业，实验描述详尽
 - 价值: ⭐⭐⭐⭐ — 为脑连接矩阵生成提供了实用SOTA方案，隐私保护数据共享等应用前景明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling](energy_matching_unifying_flow_matching_and_energy-based_models_for_generative_mo.md)
+- [Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number](prior-guided_flow_matching_for_target-aware_molecule_design_with_learnable_atom_.md)
+- [Learning Conformational Ensembles of Proteins Based on Backbone Geometry](learning_conformational_ensembles_of_proteins_based_on_backbone_geometry.md)
+- [Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](../../ICML2025/medical_imaging/flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+
+<!-- RELATED:END -->

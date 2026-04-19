@@ -152,3 +152,15 @@ $$p_\theta(\mathcal{S}_c|c,\mathcal{G}) = \sum_{\mathcal{P}_c} p_\theta(\mathcal
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多基线、消融、泛化、错误分析、backbone对比非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 数学框架清晰，但部分描述较冗长
 - **价值**: ⭐⭐⭐⭐ — 对 KG 增强的事实核查领域有较好的推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](kg_rag_recommendation.md)
+- [RAS: Retrieval-And-Structuring for Knowledge-Intensive LLM Generation](../../ICLR2026/graph_learning/ras_retrieval-and-structuring_for_knowledge-intensive_llm_generation.md)
+- [Balancing Efficiency and Expressiveness: Subgraph GNNs with Walk-Based Centrality](../../ICML2025/graph_learning/balancing_efficiency_and_expressiveness_subgraph_gnns_with_walk-based_centrality.md)
+- [Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework](../../NeurIPS2025/graph_learning/unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)
+- [SimGRAG: Leveraging Similar Subgraphs for Knowledge Graphs Driven Retrieval-Augmented Generation](simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)
+
+<!-- RELATED:END -->

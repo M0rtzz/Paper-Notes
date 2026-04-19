@@ -133,3 +133,15 @@ MM-VAP 在所有沉默时长上都优于 VAP，且两者性能均随沉默时长
 | 实验充分性 | 5 |
 | 写作质量 | 5 |
 | **总分** | **4.5** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Conversational Agents with Theory of Mind: Aligning Beliefs, Desires, and Intentions for Human-Like Interaction](enhancing_conversational_agents_with_theory_of_mind_aligning_beliefs_desires_and.md)
+- [Unique Hard Attention: A Tale of Two Sides](unique_hard_attention_a_tale_of_two_sides.md)
+- [Sheaf Cohomology of Linear Predictive Coding Networks](../../NeurIPS2025/others/sheaf_cohomology_of_linear_predictive_coding_networks.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [A Little Human Data Goes A Long Way](a_little_human_data_goes_a_long_way.md)
+
+<!-- RELATED:END -->

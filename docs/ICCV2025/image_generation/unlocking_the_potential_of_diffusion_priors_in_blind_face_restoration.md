@@ -136,3 +136,15 @@ $$F_{joint} = \text{Self-Attn}(F_x) + \phi \cdot F_{ro}$$
 - 技术深度：⭐⭐⭐⭐⭐ — BoostHub + 嵌入对齐 + 退化模式多层设计
 - 实验充分度：⭐⭐⭐⭐ — 合成+多个真实数据集
 - 实用价值：⭐⭐⭐⭐ — 真实世界退化修复效果优异
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BVINet: Unlocking Blind Video Inpainting with Zero Annotations](bvinet_unlocking_blind_video_inpainting_with_zero_annotations.md)
+- [FedDifRC: Unlocking the Potential of Text-to-Image Diffusion Models in Heterogeneous Federated Learning](feddifrc_unlocking_the_potential_of_text-to-image_diffusion_models_in_heterogene.md)
+- [MoFRR: Mixture of Diffusion Models for Face Retouching Restoration](mofrr_mixture_of_diffusion_models_for_face_retouching_restoration.md)
+- [REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers](repa-e_unlocking_vae_for_end-to-end_tuning_of_latent_diffusion_transformers.md)
+- [REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers](repae_unlocking_vae_for_endtoend_tuning_of_latent_diffusion.md)
+
+<!-- RELATED:END -->

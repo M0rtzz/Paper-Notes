@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了6个ID数据集和多种OOD类型，但缺少大规模数据集（如ImageNet）的验证
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰严谨，但pipeline描述较复杂，读者需要较强的OT背景知识
 - 价值: ⭐⭐⭐⭐ 为OOD过度自信问题提供了有原则的解决思路，但计算复杂度可能限制实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Out-of-Distribution Detection with Extended Logit Normalization](../../CVPR2026/llm_evaluation/enhancing_out-of-distribution_detection_with_extended_logit_normalization.md)
+- [Gradient-Regularized Out-of-Distribution Detection](../../ECCV2024/llm_evaluation/gradient-regularized_out-of-distribution_detection.md)
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](../../AAAI2026/llm_evaluation/graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](../../ICCV2025/llm_evaluation/odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+- [Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
+
+<!-- RELATED:END -->

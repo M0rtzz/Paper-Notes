@@ -140,3 +140,15 @@ MENTAT是评估数据集，不用于训练。核心评估设计：
 - 实验充分度: ⭐⭐⭐⭐ 22个模型+5个任务类别+3个人口统计维度+自由文本评估
 - 写作质量: ⭐⭐⭐⭐ 数据集设计和标注流程描述详尽
 - 价值: ⭐⭐⭐⭐ 填补精神科AI评估空白，公平性分析具有重要社会意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](../../AAAI2026/medical_imaging/pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)
+- [Experience with Single Domain Generalization in Real World Medical Imaging Deployments](../../AAAI2026/medical_imaging/experience_with_single_domain_generalization_in_real_world_medical_imaging_deplo.md)
+- [Can SAEs Reveal and Mitigate Racial Biases of LLMs in Healthcare?](can_saes_reveal_and_mitigate_racial_biases_of_llms_in_healthcare.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](../../NeurIPS2025/medical_imaging/mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [Benchmarking ECG FMs: A Reality Check Across Clinical Tasks](benchmarking_ecg_fms_a_reality_check_across_clinical_tasks.md)
+
+<!-- RELATED:END -->

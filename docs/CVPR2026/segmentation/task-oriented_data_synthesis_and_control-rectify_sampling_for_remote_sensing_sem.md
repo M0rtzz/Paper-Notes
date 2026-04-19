@@ -135,3 +135,15 @@ CRFM步数消融（step=23）：
 - 实验充分度: ⭐⭐⭐⭐ 控制策略和CRFM超参数的消融实验充分，但仅两个数据集略显不足
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验框架完整
 - 价值: ⭐⭐⭐⭐ 对遥感数据合成有实际价值，CRFM思路可推广到其他域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semanticguided_modalityaware_segmentation_for.md)
+- [General and Task-Oriented Video Segmentation](../../ECCV2024/segmentation/general_and_task-oriented_video_segmentation.md)
+- [Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training](data_warmup_complexity-aware_curricula_for_efficient_diffusion_training.md)
+- [InstructSAM: A Training-Free Framework for Instruction-Oriented Remote Sensing Object Recognition](../../NeurIPS2025/segmentation/instructsam_a_training-free_framework_for_instruction-oriented_remote_sensing_ob.md)
+- [InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning](../../ACL2025/segmentation/instructpart_task-oriented_part_segmentation_with_instruction_reasoning.md)
+
+<!-- RELATED:END -->

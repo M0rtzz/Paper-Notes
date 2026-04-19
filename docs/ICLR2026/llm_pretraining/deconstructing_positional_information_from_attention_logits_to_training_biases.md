@@ -93,3 +93,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成实验设计精巧，消融充分，但缺少自然语言实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论叙述清晰，从框架到发现到证明的逻辑链完整
 - 价值: ⭐⭐⭐⭐ 对位置编码的机制理解有重要推进，对MLA等新设计有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Explaining Grokking and Information Bottleneck through Neural Collapse Emergence](explaining_grokking_and_information_bottleneck_through_neural_collapse_emergence.md)
+- [Benign Overfitting in Token Selection of Attention Mechanism](../../ICML2025/llm_pretraining/benign_overfitting_in_token_selection_of_attention_mechanism.md)
+- [Robust Message Embedding via Attention Flow-Based Steganography](../../CVPR2025/llm_pretraining/robust_message_embedding_via_attention_flow-based_steganography.md)
+- [No-Regret Strategy Solving in Imperfect-Information Games via Pre-Trained Embedding](../../AAAI2026/llm_pretraining/no-regret_strategy_solving_in_imperfect-information_games_via_pre-trained_embedd.md)
+- [Counting in Small Transformers: The Delicate Interplay between Attention and Feed-Forward Layers](../../ICML2025/llm_pretraining/counting_in_small_transformers_the_delicate_interplay_between_attention_and_feed.md)
+
+<!-- RELATED:END -->

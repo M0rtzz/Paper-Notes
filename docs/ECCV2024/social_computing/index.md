@@ -10,10 +10,10 @@ description: >-
 
 **🎞️ ECCV2024** · **2** 篇论文解读
 
-**[Distribution-Aware Robust Learning From Long-Tailed Data With Noisy Labels](distribution-aware_robust_learning_from_long-tailed_data_with_noisy_labels.md)**
+**[Distribution-Aware Robust Learning from Long-Tailed Data with Noisy Labels](distribution-aware_robust_learning_from_long-tailed_data_with_noisy_labels.md)**
 
 :   提出 DaSC 框架，通过分布感知的类中心估计（DaCC）和置信度感知的对比学习（SBCL + MIDL），同时解决长尾分布和噪声标签的联合问题，在 CIFAR 和真实噪声数据集上达到 SOTA。
 
-**[Grace Graph-Based Contextual Debiasing For Fair Visual Question Answering](grace_graph-based_contextual_debiasing_for_fair_visual_question_answering.md)**
+**[GRACE: Graph-Based Contextual Debiasing for Fair Visual Question Answering](grace_graph-based_contextual_debiasing_for_fair_visual_question_answering.md)**
 
 :   提出 GRACE（GRAph-based Contextual DEbiasing），一种基于图结构的上下文去偏方法，通过无监督上下文图学习和基于图的多样化 in-context example 选择，解决知识增强 VQA 系统中大语言模型继承的数据偏差问题。

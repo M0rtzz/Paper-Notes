@@ -148,3 +148,15 @@ ARM模块各组件的贡献（Overall Scenes）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 21个方法对比，四场景评估，丰富的消融和泛化实验
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰有说服力，但部分内容较密集
 - 价值: ⭐⭐⭐⭐ 推动SOD/COD统一化发展，数据集和基准有长期影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection](beyond_single_images_retrieval_self-augmented_unsupervised_camouflaged_object_de.md)
+- [FineRS: Fine-grained Reasoning and Segmentation of Small Objects with Reinforcement Learning](../../NeurIPS2025/segmentation/finers_fine-grained_reasoning_and_segmentation_of_small_objects_with_reinforceme.md)
+- [DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation](../../CVPR2026/segmentation/discover_segment_and_select_a_progressive_mechanism_for_zero-shot_camouflaged_ob.md)
+- [Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification](../../CVPR2026/segmentation/detecting_ai-generated_forgeries_via_iterative_manifold_deviation_amplification.md)
+- [Frequency-Spatial Entanglement Learning for Camouflaged Object Detection](../../ECCV2024/segmentation/frequency-spatial_entanglement_learning_for_camouflaged_object_detection.md)
+
+<!-- RELATED:END -->

@@ -152,3 +152,15 @@ $$\bar{D} = \mathbf{S}(\hat{D}, D) \odot \hat{D}$$
 ⭐⭐⭐⭐⭐
 
 本文在单图新视角合成上实现了质量-速度的帕累托最优，6 个数据集零样本全面 SOTA，同时推理速度为亚秒级。端到端架构设计的每个模块（双层深度、深度调整、Gaussian 精细化）都有清晰的动机和消融支持。工程细节（计算图手术、SSFT）展示了深厚的系统能力。Apple 出品，代码已开源。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoVieS: Motion-Aware 4D Dynamic View Synthesis in One Second](../../CVPR2026/3d_vision/movies_motion-aware_4d_dynamic_view_synthesis_in_one_second.md)
+- [Dynamic Novel View Synthesis in High Dynamic Range](dynamic_novel_view_synthesis_in_high_dynamic_range.md)
+- [DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](../../CVPR2026/3d_vision/dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](../../ECCV2024/3d_vision/generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+- [Scaling View Synthesis Transformers (SVSM)](../../CVPR2026/3d_vision/scaling_view_synthesis_transformers.md)
+
+<!-- RELATED:END -->

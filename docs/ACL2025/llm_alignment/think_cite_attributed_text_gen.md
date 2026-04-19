@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+消融+参数分析，但缺少计算成本对比和更多开源模型实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题建模清晰，公式推导严谨，动机链完整
 - 价值: ⭐⭐⭐⭐⭐ 为LLM可靠生成提供了强力方案，inference-time scaling的重要应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentRM: Enhancing Agent Generalization with Reward Modeling](agentrm_enhancing_agent_generalization_with_reward_modeling.md)
+- [Dynamic Scaling of Unit Tests for Code Reward Modeling](dynamic_scaling_of_unit_tests_for_code_reward_modeling.md)
+- [SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](synthesizeme_persona_prompts.md)
+- [RPO: Retrieval Preference Optimization for Robust Retrieval-Augmented Generation](rpo_retrieval_preference_optimization_for_robust_retrieval-augmented_generation.md)
+- [Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation](../../ICLR2026/llm_alignment/dual-ipo_dual-iterative_preference_optimization_for_text-to-video_generation.md)
+
+<!-- RELATED:END -->

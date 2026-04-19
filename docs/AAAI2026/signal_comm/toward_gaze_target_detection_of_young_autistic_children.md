@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多 baseline 对比充分，upper bound 分析有洞察力；但缺乏跨场景泛化实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、问题定义准确、临床意义阐述充分，是社会影响力导向研究的写作典范
 - 价值: ⭐⭐⭐⭐ 社会意义重大，为 AI 辅助自闭症评估奠定基础；技术方案对其他不平衡检测任务也有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Task Aware Modulation Using Representation Learning for Upscaling of Terrestrial Carbon Fluxes](task_aware_modulation_using_representation_learning_for_upsaling_of_terrestrial_.md)
+- [Text-Guided Channel Perturbation and Pretrained Knowledge Integration for Unified Multi-Modality Image Fusion](text-guided_channel_perturbation_and_pretrained_knowledge_integration_for_unifie.md)
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](../../ICLR2026/signal_comm/multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [Deterministic Bounds and Random Estimates of Metric Tensors on Neuromanifolds](../../ICLR2026/signal_comm/deterministic_bounds_and_random_estimates_of_metric_tensors_on_neuromanifolds.md)
+- [ChartNet: A Million-Scale, High-Quality Multimodal Dataset for Robust Chart Understanding](../../CVPR2026/signal_comm/chartnet_a_million-scale_high-quality_multimodal_dataset_for_robust_chart_unders.md)
+
+<!-- RELATED:END -->

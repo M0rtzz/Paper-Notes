@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作，定理证明严谨但无实验验证算法的实际效率
 - 写作质量: ⭐⭐⭐⭐⭐ 动机example设计精妙，复杂性景观呈现清晰，证明结构层次分明
 - 价值: ⭐⭐⭐⭐ 对算法博弈论和参数化算法社区有理论贡献，但实际应用路径尚不明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bayesian Network Structural Consensus via Greedy Min-Cut Analysis](bayesian_network_structural_consensus_via_greedy_min-cut_analysis.md)
+- [An Epistemic Perspective on Agent Awareness](an_epistemic_perspective_on_agent_awareness.md)
+- [Are Bias Evaluation Methods Biased?](../../ACL2025/others/are_bias_evaluation_methods_biased.md)
+- [Variance Computation for Weighted Model Counting with Knowledge Compilation Approach](variance_computation_for_weighted_model_counting_with_knowledge_compilation_appr.md)
+- [Agent-SAMA: State-Aware Mobile Assistant](agent-sama_state-aware_mobile_assistant.md)
+
+<!-- RELATED:END -->

@@ -147,3 +147,15 @@ ConformalSAM采用两阶段训练：
 - 实验充分度: ⭐⭐⭐⭐⭐ VOC/VOC-aug/ADE20K三个数据集，插件验证，CP变体消融全面
 - 写作质量: ⭐⭐⭐⭐ 动机清楚，消融设计好，但方法部分公式较多
 - 价值: ⭐⭐⭐⭐ 展示了如何安全利用基础模型辅助downstream训练的通用范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LASS3D: Language-Assisted Semi-Supervised 3D Semantic Segmentation with Progressive Unreliable Data Exploitation](../../ECCV2024/segmentation/lass3d_language-assisted_semi-supervised_3d_semantic_segmentation_with_progressi.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](../../CVPR2026/segmentation/semitooth_a_generalizable_semisupervised_framework.md)
+- [Know Your Attention Maps: Class-specific Token Masking for Weakly Supervised Semantic Segmentation](know_your_attention_maps_class-specific_token_masking_for_weakly_supervised_sema.md)
+- [Joint Self-Supervised Video Alignment and Action Segmentation](joint_self-supervised_video_alignment_and_action_segmentation.md)
+- [Auto-Vocabulary Semantic Segmentation](auto-vocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

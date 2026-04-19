@@ -10,6 +10,6 @@ description: >-
 
 **📷 CVPR2026** · **1** 篇论文解读
 
-**[Fine-Grained Image Aesthetic Assessment Learning Discriminative Scores From Rela](fine-grained_image_aesthetic_assessment_learning_discriminative_scores_from_rela.md)**
+**[Fine-grained Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks](fine-grained_image_aesthetic_assessment_learning_discriminative_scores_from_rela.md)**
 
 :   定义"细粒度图像美学评估"新任务，构建含32,217张图像/10,028个系列的FGAesthetics基准，提出FGAesQ模型：通过差异保留Tokenization（DiffToken）+ 对比文本辅助对齐（CTAlign）+ 排序感知回归（RankReg）从相对排序中学习判别性审美评分，在细粒度场景准确率0.779的同时保持粗粒度SRCC 0.770。

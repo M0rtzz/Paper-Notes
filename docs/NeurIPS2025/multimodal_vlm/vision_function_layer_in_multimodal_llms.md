@@ -124,3 +124,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 科学发现深刻（功能层级的跨模型一致性），方法设计巧妙（Token Swapping），实用应用强（VFL-LoRA和数据选择），实验覆盖全面（多模型×多任务×消融+应用）。是MLLM可解释性领域的重要工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
+- [ADMN: A Layer-Wise Adaptive Multimodal Network for Dynamic Input Noise and Compute Resources](admn_a_layerwise_adaptive_multimodal_network_for_dynamic_inp.md)
+- [Learning to Steer: Input-dependent Steering for Multimodal LLMs](learning_to_steer_input-dependent_steering_for_multimodal_llms.md)
+- [To See or To Read: User Behavior Reasoning in Multimodal LLMs](to_see_or_to_read_user_behavior_reasoning_in_multimodal_llms.md)
+- [Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices](../../CVPR2025/multimodal_vlm/multi-layer_visual_feature_fusion_in_multimodal_llms_methods_analysis_and_best_p.md)
+
+<!-- RELATED:END -->

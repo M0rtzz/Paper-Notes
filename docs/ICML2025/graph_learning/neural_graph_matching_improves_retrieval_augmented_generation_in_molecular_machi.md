@@ -165,3 +165,15 @@ Top-1 准确率相比无 RAG 的 ICEBERG 提升 **47%**（0.189→0.278），相
 - 实验充分度: ⭐⭐⭐⭐ — NIST + MassSpecGym 双数据集验证，消融全面，但缺少推理效率对比
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、化学直觉与方法论结合紧密、图示精良
 - 价值: ⭐⭐⭐⭐ — 对分子机器学习中的 RAG 设计提供了原则性指导，应用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](../../ACL2025/graph_learning/kg_rag_recommendation.md)
+- [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](../../NeurIPS2025/graph_learning/gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
+- [Beyond Message Passing: Neural Graph Pattern Machine](beyond_message_passing_neural_graph_pattern_machine.md)
+- [SimGRAG: Leveraging Similar Subgraphs for Knowledge Graphs Driven Retrieval-Augmented Generation](../../ACL2025/graph_learning/simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](../../NeurIPS2025/graph_learning/sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+
+<!-- RELATED:END -->

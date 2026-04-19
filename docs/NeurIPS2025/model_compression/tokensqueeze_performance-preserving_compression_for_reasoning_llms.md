@@ -126,3 +126,15 @@ $$\mathcal{L}_{\text{Total}} = \eta \mathcal{L}_{\text{DPO-L}} + (1-\eta) \mathc
 - **实验充分度**: ⭐⭐⭐⭐⭐ 四个benchmark、两个模型规模、多种消融维度，分析非常透彻
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，方法描述详细
 - **价值**: ⭐⭐⭐⭐⭐ 直接解决推理LLM部署中的核心效率问题，50%压缩不损精度极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference](chunkkv_semanticpreserving_kv_cache_compression_for_efficien.md)
+- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+- [MARGE: Improving Math Reasoning for LLMs with Guided Exploration](../../ICML2025/model_compression/marge_improving_math_reasoning_for_llms_with_guided_exploration.md)
+- [Matryoshka Pilot: Learning to Drive Black-Box LLMs with LLMs](matryoshka_pilot_learning_to_drive_black-box_llms_with_llms.md)
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](../../CVPR2025/model_compression/mambaic_state_space_models_for_high-performance_learned_image_compression.md)
+
+<!-- RELATED:END -->

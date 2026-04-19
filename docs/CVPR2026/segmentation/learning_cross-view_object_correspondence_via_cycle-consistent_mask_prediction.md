@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Ego-Exo4D + HANDAL-X 双 benchmark，消融全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，动机和设计逻辑连贯
 - 价值: ⭐⭐⭐⭐ 为跨视角对应建立了简洁高效的新 baseline，TTT 策略有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FoV-Net: Rotation-Invariant CAD B-rep Learning via Field-of-View Ray Casting](fov-net_rotation-invariant_cad_b-rep_learning_via_field-of-view_ray_casting.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [O-MaMa: Learning Object Mask Matching between Egocentric and Exocentric Views](../../ICCV2025/segmentation/o-mama_learning_object_mask_matching_between_egocentric_and_exocentric_views.md)
+- [GenMask: Adapting DiT for Segmentation via Direct Mask Generation](genmask_adapting_dit_for_segmentation_via_direct_mask_generation.md)
+- [FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning](fcl-cod_weakly_supervised_camouflaged_object_detection_with_frequency-aware_and_.md)
+
+<!-- RELATED:END -->

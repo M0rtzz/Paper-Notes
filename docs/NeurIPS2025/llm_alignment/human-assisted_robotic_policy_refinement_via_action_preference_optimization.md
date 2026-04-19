@@ -160,3 +160,15 @@ $$L(\pi_\theta, \pi_{ref}) = \mathbb{E}_{x,y \sim D^h}[-v(x,y)]$$
 - 实验充分度: ⭐⭐⭐⭐ (仿真+真实世界，多任务多扰动，终身学习，跨模型验证)
 - 写作质量: ⭐⭐⭐⭐ (问题定义清晰，动机充分)
 - 价值: ⭐⭐⭐⭐ (为 VLA 部署后持续改进提供了实用方案)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning](safevla_towards_safety_alignment_of_vision-language-action_model_via_constrained.md)
+- [ORPO-Distill: Mixed-Policy Preference Optimization for Cross-Architecture LLM Distillation](orpo-distill_mixed-policy_preference_optimization_for_cross-architecture_llm_dis.md)
+- [GVPO: Group Variance Policy Optimization for Large Language Model Post-Training](gvpo_group_variance_policy_optimization_for_large_language_model_post-training.md)
+- [Strategyproof Reinforcement Learning from Human Feedback](strategyproof_reinforcement_learning_from_human_feedback.md)
+- [Capturing Individual Human Preferences with Reward Features](capturing_individual_human_preferences_with_reward_features.md)
+
+<!-- RELATED:END -->

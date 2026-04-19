@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多问题（TSP/CVRP/TSPTW）、多分布（TMAT/XASY/FLEX/FIX）、多规模（50/100/200），消融和泛化全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Proposition 1 的理论分析为方法设计提供了动机
 - 价值: ⭐⭐⭐⭐ 填补了神经路由在多重图上的空白，对物流/交通领域有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](../../AAAI2026/graph_learning/beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
+- [Towards Improved Sentence Representations using Token Graphs](towards_improved_sentence_representations_using_token_graphs.md)
+- [Pairwise is Not Enough: Hypergraph Neural Networks for Multi-Agent Pathfinding](pairwise_is_not_enough_hypergraph_neural_networks_for_multi-agent_pathfinding.md)
+- [Beyond Message Passing: Neural Graph Pattern Machine](../../ICML2025/graph_learning/beyond_message_passing_neural_graph_pattern_machine.md)
+- [Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)
+
+<!-- RELATED:END -->

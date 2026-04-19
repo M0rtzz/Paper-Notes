@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 1018 模型 + 理论验证 + 多种应用展示
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但内容过于密集
 - 价值: ⭐⭐⭐⭐⭐ 为理解 LLM 生态系统提供了基础工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Input-Label Mapping in In-Context Learning with Contrastive Decoding](enhancing_input-label_mapping_in_in-context_learning_with_contrastive_decoding.md)
+- [Writing in Symbiosis: Mapping Human Creative Agency in the AI Era](../../NeurIPS2025/llm_nlp/writing_in_symbiosis_mapping_human_creative_agency_in_the_ai_era.md)
+- [Empowering LLMs to Understand and Generate Complex Vector Graphics](../../CVPR2025/llm_nlp/empowering_llms_to_understand_and_generate_complex_vector_graphics.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [On Entity Identification in Language Models](on_entity_identification_in_language_models.md)
+
+<!-- RELATED:END -->

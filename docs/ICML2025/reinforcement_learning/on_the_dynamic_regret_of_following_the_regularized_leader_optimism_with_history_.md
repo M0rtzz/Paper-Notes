@@ -136,3 +136,15 @@ $$\|\bm{p}_{1:t}\| \leq R\sigma_{1:t-1} + \epsilon_t$$
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献重要且优美——首次为 FTRL 建立紧凑集上的极小极大最优动态遗憾保证，裁剪机制的设计简洁而深刻。缺少实验验证是遗憾，但对理论工作而言属于可接受范围。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Non-stationary Online Learning for Curved Losses: Improved Dynamic Regret via Mixability](non-stationary_online_learning_for_curved_losses_improved_dynamic_regret_via_mix.md)
+- [Dynamic Regret Reduces to Kernelized Static Regret](../../NeurIPS2025/reinforcement_learning/dynamic_regret_reduces_to_kernelized_static_regret.md)
+- [Generalizing Verifiable Instruction Following](../../NeurIPS2025/reinforcement_learning/generalizing_verifiable_instruction_following.md)
+- [Financial Instruction Following Evaluation (FIFE)](../../NeurIPS2025/reinforcement_learning/financial_instruction_following_evaluation_fife.md)
+- [Demystifying the Paradox of Importance Sampling with an Estimated History-Dependent Behavior Policy in Off-Policy Evaluation](demystifying_the_paradox_of_importance_sampling_with_an_estimated_history-depend.md)
+
+<!-- RELATED:END -->

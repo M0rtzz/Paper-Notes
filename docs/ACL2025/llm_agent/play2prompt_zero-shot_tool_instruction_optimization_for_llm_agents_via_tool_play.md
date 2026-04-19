@@ -112,3 +112,15 @@ Berkeley Function-Calling Leaderboard (Executable)：
 - 实验充分度: ⭐⭐⭐⭐ BFCL + StableToolBench 两个真实 benchmark，多模型验证
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，Figure 1 直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了真实场景中工具集成的核心痛点，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Behavior Gap: Evaluating Zero-shot LLM Agents in Complex Task-Oriented Dialogs](the_behavior_gap_evaluating_zero-shot_llm_agents_in_complex_task-oriented_dialog.md)
+- [Agent3D-Zero: An Agent for Zero-shot 3D Understanding](../../ECCV2024/llm_agent/agent3d-zero_an_agent_for_zero-shot_3d_understanding.md)
+- [SMART: Self-Aware Agent for Tool Overuse Mitigation](smart_self-aware_agent_for_tool_overuse_mitigation.md)
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](meco_metacognition_tool_use.md)
+
+<!-- RELATED:END -->

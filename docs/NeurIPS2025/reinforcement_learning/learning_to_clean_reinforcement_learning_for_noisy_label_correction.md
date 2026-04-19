@@ -137,3 +137,15 @@ RLNLC 将问题定义为 MDP $\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, \mathc
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个数据集、多种噪声类型和比例、全面消融和超参敏感性分析
 - 写作质量: ⭐⭐⭐⭐ 数学推导详细，方法表述清晰
 - 价值: ⭐⭐⭐⭐ 开辟了 RL 在数据质量提升中的新应用方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Cooperative Rationalization: The Risk of Spurious Correlations in Even Clean Datasets](../../ICML2025/reinforcement_learning/adversarial_cooperative_rationalization_the_risk_of_spurious_correlations_in_eve.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Reinforcement Learning with Action Chunking](reinforcement_learning_with_action_chunking.md)
+- [On the Global Optimality of Policy Gradient Methods in General Utility Reinforcement Learning](on_the_global_optimality_of_policy_gradient_methods_in_general_utility_reinforce.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+
+<!-- RELATED:END -->

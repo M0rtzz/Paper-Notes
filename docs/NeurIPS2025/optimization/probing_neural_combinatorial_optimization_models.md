@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 实验极为详尽，包含多种模型、任务、消融和跨分布泛化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但部分内容在附录中需要跳转
 - 价值: ⭐⭐⭐⭐⭐ 对NCO社区有范式级别的贡献，开创了NCO可解释性的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Neural Combinatorial Optimization for Vehicle Routing Problems with Different Constraint Tightness Degrees](rethinking_neural_combinatorial_optimization_for_vehicle_routing_problems_with_d.md)
+- [RRNCO: Towards Real-World Routing with Neural Combinatorial Optimization](../../ICLR2026/optimization/rrnco_towards_real-world_routing_with_neural_combinatorial_optimization.md)
+- [Evaluating LLMs for Combinatorial Optimization: One-Phase and Two-Phase Heuristics for 2D Bin-Packing](evaluating_llms_for_combinatorial_optimization_one-phase_and_two-phase_heuristic.md)
+- [Oracle-Efficient Combinatorial Semi-Bandits](oracle-efficient_combinatorial_semi-bandits.md)
+- [FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling](fedrts_federated_robust_pruning_via_combinatorial_thompson_sampling.md)
+
+<!-- RELATED:END -->

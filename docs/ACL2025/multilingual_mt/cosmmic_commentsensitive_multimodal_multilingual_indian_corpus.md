@@ -111,3 +111,15 @@ IndicBERT评论过滤器用二分类交叉熵训练。基准实验用GPT-4和LLa
 - 实验充分度: ⭐⭐⭐ 基准实验较基础
 - 写作质量: ⭐⭐⭐ 数据构建描述清晰
 - 价值: ⭐⭐⭐⭐ 为低资源印度语言NLP研究填补空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [mOSCAR: A Large-scale Multilingual and Multimodal Document-level Corpus](moscar_a_large-scale_multilingual_and_multimodal_document-level_corpus.md)
+- [Harnessing Frozen Unimodal Encoders for Flexible Multimodal Alignment](../../CVPR2025/multilingual_mt/harnessing_frozen_unimodal_encoders_for_flexible_multimodal_alignment.md)
+- [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [NameTag 3: A Tool and a Service for Multilingual/Multitagset NER](nametag_3_a_tool_and_a_service_for_multilingualmultitagset_ner.md)
+- [LangMark: A Multilingual Dataset for Automatic Post-Editing](langmark_a_multilingual_dataset_for_automatic_post-editing.md)
+
+<!-- RELATED:END -->

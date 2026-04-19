@@ -116,3 +116,15 @@ Min-Max ERM 需要每个领域的近似误差估计 $\widehat{\text{err}}_\mathc
 ## 评分
 
 ⭐⭐⭐⭐ — 理论贡献突出，给出了领域泛化的组合刻画和紧致界，但缺少实证验证和高效算法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)
+- [A Generalized Label Shift Perspective for Cross-Domain Gaze Estimation](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)
+- [How to Mitigate Overfitting in Weak-to-Strong Generalization?](../../ACL2025/others/how_to_mitigate_overfitting_in_weak-to-strong_generalization.md)
+- [Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting](tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](../../ACL2025/others/understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+
+<!-- RELATED:END -->

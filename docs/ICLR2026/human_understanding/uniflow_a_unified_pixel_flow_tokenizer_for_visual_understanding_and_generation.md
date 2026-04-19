@@ -151,3 +151,15 @@ gFID（无 guidance）比 UniTok 好 0.09，验证了生成质量的竞争力。
 - **技术深度**: ⭐⭐⭐⭐⭐ — 方法设计有深度，损失设计简洁有效
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 13 个基准、7 个任务、4 种编码器、多种对比
 - **实用价值**: ⭐⭐⭐⭐⭐ — 通用适配范式，30 epoch 即可完成，实际可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
+- [OrderChain: Towards General Instruct-Tuning for Stimulating the Ordinal Understanding Ability of MLLM](../../ICCV2025/human_understanding/orderchain_towards_general_instruct-tuning_for_stimulating_the_ordinal_understan.md)
+- [What's Making That Sound Right Now? Video-centric Audio-Visual Localization](../../ICCV2025/human_understanding/whats_making_that_sound_right_now_video-centric_audio-visual_localization.md)
+- [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](../../ICCV2025/human_understanding/rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
+- [SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](../../ICCV2025/human_understanding/semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ $$\Delta \log \pi^t(x_v)|_{x_u} \approx \eta \cdot \underbrace{\nabla_\theta \lo
 - **技术深度**: ⭐⭐⭐⭐⭐ — 学习动力学分析严谨，理论与实验紧密结合
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型多任务验证，消融设计精巧
 - **实用价值**: ⭐⭐⭐⭐ — 对后训练策略选择有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WebDS: An End-to-End Benchmark for Web-based Data Science](webds_an_end-to-end_benchmark_for_web-based_data_science.md)
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+- [FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models](../../AAAI2026/multimodal_vlm/ft-ncfm_an_influence-aware_data_distillation_framework_for_efficient_vla_models.md)
+- [SC-Captioner: Improving Image Captioning with Self-Correction by Reinforcement Learning](../../ICCV2025/multimodal_vlm/sc-captioner_improving_image_captioning_with_self-correction_by_reinforcement_le.md)
+- [SCAN: Bootstrapping Contrastive Pre-training for Data Efficiency](../../ICCV2025/multimodal_vlm/scan_bootstrapping_contrastive_pre-training_for_data_efficiency.md)
+
+<!-- RELATED:END -->

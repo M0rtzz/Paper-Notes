@@ -149,3 +149,15 @@ Stage-Capture 数据集（前景区域）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 主实验 + 完整消融 + 逐场景分析 + 光流估计器消融 + 训练效率分析 + 失败案例讨论，实验设计非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细，动机与设计之间的逻辑链条完整
 - 价值: ⭐⭐⭐⭐ 解决了 4DGS 帧插值中的关键问题，对动态场景重建领域有实质性推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BulletGen: Improving 4D Reconstruction with Bullet-Time Generation](bulletgen_improving_4d_reconstruction_with_bullet-time_generation.md)
+- [4C4D: 4 Camera 4D Gaussian Splatting](4c4d_4_camera_4d_gaussian_splatting.md)
+- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
+- [EMGauss: Continuous Slice-to-3D Reconstruction via Dynamic Gaussian Modeling in Volume Electron Microscopy](emgauss_continuous_slice-to-3d_reconstruction_via_dynamic_gaussian_modeling_in_v.md)
+- [GP-4DGS: Probabilistic 4D Gaussian Splatting from Monocular Video via Variational Gaussian Processes](gp-4dgs_probabilistic_4d_gaussian_splatting_from_monocular_video_via_variational.md)
+
+<!-- RELATED:END -->

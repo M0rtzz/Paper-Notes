@@ -118,3 +118,15 @@ QM9 无条件分子生成：
 - **实验充分度**: ⭐⭐⭐⭐ 任务覆盖面广（生成+分类+回归），消融完整  
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，但符号较多需要一定数学背景  
 - **价值**: ⭐⭐⭐⭐ 为图数据的几何理解提供了统一框架，对分子建模领域有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Riemannian Consistency Model](riemannian_consistency_model.md)
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Graph Diffusion that can Insert and Delete](graph_diffusion_that_can_insert_and_delete.md)
+- [Dual Diffusion for Unified Image Generation and Understanding](../../CVPR2025/image_generation/dual_diffusion_for_unified_image_generation_and_understanding.md)
+- [LLM Meets Diffusion: A Hybrid Framework for Crystal Material Generation](llm_meets_diffusion_a_hybrid_framework_for_crystal_material_generation.md)
+
+<!-- RELATED:END -->

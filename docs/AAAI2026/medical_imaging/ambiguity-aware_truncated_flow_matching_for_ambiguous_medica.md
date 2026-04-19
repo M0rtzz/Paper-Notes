@@ -193,3 +193,15 @@ ATFM 推理速度远快于其他扩散方法，仅需 25 步扩散 + 一次 GTR 
 - **实验充分性**: ⭐⭐⭐ — 仅两个数据集，但消融和超参分析全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，各模块的"Summarized Advantage"有助理解
 - **影响力**: ⭐⭐⭐⭐ — 在 AMIS 领域提供了新的范式思路，FM 在医学分割中的应用有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvoFlows: Evolutionary Edit-Based Flow-Matching for Protein Engineering](../../ICLR2026/medical_imaging/evoflows_evolutionary_edit-based_flow-matching_for_protein_engineering.md)
+- [FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation](funkan_functional_kolmogorov-arnold_network_for_medical_image_enhancement_and_se.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](../../ICML2025/medical_imaging/flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss](maisi-v2_accelerated_3d_high-resolution_medical_image_synthesis_with_rectified_f.md)
+- [Learning Patient-Specific Disease Dynamics with Latent Flow Matching for Longitudinal Imaging Generation](../../ICLR2026/medical_imaging/learning_patient-specific_disease_dynamics_with_latent_flow_matching_for_longitu.md)
+
+<!-- RELATED:END -->

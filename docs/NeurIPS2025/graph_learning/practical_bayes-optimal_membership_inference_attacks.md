@@ -132,3 +132,15 @@ tags:
 - ⭐ 创新性: 8/10 — 将贝叶斯最优框架扩展到图数据是重要理论贡献
 - ⭐ 实用性: 9/10 — 大幅降低计算成本的同时保持性能
 - ⭐ 写作质量: 8/10 — 理论推导清晰，实验充分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphFaaS: Serverless GNN Inference for Burst-Resilient, Real-Time Intrusion Detection](graphfaas_serverless_gnn_inference_for_burst-resilient_real-time_intrusion_detec.md)
+- [Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)
+- [HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport](../../ICML2025/graph_learning/hgot_self-supervised_heterogeneous_graph_neural_network_with_optimal_transport.md)
+- [Sheaf Graph Neural Networks via PAC-Bayes Spectral Optimization](../../AAAI2026/graph_learning/sheaf_graph_neural_networks_via_pac-bayes_spectral_optimization.md)
+- [GCL-OT: Graph Contrastive Learning with Optimal Transport for Heterophilic Text-Attributed Graphs](../../AAAI2026/graph_learning/gcl-ot_graph_contrastive_learning_with_optimal_transport_for_heterophilic_text-a.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ LongVideoBench Long: VideoSeek 73.5% / 29.6帧 vs GPT-5 64.5% / 384帧
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个基准、有无字幕对比、Thinking LLM 消融、工具消融，分析非常深入
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事流畅，Figure 1 的效率-性能对比一目了然，case study 清晰
 - 价值: ⭐⭐⭐⭐ 对视频 Agent 效率优化有重要启示，但闭源依赖限制了社区影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A4VL: A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a4vl_multiagent_long_video_reasoning.md)
+- [A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a_multi-agent_perception-action_alliance_for_efficient_long_video_reasoning.md)
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [VirtueBench: Evaluating Trustworthiness under Uncertainty in Long Video Understanding](virtuebench_evaluating_trustworthiness_under_uncertainty_in_long_video_understan.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochatm1_collaborative_policy_planning_for_vide.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ GraspLDP 采用两阶段训练：(1) Action Latent Learning 阶段：用 VAE 将
 - **Graspness**: 点云中每个点的可抓取性得分，几何驱动的抓取可行性度量
 - **Latent Diffusion Policy**: 在 VAE 编码的动作潜空间上进行扩散去噪
 - **SE(3) Geodesic Distance**: 特殊欧氏群上的测地距离，统一衡量旋转和平移差异
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thinking on the Fly: Test-Time Reasoning Enhancement via Latent Thought Policy Optimization](../../ICLR2026/reinforcement_learning/thinking_on_the_fly_test-time_reasoning_enhancement_via_latent_thought_policy_op.md)
+- [Formal Verification of Diffusion Auctions](../../AAAI2026/reinforcement_learning/formal_verification_of_diffusion_auctions.md)
+- [Lifelong Imitation Learning with Multimodal Latent Replay and Incremental Adjustment](lifelong_imitation_learning_multimodal_latent_rep.md)
+- [Object-Centric Latent Action Learning](../../AAAI2026/reinforcement_learning/object-centric_latent_action_learning.md)
+- [EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data](../../NeurIPS2025/reinforcement_learning/egobridge_domain_adaptation_for_generalizable_imitation_from_egocentric_human_da.md)
+
+<!-- RELATED:END -->

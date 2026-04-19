@@ -136,3 +136,15 @@ Shuffle View 是贡献最大的组件（去掉后 FID 恶化 +29，PSNR 下降 4
 - 实验充分度: ⭐⭐⭐⭐ 三种条件任务全面评估，消融充分；但仅在 GSO 30 objects 上评估，规模偏小
 - 写作质量: ⭐⭐⭐⭐ 问题-方案对应清晰，但符号较多
 - 价值: ⭐⭐⭐⭐ 证明了 AR 路线的可行性，启发后续工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PanSt3R: Multi-view Consistent Panoptic Segmentation](panst3r_multi-view_consistent_panoptic_segmentation.md)
+- [MV-Adapter: Multi-view Consistent Image Generation Made Easy](mv-adapter_multi-view_consistent_image_generation_made_easy.md)
+- [3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement](../../CVPR2025/3d_vision/3denhancer_consistent_multi-view_diffusion_for_3d_enhancement.md)
+- [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
+- [MVGBench: a Comprehensive Benchmark for Multi-view Generation Models](mvgbench_a_comprehensive_benchmark_for_multi-view_generation_models.md)
+
+<!-- RELATED:END -->

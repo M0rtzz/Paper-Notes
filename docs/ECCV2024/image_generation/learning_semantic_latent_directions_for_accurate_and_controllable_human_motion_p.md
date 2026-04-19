@@ -130,3 +130,15 @@ HumanEva-I 数据集（观测 15 帧，预测 60 帧）：
 - **实用性**: ⭐⭐⭐⭐ — 轻量级、可集成、首次实现语义级可控运动预测
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 12 个基线、2 个数据集、充分消融+可视化分析
 - **论文质量**: ⭐⭐⭐⭐ — 方法简洁有效，实验扎实，论文结构清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [MotionChain: Conversational Motion Controllers via Multimodal Prompts](motionchain_conversational_motion_controllers_via_multimodal_prompts.md)
+
+<!-- RELATED:END -->

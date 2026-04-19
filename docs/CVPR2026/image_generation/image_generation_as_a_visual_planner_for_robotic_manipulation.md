@@ -114,3 +114,15 @@ $$\mathbf{D} = \begin{bmatrix} D^{\text{img}_1} & D^{\text{img}_2} & D^{\text{im
 - 实验充分度: ⭐⭐⭐ 3个数据集+消融完整，但缺乏与视频生成baseline的直接对比和真机验证
 - 写作质量: ⭐⭐⭐ 结构清晰但数学描述略冗余，部分内容重复
 - 价值: ⭐⭐⭐ 提供了一个有趣的研究方向，但实用价值受限于缺少闭环执行验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MP1: MeanFlow Tames Policy Learning in 1-step for Robotic Manipulation](../../AAAI2026/image_generation/mp1_meanflow_tames_policy_learning_in_1-step_for_robotic_manipulation.md)
+- [Self-Improving Loops for Visual Robotic Planning](../../ICLR2026/image_generation/self-improving_loops_for_visual_robotic_planning.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](../../ICCV2025/image_generation/a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
+- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusionbased_image_man.md)
+
+<!-- RELATED:END -->

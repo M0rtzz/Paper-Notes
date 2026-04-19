@@ -128,3 +128,15 @@ $$\mathcal{L}_{\text{SCAN}}(\theta) = -\mathbb{E}_{(x_{\leq t}, y_t) \sim D_{\te
 - 实验充分度: ⭐⭐⭐⭐⭐ — BoN + ProcessBench 双评估、完整消融、多模型扩展
 - 写作质量: ⭐⭐⭐⭐⭐ — 预备研究→动机→方法→实验的逻辑链非常流畅
 - 价值: ⭐⭐⭐⭐⭐ — 低成本PRM训练方案，对推理增强有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
+- [Learning to Translate Noise for Robust Image Denoising](../../CVPR2026/image_restoration/learning_to_translate_noise_for_robust_image_denoising.md)
+- [Classic Video Denoising in a Machine Learning World: Robust, Fast, and Controllable](../../CVPR2025/image_restoration/classic_video_denoising_in_a_machine_learning_world_robust_fast_and_controllable.md)
+- [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
+- [Blind2Sound: Self-Supervised Image Denoising without Residual Noise](../../ICCV2025/image_restoration/blind2sound_self-supervised_image_denoising_without_residual_noise.md)
+
+<!-- RELATED:END -->

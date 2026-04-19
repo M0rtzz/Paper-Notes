@@ -166,3 +166,15 @@ DMA 原型分解：
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个基线方法×2 种设置×2 种 backbone×2 种 split，消融全面，oracle 分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰（YouTube-VIS 对比实验很有说服力），可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ 新数据集+新任务+强基线，有望推动运动中心视频理解的发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-level Correlation for Few-Shot Segmentation](object-level_correlation_for_few-shot_segmentation.md)
+- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
+- [Temporal Rate Reduction Clustering for Human Motion Segmentation](temporal_rate_reduction_clustering_for_human_motion_segmentation.md)
+- [Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation](skeleton_motion_words_for_unsupervised_skeleton-based_temporal_action_segmentati.md)
+- [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](../../NeurIPS2025/segmentation/sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
+
+<!-- RELATED:END -->

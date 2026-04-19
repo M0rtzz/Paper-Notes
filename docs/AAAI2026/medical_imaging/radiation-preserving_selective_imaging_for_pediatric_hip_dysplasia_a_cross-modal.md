@@ -149,3 +149,15 @@ tags:
 - 实验充分性：⭐⭐⭐ — 数据规模小，缺乏外部验证和前瞻性研究
 - 实用性：⭐⭐⭐⭐ — 临床工作流高度可操作，决策透明可审计
 - 写作质量：⭐⭐⭐⭐⭐ — 方法论阐述极为清晰，临床动机与技术方案紧密结合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning with Preserving for Continual Multitask Learning](learning_with_preserving_for_continual_multitask_learning.md)
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
+- [Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)
+- [Enhancing Statistical Validity and Power in Hybrid Controlled Trials: A Randomization Inference Approach with Conformal Selective Borrowing](../../ICML2025/medical_imaging/enhancing_statistical_validity_and_power_in_hybrid_controlled_trials_a_randomiza.md)
+- [Measuring Stability Beyond Accuracy in Small Open-Source Medical Large Language Models for Pediatric Endocrinology](measuring_stability_beyond_accuracy_in_small_open-source_medical_large_language_.md)
+
+<!-- RELATED:END -->

@@ -193,3 +193,15 @@ $$\sup_{\boldsymbol{\mu} \in \mathcal{F}_m} \frac{C_{loc}(m, \boldsymbol{\mu})}{
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献突出：首次给出多模态赌博机的计算可行算法和局部搜索次优性的严格证明。分解策略层层递进，数学功力深厚。扣分点在于实验规模偏小且目前限于树图结构。注意：此论文与"视觉-语言多模态"关系较远，"multimodal"指奖励函数的"多峰"性质。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Optimal Multimodal Information Bottleneck Representations](../../ICML2025/multimodal_vlm/learning_optimal_multimodal_information_bottleneck_representations.md)
+- [Inference Compute-Optimal Video Vision Language Models](../../ACL2025/multimodal_vlm/inference_compute_optimal_video_vlm.md)
+- [Towards a Rigorous Understanding of the Population Dynamics of the NSGA-III: Tight Runtime Bounds](../../AAAI2026/multimodal_vlm/towards_a_rigorous_understanding_of_the_population_dynamics_of_the_nsga-iii_tigh.md)
+- [Information Theoretic Optimal Surveillance for Epidemic Prevalence in Networks](../../AAAI2026/multimodal_vlm/information_theoretic_optimal_surveillance_for_epidemic_prevalence_in_networks.md)
+- [Multimodal Negative Learning](multimodal_negative_learning.md)
+
+<!-- RELATED:END -->

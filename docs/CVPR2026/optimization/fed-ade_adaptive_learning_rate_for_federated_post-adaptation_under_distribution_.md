@@ -130,3 +130,15 @@ $$\eta_c^t = \eta_{\min} + (\eta_{\max} - \eta_{\min}) \cdot \mathcal{S}_c^t$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 涵盖 5 个数据集、2 类漂移、4 种时间调度、多组消融（相似度度量、估计器、预训练分布、学习率边界），非常全面。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰、符号一致、理论部分严谨；但 Table 1 信息密度极高导致可读性稍差。
 - **价值**: ⭐⭐⭐⭐ — 解决了联邦后部署适应中学习率选择这一实际痛点，轻量、高效、有理论保证，对联邦学习和在线适应社区有参考价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Federated Learning with Domain Shift Eraser](../../CVPR2025/optimization/federated_learning_with_domain_shift_eraser.md)
+- [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated learning](scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
+- [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
+- [Weak-to-Strong Generalization under Distribution Shifts](../../NeurIPS2025/optimization/weak-to-strong_generalization_under_distribution_shifts.md)
+- [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](../../ICLR2026/optimization/a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+
+<!-- RELATED:END -->

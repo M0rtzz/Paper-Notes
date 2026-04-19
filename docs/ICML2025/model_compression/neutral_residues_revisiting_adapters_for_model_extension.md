@@ -151,3 +151,15 @@ $$
 - 实验充分度: ⭐⭐⭐⭐ — 多语言多基准、消融全面，但缺大模型和多领域验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、分析透彻、图表精美
 - 价值: ⭐⭐⭐⭐ — 为模型扩展提供了实用且优雅的方案，对持续学习社区有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning](../../ICCV2025/model_compression/integrating_task-specific_and_universal_adapters_for_pre-trained_model-based_cla.md)
+- [Random Initialization of Gated Sparse Adapters (RIGSA)](random_initialization_of_gated_sparse_adapters.md)
+- [Limited-Resource Adapters Are Regularizers, Not Linguists](../../ACL2025/model_compression/limited-resource_adapters_are_regularizers_not_linguists.md)
+- [Revisiting Semi-Supervised Learning in the Era of Foundation Models](../../NeurIPS2025/model_compression/revisiting_semi-supervised_learning_in_the_era_of_foundation_models.md)
+- [FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension](../../ICLR2026/model_compression/freqkv_key-value_compression_in_frequency_domain_for_context_window_extension.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ CuMoLoS-MAE（Curriculum-Guided Monte Carlo Stochastic Ensemble Masked Autoencod
 - 实验充分度: 2.5/5 — 数据规模和基线覆盖不足，消融实验较简单
 - 写作质量: 4/5 — 结构清晰，公式和可视化配合良好
 - 价值: 3/5 — 对气象遥感领域有实用价值，但规模和泛化性有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery](l2rsi_cross-view_lidar-based_place_recognition_for_large-scale_urban_scenes_via_.md)
+- [HoloLLM: Multisensory Foundation Model for Language-Grounded Human Sensing and Reasoning](holollm_multisensory_foundation_model_for_language-grounded_human_sensing_and_re.md)
+- [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](../../ICCV2025/autonomous_driving/gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
+- [DySeT: A Dynamic Masked Self-distillation Approach for Robust Trajectory Prediction](../../ECCV2024/autonomous_driving/dyset_a_dynamic_masked_self-distillation_approach_for_robust_trajectory_predicti.md)
+- [Unraveling the Effects of Synthetic Data on End-to-End Autonomous Driving](../../ICCV2025/autonomous_driving/unraveling_the_effects_of_synthetic_data_on_end-to-end_autonomous_driving.md)
+
+<!-- RELATED:END -->

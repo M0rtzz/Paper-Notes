@@ -121,3 +121,15 @@ MT-PINN 的终端库存均值仅为 Vanilla PINN 的 1/10，满足 $|X_T| \le 0.
 - 实验充分度: ⭐⭐⭐ 合成+实盘扎实但数据规模偏小，消融不够系统
 - 写作质量: ⭐⭐⭐⭐ Workshop paper 结构清晰，数学推导完整
 - 价值: ⭐⭐⭐⭐ 对 PINN 在金融控制问题中的约束执行提供了可复现的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](../../ICML2025/scientific_computing/differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding](physics-informed_neural_networks_with_fourier_features_and_attention-driven_deco.md)
+- [Neuro-Spectral Architectures for Causal Physics-Informed Networks](neuro-spectral_architectures_for_causal_physics-informed_networks.md)
+- [Empirical Stability Analysis of Kolmogorov-Arnold Networks in Hard-Constrained Recurrent Physics-Informed Discovery](../../ICLR2026/scientific_computing/empirical_stability_analysis_of_kolmogorov-arnold_networks_in_hard-constrained_r.md)
+- [Universal Neural Optimal Transport](../../ICML2025/scientific_computing/universal_neural_optimal_transport.md)
+
+<!-- RELATED:END -->

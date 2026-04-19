@@ -147,3 +147,15 @@ LimitGen 包含以下核心组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多系统对比、RAG 消融、跨领域用户研究、人类评估与自动评估相关性验证
 - 写作质量: ⭐⭐⭐⭐⭐ 结构严谨，从分类法到基准到评估协议层层递进，数据统计详实
 - 价值: ⭐⭐⭐⭐ 对 LLM 辅助审稿研究有重要基准价值，RAG 增强思路对实际应用有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Awes, Laws, and Flaws From Today's LLM Research](awes_laws_and_flaws_from_todays_llm_research.md)
+- [TestCase-Eval: A Systematic Evaluation of Fault Coverage and Exposure](testcase_eval_llm_test_gen.md)
+- [TaxoAdapt: Aligning LLM-Based Multidimensional Taxonomy Construction to Evolving Research Corpora](taxoadapt_aligning_llm-based_multidimensional_taxonomy_construction_to_evolving_.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+
+<!-- RELATED:END -->

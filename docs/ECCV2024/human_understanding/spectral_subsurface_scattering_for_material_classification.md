@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 充分验证了S4的判别力优势，但材质种类和场景多样性可以更丰富
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验设计合理
 - 价值: ⭐⭐⭐⭐ 开辟了材质感知的新维度，对计算摄影和机器人触觉/视觉融合有潜在价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MERLiN: Single-Shot Material Estimation and Relighting for Photometric Stereo](merlin_single-shot_material_estimation_and_relighting_for_photometric_stereo.md)
+- [The Transparent Earth: A Multimodal Foundation Model for the Earth's Subsurface](../../NeurIPS2025/human_understanding/the_transparent_earth_a_multimodal_foundation_model_for_the_earths_subsurface.md)
+- [Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks](../../ICML2025/human_understanding/sparse_spectral_training_and_inference_on_euclidean_and_hyperbolic_neural_networ.md)
+- [MaRI: Material Retrieval Integration across Domains](../../CVPR2025/human_understanding/mari_material_retrieval_integration_across_domains.md)
+- [An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](../../ICLR2026/human_understanding/an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)
+
+<!-- RELATED:END -->

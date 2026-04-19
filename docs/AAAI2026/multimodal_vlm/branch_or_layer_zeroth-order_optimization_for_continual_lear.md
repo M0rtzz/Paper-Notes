@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 分支级+层级的系统探索非常全面，消融丰富；但数据集偏小，缺少与更多VLCL方法的对比
 - 写作质量: ⭐⭐⭐ 逻辑框架清晰，但行文有冗余，部分段落重复表述同一观点；公式符号不够统一
 - 价值: ⭐⭐⭐⭐ 为PEFT-based VLCL提供了新的优化视角和实用方案，显存优势明显；但CLIP+小数据集的场景限制了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](../../ICLR2026/multimodal_vlm/enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](../../CVPR2026/multimodal_vlm/continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [Harnessing Textual Semantic Priors for Knowledge Transfer and Refinement in CLIP-Driven Continual Learning](harnessing_textual_semantic_priors_for_knowledge_transfer_and_refinement_in_clip.md)
+- [BOFA: Bridge-Layer Orthogonal Low-Rank Fusion for CLIP-Based Class-Incremental Learning](bofa_bridge-layer_orthogonal_low-rank_fusion_for_clip-based_.md)
+- [BiPrompt: Bilateral Prompt Optimization for Visual and Textual Debiasing in Vision-Language Models](biprompt_bilateral_prompt_optimization_for_visual_and_textual_debiasing_in_visio.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ ImageNet-127 上的结果：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多分布设定全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，动机论证充分
 - 价值: ⭐⭐⭐⭐ 对 CISSL 领域有实际贡献，但应用场景相对窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning](dicap_distribution-calibrated_pseudo-labeling_for_semi-supervised_multi-label_le.md)
+- [Semi-Supervised Conformal Prediction With Unlabeled Nonconformity Score](../../CVPR2026/llm_evaluation/semi-supervised_conformal_prediction_with_unlabeled_nonconformity_score.md)
+- [Keep It on a Leash: Controllable Pseudo-label Generation Towards Realistic Long-Tailed Semi-Supervised Learning](../../NeurIPS2025/llm_evaluation/keep_it_on_a_leash_controllable_pseudo-label_generation_towards_realistic_long-t.md)
+- [Image-Feature Weak-to-Strong Consistency: An Enhanced Paradigm for Semi-Supervised Learning](../../ECCV2024/llm_evaluation/image-feature_weak-to-strong_consistency_an_enhanced_paradigm_for_semi-supervise.md)
+- [Semi-Supervised Regression with Heteroscedastic Pseudo-Labels](../../NeurIPS2025/llm_evaluation/semi-supervised_regression_with_heteroscedastic_pseudo-labels.md)
+
+<!-- RELATED:END -->

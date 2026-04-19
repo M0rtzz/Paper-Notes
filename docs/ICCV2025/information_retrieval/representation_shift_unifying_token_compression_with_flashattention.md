@@ -133,3 +133,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 涵盖视频检索、视频QA、图像分类，验证了 ViT/CNN/SSM 三种架构
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，消融充分，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ 实用性极强，几行代码即可应用于已有模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token-Guard: Towards Token-Level Hallucination Control via Self-Checking Decoding](../../ICLR2026/information_retrieval/token-guard_towards_token-level_hallucination_control_via_self-checking_decoding.md)
+- [EXIT: Context-Aware Extractive Compression for Enhancing Retrieval-Augmented Generation](../../ACL2025/information_retrieval/exit_context-aware_extractive_compression_for_enhancing_retrieval-augmented_gene.md)
+- [Scaling Language-Centric Omnimodal Representation Learning](../../NeurIPS2025/information_retrieval/scaling_language-centric_omnimodal_representation_learning.md)
+- [TokMem: One-Token Procedural Memory for Large Language Models](../../ICLR2026/information_retrieval/tokmem_one-token_procedural_memory_for_large_language_models.md)
+- [Maximal Matching Matters: Preventing Representation Collapse for Robust Cross-Modal Retrieval](../../ACL2025/information_retrieval/maximal_matching_matters_preventing_representation_collapse_for_robust_cross-mod.md)
+
+<!-- RELATED:END -->

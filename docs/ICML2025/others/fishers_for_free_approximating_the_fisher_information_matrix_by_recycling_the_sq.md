@@ -96,3 +96,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 六大应用全面验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论清晰，图表精美
 - 价值: ⭐⭐⭐⭐⭐ 极强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FisherRF: Active View Selection and Mapping with Radiance Fields Using Fisher Information](../../ECCV2024/others/fisherrf_active_view_selection_and_mapping_with_radiance_fields_using_fisher_inf.md)
+- [Residual Matrix Transformers: Scaling the Size of the Residual Stream](residual_matrix_transformers_scaling_the_size_of_the_residual_stream.md)
+- [WGFormer: An SE(3)-Transformer Driven by Wasserstein Gradient Flows for Molecular Generation](wgformer_an_se3-transformer_driven_by_wasserstein_gradient_flows_for_molecular_g.md)
+- [The Structural Complexity of Matrix-Vector Multiplication](../../NeurIPS2025/others/the_structural_complexity_of_matrix-vector_multiplication.md)
+- [Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ VOccl3D-B-CLIFF 在 Hard-Occlusion MPJPE 上比 BEDLAM-CLIFF 降低约 **18.5mm*
 - **实验充分度**: ⭐⭐⭐⭐ 多模型、多数据集、多遮挡级别、检测器影响分析全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数据集构建细节充分
 - **价值**: ⭐⭐⭐⭐ 填补了HPS领域遮挡数据集的重要空白，可作为标准基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PandaPose: 3D Human Pose Lifting from a Single Image via Propagating 2D Pose Prior to 3D Anchor Space](../../NeurIPS2025/object_detection/pandapose_3d_human_pose_lifting_from_a_single_image_via_propagating_2d_pose_prio.md)
+- [Robust Long-term Test-Time Adaptation for 3D Human Pose Estimation through Motion Discretization](../../AAAI2026/object_detection/robust_long-term_test-time_adaptation_for_3d_human_pose_estimation_through_motio.md)
+- [Any6D: Model-free 6D Pose Estimation of Novel Objects](../../CVPR2025/object_detection/any6d_model-free_6d_pose_estimation_of_novel_objects.md)
+- [3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection](3dmood_lifting_2d_to_3d_for_monocular_openset_object_detecti.md)
+- [YOLOE: Real-Time Seeing Anything](yoloe_realtime_seeing_anything.md)
+
+<!-- RELATED:END -->

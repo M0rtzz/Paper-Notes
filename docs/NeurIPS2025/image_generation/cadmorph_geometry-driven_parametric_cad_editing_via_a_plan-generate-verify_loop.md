@@ -133,3 +133,15 @@ $$C' = \arg\min_{C'} \mathcal{D}_{\text{geometry}}(\mathcal{F}(C'), S') + \lambd
 - 实验充分度: 7/10 — 基线覆盖 VLM、逆向工程和编辑方法，含人工评估和消融；但测试集规模偏小且复杂度有限
 - 写作质量: 8/10 — 问题定义清晰，框架各阶段阐述逻辑流畅，图表直观
 - 价值: 7/10 — 解决实际工程需求，但推理效率和测试集限制在一定程度上制约了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MamTiff-CAD: Multi-Scale Latent Diffusion with Mamba+ for Complex Parametric Sequence](../../ICCV2025/image_generation/mamtiff-cad_multi-scale_latent_diffusion_with_mamba_for_complex_parametric_seque.md)
+- [Seek-CAD: A Self-Refined Generative Modeling for 3D Parametric CAD Using Local Inference via DeepSeek](../../ICLR2026/image_generation/seek-cad_a_self-refined_generative_modeling_for_3d_parametric_cad_using_local_in.md)
+- [Physics-Driven Spatiotemporal Modeling for AI-Generated Video Detection](physics-driven_spatiotemporal_modeling_for_ai-generated_video_detection.md)
+- [Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
+- [Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation](mind-the-glitch_visual_correspondence_for_detecting_inconsistencies_in_subject-d.md)
+
+<!-- RELATED:END -->

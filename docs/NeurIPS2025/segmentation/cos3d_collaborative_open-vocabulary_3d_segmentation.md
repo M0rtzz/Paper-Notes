@@ -169,3 +169,15 @@ $$\mathcal{L}_{\text{ins}} = -\frac{1}{|\Omega|} \sum_{\Omega_j \in \Omega} \sum
 ⭐⭐⭐⭐⭐ (5/5)
 
 理由：论文的技术设计紧凑优雅——协作场的概念清晰、两阶段训练策略动机明确且高效、推理阶段的 prompt 精炼也是自然的设计延伸。实验结果在两个基准上大幅领先（LeRF 上 mIoU 50.76 vs 45.30），训练效率远超基线（50 分钟 vs 240 分钟），消融实验全面验证了每个组件的必要性。框架还展示了丰富的应用拓展（图像查询、层次化分割、机器人）。代码开源，复现友好。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LangHOPS: Language Grounded Hierarchical Open-Vocabulary Part Segmentation](langhops_language_grounded_hierarchical_open-vocabulary_part_segmentation.md)
+- [Seg4Diff: Unveiling Open-Vocabulary Segmentation in Text-to-Image Diffusion Transformers](seg4diff_unveiling_open-vocabulary_segmentation_in_text-to-image_diffusion_trans.md)
+- [GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation](../../CVPR2026/segmentation/geoguide_hierarchical_geometric_guidance_for_open-vocabulary_3d_semantic_segment.md)
+- [HumanCrafter: Synergizing Generalizable Human Reconstruction and Semantic 3D Segmentation](humancrafter_synergizing_generalizable_human_reconstruction_and_semantic_3d_segm.md)
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](../../CVPR2025/segmentation/effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

@@ -147,3 +147,15 @@ $$\theta = \arg\min_\theta \mathbb{E}_\mathbf{x}\left\{\max_{\|\delta_p \odot \m
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖多种攻击/检测器/数据集，消融极为详尽，物理世界验证
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，方法描述循序渐进，实验设计严谨
 - **价值**: ⭐⭐⭐⭐⭐ — 直接提升安全关键检测系统的鲁棒性，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MOBA: A Material-Oriented Backdoor Attack against LiDAR-based 3D Object Detection](../../AAAI2026/autonomous_driving/moba_a_material-oriented_backdoor_attack_against_lidar-based_3d_object_detection.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+- [EVT: Efficient View Transformation for Multi-Modal 3D Object Detection](evt_efficient_view_transformation_for_multi-modal_3d_object_detection.md)
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [Backdoor Attacks on Open Vocabulary Object Detectors via Multi-Modal Prompt Tuning](../../AAAI2026/autonomous_driving/backdoor_attacks_on_open_vocabulary_object_detectors_via_multi-modal_prompt_tuni.md)
+
+<!-- RELATED:END -->

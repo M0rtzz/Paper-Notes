@@ -100,3 +100,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Position paper主要引用已有验证，缺少端到端系统实验
 - 写作质量: ⭐⭐⭐⭐ 论证逻辑清晰，图表直观（如Fig.2的能力区间示意）
 - 价值: ⭐⭐⭐⭐ 对AI评估范式具有方向性指导意义，3%题目重建分数的结果有很强实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](../../ACL2025/llm_evaluation/chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+- [How Much Can We Forget about Data Contamination?](how_much_can_we_forget_about_data_contamination.md)
+- [LLM-as-a-Judge for Scalable Test Coverage Evaluation](../../AAAI2026/llm_evaluation/llm-as-a-judge_for_scalable_test_coverage_evaluation_accuracy_operational_reliab.md)
+- [PhantomWiki: On-Demand Datasets for Reasoning and Retrieval Evaluation](phantomwiki_on-demand_datasets_for_reasoning_and_retrieval_evaluation.md)
+- [PaTH Attention: Position Encoding via Accumulating Householder Transformations](../../NeurIPS2025/llm_evaluation/path_attention_position_encoding_via_accumulating_householder_transformations.md)
+
+<!-- RELATED:END -->

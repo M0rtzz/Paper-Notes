@@ -127,3 +127,15 @@ V2Drop 是唯一同时降低延迟和显存的方法；SparseVLM 虽性能相当
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多模型、多 benchmark、多压缩率、效率分析、可视化、消融齐全
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、问题定义精准、理论推导严谨、图表直观
 - 价值: ⭐⭐⭐⭐ — 实用性强且对社区有启发，但方法简洁性也意味着提升空间有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [V2Drop: Variation-aware Vision Token Dropping for Faster Large Vision-Language Models](v2drop_variation_aware_token_dropping.md)
+- [Residual Decoding: Mitigating Hallucinations in Large Vision-Language Models via History-Aware Residual Guidance](residual_decoding_mitigating_hallucinations_in_large_vision-language_models_via_.md)
+- [ApET: Approximation-Error Guided Token Compression for Efficient VLMs](apet_approximation-error_guided_token_compression_for_efficient_vlms.md)
+- [On Token's Dilemma: Dynamic MoE with Drift-Aware Token Assignment for Continual Learning of Large Vision Language Models](on_tokens_dilemma_dynamic_moe_with_drift-aware_token_assignment_for_continual_le.md)
+- [HAWK: Head Importance-Aware Visual Token Pruning in Multimodal Models](hawk_head_importance-aware_visual_token_pruning_in_multimodal_models.md)
+
+<!-- RELATED:END -->

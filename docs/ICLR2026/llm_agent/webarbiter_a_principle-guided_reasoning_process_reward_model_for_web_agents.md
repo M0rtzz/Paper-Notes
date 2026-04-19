@@ -168,3 +168,15 @@ WebArbiter-7B 以 Avg BoN Acc 超越 GPT-5 达 **9.1 个百分点**，超越前 
 - 实验充分度: ⭐⭐⭐⭐⭐ (4环境benchmark、多类型baseline、详细消融、实际搜索验证)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，但符号较多，需要仔细阅读)
 - 价值: ⭐⭐⭐⭐⭐ (7B超越GPT-5，开源WebPRMBench，对Web Agent领域贡献巨大)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+- [ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents](st-webagentbench_a_benchmark_for_evaluating_safety_and_trustworthiness_in_web_ag.md)
+- [ProBench: Benchmarking GUI Agents with Accurate Process Information](../../AAAI2026/llm_agent/probench_benchmarking_gui_agents_with_accurate_process_infor.md)
+- [Web-Shepherd: Advancing PRMs for Reinforcing Web Agents](../../NeurIPS2025/llm_agent/web-shepherd_advancing_prms_for_reinforcing_web_agents.md)
+- [History-Aware Reasoning for GUI Agents](../../AAAI2026/llm_agent/history-aware_reasoning_for_gui_agents.md)
+
+<!-- RELATED:END -->

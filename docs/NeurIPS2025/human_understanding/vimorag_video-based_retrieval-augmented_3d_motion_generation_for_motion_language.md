@@ -147,3 +147,15 @@ VimoRAG 是一个两步流水线：(1) 给定运动描述文本，通过 Gemini-
 - 实验充分度: ⭐⭐⭐⭐ 域内域外实验完整，消融细致，但缺少与更多LLM骨干的对比
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，框架图易懂
 - 价值: ⭐⭐⭐⭐⭐ 打开了利用海量视频数据增强运动生成的新方向，可扩展性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Retrieval Augmented Contrastive Learning for Sequential Recommendation](semantic_retrieval_augmented_contrastive_learning_for_sequential_recommendation.md)
+- [MOSPA: Human Motion Generation Driven by Spatial Audio](mospa_human_motion_generation_driven_by_spatial_audio.md)
+- [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](../../ICML2025/human_understanding/fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](../../CVPR2026/human_understanding/molingo_motion-language_alignment_for_text-to-motion_generation.md)
+- [BEDLAM2.0: Synthetic Humans and Cameras in Motion](bedlam20_synthetic_humans_and_cameras_in_motion.md)
+
+<!-- RELATED:END -->

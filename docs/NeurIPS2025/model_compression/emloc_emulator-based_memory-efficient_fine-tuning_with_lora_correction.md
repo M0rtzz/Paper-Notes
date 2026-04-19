@@ -129,3 +129,15 @@ EMLoC 包含三个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 VQA/NLP/扩散模型，7 个数据集 + 3 种压缩率 + 26B/38B 扩展性验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表到位，动机推导流畅
 - 价值: ⭐⭐⭐⭐ 对个人用户微调大模型有很强实用价值，方法简洁且可与现有技术叠加
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Loquetier: A Virtualized Multi-LoRA Framework for Unified LLM Fine-tuning and Serving](loquetier_a_virtualized_multi-lora_framework_for_unified_llm_fine-tuning_and_ser.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [FALQON: Accelerating LoRA Fine-tuning with Low-Bit Floating-Point Arithmetic](falqon_accelerating_lora_fine-tuning_with_low-bit_floating-point_arithmetic.md)
+
+<!-- RELATED:END -->

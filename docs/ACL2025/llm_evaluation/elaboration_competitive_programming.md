@@ -124,3 +124,15 @@ ELABORATION基准包含三个核心组件：
 ⭐⭐⭐⭐
 
 **理由**：问题定义清晰，分类体系系统完整，数据集规模大且标注精细，实验设计兼顾模拟和真人两个维度。发现"编码阶段反馈最有效"和"人机互补bug检测"两个核心洞见具有实践指导意义。局限在于仅针对竞赛编程，方法层面创新性相对有限（主要贡献在benchmark构建而非新方法）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+- [PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning](physreason_a_comprehensive_benchmark_towards_physics-based_reasoning.md)
+- [Navigating Rifts in Human-LLM Grounding: Study and Benchmark](navigating_rifts_in_human-llm_grounding_study_and_benchmark.md)
+- [CFBench: A Comprehensive Constraints-Following Benchmark for LLMs](cfbench_a_comprehensive_constraints-following_benchmark_for_llms.md)
+- [HalluLens: LLM Hallucination Benchmark](hallulens_llm_hallucination_benchmark.md)
+
+<!-- RELATED:END -->

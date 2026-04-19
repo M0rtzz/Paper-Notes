@@ -146,3 +146,15 @@ BlendedPC 采用两阶段策略：
 - 实验充分度: ⭐⭐⭐⭐ [6项指标+用户研究+消融完整，但仅3个类别且baseline仅2个]
 - 写作质量: ⭐⭐⭐⭐⭐ [动机清晰、方法描述流畅、Algorithm伪代码+方法图+推理图三位一体，project page精美]
 - 价值: ⭐⭐⭐⭐ [ICCV Highlight，解决了3D局部编辑的实际痛点，代码开源，定量提升非常显著]
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Image-Guided Shape-from-Template Using Mesh Inextensibility Constraints](image-guided_shape-from-template_using_mesh_inextensibility_constraints.md)
+- [Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)](unleashing_vecset_diffusion_model_for_fast_shape_generation.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [UniVG: A Generalist Diffusion Model for Unified Image Generation and Editing](univg_a_generalist_diffusion_model_for_unified_image_generation_and_editing.md)
+- [BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes](bufferx_towards_zeroshot_point_cloud_registration_in_diverse.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ PIG 框架包含三个核心步骤：
 - **实用价值**: ⭐⭐⭐⭐ — 对 LLM 隐私安全评估有直接价值
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图示直观
 - **综合评分**: 8.0/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](synthesizeme_persona_prompts.md)
+- [Chain-of-Jailbreak Attack for Image Generation Models via Editing Step by Step](chain-of-jailbreak_attack_for_image_generation_models_via_editing_step_by_step.md)
+- [Attack via Overfitting: 10-shot Benign Fine-tuning to Jailbreak LLMs](../../NeurIPS2025/llm_alignment/attack_via_overfitting_10-shot_benign_fine-tuning_to_jailbreak_llms.md)
+- [LLMs Caught in the Crossfire: Malware Requests and Jailbreak Challenges](llms_caught_in_the_crossfire_malware_requests_and_jailbreak_challenges.md)
+- [JailbreakRadar: Comprehensive Assessment of Jailbreak Attacks Against LLMs](jailbreakradar_comprehensive_assessment_jailbreak_attacks.md)
+
+<!-- RELATED:END -->

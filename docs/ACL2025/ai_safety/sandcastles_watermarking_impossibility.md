@@ -153,3 +153,15 @@ tags:
 - **技术深度**: ⭐⭐⭐⭐ — 实验设计严谨，多维度多层次验证
 - **实用性**: ⭐⭐⭐⭐⭐ — 对水印技术的发展方向有重大影响
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7 种扰动 × 3 种水印 × 人类评估，非常全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust and Minimally Invasive Watermarking for EaaS](robust_and_minimally_invasive_watermarking_for_eaas.md)
+- [MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
+- [Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)
+- [Provable Watermarking for Data Poisoning Attacks](../../NeurIPS2025/ai_safety/provable_watermarking_for_data_poisoning_attacks.md)
+- [Revisiting (Un)Fairness in Recourse by Minimizing Worst-Case Social Burden](../../AAAI2026/ai_safety/revisiting_unfairness_in_recourse_by_minimizing_worst-case_social_burden.md)
+
+<!-- RELATED:END -->

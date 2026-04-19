@@ -180,3 +180,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 合成数据验证理论、半合成数据验证关系恢复、真实数据案例研究，覆盖面广；但缺少大规模模型和 ground truth 验证
 - 写作质量: ⭐⭐⭐⭐ — 论文结构清晰，理论-算法-实验层次分明，但符号较多，部分推导需反复查阅
 - 价值: ⭐⭐⭐⭐ — 为 LLM 可解释性提供了新的因果视角和理论保证，但实际应用价值取决于线性假设的适用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transformer-Based Spatial-Temporal Counterfactual Outcomes Estimation](../../ICML2025/causal_inference/transformer-based_spatial-temporal_counterfactual_outcomes_estimation.md)
+- [Causality-Induced Positional Encoding for Transformer-Based Representation Learning of Non-Sequential Features](causality-induced_positional_encoding_for_transformer-based_representation_learn.md)
+- [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](../../CVPR2025/causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](../../ICML2025/causal_inference/learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+- [PersonaX: Multimodal Datasets with LLM-Inferred Behavior Traits](../../ICLR2026/causal_inference/personax_multimodal_datasets_with_llm-inferred_behavior_traits.md)
+
+<!-- RELATED:END -->

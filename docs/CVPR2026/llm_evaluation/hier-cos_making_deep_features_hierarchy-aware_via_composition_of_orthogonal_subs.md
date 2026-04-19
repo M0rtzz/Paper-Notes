@@ -114,3 +114,15 @@ $\mathcal{L}_{total} = \mathcal{L}_{kl} + \alpha \mathcal{L}_{reg}$。$\mathcal{
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集、多指标对比，但缺少NLP/大规模场景
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，问题驱动清晰，评估指标的批判分析尤为出色
 - 价值: ⭐⭐⭐⭐ 对层次分类领域有方法论和评估指标的双重贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SATTC: Structure-Aware Label-Free Test-Time Calibration for Cross-Subject EEG-to-Image Retrieval](sattc_structure-aware_label-free_test-time_calibration_for_cross-subject_eeg-to-.md)
+- [Semi-Supervised Conformal Prediction With Unlabeled Nonconformity Score](semi-supervised_conformal_prediction_with_unlabeled_nonconformity_score.md)
+- [Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning](weakly_supervised_video_anomaly_detection_with_anomaly-connected_components_and_.md)
+- [TacSIm: A Dataset and Benchmark for Football Tactical Style Imitation](tacsim_a_dataset_and_benchmark_for_football_tactical_style_imitation.md)
+- [Reframing Long-Tailed Learning via Loss Landscape Geometry](reframing_long-tailed_learning_via_loss_landscape_geometry.md)
+
+<!-- RELATED:END -->

@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多模型架构、跨域评估
 - 写作质量: ⭐⭐⭐ 行文尚可，有些拼写错误
 - 价值: ⭐⭐⭐⭐ 凸显了部署模型的隐私风险
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transferable Black-Box One-Shot Forging of Watermarks via Image Preference Models](../../NeurIPS2025/image_generation/transferable_black-box_one-shot_forging_of_watermarks_via_image_preference_model.md)
+- [Discriminative Policy Optimization for Token-Level Reward Models](discriminative_policy_optimization_for_token-level_reward_models.md)
+- [Direct Discriminative Optimization: Your Likelihood-Based Visual Generative Model is also a GAN Discriminator](direct_discriminative_optimization_your_likelihood-based_visual_generative_model.md)
+- [Generative Model Inversion Through the Lens of the Manifold Hypothesis](../../NeurIPS2025/image_generation/generative_model_inversion_through_the_lens_of_the_manifold_hypothesis.md)
+- [BlackMirror: Black-Box Backdoor Detection for Text-to-Image Models via Instruction-Response Deviation](../../CVPR2026/image_generation/blackmirror_black-box_backdoor_detection_for_text-to-image_models_via_instructio.md)
+
+<!-- RELATED:END -->

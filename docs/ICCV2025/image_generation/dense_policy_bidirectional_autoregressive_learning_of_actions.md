@@ -160,3 +160,15 @@ $$P(A|O) = \prod_{i=1}^{n} P(A^i | A^{i-1}, A^{i-2}, ..., A^0, O)$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ 3仿真基准11任务 + 4真实任务，2D/3D全覆盖，消融充分
 - **写作质量**: ⭐⭐⭐⭐ 方法动机清晰，与现有工作区分到位
 - **价值**: ⭐⭐⭐⭐⭐ 为自回归策略在机器人操作中的应用开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inpaint4Drag: Repurposing Inpainting Models for Drag-Based Image Editing via Bidirectional Warping](inpaint4drag_repurposing_inpainting_models_for_drag-based_image_editing_via_bidi.md)
+- [Holistic Tokenizer for Autoregressive Image Generation](holistic_tokenizer_for_autoregressive_image_generation.md)
+- [AdaGen: Learning Adaptive Policy for Image Synthesis](../../ECCV2024/image_generation/adagen_learning_adaptive_policy_for_image_synthesis.md)
+- [Grouped Speculative Decoding for Autoregressive Image Generation](grouped_speculative_decoding_for_autoregressive_image_generation.md)
+- [LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching](lazymar_accelerating_masked_autoregressive_models_via_feature_caching.md)
+
+<!-- RELATED:END -->

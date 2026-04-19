@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两种设置、两种行为、跨parser/模型/prompt泛化的全面评估
 - 写作质量: ⭐⭐⭐⭐ 形式化清晰，约束描述精确
 - 价值: ⭐⭐⭐⭐⭐ 对OS Agent安全有重大警示意义，在Agent大规模部署前必须解决
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Agents Fix Agent Issues?](can_agents_fix_agent_issues.md)
+- [Magma: A Foundation Model for Multimodal AI Agents](../../CVPR2025/robotics/magma_a_foundation_model_for_multimodal_ai_agents.md)
+- [Zero-Shot Embedding Drift Detection: A Lightweight Defense Against Prompt Injections in LLMs](zero-shot_embedding_drift_detection_a_lightweight_defense_against_prompt_injecti.md)
+- [AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling](autotom_scaling_model-based_mental_inference_via_automated_agent_modeling.md)
+- [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ VSD在10万提示下完全崩溃（R@1=0.000），ASD保持有效。SDS在3DConv
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种生成器、两种扩散模型、从15到10万提示的全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析和方法推导逻辑严密，误差曲线图直觉性强
 - 价值: ⭐⭐⭐⭐⭐ 解决了分数蒸馏在大规模训练中的核心瓶颈，对文本到3D领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Editable Image Elements for Controllable Synthesis](editable_image_elements_for_controllable_synthesis.md)
+- [Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [InfGen: A Resolution-Agnostic Paradigm for Scalable Image Synthesis](../../ICCV2025/image_generation/infgen_a_resolution-agnostic_paradigm_for_scalable_image_synthesis.md)
+- [Scalable Group Choreography via Variational Phase Manifold Learning](scalable_group_choreography_via_variational_phase_manifold_learning.md)
+
+<!-- RELATED:END -->

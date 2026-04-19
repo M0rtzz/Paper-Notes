@@ -128,3 +128,15 @@ Chameleon 的 pipeline：(1) 用均匀权重训练一个小型代理模型；(2)
 - 实验充分度: ⭐⭐⭐⭐ 预训练/微调/域变化三种场景全覆盖，与主流方法对比充分
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，方法推导连贯，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 将数据混合的计算成本降低一个量级，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Caricatures: On the Representation of African American Language in Pretraining Corpora](../../ACL2025/llm_pretraining/data_caricatures_on_the_representation_of_african_american_language_in_pretraini.md)
+- [How to Synthesize Text Data without Model Collapse?](how_to_synthesize_text_data_without_model_collapse.md)
+- [Metadata Conditioning Accelerates Language Model Pre-training](metadata_conditioning_accelerates_language_model_pre-training.md)
+- [Language Model Developers Should Report Train-Test Overlap](language_model_developers_should_report_train-test_overlap.md)
+- [The Sharpness Disparity Principle in Transformers for Accelerating Language Model Pre-Training](the_sharpness_disparity_principle_in_transformers_for_accelerating_language_mode.md)
+
+<!-- RELATED:END -->

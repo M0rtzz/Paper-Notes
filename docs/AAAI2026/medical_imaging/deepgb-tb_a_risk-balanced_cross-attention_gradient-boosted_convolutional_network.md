@@ -120,3 +120,15 @@ DeepGB-TB 超过 3B 参数的 Qwen-Omni，推理速度快100倍。
 - 实验充分度: ⭐⭐⭐⭐ 7国数据集+多基线+消融，但数据量小
 - 写作质量: ⭐⭐⭐⭐ 临床动机清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐⭐ 对全球TB控制有实际意义的AI应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NutriScreener: Retrieval-Augmented Multi-Pose Graph Attention Network for Malnourishment Screening](nutriscreener_retrieval-augmented_multi-pose_graph_attention_network_for_malnour.md)
+- [CD-DPE: Dual-Prompt Expert Network Based on Convolutional Dictionary Feature Decoupling for Multi-Contrast MRI Super-Resolution](cd-dpe_dual-prompt_expert_network_based_on_convolutional_dictionary_feature_deco.md)
+- [Towards Interpretable Visual Decoding with Attention to Brain Representations](../../ICLR2026/medical_imaging/towards_interpretable_visual_decoding_with_attention_to_brain_representations.md)
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
+- [From Policy to Logic for Efficient and Interpretable Coverage Assessment](from_policy_to_logic_for_efficient_and_interpretable_coverage_assessment.md)
+
+<!-- RELATED:END -->

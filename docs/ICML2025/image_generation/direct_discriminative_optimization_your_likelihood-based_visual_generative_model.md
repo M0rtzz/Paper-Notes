@@ -158,3 +158,15 @@ DDO 的 pipeline 非常简洁：
 - 实验充分度: ⭐⭐⭐⭐⭐ 扩散+自回归双验证，多数据集多轮消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨，动机清晰，论述流畅
 - 价值: ⭐⭐⭐⭐⭐ 提供了后训练提升生成质量的简洁统一方案，实用性极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discriminative Policy Optimization for Token-Level Reward Models](discriminative_policy_optimization_for_token-level_reward_models.md)
+- [PPO-MI: Efficient Black-Box Model Inversion via Proximal Policy Optimization](ppo-mi_efficient_black-box_model_inversion_via_proximal_policy_optimization.md)
+- [BRIDGE: Bootstrapping Text to Control Time-Series Generation via Multi-Agent Iterative Optimization and Diffusion Modeling](bridge_bootstrapping_text_to_control_time-series_generation_via_multi-agent_iter.md)
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+- [Towards a Mechanistic Explanation of Diffusion Model Generalization](towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+
+<!-- RELATED:END -->

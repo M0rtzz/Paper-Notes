@@ -127,3 +127,15 @@ NCTTA在ImageNet-C上比Tent提升14.59%，比DeYO提升2.97%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集多backbone验证，消融详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，可视化直观
 - 价值: ⭐⭐⭐⭐ 为TTA领域提供了新的理论视角和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPACE: SPike-Aware Consistency Enhancement for Test-Time Adaptation in Spiking Neural Networks](../../NeurIPS2025/others/space_spike-aware_consistency_enhancement_for_test-time_adaptation_in_spiking_ne.md)
+- [MemBN: Robust Test-Time Adaptation via Batch Norm with Statistics Memory](../../ECCV2024/others/membn_robust_test-time_adaptation_via_batch_norm_with_statistics_memory.md)
+- [Effortless Active Labeling for Long-Term Test-Time Adaptation](../../CVPR2025/others/effortless_active_labeling_for_long-term_test-time_adaptation.md)
+- [Beyond Entropy: Region Confidence Proxy for Wild Test-Time Adaptation](../../ICML2025/others/beyond_entropy_region_confidence_proxy_for_wild_test-time_adaptation.md)
+- [Optimizer Choice Matters for the Emergence of Neural Collapse](../../ICLR2026/others/optimizer_choice_matters_for_the_emergence_of_neural_collapse.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 主要是理论工作，实验为验证性的小规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 定义精确、定理清晰、讨论深入，哲学含义阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 对 RL 理论、AI safety、可解释性都有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond World Models: Rethinking Understanding in AI Models](../../AAAI2026/others/beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [Time-Aware World Model for Adaptive Prediction and Control](time-aware_world_model_for_adaptive_prediction_and_control.md)
+- [LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics](../../ICLR2026/others/latent_particle_world_models_self-supervised_object-centric_stochastic_dynamics_.md)
+- [Suitability Filter: A Statistical Framework for Classifier Evaluation in Real-World Settings](suitability_filter_a_statistical_framework_for_classifier_evaluation_in_real-wor.md)
+- [Nonparametric Modern Hopfield Models](nonparametric_modern_hopfield_models.md)
+
+<!-- RELATED:END -->

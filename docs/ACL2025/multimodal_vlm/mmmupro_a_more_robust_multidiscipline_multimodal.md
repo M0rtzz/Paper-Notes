@@ -123,3 +123,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐（20+模型评估，CoT/OCR/学科维度全面分析）
 - **写作质量**: ⭐⭐⭐⭐⭐（图表清晰，层次分明，动机阐述convincing）
 - **价值**: ⭐⭐⭐⭐⭐（已成为多模态模型评估的标准benchmark之一，影响力大）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](longdocurl_multimodal_long_doc.md)
+- [Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](exploring_how_generative_mllms_perceive_more.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)
+- [MMINA: Benchmarking Multihop Multimodal Internet Agents](mmina_benchmarking_multihop_multimodal_internet_agents.md)
+
+<!-- RELATED:END -->

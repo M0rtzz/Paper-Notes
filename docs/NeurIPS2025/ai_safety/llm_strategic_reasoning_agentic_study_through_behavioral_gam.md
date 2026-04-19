@@ -123,3 +123,15 @@ GPT-o3-mini和GPT-o1在多数博弈中领先，但不同博弈类型的优势模
 ## 评分
 
 ⭐⭐⭐⭐ — 评估框架设计巧妙，跨学科融合出色，人口统计偏差发现具有重要的安全警示价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When AI Democratizes Exploitation: LLM-Assisted Strategic Manipulation of Fair Division Algorithms](when_ai_democratizes_exploitation_llm-assisted_strategic_manipulation_of_fair_di.md)
+- [TRAP: Targeted Redirecting of Agentic Preferences](trap_targeted_redirecting_of_agentic_preferences.md)
+- [Probabilistic Reasoning with LLMs for K-Anonymity Estimation](probabilistic_reasoning_with_llms_for_k-anonymity_estimation.md)
+- [Contextual Integrity in LLMs via Reasoning and Reinforcement Learning](contextual_integrity_in_llms_via_reasoning_and_reinforcement_learning.md)
+- [When Backdoors Speak: Understanding LLM Backdoor Attacks Through Model-Generated Explanations](../../ACL2025/ai_safety/when_backdoors_speak_understanding_llm_backdoor_attacks_through_model-generated_.md)
+
+<!-- RELATED:END -->

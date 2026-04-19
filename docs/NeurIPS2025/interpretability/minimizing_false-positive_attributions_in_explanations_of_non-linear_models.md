@@ -119,3 +119,15 @@ PatternLocal是一个**两阶段**的模型无关XAI方法：
 - 实验充分度: ⭐⭐⭐⭐ 三个不同模态的数据集（合成图像/MRI/EEG），广泛的超参数搜索和消融实验
 - 写作质量: ⭐⭐⭐⭐⭐ 从线性到非线性的理论推导清晰，toy example直观，整体结构严谨
 - 价值: ⭐⭐⭐⭐ 提升XAI解释的可靠性在医疗等高风险场景有实际价值，模型无关的特性使其易于集成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability?](the_non-linear_representation_dilemma_is_causal_abstraction_enough_for_mechanist.md)
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+- [Improving Perturbation-based Explanations by Understanding the Role of Uncertainty Calibration](improving_perturbation-based_explanations_by_understanding_the_role_of_uncertain.md)
+- [Are Greedy Task Orderings Better Than Random in Continual Linear Regression?](are_greedy_task_orderings_better_than_random_in_continual_linear_regression.md)
+- [Towards Attributions of Input Variables in a Coalition](../../ICML2025/interpretability/towards_attributions_of_input_variables_in_a_coalition.md)
+
+<!-- RELATED:END -->

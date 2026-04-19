@@ -117,3 +117,15 @@ ECG200, GunPoint, Coffee, FordA, FordB, CBF（UCR Archive）
 - 实验充分度: ⭐⭐⭐ (数据集小，仅 UCR 基准)
 - 写作质量: ⭐⭐⭐⭐ (逻辑清晰，算法描述完整)
 - 价值: ⭐⭐⭐ (填补时间序列全局解释空白但应用场景有限)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Regularized Newton Method for Nonconvex Optimization with Global and Local Complexity Guarantees](../../NeurIPS2025/human_understanding/a_regularized_newton_method_for_nonconvex_optimization_with.md)
+- [SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](../../ICCV2025/human_understanding/samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)
+- [VisionTS: Visual Masked Autoencoders Are Free-Lunch Zero-Shot Time Series Forecasters](../../ICML2025/human_understanding/visionts_visual_masked_autoencoders_are_free-lunch_zero-shot_time_series_forecas.md)
+- [High-Resolution Spatiotemporal Modeling with Global-Local State Space Models for Video-Based Human Pose Estimation](../../ICCV2025/human_understanding/high-resolution_spatiotemporal_modeling_with_global-local_state_space_models_for.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+
+<!-- RELATED:END -->

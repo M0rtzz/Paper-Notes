@@ -128,3 +128,15 @@ CoLVA仅用4B参数即超越GPT-4o 7.15%，超越Qwen2-VL-72B 11.72%。
 - 实验充分度: ⭐⭐⭐⭐ 36个模型基准测试、多维消融、跨模型迁移验证，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义与动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 开辟了MLLM视觉对应理解的新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MM-Spatial: Exploring 3D Spatial Understanding in Multimodal LLMs](mm-spatial_exploring_3d_spatial_understanding_in_multimodal_llms.md)
+- [Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](../../ACL2025/multimodal_vlm/exploring_how_generative_mllms_perceive_more.md)
+- [Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging](../../ACL2025/multimodal_vlm/exploring_compositional_generalization_of_multimodal_llms_for_medical_imaging.md)
+- [Visual Chronicles: Using Multimodal LLMs to Analyze Massive Collections of Images](visual_chronicles_using_multimodal_llms_to_analyze_massive_collections_of_images.md)
+- [Insight Over Sight: Exploring the Vision-Knowledge Conflicts in Multimodal LLMs](../../ACL2025/multimodal_vlm/conflictvis_vision_knowledge_conflict.md)
+
+<!-- RELATED:END -->

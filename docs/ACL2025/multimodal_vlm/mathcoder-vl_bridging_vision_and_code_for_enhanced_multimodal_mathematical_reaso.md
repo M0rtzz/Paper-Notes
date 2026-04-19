@@ -165,3 +165,15 @@ MathCoder-VL-8B在所有6个指标上均达到同尺寸开源模型SOTA。在Mat
 - 实验充分度: ⭐⭐⭐⭐ — 六个基准全面评测，消融实验详尽，但缺乏失败案例分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，方法和实验阐述充分，图表设计直观
 - 价值: ⭐⭐⭐⭐⭐ — 数据、模型、代码全部开源，860万级数据集对社区贡献巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Role of Visual Modality in Multimodal Mathematical Reasoning: Challenges and Insights](the_role_of_visual_modality_in_multimodal_mathematical_reasoning_challenges_and_.md)
+- [MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale](mammoth_vl_multimodal_reasoning.md)
+- [We-Math: Does Your Large Multimodal Model Achieve Human-like Mathematical Reasoning?](we-math_does_your_large_multimodal_model_achieve_human-like_mathematical_reasoni.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence](cracking_hallucination_vhd.md)
+
+<!-- RELATED:END -->

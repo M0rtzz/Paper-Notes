@@ -220,3 +220,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 五个数据集覆盖食品/医学/语言学领域，与六个基线方法对比，提供了补全和生成两种场景的评估及消融实验，统计检验完整。
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰、算法描述完整、提示模板完整展示、诚实讨论局限性。表格较多但缺乏直观的可视化分析。
 - **价值**: ⭐⭐⭐ — 食品分类法构建有明确的工业应用场景，免训练方案降低了使用门槛；但非叶节点 F1 过低意味着实用性仍有较大差距，核心挑战更多是被揭示而非被解决。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Algorithmic Fidelity of Large Language Models in Generating Synthetic German Public Opinions: A Case Study](algorithmic_fidelity_german_opinion.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [TigerLLM - A Family of Bangla Large Language Models](tigerllm_-_a_family_of_bangla_large_language_models.md)
+- [Large Language Models are Good Relational Learners](large_language_models_are_good_relational_learners.md)
+
+<!-- RELATED:END -->

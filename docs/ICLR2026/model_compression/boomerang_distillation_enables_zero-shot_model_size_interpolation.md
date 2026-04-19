@@ -154,3 +154,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个模型家族、多种损失消融、与剪枝/蒸馏/预训练全面对比、现有模型验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、图表直观，数学符号适度
 - 价值: ⭐⭐⭐⭐⭐ 提供了构建细粒度模型家族的简洁方法，对 LLM 部署有直接实用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Semi-supervised Learning with Zero-shot Pseudolabels](../../NeurIPS2025/model_compression/enhancing_semi-supervised_learning_with_zero-shot_pseudolabels.md)
+- [Improving Zero-Shot Generalization for CLIP with Variational Adapter](../../ECCV2024/model_compression/improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
+- [Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+- [Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
+- [Condensed Data Expansion Using Model Inversion for Knowledge Distillation](../../AAAI2026/model_compression/condensed_data_expansion_using_model_inversion_for_knowledge_distillation.md)
+
+<!-- RELATED:END -->

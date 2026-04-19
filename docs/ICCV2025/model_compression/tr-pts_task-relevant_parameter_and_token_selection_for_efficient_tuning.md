@@ -145,3 +145,15 @@ TR-PTS 包含两个协同模块：Task-Relevant Parameter Selection 和 Task-Rel
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 24 个数据集 + 多维度消融 + 计算开销分析
 - **写作质量**: ⭐⭐⭐⭐ — 层次清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 实用性强，PEFT 领域有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations](generalized_tensor-based_parameter-efficient_fine-tuning_via_lie_group_transform.md)
+- [Faster Parameter-Efficient Tuning with Token Redundancy Reduction (FPET)](../../CVPR2025/model_compression/faster_parameter-efficient_tuning_with_token_redundancy_reduction.md)
+- [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/model_compression/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+- [OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference](../../ICML2025/model_compression/orthorank_token_selection_via_sink_token_orthogonality_for_efficient_llm_inferen.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ GeoSVR 以 0.47 的 Chamfer Distance 全面超越所有方法，包括隐式 SOT
 - 实验充分度: ⭐⭐⭐⭐ — DTU/TnT/Mip-360 三个数据集，消融完整，定性定量齐全
 - 写作质量: ⭐⭐⭐⭐ — 问题分析清晰，方法推导自然，图表专业
 - 价值: ⭐⭐⭐⭐ — 为表面重建提供了 3DGS 之外的新解法，SOTA 结果有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction](../../ICLR2026/3d_vision/urbangs_a_scalable_and_efficient_architecture_for_geometrically_accurate_large-s.md)
+- [AtlasGS: Atlanta-world Guided Surface Reconstruction with Implicit Structured Gaussians](atlasgs_atlanta-world_guided_surface_reconstruction_with_implicit_structured_gau.md)
+- [MPMAvatar: Learning 3D Gaussian Avatars with Accurate and Robust Physics-Based Dynamics](mpmavatar_learning_3d_gaussian_avatars_with_accurate_and_robust_physics-based_dy.md)
+- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](../../AAAI2026/3d_vision/sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
+- [MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting](../../AAAI2026/3d_vision/meshsplat_generalizable_sparse-view_surface_reconstruction_via_gaussian_splattin.md)
+
+<!-- RELATED:END -->

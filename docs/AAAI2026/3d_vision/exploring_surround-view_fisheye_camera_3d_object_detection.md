@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （RQ+RF结构化分析，多角度消融非常全面）
 - 写作质量: ⭐⭐⭐⭐⭐ （问题驱动，结构清晰）
 - 价值: ⭐⭐⭐⭐ （数据集+框架对鱼眼3D检测社区有重要推动作用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection# R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](../../CVPR2026/3d_vision/r4det_4d_radar_camera_fusion_3d_detection.md)
+- [Distilling Future Temporal Knowledge with Masked Feature Reconstruction for 3D Object Detection](distilling_future_temporal_knowledge_with_masked_feature_reconstruction_for_3d_o.md)
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection](monoclue_object-aware_clustering_enhances_monocular_3d_object_detection.md)
+- [DirectFisheye-GS: Enabling Native Fisheye Input in Gaussian Splatting with Cross-View Joint Optimization](../../CVPR2026/3d_vision/directfisheye-gs_enabling_native_fisheye_input_in_gaussian_splatting_with_cross-.md)
+
+<!-- RELATED:END -->

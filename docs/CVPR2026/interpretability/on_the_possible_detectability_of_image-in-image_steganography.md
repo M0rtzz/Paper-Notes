@@ -150,3 +150,15 @@ SRM+SVM 对所有测试方案的检测准确率均超过 99%，AUC 接近 1.0，
 - 实验充分度: ⭐⭐⭐⭐ — 多方案、多方法交叉验证，但缺乏自适应对抗实验
 - 写作质量: ⭐⭐⭐⭐ — 论述清晰，可解释性分析深入，理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐ — 对深度隐写社区具有重要的安全性警示价值，推动方案设计关注不可检测性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Does It Look There? Structured Explanations for Image Classification](why_does_it_look_there_structured_explanations_for_image_classification.md)
+- [Neurodynamics-Driven Coupled Neural P Systems for Multi-Focus Image Fusion](neurodynamics-driven_coupled_neural_p_systems_for_multi-focus_image_fusion.md)
+- [DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
+- [Missing No More: Dictionary-Guided Cross-Modal Image Fusion under Missing Infrared](missing_no_more_dictionary-guided_cross-modal_image_fusion_under_missing_infrare.md)
+- [Edit-As-Act: Goal-Regressive Planning for Open-Vocabulary 3D Indoor Scene Editing](edit-as-act_goal-regressive_planning_for_open-vocabulary_3d_indoor_scene_editing.md)
+
+<!-- RELATED:END -->

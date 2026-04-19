@@ -118,3 +118,15 @@ GLoRE 通过两步表示注入：(1) **对比推理模式注入**——计算 lo
 - 实验充分度: ⭐⭐⭐⭐⭐ 域内+跨域+消融+表示分析+多模型
 - 写作质量: ⭐⭐⭐⭐⭐ 发现→假设→方法→验证的逻辑链完美
 - 价值: ⭐⭐⭐⭐⭐ 对理解和激活LLM推理能力有根本性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](chain_of_reasoning_unified_math.md)
+- [Ranked Voting based Self-Consistency of Large Language Models](ranked_voting_based_self-consistency_of_large_language_models.md)
+
+<!-- RELATED:END -->

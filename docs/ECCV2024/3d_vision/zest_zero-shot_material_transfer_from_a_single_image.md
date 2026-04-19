@@ -121,3 +121,15 @@ $$I_{gen} = \mathcal{S}(z_M, D_I, I_{init}, F)$$
 - 有效性：⭐⭐⭐⭐ — 用户研究显著领先
 - 实用性：⭐⭐⭐⭐⭐ — 零样本、免训练、15秒生成
 - 推荐度：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [Track Everything Everywhere Fast and Robustly](track_everything_everywhere_fast_and_robustly.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
+
+<!-- RELATED:END -->

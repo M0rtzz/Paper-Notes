@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖4类基线（全监督/VLM/文本VMR/图像VMR），消融详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 推动Vid2VidMR领域发展，新数据集有持续影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [Mind the Time: Temporally-Controlled Multi-Event Video Generation](../../CVPR2025/video_generation/mind_the_time_temporally-controlled_multi-event_video_generation.md)
+- [StreamDiT: Real-Time Streaming Text-to-Video Generation](../../CVPR2026/video_generation/streamdit_real-time_streaming_text-to-video_generation.md)
+- [Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation](../../NeurIPS2025/video_generation/autoregressive_adversarial_posttraining_for_realtime_interac.md)
+- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](../../ICLR2026/video_generation/motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+
+<!-- RELATED:END -->

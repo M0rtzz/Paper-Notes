@@ -187,3 +187,15 @@ ToM 环境要求模型综合处理多种模态信息：
 - **实验充分度**: ⭐⭐⭐⭐ — 多模态基准测试 + 未见场景验证 + 不同模型规模消融，较为充分
 - **写作质量**: ⭐⭐⭐⭐ — 动机分析清晰，Fig.1 的问题可视化有说服力，方法描述层次分明
 - **价值**: ⭐⭐⭐⭐ — 对多模态 ToM 推理的可扩展性研究具有重要参考价值，弱到强控制思想可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Black Boxes to Transparent Minds: Evaluating and Enhancing the Theory of Mind in Multimodal Large Language Models](from_black_boxes_to_transparent_minds_evaluating_and_enhancing_the_theory_of_min.md)
+- [Video-Only ToM: Enhancing Theory of Mind in Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/video-only_tom_enhancing_theory_of_mind_in_multimodal_large_language_models.md)
+- [ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools](../../ICCV2025/multimodal_vlm/toolvqa_a_dataset_for_multistep_reasoning_vqa_with_external.md)
+- [LADA: Scalable Label-Specific CLIP Adapter for Continual Learning](lada_scalable_label-specific_clip_adapter_for_continual_learning.md)
+- [Can Multi-Modal LLMs Provide Live Step-by-Step Task Guidance?](../../NeurIPS2025/multimodal_vlm/can_multi-modal_llms_provide_live_step-by-step_task_guidance.md)
+
+<!-- RELATED:END -->

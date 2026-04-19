@@ -113,3 +113,15 @@ Any3DIS将3D实例分割简化为：先用2D视频分割与跟踪得到每个物
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种评估设置（类别无关/开放词汇/开放式），两个数据集，消融完整
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，算法伪代码和公式推导规范
 - 价值: ⭐⭐⭐⭐ 在免训练3D实例分割方向有重要的方法论贡献，对后续工作有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ASSIST-3D: Adapted Scene Synthesis for Class-Agnostic 3D Instance Segmentation](../../AAAI2026/3d_vision/assist-3d_adapted_scene_synthesis_for_class-agnostic_3d_instance_segmentation.md)
+- [Category-Agnostic Neural Object Rigging](category-agnostic_neural_object_rigging.md)
+- [CutS3D: Cutting Semantics in 3D for 2D Unsupervised Instance Segmentation](../../ICCV2025/3d_vision/cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)
+- [GauSTAR: Gaussian Surface Tracking and Reconstruction](gaustar_gaussian_surface_tracking_and_reconstruction.md)
+- [Online Segment Any 3D Thing as Instance Tracking](../../NeurIPS2025/3d_vision/online_segment_any_3d_thing_as_instance_tracking.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ $$\mathbf{A}_{t \to v} = \text{Attn}(h_t', h_v', h_v'), \quad \mathbf{A}_{v \to 
 - 实验充分度: ⭐⭐⭐⭐ 多任务评估（二分类+三分类+报告质量+grounding+消融），但缺少与更多 3D 医学 VLM 的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，但部分符号定义分散
 - 价值: ⭐⭐⭐⭐ 可解释性医学 AI 的重要进展，executable reward 思路对医学 RLHF 有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EI: Early Intervention for Multimodal Imaging based Disease Recognition](ei_early_intervention_for_multimodal_imaging_based_disease_recognition.md)
+- [Resp-Agent: An Agent-Based System for Multimodal Respiratory Sound Generation and Disease Diagnosis](../../ICLR2026/medical_imaging/resp-agent_an_agent-based_system_for_multimodal_respiratory_sound_generation_and.md)
+- [Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](fair_lung_disease_diagnosis_from_chest_ct_via_gender-adversarial_attention_multi.md)
+- [CARE: Towards Clinical Accountability in Multi-Modal Medical Reasoning with an Evidence-Grounded Agentic Framework](../../ICLR2026/medical_imaging/care_towards_clinical_accountability_in_multi-modal_medical_reasoning_with_an_ev.md)
+- [Sim4Seg: Boosting Multimodal Multi-disease Medical Diagnosis Segmentation with Region-Aware Vision-Language Similarity Masks](../../AAAI2026/medical_imaging/sim4seg_boosting_multimodal_multi-disease_medical_diagnosis_segmentation_with_re.md)
+
+<!-- RELATED:END -->

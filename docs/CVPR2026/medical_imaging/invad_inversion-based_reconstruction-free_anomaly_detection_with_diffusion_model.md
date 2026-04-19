@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个工业 + 6 个医疗数据集，全面的消融（组件/骨干/评分/步数/泛化性）
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，范式对比图直观，表格设计合理
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，即插即用加速现有方法，对工业和医疗 AD 都有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilist.md)
+- [MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection](moeclip_patch-specialized_experts_for_zero-shot_anomaly_detection.md)
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+- [WDT-MD: Wavelet Diffusion Transformers for Microaneurysm Detection in Fundus Images](../../AAAI2026/medical_imaging/wdt-md_wavelet_diffusion_transformers_for_microaneurysm_detection_in_fundus_imag.md)
+
+<!-- RELATED:END -->

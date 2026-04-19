@@ -175,3 +175,15 @@ $$\mathcal{L} = \mathcal{L}_{IRL} + \alpha \mathcal{L}_{OGM} + \beta \mathcal{L}
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个大规模数据集、多项消融实验、定性可视化
 - **写作质量**: ⭐⭐⭐⭐ 方法阐述详细，公式推导完整
 - **价值**: ⭐⭐⭐⭐⭐ nuScenes 排行榜第一，方法可推广到其他运动预测场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DONUT: A Decoder-Only Model for Trajectory Prediction](donut_a_decoder-only_model_for_trajectory_prediction.md)
+- [Future-Aware Interaction Network For Motion Forecasting](future-aware_interaction_network_for_motion_forecasting.md)
+- [Certified Human Trajectory Prediction](../../CVPR2025/autonomous_driving/certified_human_trajectory_prediction.md)
+- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
+- [DINO-Foresight: Looking into the Future with DINO](../../NeurIPS2025/autonomous_driving/dino-foresight_looking_into_the_future_with_dino.md)
+
+<!-- RELATED:END -->

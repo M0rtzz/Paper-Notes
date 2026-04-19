@@ -145,3 +145,15 @@ TSSS 是一个**训练无关 (training-free)** 的框架：
 - **实验充分性**: ⭐⭐⭐⭐ — 三个基准、多个后端、充分消融
 - **实际影响**: ⭐⭐⭐⭐ — 对高效 RAG 部署有直接价值
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](../../ICCV2025/object_detection/viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
+- [Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension](video-rag_visually-aligned_retrieval-augmented_long_video_comprehension.md)
+- [DETree: DEtecting Human-AI Collaborative Texts via Tree-Structured Hierarchical Representation Learning](detree_detecting_human-ai_collaborative_texts_via_tree-structured_hierarchical_r.md)
+- [Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning](../../AAAI2026/object_detection/resource_efficient_sleep_staging_via_multi-level_masking_and_prompt_learning.md)
+- [Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
+
+<!-- RELATED:END -->

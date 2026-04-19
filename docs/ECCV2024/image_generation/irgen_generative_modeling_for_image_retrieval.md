@@ -210,3 +210,15 @@ $$p(l_1, \ldots, l_M | x_1, \theta) = \prod_{m=1}^{M} p(l_i | x_1, l_1, \ldots, 
 - **实验充分度**: ★★★★★ — 三个标准基准 + 两个百万级数据集 + 详尽消融 + 多种搜索策略对比
 - **写作质量**: ★★★★★ — 问题动机清晰，方法描述系统，实验组织严谨
 - **实用价值**: ★★★★☆ — 概念突破性强但自回归推理速度和动态数据库更新是工程挑战
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Breaking the Modality Barrier: Generative Modeling for Accurate Molecule Retrieval from Mass Spectra](../../AAAI2026/image_generation/breaking_the_modality_barrier_generative_modeling_for_accurate_molecule_retrieva.md)
+- [MacDiff: Unified Skeleton Modeling with Masked Conditional Diffusion](macdiff_unified_skeleton_modeling_with_masked_conditional_diffusion.md)
+- [GenIR: Generative Visual Feedback for Mental Image Retrieval](../../NeurIPS2025/image_generation/genir_generative_visual_feedback_for_mental_image_retrieval.md)
+- [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
+- [GarmentAligner: Text-to-Garment Generation via Retrieval-augmented Multi-level Corrections](garmentaligner_text-to-garment_generation_via_retrieval-augmented_multi-level_co.md)
+
+<!-- RELATED:END -->

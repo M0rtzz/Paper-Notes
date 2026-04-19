@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多方法对比+跨场景分析+消融+深度补全验证，非常系统
 - 写作质量: ⭐⭐⭐⭐ 数据采集和标定流程描述清晰详尽
 - 价值: ⭐⭐⭐⭐ 填补了真实全景立体数据集空白，baseline建设为后续研究铺路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](../../NeurIPS2025/autonomous_driving/chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
+- [Cheating Stereo Matching in Full-Scale: Physical Adversarial Attack against Binocular Depth Estimation](../../AAAI2026/autonomous_driving/cheating_stereo_matching_in_full-scale_physical_adversarial_attack_against_binoc.md)
+- [ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
+- [Towards Open-World Generation of Stereo Images and Unsupervised Matching](../../ICCV2025/autonomous_driving/towards_open-world_generation_of_stereo_images_and_unsupervised_matching.md)
+
+<!-- RELATED:END -->

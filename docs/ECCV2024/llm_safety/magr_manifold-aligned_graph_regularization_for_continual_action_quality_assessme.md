@@ -144,3 +144,15 @@ Joint Training 上界分别为 0.9360 / 0.9075 / 0.8460 / 0.7556。
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集 + 消融 + 鲁棒性 + 可视化，非常全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富，motivation 阐述充分
 - 价值: ⭐⭐⭐⭐ 为持续学习在回归任务的应用开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Order-Robust Class Incremental Learning: Graph-Driven Dynamic Similarity Grouping](../../CVPR2025/llm_safety/order-robust_class_incremental_learning_graph-driven_dynamic_similarity_grouping.md)
+- [Finding Structure in Continual Learning](../../NeurIPS2025/llm_safety/finding_structure_in_continual_learning.md)
+- [Adversarial Robust Memory-Based Continual Learner](../../ICCV2025/llm_safety/adversarial_robust_memory-based_continual_learner.md)
+- [Elastic Weight Consolidation Done Right for Continual Learning](../../CVPR2026/llm_safety/elastic_weight_consolidation_done_right_for_continual_learning.md)
+- [BECAME: BayEsian Continual Learning with Adaptive Model MErging](../../ICML2025/llm_safety/became_bayesian_continual_learning_with_adaptive_model_merging.md)
+
+<!-- RELATED:END -->

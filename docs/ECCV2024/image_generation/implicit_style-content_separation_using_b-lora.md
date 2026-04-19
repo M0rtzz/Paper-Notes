@@ -187,3 +187,15 @@ prompt 选择的影响：使用通用 prompt "A [v]" 效果最佳，显式指定
 - **实验充分度**: ★★★★☆ — 用户研究强力支持，但定量评估依赖 DINO 相似度有局限
 - **写作质量**: ★★★★★ — 论述逻辑清晰，可视化丰富且直观
 - **实用价值**: ★★★★★ — 简单、高效、模块化，极具落地价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SCFlow: Implicitly Learning Style and Content Disentanglement with Flow Models](../../ICCV2025/image_generation/scflow_implicitly_learning_style_and_content_disentanglement_with_flow_models.md)
+- [ZigMa: A DiT-style Zigzag Mamba Diffusion Model](zigma_a_dit-style_zigzag_mamba_diffusion_model.md)
+- [ZipLoRA: Any Subject in Any Style by Effectively Merging LoRAs](ziplora_any_subject_in_any_style_by_effectively_merging_loras.md)
+- [StyleTokenizer: Defining Image Style by a Single Instance for Controlling Diffusion Models](styletokenizer_defining_image_style_by_a_single_instance_for_controlling_diffusi.md)
+- [SAIR: Learning Semantic-aware Implicit Representation](sair_learning_semantic-aware_implicit_representation.md)
+
+<!-- RELATED:END -->

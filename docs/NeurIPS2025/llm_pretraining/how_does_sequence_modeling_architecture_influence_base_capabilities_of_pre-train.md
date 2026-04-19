@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 11 种架构、110M-1.3B 两种规模、系统消融、Top-1 验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链完整（发现问题→分析因素→提出原则→验证原则），图表清晰
 - 价值: ⭐⭐⭐⭐⭐ 对序列建模架构设计有根本性指导意义，评估方法论也有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dataset Ownership Verification for Pre-trained Masked Models](../../ICCV2025/llm_pretraining/dataset_ownership_verification_for_pre-trained_masked_models.md)
+- [The Curse of Depth in Large Language Models](the_curse_of_depth_in_large_language_models.md)
+- [Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](language_model_behavioral_phases_are_consistent_across_archi.md)
+- [Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?](does_object_binding_naturally_emerge_in_large_pretrained_vision_transformers.md)
+- [Imagine How To Change: Explicit Procedure Modeling for Change Captioning](../../ICLR2026/llm_pretraining/imagine_how_to_change_explicit_procedure_modeling_for_change_captioning.md)
+
+<!-- RELATED:END -->

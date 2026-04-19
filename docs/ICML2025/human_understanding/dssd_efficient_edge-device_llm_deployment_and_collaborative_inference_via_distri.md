@@ -152,3 +152,15 @@ DSSD与草稿长度$\gamma$的优化是正交的。可以进一步结合Zhao et 
 - 实验充分度: ⭐⭐⭐ — 实验验证了核心主张，但缺乏大规模真实部署验证
 - 写作质量: ⭐⭐⭐⭐ — 问题建模清晰，系统架构描述详尽，动机阐述到位
 - 价值: ⭐⭐⭐⭐ — 解决了分布式LLM推理中的实际通信瓶颈，对边缘AI部署有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ada-KV: Optimizing KV Cache Eviction by Adaptive Budget Allocation for Efficient LLM Inference](../../NeurIPS2025/human_understanding/ada-kv_optimizing_kv_cache_eviction_by_adaptive_budget_allocation_for_efficient_.md)
+- [Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)
+- [FACE: A General Framework for Mapping Collaborative Filtering Embeddings into LLM Tokens](../../NeurIPS2025/human_understanding/face_a_general_framework_for_mapping_collaborative_filtering_embeddings_into_llm.md)
+- [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates](../../ICLR2026/human_understanding/inference-time_backdoors_via_hidden_instructions_in_llm_chat_templates.md)
+- [Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks](sparse_spectral_training_and_inference_on_euclidean_and_hyperbolic_neural_networ.md)
+
+<!-- RELATED:END -->

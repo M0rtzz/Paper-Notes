@@ -129,3 +129,15 @@ Auto-PRE 在所有三个任务上均超越现有方法，相比 PRE (Auto-Exam) 
 - 实验充分度: ⭐⭐⭐⭐ — 三任务九格式全面比较，含偏差分析、成本分析和消融实验
 - 写作质量: ⭐⭐⭐⭐ — 框架清晰，三阶段划分逻辑自洽
 - 价值: ⭐⭐⭐⭐ — 为 LLM 自动评估提供了实用且可扩展的范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](../../CVPR2026/human_understanding/graph2eval_multimodal_task_generation_agents.md)
+- [LLMs Encode Their Failures: Predicting Success from Pre-Generation Activations](../../ICLR2026/human_understanding/llms_encode_their_failures_predicting_success_from_pre-generation_activations.md)
+- [PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models](pathmind_a_retrieve-prioritize-reason_framework_for_knowledge_graph_reasoning_wi.md)
+- [Towards a Common Framework for Autoformalization](towards_a_common_framework_for_autoformalization.md)
+- [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
+
+<!-- RELATED:END -->

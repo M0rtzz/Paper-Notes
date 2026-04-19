@@ -108,3 +108,15 @@ AMiD引入两个控制变量：α（控制插值路径几何）和λ（控制插
 - 实验充分度: ⭐⭐⭐⭐ 多任务+消融+toy验证完整，但模型规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，图示极其直观
 - 价值: ⭐⭐⭐⭐ 为LLM知识蒸馏的辅助分布设计提供了统一理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+- [Distillation of Large Language Models via Concrete Score Matching](distillation_of_large_language_models_via_concrete_score_matching.md)
+- [TGDD: Trajectory Guided Dataset Distillation with Balanced Distribution](../../AAAI2026/model_compression/tgdd_trajectory_guided_dataset_distillation_with_balanced_distribution.md)
+- [Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching](../../ACL2025/model_compression/flipping_kd_small_to_large.md)
+- [When Data-Free Knowledge Distillation Meets Non-Transferable Teacher: Escaping Out-of-Distribution](../../ICML2025/model_compression/when_data-free_knowledge_distillation_meets_non-transferable_teacher_escaping_ou.md)
+
+<!-- RELATED:END -->

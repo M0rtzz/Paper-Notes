@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 从合成数据到 CIFAR-10/Tiny-ImageNet，从 RF 到 ResNet/ViT，覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论和实验结合紧密，Figure 1 的展示极具说服力，证明sketch 清晰
 - 价值: ⭐⭐⭐⭐⭐ 对隐私和安全有重要启示——给出了"模型多大就危险"的定量刻画
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimal Online Change Detection via Random Fourier Features](../../NeurIPS2025/llm_pretraining/optimal_online_change_detection_via_random_fourier_features.md)
+- [Understanding the Emergence of Seemingly Useless Features in Next-Token Predictors](understanding_the_emergence_of_seemingly_useless_features_in_next-token_predicto.md)
+- [Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks](../../ICML2025/llm_pretraining/bayesian_neural_scaling_law_extrapolation_with_prior-data_fitted_networks.md)
+- [Predicting Training Re-evaluation Curves Enables Effective Data Curriculums](predicting_training_re-evaluation_curves_enables_effective_data_curriculums_for_.md)
+- [Beyond Benign Overfitting in Nadaraya-Watson Interpolators](../../NeurIPS2025/llm_pretraining/beyond_benign_overfitting_in_nadaraya-watson_interpolators.md)
+
+<!-- RELATED:END -->

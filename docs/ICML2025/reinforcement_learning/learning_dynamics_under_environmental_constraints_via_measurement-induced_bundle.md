@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 三个仿真任务+12个baseline对比充分，但缺少真实世界验证
 - 写作质量: ⭐⭐⭐ 理论部分数学密集，可读性对非几何背景读者有挑战
 - 价值: ⭐⭐⭐⭐ 为安全学习控制提供了新的理论框架和实践方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoMaGen: Generating Demonstrations under Soft and Hard Constraints for Multi-Step Bimanual Mobile Manipulation](../../ICLR2026/reinforcement_learning/momagen_generating_demonstrations_under_soft_and_hard_constraints_for_multi-step.md)
+- [Safety Certificate against Latent Variables with Partially Unidentifiable Dynamics](safety_certificate_against_latent_variables_with_partially_unidentifiable_dynami.md)
+- [Massively Parallel Imitation Learning of Mouse Forelimb Musculoskeletal Reaching Dynamics](../../NeurIPS2025/reinforcement_learning/massively_parallel_imitation_learning_of_mouse_forelimb_musculoskeletal_reaching.md)
+- [Octopus: Embodied Vision-Language Programmer from Environmental Feedback](../../ECCV2024/reinforcement_learning/octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
+- [EvoLM: In Search of Lost Language Model Training Dynamics](../../NeurIPS2025/reinforcement_learning/evolm_in_search_of_lost_language_model_training_dynamics.md)
+
+<!-- RELATED:END -->

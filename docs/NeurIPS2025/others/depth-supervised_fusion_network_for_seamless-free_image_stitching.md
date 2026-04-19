@@ -167,3 +167,15 @@ DSFN 是最快的方法——尽管引入了深度估计和推理过程。
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+消融+用户研究+效率对比，较完整
 - 写作质量: ⭐⭐⭐ 公式和损失函数定义清晰，但部分符号重载（如 $\sigma$ 既是激活函数又是损失权重）
 - 价值: ⭐⭐⭐⭐ 对大视差图像拼接实际应用有直接价值，且速度最快
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Momentum Auxiliary Network for Supervised Local Learning](../../ECCV2024/others/momentum_auxiliary_network_for_supervised_local_learning.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [HPFF: Hierarchical Locally Supervised Learning with Patch Feature Fusion](../../ECCV2024/others/hpff_hierarchical_locally_supervised_learning_with_patch_feature_fusion.md)
+- [Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
+- [Prediction-Powered Semi-Supervised Learning with Online Power Tuning](prediction-powered_semi-supervised_learning_with_online_power_tuning.md)
+
+<!-- RELATED:END -->

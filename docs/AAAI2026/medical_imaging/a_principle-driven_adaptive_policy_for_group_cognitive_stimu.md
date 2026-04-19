@@ -166,3 +166,15 @@ $$\mathcal{L}_{\text{SFT}} = \gamma_1 \cdot \mathcal{L}_{\text{Gen}} + \gamma_2 
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分，但部分技术细节（如用户状态特征）语焉不详
 - 实用价值: ⭐⭐⭐⭐ 解决真实社会需求，但从系统到临床部署还有很长的路
 - 技术深度: ⭐⭐⭐ 各模块设计较为直接，soft prompt + 注意力监督 + GRPO改编，组合创新为主
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedKCO: Medical Vision-Language Pretraining via Knowledge-Driven Cognitive Orchestration](../../CVPR2026/medical_imaging/medkco_medical_vision-language_pretraining_via_knowledge-driven_cognitive_orches.md)
+- [ATPO: Adaptive Tree Policy Optimization for Multi-Turn Medical Dialogue](../../ICLR2026/medical_imaging/atpo_adaptive_tree_policy_optimization_for_multi-turn_medical_dialogue.md)
+- [EgoEMS: A High-Fidelity Multimodal Egocentric Dataset for Cognitive Assistance in Emergency Medical Services](egoems_a_high-fidelity_multimodal_egocentric_dataset_for_cognitive_assistance_in.md)
+- [From Policy to Logic for Efficient and Interpretable Coverage Assessment](from_policy_to_logic_for_efficient_and_interpretable_coverage_assessment.md)
+- [MultiCogEval: Evaluating LLMs Across Multi-Cognitive Levels](../../ICML2025/medical_imaging/evaluating_llms_across_multi-cognitive_levels_from_medical_knowledge_mastery_to_.md)
+
+<!-- RELATED:END -->

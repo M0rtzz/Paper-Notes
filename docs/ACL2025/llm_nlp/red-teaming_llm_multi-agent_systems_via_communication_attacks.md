@@ -142,3 +142,15 @@ Amayuelas 等研究了 agent 在辩论中被说服放弃任务的场景，但攻
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 2 个框架、4 种结构、4 个数据集、2 种攻击目标、2 个真实应用，并对受害位置/说服力/模型做了消融，但缺乏防御实验和开源模型测试。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰、威胁模型定义严谨、通信形式化表述完整，但部分符号定义冗余。
 - **价值**: ⭐⭐⭐⭐⭐ — 对 LLM-MAS 安全领域有重要警示作用，揭示了一个被忽视的关键攻击面，对多智能体系统的部署和安全设计具有直接指导意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](virsci_multi_agent_idea_gen.md)
+- [Large Language Models Miss the Multi-Agent Mark](../../NeurIPS2025/llm_nlp/large_language_models_miss_the_multi-agent_mark.md)
+- [Understanding and Meeting Practitioner Needs When Measuring Representational Harms Caused by LLM-Based Systems](understanding_and_meeting_practitioner_needs_when_measuring_representational_har.md)
+- [Transforming Podcast Preview Generation: From Expert Models to LLM-Based Systems](transforming_podcast_preview_generation_from_expert_models_to_llm-based_systems.md)
+- [SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies](../../NeurIPS2025/llm_nlp/symphony_synergistic_multi-agent_planning_with_heterogeneous_language_model_asse.md)
+
+<!-- RELATED:END -->

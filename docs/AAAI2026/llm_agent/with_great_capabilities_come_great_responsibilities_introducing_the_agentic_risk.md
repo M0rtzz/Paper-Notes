@@ -134,3 +134,15 @@ ARC框架包含三大部分：Elements（要素）→ Risks（风险）→ Contr
 ⭐⭐⭐
 
 作为一篇AI治理框架论文，ARC框架的能力视角是有价值的创新，分类体系全面系统，但缺乏定量验证和实际部署的empirical evidence。框架的实用价值取决于组织的执行力，论文本身更接近position paper而非技术贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models](liecraft_a_multi-agent_framework_for_evaluating_deceptive_capabilities_in_langua.md)
+- [REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science?](../../ACL2025/llm_agent/repro-bench_can_agentic_ai_systems_assess_the_reproducibility_of_social_science_.md)
+- [Toward a Dynamic Stackelberg Game-Theoretic Framework for Agentic AI Defense Against LLM Jailbreaking](../../ICLR2026/llm_agent/toward_a_dynamic_stackelberg_game-theoretic_framework_for_agentic_ai_defense_aga.md)
+- [SR-Scientist: Scientific Equation Discovery With Agentic AI](../../ICLR2026/llm_agent/sr-scientist_scientific_equation_discovery_with_agentic_ai.md)
+- [Real-Time Trust Verification for Safe Agentic Actions Using TrustBench](real-time_trust_verification_for_safe_agentic_actions_using_trustbench.md)
+
+<!-- RELATED:END -->

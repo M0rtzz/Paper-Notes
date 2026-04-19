@@ -118,3 +118,15 @@ $$\mathcal{L}_{\text{NLL}} = -\log p(Q_t^* | \mathcal{C}_{t-1}, \mathcal{D}_{t-1
 ⭐⭐⭐⭐ (4/5)
 
 论文在任务定义、数据集构建和方法设计上都展现了很强的创新性。将行人重识别从静态检索升级为交互式对话是一个自然且有价值的方向，实验结果令人信服。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
+- [TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
+- [Scaling Large Motion Models with Million-Level Human Motions](scaling_large_motion_models_with_million-level_human_motions.md)
+- [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+
+<!-- RELATED:END -->

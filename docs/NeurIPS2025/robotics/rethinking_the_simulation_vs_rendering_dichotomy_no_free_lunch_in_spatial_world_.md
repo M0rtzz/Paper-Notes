@@ -121,3 +121,15 @@ tags:
 - **实验充分度**: ⭐⭐ 纯理论论文，无定量实验，论证主要依赖文献综述
 - **写作质量**: ⭐⭐⭐⭐ 哲学和神经科学论证严谨，但对AI读者的可及性较低
 - **价值**: ⭐⭐⭐⭐ 为AI空间推理研究提供了重要的理论锚点和方向性指引
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MineAnyBuild: Benchmarking Spatial Planning for Open-world AI Agents](mineanybuild_benchmarking_spatial_planning_for_openworld_ai.md)
+- [LabUtopia: High-Fidelity Simulation and Hierarchical Benchmark for Scientific Embodied Agents](labutopia_high-fidelity_simulation_and_hierarchical_benchmark_for_scientific_emb.md)
+- [Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
+- [LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
+- [Building Spatial World Models from Sparse Transitional Episodic Memories](../../ICLR2026/robotics/building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+
+<!-- RELATED:END -->

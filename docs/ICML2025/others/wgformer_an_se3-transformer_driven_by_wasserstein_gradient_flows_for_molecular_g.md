@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、充分消融、可视化分析
 - 写作质量: ⭐⭐⭐⭐ 物理动机解释清晰
 - 价值: ⭐⭐⭐⭐⭐ 对分子构象预测和物理启发的架构设计都有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points](../../NeurIPS2025/others/hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)
+- [Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
+- [SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures](../../NeurIPS2025/others/sad_neural_networks_divergent_gradient_flows_and_asymptotic_optimality_via_o-min.md)
+- [Fishers for Free? Approximating the Fisher Information Matrix by Recycling the Squared Gradient Accumulator](fishers_for_free_approximating_the_fisher_information_matrix_by_recycling_the_sq.md)
+- [Generation from Noisy Examples](generation_from_noisy_examples.md)
+
+<!-- RELATED:END -->

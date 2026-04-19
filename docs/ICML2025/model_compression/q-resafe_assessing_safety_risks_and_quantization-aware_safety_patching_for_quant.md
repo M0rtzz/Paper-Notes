@@ -190,3 +190,15 @@ $$\mathbf{A}_{t+1} = \mathbf{M}_A \odot (\mathbf{A}_t - \eta \nabla_A \mathcal{L
 - 实验充分度: ⭐⭐⭐⭐⭐ 4种量化方法×3种数据集×2种位宽×2个模型的全面评估矩阵，消融实验详尽（τ/方法对比/多位宽），附录补充了更多量化方法
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，评估部分组织有序（方法内分析→跨方法分析→总结），公式和算法描述完整
 - 价值: ⭐⭐⭐⭐ 首次系统评估量化×校准数据×安全的交叉影响，Q-resafe实用性强（1.2h GPU即可修复），对量化LLM的安全部署有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](../../ACL2025/model_compression/efficientqat.md)
+- [A Granular Study of Safety Pretraining under Model Abliteration](../../NeurIPS2025/model_compression/a_granular_study_of_safety_pretraining_under_model_abliteration.md)
+- [BoA: Attention-aware Post-training Quantization without Backpropagation](boa_attention-aware_post-training_quantization_without_backpropagation.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](../../ACL2025/model_compression/l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [Weak-to-Strong Jailbreaking on Large Language Models](weak-to-strong_jailbreaking_on_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -173,3 +173,15 @@ PolyJuice 引导几乎不影响图像质量，FID 甚至略有改善。
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多个 T2I 模型和分辨率，包含图像质量、频谱、可转移性分析，但 SID 覆盖偏少
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法简洁，可视化分析丰富
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 安全领域意义重大，攻防两面都提供了实际工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GASP: Efficient Black-Box Generation of Adversarial Suffixes for Jailbreaking LLMs](gasp_efficient_black-box_generation_of_adversarial_suffixes_for_jailbreaking_llm.md)
+- [Jailbreak-Zero: A Path to Pareto Optimal Red Teaming for Large Language Models](jailbreak-zero_a_path_to_pareto_optimal_red_teaming_for_large_language_models.md)
+- [DP²O-SR: Direct Perceptual Preference Optimization for Real-World Image Super-Resolution](dp2o-sr_direct_perceptual_preference_optimization_for_real-world_image_super-res.md)
+- [M2S: Multi-turn to Single-turn jailbreak in Red Teaming for LLMs](../../ACL2025/llm_alignment/m2s_multiturn_to_singleturn_jailbreak_in.md)
+- [What Makes a Reward Model a Good Teacher? An Optimization Perspective](what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+
+<!-- RELATED:END -->

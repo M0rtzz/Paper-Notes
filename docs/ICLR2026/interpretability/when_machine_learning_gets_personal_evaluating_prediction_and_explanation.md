@@ -126,3 +126,15 @@ $$\min_\Psi \max P_e \geq \frac{1}{2}\left(1 - \frac{1}{2\sqrt{d}}\left[\frac{1}
 - 实验充分度: ⭐⭐⭐⭐ 理论为主+MIMIC-III实证验证，覆盖分类和回归
 - 写作质量: ⭐⭐⭐⭐⭐ 定理-例子-直觉的交替展示非常excellent，图表设计出色
 - 价值: ⭐⭐⭐⭐⭐ 对个性化ML和XAI领域有深远影响，负面结果（不可检验性）同样有重大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
+- [Rethinking Explainable Machine Learning as Applied Statistics](../../ICML2025/interpretability/rethinking_explainable_machine_learning_as_applied_statistics.md)
+- [When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
+- [Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+- [ExPO-HM: Learning to Explain-then-Detect for Hateful Meme Detection](expo-hm_learning_to_explain-then-detect_for_hateful_meme_detection.md)
+
+<!-- RELATED:END -->

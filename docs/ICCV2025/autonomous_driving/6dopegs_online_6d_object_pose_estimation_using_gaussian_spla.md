@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在两个标准数据集上进行了全面对比和消融实验，包含实时系统演示，但缺少更多数据集的泛化验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，流程图直观，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 5倍加速在实际应用中意义重大，为机器人操作等实时场景提供了实用的无模型位姿估计方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
+- [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+- [GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
+- [GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting](gs-livm_real-time_photo-realistic_lidar-inertial-visual_mapping_with_gaussian_sp.md)
+
+<!-- RELATED:END -->

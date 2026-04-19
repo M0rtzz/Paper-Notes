@@ -135,3 +135,15 @@ MDCS 一致性提升：MDCS-MI 较 MI 在 VGG16 上提升 **+7.8%**，Inc-v3 上
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖图像分类+跨模态检索，CNN+ViT+VLM，正常模型+防御模型，稳定性+消融实验全面
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，理论推导严谨，实验部分组织良好
 - 价值: ⭐⭐⭐⭐ — 即插即用的通用攻击增强策略，有理论保证，对对抗鲁棒性研究有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling the Power of Multiple Gossip Steps: A Stability-Based Generalization Analysis in Decentralized Training](../../NeurIPS2025/optimization/unveiling_the_power_of_multiple_gossip_steps_a_stability-based_generalization_an.md)
+- [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](../../ICLR2026/optimization/a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+- [Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](../../AAAI2026/optimization/cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)
+- [Generalization Below the Edge of Stability: The Role of Data Geometry](../../ICLR2026/optimization/generalization_below_the_edge_of_stability_the_role_of_data_geometry.md)
+- [Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning](../../ICLR2026/optimization/scaf-grpo_scaffolded_group_relative_policy_optimization_for_enhancing_llm_reason.md)
+
+<!-- RELATED:END -->

@@ -154,3 +154,15 @@ $$\max_{\eta_i} \min_{\theta > 0} \sum_{i=m+1}^{n} \eta_i(S_i - \theta \frac{\pi
 - 实验充分度: ⭐⭐⭐⭐ 合成数据+MIMIC-III真实数据，多 baseline 多 $\alpha$ 值对比，50次随机种子
 - 写作质量: ⭐⭐⭐⭐ 定理-引理链条清晰，两种场景分治框架明确，证明留附录
 - 实用价值: ⭐⭐⭐⭐⭐ 对医疗等安全关键应用（如化疗剂量选择）有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transferring Causal Effects using Proxies](transferring_causal_effects_using_proxies.md)
+- [Isolated Causal Effects of Natural Language](../../ICML2025/causal_inference/isolated_causal_effects_of_natural_language.md)
+- [Estimating Causal Effects in Gaussian Linear SCMs with Finite Data](../../ICML2025/causal_inference/estimating_causal_effects_in_gaussian_linear_scms_with_finite_data.md)
+- [Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual](../../CVPR2025/causal_inference/image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)
+- [Learning Subgroups with Maximum Treatment Effects without Causal Heuristics](../../AAAI2026/causal_inference/learning_subgroups_with_maximum_treatment_effects_without_causal_heuristics.md)
+
+<!-- RELATED:END -->

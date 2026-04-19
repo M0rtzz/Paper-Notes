@@ -131,3 +131,15 @@ ShapeDiscover 算法的 pipeline：输入为点云 $X \subseteq \mathbb{R}^N$，
 - 实验充分度: ⭐⭐⭐⭐ 合成和真实数据均有，消融分析完整，但缺少大规模高维数据的定量评估
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，从抽象目标到实际算法的逻辑链完整，附录非常详尽
 - 价值: ⭐⭐⭐⭐ 为 TDA 提供了新范式，统一了多种方法，但受众偏窄（主要是计算拓扑和 TDA 社区）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Kaputt: A Large-Scale Dataset for Visual Defect Detection](../../ICCV2025/others/kaputt_a_large-scale_dataset_for_visual_defect_detection.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](../../CVPR2025/others/sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
+- [Power Variable Projection for Initialization-Free Large-Scale Bundle Adjustment](../../ECCV2024/others/power_variable_projection_for_initialization-free_large-scale_bundle_adjustment.md)
+- [On the Surprising Effectiveness of Large Learning Rates under Standard Width Scaling](../../NeurIPS2025/others/on_the_surprising_effectiveness_of_large_learning_rates_under_standard_width_sca.md)
+- [Active Measurement: Efficient Estimation at Scale](../../NeurIPS2025/others/active_measurement_efficient_estimation_at_scale.md)
+
+<!-- RELATED:END -->

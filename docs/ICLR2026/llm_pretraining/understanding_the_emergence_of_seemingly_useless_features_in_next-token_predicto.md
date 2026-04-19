@@ -126,3 +126,15 @@ Conditioned Majority 需要类似 induction head 的两层注意力构造，myop
 - 实验充分度: ⭐⭐⭐⭐ 从 toy 到 Othello 到小型 LM 到 Gemma 2 的渐进验证层次清晰，但大模型分析受限于间接指标
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事从直觉到形式化到实验的逻辑链极为流畅，概念定义精准
 - 价值: ⭐⭐⭐⭐⭐ 对理解 NTP 训练目标如何产生"超预期"能力有基础性贡献，framework 可广泛应用于 LLM 可解释性研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Law of Data Reconstruction for Random Features (and Beyond)](a_law_of_data_reconstruction_for_random_features_and_beyond.md)
+- [Explaining Grokking and Information Bottleneck through Neural Collapse Emergence](explaining_grokking_and_information_bottleneck_through_neural_collapse_emergence.md)
+- [Understanding and Improving Shampoo and SOAP via Kullback-Leibler Minimization](understanding_and_improving_shampoo_and_soap_via_kullback-leibler_minimization.md)
+- [Optimal Online Change Detection via Random Fourier Features](../../NeurIPS2025/llm_pretraining/optimal_online_change_detection_via_random_fourier_features.md)
+- [TokAlign: Efficient Vocabulary Adaptation via Token Alignment](../../ACL2025/llm_pretraining/tokalign_vocab_adaptation.md)
+
+<!-- RELATED:END -->

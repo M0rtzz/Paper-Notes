@@ -152,3 +152,15 @@ PixelRush 在所有指标上全面超越 SOTA，2K 生成仅需 4 秒（比 Free
 | 实用价值 | 9 | 10×–35× 加速 + 质量提升，直接解决实际部署瓶颈 |
 | 写作质量 | 8 | 动机清晰、逻辑递进、图表丰富 |
 | **总分** | **8.0** | 实用性极强的工作，以简洁优雅的方式解决高分辨率生成的速度瓶颈 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
+- [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
+- [Denoising as Path Planning: Training-Free Acceleration of Diffusion Models with DPCache](dpcache_denoising_path_planning_diffusion_accel.md)
+- [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
+- [Object-WIPER: Training-Free Object and Associated Effect Removal in Videos](object-wiper_training-free_object_and_associated_effect_removal_in_videos.md)
+
+<!-- RELATED:END -->

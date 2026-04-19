@@ -160,3 +160,15 @@ Pre-softmax attention 分数与 interaction 矩阵值的比值分析是本文最
 - 实验充分度: ⭐⭐⭐⭐ 跨三个数据集和两种特征配置的系统对比较为全面，interaction-dependence 指标设计巧妙，但缺少对稀疏性成因的控制变量实验和 top-k attention 的实际验证。
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，逻辑链完整，从现象观察到原因分析到消融验证层层递进，图表质量高；但整体篇幅偏短，一些关键细节（如 Top Landscape vs JetClass 差异的详细讨论）展开不够。
 - 价值: ⭐⭐⭐⭐ 对高能物理 ML 社区有直接价值：澄清了 ParT 内部机制、指明了架构简化方向（top-k attention）；对更广泛的 ML 社区也有启发——interaction-dependence 分析方法和"量级小但影响大"的发现具有跨领域迁移潜力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
+- [Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas](../../ICML2025/interpretability/why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)
+- [Tropical Attention: Neural Algorithmic Reasoning for Combinatorial Algorithms](tropical_attention_neural_algorithmic_reasoning_for_combinatorial_algorithms.md)
+- [Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+
+<!-- RELATED:END -->

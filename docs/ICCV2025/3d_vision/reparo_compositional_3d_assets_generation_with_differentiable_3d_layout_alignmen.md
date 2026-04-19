@@ -132,3 +132,15 @@ REPARO在显存≤8GB的约束下完成全流程，具有较好的实用性。
 - 技术深度: ⭐⭐⭐⭐ (损失函数设计精巧)
 - 实验充分度: ⭐⭐⭐ (定量实验可更丰富)
 - 实用价值: ⭐⭐⭐⭐ (实际多物体场景有需求)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaHuman: Animatable Detailed 3D Human Generation with Compositional Multiview Diffusion](adahuman_animatable_detailed_3d_human_generation_with_compos.md)
+- [LACONIC: A 3D Layout Adapter for Controllable Image Creation](laconic_a_3d_layout_adapter_for_controllable_image_creation.md)
+- [ComboVerse: Compositional 3D Assets Creation Using Spatially-Aware Diffusion Guidance](../../ECCV2024/3d_vision/comboverse_compositional_3d_assets_creation_using_spatially-aware_diffusion_guid.md)
+- [GeoProg3D: Compositional Visual Reasoning for City-Scale 3D Language Fields](geoprog3d_compositional_visual_reasoning_for_city-scale_3d_language_fields.md)
+- [Gaussian Splatting with Discretized SDF for Relightable Assets](gaussian_splatting_with_discretized_sdf_for_relightable_assets.md)
+
+<!-- RELATED:END -->

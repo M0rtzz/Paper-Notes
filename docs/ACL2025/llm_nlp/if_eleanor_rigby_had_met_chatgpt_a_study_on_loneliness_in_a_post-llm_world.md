@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 近 8 万条对话的大规模分析 + 深入的定性分析，但缺乏纵向追踪和因果推断
 - 写作质量: ⭐⭐⭐⭐⭐ 敏感话题的处理恰当，叙述生动但不失严谨，案例匿名化处理规范
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 伦理、LLM 部署策略和公共政策均有直接启示，具有重要的社会价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)
+- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](../../NeurIPS2025/llm_nlp/qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [A Systematic Study of Compositional Syntactic Transformer Language Models](a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
+- [Mind the Belief Gap: Group Identity in the World of LLMs](mind_the_belief_gap_group_identity_in_the_world_of_llms.md)
+
+<!-- RELATED:END -->

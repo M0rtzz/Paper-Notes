@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 有专家评估和模拟对局，但规模偏小（5人×3次、20场），统计功效不足
 - 写作质量: ⭐⭐⭐⭐ 领域背景介绍详尽，系统架构描述清晰，对双重用途风险的讨论全面且负责任
 - 价值: ⭐⭐⭐⭐ 展示了LLM+多Agent在极端复杂论证任务上的潜力，对AI安全和说服力研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AI4Reading: Chinese Audiobook Interpretation System Based on Multi-Agent Collaboration](../../ACL2025/audio_speech/ai4reading_chinese_audiobook_interpretation_system_based_on_multi-agent_collabor.md)
+- [SimulMEGA: MoE Routers are Advanced Policy Makers for Simultaneous Speech Translation](../../NeurIPS2025/audio_speech/simulmega_moe_routers_are_advanced_policy_makers_for_simultaneous_speech_transla.md)
+- [Sensorium Arc: AI Agent System for Oceanic Data Exploration and Interactive Eco-Art](../../NeurIPS2025/audio_speech/sensorium_arc_ai_agent_system_for_oceanic_data_exploration_and_interactive_eco-a.md)
+- [Say More with Less: Variable-Frame-Rate Speech Tokenization via Adaptive Clustering and Implicit Duration Coding](say_more_with_less_variable-frame-rate_speech_tokenization_via_adaptive_clusteri.md)
+- [DualSpeechLM: Towards Unified Speech Understanding and Generation via Dual Speech Token Modeling](dualspeechlm_towards_unified_speech_understanding_and_generation_via_dual_speech.md)
+
+<!-- RELATED:END -->

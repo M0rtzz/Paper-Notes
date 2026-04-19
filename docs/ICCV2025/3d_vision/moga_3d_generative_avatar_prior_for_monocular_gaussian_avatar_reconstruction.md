@@ -117,3 +117,15 @@ PSNR提升约4.8dB，证明了方法的泛化能力。
 - 技术深度: ⭐⭐⭐⭐⭐ (初始化+正则化+姿态优化的完整设计)
 - 实验充分度: ⭐⭐⭐⭐ (定量+定性+消融+野外图像)
 - 实用价值: ⭐⭐⭐⭐ (PSNR提升显著，实用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GAS: Generative Avatar Synthesis from a Single Image](gas_generative_avatar_synthesis_from_a_single_image.md)
+- [GUAVA: Generalizable Upper Body 3D Gaussian Avatar](guava_generalizable_upper_body_3d_gaussian_avatar.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](../../CVPR2025/3d_vision/anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [DriveX: Driving View Synthesis on Free-form Trajectories with Generative Prior](driving_view_synthesis_on_free-form_trajectories_with_generative_prior.md)
+- [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](../../CVPR2025/3d_vision/hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
+
+<!-- RELATED:END -->

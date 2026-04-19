@@ -174,3 +174,15 @@ EasyInv 是一种**无需训练的 (training-free) 推理时方法**。它不涉
 | 实用价值 | 4.5 | 即插即用、零额外开销、半精度友好，部署价值高 |
 | 写作质量 | 3.5 | 公式推导清晰，但部分段落冗长 |
 | **综合** | **4** | 简单有效的方法，工程价值突出 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](../../ACL2025/llm_efficiency/smarter_better_faster_longer_a_modern_bidirectional_encoder_for_fast_memory_effi.md)
+- [Advancing Expert Specialization for Better MoE](../../NeurIPS2025/llm_efficiency/advancing_expert_specialization_for_better_moe.md)
+- [SkyLadder: Better and Faster Pretraining via Context Window Scheduling](../../NeurIPS2025/llm_efficiency/skyladder_better_and_faster_pretraining_via_context_window_scheduling.md)
+- [Mixture of Lookup Experts](mixture_of_lookup_experts.md)
+- [MoH: Multi-Head Attention as Mixture-of-Head Attention](moh_multi-head_attention_as_mixture-of-head_attention.md)
+
+<!-- RELATED:END -->

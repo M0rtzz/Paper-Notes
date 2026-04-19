@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 从多个独立角度分析问题（几何、轨迹、扰动），分析全面深入
 - 写作质量: ⭐⭐⭐⭐ 逻辑链条清晰：发现潜力→尝试利用→分析失败→指明方向
 - 价值: ⭐⭐⭐⭐⭐ 对连续推理的未来发展有奠基性指导意义，明确了训练范式需要改变的方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SR-KI: Scalable and Real-Time Knowledge Integration into LLMs via Supervised Attention](sr-ki_scalable_and_real-time_knowledge_integration_into_llms_via_supervised_atte.md)
+- [Retrieval is Not Enough: Enhancing RAG Reasoning through Test-Time Critique and Optimization](../../NeurIPS2025/information_retrieval/retrieval_is_not_enough_enhancing_rag_reasoning_through_test-time_critique_and_o.md)
+- [PRIME: Planning and Retrieval-Integrated Memory for Enhanced Reasoning](prime_planning_and_retrieval-integrated_memory_for_enhanced_reasoning.md)
+- [LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning](llms_for_game_theory_entropy-guided_in-context_learning_and_adaptive_cot_reasoni.md)
+- [Scaling Language-Centric Omnimodal Representation Learning](../../NeurIPS2025/information_retrieval/scaling_language-centric_omnimodal_representation_learning.md)
+
+<!-- RELATED:END -->

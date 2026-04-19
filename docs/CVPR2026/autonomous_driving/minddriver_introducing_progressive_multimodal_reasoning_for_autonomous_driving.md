@@ -131,3 +131,15 @@ MindDriver 以六路环视相机图像、历史前视帧、驾驶指令和自车
 - 实验充分度: ⭐⭐⭐⭐ 开环+闭环+未来帧生成+消融，但闭环对比条件不完全公平
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，认知类比直观，pipeline 图示详尽
 - 价值: ⭐⭐⭐⭐⭐ 为 VLM 驱动的自动驾驶提供了新范式，数据标注流水线有复用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ColaVLA: Leveraging Cognitive Latent Reasoning for Hierarchical Parallel Trajectory Planning in Autonomous Driving](colavla_leveraging_cognitive_latent_reasoning_for_hierarchical_parallel_trajecto.md)
+- [Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving](../../ECCV2024/autonomous_driving/reason2drive_towards_interpretable_and_chain-based_reasoning_for_autonomous_driv.md)
+- [An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)
+- [NoRD: A Data-Efficient Vision-Language-Action Model that Drives without Reasoning](nord_a_data-efficient_vision-language-action_model_that_drives_without_reasoning.md)
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction.md)
+
+<!-- RELATED:END -->

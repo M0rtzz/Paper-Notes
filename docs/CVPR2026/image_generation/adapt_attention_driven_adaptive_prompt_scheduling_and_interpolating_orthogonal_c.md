@@ -142,3 +142,15 @@ ADAPT 在所有类别上均超越 R2F，平均提升 **+7.4%**，其中 Single S
 - 实验充分度: ⭐⭐⭐⭐ RareBench单一基准上的全面消融，但缺少其他benchmark和用户研究的主文展示
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法叙述完整，公式推导清楚
 - 价值: ⭐⭐⭐⭐ 对罕见概念生成有实际帮助，training-free特性增强了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Precise Object and Effect Removal with Adaptive Target-Aware Attention](precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+- [OPRO: Orthogonal Panel-Relative Operators for Panel-Aware In-Context Image Generation](opro_orthogonal_panel-relative_operators_for_panel-aware_in-context_image_genera.md)
+- [HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](../../ECCV2024/image_generation/hybridbooth_hybrid_prompt_inversion_for_efficient_subject-driven_generation.md)
+- [MAGIC: Few-Shot Mask-Guided Anomaly Inpainting with Prompt Perturbation, Spatially Adaptive Guidance, and Context Awareness](magic_few-shot_mask-guided_anomaly_inpainting_with_prompt_perturbation_spatially.md)
+- [Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models](attention_may_i_have_your_decision_localizing_generative_choices_in_diffusion_mo.md)
+
+<!-- RELATED:END -->

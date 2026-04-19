@@ -159,3 +159,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献扎实（推广 KL-Fisher 关系到任意噪声），实用价值高（0.3M 迭代 SOTA NLL），方法简洁且与标准扩散训练兼容。主要局限是不涉及采样/生成过程，仅是似然估计方法。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ItDPDM: Information-Theoretic Discrete Poisson Diffusion Model](itdpdm_information-theoretic_discrete_poisson_diffusion_model.md)
+- [Information-Theoretic Discrete Diffusion](information-theoretic_discrete_diffusion.md)
+- [MMG: Mutual Information Estimation via the MMSE Gap in Diffusion](mmg_mutual_information_estimation_via_the_mmse_gap_in_diffusion.md)
+- [Composition and Alignment of Diffusion Models using Constrained Learning](composition_and_alignment_of_diffusion_models_using_constrai.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+
+<!-- RELATED:END -->

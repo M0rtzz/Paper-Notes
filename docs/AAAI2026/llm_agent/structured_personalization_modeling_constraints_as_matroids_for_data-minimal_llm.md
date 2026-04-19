@@ -122,3 +122,15 @@ tags:
 ⭐⭐⭐⭐
 
 理论贡献扎实——将 LLM 个性化中的实际约束形式化为拟阵是很好的创新点，证明清晰完整。但实验仅为合成仿真，缺乏真实场景验证是主要不足。论文的理论-实践鸿沟较大，需要后续工作填补。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShapeCraft: LLM Agents for Structured, Textured and Interactive 3D Modeling](../../NeurIPS2025/llm_agent/shapecraft_llm_agents_for_structured_textured_and_interactive_3d_modeling.md)
+- [AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments](agentsense_virtual_sensor_data_generation_using_llm_agents_i.md)
+- [BayesAgent: Bayesian Agentic Reasoning Under Uncertainty via Verbalized Probabilistic Graphical Modeling](bayesagent_bayesian_agentic_reasoning_under_uncertainty_via_.md)
+- [DEPO: Dual-Efficiency Preference Optimization for LLM Agents](depo_dual-efficiency_preference_optimization_for_llm_agents.md)
+- [SoMe: A Realistic Benchmark for LLM-based Social Media Agents](some_a_realistic_benchmark_for_llm-based_social_media_agents.md)
+
+<!-- RELATED:END -->

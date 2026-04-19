@@ -155,3 +155,15 @@ MAPS包含三个核心模块：
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 真实商业数据+公开数据，排序+检索+消融全面
 - **实用性**: ⭐⭐⭐⭐ — 对有AI客服的电商平台直接适用
 - **总评**: ⭐⭐⭐⭐ — 强问题驱动的工作，实验扎实，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMs + Persona-Plug = Personalized LLMs](llms_persona-plug_personalized_llms.md)
+- [Dynamic Parallel Tree Search for Efficient LLM Reasoning](dynamic_parallel_tree_search_for_efficient_llm_reasoning.md)
+- [PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights](praise_enhancing_product_descriptions_with_llm-driven_structured_insights.md)
+- [HiCUPID: Exploring the Potential of LLMs as Personalized Assistants](exploring_the_potential_of_llms_as.md)
+- [AAD-LLM: Neural Attention-Driven Auditory Scene Understanding](aad-llm_neural_attention-driven_auditory_scene_understanding.md)
+
+<!-- RELATED:END -->

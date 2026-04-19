@@ -122,3 +122,15 @@ LLAVIDAL 由三大部分组成：
 - 实验充分度: ⭐⭐⭐⭐ 多基准多消融，但数据源单一
 - 写作质量: ⭐⭐⭐⭐ 方法阐述详尽但略冗长
 - 价值: ⭐⭐⭐⭐ 面向实际 ADL 场景，数据+模型+基准三位一体
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](../../ECCV2024/video_understanding/pite_pixel-temporal_alignment_for_large_video-language_model.md)
+- [BehaviorVLM: Unified Finetuning-Free Behavioral Understanding with Vision-Language Reasoning](behaviorvlm_unified_finetuning-free_behavioral_understanding_with_vision-languag.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Aligning Effective Tokens with Video Anomaly in Large Language Models](../../ICCV2025/video_understanding/aligning_effective_tokens_with_video_anomaly_in_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ AR生成：
 - **写作质量**: ⭐⭐⭐⭐⭐ 论文结构清晰，LoD vs LoS的对比直观有力，图表精美
 - **价值**: ⭐⭐⭐⭐⭐ 大幅提升3D AR生成效率（400倍token压缩），定义了3D分词的新方向
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can3Tok: Canonical 3D Tokenization and Latent Modeling of Scene-Level 3D Gaussians](../../ICCV2025/3d_vision/can3tok_canonical_3d_tokenization_and_latent_modeling_of_scene-level_3d_gaussian.md)
+- [ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
+- [Lifting Unlabeled Internet-level Data for 3D Scene Understanding](lifting_unlabeled_internet-level_data_for_3d_scene_understanding.md)
+- [LiTo: Surface Light Field Tokenization](../../ICLR2026/3d_vision/lito_surface_light_field_tokenization.md)
+- [χ: Symmetry Understanding of 3D Shapes via Chirality Disentanglement](../../ICCV2025/3d_vision/kh_symmetry_understanding_of_3d_shapes_via_chirality_disentanglement.md)
+
+<!-- RELATED:END -->

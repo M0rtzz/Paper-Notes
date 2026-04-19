@@ -116,3 +116,15 @@ SkateLLM 基于 MotionGPT 进行指令微调：
 - 实验充分度: ⭐⭐⭐ 实验偏少，仅展示了先验知识测试和基础动作描述，更多任务的评测缺失
 - 写作质量: ⭐⭐⭐ 结构完整但篇幅有限，很多内容推到了附录
 - 价值: ⭐⭐⭐⭐ 开辟了艺术体育理解的新赛道，数据集本身有持久价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Video Thinking Test: A Holistic Benchmark for Advanced Video Reasoning and Understanding](../../ICCV2025/video_understanding/towards_video_thinking_test_a_holistic_benchmark_for_advanced_video_reasoning_an.md)
+- [LiViBench: An Omnimodal Benchmark for Interactive Livestream Video Understanding](../../AAAI2026/video_understanding/livibench_an_omnimodal_benchmark_for_interactive_livestream_video_understanding.md)
+- [VCBench: A Streaming Counting Benchmark for Spatial-Temporal State Maintenance in Long Videos](vcbench_a_streaming_counting_benchmark_for_spatial-temporal_state_maintenance_in.md)
+- [M-LLM Based Video Frame Selection for Efficient Video Understanding](m-llm_based_video_frame_selection_for_efficient_video_understanding.md)
+- [InFlux: A Benchmark for Self-Calibration of Dynamic Intrinsics of Video Cameras](../../NeurIPS2025/video_understanding/influx_a_benchmark_for_self-calibration_of_dynamic_intrinsics_of_video_cameras.md)
+
+<!-- RELATED:END -->

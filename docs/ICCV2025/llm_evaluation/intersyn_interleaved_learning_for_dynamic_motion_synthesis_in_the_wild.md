@@ -122,3 +122,15 @@ InterSyn 包含两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐ 消融实验详细覆盖了数据组织方式、时间步设置、损失函数设计三个维度
 - **写作质量**: ⭐⭐⭐⭐ 方法介绍详细，可视化对比直观，但部分公式符号不够一致
 - **价值**: ⭐⭐⭐⭐ 为人体交互动作生成提供了新范式，动态环境评估基准也有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DISTA-Net: Dynamic Closely-Spaced Infrared Small Target Unmixing](dista-net_dynamic_closely-spaced_infrared_small_target_unmixing.md)
+- [MindVote: When AI Meets the Wild West of Social Media Opinion](../../AAAI2026/llm_evaluation/mindvote_when_ai_meets_the_wild_west_of_social_media_opinion.md)
+- [Towards Dynamic Theory of Mind: Evaluating LLM Adaptation to Temporal Evolution of Human States](../../ACL2025/llm_evaluation/towards_dynamic_theory_of_mind_evaluating_llm_adaptation_to_temporal_evolution_o.md)
+- [A Conditional Probability Framework for Compositional Zero-shot Learning](a_conditional_probability_framework_for_compositional_zero-shot_learning.md)
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](../../AAAI2026/llm_evaluation/graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+
+<!-- RELATED:END -->

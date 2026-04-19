@@ -174,3 +174,15 @@ HPR 采用两个角色：
 - 实验充分度: ⭐⭐⭐⭐⭐ （5个基准，多种模型组合，完整消融和效率分析）
 - 写作质量: ⭐⭐⭐⭐ （理论部分较为复杂，但整体逻辑清晰）
 - 价值: ⭐⭐⭐⭐⭐ （1/5 token达到同等性能，实用价值极高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [ELSE: Efficient Deep Neural Network Inference through Line-based Sparsity Exploration](../../ECCV2024/model_compression/else_efficient_deep_neural_network_inference_through_line-based_sparsity_explora.md)
+- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](../../NeurIPS2025/model_compression/a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+- [Efficient Reasoning for Large Reasoning Language Models via Certainty-Guided Reflection Suppression](efficient_reasoning_for_large_reasoning_language_models_via_certainty-guided_ref.md)
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](../../ACL2025/model_compression/pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+
+<!-- RELATED:END -->

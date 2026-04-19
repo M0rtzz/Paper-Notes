@@ -116,3 +116,15 @@ Meta-World 10 个任务对，攻击效果（攻击奖励↑ = 攻击更成功）
 - 实验充分度: ⭐⭐⭐⭐ Meta-World 10 任务对+多种攻击/防御对比，但缺少高维观测实验
 - 写作质量: ⭐⭐⭐⭐⭐ 攻击→理论→防御的逻辑链非常清晰
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 RL 中一种被忽视但危险的攻击模式，并提供了高效防御
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
+- [Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
+- [Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling](../../NeurIPS2025/reinforcement_learning/robust_adversarial_reinforcement_learning_in_stochastic_games_via_sequence_model.md)
+- [Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+- [Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+
+<!-- RELATED:END -->

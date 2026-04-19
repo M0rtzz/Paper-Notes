@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 模型 × 3 数据集覆盖广，但缺少更多消融细节
 - 写作质量: ⭐⭐⭐⭐ SVD 分析可视化清晰，整体逻辑通顺
 - 价值: ⭐⭐⭐⭐⭐ 0.8% 压缩率有巨大工业部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Retrieval Augmented Contrastive Learning for Sequential Recommendation](../../NeurIPS2025/human_understanding/semantic_retrieval_augmented_contrastive_learning_for_sequential_recommendation.md)
+- [AdvMark: Decoupling Defense Strategies for Robust Image Watermarking](../../CVPR2026/human_understanding/decoupling_defense_strategies_for_robust_image_watermarking.md)
+- [REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation](../../AAAI2026/human_understanding/reina_regularized_entropy_information-based_loss_for_efficient_simultaneous_spee.md)
+- [DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation](../../CVPR2026/human_understanding/decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_.md)
+- [Behavior Tokens Speak Louder: Disentangled Explainable Recommendation with Behavior Vocabulary](../../AAAI2026/human_understanding/behavior_tokens_speak_louder_disentangled_explainable_recommendation_with_behavi.md)
+
+<!-- RELATED:END -->

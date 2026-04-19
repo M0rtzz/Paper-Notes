@@ -116,3 +116,15 @@ GaussianCity 在 FID/KID 指标上全面优于 CityDreamer，且渲染速度快 
 - 实验充分度: ⭐⭐⭐⭐ 显存分析、效率对比和消融都很充分
 - 写作质量: ⭐⭐⭐⭐ 图示精美，方法阐述清晰
 - 价值: ⭐⭐⭐⭐⭐ 60 倍加速使城市级 3D 生成首次实用化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](../../ICCV2025/autonomous_driving/3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)
+- [GaussianWorld: Gaussian World Model for Streaming 3D Occupancy Prediction](gaussianworld_gaussian_world_model_for_streaming_3d_occupancy_prediction.md)
+- [EVolSplat: Efficient Volume-based Gaussian Splatting for Urban View Synthesis](evolsplat_efficient_volume-based_gaussian_splatting_for_urban_view_synthesis.md)
+- [CCL-LGS: Contrastive Codebook Learning for 3D Language Gaussian Splatting](../../ICCV2025/autonomous_driving/ccl-lgs_contrastive_codebook_learning_for_3d_language_gaussian_splatting.md)
+
+<!-- RELATED:END -->

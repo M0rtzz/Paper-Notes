@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐ Workshop论文，仅有数据集描述和人工评分，无模型训练验证
 - 写作质量: ⭐⭐⭐ 结构清晰但技术深度有限
 - 价值: ⭐⭐⭐ 填补了急救NLP数据集空白，但安全性问题限制实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BEDLAM2.0: Synthetic Humans and Cameras in Motion](bedlam20_synthetic_humans_and_cameras_in_motion.md)
+- [Reflective Translation: Improving Low-Resource Machine Translation via Structured Self-Reflection](reflective_translation_improving_low-resource_machine_translation_via_structured.md)
+- [STRIDE: Subset-Free Functional Decomposition for XAI in Tabular Settings](../../ICLR2026/human_understanding/stride_subset-free_functional_decomposition_for_xai_in_tabular_settings.md)
+- [Mingle: Mixture of Null-Space Gated Low-Rank Experts for Test-Time Continual Model Merging](mingle_mixture_of_null-space_gated_low-rank_experts_for_test-time_continual_mode.md)
+- [Exploration of Incremental Synthetic Non-Morphed Images for Single Morphing Attack Detection](exploration_of_incremental_synthetic_non-morphed_images_for_single_morphing_atta.md)
+
+<!-- RELATED:END -->

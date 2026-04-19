@@ -165,3 +165,15 @@ $$W + \Delta W = W + BA, \quad B \in \mathbb{R}^{d \times r}, A \in \mathbb{R}^{
 - **实用性**: ⭐⭐⭐⭐⭐ — 极低成本 + 标准 API = 高度可复现和可推广
 - **写作质量**: ⭐⭐⭐⭐ — 清晰简洁，适合 workshop 篇幅
 - **综合评分**: 7/10 — 实用价值高，但技术贡献有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finetuning Stellar Spectra Foundation Models with LoRA](finetuning_stellar_spectra_foundation_models_with_lora.md)
+- [Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents](gravity-bench-v1_a_benchmark_on_gravitational_physics_discovery_for_agents.md)
+- [Compact Matrix Quantum Group Equivariant Neural Networks](compact_matrix_quantum_group_equivariant_neural_networks.md)
+- [Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
+- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
+
+<!-- RELATED:END -->

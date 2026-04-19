@@ -158,3 +158,15 @@ LaScA 的完整流水线：
 - 实验充分度: ⭐⭐⭐⭐ — 跨数据集、跨模态、跨编码器的评估很全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，但表格过多影响阅读流畅性
 - 价值: ⭐⭐⭐⭐ — 为可解释情感计算提供了高效实用的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](../../ICLR2026/audio_speech/scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+- [Siamese Vision Transformers are Scalable Audio-Visual Learners](../../ECCV2024/audio_speech/siamese_vision_transformers_are_scalable_audio-visual_learners.md)
+- [MMSU: A Massive Multi-task Spoken Language Understanding and Reasoning Benchmark](../../ICLR2026/audio_speech/mmsu_a_massive_multi-task_spoken_language_understanding_and_reasoning_benchmark.md)
+- [Stitch: Simultaneous Thinking and Talking with Chunked Reasoning for Spoken Language Models](../../ICLR2026/audio_speech/stitch_simultaneous_thinking_and_talking_with_chunked_reasoning_for_spoken_langu.md)
+- [Towards Reliable Large Audio Language Model](../../ACL2025/audio_speech/towards_reliable_large_audio_language_model.md)
+
+<!-- RELATED:END -->

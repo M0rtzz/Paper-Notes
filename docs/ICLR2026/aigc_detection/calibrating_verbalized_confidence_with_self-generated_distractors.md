@@ -144,3 +144,15 @@ $$f^{\text{DiNCo}}(c) = \frac{1}{2} f^{\text{SC}}(c) + \frac{1}{2} f^{\text{NVC}
 ## 总结与展望
 
 DiNCo 从 LLM "暗示性偏差" 这一被忽视的角度出发，通过自动生成干扰项并独立评估置信度来估计和校正偏差，再融合生成与验证两个互补的一致性维度。方法在零资源设定下以极低额外开销（相比 SC 仅多 32% FLOP）实现了跨任务、跨模型的校准改善。未来方向包括：用更小模型生成干扰项以进一步降低成本、将方法扩展到多轮对话和代理决策场景、以及探索与 post-hoc 校准方法的结合。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimized Algorithms for Text Clustering with LLM-Generated Constraints](../../AAAI2026/aigc_detection/optimized_algorithms_for_text_clustering_with_llm-generated_constraints.md)
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [Low-Perplexity LLM-Generated Sequences and Where To Find Them](../../ACL2025/aigc_detection/low-perplexity_llm-generated_sequences_and_where_to_find_them.md)
+- [DuoLens: A Framework for Robust Detection of Machine-Generated Multilingual Text and Code](../../NeurIPS2025/aigc_detection/duolens_a_framework_for_robust_detection_of_machine-generated_multilingual_text_.md)
+- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+
+<!-- RELATED:END -->

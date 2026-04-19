@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四种方法 × 两种训练策略 × 六种传感器密度 × 扰动/优化实验，非常全面
 - 写作质量: ⭐⭐⭐ 结构完整、分析深入，但篇幅过长且部分分析冗余
 - 价值: ⭐⭐⭐ 对工程应用有实用指导价值，但方法层面贡献有限；在 CVPR 的领域相关性是一个问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
+- [Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
+- [UniPhy: Learning a Unified Constitutive Model for Inverse Physics Simulation](uniphy_learning_a_unified_constitutive_model_for_inverse_physics_simulation.md)
+- [Joint Out-of-Distribution Filtering and Data Discovery Active Learning](joint_out-of-distribution_filtering_and_data_discovery_active_learning.md)
+- [LATTE-MV: Learning to Anticipate Table Tennis Hits from Monocular Videos](latte-mv_learning_to_anticipate_table_tennis_hits_from_monocular_videos.md)
+
+<!-- RELATED:END -->

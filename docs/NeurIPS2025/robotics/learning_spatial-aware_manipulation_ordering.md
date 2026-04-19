@@ -192,3 +192,15 @@ $$\mathcal{L}_{\text{order}} = \sum_{j=1}^{N} \sum_{k=1}^{N} w_{jk} \cdot \mathb
 2. **依赖精确 3D 估计**：操作排序预测依赖精确的 3D 属性估计，在严重遮挡下仍具挑战
 3. **物体类别有限**：仿真仅使用 5 类 YCB 物体，真实环境仅 box 和 bag 两类，泛化到更多样物体的能力未验证
 4. **VLM 标注质量瓶颈**：性能上限受 VLM 标注质量约束，70% 噪声下退化为随机策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T-Rex: Task-Adaptive Spatial Representation Extraction for Robotic Manipulation with VLMs](t-rex_task-adaptive_spatial_representation_extraction_for_robotic_manipulation_w.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](../../CVPR2026/robotics/learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [Task-aware MoILE: Hierarchical-Task-Aware Multi-modal Mixture of Incremental LoRA Experts for Embodied Continual Learning](../../ACL2025/robotics/hierarchical-task-aware_multi-modal_mixture_of_incremental_lora_experts_for_embo.md)
+- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+- [MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning](mesatask_towards_task-driven_tabletop_scene_generation_via_3d_spatial_reasoning.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集，四种骨干，充分的消融和对比
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，频率分析角度具有教育意义
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的通用加速器，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastGS: Training 3D Gaussian Splatting in 100 Seconds](../../CVPR2026/3d_vision/fastgs_training_3d_gaussian_splatting_in_100_seconds.md)
+- [MV-DUSt3R(+): Single-Stage Scene Reconstruction from Sparse Views In 2 Seconds](mv-dust3r_single-stage_scene_reconstruction_from_sparse_views_in_2_seconds.md)
+- [Opt3DGS: Optimizing 3D Gaussian Splatting with Adaptive Exploration and Curvature-Aware Exploitation](../../AAAI2026/3d_vision/opt3dgs_optimizing_3d_gaussian_splatting_with_adaptive_exploration_and_curvature.md)
+- [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+
+<!-- RELATED:END -->

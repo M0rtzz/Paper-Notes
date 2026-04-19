@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4种AE×2个任务系统验证
 - 写作质量: ⭐⭐⭐⭐⭐ 诊断→原因→方案→验证的逻辑链清晰
 - 价值: ⭐⭐⭐⭐⭐ 极低成本带来显著改善，diffusability概念影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Flow Matching by Aligning Flow Divergence](improving_flow_matching_by_aligning_flow_divergence.md)
+- [Latent Diffusion Models with Masked AutoEncoders](../../ICCV2025/image_generation/latent_diffusion_models_with_masked_autoencoders.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](../../CVPR2025/image_generation/improving_editability_in_image_generation_with_layer-wise_memory.md)
+- [Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders](../../NeurIPS2025/image_generation/learning_interpretable_features_in_audio_latent_spaces_via_sparse_autoencoders.md)
+- [Exploring Variational Graph Autoencoders for Distribution Grid Data Generation](../../NeurIPS2025/image_generation/exploring_variational_graph_autoencoders_for_distribution_grid_data_generation.md)
+
+<!-- RELATED:END -->

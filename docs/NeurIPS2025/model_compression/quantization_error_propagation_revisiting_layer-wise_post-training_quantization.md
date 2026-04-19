@@ -113,3 +113,15 @@ QEP 本身不引入新的训练过程。核心优化目标（式7）为：$\min_
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型(7B-70B)、多方法(4种PTQ)、多比特(INT2/3/4)的全面评估
 - 写作质量: ⭐⭐⭐⭐ 从问题发现到理论分析到实验验证的逻辑链条完整
 - 价值: ⭐⭐⭐⭐⭐ 作为通用插件显著提升所有逐层PTQ方法性能，尤其在极低比特下价值巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PTQ1.61: Push the Real Limit of Extremely Low-Bit Post-Training Quantization Methods for Large Language Models](../../ACL2025/model_compression/ptq161_low_bit_quantization.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](../../ACL2025/model_compression/efficientqat.md)
+- [Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
+- [DP-LLM: Runtime Model Adaptation with Dynamic Layer-wise Precision Assignment](dp-llm_runtime_model_adaptation_with_dynamic_layer-wise_precision_assignment.md)
+- [BoA: Attention-aware Post-training Quantization without Backpropagation](../../ICML2025/model_compression/boa_attention-aware_post-training_quantization_without_backpropagation.md)
+
+<!-- RELATED:END -->

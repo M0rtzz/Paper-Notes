@@ -121,3 +121,15 @@ GAE（Generalized Advantage Estimation）通过 $\lambda$ 参数在 TD(0) 和 MC
 - 实验充分度: ⭐⭐⭐ 两个 benchmark 足够说明效果但可更广
 - 写作质量: ⭐⭐⭐⭐ 动机链清晰，理论分析严谨
 - 价值: ⭐⭐⭐⭐ 即插即用改进，对 group-based RL 社区有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimal Sparsity of Mixture-of-Experts Language Models for Reasoning Tasks](optimal_sparsity_of_mixture-of-experts_language_models_for_reasoning_tasks.md)
+- [PURGE: Reinforcement Unlearning via Group Relative Policy Optimization](reinforcement_unlearning_via_group_relative_policy_optimization.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
+- [Learning More with Less: A Dynamic Dual-Level Down-Sampling Framework for Efficient Policy Optimization](learning_more_with_less_a_dynamic_dual-level_down-sampling_framework_for_efficie.md)
+
+<!-- RELATED:END -->

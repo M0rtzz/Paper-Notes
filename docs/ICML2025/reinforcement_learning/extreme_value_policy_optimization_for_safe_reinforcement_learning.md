@@ -150,3 +150,15 @@ $$A'_R = \frac{\pi(a|s)}{\pi_0(a|s)} A_R, \quad C' = \frac{\pi(a|s)}{\pi_0(a|s)}
 - 实验充分度: ⭐⭐⭐⭐ (消融完整、敏感性分析、GPD 拟合验证、样本量实验均覆盖)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，理论推导完整，图表直观)
 - 价值: ⭐⭐⭐⭐ (安全RL中尾部风险是核心问题，方法实用且有理论保证)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Value Iteration Networks to 5000 Layers for Extreme Long-Term Planning](scaling_value_iteration_networks_to_5000_layers_for_extreme_long-term_planning.md)
+- [Wasserstein Policy Optimization](wasserstein_policy_optimization.md)
+- [Online Optimization for Offline Safe Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/online_optimization_for_offline_safe_reinforcement_learning.md)
+- [Controlling Underestimation Bias in Constrained Reinforcement Learning for Safe Exploration](controlling_underestimation_bias_in_constrained_reinforcement_learning_for_safe_.md)
+- [Opinion: Towards Unified Expressive Policy Optimization for Robust Robot Learning](../../NeurIPS2025/reinforcement_learning/opinion_towards_unified_expressive_policy_optimization_for_robust_robot_learning.md)
+
+<!-- RELATED:END -->

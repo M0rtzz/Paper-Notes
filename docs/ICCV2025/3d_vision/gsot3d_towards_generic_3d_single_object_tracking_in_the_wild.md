@@ -156,3 +156,15 @@ $$\mathcal{R}_t = \text{MLP}(\mathbf{x}^{N+1}_t), \quad b_t = \mathcal{B}_t(h), 
 - **实验充分度**: ⭐⭐⭐⭐ — 8个基线 + 详细消融，属性分析和跨基准对比有说服力
 - **表达清晰度**: ⭐⭐⭐⭐ — 结构清晰，图示丰富
 - **综合评分**: 7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Single-Object Tracking in Point Clouds with High Temporal Variation](../../ECCV2024/3d_vision/3d_single-object_tracking_in_point_clouds_with_high_temporal_variation.md)
+- [Multi-View 3D Point Tracking](multi-view_3d_point_tracking.md)
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+- [WildSeg3D: Segment Any 3D Objects in the Wild from 2D Images](wildseg3d_segment_any_3d_objects_in_the_wild_from_2d_images.md)
+- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](../../CVPR2025/3d_vision/hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+
+<!-- RELATED:END -->

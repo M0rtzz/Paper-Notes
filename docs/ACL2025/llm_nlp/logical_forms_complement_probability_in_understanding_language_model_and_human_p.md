@@ -155,3 +155,15 @@ $$\text{Acc}_\text{soft} \sim \text{Modality} + \text{ArgForm} + \text{Perplexit
 ## 评分
 
 ⭐⭐⭐⭐ — 研究设计严谨（受控实验 + 混合效应模型），发现具有启发性（逻辑形式 > 概率）。数据集构建的去偏方法和人机对比增加了研究深度。不足在于限于原子推理和模态逻辑的特定子集。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Graph Representations of Logical Forms for Language Modeling](exploring_graph_representations_of_logical_forms_for_language_modeling.md)
+- [ECLM: Entity Level Language Model for Spoken Language Understanding with Chain of Intent](eclm_entity_level_language_model_spoken_language_understanding.md)
+- [HumT DumT: Measuring and Controlling Human-like Language in LLMs](humt_dumt_measuring_and_controlling_human-like_language_in_llms.md)
+- [Understanding the Repeat Curse in Large Language Models from a Feature Perspective](understanding_the_repeat_curse_in_large_language_models_from_a_feature_perspecti.md)
+- [CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis](cot-based_synthesizer_enhancing_llm_performance_through_answer_synthesis.md)
+
+<!-- RELATED:END -->

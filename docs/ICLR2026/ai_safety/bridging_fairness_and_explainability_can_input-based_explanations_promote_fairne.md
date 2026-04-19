@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 16 种方法 × 5 个模型 × 7 种去偏 × 2 个数据集 × 3 种偏见，极度全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，RQ 驱动的叙事逻辑好
 - 价值: ⭐⭐⭐⭐ 为可解释性在公平 AI 中的应用给出了清晰的指南（哪些有效、哪些无效）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Fairness Assessment of Dutch Hate Speech Detection](../../ACL2025/ai_safety/towards_fairness_assessment_of_dutch_hate_speech_detection.md)
+- [ATEX-CF: Attack-Informed Counterfactual Explanations for Graph Neural Networks](atex-cf_attack-informed_counterfactual_explanations_for_graph_neural_networks.md)
+- [CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation](../../AAAI2026/ai_safety/core-fed_bridging_collaborative_and_representation_fairness_via_federated_embedd.md)
+- [Beyond Match Maximization and Fairness: Retention-Optimized Two-Sided Matching](beyond_match_maximization_and_fairness_retention-optimized_two-sided_matching.md)
+- [Watermark-based Detection and Attribution of AI-Generated Content](watermark-based_attribution_of_ai-generated_content.md)
+
+<!-- RELATED:END -->

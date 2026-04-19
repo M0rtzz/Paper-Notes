@@ -121,3 +121,15 @@ $$\mathcal{L} = \sum_i w_i \cdot \text{CE}(h(g(x_i^S)), y_i^S) + \lambda \cdot \
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论和实验衔接流畅
 - 价值: ⭐⭐⭐⭐ 为PDA提供了理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+- [Partial Colexifications Improve Concept Embeddings](../../ACL2025/others/partial_colexifications_improve_concept_embeddings.md)
+- [Lightspeed Geometric Dataset Distance via Sliced Optimal Transport](lightspeed_geometric_dataset_distance_via_sliced_optimal_transport.md)
+- [LaCoOT: Layer Collapse through Optimal Transport](../../ICCV2025/others/lacoot_layer_collapse_through_optimal_transport.md)
+- [Quantifying Lexical Semantic Shift via Unbalanced Optimal Transport](../../ACL2025/others/quantifying_lexical_semantic_shift_via_unbalanced_optimal_transport.md)
+
+<!-- RELATED:END -->

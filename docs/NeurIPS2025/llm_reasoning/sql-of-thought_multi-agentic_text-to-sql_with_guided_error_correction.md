@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 标准基准测试
 - 写作质量: ⭐⭐⭐
 - 价值: ⭐⭐⭐ 对text-to-SQL实践有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+- [Mind the Gap: Bridging Thought Leap for Improved Chain-of-Thought Tuning](mind_the_gap_bridging_thought_leap_for_improved_chain-of-thought_tuning.md)
+- [SafePath: Preventing Harmful Reasoning in Chain-of-Thought via Early Alignment](safepath_preventing_harmful_reasoning_in_chain-of-thought_via_early_alignment.md)
+- [ThinkSound: Chain-of-Thought Reasoning in Multimodal Large Language Models for Audio Generation and Editing](thinksound_chain-of-thought_reasoning_in_multimodal_large_language_models_for_au.md)
+- [Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
+
+<!-- RELATED:END -->

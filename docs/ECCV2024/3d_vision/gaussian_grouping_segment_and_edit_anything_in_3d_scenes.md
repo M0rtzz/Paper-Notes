@@ -130,3 +130,15 @@ $\mathcal{L} = \mathcal{L}_{rec} + \lambda_{2d}\mathcal{L}_{2d} + \lambda_{3d}\m
 - 实验充分度: ⭐⭐⭐⭐⭐ 开放词汇分割、全景分割、5种编辑任务、渲染质量、速度、消融全覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ Pipeline 图清晰，实验展示丰富，定量+定性评估充分
 - 价值: ⭐⭐⭐⭐⭐ 连接了 3DGS 重建与下游理解/编辑，开源代码对社区影响大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [iSegMan: Interactive Segment-and-Manipulate 3D Gaussians](../../CVPR2025/3d_vision/isegman_interactive_segment-and-manipulate_3d_gaussians.md)
+- [3D Gaussian Map with Open-Set Semantic Grouping for Vision-Language Navigation](../../ICCV2025/3d_vision/3d_gaussian_map_with_openset_semantic_grouping_for_visionlan.md)
+- [SegPoint: Segment Any Point Cloud via Large Language Model](segpoint_segment_any_point_cloud_via_large_language_model.md)
+- [Segment then Splat: Unified 3D Open-Vocabulary Segmentation via Gaussian Splatting](../../NeurIPS2025/3d_vision/segment_then_splat_unified_3d_open-vocabulary_segmentation_via_gaussian_splattin.md)
+- [Online Segment Any 3D Thing as Instance Tracking](../../NeurIPS2025/3d_vision/online_segment_any_3d_thing_as_instance_tracking.md)
+
+<!-- RELATED:END -->

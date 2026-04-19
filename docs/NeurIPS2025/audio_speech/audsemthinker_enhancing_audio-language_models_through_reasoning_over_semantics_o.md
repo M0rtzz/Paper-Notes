@@ -121,3 +121,15 @@ AudSemThinker 为音频语言模型引入结构化语义推理框架——定义
 - 实验充分度: ⭐⭐⭐⭐ MMAU + AudioBench + 消融
 - 写作质量: ⭐⭐⭐⭐ 语义描述符设计清晰
 - 价值: ⭐⭐⭐⭐ 为音频 AI 的推理增强提供了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [Seeing Sound, Hearing Sight: Uncovering Modality Bias and Conflict of AI Models in Sound Localization](seeing_sound_hearing_sight_uncovering_modality_bias_and_conflict_of_ai_models_in.md)
+- [Target Speaker Extraction Through Comparing Noisy Positive and Negative Audio Enrollments](target_speaker_extraction_through_comparing_noisy_positive_and_negative_audio_en.md)
+- [A Controllable Examination for Long-Context Language Models](a_controllable_examination_for_longcontext_language_models.md)
+- [Stitch: Simultaneous Thinking and Talking with Chunked Reasoning for Spoken Language Models](../../ICLR2026/audio_speech/stitch_simultaneous_thinking_and_talking_with_chunked_reasoning_for_spoken_langu.md)
+
+<!-- RELATED:END -->

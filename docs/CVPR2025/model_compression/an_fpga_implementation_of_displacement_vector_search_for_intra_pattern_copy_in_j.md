@@ -138,3 +138,15 @@ DV搜索架构包含两个主引擎：**残差计算引擎**（从DRAM获取IPC 
 - 实验充分度: ⭐⭐⭐ (资源利用和性能数据完整，但缺乏对比基线和应用场景验证)
 - 写作质量: ⭐⭐⭐⭐ (架构描述清晰，模块划分合理)
 - 价值: ⭐⭐⭐ (对JPEG XS IPC硬件部署有直接价值，但受众较窄)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+- [Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning](embracing_collaboration_over_competition_condensing_multiple_prompts_for_visual_.md)
+- [DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models](ders_towards_extremely_efficient_upcycled_mixture-of-experts_models.md)
+- [Emphasizing Discriminative Features for Dataset Distillation in Complex Scenarios](emphasizing_discriminative_features_for_dataset_distillation_in_complex_scenario.md)
+- [Targeted Forgetting of Image Subgroups in CLIP Models](targeted_forgetting_of_image_subgroups_in_clip_models.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ $$L = \frac{\mathcal{L}^{t_1} + \mathcal{L}^{t_2}}{2}, \quad t_1 = \arg\min_t \m
 - **vs Reichert & Serre (2013)**: 同步仅为后处理门控，用于分割。CTM 将同步作为训练中优化的核心潜在表征
 - **vs RIMs (Goyal et al. 2019)**: 模块化异步子网络无同步机制。CTM 的神经同步提供可学习的全局协调
 - NLM 思路可迁移到 Transformer：为每个注意力头引入私有时间历史处理，可能增强 chain-of-thought 推理质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Continuous-Time State-Space Models for Marked Event Sequences](deep_continuous-time_state-space_models_for_marked_event_sequences.md)
+- [Unifying Continuous and Discrete Text Diffusion with Non-simultaneous Diffusion Processes](../../ACL2025/others/neodiff_unified_text_diffusion.md)
+- [Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games](../../ICML2025/others/continuous-time_analysis_of_heavy_ball_momentum_in_min-max_games.md)
+- [Optimal Sensor Scheduling and Selection for Continuous-Discrete Kalman Filtering with Auxiliary Dynamics](../../ICML2025/others/optimal_sensor_scheduling_and_selection_for_continuous-discrete_kalman_filtering.md)
+- [Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians](recurrent_self-attention_dynamics_an_energy-agnostic_perspective_from_jacobians.md)
+
+<!-- RELATED:END -->

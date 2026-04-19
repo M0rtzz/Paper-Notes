@@ -134,3 +134,15 @@ USF pipeline 包含六个阶段：(i) 将平面图像与镜头法线图（lens n
 - 实验充分度: ⭐⭐⭐⭐ 三个任务、三种骨干、详细消融，但检测/分割的绝对性能指标偏低
 - 写作质量: ⭐⭐⭐⭐ 数学推导完整，模块化展示清晰，但论文偏长
 - 价值: ⭐⭐⭐⭐ 对机器人感知、AR/VR 广角视觉有实际意义，即插即用设计降低了使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REL-SF4PASS: Panoramic Semantic Segmentation with REL Depth Representation and Spherical Fusion](rel-sf4pass_panoramic_semantic_segmentation_with_rel_depth_representation_and_sp.md)
+- [FoV-Net: Rotation-Invariant CAD B-rep Learning via Field-of-View Ray Casting](fov-net_rotation-invariant_cad_b-rep_learning_via_field-of-view_ray_casting.md)
+- [SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)
+- [SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation](spar_single-pass_any-resolution_vit_for_open-vocabulary_segmentation.md)
+- [3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion](3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ Stage 1: $\mathcal{L}_{sft} = \mathbb{E}[(1 + \lambda_1 \mathbf{M}) \cdot \|\eps
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个基准、多维度指标、用户研究、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 系统完整但细节极多
 - 价值: ⭐⭐⭐⭐⭐ 定义了视频定制+运动控制的新 SOTA 和评估标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PRISM: Video Dataset Condensation with Progressive Refinement and Insertion for Sparse Motion](prism_video_dataset_condensation_with_progressive_refinement_and_insertion_for_s.md)
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](slice_semantic_latent_injection_via_compartmentali.md)
+- [DualReg: Dual-Space Filtering and Reinforcement for Rigid Registration](dualreg_dual-space_filtering_and_reinforcement_for_rigid_registration.md)
+- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_crossmodal_knowledge_transfer_for.md)
+
+<!-- RELATED:END -->

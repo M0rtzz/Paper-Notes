@@ -160,3 +160,15 @@ $$\mathcal{L}_{\text{ToBo}} = \sum_{i \in \mathcal{M}} d(\hat{\mathbf{x}}_i^{t+k
 - 实验充分度: ⭐⭐⭐⭐⭐ — 模拟+真实机器人+视频传播+多尺度+多消融的全面验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机推导清晰，逐层递进的baseline分析令人信服
 - 价值: ⭐⭐⭐⭐⭐ — 小模型小数据超越大规模VLM，对机器人视觉表征学习有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video-KTR: 通过关键 Token 归因增强视频推理](../../ICLR2026/video_understanding/video-ktr_reinforcing_video_reasoning_via_key_token_attribution.md)
+- [When One Moment Isn't Enough: Multi-Moment Retrieval with Cross-Moment Interactions](when_one_moment_isnt_enough_multi-moment_retrieval_with_cross-moment_interaction.md)
+- [AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](../../ICCV2025/video_understanding/aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](../../CVPR2026/video_understanding/streamingtom_streaming_token_compression_for_efficient_video_understanding.md)
+- [UTPTrack: Towards Simple and Unified Token Pruning for Visual Tracking](../../CVPR2026/video_understanding/utptrack_towards_simple_and_unified_token_pruning_for_visual_tracking.md)
+
+<!-- RELATED:END -->

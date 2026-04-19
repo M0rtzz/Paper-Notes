@@ -102,3 +102,15 @@ PPO强化学习，奖励信号为成功拾取目标的价值、步数惩罚$-0.0
 - 实验充分度: ⭐⭐⭐⭐ 15名被试数据、多条件消融、OOD泛化
 - 写作质量: ⭐⭐⭐⭐ 认知科学和计算模型的对比分析清晰
 - 价值: ⭐⭐⭐⭐ 对主动视觉搜索和认知建模有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decision SpikeFormer: Spike-Driven Transformer for Decision Making](decision_spikeformer_spike-driven_transformer_for_decision_making.md)
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](../../NeurIPS2025/reinforcement_learning/structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](../../ICML2025/reinforcement_learning/counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination](../../NeurIPS2025/reinforcement_learning/inner_speech_as_behavior_guides_steerable_imitation_of_diverse_behaviors_for_hum.md)
+- [Spatial-Aware Decision-Making with Ring Attractors in Reinforcement Learning Systems](../../NeurIPS2025/reinforcement_learning/spatial-aware_decision-making_with_ring_attractors_in_reinforcement_learning_sys.md)
+
+<!-- RELATED:END -->

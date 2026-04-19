@@ -10,102 +10,102 @@ description: >-
 
 **🔬 ICLR2026** · **25** 篇论文解读
 
-**[Ac-Foley Reference-Audio-Guided Video-To-Audio Synthesis With Acoustic Transfer](ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)**
+**[AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)**
 
 :   提出 AC-Foley，一种参考音频引导的视频到音频合成框架，通过两阶段训练（声学特征学习+时序适应）和多模态条件流匹配实现了细粒度音色控制、音色迁移和零样本音效生成，在音频质量和声学保真度上显著优于现有方法。
 
-**[Discovering And Steering Interpretable Concepts In Large Generative Music Models](discovering_and_steering_interpretable_concepts_in_large_generative_music_models.md)**
+**[Discovering and Steering Interpretable Concepts in Large Generative Music Models](discovering_and_steering_interpretable_concepts_in_large_generative_music_models.md)**
 
 :   首次将 Sparse Autoencoder (SAE) 应用于音频/音乐领域，从自回归音乐生成模型 MusicGen 的残差流中提取可解释的音乐概念特征，并利用这些特征实现可控生成（steering）。
 
-**[Dynamic Parameter Memory Temporary Lora-Enhanced Llm For Long-Sequence Emotion R](dynamic_parameter_memory_temporary_lora-enhanced_llm_for_long-sequence_emotion_r.md)**
+**[Dynamic Parameter Memory: Temporary LoRA-Enhanced LLM for Long-Sequence Emotion Recognition in Conversation](dynamic_parameter_memory_temporary_lora-enhanced_llm_for_long-sequence_emotion_r.md)**
 
 :   提出 Dynamic Parameter Memory (DPM) 机制，在推理阶段通过逐句将语音信息编码到临时 LoRA 模块的参数空间中，使有限上下文窗口的语音大语言模型能够处理无限长度的情感对话音频，在 IEMOCAP 和 MELD 上达到 SOTA。
 
-**[Echomind An Interrelated Multi-Level Benchmark For Evaluating Empathetic Speech ](echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)**
+**[EchoMind: An Interrelated Multi-level Benchmark for Evaluating Empathetic Speech Language Models](echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)**
 
 :   提出 EchoMind，首个面向共情对话的多层级关联基准，通过理解→推理→对话的认知流程，系统评估 Speech Language Models 感知非语言声学线索并生成共情回复的能力。
 
-**[Efficient Audio-Visual Speech Separation With Discrete Lip Semantics And Multi-S](efficient_audio-visual_speech_separation_with_discrete_lip_semantics_and_multi-s.md)**
+**[Efficient Audio-Visual Speech Separation with Discrete Lip Semantics and Multi-Scale Global-Local Attention](efficient_audio-visual_speech_separation_with_discrete_lip_semantics_and_multi-s.md)**
 
 :   提出 Dolphin 模型，通过双路径轻量视频编码器 DP-LipCoder 将唇部运动映射为离散语义 token，并设计全局-局部注意力（GLA）分离器，在三个基准上超越 SOTA 同时参数减少 50%+、MACs 降低 2.4×、GPU 推理加速 6×。
 
-**[Emotionthinker Prosody-Aware Reinforcement Learning For Explainable Speech Emoti](emotionthinker_prosody-aware_reinforcement_learning_for_explainable_speech_emoti.md)**
+**[EmotionThinker: Prosody-Aware Reinforcement Learning for Explainable Speech Emotion Reasoning](emotionthinker_prosody-aware_reinforcement_learning_for_explainable_speech_emoti.md)**
 
 :   首次将语音情感识别（SER）重构为深度推理问题，通过韵律增强基座模型 + GRPO-PTR（渐进式可信推理奖励）强化学习，生成带有声学依据的可解释情感推理。
 
-**[Flexicodec A Dynamic Neural Audio Codec For Low Frame Rates](flexicodec_a_dynamic_neural_audio_codec_for_low_frame_rates.md)**
+**[FlexiCodec: A Dynamic Neural Audio Codec for Low Frame Rates](flexicodec_a_dynamic_neural_audio_codec_for_low_frame_rates.md)**
 
 :   提出 FlexiCodec，通过 ASR 特征引导的动态帧率合并策略，在 3–12.5Hz 超低帧率下实现高质量语音编解码，同时保持优异的语义信息保留能力。
 
-**[Incentive-Aligned Multi-Source Llm Summaries](incentive-aligned_multi-source_llm_summaries.md)**
+**[Incentive-Aligned Multi-Source LLM Summaries](incentive-aligned_multi-source_llm_summaries.md)**
 
 :   将博弈论中的多任务 peer prediction 机制引入 LLM 多源摘要管线，提出 Truthful Text Summarization (TTS) 框架：通过 leave-one-out 交叉构造评价声明集、提取每个来源对声明的立场、用 informative agreement 评分来源可靠性并过滤不可靠来源后重新摘要，理论上证明"如实报告是效用最大策略"，实验中有效抵御 prompt injection、虚假信息源和协同攻击。
 
-**[Knowing When To Quit Probabilistic Early Exits For Speech Separation](knowing_when_to_quit_probabilistic_early_exits_for_speech_separation.md)**
+**[Knowing When to Quit: Probabilistic Early Exits for Speech Separation](knowing_when_to_quit_probabilistic_early_exits_for_speech_separation.md)**
 
 :   提出 PRESS（Probabilistic Early-exit for Speech Separation）方法和 PRESS-Net 架构，通过概率框架联合建模干净语音信号和误差方差，推导出基于信噪比（SNR）的可解释早退出条件，实现语音分离网络的细粒度动态计算缩放，同时保持与SOTA静态模型竞争力的性能。
 
-**[Latent Speech Text Transformer](latent_speech_text_transformer.md)**
+**[Latent Speech-Text Transformer](latent_speech_text_transformer.md)**
 
 :   提出 Latent Speech-Text Transformer (LST)，将离散语音 token 聚合为更高层级的"潜在语音 patch"作为自回归单元（类似 BLT 对 bytes 的处理），对齐语音和文本的序列建模粒度（从 20× 缩小到 ~1:1），在 speech HellaSwag 上获得 +6.5% 绝对提升且增益从 420M→7B 持续增长，同时降低 ASR/TTS 推理计算成本。
 
-**[Mapss Manifold-Based Assessment Of Perceptual Source Separation](mapss_manifold-based_assessment_of_perceptual_source_separation.md)**
+**[MAPSS: Manifold-Based Assessment of Perceptual Source Separation](mapss_manifold-based_assessment_of_perceptual_source_separation.md)**
 
 :   提出 Perceptual Separation（PS）和 Perceptual Match（PM）两个互补度量，利用扩散映射将自监督编码表示嵌入低维流形，首次在功能上解耦音源分离中的泄漏和自失真，与 18 种主流指标对比在与主观评分的相关性上几乎始终排名第一或第二。
 
-**[Mmsu A Massive Multi-Task Spoken Language Understanding And Reasoning Benchmark](mmsu_a_massive_multi-task_spoken_language_understanding_and_reasoning_benchmark.md)**
+**[MMSU: A Massive Multi-task Spoken Language Understanding and Reasoning Benchmark](mmsu_a_massive_multi-task_spoken_language_understanding_and_reasoning_benchmark.md)**
 
 :   提出 MMSU（5000 条音频 QA、47 个任务），首个系统融合语言学理论的语音理解与推理基准，评测 22 个 SpeechLLM，发现现有模型在音韵感知和复杂推理上仍存在显著差距。
 
-**[Pace Pretrained Audio Continual Learning](pace_pretrained_audio_continual_learning.md)**
+**[PACE: Pretrained Audio Continual Learning](pace_pretrained_audio_continual_learning.md)**
 
 :   首次系统性构建音频持续学习基准，揭示预训练音频模型因底层频谱特征主导导致的上游-下游不匹配问题，提出 PACE 方法（改进首会话适应 + 自适应子空间正交 PEFT + 边界感知扰动），在 6 个音频 CL 基准上大幅超越 SOTA。
 
-**[Pay Attention To Ctc Fast And Robust Pseudo-Labelling For Unified Speech Recogni](pay_attention_to_ctc_fast_and_robust_pseudo-labelling_for_unified_speech_recogni.md)**
+**[Pay Attention to CTC: Fast and Robust Pseudo-Labelling for Unified Speech Recognition](pay_attention_to_ctc_fast_and_robust_pseudo-labelling_for_unified_speech_recogni.md)**
 
 :   提出 USR 2.0，用 CTC 驱动的教师强制替代自回归伪标签生成，注意力伪标签在单次前向传播中完成，训练速度提升近 2×，通过 CTC-注意力联合预测增强分布外鲁棒性，在 LRS3/LRS2/WildVSR 上实现 ASR/VSR/AVSR 三任务统一模型 SOTA。
 
-**[Query-Guided Spatial-Temporal-Frequency Interaction For Music Audio-Visual Quest](query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)**
+**[Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)**
 
 :   提出 QSTar 框架，通过在整个处理流程中嵌入问题引导（Query Guidance），并引入空间-时序-频域三维度交互模块（特别是利用频谱特征区分音色），显著提升了音乐场景下的音频-视觉问答（Music AVQA）性能。
 
-**[Reasoningbank Scaling Agent Self-Evolving With Reasoning Memory](reasoningbank_scaling_agent_self-evolving_with_reasoning_memory.md)**
+**[ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory](reasoningbank_scaling_agent_self-evolving_with_reasoning_memory.md)**
 
 :   提出 ReasoningBank 记忆框架，从 Agent 自我判断的成功和失败经验中蒸馏可泛化的推理策略存入记忆库，并提出 memory-aware test-time scaling (MaTTS) 建立记忆与测试时扩展的协同效应，在 WebArena、Mind2Web 和 SWE-Bench 上一致超越基线（最高 34.2% 相对提升），同时减少 16% 交互步数。
 
-**[Redteamcua Adversarial Testing Agents](redteamcua_adversarial_testing_agents.md)**
+**[RedTeamCUA: Realistic Adversarial Testing of Computer-Use Agents in Hybrid Web-OS Environments](redteamcua_adversarial_testing_agents.md)**
 
 :   构建首个混合 Web-OS 环境的 CUA 红队测试框架 RedTeamCUA 和 864 个测试用例的 RTC-Bench，系统评估 9+ 前沿 CUA 对间接 prompt injection 的脆弱性，发现所有 CUA 均可被攻击（最高 ASR 83%），且能力越强的模型越危险——攻击尝试率（AR）远高于成功率（ASR）意味着模型能力提升将直接转化为更高的攻击成功率。
 
-**[Scalable Multilingual Multimodal Machine Translation With Speech-Text Fusion](scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)**
+**[Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)**
 
 :   提出 Speech-guided Machine Translation（SMT）框架，用 TTS 将源文本合成语音后与文本联合输入 MLLM 做翻译，通过自我进化机制自动筛选有益的合成语音样本进行持续训练。在 Multi30K 超越所有 MMT 方法取得 SOTA，在 FLORES-200 的 108 个翻译方向上以仅 9B 参数达到平均 SOTA。
 
-**[Singer A Clearer Voice Distills Vision Transformers Further](singer_a_clearer_voice_distills_vision_transformers_further.md)**
+**[SiNGER: A Clearer Voice Distills Vision Transformers Further](singer_a_clearer_voice_distills_vision_transformers_further.md)**
 
 :   提出 SiNGER（Singular Nullspace-Guided Energy Reallocation）框架，通过在教师特征的零空间方向施加扰动来抑制 ViT 中的高范数伪影，同时保留信息信号，结合轻量 LoRA 适配器实现高效蒸馏，在多个下游任务上取得 SOTA 性能并生成更清晰可解释的表征。
 
-**[Stitch Simultaneous Thinking And Talking With Chunked Reasoning For Spoken Langu](stitch_simultaneous_thinking_and_talking_with_chunked_reasoning_for_spoken_langu.md)**
+**[Stitch: Simultaneous Thinking and Talking with Chunked Reasoning for Spoken Language Models](stitch_simultaneous_thinking_and_talking_with_chunked_reasoning_for_spoken_langu.md)**
 
 :   提出 Stitch，在口语语言模型中实现"边想边说"——将无声推理 token 与语音 token 交替分块生成，利用音频播放期间的空闲算力完成推理。Stitch-S 首帧延迟与无推理基线一致，数学推理准确率提升约 15 个百分点。
 
-**[Synctrack Rhythmic Stability And Synchronization In Multi-Track Music Generation](synctrack_rhythmic_stability_and_synchronization_in_multi-track_music_generation.md)**
+**[SyncTrack: Rhythmic Stability and Synchronization in Multi-Track Music Generation](synctrack_rhythmic_stability_and_synchronization_in_multi-track_music_generation.md)**
 
 :   提出 SyncTrack，通过轨道共享模块（双跨轨注意力确保节奏同步）和轨道特定模块（可学习乐器先验保留音色差异）的统一架构，以及三个新的节奏一致性评估指标（IRS/CBS/CBD），显著提升多轨音乐生成质量（FAD 从 6.55→1.26，主观 MOS 3.42 vs 1.57）。
 
-**[Toward Complex-Valued Neural Networks For Waveform Generation](toward_complex-valued_neural_networks_for_waveform_generation.md)**
+**[Toward Complex-Valued Neural Networks for Waveform Generation](toward_complex-valued_neural_networks_for_waveform_generation.md)**
 
 :   提出 ComVo，首个在生成器和判别器中均使用复值神经网络（CVNN）的 iSTFT 声码器，通过相位量化层稳定训练，并引入块矩阵计算方案将训练时间减少 25%，在 LibriTTS 上合成质量超过 Vocos 等实值基线。
 
-**[Triplesumm Adaptive Triple-Modality Fusion For Video Summarization](triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)**
+**[TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization](triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)**
 
 :   提出 TripleSumm，通过多尺度时序块（层级滑动窗口注意力）和跨模态融合块（融合 token 自适应加权视觉/文本/音频），实现帧级模态重要性动态调整，并发布首个大规模三模态视频摘要数据集 MoSu（52678 视频），在 4 个 benchmark 上达到 SOTA。
 
-**[Vowelprompt Hearing Speech Emotions From Text Via Vowel-Level Prosodic Augmentat](vowelprompt_hearing_speech_emotions_from_text_via_vowel-level_prosodic_augmentat.md)**
+**[VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation](vowelprompt_hearing_speech_emotions_from_text_via_vowel-level_prosodic_augmentat.md)**
 
 :   提出 VowelPrompt，基于语音学证据提取元音级韵律描述符（音高/能量/时长），转为自然语言增强 LLM 的情感识别 prompt，配合 SFT+GRPO 两阶段训练，在零样本/微调/跨域/跨语言条件下一致超越 SOTA，同时生成可解释的情感推理。
 
-**[When Style Breaks Safety Defending Llms Against Superficial Style Alignment](when_style_breaks_safety_defending_llms_against_superficial_style_alignment.md)**
+**[When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment](when_style_breaks_safety_defending_llms_against_superficial_style_alignment.md)**
 
 :   发现 LLM 越狱 benchmark 中的 ASR 被语义无关的风格模式（如"创建列表"）人为膨胀，36 个 LLM 中几乎都存在此现象；表面风格对齐微调进一步加剧此风险；提出 SafeStyle——用风格增强的安全训练数据缓解风险。

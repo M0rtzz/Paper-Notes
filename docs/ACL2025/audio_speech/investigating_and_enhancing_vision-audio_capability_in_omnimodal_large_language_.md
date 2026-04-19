@@ -150,3 +150,15 @@ Self-KD 在模态对齐质量上也优于 SFT，进一步验证其有效性。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6 个模型/4 种规模/8 个基准/3 维分析，非常全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题→分析→解决方案的逻辑链非常清晰
 - **价值**: ⭐⭐⭐⭐ — 揭示了 OLLMs 的重要短板，Self-KD 方法通用性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](audio_dialogue_benchmark.md)
+- [Towards Reliable Large Audio Language Model](towards_reliable_large_audio_language_model.md)
+- [AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound](../../NeurIPS2025/audio_speech/audsemthinker_enhancing_audio-language_models_through_reasoning_over_semantics_o.md)
+- [Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models](who_can_withstand_chat-audio_attacks_an_evaluation_benchmark_for_large_audio-lan.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+
+<!-- RELATED:END -->

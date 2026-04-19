@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 三种tokenizer验证了一致性，但缺少下游应用评估和更多定量指标
 - 写作质量: ⭐⭐⭐⭐ 概念清晰、图示直观，PTME的数学推导简洁
 - 价值: ⭐⭐⭐⭐ 即插即用的压缩模块+免训练评估指标，对网格生成社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MeshAnything V2: Artist-Created Mesh Generation with Adjacent Mesh Tokenization](../../ICCV2025/3d_vision/meshanything_v2_artist-created_mesh_generation_with_adjacent_mesh_tokenization.md)
+- [Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning](../../NeurIPS2025/3d_vision/mesh-rft_enhancing_mesh_generation_via_fine-grained_reinforcement_fine-tuning.md)
+- [VertexRegen: Mesh Generation with Continuous Level of Detail](../../ICCV2025/3d_vision/vertexregen_mesh_generation_with_continuous_level_of_detail.md)
+- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](../../ICCV2025/3d_vision/meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+- [Nautilus: Locality-aware Autoencoder for Scalable Mesh Generation](../../ICCV2025/3d_vision/nautilus_locality-aware_autoencoder_for_scalable_mesh_generation.md)
+
+<!-- RELATED:END -->

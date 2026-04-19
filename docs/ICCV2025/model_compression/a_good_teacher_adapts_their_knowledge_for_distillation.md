@@ -148,4 +148,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 论文标题巧妙，动机-分析-方法的逻辑链清晰
 - 价值: ⭐⭐⭐⭐ 提供了理解容量差距的新视角和实用方法，与现有方法正交，对KD社区有实质贡献
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [Knowledge Distillation with Refined Logits](knowledge_distillation_with_refined_logits.md)
+- [Single-Teacher View Augmentation: Boosting Knowledge Distillation via Angular Diversity](../../NeurIPS2025/model_compression/single-teacher_view_augmentation_boosting_knowledge_distillation_via_angular_div.md)
+- [Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation](perspective-aware_teaching_adapting_knowledge_for_heterogeneous_distillation.md)
+- [Local Dense Logit Relations for Enhanced Knowledge Distillation](local_dense_logit_relations_for_enhanced_knowledge_distillation.md)
+- [Distilling Balanced Knowledge from a Biased Teacher](../../CVPR2026/model_compression/distilling_balanced_knowledge_from_a_biased_teacher.md)
+
+<!-- RELATED:END -->

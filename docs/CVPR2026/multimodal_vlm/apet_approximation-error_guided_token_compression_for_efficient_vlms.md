@@ -190,3 +190,15 @@ ApET 的核心优势之一是天然兼容 FlashAttention：
 - 实验充分度: ⭐⭐⭐⭐ — 多个 benchmark，含视频场景，消融详尽，但缺少更大模型的验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机→方法→实验逻辑链清晰，attention 偏差的分析令人信服
 - 价值: ⭐⭐⭐⭐ — FlashAttention 兼容性是实际部署的刚需，方法实用性强，但增益幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlashCache: Frequency-Domain-Guided Outlier-KV-Aware Multimodal KV Cache Compression](flashcache_frequency_kv_cache_compression.md)
+- [Efficient Document Parsing via Parallel Token Prediction](efficient_document_parsing_via_parallel_token_prediction.md)
+- [V2Drop: Variation-aware Vision Token Dropping for Faster Large Vision-Language Models](v2drop_variation_aware_token_dropping.md)
+- [Variation-Aware Vision Token Dropping for Faster Large Vision-Language Models](variation-aware_vision_token_dropping_for_faster_large_vision-language_models.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+
+<!-- RELATED:END -->

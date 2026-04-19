@@ -113,3 +113,15 @@ tags:
 - **实验充分度**: ⭐⭐ — 仅一个示例数据集、数据量化指标不够系统，属于 short paper 级别的验证
 - **写作质量**: ⭐⭐⭐⭐ — 结构紧凑、概念阐述清楚，算法伪代码和图示都很直观
 - **价值**: ⭐⭐⭐ — 对 tabular foundation model 社区有潜在价值，但需要更充分的实验来证明实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Radar: Benchmarking Language Models on Imperfect Tabular Data](../../NeurIPS2025/others/radar_benchmarking_language_models_on_imperfect_tabular_data.md)
+- [Theorem Prover as a Judge for Synthetic Data Generation](theorem_prover_as_a_judge_for_synthetic_data_generation.md)
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+- [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)
+- [Causal Estimation of Tokenisation Bias](causal_tokenisation_bias.md)
+
+<!-- RELATED:END -->

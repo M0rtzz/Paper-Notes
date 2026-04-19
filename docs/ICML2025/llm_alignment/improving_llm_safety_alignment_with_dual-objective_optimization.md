@@ -149,3 +149,15 @@ $$\mathcal{L}_{\text{Total}} = \alpha\mathcal{L}_{\text{Align}} + (1-\alpha)\mat
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖4种攻击类型、2个模型、多个baseline，含Pareto分析和表征可视化
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析→方法设计→实验验证逻辑链清晰，图表丰富且信息量大
 - 价值: ⭐⭐⭐⭐ 对LLM安全对齐领域有实际指导意义，DOOR/W-DOOR可直接用于改进现有安全训练pipeline
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Safety Alignment is Divergence Estimation in Disguise](../../NeurIPS2025/llm_alignment/llm_safety_alignment_is_divergence_estimation_in_disguise.md)
+- [Safety Alignment Can Be Not Superficial With Explicit Safety Signals](safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
+- [BOPO: Neural Combinatorial Optimization via Best-anchored and Objective-guided Preference Optimization](bopo_neural_combinatorial_optimization_via_best-anchored_and_objective-guided_pr.md)
+- [AlphaPO: Reward Shape Matters for LLM Alignment](alphapo_reward_shape_matters_for_llm_alignment.md)
+- [Differentiated Directional Intervention: A Framework for Evading LLM Safety Alignment](../../AAAI2026/llm_alignment/differentiated_directional_intervention_a_framework_for_evading_llm_safety_align.md)
+
+<!-- RELATED:END -->

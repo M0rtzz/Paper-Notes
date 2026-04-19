@@ -148,3 +148,15 @@ $$\text{hIoU} = \text{IoU}_{tgt}^{loc} \times \text{IoU}_{pix}^{seg}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 14种方法、3个数据集、正交的指标/错误/跨域分析非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清楚，框架层次分明，但细节表格过多阅读负担较重
 - 价值: ⭐⭐⭐⭐ 对IRSTD社区有直接推动作用，开源工具包增加了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DISTA-Net: Dynamic Closely-Spaced Infrared Small Target Unmixing](../../ICCV2025/llm_evaluation/dista-net_dynamic_closely-spaced_infrared_small_target_unmixing.md)
+- [Rethinking Losses for Diffusion Bridge Samplers](rethinking_losses_for_diffusion_bridge_samplers.md)
+- [Normal-Abnormal Guided Generalist Anomaly Detection](normal-abnormal_guided_generalist_anomaly_detection.md)
+- [Bayesian Evaluation of Large Language Model Behavior](bayesian_evaluation_of_large_language_model_behavior.md)
+- [Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation](beyond_the_singular_revealing_the_value_of_multiple_generations_in_benchmark_eva.md)
+
+<!-- RELATED:END -->

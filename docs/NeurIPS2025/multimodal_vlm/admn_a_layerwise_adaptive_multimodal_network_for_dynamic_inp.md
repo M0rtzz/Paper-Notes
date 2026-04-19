@@ -116,3 +116,15 @@ GDTM(Blur, 8层)：ADMN定位误差~11cm，接近上界(9.4cm)，而减少75% FL
 - 实验充分度: ⭐⭐⭐⭐⭐ 3数据集、3-4类corruption、6 seeds、大量消融+定性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰、方法描述详尽、消融极为彻底
 - 价值: ⭐⭐⭐⭐⭐ 解决了多模态部署的实际双重约束问题，AE方案无需QoI标注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision Function Layer in Multimodal LLMs](vision_function_layer_in_multimodal_llms.md)
+- [Learning to Steer: Input-dependent Steering for Multimodal LLMs](learning_to_steer_input-dependent_steering_for_multimodal_llms.md)
+- [MacVQA: Adaptive Memory Allocation and Global Noise Filtering for Continual Visual Question Answering](../../AAAI2026/multimodal_vlm/macvqa_adaptive_memory_allocation_and_global_noise_filtering_for_continual_visua.md)
+- [TableDART: Dynamic Adaptive Multi-Modal Routing for Table Understanding](../../ICLR2026/multimodal_vlm/tabledart_dynamic_adaptive_multi-modal_routing_for_table_understanding.md)
+- [Inference Compute-Optimal Video Vision Language Models](../../ACL2025/multimodal_vlm/inference_compute_optimal_video_vlm.md)
+
+<!-- RELATED:END -->

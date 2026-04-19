@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 跨架构、跨数据分布、迁移性、消融分析全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验设置详细，case study有启发性
 - 价值: ⭐⭐⭐⭐ 为神经编译领域提供了基准和方法论，但离实用还有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InFlux: A Benchmark for Self-Calibration of Dynamic Intrinsics of Video Cameras](influx_a_benchmark_for_self-calibration_of_dynamic_intrinsics_of_video_cameras.md)
+- [RainbowPrompt: Diversity-Enhanced Prompt-Evolving for Continual Learning](../../ICCV2025/video_understanding/rainbowprompt_diversity-enhanced_prompt-evolving_for_continual_learning.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [Self-Supervised Any-Point Tracking by Contrastive Random Walks](../../ECCV2024/video_understanding/self-supervised_any-point_tracking_by_contrastive_random_walks.md)
+- [DINO-Tracker: Taming DINO for Self-Supervised Point Tracking in a Single Video](../../ECCV2024/video_understanding/dino-tracker_taming_dino_for_self-supervised_point_tracking_in_a_single_video.md)
+
+<!-- RELATED:END -->

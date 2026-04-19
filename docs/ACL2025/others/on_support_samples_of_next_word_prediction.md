@@ -165,3 +165,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 实验设计严谨，多角度验证，但模型规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 定理与实验交织，逻辑紧凑，叙事引人入胜
 - 价值: ⭐⭐⭐⭐⭐ 为数据中心的LM可解释性开辟了新方向，对训练数据选择有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cautious Next Token Prediction](cautious_next_token_prediction.md)
+- [Subword Models Struggle with Word Learning, but Surprisal Hides It](subword_models_struggle_with_word_learning_but_surprisal_hides_it.md)
+- [MockConf: A Student Interpretation Dataset: Analysis, Word- and Span-level Alignment and Baselines](mockconf_a_student_interpretation_dataset_analysis_word-_and_span-level_alignmen.md)
+- [Advancing Sequential Numerical Prediction in Autoregressive Models](advancing_sequential_numerical_prediction_in_autoregressive_models.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](distractor_gen_multiple_choice.md)
+
+<!-- RELATED:END -->

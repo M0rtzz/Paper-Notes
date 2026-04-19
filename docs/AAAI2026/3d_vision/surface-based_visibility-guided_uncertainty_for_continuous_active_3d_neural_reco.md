@@ -121,3 +121,15 @@ tags:
 - 价值: ⭐⭐⭐⭐ 解决了连续主动学习中可见性估计的实际痛点，在多个基准上显著提升，NBV选择速度快（0.8s）
 
 <!-- 笔记写于 2026-04-10，基于 paper_cache/AAAI2026/2405.02568.txt 全文缓存 -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Peering into the Unknown: Active View Selection with Neural Uncertainty Maps for 3D Reconstruction](../../ICLR2026/3d_vision/peering_into_the_unknown_active_view_selection_with_neural_uncertainty_maps_for_.md)
+- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
+- [MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting](meshsplat_generalizable_sparse-view_surface_reconstruction_via_gaussian_splattin.md)
+- [Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation](domain_generalized_stereo_matching_with_uncertainty-guided_data_augmentation.md)
+- [Neural Field-Based 3D Surface Reconstruction of Microstructures from Multi-Detector Signals in Scanning Electron Microscopy](../../CVPR2026/3d_vision/neural_field-based_3d_surface_reconstruction_of_microstructures_from_multi-detec.md)
+
+<!-- RELATED:END -->

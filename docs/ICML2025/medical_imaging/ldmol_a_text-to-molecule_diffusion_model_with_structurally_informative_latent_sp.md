@@ -134,3 +134,15 @@ LDMol 在几乎所有指标上大幅超越 AR 和 DM 基线。FCD 从 bioT5+ 的
 - 实验充分度: ⭐⭐⭐⭐ — 多任务评估 + 充分消融，但缺少与更多分子生成方法的比较
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，图示直观，逻辑连贯
 - 价值: ⭐⭐⭐⭐ — 在分子生成和文本扩散模型两个方向都有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](../../NeurIPS2025/medical_imaging/towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
+- [SPACE: Your Genomic Profile Predictor is a Powerful DNA Foundation Model](space_your_genomic_profile_predictor_is_a_powerful_dna_foundation_model.md)
+- [Elucidating the Design Space of Multimodal Protein Language Models](elucidating_the_design_space_of_multimodal_protein_language_models.md)
+- [Atomic Diffusion Models for Small Molecule Structure Elucidation from NMR Spectra](../../NeurIPS2025/medical_imaging/atomic_diffusion_models_for_small_molecule_structure_elucidation_from_nmr_spectr.md)
+- [Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis](../../CVPR2025/medical_imaging/latent_drifting_in_diffusion_models_for_counterfactual_medical_image_synthesis.md)
+
+<!-- RELATED:END -->

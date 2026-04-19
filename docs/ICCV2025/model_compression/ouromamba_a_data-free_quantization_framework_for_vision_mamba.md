@@ -123,3 +123,15 @@ OuroMamba 包含两个阶段：OuroMamba-Gen（合成数据生成）和 OuroMamb
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖分类/检测/分割/生成四大任务，多模型多精度，含 kernel 加速评估
 - **写作质量**: ⭐⭐⭐⭐ 问题动机清晰，分析透彻，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ 对 Mamba 模型部署具有重要实用价值，合成数据+动态量化思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientViM: Efficient Vision Mamba with Hidden State Mixer based State Space Duality](../../CVPR2025/model_compression/efficientvim_efficient_vision_mamba_with_hidden_state_mixer_based_state_space_du.md)
+- [MixA-Q: Revisiting Activation Sparsity for Vision Transformers from a Mixed-Precision Quantization Perspective](mixa-q_revisiting_activation_sparsity_for_vision_transformers_from_a_mixed-preci.md)
+- [MSQ: Memory-Efficient Bit Sparsification Quantization](msq_memory-efficient_bit_sparsification_quantization.md)
+- [GPTAQ: Efficient Finetuning-Free Quantization for Asymmetric Calibration](../../ICML2025/model_compression/gptaq_efficient_finetuning-free_quantization_for_asymmetric_calibration.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](../../CVPR2025/model_compression/hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
+
+<!-- RELATED:END -->

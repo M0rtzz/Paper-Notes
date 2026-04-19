@@ -200,3 +200,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 覆盖合理
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐ 对特定社区有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Language Models Understand Honorific Systems in Javanese?](do_language_models_understand_honorific_systems_in_javanese.md)
+- [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
+- [Perspective Transition of Large Language Models for Solving Subjective Tasks](perspective_transition_of_large_language_models_for_solving_subjective_tasks.md)
+- [SCoP: Evaluating the Comprehension Process of Large Language Models from a Cognitive View](scop_evaluating_the_comprehension_process_of_large_language_models_from_a_cognit.md)
+- [OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens](olmotrace_tracing_language_model_outputs_back_to_trillions_of_training_tokens.md)
+
+<!-- RELATED:END -->

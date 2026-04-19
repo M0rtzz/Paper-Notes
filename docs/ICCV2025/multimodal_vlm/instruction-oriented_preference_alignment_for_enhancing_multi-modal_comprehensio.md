@@ -177,3 +177,15 @@ $$fb \sim \pi_R(\cdot | V, I, r, r^{ref}, I^{fb}; \theta_{\pi_R})$$
 - **实验**: ⭐⭐⭐⭐ — 9 个基准全面覆盖，消融充分，跨模型验证增强说服力
 - **写作**: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，Figure 1 的对比直观有力
 - **价值**: ⭐⭐⭐⭐ — 提供了可扩展的偏好数据构建范式，对 MLLM 社区有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment](../../NeurIPS2025/multimodal_vlm/guiding_cross-modal_representations_with_mllm_priors_via_preference_alignment.md)
+- [OmniAlign-V: Towards Enhanced Alignment of MLLMs with Human Preference](../../ACL2025/multimodal_vlm/omnialign-v_towards_enhanced_alignment_of_mllms_with_human_preference.md)
+- [Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension](scaling_inference-time_search_with_vision_value_model_for_improved_visual_compre.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+
+<!-- RELATED:END -->

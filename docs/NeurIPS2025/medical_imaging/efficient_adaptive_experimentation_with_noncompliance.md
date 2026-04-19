@@ -158,3 +158,15 @@ $$|\hat{\tau}_T^{\text{AMRIV}} - \tau| = O_p(T^{-1/2}) + O_p(\|\hat{\delta}_T^A 
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：问题动机强烈（非依从性是现实痛点），理论贡献完整（效率界+最优策略+收敛率+多重鲁棒+随时有效推断），实验虽基于模拟但验证充分。局限在于较强的依从性假设和仅限二元设置。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Domain-Adaptive Transformer for Data-Efficient Glioma Segmentation in Sub-Saharan MRI](domain-adaptive_transformer_for_data-efficient_glioma_segmentation_in_sub-sahara.md)
+- [MATCH: Multi-faceted Adaptive Topo-Consistency for Semi-Supervised Histopathology Segmentation](match_multi-faceted_adaptive_topo-consistency_for_semi-supervised_histopathology.md)
+- [Random Search Neural Networks for Efficient and Expressive Graph Learning](random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
+- [Online Feedback Efficient Active Target Discovery in Partially Observable Environments](online_feedback_efficient_active_target_discovery_in_partially_observable_enviro.md)
+- [Domain Adaptive Diabetic Retinopathy Grading with Model Absence and Flowing Data](../../CVPR2025/medical_imaging/domain_adaptive_diabetic_retinopathy_grading_with_model_absence_and_flowing_data.md)
+
+<!-- RELATED:END -->

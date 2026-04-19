@@ -185,3 +185,15 @@ $$\mathcal{L}_{\text{IOPO}}(\pi_\theta) = -\mathbb{E}_{i \sim D}\left\{\log\left
 | 实验充分度 | ⭐⭐⭐⭐⭐ | 2 基座、4 评测集、消融、开销分析、token 控制实验，非常全面 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，数学推导严谨，演进逻辑自然 |
 | 综合价值 | ⭐⭐⭐⭐ | 基准+算法双贡献，推动复杂指令遵循领域；4x 显存是实际障碍 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reverse Preference Optimization for Complex Instruction Following](reverse_preference_optimization_for_complex_instruction_following.md)
+- [Optimal Transport-Based Token Weighting for Enhanced Preference Optimization](otpo_token_weighting.md)
+- [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
+- [On Extending Direct Preference Optimization to Accommodate Ties](../../NeurIPS2025/llm_alignment/on_extending_direct_preference_optimization_to_accommodate_ties.md)
+- [RPO: Retrieval Preference Optimization for Robust Retrieval-Augmented Generation](rpo_retrieval_preference_optimization_for_robust_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

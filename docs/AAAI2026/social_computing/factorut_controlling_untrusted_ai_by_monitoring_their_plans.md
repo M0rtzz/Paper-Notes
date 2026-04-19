@@ -92,3 +92,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅1种攻击策略和1对模型配置，需要在更多对抗场景下验证
 - 写作质量: ⭐⭐⭐⭐ 协议设计的形式化描述清晰，结论有力且可执行
 - 价值: ⭐⭐⭐⭐⭐ 对AI安全架构设计有重要指导意义，尤其是在可信AI部署场景中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Policy-as-Prompt: Turning AI Governance Rules into Guardrails for AI Agents](../../NeurIPS2025/social_computing/policy-as-prompt_turning_ai_governance_rules_into_guardrails_for_ai_agents.md)
+- [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
+- [Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?](../../NeurIPS2025/social_computing/position_paper_if_innovation_in_ai_systematically_violates_fundamental_rights_is.md)
+- [Cross-modal Prompting for Balanced Incomplete Multi-modal Emotion Recognition](cross-modal_prompting_for_balanced_incomplete_multi-modal_emotion_recognition.md)
+- [Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System](fact2fiction_targeted_poisoning_attack_to_agentic_fact-check.md)
+
+<!-- RELATED:END -->

@@ -101,3 +101,15 @@ AR/VR沉浸式体验要求能在任意发射器位置建模声场，但现有方
 Table 2 展示了 Versa-ELE 作为即插即用的数据增强方法对NN、Linear、DiffRIR、INRAS和NAF等多个baseline的统一改善。例如 INRAS 的 STFT 从 Scene 3 的 4.22 降至 ELE 后的 1.67。这验证了方法的模型无关性。
 
 Versa-SSL 的两阶段管道：第一阶段拟合声学场获得发射器方向增益模式 $G_e$（用球谐函数编码）；第二阶段用 $G_e$ 替换接收器增益模式实现一致性约束。推理时可替换任意HRTF实现个性化听觉。整体指标：Versa-ELE平均提升C50 34%、STFT 31%；Versa-SSL在AVR上进一步提升C50 24%、STFT 48%。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Would It Sound? Material-Controlled Multimodal Acoustic Profile Generation for Objects](../../ICCV2025/audio_speech/how_would_it_sound_material-controlled_multimodal_acoustic_profile_generation_fo.md)
+- [Predicting Turn-Taking and Backchannel in Human-Machine Conversations Using Linguistic, Acoustic, and Visual Signals](../../ACL2025/audio_speech/predicting_turn-taking_and_backchannel_in_human-machine_conversations_using_ling.md)
+- [AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](../../ICLR2026/audio_speech/ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
+- [Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization](unifying_symbolic_music_arrangement_track-aware_reconstruction_and_structured_to.md)
+- [Echoes of Humanity: Exploring the Perceived Humanness of AI Music](echoes_of_humanity_exploring_the_perceived_humanness_of_ai_music.md)
+
+<!-- RELATED:END -->

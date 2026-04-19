@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多个设置的消融、与共识图的定量对比、MCMC 收敛验证
 - 写作质量: ⭐⭐⭐⭐ 临床动机和方法论描述清晰，发现与不一致之处都坦诚讨论
 - 价值: ⭐⭐⭐⭐⭐ 对 AD 研究和因果发现方法论都有实质性贡献，临床可转化潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Discovery of Latent Variables in Galactic Archaeology](../../ICML2025/causal_inference/causal_discovery_of_latent_variables_in_galactic_archaeology.md)
+- [Latent Variable Causal Discovery under Selection Bias](../../ICML2025/causal_inference/latent_variable_causal_discovery_under_selection_bias.md)
+- [Differentiable Structure Learning and Causal Discovery for General Binary Data](differentiable_structure_learning_and_causal_discovery_for_general_binary_data.md)
+- [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+- [Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes](../../ICML2025/causal_inference/classifier_reconstruction_through_counterfactual-aware_wasserstein_prototypes.md)
+
+<!-- RELATED:END -->

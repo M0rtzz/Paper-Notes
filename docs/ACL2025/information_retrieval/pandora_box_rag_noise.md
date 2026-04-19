@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个模型×8 个数据集×7 种噪声，实验量巨大
 - 写作质量: ⭐⭐⭐⭐ "潘多拉之盒 vs 阿拉丁神灯"的比喻生动，论文结构清晰
 - 价值: ⭐⭐⭐⭐ 对 RAG 系统的噪声处理策略有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluation of Attribution Bias in Generator-Aware Retrieval-Augmented Large Language Models](evaluation_of_attribution_bias_in_generator-aware_retrieval-augmented_large_lang.md)
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [RARE: Retrieval-Augmented Reasoning Enhancement for Large Language Models](rare_retrieval_augmented_reasoning.md)
+- [CoIR: A Comprehensive Benchmark for Code Information Retrieval Models](coir_a_comprehensive_benchmark_for_code_information_retrieval_models.md)
+- [Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers](drama_diverse_augmentation_from_large_language_models_to_smaller_dense_retriever.md)
+
+<!-- RELATED:END -->

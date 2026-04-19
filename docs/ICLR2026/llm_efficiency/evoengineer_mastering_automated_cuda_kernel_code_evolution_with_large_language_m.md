@@ -127,3 +127,15 @@ EvoEngineer 将 LLM-based 代码演化分解为两个正交组件：**Traverse T
 - 实验充分度: ⭐⭐⭐⭐⭐ 91 个 kernel × 3 个 LLM × 6 种方法，分析非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析系统化，但符号有些冗余
 - 价值: ⭐⭐⭐⭐ 对 LLM-based 代码优化领域有框架级贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
+- [Steering Language Models with Weight Arithmetic](steering_language_models_with_weight_arithmetic.md)
+- [Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [Position: Theory of Mind Benchmarks are Broken for Large Language Models](../../ICML2025/llm_efficiency/position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
+
+<!-- RELATED:END -->

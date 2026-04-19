@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个基准、3 个模型、4 种 PEFT 方法，含消费级 GPU 部署验证
 - 写作质量: ⭐⭐⭐⭐ 从问题→假设→方法→验证逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 兼顾理论贡献和实际部署价值，消费级 GPU 微调意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](state_offset_tuning_ssm_peft.md)
+- [Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models](trans_peft_transferable.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations](../../ICCV2025/model_compression/generalized_tensor-based_parameter-efficient_fine-tuning_via_lie_group_transform.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+
+<!-- RELATED:END -->

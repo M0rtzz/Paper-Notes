@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 11粒度×3规模×5语料库×10指标+花园路径，覆盖极全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，两个实验互补，结论明确
 - 价值: ⭐⭐⭐⭐ 对认知建模实践有直接指导，揭示的分词-认知关联有基础研究意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Models for Predictive Analysis: How Far Are They?](large_language_models_for_predictive_analysis_how_far_are_they.md)
+- [Deontological Keyword Bias: The Impact of Modal Expressions on Normative Judgments of Language Models](deontological_keyword_bias.md)
+- [Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning](character_level_understanding.md)
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+
+<!-- RELATED:END -->

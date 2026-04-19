@@ -166,3 +166,15 @@ ISIC2019 皮肤癌分类（7 个客户端按解剖部位划分，特征异构）
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4 个医学数据集、8 个基线、多角度分析（鲁棒性、可扩展性、统计显著性）
 - 写作质量: ⭐⭐⭐⭐ — 条理清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 为联邦 CLIP 在医学领域的落地提供了实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Incentives in Federated Learning with Heterogeneous Agents](../../ICLR2026/medical_imaging/incentives_in_federated_learning_with_heterogeneous_agents.md)
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](../../CVPR2026/medical_imaging/omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+- [Divide, Conquer and Unite: Hierarchical Style-Recalibrated Prototype Alignment for Federated Medical Segmentation](divide_conquer_and_unite_hierarchical_style-recalibrated_prototype_alignment_for.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](../../CVPR2026/medical_imaging/chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+- [DeNAS-ViT: Data Efficient NAS-Optimized Vision Transformer for Ultrasound Image Segmentation](denas-vit_data_efficient_nas-optimized_vision_transformer_for_ultrasound_image_s.md)
+
+<!-- RELATED:END -->

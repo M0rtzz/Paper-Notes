@@ -139,3 +139,15 @@ $$\min_{\Theta} \|\mathcal{F}_l(\mathbf{X}) - \hat{\mathcal{F}}_l(\mathbf{X}; \T
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多模型多任务全面比较，含推理速度和消融实验
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ — W4A4 首次达到实用精度，推理加速显著，有代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](../../ACL2025/model_compression/moqae_mixed_precision_kv_cache.md)
+- [The Geometry of LLM Quantization: GPTQ as Babai's Nearest Plane Algorithm](../../ICLR2026/model_compression/the_geometry_of_llm_quantization_gptq_as_babais_nearest_plane_algorithm.md)
+- [BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference](blockdialect_block-wise_fine-grained_mixed_format_quantization_for_energy-effici.md)
+- [ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization](../../NeurIPS2025/model_compression/paretoq_improving_scaling_laws_in_extremely_low-bit_llm_quantization.md)
+- ["Give Me BF16 or Give Me Death"? Accuracy-Performance Trade-Offs in LLM Quantization](../../ACL2025/model_compression/bf16_or_death_quantization_tradeoffs.md)
+
+<!-- RELATED:END -->

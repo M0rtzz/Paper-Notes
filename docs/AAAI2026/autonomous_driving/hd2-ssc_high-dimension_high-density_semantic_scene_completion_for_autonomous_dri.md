@@ -149,3 +149,15 @@ HD2-SSC = 图像编码器（ResNet50+FPN 提取 2D 特征）→ HSD 模块（解
 - 实验充分度: ⭐⭐⭐⭐⭐（两个数据集全面对比、详细消融、效率分析、泛化验证、失败案例分析）
 - 写作质量: ⭐⭐⭐⭐（问题动机清晰，架构图和可视化丰富）
 - 价值: ⭐⭐⭐⭐（自动驾驶 SSC 领域的有效方法论贡献，两个数据集 SOTA）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards 3D Object-Centric Feature Learning for Semantic Scene Completion](towards_3d_object-centric_feature_learning_for_semantic_scene_completion.md)
+- [Unleashing Semantic and Geometric Priors for 3D Scene Completion](unleashing_semantic_and_geometric_priors_for_3d_scene_completion.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](../../NeurIPS2025/autonomous_driving/x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+- [Rascene: High-Fidelity 3D Scene Imaging with mmWave Communication Signals](../../CVPR2026/autonomous_driving/rascene_high-fidelity_3d_scene_imaging_with_mmwave_communication_signals.md)
+- [AdaptiveAD: Decoupling Scene Perception and Ego Status for End-to-End Autonomous Driving](decoupling_scene_perception_and_ego_status_a_multi-context_fusion_approach_for_e.md)
+
+<!-- RELATED:END -->

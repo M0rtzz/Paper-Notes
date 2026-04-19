@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 测量 + 机制 + 干预三阶段完整验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰，心理学类比恰到好处
 - 价值: ⭐⭐⭐⭐⭐ 对对齐研究和公平 AI 的发展都有深刻启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rewrite to Jailbreak: Discover Learnable and Transferable Implicit Harmfulness Instruction](rewrite_to_jailbreak_discover_learnable_and_transferable_implicit_harmfulness_in.md)
+- [QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language](queryattack_jailbreaking_aligned_large_language_models_using_structured_non-natu.md)
+- [Exploring the Effects of Alignment on Numerical Bias in Large Language Models](../../AAAI2026/llm_alignment/exploring_the_effects_of_alignment_on_numerical_bias_in_large_language_models.md)
+- [Reducing the Scope of Language Models](../../AAAI2026/llm_alignment/reducing_the_scope_of_language_models.md)
+- [DiffPO: Diffusion Alignment with Direct Preference Optimization](diffpo_diffusion_alignment.md)
+
+<!-- RELATED:END -->

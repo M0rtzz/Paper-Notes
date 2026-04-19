@@ -144,3 +144,15 @@ $$\mathcal{L} = \sum_{j=1}^N \sum_{t=1}^T (\lambda_r \mathcal{L}_\text{IV}^{t,j}
 - 实验充分度: ⭐⭐⭐⭐ 消融实验设计合理，但测试场景数量偏少（仅8个场景）
 - 写作质量: ⭐⭐⭐⭐⭐ 图示清晰（尤其是直接warp vs 迭代warp的对比），逻辑流畅
 - 价值: ⭐⭐⭐⭐ 为单目4D重建提供了一个实用的增强方案，与多种4D方法兼容
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Shape of Motion: 4D Reconstruction from a Single Video](shape_of_motion_4d_reconstruction_from_a_single_video.md)
+- [Geo4D: Leveraging Video Generators for Geometric 4D Scene Reconstruction](geo4d_leveraging_video_generators_for_geometric_4d_scene_reconstruction.md)
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](../../CVPR2025/3d_vision/4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)
+- [Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis](gaussian_variation_field_diffusion_for_high-fidelity_video-to-4d_synthesis.md)
+- [From Image to Video: An Empirical Study of Diffusion Representations](from_image_to_video_an_empirical_study_of_diffusion_representations.md)
+
+<!-- RELATED:END -->

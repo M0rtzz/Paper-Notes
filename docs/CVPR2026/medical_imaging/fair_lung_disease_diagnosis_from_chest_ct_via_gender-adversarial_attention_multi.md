@@ -115,3 +115,15 @@ $$P = \frac{1}{2}(\text{MacroF1}_{\text{male}} + \text{MacroF1}_{\text{female}})
 ## 补充说明
 
 本文是 CVPR 2026 PHAROS-AIF-MIH Workshop Challenge 的参赛方案，竞赛得分 0.685 表现稳健。整体方法学偏工程导向，但公平性约束的多层次设计（数据层面的过采样 + 特征层面的 GRL + 决策层面的 OOF 阈值）提供了可复用的医疗 AI 公平化工具包。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](milpf_multiple_instance_learning_on_precomputed_fe.md)
+- [EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease](emad_evidence-centric_grounded_multimodal_diagnosis_for_alzheimers_disease.md)
+- [Cell-Type Prototype-Informed Neural Network for Gene Expression Estimation from Pathology Images](cell-type_prototype-informed_neural_network_for_gene_expression_estimation_from_.md)
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [Robust Multi-Source Covid-19 Detection in CT Images](robust_multi-source_covid-19_detection_in_ct_images.md)
+
+<!-- RELATED:END -->

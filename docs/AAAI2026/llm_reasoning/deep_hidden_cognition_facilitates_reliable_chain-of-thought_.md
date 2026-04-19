@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7B/13B/70B 单模态 + 7B/13B 多模态 + DeepSeek-R1 + 校准评估 + 消融
 - 写作质量: ⭐⭐⭐⭐ 洞察清晰，实验详实
 - 价值: ⭐⭐⭐⭐⭐ "模型知道自己在说谎"的洞察对可靠推理具有深远意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](../../ACL2025/llm_reasoning/drt_deep_reasoning_translation_via_long_chain-of-thought.md)
+- [BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models](badthink_triggered_overthinking_attacks_on_chain-of-thought_reasoning_in_large_l.md)
+- [L2V-CoT: Cross-Modal Transfer of Chain-of-Thought Reasoning via Latent Intervention](l2v-cot_cross-modal_transfer_of_chain-of-thought_reasoning_v.md)
+- [Intention Chain-of-Thought Prompting with Dynamic Routing for Code Generation](intention_chain-of-thought_prompting_with_dynamic_routing_for_code_generation.md)
+- [Chain-of-Thought Driven Adversarial Scenario Extrapolation for Robust Language Models](chain-of-thought_driven_adversarial_scenario_extrapolation_for_robust_language_m.md)
+
+<!-- RELATED:END -->

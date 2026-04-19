@@ -143,3 +143,15 @@ ColorTrigger 以 8.1% 的 RGB 帧实现全彩基线 91.6% 的性能（67.49/73.6
 - **实验充分度**: ⭐⭐⭐⭐ 在 StreamingBench 上验证充分，但缺少实际硬件功耗评测
 - **写作质量**: ⭐⭐⭐⭐⭐ 预研→洞察→方法→实验的故事线非常流畅
 - **价值**: ⭐⭐⭐⭐⭐ 对边缘 AI 的 always-on 感知有直接工程价值，启发性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StreamReady: Learning What to Answer and When in Long Streaming Videos](streamready_learning_what_to_answer_and_when_in_long_streaming_videos.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_video.md)
+- [FluxMem: Adaptive Hierarchical Memory for Streaming Video Understanding](fluxmem_adaptive_hierarchical_memory_for_streaming_video_understanding.md)
+- [Online Dense Point Tracking with Streaming Memory](../../ICCV2025/video_understanding/online_dense_point_tracking_with_streaming_memory.md)
+
+<!-- RELATED:END -->

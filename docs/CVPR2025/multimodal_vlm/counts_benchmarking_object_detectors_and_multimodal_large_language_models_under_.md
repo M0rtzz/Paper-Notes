@@ -124,3 +124,15 @@ COUNTS项目包含三个核心组成部分：
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖大量检测器变体和MLLM模型，分析角度多（backbone/neck/head/预训练）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、数据丰富，但论文过长（34页）且部分分析可以更精炼
 - 价值: ⭐⭐⭐⭐ 填补了检测和MLLM定位OOD基准的空白，对未来研究有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Playing the Fool: Jailbreaking LLMs and Multimodal LLMs with Out-of-Distribution Strategy](playing_the_fool_jailbreaking_llms_and_multimodal_llms_with_out-of-distribution_.md)
+- [OpenHOI: Open-World Hand-Object Interaction Synthesis with Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/openhoi_open-world_hand-object_interaction_synthesis_with_multimodal_large_langu.md)
+- [NaViL: Rethinking Scaling Properties of Native Multimodal Large Language Models under Data Constraints](../../NeurIPS2025/multimodal_vlm/navil_rethinking_scaling_properties_of_native_multimodal_large_language_models_u.md)
+- [Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality](../../CVPR2026/multimodal_vlm/benchmarking_vision-language_models_under_contradictory_virtual_content_attacks_.md)
+- [Every SAM Drop Counts: Embracing Semantic Priors for Multi-Modality Image Fusion and Beyond](every_sam_drop_counts_embracing_semantic_priors_for_multi-modality_image_fusion_.md)
+
+<!-- RELATED:END -->

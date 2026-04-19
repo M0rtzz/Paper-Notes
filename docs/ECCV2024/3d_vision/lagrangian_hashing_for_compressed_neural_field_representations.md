@@ -134,3 +134,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{recon}} + \lambda_{\text{dist}} \mathcal{L}_{
 - **实验充分度**: ⭐⭐⭐⭐ — 2D图像拟合 + NeRF合成 + 真实场景 + 压缩对比 + 详尽消融
 - **写作质量**: ⭐⭐⭐⭐ — 物理类比清晰，公式推导完整
 - **价值**: ⭐⭐⭐⭐ — 为神经场压缩提供了新的技术路径，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation](mesh2nerf_direct_mesh_supervision_for_neural_radiance_field_representation_and_g.md)
+- [Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
+- [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
+- [Compress3D: a Compressed Latent Space for 3D Generation from a Single Image](compress3d_a_compressed_latent_space_for_3d_generation_from_a_single_image.md)
+- [S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis](s3d-nerf_single-shot_speech-driven_neural_radiance_field_for_high_fidelity_talki.md)
+
+<!-- RELATED:END -->

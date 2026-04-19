@@ -141,3 +141,15 @@ BiGain 是一个**训练无关、即插即用**的框架，包含两个频率感
 - 实验充分度: ⭐⭐⭐⭐ — 4个数据集×2种骨干×2种算子×多级压缩比，消融完整
 - 写作质量: ⭐⭐⭐⭐ — 动机-方法-实验逻辑链清晰，公式规范
 - 价值: ⭐⭐⭐⭐ — 填补了扩散模型加速中判别能力被忽视的空白，设计准则有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of States: Routing Token-Level Dynamics for Multimodal Generation](mixture_of_states_routing_token-level_dynamics_for_multimodal_generation.md)
+- [SeaCache: Spectral-Evolution-Aware Cache for Accelerating Diffusion Models](seacache_spectral-evolution-aware_cache_for_accelerating_diffusion_models.md)
+- [DA-VAE: Plug-in Latent Compression for Diffusion via Detail Alignment](da-vae_plug-in_latent_compression_for_diffusion_via_detail_alignment.md)
+- [ConsistCompose: Unified Multimodal Layout Control for Image Composition](consistcompose_unified_multimodal_layout_control_for_image_composition.md)
+- [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
+
+<!-- RELATED:END -->

@@ -316,3 +316,15 @@ Birkhoff 松弛在所有噪声水平上显著优于其他两种方法。
 - 实验充分度: ⭐⭐⭐ 理论+合成实验互相印证，但缺乏真实数据验证
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，结构清晰，直觉解释充分
 - 价值: ⭐⭐⭐⭐ 图匹配/QAP 凸松弛理论的重要进展，可能启发后续更优阈值的分析
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Topological Descriptors for Graph Products](on_topological_descriptors_for_graph_products.md)
+- [Training the Untrainable: Introducing Inductive Bias via Representational Alignment](training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)
+- [Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](../../ICLR2026/others/learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
+- [Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+
+<!-- RELATED:END -->

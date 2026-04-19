@@ -168,3 +168,15 @@ $$f(\mathcal{F}_{input}(x)) = \mathcal{F}_{output}(f(x))$$
 | **综合** | **⭐⭐⭐⭐** |
 
 理论推导完整，从对称 MDP 性质出发自然引出架构设计；实验覆盖仿真+实物，消融设计合理。但核心创新在于将已有的等变网络技术（ESCNN）工程化地适配到人形机器人，新颖性偏工程应用层面而非方法论突破。任务场景较单一（仅速度跟踪），期待在更复杂任务上的验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Locomotion and Motion Imitation for Humanoid Policy Learning](../../NeurIPS2025/video_understanding/adversarial_locomotion_and_motion_imitation_for_humanoid_policy_learning.md)
+- [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](../../ICLR2026/video_understanding/stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](../../CVPR2026/video_understanding/videochatm1_collaborative_policy_planning_for_vide.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+- [Dual-Agent Reinforcement Learning for Adaptive and Cost-Aware Visual-Inertial Odometry](../../CVPR2026/video_understanding/dual-agent_reinforcement_learning_for_adaptive_and_cost-aware_visual-inertial_od.md)
+
+<!-- RELATED:END -->

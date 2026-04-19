@@ -116,3 +116,15 @@ tags:
 - **实验充分度**: 5/10 — 综述无实验，定量对比较少
 - **清晰度**: 8/10 — 结构清晰，图表信息密度高
 - **总分**: 7/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis](os_genesis_gui_agent_trajectory.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
+- [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ CaDDi是一个统一序列（因果）和时间（扩散）建模的非马尔可
 - 实验充分度: ⭐⭐⭐⭐ 覆盖LM1B/Text8/推理任务等多个维度，但缺少更多领域的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 公式推导清晰，动机阐述充分，理论和实验衔接紧密
 - 价值: ⭐⭐⭐⭐⭐ 统一框架+预训练LLM复用的价值极高，可能开辟新的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [Beyond Masked and Unmasked: Discrete Diffusion Models via Partial Masking](beyond_masked_and_unmasked_discrete_diffusion_models_via_par.md)
+- [Information-Theoretic Discrete Diffusion](information-theoretic_discrete_diffusion.md)
+
+<!-- RELATED:END -->

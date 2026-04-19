@@ -193,3 +193,15 @@ $$\mathcal{L}_{ft} = \sum_{k=1}^{K} \sum_{c_i=k} \sum_{c_j=c_i} \frac{\exp(h_v(\
 - **实验充分度**: ⭐⭐⭐⭐ — 多个基准、多种骨干、多个任务的全面评估，消融清晰
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机叙述生动（厨房例子），技术描述严谨，图示丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 零样本超越全监督的结果非常惊人，为程序学习和视频理解开辟了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ineq-Comp: Benchmarking Human-Intuitive Compositional Reasoning in Automated Theorem Proving on Inequalities](../../NeurIPS2025/llm_evaluation/ineq-comp_benchmarking_human-intuitive_compositional_reasoning_in_automated_theo.md)
+- [Bayesian Evaluation of Large Language Model Behavior](../../NeurIPS2025/llm_evaluation/bayesian_evaluation_of_large_language_model_behavior.md)
+- [ResearchTown: Simulator of Human Research Community](../../ICML2025/llm_evaluation/researchtown_simulator_of_human_research_community.md)
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+- [MOSIV: Multi-Object System Identification from Videos](../../ICLR2026/llm_evaluation/mosiv_multi-object_system_identification_from_videos.md)
+
+<!-- RELATED:END -->

@@ -169,3 +169,15 @@ REVS 完全无梯度。在每个实验中，先对所有敏感序列执行遗忘
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 基线 + 3 数据集 + 2 模型 + 3 种攻击 + 4 组消融，覆盖极为全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，算法伪代码完整，但附录较长且部分结果分散
 - 价值: ⭐⭐⭐⭐⭐ 对 GDPR 合规的 PII 遗忘有直接实用价值，且构建了首个自然记忆敏感信息数据集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Opt-Out: Investigating Entity-Level Unlearning for Large Language Models via Optimal Transport](opt-out_investigating_entity-level_unlearning_for_large_language_models_via_opti.md)
+- [Mamba Knockout for Unraveling Factual Information Flow](mamba_knockout_for_unraveling_factual_information_flow.md)
+- [Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning](answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md)
+- [Demystifying Language Model Forgetting with Low-Rank Example Associations](../../NeurIPS2025/llm_safety/demystifying_language_model_forgetting_with_low-rank_example_associations.md)
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](intent_hallucination_eval.md)
+
+<!-- RELATED:END -->

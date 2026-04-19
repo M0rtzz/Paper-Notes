@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (8 个模型 x 3 种方法，多维度指标分析)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，任务构建流程详尽)
 - 价值: ⭐⭐⭐⭐ (对法律 AI 社区有重要参考价值，方法论可迁移至其他领域)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuideBench: Benchmarking Domain-Oriented Guideline Following for LLM Agents](guidebench_guideline_following.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](toolhop_multi_hop_tool_use_benchmark.md)
+- [The Behavior Gap: Evaluating Zero-shot LLM Agents in Complex Task-Oriented Dialogs](the_behavior_gap_evaluating_zero-shot_llm_agents_in_complex_task-oriented_dialog.md)
+- [DefenderBench: A Toolkit for Evaluating Language Agents in Cybersecurity Environments](../../NeurIPS2025/llm_agent/defenderbench_a_toolkit_for_evaluating_language_agents_in_cybersecurity_environm.md)
+
+<!-- RELATED:END -->

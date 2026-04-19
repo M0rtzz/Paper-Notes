@@ -118,3 +118,15 @@ ExPO 自解释在所有设置下均显著超越专家 CoT（MATH 上 +10.6~11.1%
 - 实验充分度: ⭐⭐⭐⭐ — DPO/GRPO 双框架验证、难度级别分解分析充分，但模型规模和任务多样性有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 从问题定义、理论分析到算法设计再到实验验证，叙事极为流畅且自洽
 - 价值: ⭐⭐⭐⭐⭐ — 直击 RL 后训练推理的核心痛点，方法简洁通用，对研究和工程实践均有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Better Search with Language Models via Guided Reinforced Self-Training](learning_to_better_search_with_language_models_via_guided_reinforced_self-traini.md)
+- [Incentivizing Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](../../ICLR2026/model_compression/incentivizing_agentic_reasoning_in_llm_judges_via_tool-integrated_reinforcement_.md)
+- [ACPBench Hard: Unrestrained Reasoning about Action, Change, and Planning](../../ICLR2026/model_compression/acpbench_hard_unrestrained_reasoning_about_action_change_and_planning.md)
+- [MARGE: Improving Math Reasoning for LLMs with Guided Exploration](../../ICML2025/model_compression/marge_improving_math_reasoning_for_llms_with_guided_exploration.md)
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](../../ACL2025/model_compression/rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+
+<!-- RELATED:END -->

@@ -110,3 +110,15 @@ TUNE 在几乎所有数据集-模型组合上大幅提升，而现有 TTA 方法
 - 实验充分度: ⭐⭐⭐⭐⭐ 10个数据集+3种GAD模型+3种TTA基线+充分分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析深入，motivating experiments 做得极好
 - 价值: ⭐⭐⭐⭐⭐ 首个 GAD 专用 TTA 框架，填补重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing](towards_test-time_efficient_visual_place_recognition_via_asymmetric_query_proces.md)
+- [TALON: Test-time Adaptive Learning for On-the-Fly Category Discovery](../../CVPR2026/model_compression/talon_test-time_adaptive_learning_for_on-the-fly_category_discovery.md)
+- [Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](../../ICLR2026/model_compression/specialization_after_generalization_towards_understanding_test-time_training_in_.md)
+- [Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge](../../ACL2025/model_compression/correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m.md)
+- [Modality-free Graph In-context Alignment](../../ICLR2026/model_compression/modality-free_graph_in-context_alignment.md)
+
+<!-- RELATED:END -->

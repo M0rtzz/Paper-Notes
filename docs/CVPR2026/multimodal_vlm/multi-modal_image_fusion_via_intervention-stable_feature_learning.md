@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个IVIF基准+医学融合跨域+目标检测/分割下游任务，消融详尽，ATE分析有说服力
 - 写作质量: ⭐⭐⭐⭐ 因果动机的推导逻辑清晰，但部分公式符号可以更一致
 - 价值: ⭐⭐⭐⭐ 提出了融合领域一个新的训练范式（干预学习而非纯相关学习），实验验证了其有效性和泛化性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniMMAD: Unified Multi-Modal and Multi-Class Anomaly Detection via MoE-Driven Feature Decompression](unimmad_multimodal_moe_anomaly_detection.md)
+- [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
+- [Disentangle-then-Align: Non-Iterative Hybrid Multimodal Image Registration via Cross-Scale Feature Disentanglement](disentangle-then-align_non-iterative_hybrid_multimodal_image_registration_via_cr.md)
+- [SSR2-GCD: Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery](ssr2gcd_rate_reduction_category_discovery.md)
+- [Decoupling Stability and Plasticity for Multi-Modal Test-Time Adaptation](decoupling_stability_and_plasticity_for_multi-modal_test-time_adaptation.md)
+
+<!-- RELATED:END -->

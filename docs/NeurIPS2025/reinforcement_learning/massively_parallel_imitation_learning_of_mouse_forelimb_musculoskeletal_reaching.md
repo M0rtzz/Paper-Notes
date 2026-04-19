@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 方法验证清晰但数据量极度受限（1 只小鼠），需更大规模验证
 - 写作质量: ⭐⭐⭐⭐ 跨学科融合好，pipeline 描述清晰，但部分讨论冗长
 - 价值: ⭐⭐⭐⭐ 对计算神经科学和生物力学社区的工具贡献重大，MIMIC-MJX 平台有广泛应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantifying Generalisation in Imitation Learning](quantifying_generalisation_in_imitation_learning.md)
+- [Interactive and Hybrid Imitation Learning: Provably Beating Behavior Cloning](interactive_and_hybrid_imitation_learning_provably_beating_behavior_cloning.md)
+- [EvoLM: In Search of Lost Language Model Training Dynamics](evolm_in_search_of_lost_language_model_training_dynamics.md)
+- [Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics](solving_continuous_mean_field_games_deep_reinforcement_learning_for_non-stationa.md)
+- [Solving Neural Min-Max Games: The Role of Architecture, Initialization & Dynamics](solving_neural_min-max_games_the_role_of_architecture_initialization_dynamics.md)
+
+<!-- RELATED:END -->

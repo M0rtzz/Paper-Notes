@@ -136,3 +136,15 @@ $\lambda=0.5$，$\tau=0.1$（对比温度），均通过敏感性分析确定，
 - ⭐ 实验完备性：8/10 — 三数据集+消融+敏感性+临床诊断分析全面
 - ⭐ 实用价值：7/10 — 解决了实际临床需求（低成本OCT设备升级），但两阶段训练略重
 - ⭐ 总体：8/10 — 医学影像跨模态翻译的扎实工作，方法论可推广性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parallax to Align Them All: An OmniParallax Attention Mechanism for Distributed Multi-View Image Compression](../../CVPR2026/model_compression/parallax_to_align_them_all_an_omniparallax_attention_mechanism_for_distributed_m.md)
+- [Magnet: Multi-turn Tool-use Data Synthesis and Distillation via Graph Translation](../../ACL2025/model_compression/magnet_multi-turn_tool-use_data_synthesis_and_distillation_via_graph_translation.md)
+- [Multi-View Encoders for Performance Prediction in LLM-Based Agentic Workflows](../../ICLR2026/model_compression/multi-view_encoders_for_performance_prediction_in_llm-based_agentic_workflows.md)
+- [Layered Image Vectorization via Semantic Simplification](layered_image_vectorization_via_semantic_simplification.md)
+- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+
+<!-- RELATED:END -->

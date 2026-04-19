@@ -131,3 +131,15 @@ CheemsRM 在 Overall 上以 **0.657** 大幅领先第二名 0.535（+12.2%），
 - 实验充分度: ⭐⭐⭐⭐⭐ 评测全面（16+ RM 对比、多数据集消融、下游任务相关性分析）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据详实，图表丰富
 - 价值: ⭐⭐⭐⭐ 填补中文 RM 资源空白，对中文 LLM 对齐社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization](../../ICML2025/llm_alignment/tgdpo_harnessing_token-level_reward_guidance_for_enhancing_direct_preference_opt.md)
+- [TableDreamer: Progressive and Weakness-Guided Data Synthesis from Scratch for Table Instruction Tuning](tabledreamer_progressive_and_weakness-guided_data_synthesis_from_scratch_for_tab.md)
+- [Mutual-Taught for Co-adapting Policy and Reward Models](mutual_taught_policy_reward.md)
+- [EASE: Practical and Efficient Safety Alignment for Small Language Models](../../AAAI2026/llm_alignment/ease_practical_and_efficient_safety_alignment_for_small_language_models.md)
+- [Towards Reward Fairness in RLHF: From a Resource Allocation Perspective](reward_fairness_rlhf.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ $$J_Q(\phi) = \mathbb{E}_\mathcal{B}\left[\left(r + \gamma \frac{\exp(Q_{\phi^-}
 - 实验充分度: ⭐⭐⭐⭐⭐ 65 个数据集、T-Maze 验证、50 智能体扩展性测试、架构消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 方法推导清晰，但个别符号使用不够统一
 - 价值: ⭐⭐⭐⭐⭐ 在离线 MARL 领域树立了新的 SOTA，且代码和数据集开源，对后续研究有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Communicating Plans, Not Percepts: Scalable Multi-Agent Coordination with Embodied World Models](communicating_plans_not_percepts_scalable_multi-agent_coordination_with_embodied.md)
+- [Partial Action Replacement: Tackling Distribution Shift in Offline MARL](../../AAAI2026/reinforcement_learning/partial_action_replacement_tackling_distribution_shift_in_offline_marl.md)
+- [Incremental Sequence Classification with Temporal Consistency](incremental_sequence_classification_with_temporal_consistency.md)
+- [Ensemble++: Scalable Exploration via Ensemble](scalable_exploration_via_ensemble.md)
+- [Horizon Reduction Makes RL Scalable](horizon_reduction_makes_rl_scalable.md)
+
+<!-- RELATED:END -->

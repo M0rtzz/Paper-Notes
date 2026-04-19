@@ -133,3 +133,15 @@ SolverLLM是training-free框架。奖励函数为加权组合：$R(f_s, x^*) = \
 - 实验充分度: ⭐⭐⭐⭐ 6个数据集、多种基线、详细消融和case study，token效率分析也很到位
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观，case study有助于理解各组件作用
 - 价值: ⭐⭐⭐⭐ 展示了test-time scaling在结构化领域的潜力，对优化问题求解的实际应用有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reparameterized LLM Training via Orthogonal Equivalence Transformation](reparameterized_llm_training_via_orthogonal_equivalence_transformation.md)
+- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+- [LLM-AT: Automatic Transmission for LLM Tiers Optimizing Cost and Accuracy](../../ACL2025/llm_nlp/automatic_transmission_for_llm_tiers_optimizing_cost_and_accuracy_in_large_langu.md)
+- [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](../../ACL2025/llm_nlp/llm_braces_straightening.md)
+- [Synergy over Discrepancy: A Partition-Based Approach to Multi-Domain LLM Fine-Tuning](synergy_over_discrepancy_a_partition-based_approach_to_multi-domain_llm_fine-tun.md)
+
+<!-- RELATED:END -->

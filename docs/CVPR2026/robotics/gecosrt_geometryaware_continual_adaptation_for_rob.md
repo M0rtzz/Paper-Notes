@@ -267,3 +267,15 @@ $\mathcal{L}_{\text{total}} = \text{MSE}(\hat{a}, a) + \alpha \mathcal{L}_{\text
 - 实验充分度: ⭐⭐⭐⭐ 4+3个真实机器人任务，详尽消融+迁移分析+数据效率+可解释性
 - 写作质量: ⭐⭐⭐⭐ 问题驱动清晰，方法叙述有层次
 - 价值: ⭐⭐⭐⭐ 为Sim-to-Real迁移提供了新的持续学习视角，数据效率高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [AtomicVLA: Unlocking the Potential of Atomic Skill Learning in Robots](atomicvla_unlocking_the_potential_of_atomic_skill.md)
+- [RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](rcnf_robot_conditioned_normalizing_flow_anomaly.md)
+- [Action–Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation](actiongeometry_prediction_with_3d_geometric_prior.md)
+
+<!-- RELATED:END -->

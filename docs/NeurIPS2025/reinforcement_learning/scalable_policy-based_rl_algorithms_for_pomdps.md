@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作，无实验，但定理陈述清晰完整
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清楚，与先前工作的对比详尽
 - 价值: ⭐⭐⭐⭐ 为POMDP的可扩展求解提供了理论基石，对实际RL系统设计有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [Horizon Reduction Makes RL Scalable](horizon_reduction_makes_rl_scalable.md)
+- [Ensemble++: Scalable Exploration via Ensemble](scalable_exploration_via_ensemble.md)
+- [Parameter-Free Algorithms for the Stochastically Extended Adversarial Model](parameter-free_algorithms_for_the_stochastically_extended_adversarial_model.md)
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+
+<!-- RELATED:END -->

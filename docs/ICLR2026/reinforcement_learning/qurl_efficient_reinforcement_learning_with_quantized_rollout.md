@@ -117,3 +117,15 @@ RL 训练循环中：(1) 将旧 actor $\theta_{\text{old}}$ 量化为 $\hat{\the
 - 实验充分度: ⭐⭐⭐⭐ 覆盖PPO/GRPO/DAPO三种算法、多种模型规模和精度格式
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，失败模式可视化清晰
 - 价值: ⭐⭐⭐⭐ 直接解决RL训练的核心效率瓶颈，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Regret-Guided Search Control for Efficient Learning in AlphaZero](regret-guided_search_control_for_efficient_learning_in_alphazero.md)
+- [Efficient Estimation of Kernel Surrogate Models for Task Attribution](efficient_estimation_of_kernel_surrogate_models_for_task_attribution.md)
+- [FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning](fapo_flawed-aware_policy_optimization_for_efficient_and_reliable_reasoning.md)
+- [Entropy-Preserving Reinforcement Learning (REPO / ADAPO)](entropy-preserving_reinforcement_learning.md)
+- [Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+
+<!-- RELATED:END -->

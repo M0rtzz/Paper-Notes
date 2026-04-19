@@ -114,3 +114,15 @@ BootPlace 分两个模块。**模块一（区域检测）**：将场景图像中
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+消融+用户研究+泛化测试，但绝对 IOU 数值仍较低
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述数学化，图表丰富
 - 价值: ⭐⭐⭐ 方向有趣但实用场景有限，IOU 绝对值偏低说明问题本身很难
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaShadow: Object-Centered Shadow Detection, Removal, and Synthesis](metashadow_object-centered_shadow_detection_removal_and_synthesis.md)
+- [HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](an_image-like_diffusion_method_for_human-object_interaction_detection.md)
+- [Composing Parts for Expressive Object Generation](composing_parts_for_expressive_object_generation.md)
+- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
+- [Any-Resolution AI-Generated Image Detection by Spectral Learning](any-resolution_ai-generated_image_detection_by_spectral_learning.md)
+
+<!-- RELATED:END -->

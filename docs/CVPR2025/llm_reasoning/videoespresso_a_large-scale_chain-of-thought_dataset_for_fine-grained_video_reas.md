@@ -136,3 +136,15 @@ VideoEspresso 构建了一个20万+的大规模视频CoT推理数据集（包含
 - 实验充分度: ⭐⭐⭐⭐ 14任务9模型的全面对比+消融+跨模型泛化性验证充分
 - 写作质量: ⭐⭐⭐⭐ 流水线描述清晰，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 20万高质量视频CoT数据集+高效推理框架，对视频理解研究具有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](../../CVPR2026/llm_reasoning/e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)
+- [Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](reason-before-retrieve_one-stage_reflective_chain-of-thoughts_for_training-free_.md)
+- [Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning](../../ICLR2026/llm_reasoning/fine-r1_make_multi-modal_llms_excel_in_fine-grained_visual_recognition_by_chain-.md)
+- [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
+- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](../../ACL2025/llm_reasoning/tract_regression_cot.md)
+
+<!-- RELATED:END -->

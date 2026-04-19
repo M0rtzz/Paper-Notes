@@ -214,3 +214,15 @@ ASAP 可以与架构方法叠加使用，进一步提升效果。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6个Gymnasium + 4个Isaac-Lab环境，PPO/SAC双算法，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，但符号略多
 - 价值: ⭐⭐⭐⭐ — 对sim-to-real转移有直接意义，方法实用且开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Switching Framework for Online Interval Scheduling with Predictions](a_switching_framework_for_online_interval_scheduling_with_pr.md)
+- [Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search](../../ICLR2026/others/enhancing_generative_auto_bidding.md)
+- [Deadline-Aware, Energy-Efficient Control of Domestic Immersion Hot Water Heaters](deadline-aware_energy-efficient_control_of_domestic_immersion_hot_water_heater.md)
+- [Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](area-optimal_control_strategies_for_heterogeneous_multi-agen.md)
+- [MF-Speech: Achieving Fine-Grained and Compositional Control in Speech Generation via Factor Disentanglement](mf-speech_achieving_fine-grained_and_compositional_control_in_speech_generation_.md)
+
+<!-- RELATED:END -->

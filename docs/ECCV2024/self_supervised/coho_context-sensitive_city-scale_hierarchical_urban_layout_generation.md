@@ -161,3 +161,15 @@ tags:
 - 实验充分度: 9/10 — 330 城市大规模实验，消融实验系统覆盖模型选择、量化策略、掩码策略和调度函数
 - 写作质量: 8/10 — 结构清晰，三个观察→三个设计的逻辑线明确，图示质量高
 - 价值: 7/10 — 大规模城市布局生成相对小众，但开源数据集和方法有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Implicit Function Generation via Equivariance](../../CVPR2025/self_supervised/few-shot_implicit_function_generation_via_equivariance.md)
+- [Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](../../ACL2025/self_supervised/llm_back_gen_treebank.md)
+- [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](../../NeurIPS2025/self_supervised/seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
+- [Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision](../../AAAI2026/self_supervised/improving_region_representation_learning_from_urban_imagery_with_noisy_long-capt.md)
+- [Towards Reliable and Holistic Visual In-Context Learning Prompt Selection](../../NeurIPS2025/self_supervised/towards_reliable_and_holistic_visual_in-context_learning_prompt_selection.md)
+
+<!-- RELATED:END -->

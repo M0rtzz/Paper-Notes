@@ -126,3 +126,15 @@ $$l_{MP} = \ell_{GT} + \alpha(\ell_{KSD} + \ell_{KA})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 医学/人体/动物三种场景+low-shot+CAPE融合
 - 写作质量: ⭐⭐⭐⭐ 清晰，问题阐述有深度
 - 价值: ⭐⭐⭐⭐⭐ 为增量标注场景提供了实用方案，正向迁移发现有洞察力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning](adapter_merging_with_centroid_prototype_mapping_for_scalable_class-incremental_l.md)
+- [CL-LoRA: Continual Low-Rank Adaptation for Rehearsal-Free Class-Incremental Learning](cl-lora_continual_low-rank_adaptation_for_rehearsal-free_class-incremental_learn.md)
+- [Mixture of Noise for Pre-Trained Model-Based Class-Incremental Learning](../../NeurIPS2025/model_compression/mixture_of_noise_for_pre-trained_model-based_class-incremental_learning.md)
+- [Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning](../../ICCV2025/model_compression/integrating_task-specific_and_universal_adapters_for_pre-trained_model-based_cla.md)
+- [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](../../NeurIPS2025/model_compression/find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
+
+<!-- RELATED:END -->

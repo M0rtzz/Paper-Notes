@@ -152,3 +152,15 @@ Image Prior贡献最大（+19.5% Top-1），是性能飞跃的关键；EEG Prior
 - 实验充分度: ⭐⭐⭐⭐⭐ — 10个被试全面评估、多编码器验证、详尽消融、THINGS-MEG泛化、超参敏感性分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，生物启发叙事连贯，消融实验设计合理
 - 价值: ⭐⭐⭐⭐ — 在EEG视觉解码方向取得显著进展，但增广策略的手工设计限制了方法论深度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Inductive Logic Programming](self-supervised_inductive_logic_programming.md)
+- [Let the Void Be Void: Robust Open-Set Semi-Supervised Learning via Selective Non-Alignment](let_the_void_be_void_robust_open-set_semi-supervised_learning_via_selective_non-.md)
+- [Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval](../../CVPR2026/self_supervised/text-phase_synergy_network_with_dual_priors_for_unsupervised_cross-domain_image_.md)
+- [Towards LLM-Empowered Knowledge Tracing via LLM-Student Hierarchical Behavior Alignment in Hyperbolic Space](towards_llm-empowered_knowledge_tracing_via_llm-student_hierarchical_behavior_al.md)
+- [Clustering Properties of Self-Supervised Learning](../../ICML2025/self_supervised/clustering_properties_of_self-supervised_learning.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨4家族模型(Llama2/3, Gemma, Qwen)、5种对齐算法(SFT/PPO/DPO/KTO/SimPO)、多数据规模的全面验证
 - 写作质量: ⭐⭐⭐⭐ 理论部分需要一定数学基础，但物理类比和清晰的实验设计大大降低了理解门槛
 - 价值: ⭐⭐⭐⭐⭐ ACL 2025 Best Paper，揭示了AI对齐面临的根本性挑战，对安全研究方向有战略指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [500xCompressor: Generalized Prompt Compression for Large Language Models](500xcompressor_generalized_prompt_compression_for_large_language_models.md)
+- [AlignDistil: Token-Level Language Model Alignment as Adaptive Policy Distillation](aligndistil_token_level_alignment.md)
+- [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](../../NeurIPS2025/model_compression/data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [From Language Models over Tokens to Language Models over Characters](../../ICML2025/model_compression/from_language_models_over_tokens_to_language_models_over_characters.md)
+
+<!-- RELATED:END -->

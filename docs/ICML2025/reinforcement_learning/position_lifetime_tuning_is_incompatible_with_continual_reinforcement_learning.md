@@ -132,3 +132,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ 作为 position paper 提出了非常重要且被广泛忽视的方法论问题，论证逻辑清晰有力——两大陷阱的刻画精准到位。Non-stationary Catch 上的渐进式实验（图 1→2→3）虽然简单但极具说服力和教育意义。在 k% tuning 下缓解策略确实展现出优势的实验是最有力的证据。但解决方案（k% tuning）过于简单且引入了 k 这个新的元超参数，缺少在 Atari/MuJoCo 等标准大规模基准上的验证，也未提供自动化调参方案。对持续 RL 社区的评估规范具有潜在的深远影响。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Knowledge Adaptation for Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [Continual Reinforcement Learning by Planning with Online World Models](continual_reinforcement_learning_by_planning_with_online_world_models.md)
+- [Mitigating Plasticity Loss in Continual Reinforcement Learning by Reducing Churn](mitigating_plasticity_loss_in_continual_reinforcement_learning_by_reducing_churn.md)
+- [Principled Fast and Meta Knowledge Learners for Continual Reinforcement Learning](../../ICLR2026/reinforcement_learning/principled_fast_and_meta_knowledge_learners_for_continual_reinforcement_learning.md)
+- [Temporal-Difference Variational Continual Learning](../../NeurIPS2025/reinforcement_learning/temporal-difference_variational_continual_learning.md)
+
+<!-- RELATED:END -->

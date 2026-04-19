@@ -172,3 +172,15 @@ $$\text{confidence} = \exp\left(\frac{1}{|T|}\sum_{t \in T} \log p(t)\right)$$
 | 总评 | 3.5 |
 
 方法较为工程化，但系统设计合理、实验扎实，特别是对不同配置的详尽对比和置信度校准分析具有很好的参考价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Few-Shot Vision-Language Classification with Large Multimodal Model Features](../../ICCV2025/multimodal_vlm/enhancing_few-shot_vision-language_classification_with_large_multimodal_model_fe.md)
+- [Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](../../NeurIPS2025/multimodal_vlm/zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+- [Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages](../../CVPR2025/multimodal_vlm/rethinking_few-shot_adaptation_of_vision-language_models_in_two_stages.md)
+- [Token Pruning in Multimodal Large Language Models: Are We Solving the Right Problem?](token_pruning_in_multimodal_large_language_models_are_we_solving_the_right_probl.md)
+- [Progressive Multimodal Reasoning via Active Retrieval](progressive_multimodal_reasoning_via_active_retrieval.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ $$\max_{\mathbf{z}} \mathbb{E}[R(\mathbf{z})]$$
 - 实验充分度: ⭐⭐⭐⭐ （五个基准，突出AIME上的鲁棒性优势）
 - 写作质量: ⭐⭐⭐⭐ （框架描述清晰）
 - 价值: ⭐⭐⭐⭐⭐ （开辟了测试时潜在推理优化的新方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Machiavellian Agents: Behavior Steering via Test-Time Policy Shaping](../../AAAI2026/reinforcement_learning/aligning_machiavellian_agents_behavior_steering_via_test-tim.md)
+- [AbstRaL: Augmenting LLMs' Reasoning by Reinforcing Abstract Thinking](abstral_augmenting_llms_reasoning_by_reinforcing_abstract_thinking.md)
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+- [FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning](fapo_flawed-aware_policy_optimization_for_efficient_and_reliable_reasoning.md)
+- [PolicyFlow: Policy Optimization with Continuous Normalizing Flow in Reinforcement Learning](policyflow_policy_optimization_with_continuous_normalizing_flow_in_reinforcement.md)
+
+<!-- RELATED:END -->

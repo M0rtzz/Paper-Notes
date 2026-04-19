@@ -171,3 +171,15 @@ TrackMAE（图2）在标准MVM基础上增加两个组件：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖6个基准、线性探测+微调、全面消融、ViT-B/L两种规模
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机分析到位，对比公平
 - **价值**: ⭐⭐⭐⭐ — 在运动敏感基准上的提升实质性，CoTracker3成本仍是实用性的主要顾虑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](../../ECCV2024/self_supervised/vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
+- [Self-supervised Video Copy Localization with Regional Token Representation](../../ECCV2024/self_supervised/self-supervised_video_copy_localization_with_regional_token_representation.md)
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+- [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
+
+<!-- RELATED:END -->

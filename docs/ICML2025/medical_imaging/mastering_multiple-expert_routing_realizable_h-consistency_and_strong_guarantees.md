@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多场景验证
 - 写作质量: ⭐⭐⭐⭐ 理论严谨
 - 价值: ⭐⭐⭐⭐ 为多专家路由提供了坚实的理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLoE: Expert Consistency Learning for Missing Modality Segmentation](../../CVPR2025/medical_imaging/cloe_expert_consistency_learning_for_missing_modality_segmentation.md)
+- [MedXpertQA: Benchmarking Expert-Level Medical Reasoning and Understanding](medxpertqa_benchmarking_expert-level_medical_reasoning_and_understanding.md)
+- [Do Multiple Instance Learning Models Transfer?](do_multiple_instance_learning_models_transfer.md)
+- [ViCTr: Vital Consistency Transfer for Pathology Aware Image Synthesis](../../ICCV2025/medical_imaging/victr_vital_consistency_transfer_for_pathology_aware_image_synthesis.md)
+- [ConfHit: Conformal Generative Design with Oracle Free Guarantees](../../ICLR2026/medical_imaging/confhit_conformal_generative_design_with_oracle_free_guarantees.md)
+
+<!-- RELATED:END -->

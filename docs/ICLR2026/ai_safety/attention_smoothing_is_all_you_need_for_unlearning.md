@@ -119,3 +119,15 @@ ASU将遗忘重新定义为自蒸馏过程：构建一个forget-teacher（通过
 4. **实际部署价值**：持续遗忘场景（多轮"被遗忘权"请求）是ASU的显著优势，这在GDPR合规的实际场景中非常重要。相比GA等方法连续遗忘后立即崩溃，ASU能在遗忘90%数据后仍保持稳定，具有很强的工程实用性。
 5. **方法的简洁性**：整个方法只引入一个超参数 $\tau$，不需要额外数据、外部模型或复杂的训练策略，这种简洁性使其容易集成到现有LLM训练流程中。
 6. **局限性思考**：对抗性攻击（如精心设计的prompt）下ASU的遗忘是否仍然有效？如果攻击者知道使用了注意力平滑，是否能设计绕过策略？这些安全性问题值得后续研究。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](../../ICCV2025/ai_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)
+- [Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning](erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning.md)
+- [Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models](unmasking_backdoors_an_explainable_defense_via_gradient-attention_anomaly_scorin.md)
+- [Train Once, Answer All: Many Pretraining Experiments for the Cost of One](train_once_answer_all_many_pretraining_experiments_for_the_cost_of_one.md)
+- [OFMU: Optimization-Driven Framework for Machine Unlearning](ofmu_optimization-driven_framework_for_machine_unlearning.md)
+
+<!-- RELATED:END -->

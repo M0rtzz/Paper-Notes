@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集全面对比和详细消融，但缺少用户调研
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但公式偏多，可读性可进一步优化
 - 价值: ⭐⭐⭐⭐ 解决了人体动画的核心限制（视角自由度），对影视和虚拟人应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CompleteMe: Reference-based Human Image Completion](../../ICCV2025/image_generation/completeme_reference-based_human_image_completion.md)
+- [MangaNinja: Line Art Colorization with Precise Reference Following](manganinja_line_art_colorization_with_precise_reference_following.md)
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+- [FlexiClip: Locality-Preserving Free-Form Character Animation](../../ICML2025/image_generation/flexiclip_locality-preserving_free-form_character_animation.md)
+- [DPoser-X: Diffusion Model as Robust 3D Whole-Body Human Pose Prior](../../ICCV2025/image_generation/dposer-x_diffusion_model_as_robust_3d_whole-body_human_pose_prior.md)
+
+<!-- RELATED:END -->

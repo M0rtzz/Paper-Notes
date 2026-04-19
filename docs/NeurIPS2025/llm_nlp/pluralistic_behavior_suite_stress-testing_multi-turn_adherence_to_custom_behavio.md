@@ -145,3 +145,15 @@ PBSuite 包含两个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 6 个主流模型、30 个行业、1100 条规则，但 judge 可靠性有待提升
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验分析详尽，limitation 讨论诚实
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 LLM 企业部署中极为重要且被忽视的问题，对安全对齐研究和工业界均有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stress-testing Machine Generated Text Detection: Shifting Language Models Writing Style to Fool Detectors](../../ACL2025/llm_nlp/stress-testing_machine_generated_text_detection_shifting_language_models_writing.md)
+- [Scaling Up Active Testing to Large Language Models](scaling_up_active_testing_to_large_language_models.md)
+- [Unsupervised Evaluation of Multi-Turn Objective-Driven Interactions](../../ICLR2026/llm_nlp/unsupervised_evaluation_of_multi-turn_objective-driven_interactions.md)
+- [Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](../../AAAI2026/llm_nlp/conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
+- [Large Language Models Miss the Multi-Agent Mark](large_language_models_miss_the_multi-agent_mark.md)
+
+<!-- RELATED:END -->

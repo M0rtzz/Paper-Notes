@@ -127,3 +127,15 @@ LatentVoiceMix 的 pipeline：输入是低资源语言的音频数据集 → 去
 - 实验充分度: ⭐⭐⭐ 消融充分但语言覆盖有限，缺少与更多现代方法的对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，流程图和实验表格组织良好
 - 价值: ⭐⭐⭐ 方法简单实用但应用场景较窄，需要更多语言验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Speech Language Modeling via Energy Distance in Continuous Latent Space](../../NeurIPS2025/audio_speech/efficient_speech_language_modeling_via_energy_distance_in_continuous_latent_spac.md)
+- [Latent Speech-Text Transformer](../../ICLR2026/audio_speech/latent_speech_text_transformer.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](../../ACL2025/audio_speech/speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [Dialectal Coverage and Generalization in Arabic Speech Recognition](../../ACL2025/audio_speech/dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
+
+<!-- RELATED:END -->

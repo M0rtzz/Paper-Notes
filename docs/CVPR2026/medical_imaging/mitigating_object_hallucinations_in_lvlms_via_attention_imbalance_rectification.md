@@ -128,3 +128,15 @@ MM-Vet 通用能力：
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个 LVLM、三个基准、七个基线、详细消融和超参分析
 - 写作质量: ⭐⭐⭐⭐⭐ 数学定义严谨，分析递进清晰，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 同时解决幻觉和通用能力退化问题，无需训练即可部署，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](../../ICML2025/medical_imaging/idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
+- [Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](fair_lung_disease_diagnosis_from_chest_ct_via_gender-adversarial_attention_multi.md)
+- [Towards Interpretable Visual Decoding with Attention to Brain Representations](../../ICLR2026/medical_imaging/towards_interpretable_visual_decoding_with_attention_to_brain_representations.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](../../AAAI2026/medical_imaging/small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](../../AAAI2026/medical_imaging/fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
+
+<!-- RELATED:END -->

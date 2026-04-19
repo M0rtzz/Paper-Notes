@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ RM benchmark + 下游RLHF + 消融充分，但缺乏大模型实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论动机清晰，图表信息密度高，Remark解释到位
 - 价值: ⭐⭐⭐⭐ 实用性强——直接插入现有RLHF pipeline，budget-aware的judge调用有工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What Makes a Reward Model a Good Teacher? An Optimization Perspective](what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+- [Diffusion Model as a Noise-Aware Latent Reward Model for Step-Level Preference Optimization](diffusion_model_as_a_noiseaware_latent_reward_model_for_step.md)
+- [Mechanism Design for LLM Fine-tuning with Multiple Reward Models](mechanism_design_for_llm_fine-tuning_with_multiple_reward_models.md)
+- [Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis](limited_preference_data_learning_better_reward_model_with_latent_space_synthesis.md)
+- [Boost Your Human Image Generation Model via Direct Preference Optimization](../../CVPR2025/llm_alignment/boost_your_human_image_generation_model_via_direct_preference_optimization.md)
+
+<!-- RELATED:END -->

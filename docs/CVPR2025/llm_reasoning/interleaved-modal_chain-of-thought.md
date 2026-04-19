@@ -121,3 +121,15 @@ Qwen2-VL-7B 上提升更大（M3CoT +4.6%, LLaVA-W +5.3%）。
 - 实验充分度: ⭐⭐⭐ 三个benchmark较为有限，缺少更难的推理任务评估
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，方法简洁易懂
 - 价值: ⭐⭐⭐⭐ 即插即用的实用性很强，对多模态推理有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](../../CVPR2026/llm_reasoning/rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)
+- [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
+- [TumorChain: Interleaved Multimodal Chain-of-Thought Reasoning for Traceable Clinical Tumor Analysis](../../ICLR2026/llm_reasoning/tumorchain_interleaved_multimodal_chain-of-thought_reasoning_for_traceable_clini.md)
+- [SPRINT: Enabling Interleaved Planning and Parallelized Execution in Reasoning Models](../../NeurIPS2025/llm_reasoning/sprint_enabling_interleaved_planning_and_parallelized_execution_in_reasoning_mod.md)
+- [Style Evolving along Chain-of-Thought for Unknown-Domain Object Detection](style_evolving_along_chain-of-thought_for_unknown-domain_object_detection.md)
+
+<!-- RELATED:END -->

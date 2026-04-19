@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个horizon×多模型家族×多代理组合，评估极其全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义和框架化出色，competitive frontier概念有商业洞察
 - 价值: ⭐⭐⭐⭐ 对广告技术/数字营销领域有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DejaVid: Encoder-Agnostic Learned Temporal Matching for Video Classification](dejavid_encoder-agnostic_learned_temporal_matching_for_video_classification.md)
+- [IonCast: A Deep Learning Framework for Forecasting Ionospheric Dynamics](../../NeurIPS2025/time_series/ioncast_a_deep_learning_framework_for_forecasting_ionospheric_dynamics.md)
+- [A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](../../NeurIPS2025/time_series/a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)
+- [Learning Extremely High Density Crowds as Active Matters](learning_extremely_high_density_crowds_as_active_matters.md)
+- [FLAVC: Learned Video Compression with Feature Level Attention](flavc_learned_video_compression_with_feature_level_attention.md)
+
+<!-- RELATED:END -->

@@ -111,3 +111,15 @@ DSA-IGN的总损失为 $\mathcal{L} = \mathcal{L}_{\text{div}} + \mathcal{L}_{\t
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集×多个基线算法×两种训练策略，实验矩阵完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，定义严谨
 - 价值: ⭐⭐⭐ 实际提升在不同场景差异较大，NLP场景收益有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FLUX: Efficient Descriptor-Driven Clustered Federated Learning under Arbitrary Distribution Shifts](../../NeurIPS2025/ai_safety/flux_efficient_descriptor-driven_clustered_federated_learning_under_arbitrary_di.md)
+- [FedAWA: Adaptive Optimization of Aggregation Weights in Federated Learning Using Client Vectors](../../CVPR2025/ai_safety/fedawa_adaptive_optimization_of_aggregation_weights_in_federated_learning_using_.md)
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](../../CVPR2025/ai_safety/a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+- [MARS: A Malignity-Aware Backdoor Defense in Federated Learning](../../NeurIPS2025/ai_safety/mars_a_malignity-aware_backdoor_defense_in_federated_learning.md)
+- [Geometric Knowledge-Guided Localized Global Distribution Alignment for Federated Learning](../../CVPR2025/ai_safety/geometric_knowledge-guided_localized_global_distribution_alignment_for_federated.md)
+
+<!-- RELATED:END -->

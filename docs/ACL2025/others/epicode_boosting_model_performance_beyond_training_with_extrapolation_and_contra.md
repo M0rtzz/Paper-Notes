@@ -138,3 +138,15 @@ EpiCoDe 本身不涉及额外训练。底层微调使用标准设置：AdamW 优
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4个模型×3个任务×10次重复，配对t检验，鲁棒性分析，消融实验非常充分
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，理论推导虽带有LaTeX噪声但逻辑严密，图表易懂
 - **价值**: ⭐⭐⭐⭐ — 方法简单实用，适合低资源场景即插即用；理论框架对理解对比解码有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
+- [When to Speak, When to Abstain: Contrastive Decoding with Abstention](when_to_speak_when_to_abstain.md)
+- [CoachMe: Decoding Sport Elements with a Reference-Based Coaching Instruction Generation Model](coachme_sport_instruction.md)
+- [Decoding Reading Goals from Eye Movements](decoding_reading_goals_from_eye_movements.md)
+- [Measuring Model Performance in the Presence of an Intervention](../../AAAI2026/others/measuring_model_performance_in_the_presence_of_an_intervention.md)
+
+<!-- RELATED:END -->

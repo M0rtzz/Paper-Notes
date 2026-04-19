@@ -192,3 +192,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ （DARPA挑战赛的真实场景验证有说服力，但样本量偏小）
 - **写作质量**: ⭐⭐⭐⭐ （结构清晰，背景铺垫充分，表格信息量大）
 - **价值**: ⭐⭐⭐⭐ （高度实用，解决真实紧急医疗场景中的AI集成问题）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM-Assisted Emergency Triage Benchmark: Bridging Hospital-Rich and MCI-Like Field Simulation](llm-assisted_emergency_triage_benchmark_bridging_hospital-rich_and_mci-like_fiel.md)
+- [Is Sequence Information All You Need for Bayesian Optimization of Antibodies?](is_sequence_information_all_you_need_for_bayesian_optimization_of_antibodies.md)
+- [Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson's Disease Gait Assessment](care-pd_a_multi-site_anonymized_clinical_dataset_for_parkinsons_disease_gait_ass.md)
+- [Bayesian Inference for Correlated Human Experts and Classifiers](../../ICML2025/medical_imaging/bayesian_inference_for_correlated_human_experts_and_classifiers.md)
+- [Multimodal Disease Progression Modeling via Spatiotemporal Disentanglement and Multiscale Alignment](multimodal_disease_progression_modeling_via_spatiotemporal_disentanglement_and_m.md)
+
+<!-- RELATED:END -->

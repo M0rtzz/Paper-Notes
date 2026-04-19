@@ -144,3 +144,15 @@ $$\bar{A}^i x^i_* = \bar{b}^i, \quad i = 1, ..., n$$
 - 实验充分度: ⭐⭐⭐ （以理论为主，实验验证相对有限）
 - 写作质量: ⭐⭐⭐⭐⭐ （渐进式展开非常清晰，理论精炼）
 - 价值: ⭐⭐⭐⭐ （为个性化联邦学习提供了新的理论基础和实用框架）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Personalized Subgraph Federated Learning with Differentiable Auxiliary Projections](../../NeurIPS2025/optimization/personalized_subgraph_federated_learning_with_differentiable_auxiliary_projectio.md)
+- [Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees](../../ICML2025/optimization/understanding_the_statistical_accuracy-communication_trade-off_in_personalized_f.md)
+- [Sharper Convergence Rates for Nonconvex Optimisation via Reduction Mappings](../../NeurIPS2025/optimization/sharper_convergence_rates_for_nonconvex_optimisation_via_reduction_mappings.md)
+- [Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
+- [From Average-Iterate to Last-Iterate Convergence in Games: A Reduction and Its Applications](../../NeurIPS2025/optimization/from_average-iterate_to_last-iterate_convergence_in_games_a_reduction_and_its_ap.md)
+
+<!-- RELATED:END -->

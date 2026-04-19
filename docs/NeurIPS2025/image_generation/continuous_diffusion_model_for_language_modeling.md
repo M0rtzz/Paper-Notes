@@ -147,3 +147,15 @@ CIFAR-10（像素级图像建模，BPD↓）：
 - 实验充分度: ⭐⭐⭐⭐ 跨三个模态（文本/图像/DNA）验证，消融充分
 - 写作质量: ⭐⭐⭐⭐ 理论部分推导清晰，但部分符号较重
 - 价值: ⭐⭐⭐⭐ 为离散数据的扩散建模开辟了统一的几何视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Audio Language Modeling with Continuous-Valued Tokens and Masked Next-Token Prediction](../../ICML2025/image_generation/generative_audio_language_modeling_with_continuous-valued_tokens_and_masked_next.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [Continuous Uniqueness and Novelty Metrics for Generative Modeling of Inorganic Crystals](continuous_uniqueness_and_novelty_metrics_for_generative_modeling_of_inorganic_c.md)
+- [Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models](breaking_ars_sampling_bottleneck_provable_acceleration_via_d.md)
+- [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](../../ECCV2024/image_generation/nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
+
+<!-- RELATED:END -->

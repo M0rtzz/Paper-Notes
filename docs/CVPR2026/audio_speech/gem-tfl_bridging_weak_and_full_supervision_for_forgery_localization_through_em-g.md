@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集充分对比
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰
 - 价值: ⭐⭐⭐⭐ 弥合弱/全监督差距的方向重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeformTrace: A Deformable State Space Model with Relay Tokens for Temporal Forgery Localization](../../AAAI2026/audio_speech/deformtrace_a_deformable_state_space_model_with_relay_tokens_for_temporal_forger.md)
+- [Sortformer: A Novel Approach for Permutation-Resolved Speaker Supervision in Speech-to-Text Systems](../../ICML2025/audio_speech/sortformer_a_novel_approach_for_permutation-resolved_speaker_supervision_in_spee.md)
+- [Towards Open-Vocabulary Audio-Visual Event Localization](../../CVPR2025/audio_speech/towards_open-vocabulary_audio-visual_event_localization.md)
+- [Bridging the Language Gap: Synthetic Voice Diversity via Latent Mixup for Equitable Speech Recognition](../../ICML2025/audio_speech/bridging_the_language_gap_synthetic_voice_diversity_via_latent_mixup_for_equitab.md)
+- [In-the-wild Audio Spatialization with Flexible Text-guided Localization](../../ACL2025/audio_speech/tas_audio_spatialization.md)
+
+<!-- RELATED:END -->

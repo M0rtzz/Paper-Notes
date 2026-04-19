@@ -131,3 +131,15 @@ VLM（LLaVA-1.6-8B）身份遗忘：遗忘准确率降至2.2%，同时MME认知/
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨三大模型族（CLIP/SD/VLM）+量化鲁棒性+效率对比，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式完整，但符号较多需要反复对照
 - 价值: ⭐⭐⭐⭐ 提供了实用的遗忘框架，量化鲁棒性是重要加分项
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](pluggable_pruning_with_contiguous_layer_distillation_for_diffusion_transformers.md)
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation](edgedit_hardware-aware_diffusion_transformers_for_efficient_on-device_image_gene.md)
+- [SegQuant: A Semantics-Aware and Generalizable Quantization Framework for Diffusion Models](segquant_diffusion_model_quantization.md)
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+
+<!-- RELATED:END -->

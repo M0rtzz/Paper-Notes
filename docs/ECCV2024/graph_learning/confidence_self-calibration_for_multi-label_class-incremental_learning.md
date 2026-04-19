@@ -155,3 +155,15 @@ G → S (Softmax) 组合最优(mAP 72.8%)，优于固定统计 CM 的 Z → Z (6
 - 实验充分度: ⭐⭐⭐⭐⭐ (多数据集、多场景、详细消融、可视化齐全)
 - 写作质量: ⭐⭐⭐⭐ (问题阐述清晰，图表丰富)
 - 价值: ⭐⭐⭐⭐ (MLCIL 方向重要推进，校准思路具有启发性)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GKGNet: Group K-Nearest Neighbor Based Graph Convolutional Network for Multi-Label Image Recognition](gkgnet_group_k-nearest_neighbor_based_graph_convolutional_network_for_multi-labe.md)
+- [Uncertain Knowledge Graph Completion via Semi-Supervised Confidence Distribution Learning](../../NeurIPS2025/graph_learning/uncertain_knowledge_graph_completion_via_semi-supervised_confidence_distribution.md)
+- [SENC: Handling Self-collision in Neural Cloth Simulation](senc_handling_self-collision_in_neural_cloth_simulation.md)
+- [EchoLess: Label-Based Pre-Computation for Memory-Efficient Heterogeneous Graph Learning](../../AAAI2026/graph_learning/echoless_label-based_pre-computation_for_memory-efficient_heterogeneous_graph_le.md)
+- [Posterior Label Smoothing for Node Classification](../../AAAI2026/graph_learning/posterior_label_smoothing_for_node_classification.md)
+
+<!-- RELATED:END -->

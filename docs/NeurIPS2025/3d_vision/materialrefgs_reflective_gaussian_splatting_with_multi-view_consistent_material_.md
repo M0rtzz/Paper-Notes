@@ -140,3 +140,15 @@ $$\mathcal{L} = \mathcal{L}_c + \lambda_{n-d}\mathcal{L}_{n-d} + \lambda_n\mathc
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4个数据集全面评估（合成+真实），消融彻底，包括法线和几何精度
 - **写作质量**: ⭐⭐⭐⭐ 方法动机阐述清晰，图示质量高
 - **价值**: ⭐⭐⭐⭐ 对反射表面的3DGS渲染有实际提升，多视角一致性思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](../../ECCV2024/3d_vision/gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [TRIM: Scalable 3D Gaussian Diffusion Inference with Temporal and Spatial Trimming](trim_scalable_3d_gaussian_diffusion_inference_with_temporal_and_spatial_trimming.md)
+- [SuperMat: Physically Consistent PBR Material Estimation at Interactive Rates](../../ICCV2025/3d_vision/supermat_physically_consistent_pbr_material_estimation_at_interactive_rates.md)
+- [PanSt3R: Multi-view Consistent Panoptic Segmentation](../../ICCV2025/3d_vision/panst3r_multi-view_consistent_panoptic_segmentation.md)
+- [MaterialMVP: Illumination-Invariant Material Generation via Multi-view PBR Diffusion](../../ICCV2025/3d_vision/materialmvp_illumination-invariant_material_generation_via_multi-view_pbr_diffus.md)
+
+<!-- RELATED:END -->

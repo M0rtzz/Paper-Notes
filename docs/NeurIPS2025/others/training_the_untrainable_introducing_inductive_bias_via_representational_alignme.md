@@ -132,3 +132,15 @@ $$\mathcal{L}(\theta^T) = \mathcal{L}_T(\theta^T) + \sum_{i \in I} \bar{\mathcal
 - 实验充分度: ⭐⭐⭐⭐ 涵盖图像分类、序列建模4个任务，多种架构组合，但每个都没有做到最深入
 - 写作质量: ⭐⭐⭐⭐ 实验设计系统，但限于覆盖面过广，每个实验的分析深度有限
 - 价值: ⭐⭐⭐⭐ 提供了研究架构归纳偏置的有力实证工具，但FCN的实际效用仍待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Lists to Emojis: How Format Bias Affects Model Alignment](../../ACL2025/others/from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race](../../ACL2025/others/aligned_but_blind_implicit_bias.md)
+- [Graph Alignment via Birkhoff Relaxation](graph_alignment_via_birkhoff_relaxation.md)
+- [The Persistence of Neural Collapse Despite Low-Rank Bias](the_persistence_of_neural_collapse_despite_low-rank_bias.md)
+- [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
+
+<!-- RELATED:END -->

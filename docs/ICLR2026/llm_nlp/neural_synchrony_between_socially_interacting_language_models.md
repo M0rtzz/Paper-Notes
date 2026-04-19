@@ -171,3 +171,15 @@ $SyncR^2$ 分布随 agent 间关系亲密度增加而上移——更亲密的社
 - **实验充分度**: ⭐⭐⭐⭐ — 21 个模型对、450 个场景、多种控制条件，但模型规模偏小
 - **实用价值**: ⭐⭐⭐ — 目前更偏分析性和启发性，直接应用路径待明确
 - **总体推荐**: ⭐⭐⭐⭐ — 非常有趣且有深度的跨学科工作，打开了理解 LLM "社会心智" 的新窗口
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Topic Modeling with Large Language Models in the Loop](../../ACL2025/llm_nlp/neural_topic_modeling_with_large_language_models_in_the_loop.md)
+- [PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models](../../ACL2025/llm_nlp/plugin_finetuning_bridge.md)
+- [PT2-LLM: Post-Training Ternarization for Large Language Models](pt2-llm_post-training_ternarization_for_large_language_models.md)
+- [DreamOn: Diffusion Language Models For Code Infilling Beyond Fixed-size Canvas](dreamon_diffusion_language_models_for_code_infilling_beyond_fixed-size_canvas.md)
+- [How to Enable Effective Cooperation Between Humans and NLP Models: A Survey of Principles, Formalizations, and Beyond](../../ACL2025/llm_nlp/human_nlp_cooperation_survey.md)
+
+<!-- RELATED:END -->

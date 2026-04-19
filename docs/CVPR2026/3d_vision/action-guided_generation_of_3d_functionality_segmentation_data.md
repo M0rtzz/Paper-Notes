@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 详细的数据组合对比+分类别分析
 - 写作质量: ⭐⭐⭐⭐ 管线清晰，问题定义准确
 - 价值: ⭐⭐⭐⭐ 为具身AI数据瓶颈提供了可扩展方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Functionality Understanding and Segmentation in 3D Scenes](../../CVPR2025/3d_vision/functionality_understanding_and_segmentation_in_3d_scenes.md)
+- [Lifting Unlabeled Internet-level Data for 3D Scene Understanding](lifting_unlabeled_internet-level_data_for_3d_scene_understanding.md)
+- [GAP: Action-Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation](action-geometry_prediction_with_3d_geometric_prior_for_bimanual_manipulation.md)
+- [SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)
+- [NTK-Guided Implicit Neural Teaching](ntk-guided_implicit_neural_teaching.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 跨视觉/NLP/RL 三个领域验证，但各领域规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，Theorem 链条完整，实验组织有序
 - 价值: ⭐⭐⭐⭐⭐ 极简实用——一行代码解决持续学习核心问题，DfI 度量可广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample-Adaptivity Tradeoff in On-Demand Sampling](../../NeurIPS2025/others/sample-adaptivity_tradeoff_in_on-demand_sampling.md)
+- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](../../CVPR2026/others/your_classifier_can_do_more_towards_balancing_the.md)
+- [Guided Perturbation Sensitivity (GPS): Detecting Adversarial Text via Embedding Stability and Word Importance](../../AAAI2026/others/guided_perturbation_sensitivity_gps_detecting_adversarial_text_via_embedding_sta.md)
+- [Meta-learning three-factor plasticity rules for structured credit assignment with sparse feedback](../../NeurIPS2025/others/meta-learning_three-factor_plasticity_rules_for_structured_credit_assignment_wit.md)
+- [CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](../../ECCV2024/others/clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)
+
+<!-- RELATED:END -->

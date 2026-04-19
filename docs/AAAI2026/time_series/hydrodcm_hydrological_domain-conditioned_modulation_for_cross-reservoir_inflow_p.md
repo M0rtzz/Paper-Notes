@@ -147,3 +147,15 @@ HydroDCM 在所有预测日上一致优于所有 DG 基线，整体 NSE 仅比 O
 - 实验充分度: ⭐⭐⭐ — 数据集规模偏小（30 水库/3 目标），消融设计合理但缺乏多流域验证
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，动机论证充分，图示直观
 - 价值: ⭐⭐⭐⭐ — 对水文领域有重要实用价值，但泛化到其他领域的价值有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ResCP: Reservoir Conformal Prediction for Time Series Forecasting](../../ICLR2026/time_series/rescp_reservoir_conformal_prediction_for_time_series_forecasting.md)
+- [Urban Incident Prediction with Graph Neural Networks: Integrating Government Ratings and Crowdsourced Reports](urban_incident_prediction_with_graph_neural_networks_integrating_government_rati.md)
+- [Finding Time Series Anomalies using Granular-ball Vector Data Description](finding_time_series_anomalies_using_granular-ball_vector_data_description.md)
+- [IdealTSF: Can Non-Ideal Data Contribute to Enhancing Time Series Forecasting?](idealtsf_can_non-ideal_data_contribute_to_enhancing_the_performance_of_time_seri.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](../../ICLR2026/time_series/adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+
+<!-- RELATED:END -->

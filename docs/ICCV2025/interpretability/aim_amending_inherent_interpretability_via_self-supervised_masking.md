@@ -147,3 +147,15 @@ WaterBirds-100% 最差组准确率提升约 **40 个百分点**，TravelingBirds
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多架构验证充分，消融实验详实，还有用户研究
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对可解释性和 OOD 泛化的实际价值高，但局限于 CNN 降低了通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](../../NeurIPS2025/interpretability/self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)
+- [Dataset Distillation for Pre-Trained Self-Supervised Vision Models](../../NeurIPS2025/interpretability/dataset_distillation_for_pre-trained_self-supervised_vision_models.md)
+- [ArgoTweak: Towards Self-Updating HD Maps through Structured Priors](argotweak_towards_self-updating_hd_maps_through_structured_priors.md)
+- [Latent Principle Discovery for Language Model Self-Improvement](../../NeurIPS2025/interpretability/latent_principle_discovery_for_language_model_self-improvement.md)
+- [Evolving Prompts In-Context: An Open-ended, Self-replicating Perspective](../../ICML2025/interpretability/evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)
+
+<!-- RELATED:END -->

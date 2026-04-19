@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 结构化+随机数据验证，多种采样方案对比
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，直觉解释到位
 - 价值: ⭐⭐⭐⭐⭐ 对理解Adam在实际训练中的行为有根本意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race](../../ACL2025/others/aligned_but_blind_implicit_bias.md)
+- [Rethinking Data Bias: Dataset Copyright Protection via Embedding Class-Wise Hidden Bias](../../ECCV2024/others/rethinking_data_bias_dataset_copyright_protection_via_embedding_class-wise_hidde.md)
+- [Explicit and Implicit Data Augmentation for Social Event Detection](../../ACL2025/others/explicit_and_implicit_data_augmentation_for_social_event_detection.md)
+- [Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+- [Better Embeddings with Coupled Adam](../../ACL2025/others/better_embeddings_with_coupled_adam.md)
+
+<!-- RELATED:END -->

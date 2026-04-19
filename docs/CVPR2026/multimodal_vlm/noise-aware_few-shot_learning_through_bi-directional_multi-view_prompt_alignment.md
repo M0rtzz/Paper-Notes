@@ -182,3 +182,15 @@ DEFT在75%噪声下急剧下降（75.87），NA-MVP保持86.23（+10.36），自
 - 实验充分度: ⭐⭐⭐⭐ 5个合成噪声数据集 + 1个真实噪声数据集，消融实验覆盖组件/对齐方式/prompt数/阈值策略
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，三大局限总结到位，方法描述系统化
 - 价值: ⭐⭐⭐⭐ 在噪声小样本学习这一实用场景下提供有效方案，高噪声下的大幅提升有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Calibrating Prompt Tuning of Vision-Language Models](towards_calibrating_prompt_tuning_of_vision-language_models.md)
+- [DeAR: Fine-Grained VLM Adaptation by Decomposing Attention Head Roles](dear_fine-grained_vlm_adaptation_by_decomposing_attention_head_roles.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [CAPT: Confusion-Aware Prompt Tuning for Reducing Vision-Language Misalignment](capt_confusion-aware_prompt_tuning_for_reducing_vision-language_misalignment.md)
+- [Evolving Prompt Adaptation for Vision-Language Models](evolving_prompt_adaptation_for_visionlanguage_mode.md)
+
+<!-- RELATED:END -->

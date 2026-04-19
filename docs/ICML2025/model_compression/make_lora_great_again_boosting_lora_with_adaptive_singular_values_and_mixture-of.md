@@ -184,3 +184,15 @@ LoRA-MoE 写法：
 - 这篇工作的价值不只在“再造一个 LoRA 变体”，而在于把先验选择与优化对齐这两件事系统化。
 - 若后续做 LLM 压缩方向实验，可把 GOAT 当作“低改造成本强基线”。
 - 重点复现实验应放在：低 rank、MoE 专家数变化、scaling 扫描三类场景。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LD-MoLE: Learnable Dynamic Routing for Mixture of LoRA Experts](../../ICLR2026/model_compression/ld-mole_learnable_dynamic_routing_for_mixture_of_lora_experts.md)
+- [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](../../NeurIPS2025/model_compression/robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [Text-to-LoRA: Instant Transformer Adaption](text-to-lora_instant_transformer_adaption.md)
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](../../ACL2025/model_compression/sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+- [DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models](../../CVPR2025/model_compression/ders_towards_extremely_efficient_upcycled_mixture-of-experts_models.md)
+
+<!-- RELATED:END -->

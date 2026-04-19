@@ -151,3 +151,15 @@ $$\lambda_{diff}\mathcal{L}_{diff} + \lambda_{rgb}\mathcal{L}_{rgb} + \lambda_{m
 - 新颖性：★★★★★ — 首创Gaussian Atlas表示，开辟2D模型直接微调做3D生成的全新路径
 - 技术深度：★★★★☆ — OT映射+投影的设计简洁优雅，但扩散模型训练本身较标准
 - 实用性：★★★★☆ — 推理极快但数据集构建成本巨大，需要显著计算资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)](unleashing_vecset_diffusion_model_for_fast_shape_generation.md)
+- [CutS3D: Cutting Semantics in 3D for 2D Unsupervised Instance Segmentation](cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)
+- [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

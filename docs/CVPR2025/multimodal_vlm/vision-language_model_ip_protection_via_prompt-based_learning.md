@@ -106,3 +106,15 @@ Target-free场景（无非授权域数据）：通过风格增强生成OOD数据
 - 实验充分度: ⭐⭐⭐⭐ 三数据集+三场景+新指标+统计显著性检验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详尽，公式较密但可追踪
 - 价值: ⭐⭐⭐⭐ 实用价值高但仅限分类场景，生成任务IP保护仍待探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [VaMP: Variational Multi-Modal Prompt Learning for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/vamp_variational_multi-modal_prompt_learning_for_vision-language_models.md)
+- [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
+- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
+- [Beyond Words: Augmenting Discriminative Richness via Diffusions in Unsupervised Prompt Learning](beyond_words_augmenting_discriminative_richness_via_diffusions_in_unsupervised_p.md)
+
+<!-- RELATED:END -->

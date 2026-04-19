@@ -172,3 +172,15 @@ ChainRAG 为**无训练方法（train-free）**，所有组件使用现成模型
 | 写作质量 | 8 | 问题动机通过实证分析建立，案例清晰有说服力 |
 | 实用价值 | 8 | train-free，可直接集成，句子图 + 重写是低成本的通用改进 |
 | 总分 | 7.8 | 问题定义精准，方案实用，实验全面 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REAP: Enhancing RAG with Recursive Evaluation and Adaptive Planning for Multi-Hop Question Answering](../../AAAI2026/information_retrieval/reap_enhancing_rag_with_recursive_evaluation_and_adaptive_planning_for_multi-hop.md)
+- [MAIN-RAG: Multi-Agent Filtering Retrieval-Augmented Generation](main-rag_multi-agent_filtering_retrieval-augmented_generation.md)
+- [Typed-RAG: Type-Aware Decomposition of Non-Factoid Questions for Retrieval-Augmented Generation](typed-rag_type-aware_decomposition_of_non-factoid_questions_for_retrieval-augmen.md)
+- [HELIOS: Harmonizing Early Fusion, Late Fusion, and LLM Reasoning for Multi-Granular Table-Text Retrieval](helios_harmonizing_early_fusion_late_fusion_and_llm_reasoning_for_multi-granular.md)
+- [The Distracting Effect: Understanding Irrelevant Passages in RAG](the_distracting_effect_understanding_irrelevant_passages_in_rag.md)
+
+<!-- RELATED:END -->

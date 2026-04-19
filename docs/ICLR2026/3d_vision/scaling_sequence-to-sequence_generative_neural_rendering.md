@@ -319,3 +319,15 @@ Kaleido 将新视角合成完全表述为**序列到序列的图像合成任务*
 - 实验充分度: ⭐⭐⭐⭐⭐ （多基准、多设置的全面评估，首次匹配优化方法）
 - 写作质量: ⭐⭐⭐⭐ （概念表述清晰，实验设置严谨）
 - 价值: ⭐⭐⭐⭐⭐ （开辟了生成式神经渲染的新方向，缩放规律具有指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongStream: Long-Sequence Streaming Autoregressive Visual Geometry](../../CVPR2026/3d_vision/longstream_long-sequence_streaming_autoregressive_visual_geometry.md)
+- [LONG3R: Long Sequence Streaming 3D Reconstruction](../../ICCV2025/3d_vision/long3r_long_sequence_streaming_3d_reconstruction.md)
+- [AeroDGS: Physically Consistent Dynamic Gaussian Splatting for Single-Sequence Aerial 4D Reconstruction](../../CVPR2026/3d_vision/aerodgs_physically_consistent_dynamic_gaussian_splatting_for_single-sequence_aer.md)
+- [RadarLLM: Empowering Large Language Models to Understand Human Motion from Millimeter-Wave Point Cloud Sequence](../../AAAI2026/3d_vision/radarllm_empowering_large_language_models_to_understand_human_motion_from_millim.md)
+- [Scaling View Synthesis Transformers (SVSM)](../../CVPR2026/3d_vision/scaling_view_synthesis_transformers.md)
+
+<!-- RELATED:END -->

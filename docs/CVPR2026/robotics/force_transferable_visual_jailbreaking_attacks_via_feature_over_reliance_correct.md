@@ -195,3 +195,15 @@ FORCE 无需多模型参与，仅在单 source model 上修正特征依赖即可
 - 实验充分度: 8/10 — 覆盖多架构、多数据集、多设置，消融清晰；但 source model 多样性和超参数分析可进一步补充
 - 写作质量: 9/10 — 分析→动机→方法的逻辑链条极为清晰，图示直观，可读性强
 - 价值: 7/10 — 指出了重要问题并提供了有效缓解，但绝对攻击成功率仍低，实际 red-teaming 应用价值有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation](forcevla2_unleashing_hybrid_force-position_control_with_force_awareness_for_cont.md)
+- [Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning](cross-domain_demo-to-code_via_neurosymbolic_counterfactual_reasoning.md)
+- [RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](rc-nf_robot-conditioned_normalizing_flow_for_real-time_anomaly_detection_in_robo.md)
+- [Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)
+- [PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments](panoaffordancenet_towards_holistic_affordance_grounding_in_360_indoor_environmen.md)
+
+<!-- RELATED:END -->

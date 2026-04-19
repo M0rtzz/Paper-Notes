@@ -201,3 +201,15 @@ PS-CBM平均ACC超SOTA 1.0%~7.4%，CEA超2.0%~9.5%，同时使用的概念数仅
 - 实验充分度: ⭐⭐⭐⭐⭐ — 11个数据集、8个baseline、多维度消融，非常充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，表格丰富，可视化优秀，Table 1的对比矩阵很直观
 - 价值: ⭐⭐⭐⭐ — 对CBM领域有实质推动，CEA指标可被广泛采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Concept Bottleneck Models: From Pitfalls to Solutions](../../CVPR2026/human_understanding/rethinking_concept_bottleneck_models_from_pitfalls_to_solutions.md)
+- [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
+- [Anti-adversarial Learning: Desensitizing Prompts for Large Language Models](anti-adversarial_learning_desensitizing_prompts_for_large_la.md)
+- [Failures to Surface Harmful Contents in Video Large Language Models](failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ PhysSplat在真实感评分上最高，推理时间仅2分钟，比Physics3D快4
 - 技术深度: ⭐⭐⭐⭐ (MLLM-P3+MPDP+PGAS完整流水线)
 - 实验充分度: ⭐⭐⭐⭐ (多数据集+用户研究)
 - 实用价值: ⭐⭐⭐⭐⭐ (2分钟推理极具实用性)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update](2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)
+- [MEGA: Memory-Efficient 4D Gaussian Splatting for Dynamic Scenes](mega_memory-efficient_4d_gaussian_splatting_for_dynamic_scenes.md)
+- [Let it Snow! Animating 3D Gaussian Scenes with Dynamic Weather Effects via Physics-Guided Score Distillation](../../CVPR2026/3d_vision/let_it_snow_animating_3d_gaussian_scenes_with_dynamic_weather_effects_via_physic.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+
+<!-- RELATED:END -->

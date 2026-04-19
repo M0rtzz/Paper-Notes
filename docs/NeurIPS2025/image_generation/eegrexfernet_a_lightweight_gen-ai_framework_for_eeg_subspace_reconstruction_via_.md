@@ -144,3 +144,15 @@ Wilcoxon 秩检验结果：
 - 实验充分度: ⭐⭐⭐ 消融设计合理但数据集太小（仅 4 被试），缺少与 ASR 等标准方法的对比
 - 写作质量: ⭐⭐⭐⭐ 架构描述清晰，图表信息密度高，统计检验规范
 - 价值: ⭐⭐⭐⭐ 对实时 BCI 的 EEG 预处理有直接应用价值，轻量化设计思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StelLA: Subspace Learning in Low-rank Adaptation using Stiefel Manifold](stella_subspace_learning_in_low-rank_adaptation_using_stiefel_manifold.md)
+- [REGEN: Learning Compact Video Embedding with (Re-)Generative Decoder](../../ICCV2025/image_generation/regen_learning_compact_video_embedding_with_re-generative_decoder.md)
+- [Step-Aware Residual-Guided Diffusion for EEG Spatial Super-Resolution](../../ICLR2026/image_generation/step-aware_residual-guided_diffusion_for_eeg_spatial_super-resolution.md)
+- [AnoStyler: Text-Driven Localized Anomaly Generation via Lightweight Style Transfer](../../AAAI2026/image_generation/anostyler_text-driven_localized_anomaly_generation_via_light.md)
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+
+<!-- RELATED:END -->

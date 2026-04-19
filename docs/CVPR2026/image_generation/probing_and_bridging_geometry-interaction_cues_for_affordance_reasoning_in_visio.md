@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 探测实验设计精妙，但定量评估仅在 AGD20K 上做了融合对比
 - 写作质量: ⭐⭐⭐⭐⭐ 论文逻辑链非常清晰，从假说→探测→验证→融合环环相扣
 - 价值: ⭐⭐⭐⭐ 为可供性研究和 VFM 理解提供了全新视角，但实际应用需要更强的融合策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mind the Gap: Aligning Vision Foundation Models to Image Feature Matching](../../ICCV2025/image_generation/mind_the_gap_aligning_vision_foundation_models_to_image_feature_matching.md)
+- [DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models](../../NeurIPS2025/image_generation/dexter_diffusion-guided_explanations_with_textual_reasoning_for_vision_models.md)
+- [Cinematic Audio Source Separation Using Visual Cues](cinematic_audio_source_separation_using_visual_cues.md)
+- [A Unified Framework for Motion Reasoning and Generation in Human Interaction](../../ICCV2025/image_generation/a_unified_framework_for_motion_reasoning_and_generation_in_human_interaction.md)
+- [CoD: A Diffusion Foundation Model for Image Compression](cod_a_diffusion_foundation_model_for_image_compression.md)
+
+<!-- RELATED:END -->

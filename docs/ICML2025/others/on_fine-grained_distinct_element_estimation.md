@@ -128,3 +128,15 @@ $$\tilde{O}\!\left(\alpha \log n + \max\!\left(\frac{1}{F_0(S)},\, \varepsilon^2
 - 实验充分度: ⭐⭐⭐ — 仅 CAIDA 数据集，理论对实验比重悬殊
 - 写作质量: ⭐⭐⭐⭐ — 技术概述清晰，定理陈述精确，结构完整
 - 价值: ⭐⭐⭐⭐⭐ — 对理论社区（通信复杂度/流式算法）而言价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](../../ACL2025/others/demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](../../ACL2025/others/chartlens_fine-grained_visual_attribution_in_charts.md)
+- [Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
+- [Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
+- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](../../ACL2025/others/fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ VeriMaAS 的工作流为：给定 RTL 设计任务 → 自适应采样 Agent 算
 - 实验充分度: ⭐⭐⭐ Workshop论文规模，但覆盖了多个模型和两个benchmark
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，实验设计系统
 - 价值: ⭐⭐⭐⭐ 对硬件设计自动化有实用参考，低监督成本使其易于部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CARD: Towards Conditional Design of Multi-agent Topological Structures](../../ICLR2026/code_intelligence/card_towards_conditional_design_of_multi-agent_topological_structures.md)
+- [A Self-Improving Coding Agent](a_selfimproving_coding_agent.md)
+- [A Stochastic Differential Equation Framework for Multi-Objective LLM Interactions](a_stochastic_differential_equation_framework_for_multi-objective_llm_interaction.md)
+- [SWE-rebench: An Automated Pipeline for Task Collection and Decontaminated Evaluation of Software Engineering Agents](swe-rebench_an_automated_pipeline_for_task_collection_and_decontaminated_evaluat.md)
+- [CompileAgent: Automated Real-World Repo-Level Compilation with Tool-Integrated LLM-based Agent System](../../ACL2025/code_intelligence/compileagent_automated_real-world_repo-level_compilation_with_tool-integrated_ll.md)
+
+<!-- RELATED:END -->

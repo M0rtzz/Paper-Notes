@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型、9 个数据集、全面消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，图示规范
 - 价值: ⭐⭐⭐⭐ 通用增强框架，对任何时序模型都有潜在价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Channel Normalization for Time Series Channel Identification](../../ICML2025/time_series/channel_normalization_for_time_series_channel_identification.md)
+- [Channel Matters: Estimating Channel Influence for Multivariate Time Series](../../NeurIPS2025/time_series/channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
+- [Mask the Redundancy: Evolving Masking Representation Learning for Multivariate Time-Series Clustering](mask_the_redundancy_evolving_masking_representation_learning_for_multivariate_ti.md)
+- [iTimER: Reconstruction Error-Guided Irregularly Sampled Time Series Representation Learning](beyond_observations_reconstruction_error-guided_irregularly_sampled_time_series_.md)
+- [CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](../../ICLR2026/time_series/cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time.md)
+
+<!-- RELATED:END -->

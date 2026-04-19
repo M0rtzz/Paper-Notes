@@ -192,3 +192,15 @@ BEST-Route 的核心创新在于将 test-time compute scaling（Snell et al., 20
 | 写作质量 | 4 | 问题动机清晰，框架描述系统，图示直观 |
 
 **总评**: 4/5 — 一篇实用价值极高的工作，核心 idea 简洁优雅，将 test-time compute scaling 与 LLM routing 有机结合，在成本-质量权衡上取得了显著的 Pareto 改进。方法的技术门槛不高但工程意义重大，对 LLM 规模化部署具有直接的指导意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wider or Deeper: Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search](../../NeurIPS2025/llm_nlp/wider_or_deeper_scaling_llm_inference-time_compute_with_adaptive_branching_tree_.md)
+- [Test-Time Visual In-Context Tuning](../../CVPR2025/llm_nlp/test-time_visual_in-context_tuning.md)
+- [Near-Optimal Online Deployment and Routing for Streaming LLMs](../../ICLR2026/llm_nlp/near-optimal_online_deployment_and_routing_for_streaming_llms.md)
+- [LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation](la_rosa_enhancing_llm_efficiency_via_layerwise_rotated_sparse_activation.md)
+- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](../../NeurIPS2025/llm_nlp/qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ $$(\bm{\Delta}\mathbf{P})_{\text{Ours}} = \mathbf{W}(\mathbf{C}_*\mathbf{C}_1^\t
 - 实验充分度: ⭐⭐⭐⭐⭐ few/multi/implicit concept 三种任务，消融充分，跨架构验证
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，图表说明性强
 - 价值: ⭐⭐⭐⭐⭐ 5 秒擦除 100 概念且先验保持最优，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Localized Concept Erasure in Text-to-Image Diffusion Models via High-Level Representation Misdirection](localized_concept_erasure_in_text-to-image_diffusion_models_via_high-level_repre.md)
+- [Mass Concept Erasure in Diffusion Models with Concept Hierarchy](../../AAAI2026/image_generation/mass_concept_erasure_in_diffusion_models_with_concept_hierarchy.md)
+- [Prototype-Guided Concept Erasure in Diffusion Models](../../CVPR2026/image_generation/prototype-guided_concept_erasure_in_diffusion_models.md)
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](../../CVPR2026/image_generation/neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+- [Semantic Surgery: Zero-Shot Concept Erasure in Diffusion Models](../../NeurIPS2025/image_generation/semantic_surgery_zero-shot_concept_erasure_in_diffusion_models.md)
+
+<!-- RELATED:END -->

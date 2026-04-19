@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖无条件生成、草图条件、真实图像条件，含 CFD 仿真验证，但应用范围限于汽车
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、方法论述条理分明、算法伪代码完整
 - 价值: ⭐⭐⭐⭐ 对工业设计领域有直接应用价值，交替更新思路可推广到其他物理约束生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PosterIQ: A Design Perspective Benchmark for Poster Understanding and Generation](posteriq_a_design_perspective_benchmark_for_poster_understanding_and_generation.md)
+- [NeuSDFusion: A Spatial-Aware Generative Model for 3D Shape Completion, Reconstruction, and Generation](../../ECCV2024/image_generation/neusdfusion_a_spatial-aware_generative_model_for_3d_shape_completion_reconstruct.md)
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](../../ECCV2024/image_generation/shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [RIDER: 3D RNA Inverse Design with Reinforcement Learning-Guided Diffusion](../../ICLR2026/image_generation/rider_3d_rna_inverse_design_with_reinforcement_learning-guided_diffusion.md)
+- [Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control](../../ICLR2026/image_generation/follow-your-shape_shape-aware_image_editing_via_trajectory-guided_region_control.md)
+
+<!-- RELATED:END -->

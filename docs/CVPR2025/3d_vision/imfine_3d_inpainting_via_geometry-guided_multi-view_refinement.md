@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 自建benchmark+消融实验丰富，视频结果更有说服力
 - 写作质量: ⭐⭐⭐⭐ 流程图清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 面向无约束场景的3D修复是实际需求，方法切实有效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVBoost: Boost 3D Reconstruction with Multi-View Refinement](mvboost_boost_3d_reconstruction_with_multi-view_refinement.md)
+- [3D Gaussian Inpainting with Depth-Guided Cross-View Consistency](3d_gaussian_inpainting_with_depth-guided_cross-view_consistency.md)
+- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
+- [3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement](3denhancer_consistent_multi-view_diffusion_for_3d_enhancement.md)
+- [MUSt3R: Multi-view Network for Stereo 3D Reconstruction](must3r_multi-view_network_for_stereo_3d_reconstruction.md)
+
+<!-- RELATED:END -->

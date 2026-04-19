@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖RL和LLM双领域、四个基准、多消融、人类评估
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但整体结构略显复杂
 - 价值: ⭐⭐⭐⭐ 对RLAIF理论和可解释AI实践都有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [FlowCast: Advancing Precipitation Nowcasting with Conditional Flow Matching](flowcast_advancing_precipitation_nowcasting_with_conditional_flow_matching.md)
+- [Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
+
+<!-- RELATED:END -->

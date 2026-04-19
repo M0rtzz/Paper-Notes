@@ -148,3 +148,15 @@ $$o_1 = \frac{|\mathcal{I}_1 \cap \mathcal{I}_2|}{|\mathcal{I}_1|}, \quad o_2 = 
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 7 种算法、10 个模型，系统消融各因素
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、论证有力，但部分证据依赖公开 checkpoint
 - 价值: ⭐⭐⭐⭐⭐ 对 RL 微调本质的深刻洞察，具有重要的理论和实践意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Strategyproof Reinforcement Learning from Human Feedback](strategyproof_reinforcement_learning_from_human_feedback.md)
+- [Self-alignment of Large Video Language Models with Refined Regularized Preference Optimization](self-alignment_of_large_video_language_models_with_refined_regularized_preferenc.md)
+- [Adjacent Words, Divergent Intents: Jailbreaking Large Language Models via Task Concurrency](adjacent_words_divergent_intents_jailbreaking_large_language_models_via_task_con.md)
+- [Jailbreak-Zero: A Path to Pareto Optimal Red Teaming for Large Language Models](jailbreak-zero_a_path_to_pareto_optimal_red_teaming_for_large_language_models.md)
+- [Beyond the Tip of Efficiency: Uncovering the Submerged Threats of Jailbreak Attacks in Small Language Models](../../ACL2025/llm_alignment/beyond_the_tip_of_efficiency_uncovering_the_submerged_threats_of_jailbreak_attac.md)
+
+<!-- RELATED:END -->

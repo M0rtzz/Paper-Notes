@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个模型、4个测试集、客观+主观指标全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 数据集描述详细，实验设计规范，可复现性强
 - 价值: ⭐⭐⭐⭐ 对越南语TTS社区有直接推动，流水线设计对其他低资源语言有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [ControlSpeech: Towards Simultaneous and Independent Zero-shot Speaker Cloning and Zero-shot Language Style Control](controlspeech_zero_shot.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [TCSinger 2: Customizable Multilingual Zero-shot Singing Voice Synthesis](tcsinger_2_customizable_multilingual_zero-shot_singing_voice_synthesis.md)
+- [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
+
+<!-- RELATED:END -->

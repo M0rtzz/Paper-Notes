@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融实验充分验证了各模块贡献，但受限于可比较基线较少，定量对比不够丰富
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，动机阐述充分，Figure 1 和 Figure 2 信息量大
 - 价值: ⭐⭐⭐⭐⭐ 为 3D 内容创作（动画、游戏、VR）提供了实用的动作生成流水线，数据集和代码承诺开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition](broadband_ground_motion_synthesis_by_diffusion_model_with_minimal_condition.md)
+- [Move-in-2D: 2D-Conditioned Human Motion Generation](../../CVPR2025/image_generation/move-in-2d_2d-conditioned_human_motion_generation.md)
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](../../CVPR2025/image_generation/eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+- [Event-T2M: Event-level Conditioning for Complex Text-to-Motion Synthesis](../../ICLR2026/image_generation/event-t2m_event-level_conditioning_for_complex_text-to-motion_synthesis.md)
+- [Your Text Encoder Can Be An Object-Level Watermarking Controller](../../ICCV2025/image_generation/your_text_encoder_can_be_an_object-level_watermarking_controller.md)
+
+<!-- RELATED:END -->

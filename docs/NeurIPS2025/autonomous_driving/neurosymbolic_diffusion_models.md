@@ -132,3 +132,15 @@ I-MLE 使用连续代价预测而非离散 NeSy 框架，在 30×30 路径规划
 | 技术深度 | ⭐⭐⭐⭐⭐ | 严谨的连续时间 NELBO 推导、非因子化扩展定理、可扩展梯度估计 |
 | 实验充分度 | ⭐⭐⭐⭐ | 涵盖合成与真实任务、多基线、10 seeds 统计检验，但缺少推理效率对比 |
 | 实用价值 | ⭐⭐⭐ | 自动驾驶等安全关键场景有实际意义，但推理开销和超参敏感性限制了落地 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation](../../ECCV2024/autonomous_driving/optimizing_diffusion_models_for_joint_trajectory_prediction_and_controllable_gen.md)
+- [CymbaDiff: Structured Spatial Diffusion for Sketch-based 3D Semantic Urban Scene Generation](cymbadiff_structured_spatial_diffusion_for_sketch-based_3d_semantic_urban_scene_.md)
+- [SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving](sqs_enhancing_sparse_perception_models_via_query-based_splatting_in_autonomous_d.md)
+- [Towards Foundational LiDAR World Models with Efficient Latent Flow Matching](towards_foundational_lidar_world_models_with_efficient_latent_flow_matching.md)
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](../../ICCV2025/autonomous_driving/epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+
+<!-- RELATED:END -->

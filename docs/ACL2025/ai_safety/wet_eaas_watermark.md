@@ -109,3 +109,15 @@ GPT-3.5 改写攻击，Enron 数据集：
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集、3种改写方法、多个超参数消融，有理论证明
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，攻防逻辑严密，理论推导简洁
 - 价值: ⭐⭐⭐⭐ 对 EaaS 知识产权保护有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
+- [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](../../NeurIPS2025/ai_safety/adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [Preserving Task-Relevant Information Under Linear Concept Removal](../../NeurIPS2025/ai_safety/preserving_task-relevant_information_under_linear_concept_removal.md)
+- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](../../NeurIPS2025/ai_safety/nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+- [Plug-and-Play Parameter-Efficient Tuning of Embeddings for Federated Recommendation](../../AAAI2026/ai_safety/plug-and-play_parameter-efficient_tuning_of_embeddings_for_federated_recommendat.md)
+
+<!-- RELATED:END -->

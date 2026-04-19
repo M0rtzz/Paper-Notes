@@ -149,3 +149,15 @@ Valid Mask贡献最大（减少FID 15.8%），SCC进一步减少20%。
 - 实验充分度: ⭐⭐⭐⭐ 时间生成+空间NVS+下游任务+深度质量+消融，但仅在nuScenes单数据集
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，方法描述详尽，与现有方法的对比表格一目了然
 - 价值: ⭐⭐⭐⭐⭐ 为驾驶场景模拟提供了新范式，实际应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decoupled Diffusion Sparks Adaptive Scene Generation](decoupled_diffusion_sparks_adaptive_scene_generation.md)
+- [4DSegStreamer: Streaming 4D Panoptic Segmentation via Dual Threads](4dsegstreamer_streaming_4d_panoptic_segmentation_via_dual_th.md)
+- [Controllable 3D Outdoor Scene Generation via Scene Graphs](controllable_3d_outdoor_scene_generation_via_scene_graphs.md)
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [Occupancy Learning with Spatiotemporal Memory](occupancy_learning_with_spatiotemporal_memory.md)
+
+<!-- RELATED:END -->

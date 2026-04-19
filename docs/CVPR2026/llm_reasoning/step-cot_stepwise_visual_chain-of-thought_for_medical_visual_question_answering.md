@@ -122,3 +122,15 @@ $$\mathcal{L}_{student}^{(s)} = \mathcal{L}_{CE}^{(s)} + \alpha_{KD}\mathcal{L}_
 - 实验充分度: ⭐⭐⭐⭐ — 消融、跨数据集、临床专家对比、可视化四维度全面
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，从数据→模型→实验的叙述线完整
 - 价值: ⭐⭐⭐⭐ — 数据集和benchmark公开，对医学AI可解释推理有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](../../CVPR2025/llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [Latent Chain-of-Thought for Visual Reasoning](../../NeurIPS2025/llm_reasoning/latent_chain-of-thought_for_visual_reasoning.md)
+- [VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](visref_visual_refocusing_while_thinking_improves_test-time_scaling_in_multi-moda.md)
+- [Unsupervised Visual Chain-of-Thought Reasoning via Preference Optimization](../../ICCV2025/llm_reasoning/unsupervised_visual_chain-of-thought_reasoning_via_preference_optimization.md)
+- [Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought](../../NeurIPS2025/llm_reasoning/visual_thoughts_a_unified_perspective_of_understanding_multi.md)
+
+<!-- RELATED:END -->

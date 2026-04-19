@@ -119,3 +119,15 @@ GOF 虽能去除部分水印，但会对原始场景造成不可逆损伤（Scen
 - 实验充分度: ⭐⭐⭐⭐ (三种水印方法 × 九个场景 × 五种基线，消融完整，但缺少计算成本分析)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰、动机充分，可视化优秀)
 - 价值: ⭐⭐⭐⭐⭐ (对 3DGS 版权保护领域具有重要警示意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protecting NeRFs' Copyright via Plug-And-Play Watermarking Base Model](../../ECCV2024/3d_vision/protecting_nerfsapos_copyright_via_plug-and-play_watermarking_base_model.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](../../CVPR2025/3d_vision/3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting](../../CVPR2025/3d_vision/guardsplat_efficient_and_robust_watermarking_for_3d_gaussian_splatting.md)
+- [Where, What, Why: Toward Explainable 3D-GS Watermarking](../../CVPR2026/3d_vision/where_what_why_toward_explainable_3d-gs_watermarking.md)
+- [Gaussian Blending: Rethinking Alpha Blending in 3D Gaussian Splatting](gaussian_blending_rethinking_alpha_blending_in_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

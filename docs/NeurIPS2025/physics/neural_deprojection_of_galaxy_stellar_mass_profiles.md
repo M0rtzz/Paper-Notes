@@ -126,3 +126,15 @@ tags:
 | 写作质量 | 8 | 天文背景解释清晰，方法动机链条完整 |
 | 实用价值 | 7 | 为多尘/AGN 星系和高红移星系的 SMBH 质量测量开辟新路径 |
 | **综合** | **7.0** | 方法创新且物理动机强，但实验规模有限 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finetuning Stellar Spectra Foundation Models with LoRA](../../ICML2025/physics/finetuning_stellar_spectra_foundation_models_with_lora.md)
+- [From Simulations to Surveys: Domain Adaptation for Galaxy Observations](from_simulations_to_surveys_domain_adaptation_for_galaxy_observations.md)
+- [Galaxy Walker: Geometry-aware VLMs For Galaxy-scale Understanding](../../CVPR2025/physics/galaxy_walker_geometry-aware_vlms_for_galaxy-scale_understanding.md)
+- [Exoplanet Formation Inference Using Conditional Invertible Neural Networks](exoplanet_formation_inference_using_conditional_invertible_neural_networks.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+
+<!-- RELATED:END -->

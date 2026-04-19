@@ -158,3 +158,15 @@ AE-LLM 更依赖内部知识（GPT-4o +18%）而非推理能力。
 | 写作质量 | 7 | 结构清晰，假设-验证式消融专业 |
 | 实用价值 | 7 | 无需微调 LLM，可直接集成 |
 | 总分 | 7.5 | 方法新颖有效，消融设计值得学习 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Critique Guided Iterative Reasoning for Multi-hop Question Answering](self-critique_guided_iterative_reasoning_for_multi-hop_question_answering.md)
+- [Beyond Prompting: An Efficient Embedding Framework for Open-Domain Question Answering](embqa_embedding_odqa.md)
+- [A Comprehensive Graph Framework for Question Answering with Mode-Seeking Preference Alignment](a_comprehensive_graph_framework_for_question_answering_with_mode-seeking_prefere.md)
+- [ReSCORE: Label-free Iterative Retriever Training for Multi-hop Question Answering with Relevance-Consistency Supervision](rescore_multihop_qa.md)
+- [BELLE: A Bi-Level Multi-Agent Reasoning Framework for Multi-Hop Question Answering](belle_a_bi-level_multi-agent_reasoning_framework_for_multi-hop_question_answerin.md)
+
+<!-- RELATED:END -->

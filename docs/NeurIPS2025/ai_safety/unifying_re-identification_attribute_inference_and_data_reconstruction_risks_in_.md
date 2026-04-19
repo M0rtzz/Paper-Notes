@@ -133,3 +133,15 @@ $$P[\text{attack success}] \leq g(f, \beta, \varepsilon)$$
 | 写作质量 | 4 |
 | 实用价值 | 4 |
 | 总体推荐 | 4 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Class Support Vector Machine with Differential Privacy](multi-class_support_vector_machine_with_differential_privacy.md)
+- [Sequentially Auditing Differential Privacy](sequentially_auditing_differential_privacy.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](../../ECCV2024/ai_safety/unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
+
+<!-- RELATED:END -->

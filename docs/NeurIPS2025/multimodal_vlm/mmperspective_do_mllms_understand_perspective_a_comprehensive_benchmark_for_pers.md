@@ -129,3 +129,15 @@ MMPerspective 基准由三个互补的层次化维度构成：**透视感知 (P'
 - 实验充分度: ⭐⭐⭐⭐⭐ 43个模型的大规模评测，多维度分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，从几何基础知识到任务定义逻辑通顺
 - 价值: ⭐⭐⭐⭐ 为提升MLLM的空间几何能力提供了重要评测工具和方向指引
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs](struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)
+- [SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs](../../ICLR2026/multimodal_vlm/spinbench_perspective_and_rotation_as_a_lens_on_spatial_reasoning_in_vlms.md)
+- [Rethinking Multimodal Learning from the Perspective of Mitigating Classification Ability Disproportion](rethinking_multimodal_learning_from_the_perspective_of_mitig.md)
+- [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
+- [RobustMerge: Parameter-Efficient Model Merging for MLLMs with Direction Robustness](robustmerge_parameter-efficient_model_merging_for_mllms_with_direction_robustnes.md)
+
+<!-- RELATED:END -->

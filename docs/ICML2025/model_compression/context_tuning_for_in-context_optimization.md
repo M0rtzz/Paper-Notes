@@ -160,3 +160,15 @@ $$\Theta_{\text{CT}}^* = \arg\min_{\Theta_{\text{CT}}} \sum_{i=1}^{k} -\log p_\p
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 个基准、4 种模型规模、大量消融、5 seed 统计
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学形式化清晰，framework presentation 优秀
 - **价值**: ⭐⭐⭐⭐ — 即插即用、训练高效、可与 TTT 组合，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Core Context Aware Transformers for Long Context Language Modeling](core_context_aware_transformers_for_long_context_language_modeling.md)
+- [Sample Efficient Demonstration Selection for In-Context Learning](sample_efficient_demonstration_selection_for_in-context_learning.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [ParallelComp: Parallel Long-Context Compressor for Length Extrapolation](parallelcomp_parallel_long-context_compressor_for_length_extrapolation.md)
+- [DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning](dragon_guard_llm_unlearning_in_context_via_negative_detection_and_reasoning.md)
+
+<!-- RELATED:END -->

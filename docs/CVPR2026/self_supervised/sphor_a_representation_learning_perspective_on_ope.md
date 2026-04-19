@@ -95,3 +95,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ SSB + 两个Legacy基准、多评分规则、详细消融、新度量分析
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，消融分析深入，但符号较多
 - 价值: ⭐⭐⭐⭐ 为OSR提供了表征设计的系统方法论，AS/NS度量有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
+- [Let the Void Be Void: Robust Open-Set Semi-Supervised Learning via Selective Non-Alignment](../../AAAI2026/self_supervised/let_the_void_be_void_robust_open-set_semi-supervised_learning_via_selective_non-.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
+- [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+
+<!-- RELATED:END -->

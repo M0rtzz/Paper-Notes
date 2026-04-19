@@ -149,3 +149,15 @@ RF 仅需 400k 步即达到 DDPM 1000k 步的 FID 水平。
 - **实验充分度**: ⭐⭐⭐⭐ — 多基准全面评测，但缺少与 CogVideoX 等开源模型的深度对比
 - **论文写作**: ⭐⭐⭐⭐ — 技术报告风格，结构清晰，工程细节丰富
 - **工程价值**: ⭐⭐⭐⭐⭐ — 对工业级视频生成的数据/训练/基础设施提供全面参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
+- [Deeply Supervised Flow-Based Generative Models](../../ICCV2025/image_generation/deeply_supervised_flow-based_generative_models.md)
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](../../ICML2025/image_generation/gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+- [Gradient Variance Reveals Failure Modes in Flow-Based Generative Models](../../NeurIPS2025/image_generation/gradient_variance_reveals_failure_modes_in_flow-based_generative_models.md)
+- [QVGen: Pushing the Limit of Quantized Video Generative Models](../../ICLR2026/image_generation/qvgen_pushing_the_limit_of_quantized_video_generative_models.md)
+
+<!-- RELATED:END -->

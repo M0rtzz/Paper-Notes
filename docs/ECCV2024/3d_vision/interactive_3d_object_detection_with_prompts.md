@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅在 nuScenes 上实验，数据集覆盖不够
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，框架描述层次分明
 - 价值: ⭐⭐⭐⭐⭐ 对 3D 标注效率的提升有直接的工业应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Click-Gaussian: Interactive Segmentation to Any 3D Gaussians](click-gaussian_interactive_segmentation_to_any_3d_gaussians.md)
+- [DSPDet3D: 3D Small Object Detection with Dynamic Spatial Pruning](dspdet3d_3d_small_object_detection_with_dynamic_spatial_pruning.md)
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](../../AAAI2026/3d_vision/multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](../../CVPR2025/3d_vision/fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
+- [Exploring Surround-View Fisheye Camera 3D Object Detection](../../AAAI2026/3d_vision/exploring_surround-view_fisheye_camera_3d_object_detection.md)
+
+<!-- RELATED:END -->

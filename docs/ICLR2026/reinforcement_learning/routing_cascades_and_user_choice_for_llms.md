@@ -131,3 +131,15 @@ $$J_i(s, q) = C_i(s, q) + P(1 - S_i(s, q))$$
 - 实验充分度: ⭐⭐⭐ 纯理论工作，有定理证明和可视化但无实证实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，Figure 1的guideline总结极为实用
 - 价值: ⭐⭐⭐⭐ 对LLM服务定价和路由策略设计有直接实践指导，throttling分析具有政策意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Router-R1: Teaching LLMs Multi-Round Routing and Aggregation via Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/router-r1_teaching_llms_multi-round_routing_and_aggregation_via_reinforcement_le.md)
+- [Reasoning Boosts Opinion Alignment in LLMs](reasoning_boosts_opinion_alignment_in_llms.md)
+- [How LLMs Learn to Reason: A Complex Network Perspective](how_llms_learn_to_reason_a_complex_network_perspective.md)
+- [AbstRaL: Augmenting LLMs' Reasoning by Reinforcing Abstract Thinking](abstral_augmenting_llms_reasoning_by_reinforcing_abstract_thinking.md)
+- [Whatever Remains Must Be True: Filtering Drives Reasoning in LLMs, Shaping Diversity](whatever_remains_must_be_true_filtering_drives_reasoning_in_llms_shaping_diversi.md)
+
+<!-- RELATED:END -->

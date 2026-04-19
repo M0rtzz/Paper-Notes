@@ -136,3 +136,15 @@ HPE-Li 的输入为多天线 WiFi CSI 数据（维度为 $T \times N_{sub} \time
 - 实验充分度: ⭐⭐⭐⭐ 两个基准数据集，详细消融和效率分析，但缺少跨环境泛化实验
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述完整，图表质量好
 - 价值: ⭐⭐⭐⭐ 对 WiFi HPE 的实用化部署有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+- [Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
+- [RePOSE: 3D Human Pose Estimation via Spatio-Temporal Depth Relational Consistency](repose_3d_human_pose_estimation_via_spatio-temporal_depth_relational_consistency.md)
+- [UPose3D: Uncertainty-Aware 3D Human Pose Estimation with Cross-View and Temporal Cues](upose3d_uncertainty-aware_3d_human_pose_estimation_with_cross-view_and_temporal_.md)
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+
+<!-- RELATED:END -->

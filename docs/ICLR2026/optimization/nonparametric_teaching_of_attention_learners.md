@@ -144,3 +144,15 @@ Soft策略(Gumbel-Top-k概率采样)在时间和性能间取得最佳平衡：Ra
 - 实验充分度: ⭐⭐⭐⭐ NLP+CV+从头/微调+多模型+消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，与实验验证紧密结合
 - 价值: ⭐⭐⭐⭐ 对Transformer训练效率有理论+实用双重贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nonparametric Teaching for Graph Property Learners](../../ICML2025/optimization/nonparametric_teaching_for_graph_property_learners.md)
+- [RRNCO: Towards Real-World Routing with Neural Combinatorial Optimization](rrnco_towards_real-world_routing_with_neural_combinatorial_optimization.md)
+- [Unifying Formal Explanations: A Complexity-Theoretic Perspective](unifying_formal_explanations_a_complexity-theoretic_perspective.md)
+- [Provable and Practical In-Context Policy Optimization for Self-Improvement](provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [Non-Asymptotic Analysis of Efficiency in Conformalized Regression](non-asymptotic_analysis_of_efficiency_in_conformalized_regression.md)
+
+<!-- RELATED:END -->

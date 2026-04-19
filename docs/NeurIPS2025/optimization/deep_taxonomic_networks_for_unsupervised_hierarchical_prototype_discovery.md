@@ -126,3 +126,15 @@ Fashion 上 ACC 超 TreeVAE 17.6%，CIFAR-10 上超 15.0%。
 - 实验充分度: ⭐⭐⭐⭐ 多数据集全面对比，概率评估指标设计合理，但缺少大规模数据验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，可视化丰富，但符号较多读起来门槛高
 - 价值: ⭐⭐⭐⭐ 为无监督层次表示学习提供了理论扎实的新框架，跨粒度零重训练非常实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](../../ICML2025/optimization/sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [Adaptive Algorithms with Sharp Convergence Rates for Stochastic Hierarchical Optimization](adaptive_algorithms_with_sharp_convergence_rates_for_stochas.md)
+- [Training Robust Graph Neural Networks by Modeling Noise Dependencies](training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)
+- [Auto-Compressing Networks](auto-compressing_networks.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ YouTube-VIS 上各组件贡献：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 真实/合成三个数据集，全面消融，引入 OIR 和 DOF 新指标，定量验证碎片化减少
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机阐述极为清晰，方法推导循序渐进，可视化丰富直观
 - **价值**: ⭐⭐⭐⭐ — 为 VOCL 社区提供了实用的训练范式，但应用场景相对垂直
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SlotVTG: Object-Centric Adapter for Generalizable Video Temporal Grounding](slotvtg_object-centric_adapter_for_generalizable_video_temporal_grounding.md)
+- [From Vicious to Virtuous Cycles: Synergistic Representation Learning for Unsupervised Video Object-Centric Learning](../../ICLR2026/video_understanding/from_vicious_to_virtuous_cycles_synergistic_representation_learning_for_unsuperv.md)
+- [Predicting Video Slot Attention Queries from Random Slot-Feature Pairs](../../AAAI2026/video_understanding/predicting_video_slot_attention_queries_from_random_slot-feature_pairs.md)
+- [Rethinking Progression of Memory State in Robotic Manipulation: An Object-Centric Perspective](../../AAAI2026/video_understanding/rethinking_progression_of_memory_state_in_robotic_manipulation_an_object-centric.md)
+- [Occlusion-Aware SORT: Observing Occlusion for Robust Multi-Object Tracking](occlusion-aware_sort_observing_occlusion_for_robust_multi-object_tracking.md)
+
+<!-- RELATED:END -->

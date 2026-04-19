@@ -196,3 +196,15 @@ BIC 的惩罚项最好地平衡了 token 数量和表示质量。
 | 实验充分性 | 4 — 分类 + 分割 + 矢量化验证 |
 | 写作质量 | 4 — Spotlight 水平的清晰表达 |
 | 影响力 | 5 — 可能重塑 ViT 分词范式 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Tokenization](../../ACL2025/llm_pretraining/adversarial_tokenization.md)
+- [Does Data Scaling Lead to Visual Compositional Generalization?](../../ICML2025/llm_pretraining/does_data_scaling_lead_to_visual_compositional_generalization.md)
+- [Tokenization is Sensitive to Language Variation](../../ACL2025/llm_pretraining/tokenization_is_sensitive_to_language_variation.md)
+- [SemHiTok: A Unified Image Tokenizer via Semantic-Guided Hierarchical Codebook](../../ICLR2026/llm_pretraining/semhitok_a_unified_image_tokenizer_via_semantic-guided_hierarchical_codebook_for.md)
+- [Incorporating Domain Knowledge into Materials Tokenization](../../ACL2025/llm_pretraining/incorporating_domain_knowledge_into_materials_tokenization.md)
+
+<!-- RELATED:END -->

@@ -152,3 +152,15 @@ SORL 在 8 个环境中的 5 个取得最佳表现。
 - 理论 ⭐⭐⭐⭐：W2 距离正则化保证原创且严谨
 - 实验 ⭐⭐⭐⭐：40 个任务的全面评估，但部分环境改进有限
 - 工程价值 ⭐⭐⭐⭐：一阶段训练 + 灵活推理，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Training Technique for Shortcut Models (iSM)](improved_training_technique_for_shortcut_models.md)
+- [SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](../../ICLR2026/image_generation/flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [R-VC: Rhythm Controllable and Efficient Zero-Shot Voice Conversion via Shortcut Flow Matching](../../ACL2025/image_generation/rvc_rhythm_voice_conversion.md)
+- [Scaling Diffusion Transformers Efficiently via μP](scaling_diffusion_transformers_efficiently_via_μp.md)
+
+<!-- RELATED:END -->

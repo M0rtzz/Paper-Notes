@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 系统性对比了不同 LoRA 配置，但仅一个下游任务和一个目标巡天
 - 写作质量: ⭐⭐⭐⭐ 方法图清晰，实验设计合理
 - 价值: ⭐⭐⭐⭐ 为光谱基础模型的跨巡天部署建立了参数高效微调的标准流程
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Platonic Universe: Do Foundation Models See the Same Sky?](../../NeurIPS2025/physics/the_platonic_universe_do_foundation_models_see_the_same_sky.md)
+- [Neural Deprojection of Galaxy Stellar Mass Profiles](../../NeurIPS2025/physics/neural_deprojection_of_galaxy_stellar_mass_profiles.md)
+- [Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents](gravity-bench-v1_a_benchmark_on_gravitational_physics_discovery_for_agents.md)
+- [Teaching LLMs to Speak Spectroscopy](teaching_llms_to_speak_spectroscopy.md)
+- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
+
+<!-- RELATED:END -->

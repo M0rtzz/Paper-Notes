@@ -114,3 +114,15 @@ TCR模块无需训练。TraCLIP以CLIP ViT-L/14初始化，冻结视觉和语言
 - 实验充分度: ⭐⭐⭐⭐ 多检测器、多数据集分组对比，消融全面覆盖各超参数
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义和方法阐述条理分明
 - 价值: ⭐⭐⭐⭐ 为OV-MOT引入了有价值的轨迹视角，指出了数据和评估的根本问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trokens: Semantic-Aware Relational Trajectory Tokens for Few-Shot Action Recognition](trokens_semantic-aware_relational_trajectory_tokens_for_few-shot_action_recognit.md)
+- [EMoTive: Event-Guided Trajectory Modeling for 3D Motion Estimation](emotive_event-guided_trajectory_modeling_for_3d_motion_estimation.md)
+- [Learning to Generalize Without Bias for Open-Vocabulary Action Recognition](learning_to_generalize_without_bias_for_open-vocabulary_action_recognition.md)
+- [SLAck: Semantic, Location, and Appearance Aware Open-Vocabulary Tracking](../../ECCV2024/video_understanding/slack_semantic_location_and_appearance_aware_open-vocabulary_tracking.md)
+- [Q-Frame: Query-aware Frame Selection and Multi-Resolution Adaptation for Video-LLMs](q-frame_query-aware_frame_selection_and_multi-resolution_adaptation_for_video-ll.md)
+
+<!-- RELATED:END -->

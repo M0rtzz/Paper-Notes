@@ -123,3 +123,15 @@ $$\mathcal{L}_{total} = \lambda_{pose}\mathcal{L}_{pose} + \lambda_{geo}\mathcal
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计精妙，级联学习范式高效优雅。从未标定稀疏视角在 0.5 秒内完成位姿+几何+外观的联合推理，实用价值极高。在多个任务上全面超越现有方法。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](../../CVPR2026/3d_vision/speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views](matcha_gaussians_atlas_of_charts_for_high-quality_geometry_and_photorealism_from.md)
+- [FiffDepth: Feed-forward Transformation of Diffusion-Based Generators for Detailed Depth Estimation](../../ICCV2025/3d_vision/fiffdepth_feed-forward_transformation_of_diffusion-based_generators_for_detailed.md)
+- [Light3R-SfM: Towards Feed-forward Structure-from-Motion](light3r-sfm_towards_feed-forward_structure-from-motion.md)
+- [Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera](depth_any_camera_zero-shot_metric_depth_estimation_from_any_camera.md)
+
+<!-- RELATED:END -->

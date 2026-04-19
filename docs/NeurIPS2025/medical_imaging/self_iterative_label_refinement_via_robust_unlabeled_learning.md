@@ -125,3 +125,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6个数据集覆盖简单/困难任务，含分类和生成式对齐，对比充分
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数学推导完整，研究问题驱动的实验设计
 - **价值**: ⭐⭐⭐⭐ 为LLM在低资源和专业领域的自我改进提供了实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Iterative Self-Alignment for Radiology Report Generation](../../ACL2025/medical_imaging/oisa_radiology_report_gen.md)
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](../../CVPR2025/medical_imaging/a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)
+- [Iterative Foundation Model Fine-Tuning on Multiple Rewards](iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+
+<!-- RELATED:END -->

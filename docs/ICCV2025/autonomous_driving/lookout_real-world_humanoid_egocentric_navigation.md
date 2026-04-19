@@ -134,3 +134,15 @@ LookOut 在轨迹预测精度上以 2 倍优势领先 EgoCast（L1_trans 0.17 vs
 - 实验充分度: ⭐⭐⭐⭐ 基线对比、消融、定性分析全面，但缺少与更多方法的比较
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，问题动机阐述到位，图示丰富直观
 - 价值: ⭐⭐⭐⭐ 任务定义和数据集对具身智能社区有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoboTron-Sim: Improving Real-World Driving via Simulated Hard-Case](robotron-sim_improving_real-world_driving_via_simulated_hard-case.md)
+- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](../../CVPR2025/autonomous_driving/helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
+- [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](../../NeurIPS2025/autonomous_driving/chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
+- [IGL-Nav: Incremental 3D Gaussian Localization for Image-goal Navigation](igl-nav_incremental_3d_gaussian_localization_for_image-goal_navigation.md)
+- [SimScale: Learning to Drive via Real-World Simulation at Scale](../../CVPR2026/autonomous_driving/simscale_learning_to_drive_via_real-world_simulation_at_scale.md)
+
+<!-- RELATED:END -->

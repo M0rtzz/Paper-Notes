@@ -154,3 +154,15 @@ $$\hat{y} = \mathcal{D}^{(y)}(\bar{z}^{(y)}), \quad \bar{z}^{(y)} = \frac{1}{m}\
 - 实验充分度: ⭐⭐⭐⭐⭐ — 内外部数据集、全面消融、理论验证
 - 写作质量: ⭐⭐⭐⭐ — 理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐ — 为低成本 AD 筛查提供了可行路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](../../CVPR2026/medical_imaging/multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+- [Virtual Multiplex Staining for Histological Images Using a Marker-wise Conditioned Diffusion Model](virtual_multiplex_staining_for_histological_images_using_a_marker-wise_condition.md)
+- [Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis](../../CVPR2025/medical_imaging/latent_drifting_in_diffusion_models_for_counterfactual_medical_image_synthesis.md)
+- [MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss](maisi-v2_accelerated_3d_high-resolution_medical_image_synthesis_with_rectified_f.md)
+- [Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model](../../ECCV2024/medical_imaging/co-synthesis_of_histopathology_nuclei_image-label_pairs_using_a_context-conditio.md)
+
+<!-- RELATED:END -->

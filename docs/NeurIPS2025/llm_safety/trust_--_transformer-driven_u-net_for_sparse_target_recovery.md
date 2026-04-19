@@ -139,3 +139,15 @@ $$\mathcal{L} = \|\hat{\mathbf{x}} - \mathbf{x}\|_2^2 + \lambda_1 \|\hat{\mathbf
 | 写作质量 | 4 |
 | 实用价值 | 4 |
 | 总体推荐 | 3.5 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hallucination Stations: On Some Basic Limitations of Transformer-Based Language Models](../../AAAI2026/llm_safety/hallucination_stations_on_some_basic_limitations_of_transformer-based_language_m.md)
+- [Order-Robust Class Incremental Learning: Graph-Driven Dynamic Similarity Grouping](../../CVPR2025/llm_safety/order-robust_class_incremental_learning_graph-driven_dynamic_similarity_grouping.md)
+- [Buffer Layers for Test-Time Adaptation](buffer_layers_for_test-time_adaptation.md)
+- [A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing](a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)
+- [Angular Steering: Behavior Control via Rotation in Activation Space](angular_steering_behavior_control_via_rotation_in_activation_space.md)
+
+<!-- RELATED:END -->

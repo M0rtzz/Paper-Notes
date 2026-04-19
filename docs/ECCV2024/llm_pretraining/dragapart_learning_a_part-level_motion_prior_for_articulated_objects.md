@@ -180,3 +180,15 @@ DragAPart 在所有指标上大幅领先：PSNR +3.75 (vs DragonDiffusion)，LPI
 - **实验充分度**: ⭐⭐⭐⭐ — 定量和定性实验充分，消融有力，但真实数据评估仍以定性为主
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机阐述清晰，可视化精美，论证逻辑严密
 - **实用价值**: ⭐⭐⭐⭐ — 运动分析和部件分割展示了应用前景，但部件类型覆盖有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Plan, Posture and Go: Towards Open-Vocabulary Text-to-Motion Generation](plan_posture_and_go_towards_open-vocabulary_text-to-motion_generation.md)
+- [LLM Data Selection and Utilization via Dynamic Bi-level Optimization](../../ICML2025/llm_pretraining/llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
+- [Position: The Future of Bayesian Prediction Is Prior-Fitted](../../ICML2025/llm_pretraining/position_the_future_of_bayesian_prediction_is_prior-fitted.md)
+- [FlowMotion: Training-Free Flow Guidance for Video Motion Transfer](../../CVPR2026/llm_pretraining/flowmotion_training-free_flow_guidance_for_video_motion_transfer.md)
+- [Learning to Obstruct Few-Shot Image Classification over Restricted Classes](learning_to_obstruct_few-shot_image_classification_over_restricted_classes.md)
+
+<!-- RELATED:END -->

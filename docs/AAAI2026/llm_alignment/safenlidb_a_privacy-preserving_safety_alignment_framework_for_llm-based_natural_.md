@@ -148,3 +148,15 @@ $$\mathcal{L}_{APO} = -\mathbb{E}_{\mathcal{D}_{pref}}[\log \sigma(\beta R(y_w|x
 ⭐⭐⭐⭐
 
 问题重要且定义清晰，全链路方案（数据合成→推理热启动→交替DPO）设计完整，实验结果显著。框架兼具学术创新（APO策略）和工程价值（自动化管线+benchmark）。局限在于与真实企业场景的差距待进一步验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Differentiated Directional Intervention: A Framework for Evading LLM Safety Alignment](differentiated_directional_intervention_a_framework_for_evading_llm_safety_align.md)
+- [EASE: Practical and Efficient Safety Alignment for Small Language Models](ease_practical_and_efficient_safety_alignment_for_small_language_models.md)
+- [AMaPO: Adaptive Margin-attached Preference Optimization for Language Model Alignment](amapo_adaptive_margin-attached_preference_optimization_for_l.md)
+- [Improving LLM Safety Alignment with Dual-Objective Optimization](../../ICML2025/llm_alignment/improving_llm_safety_alignment_with_dual-objective_optimization.md)
+- [Superficial Safety Alignment Hypothesis](../../ICLR2026/llm_alignment/superficial_safety_alignment_hypothesis.md)
+
+<!-- RELATED:END -->

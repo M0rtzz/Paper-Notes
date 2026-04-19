@@ -124,3 +124,15 @@ EOGS 以标准 3DGS 为基础，输入 N 张非正射校正的卫星图像及其
 - 实验充分度: ⭐⭐⭐⭐ 7 个场景的完整评估+详细消融+参数敏感性分析+可见性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 公式推导清晰，图示直观，方法部分逻辑链条完整
 - 价值: ⭐⭐⭐⭐⭐ 300 倍加速使大规模遥感成为可能，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [From Orbit to Ground: Generative City Photogrammetry from Extreme Off-Nadir Satellite Images](../../CVPR2026/3d_vision/from_orbit_to_ground_generative_city_photogrammetry_from_extreme_off-nadir_satel.md)
+- [GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting](guardsplat_efficient_and_robust_watermarking_for_3d_gaussian_splatting.md)
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+
+<!-- RELATED:END -->

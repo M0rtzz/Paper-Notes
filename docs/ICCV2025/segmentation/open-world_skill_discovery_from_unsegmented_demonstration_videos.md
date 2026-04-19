@@ -154,3 +154,15 @@ $$\min_\theta \sum_{t \in [1...T]} -\log \pi_{unconditional}(a_t | o_{1:t})$$
 - 实验充分度：⭐⭐⭐⭐ — 多策略 + 多智能体 + 短程/长程任务
 - 实用性：⭐⭐⭐⭐ — 即插即用，可利用 YouTube 数据
 - 总体：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReferEverything: Towards Segmenting Everything We Can Speak of in Videos](refereverything_towards_segmenting_everything_we_can_speak_of_in_videos.md)
+- [Learning Precise Affordances from Egocentric Videos for Robotic Manipulation](learning_precise_affordances_from_egocentric_videos_for_robotic_manipulation.md)
+- [2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos](2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide.md)
+- [SOS: Segment Object System for Open-World Instance Segmentation With Object Priors](../../ECCV2024/segmentation/sos_segment_object_system_for_open-world_instance_segmentation_with_object_prior.md)
+- [FLOSS: Free Lunch in Open-vocabulary Semantic Segmentation](floss_free_lunch_in_openvocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ tags:
 3. 与可见光方法的互补有很大潜力：可见光提供纹理和高分辨率，LWIR 提供材质无关的法线约束
 4. 在工业检测（透明/反射物体）、安防（无需照明）等场景有直接应用价值
 5. 可以考虑将 DoLP 也纳入约束（虽然依赖折射率，但可联合估计折射率和形状）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization](../../ECCV2024/others/mahalanobis_distance-based_multi-view_optimal_transport_for_multi-view_crowd_loc.md)
+- [Auto-Regressively Generating Multi-View Consistent Images (MV-AR)](autoregressively_generating_multiview_consistent_images.md)
+- [Recover Biological Structure from Sparse-View Diffraction Images with Neural Volumetric Prior](recover_biological_structure_from_sparse-view_diffraction_images_with_neural_vol.md)
+- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](../../NeurIPS2025/others/are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
+- [EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration](edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati.md)
+
+<!-- RELATED:END -->

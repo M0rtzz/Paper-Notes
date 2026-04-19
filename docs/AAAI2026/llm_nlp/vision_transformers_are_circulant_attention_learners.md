@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个视觉任务，多架构验证
 - 写作质量: ⭐⭐⭐⭐ 可视化分析清晰，数学严谨
 - 价值: ⭐⭐⭐⭐⭐ 方向性贡献，新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Spatial Decay for Vision Transformers](learning_spatial_decay_for_vision_transformers.md)
+- [Strassen Attention, Split VC Dimension and Compositionality in Transformers](../../NeurIPS2025/llm_nlp/strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
+- [CAT: Circular-Convolutional Attention for Sub-Quadratic Transformers](../../NeurIPS2025/llm_nlp/cat_circular-convolutional_attention_for_sub-quadratic_transformers.md)
+- [Mixtures of In-Context Learners](../../ACL2025/llm_nlp/mixtures_of_in-context_learners.md)
+- [Breaking the Low-Rank Dilemma of Linear Attention](../../CVPR2025/llm_nlp/breaking_the_low-rank_dilemma_of_linear_attention.md)
+
+<!-- RELATED:END -->

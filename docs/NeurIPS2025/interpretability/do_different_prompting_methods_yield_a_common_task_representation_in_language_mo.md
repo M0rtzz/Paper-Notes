@@ -149,3 +149,15 @@ tags:
 | 写作质量 | 8 | 结构清晰，5 个 finding 逐步推进，表述准确 |
 | 实用价值 | 6 | 主要是机制理解层面的贡献，直接应用有限 |
 | **总分** | **7.6** | 扎实的可解释性实证研究，揭示了提示方式与内部表征的关系 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Do Transformers Learn Implicit Reasoning?](how_do_transformers_learn_implicit_reasoning.md)
+- [Are Greedy Task Orderings Better Than Random in Continual Linear Regression?](are_greedy_task_orderings_better_than_random_in_continual_linear_regression.md)
+- [SHAP Values via Sparse Fourier Representation](shap_values_via_sparse_fourier_representation.md)
+- [Do Sparse Autoencoders Generalize? A Case Study of Answerability](../../ICML2025/interpretability/do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)
+- [The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability?](the_non-linear_representation_dilemma_is_causal_abstraction_enough_for_mechanist.md)
+
+<!-- RELATED:END -->

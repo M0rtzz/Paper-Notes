@@ -143,3 +143,15 @@ $$\eta_t^y = \frac{c}{\sqrt{\sum_{s=1}^{t} \|G_s^y\|^2}}$$
 - ⭐ 创新性: 7/10 — 将AdaGrad思想应用到双层优化是自然但有价值的扩展
 - ⭐ 实用性: 9/10 — 消除调参需求是实践中的重大便利
 - ⭐ 写作质量: 8/10 — 理论推导完整，实验设计突出鲁棒性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Adaptive Algorithm for Bilevel Optimization on Riemannian Manifolds](an_adaptive_algorithm_for_bilevel_optimization_on_riemannian_manifolds.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+- [Set Smoothness Unlocks Clarke Hyper-stationarity in Bilevel Optimization](set_smoothness_unlocks_clarke_hyper-stationarity_in_bilevel_optimization.md)
+- [AutoOpt: A Dataset and a Unified Framework for Automating Optimization Problem Solving](autoopt_a_dataset_and_a_unified_framework_for_automating_optimization_problem_so.md)
+- [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
+
+<!-- RELATED:END -->

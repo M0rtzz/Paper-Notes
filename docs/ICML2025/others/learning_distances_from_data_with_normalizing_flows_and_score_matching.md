@@ -102,3 +102,15 @@ $$\ddot{\varphi} - \beta(s(\varphi)\cdot\dot{\varphi})\dot{\varphi} + \beta s(\v
 ## 评分
 
 ⭐⭐⭐⭐ — 理论扎实、方法优雅，首次建立了 Fermat 距离精确基准并提出实用改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Score Matching with Missing Data](score_matching_with_missing_data.md)
+- [WGFormer: An SE(3)-Transformer Driven by Wasserstein Gradient Flows for Molecular Generation](wgformer_an_se3-transformer_driven_by_wasserstein_gradient_flows_for_molecular_g.md)
+- [Diversity by Design: Leveraging Distribution Matching for Offline Model-Based Optimization](diversity_by_design_leveraging_distribution_matching_for_offline_model-based_opt.md)
+- [Fully Dynamic Euclidean Bi-Chromatic Matching in Sublinear Update Time](fully_dynamic_euclidean_bi-chromatic_matching_in_sublinear_update_time.md)
+- [PAC Learning with Improvements](pac_learning_with_improvements.md)
+
+<!-- RELATED:END -->

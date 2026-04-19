@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖三域、多采样率、完整消融和级联验证
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 音频超分新 SOTA，打开了 >48kHz 方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement](latent_harmony_synergistic_unified_uhd_image_restoration_via_latent_space_regula.md)
+- [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
+- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](../../CVPR2026/image_restoration/raw-domain_degradation_models_for_realistic_smartphone_super-resolution.md)
+- [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
+- [Adaptive Discretization for Consistency Models](adaptive_discretization_for_consistency_models.md)
+
+<!-- RELATED:END -->

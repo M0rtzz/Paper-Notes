@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多架构、多消融，但缺少error bar且数据集偏小
 - 写作质量: ⭐⭐⭐⭐ 从简单到复杂的理论推导逻辑清晰，但符号较多需要反复对照
 - 价值: ⭐⭐⭐⭐ 理论和实用双贡献，数据效率提升有实际意义，但适用场景偏特定（few-shot多源迁移）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking Transfer Learning for Open-World Few-Shot Recognition](unlocking_transfer_learning_for_open-world_few-shot_recognition.md)
+- [Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces](../../ICML2025/llm_evaluation/function_encoders_a_principled_approach_to_transfer_learning_in_hilbert_spaces.md)
+- [SpikCommander: A High-Performance Spiking Transformer with Multi-View Learning for Efficient Speech Command Recognition](../../AAAI2026/llm_evaluation/spikcommander_a_high-performance_spiking_transformer_with_multi-view_learning_fo.md)
+- [MVSMamba: Multi-View Stereo with State Space Model](mvsmamba_multi-view_stereo_with_state_space_model.md)
+- [Learning Generalizable Shape Completion with SIM(3) Equivariance](learning_generalizable_shape_completion_with_sim3_equivariance.md)
+
+<!-- RELATED:END -->

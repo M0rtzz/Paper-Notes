@@ -135,3 +135,15 @@ I2T DPO (Qwen-VL-Chat):
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个alignment benchmark+BoN+DPO(I2T和T2I)+消融(metric/decoder/数据规模/filtering)+Winoground+与human preference的agreement rate，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 清晰优雅，Figure 1的overview、Figure 7的failure analysis都很好
 - 价值: ⭐⭐⭐⭐⭐ 替代人工标注的自监督偏好学习范式，对降低VLM对齐成本有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Reward Models for High-quality Image Generation: Beyond Text-Image Alignment](enhancing_reward_models_for_high-quality_image_generation_beyond_text-image_alig.md)
+- [Fair Generation without Unfair Distortions: Debiasing Text-to-Image Generation with Entanglement-Free Attention](fair_generation_without_unfair_distortions_debiasing_text-to-image_generation_wi.md)
+- [ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)
+- [PLA: Prompt Learning Attack against Text-to-Image Generative Models](pla_prompt_learning_attack_against_text-to-image_generative_models.md)
+- [CompleteMe: Reference-based Human Image Completion](completeme_reference-based_human_image_completion.md)
+
+<!-- RELATED:END -->

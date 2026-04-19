@@ -135,3 +135,15 @@ $$\mathbf{d}_l = (\mathbf{b}_{\max} - \mathbf{b}_{\min}) / 2^l$$
 - 技术深度: ⭐⭐⭐⭐ (CGSM和IFA设计精巧)
 - 实验充分度: ⭐⭐⭐⭐⭐ (4个任务4个数据集)
 - 实用价值: ⭐⭐⭐⭐⭐ (对具身智能体极有价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding](3dgraphllm_combining_semantic_graphs_and_large_language_models_for_3d_scene_unde.md)
+- [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](../../CVPR2025/3d_vision/masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
+- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](articulate3d_holistic_understanding_of_3d_scenes_as_universa.md)
+- [ExCap3D: Expressive 3D Scene Understanding via Object Captioning with Varying Detail](excap3d_expressive_3d_scene_understanding_via_object_captioning_with_varying_det.md)
+- [OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding](../../AAAI2026/3d_vision/openscan_a_benchmark_for_generalized_open-vocabulary_3d_scene_understanding.md)
+
+<!-- RELATED:END -->

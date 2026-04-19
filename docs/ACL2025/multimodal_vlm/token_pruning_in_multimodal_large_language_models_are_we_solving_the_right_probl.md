@@ -149,3 +149,15 @@ FLOPs最低的MustDrop（11.5%）延迟反而最高，FastV FLOPs稍高但延迟
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5个模型、9+数据集、多种剪枝率的全面对比，控制变量实验扎实
 - 写作质量: ⭐⭐⭐⭐ — 以五个问题为线索层层展开，逻辑清晰，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ — 对MLLM推理加速社区有重要的纠偏意义，值得该领域每位研究者阅读
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](unsolvable_problem_detection.md)
+- [Pi-GPS: Enhancing Geometry Problem Solving by Unleashing the Power of Diagrammatic Information](../../ICCV2025/multimodal_vlm/pi-gps_enhancing_geometry_problem_solving_by_unleashing_the_power_of_diagrammati.md)
+- [Modality-Aware Neuron Pruning for Unlearning in Multimodal Large Language Models](manu_modality_aware_unlearning.md)
+- [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](../../ECCV2024/multimodal_vlm/ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+- [Feather the Throttle: Revisiting Visual Token Pruning for Vision-Language Model Acceleration](../../ICCV2025/multimodal_vlm/feather_the_throttle_revisiting_visual_token_pruning_for_vision-language_model_a.md)
+
+<!-- RELATED:END -->

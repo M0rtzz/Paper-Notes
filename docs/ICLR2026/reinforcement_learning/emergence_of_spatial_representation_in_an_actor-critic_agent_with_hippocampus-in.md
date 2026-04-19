@@ -125,3 +125,15 @@ tags:
 - 实验充分度: 5/5 （行为、位置场、空间信息、种群核、因果干预、噪声鲁棒性，多维度验证）
 - 写作质量: 4/5 （结构清晰，跨学科表述准确，神经科学与 RL 视角兼顾）
 - 价值: 4/5 （为海马体 theta 序列和 RL 导航提供统一机制解释，开辟生物启发稀疏架构新方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow Actor-Critic for Offline Reinforcement Learning (FAC)](flow_actor-critic_for_offline_reinforcement_learning.md)
+- [Risk-Sensitive Exponential Actor Critic](../../AAAI2026/reinforcement_learning/risk-sensitive_exponential_actor_critic.md)
+- [Spectral Bellman Method: Unifying Representation and Exploration in RL](spectral_bellman_method_unifying_representation_and_exploration_in_rl.md)
+- [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
+- [When Sensors Fail: Temporal Sequence Models for Robust PPO under Sensor Drift](when_sensors_fail_temporal_sequence_models_for_robust_ppo_under_sensor_drift.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ DynaAct 延迟仅比 rStar 多 5%，但精度高 6.8%。比 RAP 更快（RAP 实
 - 实验充分度: ⭐⭐⭐⭐⭐ 六个基准、消融完整、效率对比、紧凑性分析、效用分析全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，理论和实验衔接好
 - 价值: ⭐⭐⭐⭐ 为 MDP-based LLM 推理提供了重要的基础设施型贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Bayes](large_language_bayes.md)
+- [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Training-Free Bayesianization for Low-Rank Adapters of Large Language Models](training-free_bayesianization_for_low-rank_adapters_of_large_language_models.md)
+- [Verbalized Algorithms: Zero-shot Classical Algorithmic Reasoning for Correctness and Runtime Guarantees](verbalized_algorithms.md)
+
+<!-- RELATED:END -->

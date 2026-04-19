@@ -157,3 +157,15 @@ CALVIN (ABC→D) 零样本长期任务完成：
 - 实验充分度: ⭐⭐⭐⭐ SIMPLER + CALVIN + 真实世界 + 数据效率 + 人类视频 + 多角度消融，但真实世界规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 故事线清晰（token可解释性→先验学习→策略性能），每个实验回答一个明确的问题
 - 价值: ⭐⭐⭐⭐⭐ 提出了一条可能颠覆机器人学习范式的路线——用无标签视频的运动知识大规模预训练，极大降低了动作标注的需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning](../../CVPR2026/robotics/como_learning_continuous_latent_motion_from_internet_videos_for_scalable_robot_l.md)
+- [Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)
+- [iManip: Skill-Incremental Learning for Robotic Manipulation](imanip_skill-incremental_learning_for_robotic_manipulation.md)
+- [Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)
+- [Bridging Domain Generalization to Multimodal Domain Generalization via Unified Representations](bridging_domain_generalization_to_multimodal_domain_generalization_via_unified_r.md)
+
+<!-- RELATED:END -->

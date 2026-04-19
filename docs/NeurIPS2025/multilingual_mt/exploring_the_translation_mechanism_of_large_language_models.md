@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个翻译方向 + 低资源语言 + 句级验证 + 数学推理迁移 + knockout + 微调
 - 写作质量: ⭐⭐⭐⭐ 分析层层递进，图表清晰
 - 价值: ⭐⭐⭐⭐⭐ 对理解 LLM 翻译机制有重大推进，靶向微调策略有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](../../ACL2025/multilingual_mt/cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation](../../ACL2025/multilingual_mt/trans-zero_self-play_incentivizes_large_language_models_for_multilingual_transla.md)
+- [Exploring In-context Example Generation for Machine Translation](../../ACL2025/multilingual_mt/exploring_in-context_example_generation_for_machine_translation.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](../../ACL2025/multilingual_mt/disentangle_language_culture.md)
+- [Exploring In-Image Machine Translation with Real-World Background](../../ACL2025/multilingual_mt/exploring_in-image_machine_translation_with_real-world_background.md)
+
+<!-- RELATED:END -->

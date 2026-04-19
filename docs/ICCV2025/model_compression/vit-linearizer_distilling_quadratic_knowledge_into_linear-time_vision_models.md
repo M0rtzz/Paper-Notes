@@ -164,3 +164,15 @@ $$\mathcal{L}_{\text{mask}} = \frac{1}{aL}\sum_{i \in \Omega}\text{Smooth}\ell_1
 - **实验**: ⭐⭐⭐⭐ — 分类、分割多任务验证，消融全面，跨教师/跨尺寸实验充实
 - **写作**: ⭐⭐⭐⭐ — 思路清晰，动机充分，公式简洁
 - **价值**: ⭐⭐⭐⭐ — 为 ViT 推理加速提供了一条新的技术路线，对循环视觉模型的发展有推动意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EA-ViT: Efficient Adaptation for Elastic Vision Transformer](ea-vit_efficient_adaptation_for_elastic_vision_transformer.md)
+- [Distilling Tool Knowledge into Language Models via Back-Translated Traces](../../ICML2025/model_compression/distilling_tool_knowledge_into_language_models_via_back-translated_traces.md)
+- [Distilling Balanced Knowledge from a Biased Teacher](../../CVPR2026/model_compression/distilling_balanced_knowledge_from_a_biased_teacher.md)
+- [REOrdering Patches Improves Vision Models](../../NeurIPS2025/model_compression/reordering_patches_improves_vision_models.md)
+- [Towards the Law of Capacity Gap in Distilling Language Models](../../ACL2025/model_compression/law_of_capacity_gap_distilling_language_models.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 单帧+burst+真实数据+新数据集+多指标+完整消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰物理建模严谨
 - 实用价值: ⭐⭐⭐⭐ 为极端成像条件下的生成先验适配开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
+- [Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models](attention_may_i_have_your_decision_localizing_generative_choices_in_diffusion_mo.md)
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+
+<!-- RELATED:END -->

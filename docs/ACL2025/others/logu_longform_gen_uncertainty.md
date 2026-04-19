@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+两个模型+消融+域外测试，分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，两个子挑战的抽象到位，方法逻辑流畅
 - 价值: ⭐⭐⭐⭐ 实用且重要的研究方向，对提升LLM可靠性有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoAM: Corpus of All-Type Multiword Expressions](coam_corpus_of_all-type_multiword_expressions.md)
+- [Do not Abstain! Identify and Solve the Uncertainty](do_not_abstain_identify_and_solve_the_uncertainty.md)
+- [A Little Human Data Goes A Long Way](a_little_human_data_goes_a_long_way.md)
+- [Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
+- [X-Turing: Towards an Enhanced and Efficient Turing Test for Long-Term Dialogue Agents](xturing_enhanced_turing_test.md)
+
+<!-- RELATED:END -->

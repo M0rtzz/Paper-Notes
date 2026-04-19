@@ -111,3 +111,15 @@ MLM本身为预训练模型，不涉及训练。评估了9种MLM（ESM-2 35M/150
 - 实验充分度: ⭐⭐⭐⭐⭐ 罕见的大规模体外验证，9种MLM+3种CLM的系统比较，监督/无监督/引导的完整对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验发现的呈现和讨论到位
 - 价值: ⭐⭐⭐⭐⭐ 对抗体工程实践有直接指导价值，"采样算法比模型更重要"的结论颠覆性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reverse Distillation: Consistently Scaling Protein Language Model Representations](reverse_distillation_consistently_scaling_protein_language_model_representations.md)
+- [EvoFlows: Evolutionary Edit-Based Flow-Matching for Protein Engineering](evoflows_evolutionary_edit-based_flow-matching_for_protein_engineering.md)
+- [Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+- [Controlling Repetition in Protein Language Models](controlling_repetition_in_protein_language_models.md)
+- [mCLM: A Modular Chemical Language Model that Generates Functional and Makeable Molecules](mclm_a_modular_chemical_language_model_that_generates_functional_and_makeable_mo.md)
+
+<!-- RELATED:END -->

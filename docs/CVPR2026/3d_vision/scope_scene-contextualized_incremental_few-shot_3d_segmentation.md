@@ -184,3 +184,15 @@ $$\tilde{p}^c = \lambda \cdot p^c + (1 - \lambda) \cdot h^c, \quad \lambda \in [
 | 写作质量 | 8 | 问题定义清晰、动机论证充分、框架图清晰、实验组织有条理 |
 | 实用价值 | 8 | 即插即用、零额外计算/参数、代码可期，落地性强 |
 | **综合** | **7.5** | 切入角度新颖、方法简洁有效、实验全面，是增量少样本 3D 分割方向的扎实工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments](few-shot_incremental_3d_object_detection_in_dynamic_indoor_environments.md)
+- [EmoTaG: Emotion-Aware Talking Head Synthesis on Gaussian Splatting with Few-Shot Personalization](emotag_emotion-aware_talking_head_synthesis_on_gaussian_splatting_with_few-shot_.md)
+- [MSGNav: Unleashing the Power of Multi-modal 3D Scene Graph for Zero-Shot Embodied Navigation](msgnav_multimodal_3d_scene_embodied_navigation.md)
+- [Action-guided Generation of 3D Functionality Segmentation Data](action-guided_generation_of_3d_functionality_segmentation_data.md)
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
+
+<!-- RELATED:END -->

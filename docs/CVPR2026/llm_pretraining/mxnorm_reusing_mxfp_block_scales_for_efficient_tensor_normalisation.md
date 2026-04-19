@@ -189,3 +189,15 @@ MXFP dequantized tensor的$r^2$ goodness-of-fit随block数增加渐近趋向1。
 | 实用性 | 4.5 | 真正的drop-in replacement，零额外超参数，实测加速可观。随硬件更新价值持续增长 |
 | 实验充分度 | 4.5 | 125M→1B→8B三个规模验证，LR sensitivity/zero-shot/kernel benchmark/loss spike分析全面深入 |
 | 写作质量 | 4.5 | GPU性能表引出动机极为compelling，理论和实验紧密衔接，appendix详尽（含PyTorch实现） |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Defending Unauthorized Model Merging via Dual-Stage Weight Protection](defending_unauthorized_model_merging_via_dual-stage_weight_protection.md)
+- [Watch and Learn: Learning to Use Computers from Online Videos](watch_and_learn_computer_use_from_videos.md)
+- [Linking Modality Isolation in Heterogeneous Collaborative Perception](linking_modality_isolation_in_heterogeneous_collaborative_perception.md)
+- [FlowMotion: Training-Free Flow Guidance for Video Motion Transfer](flowmotion_training-free_flow_guidance_for_video_motion_transfer.md)
+- [Block-Sample MAC-Bayes Generalization Bounds](../../ICLR2026/llm_pretraining/block-sample_mac-bayes_generalization_bounds.md)
+
+<!-- RELATED:END -->

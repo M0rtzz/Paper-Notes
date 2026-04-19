@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四种域转移场景、两种骨干网络、校准样本数量分析、95% CI 案例研究
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑推理严密，CPE 的数学推导和可视化解释都很清晰
 - 价值: ⭐⭐⭐⭐ CPE 指标和后验校准方法可推广到其他不确定性感知的视觉任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VirtueBench: Evaluating Trustworthiness under Uncertainty in Long Video Understanding](virtuebench_evaluating_trustworthiness_under_uncertainty_in_long_video_understan.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT](rethinking_twostage_referringbytracking_in_referri.md)
+- [EgoXtreme: A Dataset for Robust Object Pose Estimation in Egocentric Views under Extreme Conditions](egoxtreme_a_dataset_for_robust_object_pose_estimation_in_egocentric_views_under_.md)
+- [SpikeTrack: A Spike-driven Framework for Efficient Visual Tracking](spiketrack_a_spike-driven_framework_for_efficient_visual_tracking.md)
+
+<!-- RELATED:END -->

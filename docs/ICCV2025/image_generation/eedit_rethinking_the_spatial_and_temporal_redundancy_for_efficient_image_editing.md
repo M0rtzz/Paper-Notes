@@ -145,3 +145,15 @@ TIP + ISS 在所有任务上保持性能的同时平均额外提速 20%+。
 ## 评分 ⭐⭐⭐⭐
 
 框架设计优雅，三个模块各自解决明确问题且可组合叠加。空间-时间冗余的双重分析视角新颖，实验覆盖 prompt/drag/composition 三类任务且加速显著。TIP 的数学等价性证明体现了扎实的理论功底。不足在于 mask 依赖和对更多基础模型的验证不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Layered Graphic Design Generation with a Top-Down Approach](rethinking_layered_graphic_design_generation_with_a_top-down_approach.md)
+- [Rethinking the Embodied Gap in Vision-and-Language Navigation: A Holistic Study of Physical and Visual Disparities](rethinking_the_embodied_gap_in_vision-and-language_navigation_a_holistic_study_o.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [FlowTok: Flowing Seamlessly Across Text and Image Tokens](flowtok_flowing_seamlessly_across_text_and_image_tokens.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+
+<!-- RELATED:END -->

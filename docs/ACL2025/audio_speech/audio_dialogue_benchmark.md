@@ -124,3 +124,15 @@ ADU-Bench 由 4 个数据集组成：(1) ADU-General（12,000 条）：覆盖 3 
 - 实验充分度: ⭐⭐⭐⭐⭐ 16个模型×4个维度的系统对比，加上评估方法的充分验证（多评估器、人类评估、消融）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析全面，但部分描述可以更精炼
 - 价值: ⭐⭐⭐⭐ 为LALM领域提供了急需的综合评估基准，歧义处理维度指出了重要研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models](who_can_withstand_chat-audio_attacks_an_evaluation_benchmark_for_large_audio-lan.md)
+- [Towards Reliable Large Audio Language Model](towards_reliable_large_audio_language_model.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [WavRAG: Audio-Integrated Retrieval Augmented Generation for Spoken Dialogue Models](wavrag_audio-integrated_retrieval_augmented_generation_for_spoken_dialogue_model.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ UltraFeedback 训练的模型在 OOD 基准 MT-Bench 上的表现：
 - 实验充分度: ⭐⭐⭐⭐ — 4 模型 × 2 数据集 × 4+种多样性指标，含消融/频率分析/OOD/故事写作扩展，GPT-4+人工评估
 - 写作质量: ⭐⭐⭐⭐ — 动机推导清晰，框图直观，方法描述细致完整
 - 价值: ⭐⭐⭐⭐ — 解决 RLHF 多样性降低的实际痛点，方法可扩展可插拔，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Strategyproof Reinforcement Learning from Human Feedback](../../NeurIPS2025/llm_alignment/strategyproof_reinforcement_learning_from_human_feedback.md)
+- [Understanding Impact of Human Feedback via Influence Functions](influence_functions_rlhf.md)
+- [M³HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality](../../ICML2025/llm_alignment/m3hf_multi-agent_reinforcement_learning_from_multi-phase_human_feedback_of_mixed.md)
+- [Beyond Surface-Level Patterns: An Essence-Driven Defense Framework Against Jailbreak Attacks in LLMs](beyond_surface-level_patterns_an_essence-driven_defense_framework_against_jailbr.md)
+- [Debate, Reflect, and Distill: Multi-Agent Feedback with Tree-Structured Preference Optimization for Efficient Language Model Enhancement](debate_reflect_and_distill_multi-agent_feedback_with_tree-structured_preference_.md)
+
+<!-- RELATED:END -->

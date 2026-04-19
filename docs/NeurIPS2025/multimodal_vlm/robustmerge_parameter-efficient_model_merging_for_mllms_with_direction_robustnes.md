@@ -119,3 +119,15 @@ RobustMerge是**免训练**方法，所有操作都是后处理：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模态+视觉双轨验证、12个任务基准、详尽消融（剪枝率、rank、组件、缩放策略）
 - 写作质量: ⭐⭐⭐⭐ 分析逻辑清晰，可视化丰富，但符号较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐⭐ 为PEFT时代的模型合并提供了理论基础和实用方案，HuggingFace上海量LoRA模型可直接受益
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness](mmperspective_do_mllms_understand_perspective_a_comprehensive_benchmark_for_pers.md)
+- [Transferring Textual Preferences to Vision-Language Understanding through Model Merging](../../ACL2025/multimodal_vlm/transferring_textual_preferences_to_vision-language_understanding_through_model_.md)
+- [DC-Merge: Improving Model Merging with Directional Consistency](../../CVPR2026/multimodal_vlm/dc-merge_improving_model_merging_with_directional_consistency.md)
+- [FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](../../CVPR2026/multimodal_vlm/fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
+- [Bring Reason to Vision: Understanding Perception and Reasoning through Model Merging](../../ICML2025/multimodal_vlm/bring_reason_to_vision_understanding_perception_and_reasoning_through_model_merg.md)
+
+<!-- RELATED:END -->

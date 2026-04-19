@@ -113,3 +113,15 @@ LTC 框架由三部分组成：(1) 基于连续特征空间的动态原型字典
 - 实验充分度: ⭐⭐⭐⭐ — 7个数据集、多协议、多骨干、充分消融和生成方法对比
 - 写作质量: ⭐⭐⭐⭐ — 问题动机论述有说服力，框架阐述清晰
 - 价值: ⭐⭐⭐⭐ — OCD 方向的实质性推进，无哈希+在线生成的范式值得后续跟进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TALON: Test-time Adaptive Learning for On-the-Fly Category Discovery](talon_test-time_adaptive_learning_for_on-the-fly_category_discovery.md)
+- [Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery](../../ECCV2024/model_compression/category_adaptation_meets_projected_distillation_in_generalized_continual_catego.md)
+- [Stronger Normalization-Free Transformers](stronger_normalization-free_transformers.md)
+- [Break the Tie: Learning Cluster-Customized Category Relationships for Categorical Data Clustering](../../AAAI2026/model_compression/break_the_tie_learning_cluster-customized_category_relationships_for_categorical.md)
+- [UniComp: Rethinking Video Compression Through Informational Uniqueness](unicomp_rethinking_video_compression_through_informational_uniqueness.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种方法+VLM baseline+消融+两种评估模式
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义严谨，数学形式化完整，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 新数据集+新任务+新方法，对具身 AI 有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos](hawor_world-space_hand_motion_reconstruction_from_egocentric_videos.md)
+- [DepthCrafter: Generating Consistent Long Depth Sequences for Open-world Videos](depthcrafter_generating_consistent_long_depth_sequences_for_open-world_videos.md)
+- [GenFusion: Closing the Loop between Reconstruction and Generation via Videos](genfusion_closing_the_loop_between_reconstruction_and_generation_via_videos.md)
+- [FreeScene: Mixed Graph Diffusion for 3D Scene Synthesis from Free Prompts](freescene_mixed_graph_diffusion_for_3d_scene_synthesis_from_free_prompts.md)
+- [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
+
+<!-- RELATED:END -->

@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐ 实验规模太小（300条），仅一个数据集，结论可信度不足
 - 写作质量: ⭐⭐⭐ 结构清晰但深度不够，是workshop级别的论文
 - 价值: ⭐⭐⭐ 方向有趣但验证不充分，需要更大规模的实验支撑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I-RAVEN-X: Benchmarking Generalization and Robustness of Analogical and Mathematical Reasoning in Large Language and Reasoning Models](i-raven-x_benchmarking_generalization_and_robustness_of_analogical_and_mathemati.md)
+- [Scalable Best-of-N Selection for Large Language Models via Self-Certainty](scalable_best-of-n_selection_for_large_language_models_via_self-certainty.md)
+- [ThinkSound: Chain-of-Thought Reasoning in Multimodal Large Language Models for Audio Generation and Editing](thinksound_chain-of-thought_reasoning_in_multimodal_large_language_models_for_au.md)
+- [Provable Scaling Laws for the Test-Time Compute of Large Language Models](provable_scaling_laws_for_the_testtime_compute_of_large_lang.md)
+- [Segment Policy Optimization: Effective Segment-Level Credit Assignment in RL for Large Language Models](segment_policy_optimization_effective_segment-level_credit_assignment_in_rl_for_.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ RADIO 是后训练方法，不涉及梯度训练。其优化过程是：
 - 实验充分度: ⭐⭐⭐ 缺少代码公开，实验细节有限，部分结果需要更多验证
 - 写作质量: ⭐⭐⭐⭐ 理论阐述清晰，将复杂的信息论概念解释得很好
 - 价值: ⭐⭐⭐⭐ 理论价值高，为后续研究提供了新的分析框架和视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuidedQuant: Large Language Model Quantization via Exploiting End Loss Guidance](guidedquant_large_language_model_quantization_via_exploiting_end_loss_guidance.md)
+- [Reinforced Rate Control for Neural Video Compression via Inter-Frame Rate-Distortion Awareness](../../AAAI2026/model_compression/reinforced_rate_control_for_neural_video_compression_via_inter-frame_rate-distor.md)
+- [Vision-centric Token Compression in Large Language Model](../../NeurIPS2025/model_compression/vision-centric_token_compression_in_large_language_model.md)
+- [DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization](../../ACL2025/model_compression/drpruning_robust_pruning.md)
+- [Persistent Topological Features in Large Language Models](persistent_topological_features_in_large_language_models.md)
+
+<!-- RELATED:END -->

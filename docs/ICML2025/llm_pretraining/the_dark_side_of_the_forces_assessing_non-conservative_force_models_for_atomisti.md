@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 从精度、NVE、NVT、几何优化多角度验证，附加多个材料体系
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑清晰，理论与实验完美配合
 - 价值: ⭐⭐⭐⭐⭐ 对MLIP领域非保守力模型的盲目使用敲响警钟，混合方案具有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning the Wrong Lessons: Syntactic-Domain Spurious Correlations in Language Models](../../NeurIPS2025/llm_pretraining/learning_the_wrong_lessons_syntactic-domain_spurious_correlations_in_language_mo.md)
+- [Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](../../NeurIPS2025/llm_pretraining/retrospective_incontext_learning_for_temporal_credit_assignm.md)
+- [Broken Tokens: Your Language Model Can Secretly Handle Non-Canonical Tokenization](../../NeurIPS2025/llm_pretraining/broken_tokens_your_language_model_can_secretly_handle_non-canonical_tokenization.md)
+- [Language Models over Canonical Byte-Pair Encodings](language_models_over_canonical_byte-pair_encodings.md)
+- [On the Role of Label Noise in the Feature Learning Process](on_the_role_of_label_noise_in_the_feature_learning_process.md)
+
+<!-- RELATED:END -->

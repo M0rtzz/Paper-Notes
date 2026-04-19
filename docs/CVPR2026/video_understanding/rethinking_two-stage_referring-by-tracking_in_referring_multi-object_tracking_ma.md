@@ -121,3 +121,15 @@ FlexHook 是首个两阶段方法在所有基准上全面超越一阶段 SOTA。
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，图示丰富易懂
 - 价值: ⭐⭐⭐⭐ 复兴两阶段范式，对工业部署有实际意义
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpikeTrack: A Spike-driven Framework for Efficient Visual Tracking](spiketrack_a_spike-driven_framework_for_efficient_visual_tracking.md)
+- [Real-World Point Tracking with Verifier-Guided Pseudo-Labeling](realworld_point_tracking_with_verifierguided_pseud.md)
+- [Occlusion-Aware SORT: Observing Occlusion for Robust Multi-Object Tracking](occlusion-aware_sort_observing_occlusion_for_robust_multi-object_tracking.md)
+- [Enhancing Accuracy of Uncertainty Estimation in Appearance-based Gaze Tracking with Probabilistic Evaluation and Calibration](enhancing_accuracy_of_uncertainty_estimation_in_ap.md)
+- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+
+<!-- RELATED:END -->

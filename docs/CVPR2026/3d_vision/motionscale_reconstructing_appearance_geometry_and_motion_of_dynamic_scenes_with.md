@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集全面评估，NVS + 3D/2D跟踪多维度指标，消融实验详尽
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，pipeline图直观，但公式密度较高
 - 价值: ⭐⭐⭐⭐ 在单目4D重建方向推进了SOTA，可扩展运动场的设计有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [MoVieS: Motion-Aware 4D Dynamic View Synthesis in One Second](movies_motion-aware_4d_dynamic_view_synthesis_in_one_second.md)
+- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
+- [AeroDGS: Physically Consistent Dynamic Gaussian Splatting for Single-Sequence Aerial 4D Reconstruction](aerodgs_physically_consistent_dynamic_gaussian_splatting_for_single-sequence_aer.md)
+
+<!-- RELATED:END -->

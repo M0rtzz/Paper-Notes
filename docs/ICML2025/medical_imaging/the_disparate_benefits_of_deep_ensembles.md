@@ -158,3 +158,15 @@ $$\overline{\text{DIV}} = \frac{1}{K}\sum_{k=1}^K \left[\log\left(\frac{1}{N}\su
 - 实验充分度: ⭐⭐⭐⭐⭐ — 1000个模型、3个数据集、5种架构、3个公平性指标，极其全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，实验详实，但理论分析深度可进一步加强
 - 价值: ⭐⭐⭐⭐⭐ — 直接影响Deep Ensembles在高风险场景的部署决策
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Conformational Ensembles of Proteins Based on Backbone Geometry](../../NeurIPS2025/medical_imaging/learning_conformational_ensembles_of_proteins_based_on_backbone_geometry.md)
+- [JAMUN: Bridging Smoothed Molecular Dynamics and Score-Based Learning for Conformational Ensembles](../../NeurIPS2025/medical_imaging/jamun_bridging_smoothed_molecular_dynamics_and_score-based_learning_for_conforma.md)
+- [Network Sparsity Unlocks the Scaling Potential of Deep Reinforcement Learning](network_sparsity_unlocks_the_scaling_potential_of_deep_reinforcement_learning.md)
+- [Efficient Noise Calculation in Deep Learning-based MRI Reconstructions](efficient_noise_calculation_in_deep_learning-based_mri_reconstructions.md)
+- [DCA: Graph-Guided Deep Embedding Clustering for Brain Atlases](../../NeurIPS2025/medical_imaging/dca_graph-guided_deep_embedding_clustering_for_brain_atlases.md)
+
+<!-- RELATED:END -->

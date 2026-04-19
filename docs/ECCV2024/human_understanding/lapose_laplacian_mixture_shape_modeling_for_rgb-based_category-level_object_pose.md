@@ -149,3 +149,15 @@ $$\mathcal{L} = \lambda_{pose} \mathcal{L}_{pose} + \lambda_{3D}(\mathcal{L}_{3D
 - **实验充分度**: ⭐⭐⭐⭐ — 消融全面，发现了评估脚本 bug 并修正，但数据集仅限 NOCS
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机到方案设计逻辑严谨，图示清晰专业
 - **价值**: ⭐⭐⭐⭐ — RGB-only 类别级位姿SOTA，推动了尺度无关评估指标标准化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GS-Pose: Category-Level Object Pose Estimation via Geometric and Semantic Correspondence](gs-pose_category-level_object_pose_estimation_via_geometric_and_semantic_corresp.md)
+- [U-COPE: Taking a Further Step to Universal 9D Category-Level Object Pose Estimation](u-cope_taking_a_further_step_to_universal_9d_category-level_object_pose_estimati.md)
+- [FoundPose: Unseen Object Pose Estimation with Foundation Features](foundpose_unseen_object_pose_estimation_with_foundation_features.md)
+- [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](../../ICCV2025/human_understanding/cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
+- [SCAPE: A Simple and Strong Category-Agnostic Pose Estimator](scape_a_simple_and_strong_category-agnostic_pose_estimator.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ YouCook2 上 F1 比 E2DVC 高 3.39；ActivityNet 上 Recall 和 Precision 接近
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清楚，图表直观（Fig.1的注意力对比很有说服力），但Related Work稍显冗长
 - 价值: ⭐⭐⭐⭐ 为query-based DVC提供了清晰的改进范式，OSL可迁移到其他时序任务
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAIL: Similarity-Aware Guidance and Inter-Caption Augmentation-based Learning for Weakly-Supervised Dense Video Captioning](sail_similarity-aware_guidance_and_inter-caption_augmentation-based_learning_for.md)
+- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochatm1_collaborative_policy_planning_for_vide.md)
+- [CVA: Context-aware Video-text Alignment for Video Temporal Grounding](cva_context-aware_video-text_alignment_for_video_temporal_grounding.md)
+- [Explicit Temporal-Semantic Modeling for Dense Video Captioning via Context-Aware Cross-Modal Interaction](../../AAAI2026/video_understanding/explicit_temporal-semantic_modeling_for_dense_video_captioning_via_context-aware.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ FakeRadar基于CLIP ViT-B/16冻结骨干网络，插入ST-Adapter进行参数高
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨数据集、跨操纵、消融、模型变体、特征可视化、子簇演化分析全面深入
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，"雷达探测"类比直观，但部分公式符号可进一步精简
 - 价值: ⭐⭐⭐⭐⭐ 实际意义重大——针对不断涌现的新型伪造技术，提供了一种不依赖特定伪造模式的泛化检测方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection](forgelens_data-efficient_forgery_focus_for_generalizable_forgery_image_detection.md)
+- [Semantic Discrepancy-aware Detector for Image Forgery Identification](semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
+- [SFUOD: Source-Free Unknown Object Detection](sfuod_source-free_unknown_object_detection.md)
+- [Synchronization of Multiple Videos](synchronization_of_multiple_videos.md)
+- [Detecting Adversarial Data Using Perturbation Forgery](../../CVPR2025/object_detection/detecting_adversarial_data_using_perturbation_forgery.md)
+
+<!-- RELATED:END -->

@@ -68,3 +68,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 无条件+条件模型，性别/年龄/种族多属性
 - 写作质量: ⭐⭐⭐⭐⭐ 方法论清晰，三阶段逐步推进
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 公平性有重要意义，精确干预比数据/提示方法更优雅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bias for Action: Video Implicit Neural Representations with Bias Modulation](bias_for_action_video_implicit_neural_representations_with_bias_modulation.md)
+- [Towards a Mechanistic Explanation of Diffusion Model Generalization](../../ICML2025/image_generation/towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [Implicit Bias Injection Attacks against Text-to-Image Diffusion Models](implicit_bias_injection_attacks_against_text-to-image_diffusion_models.md)
+- [DMQ: Dissecting Outliers of Diffusion Models for Post-Training Quantization](../../ICCV2025/image_generation/dmq_dissecting_outliers_of_diffusion_models_for_post-training_quantization.md)
+- [How Bias Binds: Measuring Hidden Associations for Bias Control in Text-to-Image Compositions](../../AAAI2026/image_generation/how_bias_binds_measuring_hidden_associations_for_bias_control_in_text-to-image_c.md)
+
+<!-- RELATED:END -->

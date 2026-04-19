@@ -207,3 +207,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论和实验相互验证，但数据集规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 条理清晰，定理陈述严谨
 - 价值: ⭐⭐⭐⭐ 为集合学习领域的模型鲁棒性分析提供了重要理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
+- [Lipschitz Bandits with Stochastic Delayed Feedback](lipschitz_bandits_with_stochastic_delayed_feedback.md)
+- [Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
+- [Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
+- [Loss Functions for Predictor-based Neural Architecture Search](../../ICCV2025/others/loss_functions_for_predictor-based_neural_architecture_search.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ $$\mathcal{L}^{\text{Fine}} = -\frac{1}{N_1} \sum_{i=1}^{N_1} [y_i \log(\hat{y}_
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、多种数据量、多基线对比、交叉验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，附录详尽
 - 价值: ⭐⭐⭐⭐ 开源可复现的ICU基础模型对社区有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+- [Generating Multi-Table Time Series EHR from Latent Space with Minimal Preprocessing](generating_multi-table_time_series_ehr_from_latent_space_with_minimal_preprocess.md)
+
+<!-- RELATED:END -->

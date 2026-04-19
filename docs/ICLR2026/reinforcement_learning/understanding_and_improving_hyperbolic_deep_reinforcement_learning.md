@@ -115,3 +115,15 @@ PPO clipped surrogate objective 不变。Critic 使用 HL-Gauss 损失（51 bins
 - 实验充分度: ⭐⭐⭐⭐⭐ ProcGen 16环境 + Atari-5 + PPO/PPG/DDQN 三算法 + 大量消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，方程-组件-实验三线呼应
 - 价值: ⭐⭐⭐⭐ 为双曲深度 RL 提供了首个可靠的实践方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
+- [CUDA-L1: Improving CUDA Optimization via Contrastive Reinforcement Learning](cuda-l1_improving_cuda_optimization_via_contrastive_reinforcement_learning.md)
+- [Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
+- [Deep SPI: Safe Policy Improvement via World Models](deep_spi_safe_policy_improvement_via_world_models.md)
+- [MergeMix: A Unified Augmentation Paradigm for Visual and Multi-Modal Understanding](mergemix_a_unified_augmentation_paradigm_for_visual_and_multi-modal_understandin.md)
+
+<!-- RELATED:END -->

@@ -176,3 +176,15 @@ LLM-SRT 在大 batch 下推理速度约为 Qwen2-Audio 的 **3倍**，且不会 
 | 实验充分度 | ⭐⭐⭐⭐⭐ | 多数据集、多模型规模、多方向、消融完整 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，表格丰富 |
 | 实用价值 | ⭐⭐⭐⭐⭐ | 低资源多语言翻译有重大应用价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Effective Incorporating Heterogeneous Knowledge Curriculum Learning for Sequence Labeling](dual_stage_curriculum_learning_sequence_labeling.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [Splintering Nonconcatenative Languages for Better Tokenization](splintering_nonconcatenative_languages_for_better_tokenization.md)
+- [TASTE: Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling](../../ICLR2026/llm_pretraining/taste_text-aligned_speech_tokenization_and_embedding_for_spoken_language_modelin.md)
+- [InSerter: Speech Instruction Following with Unsupervised Interleaved Pre-training](inserter_speech_instruction.md)
+
+<!-- RELATED:END -->

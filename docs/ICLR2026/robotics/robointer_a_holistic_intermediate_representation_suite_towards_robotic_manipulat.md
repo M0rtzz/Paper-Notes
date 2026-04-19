@@ -151,3 +151,15 @@ EC-E2E 在 OOD 上表现最优且下降最小（仅 8.3%），显式中间表示
 ⭐⭐⭐⭐⭐
 
 RoboInter 是机器人中间表示研究的里程碑式工作。它不仅提供了迄今为止最大规模的多类型中间表示数据集，还通过 VQA 基准和 VLA 框架的系统设计，为 plan-then-execute 范式的研究搭建了完整的实验平台。消融实验清晰揭示了 Trace > Affordance > Object Box > Subtask 的中间表示价值层级，这一洞察对未来的具身 AI 研究具有重要指导意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](../../CVPR2026/robotics/lada_robotic_manipulation.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2026/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
+- [When would Vision-Proprioception Policies Fail in Robotic Manipulation?](when_would_vision-proprioception_policies_fail_in_robotic_manipulation.md)
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2025/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+
+<!-- RELATED:END -->

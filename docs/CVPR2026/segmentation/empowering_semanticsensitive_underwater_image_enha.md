@@ -282,3 +282,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 个 baseline、3 个评估数据集、检测+分割下游评估、消融完整
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法逻辑连贯，图表直观
 - 价值: ⭐⭐⭐⭐ 可插拔策略实用性强，对水下视觉和下游感知应用有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning with Pixel-level Precision: QVLM Architecture and SQuID Dataset for Quantitative Geospatial Analytics](reasoning_with_pixel-level_precision_qvlm_architecture_and_squid_dataset_for_qua.md)
+- [EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection](erecu_pseudolabel_evolution_unsupervised_camouflage.md)
+- [Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation](spatio-semantic_expert_routing_architecture_with_mixture-of-experts_for_referrin.md)
+- [CTFS: Collaborative Teacher Framework for Forward-Looking Sonar Image Semantic Segmentation with Extremely Limited Labels](ctfs_collaborative_teacher_framework_for_forward-looking_sonar_image_semantic_se.md)
+- [Towards Context-Aware Image Anonymization with Multi-Agent Reasoning](towards_context-aware_image_anonymization_with_multi-agent_reasoning.md)
+
+<!-- RELATED:END -->

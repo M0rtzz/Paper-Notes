@@ -190,3 +190,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅三个任务、两个模型、10次试验的评估规模，任务复杂度偏低且统计置信度有限，也缺少安全性的定量评估指标。
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、动机阐述充分，附录详实地覆盖了实验细节和超参数设置，但主文的定量分析和消融实验深度可以进一步加强。
 - 价值: ⭐⭐⭐⭐ 作为首篇系统性研究 VLA+软体机器人的工作，具有重要的先驱价值和实践参考意义，开源数据集也为后续研究奠定了基础。提出的微调流水线具有良好的可复用性，可以直接推广到其他非标准机器人平台的 VLA 部署场景。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ThinkAct: Vision-Language-Action Reasoning via Reinforced Visual Latent Planning](thinkact_vision-language-action_reasoning_via_reinforced_visual_latent_planning.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](../../CVPR2025/robotics/sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
+- [MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation](../../CVPR2025/robotics/momanipvla_transferring_vision-language-action_models_for_general_mobile_manipul.md)
+- [VLA-Cache: Efficient Vision-Language-Action Manipulation via Adaptive Token Caching](vla-cache_efficient_vision-language-action_manipulation_via_adaptive_token_cachi.md)
+- [VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers](../../ICCV2025/robotics/vq-vla_improving_vision-language-action_models_via_scaling_vector-quantized_acti.md)
+
+<!-- RELATED:END -->

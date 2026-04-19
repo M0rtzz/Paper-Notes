@@ -140,3 +140,15 @@ $$\mathcal{L}_{overall} = \mathcal{L}_{point} + \lambda_5 \mathcal{L}_{APG}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6个数据集全面评估，计数+定位双重任务，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，问题动机阐述充分
 - **价值**: ⭐⭐⭐⭐ — 对 point-based 方法有实质性改进，APG 思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TF-FAS: Twofold-Element Fine-Grained Semantic Guidance for Generalizable Face Anti-Spoofing](tf-fas_twofold-element_fine-grained_semantic_guidance_for_generalizable_face_ant.md)
+- [ParTY: Part-Guidance for Expressive Text-to-Motion Synthesis](../../CVPR2026/human_understanding/party_part-guidance_for_expressive_text-to-motion_synthesis.md)
+- [RecoverMark: Robust Watermarking for Localization and Recovery of Manipulated Faces](../../CVPR2026/human_understanding/recovermark_robust_watermarking_for_localization_and_recovery_of_manipulated_fac.md)
+- [What's Making That Sound Right Now? Video-centric Audio-Visual Localization](../../ICCV2025/human_understanding/whats_making_that_sound_right_now_video-centric_audio-visual_localization.md)
+- [Improving Sparse IMU-based Motion Capture with Motion Label Smoothing](../../AAAI2026/human_understanding/improving_sparse_imu-based_motion_capture_with_motion_label_smoothing.md)
+
+<!-- RELATED:END -->

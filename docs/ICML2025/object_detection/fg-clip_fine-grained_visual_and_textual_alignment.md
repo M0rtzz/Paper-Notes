@@ -129,3 +129,15 @@ FG-CLIP 采用两阶段训练：
 ## 评分
 
 ⭐⭐⭐⭐ — 工程驱动的系统性方案，通过大规模高质量数据+三合一训练策略全面提升细粒度理解。方法创新在于数据构建和训练范式的合理整合，而非算法突破。全面开源大幅提升实际价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual-RFT: Visual Reinforcement Fine-Tuning](../../ICCV2025/object_detection/visual-rft_visual_reinforcement_fine-tuning.md)
+- [BeautyGRPO: Aesthetic Alignment for Face Retouching via Dynamic Path Guidance and Fine-Grained Preference Modeling](../../CVPR2026/object_detection/beautygrpo_aesthetic_alignment_for_face_retouching_via_dynamic_path_guidance_and.md)
+- [Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](../../ICCV2025/object_detection/dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
+- [Understanding the Emergence of Multimodal Representation Alignment](understanding_the_emergence_of_multimodal_representation_alignment.md)
+- [Advancing Textual Prompt Learning with Anchored Attributes](../../ICCV2025/object_detection/advancing_textual_prompt_learning_with_anchored_attributes.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ ReLU网络计算的函数是连续分段线性（CPWL）的——输入空间可
 - **实验充分度**: ⭐⭐⭐ — 纯理论工作，通过精确的数学例子验证定义间的区别，但无实验
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学表述严谨，组织结构清晰，定义表是极好的参考工具
 - **价值**: ⭐⭐⭐⭐ — 理论意义重大，澄清了文献中的混淆并建立了问题的基本复杂性边界，对理论深度学习研究有持久影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets](the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)
+- [Modeling Neural Activity with Conditionally Linear Dynamical Systems](modeling_neural_activity_with_conditionally_linear_dynamical_systems.md)
+- [Sheaf Cohomology of Linear Predictive Coding Networks](sheaf_cohomology_of_linear_predictive_coding_networks.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures](sad_neural_networks_divergent_gradient_flows_and_asymptotic_optimality_via_o-min.md)
+
+<!-- RELATED:END -->

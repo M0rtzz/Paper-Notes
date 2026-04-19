@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3数据集×2模型×多观测设置×多模态组合，覆盖eco-view和BEV-view，非常全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，动机逻辑链完整
 - 价值: ⭐⭐⭐⭐ KD框架通用性强，文本-模态桥接的发现对多模态学习有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting](../../ICCV2025/autonomous_driving/frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast.md)
+- [Certified Human Trajectory Prediction](certified_human_trajectory_prediction.md)
+- [Distilling Multi-modal Large Language Models for Autonomous Driving](distilling_multi-modal_large_language_models_for_autonomous_driving.md)
+- [Towards Predicting Any Human Trajectory in Context](../../NeurIPS2025/autonomous_driving/towards_predicting_any_human_trajectory_in_context.md)
+- [ClimbingCap: Multi-Modal Dataset and Method for Rock Climbing in World Coordinate](climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)
+
+<!-- RELATED:END -->

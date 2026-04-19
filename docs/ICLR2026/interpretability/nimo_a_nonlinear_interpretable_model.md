@@ -161,3 +161,15 @@ Toy example 验证（3维）：
 - **实验充分度**: ⭐⭐⭐ 合成+真实实验验证充分，但数据规模小
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机清晰、toy example 直观、理论与实验紧密结合
 - **价值**: ⭐⭐⭐⭐ 为"准确且可解释"提供实用方案，高风险领域有强应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
+- [Evolution of Concepts in Language Model Pre-Training](evolution_of_concepts_in_language_model_pre-training.md)
+- [Uni-NTFM: A Unified Foundation Model for EEG Signal Representation Learning](uni-ntfm_a_unified_foundation_model_for_eeg_signal_representation_learning.md)
+- [Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
+- [Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
+
+<!-- RELATED:END -->

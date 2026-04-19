@@ -133,3 +133,15 @@ StreamingBench 基准上的关键结果：
 - 实验充分度: ⭐⭐⭐⭐ 多基准评估 + 消融实验 + 超参数分析 + 可视化，但缺少更多 backbone 的验证
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，图示直观，问题定义严谨
 - 价值: ⭐⭐⭐⭐ 无训练即插即用的设计有很高的实用价值，为流式视频问答提供了一个简洁有效的基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAM-DAQ: Segment Anything Model with Depth-guided Adaptive Queries for RGB-D Video Salient Object Detection](sam-daq_segment_anything_model_with_depth-guided_adaptive_queries_for_rgb-d_vide.md)
+- [TabRAG: Improving Tabular Document Question Answering for Retrieval Augmented Generation via Structured Representations](../../NeurIPS2025/segmentation/tabrag_improving_tabular_document_question_answering_for_retrieval_augmented_gen.md)
+- [EAFormer: Scene Text Segmentation with Edge-Aware Transformers](../../ECCV2024/segmentation/eaformer_scene_text_segmentation_with_edge-aware_transformers.md)
+- [Towards Affordance-Aware Robotic Dexterous Grasping with Human-like Priors](towards_affordance-aware_robotic_dexterous_grasping_with_human-like_priors.md)
+- [DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](../../CVPR2026/segmentation/dsflash_comprehensive_panoptic_scene_graph_generation_in_realtime.md)
+
+<!-- RELATED:END -->

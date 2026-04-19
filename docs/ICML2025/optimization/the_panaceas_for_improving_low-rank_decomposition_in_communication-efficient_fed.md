@@ -164,3 +164,15 @@ MUD + BKD + AAD 可以同时应用：
 | 实用性 | ⭐⭐⭐⭐ | 方法简洁可落地，三种技术可灵活组合，代码已开源 |
 | 写作质量 | ⭐⭐⭐⭐ | 问题拆解清晰，图示直观，逻辑通顺 |
 | 综合 | ⭐⭐⭐⭐ | 联邦学习通信效率领域的扎实工作，思路清晰，实验有说服力 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Layer-wise Update Aggregation with Recycling for Communication-Efficient Federated Learning](../../NeurIPS2025/optimization/layer-wise_update_aggregation_with_recycling_for_communication-efficient_federat.md)
+- [MAR-FL: A Communication Efficient Peer-to-Peer Federated Learning System](../../NeurIPS2025/optimization/mar-fl_a_communication_efficient_peer-to-peer_federated_learning_system.md)
+- [FedSWA: Improving Generalization in Federated Learning with Highly Heterogeneous Data via Momentum-Based Stochastic Controlled Weight Averaging](fedswa_improving_generalization_in_federated_learning_with_highly_heterogeneous_.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](../../NeurIPS2025/optimization/perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [Multiplayer Federated Learning: Reaching Equilibrium with Less Communication](../../NeurIPS2025/optimization/multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)
+
+<!-- RELATED:END -->

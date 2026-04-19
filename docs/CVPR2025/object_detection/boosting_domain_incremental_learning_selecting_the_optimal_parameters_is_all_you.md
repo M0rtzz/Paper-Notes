@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基准评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰
 - 价值: ⭐⭐⭐⭐ 有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [All You Need is One: Capsule Prompt Tuning with a Single Vector](../../NeurIPS2025/object_detection/all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
+- [You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](../../NeurIPS2025/object_detection/you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
+- [The Devil is in the Spurious Correlations: Boosting Moment Retrieval with Dynamic Learning](../../ICCV2025/object_detection/the_devil_is_in_the_spurious_correlations_boosting_moment_retrieval_with_dynamic.md)
+
+<!-- RELATED:END -->

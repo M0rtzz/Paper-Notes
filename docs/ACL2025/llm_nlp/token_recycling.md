@@ -130,3 +130,15 @@ Token Recycling 在推理过程中维护一个轻量级邻接矩阵，记录 tok
 | 实验充分度 | ⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐ |
 | 实用价值 | ⭐⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StreamBridge: Turning Your Offline Video Large Language Model into a Proactive Streaming Model](../../NeurIPS2025/llm_nlp/streambridge_turning_your_offline_video_large_language_model_into_a_proactive_st.md)
+- [The Impact of Token Granularity on the Predictive Power of Language Model Surprisal](token_granularity_impact.md)
+- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [Conformity in Large Language Models](conformity_in_large_language_models.md)
+- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ $$
 - 技术深度：⭐⭐⭐⭐ — 从观察到方法到 CUDA 内核完整工程链
 - 实验充分度：⭐⭐⭐⭐⭐ — 三个 MoE 模型 × 多基准 × 延迟测量 × 消融全面
 - 实用价值：⭐⭐⭐⭐⭐ — 即插即用 vLLM 集成，直接可用于生产部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
+- [Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/model_compression/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
+- [Revisiting Weight Regularization for Low-Rank Continual Learning](revisiting_weight_regularization_for_low-rank_continual_learning.md)
+- [S2R-HDR: A Large-Scale Rendered Dataset for HDR Fusion](s2r-hdr_a_large-scale_rendered_dataset_for_hdr_fusion.md)
+- [Rethinking Continual Learning with Progressive Neural Collapse](rethinking_continual_learning_with_progressive_neural_collapse.md)
+
+<!-- RELATED:END -->

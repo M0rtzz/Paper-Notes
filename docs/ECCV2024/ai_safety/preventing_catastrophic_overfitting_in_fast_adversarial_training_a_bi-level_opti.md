@@ -140,3 +140,15 @@ $$\mathcal{L}_{PCO} = \mathcal{L}_{CE}(f_\theta(\boldsymbol{x}_{train}), \mathbf
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集三个模型，含消融、敏感性分析和纠正能力验证
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法推导完整
 - 价值: ⭐⭐⭐⭐ — FAT 领域的实用改进，解决了长期困扰的灾难性过拟合问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Resource-Constrained Training of Transformers via Subspace Optimization](../../ICLR2026/ai_safety/efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
+- [A Unified Perspective on Adversarial Membership Manipulation in Vision Models](../../CVPR2026/ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)
+- [Distributional Adversarial Attacks and Training in Deep Hedging](../../NeurIPS2025/ai_safety/distributional_adversarial_attacks_and_training_in_deep_hedging.md)
+- [MixAT: Combining Continuous and Discrete Adversarial Training for LLMs](../../NeurIPS2025/ai_safety/mixat_combining_continuous_and_discrete_adversarial_training_for_llms.md)
+- [Identifying and Understanding Cross-Class Features in Adversarial Training](../../ICML2025/ai_safety/identifying_and_understanding_cross-class_features_in_adversarial_training.md)
+
+<!-- RELATED:END -->

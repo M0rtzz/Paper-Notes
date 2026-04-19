@@ -150,3 +150,15 @@ DEPS 训练一个三层层次结构：
 - 实验充分度: ⭐⭐⭐⭐ 多基准多设置评估全面，定性可视化优秀，但缺少更复杂环境
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，概念阐述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对机器人技能学习和层次化策略学习领域有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Wasserstein Transfer Learning](wasserstein_transfer_learning.md)
+- [Learning from Interval Targets](learning_from_interval_targets.md)
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+
+<!-- RELATED:END -->

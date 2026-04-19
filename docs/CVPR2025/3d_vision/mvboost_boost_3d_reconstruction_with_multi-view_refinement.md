@@ -119,3 +119,15 @@ MVBoost 提出了一种通过多视图精炼策略生成伪真值数据来增强
 - 实验充分度: ⭐⭐⭐ 仅在 GSO 上评测，场景多样性有限
 - 写作质量: ⭐⭐⭐⭐ 方法阐述清晰，框架图直观
 - 价值: ⭐⭐⭐⭐ 提供了不依赖 3D 数据集的训练范式，训练成本极低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IMFine: 3D Inpainting via Geometry-guided Multi-view Refinement](imfine_3d_inpainting_via_geometry-guided_multi-view_refinement.md)
+- [MUSt3R: Multi-view Network for Stereo 3D Reconstruction](must3r_multi-view_network_for_stereo_3d_reconstruction.md)
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [Boost 3D Reconstruction using Diffusion-based Monocular Camera Calibration](../../ICCV2025/3d_vision/boost_3d_reconstruction_using_diffusion-based_monocular_camera_calibration.md)
+- [3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement](3denhancer_consistent_multi-view_diffusion_for_3d_enhancement.md)
+
+<!-- RELATED:END -->

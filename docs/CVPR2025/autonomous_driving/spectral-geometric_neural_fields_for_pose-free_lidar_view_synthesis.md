@@ -121,3 +121,15 @@ CD 降低 35.8%，ATE 降低 68.8%（nuScenes）。
 - 实验充分度: ⭐⭐⭐⭐ (多数据集多设置，消融完整)
 - 写作质量: ⭐⭐⭐⭐ (方法描述清晰，公式推导完整)
 - 价值: ⭐⭐⭐⭐⭐ (大幅推进 pose-free LiDAR NVS SOTA)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SG-NLF: Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](../../CVPR2026/autonomous_driving/sgnlf_spectralgeometric_neural_fields_for_posefre.md)
+- [VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)
+- [EVolSplat: Efficient Volume-based Gaussian Splatting for Urban View Synthesis](evolsplat_efficient_volume-based_gaussian_splatting_for_urban_view_synthesis.md)
+- [LightLoc: Learning Outdoor LiDAR Localization at Light Speed](lightloc_learning_outdoor_lidar_localization_at_light_speed.md)
+- [Cubify Anything: Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)
+
+<!-- RELATED:END -->

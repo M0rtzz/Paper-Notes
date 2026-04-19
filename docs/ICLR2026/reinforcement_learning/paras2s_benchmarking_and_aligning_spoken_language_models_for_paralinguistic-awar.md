@@ -175,3 +175,15 @@ ParaS2S 包含两大组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 极其全面：基准验证、模型比较、消融、数据效率、泛化性、人类评估
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，实验详尽，但部分内容有冗余
 - 价值: ⭐⭐⭐⭐⭐ — 填补了 S2S 领域的重要空白，基准和方法都有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
+- [Checklists Are Better Than Reward Models For Aligning Language Models](../../NeurIPS2025/reinforcement_learning/checklists_are_better_than_reward_models_for_aligning_langua.md)
+- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [Towards Strategic Persuasion with Language Models](towards_strategic_persuasion_with_language_models.md)
+- [Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
+
+<!-- RELATED:END -->

@@ -178,3 +178,15 @@ $$\lambda = 10^{-4} \cdot \left(\frac{t}{2\pi}\right)^{d/d_{extra}}, \quad d_{ex
 - 实验充分度: ⭐⭐⭐⭐（多模型、多benchmark、多长度验证）
 - 写作质量: ⭐⭐⭐⭐⭐（从现象→解释→方法→验证的完整故事线）
 - 价值: ⭐⭐⭐⭐⭐（为扩散 LLM 长上下文研究奠定基础）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
+- [Less-to-More Generalization: Unlocking More Controllability by In-Context Generation](../../ICCV2025/image_generation/less-to-more_generalization_unlocking_more_controllability_by_in-context_generat.md)
+- [DiffA: Large Language Diffusion Models Can Listen and Understand](diffa_large_language_diffusion_models_can_listen_and_understand.md)
+- [LongT2IBench: A Benchmark for Evaluating Long Text-to-Image Generation with Graph-structured Annotations](longt2ibench_a_benchmark_for_evaluating_long_text-to-image_generation_with_graph.md)
+- [ShowTable: Unlocking Creative Table Visualization with Collaborative Reflection and Refinement](../../CVPR2026/image_generation/showtable_unlocking_creative_table_visualization_with_collaborative_reflection_a.md)
+
+<!-- RELATED:END -->

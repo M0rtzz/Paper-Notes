@@ -144,3 +144,15 @@ OmniSAM 框架包含以下关键组件：
 - **实验充分度**: ⭐⭐⭐⭐ 三种 UDA 场景、四种模型规模、完整消融、逐类结果
 - **写作质量**: ⭐⭐⭐⭐ 框架描述清晰，动机充分，图示丰富
 - **价值**: ⭐⭐⭐⭐ 大幅度超越 SOTA，为全景分割 UDA 提供了新的强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Segment and Matte Anything in a Unified Model (SAMA)](../../AAAI2026/segmentation/segment_and_matte_anything_in_a_unified_model.md)
+- [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
+- [E-SAM: Training-Free Segment Every Entity Model](e-sam_training-free_segment_every_entity_model.md)
+- [Segment Anything Across Shots: A Method and Benchmark](../../AAAI2026/segmentation/segment_anything_across_shots_a_method_and_benchmark.md)
+- [SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model](../../AAAI2026/segmentation/saq-sam_semantically-aligned_quantization_for_segment_anything_model.md)
+
+<!-- RELATED:END -->

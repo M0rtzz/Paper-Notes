@@ -135,3 +135,15 @@ GETA 接受任意 DNN 和目标压缩率作为输入，输出联合剪枝+量化
 - 实验充分度: ⭐⭐⭐⭐ CNN+Transformer双架构验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰
 - 价值: ⭐⭐⭐⭐ 对模型部署有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Butterfly Effect: Neural Network Training Trajectories Are Highly Sensitive to Initial Conditions](../../ICML2025/optimization/the_butterfly_effect_neural_network_training_trajectories_are_highly_sensitive_t.md)
+- [Asymptotically Stable Quaternionic Hopfield Structured Neural Network with Supervised Projection-based Manifold Learning](../../NeurIPS2025/optimization/asymptotically_stable_quaternion-valued_hopfield-structured_neural_network_with_.md)
+- [DartQuant: Efficient Rotational Distribution Calibration for LLM Quantization](../../NeurIPS2025/optimization/dartquant_efficient_rotational_distribution_calibration_for_llm_quantization.md)
+- [SDP-CROWN: Efficient Bound Propagation for Neural Network Verification with Tightness of Semidefinite Programming](../../ICML2025/optimization/sdp-crown_efficient_bound_propagation_for_neural_network_verification_with_tight.md)
+- [Interior-Point Vanishing Problem in Semidefinite Relaxations for Neural Network Verification](../../ICML2025/optimization/interior-point_vanishing_problem_in_semidefinite_relaxations_for_neural_network_.md)
+
+<!-- RELATED:END -->

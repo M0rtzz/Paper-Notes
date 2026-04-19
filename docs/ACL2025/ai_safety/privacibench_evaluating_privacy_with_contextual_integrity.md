@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多法规 + 真实/合成数据 + CI 探测 + 3种评估策略
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，理论基础扎实
 - 价值: ⭐⭐⭐⭐⭐ 为 AI 隐私合规提供了标准化评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contextual Integrity in LLMs via Reasoning and Reinforcement Learning](../../NeurIPS2025/ai_safety/contextual_integrity_in_llms_via_reasoning_and_reinforcement_learning.md)
+- [Estimating Privacy Leakage of Augmented Contextual Knowledge in Language Models](estimating_privacy_leakage_of_augmented_contextual_knowledge_in_language_models.md)
+- [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+- [CENTAUR: Bridging the Impossible Trinity of Privacy, Efficiency, and Performance in Privacy-Preserving Transformer Inference](centaur_bridging_the_impossible_trinity_of.md)
+- [The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](tug_of_war_fairness_privacy.md)
+
+<!-- RELATED:END -->

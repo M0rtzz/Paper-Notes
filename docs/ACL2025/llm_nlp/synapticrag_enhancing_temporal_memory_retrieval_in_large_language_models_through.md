@@ -123,3 +123,15 @@ SynapticRAG 在所有4个数据集上均大幅超越最强基线，平均提升 
 - **实验充分度**: ⭐⭐⭐⭐ — 4个数据集、5个基线、3种语言、完整消融和参数分析，但数据集规模偏小
 - **写作质量**: ⭐⭐⭐⭐ — 公式推导完整清晰，框架图直观，但部分符号定义可以更紧凑
 - **价值**: ⭐⭐⭐⭐ — 为对话系统记忆管理提供了新的生物启发范式，对 RAG 时序增强有实用参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
+- [TReMu: Towards Neuro-Symbolic Temporal Reasoning for LLM-Agents with Memory in Multi-Session Dialogues](tremu_towards_neuro-symbolic_temporal_reasoning_for_llm-agents_with_memory_in_mu.md)
+- [ChronoSense: Exploring Temporal Understanding in Large Language Models with Time Intervals of Events](chronosense_exploring_temporal_understanding_in_large_language_models_with_time_.md)
+- [Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
+- [Emergent Symbolic Mechanisms Support Abstract Reasoning in Large Language Models](../../ICML2025/llm_nlp/emergent_symbolic_mechanisms_support_abstract_reasoning_in_large_language_models.md)
+
+<!-- RELATED:END -->

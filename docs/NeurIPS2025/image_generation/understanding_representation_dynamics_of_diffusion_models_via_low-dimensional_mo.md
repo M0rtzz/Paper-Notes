@@ -138,3 +138,15 @@ $$\text{SNR}(\hat{x}_\theta^\star, t) \approx \frac{C_t}{(K-1)} \cdot \left(\fra
 - 实验充分度: ⭐⭐⭐⭐ 合成和真实数据的验证系统，泛化-记忆实验设计巧妙
 - 写作质量: ⭐⭐⭐⭐⭐ 理论直觉解释清晰（去噪率vs类置信率的权衡），图示精美
 - 价值: ⭐⭐⭐⭐⭐ 为扩散模型表示学习提供理论基础，可能指导更原则性的特征提取和早停策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Shallow Diffuse: Robust and Invisible Watermarking through Low-Dimensional Subspaces in Diffusion Models](shallow_diffuse_robust_and_invisible_watermarking_through_low-dimensional_subspa.md)
+- [Elucidated Rolling Diffusion Models for Probabilistic Forecasting of Complex Dynamics](elucidated_rolling_diffusion_models_for_probabilistic_forecasting_of_complex_dyn.md)
+- [Preconditioned Langevin Dynamics with Score-Based Generative Models for Infinite-Dimensional Linear Bayesian Inverse Problems](preconditioned_langevin_dynamics_with_score-based_generative_models_for_infinite.md)
+- [Cross-fluctuation Phase Transitions Reveal Sampling Dynamics in Diffusion Models](cross-fluctuation_phase_transitions_reveal_sampling_dynamics_in_diffusion_models.md)
+- [PID-controlled Langevin Dynamics for Faster Sampling of Generative Models](pid-controlled_langevin_dynamics_for_faster_sampling_of_generative_models.md)
+
+<!-- RELATED:END -->

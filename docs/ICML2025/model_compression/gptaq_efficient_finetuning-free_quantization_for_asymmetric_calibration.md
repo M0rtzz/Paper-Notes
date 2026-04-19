@@ -120,3 +120,15 @@ GPTAQ 是无微调方法，不涉及梯度更新训练。其"训练"过程即为
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了 LLM 和 ViT，多种比特数，但消融实验可以更详细
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，仅 20 行代码的卖点非常有说服力
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高，已被工业级库集成，是 GPTQ 的明确升级替代
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OuroMamba: A Data-Free Quantization Framework for Vision Mamba](../../ICCV2025/model_compression/ouromamba_a_data-free_quantization_framework_for_vision_mamba.md)
+- [Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/model_compression/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
+- [BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference](blockdialect_block-wise_fine-grained_mixed_format_quantization_for_energy-effici.md)
+- [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](../../NeurIPS2025/model_compression/robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [GuidedQuant: Large Language Model Quantization via Exploiting End Loss Guidance](guidedquant_large_language_model_quantization_via_exploiting_end_loss_guidance.md)
+
+<!-- RELATED:END -->

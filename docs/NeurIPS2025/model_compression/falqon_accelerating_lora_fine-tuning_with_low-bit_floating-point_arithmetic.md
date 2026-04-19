@@ -129,3 +129,15 @@ FP8 LoRA 开销分析（LLaMA-7B, rank=64）：
 - 实验充分度: ⭐⭐⭐⭐ 速度分析详尽，多数据集多模型覆盖，有详细的 breakdown 分析
 - 写作质量: ⭐⭐⭐⭐ 问题分析部分非常清晰，图表有效传达核心信息
 - 价值: ⭐⭐⭐⭐⭐ 直接解决了 FP8 硬件上 LoRA 微调减速的实际痛点，3× 加速对实际部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMLoC: Emulator-based Memory-efficient Fine-tuning with LoRA Correction](emloc_emulator-based_memory-efficient_fine-tuning_with_lora_correction.md)
+- [Loquetier: A Virtualized Multi-LoRA Framework for Unified LLM Fine-tuning and Serving](loquetier_a_virtualized_multi-lora_framework_for_unified_llm_fine-tuning_and_ser.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [LittleBit: Ultra Low-Bit Quantization via Latent Factorization](littlebit_ultra_low-bit_quantization_via_latent_factorization.md)
+
+<!-- RELATED:END -->

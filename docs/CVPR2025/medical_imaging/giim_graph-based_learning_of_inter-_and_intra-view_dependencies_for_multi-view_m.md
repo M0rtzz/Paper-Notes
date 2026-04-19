@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (三种模态、缺失视图实验、多种基线对比)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，医学背景描述充分)
 - 价值: ⭐⭐⭐⭐ (通用框架适用于多种多视图医学诊断场景)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [UltrasoundAgents: Hierarchical Multi-Agent Evidence-Chain Reasoning for Breast Ultrasound Diagnosis](ultrasoundagents_hierarchical_multi-agent_evidence-chain_reasoning_for_breast_ul.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multi-modal_learning_for_single_source_domain_general.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+
+<!-- RELATED:END -->

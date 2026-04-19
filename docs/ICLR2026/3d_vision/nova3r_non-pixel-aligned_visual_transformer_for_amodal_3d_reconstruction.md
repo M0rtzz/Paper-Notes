@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 场景级(SCRREAM/7-Scenes/NRGBD) + 物体级(GSO)验证全面，消融丰富
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，pixel-aligned vs non-pixel-aligned对比直观
 - 价值: ⭐⭐⭐⭐⭐ 开创非像素对齐重建新范式，对3D视觉方向有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantized Visual Geometry Grounded Transformer](quantized_visual_geometry_grounded_transformer.md)
+- [Generalizable Coarse-to-Fine Robot Manipulation via Language-Aligned 3D Keypoints](generalizable_coarse-to-fine_robot_manipulation_via_language-aligned_3d_keypoint.md)
+- [Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images](../../ICCV2025/3d_vision/amodal3r_amodal_3d_reconstruction_from_occluded_2d_images.md)
+- [Human Hair Reconstruction with Strand-Aligned 3D Gaussians](../../ECCV2024/3d_vision/human_hair_reconstruction_with_strand-aligned_3d_gaussians.md)
+- [MVGGT: Multimodal Visual Geometry Grounded Transformer for Multiview 3D Referring Expression Segmentation](../../CVPR2026/3d_vision/mvggt_multimodal_visual_geometry_grounded_transformer_for_multiview_3d_referring.md)
+
+<!-- RELATED:END -->

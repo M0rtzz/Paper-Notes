@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 无实验，但文献分析全面系统
 - 写作质量: ⭐⭐⭐⭐⭐ 法律条款引用精确，技术分析平衡客观
 - 价值: ⭐⭐⭐⭐ 为MU社区指明了法规驱动的研究方向，弥合AI安全研究与政策需求的重要桥梁
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research](machine_unlearning_doesnt_do_what_you_think_lessons_for_generative_ai_policy_and.md)
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Efficient Verified Machine Unlearning for Distillation](efficient_verified_machine_unlearning_for_distillation.md)
+- [The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples](the_unseen_threat_residual_knowledge_in_machine_unlearning_under_perturbed_sampl.md)
+- [OFMU: Optimization-Driven Framework for Machine Unlearning](../../ICLR2026/ai_safety/ofmu_optimization-driven_framework_for_machine_unlearning.md)
+
+<!-- RELATED:END -->

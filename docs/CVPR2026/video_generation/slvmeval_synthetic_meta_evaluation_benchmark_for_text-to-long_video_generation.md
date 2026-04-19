@@ -135,3 +135,15 @@ SLVMEval是评估基准而非训练方法。评估系统的主要对比包括：
 - 实验充分度: ⭐⭐⭐⭐ 8个评估系统×10个维度的全面对比，加上人类基线和时长分析
 - 写作质量: ⭐⭐⭐⭐ 框架定义清晰，Algorithm 1简洁易懂，但部分CJK编码问题影响阅读
 - 价值: ⭐⭐⭐⭐ 精准揭示了长视频评估的瓶颈（语义+时序维度），为社区指出了明确的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldScore: A Unified Evaluation Benchmark for World Generation](../../ICCV2025/video_generation/worldscore_a_unified_evaluation_benchmark_for_world_generation.md)
+- [Free-Lunch Long Video Generation via Layer-Adaptive O.O.D Correction](free-lunch_long_video_generation_via_layer-adaptive_ood_correction.md)
+- [ActivityForensics: A Comprehensive Benchmark for Localizing Manipulated Activity in Videos](activityforensics_a_comprehensive_benchmark_for_localizing_manipulated_activity_.md)
+- [StreamDiT: Real-Time Streaming Text-to-Video Generation](streamdit_real-time_streaming_text-to-video_generation.md)
+- [VidCapBench: A Comprehensive Benchmark of Video Captioning for Controllable Text-to-Video Generation](../../ACL2025/video_generation/vidcapbench_a_comprehensive_benchmark_of_video_captioning_for_controllable_text-.md)
+
+<!-- RELATED:END -->

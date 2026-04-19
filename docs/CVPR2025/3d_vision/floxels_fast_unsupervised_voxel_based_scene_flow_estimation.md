@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多基线、详细消融、计算效率分析、失败案例可视化
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，图示清晰，故事完整
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强——在自动驾驶等对延时敏感的场景中，Floxels 是目前无监督方法的最佳选择
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flux4D: Flow-based Unsupervised 4D Reconstruction](../../NeurIPS2025/3d_vision/flux4d_flow-based_unsupervised_4d_reconstruction.md)
+- [P-SLCR: Unsupervised Point Cloud Semantic Segmentation via Prototypes Structure Learning and Consistent Reasoning](p-slcr_unsupervised_point_cloud_semantic_segmentation_via_prototypes_structure_l.md)
+- [milliFlow: Scene Flow Estimation on mmWave Radar Point Cloud for Human Motion Sensing](../../ECCV2024/3d_vision/milliflow_scene_flow_estimation_on_mmwave_radar_point_cloud_for_human_motion_sen.md)
+- [Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
+- [PCSTracker: Long-Term Scene Flow Estimation for Point Cloud Sequences](../../CVPR2026/3d_vision/pcstracker_long-term_scene_flow_estimation_for_point_cloud_sequences.md)
+
+<!-- RELATED:END -->

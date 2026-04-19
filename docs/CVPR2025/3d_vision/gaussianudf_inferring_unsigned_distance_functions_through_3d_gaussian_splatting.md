@@ -131,3 +131,15 @@ DTU 数据集（封闭曲面，15 个场景）上的平均 CD：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖开放/封闭曲面、合成/真实数据，消融彻底，但缺少大规模场景测试
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示丰富，但公式略多
 - 价值: ⭐⭐⭐⭐ 为开放曲面重建提供了高效新方案，桥接了显式和隐式表示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
+- [ActiveGAMER: Active GAussian Mapping through Efficient Rendering](activegamer_active_gaussian_mapping_through_efficient_rendering.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [Implicit Filtering for Learning Neural Signed Distance Functions from 3D Point Clouds](../../ECCV2024/3d_vision/implicit_filtering_for_learning_neural_signed_distance_functions_from_3d_point_c.md)
+- [FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting](fruitninja_3d_object_interior_texture_generation_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

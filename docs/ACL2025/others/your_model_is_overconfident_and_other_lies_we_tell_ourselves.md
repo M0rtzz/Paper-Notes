@@ -116,3 +116,15 @@ tags:
 - 实验: ⭐⭐⭐⭐⭐ — 29 个模型、多数据集、多指标的系统性对比非常扎实
 - 写作: ⭐⭐⭐⭐ — 数学符号定义清晰，论证逻辑严密
 - 实用性: ⭐⭐⭐ — 对评估和标注实践有指导意义，但无直接可用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)
+- [Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
+- [DeepRTL2: A Versatile Model for RTL-Related Tasks](deeprtl2_a_versatile_model_for_rtl-related_tasks.md)
+- [From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](../../ICCV2025/others/doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)
+
+<!-- RELATED:END -->

@@ -186,3 +186,15 @@ GuideGen 仅文本输入即超越所有需要掩码的方法。
 - 实验评估维度全面：生成质量 + 条件对齐 + 下游分割可用性
 - 合成数据超越真实数据的结果极具说服力
 - 唯一的局限在于分辨率约束和结构化提示依赖，但不影响学术贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
+- [GEM: Generative Entropy-Guided Preference Modeling for Few-shot Alignment of LLMs](gem_generative_entropy-guided_preference_modeling_for_few-shot_alignment_of_llms.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](../../ACL2025/medical_imaging/radar_radiology_report_gen.md)
+
+<!-- RELATED:END -->

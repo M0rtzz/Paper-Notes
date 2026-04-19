@@ -135,3 +135,15 @@ LotusFilter分为离线预处理和在线过滤两个阶段。
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集覆盖文本/图像场景，定量+定性评估完备，含复杂度分析、消融、预处理时间详细报告
 - 写作质量: ⭐⭐⭐⭐ 算法描述清晰，理论推导严谨，从问题定义到数据结构设计的逻辑链条完整
 - 价值: ⭐⭐⭐⭐⭐ 直击RAG系统重复检索的核心痛点，0.02ms过滤+即插即用设计使其极具工程落地价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ArtFormer: Controllable Generation of Diverse 3D Articulated Objects](artformer_controllable_generation_of_diverse_3d_articulated_objects.md)
+- [Theme-Explanation Structure for Table Summarization Using Large Language Models](../../ACL2025/nlp_generation/theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+- [FS-DFM: Fast and Accurate Long Text Generation with Few-Step Diffusion Language Model](../../ICLR2026/nlp_generation/fs-dfm_fast_and_accurate_long_text_generation_with_few-step_diffusion_language_m.md)
+- [Dense Match Summarization for Faster Two-view Estimation](dense_match_summarization_for_faster_two-view_estimation.md)
+- [What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations](../../ACL2025/nlp_generation/video_text_summarization.md)
+
+<!-- RELATED:END -->

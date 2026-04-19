@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 36 LLM × 7 benchmark + 注意力分析 + 6种风格微调 + 3种模型 × 5种基线
 - 写作质量: ⭐⭐⭐⭐⭐ 从发现到分析到防御的逻辑链完整自洽
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全评估标准和对齐实践有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowing When to Quit: Probabilistic Early Exits for Speech Separation](knowing_when_to_quit_probabilistic_early_exits_for_speech_separation.md)
+- [ControlSpeech: Towards Simultaneous and Independent Zero-shot Speaker Cloning and Zero-shot Language Style Control](../../ACL2025/audio_speech/controlspeech_zero_shot.md)
+- [Do LLMs Feel? Teaching Emotion Recognition with Prompts, Retrieval, and Curriculum Learning](../../AAAI2026/audio_speech/do_llms_feel_teaching_emotion_recognition_with_prompts_retrieval_and_curriculum_.md)
+- [A TRIANGLE Enables Multimodal Alignment Beyond Cosine Similarity](../../NeurIPS2025/audio_speech/a_triangle_enables_multimodal_alignment_beyond_cosine_simila.md)
+- [Teaching Physical Awareness to LLMs through Sounds](../../ICML2025/audio_speech/teaching_physical_awareness_to_llms_through_sounds.md)
+
+<!-- RELATED:END -->

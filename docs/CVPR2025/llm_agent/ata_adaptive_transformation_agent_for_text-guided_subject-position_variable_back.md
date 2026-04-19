@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两种模式对比验证 + 消融完整
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐ 对图像修复领域有贡献但应用面相对窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAT-Agent: Adaptive Multi-Agent Training Optimization](../../NeurIPS2025/llm_agent/mat-agent_adaptive_multi-agent_training_optimization.md)
+- [Select, Read, and Write: A Multi-Agent Framework of Full-Text-based Related Work Generation](../../ACL2025/llm_agent/select_read_and_write_a_multi-agent_framework_of_full-text-based_related_work_ge.md)
+- [GTR: Guided Thought Reinforcement Prevents Thought Collapse in RL-based VLM Agent Training](../../ICCV2025/llm_agent/gtr_guided_thought_reinforcement_prevents_thought_collapse_i.md)
+- [Adaptive Coopetition: Leveraging Coarse Verifier Signals for Resilient Multi-Agent LLM Reasoning](../../NeurIPS2025/llm_agent/adaptive_coopetition_leveraging_coarse_verifier_signals_for_resilient_multi-agen.md)
+- [LocAgent: Graph-Guided LLM Agents for Code Localization](../../ACL2025/llm_agent/locagent_graph-guided_llm_agents_for_code_localization.md)
+
+<!-- RELATED:END -->

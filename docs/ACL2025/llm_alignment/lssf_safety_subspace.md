@@ -139,3 +139,15 @@ LSSF 是完全免训练的后验方法。不涉及任何损失函数或梯度优
 - 实验充分度: ⭐⭐⭐⭐ 多模型 + 多安全评估 + 充分消融
 - 写作质量: ⭐⭐⭐⭐ 假设-验证-应用的逻辑链清晰
 - 价值: ⭐⭐⭐⭐⭐ 免训练安全恢复有巨大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](sea_lowresource_safety_alignment_for_multimodal.md)
+- [Atyaephyra at SemEval-2025 Task 4: Low-Rank Negative Preference Optimization](atyaephyra_at_semeval-2025_task_4_low-rank_negative_preference_optimization.md)
+- [Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons](../../NeurIPS2025/llm_alignment/towards_understanding_safety_alignment_a_mechanistic_perspective_from_safety_neu.md)
+- [Safety Alignment Can Be Not Superficial With Explicit Safety Signals](../../ICML2025/llm_alignment/safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
+- [MPO: Multilingual Safety Alignment via Reward Gap Optimization](mpo_multilingual_safety_alignment.md)
+
+<!-- RELATED:END -->

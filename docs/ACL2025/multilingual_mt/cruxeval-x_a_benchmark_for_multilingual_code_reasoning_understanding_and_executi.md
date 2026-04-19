@@ -176,3 +176,15 @@ phi-1.5（Python+自然语言增强）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ (24个模型×19种语言，分析维度丰富：泛化、相关性、关键因素)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰，案例分析生动，但部分表格过大影响阅读)
 - **价值**: ⭐⭐⭐⭐ (填补重要空白，方法论可复用，发现有启发性)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [Are Rules Meant to be Broken? Understanding Multilingual Moral Reasoning as a Computational Pipeline with UniMoral](are_rules_meant_to_be_broken_understanding_multilingual_moral_reasoning_as_a_com.md)
+- [M3FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset](m3finmeeting_a_multilingual_multi-sector_and_multi-task_financial_meeting_unders.md)
+- [KnowCoder-X: Boosting Multilingual Information Extraction via Code](knowcoder-x_boosting_multilingual_information_extraction_via_code.md)
+- [M2rc-Eval: Massively Multilingual Repository-level Code Completion Evaluation](m2rc-eval_massively_multilingual_repository-level_code_completion_evaluation.md)
+
+<!-- RELATED:END -->

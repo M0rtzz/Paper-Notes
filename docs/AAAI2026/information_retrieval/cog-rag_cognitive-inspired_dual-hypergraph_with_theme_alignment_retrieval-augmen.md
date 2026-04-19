@@ -123,3 +123,15 @@ Cog-RAG 在所有数据集上以压倒性优势胜出。在域内密集文本（
 - 实验充分度: ⭐⭐⭐⭐ 5 数据集 × 5 LLM，但缺乏人类评估和详细消融数值
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，公式完整，动机好，但部分描述冗长
 - 价值: ⭐⭐⭐⭐⭐ 为 RAG 系统提供了全新的层次化索引和检索范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ComoRAG: A Cognitive-Inspired Memory-Organized RAG for Stateful Long Narrative Reasoning](comorag_a_cognitive-inspired_memory-organized_rag_for_stateful_long_narrative_re.md)
+- [Knowledge Completes the Vision: A Multimodal Entity-aware Retrieval-Augmented Generation Framework for News Image Captioning](knowledge_completes_the_vision_a_multimodal_entity-aware_retrieval-augmented_gen.md)
+- [GainRAG: Preference Alignment in Retrieval-Augmented Generation through Gain Signal Synthesis](../../ACL2025/information_retrieval/gainrag_preference_alignment.md)
+- [Do Retrieval Augmented Language Models Know When They Don't Know?](do_retrieval_augmented_language_models_know_when_they_dont_know.md)
+- [HiMo-CLIP: Modeling Semantic Hierarchy and Monotonicity in Vision-Language Alignment](himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi.md)
+
+<!-- RELATED:END -->

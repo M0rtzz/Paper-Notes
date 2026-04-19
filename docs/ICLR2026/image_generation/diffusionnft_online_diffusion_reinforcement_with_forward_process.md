@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 与 FlowGRPO 的 head-to-head 对比清晰，多奖励联合训练全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，与 CFG 的类比直觉化，图表设计优秀
 - 价值: ⭐⭐⭐⭐⭐ 解决了扩散 RL 的多个根本性问题（求解器限制、CFG 依赖、效率），有望成为新标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [OARS: Process-Aware Online Alignment for Generative Real-World Image Super-Resolution](../../CVPR2026/image_generation/oars_process-aware_online_alignment_for_generative_real-world_image_super-resolu.md)
+- [ORVIT: Near-Optimal Online Distributionally Robust Reinforcement Learning](../../AAAI2026/image_generation/orvit_near-optimal_online_distributionally_robust_reinforcement_learning.md)
+- [EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling](editscore_unlocking_online_rl_for_image_editing_via_high-fidelity_reward_modelin.md)
+- [Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion](hierarchical_entity-centric_reinforcement_learning_with_factored_subgoal_diffusi.md)
+
+<!-- RELATED:END -->

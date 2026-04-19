@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐（合成+自然语言双验证，完整消融，但模型规模有限）
 - 写作质量: ⭐⭐⭐⭐⭐（论述逻辑严密，合成到自然语言的推广路径清晰）
 - 价值: ⭐⭐⭐⭐（提供了长度泛化的新理解维度，实用性强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Length-Generalizable Attention via Causal Retrieval for Long-Context Language Modeling](efficient_length-generalizable_attention_via_causal_retrieval_for_long-context_l.md)
+- [NExtLong: Toward Effective Long-Context Training without Long Documents](nextlong_toward_effective_long-context_training_without_long_documents.md)
+- [Curse of High Dimensionality Issue in Transformer for Long-context Modeling](curse_of_high_dimensionality_issue_in_transformer_for_long-context_modeling.md)
+- [PENCIL: Long Thoughts with Short Memory](pencil_long_thoughts_with_short_memory.md)
+- [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](../../NeurIPS2025/llm_efficiency/long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ $$\mathcal{L} = (1-\lambda)\mathcal{L}_1 + \lambda \mathcal{L}_2$$
 - **实验完整性**：⭐⭐⭐⭐⭐ — 消融实验非常充分，跨模型、跨领域均有验证
 - **实用价值**：⭐⭐⭐⭐⭐ — 成本极低，效果显著，可直接用于实际的 LLM 扩展训练
 - **写作质量**：⭐⭐⭐⭐ — 逻辑清晰，图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [Scaling Up Active Testing to Large Language Models](../../NeurIPS2025/llm_nlp/scaling_up_active_testing_to_large_language_models.md)
+- [AutoGUI: Scaling GUI Grounding with Automatic Functionality Annotations from LLMs](autogui_scaling_gui_grounding_with_automatic.md)
+- [Growing Through Experience: Scaling Episodic Grounding in Language Models](episodic_grounding_experience.md)
+- [Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up](reversal_of_thought_enhancing_large_language.md)
+
+<!-- RELATED:END -->

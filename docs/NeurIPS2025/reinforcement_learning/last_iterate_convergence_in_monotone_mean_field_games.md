@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 只在一个标准基准(Beach Bar Process)上验证，缺少大规模/深度学习实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，虽然符号密集但逻辑清晰
 - 价值: ⭐⭐⭐⭐ 对 MFG 学习理论有重要推进，但实验支撑偏弱
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis](learning_in_stackelberg_mean_field_games_a_non-asymptotic_analysis.md)
+- [Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics](solving_continuous_mean_field_games_deep_reinforcement_learning_for_non-stationa.md)
+- [Scalable Neural Incentive Design with Parameterized Mean-Field Approximation](scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+- [Non-convex Entropic Mean-Field Optimization via Best Response Flow](non-convex_entropic_mean-field_optimization_via_best_response_flow.md)
+
+<!-- RELATED:END -->

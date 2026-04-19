@@ -118,3 +118,15 @@ $$\mathcal{L} = \sum_{\mathbf{q},\mathbf{q^+}} -\log \frac{\exp(D_\Phi(\mathbf{q
 - 实验充分度: ⭐⭐⭐⭐ (合成+真实场景，消融完整，但缺少用户评估)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，图示精美)
 - 价值: ⭐⭐⭐⭐ (机器人/AR/VR应用场景明确)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From One to More: Contextual Part Latents for 3D Generation](from_one_to_more_contextual_part_latents_for_3d_generation.md)
+- [Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion](disentangling_instance_and_scene_contexts_for_3d_semantic_scene_completion.md)
+- [PseudoMapTrainer: Learning Online Mapping without HD Maps](pseudomaptrainer_learning_online_mapping_without_hd_maps.md)
+- [SuperDec: 3D Scene Decomposition with Superquadric Primitives](superdec_3d_scene_decomposition_with_superquadrics_primitives.md)
+- [Node-RF: Learning Generalized Continuous Space-Time Scene Dynamics with Neural ODE-based NeRFs](../../CVPR2025/3d_vision/node-rf_learning_generalized_continuous_space-time_scene_dynamics_with_neural_od.md)
+
+<!-- RELATED:END -->

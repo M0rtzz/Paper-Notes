@@ -126,3 +126,15 @@ Validator 不只做二分类（通过/拒绝），而是给出结构化批评，
 - 实验充分度: ⭐⭐⭐⭐☆（4.0/5）— QM9 上全面但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐☆（4.0/5）
 - 价值: ⭐⭐⭐⭐⭐（4.5/5）— 对可解释科学 ML 有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Agentic AI for Spatial Reasoning with a Dynamic API](../../CVPR2025/llm_agent/visual_agentic_ai_for_spatial_reasoning_with_a_dynamic_api.md)
+- [PANDA: Towards Generalist Video Anomaly Detection via Agentic AI Engineer](../../NeurIPS2025/llm_agent/panda_towards_generalist_video_anomaly_detection_via_agentic_ai_engineer.md)
+- [Physics-Informed Autonomous LLM Agents for Explainable Power Electronics Modulation Design](../../AAAI2026/llm_agent/physics-informed_autonomous_llm_agents_for_explainable_power_electronics_modulat.md)
+- [SR-Scientist: Scientific Equation Discovery With Agentic AI](../../ICLR2026/llm_agent/sr-scientist_scientific_equation_discovery_with_agentic_ai.md)
+- [REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science?](../../ACL2025/llm_agent/repro-bench_can_agentic_ai_systems_assess_the_reproducibility_of_social_science_.md)
+
+<!-- RELATED:END -->

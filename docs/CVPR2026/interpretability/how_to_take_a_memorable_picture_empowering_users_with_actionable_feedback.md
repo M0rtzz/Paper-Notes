@@ -120,3 +120,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 任务动机和方法概述图都很清晰
 - 价值: ⭐⭐⭐⭐ 对计算摄影和创意AI有启发意义
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
+- [Empowering Decision Trees via Shape Function Branching](../../NeurIPS2025/interpretability/empowering_decision_trees_via_shape_function_branching.md)
+- [Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](../../ICLR2026/interpretability/towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
+- [Uncovering Grounding IDs: How External Cues Shape Multimodal Binding](../../ICLR2026/interpretability/uncovering_grounding_ids_how_external_cues_shape_multimodal_binding.md)
+- [How Do Transformers Learn Implicit Reasoning?](../../NeurIPS2025/interpretability/how_do_transformers_learn_implicit_reasoning.md)
+
+<!-- RELATED:END -->

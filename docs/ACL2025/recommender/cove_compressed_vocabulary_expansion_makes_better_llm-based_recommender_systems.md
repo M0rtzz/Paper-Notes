@@ -146,3 +146,15 @@ Video Games 数据集上 CoVE vs. BIGRec (finetune-and-retrieval)：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 数据集、12+ baseline、多维度消融、推理速度分析，非常完整
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机阐述到位，图表设计合理
 - **价值**: ⭐⭐⭐⭐ — 100 倍推理加速 + 准确率大幅提升，工业应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token-Efficient Item Representation via Images for LLM Recommender Systems](../../ICLR2026/recommender/token-efficient_item_representation_via_images_for_llm_recommender_systems.md)
+- [Validating LLM-as-a-Judge Systems under Rating Indeterminacy](../../NeurIPS2025/recommender/validating_llm-as-a-judge_systems_under_rating_indeterminacy.md)
+- [Rejuvenating Cross-Entropy Loss in Knowledge Distillation for Recommender Systems](../../ICLR2026/recommender/rejuvenating_cross-entropy_loss_in_knowledge_distillation_for_recommender_system.md)
+- [Beyond Single Labels: Improving Conversational Recommendation through LLM-Powered Data Augmentation](beyond_single_labels_improving_conversational_recommendation_through_llm-powered.md)
+- [R²ec: Towards Large Recommender Models with Reasoning](../../NeurIPS2025/recommender/r2ec_towards_large_recommender_models_with_reasoning.md)
+
+<!-- RELATED:END -->

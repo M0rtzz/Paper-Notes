@@ -149,3 +149,15 @@ $$T_k \geq \frac{\ln(\delta / |x_0|)}{\ln(1 + \eta_k \gamma)}$$
 - **实验**: ⭐⭐⭐⭐ — 覆盖 3 数据集、5 架构、多种 baseline，结果一致且显著
 - **写作**: ⭐⭐⭐⭐ — 图表清晰，尤其 Fig.1 的学习率曲线对比很直观
 - **价值**: ⭐⭐⭐⭐ — 作为即插即用模块有实际工程价值，但理论深度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?](scaling_laws_of_signsgd_in_linear_regression_when_does_it_outperform_sgd.md)
+- [Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering](exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin.md)
+- [Convergence of Muon with Newton-Schulz](convergence_of_muon_with_newton-schulz.md)
+- [Exploring Landscapes for Better Minima along Valleys](../../NeurIPS2025/optimization/exploring_landscapes_for_better_minima_along_valleys.md)
+- [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+
+<!-- RELATED:END -->

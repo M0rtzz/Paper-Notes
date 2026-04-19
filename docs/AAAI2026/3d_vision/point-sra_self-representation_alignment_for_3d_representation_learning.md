@@ -176,3 +176,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{recon} + 0.5 \cdot \mathcal{L}_{MFM} + \mat
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖分类/分割/检测/医疗/few-shot，消融全面，含概率建模方法对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论证明完整，图表丰富
 - 价值: ⭐⭐⭐⭐ — 在 3D 自监督学习领域推进了 SOTA，理论与实践结合紧密
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](../../ICCV2025/3d_vision/strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
+- [Learning Unified Representation of 3D Gaussian Splatting](../../ICLR2026/3d_vision/learning_unified_representation_of_3d_gaussian_splatting.md)
+- [GaussianImage++: Boosted Image Representation and Compression with 2D Gaussian Splatting](gaussianimage_boosted_image_representation_and_compression_with_2d_gaussian_spla.md)
+- [CASL: Curvature-Augmented Self-supervised Learning for 3D Anomaly Detection](casl_curvature-augmented_self-supervised_learning_for_3d_anomaly_detection.md)
+- [Split-Layer: Enhancing Implicit Neural Representation by Maximizing the Dimensionality of Feature Space](split-layer_enhancing_implicit_neural_representation_by_maximizing_the_dimension.md)
+
+<!-- RELATED:END -->

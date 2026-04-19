@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 29 名参与者足以做定性研究但泛化受限
 - 写作质量: ⭐⭐⭐⭐ 组织清晰，发现呈现系统
 - 价值: ⭐⭐⭐⭐ 对教育政策制定有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Higher-Order Responsibility](higher-order_responsibility.md)
+- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](../../ACL2025/others/uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [Beyond World Models: Rethinking Understanding in AI Models](beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [Designing Incident Reporting Systems for Harms from General-Purpose AI](designing_incident_reporting_systems_for_harms_from_general-purpose_ai.md)
+- [Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis](intrinsic_barriers_and_practical_pathways_for_human-ai_alignment_an_agreement-ba.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ SDF 损失包含 RGB 渲染损失 $\mathcal{L}_{rgb}$、深度损失 $\mathcal{L
 - **实验充分度**: ⭐⭐⭐⭐ — Waymo 和 KITTI 双数据集验证，消融充分，定性结果丰富
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，图示直观，但部分公式符号较多
 - **价值**: ⭐⭐⭐⭐ — 大幅降低动态场景重建的标注需求，对自动驾驶仿真有高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SparseLaneSTP: Leveraging Spatio-Temporal Priors with Sparse Transformers for 3D Lane Detection](sparselanestp_leveraging_spatio-temporal_priors_with_sparse_transformers_for_3d_.md)
+- [GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
+- [Extrapolated Urban View Synthesis Benchmark](extrapolated_urban_view_synthesis_benchmark.md)
+- [SimWorld-Robotics: Synthesizing Photorealistic and Dynamic Urban Environments for Multimodal Robot Navigation and Collaboration](../../NeurIPS2025/autonomous_driving/simworld-robotics_synthesizing_photorealistic_and_dynamic_urban_environments_for.md)
+- [FlowScene: Learning Temporal 3D Semantic Scene Completion via Optical Flow Guidance](../../NeurIPS2025/autonomous_driving/learning_temporal_3d_semantic_scene_completion_via_optical_flow_guidance.md)
+
+<!-- RELATED:END -->

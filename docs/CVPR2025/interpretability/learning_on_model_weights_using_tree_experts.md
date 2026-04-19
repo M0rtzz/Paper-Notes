@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 14000 模型的大规模实验，判别式+生成式两类模型，但缺少更多真实模型仓库的验证
 - 写作质量: ⭐⭐⭐⭐ 动机实验层层递进，理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 开创了权重空间学习的新范式，对模型管理和搜索有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Draft and Refine with Visual Experts](../../CVPR2026/interpretability/draft_and_refine_with_visual_experts.md)
+- [DR.Experts: Differential Refinement of Distortion-Aware Experts for Blind Image Quality Assessment](../../AAAI2026/interpretability/drexperts_differential_refinement_of_distortion-aware_experts_for_blind_image_qu.md)
+- [Uni-NTFM: A Unified Foundation Model for EEG Signal Representation Learning](../../ICLR2026/interpretability/uni-ntfm_a_unified_foundation_model_for_eeg_signal_representation_learning.md)
+- [Learning Visual Composition through Improved Semantic Guidance](learning_visual_composition_through_improved_semantic_guidance.md)
+- [ToC: Tree-of-Claims Search with Multi-Agent Language Models](../../AAAI2026/interpretability/toc_tree-of-claims_search_with_multi-agent_language_models.md)
+
+<!-- RELATED:END -->

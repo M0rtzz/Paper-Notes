@@ -142,3 +142,15 @@ ImageNet-1K分类：
 - 实验充分度: ⭐⭐⭐⭐⭐（ImageNet、COCO、ADE20K三大基准+移动端延迟+详细消融）
 - 写作质量: ⭐⭐⭐⭐（逻辑清晰、公式严谨）
 - 价值: ⭐⭐⭐⭐（对移动端高效视觉模型有实际推动意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Associative Transformer](associative_transformer.md)
+- [Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer](spiking_transformer_introducing_accurate_addition-only_spiking_self-attention_fo.md)
+- [Learning in Compact Spaces with Approximately Normalized Transformer](../../NeurIPS2025/llm_efficiency/learning_in_compact_spaces_with_approximately_normalized_transformer.md)
+- [Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
+- [LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer](../../ICCV2025/llm_efficiency/layertracer_cognitive-aligned_layered_svg_synthesis_via_diffusion_transformer.md)
+
+<!-- RELATED:END -->

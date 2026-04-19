@@ -106,3 +106,15 @@ HypeVPR 包含两路网络：(1) 查询网络 $\mathcal{F}_q$ 从透视图生成
 - 实验充分度: ⭐⭐⭐⭐ 多框架对比充分，但数据集数量偏少
 - 写作质量: ⭐⭐⭐⭐ 理论基础扎实，图示清晰，动机阐述有说服力
 - 价值: ⭐⭐⭐⭐ P2E VPR 的实用解决方案，速度优势在实际部署中价值巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](../../ICCV2025/others/learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
+- [A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](../../ICCV2025/others/a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)
+- [Out of the Shadows: Exploring a Latent Space for Neural Network Verification](../../ICLR2026/others/out_of_the_shadows_exploring_a_latent_space_for_neural_network_verification.md)
+- [HEEGNet: Hyperbolic Embeddings for EEG](../../ICLR2026/others/heegnet_hyperbolic_embeddings_for_eeg.md)
+- [An Epistemic Perspective on Agent Awareness](../../AAAI2026/others/an_epistemic_perspective_on_agent_awareness.md)
+
+<!-- RELATED:END -->

@@ -193,3 +193,15 @@ $$\delta(x; \sigma) = g(\sigma(x))$$
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 4 类生物序列任务、多种基线对比和消融实验，但缺少湿实验验证
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法描述严谨，问题-解决方案逻辑连贯
 - 价值: ⭐⭐⭐⭐ — 解决了 GFlowNet 在生物序列设计中的实际瓶颈，对计算生物学有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Partial SMILES Validation Scheme for Enhanced Drug Design in Reinforcement Learning Frameworks](leveraging_partial_smiles_validation_scheme_for_enhanced_drug_design_in_reinforc.md)
+- [CrossNovo: Bidirectional Representations Augmented Autoregressive Biological Sequence Generation](../../NeurIPS2025/medical_imaging/bidirectional_representations_augmented_autoregressive_biological_sequence_gener.md)
+- [Controllable Sequence Editing for Biological and Clinical Trajectories](../../ICLR2026/medical_imaging/controllable_sequence_editing_for_biological_and_clinical_trajectories.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [Network Sparsity Unlocks the Scaling Potential of Deep Reinforcement Learning](network_sparsity_unlocks_the_scaling_potential_of_deep_reinforcement_learning.md)
+
+<!-- RELATED:END -->

@@ -161,3 +161,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 15 个模型的全面基准、SAM 评估、消融实验、超参分析、多种训练策略对比，非常详尽
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，数据集构建流程完整，5 个 RQ 结构化回答
 - **价值**: ⭐⭐⭐⭐ — 开辟了全景 VOS 这一新方向，数据集对社区有持续价值，但方法本身可能适用范围较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](../../CVPR2026/autonomous_driving/panoramic_multimodal_semantic_occupancy_prediction.md)
+- [OneOcc: Semantic Occupancy Prediction for Legged Robots with a Single Panoramic Camera](../../CVPR2026/autonomous_driving/oneocc_semantic_occupancy_prediction_for_legged_robots_with_a_single_panoramic_c.md)
+- [Learning Geometric and Photometric Features from Panoramic LiDAR Scans for Outdoor Place Categorization](../../CVPR2026/autonomous_driving/learning_geometric_and_photometric_features_from_panoramic_lidar_scans_for_outdo.md)
+- [Reliability in Semantic Segmentation: Can We Use Synthetic Data?](reliability_in_semantic_segmentation_can_we_use_synthetic_data.md)
+- [Random Walk on Pixel Manifolds for Anomaly Segmentation of Complex Driving Scenes](random_walk_on_pixel_manifolds_for_anomaly_segmentation_of_complex_driving_scene.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ MileBench 多图理解基准（KV 保留比 $\rho=0.2$）：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 3 个 MLLM、6 个基准（多图/高分辨率/视频），多种保留比设置，消融完整，含效率分析
 - 写作质量: ⭐⭐⭐⭐ 动机链条清晰（注意力分数不可用→频域分析替代→离群KV发现→保留策略），图表辅助直观
 - 价值: ⭐⭐⭐⭐⭐ 首个与 FlashAttention 兼容的无训练多模态 KV 压缩方案，80% 内存节省 + 1.69× 加速的实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Multimodal KV Cache Compression: A Frequency-Domain-Guided Outlier-KV-Aware Approach](revisiting_multimodal_kv_cache_compression_a_frequency-domain-guided_outlier-kv-.md)
+- [ApET: Approximation-Error Guided Token Compression for Efficient VLMs](apet_approximation_error_token_compression.md)
+- [Mixing Importance with Diversity: Joint Optimization for KV Cache Compression in Large Vision-Language Models](../../ICLR2026/multimodal_vlm/mixing_importance_with_diversity_joint_optimization_for_kv_cache_compression_in_.md)
+- [V2Drop: Variation-aware Vision Token Dropping for Faster Large Vision-Language Models](v2drop_variation_aware_token_dropping.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+
+<!-- RELATED:END -->

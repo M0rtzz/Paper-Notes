@@ -150,3 +150,15 @@ $$\mathcal{L} = \mathcal{L}_{color} + \beta \mathcal{L}_{depth}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖重建、渲染、理解、编辑四大任务，数据集和消融全面
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，图表丰富，动机阐述充分
 - **实用价值**: ⭐⭐⭐⭐ — 实时渲染能力和零样本理解具有显著应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream](benerf_neural_radiance_fields_from_a_single_blurry_image_and_event_stream.md)
+- [GeometrySticker: Enabling Ownership Claim of Recolorized Neural Radiance Fields](geometrysticker_enabling_ownership_claim_of_recolorized_neural_radiance_fields.md)
+- [G2fR: Frequency Regularization in Grid-Based Feature Encoding Neural Radiance Fields](g2fr_frequency_regularization_in_grid-based_feature_encoding_neural_radiance_fie.md)
+- [LaRa: Efficient Large-Baseline Radiance Fields](lara_efficient_large-baseline_radiance_fields.md)
+- [Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation](mesh2nerf_direct_mesh_supervision_for_neural_radiance_field_representation_and_g.md)
+
+<!-- RELATED:END -->

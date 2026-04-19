@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型、多数据集、多规模验证
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，形式化定义完整
 - 价值: ⭐⭐⭐⭐ 对SLM部署和RAG优化有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [G-reasoner: Foundation Models for Unified Reasoning over Graph-structured Knowledge](g-reasoner_foundation_models_for_unified_reasoning_over_graph-structured_knowled.md)
+- [When Small Models Are Right for Wrong Reasons: Process Verification for Trustworthy Agents](../../AAAI2026/information_retrieval/when_small_models_are_right_for_wrong_reasons_process_verification_for_trustwort.md)
+- [TokMem: One-Token Procedural Memory for Large Language Models](tokmem_one-token_procedural_memory_for_large_language_models.md)
+- [Multimodal Dataset Distillation Made Simple by Prototype-Guided Data Synthesis](multimodal_dataset_distillation_made_simple_by_prototype-guided_data_synthesis.md)
+- [Flow of Spans: Generalizing Language Models to Dynamic Span-Vocabulary via GFlowNets](flow_of_spans_generalizing_language_models_to_dynamic_span-vocabulary_via_gflown.md)
+
+<!-- RELATED:END -->

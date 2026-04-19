@@ -117,3 +117,15 @@ $$\mathcal{L}_{\text{Loopholing}} = \mathbb{E}_{t,\mathbf{z}_t}\left[\mathbb{I}[
 - 实验充分度: ⭐⭐⭐⭐⭐ 语言建模+生成质量+推理任务+消融+机制分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，因果分析透彻
 - 价值: ⭐⭐⭐⭐⭐ 大幅缩小离散扩散与自回归的差距，影响力可期
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Split Gibbs Discrete Diffusion Posterior Sampling](../../NeurIPS2025/image_generation/split_gibbs_discrete_diffusion_posterior_sampling.md)
+- [Discrete Adjoint Matching](discrete_adjoint_matching.md)
+- [Improving Discrete Diffusion Unmasking Policies Beyond Explicit Reference Policies (UPO)](improving_discrete_diffusion_unmasking_policies_beyond_explicit_reference_polici.md)
+- [JointDiff: Bridging Continuous and Discrete in Multi-Agent Trajectory Generation](jointdiff_bridging_continuous_and_discrete_in_multi-agent_trajectory_generation.md)
+- [Embracing Discrete Search: A Reasonable Approach to Causal Structure Learning](embracing_discrete_search_a_reasonable_approach_to_causal_structure_learning.md)
+
+<!-- RELATED:END -->

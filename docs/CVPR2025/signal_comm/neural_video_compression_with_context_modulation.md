@@ -51,3 +51,15 @@ tags:
 ## 局限与展望
 - 在极低码率下上下文信息本身就很有限，调制增益递减
 - 可以与注意力机制和 transform coding 进一步结合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continuous Space-Time Video Resampling with Invertible Motion Steganography](continuous_space-time_video_resampling_with_invertible_motion_steganography.md)
+- [Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks](tuning_the_frequencies_robust_training_for_sinusoidal_neural_networks.md)
+- [Radio Frequency Ray Tracing with Neural Object Representation for Enhanced RF Modeling](radio_frequency_ray_tracing_with_neural_object_representation_for_enhanced_rf_mo.md)
+- [Task Aware Modulation Using Representation Learning for Upscaling of Terrestrial Carbon Fluxes](../../AAAI2026/signal_comm/task_aware_modulation_using_representation_learning_for_upsaling_of_terrestrial_.md)
+- [Eigenspectrum Analysis of Neural Networks without Aspect Ratio Bias](../../ICML2025/signal_comm/eigenspectrum_analysis_of_neural_networks_without_aspect_ratio_bias.md)
+
+<!-- RELATED:END -->

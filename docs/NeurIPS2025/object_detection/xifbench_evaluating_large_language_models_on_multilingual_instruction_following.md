@@ -138,3 +138,15 @@ $$\text{RFR}^{(l)}=\frac{\sum_{i}\sum_{r}e^{(l)}_{i,r}}{\sum_{i}|\mathcal{R}_{i}
 - 实验充分度: ⭐⭐⭐⭐ — 9个模型×6种语言，多维度消融分析，一致性验证充分
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，方法描述详尽
 - 价值: ⭐⭐⭐⭐ — 填补多语言指令遵循细粒度评估空白，洞察对LLM多语言能力提升有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Inference of Vision Instruction-Following Models with Elastic Cache](../../ECCV2024/object_detection/efficient_inference_of_vision_instruction-following_models_with_elastic_cache.md)
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+- [SAFE: Multitask Failure Detection for Vision-Language-Action Models](safe_multitask_failure_detection_for_vision-language-action_models.md)
+- [Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
+- [Rectified-CFG++ for Flow Based Models](rectified-cfg_for_flow_based_models.md)
+
+<!-- RELATED:END -->

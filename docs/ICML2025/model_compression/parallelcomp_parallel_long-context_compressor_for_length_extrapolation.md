@@ -112,3 +112,15 @@ $$k \leq w - \exp\left(O\left(\frac{\log^2(\epsilon \cdot w)}{R^2}\right)\right)
 ## 评分
 
 ⭐⭐⭐⭐ — 问题重要且方案实用，对并行注意力偏差的分析新颖有深度，免训练即可实现显著的长度外推。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Core Context Aware Transformers for Long Context Language Modeling](core_context_aware_transformers_for_long_context_language_modeling.md)
+- [InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](../../ICLR2026/model_compression/inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
+- [RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments](../../NeurIPS2025/model_compression/keydiff_key_similarity-based_kv_cache_eviction_for_long-context_llm_inference_in.md)
+- [Context Tuning for In-Context Optimization](context_tuning_for_in-context_optimization.md)
+
+<!-- RELATED:END -->

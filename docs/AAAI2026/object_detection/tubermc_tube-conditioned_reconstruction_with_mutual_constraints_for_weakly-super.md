@@ -170,3 +170,15 @@ TubeRMC 框架包含三个层面：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 消融充分，四个数据集，多种设置
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式完整
 - 价值: ⭐⭐⭐⭐ — 推进了弱监督 STVG 的研究前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HieraMamba: Video Temporal Grounding via Hierarchical Anchor-Mamba Pooling](../../CVPR2026/object_detection/hieramamba_video_temporal_grounding_via_hierarchical_anchor-mamba_pooling.md)
+- [Temporal Object-Aware Vision Transformer for Few-Shot Video Object Detection](temporal_object-aware_vision_transformer_for_few-shot_video_object_detection.md)
+- [Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding](../../ICCV2025/object_detection/sparse-dense_side-tuner_for_efficient_video_temporal_grounding.md)
+- [SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection](../../ICLR2026/object_detection/spwood_sparse_partial_weakly-supervised_oriented_object_detection.md)
+- [APL: Anchor-based Prompt Learning for One-stage Weakly Supervised Referring Expression Comprehension](../../ECCV2024/object_detection/apl_anchor-based_prompt_learning_for_one-stage_weakly_supervised_referring_expre.md)
+
+<!-- RELATED:END -->

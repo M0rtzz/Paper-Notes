@@ -145,3 +145,15 @@ CDD 包含两个判别器确保重建结果的时空一致性：
 - 实验充分度: 8/10 — 四个数据集、三种任务、详细消融、可视化分析
 - 写作质量: 7/10 — 整体清晰但数学符号较多，部分描述冗长
 - 价值: 8/10 — 提供新基准数据集和有效方法，对心脏超声AI诊断有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson's Disease Gait Assessment](../../NeurIPS2025/medical_imaging/care-pd_a_multi-site_anonymized_clinical_dataset_for_parkinsons_disease_gait_ass.md)
+- [Unsupervised Motion-Compensated Decomposition for Cardiac MRI Reconstruction via Neural Representation](../../AAAI2026/medical_imaging/unsupervised_motion-compensated_decomposition_for_cardiac_mri_reconstruction_via.md)
+- [Deep Learning-based Assessment of the Relation Between the Third Molar and Mandibular Canal on Panoramic Radiographs using Local, Centralized, and Federated Learning](../../CVPR2026/medical_imaging/deep_learningbased_assessment_of_the_relation_betw.md)
+- [From Policy to Logic for Efficient and Interpretable Coverage Assessment](../../AAAI2026/medical_imaging/from_policy_to_logic_for_efficient_and_interpretable_coverage_assessment.md)
+- [Synergistic Bleeding Region and Point Detection in Laparoscopic Surgical Videos](../../CVPR2026/medical_imaging/synergistic_bleeding_region_and_point_detection_in_laparoscopic_surgical_videos.md)
+
+<!-- RELATED:END -->

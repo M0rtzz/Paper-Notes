@@ -178,3 +178,15 @@ $$\mathcal{L}_2 = \mathbb{E}_{\epsilon \sim \mathcal{N}(0,1), t} \left[ \alpha \
 | 实验 | ⭐⭐⭐⭐ | 对比多个商业模型（Hyper3D、Meshy、Hunyuan3D），覆盖工业/生成mesh两类场景，烘焙策略有定量消融；但定量指标仅KID/FID |
 | 写作 | ⭐⭐⭐⭐ | 框架图清晰完善，问题定义明确，跨拓扑/跨姿态的区分和处理逻辑连贯；附录补充详实 |
 | 价值 | ⭐⭐⭐⭐⭐ | 直接面向工业级3D服装设计需求，生成PBR材质可用于实际渲染管线，代码将开源，实用价值高 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SwiftTailor: Efficient 3D Garment Generation with Geometry Image Representation](swifttailor_efficient_3d_garment_generation_with_geometry_image_representation.md)
+- [Text–Image Conditioned 3D Generation](text-image_conditioned_3d_generation.md)
+- [Pano3DComposer: Feed-Forward Compositional 3D Scene Generation from Single Panoramic Image](pano3dcomposer_feed-forward_compositional_3d_scene_generation_from_single_panora.md)
+- [ReWeaver: Towards Simulation-Ready and Topology-Accurate Garment Reconstruction](reweaver_towards_simulation-ready_and_topology-accurate_garment_reconstruction.md)
+- [FACT-GS: Frequency-Aligned Complexity-Aware Texture Reparameterization for 2D Gaussian Splatting](fact-gs_frequency-aligned_complexity-aware_texture_reparameterization_for_2d_gau.md)
+
+<!-- RELATED:END -->

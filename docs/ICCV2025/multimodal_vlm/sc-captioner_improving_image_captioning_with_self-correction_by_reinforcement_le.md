@@ -137,3 +137,15 @@ $$L = -R(y_1, y_2, y^*) \cdot \log \pi_\theta(y_2 | [I, x_1, y_1, x_2]) + \beta 
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义新颖，奖励函数设计巧妙且实验充分，但对场景图解析质量的依赖和 GT 不完整性的处理仍有改进空间。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+- [R1-VL: Learning to Reason with Multimodal Large Language Models via Step-wise Group Relative Policy Optimization](r1-vl_learning_to_reason_with_multimodal_large_language_models_via_step-wise_gro.md)
+- [Vision-Zero: Scalable VLM Self-Improvement via Strategic Gamified Self-Play](../../ICLR2026/multimodal_vlm/vision-zero_scalable_vlm_self-improvement_via_strategic_gamified_self-play.md)
+- [Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective](../../ICLR2026/multimodal_vlm/why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)
+- [SCAN: Bootstrapping Contrastive Pre-training for Data Efficiency](scan_bootstrapping_contrastive_pre-training_for_data_efficiency.md)
+
+<!-- RELATED:END -->

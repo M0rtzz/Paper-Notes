@@ -113,3 +113,15 @@ Step 1 和 3 是已有技术的标准实践；Step 2 对齐 Nyquist 频率是唯
 - 实验充分度: ⭐⭐⭐⭐⭐ 8种架构 × 2个物理领域 + 完整消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，诚实讨论失效模式
 - 价值: ⭐⭐⭐⭐ 对科学机器学习社区有深刻启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MRD: Multi-resolution Retrieval-Detection Fusion for High-Resolution Image Understanding](../../CVPR2026/object_detection/mrd_multi-resolution_retrieval-detection_fusion_for_high-resolution_image_unders.md)
+- [SpectralGCD: Spectral Concept Selection and Cross-modal Representation Learning for Generalized Category Discovery](spectralgcd_spectral_concept_selection_and_cross-modal_representation_learning_f.md)
+- [SABRE-FL: Selective and Accurate Backdoor Rejection for Federated Prompt Learning](sabre-fl_selective_and_accurate_backdoor_rejection_for_federated_prompt_learning.md)
+- [ForestPersons: A Large-Scale Dataset for Under-Canopy Missing Person Detection](forestpersons_a_large-scale_dataset_for_under-canopy_missing_person_detection.md)
+- [What Layers When: Learning to Skip Compute in LLMs with Residual Gates](what_layers_when_learning_to_skip_compute_in_llms_with_residual_gates.md)
+
+<!-- RELATED:END -->

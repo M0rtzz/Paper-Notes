@@ -135,3 +135,15 @@ Compact-2bit 的 FID (3.26) 和 LPIPS (0.114) 远优于 DistriFusion (9.91/0.310
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型(图像+视频)+多硬件(NVLink/PCIe/Ethernet)+多压缩率+理论分析+人类评估
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、插图精美、理论和实验完美配合
 - 价值: ⭐⭐⭐⭐⭐ 直接可用于生产部署，3× 加速+质量提升，代码开源，实际价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tortoise and Hare Guidance: Accelerating Diffusion Model Inference with Multirate Integration](tortoise_and_hare_guidance_accelerating_diffusion_model_inference_with_multirate.md)
+- [BlurDM: A Blur Diffusion Model for Image Deblurring](blurdm_a_blur_diffusion_model_for_image_deblurring.md)
+- [BADiff: Bandwidth Adaptive Diffusion Model](badiff_bandwidth_adaptive_diffusion_model.md)
+- [GSPN-2: Efficient Parallel Sequence Modeling](gspn-2_efficient_parallel_sequence_modeling.md)
+- [Accelerating Diffusion Model Training under Minimal Budgets: A Condensation-Based Perspective](../../CVPR2026/image_generation/accelerating_diffusion_model_training_under_minimal_budgets_a_condensation-based.md)
+
+<!-- RELATED:END -->

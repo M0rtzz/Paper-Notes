@@ -155,3 +155,15 @@ $r_\mathbb{D} = 5.5$ 时达到最佳 FID-LPIPS 权衡；更小半径增加多样
 - **技术深度**: ⭐⭐⭐⭐ — 双曲几何基础扎实，两阶段设计合理
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 数据集、消融丰富、用户研究、可视化充分
 - **实用价值**: ⭐⭐⭐⭐ — 无需人工标签，单图即可生成多样图像
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](../../CVPR2026/image_generation/uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
+- [Latent Diffusion Models with Masked AutoEncoders](latent_diffusion_models_with_masked_autoencoders.md)
+- [Hyperbolic Hierarchical Alignment Reasoning Network for Text-3D Retrieval](../../AAAI2026/image_generation/hyperbolic_hierarchical_alignment_reasoning_network_for_text-3d_retrieval.md)
+- [DualAnoDiff: Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation](../../CVPR2025/image_generation/dual-interrelated_diffusion_model_for_few-shot_anomaly_image_generation.md)
+- [HierLoc: Hyperbolic Entity Embeddings for Hierarchical Visual Geolocation](../../ICLR2026/image_generation/hierloc_hyperbolic_entity_embeddings_for_hierarchical_visual_geolocation.md)
+
+<!-- RELATED:END -->

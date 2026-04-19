@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个基座模型、配对+真实数据、充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，动机-分析-方法-实验逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 直接适用于产品级 LLM 对齐流程，降低数据收集成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IPO: Your Language Model is Secretly a Preference Classifier](ipo_your_language_model_is_secretly_a_preference_classifier.md)
+- [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](gapo_multi_objective_alignment.md)
+- [Improve Language Model and Brain Alignment via Associative Memory](improve_language_model_and_brain_alignment_via_associative_memory.md)
+- [Direct Confidence Alignment: Aligning Verbalized Confidence with Internal Confidence In Large Language Models](direct_confidence_alignment_aligning_verbalized_confidence_with_internal_confide.md)
+- [From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
+
+<!-- RELATED:END -->

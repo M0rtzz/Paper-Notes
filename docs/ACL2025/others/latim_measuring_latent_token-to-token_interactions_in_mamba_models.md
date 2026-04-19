@@ -139,3 +139,15 @@ LaTIM 的核心思想是：将 Mamba 的前向计算重新排列，使得输出 
 - 实验充分度: ⭐⭐⭐⭐ 三个不同任务（拷贝、翻译、检索生成），多个模型规模，定量+定性分析丰富
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，背景介绍循序渐进，图表设计出色
 - 价值: ⭐⭐⭐⭐ 为日益流行的 Mamba 架构提供了急需的可解释性工具，具有广泛的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [Cautious Next Token Prediction](cautious_next_token_prediction.md)
+- [MEXMA: Token-level Objectives Improve Sentence Representations](mexma_token-level_objectives_improve_sentence_representations.md)
+- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
+
+<!-- RELATED:END -->

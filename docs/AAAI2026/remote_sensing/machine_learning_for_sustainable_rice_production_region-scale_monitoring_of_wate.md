@@ -124,3 +124,15 @@ S1 SAR时序（VV/VH/VV-VH比）→地块级均值时序提取→多源特征工
 - 实验充分度: ⭐⭐⭐⭐ 多特征组合消融、时间窗口消融、300万地块推理、政府数据验证
 - 写作质量: ⭐⭐⭐⭐ 图表丰富（特别是Figure 3的水管理模式图），跨学科写作清晰
 - 价值: ⭐⭐⭐⭐⭐ 直接服务于联合国SDG零饥饿目标和水资源保护政策，是AI for Social Good的典范
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Debiasing Machine Learning Predictions for Causal Inference Without Additional Ground Truth Data](debiasing_machine_learning_predictions_for_causal_inference_without_additional_g.md)
+- [Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models](../../NeurIPS2025/remote_sensing/connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)
+- [M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction](m3sr_multi-scale_multi-perceptual_mamba_for_efficient_spectral_reconstruction.md)
+- [TDCNet: Spatio-Temporal Context Learning with Temporal Difference Convolution for Moving IRSTD](spatio-temporal_context_learning_with_temporal_difference_convolution_for_moving.md)
+- [Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments](../../CVPR2026/remote_sensing/olbedo_an_albedo_and_shading_aerial_dataset_for_large-scale_outdoor_environments.md)
+
+<!-- RELATED:END -->

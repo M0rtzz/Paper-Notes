@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐ (数据集小、缺患者级划分、无消融实验、仅二分类)
 - 写作质量: ⭐⭐ (大量语法错误和表述混乱，可读性差)
 - 价值: ⭐⭐⭐ (特征空间扩散防御思路有启发，但实验不足以充分验证)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
+- [Nyxus: A Next Generation Image Feature Extraction Library for the Big Data and AI Era](nyxus_a_next_generation_image_feature_extraction_library_for_the_big_data_and_ai.md)
+- [MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](mil-pf_multiple_instance_learning_on_precomputed_features_for_mammography_classi.md)
+
+<!-- RELATED:END -->

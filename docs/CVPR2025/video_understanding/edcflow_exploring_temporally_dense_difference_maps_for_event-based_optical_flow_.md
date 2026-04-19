@@ -119,3 +119,15 @@ $$\mathcal{L} = \sum_{k=1}^{K} 0.8^{K-k} \|\mathbf{f}^{gt} - \mathbf{f}^k\|_1$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 在DSEC和MVSEC两个数据集上的全面评估，包含泛化实验和丰富的消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、结构完整、图文配合好
 - 价值: ⭐⭐⭐⭐ 在事件光流领域提供了精度-效率的更优平衡，可作为通用细化模块使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](../../ICCV2025/video_understanding/unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
+- [DPFlow: Adaptive Optical Flow Estimation with a Dual-Pyramid Framework](dpflow_adaptive_optical_flow_estimation_with_a_dual-pyramid_framework.md)
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](../../ICCV2025/video_understanding/memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [Simultaneous Motion And Noise Estimation with Event Cameras](../../ICCV2025/video_understanding/simultaneous_motion_and_noise_estimation_with_event_cameras.md)
+- [ResidualViT for Efficient Temporally Dense Video Encoding](../../ICCV2025/video_understanding/residualvit_for_efficient_temporally_dense_video_encoding.md)
+
+<!-- RELATED:END -->

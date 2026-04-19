@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量评估+零样本迁移+人类实验全面，但缺少非SD模型验证
 - 写作质量: ⭐⭐⭐⭐ threat model清晰，方法流程图直观
 - 价值: ⭐⭐⭐⭐⭐ 对T2I模型安全研究有重要警示意义，攻击门槛之低令人警醒
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bias for Action: Video Implicit Neural Representations with Bias Modulation](bias_for_action_video_implicit_neural_representations_with_bias_modulation.md)
+- [Dissecting and Mitigating Diffusion Bias via Mechanistic Interpretability](dissecting_and_mitigating_diffusion_bias_via_mechanistic_interpretability.md)
+- [PLA: Prompt Learning Attack against Text-to-Image Generative Models](../../ICCV2025/image_generation/pla_prompt_learning_attack_against_text-to-image_generative_models.md)
+- [FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models](../../NeurIPS2025/image_generation/fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)
+- [Nearly Zero-Cost Protection Against Mimicry by Personalized Diffusion Models](nearly_zero-cost_protection_against_mimicry_by_personalized_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ PDVAE可在4GB GPU上生成100个舞者，而GCD在10个舞者时就内存溢出
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、可扩展性测试、消融、用户研究全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰但略冗长
 - 价值: ⭐⭐⭐⭐⭐ 首次实现恒定内存的任意规模群舞生成，对运动合成领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ScaleDreamer: Scalable Text-to-3D Synthesis with Asynchronous Score Distillation](scaledreamer_scalable_text-to-3d_synthesis_with_asynchronous_score_distillation.md)
+- [StelLA: Subspace Learning in Low-rank Adaptation using Stiefel Manifold](../../NeurIPS2025/image_generation/stella_subspace_learning_in_low-rank_adaptation_using_stiefel_manifold.md)
+- [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
+- [Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
+- [Local Manifold Approximation and Projection for Manifold-Aware Diffusion Planning](../../ICML2025/image_generation/local_manifold_approximation_and_projection_for_manifold-aware_diffusion_plannin.md)
+
+<!-- RELATED:END -->

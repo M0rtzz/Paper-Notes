@@ -115,3 +115,15 @@ ShapeNet全类别迁移攻击ASR(%)，替代模型PointNet：
 - 有效性：⭐⭐⭐⭐⭐ — 黑盒ASR从6%到90%的飞跃
 - 实用性：⭐⭐⭐⭐ — 安全评估工具
 - 推荐度：⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+
+<!-- RELATED:END -->

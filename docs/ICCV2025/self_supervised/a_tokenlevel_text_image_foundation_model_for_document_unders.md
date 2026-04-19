@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 文本分割/检索/VQA/OCRBench 全面覆盖，消融详细
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，产品系列层次分明
 - 价值: ⭐⭐⭐⭐⭐ 对文档理解领域有重大推动，数据集+模型+代码全开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TabSTAR: A Tabular Foundation Model for Tabular Data with Text Fields](../../NeurIPS2025/self_supervised/tabstar_a_tabular_foundation_model_for_tabular_data_with_text_fields.md)
+- [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](../../CVPR2026/self_supervised/d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
+- [MarineInst: A Foundation Model for Marine Image Analysis with Instance Visual Description](../../ECCV2024/self_supervised/marineinst_a_foundation_model_for_marine_image_analysis_with_instance_visual_des.md)
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](../../ICML2025/self_supervised/towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval](../../CVPR2025/self_supervised/text-phase_synergy_network_with_dual_priors_for_unsupervised_cross-domain_image_.md)
+
+<!-- RELATED:END -->

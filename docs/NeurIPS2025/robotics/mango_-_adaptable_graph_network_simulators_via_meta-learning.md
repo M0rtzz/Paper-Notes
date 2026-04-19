@@ -146,3 +146,15 @@ $$\mathcal{L} = \mathbb{E}_{\tau \sim p(\tau)} \left[ \sum_{t} \| \hat{x}_t - x_
 | 实用价值 | 3.5 | 对机器人仿真有潜在价值，但实际应用未验证 |
 | 写作质量 | 4 | 论文结构清晰，20 页含附录 |
 | **总评** | **4.0** | 扎实的元学习+仿真工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+- [Adaptive Frontier Exploration on Graphs with Applications to Network-Based Disease Testing](adaptive_frontier_exploration_on_graphs_with_applications_to_network-based_disea.md)
+- [Beyond Parallelism: Synergistic Computational Graph Effects in Multi-Head Attention](beyond_parallelism_synergistic_computational_graph_effects_in_multi-head_attenti.md)
+- [Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
+- [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
+
+<!-- RELATED:END -->

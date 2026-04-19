@@ -123,3 +123,15 @@ TeXpert的构建遵循两步流程：先收集科学文档中常用的原子LaTe
 - 实验充分度: ⭐⭐⭐⭐ 9个模型、3级难度、5类错误分析，相当全面
 - 写作质量: ⭐⭐⭐ 结构清晰但部分分析略浅，Hard集统计讨论不足
 - 价值: ⭐⭐⭐⭐ 对LLM辅助学术写作有直接指导意义，数据集公开促进社区研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FEA-Bench: A Benchmark for Evaluating Repository-Level Code Generation for Feature Implementation](feabench_repo_code_gen.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+- [MLDebugging: Towards Benchmarking Code Debugging Across Multi-Library Scenarios](mldebugging_towards_benchmarking_code_debugging_across_multi-library_scenarios.md)
+- [GiFT: Gibbs Fine-Tuning for Code Generation](gift_gibbs_fine_tuning_code_gen.md)
+
+<!-- RELATED:END -->

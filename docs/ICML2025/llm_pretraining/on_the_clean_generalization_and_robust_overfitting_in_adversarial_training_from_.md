@@ -143,3 +143,15 @@ $$\underbrace{\text{Clean Classifier}}_{\text{poly}(D)} \lesssim \underbrace{\te
 - 实验充分度: ⭐⭐⭐ — 合成数据验证充分，真实数据实验偏简单
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，证明思路展示得当
 - 价值: ⭐⭐⭐⭐ — 对理解对抗训练本质有重要理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disaggregation Reveals Hidden Training Dynamics: The Case of Agreement Attraction](../../NeurIPS2025/llm_pretraining/disaggregation_reveals_hidden_training_dynamics_the_case_of_agreement_attraction.md)
+- [ConstStyle: Robust Domain Generalization with Unified Style Transformation](../../ICCV2025/llm_pretraining/conststyle_robust_domain_generalization_with_unified_style_transformation.md)
+- [Adversarial Tokenization](../../ACL2025/llm_pretraining/adversarial_tokenization.md)
+- [Intrinsic Training Dynamics of Deep Neural Networks](../../ICLR2026/llm_pretraining/intrinsic_training_dynamics_of_deep_neural_networks.md)
+- [PreLAR: World Model Pre-training with Learnable Action Representation](../../ECCV2024/llm_pretraining/prelar_world_model_pre-training_with_learnable_action_representation.md)
+
+<!-- RELATED:END -->

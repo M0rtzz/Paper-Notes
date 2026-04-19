@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种方法×多维度消融（手臂/纹理/背景/姿态/物体/骨架），分析极其详尽
 - 写作质量: ⭐⭐⭐⭐ 分析逻辑清晰，图表丰富（频谱分析、饱和曲线、遮挡级别分析），学术研究范例
 - 价值: ⭐⭐⭐⭐ 为手势估计社区指明了合成数据的最佳实践，减少对昂贵真实数据标注的依赖
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [EgoPressure: A Dataset for Hand Pressure and Pose Estimation in Egocentric Vision](egopressure_a_dataset_for_hand_pressure_and_pose_estimation_in_egocentric_vision.md)
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](../../NeurIPS2025/human_understanding/raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [One2Any: One-Reference 6D Pose Estimation for Any Object](one2any_one-reference_6d_pose_estimation_for_any_object.md)
+
+<!-- RELATED:END -->

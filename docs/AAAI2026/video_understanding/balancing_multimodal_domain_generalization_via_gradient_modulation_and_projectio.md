@@ -152,3 +152,15 @@ GMP 作为即插即用模块集成到 RNA-Net、MOOSA、SimMMDG、CMRF 后均有
 - 实验充分度: ⭐⭐⭐⭐ (消融完整、多基线比较、集成实验、可视化，但数据集较少)
 - 写作质量: ⭐⭐⭐⭐ (理论推导清晰，动机论证充分)
 - 价值: ⭐⭐⭐⭐ (即插即用的通用性强，方向有意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lifelong Domain Adaptive 3D Human Pose Estimation](lifelong_domain_adaptive_3d_human_pose_estimation.md)
+- [StegaVAR: Privacy-Preserving Video Action Recognition via Steganographic Domain Analysis](stegavar_privacy-preserving_video_action_recognition_via_steganographic_domain_a.md)
+- [EmoVid: A Multimodal Emotion Video Dataset for Emotion-Centric Video Understanding and Generation](emovid_a_multimodal_emotion_video_dataset_for_emotion-centric_video_understandin.md)
+- [UMDATrack: Unified Multi-Domain Adaptive Tracking Under Adverse Weather Conditions](../../ICCV2025/video_understanding/umdatrack_unified_multi-domain_adaptive_tracking_under_adverse_weather_condition.md)
+- [OpenMarcie: Dataset for Multimodal Action Recognition in Industrial Environments](../../CVPR2026/video_understanding/openmarcie_dataset_for_multimodal_action_recognition_in_industrial_environments.md)
+
+<!-- RELATED:END -->

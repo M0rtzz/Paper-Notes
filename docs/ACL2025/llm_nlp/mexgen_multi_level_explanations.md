@@ -126,3 +126,15 @@ AUPC（扰动曲线下面积，越高越好，截止到20% tokens）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个数据集+5个LLM+自动评估+用户研究+scalarizer交叉评估+多baselines
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验设计周密，开源工具包
 - 价值: ⭐⭐⭐⭐ 为生成LLM的实际可解释性提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Psycho-Lexical Approach for Constructing Value Systems in Large Language Models](generative_psycholexical_approach_for_constructing_value.md)
+- [Exploring Explanations Improves the Robustness of In-Context Learning](exploring_explanations_improves_the_robustness_of_in-context_learning.md)
+- [Segment-Level Diffusion: A Framework for Controllable Long-Form Generation with Diffusion Language Models](segment_level_diffusion.md)
+- [Multi-Attribute Steering of Language Models via Targeted Intervention](multi_attribute_steering.md)
+- [ELI-Why: Evaluating the Pedagogical Utility of Language Model Explanations](eli-why_evaluating_the_pedagogical_utility_of_language_model_explanations.md)
+
+<!-- RELATED:END -->

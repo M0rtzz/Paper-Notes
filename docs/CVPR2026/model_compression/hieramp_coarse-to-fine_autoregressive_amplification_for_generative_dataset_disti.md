@@ -138,3 +138,15 @@ $$\tilde{\mathbf{L}}_n^{(h)} = \mathbf{L}_n^{(h)} + \beta_n \cdot \mathbf{1} \cd
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集、多 IPC、跨架构、消融和分析全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，分析部分（token 熵/覆盖率）提供了良好的可解释性
 - 价值: ⭐⭐⭐⭐ — 为数据集蒸馏提供了新的层次语义理解视角，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation](../../CVPR2025/model_compression/curriculum_coarse-to-fine_selection_for_high-ipc_dataset_distillation.md)
+- [From Fewer Samples to Fewer Bits: Reframing Dataset Distillation as Joint Optimization of Precision and Compactness](from_fewer_samples_to_fewer_bits_reframing_dataset_distillation_as_joint_optimiz.md)
+- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](../../NeurIPS2025/model_compression/optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
+- [Dataset Distillation as Pushforward Optimal Quantization](../../ICLR2026/model_compression/dataset_distillation_as_pushforward_optimal_quantization.md)
+- [COMI: Coarse-to-fine Context Compression via Marginal Information Gain](../../ICLR2026/model_compression/comi_coarse-to-fine_context_compression_via_marginal_information_gain.md)
+
+<!-- RELATED:END -->

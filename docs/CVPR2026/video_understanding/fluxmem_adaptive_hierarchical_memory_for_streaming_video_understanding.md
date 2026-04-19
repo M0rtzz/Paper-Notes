@@ -149,3 +149,15 @@ FluxMem 在在线任务上超越所有 training-based 方法（StreamingBench 76
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 benchmark（2 在线 + 3 离线）、效率分析、层级消融、阈值分析、多方法对比，非常完整
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，Algorithm 伪代码完整，图表丰富且信息量大
 - 价值: ⭐⭐⭐⭐⭐ training-free + 显著效率提升 + SOTA 性能，对流式视频理解领域有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_video.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [InfiniPot-V: Memory-Constrained KV Cache Compression for Streaming Video Understanding](../../NeurIPS2025/video_understanding/infinipot-v_memory-constrained_kv_cache_compression_for_streaming_video_understa.md)
+- [VideoLLaMB: Long Streaming Video Understanding with Recurrent Memory Bridges](../../ICCV2025/video_understanding/videollamb_long_streaming_video_understanding_with_recurrent_memory_bridges.md)
+
+<!-- RELATED:END -->

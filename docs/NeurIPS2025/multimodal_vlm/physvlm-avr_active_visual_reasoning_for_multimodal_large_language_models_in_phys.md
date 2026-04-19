@@ -116,3 +116,15 @@ $$a_t = \arg\max_{a_t \in A} \mathbb{E}_{o_{t+1} \sim E(h_t, a_t)} [I(Y; y_{t+1}
 - 实验充分度: ⭐⭐⭐⭐ 基准设计完善，消融充分，但仅限仿真评估，缺少真实世界部署
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，从人类认知到AI范式的逻辑链条完整
 - 价值: ⭐⭐⭐⭐ 揭示了MLLM在主动推理上的根本能力缺失，为后续研究奠定基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models](affordbot_3d_fine-grained_embodied_reasoning_via_multimodal_large_language_model.md)
+- [Progressive Multimodal Reasoning via Active Retrieval](../../ACL2025/multimodal_vlm/progressive_multimodal_reasoning_via_active_retrieval.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](../../ICCV2025/multimodal_vlm/physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+- [FlexAC: Towards Flexible Control of Associative Reasoning in Multimodal Large Language Models](flexac_towards_flexible_control_of_associative_reasoning_in_multimodal_large_lan.md)
+- [Active Data Curation Effectively Distills Large-Scale Multimodal Models](../../CVPR2025/multimodal_vlm/active_data_curation_effectively_distills_large-scale_multimodal_models.md)
+
+<!-- RELATED:END -->

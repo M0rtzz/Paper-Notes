@@ -115,3 +115,15 @@ SimVQ的核心修改极其简洁：在标准VQ的码本$\bm{C} \in \mathbb{R}^{K
 - 实验充分度: ⭐⭐⭐⭐ 图像+音频双模态，大规模码本测试，完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，toy实验可视化精彩
 - 价值: ⭐⭐⭐⭐⭐ 即插即用，对VQ生态系统有重大意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Layer-wise Quantization for Quantized Optimistic Dual Averaging](../../ICML2025/optimization/layer-wise_quantization_for_quantized_optimistic_dual_averaging.md)
+- [Constraint Matters: Multi-Modal Representation for Reducing Mixed-Integer Linear programming](../../ICLR2026/optimization/constraint_matters_multi-modal_representation_for_reducing_mixed-integer_linear_.md)
+- [On the Learning Dynamics of Two-Layer Linear Networks with Label Noise SGD](../../AAAI2026/optimization/on_the_learning_dynamics_of_two-layer_linear_networks_with_label_noise_sgd.md)
+- [Random Feature Representation Boosting](../../ICML2025/optimization/random_feature_representation_boosting.md)
+- [Provable In-Context Vector Arithmetic via Retrieving Task Concepts](../../ICML2025/optimization/provable_in-context_vector_arithmetic_via_retrieving_task_concepts.md)
+
+<!-- RELATED:END -->

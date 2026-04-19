@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 评估指标丰富(6 种指标)但数据集太小、缺乏系统消融和多攻击强度场景
 - 写作质量: ⭐⭐ 语法和表达有较多问题，部分段落可读性差，影响了论文的严肃性
 - 价值: ⭐⭐⭐ 特征空间防御思路有参考价值，但实验规模和严谨性限制了结论的可信度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)
+- [PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation](pgr-net_prior-guided_roi_reasoning_network_for_brain_tumor_mri_segmentation.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modalityspecific_encoders_and_partially.md)
+- [CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration](crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr.md)
+- [Robust Multi-Source Covid-19 Detection in CT Images](robust_multi-source_covid-19_detection_in_ct_images.md)
+
+<!-- RELATED:END -->

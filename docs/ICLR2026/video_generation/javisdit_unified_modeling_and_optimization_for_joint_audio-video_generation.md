@@ -126,3 +126,15 @@ $$\mathcal{L}_{\mathrm{DPO}}^{av} = -\mathbb{E}\left[\log\sigma\left(-\beta_v(\m
 - 实验充分度: ⭐⭐⭐⭐⭐ 全面的架构对比、同步机制对比、DPO 策略对比、主观评估，ablation 非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，但部分描述略冗长
 - 价值: ⭐⭐⭐⭐ 为开源 JAVG 设立新 SOTA 和新标杆，AV-DPO 思路对社区有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization](javisdit_joint_audio-video_diffusion_transformer_with_hierarchical_spatio-tempor.md)
+- [Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
+- [UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation](../../CVPR2026/video_generation/unitalking_a_unified_audio-video_framework_for_talking_portrait_generation.md)
+- [UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions](../../CVPR2026/video_generation/uniavgen_unified_audio_and_video_generation_with_asymmetric_cross-modal_interact.md)
+- [TTOM: Test-Time Optimization and Memorization for Compositional Video Generation](ttom_test-time_optimization_and_memorization_for_compositional_video_generation.md)
+
+<!-- RELATED:END -->

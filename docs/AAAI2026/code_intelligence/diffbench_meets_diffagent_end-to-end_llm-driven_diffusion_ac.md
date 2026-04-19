@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个LLM×5个等级的全面评估，消融完整，GA超参分析细致
 - 写作质量: ⭐⭐⭐⭐ 任务定义清晰，框架描述系统化
 - 价值: ⭐⭐⭐⭐⭐ DiffBench可作为标准评估工具，DiffAgent的多Agent+GA范式可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tree-of-Code: A Tree-Structured Exploring Framework for End-to-End Code Generation](../../ACL2025/code_intelligence/tree-of-code_a_tree-structured_exploring_framework_for_end-to-end_code_generatio.md)
+- [ReCode: Updating Code API Knowledge with Reinforcement Learning](recode_updating_code_api_knowledge_with_reinforcement_learning.md)
+- [TAPA: Training-Free Adaptation of Programmatic Agents via LLM-Guided Program Synthesis in Dynamic Environments](tapas_are_free_training-free_adaptation_of_programmatic_agen.md)
+- [Towards Better Code Understanding in Decoder-Only Models with Contrastive Learning](towards_better_code_understanding_in_decoder-only_models_with_contrastive_learni.md)
+- [Extracting Events Like Code: A Multi-Agent Programming Framework for Zero-Shot Event Extraction](extracting_events_like_code_a_multi-agent_programming_framework_for_zero-shot_ev.md)
+
+<!-- RELATED:END -->

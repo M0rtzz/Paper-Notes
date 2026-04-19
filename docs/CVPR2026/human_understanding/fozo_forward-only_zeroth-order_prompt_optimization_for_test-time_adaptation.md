@@ -144,3 +144,15 @@ $$\mathcal{L}_{stats} = \sum_{k \in \{shallow, deep\}} (\|\mu_k^T - \mu_k^S\|_2 
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集、量化模型、持续适应、详细消融和超参分析，但缺少非 ViT 架构实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论推导完整，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 在边缘部署和量化模型 TTA 这一实际场景中提供了强竞争力方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CRISP: Object Pose and Shape Estimation with Test-Time Adaptation](../../CVPR2025/human_understanding/crisp_object_pose_and_shape_estimation_with_test-time_adaptation.md)
+- [Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework](../../ECCV2024/human_understanding/human_motion_forecasting_in_dynamic_domain_shifts_a_homeostatic_continual_test-t.md)
+- [P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](../../ICLR2026/human_understanding/p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
+- [Bi-TTA: Bidirectional Test-Time Adapter for Remote Physiological Measurement](../../ECCV2024/human_understanding/bi-tta_bidirectional_test-time_adapter_for_remote_physiological_measurement.md)
+- [Face Time Traveller: Travel Through Ages Without Losing Identity](face_time_traveller_travel_through_ages_without_losing_identity.md)
+
+<!-- RELATED:END -->

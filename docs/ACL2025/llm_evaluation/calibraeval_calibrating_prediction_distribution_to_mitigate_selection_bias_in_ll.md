@@ -144,3 +144,15 @@ Qwen-72B 上的效果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多基准、多指标，鲁棒性验证全面（prompt变化、token变化、few-shot）
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，问题动机明确，但部分数学符号较密集
 - 价值: ⭐⭐⭐⭐⭐ 解决了LLM评估中的关键痛点，方法即插即用，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Evaluating LLM Alignment by Evaluating LLMs as Judges](../../NeurIPS2025/llm_evaluation/on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+- [JuStRank: Benchmarking LLM Judges for System Ranking](justrank_llm_judge_system_ranking.md)
+- [ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](../../ICCV2025/llm_evaluation/odp-bench_benchmarking_out-of-distribution_performance_prediction.md)
+- [McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
+- [Help Me Write a Story: Evaluating LLMs' Ability to Generate Writing Feedback](help_write_story_feedback.md)
+
+<!-- RELATED:END -->

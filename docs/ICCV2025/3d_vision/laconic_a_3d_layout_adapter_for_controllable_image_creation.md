@@ -172,3 +172,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 定量 + 定性 + 用户研究 + 新 SOC 指标，但数据集规模偏小
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机清晰，图示丰富且直观
 - **价值**: ⭐⭐⭐⭐ — 为 3D 感知图像生成提供了更直接和灵活的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MV-Adapter: Multi-view Consistent Image Generation Made Easy](mv-adapter_multi-view_consistent_image_generation_made_easy.md)
+- [REPARO: Compositional 3D Assets Generation with Differentiable 3D Layout Alignment](reparo_compositional_3d_assets_generation_with_differentiable_3d_layout_alignmen.md)
+- [DeepMesh: Auto-Regressive Artist-Mesh Creation with Reinforcement Learning](deepmesh_auto-regressive_artist-mesh_creation_with_reinforcement_learning.md)
+- [FoundHand: Large-Scale Domain-Specific Learning for Controllable Hand Image Generation](../../CVPR2025/3d_vision/foundhand_large-scale_domain-specific_learning_for_controllable_hand_image_gener.md)
+- [Ctrl-D: Controllable Dynamic 3D Scene Editing with Personalized 2D Diffusion](../../CVPR2025/3d_vision/ctrl-d_controllable_dynamic_3d_scene_editing_with_personalized_2d_diffusion.md)
+
+<!-- RELATED:END -->

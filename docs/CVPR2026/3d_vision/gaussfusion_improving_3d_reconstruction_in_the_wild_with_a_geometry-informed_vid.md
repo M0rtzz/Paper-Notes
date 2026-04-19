@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多范式、多消融、速度对比，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构合理，动机阐述清晰
 - 价值: ⭐⭐⭐⭐⭐ 实时推理+跨范式泛化使其在实际部署中有很高价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator](../../ICLR2026/3d_vision/text-to-3d_by_stitching_a_multi-view_reconstruction_network_to_a_video_generator.md)
+- [BulletGen: Improving 4D Reconstruction with Bullet-Time Generation](bulletgen_improving_4d_reconstruction_with_bullet-time_generation.md)
+- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](../../ICCV2025/3d_vision/vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
+- [Scene Grounding In the Wild](scene_grounding_in_the_wild.md)
+- [GaussianGrow: Geometry-aware Gaussian Growing from 3D Point Clouds with Text Guidance](gaussiangrow_geometry-aware_gaussian_growing_from_3d_point_clouds_with_text_guid.md)
+
+<!-- RELATED:END -->

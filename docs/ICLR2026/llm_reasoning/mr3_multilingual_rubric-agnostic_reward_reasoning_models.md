@@ -161,3 +161,15 @@ mR3-Qwen3-14B以14B参数超越120B教师模型（+0.13 on m-RB, +1.04 on MM-Eva
 - 新颖性: ⭐⭐⭐⭐ 首个大规模多语言奖励推理模型
 - 实验充分度: ⭐⭐⭐⭐⭐ 72语言+人工评估
 - 价值: ⭐⭐⭐⭐⭐ 多语言LLM对齐的基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
+- [Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
+- [Why is Your Language Model a Poor Implicit Reward Model?](why_is_your_language_model_a_poor_implicit_reward_model.md)
+- [Fixing the Broken Compass: Diagnosing and Improving Inference-Time Reward Modeling](fixing_the_broken_compass_diagnosing_and_improving_inference-time_reward_modelin.md)
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+
+<!-- RELATED:END -->

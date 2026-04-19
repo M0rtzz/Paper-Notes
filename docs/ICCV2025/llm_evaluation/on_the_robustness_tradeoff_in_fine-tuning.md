@@ -135,3 +135,15 @@ tags:
 - 实验充分度：★★★★★（231模型×7策略×6数据集，~2100对抗+~2000 OOD评估，消融充分）
 - 实用价值：★★★★☆（为选择微调策略提供了实用指导：简单任务用BitFit，复杂任务用Compacter）
 - 写作质量：★★★★★（研究问题清晰，理论-实验呼应，图表信息丰富）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Objective Fine-tuning: How LLMs' Prior Knowledge Causes Potential Poor Calibration?](../../ACL2025/llm_evaluation/towards_objective_fine-tuning_how_llms_prior_knowledge_causes_potential_poor_cal.md)
+- [Low-Rank Curvature for Zeroth-Order Optimization in LLM Fine-Tuning](../../AAAI2026/llm_evaluation/low-rank_curvature_for_zeroth-order_optimization_in_llm_fine-tuning.md)
+- [Towards Anomaly-Aware Pre-Training and Fine-Tuning for Graph Anomaly Detection](../../ICLR2026/llm_evaluation/towards_anomaly-aware_pre-training_and_fine-tuning_for_graph_anomaly_detection.md)
+- [OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)
+- [IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness](../../ICML2025/llm_evaluation/promoting_ensemble_diversity_with_interactive_bayesian_distributional_robustness.md)
+
+<!-- RELATED:END -->

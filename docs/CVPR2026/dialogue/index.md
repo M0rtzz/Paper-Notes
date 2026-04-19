@@ -10,6 +10,6 @@ description: >-
 
 **📷 CVPR2026** · **1** 篇论文解读
 
-**[Evolutionary Multimodal Reasoning Via Hierarchical Semantic Representation For I](evolutionary_multimodal_reasoning_via_hierarchical_semantic_representation_for_i.md)**
+**[Evolutionary Multimodal Reasoning via Hierarchical Semantic Representation for Intent Recognition](evolutionary_multimodal_reasoning_via_hierarchical_semantic_representation_for_i.md)**
 
 :   提出 HIER，通过层次语义表示（token→概念→关系三级）结合基于 MLLM 反馈的自进化推理机制，在三个多模态意图识别 benchmark 上一致超越 SOTA 方法和领先 MLLM（1-3% 增益）。

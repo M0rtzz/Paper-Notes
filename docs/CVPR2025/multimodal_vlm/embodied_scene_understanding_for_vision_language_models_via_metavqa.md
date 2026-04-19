@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个 VLM、开环+闭环评估、仿真/真实消融、数据量消融，极其全面
 - 写作质量: ⭐⭐⭐⭐ 基准设计动机清晰，评估维度组织合理
 - 价值: ⭐⭐⭐⭐⭐ 基准和数据集对自动驾驶 VLM 社区有重要基础设施价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models](espire_a_diagnostic_benchmark_for_embodied_spatial_reasoning_of_vision-language_.md)
+- [Recognition-Synergistic Scene Text Editing](recognition-synergistic_scene_text_editing.md)
+- [Nautilus: A Large Multimodal Model for Underwater Scene Understanding](../../NeurIPS2025/multimodal_vlm/nautilus_a_large_multimodal_model_for_underwater_scene_understanding.md)
+- [Scene-VLM: Multimodal Video Scene Segmentation via Vision-Language Models](../../CVPR2026/multimodal_vlm/scene-vlm_multimodal_video_scene_segmentation_via_vision-language_models.md)
+- [RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
+
+<!-- RELATED:END -->

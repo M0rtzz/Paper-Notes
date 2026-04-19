@@ -136,3 +136,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 开创性地将双视图3D重建先验引入实时SLAM，系统设计完整优雅（匹配/跟踪/融合/回环/优化每个环节都有针对性设计），标定和无标定模式均达到SOTA，对SLAM领域具有范式级影响。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](../../ECCV2024/3d_vision/sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
+- [MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots](mne-slam_multi-agent_neural_slam_for_mobile_robots.md)
+- [I²-SLAM: Inverting Imaging Process for Robust Photorealistic Dense SLAM](../../ECCV2024/3d_vision/i2-slam_inverting_imaging_process_for_robust_photorealistic_dense_slam.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+
+<!-- RELATED:END -->

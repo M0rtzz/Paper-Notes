@@ -118,3 +118,15 @@ $$\hat{D}_{\text{KL}}(\varepsilon_n) = (1-\varepsilon_n)^n \left(\log n + (n-1)\
 - 实验充分度: ⭐⭐⭐ — 合成实验充分但缺乏大规模实际对齐场景验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 论证清晰严谨，从反例到定理到估计器层层递进
 - 价值: ⭐⭐⭐⭐ — 对 LLM 对齐社区有重要纠偏意义，后续已被多篇工作引用和推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video Prediction Policy: A Generalist Robot Policy with Predictive Visual Representations](video_prediction_policy_a_generalist_robot_policy_with_predictive_visual_represe.md)
+- [Image Super-Resolution with Guarantees via Conformalized Generative Models](../../NeurIPS2025/image_generation/image_super-resolution_with_guarantees_via_conformalized_generative_models.md)
+- [Discriminative Policy Optimization for Token-Level Reward Models](discriminative_policy_optimization_for_token-level_reward_models.md)
+- [Flattening Hierarchies with Policy Bootstrapping](../../NeurIPS2025/image_generation/flattening_hierarchies_with_policy_bootstrapping.md)
+- [LIVS: A Pluralistic Alignment Dataset for Inclusive Public Spaces](livs_a_pluralistic_alignment_dataset_for_inclusive_public_spaces.md)
+
+<!-- RELATED:END -->

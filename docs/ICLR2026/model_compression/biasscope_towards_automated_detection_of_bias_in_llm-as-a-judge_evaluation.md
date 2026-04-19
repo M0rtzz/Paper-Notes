@@ -157,3 +157,15 @@ BiasScope 是一个两阶段迭代框架：
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个模型、多个消融、可靠性验证、长度控制实验、DPO缓解验证、JudgeBench-Pro构建与评估，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式形式化规范，图表配合良好
 - 价值: ⭐⭐⭐⭐ 为 LLM-as-a-Judge 的鲁棒性评估提供了实用工具和新基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models](beyondbench_contamination-resistant_evaluation_of_reasoning_in_language_models.md)
+- [Rectified Decoupled Dataset Distillation: A Closer Look for Fair and Comprehensive Evaluation](rectified_decoupled_dataset_distillation_a_closer_look_for_fair_and_comprehensiv.md)
+- [Steer LLM Latents for Hallucination Detection](../../ICML2025/model_compression/steer_llm_latents_for_hallucination_detection.md)
+- [Incentivizing Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](incentivizing_agentic_reasoning_in_llm_judges_via_tool-integrated_reinforcement_.md)
+- [KBVQ-MoE: KLT-guided SVD with Bias-Corrected Vector Quantization for MoE Large Language Models](kbvq-moe_klt-guided_svd_with_bias-corrected_vector_quantization_for_moe_large_la.md)
+
+<!-- RELATED:END -->

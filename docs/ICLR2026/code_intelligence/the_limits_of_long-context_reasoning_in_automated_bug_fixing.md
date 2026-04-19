@@ -121,3 +121,15 @@ mini-SWE-agent 使用线性历史 —— 每步执行 bash 命令后将输出追
 - 实验充分度: ⭐⭐⭐ 样本量小，模型覆盖有限
 - 写作质量: ⭐⭐⭐⭐ 论点清晰，数据直观
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 长上下文能力的认知有重要校正作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongCodeU: Benchmarking Long-Context Language Models on Long Code Understanding](../../ACL2025/code_intelligence/benchmarking_long-context_language_models_on_long_code_understanding.md)
+- [MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
+- [Supervised Reinforcement Learning: From Expert Trajectories to Step-wise Reasoning](supervised_reinforcement_learning_from_expert_trajectories_to_step-wise_reasonin.md)
+- [Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)
+- [Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
+
+<!-- RELATED:END -->

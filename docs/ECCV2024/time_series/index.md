@@ -10,11 +10,11 @@ description: >-
 
 **🎞️ ECCV2024** · **3** 篇论文解读
 
-**[Multi-Person Pose Forecasting With Individual Interaction Perceptron And Prior L](multi-person_pose_forecasting_with_individual_interaction_perceptron_and_prior_l.md)**
+**[Multi-person Pose Forecasting with Individual Interaction Perceptron and Prior Learning](multi-person_pose_forecasting_with_individual_interaction_perceptron_and_prior_l.md)**
 
 :   本文提出 IAFormer（Interaction-Aware Pose Forecasting Transformer），通过设计交互感知模块（IPM）来评估每个人与事件的交互程度，并引入交互先验学习模块（IPLM）来积累高频交互模式的先验知识，从而实现语义层面的多人姿态预测，在多个多人场景数据集上显著超越现有方法。
 
-**[Omnisat Self-Supervised Modality Fusion For Earth Observation](omnisat_self-supervised_modality_fusion_for_earth_observation.md)**
+**[OmniSat: Self-Supervised Modality Fusion for Earth Observation](omnisat_self-supervised_modality_fusion_for_earth_observation.md)**
 
 :   提出OmniSat统一框架，通过模态特异编码器+跨模态对比自监督预训练，将多光谱时序（S2）、SAR时序（S1）、高分辨率单时相（SPOT/Aerial）等异构遥感数据融合为统一表示，在语义分割和作物分类上超越所有单模态和多模态基线。
 

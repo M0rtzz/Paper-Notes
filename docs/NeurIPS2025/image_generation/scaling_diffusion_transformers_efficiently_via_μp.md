@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （从 DiT 到 MMDiT-18B，逐步验证）
 - 写作质量: ⭐⭐⭐⭐⭐ （条理清晰，理论与实验配合紧密）
 - 价值: ⭐⭐⭐⭐⭐ （对工业界大模型训练有直接指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing Diffusion Transformers for Visual Correspondence by Modulating Massive Activations](unleashing_diffusion_transformers_for_visual_correspondence_by_modulating_massiv.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
+- [OmniSync: Towards Universal Lip Synchronization via Diffusion Transformers](omnisync_towards_universal_lip_synchronization_via_diffusion.md)
+- [Routing Matters in MoE: Scaling Diffusion Transformers with Explicit Routing Guidance](../../ICLR2026/image_generation/routing_matters_in_moe_scaling_diffusion_transformers_with_explicit_routing_guid.md)
+
+<!-- RELATED:END -->

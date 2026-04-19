@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个基准、7种baseline、5种倍率、完整消融和效率分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，技术描述完整，公式推导严谨
 - 价值: ⭐⭐⭐⭐ 实时+灵活倍率对3DGS实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IE-SRGS: An Internal-External Knowledge Fusion Framework for High-Fidelity 3D Gaussian Splatting Super-Resolution](ie-srgs_an_internal-external_knowledge_fusion_framework_for_high-fidelity_3d_gau.md)
+- [SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting](../../CVPR2026/3d_vision/sr3r_rethinking_super-resolution_3d_reconstruction_with_feed-forward_gaussian_sp.md)
+- [A3GS: Arbitrary Artistic Style into Arbitrary 3D Gaussian Splatting](../../ICCV2025/3d_vision/a3gs_arbitrary_artistic_style_into_arbitrary_3d_gaussian_spl.md)
+- [3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](../../ICCV2025/3d_vision/bridging_diffusion_models_and_3d_representations_a_3d_consis.md)
+- [SuperGaussian: Repurposing Video Models for 3D Super Resolution](../../ECCV2024/3d_vision/supergaussian_repurposing_video_models_for_3d_super_resolution.md)
+
+<!-- RELATED:END -->

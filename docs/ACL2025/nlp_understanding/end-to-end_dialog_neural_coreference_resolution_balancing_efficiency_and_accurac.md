@@ -134,3 +134,15 @@ $$\mathcal{L}_{CR} = -(\alpha \cdot \log(P) + \beta \cdot \log(1-P))$$
 - **实验充分度**: ⭐⭐⭐ — 多数据集多消融，但所有方法统一训练配置的做法有争议
 - **写作质量**: ⭐⭐⭐ — 结构清晰但部分描述较为冗长，方法创新性阐述不够突出
 - **价值**: ⭐⭐⭐ — 提供了全面的共指消解系统设计参考，但突破性有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BookCoref: Coreference Resolution at Book Scale](bookcoref_book_scale.md)
+- [Adapting Psycholinguistic Research for LLMs: Gender-Inclusive Language in a Coreference Context](adapting_psycholinguistic_research_for_llms_gender-inclusive_language_in_a_coref.md)
+- [NeuSym-RAG: Hybrid Neural Symbolic Retrieval with Multiview Structuring for PDF Question Answering](neusym_rag_pdf_qa.md)
+- [Generating Diverse Training Samples for Relation Extraction with Large Language Models](generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+- [Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing](disambiguate_first_parse_later_generating_interpretations_for_ambiguity_resoluti.md)
+
+<!-- RELATED:END -->

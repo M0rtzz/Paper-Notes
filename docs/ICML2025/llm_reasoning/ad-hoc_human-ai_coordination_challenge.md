@@ -193,3 +193,15 @@ $$\mathcal{L}_t^{\text{HDR-IPPO}}(\theta) = (1 - \lambda) \cdot \mathcal{L}_t^{\
 - 实验充分度: ⭐⭐⭐⭐ (4/5) — 基线丰富（含 LLM），人类相似性多维验证，但 LLM 评估量有限
 - 写作质量: ⭐⭐⭐⭐ (4/5) — 结构清晰，问题定义和动机明确
 - 价值: ⭐⭐⭐⭐⭐ (5/5) — 为 Human-AI 协调研究提供了急需的标准化基准，开源数据+API评估是重要社区贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Safety Reasoning in LLMs: AI-agentic Deliberation for Policy-embedded CoT Data Creation](../../ACL2025/llm_reasoning/towards_safety_reasoning_in_llms_ai-agentic_deliberation_for_policy-embedded_cot.md)
+- [Dropouts in Confidence: Moral Uncertainty in Human-LLM Alignment](../../AAAI2026/llm_reasoning/dropouts_in_confidence_moral_uncertainty_in_human-llm_alignment.md)
+- [BLM-Guard: Explainable Multimodal Ad Moderation with Chain-of-Thought and Policy-Aligned Rewards](../../AAAI2026/llm_reasoning/blm-guard_explainable_multimodal_ad_moderation_with_chain-of.md)
+- [E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](../../CVPR2026/llm_reasoning/e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)
+- [Putnam-AXIOM: A Functional & Static Benchmark for Measuring Higher Level Mathematical Reasoning in LLMs](putnam-axiom_a_functional_and_static_benchmark_for_measuring_higher_level_mathem.md)
+
+<!-- RELATED:END -->

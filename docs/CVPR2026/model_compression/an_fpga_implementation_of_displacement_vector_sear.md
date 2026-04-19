@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 资源和性能数据充分但缺少率失真对比
 - 写作质量: ⭐⭐⭐ 结构清晰但部分细节不够
 - 价值: ⭐⭐⭐ 对 JPEG XS 硬件化有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [Distilling Balanced Knowledge from a Biased Teacher](distilling_balanced_knowledge_from_a_biased_teacher.md)
+- [MEMO: Human-like Crisp Edge Detection Using Masked Edge Prediction](memo_human-like_crisp_edge_detection_using_masked_edge_prediction.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
+
+<!-- RELATED:END -->

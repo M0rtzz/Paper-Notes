@@ -131,3 +131,15 @@ Hessian 结构验证（MNIST, 1 Transformer block）：
 - 实验充分度: ⭐⭐⭐ 实验仅在 MNIST/CIFAR-100 小模型上验证，缺少大规模实验支撑。
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，结构清晰；但公式密集，可读性对非理论方向读者不友好。
 - 价值: ⭐⭐⭐⭐ 为 Transformer 优化理论奠定新基础，但需在大规模模型上进一步验证实用性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Scaling Laws for Symbolic Regression](../../NeurIPS2025/interpretability/towards_scaling_laws_for_symbolic_regression.md)
+- [Noise Stability of Transformer Models](noise_stability_of_transformer_models.md)
+- [Sloth: Scaling Laws for LLM Skills to Predict Multi-Benchmark Performance Across Families](../../NeurIPS2025/interpretability/sloth_scaling_laws_for_llm_skills_to_predict_multi-benchmark_performance_across_.md)
+- [FlashKAT: Understanding and Addressing Performance Bottlenecks in the Kolmogorov-Arnold Transformer](../../AAAI2026/interpretability/flashkat_understanding_and_addressing_performance_bottlenecks_in_the_kolmogorov-.md)
+- [How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
+
+<!-- RELATED:END -->

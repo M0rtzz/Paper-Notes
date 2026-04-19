@@ -101,3 +101,15 @@ FDSE在所有数据集上一致最优，在DomainNet上超越20+方法。
 - 实验充分度: ⭐⭐⭐⭐ 20+基线、3个数据集、可视化分析
 - 写作质量: ⭐⭐⭐⭐ 动机和方法阐述清晰
 - 价值: ⭐⭐⭐⭐ 对联邦域泛化有实质推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift](../../CVPR2026/optimization/fed-ade_adaptive_learning_rate_for_federated_post-adaptation_under_distribution_.md)
+- [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning](scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
+- [Streaming Federated Learning with Markovian Data](../../NeurIPS2025/optimization/streaming_federated_learning_with_markovian_data.md)
+- [Mind the Gap: Confidence Discrepancy Can Guide Federated Semi-Supervised Learning](mind_the_gap_confidence_discrepancy_can_guide_federated_semi-supervised_learning.md)
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](../../NeurIPS2025/optimization/learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+
+<!-- RELATED:END -->

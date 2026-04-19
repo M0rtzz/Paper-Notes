@@ -150,3 +150,15 @@ $$\overline{\mathcal{E}} = \frac{1}{|G|N} \sum_{g \in G} \sum_{n=1}^{N} \mathcal
 | 实用价值 | 7 | 为湍流ML中的对称性设计提供了实用决策指南 |
 | 写作质量 | 8 | 结构清晰，物理直觉解释好，图表表达力强 |
 | 综合评分 | 7 | 一项连接经典湍流理论与现代ML的实证分析工作，观察优雅但规模有限 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
+- [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
+- [The Surprising Effectiveness of Noise Pretraining for Implicit Neural Representations](../../CVPR2026/image_restoration/the_surprising_effectiveness_of_noise_pretraining_for_implicit_neural_representa.md)
+- [Augmenting Perceptual Super-Resolution via Image Quality Predictors](../../CVPR2025/image_restoration/augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
+- [Emulating Self-Attention with Convolution for Efficient Image Super-Resolution](../../ICCV2025/image_restoration/emulating_self-attention_with_convolution_for_efficient_image_super-resolution.md)
+
+<!-- RELATED:END -->

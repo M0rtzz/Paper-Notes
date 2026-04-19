@@ -136,3 +136,15 @@ LongSplat 在所有场景上一致性地超越基线。
 - **实用性**: ⭐⭐⭐⭐⭐ — 直接处理手机随拍视频，极具实用价值
 - **实验完整度**: ⭐⭐⭐⭐ — 多数据集验证+消融完整
 - **写作质量**: ⭐⭐⭐⭐ — 系统描述清晰，管线图直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+- [StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting](stochasticsplats_stochastic_rasterization_for_sorting-free_3d_gaussian_splatting.md)
+- [Tune-Your-Style: Intensity-Tunable 3D Style Transfer with Gaussian Splatting](tune-your-style_intensity-tunable_3d_style_transfer_with_gaussian_splatting.md)
+- [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+
+<!-- RELATED:END -->

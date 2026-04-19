@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4模型×4输入×5损失+IAA分析+多粒度评估，系统而全面
 - 写作质量: ⭐⭐⭐⭐ 标注过程和语料库描述极为详尽，指南设计透明
 - 价值: ⭐⭐⭐⭐ 对阿拉伯语NLP社区和教育技术有重要资源价值，形态学分词发现有跨语言启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guidelines for Fine-grained Sentence-level Arabic Readability Annotation](guidelines_for_fine-grained_sentence-level_arabic_readability_annotation.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+
+<!-- RELATED:END -->

@@ -172,3 +172,15 @@ TowerMind 的地图定义在以 (0,0) 为中心、边长为 6 的正方形区域
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖了 7 个 LLM + 2 个 RL 算法 + 人类基线，分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，图表丰富，定量与定性分析结合良好
 - 价值: ⭐⭐⭐⭐ — 为 LLM 智能体评估提供了实用且可扩展的新工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning](well_begun_half_done_reinforcement_learning_with_prefix_optimization_for_llm_rea.md)
+- [Learning to Orchestrate Agents in Natural Language with the Conductor](../../ICLR2026/reinforcement_learning/learning_to_orchestrate_agents_in_natural_language_with_the_conductor.md)
+- [Don't Just Fine-tune the Agent, Tune the Environment](../../ICLR2026/reinforcement_learning/dont_just_fine-tune_the_agent_tune_the_environment.md)
+- [Aligning Machiavellian Agents: Behavior Steering via Test-Time Policy Shaping](aligning_machiavellian_agents_behavior_steering_via_test-tim.md)
+- [Meta-World+: An Improved, Standardized, RL Benchmark](../../NeurIPS2025/reinforcement_learning/meta-world_an_improved_standardized_rl_benchmark.md)
+
+<!-- RELATED:END -->

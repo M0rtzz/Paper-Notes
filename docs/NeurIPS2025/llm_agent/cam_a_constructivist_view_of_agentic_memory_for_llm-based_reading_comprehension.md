@@ -133,3 +133,15 @@ CAM在所有6个数据集的所有指标上全面领先，平均提升3.0%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个数据集、7个基线、在线/离线对比、消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-蓝图-实现-验证的叙事链清晰流畅
 - 价值: ⭐⭐⭐⭐ 对长文本Agent记忆系统设计有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [Agentic Plan Caching: Test-Time Memory for Fast and Cost-Efficient LLM Agents](agentic_plan_caching_test-time_memory_for_fast_and_cost-efficient_llm_agents.md)
+- [Unveiling Privacy Risks in LLM Agent Memory](../../ACL2025/llm_agent/mextra_agent_memory_privacy.md)
+- [R2D2: Remembering, Replaying and Dynamic Decision Making with a Reflective Agentic Memory](../../ACL2025/llm_agent/r2d2_reflective_agentic_memory.md)
+- [Agentic NL2SQL to Reduce Computational Costs](agentic_nl2sql_to_reduce_computational_costs.md)
+
+<!-- RELATED:END -->

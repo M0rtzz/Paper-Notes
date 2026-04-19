@@ -160,3 +160,15 @@ Pipeline分四阶段：(1) 三路并行编码器提取特征 → (2) Transformer
 - 实验充分度: ⭐⭐⭐⭐⭐ 仿真32个任务三类别、6个baseline、消融实验、数据效率分析、真实世界4任务验证
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、框架图直观，但某些实验细节需对照补充材料
 - 价值: ⭐⭐⭐⭐ 在双臂操控中引入3D基础模型是重要方向，联合3D预测的paradigm有广泛影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Pose Refinement in 3D Gaussian Splatting under Pose Prior and Geometric Uncertainty](rethinking_pose_refinement_in_3d_gaussian_splatting_under_pose_prior_and_geometr.md)
+- [Action-guided Generation of 3D Functionality Segmentation Data](action-guided_generation_of_3d_functionality_segmentation_data.md)
+- [Pano360: Perspective to Panoramic Vision with Geometric Consistency](pano360_perspective_to_panoramic_vision_with_geometric_consistency.md)
+- [Ctrl&Shift: High-Quality Geometry-Aware Object Manipulation in Visual Generation](../../ICLR2026/3d_vision/ctrlshift_high-quality_geometry-aware_object_manipulation_in_visual_generation.md)
+- [Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation](ada3drift_adaptive_trainingtime_drifting_for_onest.md)
+
+<!-- RELATED:END -->

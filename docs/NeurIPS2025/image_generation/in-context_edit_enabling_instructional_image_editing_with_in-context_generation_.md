@@ -225,3 +225,15 @@ ICEdit（含推理缩放）VIE-Score 达到 **78.2**，超过商业模型 SeedEd
 - 实验充分度: ★★★★★ — 双 benchmark 评测 + VIE-Score 对标商业模型 + 全面消融（prompt 类型、MoE 配置、数据量、推理缩放参数）+ GPT-4o 人类偏好对齐评估
 - 写作质量: ★★★★☆ — 结构清晰，motivation 到方法的推导逻辑自然，图表丰富；但符号使用偶有不一致
 - 价值: ★★★★★ — 以极小训练代价达到 SOTA，开源可复现，方法论对社区有广泛启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaVin-DiT: Large Vision Diffusion Transformer](../../CVPR2025/image_generation/lavin-dit_large_vision_diffusion_transformer.md)
+- [CAMILA: Context-Aware Masking for Image Editing with Language Alignment](camila_contextaware_masking_for_image_editing_with_language.md)
+- [UltraHR-100K: Enhancing UHR Image Synthesis with A Large-Scale High-Quality Dataset](ultrahr-100k_enhancing_uhr_image_synthesis_with_a_large-scale_high-quality_datas.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](../../ECCV2024/image_generation/lazy_diffusion_transformer_for_interactive_image_editing.md)
+- [Large-Scale Training Data Attribution for Music Generative Models via Unlearning](large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
+
+<!-- RELATED:END -->

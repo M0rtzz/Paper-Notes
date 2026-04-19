@@ -141,3 +141,15 @@ $$\mathcal{L} = \frac{1}{K_\mathcal{B}} \sum_{\hat{I} \in \hat{\mathcal{I}}_\mat
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集(DL3DV/RealEstate/Objaverse)全面对比，消融+位姿分析透彻
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑缜密，动机清晰，设计选择有充分理由
 - 价值: ⭐⭐⭐⭐⭐ 证明了3D视觉模型摆脱监督学习的可行性，开辟新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HumanOLAT: A Large-Scale Dataset for Full-Body Human Relighting and Novel-View Synthesis](humanolat_a_large-scale_dataset_for_full-body_human_relighting_and_novel-view_sy.md)
+- [StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
+- [SHeaP: Self-Supervised Head Geometry Predictor Learned via 2D Gaussians](sheap_self-supervised_head_geometry_predictor_learned_via_2d_gaussians.md)
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+- [SkySense V2: A Unified Foundation Model for Multi-Modal Remote Sensing](skysense_v2_a_unified_foundation_model_for_multi-modal_remote_sensing.md)
+
+<!-- RELATED:END -->

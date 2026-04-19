@@ -181,3 +181,15 @@ FPro 仅需 Restormer 约 47% 的 FLOPs。
 - 实验充分度: ⭐⭐⭐⭐ 5 个任务覆盖面广，消融实验充分，可视化分析直观
 - 写作质量: ⭐⭐⭐⭐⭐ 论文写作质量高，方法推导严谨，公式-文字-图示配合好
 - 价值: ⭐⭐⭐⭐ 频域 prompt 思路有通用性，FLOPs 低性能好，有开源代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contourlet Residual for Prompt Learning Enhanced Infrared Image Super-Resolution](contourlet_residual_for_prompt_learning_enhanced_infrared_image_super-resolution.md)
+- [EDformer: Transformer-Based Event Denoising Across Varied Noise Levels](edformer_transformer-based_event_denoising_across_varied_noise_levels.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [Enhancing Image Restoration Transformer via Adaptive Translation Equivariance](../../ICCV2025/image_restoration/enhancing_image_restoration_transformer_via_adaptive_translation_equivariance.md)
+- [OAPT: Offset-Aware Partition Transformer for Double JPEG Artifacts Removal](oapt_offset-aware_partition_transformer_for_double_jpeg_artifacts_removal.md)
+
+<!-- RELATED:END -->

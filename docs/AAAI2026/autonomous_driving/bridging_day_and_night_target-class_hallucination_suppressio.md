@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集评估+详细消融+定性分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对域适应社区有实际意义，幻觉问题的解法可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiREC-Net: A Target-Free and Learning-Based Network for LiDAR, RGB, and Event Calibration](../../CVPR2026/autonomous_driving/lirec-net_a_target-free_and_learning-based_network_for_lidar_rgb_and_event_calib.md)
+- [Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification](hierarchical_prompt_learning_for_image-_and_text-based_person_re-identification.md)
+- [PanoVOS: Bridging Non-panoramic and Panoramic Views with Transformer for Video Segmentation](../../ECCV2024/autonomous_driving/panovos_bridging_non-panoramic_and_panoramic_views_with_transformer_for_video_se.md)
+- [MambaSeg: Harnessing Mamba for Accurate and Efficient Image-Event Semantic Segmentation](mambaseg_harnessing_mamba_for_accurate_and_efficient_image-e.md)
+- [Single Pixel Image Classification using an Ultrafast Digital Light Projector](../../CVPR2026/autonomous_driving/single_pixel_image_classification_using_an_ultrafast_digital_light_projector.md)
+
+<!-- RELATED:END -->

@@ -105,3 +105,15 @@ AC3 建立在 DDPG 风格的 off-policy actor-critic 框架之上。输入是多
 - 实验充分度: ⭐⭐⭐⭐⭐ 25 个任务、多项消融、与多种 baseline 对比，分析非常详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论分析透彻，附录的无约束动作子空间分析尤为出色
 - 价值: ⭐⭐⭐⭐ 解决了 RL + continuous action chunking 中的关键稳定性问题，方法简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation](../../CVPR2026/object_detection/palm_progress-aware_policy_learning_via_affordance_reasoning_for_long-horizon_ro.md)
+- [H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation](h-gar_a_hierarchical_interaction_framework_via_goal-driven_observation-action_re.md)
+- [Continuous Vision-Language-Action Co-Learning with Semantic-Physical Alignment for Behavioral Cloning](continuous_vision-language-action_co-learning_with_semantic-.md)
+- [SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
+- [Tackling Resource-Constrained and Data-Heterogeneity in Federated Learning with Double-Weight Sparse Pack](tackling_resource-constrained_and_data-heterogeneity_in_federated_learning_with_.md)
+
+<!-- RELATED:END -->

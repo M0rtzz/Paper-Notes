@@ -120,3 +120,15 @@ CRO优化目标：$\min_\theta \mathbb{E}_{\gamma, t} \|x_{t-\gamma}^{mix} - p_\
 - 实验充分度: ⭐⭐⭐⭐ GPT-4o评估+用户研究+消融+注意力可视化+去噪过程可视化
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，方法动机清晰，但公式较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐⭐ 解决了目标移除中"物体重生"这个实际痛点，对修图/广告/social media有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Losses for Diffusion Bridge Samplers](../../NeurIPS2025/llm_evaluation/rethinking_losses_for_diffusion_bridge_samplers.md)
+- [CalibraEval: Calibrating Prediction Distribution to Mitigate Selection Bias in LLMs-as-Judges](../../ACL2025/llm_evaluation/calibraeval_calibrating_prediction_distribution_to_mitigate_selection_bias_in_ll.md)
+- [Cross-regularization: Adaptive Model Complexity through Validation Gradients](../../ICML2025/llm_evaluation/cross-regularization_adaptive_model_complexity_through_validation_gradients.md)
+- [MOSIV: Multi-Object System Identification from Videos](../../ICLR2026/llm_evaluation/mosiv_multi-object_system_identification_from_videos.md)
+- [Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention](../../NeurIPS2025/llm_evaluation/generalization_error_analysis_for_selective_state-space_models_through_the_lens_.md)
+
+<!-- RELATED:END -->

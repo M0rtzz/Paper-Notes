@@ -151,3 +151,15 @@ $$\epsilon_T(h) \leq \hat{\epsilon}_S(h) + C\sqrt{\epsilon_1} + L\sqrt{\epsilon_
 ⭐⭐⭐⭐ (4/5)
 
 方法设计完整，因果解耦+生成干预+伪标签校准三位一体。理论分析和实验覆盖较全。但实验数据集偏小，提升幅度有限（0.5%~2.3%），且因果图的先验假设可能限制方法的泛化能力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Butterfly Effect: Neural Network Training Trajectories Are Highly Sensitive to Initial Conditions](the_butterfly_effect_neural_network_training_trajectories_are_highly_sensitive_t.md)
+- [Widening the Network Mitigates the Impact of Data Heterogeneity on FedAvg](widening_the_network_mitigates_the_impact_of_data_heterogeneity_on_fedavg.md)
+- [Federated Continual Instruction Tuning](../../ICCV2025/optimization/federated_continual_instruction_tuning.md)
+- [GCAL: Adapting Graph Models to Evolving Domain Shifts](gcal_adapting_graph_models_to_evolving_domain_shifts.md)
+- [Deep Taxonomic Networks for Unsupervised Hierarchical Prototype Discovery](../../NeurIPS2025/optimization/deep_taxonomic_networks_for_unsupervised_hierarchical_prototype_discovery.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ SE-Net 训练：分类损失 + 三元组对比损失，25 epochs。ISP-SENet 训
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、三种 n-shot 设置、多种 baseline 对比完整
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 对个性化注意力预测的实际应用（推荐系统、广告、辅助诊断）有直接推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
+- [PVChat: Personalized Video Chat with One-Shot Learning](../../ICCV2025/medical_imaging/pvchat_personalized_video_chat_with_one-shot_learning.md)
+- [Dual Distillation for Few-Shot Anomaly Detection](../../ICLR2026/medical_imaging/dual_distillation_for_few-shot_anomaly_detection.md)
+- [Few-Shot Learning from Gigapixel Images via Hierarchical Vision-Language Alignment and Modeling](../../NeurIPS2025/medical_imaging/few-shot_learning_from_gigapixel_images_via_hierarchical_vision-language_alignme.md)
+- [DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](../../ICCV2025/medical_imaging/dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)
+
+<!-- RELATED:END -->

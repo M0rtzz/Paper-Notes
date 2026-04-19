@@ -204,3 +204,15 @@ SBAG、Group Mask、Decoupled Finetuning 三组件缺一不可。全部移除时
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集、三种消息长度、图像级+模型级攻击、完整消融，但缺动态场景和对抗攻击评估
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，数学表述严谨，图表丰富
 - 价值: ⭐⭐⭐⭐ — 3D-GS 版权保护的重要工作，可解释性是关键卖点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting](../../CVPR2025/3d_vision/guardsplat_efficient_and_robust_watermarking_for_3d_gaussian_splatting.md)
+- [Can Protective Watermarking Safeguard the Copyright of 3D Gaussian Splatting?](../../AAAI2026/3d_vision/can_protective_watermarking_safeguard_the_copyright_of_3d_gaussian_splatting.md)
+- [What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zero-shot_stereo_matching.md)
+- [WMGStereo: What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zerosh.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](../../CVPR2025/3d_vision/3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+
+<!-- RELATED:END -->

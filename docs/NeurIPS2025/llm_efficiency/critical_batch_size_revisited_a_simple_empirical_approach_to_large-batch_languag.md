@@ -135,3 +135,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 系统测量了多个 checkpoint × 多个 batch size 倍数 × 两个模型规模，还有 OOD 评估和 mid-training 验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰、假设明确说明、图表信息量大，是方法论论文的典范
 - **价值**: ⭐⭐⭐⭐ — 对 LLM 预训练实践有直接指导意义。Warmup 策略无侵入性，可与现有训练流程无缝集成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws](../../ICLR2026/llm_efficiency/fast_catch-up_late_switching_optimal_batch_size_scheduling_via_functional_scalin.md)
+- [Tetris: Optimal Draft Token Selection for Batch Speculative Decoding](../../ACL2025/llm_efficiency/tetris_optimal_draft_token_selection_for_batch_speculative_decoding.md)
+- [Constant Bit-Size Transformers Are Turing Complete](constant_bit-size_transformers_are_turing_complete.md)
+- [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
+- [L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context for Large Language Models](l-mtp_leap_multi-token_prediction_beyond_adjacent_context_for_large_language_mod.md)
+
+<!-- RELATED:END -->

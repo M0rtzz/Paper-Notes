@@ -111,3 +111,14 @@ tags:
 - 在 LLaVA-1.5-13B 上同样有效：CS 从 40.8 降至 35.7（LTS-FS+Nullu），32.0（LTS-FS+VTI）
 - 在 Qwen-VL2.5-7B 上 CHAIR-CI 从 7.4 降至 6.0，幻觉详细描述减少约 19%
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation](../../ICLR2026/multimodal_vlm/look_carefully_adaptive_visual_reinforcements_in_multimodal_large_language_model.md)
+- [InEx: Hallucination Mitigation via Introspection and Cross-Modal Multi-Agent Collaboration](../../AAAI2026/multimodal_vlm/inex_hallucination_mitigation_via_introspection_and_cross-mo.md)
+- [Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models](../../ICLR2026/multimodal_vlm/dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis.md)
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Prime Once, then Reprogram Locally: An Efficient Alternative to Black-Box Service Model Adaptation](prime_once_then_reprogram_locally_an_efficient_alternative_to_black-box_service_.md)
+
+<!-- RELATED:END -->

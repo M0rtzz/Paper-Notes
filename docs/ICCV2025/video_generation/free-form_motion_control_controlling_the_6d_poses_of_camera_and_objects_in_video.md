@@ -149,3 +149,15 @@ FMC 在物体运动控制上大幅领先 MotionCtrl（ObjTransErr: 42.25 vs 80.6
 - 实验充分度：⭐⭐⭐⭐ — 独立/联合控制对比、消融、用户研究、多风格适配
 - 实用价值：⭐⭐⭐⭐ — 电影制作/游戏/AR 等应用场景明确
 - 写作质量：⭐⭐⭐⭐ — 图表丰富，方法叙述清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RealCam-I2V: Real-World Image-to-Video Generation with Interactive Complex Camera Control](realcam-i2v_real-world_image-to-video_generation_with_interactive_complex_camera.md)
+- [Dynamic Camera Poses and Where to Find Them](../../CVPR2025/video_generation/dynamic_camera_poses_and_where_to_find_them.md)
+- [Motion Prompting: Controlling Video Generation with Motion Trajectories](../../CVPR2025/video_generation/motion_prompting_controlling_video_generation_with_motion_trajectories.md)
+- [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
+- [ReCamMaster: Camera-Controlled Generative Rendering from A Single Video](recammaster_camera-controlled_generative_rendering_from_a_single_video.md)
+
+<!-- RELATED:END -->

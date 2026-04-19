@@ -157,3 +157,15 @@ ACVRP 任务（有容量约束）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三种任务 × 三种分布 × 多种基线，消融实验完整，真实城市数据集令人信服
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，框架图直观，实验表格丰富；数学公式密集但组织有序
 - **价值**: ⭐⭐⭐⭐⭐ — 开源数据集和代码为 NCO 社区提供了首个真实世界标准基准，推动该领域从玩具问题走向实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FrontierCO: Real-World and Large-Scale Evaluation of Machine Learning Solvers for Combinatorial Optimization](frontierco_real-world_and_large-scale_evaluation_of_machine_learning_solvers_for.md)
+- [Rethinking Neural Combinatorial Optimization for Vehicle Routing Problems with Different Constraint Tightness Degrees](../../NeurIPS2025/optimization/rethinking_neural_combinatorial_optimization_for_vehicle_routing_problems_with_d.md)
+- [Probing Neural Combinatorial Optimization Models](../../NeurIPS2025/optimization/probing_neural_combinatorial_optimization_models.md)
+- [Bridging Synthetic and Real Routing Problems via LLM-Guided Instance Generation and Progressive Adaptation](../../AAAI2026/optimization/bridging_synthetic_and_real_routing_problems_via_llm-guided_instance_generation_.md)
+- [Celo2: Towards Learned Optimization Free Lunch](celo2_towards_learned_optimization_free_lunch.md)
+
+<!-- RELATED:END -->

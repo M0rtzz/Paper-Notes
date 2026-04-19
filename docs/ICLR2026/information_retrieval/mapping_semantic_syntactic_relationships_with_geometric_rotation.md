@@ -136,3 +136,15 @@ RISE通过三步实现语义变换的几何表示：(1) 规范化（Canonicaliza
 - 实验充分度: ⭐⭐⭐⭐⭐ 7语言×3模型×3变换×3数据集×2基线的全矩阵评估
 - 写作质量: ⭐⭐⭐⭐⭐ 理论动机→方法设计→大规模实验→数学证明的完整叙事
 - 价值: ⭐⭐⭐⭐ 对嵌入可解释性和多语言理解有基础贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Magnitude Matters: A Superior Class of Similarity Metrics for Holistic Semantic Understanding](../../AAAI2026/information_retrieval/magnitude_matters_a_superior_class_of_similarity_metrics_for_holistic_semantic_u.md)
+- [HiMo-CLIP: Modeling Semantic Hierarchy and Monotonicity in Vision-Language Alignment](../../AAAI2026/information_retrieval/himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi.md)
+- [CART: A Generative Cross-Modal Retrieval Framework with Coarse-To-Fine Semantic Modeling](../../ACL2025/information_retrieval/cart_a_generative_cross-modal_retrieval_framework_with_coarse-to-fine_semantic_m.md)
+- [Uncovering Visual-Semantic Psycholinguistic Properties from the Distributional Structure of Text Embedding Space](../../ACL2025/information_retrieval/psycholinguistic_visual_semantic.md)
+- [SeCon-RAG: A Two-Stage Semantic Filtering and Conflict-Free Framework for Trustworthy RAG](../../NeurIPS2025/information_retrieval/secon-rag_a_two-stage_semantic_filtering_and_conflict-free_framework_for_trustwo.md)
+
+<!-- RELATED:END -->

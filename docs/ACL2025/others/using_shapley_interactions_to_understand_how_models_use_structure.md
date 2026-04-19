@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 分析深入但模型规模有限
 - 写作质量: ⭐⭐⭐⭐ 理论框架清晰，实验设计巧妙
 - 价值: ⭐⭐⭐⭐ 为NLP可解释性提供了新方法论视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The AI Gap: How Socioeconomic Status Affects Language Technology Interactions](the_ai_gap_how_socioeconomic_status_affects_language_technology_interactions.md)
+- [LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
+- [ProxAnn: Use-Oriented Evaluations of Topic Models and Document Clustering](proxann_topic_model_eval.md)
+- [Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
+- [HyperSHAP: Shapley Values and Interactions for Explaining Hyperparameter Optimization](../../AAAI2026/others/hypershap_shapley_values_and_interactions_for_explaining_hyperparameter_optimiza.md)
+
+<!-- RELATED:END -->

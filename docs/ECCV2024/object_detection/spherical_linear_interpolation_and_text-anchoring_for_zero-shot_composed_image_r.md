@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个基准(CIRR/CIRCO/FashionIQ)、三种backbone、详细消融（数据集/锚定策略/α/监督CIR初始化）
 - 写作质量: ⭐⭐⭐⭐ 方法阐述清晰，动机和数学推导连贯
 - 价值: ⭐⭐⭐⭐⭐ 训练效率极高(<0.5h)、性能大幅领先，实用价值突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](../../CVPR2026/object_detection/beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection](openkd_opening_prompt_diversity_for_zero-_and_few-shot_keypoint_detection.md)
+- [Zero-Shot Detection of AI-Generated Images](zero-shot_detection_of_ai-generated_images.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](be_yourself_bounded_attention_for_multi-subject_text-to-image_generation.md)
+- [Adaptive Multi-task Learning for Few-Shot Object Detection](adaptive_multi-task_learning_for_few-shot_object_detection.md)
+
+<!-- RELATED:END -->

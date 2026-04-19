@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （涵盖VLM评估+大规模实地标注+多维度分析，但标注者数量少）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，问题定义和上下文介绍详实）
 - 价值: ⭐⭐⭐⭐ （对发展中国家的城市无障碍映射有直接实践价值，方法论可推广）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Survey on Patent Analysis: From NLP to Multimodal AI](../../ACL2025/multimodal_vlm/patent_analysis_survey.md)
+- [CreBench: Human-Aligned Creativity Evaluation from Idea to Process to Product](crebench_human-aligned_creativity_evaluation_from_idea_to_process_to_product.md)
+- [Scene-Aware Urban Design: A Human-AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models](../../NeurIPS2025/multimodal_vlm/scene-aware_urban_design_a_human-ai_recommendation_framework_using_co-occurrence.md)
+- [Exo2Ego: Exocentric Knowledge Guided MLLM for Egocentric Video Understanding](exo2ego_exocentric_knowledge_guided_mllm_for_egocentric_vide.md)
+- [SAGE: Spuriousness-Aware Guided Prompt Exploration for Mitigating Multimodal Bias](sage_spuriousness-aware_guided_prompt_exploration_for_mitigating_multimodal_bias.md)
+
+<!-- RELATED:END -->

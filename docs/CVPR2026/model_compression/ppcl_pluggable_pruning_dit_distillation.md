@@ -153,3 +153,15 @@ PPCL 分两个阶段、三个步骤：
 - 实验充分度: ⭐⭐⭐⭐ 在 FLUX.1 和 Qwen-Image 两个主流 MMDiT 上验证，消融实验细致地拆解了每个组件的贡献
 - 写作质量: ⭐⭐⭐⭐ 方法动机阐述清晰，从观察→假设→设计的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 直击 20B 级 DiT 部署瓶颈，50% 压缩+1.8× 加速的工程价值极高，即插即用特性进一步提升实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multigranular_stochastic_autopruning_framew.md)
+- [FAIR-Pruner: Leveraging Tolerance of Difference for Flexible Automatic Layer-Wise Neural Network Pruning](fair-pruner_leveraging_tolerance_of_difference_for_flexible_automatic_layer-wise.md)
+- [Stronger Normalization-Free Transformers](stronger_normalization-free_transformers.md)
+- [SODA: Sensitivity-Oriented Dynamic Acceleration for Diffusion Transformer](soda_sensitivity-oriented_dynamic_acceleration_for_diffusion_transformer.md)
+
+<!-- RELATED:END -->

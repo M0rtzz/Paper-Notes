@@ -144,3 +144,15 @@ $$\sigma_{max} = |(\mathcal{Q}_{\times}^{GS} \cup \mathcal{Q}_{\times}^{GL} \cup
 ⭐⭐⭐⭐
 
 本文选题新颖，首次系统化研究了多智能体系统中的曼德拉效应。ManBench 设计精巧（4 类任务 × 5 种协议 × 13 个模型），发现的倒 U 型群体规模效应和缩放悖论具有重要启示。缓解策略（尤其是平衡训练方案）实用性强。实验规模大、分析维度丰富。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Procedural Mistake Detection via Action Effect Modeling](procedural_mistake_detection_via_action_effect_modeling.md)
+- [When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets](../../AAAI2026/object_detection/when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
+- [What Layers When: Learning to Skip Compute in LLMs with Residual Gates](what_layers_when_learning_to_skip_compute_in_llms_with_residual_gates.md)
+- [Is Your Paper Being Reviewed by an LLM? Benchmarking AI Text Detection in Peer Review](is_your_paper_being_reviewed_by_an_llm_benchmarking_ai_text_detection_in_peer_re.md)
+- [FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition](../../CVPR2026/object_detection/fusionagent_a_multimodal_agent_with_dynamic_model_selection_for_human_recognitio.md)
+
+<!-- RELATED:END -->

@@ -201,3 +201,15 @@ MRGen 包含三个核心阶段：
 - **实验充分度**: ⭐⭐⭐⭐ — 10 对跨模态实验、两个分割框架（nnUNet + UMamba）、生成+分割双评估，消融完整
 - **写作质量**: ⭐⭐⭐⭐ — 动机图清晰，与已有方法的定位区分明确
 - **价值**: ⭐⭐⭐⭐⭐ — 直接解决了 MRI 标注稀缺的实际痛点，数据集和模型均开源，具有较高的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Domain-Adaptive Transformer for Data-Efficient Glioma Segmentation in Sub-Saharan MRI](../../NeurIPS2025/medical_imaging/domain-adaptive_transformer_for_data-efficient_glioma_segmentation_in_sub-sahara.md)
+- [Scaling Tumor Segmentation: Best Lessons from Real and Synthetic Data](scaling_tumor_segmentation_best_lessons_from_real_and_synthetic_data.md)
+- [UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)
+- [TeethGenerator: A Two-Stage Framework for Paired Pre- and Post-Orthodontic 3D Dental Data Generation](teethgenerator_a_two-stage_framework_for_paired_pre-_and_post-orthodontic_3d_den.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](../../CVPR2025/medical_imaging/multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ $$c_i = \text{LLM}(\mathcal{T}_{\text{code}}(R, P, f_i, a_i, \{c_1, ..., c_{i-1}
 - ⭐ 实验充分度: 4.5/5 — 90 篇论文自动评估 + 21 篇人类评估 + PaperBench 外部验证 + 丰富消融
 - ⭐ 写作质量: 4.5/5 — 论文结构清晰，形式化准确，图表质量高
 - ⭐ 价值: 4.5/5 — 直接解决 ML 社区的可复现性痛点，代码已开源，具有广泛影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShieldedCode: Learning Robust Representations for Virtual Machine Protected Code](shieldedcode_learning_robust_representations_for_virtual_machine_protected_code.md)
+- [Breaking the SFT Plateau: Multimodal Structured Reinforcement Learning for Chart-to-Code Generation](breaking_the_sft_plateau_multimodal_structured_reinforcement_learning_for_chart-.md)
+- [Learning to Reason without External Rewards](learning_to_reason_without_external_rewards.md)
+- [MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](../../NeurIPS2025/code_intelligence/mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
+- [AstroVisBench: A Code Benchmark for Scientific Computing and Visualization in Astronomy](../../NeurIPS2025/code_intelligence/astrovisbench_a_code_benchmark_for_scientific_computing_and_visualization_in_ast.md)
+
+<!-- RELATED:END -->

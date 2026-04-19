@@ -155,3 +155,15 @@ Token选择方法对比 (NextQA, 保留6% token)：
 - 实验充分度: ⭐⭐⭐⭐⭐ 流式+离线多基准、充分消融、效率对比
 - 写作质量: ⭐⭐⭐⭐⭐ 刻画清晰、算法伪代码完整
 - 价值: ⭐⭐⭐⭐⭐ 无训练、即插即用、高效实用，为流式视频理解设立了强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [SpecAttn: Speculating Sparse Attention](specattn_speculating_sparse_attention.md)
+- [Switchable Token-Specific Codebook Quantization for Face Image Compression](switchable_token-specific_codebook_quantization_for_face_image_compression.md)
+- [SymRTLO: Enhancing RTL Code Optimization with LLMs and Neuron-Inspired Symbolic Reasoning](symrtlo_enhancing_rtl_code_optimization_with_llms_and_neuron-inspired_symbolic_r.md)
+- [Learning Skill-Attributes for Transferable Assessment in Video](learning_skill-attributes_for_transferable_assessment_in_video.md)
+
+<!-- RELATED:END -->

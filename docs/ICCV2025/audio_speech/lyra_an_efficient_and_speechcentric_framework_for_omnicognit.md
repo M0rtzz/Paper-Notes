@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Vision-language+vision-speech+speech-language全面评估，3个模型规模，长语音Needle测试，大量消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，speech-centric评估视角有洞察
 - 价值: ⭐⭐⭐⭐⭐ 2.7M数据超过27M的竞品，长语音首次突破2小时，对omni-model方向有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [MemoryTalker: Personalized Speech-Driven 3D Facial Animation via Audio-Guided Stylization](memorytalker_personalized_speech-driven_3d_facial_animation_via_audio-guided_sty.md)
+- [2.5 Years in Class: A Multimodal Textbook for Vision-Language Pretraining](25_years_in_class_a_multimodal_textbook_for_vision-language_pretraining.md)
+- [Latent Swap Joint Diffusion for 2D Long-Form Latent Generation](latent_swap_joint_diffusion_for_2d_long-form_latent_generation.md)
+- [VGGSounder: Audio-Visual Evaluations for Foundation Models](vggsounder_audio-visual_evaluations_for_foundation_models.md)
+
+<!-- RELATED:END -->

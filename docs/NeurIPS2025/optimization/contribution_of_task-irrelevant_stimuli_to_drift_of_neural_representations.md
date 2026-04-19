@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论为主，实验验证在简单模型上，缺乏大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 从直观例子到理论推导再到对比分析，层层推进，很清晰
 - 价值: ⭐⭐⭐⭐ 对神经科学和深度学习理论均有启发，提供了可实验验证的预测
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Adjustment for Confounding using Pre-Trained Representations](../../ICML2025/optimization/adjustment_for_confounding_using_pre-trained_representations.md)
+- [Provable In-Context Vector Arithmetic via Retrieving Task Concepts](../../ICML2025/optimization/provable_in-context_vector_arithmetic_via_retrieving_task_concepts.md)
+- [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+- [Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)
+
+<!-- RELATED:END -->

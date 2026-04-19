@@ -99,3 +99,15 @@ CodeBrain补全的T1Gd → 分割Dice 61.44%，vs Full Modalities 87.40%，vs零
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、多场景(O→O/M→O)、详细消融(F_c/grading/loss/条件类型/权重)、下游分割验证
 - 写作质量: ⭐⭐⭐⭐ 清晰完整，图表信息量大，方法动机论证充分
 - 对我的价值: ⭐⭐⭐ 医学影像非核心方向，但量化码做跨模态翻译的思路有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Virtual Full-stack Scanning of Brain MRI via Imputing Any Quantised Code](virtual_full-stack_scanning_of_brain_mri_via_imputing_any_quantised_code.md)
+- [PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation](pgr-net_prior-guided_roi_reasoning_network_for_brain_tumor_mri_segmentation.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusionbased_feature_denoising_and_using_nnmf_fo.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+
+<!-- RELATED:END -->

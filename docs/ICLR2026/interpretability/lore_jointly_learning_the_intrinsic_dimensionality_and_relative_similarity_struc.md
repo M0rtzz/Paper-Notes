@@ -135,3 +135,15 @@ $$\min_Z \Psi(Z) = \underbrace{\sum_{(a,i,j)\in T} \log(1+\exp(1+d(z_a,z_i)-d(z_
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+LLM模拟+3个真实众包数据集，系统消融4个因素
 - 写作质量: ⭐⭐⭐⭐⭐ 问题motivation清晰，数学推导严谨，图表信息量大
 - 价值: ⭐⭐⭐⭐ 对感知科学和表示学习有重要理论与实用贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+- [Data Whitening Improves Sparse Autoencoder Learning](../../AAAI2026/interpretability/data_whitening_improves_sparse_autoencoder_learning.md)
+- [CI-ICE: Intrinsic Concept Extraction Based on Compositional Interpretability](../../CVPR2026/interpretability/ciice_intrinsic_concept_extraction_compositional.md)
+- [Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement](decoupling_dynamical_richness_from_representation_learning_towards_practical_mea.md)
+- [Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
+
+<!-- RELATED:END -->

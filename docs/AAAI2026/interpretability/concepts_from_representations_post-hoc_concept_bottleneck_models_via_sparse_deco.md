@@ -190,3 +190,15 @@ $$\mathbf{I}_i = \hat{\mathbf{I}}_i + \epsilon_i = \sum_{j=1}^m w_j^i \mathbf{c}
 3. **MLLM 作为概念标注器**：利用多模态 LLM 为无监督发现的概念赋予人类可理解的语义标签，这是一种低成本的"人机协作"标注方案
 4. **稀疏分解的双重作用**：既提供可解释性（每张图仅依赖少量概念），又保持精度（重建嵌入近似原始嵌入），是一个优雅的设计
 5. **对下游应用的启示**：该框架可直接用于医学影像诊断的可解释性需求，只需替换领域特定的 MLLM 即可提升概念质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flexible Concept Bottleneck Model](flexible_concept_bottleneck_model.md)
+- [Concepts' Information Bottleneck Models](../../ICLR2026/interpretability/concepts_information_bottleneck_models.md)
+- [Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2026/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/interpretability/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [There Was Never a Bottleneck in Concept Bottleneck Models](../../ICLR2026/interpretability/there_was_never_a_bottleneck_in_concept_bottleneck_models.md)
+
+<!-- RELATED:END -->

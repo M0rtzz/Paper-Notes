@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集覆盖合成/真实/单目/多目，消融详尽（函数类型、阶数、时变属性、光流损失），但缺少与更多同期4DGS工作的对比
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，公式推导严谨，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 首次实现了动态场景的实时高质量渲染（118 FPS@1352×1014），对后续4DGS研究有重要启发作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
+- [NGP-RT: Fusing Multi-Level Hash Features with Lightweight Attention for Real-Time Novel View Synthesis](ngp-rt_fusing_multi-level_hash_features_with_lightweight_attention_for_real-time.md)
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+- [VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting](versatilegaussian_real-time_neural_rendering_for_versatile_tasks_using_gaussian_.md)
+- [Dynamic Novel View Synthesis in High Dynamic Range](../../ICLR2026/3d_vision/dynamic_novel_view_synthesis_in_high_dynamic_range.md)
+
+<!-- RELATED:END -->

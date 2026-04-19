@@ -187,3 +187,15 @@ $$\mathcal{L}_{\text{total}} = \underbrace{\text{BCE}(s, c)}_{\text{分类}} + \
 | 实验充分性 | 5 | 15 个数据集、多维度消融、专家激活分析全面 |
 | 实用价值 | 4 | CLIP 冻结+轻量模块，部署友好；但训练集选择影响待调查 |
 | 写作质量 | 4 | 范式对比图（Figure 1）直观，整体叙事清晰 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaCLIP: Adapting CLIP with Hybrid Learnable Prompts for Zero-Shot Anomaly Detection](../../ECCV2024/llm_nlp/adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)
+- [Soft Filtering: Guiding Zero-Shot Composed Image Retrieval with Prescriptive and Proscriptive Prompts](soft_filtering_guiding_zero-shot_composed_image_retrieval_with_prescriptive_and_.md)
+- [Adaptive Multi-prompt Contrastive Network for Few-shot Out-of-distribution Detection](../../ICML2025/llm_nlp/adaptive_multi-prompt_contrastive_network_for_few-shot_out-of-distribution_detec.md)
+- [Zero-Shot Belief: A Hard Problem for LLMs](../../ACL2025/llm_nlp/zero-shot_belief_a_hard_problem_for_llms.md)
+- [MonarchAttention: Zero-Shot Conversion to Fast, Hardware-Aware Structured Attention](../../NeurIPS2025/llm_nlp/monarchattention_zero-shot_conversion_to_fast_hardware-aware_structured_attentio.md)
+
+<!-- RELATED:END -->

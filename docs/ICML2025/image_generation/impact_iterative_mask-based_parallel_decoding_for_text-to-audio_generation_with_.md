@@ -163,3 +163,15 @@ IMPACT 在 FD 和 FAD 两个关键指标上取得 SOTA，分别较 Tango2 提升
 - 实验充分度: ⭐⭐⭐⭐ — 客观+主观评估，消融实验充分验证了各组件贡献，但仅单一数据集略有不足
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法说明条理分明，相关工作定位准确
 - 价值: ⭐⭐⭐⭐ — 为文本到音频生成提供了质量-速度 Pareto 最优的新方案，轻量扩散头设计可推广到其他模态
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BRIDGE: Bootstrapping Text to Control Time-Series Generation via Multi-Agent Iterative Optimization and Diffusion Modeling](bridge_bootstrapping_text_to_control_time-series_generation_via_multi-agent_iter.md)
+- [Autoregressive Image Generation with Randomized Parallel Decoding](../../ICLR2026/image_generation/autoregressive_image_generation_with_randomized_parallel_decoding.md)
+- [ETTA: Elucidating the Design Space of Text-to-Audio Models](etta_elucidating_the_design_space_of_text-to-audio_models.md)
+- [Simple and Critical Iterative Denoising: A Recasting of Discrete Diffusion in Graph Generation](simple_and_critical_iterative_denoising_a_recasting_of_discrete_diffusion_in_gra.md)
+- [Generative Audio Language Modeling with Continuous-Valued Tokens and Masked Next-Token Prediction](generative_audio_language_modeling_with_continuous-valued_tokens_and_masked_next.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ tags:
 ## 补充说明
 
 跨物种迁移学习的核心假设——癫痫发作前的行为先兆在物种间具有共性——在神经科学文献中有一定支撑。本文的实践验证虽然规模有限，但为后续大规模研究开辟了新方向。未来结合多模态信号（视频+HRV+音频）有望进一步提升预测性能。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [Parameter-efficient Prompt Tuning and Hierarchical Textual Guidance for Few-shot Whole Slide Image Classification](parameter-efficient_prompt_tuning_and_hierarchical_textual_guidance_for_few-shot.md)
+- [Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding](meta-learning_in-context_enables_training-free_cross_subject_brain_decoding.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration](crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr.md)
+
+<!-- RELATED:END -->

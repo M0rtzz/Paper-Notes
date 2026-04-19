@@ -124,3 +124,15 @@ tags:
 | 实验充分度 | ⭐⭐⭐ | 环境规模偏小，缺少连续控制和大规模环境，但 Walking Robot 分析很细致 |
 | 写作质量 | ⭐⭐⭐⭐ | 动机清晰，例子贯穿全文，proof sketch 简洁 |
 | 实用性 | ⭐⭐⭐ | 目前限于 tabular 设定，实用性有限，但为混淆数据利用开辟新方向 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Action-Dependent Optimality-Preserving Reward Shaping (ADOPS)](action-dependent_optimality-preserving_reward_shaping.md)
+- [MVR: Multi-view Video Reward Shaping for Reinforcement Learning](../../ICLR2026/reinforcement_learning/mvr_multi-view_video_reward_shaping_for_reinforcement_learning.md)
+- [Heterogeneous Data Game: Characterizing the Model Competition Across Multiple Data Sources](heterogeneous_data_game_characterizing_the_model_competition_across_multiple_dat.md)
+- [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
+- [Leveraging Skills from Unlabeled Prior Data for Efficient Online Exploration](leveraging_skills_from_unlabeled_prior_data_for_efficient_online_exploration.md)
+
+<!-- RELATED:END -->

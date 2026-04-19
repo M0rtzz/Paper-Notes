@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个公开数据集（3标记物+18标记物），完整消融（条件策略/微调/损失权重/推理成本），5种baseline对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，两阶段设计的动机和效果阐述充分
 - 价值: ⭐⭐⭐⭐⭐ 对计算病理学有直接应用价值，可解锁大量已有H&E图像库的多标记物分析能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UNIStainNet: Foundation-Model-Guided Virtual Staining of H&E to IHC](../../CVPR2026/medical_imaging/unistainnet_foundation-model-guided_virtual_staining_of_he_to_ihc.md)
+- [CoCoLIT: ControlNet-Conditioned Latent Image Translation for MRI to Amyloid PET Synthesis](cocolit_controlnet-conditioned_latent_image_translation_for_mri_to_amyloid_pet_s.md)
+- [WDT-MD: Wavelet Diffusion Transformers for Microaneurysm Detection in Fundus Images](wdt-md_wavelet_diffusion_transformers_for_microaneurysm_detection_in_fundus_imag.md)
+- [Self-supervised Multiplex Consensus Mamba for General Image Fusion](self-supervised_multiplex_consensus_mamba_for_general_image_fusion.md)
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+
+<!-- RELATED:END -->

@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型多数据集，与多种不确定性度量结合
 - 写作质量: ⭐⭐⭐⭐ 贝叶斯框架的阐述清晰
 - 价值: ⭐⭐⭐⭐ 即插即用的幻觉检测增强方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VeriTrail: Closed-Domain Hallucination Detection with Traceability](veritrail_closed-domain_hallucination_detection_with_traceability.md)
+- [HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](../../ACL2025/llm_safety/hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)
+- [Understanding Sensitivity of Differential Attention through the Lens of Adversarial Robustness](understanding_sensitivity_of_differential_attention_through_the_lens_of_adversar.md)
+- [Unlearning Evaluation through Subset Statistical Independence](unlearning_evaluation_through_subset_statistical_independence.md)
+- [Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](../../ACL2025/llm_safety/learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)
+
+<!-- RELATED:END -->

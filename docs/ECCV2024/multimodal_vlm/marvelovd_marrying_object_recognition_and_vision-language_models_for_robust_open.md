@@ -183,3 +183,15 @@ burn-in 步数影响很小（模型收敛后伪标签质量趋同），阈值 0.
 - 实验充分度: ⭐⭐⭐⭐⭐ — COCO+LVIS 两个数据集，消融全面，分析深入
 - 写作质量: ⭐⭐⭐⭐ — 问题分析清晰，图表直观，逻辑流畅
 - 价值: ⭐⭐⭐⭐ — 在伪标签OVD方向上的重要改进，方法简洁有效可复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpLIP: 通过多模态提示学习提升所有零样本草图检索任务](elevating_all_zero-shot_sketch-based_image_retrieval_through_multimodal_prompt_l.md)
+- [CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts](clap_isolating_content_from_style_through_contrastive_learning_with_augmented_pr.md)
+- [Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
+- [MMBench: Is Your Multi-modal Model an All-Around Player?](mmbench_is_your_multi-modal_model_an_all-around_player.md)
+- [The Hard Positive Truth about Vision-Language Compositionality](the_hard_positive_truth_about_vision-language_compositionality.md)
+
+<!-- RELATED:END -->

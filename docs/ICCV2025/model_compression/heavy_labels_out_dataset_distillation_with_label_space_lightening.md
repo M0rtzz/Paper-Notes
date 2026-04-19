@@ -151,3 +151,15 @@ $$\phi^e = \phi^{e-1} - \alpha \nabla_\phi (MSE(f_\phi(\mathcal{A}(X_s)), Y^*) +
 - **实验充分度**: ⭐⭐⭐⭐ 多数据集、多架构、完整消融，但缺少更多大规模场景验证
 - **写作质量**: ⭐⭐⭐⭐ 问题和方法阐述清晰，数学推导完善
 - **价值**: ⭐⭐⭐⭐ 解决了数据集蒸馏中的实际瓶颈，对大规模蒸馏有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation](../../NeurIPS2025/model_compression/rectifying_soft-label_entangled_bias_in_long-tailed_dataset_distillation.md)
+- [Dataset Distillation via the Wasserstein Metric](dataset_distillation_via_the_wasserstein_metric.md)
+- [Enhancing Dataset Distillation via Non-Critical Region Refinement](../../CVPR2025/model_compression/enhancing_dataset_distillation_via_non-critical_region_refinement.md)
+- [Hyperbolic Dataset Distillation](../../NeurIPS2025/model_compression/hyperbolic_dataset_distillation.md)
+- [Dataset Distillation with Neural Characteristic Function: A Minmax Perspective](../../CVPR2025/model_compression/dataset_distillation_with_neural_characteristic_function_a_minmax_perspective.md)
+
+<!-- RELATED:END -->

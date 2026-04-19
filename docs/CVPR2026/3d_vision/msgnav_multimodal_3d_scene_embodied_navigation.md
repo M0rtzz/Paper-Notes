@@ -132,3 +132,15 @@ VVD 模块在不同成功阈值下的效果：
 - 实验充分度: ⭐⭐⭐⭐ 两个主流基准 SOTA，多维度消融（模块/场景图类型/VVD 阈值），分析扎实
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，三个限制对应三个解决方案的叙事流畅
 - 价值: ⭐⭐⭐⭐ 为零样本具身导航提供了新的场景表示范式，最后一公里问题对社区有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting](onlinepg_online_open-vocabulary_panoptic_mapping_with_3d_gaussian_splatting.md)
+- [SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)
+- [PromptStereo: Zero-Shot Stereo Matching via Structure and Motion Prompts](promptstereo_zero-shot_stereo_matching_via_structure_and_motion_prompts.md)
+- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
+
+<!-- RELATED:END -->

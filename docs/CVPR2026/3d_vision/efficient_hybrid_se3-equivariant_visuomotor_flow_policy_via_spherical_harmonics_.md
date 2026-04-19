@@ -173,3 +173,15 @@ E3Flow（图2）的流程：
 - **实验充分度**: ⭐⭐⭐⭐ — 8个仿真任务+4个真实任务，丰富的消融和基线对比
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导清晰，图表专业
 - **价值**: ⭐⭐⭐⭐⭐ — 解决了等变策略的推理效率瓶颈，对机器人学习社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SE(3)-Equivariant Diffusion Policy in Spherical Fourier Space](../../ICML2025/3d_vision/se3-equivariant_diffusion_policy_in_spherical_fourier_space.md)
+- [DropAnSH-GS: Dropping Anchor and Spherical Harmonics for Sparse-view Gaussian Splatting](dropping_anchor_and_spherical_harmonics_for_sparse-view_gaussian_splatting.md)
+- [ECKConv: Learning Coordinate-based Convolutional Kernels for Continuous SE(3) Equivariant Point Cloud Analysis](learning_coordinate-based_convolutional_kernels_for_continuous_se3_equivariant_a.md)
+- [From Pairs to Sequences: Track-Aware Policy Gradients for Keypoint Detection](from_pairs_to_sequences_track-aware_policy_gradients_for_keypoint_detection.md)
+- [Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation](ada3drift_adaptive_training-time_drifting_for_one-step_3d_visuomotor_robotic_man.md)
+
+<!-- RELATED:END -->

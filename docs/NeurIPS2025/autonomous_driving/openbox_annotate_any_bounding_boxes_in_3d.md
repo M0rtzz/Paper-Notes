@@ -182,3 +182,15 @@ OpenBox 本身是标注流水线，不涉及端到端训练。生成的标注用
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个大规模数据集、两种评估场景、充分消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 自动标注质量显著优于SOTA，对降低3D标注成本有重要实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LabelAny3D: Label Any Object 3D in the Wild](labelany3d_label_any_object_3d_in_the_wild.md)
+- [Towards Predicting Any Human Trajectory in Context](towards_predicting_any_human_trajectory_in_context.md)
+- [HorizonForge: Driving Scene Editing with Any Trajectories and Any Vehicles](../../CVPR2026/autonomous_driving/horizonforge_driving_scene_editing_with_any_trajectories_and_any_vehicles.md)
+- [Adaptive Bounding Box Uncertainties via Two-Step Conformal Prediction](../../ECCV2024/autonomous_driving/adaptive_bounding_box_uncertainties_via_twostep_conformal_pr.md)
+- [SEAL: Segment Any Events with Language](../../ICLR2026/autonomous_driving/segment_any_events_with_language.md)
+
+<!-- RELATED:END -->

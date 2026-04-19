@@ -126,3 +126,15 @@ $$\mathcal{L} = \mathcal{L}_{recon} + \beta \mathcal{L}_{KL} + \gamma \mathcal{L
 - 实验充分度: ⭐⭐⭐⭐ 6个数据集、5类指标、4个基线、消融实验+可视化完整
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰、数学符号规范、但部分公式推导可以更详细
 - 价值: ⭐⭐⭐⭐ 为时间序列生成提供了新的建模范式和评估指标，有较好的启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimDiff: Simpler Yet Better Diffusion Model for Time Series Point Forecasting](simdiff_simpler_yet_better_diffusion_model_for_time_series_point_forecasting.md)
+- [Conditionally Whitened Generative Models for Probabilistic Time Series Forecasting](../../ICLR2026/image_generation/conditionally_whitened_generative_models_for_probabilistic_time_series_forecasti.md)
+- [A Diffusion Model for Regular Time Series Generation from Irregular Data with Completion and Masking](../../NeurIPS2025/image_generation/a_diffusion_model_for_regular_time_series_generation_from_irregular_data_with_co.md)
+- [Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](../../CVPR2025/image_generation/everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
+- [Enhancing Multimodal Misinformation Detection by Replaying the Whole Story from Image Modality Perspective](enhancing_multimodal_misinformation_detection_by_replaying_the_whole_story_from_.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ TANDEM 在分类和回归上均取得最佳均值和最佳平均排名。
 - 实验充分度: ⭐⭐⭐⭐⭐ 19个分类+13个回归数据集，100次重复，50-1000标签范围，消融全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法阐述系统完整
 - 价值: ⭐⭐⭐⭐ 对低标签表格数据学习有实际意义，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TabSTAR: A Tabular Foundation Model for Tabular Data with Text Fields](tabstar_a_tabular_foundation_model_for_tabular_data_with_text_fields.md)
+- [TabArena: A Living Benchmark for Machine Learning on Tabular Data](tabarena_a_living_benchmark_for_machine_learning_on_tabular_data.md)
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](../../ICML2025/self_supervised/towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [To Label or Not to Label: PALM – A Predictive Model for Evaluating Sample Efficiency in Active Learning Models](../../ICCV2025/self_supervised/to_label_or_not_to_label_palm_-_a_predictive_model_for_evaluating_sample_efficie.md)
+- [Memory-Integrated Reconfigurable Adapters: A Unified Framework for Settings with Multiple Tasks](memory-integrated_reconfigurable_adapters_a_unified_framework_for_settings_with_.md)
+
+<!-- RELATED:END -->

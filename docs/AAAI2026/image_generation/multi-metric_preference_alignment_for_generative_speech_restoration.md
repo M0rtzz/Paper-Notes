@@ -128,3 +128,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 方法简洁有效，多指标一致同意准则设计优雅，三范式统一框架具有良好的通用性。消融实验充分验证了核心假设。范式内对齐原则的发现和定量分析具有学术价值。伪标注应用拓展了工作的实用影响力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](../../ICLR2026/image_generation/diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [MACS: Multi-source Audio-to-Image Generation with Contextual Significance and Semantic Alignment](macs_multi-source_audio-to-image_generation_with_contextual_significance_and_sem.md)
+- [Multi-Aspect Cross-modal Quantization for Generative Recommendation](multi-aspect_cross-modal_quantization_for_generative_recommendation.md)
+- [GenDR: Lighten Generative Detail Restoration](../../ICLR2026/image_generation/gendr_lighten_generative_detail_restoration.md)
+- [Taming Preference Mode Collapse via Directional Decoupling Alignment in Diffusion Reinforcement Learning](../../CVPR2026/image_generation/taming_preference_mode_collapse_via_directional_decoupling_alignment_in_diffusio.md)
+
+<!-- RELATED:END -->

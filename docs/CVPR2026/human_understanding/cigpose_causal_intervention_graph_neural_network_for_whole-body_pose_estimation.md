@@ -149,3 +149,15 @@ CIGPose-x 仅用 COCO-WholeBody 训练就超过了依赖两阶段蒸馏+额外 U
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集全面对比+消融+可视化验证，但缺少非遮挡混杂因素的定量分析
 - 写作质量: ⭐⭐⭐⭐ — SCM 建模和理论推导清晰，图示辅助理解好
 - 价值: ⭐⭐⭐⭐ — 在实际部署场景中鲁棒性提升有意义，因果干预思路可迁移到其他密集预测任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](../../ICCV2025/human_understanding/rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
+- [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](../../ICCV2025/human_understanding/cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
+- [ParaRevSNN: A Parallel Reversible Spiking Neural Network for Efficient Training and Inference](../../AAAI2026/human_understanding/pararevsnn_a_parallel_reversible_spiking_neural_network_for_efficient_training_a.md)
+- [COG: Confidence-aware Optimal Geometric Correspondence for Unsupervised Single-reference Novel Object Pose Estimation](cog_confidence-aware_optimal_geometric_correspondence_for_unsupervised_single-re.md)
+- [Upper-Body Hierarchical Graph for Skeleton Based Emotion Recognition in Assistive Driving](../../ECCV2024/human_understanding/upper-body_hierarchical_graph_for_skeleton_based_emotion_recognition_in_assistiv.md)
+
+<!-- RELATED:END -->

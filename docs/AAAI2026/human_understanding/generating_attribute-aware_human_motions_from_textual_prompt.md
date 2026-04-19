@@ -189,3 +189,15 @@ AttrMoGen 将 FID 从 MoMask 的 0.245 大幅降低到 0.089（-63.7%），MM-Di
 - 实验充分度: ⭐⭐⭐⭐ — 充分的消融和属性分组实验，新数据集构建完善
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，因果建模阐述严谨
 - 价值: ⭐⭐⭐⭐⭐ — 数据集+方法双重贡献，长期影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraspXL: Generating Grasping Motions for Diverse Objects at Scale](../../ECCV2024/human_understanding/graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
+- [CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning](clip-fti_fine-grained_face_template_inversion_via_clip-driven_attribute_conditio.md)
+- [SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control](soscontrol_enhancing_human_motion_generation_through_saliency-aware_symbolic_ori.md)
+- [Scaling Large Motion Models with Million-Level Human Motions](../../ICML2025/human_understanding/scaling_large_motion_models_with_million-level_human_motions.md)
+- [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
+
+<!-- RELATED:END -->

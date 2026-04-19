@@ -149,3 +149,15 @@ $$\mathcal{O}\!\left(\frac{f(x_0)-f^*}{\eta T} + L\eta C^2 + \frac{L\eta \, d\si
 - 实验充分度: 7/10 — 覆盖多数据集/多模型/多模态，但缺乏大规模模型和更多 DPSGD 变体对比
 - 写作质量: 8/10 — 动机清晰、理论和实验组织良好
 - 价值: 7/10 — 在 DP 训练领域提供了实用且有理论支撑的改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Sample Complexity of Differentially Private Policy Optimization](../../NeurIPS2025/ai_safety/on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](../../NeurIPS2025/ai_safety/invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](../../ICLR2026/ai_safety/sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
+- [Toward Enhancing Representation Learning in Federated Multi-Task Settings](../../ICLR2026/ai_safety/toward_enhancing_representation_learning_in_federated_multi-task_settings.md)
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](../../NeurIPS2025/ai_safety/bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+
+<!-- RELATED:END -->

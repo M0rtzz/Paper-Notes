@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 7页篇幅限制了实验深度和广度
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，逻辑链完整
 - 价值: ⭐⭐⭐⭐ 为理解和改进LLM推理提供了重要的实证基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch](unleashing_llm_reasoning_capability_via_scalable.md)
+- [Re-TASK: Revisiting LLM Tasks from Capability, Skill, and Knowledge Perspectives](re-task_revisiting_llm_tasks_from_capability_skill_and_knowledge_perspectives.md)
+- [Circuit Compositions: Exploring Modular Structures in Transformer-Based Language Models](circuit_compositions_modular_structures.md)
+- [LazyReview: A Dataset for Uncovering Lazy Thinking in NLP Peer Reviews](lazyreview_peer_review.md)
+- [Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
+
+<!-- RELATED:END -->

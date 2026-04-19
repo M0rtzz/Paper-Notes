@@ -149,3 +149,15 @@ AOI 在无法获取模型参数的黑盒场景同样有效：
 - **实验充分性**: ⭐⭐⭐⭐ — 3 模型 × 4 数据集 + CoT/ICL/DoLa 叠加 + 黑盒验证 + 消融完整
 - **实用性**: ⭐⭐⭐⭐⭐ — 即插即用，白盒黑盒均适用，与现有方法正交
 - **总评**: ⭐⭐⭐⭐ — 方法简洁有效，解决 LLM MCQ 去偏的实际痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Communication Overhead: A Multilevel Monte Carlo Approach for Mitigating Compression Bias in Distributed Learning](../../ICML2025/model_compression/beyond_communication_overhead_a_multilevel_monte_carlo_approach_for_mitigating_c.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [STUN: Structured-Then-Unstructured Pruning for Scalable MoE Pruning](stun_moe_pruning.md)
+- [LongReD: Mitigating Short-Text Degradation of Long-Context Large Language Models via Restoration Distillation](longred_mitigating_short-text_degradation_of_long-context_large_language_models_.md)
+- [Best Subset Selection: Optimal Pursuit for Feature Selection and Elimination](../../ICML2025/model_compression/best_subset_selection_optimal_pursuit_for_feature_selection_and_elimination.md)
+
+<!-- RELATED:END -->

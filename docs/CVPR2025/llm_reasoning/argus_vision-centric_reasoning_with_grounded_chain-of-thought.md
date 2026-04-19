@@ -136,3 +136,15 @@ CoT和Grounding的叠加效果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验全面系统，涵盖4种re-engagement策略、编码器容量、上下文扩展、多RoI等
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，认知科学的类比引人入胜，图示直观
 - 价值: ⭐⭐⭐⭐ 为MLLM的视觉推理提供了清晰的改进方向，重采样策略的实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [Improve Vision Language Model Chain-of-thought Reasoning](../../ACL2025/llm_reasoning/improve_vlm_cot_reasoning.md)
+- [Interleaved-Modal Chain-of-Thought](interleaved-modal_chain-of-thought.md)
+- [SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes](../../ICLR2026/llm_reasoning/scenecot_eliciting_grounded_chain-of-thought_reasoning_in_3d_scenes.md)
+- [Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision](../../ICLR2026/llm_reasoning/uni-cot_towards_unified_chain-of-thought_reasoning_across_text_and_vision.md)
+
+<!-- RELATED:END -->

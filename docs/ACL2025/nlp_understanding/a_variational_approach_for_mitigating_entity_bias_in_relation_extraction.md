@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三领域六设置的全面验证加方差可解释性分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论与实验结合紧密
 - 价值: ⭐⭐⭐ 方法有效但应用场景较窄，缺少在LLM上的验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards a More Generalized Approach in Open Relation Extraction](generalized_open_relation_extract.md)
+- [Generating Diverse Training Samples for Relation Extraction with Large Language Models](generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+- [Analyzing Political Bias in LLMs via Target-Oriented Sentiment Classification](analyzing_political_bias_in_llms_via_target-oriented_sentiment_classification.md)
+- [Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing](disambiguate_first_parse_later_generating_interpretations_for_ambiguity_resoluti.md)
+- [iQUEST: An Iterative Question-Guided Framework for Knowledge Base Question Answering](iquest_an_iterative_question-guided_framework_for_knowledge_base_question_answer.md)
+
+<!-- RELATED:END -->

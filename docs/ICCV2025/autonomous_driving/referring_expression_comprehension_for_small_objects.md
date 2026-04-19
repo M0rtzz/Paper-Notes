@@ -152,3 +152,15 @@ $\mathbf{x}_i$ 是第 $i$ 步裁剪后的图像区域。
 - **实验充分度**: ⭐⭐⭐⭐ — 多种 PEFT 方法对比，消融充分，但缺乏与其他 REC 方法的对比
 - **写作质量**: ⭐⭐⭐⭐⭐ — 论文结构清晰，动机阐述到位，数据集构建描述详尽
 - **价值**: ⭐⭐⭐⭐ — 数据集和方法对小目标理解领域均有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Counting Stacked Objects](counting_stacked_objects.md)
+- [Learning to Detect Objects from Multi-Agent LiDAR Scans without Manual Labels](../../CVPR2025/autonomous_driving/learning_to_detect_objects_from_multi-agent_lidar_scans_without_manual_labels.md)
+- [SABER: Spatially Consistent 3D Universal Adversarial Objects for BEV Detectors](../../CVPR2026/autonomous_driving/saber_spatially_consistent_3d_universal_adversarial_objects_for_bev_detectors.md)
+- [TrackAny3D: Transferring Pretrained 3D Models for Category-unified 3D Point Cloud Tracking](trackany3d_transferring_pretrained_3d_models_for_category-unified_3d_point_cloud.md)
+- [Occupancy Learning with Spatiotemporal Memory](occupancy_learning_with_spatiotemporal_memory.md)
+
+<!-- RELATED:END -->

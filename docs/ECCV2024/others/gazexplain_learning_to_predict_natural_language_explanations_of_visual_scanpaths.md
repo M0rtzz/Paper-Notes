@@ -167,3 +167,15 @@ $$\mathcal{L} = \mathcal{L}_{fix} + \mathcal{L}_{exp} + \mathcal{L}_{aln}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 4+2个数据集、全面的消融实验、多维度评估（扫描路径+显著性+解释质量+多样性+忠实度）
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，实验分析细致深入
 - 价值: ⭐⭐⭐⭐⭐ 为人类视觉注意力理解开辟了全新方向，具有广泛的应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPOT: Bridging Natural Language and Geospatial Search for Investigative Journalists](../../ACL2025/others/spot_bridging_natural_language_and_geospatial_search_for_investigative_journalis.md)
+- [QualiSpeech: A Speech Quality Assessment Dataset with Natural Language Reasoning](../../ACL2025/others/qualispeech_a_speech_quality_assessment_dataset_with_natural_language_reasoning_.md)
+- [HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images](hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](../../ACL2025/others/self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [Synergy of Sight and Semantics: Visual Intention Understanding with CLIP](synergy_of_sight_and_semantics_visual_intention_understanding_with_clip.md)
+
+<!-- RELATED:END -->

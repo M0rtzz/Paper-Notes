@@ -112,3 +112,15 @@ FreeLOC完全免训练。VRPR和TSA仅在推理时应用。探测过程为离线
 - 实验充分度: ⭐⭐⭐⭐⭐ 双模型验证(Wan+HunyuanVideo)、多种消融(策略/组件/位置编码/注意力机制)、定量+定性对比充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰、探测实验可视化直观，整体逻辑自洽
 - 价值: ⭐⭐⭐⭐ 免训练的长视频生成对社区有直接实用价值，开源代码进一步增强影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
+- [Foresight: Adaptive Layer Reuse for Accelerated and High-Quality Text-to-Video Generation](../../NeurIPS2025/video_generation/foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)
+- [LongDiff: Training-Free Long Video Generation in One Go](../../CVPR2025/video_generation/longdiff_training-free_long_video_generation_in_one_go.md)
+- [SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation](slvmeval_synthetic_meta_evaluation_benchmark_for_text-to-long_video_generation.md)
+- [RIFLEx: A Free Lunch for Length Extrapolation in Video Diffusion Transformers](../../ICML2025/video_generation/riflex_a_free_lunch_for_length_extrapolation_in_video_diffusion_transformers.md)
+
+<!-- RELATED:END -->

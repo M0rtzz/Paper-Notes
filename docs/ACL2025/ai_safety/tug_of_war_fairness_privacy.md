@@ -115,3 +115,15 @@ SPIN 是一个部署前一次性执行的无训练方法：输入为预训练 LL
 - 实验充分度: ⭐⭐⭐⭐ 四个模型系列、多个基线、消融实验和鲁棒性分析，但缺少大模型验证
 - 写作质量: ⭐⭐⭐⭐ 理论和实验衔接紧密，图表直观
 - 价值: ⭐⭐⭐⭐ 对多维度 alignment 冲突提供了重要洞察和实用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](dialect_fairness_robustness.md)
+- [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [Improved Unbiased Watermark for Large Language Models](improved_unbiased_watermark_for_large_language.md)
+- [Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)
+
+<!-- RELATED:END -->

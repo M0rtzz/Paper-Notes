@@ -214,3 +214,15 @@ HF-Fuser 和 SA-Coupler 消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 仿真+真实世界、效率对比、多维消融、注意力可视化分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰但公式符号较密集
 - 价值: ⭐⭐⭐⭐⭐ — 性能和效率双重突破，对 VLA 社区有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward](actor-critic_for_continuous_action_chunks_a_reinforcement_le.md)
+- [H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation](h-gar_a_hierarchical_interaction_framework_via_goal-driven_observation-action_re.md)
+- [PASG: A Closed-Loop Framework for Automated Geometric Primitive Extraction and Semantic Anchoring in Robotic Manipulation](../../ICCV2025/object_detection/pasg_a_closed-loop_framework_for_automated_geometric_primitive_extraction_and_se.md)
+- [PASE: Leveraging the Phonological Prior of WavLM for Low-Hallucination Generative Speech Enhancement](pase_leveraging_the_phonological_prior_of_wavlm_for_low-hallucination_generative.md)
+- [PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation](../../CVPR2026/object_detection/palm_progress-aware_policy_learning_via_affordance_reasoning_for_long-horizon_ro.md)
+
+<!-- RELATED:END -->

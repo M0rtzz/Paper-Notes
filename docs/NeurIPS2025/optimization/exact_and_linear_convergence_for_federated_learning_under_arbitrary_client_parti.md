@@ -137,3 +137,15 @@ $$\boldsymbol{x}_{k+1} = R_k(\boldsymbol{x}_k - \eta D_k \boldsymbol{y}_k), \qua
 - 实验充分度: ⭐⭐⭐ 理论贡献为主，实验验证在附录中，规模有限
 - 写作质量: ⭐⭐⭐⭐ 矩阵建模框架的逐步引入非常清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了 FL 领域的根本性理论问题，具有很强的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data](../../ICCV2025/optimization/federated_prompt-tuning_with_heterogeneous_and_incomplete_multimodal_client_data.md)
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Personalized Subgraph Federated Learning with Differentiable Auxiliary Projections](personalized_subgraph_federated_learning_with_differentiable_auxiliary_projectio.md)
+
+<!-- RELATED:END -->

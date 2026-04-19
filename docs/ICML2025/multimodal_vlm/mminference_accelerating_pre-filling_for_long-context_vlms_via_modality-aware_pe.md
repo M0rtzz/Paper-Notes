@@ -234,3 +234,15 @@ MMInference 的策略是：
 ## 备注
 本笔记严格基于本地缓存文件编写，未使用网络检索。
 若后续补齐完整缓存版本，可在本文件增补完整主结果与消融数值表，并校正本笔记中“仅定性描述”的条目。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PermLLM: Learnable Channel Permutation for N:M Sparse Large Language Models](../../NeurIPS2025/multimodal_vlm/permllm_learnable_channel_permutation_for_nm_sparse_large_language_models.md)
+- [MadaKV: Adaptive Modality-Perception KV Cache Eviction for Efficient Multimodal Long-Context Inference](../../ACL2025/multimodal_vlm/madakv_adaptive_modality-perception_kv_cache_eviction_for_efficient_multimodal_l.md)
+- [CoCoA-Mix: Confusion-and-Confidence-Aware Mixture Model for Context Optimization](cocoa-mix_confusion-and-confidence-aware_mixture_model_for_context_optimization.md)
+- [Context-Aware Multimodal Pretraining](../../CVPR2025/multimodal_vlm/context-aware_multimodal_pretraining.md)
+- [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](../../CVPR2025/multimodal_vlm/post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
+
+<!-- RELATED:END -->

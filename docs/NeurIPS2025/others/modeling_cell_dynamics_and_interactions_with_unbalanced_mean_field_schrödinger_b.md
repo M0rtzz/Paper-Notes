@@ -133,3 +133,15 @@ $$\frac{\partial \rho}{\partial t} = -\nabla_\mathbf{x} \cdot \left[\left(\mathb
 - 实验充分度: ⭐⭐⭐⭐ 合成和真实数据均有，消融实验充分，但缺少计算效率对比
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，整体结构合理
 - 价值: ⭐⭐⭐⭐ 对计算生物学领域有直接价值，框架也有更广的机器学习应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adjoint Schrödinger Bridge Sampler](adjoint_schrödinger_bridge_sampler.md)
+- [Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free](learning_non-equilibrium_diffusions_with_schrödinger_bridges_from_exactly_solvab.md)
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+- [Normalization in Attention Dynamics](normalization_in_attention_dynamics.md)
+- [Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
+
+<!-- RELATED:END -->

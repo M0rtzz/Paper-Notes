@@ -140,3 +140,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 理由：物体整理→序列预测的跨领域类比新颖有力，偏好即排列顺序的设计简洁优雅。240 万组自监督数据 + 真实机器人部署的完整闭环验证令人信服。扣分点在于仅限 2D 桌面场景、偏好表达能力有限，以及缺乏与人类整洁度判断的定量对比。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Embodiment Gaps: Deploying Vision-Language-Action Models on Soft Robots](bridging_embodiment_gaps_deploying_vision-language-action_models_on_soft_robots.md)
+- [AtomicVLA: Unlocking the Potential of Atomic Skill Learning in Robots](../../CVPR2026/robotics/atomicvla_unlocking_the_potential_of_atomic_skill.md)
+- [Synthesizing Images on Perceptual Boundaries of ANNs for Uncovering and Manipulating Human Perceptual Variability](../../ICML2025/robotics/synthesizing_images_on_perceptual_boundaries_of_anns_for_uncovering_and_manipula.md)
+- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](../../ICLR2026/robotics/robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+- [Mitigating the Human-Robot Domain Discrepancy in Visual Pre-training for Robotic Manipulation](../../CVPR2025/robotics/mitigating_the_human-robot_domain_discrepancy_in_visual_pre-training_for_robotic.md)
+
+<!-- RELATED:END -->

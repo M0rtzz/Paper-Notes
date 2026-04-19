@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ (核心实验在子论文中)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，动机强)
 - 价值: ⭐⭐⭐⭐ (对全球南方AI安全具有重要指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GloCTM: Cross-Lingual Topic Modeling via a Global Context Space](gloctm_cross-lingual_topic_modeling_via_a_global_context_space.md)
+- [How Does Alignment Enhance LLMs' Multilingual Capabilities? A Language Neurons Perspective](how_does_alignment_enhance_llms_multilingual_capabilities_a_language_neurons_per.md)
+- [STELLAR: Scene Text Editor for Low-Resource Languages and Real-World Data](stellar_scene_text_editor_for_low-resource_languages_and_real-world_data.md)
+- [LangSAMP: Language-Script Aware Multilingual Pretraining](../../ACL2025/multilingual_mt/langsamp_multilingual_pretraining.md)
+- [The Hidden Space of Safety: Understanding Preference-Tuned LLMs in Multilingual Contexts](../../ACL2025/multilingual_mt/the_hidden_space_of_safety_understanding_preference-tuned_llms_in_multilingual_c.md)
+
+<!-- RELATED:END -->

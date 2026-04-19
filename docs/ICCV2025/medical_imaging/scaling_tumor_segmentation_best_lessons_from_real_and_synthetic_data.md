@@ -159,3 +159,15 @@ AbdomenAtlas 2.0 在 MSD 排行榜取得 **#1** 名次。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 大规模数据集、多基线对比、分布内外评估、详细缩放实验，极为充分
 - **写作质量**: ⭐⭐⭐⭐ 论述逻辑性强，发现表述清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ 数据集对医学影像社区有巨大价值，缩放定律发现对未来数据集构建有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MRGen: Segmentation Data Engine for Underrepresented MRI Modalities](mrgen_segmentation_data_engine_for_underrepresented_mri_modalities.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](../../NeurIPS2025/medical_imaging/mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [RadGPT: Constructing 3D Image-Text Tumor Datasets](radgpt_constructing_3d_image-text_tumor_datasets.md)
+- [Constrained Best Arm Identification with Tests for Feasibility](../../AAAI2026/medical_imaging/constrained_best_arm_identification_with_tests_for_feasibility.md)
+- [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](../../CVPR2025/medical_imaging/evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
+
+<!-- RELATED:END -->

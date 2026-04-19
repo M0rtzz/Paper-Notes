@@ -135,3 +135,15 @@ Spotify 提出用 LLM（Gemini 1.5 Pro）替代传统多模型特征工程流水
 - 实验充分度: ⭐⭐⭐⭐⭐ (离线人工评估+线上A/B测试，统计检验完整，产业级验证)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，传统vs LLM对比充分，图表直观)
 - 价值: ⭐⭐⭐⭐ (产业应用论文标杆，展示了LLM落地的完整路径和效果)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WarriorCoder: Learning from Expert Battles to Augment Code Large Language Models](warriorcoder_learning_from_expert_battles_to_augment_code_large_language_models.md)
+- [Do Language Models Understand Honorific Systems in Javanese?](do_language_models_understand_honorific_systems_in_javanese.md)
+- [Red-Teaming LLM Multi-Agent Systems via Communication Attacks](red-teaming_llm_multi-agent_systems_via_communication_attacks.md)
+- [From Selection to Generation: A Survey of LLM-based Active Learning](from_selection_to_generation_a_survey.md)
+- [Generative Psycho-Lexical Approach for Constructing Value Systems in Large Language Models](generative_psycholexical_approach_for_constructing_value.md)
+
+<!-- RELATED:END -->

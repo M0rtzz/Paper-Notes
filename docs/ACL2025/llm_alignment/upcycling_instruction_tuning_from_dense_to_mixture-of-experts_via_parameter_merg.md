@@ -137,3 +137,15 @@ UpIT包含四个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 数据规模消融、专家数量消融、上限探索、路由可视化、多种消融分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Algorithm和Figure配合好，问题定义到方法过渡自然
 - 价值: ⭐⭐⭐⭐⭐ 大幅降低MoE训练的数据需求，方法实用、可复现性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Table Instruction Tuning](rethinking_table_instruction_tuning.md)
+- [JsonTuning: Towards Generalizable, Robust, and Controllable Instruction Tuning](jsontuning_towards_generalizable_robust_and_controllable_instruction_tuning.md)
+- [Call for Rigor in Reporting Quality of Instruction Tuning Data](call_for_rigor_in_reporting_quality_of_instruction_tuning_data.md)
+- [Measuring Data Diversity for Instruction Tuning: A Systematic Analysis and A Reliable Metric](measuring_data_diversity_for_instruction_tuning_a_systematic_analysis_and_a_reli.md)
+- [TableDreamer: Progressive and Weakness-Guided Data Synthesis from Scratch for Table Instruction Tuning](tabledreamer_progressive_and_weakness-guided_data_synthesis_from_scratch_for_tab.md)
+
+<!-- RELATED:END -->

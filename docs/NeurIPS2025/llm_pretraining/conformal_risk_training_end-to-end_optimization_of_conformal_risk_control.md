@@ -178,3 +178,15 @@ subject to $\rho(\ell(f_\theta(x), y; \hat{\lambda}(\theta))) \leq \alpha$ on ca
 - **实验充分度**: ⭐⭐⭐ — 应用场景偏少（仅两个），但各自展示充分
 - **写作质量**: ⭐⭐⭐⭐ — 理论阐述清晰，但对非专业读者门槛较高
 - **实用性**: ⭐⭐⭐⭐ — 对安全关键 AI 部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Training Data Attribution with Representational Optimization](enhancing_training_data_attribution_with_representational_optimization.md)
+- [Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding](../../ACL2025/llm_pretraining/diversity_explains_inference_scaling_laws_through_a_case_study_of_minimum_bayes_.md)
+- [Breaking the Frozen Subspace: Importance Sampling for Low-Rank Optimization in LLM Pretraining](breaking_the_frozen_subspace_importance_sampling_for_low-rank_optimization_in_ll.md)
+- [Predict Training Data Quality via Its Geometry in Metric Space](predict_training_data_quality_via_its_geometry_in_metric_space.md)
+- [Disaggregation Reveals Hidden Training Dynamics: The Case of Agreement Attraction](disaggregation_reveals_hidden_training_dynamics_the_case_of_agreement_attraction.md)
+
+<!-- RELATED:END -->

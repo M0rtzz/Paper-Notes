@@ -157,3 +157,15 @@ tags:
 - **Causal Mediation Analysis**：通过干预内部激活分析因果作用的方法论框架，本文的注意力屏蔽和表征修补是该框架在类比推理中的具体应用。
 - **Structure-Mapping Theory (Gentner)**：认知科学中类比推理的经典理论——通过结构对齐建立一一对应。MAS 是该理论的计算化量化尝试。
 - **AnalogyKB**：百万级类比知识库，本文用其构建受控实验数据，验证了其在机制分析中的价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I-RAVEN-X: Benchmarking Generalization and Robustness of Analogical and Mathematical Reasoning in Large Language and Reasoning Models](../../NeurIPS2025/llm_reasoning/i-raven-x_benchmarking_generalization_and_robustness_of_analogical_and_mathemati.md)
+- [BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models](badthink_triggered_overthinking_attacks_on_chain-of-thought_reasoning_in_large_l.md)
+- [Text-to-Scene with Large Reasoning Models](text-to-scene_with_large_reasoning_models.md)
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+- [Training Turn-by-Turn Verifiers for Dialogue Tutoring Agents: The Curious Case of LLMs as Your Coding Tutors](../../ACL2025/llm_reasoning/training_turn-by-turn_verifiers_for_dialogue_tutoring_agents_the_curious_case_of.md)
+
+<!-- RELATED:END -->

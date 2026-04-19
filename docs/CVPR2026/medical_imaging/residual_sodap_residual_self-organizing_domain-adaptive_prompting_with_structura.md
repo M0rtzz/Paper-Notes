@@ -140,3 +140,15 @@ $$\mathcal{L}_{\text{total}} = \sum_i \left(e^{-s_i} \mathcal{L}_i + s_i\right)$
 - 实验充分度: ⭐⭐⭐⭐ 三个基准、多基线、完整消融、三次独立运行
 - 写作质量: ⭐⭐⭐⭐ 公式推导细致，各模块动机清晰
 - 价值: ⭐⭐⭐⭐ 对医学 DIL 场景有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multimodal_learning_for.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+
+<!-- RELATED:END -->

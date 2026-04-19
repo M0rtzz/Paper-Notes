@@ -130,3 +130,15 @@ CaDrift 是生成框架而非训练模型。映射函数在初始化时拟合一
 - 实验充分度: ⭐⭐⭐⭐ 8个自生成数据集+3个传统基准，消融实验用统计检验验证，但缺少漂移检测评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、对比表格完善，数学定义规范
 - 价值: ⭐⭐⭐⭐ 对数据流挖掘社区有实际工具价值，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Black-Box Generative Attacks via Generator Semantic Consistency](improving_black-box_generative_attacks_via_generator_semantic_consistency.md)
+- [Generating Synthetic Relational Tabular Data via Structural Causal Models](../../ACL2025/others/generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
+- [Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
+- [How to Marginalize in Causal Structure Learning?](../../AAAI2026/others/how_to_marginalize_in_causal_structure_learning.md)
+- [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ $$\text{WCDE}(a, a') = \sum_m [E[Y \mid do(A=a, M=m)] - E[Y \mid do(A=a', M=m)]]
 - 实验充分度: ⭐⭐⭐⭐ 多 DAG 结构模拟充分验证理论
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，动机清晰
 - 价值: ⭐⭐⭐⭐ 公平性和中介分析的理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probabilistic Reasoning with LLMs for K-Anonymity Estimation](probabilistic_reasoning_with_llms_for_k-anonymity_estimation.md)
+- [Locally Optimal Private Sampling: Beyond the Global Minimax](locally_optimal_private_sampling_beyond_the_global_minimax.md)
+- [Beyond Last-Click: An Optimal Mechanism for Ad Attribution](beyond_last-click_an_optimal_mechanism_for_ad_attribution.md)
+- [The Ripple Effect: On Unforeseen Complications of Backdoor Attacks](../../ICML2025/ai_safety/the_ripple_effect_on_unforeseen_complications_of_backdoor_attacks.md)
+- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+
+<!-- RELATED:END -->

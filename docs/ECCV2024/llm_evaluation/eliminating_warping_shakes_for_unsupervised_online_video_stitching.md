@@ -165,3 +165,15 @@ StabStitch包含三个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐ 多场景评测+用户研究+速度分析+消融完整
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义清晰，公式推导严谨，图示说明力强
 - **价值**: ⭐⭐⭐⭐⭐ 高实用价值——实时在线视频拼接系统，开源代码和数据集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SIGMA: Sinkhorn-Guided Masked Video Modeling](sigma_sinkhorn-guided_masked_video_modeling.md)
+- [Distribution Alignment for Fully Test-Time Adaptation with Dynamic Online Data Streams](distribution_alignment_for_fully_test-time_adaptation_with_dynamic_online_data_s.md)
+- [Deep Cost Ray Fusion for Sparse Depth Video Completion](deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
+- [DcMatch: Unsupervised Multi-Shape Matching with Dual-Level Consistency](../../AAAI2026/llm_evaluation/dcmatch_unsupervised_multi-shape_matching_with_dual-level_consistency.md)
+- [ColorMNet: A Memory-based Deep Spatial-Temporal Feature Propagation Network for Video Colorization](colormnet_a_memory-based_deep_spatial-temporal_feature_propagation_network_for_v.md)
+
+<!-- RELATED:END -->

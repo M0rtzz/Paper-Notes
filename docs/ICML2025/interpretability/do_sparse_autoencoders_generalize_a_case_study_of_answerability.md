@@ -183,3 +183,15 @@ $$\mathcal{L} = \|\mathbf{x} - \hat{\mathbf{x}}\|_2^2 + \lambda \|\mathbf{f}\|_1
 - 实验充分度: ⭐⭐⭐⭐ — 6个数据集覆盖多种分布偏移，但仅限单模型单SAE宽度
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，分析条理分明，图表直观
 - 价值: ⭐⭐⭐⭐ — 对 SAE 可解释性社区的重要警示，推动更严格的泛化评估范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](../../NeurIPS2025/interpretability/a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](../../NeurIPS2025/interpretability/transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Temporal Sparse Autoencoders: Leveraging the Sequential Nature of Language for Interpretability](../../ICLR2026/interpretability/temporal_sparse_autoencoders_leveraging_the_sequential_nature_of_language_for_in.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](../../CVPR2026/interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+- [Do Different Prompting Methods Yield a Common Task Representation?](../../NeurIPS2025/interpretability/do_different_prompting_methods_yield_a_common_task_representation_in_language_mo.md)
+
+<!-- RELATED:END -->

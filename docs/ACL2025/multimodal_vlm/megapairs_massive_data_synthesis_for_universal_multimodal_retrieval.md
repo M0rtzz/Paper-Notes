@@ -154,3 +154,15 @@ $$\mathcal{L} = -\frac{1}{|\mathcal{Q}|}\sum_{q_i \in \mathcal{Q}} \log \frac{\e
 - **实验完备性**: ⭐⭐⭐⭐⭐ 4 个 CIR 基准 + MMEB 36 数据集 + 零样本/微调 + 数据缩放/消融
 - **实用性**: ⭐⭐⭐⭐⭐ 全套开源，2600 万数据立即可用，解决领域痛点
 - **写作**: ⭐⭐⭐⭐ 方法描述清晰，图示丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal Retrieval for Multimodal Trajectory Modeling](../../ICML2025/multimodal_vlm/universal_retrieval_for_multimodal_trajectory_modeling.md)
+- [U-MARVEL: Unveiling Key Factors for Universal Multimodal Retrieval via Embedding Learning](../../ICLR2026/multimodal_vlm/u-marvel_unveiling_key_factors_for_universal_multimodal_retrieval_via_embedding_.md)
+- [Progressive Multimodal Reasoning via Active Retrieval](progressive_multimodal_reasoning_via_active_retrieval.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [Retrv-R1: A Reasoning-Driven MLLM Framework for Universal and Efficient Multimodal Retrieval](../../NeurIPS2025/multimodal_vlm/retrv-r1_a_reasoning-driven_mllm_framework_for_universal_and_efficient_multimoda.md)
+
+<!-- RELATED:END -->

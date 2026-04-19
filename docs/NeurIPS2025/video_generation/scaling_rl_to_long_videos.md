@@ -148,3 +148,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多基准对比、消融充分、训练效率量化完整
 - **写作质量**: ⭐⭐⭐⭐ 内容密集但组织清晰
 - **价值**: ⭐⭐⭐⭐⭐ 为长视频 VLM 推理提供了可复现的完整方案，开源系统价值大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](../../ICCV2025/video_generation/omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
+- [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
+- [Long Context Tuning for Video Generation](../../ICCV2025/video_generation/long_context_tuning_for_video_generation.md)
+- [ActivityForensics: A Comprehensive Benchmark for Localizing Manipulated Activity in Videos](../../CVPR2026/video_generation/activityforensics_a_comprehensive_benchmark_for_localizing_manipulated_activity_.md)
+- [LongDiff: Training-Free Long Video Generation in One Go](../../CVPR2025/video_generation/longdiff_training-free_long_video_generation_in_one_go.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ $$SNR = 10\log_{10} \frac{\sum_{k,l} |Y|^2}{\sum_{k,l}(|Y|^2 + |\hat{Y}|^2 + C)}
 - 实验充分度: 9/10 — 多声码器、多数据集、多指标的系统性验证
 - 写作质量: 8/10 — 数学推导清晰，问题动机阐述充分
 - 价值: 8/10 — 提供了可直接替代 SNR 的新指标和即插即用的损失函数，对音频生成社区有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Perceptually Aligning Representations of Music via Noise-Augmented Autoencoders](../../NeurIPS2025/audio_speech/perceptually_aligning_representations_of_music_via_noise-augmented_autoencoders.md)
+- [OmniSonic: Towards Universal and Holistic Audio Generation from Video and Text](../../CVPR2026/audio_speech/omnisonic_towards_universal_and_holistic_audio_generation_from_video_and_text.md)
+- [Echoes Over Time: Unlocking Length Generalization in Video-to-Audio Generation Models](../../CVPR2026/audio_speech/echoes_over_time_unlocking_length_generalization_in_video-to-audio_generation_mo.md)
+- [DistinctAD: Distinctive Audio Description Generation in Contexts](../../CVPR2025/audio_speech/distinctad_distinctive_audio_description_generation_in_contexts.md)
+- [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](../../CVPR2025/audio_speech/vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
+
+<!-- RELATED:END -->

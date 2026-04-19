@@ -133,3 +133,15 @@ $$e^{-\epsilon} \leq \frac{P(M(A(D), D, x) \in S)}{P(A(D \setminus x) \in S)} \l
 - 实验充分度: ⭐⭐⭐⭐ 5个数据集、3种移除规模、6种基线对比，覆盖图像/文本/结构化数据
 - 写作质量: ⭐⭐⭐ 行文可读但部分公式符号不一致，OOD 设置描述较简略
 - 价值: ⭐⭐⭐⭐ 解决了 unlearning 在分布漂移下的实际痛点，方法路线值得关注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [De-mark: Watermark Removal in Large Language Models](../../ICML2025/ai_safety/de-mark_watermark_removal_in_large_language_models.md)
+- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+- [Distributional Adversarial Attacks and Training in Deep Hedging](distributional_adversarial_attacks_and_training_in_deep_hedging.md)
+- [DeepPersona: A Generative Engine for Scaling Deep Synthetic Personas](deeppersona_a_generative_engine_for_scaling_deep_synthetic_personas.md)
+- [Preserving Task-Relevant Information Under Linear Concept Removal](preserving_task-relevant_information_under_linear_concept_removal.md)
+
+<!-- RELATED:END -->

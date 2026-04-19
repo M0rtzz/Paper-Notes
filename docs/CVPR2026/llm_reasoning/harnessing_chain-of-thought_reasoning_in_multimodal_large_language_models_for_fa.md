@@ -132,3 +132,15 @@ Stage 1: 标准自回归语言建模loss on CoT文本，全参数SFT。Stage 2: 
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个基准数据集、多个训练配置对比、详尽的消融
 - 写作质量: ⭐⭐⭐⭐ 数据构建流程清晰，但方法创新部分相对简单
 - 价值: ⭐⭐⭐⭐ 数据集贡献显著，方法有效但特定于FAS领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FaceCoT: Harnessing Chain-of-Thought Reasoning in MLLMs for Face Anti-Spoofing](facecot_cot_reasoning_face_anti_spoofing.md)
+- [Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)
+- [CoRVid: Improving Multimodal Large Language Models Towards Chain-of-Thought Reasoning](../../ICCV2025/llm_reasoning/corvid_improving_multimodal_large_language_models_towards_chain-of-thought_reaso.md)
+- [Reinforcing Structured Chain-of-Thought for Video Understanding](reinforcing_structured_chain-of-thought_for_video_understanding.md)
+- [VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](visref_visual_refocusing_while_thinking_improves_test-time_scaling_in_multi-moda.md)
+
+<!-- RELATED:END -->

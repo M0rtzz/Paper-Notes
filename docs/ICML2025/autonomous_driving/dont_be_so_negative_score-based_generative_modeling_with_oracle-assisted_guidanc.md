@@ -123,3 +123,15 @@ Gen-neG 涉及两个优化目标：(1) 基线扩散模型的标准 score matchin
 ## 评分
 
 ⭐⭐⭐⭐ 方法简洁，理论清晰，揭示了 classifier guidance 中被忽略的重要细节。交通场景实验令人印象深刻（29.3%→5.6%）。运动生成实验改善有限是扣分项。整体是约束生成领域的重要贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration](geometry-to-image_synthesis-driven_generative_point_cloud_registration.md)
+- [SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](../../CVPR2025/autonomous_driving/scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)
+- [Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering](../../ICCV2025/autonomous_driving/leveraging_2d_priors_and_sdf_guidance_for_urban_scene_rendering.md)
+- [FlowScene: Learning Temporal 3D Semantic Scene Completion via Optical Flow Guidance](../../NeurIPS2025/autonomous_driving/learning_temporal_3d_semantic_scene_completion_via_optical_flow_guidance.md)
+- [DriverGaze360: OmniDirectional Driver Attention with Object-Level Guidance](../../CVPR2026/autonomous_driving/drivergaze360_omnidirectional_driver_attention_with_object-level_guidance.md)
+
+<!-- RELATED:END -->

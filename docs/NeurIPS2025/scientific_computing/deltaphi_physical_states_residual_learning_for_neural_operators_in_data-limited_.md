@@ -134,3 +134,15 @@ $$\mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} \| \mathcal{N}_\theta(a_i, a_{k_i}) -
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7 种架构 × 多种 PDE × 不规则域，消融和分析全面。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分。
 - **价值**: ⭐⭐⭐⭐⭐ — 即插即用、开销极小、代码开源，工程落地门槛极低。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Universal Neural Operators through Multiphysics Pretraining](towards_universal_neural_operators_through_multiphysics_pretraining.md)
+- [Neural Emulator Superiority: When Machine Learning for PDEs Surpasses its Training Data](neural_emulator_superiority_when_machine_learning_for_pdes_surpasses_its_trainin.md)
+- [Hamiltonian Neural PDE Solvers through Functional Approximation](hamiltonian_neural_pde_solvers_through_functional_approximation.md)
+- [Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections](enforcing_governing_equation_constraints_in_neural_pde_solvers_via_training-free.md)
+- [INC: An Indirect Neural Corrector for Auto-Regressive Hybrid PDE Solvers](inc_an_indirect_neural_corrector_for_auto-regressive_hybrid_pde_solvers.md)
+
+<!-- RELATED:END -->

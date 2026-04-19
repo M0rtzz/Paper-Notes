@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 18个模型×16个benchmark，观察+干预双验证，跨算法/模型/步数消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，RQ驱动，统计检验严谨
 - 价值: ⭐⭐⭐⭐⭐ 对RPT社区有重要警示意义，揭示了被广泛忽略的泛化瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [Partially Equivariant Reinforcement Learning in Symmetry-Breaking Environments](partially_equivariant_reinforcement_learning_in_symmetry-breaking_environments.md)
+- [References Improve LLM Alignment in Non-Verifiable Domains](references_improve_llm_alignment_in_non-verifiable_domains.md)
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](../../NeurIPS2025/reinforcement_learning/repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+- [MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning](../../ACL2025/reinforcement_learning/maporl_multi-agent_post-co-training_for_collaborative_large_language_models_with.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop 级别但残差验证严谨，真实数据待测
 - 写作质量: ⭐⭐⭐⭐ 天文学和 ML 的概念衔接好
 - 价值: ⭐⭐⭐⭐ 对引力透镜分析和大型巡天数据处理有直接推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Model Inversion Through the Lens of the Manifold Hypothesis](generative_model_inversion_through_the_lens_of_the_manifold_hypothesis.md)
+- [Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network](denoising_weak_lensing_mass_maps_with_diffusion_model_and_generative_adversarial.md)
+- [MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction](mge-ldm_joint_latent_diffusion_for_simultaneous_music_generation_and_source_extr.md)
+- [Ψ-Sampler: Initial Particle Sampling for SMC-Based Inference-Time Reward Alignment in Score Models](psi-sampler_initial_particle_sampling_for_smc-based_inference-time_reward_alignm.md)
+- [Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models](../../ECCV2024/image_generation/source_prompt_disentangled_inversion_for_boosting_image_editability_with_diffusi.md)
+
+<!-- RELATED:END -->

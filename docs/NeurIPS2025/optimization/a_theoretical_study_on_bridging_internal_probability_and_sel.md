@@ -122,3 +122,15 @@ RPC是一个后处理（post-hoc）方法，不需要修改LLM架构或训练过
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个数据集、多个模型规模/架构、多种消融、与高级方法兼容性测试
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，命题-定理-备注结构严谨，实验展示逻辑好
 - 价值: ⭐⭐⭐⭐ 理论分析为领域提供了有价值的认知框架，RPC方法简单有效可直接用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Neural Networks Need Gradient Descent to Generalize? A Theoretical Study](do_neural_networks_need_gradient_descent_to_generalize_a_theoretical_study.md)
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](../../ICML2025/optimization/how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+- [Non-Stationary Bandit Convex Optimization: A Comprehensive Study](non-stationary_bandit_convex_optimization_a_comprehensive_study.md)
+- [∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](../../ICLR2026/optimization/nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+
+<!-- RELATED:END -->

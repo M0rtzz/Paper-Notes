@@ -127,3 +127,15 @@ L-DiffER 基于预训练的语言引导扩散模型（如 Stable Diffusion）构
 - 实验充分度: ⭐⭐⭐⭐ 在 4 个数据集上全面评估，消融实验完整
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，方法描述清晰
 - 价值: ⭐⭐⭐⭐ 为扩散模型在图像恢复中的应用提供了实用的工程方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model](nl2contact_natural_language_guided_3d_hand-object_contact_modeling_with_diffusio.md)
+- [StyleTokenizer: Defining Image Style by a Single Instance for Controlling Diffusion Models](styletokenizer_defining_image_style_by_a_single_instance_for_controlling_diffusi.md)
+- [DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+- [Continuous Diffusion Model for Language Modeling](../../NeurIPS2025/image_generation/continuous_diffusion_model_for_language_modeling.md)
+
+<!-- RELATED:END -->

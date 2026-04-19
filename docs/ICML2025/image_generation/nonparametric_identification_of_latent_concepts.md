@@ -131,3 +131,15 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{(\mathbf{x},\mathbf{c})} \left[ -\log p_{\ha
 - 实验充分度: ⭐⭐⭐ — 合成实验验证理论，真实数据定性展示，但缺乏大规模定量评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 从认知科学到数学形式化的叙事流畅，例子丰富
 - 价值: ⭐⭐⭐⭐ — 为概念学习的经验成功提供理论基础，跨领域影响广泛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memories of Forgotten Concepts](../../CVPR2025/image_generation/memories_of_forgotten_concepts.md)
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](../../NeurIPS2025/image_generation/emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+- [Origin Identification for Text-Guided Image-to-Image Diffusion Models](origin_identification_for_text-guided_image-to-image_diffusion_models.md)
+- [When Are Concepts Erased From Diffusion Models?](../../NeurIPS2025/image_generation/when_are_concepts_erased_from_diffusion_models.md)
+- [Hessian Geometry of Latent Space in Generative Models](hessian_geometry_of_latent_space_in_generative_models.md)
+
+<!-- RELATED:END -->

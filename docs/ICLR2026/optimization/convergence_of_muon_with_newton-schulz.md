@@ -100,3 +100,15 @@ Muon 每步：(1) 计算随机梯度 $G_t$；(2) 动量更新 $M_t = \beta M_{t-
 - 实验充分度: ⭐⭐⭐ 纯理论，无新实验（但合理——补充已有实践的理论解释）
 - 写作质量: ⭐⭐⭐⭐⭐ 研究问题清晰、定理层层递进、叙述严谨流畅
 - 价值: ⭐⭐⭐⭐⭐ 为当下最热门的矩阵优化器提供了急需的理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data](../../NeurIPS2025/optimization/implicit_bias_of_spectral_descent_and_muon_on_multiclass_separable_data.md)
+- [When to Restart? Exploring Escalating Restarts on Convergence](when_to_restart_exploring_escalating_restarts_on_convergence.md)
+- [Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks](directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two.md)
+- [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+- [A Generalization Result for Convergence in Learning-to-Optimize](../../ICML2025/optimization/a_generalization_result_for_convergence_in_learning-to-optimize.md)
+
+<!-- RELATED:END -->

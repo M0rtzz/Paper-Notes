@@ -116,3 +116,15 @@ Ada3Drift 的输入是机器人本体状态和 3D 点云观测，输出是未来
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个仿真平台+真实机器人实验，消融全面，训练动态分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 问题抽象清晰，从观察到方案到验证一气呵成
 - 价值: ⭐⭐⭐⭐ 对实时机器人控制有实际意义，但应用范围限于操作任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation](hyperbolic_multiview_pretraining_for_robotic_manipulation.md)
+- [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
+- [SonoWorld: From One Image to a 3D Audio-Visual Scene](sonoworld_from_one_image_to_a_3d_audio-visual_scene.md)
+- [Efficient Hybrid SE(3)-Equivariant Visuomotor Flow Policy via Spherical Harmonics](efficient_hybrid_se3-equivariant_visuomotor_flow_policy_via_spherical_harmonics_.md)
+- [Fast3Dcache: Training-free 3D Geometry Synthesis Acceleration](fast3dcache_training-free_3d_geometry_synthesis_acceleration.md)
+
+<!-- RELATED:END -->

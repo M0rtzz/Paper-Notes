@@ -124,3 +124,15 @@ CIFAR-10 知识删除对比（All-CNN）：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多模型，KR 分析深入，但缺少大规模实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，但符号繁多
 - 价值: ⭐⭐⭐⭐⭐ 对机器遗忘社区有方向性影响，KR 指标可能成为标准评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causally Reliable Concept Bottleneck Models](../../NeurIPS2025/ai_safety/causally_reliable_concept_bottleneck_models.md)
+- [Geometric Knowledge-Guided Localized Global Distribution Alignment for Federated Learning](geometric_knowledge-guided_localized_global_distribution_alignment_for_federated.md)
+- [Activation Space Interventions Can Be Transferred Between Large Language Models](../../ICML2025/ai_safety/activation_space_interventions_can_be_transferred_between_large_language_models.md)
+- [Preserving Task-Relevant Information Under Linear Concept Removal](../../NeurIPS2025/ai_safety/preserving_task-relevant_information_under_linear_concept_removal.md)
+- [The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples](../../NeurIPS2025/ai_safety/the_unseen_threat_residual_knowledge_in_machine_unlearning_under_perturbed_sampl.md)
+
+<!-- RELATED:END -->

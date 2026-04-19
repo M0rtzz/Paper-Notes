@@ -337,3 +337,15 @@ fastMRI FLAIR 重建 NRMSE（预训练在 T1/T2/T1-post，微调在 20 FLAIR 受
 - 实验充分度: ⭐⭐⭐⭐⭐ fastMRI 控制实验 + 临床中风数据 + 80 患者盲法读片研究 + 前瞻性实验，极其全面
 - 写作质量: ⭐⭐⭐⭐ 临床导向的写作风格，实验设计严谨
 - 价值: ⭐⭐⭐⭐ 直接推动 DPM 在临床 MRI 加速中的落地，读片研究证实临床可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversionbased_reconstructionfree_anomaly_de.md)
+- [Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data](towards_efficient_medical_reasoning_with_minimal_fine-tuning_data.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+- [cryoSENSE: Compressive Sensing Enables High-throughput Microscopy with Sparse and Generative Priors on the Protein Cryo-EM Image Manifold](cryosense_compressive_sensing_enables_high-throughput_microscopy_with_sparse_and.md)
+- [Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset](instruction-guided_lesion_segmentation_for_chest_x-rays_with_automatically_gener.md)
+
+<!-- RELATED:END -->

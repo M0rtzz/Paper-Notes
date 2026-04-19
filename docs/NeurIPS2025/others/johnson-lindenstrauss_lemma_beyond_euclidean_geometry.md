@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论验证+10个数据集+下游任务
 - 写作质量: ⭐⭐⭐⭐ 理论清晰，几何直觉解释到位
 - 价值: ⭐⭐⭐⭐⭐ 对降维理论有重要贡献，潜在应用广泛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feature Learning beyond the Lazy-Rich Dichotomy: Insights from Representational Geometry](../../ICML2025/others/feature_learning_beyond_the_lazy-rich_dichotomy_insights_from_representational_g.md)
+- [On a Geometry of Interbrain Networks](on_a_geometry_of_interbrain_networks.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+- [Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)
+- [Distributed Algorithms for Euclidean Clustering](../../ICLR2026/others/distributed_algorithms_for_euclidean_clustering.md)
+
+<!-- RELATED:END -->

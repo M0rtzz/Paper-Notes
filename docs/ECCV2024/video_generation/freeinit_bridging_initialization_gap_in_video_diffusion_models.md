@@ -208,3 +208,15 @@ FVD 全面改善，运动流畅度和动态程度更接近真实视频。
 - **实用性**：★★★★★ — 零修改即插即用，效果显著且稳定，极具部署价值
 - **实验充分度**：★★★★★ — 三个模型、两个数据集、多维指标、详尽消融，非常全面
 - **写作质量**：★★★★★ — 可视化清晰、频率分析严谨、叙述流畅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
+- [Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion](../../NeurIPS2025/video_generation/self_forcing_bridging_the_train-test_gap_in_autoregressive_video_diffusion.md)
+- [Exploring Pre-trained Text-to-Video Diffusion Models for Referring Video Object Segmentation](exploring_pre-trained_text-to-video_diffusion_models_for_referring_video_object_.md)
+- [Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion](videoshop_localized_semantic_video_editing_with_noise-extrapolated_diffusion_inv.md)
+- [MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing](magdiff_multi-alignment_diffusion_for_high-fidelity_video_generation_and_editing.md)
+
+<!-- RELATED:END -->

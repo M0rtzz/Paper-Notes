@@ -166,3 +166,15 @@ $$\delta^* = \arg\max_{\|\delta\|_\infty \leq \epsilon} \mathcal{L}_{\text{attac
 - 实验完整性: ⭐⭐⭐⭐（经典+AIGC 双场景验证）
 - 实用价值: ⭐⭐⭐⭐（免训练，直接可用）
 - 总体评分: 8.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](../../CVPR2026/image_generation/towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [BlurGuard: A Simple Approach for Robustifying Image Protection Against AI-Powered Edit](../../NeurIPS2025/image_generation/blurguard_a_simple_approach_for_robustifying_image_protection_against_ai-powered.md)
+- [Aggregating Diverse Cue Experts for AI-Generated Image Detection](aggregating_diverse_cue_experts_for_ai-generated_image_detec.md)
+- [MacPrompt: Maraconic-guided Jailbreak against Text-to-Image Models](macprompt_maraconic-guided_jailbreak_against_text-to-image_models.md)
+- [AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](aedr_training-free_ai-generated_image_attribution_via_autoen.md)
+
+<!-- RELATED:END -->

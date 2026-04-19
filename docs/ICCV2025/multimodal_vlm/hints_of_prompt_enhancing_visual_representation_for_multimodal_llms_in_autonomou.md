@@ -143,3 +143,15 @@ HoP仅用25%训练数据即可达到64.0 Lingo-Judge，超过LLaVA-v1.5全量数
 - **实验**: ⭐⭐⭐⭐ （三个数据集全面验证，消融充分）
 - **写作**: ⭐⭐⭐⭐ （逻辑清晰，图表丰富）
 - **价值**: ⭐⭐⭐⭐ （对驾驶VQA有实际应用价值，Efficient版本可部署）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](../../ACL2025/multimodal_vlm/table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
+- [MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
+- [MM-IFEngine: Towards Multimodal Instruction Following](mm-ifengine_towards_multimodal_instruction_following.md)
+
+<!-- RELATED:END -->

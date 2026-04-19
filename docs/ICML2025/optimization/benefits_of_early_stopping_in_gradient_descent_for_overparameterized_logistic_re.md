@@ -115,3 +115,15 @@ $$\frac{\|\mathbf{w}_t - \mathbf{u}\|^2}{2\eta t} + \hat{\mathcal{L}}(\mathbf{w}
 - 实验充分度: ⭐⭐⭐ (理论为主，仅一组说明性实验，但对理论工作而言足够)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，主要结论在 Contributions 中总结到位，技术细节安排合理)
 - 价值: ⭐⭐⭐⭐⭐ (为过参数化学习中的优化与统计交互提供了深刻理论洞察，对理解深度学习中的早停实践有重要参考价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression](../../NeurIPS2025/optimization/large_stepsizes_accelerate_gradient_descent_for_regularized_logistic_regression.md)
+- [Constant Stepsize Local GD for Logistic Regression: Acceleration by Instability](constant_stepsize_local_gd_for_logistic_regression_acceleration_by_instability.md)
+- [Quantum Optimization via Gradient-Based Hamiltonian Descent](quantum_optimization_via_gradient-based_hamiltonian_descent.md)
+- [Stop Walking in Circles! Bailing Out Early in Projected Gradient Descent](../../CVPR2025/optimization/stop_walking_in_circles_bailing_out_early_in_projected_gradient_descent.md)
+- [Incremental Gradient Descent with Small Epoch Counts is Surprisingly Slow on Ill-Conditioned Problems](incremental_gradient_descent_with_small_epoch_counts_is_surprisingly_slow_on_ill.md)
+
+<!-- RELATED:END -->

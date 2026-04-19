@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 维度×多数据集×多模型×128K 上下文，控制变量严谨
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全研究有根本性启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Many-Shot In-Context Learning for Long-Context Evaluation](on_many-shot_in-context_learning_for_long-context_evaluation.md)
+- [Efficient Many-Shot In-Context Learning with Dynamic Block-Sparse Attention](efficient_many-shot_in-context_learning_with_dynamic_block-sparse_attention.md)
+- [What are the Essential Factors in Crafting Effective Long Context Multi-Hop Instruction Datasets? Insights and Best Practices](what_are_the_essential_factors_in_crafting_effective_long_context_multi-hop_inst.md)
+- [Mitigating Posterior Salience Attenuation in Long-Context LLMs with Positional Contrastive Decoding](mitigating_posterior_salience_attenuation_in_long-context_llms_with_positional_c.md)
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](ladm_long_context_data.md)
+
+<!-- RELATED:END -->

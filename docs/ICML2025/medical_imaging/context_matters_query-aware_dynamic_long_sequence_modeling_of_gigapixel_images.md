@@ -147,3 +147,15 @@ Querent 分 4 步处理 WSI：
 - 实验充分度: ⭐⭐⭐⭐⭐ 10+ 数据集、4 种任务、理论+实验双验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、图示精美、分析透彻
 - 价值: ⭐⭐⭐⭐⭐ 对计算病理学和长序列建模都有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Learning from Gigapixel Images via Hierarchical Vision-Language Alignment and Modeling](../../NeurIPS2025/medical_imaging/few-shot_learning_from_gigapixel_images_via_hierarchical_vision-language_alignme.md)
+- [eccDNAMamba: A Pre-Trained Model for Ultra-Long eccDNA Sequence Analysis](eccdnamamba_a_pre-trained_model_for_ultra-long_eccdna_sequence_analysis.md)
+- [MergeDNA: Context-aware Genome Modeling with Dynamic Tokenization through Token Merging](../../AAAI2026/medical_imaging/mergedna_context-aware_genome_modeling_with_dynamic_tokenization_through_token_m.md)
+- [TrinityDNA: A Bio-Inspired Foundational Model for Efficient Long-Sequence DNA Modeling](../../AAAI2026/medical_imaging/trinitydna_a_bio-inspired_foundational_model_for_efficient_long-sequence_dna_mod.md)
+- [Towards Effective and Efficient Context-aware Nucleus Detection in Histopathology Whole Slide Images](../../AAAI2026/medical_imaging/towards_effective_and_efficient_context-aware_nucleus_detection_in_histopatholog.md)
+
+<!-- RELATED:END -->

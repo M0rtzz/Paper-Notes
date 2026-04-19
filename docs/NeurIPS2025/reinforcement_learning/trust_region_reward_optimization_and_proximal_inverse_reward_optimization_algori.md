@@ -138,3 +138,15 @@ PIRO 的交替更新：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9 个任务 + 13 个基线 + 稳定性/效率/迁移/敏感性全面分析
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，实践算法简洁
 - 价值: ⭐⭐⭐⭐⭐ — 对 IRL 理论和实践都有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inverse Optimization Latent Variable Models for Learning Costs Applied to Route Problems](inverse_optimization_latent_variable_models_for_learning_costs_applied_to_route_.md)
+- [Complexity Scaling Laws for Neural Models using Combinatorial Optimization](complexity_scaling_laws_for_neural_models_using_combinatorial_optimization.md)
+- [Embedding Safety into RL: A New Take on Trust Region Methods](../../ICML2025/reinforcement_learning/embedding_safety_into_rl_a_new_take_on_trust_region_methods.md)
+- [Risk-Averse Total-Reward Reinforcement Learning](risk-averse_total-reward_reinforcement_learning.md)
+- [Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
+
+<!-- RELATED:END -->

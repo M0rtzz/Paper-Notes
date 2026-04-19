@@ -123,3 +123,15 @@ tags:
 - 适合作为等变 CNN 核构造的参考文献，尤其是需要自定义对称群时
 - 对理解 e3nn、escnn 等等变网络库的底层数学非常有帮助
 - Lorentz 群部分对高能物理 ML（jet tagging、particle tracking）社区最有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SymDPO: Boosting In-Context Learning of Large Multimodal Models with Symbol Demonstration Direct Preference Optimization](symdpo_boosting_in-context_learning_of_large_multimodal_models_with_symbol_demon.md)
+- [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
+- [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
+- [Jailbreaking the Non-Transferable Barrier via Test-Time Data Disguising](jailbreaking_the_non-transferable_barrier_via_test-time_data_disguising.md)
+- [PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization](physmodpo_physically-plausible_humanoid_motion_with_preference_optimization.md)
+
+<!-- RELATED:END -->

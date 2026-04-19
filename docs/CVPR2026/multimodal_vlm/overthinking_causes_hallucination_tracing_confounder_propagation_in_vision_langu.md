@@ -133,3 +133,15 @@ OOD泛化（AMBER + LLaVA-1.5）：**Ours GB 86.11 AUC / 71.58 F1** vs MetaToken
 - **实验充分度**: ⭐⭐⭐⭐ — 3个VLM、ID+OOD数据集、消融+SHAP分析完整，缺缓解实验
 - **写作质量**: ⭐⭐⭐⭐⭐ — 假设驱动的分析逻辑清晰，案例直觉性强
 - **实用价值**: ⭐⭐⭐⭐⭐ — S-OT即插即用提升所有检测器，工程价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [Circuit Tracing in Vision-Language Models: Understanding the Internal Mechanisms of Multimodal Thinking](circuit_tracing_in_vision-language_models_understanding_the_internal_mechanisms_.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [KVSmooth: Mitigating Hallucination in Multi-modal Large Language Models through Key-Value Smoothing](kvsmooth_mitigating_hallucination_in_multimodal_la.md)
+- [Zina: Multimodal Fine-grained Hallucination Detection and Editing](zina_multimodal_fine-grained_hallucination_detection_and_editing.md)
+
+<!-- RELATED:END -->

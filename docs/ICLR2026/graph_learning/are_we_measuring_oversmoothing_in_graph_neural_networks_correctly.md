@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多架构、理论+实证的全面验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑清晰，实验设计精当
 - 价值: ⭐⭐⭐⭐⭐ 对GNN社区的基础度量进行了必要的修正
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Measuring Long-Range Interactions in Graph Neural Networks](../../ICML2025/graph_learning/on_measuring_long-range_interactions_in_graph_neural_networks.md)
+- [Cooperative Sheaf Neural Networks](cooperative_sheaf_neural_networks.md)
+- [LogicXGNN: Grounded Logical Rules for Explaining Graph Neural Networks](logicxgnn_grounded_logical_rules_for_explaining_graph_neural_networks.md)
+- [Beyond Simple Graphs: Neural Multi-Objective Routing on Multigraphs](beyond_simple_graphs_neural_multi-objective_routing_on_multigraphs.md)
+- [Adaptive Riemannian Graph Neural Networks](../../AAAI2026/graph_learning/adaptive_riemannian_graph_neural_networks.md)
+
+<!-- RELATED:END -->

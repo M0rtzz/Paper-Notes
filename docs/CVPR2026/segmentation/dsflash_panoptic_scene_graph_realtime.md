@@ -256,3 +256,15 @@ DSFlash 采用两阶段设计：第一阶段用冻结的 EoMT（Encoder-only Mas
 - 实验充分度: ⭐⭐⭐⭐ 多 GPU 延迟评估、详尽消融、公平评估协议
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，对评估问题的讨论很有价值
 - 价值: ⭐⭐⭐⭐ 将 PSGG 带入实时领域，实用性强，对资源受限场景特别有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [GenMask: Adapting DiT for Segmentation via Direct Mask Generation](genmask_adapting_dit_for_segmentation_via_direct_mask_generation.md)
+- [CA-LoRA: Concept-Aware LoRA for Domain-Aligned Segmentation Dataset Generation](ca-lora_concept-aware_lora_for_domain-aligned_segmentation_dataset_generation.md)
+- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_re.md)
+- [UnrealPose: Leveraging Game Engine Kinematics for Large-Scale Synthetic Human Pose Data](unrealpose_leveraging_game_engine_kinematics_for_large-scale_synthetic_human_pos.md)
+
+<!-- RELATED:END -->

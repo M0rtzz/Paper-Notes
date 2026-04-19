@@ -179,3 +179,15 @@ $$\mathbb{E}_t\left\{w(t)\mathbb{E}_{\mathbf{x}(0)}\mathbb{E}_{\mathbf{x}(t)}\le
 | 实验充分性 | ★★★☆☆ | 实验规模偏小，与 SOTA 方法对比不足 |
 | 实用价值 | ★★★★☆ | 分子构象/对接应用有潜力，但工程实现复杂 |
 | 写作质量 | ★★★★☆ | 数学严谨但可读性有挑战，需较强的微分几何基础 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CORAL: Disentangling Latent Representations in Long-Tailed Diffusion](coral_disentangling_latent_representations_in_longtailed_dif.md)
+- [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+- [UniCom: Unified Multimodal Modeling via Compressed Continuous Semantic Representations](../../CVPR2025/image_generation/unicom_unified_multimodal_modeling_via_compressed_continuous_semantic_representa.md)
+- [SummDiff: Generative Modeling of Video Summarization with Diffusion](../../ICCV2025/image_generation/summdiff_generative_modeling_of_video_summarization_with_diffusion.md)
+- [Hephaestus: Mixture Generative Modeling with Energy Guidance for Large-scale QoS Degradation](hephaestus_mixture_generative_modeling_with_energy_guidance_for_large-scale_qos_.md)
+
+<!-- RELATED:END -->

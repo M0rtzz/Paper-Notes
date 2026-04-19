@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 含传统/KPG两套评估、详尽消融、大规模用户研究
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，动机推导令人信服，对领域问题有深刻洞察
 - 价值: ⭐⭐⭐⭐⭐ KP和KPG对运动理解领域有深远影响，可能改变评估范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KinMo: Kinematic-Aware Human Motion Understanding and Generation](../../ICCV2025/human_understanding/kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
+- [HUMOS: Human Motion Model Conditioned on Body Shape](humos_human_motion_model_conditioned_on_body_shape.md)
+- [MANIKIN: Biomechanically Accurate Neural Inverse Kinematics for Human Motion Estimation](manikin_biomechanically_accurate_neural_inverse_kinematics_for_human_motion_esti.md)
+- [EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding](egoexo-fitness_towards_egocentric_and_exocentric_full-body_action_understanding.md)
+- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](quar-vla_vision-language-action_model_for_quadruped_robots.md)
+
+<!-- RELATED:END -->

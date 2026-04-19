@@ -137,3 +137,15 @@ Aria-UI 在 ScreenSpot 系列所有子基准上均超越了纯视觉方法和依
 - 实验充分度: ⭐⭐⭐⭐⭐ 离线+在线基准全覆盖，消融完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐⭐ 开源完整，在 GUI Agent 领域有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R-VLM: Region-Aware Vision Language Model for Precise GUI Grounding](r-vlm_region-aware_vision_language_model_for_precise_gui_grounding.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+- [Widget2Code: From Visual Widgets to UI Code via Multimodal LLMs](../../CVPR2026/multimodal_vlm/widget2code_from_visual_widgets_to_ui_code_via_multimodal_llms.md)
+- [DOGR: Towards Versatile Visual Document Grounding and Referring](../../ICCV2025/multimodal_vlm/dogr_towards_versatile_visual_document_grounding_and_referring.md)
+- [Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models](../../ECCV2024/multimodal_vlm/groma_localized_visual_tokenization_for_grounding_multimodal_large_language_mode.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖分类、密集预测、NLP，8/14/20 任务规模，多种合并方法
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表说服力强
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高，8% 存储即保持性能，对资源受限部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MSQ: Memory-Efficient Bit Sparsification Quantization](msq_memory-efficient_bit_sparsification_quantization.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](../../NeurIPS2025/model_compression/accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+- [SSVQ: Unleashing the Potential of Vector Quantization with Sign-Splitting](ssvq_unleashing_the_potential_of_vector_quantization_with_sign-splitting.md)
+- [Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning](integrating_task-specific_and_universal_adapters_for_pre-trained_model-based_cla.md)
+- [TR-PTS: Task-Relevant Parameter and Token Selection for Efficient Tuning](tr-pts_task-relevant_parameter_and_token_selection_for_efficient_tuning.md)
+
+<!-- RELATED:END -->

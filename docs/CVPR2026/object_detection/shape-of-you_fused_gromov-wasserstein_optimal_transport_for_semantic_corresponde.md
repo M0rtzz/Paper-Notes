@@ -140,3 +140,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{soft}} + \mathcal{L}_{\text{de
 - 实验充分度: ⭐⭐⭐⭐ (两个数据集 + 详尽消融 + PCK_label 指标验证伪标签质量)
 - 写作质量: ⭐⭐⭐⭐ (OT 背景清楚, 方法推导完整, 图表信息量大)
 - 价值: ⭐⭐⭐⭐ (为无标注语义对应提供了新范式, 3D+OT 的思路可迁移到其他视觉匹配任务)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Many Experts Are Enough? Towards Optimal Semantic Specialization for Mixture-of-Experts](../../AAAI2026/object_detection/how_many_experts_are_enough_towards_optimal_semantic_specialization_for_mixture-.md)
+- [Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need](../../CVPR2025/object_detection/boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](slice_semantic_latent_injection_via_compartmentali.md)
+- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+
+<!-- RELATED:END -->

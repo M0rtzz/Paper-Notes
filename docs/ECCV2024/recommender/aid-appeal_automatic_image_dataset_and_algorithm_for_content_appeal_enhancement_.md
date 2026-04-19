@@ -128,3 +128,15 @@ Pipeline 分四步：(1) 自动搜索收集领域图像（如食物/房间）；
 - 实验充分度: ⭐⭐⭐⭐ 有用户研究、跨领域验证、IAA 对比，但消融偏少
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，pipeline 逻辑流畅，图表直观
 - 价值: ⭐⭐⭐⭐ 打开了内容吸引力评估的新方向，对商业应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FineVQ: Fine-Grained User Generated Content Video Quality Assessment](../../CVPR2025/recommender/finevq_fine-grained_user_generated_content_video_quality_assessment.md)
+- [TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning](../../AAAI2026/recommender/travellama_a_multimodal_travel_assistant_with_large-scale_dataset_and_structured.md)
+- [How to Set AdamW's Weight Decay as You Scale Model and Dataset Size](../../ICML2025/recommender/how_to_set_adamws_weight_decay_as_you_scale_model_and_dataset_size.md)
+- [LOTUS: A Leaderboard for Detailed Image Captioning from Quality to Societal Bias and User Preferences](../../ACL2025/recommender/lotus_a_leaderboard_for_detailed_image_captioning_from_quality_to_societal_bias_.md)
+- [QuRe: Query-Relevant Retrieval through Hard Negative Sampling in Composed Image Retrieval](../../ICML2025/recommender/qure_query-relevant_retrieval_through_hard_negative_sampling_in_composed_image_r.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ NTK 贡献随训练进行指数衰减，因为：(1) 训练后期误差分布更
 - **实验**: 4/5 - 实验充分覆盖了多种基线、网络规模、网络架构、超参敏感性，但主要限于 2D 图像
 - **写作**: 5/5 - 从 NTK 理论到现有方法缺陷到新方法设计，逻辑链条清晰流畅，图表设计精良
 - **价值**: 4/5 - 即插即用的训练加速方法有较高实用价值，但受限于 NTK 计算开销，对超大规模场景适用性待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience](3drawagent_teaching_llm_to_draw_in_3d_with_early_contrastive_experience.md)
+- [3D-IDE: 3D Implicit Depth Emergent](3d-ide_3d_implicit_depth_emergent.md)
+- [End-to-End Implicit Neural Representations for Classification](../../CVPR2025/3d_vision/end-to-end_implicit_neural_representations_for_classification.md)
+- [SL2A-INR: Single-Layer Learnable Activation for Implicit Neural Representation](../../ICCV2025/3d_vision/sl2a-inr_single-layer_learnable_activation_for_implicit_neural_representation.md)
+- [Split-Layer: Enhancing Implicit Neural Representation by Maximizing the Dimensionality of Feature Space](../../AAAI2026/3d_vision/split-layer_enhancing_implicit_neural_representation_by_maximizing_the_dimension.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9 个数据集+合成数据+可解释性实验，两种评估场景，但缺少运行时间对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，实验设置详尽，附录完备
 - 价值: ⭐⭐⭐⭐ 对高维无标签数据的特征选择有实际价值，可解释性是一大优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TangledFeatures: Robust Feature Selection in Highly Correlated Spaces](../../NeurIPS2025/interpretability/tangledfeatures_robust_feature_selection_in_highly_correlated_spaces.md)
+- [Quiet Feature Learning in Algorithmic Tasks](quiet_feature_learning_in_algorithmic_tasks.md)
+- [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
+- [HSKBenchmark: Modeling and Benchmarking Chinese Second Language Acquisition in Large Language Models through Curriculum Tuning](hskbenchmark_modeling_and_benchmarking_chinese_second_language_acquisition_in_la.md)
+- [Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](../../ICLR2026/interpretability/decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
+
+<!-- RELATED:END -->

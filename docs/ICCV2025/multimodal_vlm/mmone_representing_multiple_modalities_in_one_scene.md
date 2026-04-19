@@ -177,3 +177,15 @@ RGB 提升 0.5dB，热成像提升 0.4dB，且仅使用 ThermalGaussian **三分
 | 实验充分性 | ⭐⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐ |
 | 总体推荐 | 8.5/10 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OMGM: Orchestrate Multiple Granularities and Modalities for Efficient Multimodal Retrieval](../../ACL2025/multimodal_vlm/omgm_orchestrate_multiple_granularities_and_modalities_for_efficient_multimodal_.md)
+- [Multimodal Prompt Optimization: Why Not Leverage Multiple Modalities for MLLMs](../../ICLR2026/multimodal_vlm/multimodal_prompt_optimization_why_not_leverage_multiple_modalities_for_mllms.md)
+- [Synergistic Prompting for Robust Visual Recognition with Missing Modalities](synergistic_prompting_for_robust_visual_recognition_with_missing_modalities.md)
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+- [One Perturbation is Enough: On Generating Universal Adversarial Perturbations against Vision-Language Pre-training Models](one_perturbation_is_enough_on_generating_universal_adversarial_perturbations_aga.md)
+
+<!-- RELATED:END -->

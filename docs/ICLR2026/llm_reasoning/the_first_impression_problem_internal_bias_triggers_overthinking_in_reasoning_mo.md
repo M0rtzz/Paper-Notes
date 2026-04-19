@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （关联分析 + 双向因果干预 + 注意力/Logit Lens 可解释性 + 缓解方法评估 + 新方案探索，实验链条完整且严谨）
 - 写作质量: ⭐⭐⭐⭐ （概念阐述清晰，"第一印象"类比直觉友好，递进式实验设计的叙事逻辑流畅）
 - 价值: ⭐⭐⭐⭐⭐ （对推理模型 overthinking 的根因理解具有里程碑意义，对未来模型设计和训练范式有直接指导价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Manipulation of Reasoning Models using Internal Representations](../../ICML2025/llm_reasoning/adversarial_manipulation_of_reasoning_models_using_internal_representations.md)
+- [The Virtues of Brevity: Avoid Overthinking in Parallel Test-Time Reasoning](../../NeurIPS2025/llm_reasoning/the_virtues_of_brevity_avoid_overthinking_in_parallel_test-time_reasoning.md)
+- [BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models](../../AAAI2026/llm_reasoning/badthink_triggered_overthinking_attacks_on_chain-of-thought_reasoning_in_large_l.md)
+- [The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity](../../NeurIPS2025/llm_reasoning/the_illusion_of_thinking_understanding_the_strengths_and_limitations_of_reasonin.md)
+- [On The Fragility of Benchmark Contamination Detection in Reasoning Models](on_the_fragility_of_benchmark_contamination_detection_in_reasoning_models.md)
+
+<!-- RELATED:END -->

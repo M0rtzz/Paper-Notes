@@ -121,3 +121,15 @@ $$\mathcal{L}_{\text{BC}}(\theta) = \mathbb{E}_{k, \mathbf{a}_\mu^k \sim p_\mu} 
 - 实验充分度: ⭐⭐⭐⭐ — 50任务基准+多种baseline+充分的消融实验，但缺少真实环境验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，符号系统规范
 - 价值: ⭐⭐⭐⭐ — 为低质量数据驱动的多任务智能体训练提供了可行路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LIFT: Latent Implicit Functions for Task- and Data-Agnostic Encoding](../../ICCV2025/image_generation/lift_latent_implicit_functions_for_task-_and_data-agnostic_encoding.md)
+- [Tree-Guided Diffusion Planner](../../NeurIPS2025/image_generation/tree-guided_diffusion_planner.md)
+- [Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models](zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)
+- [Efficient Fine-Tuning and Concept Suppression for Pruned Diffusion Models](../../CVPR2025/image_generation/efficient_fine-tuning_and_concept_suppression_for_pruned_diffusion_models.md)
+- [Revisiting Diffusion Models: From Generative Pre-training to One-Step Generation](revisiting_diffusion_models_from_generative_pre-training_to_one-step_generation.md)
+
+<!-- RELATED:END -->

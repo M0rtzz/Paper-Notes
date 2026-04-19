@@ -105,3 +105,15 @@ O-AUROC比前SOTA提升5%
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+完整消融+PAM泛化性验证+修复质量评估
 - 写作质量: ⭐⭐⭐⭐ 理论建模清晰(Sec.3.2)，pipeline图直观
 - 对我的价值: ⭐⭐⭐ 异常检测领域，与主流3D视觉研究有一定距离但方法论有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation](bridging_3d_anomaly_localization_and_repair_via_high-quality_continuous_geometri.md)
+- [SiM3D: Single-Instance Multiview Multimodal and Multisetup 3D Anomaly Detection Benchmark](sim3d_single-instance_multiview_multimodal_and_multisetup_3d_anomaly_detection_b.md)
+- [RayletDF: Raylet Distance Fields for Generalizable 3D Surface Reconstruction from Point Clouds or Gaussians](rayletdf_raylet_distance_fields_for_generalizable_3d_surface_reconstruction_from.md)
+- [Momentum-GS: Momentum Gaussian Self-Distillation for High-Quality Large Scene Reconstruction](momentum-gs_momentum_gaussian_self-distillation_for_high-quality_large_scene_rec.md)
+- [Guiding Diffusion-Based Articulated Object Generation by Partial Point Cloud Alignment and Physical Plausibility Constraints](guiding_diffusion-based_articulated_object_generation_by_partial_point_cloud_ali.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ LPWM 在 PandaPush 和 OGBench 的多任务上显著超越基线。OGBench task3
 - 实验充分度: ⭐⭐⭐⭐ 6+ 数据集（合成+真实）+ 视频预测 + 模仿学习 + 消融
 - 写作质量: ⭐⭐⭐⭐ 动机和设计逻辑清晰，与先前工作的对比充分
 - 价值: ⭐⭐⭐⭐⭐ 物体中心世界模型领域的开创性工作，代码/数据/模型全部开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Equivariant Operators for Robust Object Recognition: Promises and Challenges](latent_equivariant_operators_for_robust_object_recognition_promises_and_challeng.md)
+- [Beyond World Models: Rethinking Understanding in AI Models](../../AAAI2026/others/beyond_world_models_rethinking_understanding_in_ai_models.md)
+- [General Agents Contain World Models](../../ICML2025/others/general_agents_contain_world_models.md)
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](../../NeurIPS2025/others/inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+- [Lipschitz Bandits with Stochastic Delayed Feedback](lipschitz_bandits_with_stochastic_delayed_feedback.md)
+
+<!-- RELATED:END -->

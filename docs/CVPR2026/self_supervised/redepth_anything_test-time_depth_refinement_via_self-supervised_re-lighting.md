@@ -135,3 +135,15 @@ $$\mathbf{W}^*, \theta^* = \arg\min_{\mathbf{W}, \theta} \mathcal{L}(\hat{\mathb
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集 + DA-V2/DA3 双 backbone + 详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰，方法优雅，分析透彻
 - 价值: ⭐⭐⭐⭐ — 为基础模型的测试时精细化开辟了新路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation](actta_rethinking_test-time_adaptation_via_dynamic_activation.md)
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](../../ICML2025/self_supervised/test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [Update Your Transformer to the Latest Release: Re-Basin of Task Vectors](../../ICML2025/self_supervised/update_your_transformer_to_the_latest_release_re-basin_of_task_vectors.md)
+- [Test-Time Training Provably Improves Transformers as In-Context Learners](../../ICML2025/self_supervised/test-time_training_provably_improves_transformers_as_in-context_learners.md)
+- [TeFlow: Enabling Multi-frame Supervision for Self-Supervised Feed-forward Scene Flow Estimation](teflow_enabling_multi-frame_supervision_for_self-supervised_feed-forward_scene_f.md)
+
+<!-- RELATED:END -->

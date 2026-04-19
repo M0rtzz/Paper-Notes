@@ -135,3 +135,15 @@ RoboMaster基于预训练CogVideoX-5B架构。给定初始帧 $\mathbf{I}$、文
 - 实验充分度: ⭐⭐⭐⭐⭐ 包含视频质量、轨迹精度、机器人规划、消融和用户研究
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示精美
 - 价值: ⭐⭐⭐⭐ 对机器人视频生成和数据增强具有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Geometry-aware 4D Video Generation for Robot Manipulation](geometry-aware_4d_video_generation_for_robot_manipulation.md)
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
+- [Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models](frame_guidance_training-free_guidance_for_frame-level_control_in_video_diffusion.md)
+- [LeviTor: 3D Trajectory Oriented Image-to-Video Synthesis](../../CVPR2025/video_generation/levitor_3d_trajectory_oriented_image-to-video_synthesis.md)
+- [Streaming Autoregressive Video Generation via Diagonal Distillation](streaming_autoregressive_video_generation_via_diagonal_distillation.md)
+
+<!-- RELATED:END -->

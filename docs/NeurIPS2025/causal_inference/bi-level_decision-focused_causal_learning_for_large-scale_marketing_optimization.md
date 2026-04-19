@@ -121,3 +121,15 @@ Target Network $\mathcal{F}_\theta$ 在大量 OBS 数据上训练预测损失（
 - 实验充分度: ⭐⭐⭐⭐⭐ 公开数据集 + 工业数据集 + 在线 A/B 测试
 - 写作质量: ⭐⭐⭐⭐ 技术细节完整但公式密集
 - 价值: ⭐⭐⭐⭐⭐ 已在大规模平台部署，实际价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)
+- [Distill Gold from Massive Ores: Bi-level Data Pruning towards Efficient Dataset Distillation](../../ECCV2024/causal_inference/distill_gold_from_massive_ores_bi-level_data_pruning_towards_efficient_dataset_d.md)
+- [Cyclic Counterfactuals under Shift–Scale Interventions](cyclic_counterfactuals_under_shift-scale_interventions.md)
+- [Revealing Multimodal Causality with Large Language Models](revealing_multimodal_causality_with_large_language_models.md)
+- [Characterization and Learning of Causal Graphs from Hard Interventions](characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+
+<!-- RELATED:END -->

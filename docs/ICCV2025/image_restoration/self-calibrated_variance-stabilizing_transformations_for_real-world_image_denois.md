@@ -148,3 +148,15 @@ $$\hat{\boldsymbol{s}} = (f^{\text{inv}}_{\boldsymbol{\theta},\alpha,\beta} \cir
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖合成噪声、荧光显微镜、智能手机相机三类场景，对比方法全面
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰严谨，但符号较多需要仔细跟读
 - 价值: ⭐⭐⭐⭐⭐ 零样本方法达到接近有监督性能，在资源受限场景具有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TM-BSN: Triangular-Masked Blind-Spot Network for Real-World Self-Supervised Image Denoising](../../CVPR2026/image_restoration/tm-bsn_triangular-masked_blind-spot_network_for_real-world_self-supervised_image.md)
+- [Blind2Sound: Self-Supervised Image Denoising without Residual Noise](blind2sound_self-supervised_image_denoising_without_residual_noise.md)
+- [Asymmetric Mask Scheme for Self-supervised Real Image Denoising](../../ECCV2024/image_restoration/asymmetric_mask_scheme_for_self-supervised_real_image_denoising.md)
+- [Emulating Self-Attention with Convolution for Efficient Image Super-Resolution](emulating_self-attention_with_convolution_for_efficient_image_super-resolution.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+
+<!-- RELATED:END -->

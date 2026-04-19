@@ -150,3 +150,15 @@ $$q \leq \text{quantile}\left(L_{p^*}(Z_{p^*}), 1-\alpha+\frac{\alpha^2}{2}\righ
 - **实验充分度**: ⭐⭐⭐ 理论严谨但实验规模偏小，缺少LLM Agent实验
 - **写作质量**: ⭐⭐⭐⭐ 形式化定义清晰，示例（DroneNav/信息检索）直观
 - **实用价值**: ⭐⭐⭐⭐ 对安全关键Agent部署有坚实的理论指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
+- [From Static Benchmarks to Dynamic Protocol: Agent-Centric Text Anomaly Detection for Evaluating LLM Reasoning](from_static_benchmarks_to_dynamic_protocol_agent-centric_text_anomaly_detection_.md)
+- [From Single to Societal: Analyzing Persona-Induced Bias in Multi-Agent Interactions](../../AAAI2026/ai_safety/from_single_to_societal_analyzing_persona-induced_bias_in_multi-agent_interactio.md)
+- [Convex Markov Games: A New Frontier for Multi-Agent Reinforcement Learning](../../ICML2025/ai_safety/convex_markov_games_a_new_frontier_for_multi-agent_reinforcement_learning.md)
+- [It's Complicated: The Relationship of Algorithmic Fairness and Non-Discrimination Provisions for High-Risk Systems in the EU AI Act](../../NeurIPS2025/ai_safety/its_complicated_the_relationship_of_algorithmic_fairness_and_non-discrimination_.md)
+
+<!-- RELATED:END -->

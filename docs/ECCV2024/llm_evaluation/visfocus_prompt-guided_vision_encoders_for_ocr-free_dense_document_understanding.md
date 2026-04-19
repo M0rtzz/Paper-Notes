@@ -154,3 +154,15 @@ $$\mathcal{M}(\mathbf{p}, X) = \mathcal{M}_L(\mathbf{p}, \mathcal{M}_V^p(\mathbf
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、详细消融（组件拆解、位置分析、密度分析、注入方式对比）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，动机阐述到位
 - 价值: ⭐⭐⭐⭐ 为OCR-free文档理解提供了有效的提示感知编码范式，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding](../../ACL2025/llm_evaluation/kitab-bench_a_comprehensive_multi-domain_benchmark_for_arabic_ocr_and_document_u.md)
+- [Scalable Vision-Guided Crop Yield Estimation](../../AAAI2026/llm_evaluation/scalable_vision-guided_crop_yield_estimation.md)
+- [SIGMA: Sinkhorn-Guided Masked Video Modeling](sigma_sinkhorn-guided_masked_video_modeling.md)
+- [OGNI-DC: Robust Depth Completion with Optimization-Guided Neural Iterations](ogni-dc_robust_depth_completion_with_optimization-guided_neural_iterations.md)
+- [MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark](../../ACL2025/llm_evaluation/mmlu-cf_a_contamination-free_multi-task_language_understanding_benchmark.md)
+
+<!-- RELATED:END -->

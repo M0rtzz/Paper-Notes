@@ -139,3 +139,15 @@ $$\mathcal{L}_{\text{OraPO}} = \frac{1}{B}\sum_{i=1}^{B}[(1 - w_i^{(t)})\mathcal
 - 实验充分度: ⭐⭐⭐⭐ — 两个大型数据集、28+ 基线对比、详细消融、gold label 验证、商用 API 对比
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法推导完整，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ — 极致数据效率对医疗场景有极强实用价值，recall 导向设计符合临床需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+- [MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding](medgrpo_multi-task_reinforcement_learning_for_heterogeneous_medical_video_unders.md)
+- [CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation](cure_curriculum-guided_multi-task_training_for_reliable_anatomy_grounded_report_.md)
+- [Glance and Focus Reinforcement for Pan-cancer Screening](../../ICLR2026/medical_imaging/glance_and_focus_reinforcement_for_pan-cancer_screening.md)
+
+<!-- RELATED:END -->

@@ -176,3 +176,15 @@ ITLR 在 12 个（模型×数据集）组合中的 11 个取得最佳性能。
 ## 评分
 
 ⭐⭐⭐⭐ — 方法简洁优雅，对否定处理效果显著，实用价值高（对 RAG/搜索系统有直接指导意义），但无否定时性能轻微退化且评估依赖 LLM 生成数据是美中不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Generalization across Measurement Systems: LLMs Entail More Test-Time Compute for Underrepresented Cultures](on_generalization_across_measurement_systems_llms_entail_more_test-time_compute_.md)
+- [LogicPro: Improving Complex Logical Reasoning via Program-Guided Learning](logicpro_program_guided_reasoning.md)
+- [Aristotle: Mastering Logical Reasoning with A Logic-Complete Decompose-Search-Resolve Framework](aristotle_logical_reasoning.md)
+- [Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](../../AAAI2026/llm_reasoning/jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
+- [Enhancing Mathematical Reasoning in LLMs by Stepwise Correction](enhancing_mathematical_reasoning_in_llms_by_stepwise_correction.md)
+
+<!-- RELATED:END -->

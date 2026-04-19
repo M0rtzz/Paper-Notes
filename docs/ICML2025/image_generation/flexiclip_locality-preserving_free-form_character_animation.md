@@ -146,3 +146,15 @@ FlexiClip 在视觉保真度（CLIP 0.9563 vs 0.9401）和文本-视频对齐（
 ⭐⭐⭐⭐ (4/5)
 
 创新性强，将pfODE和GFlowNet引入剪贴画动画是有趣的跨领域融合。实验全面，包含定量评估、消融和用户研究。但计算成本较高，GD指标略逊，且限于2D场景，实际应用场景相对有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAVFlow: Preserving Paralinguistic Elements with Conditional Flow Matching for Zero-Shot AV2AV Multilingual Translation](../../ICCV2025/image_generation/mavflow_preserving_paralinguistic_elements_with_conditional_flow_matching_for_ze.md)
+- [MatchDiffusion: Training-free Generation of Match-Cuts](../../ICCV2025/image_generation/matchdiffusion_training-free_generation_of_match-cuts.md)
+- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](../../ICCV2025/image_generation/freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
+- [TAUE: Training-free Noise Transplant and Cultivation Diffusion Model](../../CVPR2026/image_generation/taue_training-free_noise_transplant_and_cultivation_diffusion_model.md)
+- [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](../../CVPR2026/image_generation/tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
+
+<!-- RELATED:END -->

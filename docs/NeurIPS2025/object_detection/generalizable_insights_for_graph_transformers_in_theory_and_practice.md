@@ -137,3 +137,15 @@ GDT 基于标准 Transformer 编码器层，支持两种 token 化：
 - 实验充分度: ⭐⭐⭐⭐⭐ 8M图/270M token 六任务全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨实验系统洞察清晰
 - 价值: ⭐⭐⭐⭐ GT 统一框架和 PE 选择指南
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Effective Federated Graph Foundation Model via Mitigating Knowledge Entanglement](towards_effective_federated_graph_foundation_model_via_mitigating_knowledge_enta.md)
+- [Adversarial Attention Perturbations for Large Object Detection Transformers](../../ICCV2025/object_detection/adversarial_attention_perturbations_for_large_object_detection_transformers.md)
+- [Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
+- [TAPTR: Tracking Any Point with Transformers as Detection](../../ECCV2024/object_detection/taptr_tracking_any_point_with_transformers_as_detection.md)
+- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](../../CVPR2026/object_detection/just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
+
+<!-- RELATED:END -->

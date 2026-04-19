@@ -151,3 +151,15 @@ VACE-Benchmark（480评测样本，12种任务）上的自动评分+用户研究
 - 实验充分度: ⭐⭐⭐⭐ 12种任务的对比+消融+用户研究+组合任务可视化，但VACE-Benchmark规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ VCU的形式化定义清晰简洁，架构描述条理分明
 - 价值: ⭐⭐⭐⭐⭐ 首个视频DiT上的全任务统一模型，填补了视频统一生成编辑的空白，代码开源且来自阿里通义实验室
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks](generating_fast_and_slow_scalable_parallel_video_generation_with_video_interface.md)
+- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+- [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
+- [ReCamMaster: Camera-Controlled Generative Rendering from A Single Video](recammaster_camera-controlled_generative_rendering_from_a_single_video.md)
+- [SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization](sweettok_semantic-aware_spatial-temporal_tokenizer_for_compact_video_discretizat.md)
+
+<!-- RELATED:END -->

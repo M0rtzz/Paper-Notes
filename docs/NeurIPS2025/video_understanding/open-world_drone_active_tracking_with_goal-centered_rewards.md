@@ -162,3 +162,15 @@ $$r_{gc}(P_g) = \begin{cases} \tanh(\alpha(1-\phi(P_g, C_g))^3), & P_g \in \math
 ⭐⭐⭐⭐
 
 系统性的工作，基准和方法均有贡献。奖励设计有理论支撑且验证充分，但跟踪方法本身（CNN+GRU+PPO）较为标准。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TrackingWorld: World-centric Monocular 3D Tracking of Almost All Pixels](trackingworld_world-centric_monocular_3d_tracking_of_almost_all_pixels.md)
+- [Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking](../../ICCV2025/video_understanding/attention_to_trajectory_trajectory-aware_open-vocabulary_tracking.md)
+- [Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity](lattice_boltzmann_model_for_learning_real-world_pixel_dynamicity.md)
+- [AMEGO: Active Memory from Long EGOcentric Videos](../../ECCV2024/video_understanding/amego_active_memory_from_long_egocentric_videos.md)
+- [SLAck: Semantic, Location, and Appearance Aware Open-Vocabulary Tracking](../../ECCV2024/video_understanding/slack_semantic_location_and_appearance_aware_open-vocabulary_tracking.md)
+
+<!-- RELATED:END -->

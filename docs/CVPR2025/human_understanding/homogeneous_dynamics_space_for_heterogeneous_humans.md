@@ -134,3 +134,15 @@ HDyS 是由多个自编码器组成的聚合架构，对应逆动力学和前向
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集覆盖全部动力学层次，消融实验细致（组件、数据源、维度、规模/异构性分解）
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，但涉及大量生物力学背景知识，门槛较高
 - 价值: ⭐⭐⭐⭐ 对人体动力学领域有基础性贡献，但应用场景相对专业
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments](../../ICML2025/human_understanding/a_generalizable_physics-enhanced_state_space_model_for_long-term_dynamics_foreca.md)
+- [HOP: Heterogeneous Topology-based Multimodal Entanglement for Co-Speech Gesture Generation](hop_heterogeneous_topology-based_multimodal_entanglement_for_co-speech_gesture_g.md)
+- [BEDLAM2.0: Synthetic Humans and Cameras in Motion](../../NeurIPS2025/human_understanding/bedlam20_synthetic_humans_and_cameras_in_motion.md)
+- [Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation](learning_phase_distortion_with_selective_state_space_models_for_video_turbulence.md)
+- [Reactivation: Empirical NTK Dynamics Under Task Shifts](../../ICML2025/human_understanding/reactivation_empirical_ntk_dynamics_under_task_shifts.md)
+
+<!-- RELATED:END -->

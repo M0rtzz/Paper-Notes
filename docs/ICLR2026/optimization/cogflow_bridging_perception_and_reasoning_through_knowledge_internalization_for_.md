@@ -123,3 +123,15 @@ CogFlow 提出认知启发的三阶段视觉数学推理框架（感知→内化
 - 实验充分度: ⭐⭐⭐⭐⭐ 多基准、消融、推理漂移定量分析、与闭源模型对比
 - 写作质量: ⭐⭐⭐⭐⭐ 认知科学动机清晰，图表设计精美，问题-方案对应明确
 - 价值: ⭐⭐⭐⭐⭐ 120K 数据集 + 开源代码，对视觉推理方向有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GHOST: Solving the Traveling Salesman Problem on Graphs of Convex Sets](../../AAAI2026/optimization/ghost_solving_the_traveling_salesman_problem_on_graphs_of_convex_sets.md)
+- [AutoOpt: A Dataset and a Unified Framework for Automating Optimization Problem Solving](../../NeurIPS2025/optimization/autoopt_a_dataset_and_a_unified_framework_for_automating_optimization_problem_so.md)
+- [Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning](scaf-grpo_scaffolded_group_relative_policy_optimization_for_enhancing_llm_reason.md)
+- [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](../../NeurIPS2025/optimization/a_theoretical_study_on_bridging_internal_probability_and_sel.md)
+- [Learning to Solve Orienteering Problem with Time Windows and Variable Profits](learning_to_solve_orienteering_problem_with_time_windows_and_variable_profits.md)
+
+<!-- RELATED:END -->

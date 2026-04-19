@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 多种子实验设计严谨，但局限于单模型单数据集
 - 写作质量: ⭐⭐⭐⭐ 实证论文写作规范，结论表述审慎
 - 价值: ⭐⭐⭐ Workshop 论文定位合理，任务划分效应的洞察对该领域有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](../../ICML2025/graph_learning/from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)
+- [Can Knowledge Graphs Make Large Language Models More Trustworthy? An Empirical Study Over Open-ended Question Answering](../../ACL2025/graph_learning/kg_llm_trustworthy_qa.md)
+- [Uncertain Knowledge Graph Completion via Semi-Supervised Confidence Distribution Learning](uncertain_knowledge_graph_completion_via_semi-supervised_confidence_distribution.md)
+- [MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
+- [Inductive Transfer Learning for Graph-Based Recommenders](inductive_transfer_learning_for_graph-based_recommenders.md)
+
+<!-- RELATED:END -->

@@ -103,3 +103,15 @@ $$\mathcal{J}_{DTPO} = \mathcal{J}_{tool} + \mathcal{J}_{answer}$$
 - 实验充分度: ⭐⭐⭐⭐ (9 个 VQA benchmark，全面的消融实验)
 - 写作质量: ⭐⭐⭐⭐ (动机清晰，方法推导严谨)
 - 价值: ⭐⭐⭐⭐ (高效 VLM 的实用方向，DTPO 可推广)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMind: Bio-inspired Training-free Adaptive Visual Representations for Vision-Language Models](llmind_bio-inspired_training-free_adaptive_visual_representations_for_vision-lan.md)
+- [Phantasia: Context-Adaptive Backdoors in Vision Language Models](phantasia_context-adaptive_backdoors_in_vision_language_models.md)
+- [AVG-LLaVA: An Efficient Large Multimodal Model with Adaptive Visual Granularity](../../ACL2025/multimodal_vlm/avg-llava_an_efficient_large_multimodal_model_with_adaptive_visual_granularity.md)
+- [NVILA: Efficient Frontier Visual Language Models](../../CVPR2025/multimodal_vlm/nvila_efficient_frontier_visual_language_models.md)
+- [TinyChemVL: Advancing Chemical Vision-Language Models via Efficient Visual Token Reduction and Complex Reaction Tasks](../../AAAI2026/multimodal_vlm/tinychemvl_advancing_chemical_vision-language_models_via_efficient_visual_token_.md)
+
+<!-- RELATED:END -->

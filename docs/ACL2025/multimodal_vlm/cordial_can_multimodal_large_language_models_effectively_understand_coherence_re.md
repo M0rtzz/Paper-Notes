@@ -147,3 +147,15 @@ CORDIAL评估MLLM在三个话语领域的连贯关系预测和验证能力：
 - 实验充分度: ⭐⭐⭐⭐ 10+模型、3种提示策略、3个领域，但各领域测试集规模不同可能影响结论
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，连贯关系定义准确，但部分表格过于密集
 - 价值: ⭐⭐⭐⭐ 指出了MLLM评估的重要盲区，对"MLLM是否真正理解多模态话语"提出了尖锐质疑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [NegVQA: Can Vision Language Models Understand Negation?](negvqa_can_vision_language_models_understand_negation.md)
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+- [Can MLLMs Understand the Deep Implication Behind Chinese Images?](can_mllms_understand_the_deep_implication_behind_chinese_images.md)
+- [Enhance Multimodal Consistency and Coherence for Text-Image Plan Generation](enhance_multimodal_consistency_and_coherence_for_text-image_plan_generation.md)
+
+<!-- RELATED:END -->

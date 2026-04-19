@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ DUD-E + LIT-PCBA 双基准，holo/apo-exp/apo-pred × oracle/annot/blind 多维对比
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入透彻，实验设计严谨，结构清晰
 - 价值: ⭐⭐⭐⭐⭐ 解决了 SBVS 从 holo 到 apo 的关键转化瓶颈，对药物发现有直接实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S2Drug: Bridging Protein Sequence and 3D Structure in Contrastive Representation Learning for Virtual Screening](../../AAAI2026/medical_imaging/s2drug_bridging_protein_sequence_and_3d_structure_in_contrastive_representation_.md)
+- [Better than Average: Spatially-Aware Aggregation of Segmentation Uncertainty Improves Downstream Performance](../../CVPR2026/medical_imaging/better_than_average_spatially-aware_aggregation_of_segmentation_uncertainty_impr.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [Towards Multiscale Graph-based Protein Learning with Geometric Secondary Structural Motifs](towards_multiscale_graph-based_protein_learning_with_geometric_secondary_structu.md)
+- [Multimodal Disease Progression Modeling via Spatiotemporal Disentanglement and Multiscale Alignment](multimodal_disease_progression_modeling_via_spatiotemporal_disentanglement_and_m.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ Free Sinewich 提出基于频率切换的参数高效多任务学习框架，通
 - 实验充分度: ⭐⭐⭐⭐ 两个基准、多种消融(组件/共享方式/解码器/秩)、与大量基线对比，但NYUDv2上仍为负Δm
 - 写作质量: ⭐⭐⭐⭐ 方法动机链清晰，数学公式推导完整，消融设计有针对性
 - 价值: ⭐⭐⭐⭐ 对PEFT-MTL领域贡献显著，"真正参数复用"的论证有启发性，可推广到其他多任务场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](../../ECCV2024/signal_comm/pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
+- [DiTASK: Multi-Task Fine-Tuning with Diffeomorphic Transformations](../../CVPR2025/signal_comm/ditask_multi-task_fine-tuning_with_diffeomorphic_transformations.md)
+- [Dual-Imbalance Continual Learning for Real-World Food Recognition](dual-imbalance_continual_learning_for_real-world_food_recognition.md)
+- [Task Aware Modulation Using Representation Learning for Upscaling of Terrestrial Carbon Fluxes](../../AAAI2026/signal_comm/task_aware_modulation_using_representation_learning_for_upsaling_of_terrestrial_.md)
+
+<!-- RELATED:END -->

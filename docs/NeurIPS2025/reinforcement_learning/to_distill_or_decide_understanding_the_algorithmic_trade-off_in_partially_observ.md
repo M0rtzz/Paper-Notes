@@ -169,3 +169,15 @@ tags:
 - **实验充分性**: ⭐⭐⭐⭐ — 控制实验充分验证理论预测
 - **实际影响**: ⭐⭐⭐⭐ — 对 sim-to-real 和机器人控制实践有指导价值
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论与实验的结合非常自然
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Focus: Prioritizing Informative Histories with Structured Attention Mechanisms in Partially Observable Reinforcement Learning](learning_to_focus_prioritizing_informative_histories_with_structured_attention_m.md)
+- [PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](../../ICML2025/reinforcement_learning/pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
+- [Bootstrap Off-policy with World Model](boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [Bootstrap Off-policy with World Model (BOOM)](bootstrap_off-policy_with_world_model.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](real-world_reinforcement_learning_of_active_perception_behaviors.md)
+
+<!-- RELATED:END -->

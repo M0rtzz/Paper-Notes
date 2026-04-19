@@ -141,3 +141,15 @@ SDEval 以原始安全基准样本 $P=(T, I)$ 为输入，通过动态策略集 
 - **实验充分度** ⭐⭐⭐⭐：覆盖 17 个 MLLM、2 个安全基准 + 2 个能力基准，消融详尽
 - **写作质量** ⭐⭐⭐⭐：动机清晰，框架图易于理解
 - **价值** ⭐⭐⭐⭐：为 MLLM 安全评估提供了可持续演进的方法论，对社区有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory](../../CVPR2026/multimodal_vlm/evolving_contextual_safety_in_multi-modal_large_language_models_via_inference-ti.md)
+- [Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models](../../ICLR2026/multimodal_vlm/dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis.md)
+- [Video-SafetyBench: A Benchmark for Safety Evaluation of Video LVLMs](../../NeurIPS2025/multimodal_vlm/video-safetybench_a_benchmark_for_safety_evaluation_of_video_lvlms.md)
+- [MoDES: Accelerating Mixture-of-Experts Multimodal Large Language Models via Dynamic Expert Skipping](../../CVPR2026/multimodal_vlm/modes_moe_dynamic_expert_skipping.md)
+- [Hierarchical Safety Realignment: Lightweight Restoration of Safety in Pruned Large Vision-Language Models](../../ACL2025/multimodal_vlm/hierarchical_safety_realignment_lightweight_restoration_of_safety_in_pruned_larg.md)
+
+<!-- RELATED:END -->

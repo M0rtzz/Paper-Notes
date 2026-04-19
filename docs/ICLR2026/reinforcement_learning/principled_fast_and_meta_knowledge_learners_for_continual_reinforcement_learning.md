@@ -160,3 +160,15 @@ FAME（FAst and MEta knowledge learner）包含两个耦合的学习器：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 涵盖像素级和连续控制两类基准、值函数和策略梯度两类算法，统计结果充分（30 seeds）
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，理论推导严谨，从基础定义到算法设计的逻辑链条完整
 - **价值**: ⭐⭐⭐⭐ 为持续 RL 提供了理论基础和实用算法，弥合了理论与实践的差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Knowledge Adaptation for Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
+- [Position: Lifetime Tuning is Incompatible with Continual Reinforcement Learning](../../ICML2025/reinforcement_learning/position_lifetime_tuning_is_incompatible_with_continual_reinforcement_learning.md)
+- [Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation](../../AAAI2026/reinforcement_learning/scalable_multi-objective_and_meta_reinforcement_learning_via_gradient_estimation.md)
+- [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
+
+<!-- RELATED:END -->

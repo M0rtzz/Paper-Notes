@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量定性比较充分，消融详尽，但仅在合成数据上评估
 - 写作质量: ⭐⭐⭐⭐⭐ 方法动机清晰，技术细节完整，图表设计精良
 - 价值: ⭐⭐⭐⭐ 对交互式渲染和虚拟制作有实际应用价值，确定性输出是生产环境的刚需
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching](mpdit_multi-patch_global-to-local_transformer_architecture_for_efficient_flow_ma.md)
+- [Flow Matching Neural Processes](../../NeurIPS2025/image_generation/flow_matching_neural_processes.md)
+- [VeCoR — Velocity Contrastive Regularization for Flow Matching](vecor_--_velocity_contrastive_regularization_for_flow_matching.md)
+- [SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](../../ICLR2026/image_generation/flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
+- [ContinualFlow: Learning and Unlearning with Neural Flow Matching](../../ICML2025/image_generation/continualflow_learning_and_unlearning_with_neural_flow_matching.md)
+
+<!-- RELATED:END -->

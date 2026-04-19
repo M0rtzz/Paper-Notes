@@ -165,3 +165,15 @@ Co-Erasing 可作为即插即用模块嵌入其他擦除框架：
 - 实验充分度: ⭐⭐⭐⭐ (消融完整，多任务多框架验证)
 - 写作质量: ⭐⭐⭐⭐ (动机分析清晰，结构工整)
 - 价值: ⭐⭐⭐⭐ (AI 安全方向实用性强，但模型覆盖面待扩展)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](../../CVPR2025/image_generation/from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
+- [Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models](performance_plateaus_in_inference-time_scaling_for_text-to-image_diffusion_witho.md)
+- [One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting](../../NeurIPS2025/image_generation/one_stone_with_two_birds_a_null-text-null_frequency-aware_diffusion_models_for_t.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](../../ECCV2024/image_generation/latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space](dctdiff_intriguing_properties_of_image_generative_modeling_in_the_dct_space.md)
+
+<!-- RELATED:END -->

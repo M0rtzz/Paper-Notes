@@ -113,3 +113,15 @@ MetaScenes 构建了一个大规模可仿真3D场景数据集（15366个物体, 
 - 实验充分度: ⭐⭐⭐⭐ 提供了详尽的对比和两个下游任务验证，但消融不够深入
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，动机推导合理，图表制作精良
 - 价值: ⭐⭐⭐⭐⭐ 数据集贡献巨大（15366物体+98423候选资产），对EAI领域有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Demeter: A Parametric Model of Crop Plant Morphology from the Real World](../../ICCV2025/3d_vision/demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
+- [FastCAD: Real-Time CAD Retrieval and Alignment from Scans and Videos](../../ECCV2024/3d_vision/fastcad_real-time_cad_retrieval_and_alignment_from_scans_and_videos.md)
+- [Revisiting Point Cloud Completion: Are We Ready For The Real-World?](../../ICCV2025/3d_vision/revisiting_point_cloud_completion_are_we_ready_for_the_real-world.md)
+- [MARVEL-40M+: Multi-Level Visual Elaboration for High-Fidelity Text-to-3D Content Creation](marvel-40m_multi-level_visual_elaboration_for_high-fidelity_text-to-3d_content_c.md)
+- [3D Reconstruction of Objects in Hands without Real World 3D Supervision](../../ECCV2024/3d_vision/3d_reconstruction_of_objects_in_hands_without_real_world_3d.md)
+
+<!-- RELATED:END -->

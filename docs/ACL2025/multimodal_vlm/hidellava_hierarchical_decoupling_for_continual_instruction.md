@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 新旧基准对比 + 消融 + CKA 可视化
 - 写作质量: ⭐⭐⭐⭐ CKA 分析和实验设计逻辑清晰
 - 价值: ⭐⭐⭐⭐ 对 MLLM 持续学习有实质推进，基准修正有社区价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Multimodal Continual Instruction Tuning with BranchLoRA](branchlora_continual_instruction.md)
+- [SMoLoRA: Exploring and Defying Dual Catastrophic Forgetting in Continual Visual Instruction Tuning](../../ICCV2025/multimodal_vlm/smolora_exploring_and_defying_dual_catastrophic_forgetting_in_continual_visual_i.md)
+- [Dynamic Mixture of Curriculum LoRA Experts for Continual Multimodal Instruction Tuning](../../ICML2025/multimodal_vlm/dynamic_mixture_of_curriculum_lora_experts_for_continual_multimodal_instruction_.md)
+- [AVG-LLaVA: An Efficient Large Multimodal Model with Adaptive Visual Granularity](avg-llava_an_efficient_large_multimodal_model_with_adaptive_visual_granularity.md)
+- [Error-driven Data-efficient Large Multimodal Model Tuning](error-driven_data-efficient_large_multimodal_model_tuning.md)
+
+<!-- RELATED:END -->

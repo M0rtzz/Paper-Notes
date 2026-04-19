@@ -139,3 +139,15 @@ GaitHeat 的 pipeline 如下：（1）使用现成的姿态估计器（如 HRNet
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集全面评估，消融和泛化实验丰富
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述出色，"cut out the middleman"标题很有记忆点
 - 价值: ⭐⭐⭐⭐ 弥合姿态方法与轮廓方法的差距，对步态识别领域有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CarGait: Cross-Attention based Re-ranking for Gait Recognition](../../ICCV2025/human_understanding/cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
+- [GaitSnippet: Gait Recognition Beyond Unordered Sets and Ordered Sequences](../../ICLR2026/human_understanding/gaitsnippet_gait_recognition_beyond_unordered_sets_and_ordered_sequences.md)
+- [Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)
+- [Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization](pose-aware_self-supervised_learning_with_viewpoint_trajectory_regularization.md)
+- [EvSign: Sign Language Recognition and Translation with Streaming Events](evsign_sign_language_recognition_and_translation_with_streaming_events.md)
+
+<!-- RELATED:END -->

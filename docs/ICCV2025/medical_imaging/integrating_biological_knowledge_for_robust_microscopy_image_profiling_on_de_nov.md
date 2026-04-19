@@ -144,3 +144,15 @@ scFM维度消融（WSL预训练，U2OS评测）：
 - **实验充分度**: ⭐⭐⭐⭐ 5种预训练基线×3个de novo细胞系，消融实验细致（CS/PS分离、图损失分析、scFM维度）
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰、方法动机充分、理论分析严谨
 - **价值**: ⭐⭐⭐⭐ 为药物发现中的跨细胞系泛化提供了有前景的方向，尽管绝对性能仍有较大提升空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [De novo generation of functional terpene synthases using TpsGPT](../../NeurIPS2025/medical_imaging/de_novo_generation_of_functional_terpene_synthases_using_tpsgpt.md)
+- [UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](../../ICML2025/medical_imaging/unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
+- [One Small Step with Fingerprints, One Giant Leap for De Novo Molecule Generation from Mass Spectra](../../NeurIPS2025/medical_imaging/one_small_step_with_fingerprints_one_giant_leap_for_de_novo_molecule_generation_.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [COIN: Confidence Score-Guided Distillation for Annotation-Free Cell Segmentation](coin_confidence_score-guided_distillation_for_annotation-free_cell_segmentation.md)
+
+<!-- RELATED:END -->

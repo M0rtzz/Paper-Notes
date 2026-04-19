@@ -118,3 +118,15 @@ RWS benchmark（158 道太阳物理题，数值/符号/文本三类） -> 程序
 - 实验充分度: ⭐⭐⭐⭐ 跨 6 个 benchmark 比较，但 RWS 本身规模小
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，系统工程原则贯穿全文
 - 价值: ⭐⭐⭐⭐ 提供了有解释力的 agent 模式选择指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ControlFusion: A Controllable Image Fusion Framework with Language-Vision Degradation Prompts](controlfusion_a_controllable_image_fusion_framework_with_language-vision_degrada.md)
+- [A Probabilistic U-Net Approach to Downscaling Climate Simulations](a_probabilistic_unet_approach_to_downscaling_climate_simulat.md)
+- [Adaptive Online Emulation for Accelerating Complex Physical Simulations](adaptive_online_emulation_for_accelerating_complex_physical_simulations.md)
+- [Predicting Public Health Impacts of Electricity Usage](predicting_public_health_impacts_of_electricity_usage.md)
+- [Semi-supervised Video Desnowing Network via Temporal Decoupling Experts and Distribution-Driven Contrastive Regularization](../../ECCV2024/earth_science/semi-supervised_video_desnowing_network_via_temporal_decoupling_experts_and_dist.md)
+
+<!-- RELATED:END -->

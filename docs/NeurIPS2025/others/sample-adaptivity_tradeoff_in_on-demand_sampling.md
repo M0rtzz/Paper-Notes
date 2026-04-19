@@ -168,3 +168,15 @@ $$\Omega\left(\frac{dk^{1/r}}{r\log^2 k}\right)$$
 - 实验充分度: ⭐⭐ — 纯理论工作，无实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，从简单到复杂层层递进，直觉解释出色
 - 价值: ⭐⭐⭐⭐⭐ — 为理解自适应数据采集的本质困难提供了坚实理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
+- [One Sample is Enough to Make Conformal Prediction Robust](one_sample_is_enough_to_make_conformal_prediction_robust.md)
+- [Foster Adaptivity and Balance in Learning with Noisy Labels](../../ECCV2024/others/foster_adaptivity_and_balance_in_learning_with_noisy_labels.md)
+- [Sampling from Binary Quadratic Distributions via Stochastic Localization](../../ICML2025/others/sampling_from_binary_quadratic_distributions_via_stochastic_localization.md)
+- [Scalable Equilibrium Sampling with Sequential Boltzmann Generators](../../ICML2025/others/scalable_equilibrium_sampling_with_sequential_boltzmann_generators.md)
+
+<!-- RELATED:END -->

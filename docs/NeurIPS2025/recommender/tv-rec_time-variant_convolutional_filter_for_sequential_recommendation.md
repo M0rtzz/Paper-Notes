@@ -134,3 +134,15 @@ $$\mathcal{L} = -\sum_{t} \log \frac{\exp(s_{y_{t+1}})}{\sum_{j} \exp(s_j)}$$
 | 写作质量 | 4 |
 | 实用价值 | 4 |
 | 总体推荐 | 4 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wavelet Enhanced Adaptive Frequency Filter for Sequential Recommendation](../../AAAI2026/recommender/wavelet_enhanced_adaptive_frequency_filter_for_sequential_re.md)
+- [MMPB: It's Time for Multi-Modal Personalization](mmpb_its_time_for_multi-modal_personalization.md)
+- [Inference-Time Reward Hacking in Large Language Models](inference-time_reward_hacking_in_large_language_models.md)
+- [Think before Recommendation: Autonomous Reasoning-enhanced Recommender](think_before_recommendation_autonomous_reasoning-enhanced_recommender.md)
+- [Who You Are Matters: Bridging Topics and Social Roles via LLM-Enhanced Logical Recommendation](who_you_are_matters_bridging_topics_and_social_roles_via_llm-enhanced_logical_re.md)
+
+<!-- RELATED:END -->

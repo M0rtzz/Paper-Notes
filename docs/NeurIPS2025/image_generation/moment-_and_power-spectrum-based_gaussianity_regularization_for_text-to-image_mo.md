@@ -157,3 +157,15 @@ $$\mathcal{L}_{\mathcal{N}(0,I)} = \sum_{n \in \mathcal{K}} \mathcal{L}_n + \lam
 - **实验充分度**: ⭐⭐⭐⭐ （toy实验+两类应用任务，但基础模型单一）
 - **写作质量**: ⭐⭐⭐⭐⭐ （数学推导严谨，图表质量极高，直观性强）
 - **价值**: ⭐⭐⭐⭐ （对生成模型中的潜在空间优化有普遍指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TextDiffuser-2: Unleashing the Power of Language Models for Text Rendering](../../ECCV2024/image_generation/textdiffuser-2_unleashing_the_power_of_language_models_for_text_rendering.md)
+- [Continual Unlearning for Text-to-Image Diffusion Models: A Regularization Perspective](../../ICLR2026/image_generation/continual_unlearning_for_text-to-image_diffusion_models_a_regularization_perspec.md)
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+
+<!-- RELATED:END -->

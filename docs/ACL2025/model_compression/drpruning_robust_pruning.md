@@ -119,3 +119,15 @@ PPL 下降 -5.59%，下游任务提升 +1.52%。
 - 实验充分度: ⭐⭐⭐⭐ 单语+多语、PPL+下游+指令微调多维评估
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 提供了结构化剪枝的最佳实践，DRO 自动化具有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [Quantification of Large Language Model Distillation](quantification_of_large_language_model_distillation.md)
+- [BlockPruner: Fine-grained Pruning for Large Language Models](blockpruner_fine-grained_pruning_for_large_language_models.md)
+- [RADIO: Rate-Distortion Optimization for Large Language Model Compression](../../ICML2025/model_compression/radio_rate-distortion_optimization_for_large_language_model_compression.md)
+- [Unraveling LoRA Interference: Orthogonal Subspaces for Robust Model Merging](osrm_lora_merging_orthogonal.md)
+
+<!-- RELATED:END -->

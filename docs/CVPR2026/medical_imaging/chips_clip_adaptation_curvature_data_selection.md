@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 48 个基准的大规模系统验证
 - 写作质量: ⭐⭐⭐⭐ 理论和实验动机清晰
 - 价值: ⭐⭐⭐⭐ 为数据高效的基础模型适配提供了有力工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data](towards_efficient_medical_reasoning_with_minimal_fine-tuning_data.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mambabased_decoder_with.md)
+- [OraPO: Oracle-educated Reinforcement Learning for Data-efficient and Factual Radiology Report Generation](orapo_oracle_rl_radiology_report_generation.md)
+- [RDFace: A Benchmark Dataset for Rare Disease Facial Image Analysis under Extreme Data Scarcity and Phenotype-Aware Synthetic Generation](rdface_a_benchmark_dataset_for_rare_disease_facial_image_analysis_under_extreme_.md)
+- [Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions](adaptation_of_weakly_supervised_localization_in_hi.md)
+
+<!-- RELATED:END -->

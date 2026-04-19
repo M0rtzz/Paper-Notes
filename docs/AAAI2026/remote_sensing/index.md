@@ -10,30 +10,30 @@ description: >-
 
 **🤖 AAAI2026** · **7** 篇论文解读
 
-**[Asymmetric Cross-Modal Knowledge Distillation Bridging Modalities With Weak Sema](asymmetric_cross-modal_knowledge_distillation_bridging_modalities_with_weak_sema.md)**
+**[Asymmetric Cross-Modal Knowledge Distillation: Bridging Modalities with Weak Semantic Consistency](asymmetric_cross-modal_knowledge_distillation_bridging_modalities_with_weak_sema.md)**
 
 :   提出 Asymmetric Cross-modal Knowledge Distillation (ACKD) 新范式，通过 SemBridge 框架（包含自监督语义匹配 + 最优传输对齐两个即插即用模块）实现弱语义一致性条件下的跨模态知识蒸馏，使不同地理位置采集的多光谱（MS）图像能有效指导 RGB 图像的遥感场景分类。
 
-**[Consistency-Based Abductive Reasoning Over Perceptual Errors Of Multiple Pre-Tra](consistency-based_abductive_reasoning_over_perceptual_errors_of_multiple_pre-tra.md)**
+**[Consistency-based Abductive Reasoning over Perceptual Errors of Multiple Pre-trained Models in Novel Environments](consistency-based_abductive_reasoning_over_perceptual_errors_of_multiple_pre-tra.md)**
 
 :   将多个预训练感知模型在新环境中的冲突预测建模为一致性溯因推理问题，通过逻辑程序编码各模型的错误检测规则和领域约束，寻找在保持不一致率低于阈值的同时最大化预测覆盖率的最优假设，在15个航拍测试集上平均F1提升13.6%。
 
-**[Debiasing Machine Learning Predictions For Causal Inference Without Additional G](debiasing_machine_learning_predictions_for_causal_inference_without_additional_g.md)**
+**[Debiasing Machine Learning Predictions for Causal Inference Without Additional Ground Truth Data](debiasing_machine_learning_predictions_for_causal_inference_without_additional_g.md)**
 
 :   针对ML卫星贫困预测因均值回归导致因果处理效应衰减的问题，提出两种无需新标注数据的后处理校正方法——线性校准校正(LCC)和Tweedie局部去收缩——使同一预测地图可在多个下游因果试验中复用（"一图多试"范式），Tweedie校正在模拟和DHS真实数据上实现近无偏的处理效应估计。
 
-**[M3Sr Multi-Scale Multi-Perceptual Mamba For Efficient Spectral Reconstruction](m3sr_multi-scale_multi-perceptual_mamba_for_efficient_spectral_reconstruction.md)**
+**[M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction](m3sr_multi-scale_multi-perceptual_mamba_for_efficient_spectral_reconstruction.md)**
 
 :   提出 M3SR，一种基于 Mamba 的多尺度多感知架构，通过空间-频率-光谱三分支并行融合结合 U-Net 多尺度结构，以 2.17M 参数和 100.9G FLOPs 的低计算代价在四个光谱重建基准上超越现有 SOTA 方法。
 
-**[Machine Learning For Sustainable Rice Production Region-Scale Monitoring Of Wate](machine_learning_for_sustainable_rice_production_region-scale_monitoring_of_wate.md)**
+**[Machine Learning for Sustainable Rice Production: Region-Scale Monitoring of Water-Saving Practices in Punjab, India](machine_learning_for_sustainable_rice_production_region-scale_monitoring_of_wate.md)**
 
 :   提出维度分类方法将水稻节水实践识别解耦为播种维度(DSR vs PTR)和灌溉维度(AWD vs CF)两个独立二分类任务，仅使用Sentinel-1 SAR影像实现播种F1=0.80和灌溉F1=0.74，并在旁遮普邦300万+地块上进行大规模推理，地区级采纳率与政府统计高度相关（Spearman ρ=0.69）。
 
-**[Spatio-Temporal Context Learning With Temporal Difference Convolution For Moving](spatio-temporal_context_learning_with_temporal_difference_convolution_for_moving.md)**
+**[TDCNet: Spatio-Temporal Context Learning with Temporal Difference Convolution for Moving IRSTD](spatio-temporal_context_learning_with_temporal_difference_convolution_for_moving.md)**
 
 :   提出 TDCNet，将时间差分和 3D 卷积融合为统一的时间差分卷积 (TDC)，通过重参数化实现推理零额外开销，配合 TDC 引导的时空注意力，在自建 IRSTD-UAV 数据集上 F1 达 97.12%（AP50 93.83%），同时发布 15,106 帧真实红外无人机数据集。
 
-**[Uniabg Unified Adversarial View Bridging And Graph Correspondence For Unsupervis](uniabg_unified_adversarial_view_bridging_and_graph_correspondence_for_unsupervis.md)**
+**[UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization](uniabg_unified_adversarial_view_bridging_and_graph_correspondence_for_unsupervis.md)**
 
 :   提出双阶段无监督跨视角地理定位框架 UniABG，通过对抗式视角桥接 (VAAB) 消除无人机/卫星视角域差距，再用异构图过滤校准 (HGFC) 净化跨视角关联，在 University-1652 上 Satellite→Drone AP 达 93.29%，超过多数有监督方法。

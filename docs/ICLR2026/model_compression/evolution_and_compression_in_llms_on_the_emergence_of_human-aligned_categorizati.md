@@ -130,3 +130,15 @@ $$\mathcal{F}_\beta[q] = I_q(M;W) - \beta \cdot I_q(W;U)$$
 - 实验充分度: ⭐⭐⭐⭐ (39 模型大规模比较，但跨域泛化证据较初步)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰、理论动机充分、图示精美)
 - 价值: ⭐⭐⭐⭐ (为理解 LLM 的语义组织能力提供了全新理论视角)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM DNA: Tracing Model Evolution via Functional Representations](llm_dna_tracing_model_evolution_via_functional_representations.md)
+- [Human-LLM Collaborative Feature Engineering for Tabular Learning](human-llm_collaborative_feature_engineering_for_tabular_data.md)
+- [CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](../../AAAI2026/model_compression/coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)
+- [TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs](../../NeurIPS2025/model_compression/tokensqueeze_performance-preserving_compression_for_reasoning_llms.md)
+- [Preference-Aligned LoRA Merging: Preserving Subspace Coverage and Addressing Directional Anisotropy](../../CVPR2026/model_compression/preference-aligned_lora_merging_preserving_subspace_coverage_and_addressing_dire.md)
+
+<!-- RELATED:END -->

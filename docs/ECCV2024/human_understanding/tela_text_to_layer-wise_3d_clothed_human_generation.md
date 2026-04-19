@@ -118,3 +118,15 @@ TELA采用渐进式生成策略：(1) 首先从文本描述中生成基础人体
 - 实验充分度: ⭐⭐⭐ 展示了生成效果和编辑能力，但定量评估可以更丰富
 - 写作质量: ⭐⭐⭐ 方法描述清晰，但论文整体可以更精炼
 - 价值: ⭐⭐⭐⭐ 对虚拟试穿等应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WordRobe: Text-Guided Generation of Textured 3D Garments](wordrobe_text-guided_generation_of_textured_3d_garments.md)
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+- [Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
+- [WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation](worldpose_a_world_cup_dataset_for_global_3d_human_pose_estimation.md)
+- [Decomposed Vector-Quantized Variational Autoencoder for Human Grasp Generation](decomposed_vector-quantized_variational_autoencoder_for_human_grasp_generation.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ HBP 包含三个阶段：(1) **层次分组自动选择**：通过 profiling 确
 - **Stable Loss 的广泛适用性**：$T_{ave}$ 归一化的理论推导（每个 token 对损失贡献相等）不依赖 HBP 的层次结构，可独立应用于任何混合长度训练场景，包括预训练。
 - **与 MoE 训练的协同**：DeepSeek-V2 上 2.4× 加速说明 MoE 模型因专家通信开销大，对 SP 通信优化更敏感。HBP 的通信节省策略对 MoE 架构尤为重要。
 - **课程学习的自然嵌入**：层次结构天然支持"先短后长"的课程策略，无需额外的采样器设计，这种方法上的简洁性是工程落地的关键。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token-level Data Selection for Safe LLM Fine-tuning](../../ICLR2026/llm_efficiency/token-level_data_selection_for_safe_llm_fine-tuning.md)
+- [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
+- [Vocabulary Customization for Efficient Domain-Specific LLM Deployment](vocabulary_customization_for_efficient_domain-specific_llm_deployment.md)
+- [Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access](hardware-aligned_hierarchical_sparse_attention_for_efficient_long-term_memory_ac.md)
+- [Efficient Training-Free Online Routing for High-Volume Multi-LLM Serving](efficient_training-free_online_routing_for_high-volume_multi-llm_serving.md)
+
+<!-- RELATED:END -->

@@ -92,3 +92,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个模型、5个基准、>150种边界配置、4种策略对比、效率分析、详细案例分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，从动机→分析→方法→实验的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 仅5%延迟的即插即用幻觉缓解在实际部署中非常有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Faithful Multimodal Concept Bottleneck Models](towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Cut to the Chase: Training-free Multimodal Summarization via Chain-of-Events](cut_to_the_chase_training-free_multimodal_summarization_via_chain-of-events.md)
+- [FINER: MLLMs Hallucinate under Fine-grained Negative Queries](finer_mllms_hallucinate_under_fine-grained_negative_queries.md)
+- [How to Take a Memorable Picture? Empowering Users with Actionable Feedback](how_to_take_a_memorable_picture_empowering_users_with_actionable_feedback.md)
+- [SubspaceAD: Training-Free Few-Shot Anomaly Detection via Subspace Modeling](subspacead_training-free_few-shot_anomaly_detection_via_subspace_modeling.md)
+
+<!-- RELATED:END -->

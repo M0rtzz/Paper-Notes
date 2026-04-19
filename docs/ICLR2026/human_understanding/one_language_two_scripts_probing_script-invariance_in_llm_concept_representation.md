@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 5个模型规模覆盖充分，但数据集太小(30句)且仅一个模型族
 - 写作质量: ⭐⭐⭐⭐⭐ 实验设计清晰，结论推导严谨
 - 价值: ⭐⭐⭐⭐ 对理解LLM表征本质有重要贡献，提出了可复用的评估范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Unlearning with LLM Beliefs](llm_unlearning_with_llm_beliefs.md)
+- [COLD-Steer: Steering Large Language Models via In-Context One-step Learning Dynamics](cold-steer_steering_large_language_models_via_in-context_one-step_learning_dynam.md)
+- [Partially Shared Concept Bottleneck Models](../../AAAI2026/human_understanding/partially_shared_concept_bottleneck_models.md)
+- [Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models](../../CVPR2025/human_understanding/two_is_better_than_one_efficient_ensemble_defense_for_robust_and_compact_models.md)
+- [Rethinking Concept Bottleneck Models: From Pitfalls to Solutions](../../CVPR2026/human_understanding/rethinking_concept_bottleneck_models_from_pitfalls_to_solutions.md)
+
+<!-- RELATED:END -->

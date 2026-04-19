@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖压缩感知与稀疏回归两大任务，合成+真实数据，三组算法对比，多种评估指标，附录中还有高相关性、超高维、无监督、复信号处理等扩展实验
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰，图表直观，从旧准则到新准则的推导自然流畅，Figure 1 的可视化对比非常有效
 - 价值: ⭐⭐⭐⭐ 作为经典最优子集选择领域的理论+方法改进，具有很好的学术价值；Meta-Substitution 思路有启发性，但应用范围受限于线性稀疏模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample Efficient Demonstration Selection for In-Context Learning](sample_efficient_demonstration_selection_for_in-context_learning.md)
+- [Predictive Data Selection: The Data That Predicts Is the Data That Teaches](predictive_data_selection_the_data_that_predicts_is_the_data_that_teaches.md)
+- [OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference](orthorank_token_selection_via_sink_token_orthogonality_for_efficient_llm_inferen.md)
+- [Mitigating Selection Bias with Node Pruning and Auxiliary Options](../../ACL2025/model_compression/selection_bias_node_pruning.md)
+- [DataDecide: How to Predict Best Pretraining Data with Small Experiments](datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
+
+<!-- RELATED:END -->

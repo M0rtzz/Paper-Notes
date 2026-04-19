@@ -144,3 +144,15 @@ UniPhys 的核心流程：
 - 实验充分度: ⭐⭐⭐⭐ 涵盖多种控制任务，但缺少大规模定量对比（部分结果为定性分析）
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述清晰，方法推导详实，图示直观
 - 价值: ⭐⭐⭐⭐ 对物理角色控制领域有重要贡献，但与图像复原领域无关
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Physics-Informed Blur Learning Framework for Imaging Systems](../../CVPR2025/image_restoration/a_physics-informed_blur_learning_framework_for_imaging_systems.md)
+- [Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)](generic_event_boundary_detection_via_denoising_diffusion.md)
+- [Exploiting Diffusion Prior for Task-driven Image Restoration](exploiting_diffusion_prior_for_task-driven_image_restoration.md)
+- [MS-BART: Unified Modeling of Mass Spectra and Molecules for Structure Elucidation](../../NeurIPS2025/image_restoration/ms-bart_unified_modeling_of_mass_spectra_and_molecules_for_structure_elucidation.md)
+- [Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement](../../NeurIPS2025/image_restoration/latent_harmony_synergistic_unified_uhd_image_restoration_via_latent_space_regula.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ s1.1-32B在IFEval上下降47.38%的同时推理成本增加250%！
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个模型家族、多种规模、6个benchmark、4种推理模式、细粒度分析、case study，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，发现有说服力，case study很好地support了结论
 - 价值: ⭐⭐⭐⭐⭐ 对LRM社区有重要警示价值——推理能力的提升可能以基础能力为代价，adaptive reasoning是刚需
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
+- [Text-to-Scene with Large Reasoning Models](text-to-scene_with_large_reasoning_models.md)
+- [Are Large Reasoning Models Good Translation Evaluators? Analysis and Performance Boost](../../NeurIPS2025/llm_reasoning/are_large_reasoning_models_good_translation_evaluators_analysis_and_performance_.md)
+- [The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
+- [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](../../NeurIPS2025/llm_reasoning/adaptive_dual_reasoner_large_reasoning_models_can_think_efficiently_by_hybrid_re.md)
+
+<!-- RELATED:END -->

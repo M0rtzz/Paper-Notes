@@ -143,3 +143,15 @@ Positional Transformer 在所有五个算法任务上**OOD 泛化显著优于标
 - 实验充分度: ⭐⭐⭐⭐ (5 个算法任务 + 归纳头 + 混合输入，ID/OOD 全面覆盖)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论-实验-直觉三位一体，Figure 1 极为清晰)
 - 价值: ⭐⭐⭐⭐ (为理解注意力机制中位置与内容的角色提供了重要理论框架)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discrete Neural Algorithmic Reasoning](discrete_neural_algorithmic_reasoning.md)
+- [Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
+- [The Price of Freedom: Exploring Expressivity and Runtime Tradeoffs in Equivariant Networks](the_price_of_freedom_exploring_expressivity_and_runtime_tradeoffs_in_equivariant.md)
+- [Unique Hard Attention: A Tale of Two Sides](../../ACL2025/others/unique_hard_attention_a_tale_of_two_sides.md)
+- [Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph](../../ACL2025/others/why_are_positional_encodings_nonessential_for_deep_autoregressive_transformers_r.md)
+
+<!-- RELATED:END -->

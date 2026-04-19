@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种设置全面评估，消融分析到位，含用户研究
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机和方法解释充分
 - 价值: ⭐⭐⭐⭐⭐ 首次实现从单张图片到 360° 实时 Gaussian 头像的实用系统，应用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StrandHead: Text to Hair-Disentangled 3D Head Avatars Using Human-Centric Priors](../../ICCV2025/3d_vision/strandhead_text_to_hair-disentangled_3d_head_avatars_using_human-centric_priors.md)
+- [3D Gaussian Head Avatars with Expressive Dynamic Appearances by Compact Tensorial Representations](3d_gaussian_head_avatars_with_expressive_dynamic_appearances_by_compact_tensoria.md)
+- [Sequential Gaussian Avatars with Hierarchical Motion Context](../../ICCV2025/3d_vision/sequential_gaussian_avatars_with_hierarchical_motion_context.md)
+- [LUCAS: Layered Universal Codec Avatars](lucas_layered_universal_codec_avatars.md)
+- [BecomingLit: Relightable Gaussian Avatars with Hybrid Neural Shading](../../NeurIPS2025/3d_vision/becominglit_relightable_gaussian_avatars_with_hybrid_neural_shading.md)
+
+<!-- RELATED:END -->

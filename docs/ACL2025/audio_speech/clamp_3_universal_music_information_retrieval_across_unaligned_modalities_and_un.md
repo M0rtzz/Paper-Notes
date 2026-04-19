@@ -159,3 +159,15 @@ $$L_{CL} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{\exp(\text{sim}(z_i^t, z_i^m) 
 - **实验充分度**: ⭐⭐⭐⭐⭐ (多模态/多语言/跨模态全面评测, 多个基准)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰, 图表丰富, 实验设置详尽)
 - **价值**: ⭐⭐⭐⭐⭐ (开源模型+数据集+基准, 对MIR社区贡献巨大)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WavRAG: Audio-Integrated Retrieval Augmented Generation for Spoken Dialogue Models](wavrag_audio-integrated_retrieval_augmented_generation_for_spoken_dialogue_model.md)
+- [GigaSpeech 2: An Evolving, Large-Scale and Multi-domain ASR Corpus for Low-Resource Languages](gigaspeech2_low_resource_asr.md)
+- [ATRI: Mitigating Multilingual Audio Text Retrieval Inconsistencies by Reducing Data Distribution Errors](atri_mitigating_multilingual_audio_text_retrieval_inconsistencies_by_reducing_da.md)
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ tags:
 - **实用价值**: ⭐⭐⭐⭐⭐ — 直接对接抄袭检测和 AI 生成内容监管需求
 - **写作质量**: ⭐⭐⭐⭐⭐ — 逻辑清晰，图示精美，理论与实验配合良好
 - **综合评分**: 9.0/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identifying and Understanding Cross-Class Features in Adversarial Training](../../ICML2025/ai_safety/identifying_and_understanding_cross-class_features_in_adversarial_training.md)
+- [A Certified Unlearning Approach without Access to Source Data](../../ICML2025/ai_safety/a_certified_unlearning_approach_without_access_to_source_data.md)
+- [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs](fairness_difference_awareness.md)
+- [Quantifying Misattribution Unfairness in Authorship Attribution](quantifying_misattribution_unfairness_in_authorship_attribution.md)
+
+<!-- RELATED:END -->

@@ -163,3 +163,15 @@ SIS 是 DeepDiver 的核心涌现能力——模型**自适应地增加搜索频
 - 实验充分度: ⭐⭐⭐⭐⭐ (隔离测试、消融、跨语言、跨领域泛化分析极其详尽)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，分析逻辑严密)
 - 价值: ⭐⭐⭐⭐⭐ (对 LLM+搜索的 RL 训练有重要指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcement Learning Teachers of Test Time Scaling](reinforcement_learning_teachers_of_test_time_scaling.md)
+- [SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution](swe-rl_advancing_llm_reasoning_via_reinforcement_learning_on_open_software_evolu.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Complexity Scaling Laws for Neural Models using Combinatorial Optimization](complexity_scaling_laws_for_neural_models_using_combinatorial_optimization.md)
+- [TreeRL: LLM Reinforcement Learning with On-Policy Tree Search](../../ACL2025/reinforcement_learning/treerl_tree_search_rl.md)
+
+<!-- RELATED:END -->

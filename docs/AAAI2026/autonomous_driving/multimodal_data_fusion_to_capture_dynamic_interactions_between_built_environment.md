@@ -191,3 +191,15 @@ tags:
 - 实验充分度: ⭐⭐ — 仅有概念验证级别的初步结果，缺乏统计分析和大样本验证
 - 写作质量: ⭐⭐⭐⭐ — 问题动机和框架描述清晰，图表直观
 - 价值: ⭐⭐⭐ — 思路有启发性但实用性尚待验证，更偏向position paper
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiveHPS++: Robust and Coherent Motion Capture in Dynamic Free Environment](../../ECCV2024/autonomous_driving/livehps_robust_and_coherent_motion_capture_in_dynamic_free_environment.md)
+- [CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction](catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving.md)
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+- [Understanding Dynamic Scenes in Egocentric 4D Point Clouds](understanding_dynamic_scenes_in_ego_centric_4d_point_clouds.md)
+- [Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction](global-lens_transformers_adaptive_token_mixing_for_dynamic_link_prediction.md)
+
+<!-- RELATED:END -->

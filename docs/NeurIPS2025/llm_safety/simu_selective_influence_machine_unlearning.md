@@ -158,3 +158,15 @@ $$\theta_{t+1} = \theta_t - \eta_t \cdot \text{clip}\left(\frac{m_t}{\max\{\gamm
 - **实验充分度** ⭐⭐⭐⭐：两个基准、两个模型的全面评估，改进一致
 - **理论深度** ⭐⭐⭐：有直觉解释但缺乏严格理论分析
 - **实用性** ⭐⭐⭐⭐：方法相对简单，可直接应用于现有 LLM
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
+- [NegMerge: Sign-Consensual Weight Merging for Machine Unlearning](../../ICML2025/llm_safety/negmerge_sign-consensual_weight_merging_for_machine_unlearning.md)
+- [SineProject: Machine Unlearning for Stable Vision–Language Alignment](../../CVPR2026/llm_safety/sineproject_machine_unlearning_for_stable_vision_language_alignment.md)
+- [ZJUKLAB at SemEval-2025 Task 4: Unlearning via Model Merging](../../ACL2025/llm_safety/zjuklab_at_semeval-2025_task_4_unlearning_via_model_merging.md)
+- [CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP](../../ACL2025/llm_safety/cliperase_efficient_unlearning_of_visual-textual_associations_in_clip.md)
+
+<!-- RELATED:END -->

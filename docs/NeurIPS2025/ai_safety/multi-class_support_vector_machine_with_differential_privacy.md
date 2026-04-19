@@ -114,3 +114,15 @@ $$\hat{\mathbf{w}}_{t+1} = \hat{\mathbf{w}}_t - \eta_t \left\{ \frac{1}{n}\sum_{
 - **实验充分度**: ⭐⭐⭐⭐ 6个数据集、多个$\epsilon$水平、消融实验完整，但缺少大规模实验
 - **写作质量**: ⭐⭐⭐⭐⭐ 理论推导清晰，动机阐述到位，图表直观
 - **价值**: ⭐⭐⭐⭐ 为多类DP-SVM提供了实用解决方案，具有教科书级的理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sequentially Auditing Differential Privacy](sequentially_auditing_differential_privacy.md)
+- [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+
+<!-- RELATED:END -->

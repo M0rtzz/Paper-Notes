@@ -142,3 +142,15 @@ $$e_k^{\text{true}} < C_0 e_0^{\text{cnf}} + \frac{1}{k}\sum_{i=1}^{k-1}\left[(i
 - 实验充分度: ⭐⭐⭐⭐ 三个递进复杂度的实验+附加金融应用，但高维实验缺乏
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法步骤递进展示（Algo 1→2→3）
 - 价值: ⭐⭐⭐⭐ 打开了用DRL解决复杂MFG的大门，但通用性仍需更多验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis](learning_in_stackelberg_mean_field_games_a_non-asymptotic_analysis.md)
+- [Last Iterate Convergence in Monotone Mean Field Games](last_iterate_convergence_in_monotone_mean_field_games.md)
+- [Non-convex Entropic Mean-Field Optimization via Best Response Flow](non-convex_entropic_mean-field_optimization_via_best_response_flow.md)
+- [Forecasting in Offline Reinforcement Learning for Non-stationary Environments](forecasting_in_offline_reinforcement_learning_for_non-stationary_environments.md)
+- [Solving Neural Min-Max Games: The Role of Architecture, Initialization & Dynamics](solving_neural_min-max_games_the_role_of_architecture_initialization_dynamics.md)
+
+<!-- RELATED:END -->

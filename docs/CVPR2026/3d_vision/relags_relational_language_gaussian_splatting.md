@@ -160,3 +160,15 @@ ReLaGS 包含三个阶段，**全程无需逐场景训练**：
 - 实验充分度: ⭐⭐⭐⭐ — 四个数据集/三类任务，消融完整，但ScanNet提升有限的解释略显牵强
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机论证充分，图示信息量大
 - 价值: ⭐⭐⭐⭐ — 无训练+高效+多任务统一是3DGS语义理解的重要方向，场景图构建有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Language Splatting](../../ICCV2025/3d_vision/online_language_splatting.md)
+- [OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting](onlinepg_online_open-vocabulary_panoptic_mapping_with_3d_gaussian_splatting.md)
+- [SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting](sr3r_rethinking_super-resolution_3d_reconstruction_with_feed-forward_gaussian_sp.md)
+- [PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors](../../NeurIPS2025/3d_vision/planargs_high-fidelity_indoor_3d_gaussian_splatting_guided_by_vision-language_pl.md)
+- [AutoOcc: Automatic Open-Ended Semantic Occupancy Annotation via Vision-Language Guided Gaussian Splatting](../../ICCV2025/3d_vision/autoocc_automatic_openended_semantic_occupancy_annotation_vi.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ $$\tilde{G}_t = (\hat{y}_\Omega(\theta_t) - \tilde{y}_t) x_t^\top$$
 | 实验充分性 | 3 |
 | 写作质量 | 4 |
 | 总评 | 4 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bi-Level Contextual Bandits for Individualized Resource Allocation under Delayed Feedback](../../AAAI2026/reinforcement_learning/bi-level_contextual_bandits_for_individualized_resource_allocation_under_delayed.md)
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+- [Online Prediction of Stochastic Sequences with High Probability Regret Bounds](../../ICLR2026/reinforcement_learning/online_prediction_of_stochastic_sequences_with_high_probability_regret_bounds.md)
+
+<!-- RELATED:END -->

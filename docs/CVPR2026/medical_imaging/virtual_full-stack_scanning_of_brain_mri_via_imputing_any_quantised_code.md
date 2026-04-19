@@ -191,3 +191,15 @@ CodeBrain 在两个数据集上全面领先，IXI 上 PSNR +0.50 dB，SSIM +0.42
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、九种场景、五种对比、消融+下游验证完整
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，动机到方法到实验逻辑连贯
 - 价值: ⭐⭐⭐⭐ 为统一 MRI 模态补全提供实用框架，可直接提升下游临床任务性能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CodeBrain: Virtual Full-stack Scanning of Brain MRI via Imputing Any Quantised Code](virtual_fullstack_scanning_of_brain_mri_via_imputi.md)
+- [PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation](pgr-net_prior-guided_roi_reasoning_network_for_brain_tumor_mri_segmentation.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusionbased_feature_denoising_and_using_nnmf_fo.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+
+<!-- RELATED:END -->

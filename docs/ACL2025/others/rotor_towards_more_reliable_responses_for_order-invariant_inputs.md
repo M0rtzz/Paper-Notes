@@ -160,3 +160,15 @@ RoToR 由两个阶段组成：
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 LitM / KGQA / MMLU 三大类任务，5 种模型规模，多种排序算法变体，包括方差和时间分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图示生动，与 PINE 的对比非常直观
 - **价值**: ⭐⭐⭐⭐ — 解决了 decoder-only LM 中一个持久且实际的问题，方法简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Transformers for Generalizable First-Order Logical Entailment](enhancing_fol_entailment.md)
+- [Identifying Reliable Evaluation Metrics for Scientific Text Revision](reliable_eval_metrics_scientific.md)
+- [Using Source-Side Confidence Estimation for Reliable Translation into Unfamiliar Languages](using_source-side_confidence_estimation_for_reliable_translation_into_unfamiliar.md)
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](seoe_semantic_eval.md)
+- [MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
+
+<!-- RELATED:END -->

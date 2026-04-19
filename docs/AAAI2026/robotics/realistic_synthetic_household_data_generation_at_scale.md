@@ -195,3 +195,15 @@ $$\text{Score} = w_2 \rho_{\text{env}}(i+1) + w_3 \gamma_{\text{act}}(i+1) + w_4
 - **实验充分度**: ⭐⭐⭐ — 统计验证充分，但缺乏下游任务验证和 3D 场景质量评估
 - **写作质量**: ⭐⭐⭐ — 结构清晰但部分内容偏冗长，算法伪代码有助于理解
 - **价值**: ⭐⭐⭐⭐ — 对家用机器人训练数据的规模化生成有重要实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DexFlyWheel: A Scalable Self-Improving Data Generation Framework for Dexterous Manipulation](../../NeurIPS2025/robotics/dexflywheel_a_scalable_and_self-improving_data_generation_framework_for_dexterou.md)
+- [UrbanNav: Learning Language-Guided Urban Navigation from Web-Scale Human Trajectories](urbannav_learning_language-guided_urban_navigation_from_web-scale_human_trajecto.md)
+- [LaF-GRPO: In-Situ Navigation Instruction Generation for the Visually Impaired via GRPO with LLM-as-Follower Reward](laf-grpo_in-situ_navigation_instruction_generation_for_the_visually_impaired_via.md)
+- [ReALFRED: An Embodied Instruction Following Benchmark in Photo-Realistic Environments](../../ECCV2024/robotics/realfred_an_embodied_instruction_following_benchmark_in_photo-realistic_environm.md)
+- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](../../ICLR2026/robotics/robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+
+<!-- RELATED:END -->

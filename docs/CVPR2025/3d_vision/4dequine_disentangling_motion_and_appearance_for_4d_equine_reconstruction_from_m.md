@@ -150,3 +150,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多baseline、全面消融，还有零样本泛化实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，流程图直观
 - 价值: ⭐⭐⭐⭐ 在马匹4D重建这个niche领域做到了SOTA，解耦思路有通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Shape of Motion: 4D Reconstruction from a Single Video](../../ICCV2025/3d_vision/shape_of_motion_4d_reconstruction_from_a_single_video.md)
+- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](../../ICCV2025/3d_vision/vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
+- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
+- [GIFStream: 4D Gaussian-based Immersive Video with Feature Stream](gifstream_4d_gaussian-based_immersive_video_with_feature_stream.md)
+- [Orientation-anchored Hyper-Gaussian for 4D Reconstruction from Casual Videos](../../NeurIPS2025/3d_vision/orientation-anchored_hyper-gaussian_for_4d_reconstruction_from_casual_videos.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成数据验证充分但真实数据验证偏弱（仅CIFAR-10近似实验）
 - 写作质量: ⭐⭐⭐⭐ 理论主线清晰，定理→讨论→实证的结构好，但符号较多
 - 价值: ⭐⭐⭐⭐ 对理解DL泛化机制有深刻贡献，但实践指导价值有限（一致性不可高效计算）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Rich and the Simple: On the Implicit Bias of Adam and SGD](the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Generalization Below the Edge of Stability: The Role of Data Geometry](../../ICLR2026/optimization/generalization_below_the_edge_of_stability_the_role_of_data_geometry.md)
+- [Unveiling the Power of Multiple Gossip Steps: A Stability-Based Generalization Analysis in Decentralized Training](unveiling_the_power_of_multiple_gossip_steps_a_stability-based_generalization_an.md)
+- [Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data](implicit_bias_of_spectral_descent_and_muon_on_multiclass_separable_data.md)
+
+<!-- RELATED:END -->

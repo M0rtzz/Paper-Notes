@@ -141,3 +141,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多个基线（商业/通用/专家）、复杂度分级评估、人工评价、详尽消融
 - **写作质量**: ⭐⭐⭐⭐ 问题分析透彻，方法动机说明清楚
 - **价值**: ⭐⭐⭐⭐⭐ 实用价值极高（直接服务于科学文档数字化），方法论价值也大（visual-in-the-loop RL的新范式）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TeXpert: A Multi-Level Benchmark for Evaluating LaTeX Code Generation by LLMs](../../ACL2025/code_intelligence/texpert_a_multi-level_benchmark_for_evaluating_latex_code_generation_by_llms.md)
+- [Personality-Guided Code Generation Using Large Language Models](../../ACL2025/code_intelligence/personality_guided_code_gen.md)
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](../../ACL2025/code_intelligence/codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](../../ACL2025/code_intelligence/dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [Tree-of-Evolution: Tree-Structured Instruction Evolution for Code Generation in Large Language Models](../../ACL2025/code_intelligence/tree_of_evolution_code_gen.md)
+
+<!-- RELATED:END -->

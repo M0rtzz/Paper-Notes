@@ -147,3 +147,15 @@ MCAM 包含三个组件：
 - **实验充分度**: ⭐⭐⭐ 两个数据集、消融覆盖模块组合，但未与最新 MLLM 对比，缺少因果分析可解释性验证
 - **写作质量**: ⭐⭐⭐ 因果建模部分公式定义较多但与实际实现的对应关系不够清晰
 - **价值**: ⭐⭐⭐⭐ 轻量化方案实用，因果分析思路对驾驶行为理解有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation](hermes_a_unified_self-driving_world_model_for_simultaneous_3d_scene_understandin.md)
+- [StreamForest: Efficient Online Video Understanding with Persistent Event Memory](../../NeurIPS2025/autonomous_driving/streamforest_efficient_online_video_understanding_with_persistent_event_memory.md)
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+- [INSTINCT: Instance-Level Interaction Architecture for Query-Based Collaborative Perception](instinct_instance-level_interaction_architecture_for_query-based_collaborative_p.md)
+- [MARC: Memory-Augmented RL Token Compression for Efficient Video Understanding](../../ICLR2026/autonomous_driving/marc_memory-augmented_rl_token_compression_for_efficient_video_un.md)
+
+<!-- RELATED:END -->

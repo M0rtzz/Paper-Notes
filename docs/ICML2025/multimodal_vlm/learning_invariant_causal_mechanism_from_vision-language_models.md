@@ -105,3 +105,15 @@ $$P_{inv}(c|\mathbf{x}) = \frac{\exp(S(A_{inv}f_I(\mathbf{x}), A_{inv}f_T(\mathb
 - 因果机制的一致性通过 do-calculus 证明：$P^*(y|do(\mathbf{z}_{inv})) = P(y|do(\mathbf{z}_{inv}))$
 - 投影矩阵估计基于对比学习目标，最小化干预对在不变子空间的差异
 - 图像干预与文本干预可单独或组合使用，实验表明组合效果最佳
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal-LLaVA: Causal Disentanglement for Mitigating Hallucination in Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/causalllava_causal_disentanglement_for_mitigating_hallucinat.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+- [Dynamic Multimodal Prototype Learning in Vision-Language Models](../../ICCV2025/multimodal_vlm/dynamic_multimodal_prototype_learning_in_vision-language_models.md)
+- [VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism](../../ACL2025/multimodal_vlm/vrest_tree_search_vlm_reasoning.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+
+<!-- RELATED:END -->

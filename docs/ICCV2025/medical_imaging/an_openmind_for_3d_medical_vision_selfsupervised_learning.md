@@ -163,3 +163,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ [7种方法×2架构×15数据集×5微调策略+数据过滤+匿名化消融，极其全面]
 - 写作质量: ⭐⭐⭐⭐⭐ [结构清晰，实验设计严谨，findings总结到位]
 - 价值: ⭐⭐⭐⭐⭐ [数据集+benchmark+开源框架对社区价值极大，将成为3D医学SSL的标准参考]
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](../../ICML2025/medical_imaging/scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
+- [Vector Contrastive Learning for Pixel-wise Pretraining in Medical Vision](vector_contrastive_learning_for_pixel-wise_pretraining_in_medical_vision.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](../../CVPR2026/medical_imaging/learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+- [Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](../../CVPR2025/medical_imaging/addressing_data_scarcity_in_3d_trauma_detection_through_self-supervised_and_semi.md)
+- [Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training](boosting_vision_semantic_density_with_anatomy_normality_mode.md)
+
+<!-- RELATED:END -->

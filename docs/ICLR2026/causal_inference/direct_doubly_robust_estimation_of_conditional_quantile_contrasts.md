@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多维度仿真对比（斜率、样本量、噪声）+ 真实数据 + 消融，但缺少高维 X 和非线性 CQC 的实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，数学推导严谨，从直觉→形式化一步步展开，CQC vs CATE/CQTE 的 Figure 1 可视化非常直观
 - 价值: ⭐⭐⭐⭐ 对因果推理中异质性处理效应估计有实质推进，但 CQC 本身仍是较新的估计量，应用范围有待拓展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Counterfactual Explanations on Robust Perceptual Geodesics](counterfactual_explanations_on_robust_perceptual_geodesics.md)
+- [Learning Robust Intervention Representations with Delta Embeddings](learning_robust_intervention_representations_with_delta_embeddings.md)
+- [Efficient Ensemble Conditional Independence Test Framework for Causal Discovery](efficient_ensemble_conditional_independence_test_framework_for_causal_discovery.md)
+- [Synthesising Counterfactual Explanations via Label-Conditional Gaussian Mixture Variational Autoencoders](synthesising_counterfactual_explanations_via_label-conditional_gaussian_mixture_.md)
+- [Transformer-Based Spatial-Temporal Counterfactual Outcomes Estimation](../../ICML2025/causal_inference/transformer-based_spatial-temporal_counterfactual_outcomes_estimation.md)
+
+<!-- RELATED:END -->

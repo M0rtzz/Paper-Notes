@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ImageNet + COCO + ADE20K 全覆盖
 - 写作质量: ⭐⭐⭐ 内容详实但结构稍显冗长
 - 价值: ⭐⭐⭐⭐ 推动了超图视觉架构的发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hypergraph Vision Transformers: Images are More than Nodes, More than Edges](hypergraph_vision_transformers_images_are_more_than_nodes_more_than_edges.md)
+- [The Underappreciated Power of Vision Models for Graph Structural Understanding](../../NeurIPS2025/graph_learning/the_underappreciated_power_of_vision_models_for_graph_structural_understanding.md)
+- [Open Your Eyes: Vision Enhances Message Passing Neural Networks in Link Prediction](../../ICML2025/graph_learning/open_your_eyes_vision_enhances_message_passing_neural_networks_in_link_predictio.md)
+- [M3HG: Multimodal, Multi-scale, and Multi-type Node Heterogeneous Graph for Emotion Cause Triplet Extraction in Conversations](../../ACL2025/graph_learning/m3hg_multimodal_multi-scale_and_multi-type_node_heterogeneous_graph_for_emotion_.md)
+- [GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training](../../ICML2025/graph_learning/modeling_all-atom_glycan_structures_via_hierarchical_message_passing_and_multi-s.md)
+
+<!-- RELATED:END -->

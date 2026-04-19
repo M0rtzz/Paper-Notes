@@ -117,3 +117,15 @@ Step 2 使用对称 InfoNCE 对比损失 $\mathcal{L}_{CL}$，在硬负样本构
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 种基线、11 个数据集、极详尽的消融实验，每个组件的贡献都被清晰分离
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，理论分析（特征通道不变性）为线性加权提供了支撑
 - 价值: ⭐⭐⭐⭐ 即插即用的特性使其具有很好的实用价值，但 BNT 问题本身的场景假设有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAPT: Test-Time Adversarial Prompt Tuning for Robust Inference in Vision-Language Models](tapt_test-time_adversarial_prompt_tuning_for_robust_inference_in_vision-language.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [Towards Calibrating Prompt Tuning of Vision-Language Models](../../CVPR2026/multimodal_vlm/towards_calibrating_prompt_tuning_of_vision-language_models.md)
+- [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
+- [Skip Tuning: Pre-trained Vision-Language Models are Effective and Efficient Adapters Themselves](skip_tuning_pre-trained_vision-language_models_are_effective_and_efficient_adapt.md)
+
+<!-- RELATED:END -->

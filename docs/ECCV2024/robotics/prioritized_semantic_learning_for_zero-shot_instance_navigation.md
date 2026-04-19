@@ -178,3 +178,15 @@ PSL方法由三部分组成：(1) PSL Agent架构——增加CLIP语义观测编
 - 实验充分度: ⭐⭐⭐⭐⭐ ObjectNav+InstanceNav两个任务，text/image-goal两个设定，消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机由先导实验自然引出，逻辑链完整
 - 价值: ⭐⭐⭐⭐ 无LLM超越LLM方法，对具身导航领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PanoNav: Mapless Zero-Shot Object Navigation with Panoramic Scene Parsing and Dynamic Memory](../../AAAI2026/robotics/panonav_mapless_zero-shot_object_navigation_with_panoramic_scene_parsing_and_dyn.md)
+- [SemGrasp: Semantic Grasp Generation via Language Aligned Discretization](semgrasp_semantic_grasp_generation_via_language_aligned_discretization.md)
+- [Zero-Shot Embedding Drift Detection: A Lightweight Defense Against Prompt Injections in LLMs](../../NeurIPS2025/robotics/zero-shot_embedding_drift_detection_a_lightweight_defense_against_prompt_injecti.md)
+- [LLM as Copilot for Coarse-Grained Vision-and-Language Navigation](llm_as_copilot_for_coarse-grained_vision-and-language_navigation.md)
+- [ReALFRED: An Embodied Instruction Following Benchmark in Photo-Realistic Environments](realfred_an_embodied_instruction_following_benchmark_in_photo-realistic_environm.md)
+
+<!-- RELATED:END -->

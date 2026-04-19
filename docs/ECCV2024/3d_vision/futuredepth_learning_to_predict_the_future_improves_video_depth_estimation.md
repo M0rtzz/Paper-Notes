@@ -139,3 +139,15 @@ FutureDepth由四个组件构成：(1) 编码器提取连续$T$帧的特征体 $
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个数据集（室内+驾驶+开放域）、精度+时序一致性+效率三维比较、详细消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，训练流程偏复杂但有算法伪代码补充
 - 价值: ⭐⭐⭐⭐⭐ 精度、时序一致性、效率三方面均SOTA，具有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [FlashDepth: Real-time Streaming Video Depth Estimation at 2K Resolution](../../ICCV2025/3d_vision/flashdepth_real-time_streaming_video_depth_estimation_at_2k_resolution.md)
+- [Diffusion Models for Monocular Depth Estimation: Overcoming Challenging Conditions](diffusion_models_for_monocular_depth_estimation_overcoming_challenging_condition.md)
+- [High-Precision Self-Supervised Monocular Depth Estimation with Rich-Resource Prior](high-precision_self-supervised_monocular_depth_estimation_with_rich-resource_pri.md)
+- [SEDiff: Structure Extraction for Domain Adaptive Depth Estimation via Denoising Diffusion Models](sediff_structure_extraction_for_domain_adaptive_depth_estimation_via_denoising_d.md)
+
+<!-- RELATED:END -->

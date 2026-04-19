@@ -154,3 +154,15 @@ SLAM上所有算法与胜率的相关性都很高（≥0.91），说明均匀分
 - **实用性**：⭐⭐⭐⭐⭐ — 给出了明确的算法选择指南，对LLM评估实践有直接指导意义
 - **实验充分性**：⭐⭐⭐⭐ — 两种评估场景、三条评估准则、多维度分析
 - **写作质量**：⭐⭐⭐⭐ — 结构清晰，结论明确，推荐部分尤为实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](mha2mla_deepseek_latent_attention.md)
+- [Post Hoc Regression Refinement via Pairwise Rankings](../../NeurIPS2025/llm_nlp/post_hoc_regression_refinement_via_pairwise_rankings.md)
+- [AIMSCheck: Leveraging LLMs for AI-Assisted Review of Modern Slavery Statements Across Jurisdictions](aimscheck_modern_slavery.md)
+- [Can LLMs Identify Critical Limitations within Scientific Research? A Systematic Evaluation on AI Research Papers](can_llms_identify_critical_limitations_within_scientific_research_a_systematic_e.md)
+- [Beware of Your Po! Measuring and Mitigating AI Safety Risks in Role-Play Fine-Tuning of LLMs](sarft_roleplay_safety.md)
+
+<!-- RELATED:END -->

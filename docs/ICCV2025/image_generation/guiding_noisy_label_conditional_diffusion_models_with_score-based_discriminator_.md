@@ -146,3 +146,15 @@ SBDC在类条件指标（CW-FID、CW-Density、CW-Coverage）上全面超越TDSM
 - **实验充分度**: ⭐⭐⭐ 覆盖多种噪声设置但局限于小数据集
 - **写作质量**: ⭐⭐⭐⭐ 理论推导清晰，实验组织合理
 - **价值**: ⭐⭐⭐⭐ 解决了一个实际且重要的问题，推理时校正方案具有很好的实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](../../NeurIPS2025/image_generation/distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
+- [UniCombine: Unified Multi-Conditional Combination with Diffusion Transformer](unicombine_unified_multi-conditional_combination_with_diffusion_transformer.md)
+- [Guiding Diffusion Models with Semantically Degraded Conditions](../../CVPR2026/image_generation/guiding_diffusion_models_with_semantically_degraded_conditions.md)
+- [HPSv3: Towards Wide-Spectrum Human Preference Score](hpsv3_towards_wide-spectrum_human_preference_score.md)
+- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+
+<!-- RELATED:END -->

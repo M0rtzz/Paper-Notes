@@ -141,3 +141,15 @@ JailBound 分两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 6 个 VLM + 13 类安全场景 + 白盒/黑盒全面覆盖，但缺少防御方法对比
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，数学形式化完整，但部分符号较多可以精简
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 安全领域有重要警示意义，揭示了线性安全边界的脆弱性，推动更强防御研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperbolic Safety-Aware Vision-Language Models](../../CVPR2025/multimodal_vlm/hyperbolic_safety-aware_vision-language_models.md)
+- [Hierarchical Safety Realignment: Lightweight Restoration of Safety in Pruned Large Vision-Language Models](../../ACL2025/multimodal_vlm/hierarchical_safety_realignment_lightweight_restoration_of_safety_in_pruned_larg.md)
+- [IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves](../../ICCV2025/multimodal_vlm/ideator_jailbreaking_and_benchmarking_large_visionlanguage_m.md)
+- [Do Vision-Language Models Have Internal World Models? Towards an Atomic Evaluation](../../ACL2025/multimodal_vlm/do_vision-language_models_have_internal_world_models_towards_an_atomic_evaluatio.md)
+- [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
+
+<!-- RELATED:END -->

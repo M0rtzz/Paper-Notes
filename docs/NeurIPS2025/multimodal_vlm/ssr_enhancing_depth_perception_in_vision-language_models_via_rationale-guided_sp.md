@@ -112,3 +112,15 @@ SSR (7B) 进一步提升：SpatialBench 上超越 LLaVA-NeXT-13B、SpatialBot-3B
 - **实验充分度**: ⭐⭐⭐⭐ 多 benchmark 验证，配备自建 SSRBench，数据质量评估完善
 - **写作质量**: ⭐⭐⭐⭐ 框架图清晰，流程详尽
 - **价值**: ⭐⭐⭐⭐ 即插即用的空间增强方案实用性强，对具身 AI 有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs](struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)
+- [SD-VLM: Spatial Measuring and Understanding with Depth-Encoded Vision-Language Models](sd-vlm_spatial_measuring_and_understanding_with_depth-encoded_vision-language_mo.md)
+- [SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs](../../ICLR2026/multimodal_vlm/spinbench_perspective_and_rotation_as_a_lens_on_spatial_reasoning_in_vlms.md)
+- [SpatialThinker: Reinforcing 3D Reasoning in Multimodal LLMs via Spatial Rewards](spatialthinker_reinforcing_3d_reasoning_in_multimodal_llms_via_spatial_rewards.md)
+- [RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics](roborefer_towards_spatial_referring_with_reasoning_in_vision-language_models_for.md)
+
+<!-- RELATED:END -->

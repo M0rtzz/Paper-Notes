@@ -140,3 +140,15 @@ R²-Tuning 仅用 CLIP（无额外骨干），以 2.7M 参数超越了需要 CLI
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个数据集 3 个任务的全面评估，消融实验详尽，可视化分析充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述由浅入深，图示直观
 - 价值: ⭐⭐⭐⭐ 证明了 CLIP 多层特征在 VTG 上的巨大潜力，为参数高效视频理解提供了强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)
+- [Efficient Transfer Learning for Video-language Foundation Models](../../CVPR2025/video_understanding/efficient_transfer_learning_for_video-language_foundation_models.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](videomamba_state_space_model_for_efficient_video_understanding.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
+- [Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个标准数据集+丰富消融+合成实验，但缺少与更多GS改进方法对比
 - 写作质量: ⭐⭐⭐⭐⭐ 概念清晰，图示优秀（特别是Fig.2的椅子对比和Fig.4的$\delta$-$\sigma$可视化）
 - 价值: ⭐⭐⭐⭐ 有望成为3DGS之后的新标准基元，但渲染速度降幅需解决
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting](../../ICLR2026/3d_vision/augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting.md)
+- [DoF-Gaussian: Controllable Depth-of-Field for 3D Gaussian Splatting](dof-gaussian_controllable_depth-of-field_for_3d_gaussian_splatting.md)
+- [LookCloser: Frequency-aware Radiance Field for Tiny-Detail Scene (FA-NeRF)](lookcloser_frequency-aware_radiance_field_for_tiny-detail_scene.md)
+- [Dynamic Neural Radiance Field from Defocused Monocular Video](../../ECCV2024/3d_vision/dynamic_neural_radiance_field_from_defocused_monocular_video.md)
+- [Exploiting Deblurring Networks for Radiance Fields](exploiting_deblurring_networks_for_radiance_fields.md)
+
+<!-- RELATED:END -->

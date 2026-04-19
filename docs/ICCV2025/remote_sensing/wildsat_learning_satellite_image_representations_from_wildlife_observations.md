@@ -159,3 +159,15 @@ WildSAT 在 115 个设置中的 108 个取得提升，平均提升 4.3%-10.4%。
 | 写作质量 | 4.5 |
 | 实用价值 | 4.5 |
 | 总评 | 4.5 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Representations of Satellite Images From Metadata Supervision](../../ECCV2024/remote_sensing/learning_representations_of_satellite_images_from_metadata_supervision.md)
+- [AstroLoc: Robust Space to Ground Image Localizer](astroloc_robust_space_to_ground_image_localizer.md)
+- [Weakly-Supervised Camera Localization by Ground-to-Satellite Image Registration](../../ECCV2024/remote_sensing/weakly-supervised_camera_localization_by_ground-to-satellite_image_registration.md)
+- [Pan-Crafter: Learning Modality-Consistent Alignment for Pan-Sharpening](pan-crafter_learning_modality-consistent_alignment_for_pan-sharpening.md)
+- [EarthDial: Turning Multi-sensory Earth Observations to Interactive Dialogues](../../CVPR2025/remote_sensing/earthdial_turning_multi-sensory_earth_observations_to_interactive_dialogues.md)
+
+<!-- RELATED:END -->

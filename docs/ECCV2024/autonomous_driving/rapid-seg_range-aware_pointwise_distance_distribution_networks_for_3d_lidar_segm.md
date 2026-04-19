@@ -138,3 +138,15 @@ RAPiD vs PDD 对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两个主流数据集 SOTA，消融极其详细，PDD vs RAPiD 对比令人信服
 - 写作质量: ⭐⭐⭐⭐ — 数学公式严谨，但信息密度大，阅读难度较高
 - 价值: ⭐⭐⭐⭐ — 提供了一种新的点云特征设计范式，可启发后续工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ItTakesTwo: Leveraging Peer Representations for Semi-supervised LiDAR Semantic Segmentation](ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se.md)
+- [SFPNet: Sparse Focal Point Network for Semantic Segmentation on General LiDAR Point Clouds](sfpnet_sparse_focal_point_network_for_semantic_segmentation_on_general_lidar_poi.md)
+- [Adaptive Augmentation-Aware Latent Learning for Robust LiDAR Semantic Segmentation](../../ICLR2026/autonomous_driving/adaptive_augmentation-aware_latent_learning_for_robust_lidar_semantic_segmentati.md)
+- [Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather](rethinking_data_augmentation_for_robust_lidar_semantic_segmentation_in_adverse_w.md)
+- [3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation](../../CVPR2025/autonomous_driving/3d-avs_lidar-based_3d_auto-vocabulary_segmentation.md)
+
+<!-- RELATED:END -->

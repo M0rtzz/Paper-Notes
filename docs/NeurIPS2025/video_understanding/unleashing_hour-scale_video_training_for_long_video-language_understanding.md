@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个基准、详尽消融（遗忘策略、数据混合、记忆规模、压缩方法对比）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ VideoMarathon填补了长视频训练数据的巨大空白，Hour-LLaVA证明了长视频训练的必要性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+- [Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers](../../ICCV2025/video_understanding/vamba_understanding_hour-long_videos_with_hybrid_mamba-transformers.md)
+- [Web-Scale Collection of Video Data for 4D Animal Reconstruction](web-scale_collection_of_video_data_for_4d_animal_reconstruction.md)
+- [APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval](../../AAAI2026/video_understanding/apvr_hour-level_long_video_understanding_with_adaptive_pivot.md)
+- [VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding](vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)
+
+<!-- RELATED:END -->

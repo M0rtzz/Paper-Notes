@@ -126,3 +126,15 @@ CHOICE 的能力分类体系采用三层结构：
 - ⭐ 实验充分度: 5/5 — 24 个模型、23 个任务、10,507 道题的大规模评估
 - ⭐ 写作质量: 4/5 — 分类体系清晰，图表丰富
 - ⭐ 价值: 4/5 — 为遥感 VLM 社区提供了急需的标准化评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models](mm-opera_benchmarking_open-ended_association_reasoning_for_large_vision-language.md)
+- [MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly](mmlongbench_benchmarking_longcontext_visionlanguage_models_e.md)
+- [Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](../../ICML2025/multimodal_vlm/unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)
+- [CityLens: Evaluating Large Vision-Language Models for Urban Socioeconomic Sensing](../../ICLR2026/multimodal_vlm/citylens_evaluating_large_vision-language_models_for_urban_socioeconomic_sensing.md)
+- [IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves](../../ICCV2025/multimodal_vlm/ideator_jailbreaking_and_benchmarking_large_visionlanguage_m.md)
+
+<!-- RELATED:END -->

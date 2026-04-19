@@ -115,3 +115,15 @@ EAMamba采用UNet编码器-解码器架构，包含4级编码器（[4,6,6,7]个M
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖去噪/超分/去模糊/去雾四类任务，多数据集验证，消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，ERF可视化和架构图制作精良，实验对比详尽
 - 价值: ⭐⭐⭐⭐ 为Vision Mamba在低级视觉任务的效率化提供了通用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Visual State Space Model for Image Deblurring](../../CVPR2025/image_restoration/efficient_visual_state_space_model_for_image_deblurring.md)
+- [PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining](pre-mamba_a_4d_state_space_model_for_ultra-high-frequent_event_camera_deraining.md)
+- [MambaIR: A Simple Baseline for Image Restoration with State-Space Model](../../ECCV2024/image_restoration/mambair_a_simple_baseline_for_image_restoration_with_state-space_model.md)
+- [MambaIRv2: Attentive State Space Restoration](../../CVPR2025/image_restoration/mambairv2_attentive_state_space_restoration.md)
+- [Efficient Concertormer for Image Deblurring and Beyond](efficient_concertormer_for_image_deblurring_and_beyond.md)
+
+<!-- RELATED:END -->

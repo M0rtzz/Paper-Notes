@@ -143,3 +143,15 @@ HSTR 相比 Tree-Ring 平均提升 31.6 个百分点；HSQR 与 RingID 精度相
 - **技术深度**: ⭐⭐⭐⭐ — 频域分析透彻，高斯性保持论证完整
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 12 种攻击、4 个数据集、多基线对比
 - **实用价值**: ⭐⭐⭐⭐⭐ — 无训练、无开销、即插即用，极强实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Reward Models for High-quality Image Generation: Beyond Text-Image Alignment](enhancing_reward_models_for_high-quality_image_generation_beyond_text-image_alig.md)
+- [Watermarking Autoregressive Image Generation](../../NeurIPS2025/image_generation/watermarking_autoregressive_image_generation.md)
+- [UltraHR-100K: Enhancing UHR Image Synthesis with A Large-Scale High-Quality Dataset](../../NeurIPS2025/image_generation/ultrahr-100k_enhancing_uhr_image_synthesis_with_a_large-scale_high-quality_datas.md)
+- [Revelio: Interpreting and Leveraging Semantic Information in Diffusion Models](revelio_interpreting_and_leveraging_semantic_information_in_diffusion_models.md)
+- [Your Text Encoder Can Be An Object-Level Watermarking Controller](your_text_encoder_can_be_an_object-level_watermarking_controller.md)
+
+<!-- RELATED:END -->

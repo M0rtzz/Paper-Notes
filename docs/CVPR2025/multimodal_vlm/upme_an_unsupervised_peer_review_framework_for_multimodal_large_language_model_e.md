@@ -99,3 +99,15 @@ UPME包含三个核心模块：(1) **同行评审机制**——每轮迭代从ML
 - 实验充分度: ⭐⭐⭐⭐ 消融、偏差分析、人工偏好对齐实验完整，但模型池规模偏小
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，数学符号规范，图表直观
 - 价值: ⭐⭐⭐⭐ 为MLLM评估提供了低成本高效路径，但实用性需更大规模验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PRISMM-Bench: A Benchmark of Peer-Review Grounded Multimodal Inconsistencies](../../ICLR2026/multimodal_vlm/prismm-bench_a_benchmark_of_peer-review_grounded_multimodal_inconsistencies.md)
+- [FlagEvalMM: A Flexible Framework for Comprehensive Multimodal Model Evaluation](../../ACL2025/multimodal_vlm/flagevalmm_a_flexible_framework_for_comprehensive_multimodal_model_evaluation.md)
+- [Taxonomy-Aware Evaluation of Vision-Language Models](taxonomy-aware_evaluation_of_vision-language_models.md)
+- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
+- [MIMO: A Medical Vision Language Model with Visual Referring Multimodal Input and Pixel Grounding Multimodal Output](mimo_a_medical_vision_language_model_with_visual_referring_multimodal_input_and_.md)
+
+<!-- RELATED:END -->

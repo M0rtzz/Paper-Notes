@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （18K记录+人工验证+同行评审子集佐证，充分度高）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，实验设计和分析逐步深入，可读性好）
 - 价值: ⭐⭐⭐⭐ （数据集和管线对社区有持续价值，分析发现具有实际指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synergizing Unsupervised Episode Detection with LLMs for Large-Scale News Events](synergizing_unsupervised_episode_detection_with_llms_for_large-scale_news_events.md)
+- [LlamaDuo: LLMOps Pipeline for Seamless Migration from Service LLMs to Small-Scale Local LLMs](llamaduo_llmops_pipeline_for_seamless_migration_from_service_llms_to_small-scale.md)
+- [Unintended Harms of Value-Aligned LLMs: Psychological and Empirical Insights](unintended_harms_of_value-aligned_llms_psychological_and_empirical_insights.md)
+- [Can Language Models Reason about Individualistic Human Values and Preferences?](can_language_models_reason_about_individualistic_human_values_and_preferences.md)
+- [LLMs Can Be Easily Confused by Instructional Distractions](llms_can_be_easily_confused_by_instructional_distractions.md)
+
+<!-- RELATED:END -->

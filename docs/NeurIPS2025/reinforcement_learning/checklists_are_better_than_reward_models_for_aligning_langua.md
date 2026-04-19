@@ -119,3 +119,15 @@ RLCF 是唯一在所有 5 个 benchmark 上都有正向提升的方法。RM-base
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 benchmark，6 个 baseline，跨模型族验证，RewardBench 对比，多个消融实验
 - 写作质量: ⭐⭐⭐⭐⭐ Figure 1 和 Table 2-4 清晰展示只有 RLCF 一致性正收益；Table 8 的案例分析非常说服力
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 RM 在 RLHF 中的根本局限性，提供了可行的替代方案，WildChecklists 数据集有直接复用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Language Models to Reason Efficiently](training_language_models_to_reason_efficiently.md)
+- [Behavior Injection: Preparing Language Models for Reinforcement Learning](behavior_injection_preparing_language_models_for_reinforcement_learning.md)
+- [When Less Language is More: Language-Reasoning Disentanglement Makes LLMs Better Multilingual Reasoners](when_less_language_is_more_language-reasoning_disentanglement_makes_llms_better_.md)
+- [ParaS2S: Benchmarking and Aligning Spoken Language Models for Paralinguistic-Aware Speech-to-Speech Interaction](../../ICLR2026/reinforcement_learning/paras2s_benchmarking_and_aligning_spoken_language_models_for_paralinguistic-awar.md)
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+
+<!-- RELATED:END -->

@@ -175,3 +175,15 @@ DTCRS 的整体流程分为三步：
 ## 评分 ⭐⭐⭐⭐
 
 方法设计简洁且有效，问题驱动的动态摘要树是对静态 RAPTOR 的合理改进，实验充分。不过，对 LLM 调用次数的成本分析不够深入，且方法的适用范围与问题类型分布高度相关。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PerSphere: A Comprehensive Framework for Multi-Faceted Perspective Retrieval and Summarization](persphere_a_comprehensive_framework_for_multi-faceted_perspective_retrieval_and_.md)
+- [What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations](video_text_summarization.md)
+- [Context-Aware Hierarchical Merging for Long Document Summarization](context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [Theme-Explanation Structure for Table Summarization Using Large Language Models](theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+- [An Empirical Study of Many-to-Many Summarization with Large Language Models](an_empirical_study_of_manytomany_summarization.md)
+
+<!-- RELATED:END -->

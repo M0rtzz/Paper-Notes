@@ -132,3 +132,15 @@ QoQ-Med 构建了覆盖 9 个临床模态（1D ECG + 6 类 2D 影像 + 2 类 3D 
 - 实验充分度: ⭐⭐⭐⭐⭐ 9 模态 + 33 数据集 + 261 万样本 + 多种 RL 对比
 - 写作质量: ⭐⭐⭐⭐ 方法清晰，消融充分
 - 价值: ⭐⭐⭐⭐⭐ 为临床 AI 提供了可解释的多模态推理基础模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal 3D Genome Pre-training](multimodal_3d_genome_pre-training.md)
+- [Foundation Models for Clinical Records at Health System Scale](../../ICML2025/medical_imaging/foundation_models_for_clinical_records_at_health_system_scale.md)
+- [CureAgent: A Training-Free Executor-Analyst Framework for Clinical Reasoning](cureagent_a_training-free_executor-analyst_framework_for_clinical_reasoning.md)
+- [MTBBench: A Multimodal Sequential Clinical Decision-Making Benchmark in Oncology](mtbbench_a_multimodal_sequential_clinical_decision-making_benchmark_in_oncology.md)
+- [Towards Self-Supervised Foundation Models for Critical Care Time Series](towards_self-supervised_foundation_models_for_critical_care_time_series.md)
+
+<!-- RELATED:END -->

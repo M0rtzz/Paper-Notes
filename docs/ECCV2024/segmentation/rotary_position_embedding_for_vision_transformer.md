@@ -157,3 +157,15 @@ $$\mathbf{A}'_{(n,m)} = \mathrm{Re}[\mathbf{q}_n \mathbf{k}_m^* e^{i(n-m)\theta}
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 ViT 和 Swin 两大架构，分类/检测/分割三个任务，多种组合对比，非常全面
 - 写作质量: ⭐⭐⭐⭐ 从位置编码基础到 RoPE 扩展再到实验，逻辑链完整清晰
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的位置编码改进，实际收益显著，对所有使用 ViT 的工作都有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GiT: Towards Generalist Vision Transformer through Universal Language Interface](git_towards_generalist_vision_transformer_through_universal_language_interface.md)
+- [Locality-Attending Vision Transformer](../../ICLR2026/segmentation/locality-attending_vision_transformer.md)
+- [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
+- [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
+
+<!-- RELATED:END -->

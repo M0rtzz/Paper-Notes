@@ -133,3 +133,15 @@ M = MultiWOZ, τ = τ-bench。SR为4次试验平均值。
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个模型×2个基准×5种模式+2个扩展基准+SFT训练实验+human eval+详细错误分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析深入，行为-失败机制的对应关系讲解得很好
 - 价值: ⭐⭐⭐⭐ 填补Agent鲁棒性评测空白，框架开源可复用，对Agent部署有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Know You First and Be You Better: Modeling Human-Like User Simulators via Implicit Profiles](../../ACL2025/dialogue/know_you_first_and_be_you_better_modeling_human-like_user_simulators_via_implici.md)
+- [Investigating Non-Transitivity in LLM-as-a-Judge](../../ICML2025/dialogue/investigating_non-transitivity_in_llm-as-a-judge.md)
+- [Position: Uncertainty Quantification Needs Reassessment for Large-language Model Agents](../../ICML2025/dialogue/position_uncertainty_quantification_needs_reassessment_for_large-language_model_.md)
+- [SciArena: An Open Evaluation Platform for Non-Verifiable Scientific Literature-Grounded Tasks](../../NeurIPS2025/dialogue/sciarena_an_open_evaluation_platform_for_non-verifiable_scientific_literature-gr.md)
+- [AQuA: Toward Strategic Response Generation for Ambiguous Visual Questions](aqua_toward_strategic_response_generation_for_ambiguous_visual_questions.md)
+
+<!-- RELATED:END -->

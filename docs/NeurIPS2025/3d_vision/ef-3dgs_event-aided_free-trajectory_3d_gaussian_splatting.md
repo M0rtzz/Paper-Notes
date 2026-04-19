@@ -127,3 +127,15 @@ EF-3DGS 在所有帧率下 ATE 均为最低，高速场景降幅约 40%。在新
 - ⭐ 实验充分度: 4/5 — 公开基准+自建真实数据集，多帧率全面对比
 - ⭐ 写作质量: 4/5 — 方法从事件成像原理推导，逻辑清晰
 - ⭐ 价值: 4.5/5 — 高速场景重建痛点的有效解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IncEventGS: Pose-Free Gaussian Splatting from a Single Event Camera](../../CVPR2025/3d_vision/inceventgs_pose-free_gaussian_splatting_from_a_single_event_camera.md)
+- [ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS](zpressor_bottleneck-aware_compression_for_scalable_feed-forward_3dgs.md)
+- [E2EGS: Event-to-Edge Gaussian Splatting for Pose-Free 3D Reconstruction](../../CVPR2026/3d_vision/e2egs_event-to-edge_gaussian_splatting_for_pose-free_3d_reconstruction.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [RobustSplat: Decoupling Densification and Dynamics for Transient-Free 3DGS](../../ICCV2025/3d_vision/robustsplat_decoupling_densification_and_dynamics_for_transient-free_3dgs.md)
+
+<!-- RELATED:END -->

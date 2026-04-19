@@ -175,3 +175,15 @@ Min-K%++在500M tokens训练时表现最优（AUC 0.72-0.85），但在5B tokens
 - 实验充分度: ⭐⭐⭐⭐ — 4个数据集、多个基线、消融实验（样本数、scoring model选择）和人类评估较完整，但仅在continued pretraining上验证
 - 写作质量: ⭐⭐⭐⭐ — 问题建模清晰，方法描述直观，但部分符号定义分散，需要来回查阅
 - 价值: ⭐⭐⭐⭐ — 解决了LLM训练数据版权保护的实际痛点，9个数量级的p-value差距为法律场景提供了强有力的统计证据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Provable Watermarking for Data Poisoning Attacks](../../NeurIPS2025/ai_safety/provable_watermarking_for_data_poisoning_attacks.md)
+- [Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](../../ACL2025/ai_safety/robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)
+- [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](../../NeurIPS2025/ai_safety/virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
+- [Privacy on the Fly: A Predictive Adversarial Transformation Network for Mobile Sensor Data](privacy_on_the_fly_a_predictive_adversarial_transformation_network_for_mobile_se.md)
+- [Principles2Plan: LLM-Guided System for Operationalising Ethical Principles into Plans](principles2plan_llm-guided_system_for_operationalising_ethical_principles_into_p.md)
+
+<!-- RELATED:END -->

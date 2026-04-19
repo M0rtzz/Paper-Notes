@@ -202,3 +202,15 @@ $$A_{(k)} = r_{(k)} - r_{(k-1)}$$
 - 实验充分度: ⭐⭐⭐ — 覆盖 MATH 和 CodeContests 两个代表性场景，但缓存不完整限制了完整评估
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，特例分析直觉好，从一般框架到具体应用逐步展开
 - 价值: ⭐⭐⭐⭐ — 在推理时计算日益重要的当下，训练-推理目标对齐具有很高的实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T1: Advancing Language Model Reasoning through Reinforcement Learning and Inference Scaling](t1_advancing_language_model_reasoning_through_reinforcement_learning_and_inferen.md)
+- [EVOLvE: Evaluating and Optimizing LLMs For In-Context Exploration](evolve_evaluating_and_optimizing_llms_for_in-context_exploration.md)
+- [Behavior Injection: Preparing Language Models for Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/behavior_injection_preparing_language_models_for_reinforcement_learning.md)
+- [Optimistic Task Inference for Behavior Foundation Models](../../ICLR2026/reinforcement_learning/optimistic_task_inference_behavior_models.md)
+- [ReVISE: Learning to Refine at Test-Time via Intrinsic Self-Verification](revise_learning_to_refine_at_test-time_via_intrinsic_self-verification.md)
+
+<!-- RELATED:END -->

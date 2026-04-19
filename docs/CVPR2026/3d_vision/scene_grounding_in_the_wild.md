@@ -141,3 +141,15 @@ WikiEarth基准（32个meta-images，23个场景）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多初始化、与前馈模型全面对比、详细消融、无人机泛化实验，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，可视化丰富，方法描述条理
 - 价值: ⭐⭐⭐⭐ 实用性强——提供了解决大规模场景碎片化重建的方案，对文化遗产、城市建模有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DROID-W: DROID-SLAM in the Wild](droid-slam_in_the_wild.md)
+- [GaussFusion: Improving 3D Reconstruction in the Wild with A Geometry-Informed Video Generator](gaussfusion_improving_3d_reconstruction_in_the_wild_with_a_geometry-informed_vid.md)
+- [Extreme Rotation Estimation in the Wild](../../CVPR2025/3d_vision/extreme_rotation_estimation_in_the_wild.md)
+- [ScanReason: Empowering 3D Visual Grounding with Reasoning Capabilities](../../ECCV2024/3d_vision/scanreason_empowering_3d_visual_grounding_with_reasoning_capabilities.md)
+- [Look and Tell: A Dataset for Multimodal Grounding Across Egocentric and Exocentric Views](../../NeurIPS2025/3d_vision/look_and_tell_a_dataset_for_multimodal_grounding_across_egocentric_and_exocentri.md)
+
+<!-- RELATED:END -->

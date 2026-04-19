@@ -123,3 +123,15 @@ tags:
 - **有效性**: ⭐⭐⭐⭐ — 实验覆盖全面，消融充分，ProEval 通过人工标注和 LLM-as-judge 双重验证
 - **价值**: ⭐⭐⭐⭐ — 语料库和框架对 L2 教育和自动评估研究有直接实用价值
 - **清晰度**: ⭐⭐⭐⭐ — 论文结构清晰，图表信息密度高，方法描述详尽
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Masking in Multi-hop QA: How LMs Perform with Context Permutation](masking_in_multi-hop_qa_an_analysis_of_how_language_models_perform_with_context_.md)
+- [Do LLMs Give Psychometrically Plausible Responses in Educational Assessments?](do_llms_give_psychometrically_plausible_responses_in_educational_assessments.md)
+- [Do Large Language Models Perform Latent Multi-Hop Reasoning without Exploiting Shortcuts?](do_large_language_models_perform_latent_multi-hop_reasoning_without_exploiting_s.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [LLMs Can Be Easily Confused by Instructional Distractions](llms_can_be_easily_confused_by_instructional_distractions.md)
+
+<!-- RELATED:END -->

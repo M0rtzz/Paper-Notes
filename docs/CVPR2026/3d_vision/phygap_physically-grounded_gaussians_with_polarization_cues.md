@@ -135,3 +135,15 @@ $$\mathcal{L} = \mathcal{L}_{\mathrm{rgb}} + \lambda_1 \mathcal{L}_{\mathrm{pol}
 - 实验充分度: ⭐⭐⭐⭐ — 9 个场景、合成+真实数据、NVS/法线/分解/重光照多维评测、消融完整
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ — 首次实现偏振 GS 的重光照能力，对 VR/AR 和交互设计有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](../../ICCV2025/3d_vision/geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+- [AeroDGS: Physically Consistent Dynamic Gaussian Splatting for Single-Sequence Aerial 4D Reconstruction](aerodgs_physically_consistent_dynamic_gaussian_splatting_for_single-sequence_aer.md)
+- [GGPT: Geometry-Grounded Point Transformer](ggpt_geometry_grounded_point_transformer.md)
+- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
+- [Quantized Visual Geometry Grounded Transformer](../../ICLR2026/3d_vision/quantized_visual_geometry_grounded_transformer.md)
+
+<!-- RELATED:END -->

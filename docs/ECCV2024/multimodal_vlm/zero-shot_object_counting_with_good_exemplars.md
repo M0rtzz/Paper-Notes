@@ -165,3 +165,15 @@ VA-Count由两个核心模块组成：
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+跨域实验+逐组件消融+定性分析，较为全面
 - 写作质量: ⭐⭐⭐ 方法描述稍显冗长，符号定义较多，可读性一般
 - 价值: ⭐⭐⭐⭐ 零样本计数实用价值高，思路可迁移到其他零样本视觉任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
+- [RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models](../../ACL2025/multimodal_vlm/rate-nav_region-aware_termination_enhancement_for_zero-shot_object_navigation_wi.md)
+- [CAPTURe: Evaluating Spatial Reasoning in Vision Language Models via Occluded Object Counting](../../ICCV2025/multimodal_vlm/capture_evaluating_spatial_reasoning_in_vision_language_models_via_occluded_obje.md)
+- [Bootstrapping MLLM for Weakly-Supervised Class-Agnostic Object Counting (WS-COC)](../../ICLR2026/multimodal_vlm/bootstrapping_mllm_for_weakly-supervised_class-agnostic_object_counting.md)
+- [Single Domain Generalization for Few-Shot Counting via Universal Representation Matching](../../CVPR2025/multimodal_vlm/single_domain_generalization_for_few-shot_counting_via_universal_representation_.md)
+
+<!-- RELATED:END -->

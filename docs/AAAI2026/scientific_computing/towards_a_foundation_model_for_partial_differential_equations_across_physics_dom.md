@@ -111,3 +111,15 @@ $$\hat{u}(x) = \sum_{|k| \leq m} W_k \cdot \mathcal{F}[z](k) e^{2\pi i k \cdot x
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 问题定义重要，架构设计全面，实验覆盖 12 个异构物理域，结果出色
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniArch: Building Foundation Model For Scientific Computing](../../ICML2025/scientific_computing/omniarch_building_foundation_model_for_scientific_computing.md)
+- [Closed-form Symbolic Solutions: A New Perspective on Solving Partial Differential Equations](../../ICML2025/scientific_computing/closed-form_solutions_a_new_perspective_on_solving_differential_equations.md)
+- [SAOT: An Enhanced Locality-Aware Spectral Transformer for Solving PDEs](saot_an_enhanced_locality-aware_spectral_transformer_for_solving_pdes.md)
+- [PIMRL: Physics-Informed Multi-Scale Recurrent Learning for Burst-Sampled Spatiotemporal Dynamics](pimrl_physics-informed_multi-scale_recurrent_learning_for_burst-sampled_spatiote.md)
+- [PhysicsCorrect: A Training-Free Approach for Stable Neural PDE Simulations](physicscorrect_a_training-free_approach_for_stable_neural_pde_simulations.md)
+
+<!-- RELATED:END -->

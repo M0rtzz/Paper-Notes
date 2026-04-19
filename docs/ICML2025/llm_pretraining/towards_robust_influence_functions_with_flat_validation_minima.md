@@ -145,3 +145,15 @@ FVM 在 CIFAR-100N 重标注上达到 70.61%，是先前最佳 GEX (22.41%) 的 
 - 实验充分度: ⭐⭐⭐⭐⭐ 四类任务、多数据集、详细消融
 - 写作质量: ⭐⭐⭐⭐ Figure 2/3 的诊断设计精巧
 - 价值: ⭐⭐⭐⭐⭐ 重标注能力的突破开辟新应用空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Superposition Yields Robust Neural Scaling](../../NeurIPS2025/llm_pretraining/superposition_yields_robust_neural_scaling.md)
+- [Robust Message Embedding via Attention Flow-Based Steganography](../../CVPR2025/llm_pretraining/robust_message_embedding_via_attention_flow-based_steganography.md)
+- [How Does Sequence Modeling Architecture Influence Base Capabilities of Pre-trained Language Models?](../../NeurIPS2025/llm_pretraining/how_does_sequence_modeling_architecture_influence_base_capabilities_of_pre-train.md)
+- [ConstStyle: Robust Domain Generalization with Unified Style Transformation](../../ICCV2025/llm_pretraining/conststyle_robust_domain_generalization_with_unified_style_transformation.md)
+- [On the Clean Generalization and Robust Overfitting in Adversarial Training from Two Theoretical Views: Representation Complexity and Training Dynamics](on_the_clean_generalization_and_robust_overfitting_in_adversarial_training_from_.md)
+
+<!-- RELATED:END -->

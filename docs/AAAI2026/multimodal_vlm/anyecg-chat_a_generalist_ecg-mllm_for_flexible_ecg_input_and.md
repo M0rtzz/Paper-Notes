@@ -118,3 +118,15 @@ anyECG-chat是首个同时解决任务多样性和输入灵活性两大问题的
 - 实验充分度: ⭐⭐⭐⭐ 三个任务的评估全面，OOD测试+零样本+消融分析齐全，但缺少与更多MLLM的对比
 - 写作质量: ⭐⭐⭐⭐ 数据集构建过程描述详细，方法清晰
 - 价值: ⭐⭐⭐⭐ 对医学AI社区有直接应用价值，尤其是家用ECG监测和临床纵向分析场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GEM: Empowering MLLM for Grounded ECG Understanding with Time Series and Images](../../NeurIPS2025/multimodal_vlm/gem_empowering_mllm_for_grounded_ecg_understanding_with_time_series_and_images.md)
+- [Exo2Ego: Exocentric Knowledge Guided MLLM for Egocentric Video Understanding](exo2ego_exocentric_knowledge_guided_mllm_for_egocentric_vide.md)
+- [FinMMDocR: Benchmarking Financial Multimodal Reasoning with Scenario Awareness, Document Understanding, and Multi-Step Computation](finmmdocr_benchmarking_financial_multimodal_reasoning_with_scenario_awareness_do.md)
+- [Filter, Correlate, Compress: Training-Free Token Reduction for MLLM Acceleration](filter_correlate_compress_training-free_token_reduction_for_.md)
+- [Understanding Task Transfer in Vision-Language Models](../../CVPR2026/multimodal_vlm/understanding_task_transfer_in_vision-language_models.md)
+
+<!-- RELATED:END -->

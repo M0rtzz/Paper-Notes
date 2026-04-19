@@ -120,3 +120,15 @@ FID 降低：InterHuman -9%（从 5.149 降至 4.677），InterX -22%（从 0.46
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、定量+定性对比、详细消融分析
 - 写作质量: ⭐⭐⭐⭐ 方法每个组件的动机都有清晰说明
 - 价值: ⭐⭐⭐⭐ 双人交互运动生成的新 SOTA，FID 降低 9-22% 的实质性改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoCodeBench: Benchmarking PhD-Level Coding in 3D Geometric Computer Vision](../../CVPR2026/llm_efficiency/benchmarking_phd-level_coding_in_3d_geometric_computer_vision.md)
+- [Vocabulary Customization for Efficient Domain-Specific LLM Deployment](../../NeurIPS2025/llm_efficiency/vocabulary_customization_for_efficient_domain-specific_llm_deployment.md)
+- [Expert Divergence Learning for MoE-based Language Models](../../ICLR2026/llm_efficiency/expert_divergence_learning_for_moe-based_language_models.md)
+- [DND: Boosting Large Language Models with Dynamic Nested Depth](../../ICLR2026/llm_efficiency/dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
+- [Deep Compositional Phase Diffusion for Long Motion Sequence Generation](../../NeurIPS2025/llm_efficiency/deep_compositional_phase_diffusion_for_long_motion_sequence_generation.md)
+
+<!-- RELATED:END -->

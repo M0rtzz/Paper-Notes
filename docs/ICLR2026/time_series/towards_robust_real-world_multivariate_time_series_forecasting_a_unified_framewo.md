@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个数据集（含真实工业LNG）+ 两种case设置 + 详尽消融 + channel token数量分析 + 多基线对比（12个方法）
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，设计motivation充分，但符号较重
 - 价值: ⭐⭐⭐⭐⭐ 对真实世界时序预测有直接工业价值，统一框架的思路可启发其他多模态异质数据融合任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
+- [Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
+- [Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
+- [AERO: A Redirection-Based Optimization Framework Inspired by Judo for Robust Probabilistic Forecasting](../../NeurIPS2025/time_series/aero_a_redirection-based_optimization_framework_inspired_by_judo_for_robust_prob.md)
+- [Language in the Flow of Time: Time-Series-Paired Texts Weaved into a Unified Temporal Narrative](language_in_the_flow_of_time_time-series-paired_texts_weaved_into_a_unified_temp.md)
+
+<!-- RELATED:END -->

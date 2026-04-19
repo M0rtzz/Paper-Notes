@@ -151,3 +151,15 @@ FedCola 在默认设置下比最强基线 FedIoT 提升约 6.5/6.7 个点。
 - 实验充分度: ⭐⭐⭐⭐ — 多设置、多域差距、消融、公平性分析很全面
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，方法阐述系统
 - 价值: ⭐⭐⭐⭐ — 为多模态 FL 提供了实用且可扩展的框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-LoRA: Collaborative Model Personalization on Heterogeneous Multi-Modal Clients](../../ICLR2026/ai_safety/co-lora_collaborative_model_personalization_on_heterogeneous_multi-modal_clients.md)
+- [SkyMask: Attack-Agnostic Robust Federated Learning with Fine-Grained Learnable Masks](skymask_attack-agnostic_robust_federated_learning_with_fine-grained_learnable_ma.md)
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](../../CVPR2025/ai_safety/infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+- [Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](../../CVPR2026/ai_safety/multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
+- [Fisher Calibration for Backdoor-Robust Heterogeneous Federated Learning](fisher_calibration_for_backdoor-robust_heterogeneous_federated_learning.md)
+
+<!-- RELATED:END -->

@@ -166,3 +166,15 @@ $$\hat{f}(y_{neu}) = g(\mathcal{T}_\theta^{resp,s}(\boldsymbol{h}_{neu}) + \math
 - **实验充分度**: ⭐⭐⭐⭐⭐ — Winobias、I2P基准全面覆盖，包含SDXL迁移和详尽消融
 - **写作质量**: ⭐⭐⭐⭐ — 框架描述清晰，但符号较多，初读需一定耐心
 - **价值**: ⭐⭐⭐⭐ — 在负责任AI生成方向贡献显著，实际部署价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MGAudio: Model-Guided Dual-Role Alignment for High-Fidelity Open-Domain Video-to-Audio Generation](model-guided_dual-role_alignment_for_high-fidelity_open-domain_video-to-audio_ge.md)
+- [Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models](breaking_ars_sampling_bottleneck_provable_acceleration_via_d.md)
+- [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](../../CVPR2025/image_generation/trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
+- [Dual Diffusion for Unified Image Generation and Understanding](../../CVPR2025/image_generation/dual_diffusion_for_unified_image_generation_and_understanding.md)
+- [UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation](utilgen_utility-centric_generative_data_augmentation_with_dual-level_task_adapta.md)
+
+<!-- RELATED:END -->

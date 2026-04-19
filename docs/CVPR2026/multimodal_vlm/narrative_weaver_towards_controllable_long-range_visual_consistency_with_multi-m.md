@@ -110,3 +110,14 @@ tags:
 - Memory Bank 的几何衰减率 $\lambda$ 的选择对不同叙事长度的影响需更多消融
 - Stage 3 仅训练 1-2 epoch，更充分的训练可能进一步提升细粒度一致性
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Visual Forgetting via Take-along Visual Conditioning for Multi-modal Long CoT Reasoning](../../ACL2025/multimodal_vlm/tvc_mitigating_visual_forgetting.md)
+- [UniMMAD: Unified Multi-Modal and Multi-Class Anomaly Detection via MoE-Driven Feature Decompression](unimmad_multimodal_moe_anomaly_detection.md)
+- [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
+- [Decoupling Stability and Plasticity for Multi-Modal Test-Time Adaptation](decoupling_stability_and_plasticity_for_multi-modal_test-time_adaptation.md)
+- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
+
+<!-- RELATED:END -->

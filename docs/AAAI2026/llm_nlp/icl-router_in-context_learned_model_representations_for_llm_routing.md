@@ -150,3 +150,15 @@ ICL-Router 平均 76.30，超越最佳单模型 3.11 分，超越 EmbedLLM 2.14 
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：方法设计清晰（两阶段训练 + in-context 能力画像），可扩展性解决了实际痛点，实验全面（10 个 benchmark，ID/OOD 均覆盖）。扣一分因为查询集选择策略未深入分析，且路由器自身的推理开销未充分讨论。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Mutual Influence of Gender and Occupation in LLM Representations](../../ACL2025/llm_nlp/on_the_mutual_influence_of_gender_and_occupation_in_llm_representations.md)
+- [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
+- [Near-Optimal Online Deployment and Routing for Streaming LLMs](../../ICLR2026/llm_nlp/near-optimal_online_deployment_and_routing_for_streaming_llms.md)
+- [Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts](../../ACL2025/llm_nlp/cross_model_transferability_sv.md)
+- [Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验规模适中，但验证了核心claims
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰
 - 价值: ⭐⭐⭐⭐ 为扩散模型适配提供了原则性框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [Training-Free Constrained Generation with Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)
+- [Information Theoretic Learning for Diffusion Models with Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)
+- [Exploring Semantic-constrained Adversarial Example with Instruction Uncertainty Reduction](exploring_semantic-constrained_adversarial_example_with_instruction_uncertainty_.md)
+- [Physics-Constrained Flow Matching: Sampling Generative Models with Hard Constraints](physics-constrained_flow_matching_sampling_generative_models_with_hard_constrain.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ LLM 已展现强大的跨语言泛化能力，但对古典语言的零样本 NLU
 - **实用性**: ⭐⭐⭐ — 应用场景偏窄（数字人文、语言学研究），但 QA 数据集和 RAG 方案有实际价值
 - **实验充分度**: ⭐⭐⭐⭐ — 多任务、多语言、多模型、多维度正交对比，分析细致
 - **写作质量**: ⭐⭐⭐⭐ — 案例研究风格恰当，结构清晰，混淆矩阵分析深入
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Translation and Fusion Improves Zero-shot Cross-lingual Information Extraction](translation_and_fusion_improves_cross-lingual_information_extraction.md)
+- [Cross-Lingual Generalization and Compression: From Language-Specific to Shared Neurons](cross_lingual_neurons_compression.md)
+- [Machine Translation Models are Zero-Shot Detectors of Translation Direction](machine_translation_models_are_zero-shot_detectors_of_translation_direction.md)
+- [Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models](statement-tuning_enables_efficient_cross-lingual_generalization_in_encoder-only_.md)
+- [Cross-Lingual Auto Evaluation for Assessing Multilingual LLMs](cross-lingual_auto_evaluation_for_assessing_multilingual_llms.md)
+
+<!-- RELATED:END -->

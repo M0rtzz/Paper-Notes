@@ -205,3 +205,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{task} + \frac{1}{\beta}(\mathcal{L}_{tib} +
 ⭐⭐⭐⭐ (4/5)
 
 框架设计完整，信息瓶颈与多模态融合/缺失重建的结合自然。实验覆盖4个数据集在完整和多种不完整设置下全面验证。理论直觉清晰但缺少更大规模/更多模态的验证。循环翻译在信息化空间中进行是核心创新。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VT-FSL: Bridging Vision and Text with LLMs for Few-Shot Learning](vt-fsl_bridging_vision_and_text_with_llms_for_few-shot_learning.md)
+- [Multimodal Negative Learning](multimodal_negative_learning.md)
+- [AntiGrounding: Lifting Robotic Actions into VLM Representation Space for Decision Making](antigrounding_lifting_robotic_actions_into_vlm_representatio.md)
+- [Continual Multimodal Contrastive Learning](continual_multimodal_contrastive_learning.md)
+- [Test-Time Spectrum-Aware Latent Steering for Zero-Shot Generalization in Vision-Language Models](test-time_spectrum-aware_latent_steering_for_zero-shot_generalization_in_vision-.md)
+
+<!-- RELATED:END -->

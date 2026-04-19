@@ -111,3 +111,15 @@ SSS在9个指标中6个最优，2个次优。LPIPS提升尤其显著（T&T: 0.13
 - 实验充分度: ⭐⭐⭐⭐⭐ 3数据集×11场景×3指标标准评估+165组不同组件数对比+消融+可视化+采样效果分析
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨完整，but文章较长较密集
 - 价值: ⭐⭐⭐⭐⭐ 对3DGS范式的根本性改进，代码开源，可直接替代3DGS作为更强基础组件
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [Mitigating Ambiguities in 3D Classification with Gaussian Splatting](mitigating_ambiguities_in_3d_classification_with_gaussian_splatting.md)
+- [DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds](dashgaussian_optimizing_3d_gaussian_splatting_in_200_seconds.md)
+- [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

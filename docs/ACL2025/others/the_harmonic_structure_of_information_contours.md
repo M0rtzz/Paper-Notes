@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6 种语言 + 多粒度对比 + 显著性检验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，Figure 1 直观展示了谐波分解
 - 价值: ⭐⭐⭐⭐ 对语言信息结构有首要理论贡献，对语篇分析和 LM 评估有潜在应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [Entropy-UID: A Method for Optimizing Information Density](entropy-uid_a_method_for_optimizing_information_density.md)
+- [A Linear N-Point Solver for Structure and Motion from Asynchronous Tracks](../../ICCV2025/others/a_linear_n-point_solver_for_structure_and_motion_from_asynchronous_tracks.md)
+- [How to Marginalize in Causal Structure Learning?](../../AAAI2026/others/how_to_marginalize_in_causal_structure_learning.md)
+- [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)
+
+<!-- RELATED:END -->

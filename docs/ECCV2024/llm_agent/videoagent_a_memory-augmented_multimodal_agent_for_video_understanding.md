@@ -184,3 +184,15 @@ VideoAgent 是一个**零样本框架**，无需针对特定任务训练：
 - 实验充分度: ⭐⭐⭐⭐ 在 NExT-QA 和 EgoSchema 两个主要基准上验证，有消融和案例分析
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，案例演示直观，易于理解
 - 价值: ⭐⭐⭐⭐⭐ Agent+记忆的范式对长视频理解影响深远，EgoSchema +26% 的提升非常显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [Agent3D-Zero: An Agent for Zero-shot 3D Understanding](agent3d-zero_an_agent_for_zero-shot_3d_understanding.md)
+- [Think, Then Verify: A Hypothesis-Verification Multi-Agent Framework for Long Video Understanding](../../CVPR2026/llm_agent/think_then_verify_a_hypothesis-verification_multi-agent_framework_for_long_video.md)
+- [Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization](../../ICLR2026/llm_agent/exploratory_memory-augmented_llm_agent_via_hybrid_on-_and_off-policy_optimizatio.md)
+- [Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding](../../NeurIPS2025/llm_agent/deep_video_discovery_agentic_search_with_tool_use_for_longfo.md)
+
+<!-- RELATED:END -->

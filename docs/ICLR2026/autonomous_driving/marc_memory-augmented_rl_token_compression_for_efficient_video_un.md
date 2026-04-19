@@ -176,3 +176,15 @@ $$\mathcal{L}_{\text{C-GRPO}} = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\left(\
 | 实验充分度 | ⭐⭐⭐⭐ | 6 个 benchmark、多组对比/消融、效率评估完整；但缺少大模型验证 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，公式推导完整，动机阐述充分 |
 | 价值 | ⭐⭐⭐⭐⭐ | 95% 压缩率 + 性能无损，对实际部署价值极高 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StreamForest: Efficient Online Video Understanding with Persistent Event Memory](../../NeurIPS2025/autonomous_driving/streamforest_efficient_online_video_understanding_with_persistent_event_memory.md)
+- [EgoDex: Learning Dexterous Manipulation from Large-Scale Egocentric Video](egodex_learning_dexterous_manipulation_from_large-scale_egocentric_video.md)
+- [DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
+- [CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking](../../AAAI2026/autonomous_driving/comptrack_information_bottleneckguided_lowrank_dynamic_token_compres.md)
+- [FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](../../AAAI2026/autonomous_driving/fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
+
+<!-- RELATED:END -->

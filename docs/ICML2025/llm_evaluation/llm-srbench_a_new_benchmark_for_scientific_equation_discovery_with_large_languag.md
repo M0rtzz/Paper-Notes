@@ -115,3 +115,15 @@ LLM嵌入了大量科学知识可辅助假设生成。但现有基准（Feynman/
 
 ### 与SRBench的互补性
 SRBench评估传统符号回归方法，LLM-SRBench专门评估LLM方法——两者互补。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [YESciEval: Robust LLM-as-a-Judge for Scientific Question Answering](../../ACL2025/llm_evaluation/yescieval_llm_judge_science.md)
+- [MisMatched: A Benchmark for Scientific Natural Language Inference](../../ACL2025/llm_evaluation/a_mismatched_benchmark_for_scientific_natural_language_inference.md)
+- [RGB-to-Polarization Estimation: A New Task and Benchmark Study](../../NeurIPS2025/llm_evaluation/rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)
+- [HalluLens: LLM Hallucination Benchmark](../../ACL2025/llm_evaluation/hallulens_llm_hallucination_benchmark.md)
+- [On Evaluating LLM Alignment by Evaluating LLMs as Judges](../../NeurIPS2025/llm_evaluation/on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+
+<!-- RELATED:END -->

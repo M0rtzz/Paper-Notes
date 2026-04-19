@@ -142,3 +142,15 @@ $$\mathcal{M}(x_t^k) = \underbrace{\{x_t^1,...,x_t^m, [\text{VINST}]_t\}}_{\text
 - ⭐ 实验充分度: 4/5 — 覆盖生成、检测、PEO 三个任务 + 消融 + 逆向工程用户研究，但部分基线为估计值
 - ⭐ 写作质量: 3.5/5 — 技术内容扎实但论文较长，部分公式符号不统一
 - ⭐ 价值: 4/5 — 开辟学习型软件保护新方向，对安全社区有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Paper2Code: Automating Code Generation from Scientific Papers in Machine Learning](paper2code_automating_code_generation_from_scientific_papers_in_machine_learning.md)
+- [Robust Learning of Diverse Code Edits (NextCoder)](../../ICML2025/code_intelligence/robust_learning_of_diverse_code_edits.md)
+- [DRO-InstructZero: Distributionally Robust Prompt Optimization for Large Language Models](dro-instructzero_distributionally_robust_prompt_optimization_for_large_language_.md)
+- [Learning to Reason without External Rewards](learning_to_reason_without_external_rewards.md)
+- [Breaking the SFT Plateau: Multimodal Structured Reinforcement Learning for Chart-to-Code Generation](breaking_the_sft_plateau_multimodal_structured_reinforcement_learning_for_chart-.md)
+
+<!-- RELATED:END -->

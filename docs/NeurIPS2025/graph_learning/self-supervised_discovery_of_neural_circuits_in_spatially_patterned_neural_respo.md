@@ -135,3 +135,15 @@ GNN推断误差比GLM低70%以上。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 合成数据多条件消融+真实数据验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，实验递进式展开
 - 价值: ⭐⭐⭐⭐ — 计算神经科学和GNN交叉领域有意义的贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Over-squashing in Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)
+- [HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport](../../ICML2025/graph_learning/hgot_self-supervised_heterogeneous_graph_neural_network_with_optimal_transport.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+- [Graph Neural Networks for Interferometer Simulations](graph_neural_networks_for_interferometer_simulations.md)
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+
+<!-- RELATED:END -->

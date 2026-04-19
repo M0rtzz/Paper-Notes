@@ -148,3 +148,15 @@ Arditi et al. (2024) 展示了拒绝行为可通过激活转向移除，Li et al
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6 个模型 × 4 个数据集 × 3 类任务，含消融、通用能力测试、分类别分析和 case study，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 框架清晰，三步流程自然递进，图表丰富；但部分数学符号过于冗余
 - **价值**: ⭐⭐⭐⭐ — 提供了一条实用的推理时去偏路径，即插即用特性使其有很强的工程应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Debiasing Tsallis Entropy for Test-Time Adaptation](../../ICLR2026/social_computing/adaptive_debiasing_tsallis_entropy_for_test-time_adaptation.md)
+- [Concept-Level Explainability for Auditing & Steering LLM Responses](../../NeurIPS2025/social_computing/concept-level_explainability_for_auditing_steering_llm_responses.md)
+- [Exploring the Impact of Instruction-Tuning on LLMs' Susceptibility to Misinformation](exploring_the_impact_of_instruction-tuning_on_llms_susceptibility_to_misinformat.md)
+- [BanStereoSet: A Dataset to Measure Stereotypical Social Biases in LLMs for Bangla](banstereoset_a_dataset_to_measure_stereotypical_social_biases_in_llms_for_bangla.md)
+- [DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts](../../ICML2025/social_computing/defame_dynamic_evidence-based_fact-checking_with_multimodal_experts.md)
+
+<!-- RELATED:END -->

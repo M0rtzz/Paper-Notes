@@ -148,3 +148,15 @@ Brain-IT 分为两个阶段：**图像特征预测**（BIT 模型）→ **图像
 - 实验充分度: ⭐⭐⭐⭐ (全面指标对比，迁移学习分析充分，但仅一个数据集)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，图示优秀，方法对应直觉易懂)
 - 价值: ⭐⭐⭐⭐⭐ (大幅推进 fMRI 图像重建 SOTA，1小时迁移有重要临床意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Interpretable Visual Decoding with Attention to Brain Representations](towards_interpretable_visual_decoding_with_attention_to_brain_representations.md)
+- [Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI](../../ICCV2025/medical_imaging/beyond_brain_decoding_visualsemantic_reconstructions_to_ment.md)
+- [Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model](brain-semantoks_learning_semantic_tokens_of_brain_dynamics_with_a_self-distilled.md)
+- [MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding](../../NeurIPS2025/medical_imaging/more-brain_routed_mixture_of_experts_for_interpretable_and_generalizable_cross-s.md)
+- [Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis](../../NeurIPS2025/medical_imaging/scalable_diffusion_transformer_for_conditional_4d_fmri_synthesis.md)
+
+<!-- RELATED:END -->

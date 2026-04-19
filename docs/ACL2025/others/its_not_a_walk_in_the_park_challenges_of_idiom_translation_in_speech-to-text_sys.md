@@ -133,3 +133,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 多系统、多语言、自动+人工评估，逐层分析深入。但语言对和样本量可更多
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富，问题动机阐释充分
 - **价值**: ⭐⭐⭐⭐ — 对语音翻译社区有重要的实践指导意义，揭示了 SLT 在语义理解上的根本性不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OrbitZoo: Real Orbital Systems Challenges for Reinforcement Learning](../../NeurIPS2025/others/orbitzoo_real_orbital_systems_challenges_for_reinforcement_learning.md)
+- [Towards Style Alignment in Cross-Cultural Translation](towards_style_alignment_in_cross-cultural_translation.md)
+- [I Can't Believe It's Not Scene Flow!](../../ECCV2024/others/i_canapost_believe_itaposs_not_scene_flow.md)
+- [Do not Abstain! Identify and Solve the Uncertainty](do_not_abstain_identify_and_solve_the_uncertainty.md)
+- [Is Linguistically-Motivated Data Augmentation Worth It?](is_linguistically-motivated_data_augmentation_worth_it.md)
+
+<!-- RELATED:END -->

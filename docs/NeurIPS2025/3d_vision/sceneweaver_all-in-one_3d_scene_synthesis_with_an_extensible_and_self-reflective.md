@@ -116,3 +116,15 @@ SceneWeaver不涉及端到端训练。核心是利用预训练MLLM（GPT-4）的
 - 实验充分度: ⭐⭐⭐⭐⭐ 常见房型和开放词汇两个setting，8种房间类型，多维度指标，消融和人类评估全面
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但方法部分稍长，可适当精简
 - 价值: ⭐⭐⭐⭐⭐ 对具身AI场景构建有直接价值，统一框架思路有望推广到更多3D生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Matrix3D: Large Photogrammetry Model All-in-One](../../CVPR2025/3d_vision/matrix3d_large_photogrammetry_model_all-in-one.md)
+- [3D-Agent: Tri-Modal Multi-Agent Collaboration for Scalable 3D Object Annotation](3d-agenttri-modal_multi-agent_collaboration_for_scalable_3d_object_annotation.md)
+- [RoboTron-Mani: All-in-One Multimodal Large Model for Robotic Manipulation](../../ICCV2025/3d_vision/robotron-mani_all-in-one_multimodal_large_model_for_robotic_manipulation.md)
+- [MaterialRefGS: Reflective Gaussian Splatting with Multi-view Consistent Material Inference](materialrefgs_reflective_gaussian_splatting_with_multi-view_consistent_material_.md)
+- [No Pose at All: Self-Supervised Pose-Free 3D Gaussian Splatting from Sparse Views](../../ICCV2025/3d_vision/no_pose_at_all_self-supervised_pose-free_3d_gaussian_splatting_from_sparse_views.md)
+
+<!-- RELATED:END -->

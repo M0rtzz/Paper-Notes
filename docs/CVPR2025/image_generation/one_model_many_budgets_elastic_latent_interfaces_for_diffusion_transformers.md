@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4种架构、2种分辨率、视频生成、多种 FLOPs 曲线、zero-padding 实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机实验极具说服力，图表丰富清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 DiT 系列的实用改进，drop-in 可直接应用到工业模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
+- [LEDiff: Latent Exposure Diffusion for HDR Generation](lediff_latent_exposure_diffusion_for_hdr_generation.md)
+- [GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration](gendeg_diffusion-based_degradation_synthesis_for_generalizable_all-in-one_image_.md)
+- [Latent Space Imaging](latent_space_imaging.md)
+- [BootPlace: Bootstrapped Object Placement with Detection Transformers](bootplace_bootstrapped_object_placement_with_detection_transformers.md)
+
+<!-- RELATED:END -->

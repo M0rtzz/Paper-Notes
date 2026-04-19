@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为立场论文以论证和路线图为主，自有实验非常有限
 - 写作质量: ⭐⭐⭐⭐⭐ 论证层层递进，生物类比精准有力，形式化清晰
 - 价值: ⭐⭐⭐⭐ 方向正确且重要，但需要大量后续实证工作来兑现其承诺
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DNA-DetectLLM: Unveiling AI-Generated Text via a DNA-Inspired Mutation-Repair Paradigm](dna-detectllm_unveiling_ai-generated_text_via_a_dna-inspired_mutation-repair_par.md)
+- [Understanding Challenges to the Interpretation of Disaggregated Evaluations of AI](understanding_challenges_to_the_interpretation_of_disaggregated_evaluations_of_a.md)
+- [FedSVD: Adaptive Orthogonalization for Private Federated Learning with LoRA](fedsvd_adaptive_orthogonalization_for_private_federated_learning_with_lora.md)
+- [CTRL-ALT-DECEIT: Sabotage Evaluations for Automated AI R&D](ctrl-alt-deceit_sabotage_evaluations_for_automated_ai_rd.md)
+- [Adaptive LoRA Experts Allocation and Selection for Federated Fine-Tuning](adaptive_lora_experts_allocation_and_selection_for_federated_fine-tuning.md)
+
+<!-- RELATED:END -->

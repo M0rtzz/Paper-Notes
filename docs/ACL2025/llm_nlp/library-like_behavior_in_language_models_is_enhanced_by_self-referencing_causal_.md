@@ -150,3 +150,15 @@ $$S_l = \arg\max_{s \in S_{l_c}} P_\mathcal{M}(S_r|s) P_\mathcal{M}(s)$$
 ⭐⭐⭐⭐ (4/5)
 
 立意新颖，从全新视角审视 reversal curse 问题，提出的 cycle token 概念直觉上优雅且理论上严谨。Few-token 实验设计精心且说服力强。但从小模型实验到大模型应用的推广仍需更多验证，实际 prompting 策略的适用范围也有待拓展到更广泛的文本类型。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ExpliCa: Evaluating Explicit Causal Reasoning in Large Language Models](explica_evaluating_explicit_causal_reasoning_in_large_language_models.md)
+- [Self-Training Elicits Concise Reasoning in Large Language Models](self-training_elicits_concise_reasoning_in_large_language_models.md)
+- [SQLong: Enhanced NL2SQL for Longer Contexts with LLMs](sqlong_enhanced_nl2sql_for_longer_contexts_with_llms.md)
+- [HumT DumT: Measuring and Controlling Human-like Language in LLMs](humt_dumt_measuring_and_controlling_human-like_language_in_llms.md)
+- [DIVE into MoE: Diversity-Enhanced Reconstruction of Large Language Models from Dense into Mixture-of-Experts](dive_moe_reconstruction.md)
+
+<!-- RELATED:END -->

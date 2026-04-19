@@ -161,3 +161,15 @@ VidAssist是零/少样本框架，**不需要训练**。核心是prompt设计和
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个任务、两个数据集、三种设置（零样本/少样本/全监督对比）、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，Propose-Assess-Search的命名直观易懂
 - 价值: ⭐⭐⭐⭐ 少样本超越全监督SOTA具有实际意义，证明了LLM内在知识的规划能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMs Can Be Easily Confused by Instructional Distractions](../../ACL2025/llm_nlp/llms_can_be_easily_confused_by_instructional_distractions.md)
+- [Composing Concepts from Images and Videos via Concept-prompt Binding](../../CVPR2026/llm_nlp/composing_concepts_from_images_and_videos_via_concept-prompt_binding.md)
+- [LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery](../../ICLR2026/llm_nlp/llema_evolutionary_search_with_llms_for_multi-objective_materials_discovery.md)
+- [AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play](../../NeurIPS2025/llm_nlp/acesearcher_bootstrapping_reasoning_and_search_for_llms_via_reinforced_self-play.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](../../ACL2025/llm_nlp/plangenllms_planning_survey.md)
+
+<!-- RELATED:END -->

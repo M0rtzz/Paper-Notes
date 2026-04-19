@@ -141,3 +141,15 @@ PMS-FT 在所有模型和所有任务上均超越基线。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，理论与实验紧密配合
 - **实用价值**: ⭐⭐⭐⭐ — 方法简单有效，易于集成到现有微调流程
 - **综合**: ⭐⭐⭐⭐ (8/10) — 解决了多域微调的实际痛点，理论与实践结合良好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse MeZO: Less Parameters for Better Performance in Zeroth-Order LLM Fine-Tuning](sparse_mezo_less_parameters_for_better_performance_in_zeroth-order_llm_fine-tuni.md)
+- [A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](../../ACL2025/llm_nlp/a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)
+- [Triplets Better Than Pairs: Towards Stable and Effective Self-Play Fine-Tuning for LLMs](triplets_better_than_pairs_towards_stable_and_effective_self-play_fine-tuning_fo.md)
+- [SPACE: Noise Contrastive Estimation Stabilizes Self-Play Fine-Tuning for Large Language Models](space_noise_contrastive_estimation_stabilizes_self-play_fine-tuning_for_large_la.md)
+- [MOOSE-Chem2: Exploring LLM Limits in Fine-Grained Scientific Hypothesis Discovery](moose-chem2_exploring_llm_limits_in_fine-grained_scientific_hypothesis_discovery.md)
+
+<!-- RELATED:END -->

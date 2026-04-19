@@ -141,3 +141,15 @@ $$L_{\text{cos-mse}}(q', \hat{q}) = 1 - \cos(q', \hat{q}) + L^2(q', \hat{q})$$
 - **实验**: ⭐⭐⭐⭐ — 覆盖分割/深度/法线/多分辨率/多编码器，消融充分
 - **实用性**: ⭐⭐⭐⭐⭐ — 直接解决"换编码器需重训"的工程痛点，开源权重即插即用
 - **写作**: ⭐⭐⭐⭐ — 图表清晰，对比方法分类表格一目了然
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Computable Universal Online Learning](../../NeurIPS2025/others/computable_universal_online_learning.md)
+- [Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)
+- [Distributionally Robust Feature Selection](../../NeurIPS2025/others/distributionally_robust_feature_selection.md)
+- [FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](../../NeurIPS2025/others/flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)
+- [Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
+
+<!-- RELATED:END -->

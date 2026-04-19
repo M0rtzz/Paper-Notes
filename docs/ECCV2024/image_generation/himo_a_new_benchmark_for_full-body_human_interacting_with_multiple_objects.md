@@ -249,3 +249,15 @@ $$\mathcal{L} = \lambda_{vel}\mathcal{L}_{vel} + \lambda_{pos}\mathcal{L}_{pos} 
 - **实用性**：★★★★☆ — 对游戏/VR/机器人有直接应用价值，但数据规模仍有待扩展
 - **实验充分度**：★★★★☆ — 多基线比较+泛化实验+消融，评估协议参照成熟框架
 - **写作质量**：★★★★☆ — 结构清晰，系统介绍完整，但方法部分稍显冗长
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MagicEraser: Erasing Any Objects via Semantics-Aware Control](magiceraser_erasing_any_objects_via_semantics-aware_control.md)
+- [DPoser-X: Diffusion Model as Robust 3D Whole-Body Human Pose Prior](../../ICCV2025/image_generation/dposer-x_diffusion_model_as_robust_3d_whole-body_human_pose_prior.md)
+- [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Generating Human Interaction Motions in Scenes with Text Control](generating_human_interaction_motions_in_scenes_with_text_control.md)
+
+<!-- RELATED:END -->

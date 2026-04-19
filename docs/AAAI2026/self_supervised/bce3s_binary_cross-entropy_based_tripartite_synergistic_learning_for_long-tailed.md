@@ -211,3 +211,15 @@ $L = \frac{1}{B}\sum L_{\text{bce}}^{(\text{sc})} + \frac{\lambda_{ss}}{B}\sum L
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集+详细消融+特征可视化
 - 写作质量: ⭐⭐⭐⭐ 理论分析清晰
 - 价值: ⭐⭐⭐⭐ 为长尾学习提供了新的损失设计范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Tailed Recognition via Information-Preservable Two-Stage Learning](../../NeurIPS2025/self_supervised/long-tailed_recognition_via_information-preservable_two-stage_learning.md)
+- [Maximizing Incremental Information Entropy for Contrastive Learning](../../ICLR2026/self_supervised/maximizing_incremental_information_entropy_for_contrastive_learning.md)
+- [MovSemCL: Movement-Semantics Contrastive Learning for Trajectory Similarity (Extension)](movsemcl_movement-semantics_contrastive_learning_for_trajectory_similarity_exten.md)
+- [Let the Void Be Void: Robust Open-Set Semi-Supervised Learning via Selective Non-Alignment](let_the_void_be_void_robust_open-set_semi-supervised_learning_via_selective_non-.md)
+- [Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision](improving_region_representation_learning_from_urban_imagery_with_noisy_long-capt.md)
+
+<!-- RELATED:END -->

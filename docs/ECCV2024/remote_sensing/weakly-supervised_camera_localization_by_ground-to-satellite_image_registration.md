@@ -174,3 +174,15 @@ $$\mathbf{S}(u,v) = \frac{\sum_i \sum_j \mathbf{F}_s(u+i, v+j) \hat{\mathbf{F}_g
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 双数据集(KITTI+VIGOR)、同/跨区域评估、详尽消融、多种对比方法
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，实验分析深入，补充材料丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 大幅降低了高精度定位的数据标注需求，跨区域泛化性能实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](../../ICCV2025/remote_sensing/geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+- [ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations](congeo_robust_cross-view_geo-localization_across_ground_view_variations.md)
+- [Learning Representations of Satellite Images From Metadata Supervision](learning_representations_of_satellite_images_from_metadata_supervision.md)
+- [Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
+- [AstroLoc: Robust Space to Ground Image Localizer](../../ICCV2025/remote_sensing/astroloc_robust_space_to_ground_image_localizer.md)
+
+<!-- RELATED:END -->

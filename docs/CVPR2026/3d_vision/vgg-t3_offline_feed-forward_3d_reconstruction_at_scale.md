@@ -142,3 +142,15 @@ $$L_t(T_\theta(k_i), v_i) = T_\theta(k_i)^T v_i$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖pointmap、深度、位姿、定位四大任务，含大规模评测和分布式推理，消融完整
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，motivation层层递进，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ — 解决前馈3D重建可扩展性瓶颈，11.6×加速下精度损失极小，对大规模场景重建有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+
+<!-- RELATED:END -->

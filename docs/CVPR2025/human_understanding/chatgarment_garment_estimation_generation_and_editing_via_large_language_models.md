@@ -113,3 +113,15 @@ ChatGarment 支持多种编辑操作：
 ## 总结与展望
 
 ChatGarment 创新性地将 VLM 与参数化服装表示结合，通过 GarmentCodeRC 压缩（900→350 tokens）、\<ENDS\> 数值终止token 和大规模数据构建，实现了高质量的3D服装生成。在 Dress4D 上 CD 3.12 vs SewFormer 27.06，展示了巨大的精度优势。该系统使非专业用户也能通过自然语言交互创建和编辑3D服装。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncovering Strategic Egoism Behaviors in Large Language Models](../../NeurIPS2025/human_understanding/uncovering_strategic_egoism_behaviors_in_large_language_models.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](../../NeurIPS2025/human_understanding/graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [BQA: Body Language Question Answering Dataset for Video Large Language Models](../../ACL2025/human_understanding/bqa_body_language_question_answering_dataset_for_video_large_language_models.md)
+- [Enhancing Decision-Making of Large Language Models via Actor-Critic](../../ICML2025/human_understanding/enhancing_decision-making_of_large_language_models_via_actor-critic.md)
+- [Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models](../../NeurIPS2025/human_understanding/incentivizing_reasoning_for_advanced_instruction-following_of_large_language_mod.md)
+
+<!-- RELATED:END -->

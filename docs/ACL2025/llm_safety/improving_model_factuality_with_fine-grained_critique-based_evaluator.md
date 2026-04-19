@@ -205,3 +205,15 @@ FenCE 仅8B参数即超越 Mistral-123B 和 Claude-3 Opus，接近 GPT-4。
 ## 评分 ⭐⭐⭐⭐⭐
 
 完整度极高的工作——从评估器训练到生成器提升形成闭环。冷门事实的 Edit/Remove 策略是核心创新，实验结果极具说服力（超越SOTA 8.83%）。评估器质量验证、消融实验、行为分析都做得非常充分。该工作为LLM事实性改进提供了一套完整可操作的解决方案。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ewe: Improving Factuality with Explicit Working Memory](improving_factuality_with_explicit_working_memory.md)
+- [On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)
+- [Exploring Forgetting in Large Language Model Pre-Training](exploring_forgetting_in_large_language_model_pre-training.md)
+- [UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)
+- [ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)
+
+<!-- RELATED:END -->

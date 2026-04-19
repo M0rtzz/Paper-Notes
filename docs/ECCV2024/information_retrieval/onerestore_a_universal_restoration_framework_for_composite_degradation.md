@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 自建 CDD-11 数据集、14 种 SOTA 对比、多维消融、真实场景验证、可控性展示齐全
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题定义明确，但公式和符号略多
 - 价值: ⭐⭐⭐⭐⭐ 解决了真实场景复合退化的核心痛点，可控复原开创了新方向，参数效率极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GENIUS: A Generative Framework for Universal Multimodal Search](../../CVPR2025/information_retrieval/genius_a_generative_framework_for_universal_multimodal_search.md)
+- [Generalized Contrastive Learning for Universal Multimodal Retrieval](../../NeurIPS2025/information_retrieval/generalized_contrastive_learning_for_universal_multimodal_re.md)
+- [Grounding Language Models for Visual Entity Recognition](grounding_language_models_for_visual_entity_recognition.md)
+- [Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
+- [ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](artvlm_attribute_recognition_through_vision-based_prefix_language_modeling.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ LoRA 适配到未见过的定制模型（Realistic, SD-v1.5, 4步）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多 backbone（SD-v1.5/SDXL/PixArt-α/CogVideoX）、多步数、多指标全面评测
 - 写作质量: ⭐⭐⭐⭐⭐ 理论清晰，从轨迹蒸馏到分布匹配的统一逻辑连贯流畅
 - 价值: ⭐⭐⭐⭐⭐ 效果 SOTA + 极致训练效率 + 理论新范式，实用性和影响力兼备
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Refining Few-Step Text-to-Multiview Diffusion via Reinforcement Learning](../../CVPR2026/image_generation/refining_few-step_text-to-multiview_diffusion_via_reinforcement_learning.md)
+- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](../../CVPR2026/image_generation/uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
+- [Golden Noise for Diffusion Models: A Learning Framework](golden_noise_for_diffusion_models_a_learning_framework.md)
+- [Joint Diffusion Models in Continual Learning](joint_diffusion_models_in_continual_learning.md)
+- [DiffuMatch: Category-Agnostic Spectral Diffusion Priors for Robust Non-rigid Shape Matching](diffumatch_category-agnostic_spectral_diffusion_priors_for_robust_non-rigid_shap.md)
+
+<!-- RELATED:END -->

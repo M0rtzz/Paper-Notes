@@ -170,3 +170,15 @@ MPNet 消融：
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据验证，16种基线对比，详细消融和效率分析
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，方法分解逻辑性强
 - 价值: ⭐⭐⭐⭐ 为视频修复开辟了零标注的新范式，弹幕/水印去除等应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking the Potential of Diffusion Priors in Blind Face Restoration](unlocking_the_potential_of_diffusion_priors_in_blind_face_restoration.md)
+- [AnyPortal: Zero-Shot Consistent Video Background Replacement](anyportal_zero-shot_consistent_video_background_replacement.md)
+- [Inpaint4Drag: Repurposing Inpainting Models for Drag-Based Image Editing via Bidirectional Warping](inpaint4drag_repurposing_inpainting_models_for_drag-based_image_editing_via_bidi.md)
+- [Less-to-More Generalization: Unlocking More Controllability by In-Context Generation](less-to-more_generalization_unlocking_more_controllability_by_in-context_generat.md)
+- [Video Motion Graphs](video_motion_graphs.md)
+
+<!-- RELATED:END -->

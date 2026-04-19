@@ -142,3 +142,15 @@ $$(1-\varepsilon) \mathcal{L}(\theta) \leq \mathcal{L}_\mathcal{S}(\theta) \leq 
 - 实验充分度: ⭐⭐⭐ — 理论验证充分但缺少大规模实际任务的实验
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨清晰，记号系统完整
 - 价值: ⭐⭐⭐⭐ — 为非线性模型的数据采样提供了坚实的理论基础，有广泛启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tree-Sliced Wasserstein Distance with Nonlinear Projection](tree-sliced_wasserstein_distance_with_nonlinear_projection.md)
+- [Morse: Dual-Sampling for Lossless Acceleration of Diffusion Models](morse_dual-sampling_for_lossless_acceleration_of_diffusion_models.md)
+- [Annealing Flow Generative Models Towards Sampling High-Dimensional and Multi-Modal Distributions](annealing_flow_generative_models_towards_sampling_high-dimensional_and_multi-mod.md)
+- [Amortized Sampling with Transferable Normalizing Flows](../../NeurIPS2025/image_generation/amortized_sampling_with_transferable_normalizing_flows.md)
+- [PID-controlled Langevin Dynamics for Faster Sampling of Generative Models](../../NeurIPS2025/image_generation/pid-controlled_langevin_dynamics_for_faster_sampling_of_generative_models.md)
+
+<!-- RELATED:END -->

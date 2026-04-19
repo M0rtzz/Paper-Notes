@@ -126,3 +126,15 @@ EventHub 通过两条互补路径生成训练数据：(i) **Event Data Factory**
 - 实验充分度: ⭐⭐⭐⭐⭐ 4种模型×4种数据组合×3个测试集，且包含域内/域外/夜间等全面评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，管线描述详细，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 解决了事件相机领域的核心痛点——数据匮乏，且代理标签优于 LiDAR 的发现很有影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WMGStereo: What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zerosh.md)
+- [Toward Generalizable Whole Brain Representations with High-Resolution Light-Sheet Data](toward_generalizable_whole_brain_representations_with_high-resolution_light-shee.md)
+- [What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zero-shot_stereo_matching.md)
+- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation](../../AAAI2026/3d_vision/domain_generalized_stereo_matching_with_uncertainty-guided_data_augmentation.md)
+
+<!-- RELATED:END -->

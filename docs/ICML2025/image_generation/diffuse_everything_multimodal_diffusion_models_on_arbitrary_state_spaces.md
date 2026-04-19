@@ -132,3 +132,15 @@ $$\mathcal{L} = \mathbb{E}_{t, x_0, \epsilon} \left[ \lambda_c(t) \|\hat{x}_c - 
 - 实验充分度: ⭐⭐⭐ 验证了文本-图像和表格数据两个场景，但规模较小
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，框架描述完整
 - 价值: ⭐⭐⭐⭐ 为多模态原生扩散提供了新的思路，对混合状态空间建模有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Shallow Diffuse: Robust and Invisible Watermarking through Low-Dimensional Subspaces in Diffusion Models](../../NeurIPS2025/image_generation/shallow_diffuse_robust_and_invisible_watermarking_through_low-dimensional_subspa.md)
+- [State-Covering Trajectory Stitching for Diffusion Planners](../../NeurIPS2025/image_generation/state-covering_trajectory_stitching_for_diffusion_planners.md)
+- [Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
+- [Guided Diffusion Sampling on Function Spaces with Applications to PDEs](../../NeurIPS2025/image_generation/guided_diffusion_sampling_on_function_spaces_with_applications_to_pdes.md)
+
+<!-- RELATED:END -->

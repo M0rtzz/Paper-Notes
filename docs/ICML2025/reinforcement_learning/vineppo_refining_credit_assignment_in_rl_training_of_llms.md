@@ -145,3 +145,15 @@ K 越大方差越小，且计算效率反而更高（更少迭代次数收敛）
 - 实验充分度: ⭐⭐⭐⭐⭐ — 消融全面，value network 失败分析深入，公平控制变量
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，图表精美，问题→诊断→方案→验证的叙事非常流畅
 - 价值: ⭐⭐⭐⭐⭐ — 对 RLVR 领域的 CA 问题给出了简洁有效的解法，对后续 DeepSeek-R1 等工作有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow of Reasoning: Training LLMs for Divergent Reasoning with Minimal Examples](flow_of_reasoning_training_llms_for_divergent_reasoning_with_minimal_examples.md)
+- [The Challenge of Teaching Reasoning to LLMs Without RL or Distillation](the_challenge_of_teaching_reasoning_to_llms_without_rl_or_distillation.md)
+- [mDP3: A Training-free Approach for List-wise Frame Selection in Video-LLMs](../../ICCV2025/reinforcement_learning/mdp3_a_training-free_approach_for_list-wise_frame_selection_in_video-llms.md)
+- [EVOLvE: Evaluating and Optimizing LLMs For In-Context Exploration](evolve_evaluating_and_optimizing_llms_for_in-context_exploration.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+
+<!-- RELATED:END -->

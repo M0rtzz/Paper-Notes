@@ -124,3 +124,15 @@ o4-mini 在 Code Agent 下干净表格达到 100% 精确匹配，但引入数据
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 11 个模型、两种范式、多维度分析
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，框架描述详细
 - **价值**: ⭐⭐⭐⭐⭐ 对 LLM-as-data-analyst 的可靠性评估有重要意义，揭示了关键短板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating Synthetic Relational Tabular Data via Structural Causal Models](../../ACL2025/others/generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
+- [Product Distribution Learning with Imperfect Advice](product_distribution_learning_with_imperfect_advice.md)
+- [Adaptive Data Analysis for Growing Data](adaptive_data_analysis_for_growing_data.md)
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+- [Brain-Like Processing Pathways Form in Models With Heterogeneous Experts](brain-like_processing_pathways_form_in_models_with_heterogeneous_experts.md)
+
+<!-- RELATED:END -->

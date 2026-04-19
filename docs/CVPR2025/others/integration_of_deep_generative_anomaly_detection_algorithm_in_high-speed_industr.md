@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 真实工业数据验证有说服力，但缺乏公开基准对比
 - 写作质量: ⭐⭐⭐ 工程细节充分，但数学符号偶有混乱，结构略显冗长
 - 价值: ⭐⭐⭐⭐ 对工业异常检测部署有很好的参考价值，弥补了学术方法到产线落地的 gap
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnomalyNCD: Towards Novel Anomaly Class Discovery in Industrial Scenarios](anomalyncd_towards_novel_anomaly_class_discovery_in_industrial_scenarios.md)
+- [Wear Classification of Abrasive Flap Wheels using a Hierarchical Deep Learning Approach](wear_classification_of_abrasive_flap_wheels_using_a_hierarchical_deep_learning_a.md)
+- [ADPretrain: Advancing Industrial Anomaly Detection via Anomaly Representation Pretraining](../../NeurIPS2025/others/adpretrain_advancing_industrial_anomaly_detection_via_anomaly_representation_pre.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sensors_from_deterministic_to_gen.md)
+- [Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
+
+<!-- RELATED:END -->

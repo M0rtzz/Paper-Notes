@@ -116,3 +116,15 @@ PoseMaster 基于 Hunyuan3D 2.1 架构，由两个主要组件构成：3D VAE（
 - 实验充分度: ⭐⭐⭐⭐ 对比设置公平（给 baseline 信息优势仍超越），消融分析到位，但缺少用户研究
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述详尽，图表质量高
 - 价值: ⭐⭐⭐⭐⭐ 开创了 3D 姿态风格化的新范式，可动画 mesh 生成的应用价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models](../../ICLR2026/3d_vision/quadgpt_native_quadrilateral_mesh_generation_with_autoregressive_models.md)
+- [PixARMesh: Autoregressive Mesh-Native Single-View Scene Reconstruction](pixarmesh_autoregressive_mesh-native_single-view_scene_reconstruction.md)
+- [FantasyStyle: Controllable Stylized Distillation for 3D Gaussian Splatting](../../AAAI2026/3d_vision/fantasystyle_controllable_stylized_distillation_for_3d_gaussian_splatting.md)
+- [RnG: A Unified Transformer for Complete 3D Modeling from Partial Observations](rng_a_unified_transformer_for_complete_3d_modeling_from_partial_observations.md)
+- [DirectFisheye-GS: Enabling Native Fisheye Input in Gaussian Splatting with Cross-View Joint Optimization](directfisheye-gs_enabling_native_fisheye_input_in_gaussian_splatting_with_cross-.md)
+
+<!-- RELATED:END -->

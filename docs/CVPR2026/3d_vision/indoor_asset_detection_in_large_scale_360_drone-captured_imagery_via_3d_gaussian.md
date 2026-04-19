@@ -119,3 +119,15 @@ Pipeline不涉及训练——完全基于预训练的2D检测器(OWLv2)和分割
 - 实验充分度: ⭐⭐⭐⭐ 两个大规模真实场景+详细消融+与GAGA的公平对比
 - 写作质量: ⭐⭐⭐⭐ Pipeline描述清晰，图示辅助理解每个步骤
 - 价值: ⭐⭐⭐⭐ 为大规模室内3DGS的实用目标检测提供了可行方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IM360: Large-scale Indoor Mapping with 360 Cameras](../../ICCV2025/3d_vision/im360_large-scale_indoor_mapping_with_360_cameras.md)
+- [Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments](few-shot_incremental_3d_object_detection_in_dynamic_indoor_environments.md)
+- [Off The Grid: Detection of Primitives for Feed-Forward 3D Gaussian Splatting](off_the_grid_detection_of_primitives_for_feed-forward_3d_gaussian_splatting.md)
+- [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](../../CVPR2025/3d_vision/dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
+- [Ego-1K: A Large-Scale Multiview Video Dataset for Egocentric Vision](ego-1k_--_a_large-scale_multiview_video_dataset_for_egocentric_vision.md)
+
+<!-- RELATED:END -->

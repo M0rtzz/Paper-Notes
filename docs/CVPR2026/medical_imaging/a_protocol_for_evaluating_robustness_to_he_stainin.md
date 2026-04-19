@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 306个模型、3个foundation model、4种染色条件、bootstrap CI，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，协议描述严谨，但篇幅较长
 - 对我的价值: ⭐⭐⭐ 评估协议的设计思路可借鉴，对染色鲁棒性问题的理解有帮助，但不直接对应我的核心方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [Fusing Pixels and Genes: Spatially-Aware Learning in Computational Pathology](../../ICLR2026/medical_imaging/fusing_pixels_and_genes_spatially-aware_learning_in_computational_pathology.md)
+- [Revisiting End-to-End Learning with Slide-level Supervision in Computational Pathology](../../NeurIPS2025/medical_imaging/revisiting_end-to-end_learning_with_slide-level_supervision_in_computational_pat.md)
+- [LUMINA: A Multi-Vendor Mammography Benchmark with Energy Harmonization Protocol](lumina_a_multi-vendor_mammography_benchmark_with_energy_harmonization_protocol.md)
+- [UNIStainNet: Foundation-Model-Guided Virtual Staining of H&E to IHC](unistainnet_foundation-model-guided_virtual_staining_of_he_to_ihc.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ VADTree 由三大模块组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多种消融、不同模型组合、定性分析齐全
 - 写作质量: ⭐⭐⭐⭐ 公式和流程清晰，但符号稍多
 - 价值: ⭐⭐⭐⭐ 训练无关VAD的重要进展，MSAD上超弱监督方法意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Reasoning Framework for Holistic Zero-Shot Video Anomaly Analysis](a_unified_reasoning_framework_for_holistic_zeroshot_video_an.md)
+- [SubspaceAD: Training-Free Few-Shot Anomaly Detection via Subspace Modeling](../../CVPR2026/interpretability/subspacead_training-free_few-shot_anomaly_detection_via_subspace_modeling.md)
+- [Curvature Tuning: Provable Training-free Model Steering From a Single Parameter](curvature_tuning_provable_training-free_model_steering_from_a_single_parameter.md)
+- [CHiQPM: Calibrated Hierarchical Interpretable Image Classification](chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
+- [From Flat to Hierarchical: Extracting Sparse Representations with Matching Pursuit](from_flat_to_hierarchical_extracting_sparse_representations_with_matching_pursui.md)
+
+<!-- RELATED:END -->

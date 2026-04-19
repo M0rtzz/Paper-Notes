@@ -153,3 +153,15 @@ YOLOv9 由两个核心创新组成：**PGI (Programmable Gradient Information)**
 - **实验充分度**: ⭐⭐⭐⭐⭐ 消融实验极其详尽（计算块类型、深度、PGI 组件、不同模型规模），可视化有力
 - **写作质量**: ⭐⭐⭐⭐ 理论分析清晰，从问题到方案的逻辑链完整
 - **价值**: ⭐⭐⭐⭐⭐ YOLO 系列影响力巨大，PGI 和 GELAN 的设计理念对后续工作有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can OOD Object Detectors Learn from Foundation Models?](can_ood_object_detectors_learn_from_foundation_models.md)
+- [Learn from the Learnt: Source-Free Active Domain Adaptation via Contrastive Sampling and Visual Persistence](learn_from_the_learnt_source-free_active_domain_adaptation_via_contrastive_sampl.md)
+- [Ground What You See: Hallucination-Resistant MLLMs via Caption Feedback, Diversity-Aware Sampling, and Conflict Regularization](../../AAAI2026/object_detection/ground_what_you_see_hallucination-resistant_mllms_via_caption_feedback_diversity.md)
+- [Bridge Past and Future: Overcoming Information Asymmetry in Incremental Object Detection](bridge_past_and_future_overcoming_information_asymmetry_in_incremental_object_de.md)
+- [What Layers When: Learning to Skip Compute in LLMs with Residual Gates](../../ICLR2026/object_detection/what_layers_when_learning_to_skip_compute_in_llms_with_residual_gates.md)
+
+<!-- RELATED:END -->

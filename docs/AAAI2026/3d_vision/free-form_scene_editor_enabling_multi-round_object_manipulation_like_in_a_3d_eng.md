@@ -122,3 +122,15 @@ FFSE将编辑过程形式化为状态转换问题：场景状态空间 $S$、操
 - 实验充分度: ⭐⭐⭐⭐ 对比4种方法，用户研究30人，消融全面（数据/LoRA/CSA/阶段），但缺少与更多最新方法的比较
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰（4大挑战），可视化结果丰富，附录详实
 - 价值: ⭐⭐⭐⭐⭐ 解决了多轮3D编辑这一实际痛点，方法实用性强（免重建+用户友好界面），背景效果生成能力是独特贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FE2E: From Editor to Dense Geometry Estimator](../../CVPR2026/3d_vision/from_editor_to_dense_geometry_estimator.md)
+- [DriveX: Driving View Synthesis on Free-form Trajectories with Generative Prior](../../ICCV2025/3d_vision/driving_view_synthesis_on_free-form_trajectories_with_generative_prior.md)
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [Zero-Shot Multi-Object Scene Completion](../../ECCV2024/3d_vision/zero-shot_multi-object_scene_completion.md)
+- [Ctrl&Shift: High-Quality Geometry-Aware Object Manipulation in Visual Generation](../../ICLR2026/3d_vision/ctrlshift_high-quality_geometry-aware_object_manipulation_in_visual_generation.md)
+
+<!-- RELATED:END -->

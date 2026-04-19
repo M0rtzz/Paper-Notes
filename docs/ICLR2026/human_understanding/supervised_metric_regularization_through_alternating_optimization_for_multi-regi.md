@@ -129,3 +129,15 @@ $$\ddot{x} + \delta\dot{x} + \alpha x + \beta x^3 = F_0 \cos(\omega t)$$
 - **技术深度**: ⭐⭐⭐⭐ — 方法设计合理，消融证据充分
 - **实验充分度**: ⭐⭐⭐ — 仅 Duffing 一个测试问题，规模偏小
 - **实用价值**: ⭐⭐⭐⭐ — 为多体制 PINN 提供了轻量级解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
+- [Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation](../../ICML2025/human_understanding/merge-friendly_post-training_quantization_for_multi-target_domain_adaptation.md)
+- [Plug-and-Play Clarifier: A Zero-Shot Multimodal Framework for Egocentric Intent Disambiguation](../../AAAI2026/human_understanding/plug-and-play_clarifier_a_zero-shot_multimodal_framework_for_egocentric_intent_d.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ Geminio分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 3数据集×5攻击方法×4防御×多架构×FedSGD+FedAvg，极为全面
 - 写作质量: ⭐⭐⭐⭐⭐ 图表精美，攻击场景可视化直观，方法描述清晰，安全分析深入
 - 价值: ⭐⭐⭐⭐⭐ 揭示了FL面临的全新威胁范式，对隐私保护和AI安全研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient Inversion Attacks on Parameter-Efficient Fine-Tuning](../../CVPR2025/ai_safety/gradient_inversion_attacks_on_parameter-efficient_fine-tuning.md)
+- [Enhancing Adversarial Transferability by Balancing Exploration and Exploitation with Gradient-Guided Sampling](enhancing_adversarial_transferability_by_balancing_exploration_and_exploitation_.md)
+- [FedMeNF: Privacy-Preserving Federated Meta-Learning for Neural Fields](fedmenf_privacy-preserving_federated_meta-learning_for_neural_fields.md)
+- [Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing](client2vec_improving_federated_learning_by_distribution_shifts_aware_client_inde.md)
+- [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
+
+<!-- RELATED:END -->

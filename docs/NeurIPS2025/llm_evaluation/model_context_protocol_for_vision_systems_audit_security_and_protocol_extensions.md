@@ -149,3 +149,15 @@ Model Context Protocol (MCP) 是一种用于Agent-工具交互的schema绑定执
 - **实验充分度**: ⭐⭐⭐⭐ （91个服务器、5个案例研究、量化的置信区间）
 - **写作质量**: ⭐⭐⭐⭐ （结构清晰，分类法和表格组织良好）
 - **价值**: ⭐⭐⭐⭐ （对MCP生态系统安全和可靠性有重要指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Which LLM Multi-Agent Protocol to Choose?](../../ICLR2026/llm_evaluation/which_llm_multi-agent_protocol_to_choose.md)
+- [Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)
+- [Bayesian Evaluation of Large Language Model Behavior](bayesian_evaluation_of_large_language_model_behavior.md)
+- [Reliably Detecting Model Failures in Deployment Without Labels](reliably_detecting_model_failures_in_deployment_without_labels.md)
+- [MVSMamba: Multi-View Stereo with State Space Model](mvsmamba_multi-view_stereo_with_state_space_model.md)
+
+<!-- RELATED:END -->

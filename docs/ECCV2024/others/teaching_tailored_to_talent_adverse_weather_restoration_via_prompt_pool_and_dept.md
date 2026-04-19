@@ -203,3 +203,15 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{res} + \lambda_2 \mathcal{L}_{cp}
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个 synthetic benchmark + 两个 real-world 数据集，详细消融（prompt pool/general prompts/CPL/pool size/top-k/DA架构），计算效率对比全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富（t-SNE、sub-prompt 选择频率、heatmap），motivation 和 Discussion 写得好
 - 价值: ⭐⭐⭐⭐⭐ 1/52 的计算量达到 SOTA，对 diffusion-based restoration 的实用化有重要推动；prompt pool 设计思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)
+- [Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration](../../ICCV2025/others/omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration.md)
+- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](../../ICML2025/others/efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+- [Anything Goes? A Crosslinguistic Study of (Im)possible Language Learning in LMs](../../ACL2025/others/anything_goes_a_crosslinguistic_study_of_impossible_language_learning_in_lms.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+
+<!-- RELATED:END -->

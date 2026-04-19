@@ -134,3 +134,15 @@ MASS 在初始性能最弱的领域提供了最大增益（Intermediate Algebra 
 ⭐⭐⭐⭐
 
 MASS 将元学习与 test-time training 巧妙结合，用双层优化解决了"自生成数据质量不可控"这一核心痛点。15.4pp 的提升和领域自适应能力令人印象深刻。不过作为 workshop/short paper 级别的工作，实验规模（仅 MATH-500、单一模型）和分析深度（无 scaling 研究、无推理开销分析）还有较大提升空间。框架本身的通用性——将 test-time compute 投入到"学习如何生成有利于自己的训练数据"——是一个很有前景的研究方向。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
+- [Provable and Practical In-Context Policy Optimization for Self-Improvement](provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [Learning to Solve Orienteering Problem with Time Windows and Variable Profits](learning_to_solve_orienteering_problem_with_time_windows_and_variable_profits.md)
+- [Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering](exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin.md)
+- [Instance Generation for Meta-Black-Box Optimization through Latent Space Reverse Engineering](../../AAAI2026/optimization/instance_generation_for_meta-black-box_optimization_through_latent_space_reverse.md)
+
+<!-- RELATED:END -->

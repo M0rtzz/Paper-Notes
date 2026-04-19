@@ -134,3 +134,15 @@ PubSub-VFL通过三层设计解决上述问题：(1) 使用Pub/Sub架构实现**
 - **实验充分度**: ⭐⭐⭐⭐ 五个数据集、多种异构场景、完整消融实验，但缺少GPU实验
 - **写作质量**: ⭐⭐⭐⭐ 系统设计描述清晰，数学建模规范
 - **价值**: ⭐⭐⭐⭐ 对VFL系统效率提升有实际意义，但两方限制降低了通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DictPFL: Efficient and Private Federated Learning on Encrypted Gradients](dictpfl_efficient_and_private_federated_learning_on_encrypted_gradients.md)
+- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+- [Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
+- [Fisher Calibration for Backdoor-Robust Heterogeneous Federated Learning](../../ECCV2024/ai_safety/fisher_calibration_for_backdoor-robust_heterogeneous_federated_learning.md)
+- [Efficient Verified Machine Unlearning for Distillation](efficient_verified_machine_unlearning_for_distillation.md)
+
+<!-- RELATED:END -->

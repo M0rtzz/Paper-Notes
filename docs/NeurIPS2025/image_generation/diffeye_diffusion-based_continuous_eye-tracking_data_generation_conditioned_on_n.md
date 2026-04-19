@@ -146,3 +146,15 @@ DiffEye 训练数据量（8,934 轨迹）远小于基线（DeepGaze III 用 615K
 | 实验充分性 | ★★★★☆ | 多度量评估、多基线对比、消融研究完善 |
 | 实用价值 | ★★★★☆ | 可应用于 VR、发育科学等领域，代码开源 |
 | 写作质量 | ★★★★☆ | 图表清晰，动机明确，逻辑流畅 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting Generated Images by Fitting Natural Image Distributions](detecting_generated_images_by_fitting_natural_image_distributions.md)
+- [A Diffusion Model for Regular Time Series Generation from Irregular Data with Completion and Masking](a_diffusion_model_for_regular_time_series_generation_from_irregular_data_with_co.md)
+- [SAO-Instruct: Free-form Audio Editing using Natural Language Instructions](sao-instruct_free-form_audio_editing_using_natural_language_instructions.md)
+- [Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
+- [Mitigating Sexual Content Generation via Embedding Distortion in Text-conditioned Diffusion Models](mitigating_sexual_content_generation_via_embedding_distortion_in_text-conditione.md)
+
+<!-- RELATED:END -->

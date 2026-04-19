@@ -169,3 +169,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 选题重要且新颖——预训练遗忘长期被忽视但影响深远。新指标设计合理、实验逻辑清晰。但受限于计算资源仅在小模型验证，且 replay 策略较为简单，距离实际大规模预训练的应用还有距离。与人类遗忘曲线的类比为预训练策略设计提供了启发性的新方向。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling and Addressing Pseudo Forgetting in Large Language Models](unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)
+- [Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training](hallucination_detox_send.md)
+- [SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
+- [Demystifying Language Model Forgetting with Low-Rank Example Associations](../../NeurIPS2025/llm_safety/demystifying_language_model_forgetting_with_low-rank_example_associations.md)
+- [UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)
+
+<!-- RELATED:END -->

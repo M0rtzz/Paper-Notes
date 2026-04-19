@@ -173,3 +173,15 @@ HMDB-51上1-shot提升**+9.8%**，SSV2 Small上1-shot提升**+5.5%**，改善非
 - 实用性：⭐⭐⭐⭐ — 端到端可训练，6个基准全面SOTA
 - 实验充分度：⭐⭐⭐⭐⭐ — 6个数据集、多种shot/way设置、类级分析
 - 写作质量：⭐⭐⭐⭐ — 动机图清晰，方法推导完整
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Label Semantics: Language-Guided Action Anatomy for Few-shot Action Recognition](beyond_label_semantics_language-guided_action_anatomy_for_few-shot_action_recogn.md)
+- [Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking](attention_to_trajectory_trajectory-aware_open-vocabulary_tracking.md)
+- [Task-Specific Distance Correlation Matching for Few-Shot Action Recognition](../../AAAI2026/video_understanding/task-specific_distance_correlation_matching_for_few-shot_action_recognition.md)
+- [Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](../../ECCV2024/video_understanding/efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
+- [Learning to Generalize Without Bias for Open-Vocabulary Action Recognition](learning_to_generalize_without_bias_for_open-vocabulary_action_recognition.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ LLaMA-2-13B (PPL, WikiText-2):
 - ⭐ 创新性: 8/10 — 将信息论工具引入LLM量化是新颖视角
 - ⭐ 实用性: 9/10 — 开源代码+CUDA kernel,可直接部署
 - ⭐ 写作质量: 8/10 — 理论到工程的衔接流畅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression](learning_grouped_lattice_vector_quantizers_for_low-bit_llm_compression.md)
+- [ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization](paretoq_improving_scaling_laws_in_extremely_low-bit_llm_quantization.md)
+- [LittleBit: Ultra Low-Bit Quantization via Latent Factorization](littlebit_ultra_low-bit_quantization_via_latent_factorization.md)
+- [FALQON: Accelerating LoRA Fine-tuning with Low-Bit Floating-Point Arithmetic](falqon_accelerating_lora_fine-tuning_with_low-bit_floating-point_arithmetic.md)
+- [MSQ: Memory-Efficient Bit Sparsification Quantization](../../ICCV2025/model_compression/msq_memory-efficient_bit_sparsification_quantization.md)
+
+<!-- RELATED:END -->

@@ -169,3 +169,15 @@ KeepLoRA在保持原始架构且不使用额外数据的前提下取得最佳Tra
 - **实用性**: ⭐⭐⭐⭐⭐ — 无需外部数据，零推理开销，部署友好
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，但符号较多需要仔细阅读
 - **综合**: ⭐⭐⭐⭐ (8.5/10)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+- [Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
+- [BriMA: Bridged Modality Adaptation for Multi-Modal Continual Action Quality Assessment](../../CVPR2026/multimodal_vlm/brima_bridged_modality_adaptation_for_multi-modal_continual_action_quality_asses.md)
+- [Residual Decoding: Mitigating Hallucinations in Large Vision-Language Models via History-Aware Residual Guidance](../../CVPR2026/multimodal_vlm/residual_decoding_mitigating_hallucinations_in_large_vision-language_models_via_.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](../../CVPR2026/multimodal_vlm/continual_learning_with_visionlanguage_models_via.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ $$O.P. = 4 \times \frac{PSNR}{50} + 3 \times \frac{SSIM-0.5}{0.5} + 4 \times \fr
 ## 评分
 
 ⭐⭐⭐⭐ — 作为 benchmark 论文，贡献扎实全面：数据集构建科学合理、评估框架新颖且经过充分验证、24 种方法的系统评测提供了有价值的社区指引。不过方法创新性有限，更偏向实验分析。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OptiFusion: Towards Universal Computational Aberration Correction in Photographic Cameras](../../CVPR2025/image_restoration/towards_universal_computational_aberration_correction_in_photographic_cameras_a_.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [UCAN: Unified Convolutional Attention Network for Expansive Receptive Fields in Lightweight Super-Resolution](ucan_unified_convolutional_attention_network_for_expansive_receptive_fields_in_l.md)
+- [BluRef: Unsupervised Image Deblurring with Dense-Matching References](bluref_unsupervised_image_deblurring_with_dense-matching_references.md)
+- [Bridging the Perception Gap in Image Super-Resolution Evaluation](bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
+
+<!-- RELATED:END -->

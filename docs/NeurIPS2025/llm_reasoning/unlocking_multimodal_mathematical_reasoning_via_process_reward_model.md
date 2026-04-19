@@ -107,3 +107,15 @@ tags:
 | 技术深度 | ⭐⭐⭐⭐⭐ | 三阶段覆盖数据、PRM、RL，每步都有深入分析 |
 | 实验充分性 | ⭐⭐⭐⭐⭐ | 6个基准、多种消融、BoN分析、训练曲线、与GRPO对比 |
 | 实际影响 | ⭐⭐⭐⭐ | 开源数据集和模型有直接价值，但方法复杂度较高 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamPRM: Domain-Reweighted Process Reward Model for Multimodal Reasoning](dreamprm_domain-reweighted_process_reward_model_for_multimodal_reasoning.md)
+- [Stop Summation: Min-Form Credit Assignment Is All Process Reward Model Needs for Reasoning](stop_summation_minform_credit_assignment_is_all_process_rewa.md)
+- [ARM: Adaptive Reasoning Model](arm_adaptive_reasoning_model.md)
+- [One Token Embedding Is Enough to Deadlock Your Large Reasoning Model](one_token_embedding_is_enough_to_deadlock_your_large_reasoning_model.md)
+- [Know What You Don't Know: Uncertainty Calibration of Process Reward Models](know_what_you_dont_know_uncertainty_calibration_of_process_reward_models.md)
+
+<!-- RELATED:END -->

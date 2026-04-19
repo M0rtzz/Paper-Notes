@@ -119,3 +119,15 @@ $$d_{\max} = \frac{1}{\kappa_{\max}} \left(1 - \sqrt{1 - \left(\frac{\kappa_{\ma
 - 实验充分度: ⭐⭐⭐ — 理论驱动的小规模验证充分，但缺少实际深度网络实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学表述严谨，结构清晰，直觉与形式化并重
 - 价值: ⭐⭐⭐⭐ — 为模型融合/集成提供理论指导，但实用落地需进一步扩展到非线性情形
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalized Linear Mode Connectivity for Transformers](../../NeurIPS2025/others/generalized_linear_mode_connectivity_for_transformers.md)
+- [Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](../../ICLR2026/others/entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
+- [Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
+- [Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
+- [TANGO: Clustering with Typicality-Aware Nonlocal Mode-Seeking and Graph-Cut Optimization](tango_clustering_with_typicality-aware_nonlocal_mode-seeking_and_graph-cut_optim.md)
+
+<!-- RELATED:END -->

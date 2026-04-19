@@ -109,3 +109,15 @@ $$\mathcal{L}_{total} = \lambda_1\mathcal{L}_2 + \lambda_2\mathcal{L}_{ssim} + \
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、完整消融、跨数据集泛化
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，因果框架的阐述层层递进
 - 价值: ⭐⭐⭐⭐ 轻量高效且性能SOTA，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](low-light_image_enhancement_using_event-based_illumination_estimation.md)
+- [ICLR: Inter-Chrominance and Luminance Interaction for Natural Color Restoration in Low-Light Image Enhancement](../../AAAI2026/image_restoration/iclr_inter-chrominance_and_luminance_interaction_for_natural_color_restoration_i.md)
+- [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](../../ECCV2024/image_restoration/towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+- [Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement](../../ECCV2024/image_restoration/unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)
+- [Efficient Diffusion as Low Light Enhancer (ReDDiT)](../../CVPR2025/image_restoration/efficient_diffusion_as_low_light_enhancer.md)
+
+<!-- RELATED:END -->

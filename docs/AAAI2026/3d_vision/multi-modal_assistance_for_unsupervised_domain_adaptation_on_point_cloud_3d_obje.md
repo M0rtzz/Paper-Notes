@@ -163,3 +163,15 @@ MMAssist 基于 teacher-student 自训练框架（DTS），包含两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ （3 数据集 × 3 检测器，消融全面）
 - 写作质量: ⭐⭐⭐⭐ （清晰易懂，公式推导完整）
 - 价值: ⭐⭐⭐⭐ （实用性强，推理无额外开销）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIPoint3D: Language-Grounded Few-Shot Unsupervised 3D Point Cloud Domain Adaptation](../../CVPR2026/3d_vision/clipoint3d_language-grounded_few-shot_unsupervised_3d_point_cloud_domain_adaptat.md)
+- [QD-PCQA: Quality-Aware Domain Adaptation for Point Cloud Quality Assessment](../../CVPR2026/3d_vision/qd-pcqa_quality-aware_domain_adaptation_for_point_cloud_quality_assessment.md)
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Exploring Surround-View Fisheye Camera 3D Object Detection](exploring_surround-view_fisheye_camera_3d_object_detection.md)
+- [Distilling Future Temporal Knowledge with Masked Feature Reconstruction for 3D Object Detection](distilling_future_temporal_knowledge_with_masked_feature_reconstruction_for_3d_o.md)
+
+<!-- RELATED:END -->

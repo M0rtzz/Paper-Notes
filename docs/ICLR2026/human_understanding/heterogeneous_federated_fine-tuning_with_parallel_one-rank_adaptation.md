@@ -109,3 +109,15 @@ PLoRA: $\Delta W = \sum_{j=1}^{R} B_{(j)}A_{(j)}$，等价于标准LoRA但模块
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个模型、多领域任务、IID/non-IID、多baseline
 - 写作质量: ⭐⭐⭐⭐ 噪声分析框架清晰，对比公平
 - 价值: ⭐⭐⭐⭐ 对異构联邦微调有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Safety Subspaces are Not Linearly Distinct: A Fine-Tuning Case Study](safety_subspaces_are_not_linearly_distinct_a_fine-tuning_case_study.md)
+- [Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection](../../AAAI2026/human_understanding/fine-grained_dino_tuning_with_dual_supervision_for_face_forgery_detection.md)
+- [Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
+- [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](../../ICML2025/human_understanding/fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+- [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](../../AAAI2026/human_understanding/small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
+
+<!-- RELATED:END -->

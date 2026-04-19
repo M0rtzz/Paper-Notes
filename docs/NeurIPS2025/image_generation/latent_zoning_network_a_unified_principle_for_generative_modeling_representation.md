@@ -132,3 +132,15 @@ LZN 建立一个共享的高斯潜在空间，连接多对编码器-解码器。
 - 实验充分度: ⭐⭐⭐⭐ 三个层级的应用示范有说服力，但表征学习和分类与SOTA仍有差距
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑线清晰，从动机到设计到实验层层推进，图示出色
 - 价值: ⭐⭐⭐⭐⭐ 开辟了统一 ML 任务的新研究方向，长期影响潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
+- [Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network](denoising_weak_lensing_mass_maps_with_diffusion_model_and_generative_adversarial.md)
+- [Diffusion Generative Modeling on Lie Group Representations](diffusion_generative_modeling_on_lie_group_representations.md)
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [BiGain: Unified Token Compression for Joint Generation and Classification](../../CVPR2025/image_generation/bigain_unified_token_compression_for_joint_generation_and_classification.md)
+
+<!-- RELATED:END -->

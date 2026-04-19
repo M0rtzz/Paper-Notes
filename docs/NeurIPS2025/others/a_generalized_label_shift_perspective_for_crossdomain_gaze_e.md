@@ -102,3 +102,15 @@ GLSGE框架分三步：(1) 估计重要性权重函数ω(y)，用重加权后的
 - 实验充分度: ⭐⭐⭐⭐ 四个任务、四种backbone、完整消融和可视化；但缺少其他回归任务的验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，框架统一；PCOD推导篇幅较大但必要
 - 价值: ⭐⭐⭐⭐ 即插即用地提升多种模型，理论+实践贡献都有；但视线估计本身应用范围较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [De-confounded Gaze Estimation](../../ECCV2024/others/de-confounded_gaze_estimation.md)
+- [Generalized Linear Mode Connectivity for Transformers](generalized_linear_mode_connectivity_for_transformers.md)
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](../../CVPR2025/others/open_set_label_shift_with_test_time_out-of-distribution_reference.md)
+- [MaxSup: Overcoming Representation Collapse in Label Smoothing](maxsup_overcoming_representation_collapse_in_label_smoothing.md)
+- [How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension](how_many_domains_suffice_for_domain_generalization_a_tight_characterization_via_.md)
+
+<!-- RELATED:END -->

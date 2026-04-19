@@ -134,3 +134,15 @@ HN-MVTS 在任意基础预测模型之上添加一个超网络模块：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8 个数据集×5 个模型，全面的消融、训练时间分析和嵌入可视化
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，动机明确，图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 即插即用、零推理开销，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transparent Networks for Multivariate Time Series](transparent_networks_for_multivariate_time_series.md)
+- [Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting](revitalizing_canonical_pre-alignment_for_irregular_multivariate_time_series_fore.md)
+- [CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](../../ICLR2026/time_series/cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time.md)
+- [Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](../../ICLR2026/time_series/enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
+- [Counterfactual Explainable AI (XAI) Method for Deep Learning-Based Multivariate Time Series Classification](counterfactual_explainable_ai_xai_method_for_deep_learning-based_multivariate_ti.md)
+
+<!-- RELATED:END -->

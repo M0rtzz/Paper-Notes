@@ -129,3 +129,15 @@ Kodak24 数据集上 BER=$10^{-4}$ 时的重建质量：
 - 实验充分度: ⭐⭐⭐⭐ 横跨多种 BER 值和压缩方法类型的系统评估，但数据集有限
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，分析深入浅出，脆弱性原因的解释（字典序编码例子）非常直观
 - 价值: ⭐⭐⭐⭐ 揭示了扩散压缩的新优势维度，对通信和压缩系统设计有启发价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [One-Step Diffusion-Based Image Compression with Semantic Distillation](../../NeurIPS2025/model_compression/one-step_diffusion-based_image_compression_with_semantic_distillation.md)
+- [GeoFusion-CAD: Structure-Aware Diffusion with Geometric State Space for Parametric 3D Design](geofusion-cad_structure-aware_diffusion_with_geometric_state_space_for_parametri.md)
+- [Parallax to Align Them All: An OmniParallax Attention Mechanism for Distributed Multi-View Image Compression](parallax_to_align_them_all_an_omniparallax_attention_mechanism_for_distributed_m.md)
+- [Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning](towards_generalizable_ai-generated_image_detection_via_image-adaptive_prompt_lea.md)
+
+<!-- RELATED:END -->

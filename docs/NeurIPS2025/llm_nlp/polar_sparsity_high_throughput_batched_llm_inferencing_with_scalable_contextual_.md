@@ -172,3 +172,15 @@ Router 训练：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多个模型家族和规模，包含准确率+吞吐量+kernel 微基准，与多个 baseline 详细对比
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验充实，但技术细节可以更精炼
 - 价值: ⭐⭐⭐⭐⭐ 直接可部署的推理加速方案，首次解决了大 batch 下上下文稀疏性失效的问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting High-Stakes Interactions with Activation Probes](detecting_high-stakes_interactions_with_activation_probes.md)
+- [ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch](../../ACL2025/llm_nlp/unleashing_llm_reasoning_capability_via_scalable.md)
+- [Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](../../AAAI2026/llm_nlp/scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
+- [Un-considering Contextual Information: Assessing LLMs' Understanding of Indexical Elements](../../ACL2025/llm_nlp/un-considering_contextual_information_assessing_llms_understanding_of_indexical_.md)
+- [SolverLLM: 通过LLM引导的搜索利用测试时缩放求解优化问题](solverllm_leveraging_test-time_scaling_for_optimization_problem_via_llm-guided_s.md)
+
+<!-- RELATED:END -->

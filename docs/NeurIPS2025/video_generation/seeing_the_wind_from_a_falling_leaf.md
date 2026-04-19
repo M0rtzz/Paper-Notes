@@ -130,3 +130,15 @@ $$\mathcal{L} = \mathcal{L}_{motion} + \lambda_1 \mathcal{L}_{space} + \lambda_2
 - **实验充分度**: ⭐⭐⭐⭐ 合成+真实场景，多种材料，消融完整，但定量评估仅在合成数据
 - **写作质量**: ⭐⭐⭐⭐⭐ Rossetti 诗句引入优美，技术叙述清晰
 - **价值**: ⭐⭐⭐⭐⭐ 桥接视觉与物理，开辟从感知到力场的新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seeing the Unseen: Zooming in the Dark with Event Cameras](../../AAAI2026/video_generation/seeing_the_unseen_zooming_in_the_dark_with_event_cameras.md)
+- [SeeU: Seeing the Unseen World via 4D Dynamics-aware Generation](../../CVPR2026/video_generation/seeu_seeing_the_unseen_world_via_4d_dynamics-aware_generation.md)
+- [Training-Free Efficient Video Generation via Dynamic Token Carving (Jenga)](training-free_efficient_video_generation_via_dynamic_token_carving.md)
+- [Video Killed the Energy Budget: Characterizing the Latency and Power Regimes of Open Text-to-Video Models](video_killed_the_energy_budget_characterizing_the_latency_and_power_regimes_of_o.md)
+- [Photography Perspective Composition: Towards Aesthetic Perspective Recommendation](photography_perspective_composition_towards_aesthetic_perspective_recommendation.md)
+
+<!-- RELATED:END -->

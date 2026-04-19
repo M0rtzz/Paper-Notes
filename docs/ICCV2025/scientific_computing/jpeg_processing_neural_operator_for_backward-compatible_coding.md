@@ -175,3 +175,15 @@ JPNeO由三个组件构成：
 - **实验充分度**: ⭐⭐⭐⭐ — 模块消融、RD曲线、色度分析、计算效率、互信息验证全面
 - **写作质量**: ⭐⭐⭐⭐ — 信息论推导清晰，但符号较多读起来密集
 - **价值**: ⭐⭐⭐⭐ — 对JPEG生态系统有实际价值，即插即用的后向兼容增强方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](../../ICLR2026/scientific_computing/one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
+- [From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics](../../NeurIPS2025/scientific_computing/from_black_hole_to_galaxy_neural_operator_framework_for_accretion_and_feedback_d.md)
+- [Integration Matters for Learning PDEs with Backward SDEs](../../NeurIPS2025/scientific_computing/integration_matters_for_learning_pdes_with_backward_sdes.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](../../ICLR2026/scientific_computing/drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training](../../CVPR2026/scientific_computing/nestor_a_nested_moe-based_neural_operator_for_large-scale_pde_pre-training.md)
+
+<!-- RELATED:END -->

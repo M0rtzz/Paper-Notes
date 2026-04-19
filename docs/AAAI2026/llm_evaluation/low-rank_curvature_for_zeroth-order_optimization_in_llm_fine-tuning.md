@@ -120,3 +120,15 @@ LOREN 的额外内存开销仅为 O(n)，远低于 MeZO-Adam 的 O(mn)。
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 66M 到 13B 多种模型、GLUE/SuperGLUE 多个任务，但缺少生成任务评估
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨完整，但符号较多，读起来有一定门槛
 - 价值: ⭐⭐⭐⭐ 在内存受限场景下提升 ZO 微调性能有实际意义，但随着 LoRA 的普及，ZO 微调的应用窗口在收窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Robustness Tradeoff in Fine-Tuning](../../ICCV2025/llm_evaluation/on_the_robustness_tradeoff_in_fine-tuning.md)
+- [Towards Anomaly-Aware Pre-Training and Fine-Tuning for Graph Anomaly Detection](../../ICLR2026/llm_evaluation/towards_anomaly-aware_pre-training_and_fine-tuning_for_graph_anomaly_detection.md)
+- [GDBA Revisited: Unleashing the Power of Guided Local Search for Distributed Constraint Optimization](gdba_revisited_unleashing_the_power_of_guided_local_search_for_distributed_const.md)
+- [LLM-as-a-Judge for Scalable Test Coverage Evaluation](llm-as-a-judge_for_scalable_test_coverage_evaluation_accuracy_operational_reliab.md)
+- [Cost-Sensitive Freeze-thaw Bayesian Optimization for Efficient Hyperparameter Tuning](../../NeurIPS2025/llm_evaluation/cost-sensitive_freeze-thaw_bayesian_optimization_for_efficient_hyperparameter_tu.md)
+
+<!-- RELATED:END -->

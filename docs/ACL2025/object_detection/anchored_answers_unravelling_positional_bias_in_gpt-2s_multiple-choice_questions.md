@@ -111,3 +111,15 @@ MLP值向量更新后的MCQ准确率（%）：
 - 实验充分度: ⭐⭐⭐⭐ GPT-2全系列×5+数据集×多种干预
 - 写作质量: ⭐⭐⭐⭐⭐ 分析层层深入
 - 价值: ⭐⭐⭐⭐ 对LLM可解释性和偏差缓解有方法论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synchronization of Multiple Videos](../../ICCV2025/object_detection/synchronization_of_multiple_videos.md)
+- [Multiple Object Tracking as ID Prediction](../../CVPR2025/object_detection/multiple_object_tracking_as_id_prediction.md)
+- [Why Safeguarded Ships Run Aground? Aligned Large Language Models' Safety Mechanisms Tend to Be Anchored in The Template Region](why_safeguarded_ships_run_aground_aligned_large_language_models_safety_mechanism.md)
+- [Advancing Textual Prompt Learning with Anchored Attributes](../../ICCV2025/object_detection/advancing_textual_prompt_learning_with_anchored_attributes.md)
+- [A Bias-Free Training Paradigm for More General AI-generated Image Detection](../../CVPR2025/object_detection/a_bias-free_training_paradigm_for_more_general_ai-generated_image_detection.md)
+
+<!-- RELATED:END -->

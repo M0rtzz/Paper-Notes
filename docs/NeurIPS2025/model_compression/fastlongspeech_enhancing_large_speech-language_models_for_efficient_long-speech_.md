@@ -185,3 +185,15 @@ $$L_{dct} = -\sum_{L \sim \mathcal{U}(\mathbf{L})} \log p(\mathbf{y} \mid \mathb
 - 技术深度：★★★★☆（问题分解清晰，各组件设计有明确动机和理论支撑）
 - 实验充分度：★★★★☆（多任务评估+消融+效率分析完整，但仅基于单个基础模型）
 - 实用价值：★★★★★（无需长语音数据，即插即用，推理大幅加速，实际应用价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [LaCache: Ladder-Shaped KV Caching for Efficient Long-Context Modeling of Large Language Models](../../ICML2025/model_compression/lacache_ladder-shaped_kv_caching_for_efficient_long-context_modeling_of_large_la.md)
+- [Correlation Dimension of Auto-Regressive Large Language Models](correlation_dimension_of_auto-regressive_large_language_models.md)
+- [Restoring Pruned Large Language Models via Lost Component Compensation](restoring_pruned_large_language_models_via_lost_component_compensation.md)
+
+<!-- RELATED:END -->

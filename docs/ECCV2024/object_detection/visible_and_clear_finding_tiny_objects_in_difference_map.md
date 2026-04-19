@@ -172,3 +172,15 @@ AI-TOD 数据集结果：
 - 实验充分度: ⭐⭐⭐⭐ （三个数据集、多检测器、充分消融）
 - 写作质量: ⭐⭐⭐⭐ （逻辑清晰，可视化有说服力）
 - 价值: ⭐⭐⭐⭐ （实用性强，方法简洁可复现，思路可推广）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Complexity of Finding Local Optima in Contrastive Learning](../../NeurIPS2025/object_detection/the_complexity_of_finding_local_optima_in_contrastive_learning.md)
+- [GRA: Detecting Oriented Objects Through Group-Wise Rotating and Attention](gra_detecting_oriented_objects_through_group-wise_rotating_and_attention.md)
+- [Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward](../../CVPR2026/object_detection/saliency-r1_enforcing_interpretable_and_faithful_vision-language_reasoning_via_s.md)
+- [Any6D: Model-free 6D Pose Estimation of Novel Objects](../../CVPR2025/object_detection/any6d_model-free_6d_pose_estimation_of_novel_objects.md)
+- [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](../../CVPR2026/object_detection/show_dont_tell_detecting_novel_objects_by_watching.md)
+
+<!-- RELATED:END -->

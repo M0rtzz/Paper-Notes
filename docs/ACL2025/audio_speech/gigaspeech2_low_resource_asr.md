@@ -134,3 +134,15 @@ NST 迭代效果（泰语）:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 种语言、多个测试集、NST 迭代分析、与商业服务对比，非常全面
 - 写作质量: ⭐⭐⭐⭐ 管线描述清晰，但某些细节（过滤阈值选择）不够详细
 - 价值: ⭐⭐⭐⭐⭐ 开源的大规模低资源 ASR 语料库对社区贡献巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Robust Approximation of ASR Metrics](on_the_robust_approximation_of_asr_metrics.md)
+- [EuroSpeech: A Multilingual Speech Corpus](../../NeurIPS2025/audio_speech/eurospeech_a_multilingual_speech_corpus.md)
+- [UniCodec: Unified Audio Codec with Single Domain-Adaptive Codebook](unicodec_unified_audio_codec_with_single_domain-adaptive_codebook.md)
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+- [CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages](clamp_3_universal_music_information_retrieval_across_unaligned_modalities_and_un.md)
+
+<!-- RELATED:END -->

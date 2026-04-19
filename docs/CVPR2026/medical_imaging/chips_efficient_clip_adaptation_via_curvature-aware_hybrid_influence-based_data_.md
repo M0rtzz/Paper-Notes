@@ -186,3 +186,15 @@ CHIPS 分数计算一次后可缓存复用于不同架构和预训练规模。
 ## 评分
 
 ⭐⭐⭐⭐ 理论扎实、实验全面的数据中心 CLIP 适配工作，三组件设计清晰优雅，30% 数据匹配全量 CPT 的结果令人印象深刻，对数据稀缺的垂直领域适配有很强实用价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data](towards_efficient_medical_reasoning_with_minimal_fine-tuning_data.md)
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [OraPO: Oracle-educated Reinforcement Learning for Data-efficient and Factual Radiology Report Generation](orapo_oracle_rl_radiology_report_generation.md)
+- [RDFace: A Benchmark Dataset for Rare Disease Facial Image Analysis under Extreme Data Scarcity and Phenotype-Aware Synthetic Generation](rdface_a_benchmark_dataset_for_rare_disease_facial_image_analysis_under_extreme_.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ VLM 在图像描述、VQA 等任务上展现了惊人能力，但其内部视觉
 - 实验充分度: ⭐⭐⭐⭐ 多种 knockout 配置、LLM 评估 + 人类验证、空间定位分析，但数据规模较小（80张图）
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰，实验逐步深入，可视化优秀
 - 价值: ⭐⭐⭐⭐⭐ 对理解 VLM 内部机制和指导高效 VLM 设计有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
+- [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
+- [MMRL: Multi-Modal Representation Learning for Vision-Language Models](mmrl_multi-modal_representation_learning_for_vision-language_models.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+
+<!-- RELATED:END -->

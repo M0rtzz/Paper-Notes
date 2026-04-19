@@ -150,3 +150,15 @@ $\epsilon$ 为可调噪声缩放参数。
 - 实验充分度: ⭐⭐⭐⭐⭐ (多场景、多基线、多消融、定性分析全面)
 - 写作质量: ⭐⭐⭐⭐ (方法描述清晰，逻辑流畅)
 - 价值: ⭐⭐⭐⭐ (实用性强，即插即用的公平性工具)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Bias Binds: Measuring Hidden Associations for Bias Control in Text-to-Image Compositions](../../AAAI2026/image_generation/how_bias_binds_measuring_hidden_associations_for_bias_control_in_text-to-image_c.md)
+- [Implicit Bias Injection Attacks against Text-to-Image Diffusion Models](../../CVPR2025/image_generation/implicit_bias_injection_attacks_against_text-to-image_diffusion_models.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [DEFT: Decompositional Efficient Fine-Tuning for Text-to-Image Models](deft_decompositional_efficient_finetuning_for_texttoimage_mo.md)
+- [ConceptGuard: Continual Personalized Text-to-Image Generation with Forgetting and Confusion Mitigation](../../CVPR2025/image_generation/conceptguard_continual_personalized_text-to-image_generation_with_forgetting_and.md)
+
+<!-- RELATED:END -->

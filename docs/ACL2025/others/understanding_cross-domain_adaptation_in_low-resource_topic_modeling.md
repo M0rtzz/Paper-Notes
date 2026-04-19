@@ -144,3 +144,15 @@ k=10 时各数据集的 $C_V$ 分数：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多基线、消融完整，但源域探索不够
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，motivating example 清晰，结构良好
 - 价值: ⭐⭐⭐⭐ 理论贡献和实际应用价值兼备，但主题建模整体关注度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S2WTM: Spherical Sliced-Wasserstein Autoencoder for Topic Modeling](s2wtm_spherical_sliced-wasserstein_autoencoder_for_topic_modeling.md)
+- [Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding](well_begun_is_half_done_low-resource_preference_alignment_by_weak-to-strong_deco.md)
+- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+- [Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)
+
+<!-- RELATED:END -->

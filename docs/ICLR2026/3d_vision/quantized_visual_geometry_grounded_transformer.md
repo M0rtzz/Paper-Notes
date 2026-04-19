@@ -119,3 +119,15 @@ QuantVGGT 包含两个核心组件：(1) DSFQ（Dual-Smoothed Fine-Grained Quant
 - 实验充分度: ⭐⭐⭐⭐ 多基准多 bit-width 评估，消融完整
 - 写作质量: ⭐⭐⭐⭐ 动机分析深入，可视化清晰
 - 价值: ⭐⭐⭐⭐ 首个 3D 大模型量化工作，实用意义强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GGPT: Geometry-Grounded Point Transformer](../../CVPR2026/3d_vision/ggpt_geometry_grounded_point_transformer.md)
+- [MVGGT: Multimodal Visual Geometry Grounded Transformer for Multiview 3D Referring Expression Segmentation](../../CVPR2026/3d_vision/mvggt_multimodal_visual_geometry_grounded_transformer_for_multiview_3d_referring.md)
+- [NOVA3R: Non-pixel-aligned Visual Transformer for Amodal 3D Reconstruction](nova3r_non-pixel-aligned_visual_transformer_for_amodal_3d_reconstruction.md)
+- [Ctrl&Shift: High-Quality Geometry-Aware Object Manipulation in Visual Generation](ctrlshift_high-quality_geometry-aware_object_manipulation_in_visual_generation.md)
+- [pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning](pyspatial_generating_3d_visual_programs_for_zero-shot_spatial_reasoning.md)
+
+<!-- RELATED:END -->

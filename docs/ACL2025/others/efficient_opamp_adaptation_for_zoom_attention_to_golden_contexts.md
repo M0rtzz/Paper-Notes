@@ -136,3 +136,15 @@ $$\bar{M} = A_d(M^+ - M^-) + \frac{A_c}{2}(M^+ + M^-)$$
 ## 评分 ⭐⭐⭐⭐
 
 创新性强（OpAmp 类比）、效果优秀（超越 GPT-4o/DeepSeek-V3）、工程友好（adapter 即插即用），但评估任务偏窄、通用性有待验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)
+- [HATA: Trainable and Hardware-Efficient Hash-Aware Top-k Attention for Scalable Large Model Inference](hata_trainable_and_hardware-efficient_hash-aware_top-k_attention_for_scalable_la.md)
+- [AttnZero: Efficient Attention Discovery for Vision Transformers](../../ECCV2024/others/attnzero_efficient_attention_discovery_for_vision_transformers.md)
+- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+
+<!-- RELATED:END -->

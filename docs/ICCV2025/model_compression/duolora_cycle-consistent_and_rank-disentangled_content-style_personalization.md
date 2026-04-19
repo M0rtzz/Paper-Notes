@@ -127,3 +127,15 @@ $$\mathcal{L} = \lambda_{layer\_prior} \mathcal{L}_{layer\_prior} + \lambda_{cyc
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集、用户研究、消融实验齐全，但缺乏大规模定量评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论证明完整，图表丰富
 - 价值: ⭐⭐⭐⭐ 对内容-风格个性化领域有实用价值，参数效率的提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Low-Rank Tuning: Model Prior-Guided Rank Allocation for Effective Transfer in Low-Data and Large-Gap Regimes](beyond_low-rank_tuning_model_prior-guided_rank_allocation_for_effective_transfer.md)
+- [FreestyleRet: Retrieving Images from Style-Diversified Queries](../../ECCV2024/model_compression/freestyleret_retrieving_images_from_style-diversified_queries.md)
+- [FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?](../../NeurIPS2025/model_compression/fira_can_we_achieve_full-rank_training_of_llms_under_low-rank_constraint.md)
+- [From Low Rank Gradient Subspace Stabilization to Low-Rank Weights: Observations, Theories, and Applications](../../ICML2025/model_compression/from_low_rank_gradient_subspace_stabilization_to_low-rank_weights_observations_t.md)
+- [Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation](../../NeurIPS2025/model_compression/beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad.md)
+
+<!-- RELATED:END -->

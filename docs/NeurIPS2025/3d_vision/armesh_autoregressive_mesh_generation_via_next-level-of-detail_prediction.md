@@ -137,3 +137,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 多类别 ShapeNet 对比、消融研究（惩罚因子/LOD/流形）充分，但缺少更大规模数据集和条件生成实验
 - **写作质量**: ⭐⭐⭐⭐⭐ — 从 QSlim 到 GSlim 到 PSC 的递进叙述清晰严谨，背景自洽，图示丰富
 - **价值**: ⭐⭐⭐⭐ — 打开了 LOD 式网格生成的新范式，early stopping 的灵活性有很强的实际工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VertexRegen: Mesh Generation with Continuous Level of Detail](../../ICCV2025/3d_vision/vertexregen_mesh_generation_with_continuous_level_of_detail.md)
+- [LODGE: Level-of-Detail Large-Scale Gaussian Splatting with Efficient Rendering](lodge_level-of-detail_large-scale_gaussian_splatting_with_efficient_rendering.md)
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](../../ICCV2025/3d_vision/ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+- [Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning](mesh-rft_enhancing_mesh_generation_via_fine-grained_reinforcement_fine-tuning.md)
+- [QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models](../../ICLR2026/3d_vision/quadgpt_native_quadrilateral_mesh_generation_with_autoregressive_models.md)
+
+<!-- RELATED:END -->

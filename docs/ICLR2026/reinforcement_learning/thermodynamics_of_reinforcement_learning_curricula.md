@@ -116,3 +116,15 @@ MEW无需额外损失函数，而是提供温度调度策略。以ASAC（Average
 - 价值: ⭐⭐⭐⭐ 为课程学习和温度调节提供了理论基础，MEW算法直接可用
 - 可扩展性: ⭐⭐⭐ 一维温度退火已验证，多维任务空间需要可扩展的摩擦估计器
 - 理论深度: ⭐⭐⭐⭐⭐ 从非平衡热力学到RL课程的映射数学严谨且物理直觉清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DISCOVER: Automated Curricula for Sparse-Reward Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/discover_automated_curricula_for_sparse-reward_reinforcement_learning.md)
+- [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
+- [Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
+- [Spotlight on Token Perception for Multimodal Reinforcement Learning](spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
+- [QuRL: Efficient Reinforcement Learning with Quantized Rollout](qurl_efficient_reinforcement_learning_with_quantized_rollout.md)
+
+<!-- RELATED:END -->

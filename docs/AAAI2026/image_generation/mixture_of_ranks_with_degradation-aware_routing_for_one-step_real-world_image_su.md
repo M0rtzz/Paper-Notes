@@ -194,3 +194,15 @@ MoR 架构消融（在 DRealSR 上）：
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、多种对比方法、详细消融和可视化分析
 - **写作质量**: ⭐⭐⭐⭐ — 方法动机清晰，图示直观  
 - **价值**: ⭐⭐⭐⭐ — 在单步超分方向取得显著进步，MoR 思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realism Control One-step Diffusion for Real-World Image Super-Resolution](realism_control_one-step_diffusion_for_real-world_image_super-resolution.md)
+- [Continuous Degradation Modeling via Latent Flow Matching for Real-World Super-Resolution](continuous_degradation_modeling_via_latent_flow_matching_for_real-world_super-re.md)
+- [QuantVSR: Low-Bit Post-Training Quantization for Real-World Video Super-Resolution](quantvsr_low-bit_post-training_quantization_for_real-world_video_super-resolutio.md)
+- [DOVE: Efficient One-Step Diffusion Model for Real-World Video Super-Resolution](../../NeurIPS2025/image_generation/dove_efficient_one-step_diffusion_model_for_real-world_video_super-resolution.md)
+- [OARS: Process-Aware Online Alignment for Generative Real-World Image Super-Resolution](../../CVPR2026/image_generation/oars_processaware_online_alignment_for_generative.md)
+
+<!-- RELATED:END -->

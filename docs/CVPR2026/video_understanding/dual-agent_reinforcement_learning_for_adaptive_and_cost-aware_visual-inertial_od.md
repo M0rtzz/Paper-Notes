@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 消融详尽，跨后端泛化和鲁棒性均有测试，但仅限两个室内数据集
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 精度-效率折中有实际部署意义，但与SOTA优化方法的精度差距限制了高精度场景应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Assist: Physics-Grounded Human-Human Control via Multi-Agent Reinforcement Learning](learning_to_assist_physics-grounded_human-human_control_via_multi-agent_reinforc.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochat-m1_collaborative_policy_planning_for_video_understanding_via_multi-age.md)
+- [LongVideo-R1: Smart Navigation for Low-cost Long Video Understanding](longvideo-r1_smart_navigation_for_low-cost_long_video_understanding.md)
+- [Echoes of Ownership: Adversarial-Guided Dual Injection for Copyright Protection in MLLMs](echoes_of_ownership_adversarial-guided_dual_injection_for_copyright_protection_i.md)
+- [Coordinated Humanoid Robot Locomotion with Symmetry Equivariant Reinforcement Learning Policy](../../AAAI2026/video_understanding/coordinated_humanoid_robot_locomotion_with_symmetry_equivariant_reinforcement_le.md)
+
+<!-- RELATED:END -->

@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8模型×10数据集，80个组合，覆盖非常全面
 - 写作质量: ⭐⭐⭐⭐ 理论与实验结合好，toy example直观
 - 价值: ⭐⭐⭐⭐ 简单通用的GNN正则化技巧，实际价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NTSFormer: A Self-Teaching Graph Transformer for Multimodal Isolated Cold-Start Node Classification](ntsformer_a_self-teaching_graph_transformer_for_multimodal_isolated_cold-start_n.md)
+- [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
+- [Geometric Imbalance in Semi-Supervised Node Classification](../../NeurIPS2025/graph_learning/geometric_imbalance_in_semi-supervised_node_classification.md)
+- [EchoLess: Label-Based Pre-Computation for Memory-Efficient Heterogeneous Graph Learning](echoless_label-based_pre-computation_for_memory-efficient_heterogeneous_graph_le.md)
+- [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](../../NeurIPS2025/graph_learning/preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
+
+<!-- RELATED:END -->

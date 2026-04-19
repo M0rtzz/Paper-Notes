@@ -131,3 +131,15 @@ $$w_l = \frac{\exp(-\|\text{triu}(F^{(l)}) - \text{triu}(P)\|_F^2)}{\sum_{j=1}^{
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 4 数据集 16+ 架构，含可视化/消融/权重方案对比/理论分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论部分完整，可视化丰富直观
 - 价值: ⭐⭐⭐⭐ 零参数即插即用的正则化方法，实用性强，但需拓展到更多任务验证通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graver: Generative Graph Vocabularies for Robust Graph Foundation Models Fine-tuning](graver_generative_graph_vocabularies_for_robust_graph_foundation_models_fine-tun.md)
+- [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
+- [Towards Unsupervised Open-Set Graph Domain Adaptation via Dual Reprogramming](towards_unsupervised_open-set_graph_domain_adaptation_via_dual_reprogramming.md)
+- [Graph Counselor: Adaptive Graph Exploration via Multi-Agent Synergy to Enhance LLM Reasoning](../../ACL2025/model_compression/graph_counselor_multiagent_graphrag.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+
+<!-- RELATED:END -->

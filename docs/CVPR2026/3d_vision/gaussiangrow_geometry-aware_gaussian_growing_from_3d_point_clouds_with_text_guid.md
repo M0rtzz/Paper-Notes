@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Objaverse合成+DeepFashion真实扫描+T3Bench文本到3D+多方法对比+全面消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式和图表配合好
 - 价值: ⭐⭐⭐⭐ 提供了3D生成的新范式，但依赖外部多视图扩散模型限制了独立性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GAP: Gaussianize Any Point Clouds with Text Guidance](../../ICCV2025/3d_vision/gap_gaussianize_any_point_clouds_with_text_guidance.md)
+- [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](../../ICCV2025/3d_vision/egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
+- [GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
+- [Motion-Aware Animatable Gaussian Avatars Deblurring](motion-aware_animatable_gaussian_avatars_deblurring.md)
+- [GGPT: Geometry-Grounded Point Transformer](ggpt_geometry_grounded_point_transformer.md)
+
+<!-- RELATED:END -->

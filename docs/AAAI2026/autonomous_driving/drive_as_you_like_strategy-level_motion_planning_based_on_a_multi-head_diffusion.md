@@ -146,3 +146,15 @@ M-Diffusion Planner 包含三个核心组件：
 - 实验充分度: 6/10（闭环 SOTA 有说服力，但缺安全指标和真车验证）
 - 写作质量: 7/10（结构清晰，公式完整，但部分表述冗余）
 - 价值: 7/10（为可控驾驶规划提供了实用范式，但策略粒度有限）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving](diffrefiner_coarse_to_fine_trajectory_planning_via_diffusion_refinement_with_sem.md)
+- [Multi-Head Low-Rank Attention (MLRA)](../../ICLR2026/autonomous_driving/multi-head_low-rank_attention.md)
+- [WorldRFT: Latent World Model Planning with Reinforcement Fine-Tuning for Autonomous Driving](worldrft_latent_world_model_planning_with_reinforcement_fine-tuning_for_autonomo.md)
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](../../ICCV2025/autonomous_driving/epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+- [Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](../../CVPR2026/autonomous_driving/drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)
+
+<!-- RELATED:END -->

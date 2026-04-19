@@ -123,3 +123,15 @@ $$\mathcal{L}_{KD}^{(t)} = \sum_{m=1}^{M} \text{KL}\left(\pi_{\theta^{T_m}}(a_t|
 - 实验充分度: ⭐⭐⭐⭐⭐ 16种VRP变体、4种规模、多个基线的全面评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ 对多任务VRP求解有实际意义，规模泛化提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Router-R1: Teaching LLMs Multi-Round Routing and Aggregation via Reinforcement Learning](router-r1_teaching_llms_multi-round_routing_and_aggregation_via_reinforcement_le.md)
+- [Continual Knowledge Adaptation for Reinforcement Learning](continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data](egobridge_domain_adaptation_for_generalizable_imitation_from_egocentric_human_da.md)
+- [Thompson Sampling in Function Spaces via Neural Operators](thompson_sampling_in_function_spaces_via_neural_operators.md)
+- [Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
+
+<!-- RELATED:END -->

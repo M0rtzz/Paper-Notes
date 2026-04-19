@@ -143,3 +143,15 @@ NeurINO 提出通过将 DINOv3 预训练的 2D 卷积核膨胀（inflate）为 3
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集 + 两种追踪算法 + 详细消融，但缺少与更多 3D 预训练方法的比较
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机论述合理，图示直观
 - 价值: ⭐⭐⭐⭐ 为资源受限的 3D 生物医学分割提供了实用的低成本方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](marker-based_3d_reconstruction_of_aggregates_with_a_comparative_analysis_of_2d_a.md)
+- [Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](addressing_data_scarcity_in_3d_trauma_detection_th.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+- [An OpenMind for 3D Medical Vision Self-supervised Learning](../../ICCV2025/medical_imaging/an_openmind_for_3d_medical_vision_selfsupervised_learning.md)
+- [Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study](are_generalpurpose_vision_models_all_we_need_for_2.md)
+
+<!-- RELATED:END -->

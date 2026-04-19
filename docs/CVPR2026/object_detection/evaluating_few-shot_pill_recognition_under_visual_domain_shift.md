@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个base domain对比+标准/overlap双评估+多shot设置+定量+定性分析，实验设计严谨
 - 写作质量: ⭐⭐⭐⭐ 论述清晰，实验动机和结论链条完整，分类-定位解耦的论证层层递进
 - 价值: ⭐⭐⭐⭐ 对医疗AI部署有直接指导意义，揭示的"数据真实性>数据量"和"分类-定位解耦"具有普适参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Remedying Target-Domain Astigmatism for Cross-Domain Few-Shot Object Detection](remedying_target-domain_astigmatism_for_cross-domain_few-shot_object_detection.md)
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps](a_closer_look_at_cross-domain_few-shot_object_detection_fine-tuning_matters_and_.md)
+- [Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition](learning_by_neighbor-aware_semantics_deciding_by_open-form_flows_towards_robust_.md)
+- [FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition](fusionagent_a_multimodal_agent_with_dynamic_model_selection_for_human_recognitio.md)
+
+<!-- RELATED:END -->

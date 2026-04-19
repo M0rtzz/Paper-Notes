@@ -146,3 +146,15 @@ FFM 初始化 vs 无初始化（TLT, DINOv2→SigLIP2）:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 极其系统——多数据集、多任务、多 VFM、多 stitch layer 类型，self-stitch 对照设计严谨
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，failure mode 分析透彻，实验设计层层递进
 - **价值**: ⭐⭐⭐⭐ 对 VFM 表示理解和多 VFM 高效部署都有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EgoLM: Multi-Modal Language Model of Egocentric Motions](egolm_multi-modal_language_model_of_egocentric_motions.md)
+- [Rethinking Vision-Language Model in Face Forensics: Multi-Modal Interpretable Forged Face Detector](rethinking_vision-language_model_in_face_forensics_multi-modal_interpretable_for.md)
+- [Period-LLM: Extending the Periodic Capability of Multimodal Large Language Model](period-llm_extending_the_periodic_capability_of_multimodal_large_language_model.md)
+- [SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model](seqafford_sequential_3d_affordance_reasoning_via_multimodal_large_language_model.md)
+- [Distraction is All You Need for Multimodal Large Language Model Jailbreaking](distraction_is_all_you_need_for_multimodal_large_language_model_jailbreaking.md)
+
+<!-- RELATED:END -->

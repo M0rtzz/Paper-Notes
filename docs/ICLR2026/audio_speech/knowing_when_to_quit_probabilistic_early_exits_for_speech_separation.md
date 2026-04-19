@@ -151,3 +151,15 @@ PRESS-Net 采用编码器-分离器-解码器架构（TasNet家族）：
 - 实验充分度: ⭐⭐⭐⭐⭐ （三个数据集、多种模型配置、详尽的消融和校准分析）
 - 写作质量: ⭐⭐⭐⭐⭐ （数学推导严谨，工程洞察清晰，附录详实）
 - 价值: ⭐⭐⭐⭐⭐ （为语音分离的动态部署提供了原则性框架，实用价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAPSS: Manifold-Based Assessment of Perceptual Source Separation](mapss_manifold-based_assessment_of_perceptual_source_separation.md)
+- [Efficient Audio-Visual Speech Separation with Discrete Lip Semantics and Multi-Scale Global-Local Attention](efficient_audio-visual_speech_separation_with_discrete_lip_semantics_and_multi-s.md)
+- [When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment](when_style_breaks_safety_defending_llms_against_superficial_style_alignment.md)
+- [USE: A Unified Model for Universal Sound Separation and Extraction](../../AAAI2026/audio_speech/use_a_unified_model_for_universal_sound_separation_and_extraction.md)
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+
+<!-- RELATED:END -->

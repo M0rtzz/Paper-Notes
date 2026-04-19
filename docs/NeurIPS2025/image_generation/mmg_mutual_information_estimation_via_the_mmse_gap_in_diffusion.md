@@ -159,3 +159,15 @@ MINDE 在高 MI 场景下低估严重，原因是 score matching 需要逼近尖
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 40任务基准、高 MI 专项、自一致性测试、消融分析，极其全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论推导清晰，几何直觉图（Figure 1）出色
 - **实用价值**: ⭐⭐⭐⭐ — MI 估计是基础工具，开源库降低了使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Information-Theoretic Discrete Diffusion](information-theoretic_discrete_diffusion.md)
+- [ItDPDM: Information-Theoretic Discrete Poisson Diffusion Model](itdpdm_information-theoretic_discrete_poisson_diffusion_model.md)
+- [Information Theoretic Learning for Diffusion Models with Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)
+- [Learning a Distance Measure from the Information-Estimation Geometry of Data](../../ICLR2026/image_generation/learning_a_distance_measure_from_the_information-estimation_geometry_of_data.md)
+- [A Connection Between Score Matching and Local Intrinsic Dimension](a_connection_between_score_matching_and_local_intrinsic_dimension.md)
+
+<!-- RELATED:END -->

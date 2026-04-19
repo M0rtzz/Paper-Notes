@@ -155,3 +155,15 @@ FRIEDA 围绕四个核心维度设计问题：
 - 实验充分度: ⭐⭐⭐⭐ — 11 个模型 + 人类基线 + 细粒度错误分析
 - 写作质量: ⭐⭐⭐⭐ — 任务定义清晰，GIS 理论与 LVLM 评估结合紧密
 - 价值: ⭐⭐⭐⭐ — 填补重要评测空白，对推动 LVLM 空间智能有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes](seeing_across_views_benchmarking_spatial_reasoning_of_vision-language_models_in_.md)
+- [FinMMDocR: Benchmarking Financial Multimodal Reasoning with Scenario Awareness, Document Understanding, and Multi-Step Computation](../../AAAI2026/multimodal_vlm/finmmdocr_benchmarking_financial_multimodal_reasoning_with_scenario_awareness_do.md)
+- [VisioMath: Benchmarking Figure-based Mathematical Reasoning in LMMs](visiomath_benchmarking_figure-based_mathematical_reasoning_in_lmms.md)
+- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](../../CVPR2026/multimodal_vlm/graphvlm_benchmarking_vision_language_models_for_multimodal_graph_learning.md)
+- [GTR-Bench: Evaluating Geo-Temporal Reasoning in Vision-Language Models](gtr-bench_evaluating_geo-temporal_reasoning_in_vision-language_mod.md)
+
+<!-- RELATED:END -->

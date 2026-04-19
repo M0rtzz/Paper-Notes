@@ -126,3 +126,15 @@ SAE 训练使用重构目标加稀疏正则：$\mathcal{L}(\mathbf{v}) = \mathca
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨多个视觉编码器、多层、多扩展因子的系统实验，加上大规模用户研究和引导应用
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，从指标定义到实验验证到应用展示层层递进
 - 价值: ⭐⭐⭐⭐ 为 VLM 可解释性和安全控制提供了实用工具和基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PermLLM: Learnable Channel Permutation for N:M Sparse Large Language Models](permllm_learnable_channel_permutation_for_nm_sparse_large_language_models.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+- [Enhancing Target-unspecific Tasks through a Features Matrix](../../ICML2025/multimodal_vlm/enhancing_target-unspecific_tasks_through_a_features_matrix.md)
+- [Enhancing Few-Shot Vision-Language Classification with Large Multimodal Model Features](../../ICCV2025/multimodal_vlm/enhancing_few-shot_vision-language_classification_with_large_multimodal_model_fe.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+
+<!-- RELATED:END -->

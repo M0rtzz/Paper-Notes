@@ -180,3 +180,15 @@ Average mIoU 提升 +7.66%，Last-1 提升 **+15.54%**（SAR 单模态）。
 ## 评分
 
 ⭐⭐⭐⭐ 系统性强且实用的 IMSS 框架。语义原型 + 鲁棒性引导采样的组合设计优雅，在三个数据集两个 backbone 上一致性显著提升。脆弱模态的巨幅改进（Last-1 +18%）有实际部署价值。计算开销极低的即插即用设计增加了工程可行性。略微遗憾的是 novelty 主要在组合而非单个组件，且对时序和更复杂缺失模式的扩展尚未涉及。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Task-Oriented Data Synthesis and Control-Rectify Sampling for Remote Sensing Semantic Segmentation](task-oriented_data_synthesis_and_control-rectify_sampling_for_remote_sensing_sem.md)
+- [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportionaware_dynamic_adaptive_sali.md)
+- [Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training](data_warmup_complexity-aware_curricula_for_efficient_diffusion_training.md)
+- [SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons](semlayer_semantic-aware_generative_segmentation_and_layer_construction_for_abstr.md)
+- [UnrealPose: Leveraging Game Engine Kinematics for Large-Scale Synthetic Human Pose Data](unrealpose_leveraging_game_engine_kinematics_for_large-scale_synthetic_human_pos.md)
+
+<!-- RELATED:END -->

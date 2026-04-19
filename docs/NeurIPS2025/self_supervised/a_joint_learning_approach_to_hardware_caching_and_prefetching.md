@@ -144,3 +144,15 @@ $$L_{total} = L_{replacement} + \lambda_1 L_{prefetch} + \lambda_2 L_{contrastiv
 - 实验充分性：⭐⭐⭐ （workshop 论文，实验规模有限但足够说明概念）
 - 写作质量：⭐⭐⭐⭐ （动机清晰，结构合理）
 - 综合评分：⭐⭐⭐☆ （有趣的方向性工作，但整体完成度偏初步）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](../../ICML2025/self_supervised/foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+- [Know Thyself by Knowing Others: Learning Neuron Identity from Population Context](know_thyself_by_knowing_others_learning_neuron_identity_from_population_context.md)
+- [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
+- [Long-Tailed Recognition via Information-Preservable Two-Stage Learning](long-tailed_recognition_via_information-preservable_two-stage_learning.md)
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+
+<!-- RELATED:END -->

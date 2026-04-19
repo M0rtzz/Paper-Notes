@@ -154,3 +154,15 @@ $$R^t = \begin{cases} \alpha \cdot (1 - \tanh(\tau \cdot d_{grip})), & \text{接
 实验 ★★★★☆：10 个任务覆盖广，消融充分，但真实世界评估有限
 写作 ★★★★☆：结构清晰，比较表格系统全面
 实用性 ★★★☆☆：需要训练流生成模型和 RL 训练，部署复杂度较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GLASS: Guided Latent Slot Diffusion for Object-Centric Learning](../../CVPR2025/image_generation/glass_guided_latent_slot_diffusion_for_object-centric_learning.md)
+- [Composite Flow Matching for Reinforcement Learning with Shifted-Dynamics Data](../../NeurIPS2025/image_generation/composite_flow_matching_for_reinforcement_learning_with_shifted-dynamics_data.md)
+- [GenHancer: Imperfect Generative Models are Secretly Strong Vision-Centric Enhancers](genhancer_imperfect_generative_models_are_secretly_strong_vision-centric_enhance.md)
+- [Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion](../../ICLR2026/image_generation/hierarchical_entity-centric_reinforcement_learning_with_factored_subgoal_diffusi.md)
+- [Deeply Supervised Flow-Based Generative Models](deeply_supervised_flow-based_generative_models.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ PTA-LLM 遵循知识融合范式：将多个 source LLM 的概率分布矩阵通
 - 实验充分度: ⭐⭐⭐⭐ 6 基准 78 任务+困难任务分析+消融+可视化，但仅限 7B 模型规模
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，数学推导完整，可视化分析有说服力
 - 价值: ⭐⭐⭐ 对知识融合范式的实用改进，但绝对提升幅度有限且应用场景偏窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Encoding and Understanding Astrophysical Information in Large Language Model-Generated Summaries](encoding_and_understanding_astrophysical_information_in_large_language_model-gen.md)
+- [scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery](scpilot_large_language_model_reasoning_toward_automated_single-cell_analysis_and.md)
+- [The Trilemma of Truth in Large Language Models](the_trilemma_of_truth_in_large_language_models.md)
+- [Latent Principle Discovery for Language Model Self-Improvement](latent_principle_discovery_for_language_model_self-improvement.md)
+- [VL-SAE: Interpreting and Enhancing Vision-Language Alignment with a Unified Concept Set](vlsae_interpreting_and_enhancing_visionlanguage_alignment_wi.md)
+
+<!-- RELATED:END -->

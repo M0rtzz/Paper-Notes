@@ -134,3 +134,15 @@ $$y_{c,l} = f([q_{c,l}\tilde{K}_{:,-1}^\top; q_{c,l}\tilde{k}_{c,l}^\top])[\tild
 - **实验充分度**: ⭐⭐⭐⭐⭐ 7 项短上下文 reasoning + 11 项 LongBench + 4 项 SFT + 9 项检索合成任务，覆盖极全
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机推导清晰，从 RNN/Attention 对比自然引出 Chunk 设计
 - **价值**: ⭐⭐⭐⭐⭐ 10× 吞吐提升 + 无自定义内核 + 精度持平，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [Adaptive Prediction-Powered AutoEval with Reliability and Efficiency Guarantees](adaptive_predictionpowered_autoeval_with_reliability_and_eff.md)
+- [Order-Level Attention Similarity Across Language Models: A Latent Commonality](order-level_attention_similarity_across_language_models_a_latent_commonality.md)
+- [Homogeneous Keys, Heterogeneous Values: Exploiting Local KV Cache Asymmetry for Long-Context LLMs](homogeneous_keys_heterogeneous_values_exploiting_local_kv_cache_asymmetry_for_lo.md)
+- [LT-Soups: Bridging Head and Tail Classes via Subsampled Model Soups](lt-soups_bridging_head_and_tail_classes_via_subsampled_model_soups.md)
+
+<!-- RELATED:END -->

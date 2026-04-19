@@ -123,3 +123,15 @@ $$\mathbb{E}_{q_\phi(z|c)}[\log p_\theta(c|z)] - D_{KL}(q_\phi(z|c), p_\psi(z|x)
 - **实验充分度**: ⭐⭐⭐⭐⭐ COCO/ADE20K/Cityscapes 三大数据集、三种分割任务全覆盖
 - **写作质量**: ⭐⭐⭐⭐ 框架和公式推导清晰，但部分符号使用不够一致
 - **价值**: ⭐⭐⭐⭐⭐ 开辟了自回归建模在分割中的新方向，SOTA 结果有力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
+- [Harnessing Massive Satellite Imagery with Efficient Masked Image Modeling](../../ICCV2025/segmentation/harnessing_massive_satellite_imagery_with_efficient_masked_image_modeling.md)
+- [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
+- [Towards Unsupervised Domain Bridging via Image Degradation in Semantic Segmentation](towards_unsupervised_domain_bridging_via_image_degradation_in_semantic_segmentat.md)
+- [SaFiRe: Saccade-Fixation Reiteration with Mamba for Referring Image Segmentation](safire_saccade-fixation_reiteration_with_mamba_for_referring_image_segmentation.md)
+
+<!-- RELATED:END -->

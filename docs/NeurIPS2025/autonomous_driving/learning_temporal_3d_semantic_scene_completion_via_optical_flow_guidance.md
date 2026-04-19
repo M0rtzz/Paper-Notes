@@ -187,3 +187,15 @@ FlowScene 仅用 2 帧历史输入，相比 HTCL（3帧）提升 mIoU +0.61%、I
 - OGVR 的加权公式（公式7）虽然简单但有效，核心在于"非遮挡区用历史、遮挡区用当前"的分治策略
 - 一个值得关注的趋势：相比需要 5 帧输入的方法，FlowScene 用 2 帧就达到更好效果，说明"质量>数量"——高质量的时序对齐比堆叠更多帧更重要
 - 未来可探索将光流引导与 BEV 感知（如 BEVFormer）或占据网络（Occ3D）结合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Temporal Context Learning for Camera-based Semantic Scene Completion](../../ECCV2024/autonomous_driving/hierarchical_temporal_context_learning_for_camera-based_semantic_scene_completio.md)
+- [Towards 3D Object-Centric Feature Learning for Semantic Scene Completion](../../AAAI2026/autonomous_driving/towards_3d_object-centric_feature_learning_for_semantic_scene_completion.md)
+- [CymbaDiff: Structured Spatial Diffusion for Sketch-based 3D Semantic Urban Scene Generation](cymbadiff_structured_spatial_diffusion_for_sketch-based_3d_semantic_urban_scene_.md)
+- [Unleashing Semantic and Geometric Priors for 3D Scene Completion](../../AAAI2026/autonomous_driving/unleashing_semantic_and_geometric_priors_for_3d_scene_completion.md)
+- [SPIRAL: Semantic-Aware Progressive LiDAR Scene Generation and Understanding](spiral_semantic-aware_progressive_lidar_scene_generation_and_understanding.md)
+
+<!-- RELATED:END -->

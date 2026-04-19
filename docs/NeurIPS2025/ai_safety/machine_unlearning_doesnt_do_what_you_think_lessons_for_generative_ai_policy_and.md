@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为分析性论文，案例论证充分，但缺乏系统性的定量实验
 - 写作质量: ⭐⭐⭐⭐⭐ 跨学科写作极为清晰，概念定义精准，逻辑链条完整
 - 价值: ⭐⭐⭐⭐ 对AI政策制定和ML研究方向具有重要参考价值，但实践指导性仍需加强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: Bridge the Gaps between Machine Unlearning and AI Regulation](position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Efficient Verified Machine Unlearning for Distillation](efficient_verified_machine_unlearning_for_distillation.md)
+- [The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples](the_unseen_threat_residual_knowledge_in_machine_unlearning_under_perturbed_sampl.md)
+- [EgoPrivacy: What Your First-Person Camera Says About You?](../../ICML2025/ai_safety/egoprivacy_what_your_first-person_camera_says_about_you.md)
+
+<!-- RELATED:END -->

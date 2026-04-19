@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 653名参与者、双群体、多模型对比、内容编码，但流派覆盖有限
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，方法论严谨，图表丰富
 - 价值: ⭐⭐⭐⭐ 对AI音乐检测教育和模型改进均有实用指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ethics Statements in AI Music Papers: The Effective and the Ineffective](ethics_statements_in_ai_music_papers_the_effective_and_the_ineffective.md)
+- [From Generation to Attribution: Music AI Agent Architectures for the Post-Streaming Era](from_generation_to_attribution_music_ai_agent_architectures_for_the_post-streami.md)
+- [Accelerate Creation of Product Claims Using Generative AI](accelerate_creation_of_product_claims_using_generative_ai.md)
+- [Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
+- [BNMusic: Blending Environmental Noises into Personalized Music](bnmusic_blending_environmental_noises_into_personalized_music.md)
+
+<!-- RELATED:END -->

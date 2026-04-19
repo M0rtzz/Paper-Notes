@@ -110,3 +110,15 @@ SWR 的 shortcut 分支通过简单重建管线训练，选择记忆条件特征
 - 实验充分度: ⭐⭐⭐⭐ 4 个 VOS 基准 + 两种模型规模 + 完整消融 + 多种基线对比
 - 写作质量: ⭐⭐⭐⭐ 观察-方案对应清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，后训练加速 SAM2 有广泛工业需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Distractor-Aware Memory for Visual Object Tracking with SAM2](../../CVPR2025/segmentation/a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
+- [RS2-SAM2: Customized SAM2 for Referring Remote Sensing Image Segmentation](../../AAAI2026/segmentation/rs2-sam2_customized_sam2_for_referring_remote_sensing_image_segmentation.md)
+- [VIRTUE: Visual-Interactive Text-Image Universal Embedder](virtue_visual-interactive_text-image_universal_embedder.md)
+- [AMLRIS: Alignment-aware Masked Learning for Referring Image Segmentation](amlris_alignment-aware_masked_learning_for_referring_image_segmentation.md)
+- [RegionReasoner: Region-Grounded Multi-Round Visual Reasoning](regionreasoner_region-grounded_multi-round_visual_reasoning.md)
+
+<!-- RELATED:END -->

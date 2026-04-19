@@ -150,3 +150,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{supervised} + \lambda(t) \times (\mathcal{L
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，两阶段训练策略的设计动机阐述得当，公式推导完整
 - 对我的价值: ⭐⭐⭐ 标签稀缺场景下自监督+半监督的整合范式可借鉴，3D RPE在医学检测中的应用有参考意义
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [NeuroSeg Meets DINOv3: Transferring 2D Self-Supervised Visual Priors to 3D Neuron Segmentation via DINOv3 Initialization](neuroseg_meets_dinov3_transferring_2d_self-supervised_visual_priors_to_3d_neuron.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ TP 方法修改了 LLM 的层间传播过程，主要由三部分组成：
 - 实验充分度: ⭐⭐⭐⭐ — 多个 STS 基准、多种 prompt 方法、多个模型，缺少更多下游任务
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ — training-free 且即插即用，实用价值较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](contrastive_prompting_embeddings.md)
+- [A Training-free LLM-based Approach to General Chinese Character Error Correction](a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+- [Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
+- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+- [Interchangeable Token Embeddings for Extendable Vocabulary and Alpha-Equivalence](../../ICML2025/llm_nlp/interchangeable_token_embeddings_for_extendable_vocabulary_and_alpha-equivalence.md)
+
+<!-- RELATED:END -->

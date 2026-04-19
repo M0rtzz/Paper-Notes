@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多场景验证，用户研究
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 视频编辑的实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction](../../ICCV2025/video_generation/aid_adapting_image2video_diffusion_models_for_instruction-guided_video_predictio.md)
+- [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
+- [Can Text-to-Video Generation Help Video-Language Alignment?](can_text-to-video_generation_help_video-language_alignment.md)
+- [MotiF: Making Text Count in Image Animation with Motion Focal Loss](motif_making_text_count_in_image_animation_with_motion_focal_loss.md)
+- [Evaluating Text-to-Visual Generation with Image-to-Text Generation](../../ECCV2024/video_generation/evaluating_text-to-visual_generation_with_image-to-text_generation.md)
+
+<!-- RELATED:END -->

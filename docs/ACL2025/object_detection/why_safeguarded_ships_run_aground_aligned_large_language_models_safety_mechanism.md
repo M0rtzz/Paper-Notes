@@ -100,3 +100,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型验证+因果分析+攻防实验，较为完整
 - **写作质量**: ⭐⭐⭐⭐ — 三阶段递进清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ — 对理解和改进LLM安全对齐有重要指导意义，防御方法仍有较大改进空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](../../NeurIPS2025/object_detection/m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+- [XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](../../NeurIPS2025/object_detection/xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
+- [Anchored Answers: Unravelling Positional Bias in GPT-2's Multiple-Choice Questions](anchored_answers_unravelling_positional_bias_in_gpt-2s_multiple-choice_questions.md)
+- [Token Reduction via Local and Global Contexts Optimization for Efficient Video Large Language Models](../../CVPR2026/object_detection/token_reduction_via_local_and_global_contexts_optimization_for_efficient_video_l.md)
+- [BlueGlass: A Framework for Composite AI Safety](../../ICML2025/object_detection/blueglass_a_framework_for_composite_ai_safety.md)
+
+<!-- RELATED:END -->

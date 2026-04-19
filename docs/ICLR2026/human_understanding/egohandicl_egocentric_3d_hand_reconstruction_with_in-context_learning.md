@@ -184,3 +184,15 @@ $$\mathcal{L} = \lambda_m \mathcal{L}_{mano} + \lambda_v \mathcal{L}_V + \lambda
 - **实验说服力**: ★★★★★ — 双数据集多指标验证，消融全面
 - **实用价值**: ★★★★☆ — 有开源代码，可作为插件提升现有方法
 - **表达清晰度**: ★★★★☆ — 图示清晰，框架组件逻辑明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable In-Context Q-Learning](scalable_in-context_q-learning.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [COLD-Steer: Steering Large Language Models via In-Context One-step Learning Dynamics](cold-steer_steering_large_language_models_via_in-context_one-step_learning_dynam.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/human_understanding/in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [UniDex: A Robot Foundation Suite for Universal Dexterous Hand Control from Egocentric Human Videos](../../CVPR2026/human_understanding/unidex_a_robot_foundation_suite_for_universal_dexterous_hand_control_from_egocen.md)
+
+<!-- RELATED:END -->

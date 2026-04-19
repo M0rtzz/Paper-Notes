@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 17个数据集+消融+收敛分析+跨模型验证+1-shot分析+推理scaling law，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ POMDP形式化严谨，Proposition证明完整，附录极其详出（所有prompt+完整优化过程）
 - 价值: ⭐⭐⭐⭐⭐ 1-shot即达SOTA的APO方法有极高实用价值，多Agent苏格拉底范式可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management](mars_a_meta-adaptive_reinforcement_learning_framework_for_risk-aware_multi-agent.md)
+- [InfiGUI-G1: Advancing GUI Grounding with Adaptive Exploration Policy Optimization](infigui-g1_advancing_gui_grounding_with_adaptive_exploration_policy_optimization.md)
+- [HCPO: Hierarchical Conductor-Based Policy Optimization in Multi-Agent Reinforcement Learning](hcpo_hierarchical_conductor-based_policy_optimization_in_multi-agent_reinforceme.md)
+- [BAMAS: Structuring Budget-Aware Multi-Agent Systems](bamas_structuring_budget-aware_multi-agent_systems.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+
+<!-- RELATED:END -->

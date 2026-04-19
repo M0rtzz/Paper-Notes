@@ -157,3 +157,15 @@ $$\mathcal{L} = \|\varepsilon_\theta^{2D}(\mathbf{I}_i) - \mathbf{F}^{\text{high
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6个数据集(3室内+3跨域)、5种视觉模型、多组消融实验
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，可视化丰富，Algorithm 1简明扼要
 - **实用价值**: ⭐⭐⭐⭐ — 轻量微调即可提升现有基础模型，实用性高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning 3D-Aware GANs from Unposed Images with Template Feature Field](learning_3d-aware_gans_from_unposed_images_with_template_feature_field.md)
+- [Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
+- [Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning](../../NeurIPS2025/3d_vision/mesh-rft_enhancing_mesh_generation_via_fine-grained_reinforcement_fine-tuning.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
+- [TrackNeRF: Bundle Adjusting NeRF from Sparse and Noisy Views via Feature Tracks](tracknerf_bundle_adjusting_nerf_from_sparse_and_noisy_views_via_feature_tracks.md)
+
+<!-- RELATED:END -->

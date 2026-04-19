@@ -99,3 +99,15 @@ CCQA：$L_{CCQA} = L_{MSE} + L_{rank} + 0.1 \cdot L_{consistency}$。CPAM：$L_{
 - 实验充分度: ⭐⭐⭐ 评估充分但缺少用户研究
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 对手机摄影应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EZSR: Event-based Zero-Shot Recognition](ezsr_event-based_zero-shot_recognition.md)
+- [Preserving Clusters in Prompt Learning for Unsupervised Domain Adaptation](preserving_clusters_in_prompt_learning_for_unsupervised_domain_adaptation.md)
+- [Advancing Myopia To Holism: Fully Contrastive Language-Image Pre-training](advancing_myopia_to_holism_fully_contrastive_language-image_pre-training.md)
+- [Few-Shot Recognition via Stage-Wise Retrieval-Augmented Finetuning](few-shot_recognition_via_stage-wise_retrieval-augmented_finetuning.md)
+- [LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
+
+<!-- RELATED:END -->

@@ -157,3 +157,15 @@ FPR5 从 0.42 降至 0.22（减半！），同时 minFDE6 也从 0.654 提升至
 - **实验充分度**: ⭐⭐⭐⭐⭐ 两个数据集、两个 backbone、多种 baseline、详尽消融、可视化充分
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，motivation 论述有力，图表信息量大
 - **价值**: ⭐⭐⭐⭐⭐ 不改架构、不影响推理效率地解决长尾问题，实用性极强，方法可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LangTraj: Diffusion Model and Dataset for Language-Conditioned Trajectory Simulation](langtraj_diffusion_model_and_dataset_for_language-conditioned_trajectory_simulat.md)
+- [DONUT: A Decoder-Only Model for Trajectory Prediction](donut_a_decoder-only_model_for_trajectory_prediction.md)
+- [Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation](../../ECCV2024/autonomous_driving/optimizing_diffusion_models_for_joint_trajectory_prediction_and_controllable_gen.md)
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+- [Wavelet Policy: Lifting Scheme for Policy Learning in Long-Horizon Tasks](wavelet_policy_lifting_scheme_for_policy_learning_in_long-horizon_tasks.md)
+
+<!-- RELATED:END -->

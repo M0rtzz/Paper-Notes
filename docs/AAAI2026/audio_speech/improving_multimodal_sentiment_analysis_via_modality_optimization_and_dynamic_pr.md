@@ -128,3 +128,15 @@ InfoNCE 损失从融合特征反向预测各单模态特征，稳定主模态选
 ## 评分
 
 ⭐⭐⭐⭐ — 样本级动态选择 + 图压缩的组合设计合理且有效，但核心模块的可微性和扩展性有待加强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PaSE: Prototype-aligned Calibration and Shapley-based Equilibrium for Multimodal Sentiment Analysis](pase_prototype-aligned_calibration_and_shapley-based_equilibrium_for_multimodal_.md)
+- [PSA-MF: Personality-Sentiment Aligned Multi-Level Fusion for Multimodal Sentiment Analysis](psa-mf_personality-sentiment_aligned_multi-level_fusion_for_multimodal_sentiment.md)
+- [Tri-Subspaces Disentanglement for Multimodal Sentiment Analysis](../../CVPR2026/audio_speech/tri-subspaces_disentanglement_for_multimodal_sentiment_analysis.md)
+- [OmniRet: Efficient and High-Fidelity Omni Modality Retrieval](../../CVPR2026/audio_speech/omniret_efficient_and_high-fidelity_omni_modality_retrieval.md)
+- [TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization](../../ICLR2026/audio_speech/triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)
+
+<!-- RELATED:END -->

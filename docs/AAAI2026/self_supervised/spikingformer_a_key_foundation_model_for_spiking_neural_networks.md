@@ -115,3 +115,15 @@ $$E_{SNN} = E_{AC} \times \Big(\sum_{i=2}^N SOP_{Conv}^i + \sum_{j=1}^M SOP_{SSA
 ## 评分
 
 ⭐⭐⭐⭐ — 工程贡献扎实，设计简洁有效，实验全面，但核心创新（调整 SN 位置）相对直接
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Manifolds and Modules: How Function Develops in a Neural Foundation Model](../../NeurIPS2025/self_supervised/manifolds_and_modules_how_function_develops_in_a_neural_foundation_model.md)
+- [SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](../../CVPR2026/self_supervised/sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
+- [Robust Tabular Foundation Models](robust_tabular_foundation_models.md)
+- [MOMO: Mars Orbital Model — Foundation Model for Mars Orbital Applications](../../CVPR2026/self_supervised/momo_mars_orbital_model_foundation_model_for_mars_orbital_applications.md)
+- [FedGRPO: Privately Optimizing Foundation Models with Group-Relative Rewards from Domain Clients](fedgrpo_privately_optimizing_foundation_models_with_group-relative_rewards_from_.md)
+
+<!-- RELATED:END -->

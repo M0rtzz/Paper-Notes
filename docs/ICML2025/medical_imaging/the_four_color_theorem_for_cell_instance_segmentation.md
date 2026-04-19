@@ -137,3 +137,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{sem} + \lambda_1 \mathcal{L}_{ort} + \lambd
 ⭐⭐⭐⭐ (4/5)
 
 创新视角独特（四色定理+实例分割），理论分析充分，实验覆盖多种成像模式。主要不足是对极端密集场景的鲁棒性未充分验证，且后处理步骤未详细讨论。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein Structure Tokenization: Benchmarking and New Recipe](protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
+- [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](../../ICLR2026/medical_imaging/compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
+
+<!-- RELATED:END -->

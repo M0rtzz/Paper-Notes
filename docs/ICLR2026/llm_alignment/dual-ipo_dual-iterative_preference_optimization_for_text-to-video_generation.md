@@ -119,3 +119,15 @@ $$\mathcal{L}_{\text{SRPO}}(\theta) = \mathbb{E}_{x,y_w,y_l}[\text{PCE}(y_w|x) \
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多架构、多尺度、多轮迭代消融实验非常充分
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 对视频生成后训练有很强的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [World Modeling Makes a Better Planner: Dual Preference Optimization for Embodied Task Planning](../../ACL2025/llm_alignment/world_modeling_makes_a_better_planner_dual_preference_optimization_for_embodied_.md)
+- [Learning More with Less: A Dynamic Dual-Level Down-Sampling Framework for Efficient Policy Optimization](learning_more_with_less_a_dynamic_dual-level_down-sampling_framework_for_efficie.md)
+- [Alignment through Meta-Weighted Online Sampling: Bridging the Gap between Data Generation and Preference Optimization](alignment_through_meta-weighted_online_sampling_bridging_the_gap_between_data_ge.md)
+- [AVERE: Improving Audiovisual Emotion Reasoning with Preference Optimization](avere_improving_audiovisual_emotion_reasoning_with_preference_optimization.md)
+- [Improving LLM Safety Alignment with Dual-Objective Optimization](../../ICML2025/llm_alignment/improving_llm_safety_alignment_with_dual-objective_optimization.md)
+
+<!-- RELATED:END -->

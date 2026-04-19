@@ -155,3 +155,15 @@ TeSMo 将场景中的运动生成分解为两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐ — 导航和交互分别有定量评估+用户研究+消融，比较全面
 - **写作质量**: ⭐⭐⭐⭐ — 框架清晰，分解合理，数据构建过程详尽
 - **价值**: ⭐⭐⭐⭐ — 为场景感知可控运动生成提供了实用的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ponymation: Learning Articulated 3D Animal Motions from Unlabeled Online Videos](ponymation_learning_articulated_3d_animal_motions_from_unlabeled_online_videos.md)
+- [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [COIN: Control-Inpainting Diffusion Prior for Human and Camera Motion Estimation](coin_control-inpainting_diffusion_prior_for_human_and_camera_motion_estimation.md)
+- [ViHOI: Human-Object Interaction Synthesis with Visual Priors](../../CVPR2026/image_generation/vihoi_human-object_interaction_synthesis_with_visual_priors.md)
+
+<!-- RELATED:END -->

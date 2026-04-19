@@ -140,3 +140,15 @@ $\mathcal{L} = \lambda_1 \mathcal{L}_{RGB} + \lambda_2 \mathcal{L}_{SSIM} + \lam
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集全面验证+详尽消融+定性定量结合
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，消融逻辑清楚
 - 价值: ⭐⭐⭐⭐ 有效解决了生成-重建混合训练的域差距问题，对闭环仿真有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiST-4D: Disentangled Spatiotemporal Diffusion with Metric Depth for 4D Driving Scene Generation](dist-4d_disentangled_spatiotemporal_diffusion_with_metric_depth_for_4d_driving_s.md)
+- [SLEDGE: Synthesizing Driving Environments with Generative Models and Rule-Based Traffic](../../ECCV2024/autonomous_driving/sledge_synthesizing_driving_environments_with_generative_models_and_rule-based_t.md)
+- [DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](../../ICLR2026/autonomous_driving/drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
+- [ETA: Efficiency through Thinking Ahead, A Dual Approach to Self-Driving with Large Models](eta_efficiency_through_thinking_ahead_a_dual_approach_to_self-driving_with_large.md)
+- [Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering](leveraging_2d_priors_and_sdf_guidance_for_urban_scene_rendering.md)
+
+<!-- RELATED:END -->

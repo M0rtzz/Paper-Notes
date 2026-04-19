@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅有初步标注一致性实验，无下游任务验证
 - 写作质量: ⭐⭐⭐⭐ 背景知识介绍充分，术语来源和处理过程透明
 - 价值: ⭐⭐⭐⭐ 对公平性和包容性 NLP 有实际推动意义，但需等完整数据集发布
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Slice Discovery in Large Language Models](active_slice_discovery_in_large_language_models.md)
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [DATE-LM: Benchmarking Data Attribution Evaluation for Large Language Models](date-lm_benchmarking_data_attribution_evaluation_for_large_language_models.md)
+- [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
+- [Don't Let It Fade: Preserving Edits in Diffusion Language Models via Token Timestep Allocation](dont_let_it_fade_preserving_edits_in_diffusion_language_mode.md)
+
+<!-- RELATED:END -->

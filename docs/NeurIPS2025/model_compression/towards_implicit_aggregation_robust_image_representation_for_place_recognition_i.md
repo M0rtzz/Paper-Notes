@@ -129,3 +129,15 @@ $$\text{Attn}(Q,K,V) = [\underbrace{Q_aK_a^\top V_a}_{\text{Agg-Agg}} + \underbr
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多数据集全面对比 + MSLS 排行榜第 1 + 公平同设置对比 + 详细消融
 - **写作质量**: ⭐⭐⭐⭐⭐ 逻辑清晰，从现有范式的问题推导到隐式聚合的动机，图示直观
 - **价值**: ⭐⭐⭐⭐⭐ 重新定义 VPR 工程实践，方法极简但效果极好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Representation Consistency for Accurate and Coherent LLM Answer Aggregation](representation_consistency_for_accurate_and_coherent_llm_answer_aggregation.md)
+- [Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing](../../AAAI2026/model_compression/towards_test-time_efficient_visual_place_recognition_via_asymmetric_query_proces.md)
+- [Smooth Regularization for Efficient Video Recognition](smooth_regularization_for_efficient_video_recognition.md)
+- [Memory-Efficient Training with In-Place FFT Implementation](memory-efficient_training_with_in-place_fft_implementation.md)
+- [Revisiting Semi-Supervised Learning in the Era of Foundation Models](revisiting_semi-supervised_learning_in_the_era_of_foundation_models.md)
+
+<!-- RELATED:END -->

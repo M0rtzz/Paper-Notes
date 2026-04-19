@@ -153,3 +153,15 @@ SF-GD 在二次目标函数上的稳定性阈值为 $\lambda_1(H) > \frac{2}{(1-
 ⭐⭐⭐⭐⭐ (5/5)
 
 理由：论文在理论深度和实验验证方面都做得非常扎实。从直观的几何解释到严格的数学分析（EoS 稳定性阈值、central flow 推导），再到清晰的实验对比，逻辑链条完整且令人信服。改进版 SF-AdamW 的设计简洁优雅、动机充分。虽然实验规模受限于计算资源，但核心发现具有很强的泛化潜力，为大规模 LLM 预训练的优化器选择提供了重要的理论指导。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Final-Model-Only Data Attribution with a Unifying View of Gradient-Based Methods](final-model-only_data_attribution_with_a_unifying_view_of_gradient-based_methods.md)
+- [Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](language_model_behavioral_phases_are_consistent_across_archi.md)
+- [Nemotron-CLIMB: CLustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training](nemotron-climb_clustering-based_iterative_data_mixture_bootstrapping_for_languag.md)
+- [The Sharpness Disparity Principle in Transformers for Accelerating Language Model Pre-Training](../../ICML2025/llm_pretraining/the_sharpness_disparity_principle_in_transformers_for_accelerating_language_mode.md)
+- [Metadata Conditioning Accelerates Language Model Pre-training](../../ICML2025/llm_pretraining/metadata_conditioning_accelerates_language_model_pre-training.md)
+
+<!-- RELATED:END -->

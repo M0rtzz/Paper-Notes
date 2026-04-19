@@ -125,3 +125,15 @@ HINT-14B 平均 68.1%，超越 InternVL3-14B baseline 5.4pp，甚至超过 GPT-5
 - 实验充分度: ⭐⭐⭐⭐ 15 个 baseline 对比 + 丰富消融，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，结构完整，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 为 AR/VR 助手指明了关键方向，数据集和方法都有广泛影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EgoPointVQA: Gesture-Based Egocentric Video Question Answering](egopointvqa_gesture_based_egocentric_video_qa.md)
+- [LensWalk: Agentic Video Understanding by Planning How You See in Videos](lenswalk_agentic_video_understanding_by_planning_how_you_see_in_videos.md)
+- [MovieRecapsQA: A Multimodal Open-Ended Video Question-Answering Benchmark](movierecapsqa_a_multimodal_open-ended_video_question-answering_benchmark.md)
+- [HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
+- [Hear What Matters! Text-conditioned Selective Video-to-Audio Generation](hear_what_matters_text-conditioned_selective_video-to-audio_generation.md)
+
+<!-- RELATED:END -->

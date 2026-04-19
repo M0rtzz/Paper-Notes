@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ HPatches + ETH3D + IMC + Texture-Poor 四个基准，消融详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 图示清晰、pipeline 描述流畅、符号一致
 - 价值: ⭐⭐⭐⭐ 对 SfM / 3D 重建领域有直接推动作用，填补了多视图稠密匹配的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_human-scene_reconstruction_from_multi-person_multi-view_video_in_a_sing.md)
+- [BRepGaussian: CAD Reconstruction from Multi-View Images with Gaussian Splatting](brepgaussian_cad_reconstruction_from_multi-view_images_with_gaussian_splatting.md)
+- [CoMatcher: Multi-View Collaborative Feature Matching](../../CVPR2025/3d_vision/comatcher_multi-view_collaborative_feature_matching.md)
+- [MV-Adapter: Multi-view Consistent Image Generation Made Easy](../../ICCV2025/3d_vision/mv-adapter_multi-view_consistent_image_generation_made_easy.md)
+- [Learning Multi-View Spatial Reasoning from Cross-View Relations](learning_multi-view_spatial_reasoning_from_cross-view_relations.md)
+
+<!-- RELATED:END -->

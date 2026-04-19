@@ -124,3 +124,15 @@ InstructPart 是 benchmark + 简单 baseline。核心贡献在数据集构建和
 - 实验充分度: ⭐⭐⭐⭐ 评估了 3 类共 10 个模型，baseline 有效，但数据集偏小
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，任务定义明确
 - 价值: ⭐⭐⭐⭐⭐ 对机器人操作和具身 AI 有直接推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [General and Task-Oriented Video Segmentation](../../ECCV2024/segmentation/general_and_task-oriented_video_segmentation.md)
+- [InstructSAM: A Training-Free Framework for Instruction-Oriented Remote Sensing Object Recognition](../../NeurIPS2025/segmentation/instructsam_a_training-free_framework_for_instruction-oriented_remote_sensing_ob.md)
+- [PartSTAD: 2D-to-3D Part Segmentation Task Adaptation](../../ECCV2024/segmentation/partstad_2d-to-3d_part_segmentation_task_adaptation.md)
+- [DEF-DTS: Deductive Reasoning for Open-domain Dialogue Topic Segmentation](def-dts_deductive_reasoning_for_open-domain_dialogue_topic_segmentation.md)
+- [Pixel-Level Reasoning Segmentation via Multi-turn Conversations](pixel-level_reasoning_segmentation_via_multi-turn_conversations.md)
+
+<!-- RELATED:END -->

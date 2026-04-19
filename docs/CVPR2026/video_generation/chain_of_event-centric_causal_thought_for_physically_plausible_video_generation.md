@@ -132,3 +132,15 @@ PhyGenBench 上整体性能 0.66，超越前 SOTA PhysHPO 8.19%。
 - **实验充分度**: 8/10 — 两个 benchmark 全面验证，消融完整，但缺乏用户研究
 - **写作质量**: 8/10 — 结构清晰，模块化设计描述详尽
 - **价值**: 7/10 — 推理 pipeline 较重，实用部署可能受限，但为 PPVG 提供了重要的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](../../AAAI2026/video_generation/mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)
+- [Seeing the Unseen: Zooming in the Dark with Event Cameras](../../AAAI2026/video_generation/seeing_the_unseen_zooming_in_the_dark_with_event_cameras.md)
+- [DreamRelation: Relation-Centric Video Customization](../../ICCV2025/video_generation/dreamrelation_relation-centric_video_customization.md)
+- [Mind the Time: Temporally-Controlled Multi-Event Video Generation](../../CVPR2025/video_generation/mind_the_time_temporally-controlled_multi-event_video_generation.md)
+
+<!-- RELATED:END -->

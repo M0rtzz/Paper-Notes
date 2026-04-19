@@ -142,3 +142,15 @@ $$\min_{E,D} \mathbb{E}_{\mathbf{x},\mathbf{m},j,\xi} [\ell_{\mathrm{rec}}(D(\ma
 - 实验充分度: ⭐⭐⭐ — 覆盖面广但数据为假设性值，未提供真实实验
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨清晰，符号体系统一，叙事结构合理
 - 价值: ⭐⭐⭐⭐ — 对水印安全社区有重要警示，评估协议有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rel-Zero: Harnessing Patch-Pair Invariance for Robust Zero-Watermarking Against AI Editing](rel-zero_harnessing_patch-pair_invariance_for_robust_zero-watermarking_against_a.md)
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
+- [TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking](trace_structure-aware_character_encoding_for_robust_and_generalizable_document_w.md)
+- [Image Generation as a Visual Planner for Robotic Manipulation](image_generation_as_a_visual_planner_for_robotic_manipulation.md)
+
+<!-- RELATED:END -->

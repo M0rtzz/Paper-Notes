@@ -121,3 +121,15 @@ Pipeline：
 - 实验充分度: ⭐⭐⭐⭐ 多指标多数据集验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论表述清晰，算法描述简洁
 - 价值: ⭐⭐⭐⭐ 解决了实际中的重要问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sampling from Binary Quadratic Distributions via Stochastic Localization](sampling_from_binary_quadratic_distributions_via_stochastic_localization.md)
+- [Optimizing Decomposition for Optimal Claim Verification](../../ACL2025/others/optimizing_decomposition_for_optimal_claim_verification.md)
+- [Generalized Linear Mode Connectivity for Transformers](../../NeurIPS2025/others/generalized_linear_mode_connectivity_for_transformers.md)
+- [A Measure of the System Dependence of Automated Metrics](../../ACL2025/others/a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [Entropy-UID: A Method for Optimizing Information Density](../../ACL2025/others/entropy-uid_a_method_for_optimizing_information_density.md)
+
+<!-- RELATED:END -->

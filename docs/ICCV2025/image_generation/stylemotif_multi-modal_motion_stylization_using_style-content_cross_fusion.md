@@ -164,3 +164,15 @@ $$\mathcal{L}_{align} = -\frac{1}{2}\sum_{(i,j)} \log\frac{\exp(\mathcal{F}_t^i 
 ## 评分 ⭐⭐⭐⭐
 
 单分支设计理念清晰，交叉归一化策略既简洁又有效。多模态扩展是亮点，展示了涌现能力。消融实验覆盖全面（预训练策略、缩放比例、文本表达方式）。文本引导风格化的巨大提升（4.82→56.71 SRA）令人印象深刻。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+- [Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video](bitrate-controlled_diffusion_for_disentangling_motion_and_content_in_video.md)
+- [End-to-End Multi-Modal Diffusion Mamba](end-to-end_multi-modal_diffusion_mamba.md)
+- [CSD-VAR: Content-Style Decomposition in Visual Autoregressive Models](csd-var_content-style_decomposition_in_visual_autoregressive_models.md)
+- [Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers](rethinking_cross-modal_interaction_in_multimodal_diffusion_transformers.md)
+
+<!-- RELATED:END -->

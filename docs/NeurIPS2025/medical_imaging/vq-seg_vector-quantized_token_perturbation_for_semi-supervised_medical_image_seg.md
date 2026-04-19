@@ -131,3 +131,15 @@ QPM 贡献最大（+2.58% Dice），三个模块协同效果最优。
 - 实验充分度: ⭐⭐⭐⭐ 消融细致，但仅两个数据集（LC 和 ACDC），可更多样化
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，图示直观，结构完整
 - 价值: ⭐⭐⭐⭐ 为半监督分割中的扰动策略提供新思路，新数据集有额外贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MATCH: Multi-faceted Adaptive Topo-Consistency for Semi-Supervised Histopathology Segmentation](match_multi-faceted_adaptive_topo-consistency_for_semi-supervised_histopathology.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](../../CVPR2025/medical_imaging/semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](../../CVPR2026/medical_imaging/semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation](../../ECCV2024/medical_imaging/alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)
+- [Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](../../AAAI2026/medical_imaging/bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)
+
+<!-- RELATED:END -->

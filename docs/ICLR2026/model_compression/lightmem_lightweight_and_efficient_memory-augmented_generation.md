@@ -111,3 +111,15 @@ LightMem 是一个无需训练的管道式系统，核心参数是压缩率 $r$ 
 - 实验充分度: ⭐⭐⭐⭐⭐ LongMemEval + LoCoMo，多骨干模型，全面效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，复杂度分析详尽
 - 价值: ⭐⭐⭐⭐⭐ 实用性强，效率提升巨大，具有工程落地价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](../../ICML2025/model_compression/lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
+- [QKV Projections Require a Fraction of Their Memory](qkv_projections_require_a_fraction_of_their_memory.md)
+- [π-Flow: Policy-Based Few-Step Generation via Imitation Distillation](pi-flow_policy-based_few-step_generation_via_imitation_distillation.md)
+- [MoNE: Replacing Redundant Experts with Lightweight Novices for Structured Pruning of MoE](mone_replacing_redundant_experts_with_lightweight_novices_for_structured_pruning.md)
+- [PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
+
+<!-- RELATED:END -->

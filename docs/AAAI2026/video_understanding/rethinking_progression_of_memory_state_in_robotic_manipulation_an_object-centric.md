@@ -170,3 +170,15 @@ $$\hat{\mathbf{a}}_t \sim P_\theta(\mathbf{a}_t | \{\mathbf{r}_t^{(j)}\}, \{\mat
 - 实验充分度: ⭐⭐⭐ （多基线对比充分，但缺少组件级消融和真实环境实验）
 - 写作质量: ⭐⭐⭐⭐ （问题形式化清晰，框架描述详尽，可视化有说服力）
 - 价值: ⭐⭐⭐⭐ （为非马尔可夫机器人操控开辟新方向，基准有长期价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Out of Sight, Out of Track: Adversarial Attacks on Propagation-based Multi-Object Trackers via Query State Manipulation](../../CVPR2026/video_understanding/out_of_sight_out_of_track_adversarial_attacks_on_propagation-based_multi-object_.md)
+- [Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning](../../CVPR2026/video_understanding/reconstruction-guided_slot_curriculum_addressing_object_over-fragmentation_in_vi.md)
+- [SlotVTG: Object-Centric Adapter for Generalizable Video Temporal Grounding](../../CVPR2026/video_understanding/slotvtg_object-centric_adapter_for_generalizable_video_temporal_grounding.md)
+- [MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models](state-space_hierarchical_compression_with_gated_attention_an.md)
+- [KineST: A Kinematics-guided Spatiotemporal State Space Model for Human Motion Tracking from Sparse Signals](kinest_a_kinematics-guided_spatiotemporal_state_space_model_for_human_motion_tra.md)
+
+<!-- RELATED:END -->

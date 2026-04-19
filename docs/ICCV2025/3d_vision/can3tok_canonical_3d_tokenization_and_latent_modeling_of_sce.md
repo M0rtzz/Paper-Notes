@@ -102,3 +102,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ DL3DV-10K大规模验证+完整消融+潜在空间分析+两种生成应用
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻(为何现有方法失败)，实验设计合理
 - 对我的价值: ⭐⭐⭐⭐ 3DGS生成方向的重要进展，归一化/tokenization策略有实用参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
+- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zeroshot_singleview_3d_indoor_scene_model.md)
+- [SceneMI: Motion In-betweening for Modeling Human-Scene Interactions](scenemi_motion_in-betweening_for_modeling_human-scene_interaction.md)
+- [Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models](representing_3d_shapes_with_64_latent_vectors_for_3d_diffusion_models.md)
+- [AnimateAnyMesh: A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation](animateanymesh_a_feedforward_4d_foundation_model_for_textdri.md)
+
+<!-- RELATED:END -->

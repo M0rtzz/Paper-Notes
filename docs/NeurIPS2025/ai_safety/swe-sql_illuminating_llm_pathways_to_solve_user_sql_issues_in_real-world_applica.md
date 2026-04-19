@@ -153,3 +153,15 @@ Bird-Fixer 基于 14B 参数模型，达到与 O3-Mini 可比的性能，超越 
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多方言、多消融、错误分析详尽
 - 写作质量: ⭐⭐⭐⭐ 结构完整，但附录内容较多需要反复查看
 - 价值: ⭐⭐⭐⭐⭐ 实际应用价值极高，基准和代码均开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
+- [AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text](agentstealth_reinforcing_large_language_model_for_anonymizing_user-generated_tex.md)
+- [Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification](keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)
+- [Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy](spectral_perturbation_bounds_for_low-rank_approximation_with_applications_to_pri.md)
+- [SECA: Semantically Equivalent and Coherent Attacks for Eliciting LLM Hallucinations](seca_semantically_equivalent_and_coherent_attacks_for_eliciting_llm_hallucinatio.md)
+
+<!-- RELATED:END -->

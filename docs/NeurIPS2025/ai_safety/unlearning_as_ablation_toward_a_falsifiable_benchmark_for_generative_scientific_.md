@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐ （纯立场论文，无实验）
 - 写作质量: ⭐⭐⭐⭐ （论证逻辑清晰，但篇幅冗长）
 - 价值: ⭐⭐⭐⭐ （概念有深度，但可行性未验证）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research](machine_unlearning_doesnt_do_what_you_think_lessons_for_generative_ai_policy_and.md)
+- [DeepPersona: A Generative Engine for Scaling Deep Synthetic Personas](deeppersona_a_generative_engine_for_scaling_deep_synthetic_personas.md)
+- [CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming](cpret_a_dataset_benchmark_and_model_for_retrieval_in_competitive_programming.md)
+- [ORBIT -- Open Recommendation Benchmark for Reproducible Research with Hidden Tests](orbit_--_open_recommendation_benchmark_for_reproducible_research_with_hidden_tes.md)
+- [Efficient Verified Machine Unlearning for Distillation](efficient_verified_machine_unlearning_for_distillation.md)
+
+<!-- RELATED:END -->

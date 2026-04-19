@@ -160,3 +160,15 @@ ViLU 在 13 个数据集的平均 AUC 上超越所有方法（+8.2 vs LVU），F
 | 写作清晰度 | 5 |
 | 实用价值 | 4 |
 | 总评 | 4.6 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Joint Vision-Language Social Bias Removal for CLIP](../../CVPR2025/information_retrieval/joint_vision-language_social_bias_removal_for_clip.md)
+- [Aligning Information Capacity Between Vision and Language via Dense-to-Sparse Feature Distillation](aligning_information_capacity_between_vision_and_language_via_dense-to-sparse_fe.md)
+- [Scaling Language-Centric Omnimodal Representation Learning](../../NeurIPS2025/information_retrieval/scaling_language-centric_omnimodal_representation_learning.md)
+- [Revela: Dense Retriever Learning via Language Modeling](../../ICLR2026/information_retrieval/revela_dense_retriever_learning_via_language_modeling.md)
+- [ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling](../../ECCV2024/information_retrieval/artvlm_attribute_recognition_through_vision-based_prefix_language_modeling.md)
+
+<!-- RELATED:END -->

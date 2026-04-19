@@ -175,3 +175,15 @@ $$t := v \mid w \mid c \mid f(t_1, \ldots, t_k)$$
 - 实验充分度: ⭐⭐⭐⭐ — 多任务多基线比较，置信区间完善，但环境有限
 - 写作质量: ⭐⭐⭐⭐ — 理论框架严谨，实例清晰（仓库机器人贯穿全文）
 - 价值: ⭐⭐⭐⭐⭐ — 显著降低逻辑奖励规范的使用门槛，开辟新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeepProofLog: Efficient Proving in Deep Stochastic Logic Programs](deepprooflog_efficient_proving_in_deep_stochastic_logic_programs.md)
+- [Language Model Distillation: A Temporal Difference Imitation Learning Perspective](language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
+- [ReGal: A First Look at PPO-based Legal AI for Judgment Prediction and Summarization in India](regal_a_first_look_at_ppo-based_legal_ai_for_judgment_prediction_and_summarizati.md)
+- [Breaking Barriers: Do Reinforcement Post Training Gains Transfer To Unseen Domains?](../../ICLR2026/reinforcement_learning/breaking_barriers_do_reinforcement_post_training_gains_transfer_to_unseen_domain.md)
+- [See It, Say It, Sorted: An Iterative Training-Free Framework for Visually-Grounded Multimodal Reasoning in LVLMs](../../CVPR2026/reinforcement_learning/see_it_say_it_sorted_an_iterative_training-free_framework_for_visually-grounded_.md)
+
+<!-- RELATED:END -->

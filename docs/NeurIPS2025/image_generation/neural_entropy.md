@@ -138,3 +138,15 @@ $$S_\text{neural} = \int_0^T \mathbb{E}_{x_t} \left[ \| \nabla_{x_t} \log p_t(x_
 - **理论深度**: ★★★★★ — 建立了信息论与扩散模型的优美联系
 - **实验充分性**: ★★★☆☆ — 实验规模较小，主要是概念验证
 - **写作质量**: ★★★★☆ — 理论阐述清晰，但需要较强的信息论背景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EVODiff: Entropy-aware Variance Optimized Diffusion Inference](evodiff_entropy-aware_variance_optimized_diffusion_inference.md)
+- [Entropy Rectifying Guidance for Diffusion and Flow Models](entropy_rectifying_guidance_for_diffusion_and_flow_models.md)
+- [Flow Matching Neural Processes](flow_matching_neural_processes.md)
+- [Provable Maximum Entropy Manifold Exploration via Diffusion Models](../../ICML2025/image_generation/provable_maximum_entropy_manifold_exploration_via_diffusion_models.md)
+- [Graph-based Neural Space Weather Forecasting](graph-based_neural_space_weather_forecasting.md)
+
+<!-- RELATED:END -->

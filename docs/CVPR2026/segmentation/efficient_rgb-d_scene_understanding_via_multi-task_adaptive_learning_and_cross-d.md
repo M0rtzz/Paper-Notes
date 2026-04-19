@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集、详尽的消融实验（编码器/CFIL 位置/NFCL 层数/损失调节因子/模块对比），复杂度分析完整
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、图表丰富、公式推导完整，可读性好
 - 价值: ⭐⭐⭐ — 工程实用性强，适合资源受限的机器人部署场景，但学术贡献相对增量式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](dsflash_comprehensive_panoptic_scene_graph_generation_in_realtime.md)
+- [RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)
+- [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportion-aware_dynamic_adaptive_salient_object_detection_network_.md)
+- [SARMAE: Masked Autoencoder for SAR Representation Learning](sarmae_masked_autoencoder_for_sar_representation_learning.md)
+- [Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction](learning_cross-view_object_correspondence_via_cycle-consistent_mask_prediction.md)
+
+<!-- RELATED:END -->

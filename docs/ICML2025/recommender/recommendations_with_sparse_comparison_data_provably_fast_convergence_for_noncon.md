@@ -136,3 +136,15 @@ $$\|\Delta(Z_t)\|_F^2 \leq \left(1 - \frac{\alpha\eta}{4}\right)^t \|\Delta(Z_0)
 - 实验充分度: ⭐⭐⭐ 仅合成数据仿真验证，缺乏真实数据实验
 - 写作质量: ⭐⭐⭐⭐ 理论陈述清晰，证明结构well-organized
 - 价值: ⭐⭐⭐⭐ 对推荐系统理论社区有重要贡献，但实际影响受限于无噪声假设
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
+- [Interpretable Reward Model via Sparse Autoencoder](../../AAAI2026/recommender/interpretable_reward_model_via_sparse_autoencoder.md)
+- [SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
+- [Generalization Bounds for Semi-supervised Matrix Completion with Distributional Side Information](../../AAAI2026/recommender/generalization_bounds_for_semi-supervised_matrix_completion_with_distributional_.md)
+- [Beyond Single Labels: Improving Conversational Recommendation through LLM-Powered Data Augmentation](../../ACL2025/recommender/beyond_single_labels_improving_conversational_recommendation_through_llm-powered.md)
+
+<!-- RELATED:END -->

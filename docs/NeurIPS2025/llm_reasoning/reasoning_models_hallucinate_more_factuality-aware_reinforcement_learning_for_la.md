@@ -125,3 +125,15 @@ FSPO在GRPO基础上增加步级事实性反馈。输入是问题 $x$ + 关联ev
 - 实验充分度: ⭐⭐⭐⭐ 多模型多基准全面评估+消融+训练动态分析，但缺乏大模型验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论→实证→方法→实验的逻辑清晰，图表丰富直观
 - 价值: ⭐⭐⭐⭐⭐ 对整个reasoning LLM社区敲响幻觉警钟，FSPO是实用且高效的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Impact of Quantization on Large Reasoning Model Reinforcement Learning](the_impact_of_quantization_on_large_reasoning_model_reinforcement_learning.md)
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+- [DisCO: Reinforcing Large Reasoning Models with Discriminative Constrained Optimization](disco_reinforcing_large_reasoning_models_with_discriminative_constrained_optimiz.md)
+- [Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
+- [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](adaptive_dual_reasoner_large_reasoning_models_can_think_efficiently_by_hybrid_re.md)
+
+<!-- RELATED:END -->

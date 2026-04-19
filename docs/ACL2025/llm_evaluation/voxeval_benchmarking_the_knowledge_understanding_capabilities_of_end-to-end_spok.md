@@ -112,3 +112,15 @@ VoxEval 构建于 MMLU 之上，将其从文本扩展到语音模态。实验表
 - 实验充分度: ⭐⭐⭐⭐ — 5 个 SLM + 1 级联基线，26 种音频条件，分析详尽
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，图表丰富，结构合理
 - 价值: ⭐⭐⭐⭐ — 为 SLM 社区提供急需的评估工具，有效暴露关键短板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](codemenv_benchmarking_large_language_models_on_code_migration.md)
+- [SANSKRITI: A Comprehensive Benchmark for Evaluating Language Models' Knowledge of Indian Culture](sanskriti_a_comprehensive_benchmark_for_evaluating_language_models_knowledge_of_.md)
+- [Mis-prompt: Benchmarking Large Language Models for Proactive Error Handling](mis-prompt_benchmarking_large_language_models_for_proactive_error_handling.md)
+- [WXImpactBench: A Disruptive Weather Impact Understanding Benchmark for Evaluating Large Language Models](wximpactbench_a_disruptive_weather_impact_understanding_benchmark_for_evaluating.md)
+- [AD-LLM: Benchmarking Large Language Models for Anomaly Detection](ad-llm_benchmarking_large_language_models_for_anomaly_detection.md)
+
+<!-- RELATED:END -->

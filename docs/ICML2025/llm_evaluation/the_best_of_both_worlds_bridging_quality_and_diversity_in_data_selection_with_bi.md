@@ -140,3 +140,15 @@ GraphFilter 在**所有三个模型**上全面超越全部 9 种基线方法。
 ⭐⭐⭐⭐（4/5）
 
 方法简洁高效、实验充分，将数据选择问题优雅地形式化为集合覆盖问题。尽管技术上并不复杂，但实际效果显著且实用性强，是数据选择领域的扎实贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Soft Quality-Diversity Optimization](../../ICLR2026/llm_evaluation/soft_quality-diversity_optimization.md)
+- [Hyperband-based Bayesian Optimization for Black-box Prompt Selection](hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
+- [IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness](promoting_ensemble_diversity_with_interactive_bayesian_distributional_robustness.md)
+- [How Much Can We Forget about Data Contamination?](how_much_can_we_forget_about_data_contamination.md)
+- [Unlocking Post-hoc Dataset Inference with Synthetic Data](unlocking_post-hoc_dataset_inference_with_synthetic_data.md)
+
+<!-- RELATED:END -->

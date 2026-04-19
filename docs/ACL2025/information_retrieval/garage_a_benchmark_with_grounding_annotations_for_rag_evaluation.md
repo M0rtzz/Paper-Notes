@@ -117,3 +117,15 @@ GaRAGe 本身是评估基准而非模型，不涉及训练。评估使用 GPT-4o
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 评估了 11 个模型、多个维度切片分析（时间敏感性/来源/噪声水平/热度），非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表设计优良，评估框架阐述得当
 - **价值**: ⭐⭐⭐⭐⭐ — 对 RAG 社区具有直接且长期的实用价值，填补了评估空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation](memerag_a_multilingual_end-to-end_meta-evaluation_benchmark_for_retrieval_augmen.md)
+- [MT-RAIG: Novel Benchmark and Evaluation Framework for Retrieval-Augmented Insight Generation over Multiple Tables](mt-raig_novel_benchmark_and_evaluation_framework_for_retrieval-augmented_insight.md)
+- [Unanswerability Evaluation for Retrieval Augmented Generation](unanswerability_evaluation_for_retrieval_augmented_generation.md)
+- [RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering](../../NeurIPS2025/information_retrieval/rag-igbench_innovative_evaluation_for_rag-based_interleaved_generation_in_open-d.md)
+- [DICE: Discrete Interpretable Comparative Evaluation with Probabilistic Scoring for RAG](../../NeurIPS2025/information_retrieval/dice_discrete_interpretable_comparative_evaluation_with_probabilistic_scoring_fo.md)
+
+<!-- RELATED:END -->

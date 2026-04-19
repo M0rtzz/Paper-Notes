@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6个基准+消融+鲁棒性+可扩展性+案例分析，全面充分。
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，与现有范式的对比用图示直观展示，逻辑流畅。
 - 价值: ⭐⭐⭐⭐⭐ 为多Agent拓扑自动化设计开辟了全新方向，框架优雅且有强实验支撑。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [Pairwise is Not Enough: Hypergraph Neural Networks for Multi-Agent Pathfinding](../../ICLR2026/graph_learning/pairwise_is_not_enough_hypergraph_neural_networks_for_multi-agent_pathfinding.md)
+- [MyGram: Modality-aware Graph Transformer with Global Distribution for Multi-modal Entity Alignment](mygram_modality-aware_graph_transformer_with_global_distribution_for_multi-modal.md)
+- [GraphTOP: Graph Topology-Oriented Prompting for Graph Neural Networks](../../NeurIPS2025/graph_learning/graphtop_graph_topology-oriented_prompting_for_graph_neural_networks.md)
+- [GraphUniverse: Synthetic Graph Generation for Evaluating Inductive Generalization](../../ICLR2026/graph_learning/graphuniverse_synthetic_graph_generation_for_evaluating_inductive_generalization.md)
+
+<!-- RELATED:END -->

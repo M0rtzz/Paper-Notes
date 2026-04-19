@@ -129,3 +129,15 @@ GWAD 框架持续监控发送到被保护模型的查询序列。对于每三个
 - 实验充分度: ⭐⭐⭐⭐⭐ 8种攻击+自适应攻击+泛化+误报率+多场景全面评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰、理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 解决了状态化防御被自适应攻击击穿的核心痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
+- [Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](../../NeurIPS2025/ai_safety/bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [Traceable Black-box Watermarks for Federated Learning](../../ICLR2026/ai_safety/traceable_black-box_watermarks_for_federated_learning.md)
+- [GraphTextack: A Realistic Black-Box Node Injection Attack on LLM-Enhanced GNNs](../../AAAI2026/ai_safety/graphtextack_a_realistic_black-box_node_injection_attack_on_llm-enhanced_gnns.md)
+
+<!-- RELATED:END -->

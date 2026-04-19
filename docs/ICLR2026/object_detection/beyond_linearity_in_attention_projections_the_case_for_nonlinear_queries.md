@@ -111,3 +111,15 @@ $$Q(X) = (X + f_\theta(X)) / 2$$
 - 实验充分度: ⭐⭐⭐ 单一规模、单一数据集，但控制变量极为严谨
 - 写作质量: ⭐⭐⭐⭐ Workshop 篇幅内逻辑清晰，数学简洁
 - 价值: ⭐⭐⭐⭐ 如能在大规模模型上验证将有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Caption-Based Queries for Video Moment Retrieval](../../CVPR2026/object_detection/beyond_caption-based_queries_for_video_moment_retrieval.md)
+- [Long-Context Generalization with Sparse Attention](long-context_generalization_with_sparse_attention.md)
+- [From Narrow to Panoramic Vision: Attention-Guided Cold-Start Reshapes Multimodal Reasoning](from_narrow_to_panoramic_vision_attention-guided_cold-start_reshapes_multimodal_.md)
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](../../CVPR2026/object_detection/beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces](../../AAAI2026/object_detection/beyond_fact_retrieval_episodic_memory_for_rag_with_generative_semantic_workspace.md)
+
+<!-- RELATED:END -->

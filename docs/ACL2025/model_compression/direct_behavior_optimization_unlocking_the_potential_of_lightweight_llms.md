@@ -179,3 +179,15 @@ DeBoP 比 StrategyLLM 快约 61%，比 Self-Discover 快约 63%。
 - **实验充分度**: ⭐⭐⭐⭐ — 7 个任务、效率对比、消融、泛化分析，但任务类型可更多样
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，数学形式化程度高，Figure 2 的框架图非常直观
 - **综合价值**: ⭐⭐⭐⭐⭐ — 为轻量级 LLM 的实际应用开辟了新路径，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StepFun-Formalizer: Unlocking the Autoformalization Potential of LLMs Through Knowledge-Reasoning Fusion](../../AAAI2026/model_compression/stepfun-formalizer_unlocking_the_autoformalization_potential_of_llms_through_kno.md)
+- [3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](../../NeurIPS2025/model_compression/3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)
+- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)
+- [Joker: Joint Optimization Framework for Lightweight Kernel Machines](../../ICML2025/model_compression/joker_joint_optimization_framework_for_lightweight_kernel_machines.md)
+
+<!-- RELATED:END -->

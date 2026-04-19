@@ -145,3 +145,15 @@ $$\limsup_{\delta \to 0} \frac{\mathbb{E}[\tau_\delta]}{\log(1/\delta)} \leq 8\s
 - 实验充分度: ⭐⭐⭐ — 仅合成实验，无真实数据
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机充分
 - 综合价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors](learning-augmented_algorithms_for_mts_with_bandit_access_to_multiple_predictors.md)
+- [Near Optimal Best Arm Identification for Clustered Bandits](near_optimal_best_arm_identification_for_clustered_bandits.md)
+- [Multiple-Policy Evaluation via Density Estimation](multiple-policy_evaluation_via_density_estimation.md)
+- [Bipartite Ranking From Multiple Labels: On Loss Versus Label Aggregation](bipartite_ranking_from_multiple_labels_on_loss_versus_label_aggregation.md)
+- [Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification](fixing_the_loose_brake_exponential-tailed_stopping_time_in_best_arm_identificati.md)
+
+<!-- RELATED:END -->

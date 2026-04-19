@@ -128,3 +128,15 @@ QPrompt方法基于对prompt权重分布特征的深入分析，采用K-Means聚
 - 实验充分度: ⭐⭐⭐⭐ 四个评估设置、11个数据集、多种基线对比、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从观察到原则到设计的推导链完整
 - 价值: ⭐⭐⭐⭐⭐ 在效率和效果上同时取得收益，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evolving Prompt Adaptation for Vision-Language Models](../../CVPR2026/multimodal_vlm/evolving_prompt_adaptation_for_visionlanguage_mode.md)
+- [Towards Calibrating Prompt Tuning of Vision-Language Models](../../CVPR2026/multimodal_vlm/towards_calibrating_prompt_tuning_of_vision-language_models.md)
+- [EvoPrompt: Evolving Prompt Adaptation for Vision-Language Models](../../CVPR2026/multimodal_vlm/evolving_prompt_adaptation_for_vision-language_models.md)
+- [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](../../CVPR2025/multimodal_vlm/dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+
+<!-- RELATED:END -->

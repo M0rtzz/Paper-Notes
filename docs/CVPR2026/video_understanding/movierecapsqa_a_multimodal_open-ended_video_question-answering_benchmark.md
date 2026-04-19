@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个模型+人类评估、多种评估指标对比、按模态/推理类型的详细分解分析
 - 写作质量: ⭐⭐⭐⭐⭐ 论文逻辑清晰，motivation推导自然，实验发现的表述精确有洞察力
 - 价值: ⭐⭐⭐⭐ 为长视频多模态理解提供了重要的评估工具，"视觉感知是瓶颈"的发现对领域有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
+- [EgoPointVQA: Gesture-Based Egocentric Video Question Answering](egopointvqa_gesture_based_egocentric_video_qa.md)
+- [Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering](do_you_see_what_i_am_pointing_at_gesture-based_egocentric_video_question_answeri.md)
+- [MINERVA-Cultural: A Benchmark for Cultural and Multilingual Long Video Reasoning](minerva-cultural_a_benchmark_for_cultural_and_multilingual_long_video_reasoning.md)
+- [Decoding Open-Ended Information Seeking Goals from Eye Movements in Reading](../../ICLR2026/video_understanding/decoding_open-ended_information_seeking_goals_from_eye_movements_in_reading.md)
+
+<!-- RELATED:END -->

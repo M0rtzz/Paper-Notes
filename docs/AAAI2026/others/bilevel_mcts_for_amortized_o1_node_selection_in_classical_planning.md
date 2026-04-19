@@ -147,3 +147,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ IPC18+23标准基准、3种启发式、7种baseline/变体、详细消融（Bilevel/TC/DTC/固定预算/novelty/交替队列）、5min+30min双设定、5种随机种子
 - **写作质量**: ⭐⭐⭐⭐ 渐进式引入改进+即时实验验证的组织方式非常清晰，但信息密度极高，附录内容丰富（≥12个section）需多次阅读
 - **价值**: ⭐⭐⭐⭐⭐ Nεbula在IPC标准基准上创造新SOTA，方法论的模块化正交组合思想可推广至其他搜索问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Extreme Value Monte Carlo Tree Search for Classical Planning](extreme_value_monte_carlo_tree_search_for_classical_planning.md)
+- [MeshA*: Efficient Path Planning With Motion Primitives](mesha_efficient_path_planning_with_motion_primitives.md)
+- [Symbolic Planning and Multi-Agent Path Finding in Extremely Dense Environments with Unassigned Agents](symbolic_planning_and_multi-agent_path_finding_in_extremely_dense_environments_w.md)
+- [Compositional Diffusion with Guided Search for Long-Horizon Planning](../../ICLR2026/others/compositional_diffusion_long_horizon_planning.md)
+- [Deadline-Aware, Energy-Efficient Control of Domestic Immersion Hot Water Heaters](deadline-aware_energy-efficient_control_of_domestic_immersion_hot_water_heater.md)
+
+<!-- RELATED:END -->

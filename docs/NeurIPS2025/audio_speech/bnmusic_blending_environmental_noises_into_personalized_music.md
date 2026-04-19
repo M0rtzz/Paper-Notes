@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 客观+主观评估全面，消融完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，心理声学原理解释好
 - 价值: ⭐⭐⭐⭐ 全新任务的开创性工作，但实际部署还有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MemoryTalker: Personalized Speech-Driven 3D Facial Animation via Audio-Guided Stylization](../../ICCV2025/audio_speech/memorytalker_personalized_speech-driven_3d_facial_animation_via_audio-guided_sty.md)
+- [Echoes of Humanity: Exploring the Perceived Humanness of AI Music](echoes_of_humanity_exploring_the_perceived_humanness_of_ai_music.md)
+- [Ethics Statements in AI Music Papers: The Effective and the Ineffective](ethics_statements_in_ai_music_papers_the_effective_and_the_ineffective.md)
+- [Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization](unifying_symbolic_music_arrangement_track-aware_reconstruction_and_structured_to.md)
+- [Perceptually Aligning Representations of Music via Noise-Augmented Autoencoders](perceptually_aligning_representations_of_music_via_noise-augmented_autoencoders.md)
+
+<!-- RELATED:END -->

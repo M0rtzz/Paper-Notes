@@ -140,3 +140,15 @@ Technicolor Birthday 上相比 4DGS 提升 **58.25%**。
 ## 评分
 
 ⭐⭐⭐⭐ — 数学建模优雅、实验全面，SOTA 提升明显；原创性在于将完整 Taylor 级数引入 4D Gaussian 建模。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ActiveGAMER: Active GAussian Mapping through Efficient Rendering](activegamer_active_gaussian_mapping_through_efficient_rendering.md)
+- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
+- [DropoutGS: Dropping Out Gaussians for Better Sparse-view Rendering](dropoutgs_dropping_out_gaussians_for_better_sparse-view_rendering.md)
+- [BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis](../../ICCV2025/3d_vision/billboard_splatting_bbsplat_learnable_textured_primitives_fo.md)
+- [MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds](mosca_dynamic_gaussian_fusion_from_casual_videos_via_4d_motion_scaffolds.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_b(f(x_b; \Theta), y_b) + \frac{1-\alpha
 ## 评分
 
 ⭐⭐⭐⭐ — 提出了一个新颖且重要的安全问题（后门并发症），实验规模充分（4个PTLM × 16个数据集 × 3个触发词），缓解方法实用。虽然从攻击者视角出发有伦理争议，但对全面理解后门攻击的影响不可或缺。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Inception Backdoor Attacks against Reinforcement Learning](adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [ICLShield: Exploring and Mitigating In-Context Learning Backdoor Attacks](iclshield_exploring_and_mitigating_in-context_learning_backdoor_attacks.md)
+- [ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training](../../NeurIPS2025/ai_safety/toxictextclip_text-based_poisoning_and_backdoor_attacks_on_clip_pre-training.md)
+- [Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](../../CVPR2025/ai_safety/detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
+- [Event Trojan: Asynchronous Event-Based Backdoor Attacks](../../ECCV2024/ai_safety/event_trojan_asynchronous_event-based_backdoor_attacks.md)
+
+<!-- RELATED:END -->

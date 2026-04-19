@@ -189,3 +189,15 @@ $$\mathcal{L}_\theta = \sum_{i=1}^L \mathbf{M} \| \epsilon - \epsilon_\theta(\bo
 - 实验充分度: ⭐⭐⭐⭐ 自动指标+用户研究+消融+多种控制模式可视化，较为全面；但仅与DragNUWA对比（MotionCtrl未开源SVD版本）
 - 写作质量: ⭐⭐⭐⭐ toy experiment的动机展示直观有力，方法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 在可控视频生成领域提出了关键的范式改进，实体级控制的思路对后续工作有重要影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal-Entity Reflected Egocentric Traffic Accident Video Synthesis](../../ICCV2025/video_generation/causal-entity_reflected_egocentric_traffic_accident_video_synthesis.md)
+- [SymphoMotion: Joint Control of Camera Motion and Object Dynamics for Coherent Video Generation](../../CVPR2026/video_generation/symphomotion_joint_control_of_camera_motion_and_object_dynamics_for_coherent_vid.md)
+- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](../../ICCV2025/video_generation/free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](../../AAAI2026/video_generation/motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
+- [MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model](mofa-video_controllable_image_animation_via_generative_motion_field_adaptions_in.md)
+
+<!-- RELATED:END -->

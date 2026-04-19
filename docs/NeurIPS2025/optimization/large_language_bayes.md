@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 有概念验证但缺乏大规模基准对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导优雅，问题动机清晰
 - 价值: ⭐⭐⭐⭐⭐ 可能开启"自然语言 → 贝叶斯推断"的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
+- [Training-Free Bayesianization for Low-Rank Adapters of Large Language Models](training-free_bayesianization_for_low-rank_adapters_of_large_language_models.md)
+- [DynaAct: Large Language Model Reasoning with Dynamic Action Spaces](dynaact_large_language_model_reasoning_with_dynamic_action_spaces.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](../../ICML2025/optimization/subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+
+<!-- RELATED:END -->

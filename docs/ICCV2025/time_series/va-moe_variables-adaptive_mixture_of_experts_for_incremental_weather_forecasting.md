@@ -128,3 +128,15 @@ VA-MoE以665M参数显著优于1113M参数的ViT+MoE。增量训练版本（仅1
 - **实验充分度**: ⭐⭐⭐⭐ ERA5上全面验证，与多个SOTA对比
 - **写作质量**: ⭐⭐⭐⭐ 问题动机清晰，框架描述系统
 - **综合价值**: ⭐⭐⭐⭐ 为气象AI的可扩展性提供了实用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M2FMoE: Multi-Resolution Multi-View Frequency Mixture-of-Experts for Extreme-Adaptive Time Series Forecasting](../../AAAI2026/time_series/m2fmoe_multi-resolution_multi-view_frequency_mixture-of-experts_for_extreme-adap.md)
+- [STCast: Adaptive Boundary Alignment for Global and Regional Weather Forecasting](../../CVPR2026/time_series/stcast_adaptive_boundary_alignment_for_global_and_regional_weather_forecasting.md)
+- [I²-World: Intra-Inter Tokenization for Efficient Dynamic 4D Scene Forecasting](i2-world_intra-inter_tokenization_for_efficient_dynamic_4d_scene_forecasting.md)
+- [Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting](../../ICML2025/time_series/breaking_silos_adaptive_model_fusion_unlocks_better_time_series_forecasting.md)
+- [MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series](../../NeurIPS2025/time_series/maestro_adaptive_sparse_attention_and_robust_learning_for_multimodal_dynamic_tim.md)
+
+<!-- RELATED:END -->

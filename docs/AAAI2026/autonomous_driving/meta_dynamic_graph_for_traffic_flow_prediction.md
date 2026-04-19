@@ -155,3 +155,15 @@ $$\tilde{\boldsymbol{A}_t} = \text{asym}(\boldsymbol{\phi}_t \odot \boldsymbol{A
 - 实验充分度: ⭐⭐⭐⭐ — 四个标准数据集全面评测，消融和效率分析完整，但缺少跨领域验证
 - 写作质量: ⭐⭐⭐⭐ — 动机阐述清晰，ST-isolated到ST-unification的论述线有说服力
 - 价值: ⭐⭐⭐⭐ — 代码开源，四个数据集SOTA，对时空预测社区有较好的参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAST: A Retrieval Augmented Spatio-Temporal Framework for Traffic Prediction](rast_a_retrieval_augmented_spatio-temporal_framework_for_traffic_prediction.md)
+- [Embracing Large Language Models in Traffic Flow Forecasting](../../ACL2025/autonomous_driving/embracing_large_language_models_in_traffic_flow_forecasting.md)
+- [CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction](catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving.md)
+- [MetaDAT: Generalizable Trajectory Prediction via Meta Pre-training and Data-Adaptive Test-Time Updating](../../CVPR2026/autonomous_driving/metadat_generalizable_trajectory_prediction_via_me.md)
+- [TARS: Traffic-Aware Radar Scene Flow Estimation](../../ICCV2025/autonomous_driving/tars_traffic-aware_radar_scene_flow_estimation.md)
+
+<!-- RELATED:END -->

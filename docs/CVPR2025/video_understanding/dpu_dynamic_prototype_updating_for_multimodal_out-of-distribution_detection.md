@@ -124,3 +124,15 @@ DPU在所有9种基础OOD方法上均实现显著提升，FPR95降低最高达**
 ## 评分
 
 ⭐⭐⭐⭐ — 对多模态OOD检测中类内变异问题的观察敏锐且有洞察力。三步框架设计逻辑清晰、环环相扣。在5个数据集×9种基础方法的大规模实验中全面验证了通用性，Far-OOD 80%的提升令人印象深刻。即插即用特性使其具有很强的实用价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Out of Sight, Out of Track: Adversarial Attacks on Propagation-based Multi-Object Trackers via Query State Manipulation](../../CVPR2026/video_understanding/out_of_sight_out_of_track_adversarial_attacks_on_propagation-based_multi-object_.md)
+- [DisTime: Distribution-based Time Representation for Video Large Language Models](../../ICCV2025/video_understanding/distime_distribution-based_time_representation_for_video_large_language_models.md)
+- [DivPrune: Diversity-Based Visual Token Pruning for Large Multimodal Models](divprune_diversity-based_visual_token_pruning_for_large_multimodal_models.md)
+- [Dynamic Updates for Language Adaptation in Visual-Language Tracking](dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
+- [DynFocus: Dynamic Cooperative Network Empowers LLMs with Video Understanding](dynfocus_dynamic_cooperative_network_empowers_llms_with_video_understanding.md)
+
+<!-- RELATED:END -->

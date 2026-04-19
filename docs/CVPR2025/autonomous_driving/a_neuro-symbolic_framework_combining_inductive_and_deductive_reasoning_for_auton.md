@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ nuScenes 上全面对比+消融+案例分析，但缺少闭环验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论文逻辑链清晰，从动机到方法到实验一气呵成
 - 价值: ⭐⭐⭐⭐⭐ 为自动驾驶的可解释安全规划提供了范式性的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ColaVLA: Leveraging Cognitive Latent Reasoning for Hierarchical Parallel Trajectory Planning in Autonomous Driving](../../CVPR2026/autonomous_driving/colavla_leveraging_cognitive_latent_reasoning_for_hierarchical_parallel_trajecto.md)
+- [UniMotion: A Unified Motion Framework for Simulation, Prediction and Planning](../../NeurIPS2025/autonomous_driving/unimotion_a_unified_motion_framework_for_simulation_prediction_and_planning.md)
+- [Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving](../../ECCV2024/autonomous_driving/reason2drive_towards_interpretable_and_chain-based_reasoning_for_autonomous_driv.md)
+- [Flow Matching-Based Autonomous Driving Planning with Advanced Interactive Behavior Modeling](../../NeurIPS2025/autonomous_driving/flow_matching-based_autonomous_driving_planning_with_advanced_interactive_behavi.md)
+- [PAP: A Prediction-as-Perception Framework for 3D Object Detection](a_prediction-as-perception_framework_for_3d_object_detection.md)
+
+<!-- RELATED:END -->

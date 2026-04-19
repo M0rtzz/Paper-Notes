@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨三个任务（检测/语义分割/显著性）、六个数据集、多模型验证，含匿名化和泛化实验
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机到方法到实验衔接自然
 - 价值: ⭐⭐⭐⭐ 作为通用数据增强工具实用性强，释放数据集+代码更增添实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement](visage_video_instance_segmentation_with_appearance-guided_enhancement.md)
+- [Plain-Det: A Plain Multi-Dataset Object Detector](plain-det_a_plain_multi-dataset_object_detector.md)
+- [ProMerge: Prompt and Merge for Unsupervised Instance Segmentation](promerge_prompt_and_merge_for_unsupervised_instance_segmentation.md)
+- [UniFS: Universal Few-Shot Instance Perception with Point Representations](unifs_universal_few-shot_instance_perception_with_point_representations.md)
+- [Reasoning with Pixel-level Precision: QVLM Architecture and SQuID Dataset for Quantitative Geospatial Analytics](../../CVPR2026/segmentation/reasoning_with_pixel-level_precision_qvlm_architecture_and_squid_dataset_for_qua.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ OCNet 由两个核心模块组成：
 - **实验充分度**: ⭐⭐⭐⭐ 双数据集、双骨干、充分消融，定性分析清晰
 - **写作质量**: ⭐⭐⭐⭐ 动机阐述清楚，方法描述详细，图示信息丰富
 - **价值**: ⭐⭐⭐⭐ 提供了 FSS 领域新的思路，但提升幅度有限（~1-2% mIoU）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
+- [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](../../NeurIPS2025/segmentation/sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+- [LayerAnimate: Layer-level Control for Animation](layeranimate_layer-level_control_for_animation.md)
+- [Self-Disentanglement and Re-Composition for Cross-Domain Few-Shot Segmentation](../../ICML2025/segmentation/self-disentanglement_and_re-composition_for_cross-domain_few-shot_segmentation.md)
+
+<!-- RELATED:END -->

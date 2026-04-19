@@ -176,3 +176,15 @@ LLaMA3.2-3B 在 clean 和 noisy 条件下均最优，不是越大越好。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融非常细致，覆盖融合策略/LLM 规模/查询频率/SNR 等多个维度
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，但部分符号使用较繁琐
 - **价值**: ⭐⭐⭐⭐⭐ — 实际部署价值极高，86% 压缩率对多模态语音 LLM 的落地至关重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spark-TTS: An Efficient LLM-Based Text-to-Speech Model with Single-Stream Decoupled Speech Tokens](spark-tts_an_efficient_llm-based_text-to-speech_model_with_single-stream_decoupl.md)
+- [MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition](../../NeurIPS2025/audio_speech/mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)
+- [Dialectal Coverage and Generalization in Arabic Speech Recognition](dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [Eta-WavLM: Efficient Speaker Identity Removal in Self-Supervised Speech Representations Using a Simple Linear Equation](eta-wavlm_efficient_speaker_identity_removal_in_self-supervised_speech_represent.md)
+
+<!-- RELATED:END -->

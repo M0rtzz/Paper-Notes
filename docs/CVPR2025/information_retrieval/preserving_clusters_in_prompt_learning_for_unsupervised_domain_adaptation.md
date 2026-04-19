@@ -116,3 +116,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_S + \lambda_T \mathcal{L}_T + \lambda_\mathc
 - 实验充分度: ⭐⭐⭐⭐ 覆盖ImageCLEF/OfficeHome/DomainNet三个benchmark，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 动机分析深刻（Table 1的实验设计），公式推导清晰
 - 价值: ⭐⭐⭐⭐ 为 prompt-based UDA 提供了新视角和实用的改进方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Redundancy, Isotropy and Intrinsic Dimensionality of Prompt-Based Text Embeddings](../../ACL2025/information_retrieval/redundancy_isotropy_and_intrinsic_dimensionality_of_prompt-based_text_embeddings.md)
+- [RAEmoLLM: Retrieval Augmented LLMs for Cross-Domain Misinformation Detection Using In-Context Learning Based on Emotional Information](../../ACL2025/information_retrieval/raemollm_retrieval_augmented_llms_for_cross-domain_misinformation_detection_usin.md)
+- [GOAL: Global-Local Object Alignment Learning](goal_global-local_object_alignment_learning.md)
+- [On Synthetic Data Strategies for Domain-Specific Generative Retrieval](../../ACL2025/information_retrieval/on_synthetic_data_strategies_for_domain-specific_generative_retrieval.md)
+- [Generalized Contrastive Learning for Universal Multimodal Retrieval](../../NeurIPS2025/information_retrieval/generalized_contrastive_learning_for_universal_multimodal_re.md)
+
+<!-- RELATED:END -->

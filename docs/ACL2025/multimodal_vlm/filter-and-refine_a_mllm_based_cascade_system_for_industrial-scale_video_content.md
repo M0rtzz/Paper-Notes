@@ -130,3 +130,15 @@ MLLM方案在F1上比传统分类模型提升66.50%，微调后比零样本在PR
 - 实验充分度: ⭐⭐⭐⭐ 涵盖离线评估、消融、线上A/B测试，数据说服力强
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，工业论文风格务实
 - 价值: ⭐⭐⭐⭐ 对工业界有直接参考价值，展示了MLLM在审核领域的可行路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Speaking Beyond Language: A Large-Scale Multimodal Dataset for Learning Nonverbal Cues from Video-Grounded Dialogues](speaking_beyond_language.md)
+- [Video-XL: Extra-Long Vision Language Model for Hour-Scale Video Understanding](../../CVPR2025/multimodal_vlm/video-xl_extra-long_vision_language_model_for_hour-scale_video_understanding.md)
+- [Filter, Correlate, Compress: Training-Free Token Reduction for MLLM Acceleration](../../AAAI2026/multimodal_vlm/filter_correlate_compress_training-free_token_reduction_for_.md)
+- [Sharper and Faster mean Better: Towards More Efficient Vision-Language Model for Hour-scale Long Video Understanding](sophia_efficient_long_video.md)
+- [Generate, Analyze, and Refine: Training-Free Sound Source Localization via MLLM Meta-Reasoning](../../CVPR2026/multimodal_vlm/generate_analyze_and_refine_training-free_sound_source_localization_via_mllm_met.md)
+
+<!-- RELATED:END -->

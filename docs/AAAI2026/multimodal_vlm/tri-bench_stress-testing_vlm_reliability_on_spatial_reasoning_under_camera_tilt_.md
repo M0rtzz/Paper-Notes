@@ -166,3 +166,15 @@ Tri-Bench包含100个标注三角形，每个在4种条件下拍摄（2×2：平
 - 实验充分度: ⭐⭐⭐⭐ （四个模型、六项任务、四种条件的全面交叉分析，但数据集规模较小）
 - 写作质量: ⭐⭐⭐⭐⭐ （论证链条清晰，从问题到设计到发现环环相扣，结论有力）
 - 价值: ⭐⭐⭐⭐ （对VLM可信部署的警示价值高，揭示了被忽视的根本性失败，但实际应用路径不够明确）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpatialStack: Layered Geometry-Language Fusion for 3D VLM Spatial Reasoning](../../CVPR2026/multimodal_vlm/spatialstack_layered_geometry-language_fusion_for_3d_vlm_spatial_reasoning.md)
+- [CAPTURe: Evaluating Spatial Reasoning in Vision Language Models via Occluded Object Counting](../../ICCV2025/multimodal_vlm/capture_evaluating_spatial_reasoning_in_vision_language_models_via_occluded_obje.md)
+- [SpatialTraceGen: High-Fidelity Traces for Efficient VLM Spatial Reasoning Distillation](../../NeurIPS2025/multimodal_vlm/spatialtracegen_high-fidelity_traces_for_efficient_vlm_spatial_reasoning_distill.md)
+- [VLM-Pruner: Buffering for Spatial Sparsity in an Efficient VLM Centrifugal Token Pruning Paradigm](../../CVPR2026/multimodal_vlm/vlm-pruner_buffering_for_spatial_sparsity_in_an_efficient_vlm_centrifugal_token_.md)
+- [Rethinking Visual Token Reduction in LVLMs under Cross-Modal Misalignment](rethinking_visual_token_reduction_in_lvlms_under_cross-modal_misalignment.md)
+
+<!-- RELATED:END -->

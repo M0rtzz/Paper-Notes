@@ -144,3 +144,15 @@ $r_{\text{disc}}$ 具有以下关键特性：
 
 ### 评分
 ⭐⭐⭐⭐ — 问题定位精准、方法新颖、分析深入，但缺乏理论保证且搜索规模受限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+- [Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning](near-optimal_second-order_guarantees_for_model-based_adversarial_imitation_learn.md)
+- [Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
+- [Parameter-Free Algorithms for the Stochastically Extended Adversarial Model](../../NeurIPS2025/reinforcement_learning/parameter-free_algorithms_for_the_stochastically_extended_adversarial_model.md)
+
+<!-- RELATED:END -->

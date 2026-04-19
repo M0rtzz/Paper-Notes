@@ -127,3 +127,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ (3个模型×2个数据集×6种方言，消融充分)
 - **写作质量**: ⭐⭐⭐⭐ (动机和社会意义阐述有力，方法描述清晰)
 - **价值**: ⭐⭐⭐⭐ (对NLP公平性研究和隐私保护领域都有启发)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Privacy Risks in LLM Agent Memory](mextra_agent_memory_privacy.md)
+- [iAgent: LLM Agent as a Shield between User and Recommender Systems](iagent_llm_agent_as_a_shield_between_user_and_recommender_systems.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+- [Table-Critic: A Multi-Agent Framework for Collaborative Criticism and Refinement in Table Reasoning](table_critic_multi_agent.md)
+- [EMULATE: A Multi-Agent Framework for Determining the Veracity of Atomic Claims by Emulating Human Actions](emulate_a_multi-agent_framework_for_determining_the_veracity_of_atomic_claims_by.md)
+
+<!-- RELATED:END -->

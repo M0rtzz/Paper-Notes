@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 室内外两个数据集，丰富的消融和定性分析，但缺少更大规模场景验证
 - 写作质量: ⭐⭐⭐⭐ 动机分析详细（Section 4 的误差-语义关系分析很有说服力），整体逻辑清晰
 - 价值: ⭐⭐⭐⭐ 方法轻量、即插即用、思路可迁移，但应用场景偏窄（仅视觉定位）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PromptIQA: Boosting the Performance and Generalization for No-Reference Image Quality Assessment via Prompts](promptiqa_boosting_the_performance_and_generalization_for_no-reference_image_qua.md)
+- [AdaCLIP: Adapting CLIP with Hybrid Learnable Prompts for Zero-Shot Anomaly Detection](adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)
+- [LLM Meets Scene Graph: Can Large Language Models Understand and Generate Scene Graphs?](../../ACL2025/llm_nlp/llm_meets_scene_graph_can_large_language_models_understand_and_generate_scene_gr.md)
+- [Post Hoc Regression Refinement via Pairwise Rankings](../../NeurIPS2025/llm_nlp/post_hoc_regression_refinement_via_pairwise_rankings.md)
+- [AAD-LLM: Neural Attention-Driven Auditory Scene Understanding](../../ACL2025/llm_nlp/aad-llm_neural_attention-driven_auditory_scene_understanding.md)
+
+<!-- RELATED:END -->

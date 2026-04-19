@@ -173,3 +173,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 实验非常充分，覆盖 3 类攻击、2 个数据集、4 种 Negative Function、7 种防御方法、4 种模型结构，消融分析详尽。
 - **写作质量**: ⭐⭐⭐ — 符号系统和组件命名（A/B/C）可以更直观，论文结构清晰但部分实验描述略显冗长，符号有些密集。
 - **实用价值**: ⭐⭐⭐⭐ — 组件化的设计思路对攻击方和防御方都有实际指导意义，代码已开源，可复现性好。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training](toxictextclip_text-based_poisoning_and_backdoor_attacks_on_clip_pre-training.md)
+- [ReliabilityRAG: Effective and Provably Robust Defense for RAG-based Web-Search](reliabilityrag_effective_and_provably_robust_defense_for_rag-based_web-search.md)
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](../../CVPR2025/ai_safety/infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+- [On the Sample Complexity of Differentially Private Policy Optimization](on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+- [The Ripple Effect: On Unforeseen Complications of Backdoor Attacks](../../ICML2025/ai_safety/the_ripple_effect_on_unforeseen_complications_of_backdoor_attacks.md)
+
+<!-- RELATED:END -->

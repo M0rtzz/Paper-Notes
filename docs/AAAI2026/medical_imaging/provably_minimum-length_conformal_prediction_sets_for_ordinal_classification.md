@@ -164,3 +164,15 @@ $$\sum_{k=l}^u f(X)_k - \lambda \cdot \ell(l,u) \ge \tau$$
 - **实验**：⭐⭐⭐⭐ — 4个数据集、多个 $\alpha$ 值，提升显著且一致
 - **写作**：⭐⭐⭐⭐⭐ — 定理-引理-推论的逻辑链清晰，算法伪代码完整
 - **实用性**：⭐⭐⭐⭐ — 线性时间即插即用，适用于任何序数分类模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](../../ICLR2026/medical_imaging/compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
+- [Extending Sequence Length is Not All You Need: Effective Integration of Multimodal Signals for Gene Expression Prediction](../../ICLR2026/medical_imaging/extending_sequence_length_is_not_all_you_need_effective_integration_of_multimoda.md)
+- [RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification](../../NeurIPS2025/medical_imaging/raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica.md)
+- [Bridging Graph and State-Space Modeling for Intensive Care Unit Length of Stay Prediction](../../NeurIPS2025/medical_imaging/bridging_graph_and_state-space_modeling_for_intensive_care_unit_length_of_stay_p.md)
+- [Amortized Active Generation of Pareto Sets](../../NeurIPS2025/medical_imaging/amortized_active_generation_of_pareto_sets.md)
+
+<!-- RELATED:END -->

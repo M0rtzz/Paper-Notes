@@ -148,3 +148,15 @@ EmoRAG 由四个组件串联：Database → Retriever → Generators (LLM集合)
 - **实验充分度**: 7/10 — 覆盖 28 种语言很全面，但缺乏与微调基线的对比
 - **写作质量**: 6/10 — 内容组织清晰但篇幅短，分析不够深入
 - **价值**: 6/10 — 作为 SemEval 系统描述论文，展示了 RAG 在多语言情感分析中的可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)
+- [Health-LLM: Personalized Retrieval-Augmented Disease Prediction System](health-llm_personalized_retrieval-augmented_disease_prediction_system.md)
+- [MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation](memerag_a_multilingual_end-to-end_meta-evaluation_benchmark_for_retrieval_augmen.md)
+- [A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
+- [Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation](towards_adaptive_memory-based_optimization_for_enhanced_retrieval-augmented_gene.md)
+
+<!-- RELATED:END -->

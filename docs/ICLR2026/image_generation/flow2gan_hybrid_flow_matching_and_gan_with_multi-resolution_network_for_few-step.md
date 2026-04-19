@@ -122,3 +122,15 @@ LibriTTS测试集（Mel-spectrogram条件）：
 - 实验充分度: ⭐⭐⭐⭐⭐ Mel条件、Token条件、TTS vocoder、消融全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，对比充分，demo可在线试听
 - 价值: ⭐⭐⭐⭐ 对音频生成领域有直接实用价值，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [DistillKac: Few-Step Image Generation via Damped Wave Equations](distillkac_few-step_image_generation_via_damped_wave_equations.md)
+- [Few-shot Acoustic Synthesis with Multimodal Flow Matching](../../CVPR2026/image_generation/few-shot_acoustic_synthesis_with_multimodal_flow_matching.md)
+- [SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
+
+<!-- RELATED:END -->

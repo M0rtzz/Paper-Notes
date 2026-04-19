@@ -114,3 +114,15 @@ INFP 在所有指标上大幅领先 DIM，SyncScore (7.188 vs 4.778) 接近于 G
 - 实验充分度: ⭐⭐⭐⭐ 交互/倾听/说话三个场景都有评估，但缺少与更多最新方法的对比（部分未开源）
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详尽，但部分实现细节需要看补充材料
 - 价值: ⭐⭐⭐⭐ 对构建更自然的对话 AI agent 有重要参考价值，DyConv 数据集也是有价值的贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PNG: Diffusion-Based sRGB Real Noise Generation via Prompt-Driven Noise Representation Learning](../../CVPR2026/image_restoration/diffusion-based_srgb_real_noise_generation_via_prompt-driven_noise_representatio.md)
+- [Audio Super-Resolution with Latent Bridge Models](../../NeurIPS2025/image_restoration/audio_super-resolution_with_latent_bridge_models.md)
+- [Exploiting Diffusion Prior for Task-driven Image Restoration](../../ICCV2025/image_restoration/exploiting_diffusion_prior_for_task-driven_image_restoration.md)
+- [EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation](echomimicv2_towards_striking_simplified_and_semi-body_human_animation.md)
+- [InterActHuman: Multi-Concept Human Animation with Layout-Aligned Audio Conditions](../../ICLR2026/image_restoration/interacthuman_multi-concept_human_animation_with_layout-aligned_audio_conditions.md)
+
+<!-- RELATED:END -->

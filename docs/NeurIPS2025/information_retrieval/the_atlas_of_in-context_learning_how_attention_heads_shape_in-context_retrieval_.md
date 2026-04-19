@@ -128,3 +128,15 @@ Function Vector 零样本注入（Biography 数据集）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 模型×多验证方式×跨数据集
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图示优雅
 - 价值: ⭐⭐⭐⭐⭐ 为 ICL 机制理解和模型可控性提供基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Synthetic Context Extension via Retrieval Heads](../../ICML2025/information_retrieval/understanding_synthetic_context_extension_via_retrieval_heads.md)
+- [SEAL: Scaling to Emphasize Attention for Long-Context Retrieval](../../ACL2025/information_retrieval/seal_scaling_to_emphasize_attention_for_long-context_retrieval.md)
+- [RAEmoLLM: Retrieval Augmented LLMs for Cross-Domain Misinformation Detection Using In-Context Learning Based on Emotional Information](../../ACL2025/information_retrieval/raemollm_retrieval_augmented_llms_for_cross-domain_misinformation_detection_usin.md)
+- [Scale-invariant Attention](scale-invariant_attention.md)
+- [ARC-JSD: Attributing Response to Context via Jensen-Shannon Divergence Driven Mechanistic Study](attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)
+
+<!-- RELATED:END -->

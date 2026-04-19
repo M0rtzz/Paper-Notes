@@ -131,3 +131,15 @@ HELIX 用 14B 模型在 ML 任务上超越 GPT-4o 流水线，F1 平均提升 5.
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 类 20 个任务覆盖面广，消融详细
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但公式较多
 - 价值: ⭐⭐⭐⭐⭐ 为 AI 解决开放式科学问题提供了强大的通用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for RL of Open-ended Generation](from_verifiable_dot_to_reward_chain_harnessing_verifiable_reference-based_reward.md)
+- [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
+- [Solving Parameter-Robust Avoid Problems with Unknown Feasibility using Reinforcement Learning](solving_parameter-robust_avoid_problems_with_unknown_feasibility_using_reinforce.md)
+- [Solving Football by Exploiting Equilibrium Structure of 2p0s Differential Games with One-Sided Information](solving_football_by_exploiting_equilibrium_structure_of_2p0s_differential_games_.md)
+- [Entropy-Preserving Reinforcement Learning (REPO / ADAPO)](entropy-preserving_reinforcement_learning.md)
+
+<!-- RELATED:END -->

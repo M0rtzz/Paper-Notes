@@ -149,3 +149,15 @@ $$\text{SubOpt}(\hat{\pi}) \leq const \cdot \left(\sqrt{\frac{d\log(k/\delta)}{k
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，定理陈述精确，但部分符号较重
 - **实用价值**: ⭐⭐⭐⭐ — 问题动机强烈，但算法的实际可计算性和可扩展性有待验证
 - **综合**: ⭐⭐⭐⭐ (8.5/10) — 极具开创性的理论工作，开辟了 RLHF 与机制设计交叉的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Curiosity-Driven Reinforcement Learning from Human Feedback](../../ACL2025/llm_alignment/curiosity_driven_rlhf.md)
+- [M³HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality](../../ICML2025/llm_alignment/m3hf_multi-agent_reinforcement_learning_from_multi-phase_human_feedback_of_mixed.md)
+- [Reinforcement Learning Finetunes Small Subnetworks in Large Language Models](reinforcement_learning_finetunes_small_subnetworks_in_large_language_models.md)
+- [Understanding Impact of Human Feedback via Influence Functions](../../ACL2025/llm_alignment/influence_functions_rlhf.md)
+- [ResponseRank: Data-Efficient Reward Modeling through Preference Strength Learning](responserank_data-efficient_reward_modeling_through_preference_strength_learning.md)
+
+<!-- RELATED:END -->

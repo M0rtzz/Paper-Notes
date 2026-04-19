@@ -134,3 +134,15 @@ Qwen3-30B-A3B MoE模型，17个benchmark：
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvoEngineer: Mastering Automated CUDA Kernel Code Evolution with Large Language Models](evoengineer_mastering_automated_cuda_kernel_code_evolution_with_large_language_m.md)
+- [Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](../../ACL2025/llm_efficiency/dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
+- [Steering Language Models with Weight Arithmetic](steering_language_models_with_weight_arithmetic.md)
+- [Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [Position: Theory of Mind Benchmarks are Broken for Large Language Models](../../ICML2025/llm_efficiency/position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
+
+<!-- RELATED:END -->

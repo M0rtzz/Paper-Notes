@@ -133,3 +133,15 @@ Twilight 采用"选择-剪枝"（Select-then-Prune）两阶段架构：(1) **Tok
 - 实验充分度: ⭐⭐⭐⭐⭐ 长/中上下文准确率 + 延迟/吞吐量效率 + 多基础算法 + 详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 问题形式化+类比推理+系统实现都很清晰
 - 价值: ⭐⭐⭐⭐⭐ 解决了固定预算的根本问题，即插即用增强所有稀疏注意力方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spark Transformer: Reactivating Sparsity in FFN and Attention](spark_transformer_reactivating_sparsity_in_ffn_and_attention.md)
+- [MUSTAFAR: Promoting Unstructured Sparsity for KV Cache Pruning in LLM Inference](mustafar_promoting_unstructured_sparsity_for_kv_cache_pruning_in_llm_inference.md)
+- [DuoGPT: Training-free Dual Sparsity through Activation-aware Pruning in LLMs](duogpt_training-free_dual_sparsity_through_activation-aware_pruning_in_llms.md)
+- [4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming](4dgcpro_efficient_hierarchical_4d_gaussian_compression_for_p.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+
+<!-- RELATED:END -->

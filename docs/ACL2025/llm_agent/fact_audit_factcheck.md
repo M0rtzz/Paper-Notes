@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 13个模型全面评估，3组消融实验，人工质量保证+benchmark对比，case study展示说服力强
 - 写作质量: ⭐⭐⭐⭐ 理论部分清晰严谨，框架描述层次分明，附录极为详尽（12个appendix）
 - 对我的价值: ⭐⭐⭐⭐ 自适应评估框架的设计思路值得借鉴；justification-aware评估在可信AI方向有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](meco_metacognition_tool_use.md)
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](toolhop_multi_hop_tool_use.md)
+- [Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?](../../NeurIPS2025/llm_agent/debate_or_vote_which_yields_better_decisions_in_multi-agent_large_language_model.md)
+
+<!-- RELATED:END -->

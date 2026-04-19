@@ -134,3 +134,15 @@ Chem 基准（Setting 1.0 + 2.0）：
 - 实验充分度: ⭐⭐⭐⭐ 多个配音数据集、零样本设置、MOS 评测覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 架构描述清晰，公式与图的配合好
 - 价值: ⭐⭐⭐⭐ 统一了唇同步+发音+情感控制的配音系统，对电影后期制作有明确应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ArtiFade: Learning to Generate High-quality Subject from Blemished Images](artifade_learning_to_generate_high-quality_subject_from_blemished_images.md)
+- [3DTopia-XL: Scaling High-Quality 3D Asset Generation via Primitive Diffusion](3dtopia-xl_scaling_high-quality_3d_asset_generation_via_primitive_diffusion.md)
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+- [RepLDM: Reprogramming Pretrained Latent Diffusion Models for High-Quality, High-Efficiency, High-Resolution Image Generation](../../NeurIPS2025/image_generation/repldm_reprogramming_pretrained_latent_diffusion_models_for_high-quality_high-ef.md)
+- [MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation](mvportrait_text-guided_motion_and_emotion_control_for_multi-view_vivid_portrait_.md)
+
+<!-- RELATED:END -->

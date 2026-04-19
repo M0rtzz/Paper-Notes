@@ -155,3 +155,15 @@ Test-time优化贡献最大，diffusion-time优化效果有限（其调整可能
 - 实验充分度: ⭐⭐⭐⭐ — 全面的对比、消融和优化策略分析，但仅在HumanML3D单数据集验证
 - 写作质量: ⭐⭐⭐⭐ — 系统完整、模块清晰，但整体pipeline较复杂，读者学习成本较高
 - 价值: ⭐⭐⭐⭐ — 提出了实用的运动控制新范式，代码开源，对动画和人机交互领域有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference](../../CVPR2026/human_understanding/lamogen_language_to_motion_generation_through_llm-guided_symbolic_inference.md)
+- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](finextrol_controllable_motion_generation_via_fine-grained_text.md)
+- [mmPred: Radar-based Human Motion Prediction in the Dark](mmpred_radar-based_human_motion_prediction_in_the_dark.md)
+- [KinMo: Kinematic-Aware Human Motion Understanding and Generation](../../ICCV2025/human_understanding/kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
+- [DEIG: Detail-Enhanced Instance Generation with Fine-Grained Semantic Control](deig_detail-enhanced_instance_generation_with_fine-grained_semantic_control.md)
+
+<!-- RELATED:END -->

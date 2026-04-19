@@ -136,3 +136,15 @@ tags:
 - ⭐⭐⭐⭐⭐ 实验充分度: 多数据集(4个)、多不平衡率、多剪枝率、多backbone、详细消融+系统效率分析
 - ⭐⭐⭐⭐ 写作质量: 方法公式化清晰，三个RQ驱动设计自然
 - ⭐⭐⭐⭐ 价值: 对数据高效联邦学习有实际价值，通信效率提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift](fed-ade_adaptive_learning_rate_for_federated_post-adaptation_under_distribution_.md)
+- [Learning to Recall with Transformers Beyond Orthogonal Embeddings](../../ICLR2026/optimization/learning_to_recall_with_transformers_beyond_orthogonal_embeddings.md)
+- [Dynamic Momentum Recalibration in Online Gradient Learning](dynamic_momentum_recalibration_in_online_gradient_learning.md)
+- [The Power of Decaying Steps: Enhancing Attack Stability and Transferability for Sign-based Optimizers](the_power_of_decaying_steps_enhancing_attack_stability_and_transferability_for_s.md)
+- [DeepAFL: Deep Analytic Federated Learning](../../ICLR2026/optimization/deepafl_deep_analytic_federated_learning.md)
+
+<!-- RELATED:END -->

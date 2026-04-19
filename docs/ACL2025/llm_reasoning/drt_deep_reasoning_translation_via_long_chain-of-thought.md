@@ -134,3 +134,15 @@ DRT-14B 在文学性上大幅领先（0.362 vs 0.087/0.007）。
 - 实验充分度: ⭐⭐⭐⭐ 自动指标+人类评估+消融+商业模型对比，多维度验证
 - 写作质量: ⭐⭐⭐⭐ 数据合成流程清晰，评估全面
 - 价值: ⭐⭐⭐⭐ 对文学翻译和long-thought范式都有实用贡献，数据和模型均开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)
+- [Unlocking General Long Chain-of-Thought Reasoning Capabilities of Large Language Models via Representation Engineering](glore_long_cot_representation.md)
+- [Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)
+- [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
+- [Deep Hidden Cognition Facilitates Reliable Chain-of-Thought Reasoning](../../AAAI2026/llm_reasoning/deep_hidden_cognition_facilitates_reliable_chain-of-thought_.md)
+
+<!-- RELATED:END -->

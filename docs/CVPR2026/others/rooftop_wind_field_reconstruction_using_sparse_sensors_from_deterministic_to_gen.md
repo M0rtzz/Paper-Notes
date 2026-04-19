@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 极其充分：多方法×多传感器×多训练策略×扰动鲁棒性×传感器优化×时间平均×消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，分析深入，图表丰富；但篇幅较长，部分讨论可精简
 - 价值: ⭐⭐⭐⭐ — 为屋顶风场重建的实际部署提供系统性方法选择指南，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_a.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_widefield_and_highdynamic_range.md)
+- [AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments](adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet.md)
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+
+<!-- RELATED:END -->

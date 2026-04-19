@@ -152,3 +152,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 域内+域外四种设置、多种基线、历史信息消融详尽
 - **写作质量**: ⭐⭐⭐⭐ 统计数据丰富，可视化直观，论述逻辑清晰
 - **价值**: ⭐⭐⭐⭐⭐ 数据集对社区价值极高，揭示了跨应用 GUI 导航的核心挑战
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GUI-Rise: Structured Reasoning and History Summarization for GUI Navigation](../../NeurIPS2025/human_understanding/gui-rise_structured_reasoning_and_history_summarization_for_gui_navigation.md)
+- [Scalable Video-to-Dataset Generation for Cross-Platform Mobile Agents](../../CVPR2025/human_understanding/scalable_video-to-dataset_generation_for_cross-platform_mobile_agents.md)
+- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](../../NeurIPS2025/human_understanding/succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [Iris: Breaking GUI Complexity with Adaptive Focus and Self-Refining](iris_breaking_gui_complexity_with_adaptive_focus_and_self-refining.md)
+- [CarGait: Cross-Attention based Re-ranking for Gait Recognition](cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ $$L_{\text{STRank}}^{\text{List}} = -\sum_{g}^{N^g} \sum_{i}^{N^k} e_g^i \log p_
 - **实验充分度**: ⭐⭐⭐⭐ 合成数据验证假设 + 7 个真实数据集，但改进幅度有限
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，动机阐述充分
 - **价值**: ⭐⭐⭐⭐ 损失函数方法通用性强，可扩展到其他计数数据场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cell-Type Prototype-Informed Neural Network for Gene Expression Estimation from Pathology Images](../../CVPR2026/medical_imaging/cell-type_prototype-informed_neural_network_for_gene_expression_estimation_from_.md)
+- [Scalable Generation of Spatial Transcriptomics from Histology Images via Whole-Slide Flow Matching](../../ICML2025/medical_imaging/scalable_generation_of_spatial_transcriptomics_from_histology_images_via_whole-s.md)
+- [AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images](../../ICCV2025/medical_imaging/aczerots_active_learning_for_zeroshot_tissue_segmentation_in.md)
+- [Revisiting End-to-End Learning with Slide-level Supervision in Computational Pathology](revisiting_end-to-end_learning_with_slide-level_supervision_in_computational_pat.md)
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](../../CVPR2026/medical_imaging/cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+
+<!-- RELATED:END -->

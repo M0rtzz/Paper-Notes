@@ -131,3 +131,15 @@ GNVC-VD 在所有基准和指标上均取得最优感知质量，相较 GLC-Vide
 - 实验充分度: ⭐⭐⭐⭐ 多基准全面对比，消融完整，但缺少中等码率和复杂运动场景的分析
 - 写作质量: ⭐⭐⭐⭐ 技术路线清晰，公式推导严谨，图表信息丰富
 - 价值: ⭐⭐⭐⭐⭐ 为下一代感知视频压缩指明方向，视频扩散先验+编解码器的范式具有广泛影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LightMover: Generative Light Movement with Color and Intensity Controls](lightmover_generative_light_movement_with_color_and_intensity_controls.md)
+- [JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization](../../ICLR2026/video_generation/javisdit_joint_audio-video_diffusion_transformer_with_hierarchical_spatio-tempor.md)
+- [HyperNVD: Accelerating Neural Video Decomposition via Hypernetworks](../../CVPR2025/video_generation/hypernvd_accelerating_neural_video_decomposition_via_hypernetworks.md)
+- [Arbitrary Generative Video Interpolation](../../ICLR2026/video_generation/arbitrary_generative_video_interpolation.md)
+- [Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning](goal-driven_reward_by_video_diffusion_models_for_reinforcement_learning.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种方法互相印证，有定量分析，但仅单一奖励函数
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，药化-ML桥接好，但篇幅较短缺少部分细节
 - 价值: ⭐⭐⭐⭐ 对药物AI的实际部署有显著推动，填补重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GFlowNets for Learning Better Drug-Drug Interaction Representations](gflownets_for_learning_better_drug-drug_interaction_representations.md)
+- [Compressing Biology: Evaluating the Stable Diffusion VAE for Phenotypic Drug Discovery](compressing_biology_evaluating_the_stable_diffusion_vae_for_phenotypic_drug_disc.md)
+- [GenMol: A Drug Discovery Generalist with Discrete Diffusion](../../ICML2025/medical_imaging/genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+- [From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)
+- [Online Feedback Efficient Active Target Discovery in Partially Observable Environments](online_feedback_efficient_active_target_discovery_in_partially_observable_enviro.md)
+
+<!-- RELATED:END -->

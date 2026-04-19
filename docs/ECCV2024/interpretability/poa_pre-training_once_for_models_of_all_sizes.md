@@ -138,3 +138,15 @@ $$\mathcal{L}_S = \lambda \mathcal{L}_{IS} + (1-\lambda)(\mathcal{L}_{ES1} + \ma
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种 backbone、多个下游任务、详细消融、与 KD 方法对比
 - 写作质量: ⭐⭐⭐⭐ 整体清晰，公式推导完整，但部分符号较重
 - 价值: ⭐⭐⭐⭐⭐ 对实际部署有极大意义，一次训练多次部署大幅降低成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evolution of Concepts in Language Model Pre-Training](../../ICLR2026/interpretability/evolution_of_concepts_in_language_model_pre-training.md)
+- [Scaling Vision Pre-Training to 4K Resolution](../../CVPR2025/interpretability/scaling_vision_pre-training_to_4k_resolution.md)
+- [Dataset Distillation for Pre-Trained Self-Supervised Vision Models](../../NeurIPS2025/interpretability/dataset_distillation_for_pre-trained_self-supervised_vision_models.md)
+- [Improving Intervention Efficacy via Concept Realignment in Concept Bottleneck Models](improving_intervention_efficacy_via_concept_realignment_in_concept_bottleneck_mo.md)
+- [ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](../../ICLR2026/interpretability/zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
+
+<!-- RELATED:END -->

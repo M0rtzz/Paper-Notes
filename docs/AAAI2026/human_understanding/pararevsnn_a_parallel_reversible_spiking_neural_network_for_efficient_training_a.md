@@ -175,3 +175,15 @@ ParaRevSNN-ResNet采用四阶段结构：
 - 实验充分度: ⭐⭐⭐⭐ — 四个数据集+多种深度+详细效率分析，但缺少大规模数据集验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式规范，图表说明充分
 - 价值: ⭐⭐⭐⭐ — 对SNN高效训练有实用价值，但应用范围相对窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks](../../ICML2025/human_understanding/sparse_spectral_training_and_inference_on_euclidean_and_hyperbolic_neural_networ.md)
+- [Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](../../ICML2025/human_understanding/efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)
+- [Stable Spike: Dual Consistency Optimization via Bitwise AND Operations for Spiking Neural Networks](../../CVPR2026/human_understanding/stable_spike_dual_consistency_optimization_via_bitwise_and_operations_for_spikin.md)
+- [Renormalization Group Guided Tensor Network Structure Search](renormalization_group_guided_tensor_network_structure_search.md)
+- [Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks](../../ICLR2026/human_understanding/time_is_all_it_takes_spike-retiming_attacks_on_event-driven_spiking_neural_netwo.md)
+
+<!-- RELATED:END -->

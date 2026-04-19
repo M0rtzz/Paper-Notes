@@ -157,3 +157,15 @@ GLIP 和 SAM 均冻结，仅训练权重预测网络（per category，few-shot 8
 - 实验充分度: ⭐⭐⭐⭐ （45 类完整实验+消融，但仅一个数据集）
 - 写作质量: ⭐⭐⭐⭐ （逻辑清晰，公式推导完整）
 - 价值: ⭐⭐⭐⭐ （为 2D→3D 分割提供了正确的优化方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [General and Task-Oriented Video Segmentation](general_and_task-oriented_video_segmentation.md)
+- [PartField: Learning 3D Feature Fields for Part Segmentation and Beyond](../../ICCV2025/segmentation/partfield_learning_3d_feature_fields_for_part_segmentation_and_beyond.md)
+- [InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning](../../ACL2025/segmentation/instructpart_task-oriented_part_segmentation_with_instruction_reasoning.md)
+- [Leveraging 3D Geometric Priors in 2D Rotation Symmetry Detection](../../CVPR2025/segmentation/leveraging_3d_geometric_priors_in_2d_rotation_symmetry_detection.md)
+- [OLAF: A Plug-and-Play Framework for Enhanced Multi-object Multi-part Scene Parsing](olaf_a_plug-and-play_framework_for_enhanced_multi-object_multi-part_scene_parsin.md)
+
+<!-- RELATED:END -->

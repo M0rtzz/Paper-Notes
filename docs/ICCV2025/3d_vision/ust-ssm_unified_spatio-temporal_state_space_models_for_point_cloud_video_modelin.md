@@ -129,3 +129,15 @@ UST-SSM以线性复杂度在运行时间、GPU显存和精度三方面优于P4Tr
 - 技术深度: ⭐⭐⭐⭐⭐ (三个模块各解决一个核心问题)
 - 实验充分度: ⭐⭐⭐⭐ (三个数据集+效率分析)
 - 实用价值: ⭐⭐⭐⭐ (线性复杂度适合长期建模)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Global-Aware Monocular Semantic Scene Completion with State Space Models](global-aware_monocular_semantic_scene_completion_with_state_space_models.md)
+- [MeshMamba: State Space Models for Articulated 3D Mesh Generation and Reconstruction](meshmamba_state_space_models_for_articulated_3d_mesh_generation_and_reconstructi.md)
+- [Mesh Mamba: A Unified State Space Model for Saliency Prediction in Non-Textured and Textured Meshes](../../CVPR2025/3d_vision/mesh_mamba_a_unified_state_space_model_for_saliency_prediction_in_non-textured_a.md)
+- [UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
+- [StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
+
+<!-- RELATED:END -->

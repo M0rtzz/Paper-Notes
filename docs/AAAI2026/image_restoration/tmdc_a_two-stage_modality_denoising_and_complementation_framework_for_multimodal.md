@@ -109,3 +109,15 @@ $$\mathcal{L}_{IMD} = \sum_{m} \left(\sum_{b \in \{Spe,Com\}} \mathcal{L}_b^m + 
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义精准（噪声+缺失的联合处理），方法设计合理，噪声鲁棒性验证充分，但数据集规模偏小且未引入大模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blink: Dynamic Visual Token Resolution for Enhanced Multimodal Understanding](../../CVPR2026/image_restoration/blink_dynamic_visual_token_resolution_for_enhanced_multimodal_understanding.md)
+- [Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework](large_language_models_meet_extreme_multi-label_classification_scaling_and_multi-.md)
+- [Towards Universal Computational Aberration Correction in Photographic Cameras: A Comprehensive Benchmark Analysis](../../CVPR2026/image_restoration/towards_universal_computational_aberration_correction_in_photographic_cameras_a_.md)
+- [Blur-Robust Detection via Feature Restoration: An End-to-End Framework for Prior-Guided Infrared UAV Target Detection](blur-robust_detection_via_feature_restoration_an_end-to-end_framework_for_prior-.md)
+- [Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](../../ICCV2025/image_restoration/benchmarking_burst_superresolution_for_polarization_images_n.md)
+
+<!-- RELATED:END -->

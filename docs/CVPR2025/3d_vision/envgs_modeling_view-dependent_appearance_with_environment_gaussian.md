@@ -117,3 +117,15 @@ $\mathcal{L} = \mathcal{L}_{rgb} + 0.04 \cdot \mathcal{L}_{norm} + 0.01 \cdot \m
 - 实验充分度: ⭐⭐⭐⭐ 多数据集对比+消融+前景/近场单独评估，较充分
 - 写作质量: ⭐⭐⭐⭐⭐ 方法描述清晰，图示信息量大，结构合理
 - 价值: ⭐⭐⭐⭐⭐ 实时反射渲染的重要突破，对3D重建和VR/AR领域有高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting](../../ICML2025/3d_vision/tackling_view-dependent_semantics_in_3d_language_gaussian_splatting.md)
+- [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](../../NeurIPS2025/3d_vision/wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
+- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
+- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)
+
+<!-- RELATED:END -->

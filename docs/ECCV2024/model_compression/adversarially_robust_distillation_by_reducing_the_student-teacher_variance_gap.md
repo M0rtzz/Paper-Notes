@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 消融完整但数据集规模偏小，缺少大规模验证
 - 写作质量: ⭐⭐⭐⭐ 从实证发现出发推导方法，逻辑清晰
 - 价值: ⭐⭐⭐ 为对抗鲁棒蒸馏提供了新视角，方法简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UNIC: Universal Classification Models via Multi-teacher Distillation](unic_universal_classification_models_via_multi-teacher_distillation.md)
+- [Prompt Candidates, then Distill: A Teacher-Student Framework for LLM-driven Data Annotation](../../ACL2025/model_compression/prompt_distill_teacher_student.md)
+- [A Good Teacher Adapts Their Knowledge for Distillation](../../ICCV2025/model_compression/a_good_teacher_adapts_their_knowledge_for_distillation.md)
+- [Single-Teacher View Augmentation: Boosting Knowledge Distillation via Angular Diversity](../../NeurIPS2025/model_compression/single-teacher_view_augmentation_boosting_knowledge_distillation_via_angular_div.md)
+- [Improving Knowledge Distillation via Regularizing Feature Direction and Norm](improving_knowledge_distillation_via_regularizing_feature_direction_and_norm.md)
+
+<!-- RELATED:END -->

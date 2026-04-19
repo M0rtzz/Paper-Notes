@@ -241,3 +241,15 @@ SODEC比PerCo快 **26×**，比DiffEIC快 **33×**！
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三数据集验证，全面的率失真感知曲线，详细消融
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机论述有力，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 20×解码加速+SOTA质量，使扩散压缩首次具备实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](../../CVPR2026/image_generation/pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Realism Control One-step Diffusion for Real-World Image Super-Resolution](realism_control_one-step_diffusion_for_real-world_image_super-resolution.md)
+- [Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal](../../ICCV2025/image_generation/compression-aware_one-step_diffusion_model_for_jpeg_artifact_removal.md)
+- [Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
+- [CountSteer: Steering Attention for Object Counting in Diffusion Models](countsteer_steering_attention_for_object_counting_in_diffusion_models.md)
+
+<!-- RELATED:END -->

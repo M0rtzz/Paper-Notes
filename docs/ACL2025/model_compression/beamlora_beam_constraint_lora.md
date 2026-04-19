@@ -112,3 +112,15 @@ BeamLoRA 在标准 LoRA 中间插入可学习 score 向量 $\mathbf{s} \in \math
 - 实验充分度: ⭐⭐⭐⭐⭐ 三模型、12 数据集、多维度消融
 - 写作质量: ⭐⭐⭐⭐ 分析清晰，可视化直观
 - 价值: ⭐⭐⭐⭐ 提供了 LoRA 的即插即用改进，几乎无额外成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DenseLoRA: Dense Low-Rank Adaptation of Large Language Models](denselora_dense_low-rank_adaptation_of_large_language_models.md)
+- [TeamLoRA: Boosting Low-Rank Adaptation with Expert Collaboration and Competition](teamlora_boosting_low-rank_adaptation_with_expert_collaboration_and_competition.md)
+- [TableLoRA: Low-rank Adaptation on Table Structure Understanding for Large Language Models](table_lora_structure_understanding.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](../../NeurIPS2025/model_compression/gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?](../../NeurIPS2025/model_compression/fira_can_we_achieve_full-rank_training_of_llms_under_low-rank_constraint.md)
+
+<!-- RELATED:END -->

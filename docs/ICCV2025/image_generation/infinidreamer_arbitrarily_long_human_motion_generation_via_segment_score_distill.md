@@ -129,3 +129,15 @@ InfiniDreamer 通过将预训练的短序列运动扩散模型作为先验，提
 - 实验充分度: ⭐⭐⭐⭐ HumanML3D + BABEL 双数据集验证，完善的消融实验
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，SSD 与 SDS 的联系阐述到位
 - 价值: ⭐⭐⭐⭐ 免训练长序列运动生成的实用方案，解耦短序列模型与长序列组合为未来改进留出空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PINO: Person-Interaction Noise Optimization for Long-Duration and Customizable Motion Generation of Arbitrary-Sized Groups](pino_person-interaction_noise_optimization_for_long-duration_and_customizable_mo.md)
+- [A Unified Framework for Motion Reasoning and Generation in Human Interaction](a_unified_framework_for_motion_reasoning_and_generation_in_human_interaction.md)
+- [HPSv3: Towards Wide-Spectrum Human Preference Score](hpsv3_towards_wide-spectrum_human_preference_score.md)
+- [ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion](scorehoi_physically_plausible_reconstruction_of_human-object_interaction_via_sco.md)
+- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+
+<!-- RELATED:END -->

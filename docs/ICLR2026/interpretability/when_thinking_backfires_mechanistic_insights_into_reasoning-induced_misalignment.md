@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个模型 × 多数据集 × 推理时+训练时双层面分析 + 因果干预
 - 写作质量: ⭐⭐⭐⭐⭐ 从现象描述到机制分析的递进逻辑非常出色
 - 价值: ⭐⭐⭐⭐⭐ 对整个 reasoning model 训练范式敲响安全警钟，长期影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
+- [Base Models Know How to Reason, Thinking Models Learn When](../../NeurIPS2025/interpretability/base_models_know_how_to_reason_thinking_models_learn_when.md)
+- [Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
+- [When Machine Learning Gets Personal: Evaluating Prediction and Explanation](when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
+- [RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
+
+<!-- RELATED:END -->

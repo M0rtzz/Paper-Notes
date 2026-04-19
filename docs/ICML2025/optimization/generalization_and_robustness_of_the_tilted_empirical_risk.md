@@ -146,3 +146,15 @@ $$\gamma_{\text{data}} = \arg\min_{\gamma < 0}\left[|\gamma|^\epsilon \kappa_u^{
 - 实验充分度: ⭐⭐ (实验过于简单，仅线性模型)
 - 写作质量: ⭐⭐⭐⭐ (理论推导严谨，结构清晰)
 - 价值: ⭐⭐⭐⭐ (为 TERM 的理论基础提供重要贡献，但实用影响待验证)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tilted Sharpness-Aware Minimization](tilted_sharpness-aware_minimization.md)
+- [Leveraging Perturbation Robustness to Enhance Out-of-Distribution Detection](../../CVPR2025/optimization/leveraging_perturbation_robustness_to_enhance_out-of-distribution_detection.md)
+- [A Generalization Result for Convergence in Learning-to-Optimize](a_generalization_result_for_convergence_in_learning-to-optimize.md)
+- [MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization](../../NeurIPS2025/optimization/mecefo_enhancing_llm_training_robustness_via_fault-tolerant_optimization.md)
+- [Generalization in Federated Learning: A Conditional Mutual Information Framework](generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
+
+<!-- RELATED:END -->

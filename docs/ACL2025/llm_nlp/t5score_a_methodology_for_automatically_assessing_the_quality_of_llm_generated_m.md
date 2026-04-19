@@ -118,3 +118,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ IAA 研究 + LLM judge 对比 + 生成系统排序验证 + 人工生成集验证，实验链完整
 - **写作质量**: ⭐⭐⭐⭐ 形式化定义清晰，但公式较多，跟读成本略高
 - **价值**: ⭐⭐⭐⭐ 为 FT-topics 评估提供了首个可靠的方法论框架，对主题建模社区有较高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation](skillverse_tree_eval.md)
+- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+- [Neural Topic Modeling with Large Language Models in the Loop](neural_topic_modeling_with_large_language_models_in_the_loop.md)
+- [Aligning Large Language Models with Implicit Preferences from User-Generated Content](pugc_align_implicit_pref_ugc.md)
+- [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
+
+<!-- RELATED:END -->

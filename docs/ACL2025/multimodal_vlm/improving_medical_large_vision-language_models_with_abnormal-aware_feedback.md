@@ -164,3 +164,15 @@ UMed-LVLM 以 0.75 平均准确率大幅超越基线 MedVInt (0.17)，比 GPT-4V
 - **实验完备性**: ⭐⭐⭐⭐⭐ 消融+泛化分析极其全面（跨类别/跨数据集/跨模态/数据规模/IoU影响）
 - **方法可解释性**: ⭐⭐⭐⭐ 奖励设计有明确的医学动机，IoU 阈值分析直观
 - **实用性**: ⭐⭐⭐ 数据集规模较小，模型未基于最新的 LVLM 底座
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harnessing PDF Data for Improving Japanese Large Multimodal Models](harnessing_pdf_data_for_improving_japanese_large_multimodal_models.md)
+- [Improving Large Vision and Language Models by Learning from a Panel of Peers](../../ICCV2025/multimodal_vlm/improving_large_vision_and_language_models_by_learning_from_a_panel_of_peers.md)
+- [HSCR: Hierarchical Self-Contrastive Rewarding for Aligning Medical Vision Language Models](hscr_hierarchical_self-contrastive_rewarding_for_aligning_medical_vision_languag.md)
+- [Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains](weaving_context_across_images_improving_vision-language_models_through_focus-cen.md)
+- [VF-Eval: Evaluating Multimodal LLMs for Generating Feedback on AIGC Videos](vf_eval_aigc_video_feedback.md)
+
+<!-- RELATED:END -->

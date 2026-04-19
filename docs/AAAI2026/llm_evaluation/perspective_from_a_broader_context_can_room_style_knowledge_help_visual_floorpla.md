@@ -161,3 +161,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集、多设定、充分消融，但缺乏真实场景验证
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、方法描述完整、图文配合良好
 - 价值: ⭐⭐⭐⭐ — 提出了有效的无监督场景上下文建模方案，对室内定位领域有实际推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Supercharging Floorplan Localization with Semantic Rays](../../ICCV2025/llm_evaluation/supercharging_floorplan_localization_with_semantic_rays.md)
+- [Benchmarking LLMs for Political Science: A United Nations Perspective](benchmarking_llms_for_political_science_a_united_nations_perspective.md)
+- [TacSIm: A Dataset and Benchmark for Football Tactical Style Imitation](../../CVPR2026/llm_evaluation/tacsim_a_dataset_and_benchmark_for_football_tactical_style_imitation.md)
+- [Free-Grained Hierarchical Visual Recognition](../../CVPR2026/llm_evaluation/free-grained_hierarchical_visual_recognition.md)
+- [MCTS-SQL: Light-Weight LLMs can Master the Text-to-SQL through Monte Carlo Tree Search](mcts-sql_light-weight_llms_can_master_the_text-to-sql_through_monte_carlo_tree_s.md)
+
+<!-- RELATED:END -->

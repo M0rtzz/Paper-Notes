@@ -171,3 +171,15 @@ VISA 由三个核心组件组成，构成一个优雅的流水线：
 - ⭐⭐⭐⭐ **实验充分度**：8 个数据集、多组消融实验（数据集/帧采样/token数/采样策略），横向纵向对比都很充分
 - ⭐⭐⭐⭐ **写作质量**：结构清晰，任务定义明确，图表丰富，动机阐述到位
 - ⭐⭐⭐⭐⭐ **价值**：开创了 Reasoning VOS 方向，ReVOS 数据集填补空白，代码和数据集开源，对后续研究有较大推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoReS: Orchestrating the Dance of Reasoning and Segmentation](cores_orchestrating_the_dance_of_reasoning_and_segmentation.md)
+- [OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models](openpsg_open-set_panoptic_scene_graph_generation_via_large_multimodal_models.md)
+- [ActionVOS: Actions as Prompts for Video Object Segmentation](actionvos_actions_as_prompts_for_video_object_segmentation.md)
+- [GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation](../../CVPR2025/segmentation/glus_global-local_reasoning_unified_into_a_single_large_language_model_for_video.md)
+- [A Semantic Space is Worth 256 Language Descriptions: Make Stronger Segmentation Models with Descriptive Properties](a_semantic_space_is_worth_256_language_descriptions_make_str.md)
+
+<!-- RELATED:END -->

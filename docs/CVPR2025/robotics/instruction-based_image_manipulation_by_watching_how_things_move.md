@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量指标、人类评估、消融实验齐全，但自建的 50 张测试集规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表质量高，motivation 阐述得很好
 - 价值: ⭐⭐⭐⭐⭐ 开辟了利用视频数据训练图像编辑模型的新范式，数据集和方法都有广泛影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rolling the DICE on Idiomaticity: How LLMs Fail to Grasp Context](../../ACL2025/robotics/dice_idiomaticity.md)
+- [UnZipLoRA: Separating Content and Style from a Single Image](../../ICCV2025/robotics/unziplora_separating_content_and_style_from_a_single_image.md)
+- [UrbanVerse: Scaling Urban Simulation by Watching City-Tour Videos](../../ICLR2026/robotics/urbanverse_scaling_urban_simulation_by_watching_city-tour_videos.md)
+- [From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations](../../AAAI2026/robotics/from_passive_perception_to_active_memory_a_weakly_supervised_image_manipulation_.md)
+- [MIP against Agent: Malicious Image Patches Hijacking Multimodal OS Agents](../../NeurIPS2025/robotics/mip_against_agent_malicious_image_patches_hijacking_multimod.md)
+
+<!-- RELATED:END -->

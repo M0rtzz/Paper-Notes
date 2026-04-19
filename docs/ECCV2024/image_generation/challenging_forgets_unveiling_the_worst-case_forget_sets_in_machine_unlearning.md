@@ -160,3 +160,15 @@ $$\theta_j = \theta_{j-1} - \beta \cdot \text{sign}(\nabla_\theta \ell_{\text{MU
 | 实验充分度 | ⭐⭐⭐⭐ | 多数据集、多模型、多场景全面验证 |
 | 写作质量 | ⭐⭐⭐⭐ | 问题动机清晰，公式推导严谨 |
 | 实用价值 | ⭐⭐⭐⭐ | 为 MU 提供了标准化的对抗评估工具 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement](unveiling_advanced_frequency_disentanglement_paradigm_for_low-light_image_enhanc.md)
+- [MUNBa: Machine Unlearning via Nash Bargaining](../../ICCV2025/image_generation/munba_machine_unlearning_via_nash_bargaining.md)
+- [Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs](../../ICLR2026/image_generation/model_collapse_is_not_a_bug_but_a_feature_in_machine_unlearning_for_llms.md)
+- [Invisible Watermarks, Visible Gains: Steering Machine Unlearning with Bi-Level Watermarking Design](../../ICCV2025/image_generation/invisible_watermarks_visible_gains_steering_machine_unlearning_with_bi-level_wat.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+
+<!-- RELATED:END -->

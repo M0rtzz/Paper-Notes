@@ -118,3 +118,15 @@ $$\mathcal{L}_{\text{GRPO}}(\theta) = \mathbb{E}[\min(\rho A, \text{clip}(\rho, 
 - 实验充分度: ⭐⭐⭐⭐⭐ 多基准评估、详尽消融（奖励组件、backbone、数据质量）、跨架构验证
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，方法描述系统化，但部分公式较冗长
 - 价值: ⭐⭐⭐⭐ 数据高效+可解释的地理定位方案对实际应用有价值，GRPO框架有广泛迁移潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [SpatialThinker: Reinforcing 3D Reasoning in Multimodal LLMs via Spatial Rewards](spatialthinker_reinforcing_3d_reasoning_in_multimodal_llms_via_spatial_rewards.md)
+- [VAGEN: Reinforcing World Model Reasoning for Multi-Turn VLM Agents](vagen_reinforcing_world_model_reasoning_for_multi-turn_vlm_agents.md)
+- [VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism](../../ACL2025/multimodal_vlm/vrest_tree_search_vlm_reasoning.md)
+- [CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models](choice_benchmarking_the_remote_sensing_capabilities_of_large_vision-language_mod.md)
+
+<!-- RELATED:END -->

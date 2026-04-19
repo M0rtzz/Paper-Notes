@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 忠实度评估（deletion/insertion）充分，但完整的下游任务性能表格在缓存中截断
 - 写作质量: ⭐⭐⭐⭐⭐ 动机图（不同推理轨迹关注不同区域）非常直观，方法流程图清晰，数学推导严谨
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 可信推理具有重要意义，方法实用且可复现，开辟了显著性引导 RL 训练的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FALCON: False-Negative Aware Learning of Contrastive Negatives in Vision-Language Alignment](falcon_false-negative_aware_learning_of_contrastive_negatives_in_vision-language.md)
+- [Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection](mining_instance-centric_vision-language_contexts_for_human-object_interaction_de.md)
+- [SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding](../../ECCV2024/object_detection/shine_saliency-aware_hierarchical_negative_ranking_for_compositional_temporal_gr.md)
+- [Continuous Vision-Language-Action Co-Learning with Semantic-Physical Alignment for Behavioral Cloning](../../AAAI2026/object_detection/continuous_vision-language-action_co-learning_with_semantic-.md)
+- [ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation](rehark_refined_hybrid_adaptive_rbf_kernels_for_robust_one-shot_vision-language_a.md)
+
+<!-- RELATED:END -->

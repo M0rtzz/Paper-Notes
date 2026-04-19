@@ -140,3 +140,15 @@ Lion 框架为双向线性 Transformer 提供三种理论等价的表示：
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖图像分类和 MLM 两大双向任务，但缺少更多下游应用评估
 - **写作质量**: ⭐⭐⭐⭐⭐ 结构清晰，数学推导详尽，表 1 的统一映射表非常有价值
 - **价值**: ⭐⭐⭐⭐⭐ 为高效双向建模提供了理论基础和实用工具，训练速度与 softmax Transformer 持平是重大突破
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAT: Bridging RNN Efficiency and Attention Accuracy via Chunk-based Sequence Modeling](rat_bridging_rnn_efficiency_and_attention_accuracy_via_chunk-based_sequence_mode.md)
+- [LALIC: Linear Attention Modeling for Learned Image Compression](../../CVPR2025/model_compression/linear_attention_modeling_for_learned_image_compression.md)
+- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+- [Infrequent Exploration in Linear Bandits](infrequent_exploration_in_linear_bandits.md)
+- [FastVAR: Linear Visual Autoregressive Modeling via Cached Token Pruning](../../ICCV2025/model_compression/fastvar_linear_visual_autoregressive_modeling_via_cached_token_pruning.md)
+
+<!-- RELATED:END -->

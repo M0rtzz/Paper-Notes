@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个实验（模型比较+纵向分析+消融）设计严谨，信息论指标体系完整
 - 写作质量: ⭐⭐⭐⭐ 数据呈现清晰，图表丰富，讨论与结论逻辑连贯
 - 价值: ⭐⭐⭐ 主要是分析性工作，缺少改进方法的提出，对实际应用的指导有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FoodTaxo: Generating Food Taxonomies with Large Language Models](foodtaxo_generating_food_taxonomies_with_large_language_models.md)
+- [Language Model Fine-Tuning on Scaled Survey Data for Predicting Distributions of Public Opinions](language_model_fine-tuning_on_scaled_survey_data_for_predicting_distributions_of.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [Is It JUST Semantics? A Case Study of Discourse Particle Understanding in LLMs](is_it_just_semantics_a_case_study_of_discourse_particle_understanding_in_llms.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+
+<!-- RELATED:END -->

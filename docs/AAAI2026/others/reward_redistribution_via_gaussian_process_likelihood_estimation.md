@@ -189,3 +189,15 @@ GP-LRR 在所有四个环境中一致最优，在 HalfCheetah-v4 中优势尤为
 | 实验充分性 | ⭐⭐⭐ | 环境有限，缺少与更多近期方法的比较 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，理论与实验结合紧密 |
 | 总评 | ⭐⭐⭐⭐ | 理论贡献突出，但实验验证范围需扩展 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](../../NeurIPS2025/others/gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [Expressive Temporal Specifications for Reward Monitoring](expressive_temporal_specifications_for_reward_monitoring.md)
+- [Private Frequency Estimation via Residue Number Systems](private_frequency_estimation_via_residue_number_systems.md)
+- [Spike Imaging Velocimetry: Dense Motion Estimation of Fluids Using Spike Cameras](spike_imaging_velocimetry_dense_motion_estimation_of_fluids_using_spike_cameras.md)
+- [How Wide and How Deep? Mitigating Over-Squashing of GNNs via Channel Capacity Constrained Estimation](how_wide_and_how_deep_mitigating_over-squashing_of_gnns_via_channel_capacity_con.md)
+
+<!-- RELATED:END -->

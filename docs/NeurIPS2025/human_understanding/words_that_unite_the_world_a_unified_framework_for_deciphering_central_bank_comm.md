@@ -126,3 +126,15 @@ PLM 使用标准微调流程（分类头 + 交叉熵损失）。LLM 基于 promp
 - 实验充分度: ⭐⭐⭐⭐⭐ 15,075次实验，7 PLMs + 9 LLMs + 多种提示策略 + 人类评估 + 经济预测验证，极其全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，数据集构建流程文档化良好
 - 价值: ⭐⭐⭐⭐ 对金融 NLP 社区和政策分析实践有重要价值，"聚合优于单独"的发现具有直接实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MG-MotionLLM: A Unified Framework for Motion Comprehension and Generation across Multiple Granularities](../../CVPR2025/human_understanding/mg-motionllm_a_unified_framework_for_motion_comprehension_and_generation_across_.md)
+- [FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](../../ECCV2024/human_understanding/freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)
+- [Emergent World Beliefs: Exploring Transformers in Stochastic Games](emergent_world_beliefs_exploring_transformers_in_stochastic_games.md)
+- [On Large Multimodal Models as Open-World Image Classifiers](../../ICCV2025/human_understanding/on_large_multimodal_models_as_open-world_image_classifiers.md)
+- [GeoWorld: Geometric World Models](../../CVPR2026/human_understanding/geoworld_geometric_world_models.md)
+
+<!-- RELATED:END -->

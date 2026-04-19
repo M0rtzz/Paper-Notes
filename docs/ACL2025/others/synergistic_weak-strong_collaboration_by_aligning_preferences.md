@@ -149,3 +149,15 @@ CoWest 相对最优单模型的提升：Counterfactuals +6.14 EM，Medicine +2.0
 - 实验充分度: ⭐⭐⭐⭐ 三个领域、多种基线、详细消融（交互策略/模型选择/数据量），但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 方法动机和流程描述清晰，理论分析简洁有力
 - 价值: ⭐⭐⭐⭐ 对黑盒 LLM 时代的实际应用有指导意义，框架通用且易于实现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How to Mitigate Overfitting in Weak-to-Strong Generalization?](how_to_mitigate_overfitting_in_weak-to-strong_generalization.md)
+- [Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding](well_begun_is_half_done_low-resource_preference_alignment_by_weak-to-strong_deco.md)
+- [Revisiting Weak-to-Strong Generalization: Reverse KL vs. Forward KL](revisiting_weak-to-strong_generalization_in_theory_and_practice_reverse_kl_vs_fo.md)
+- [Consultant Decoding: Yet Another Synergistic Mechanism](consultant_decoding_yet_another_synergistic_mechanism.md)
+- [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](literature_meets_data_hypothesis.md)
+
+<!-- RELATED:END -->

@@ -177,3 +177,15 @@ $$\frac{\partial \theta_i}{\partial t} = \frac{1}{\sigma_i}\sum_j r_{ij}$$
 - 实验充分度: ⭐⭐⭐ 多种配置和提示策略，但每种仅 3 次迭代，统计力度有限
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，实验描述详尽，讨论部分深刻
 - 价值: ⭐⭐⭐⭐ 为 AI 辅助科学发现开辟了"无目标探索"这一重要研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning](../../ICML2025/llm_agent/guardagent_safeguard_llm_agents_by_a_guard_agent_via_knowledge-enabled_reasoning.md)
+- [NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](../../ICLR2026/llm_agent/newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
+- [Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding](deep_video_discovery_agentic_search_with_tool_use_for_longfo.md)
+- [Improving LLM Agent Planning with In-Context Learning via Atomic Fact Augmentation and Lookahead Search](../../ICML2025/llm_agent/improving_llm_agent_planning_with_in-context_learning_via_atomic_fact_augmentati.md)
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+
+<!-- RELATED:END -->

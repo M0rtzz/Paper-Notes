@@ -154,3 +154,15 @@ SRL 在 Oracle 设置下相对 SWE-Gym-7B 提升 74%，端到端性能翻倍。
 - 实验充分度: ⭐⭐⭐⭐ — 数学+SWE 两个领域验证，消融充分，但仅限 7B 模型
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰，方法描述精确，图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 为训练小模型处理难题提供了实用的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Breaking the SFT Plateau: Multimodal Structured Reinforcement Learning for Chart-to-Code Generation](breaking_the_sft_plateau_multimodal_structured_reinforcement_learning_for_chart-.md)
+- [ReCode: Updating Code API Knowledge with Reinforcement Learning](../../AAAI2026/code_intelligence/recode_updating_code_api_knowledge_with_reinforcement_learning.md)
+- [MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction](../../CVPR2026/code_intelligence/mm-recoder_advancing_chart-to-code_generation_with_reinforcement_learning_and_se.md)
+- [AdaptiveStep: Automatically Dividing Reasoning Step through Model Confidence](../../ICML2025/code_intelligence/adaptivestep_automatically_dividing_reasoning_step_through_model_confidence.md)
+- [Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning](../../NeurIPS2025/code_intelligence/co-evolving_llm_coder_and_unit_tester_via_reinforcement_learning.md)
+
+<!-- RELATED:END -->

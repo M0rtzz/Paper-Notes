@@ -248,3 +248,15 @@ Gemstones开源4000+检查点数据集（至2B参数），系统研究宽度-深
 
 ## 评分
 ⭐⭐⭐⭐⭐ (5/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning](../../ACL2025/llm_pretraining/training_dynamics_underlying_language_model_scaling_laws_loss_deceleration_and_z.md)
+- [Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
+- [Superposition Yields Robust Neural Scaling](superposition_yields_robust_neural_scaling.md)
+- [Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding](../../ACL2025/llm_pretraining/diversity_explains_inference_scaling_laws_through_a_case_study_of_minimum_bayes_.md)
+
+<!-- RELATED:END -->

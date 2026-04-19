@@ -158,3 +158,15 @@ EgoXtreme 是一个数据集贡献型工作，核心包括：（1）三个挑战
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三种SOTA模型、多种条件组合、预处理分析、追踪策略对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，数据描述详尽
 - 价值: ⭐⭐⭐⭐ — 对推动鲁棒位姿估计研究有重要意义，但需要社区跟进方法开发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EgoPoser: Robust Real-Time Egocentric Pose Estimation from Sparse and Intermittent Observations Everywhere](../../ECCV2024/video_understanding/egoposer_robust_real-time_egocentric_pose_estimation_from_sparse_and_intermitten.md)
+- [Occlusion-Aware SORT: Observing Occlusion for Robust Multi-Object Tracking](occlusion-aware_sort_observing_occlusion_for_robust_multi-object_tracking.md)
+- [Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects](../../ECCV2024/video_understanding/benchmarks_and_challenges_in_pose_estimation_for_egocentric_hand_interactions_wi.md)
+- [Lifelong Domain Adaptive 3D Human Pose Estimation](../../AAAI2026/video_understanding/lifelong_domain_adaptive_3d_human_pose_estimation.md)
+- [OpenMarcie: Dataset for Multimodal Action Recognition in Industrial Environments](openmarcie_dataset_for_multimodal_action_recognition_in_industrial_environments.md)
+
+<!-- RELATED:END -->

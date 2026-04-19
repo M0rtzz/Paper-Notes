@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据，多种 bandit 算法，但真实场景验证可更丰富
 - 写作质量: ⭐⭐⭐⭐ 理论部分严谨，但符号较重，非 bandit 领域读者需要较多背景知识
 - 价值: ⭐⭐⭐⭐ 对 AI 安全和模型评估领域有重要警示意义，但直接应用场景较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [Pareto-Conditioned Diffusion Models for Offline Multi-Objective Optimization](pareto-conditioned_diffusion_models_for_offline_multi-objective_optimization.md)
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [Scaling Offline RL via Efficient and Expressive Shortcut Models](../../NeurIPS2025/image_generation/scaling_offline_rl_via_efficient_and_expressive_shortcut_models.md)
+- [Verification of the Implicit World Model in a Generative Model via Adversarial Sequences](verification_of_the_implicit_world_model_in_a_generative_model_via_adversarial_s.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ GenEval 分两大步骤：(1) 因果覆盖评估与知识精炼；(2) 多模态 
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8+2 数据集、12 对 SDG 迁移、多种基线对比、消融/敏感性分析齐全
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，但符号密集、行文偏长，部分证明需查看补充材料
 - 价值: ⭐⭐⭐⭐ — 在医学影像 SDG 实际部署场景中很有价值，DCB 可作为部署前的安全检查工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mind the Discriminability Trap in Source-Free Cross-domain Few-shot Learning](mind_the_discriminability_trap_in_source-free_cross-domain_few-shot_learning.md)
+- [Reclaiming Lost Text Layers for Source-Free Cross-Domain Few-Shot Learning](reclaiming_lost_text_layers_for_source-free_cross-domain_few-shot_learning.md)
+- [Experience with Single Domain Generalization in Real World Medical Imaging Deployments](../../AAAI2026/medical_imaging/experience_with_single_domain_generalization_in_real_world_medical_imaging_deplo.md)
+- [Similarity-as-Evidence: Calibrating Overconfident VLMs for Interpretable and Label-Efficient Medical Active Learning](similarity-as-evidence_calibrating_overconfident_vlms_for_interpretable_and_labe.md)
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+
+<!-- RELATED:END -->

@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基准多消融，体育解说评估新颖
 - 写作质量: ⭐⭐⭐⭐ 清晰完整
 - 价值: ⭐⭐⭐⭐⭐ 为实时视频理解开辟了大规模训练路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Highlight Audio by Watching Movies](learning_to_highlight_audio_by_watching_movies.md)
+- [MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens](../../ACL2025/audio_speech/mms-llama_efficient_llm-based_audio-visual_speech_recognition_with_minimal_multi.md)
+- [Spark-TTS: An Efficient LLM-Based Text-to-Speech Model with Single-Stream Decoupled Speech Tokens](../../ACL2025/audio_speech/spark-tts_an_efficient_llm-based_text-to-speech_model_with_single-stream_decoupl.md)
+- [E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis](../../NeurIPS2025/audio_speech/e2e-vguard_adversarial_prevention_for_production_llm-based_end-to-end_speech_syn.md)
+- [CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing](../../ECCV2024/audio_speech/coleaf_a_contrastive-collaborative_learning_framework_for_weakly_supervised_audi.md)
+
+<!-- RELATED:END -->

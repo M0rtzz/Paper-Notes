@@ -101,4 +101,16 @@ SuffixDecoding 由两个核心组件组成：(1) 后缀树索引——缓存 pro
 - 实验充分度: ⭐⭐⭐⭐ SWE-Bench + Text-to-SQL 双基准
 - 写作质量: ⭐⭐⭐⭐ 动机充分，方案简洁
 - 价值: ⭐⭐⭐⭐⭐ 无训练、即插即用、5.3 倍加速
-**代码**: 待确认  
+**代码**: 待确认
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What AI Speaks for Your Community: Polling AI Agents for Public Opinion on Data Center Projects](what_ai_speaks_for_your_community_polling_ai_agents_for_public_opinion_on_data_c.md)
+- [Generative AI Agents for Controllable and Protected Content Creation](generative_ai_agents_for_controllable_and_protected_content_creation.md)
+- [PANDA: Towards Generalist Video Anomaly Detection via Agentic AI Engineer](panda_towards_generalist_video_anomaly_detection_via_agentic_ai_engineer.md)
+- [xChemAgents: Agentic AI for Explainable Quantum Chemistry](../../ICML2025/llm_agent/xchemagents_agentic_ai_for_explainable_quantum_chemistry.md)
+- [LC-Opt: Benchmarking Reinforcement Learning and Agentic AI for End-to-End Liquid Cooling Optimization in Data Centers](lc-opt_benchmarking_reinforcement_learning_and_agentic_ai_for_end-to-end_liquid_.md)
+
+<!-- RELATED:END -->

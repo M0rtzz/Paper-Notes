@@ -129,3 +129,15 @@ TopoMDC类型消融：正交(𝒞₁₋₄) + 对角(𝒞₅₋₈) 组合效果
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个场景10个数据集，2个基线网络，充分的消融实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题动机阐述充分，但公式较多略显密集
 - 价值: ⭐⭐⭐⭐ 填补TSS+TTA的空白，实际应用价值明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
+- [Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](correspondence_as_video_testtime_adaption_on_sam2_for_refere.md)
+- [IT³: Idempotent Test-Time Training](../../ICML2025/segmentation/it3_idempotent_test-time_training.md)
+- [The Golden Subspace: Where Efficiency Meets Generalization in Continual Test-Time Adaptation](../../CVPR2026/segmentation/the_golden_subspace_where_efficiency_meets_generalization_in_continual_test-time.md)
+- [DeRIS: Decoupling Perception and Cognition for Enhanced Referring Image Segmentation through Loopback Synergy](deris_decoupling_perception_and_cognition_for_enhanced_referring_image_segmentat.md)
+
+<!-- RELATED:END -->

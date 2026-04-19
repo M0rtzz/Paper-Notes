@@ -160,3 +160,15 @@ $$\max_\delta \sum_{i=1}^N L(f_\theta(x + \Delta_i + \delta \odot m), y) \quad \
 - 实验充分度: ⭐⭐⭐⭐⭐ （三种防御 × 三种攻击 × 多个σ/ε + 定向/非定向 + 用户研究 + 消融）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，实验展示直观）
 - 价值: ⭐⭐⭐⭐ （对认证防御社区是重要的安全警示，推动了对认证可靠性的反思）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables](faster_certified_symmetry_breaking_using_orders_with_auxiliary_variables.md)
+- [Certified Branch-and-Bound MaxSAT Solving (Extended Version)](certified_branch-and-bound_maxsat_solving_extended_version.md)
+- [LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](../../ICLR2026/others/lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
+- [Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](../../ICML2025/others/enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
+- [DW-DGAT: Dynamically Weighted Dual Graph Attention Network for Neurodegenerative Disease Diagnosis](dw-dgat_dynamically_weighted_dual_graph_attention_network_for_neurodegenerative_.md)
+
+<!-- RELATED:END -->

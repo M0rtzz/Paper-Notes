@@ -113,3 +113,15 @@ $$A(v) = \sum_{i=1}^{n} -\log P(Z_v \geq \tau_i \mid c_v^{\mathrm{uf}}(\tau_i))$
 - 实验充分度: ⭐⭐⭐⭐⭐ 六项蒙特卡洛实验+两个真实数据集+网格收敛分析，统计验证极其全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学推导严谨，算法伪代码完整
 - 价值: ⭐⭐⭐⭐ 对神经影像学统计分析有重要实用价值，开源pytfce包降低使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid eTFCE-GRF: Exact Cluster-Size Retrieval with Analytical p-Values for Voxel-Based Morphometry](../../CVPR2025/3d_vision/hybrid_etfce-grf_exact_cluster-size_retrieval_with_analytical_p-values_for_voxel.md)
+- [Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow](easy3e_feed-forward_3d_asset_editing_via_rectified_voxel_flow.md)
+- [Efficient Hybrid SE(3)-Equivariant Visuomotor Flow Policy via Spherical Harmonics](efficient_hybrid_se3-equivariant_visuomotor_flow_policy_via_spherical_harmonics_.md)
+- [CMHANet: A Cross-Modal Hybrid Attention Network for Point Cloud Registration](cmhanet_a_crossmodal_hybrid_attention_network_for.md)
+- [SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)
+
+<!-- RELATED:END -->

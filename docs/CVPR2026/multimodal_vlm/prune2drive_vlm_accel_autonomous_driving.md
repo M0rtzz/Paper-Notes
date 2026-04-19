@@ -98,3 +98,15 @@ DriveLMM-o1: 10%保留→68.3 vs vanilla 74.2(下降6%),优于FastV(65.3)、DART
 - 实验充分度: ⭐⭐⭐⭐⭐ 2个AD基准+1个视频AD+5个通用VLM、效率分析、消融、可视化、失败分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论分析加分，但部分表格格式不够精炼
 - 价值: ⭐⭐⭐⭐⭐ 自动驾驶VLM的实时部署极需此类方法，6.40×加速有直接工业价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VGGDrive: Empowering Vision-Language Models with Cross-View Geometric Grounding for Autonomous Driving](vggdrive_empowering_vision-language_models_with_cross-view_geometric_grounding_f.md)
+- [Seeing Clearly, Reasoning Confidently: Plug-and-Play Remedies for Vision Language Model Blindness](seeing_clearly_reasoning_confidently_plug-and-play_remedies_for_vision_language_.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [VLM-Loc: Localization in Point Cloud Maps via Vision-Language Models](vlm-loc_localization_in_point_cloud_maps_via_vision-language_models.md)
+- [Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ $$\min_{p_\phi} \mathbb{E}_{Q \sim U(\mathcal{O})} \left[ \text{CE}(p_\phi(QS), 
 - 实验充分度: ⭐⭐⭐⭐ — ShapeNet全类别+ModelNet40+Objaverse，消融完整，但仅点云输入
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，动机阐述充分，图表直观
 - 价值: ⭐⭐⭐⭐ — 3D预处理的实用工具，但应用范围限于刚性形状朝向估计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
+- [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild](../../NeurIPS2025/others/houselayout3d_a_benchmark_and_training-free_baseline_for_3d_layout_estimation_in.md)
+- [On Fine-Grained Distinct Element Estimation](on_fine-grained_distinct_element_estimation.md)
+- [Prediction-Powered Adaptive Shrinkage Estimation](prediction-powered_adaptive_shrinkage_estimation.md)
+
+<!-- RELATED:END -->

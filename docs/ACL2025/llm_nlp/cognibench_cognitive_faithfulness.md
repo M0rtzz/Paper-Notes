@@ -139,3 +139,15 @@ CogniDet 基于 Llama3 8B Instruct 微调，使用标准因果语言建模损失
 - **实用性**: ⭐⭐⭐⭐ 数据集和检测器开源，自动标注流水线可直接用于评估新模型
 - **严谨性**: ⭐⭐⭐⭐ 标注协议设计严谨（96.19% IAA），消融实验充分
 - **影响力**: ⭐⭐⭐⭐ 认知幻觉是 LLM 安全部署的关键瓶颈，本文开辟了重要评估维度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization](improving_contextual_faithfulness_of_large_language_models_via_retrieval_heads-i.md)
+- [SCoP: Evaluating the Comprehension Process of Large Language Models from a Cognitive View](scop_evaluating_the_comprehension_process_of_large_language_models_from_a_cognit.md)
+- [CogSteer: Cognition-Inspired Selective Layer Intervention for Efficiently Steering Large Language Models](cogsteer_cognition-inspired_selective_layer_intervention_for_efficiently_steerin.md)
+- [Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_code_empowered_tool_learning.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ CaptionSmiths在CIDEr上分别提升9.3%/59.1%/257.8%，在长描述数据集上
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集联合训练/评估 + 三属性分别验证 + 自检索 + 消融 + 细粒度分类验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表直观，公式与直觉解释并重
 - 价值: ⭐⭐⭐⭐ 为可控图像描述提供了实用且高效的解决方案，滑块式控制有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SC-Captioner: Improving Image Captioning with Self-Correction by Reinforcement Learning](sc-captioner_improving_image_captioning_with_self-correction_by_reinforcement_le.md)
+- [Controlling Multimodal LLMs via Reward-guided Decoding](controlling_multimodal_llms_via_rewardguided_decoding.md)
+- [Text-Only Training for Image Captioning with Retrieval Augmentation and Modality Gap Correction](../../CVPR2026/multimodal_vlm/text-only_training_for_image_captioning_with_retrieval_augmentation_and_modality.md)
+- [Toward Robust Hyper-Detailed Image Captioning: A Multiagent Approach and Dual Evaluation Metrics for Factuality and Coverage](../../ICML2025/multimodal_vlm/toward_robust_hyper-detailed_image_captioning_a_multiagent_approach_and_dual_eva.md)
+- [DisCode: Distribution-Aware Score Decoder for Robust Automatic Evaluation of Image Captioning](../../AAAI2026/multimodal_vlm/discode_distribution-aware_score_decoder_for_robust_automatic_evaluation_of_imag.md)
+
+<!-- RELATED:END -->

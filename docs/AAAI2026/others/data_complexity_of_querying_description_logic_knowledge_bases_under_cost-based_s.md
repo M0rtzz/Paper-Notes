@@ -183,3 +183,15 @@ $$\mathsf{core}(\mathcal{A}) = \mathsf{pc}(\mathcal{A}) \cup \{b \mid a \leadsto
 - 实验充分度: ⭐⭐⭐ (纯理论工作，无实现/实验，但复杂度landscape完整)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，但技术密度高，对非专家不友好)
 - 价值: ⭐⭐⭐⭐ (对描述逻辑和知识表示领域有重要理论贡献)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Description Logics with Two Types of Definite Descriptions: Complexity, Expressiveness, and Automated Deduction](description_logics_with_two_types_of_definite_descriptions_complexity_expressive.md)
+- [Cost-Free Neutrality for the River Method](cost-free_neutrality_for_the_river_method.md)
+- [From Decision Trees to Boolean Logic: A Fast and Unified SHAP Algorithm](from_decision_trees_to_boolean_logic_a_fast_and_unified_shap_algorithm.md)
+- [The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets](../../NeurIPS2025/others/the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)
+- [ShortageSim: Simulating Drug Shortages under Information Asymmetry](shortagesim_simulating_drug_shortages_under_information_asymmetry.md)
+
+<!-- RELATED:END -->

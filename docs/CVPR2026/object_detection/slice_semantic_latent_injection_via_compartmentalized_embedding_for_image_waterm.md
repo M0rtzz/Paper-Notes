@@ -118,3 +118,15 @@ SLICE 是完全 training-free 的方法。使用 Stable Diffusion V2 生成，QW
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多种攻击和扰动，有理论分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，可视化案例直观
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 内容溯源和可信生成具有重要推动意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval](beyond_semantic_search_towards_referential_anchoring_in_composed_image_retrieval.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [DreamVideo-Omni: Omni-Motion Controlled Multi-Subject Video Customization with Latent Identity Reinforcement Learning](dreamvideo-omni_omni-motion_controlled_multi-subject_video_customization_with_la.md)
+- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+
+<!-- RELATED:END -->

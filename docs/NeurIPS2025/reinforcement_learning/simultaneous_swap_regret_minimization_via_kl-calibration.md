@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作，结果以定理呈现，无需实验验证但缺少数值模拟
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，证明思路讲解详尽，技术贡献与已有工作的对比明确
 - 价值: ⭐⭐⭐⭐⭐ 显著推进了在线校准和同步遗憾最小化领域的理论前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Comparing Uniform Price and Discriminatory Multi-Unit Auctions through Regret Minimization](comparing_uniform_price_and_discriminatory_multi-unit_auctions_through_regret_mi.md)
+- [Dynamic Regret Reduces to Kernelized Static Regret](dynamic_regret_reduces_to_kernelized_static_regret.md)
+- [Deep (Predictive) Discounted Counterfactual Regret Minimization](../../AAAI2026/reinforcement_learning/deep_predictive_discounted_counterfactual_regret_minimization.md)
+- [Improved Regret Bounds for GP-UCB in Bayesian Optimization](improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+- [Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update](generalized_linear_bandits_almost_optimal_regret_with_one-pass_update.md)
+
+<!-- RELATED:END -->

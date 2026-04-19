@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 合成 + benchmark + 大规模 + 消融全覆盖，对比方法丰富
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，技术细节充分，图表信息量大
 - 价值: ⭐⭐⭐⭐ — 对 FJSP 求解和 DRL 改进型方法社区有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+- [Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics](robot-r1_reinforcement_learning_for_enhanced_embodied_reasoning_in_robotics.md)
+- [Blending Complementary Memory Systems in Hybrid Quadratic-Linear Transformers](blending_complementary_memory_systems_in_hybrid_quadratic-linear_transformers.md)
+- [Deep SPI: Safe Policy Improvement via World Models](../../ICLR2026/reinforcement_learning/deep_spi_safe_policy_improvement_via_world_models.md)
+- [LLM-Enhanced Self-Evolving Reinforcement Learning for Multi-Step E-Commerce Payment Fraud Risk Detection](../../ACL2025/reinforcement_learning/llm-enhanced_self-evolving_reinforcement_learning_for_multi-step_e-commerce_paym.md)
+
+<!-- RELATED:END -->

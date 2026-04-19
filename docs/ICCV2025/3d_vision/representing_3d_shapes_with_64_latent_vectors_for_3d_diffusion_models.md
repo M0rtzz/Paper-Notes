@@ -190,3 +190,15 @@ Triplane解码器重建速度达42.68 sample/s，是VecSet CrossAttn的12.4×，
 - **实验充分度**: ⭐⭐⭐⭐⭐ ShapeNet+Objaverse双数据集、重建+生成双任务、全面的消融和效率分析
 - **写作质量**: ⭐⭐⭐⭐⭐ 论文结构优秀，motivation到method的逻辑链完整，图表清晰
 - **价值**: ⭐⭐⭐⭐⭐ 20.8×生成加速对3D扩散模型有重大实际意义，compact latent space可作为下游多种生成方法的基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [χ: Symmetry Understanding of 3D Shapes via Chirality Disentanglement](kh_symmetry_understanding_of_3d_shapes_via_chirality_disentanglement.md)
+- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
+- [3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](bridging_diffusion_models_and_3d_representations_a_3d_consis.md)
+- [Bridging Diffusion Models and 3D Representations: A 3D Consistent Super-Resolution Framework](bridging_diffusion_models_and_3d_representations_a_3d_consistent_super-resolutio.md)
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+
+<!-- RELATED:END -->

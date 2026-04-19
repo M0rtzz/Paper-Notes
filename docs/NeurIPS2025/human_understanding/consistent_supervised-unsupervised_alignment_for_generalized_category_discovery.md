@@ -121,3 +121,15 @@ NC-GCD 包含四个核心组件：(1) 预训练视觉编码器 $f(\cdot)$（DINO
 - 实验充分度: ⭐⭐⭐⭐ 6 个基准、两种 K 设定、10+ 方法对比
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，公式符号统一
 - 价值: ⭐⭐⭐⭐ 为 GCD 提供结构化几何先验，新类精度提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UnCLe: Towards Scalable Dynamic Causal Discovery in Non-Linear Temporal Systems](uncle_towards_scalable_dynamic_causal_discovery_in_non-linear_temporal_systems.md)
+- [Cycle-Sync: Robust Global Camera Pose Estimation through Enhanced Cycle-Consistent Synchronization](cycle-sync_robust_global_camera_pose_estimation_through_enhanced_cycle-consisten.md)
+- [Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](../../ECCV2024/human_understanding/interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)
+- [Mouse-Guided Gaze: Semi-Supervised Learning of Intention-Aware Representations for Reading Detection](mouse-guided_gaze_semi-supervised_learning_of_intention-aware_representations_fo.md)
+- [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
+
+<!-- RELATED:END -->

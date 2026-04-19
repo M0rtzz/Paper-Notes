@@ -155,3 +155,15 @@ $$\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(c,y^+,y
 - **实验**: ⭐⭐⭐⭐ — 定量定性全面，包含用户研究和多维度消融
 - **写作**: ⭐⭐⭐⭐ — 结构清晰，但部分拼写错误（如"poineer"）
 - **价值**: ⭐⭐⭐⭐⭐ — 推动了高质量Artist Mesh自动生成的前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MeshAnything V2: Artist-Created Mesh Generation with Adjacent Mesh Tokenization](meshanything_v2_artist-created_mesh_generation_with_adjacent_mesh_tokenization.md)
+- [Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk](../../ICLR2026/3d_vision/topology-preserved_auto-regressive_mesh_generation_in_the_manner_of_weaving_silk.md)
+- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+- [Auto-Regressively Generating Multi-View Consistent Images](auto-regressively_generating_multi-view_consistent_images.md)
+- [Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning](../../NeurIPS2025/3d_vision/mesh-rft_enhancing_mesh_generation_via_fine-grained_reinforcement_fine-tuning.md)
+
+<!-- RELATED:END -->

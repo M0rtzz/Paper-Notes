@@ -147,3 +147,15 @@ ECT 同时拥有**最少参数 (1.19M)** 和**最低推理延迟 (82ms)**，比 
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+真实数据+全面消融，但真实数据规模较小
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、公式推导严谨
 - 价值: ⭐⭐⭐⭐ 效率+性能同时最优，具有实用价值和理论启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Adverse Weather Removal via Spectral-based Spatial Grouping (SSGformer)](../../ICCV2025/image_restoration/robust_adverse_weather_removal_via_spectral-based_spatial_grouping.md)
+- [Spectral Super-Resolution via Adversarial Unfolding and Data-Driven Spectrum Regularization](../../CVPR2026/image_restoration/spectral_super-resolution_via_adversarial_unfolding_and_data-driven_spectrum_reg.md)
+- [Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography](joint_rgb-spectral_decomposition_model_guided_image_enhancement_in_mobile_photog.md)
+- [Contourlet Residual for Prompt Learning Enhanced Infrared Image Super-Resolution](contourlet_residual_for_prompt_learning_enhanced_infrared_image_super-resolution.md)
+- [Spiking Meets Attention: Efficient Remote Sensing Image Super-Resolution with Attention Spiking Neural Networks](../../NeurIPS2025/image_restoration/spiking_meets_attention_efficient_remote_sensing_image_super-resolution_with_att.md)
+
+<!-- RELATED:END -->

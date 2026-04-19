@@ -147,3 +147,15 @@ $$\boldsymbol{x}_s = \boldsymbol{x}_t + (s-t) \boldsymbol{f}_\theta(\boldsymbol{
 - **实验充分度**: ⭐⭐⭐⭐ — CIFAR-10和ImageNet充分，但缺少文本到图像的验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 几何直觉、理论推导和实验验证层层递进，非常清晰
 - **价值**: ⭐⭐⭐⭐ — 提供了一个稳定、简洁的少步扩散方案，训练友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Composition and Alignment of Diffusion Models using Constrained Learning](composition_and_alignment_of_diffusion_models_using_constrai.md)
+- [Information Theoretic Learning for Diffusion Models with Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)
+- [Joint Diffusion Models in Continual Learning](../../ICCV2025/image_generation/joint_diffusion_models_in_continual_learning.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](towards_robust_zero-shot_reinforcement_learning.md)
+- [Golden Noise for Diffusion Models: A Learning Framework](../../ICCV2025/image_generation/golden_noise_for_diffusion_models_a_learning_framework.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ HACO 的 F1 分数是 DECO 的 **2.65 倍**。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 14 数据集大规模训练 + 多场景测试 + 下游任务验证 + 全面消融
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，数据分析详实
 - 价值: ⭐⭐⭐⭐ — 提供了首个通用手部接触估计模型和实用的不平衡处理方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Reconstruction of Hand-Object Interaction with Distributed Force-aware Contact Representation](../../ICCV2025/human_understanding/dynamic_reconstruction_of_hand-object_interaction_with_distributed_force-aware_c.md)
+- [Data-Juicer 2.0: Cloud-Scale Adaptive Data Processing for and with Foundation Models](data-juicer_20_cloud-scale_adaptive_data_processing_for_and_with_foundation_mode.md)
+- [Learning From Design Procedure To Generate CAD Programs for Data Augmentation](learning_from_design_procedure_to_generate_cad_programs_for_data_augmentation.md)
+- [HccePose(BF): Predicting Front & Back Surfaces to Construct Ultra-Dense 2D-3D Correspondences for Pose Estimation](../../ICCV2025/human_understanding/hcceposebf_predicting_front_back_surfaces_to_construct_ultra-dense_2d-3d_corresp.md)
+- [VPHO: Joint Visual-Physical Cue Learning and Aggregation for Hand-Object Pose Estimation](../../AAAI2026/human_understanding/vpho_joint_visual-physical_cue_learning_and_aggregation_for_hand-object_pose_est.md)
+
+<!-- RELATED:END -->

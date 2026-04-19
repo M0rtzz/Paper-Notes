@@ -122,3 +122,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐（5个评估维度，16个变体，实验设计非常系统）
 - **写作质量**: ⭐⭐⭐⭐（结构清晰，图表丰富，但公式较密集）
 - **价值**: ⭐⭐⭐⭐（对SLM领域有重要指导意义，推荐建议实用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Systematic Generalization in Language Models Scales with Information Entropy](systematic_generalization_in_language_models_scales_with_information_entropy.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](cadllm_cad_modeling_from_text.md)
+- [Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability](compositional_generalization_instruction.md)
+- [Circuit Compositions: Exploring Modular Structures in Transformer-Based Language Models](circuit_compositions_modular_structures.md)
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_code_empowered_tool_learning.md)
+
+<!-- RELATED:END -->

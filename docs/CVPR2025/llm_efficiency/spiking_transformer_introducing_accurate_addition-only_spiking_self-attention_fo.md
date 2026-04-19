@@ -120,3 +120,15 @@ A²OS²A 的整体框架遵循标准 Vision Transformer 的架构设计，包含
 - 实验充分度: ⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Associative Transformer](associative_transformer.md)
+- [CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction](care_transformer_mobile-friendly_linear_visual_transformer_via_decoupled_dual_in.md)
+- [Frequency-Aware Token Reduction for Efficient Vision Transformer](../../NeurIPS2025/llm_efficiency/frequency-aware_token_reduction_for_efficient_vision_transformer.md)
+- [LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer](../../ICCV2025/llm_efficiency/layertracer_cognitive-aligned_layered_svg_synthesis_via_diffusion_transformer.md)
+- [Learning in Compact Spaces with Approximately Normalized Transformer](../../NeurIPS2025/llm_efficiency/learning_in_compact_spaces_with_approximately_normalized_transformer.md)
+
+<!-- RELATED:END -->

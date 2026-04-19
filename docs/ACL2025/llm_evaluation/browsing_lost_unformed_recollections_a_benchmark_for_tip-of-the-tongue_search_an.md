@@ -149,3 +149,15 @@ tags:
 ## 评分 ⭐⭐⭐⭐⭐
 
 这是一个高质量的 benchmark 贡献。任务定义源自真实信息需求，数据集构建严谨（两阶段验证、推理链、多级防作弊），结果揭示了当前 AI 系统在工具使用推理上的深层瓶颈。42% 的人机差距（56% vs 98%）为社区提供了清晰的改进方向。跨模态、跨语言、跨域的综合评估设计值得其他 benchmark 工作借鉴。唯一的遗憾是系统评估的可复现性和多轮场景的缺失。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning](physreason_a_comprehensive_benchmark_towards_physics-based_reasoning.md)
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](../../ICCV2025/llm_evaluation/3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+- [MDBench: A Synthetic Multi-Document Reasoning Benchmark Generated with Knowledge Guidance](mdbench_a_synthetic_multi-document_reasoning_benchmark_generated_with_knowledge_.md)
+- [RuleArena: A Benchmark for Rule-Guided Reasoning with LLMs in Real-World Scenarios](rulearena_rule_guided_reasoning.md)
+- [HPSS: Heuristic Prompting Strategy Search for LLM Evaluators](hpss_heuristic_prompting_strategy_search_for_llm_evaluators.md)
+
+<!-- RELATED:END -->

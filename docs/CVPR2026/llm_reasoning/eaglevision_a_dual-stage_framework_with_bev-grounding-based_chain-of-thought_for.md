@@ -124,3 +124,15 @@ SQA3D上同样达开源VLM SOTA。
 - 实验充分度: ⭐⭐⭐⭐ VSI-Bench和SQA3D双基准验证，充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 框架设计清晰，数学形式化完整，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对空间智能和embodied AI有重大推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcing Structured Chain-of-Thought for Video Understanding](reinforcing_structured_chain-of-thought_for_video_understanding.md)
+- [CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)
+- [Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)
+- [E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)
+- [Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)
+
+<!-- RELATED:END -->

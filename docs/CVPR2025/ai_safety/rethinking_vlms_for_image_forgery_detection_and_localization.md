@@ -123,3 +123,15 @@ IFDL-VLM 采用两阶段解耦架构：
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，论证有力
 - **实用性**: ⭐⭐⭐⭐ — 检测精度高，可解释性强
 - **综合推荐**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Noise-Assisted Prompt Learning for Image Forgery Detection and Localization](../../ECCV2024/ai_safety/noise-assisted_prompt_learning_for_image_forgery_detection_and_localization.md)
+- [ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization](../../NeurIPS2025/ai_safety/forensichub_a_unified_benchmark_codebase_for_all-domain_fake_image_detection_and.md)
+- [Gradient Inversion Attacks on Parameter-Efficient Fine-Tuning](gradient_inversion_attacks_on_parameter-efficient_fine-tuning.md)
+- [ESC: Erasing Space Concept for Knowledge Deletion](esc_erasing_space_concept_for_knowledge_deletion.md)
+- [Lyapunov Stable Graph Neural Flow](lyapunov_stable_graph_neural_flow.md)
+
+<!-- RELATED:END -->

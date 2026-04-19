@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 重建和生成都有详细对比，多数据集验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，与TRELLIS等对比明确
 - 价值: ⭐⭐⭐⭐⭐ 对3D生成表示方法有重要推进，解决了视角依赖的关键盲点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Field-Based 3D Surface Reconstruction of Microstructures from Multi-Detector Signals in Scanning Electron Microscopy](../../CVPR2026/3d_vision/neural_field-based_3d_surface_reconstruction_of_microstructures_from_multi-detec.md)
+- [From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy](../../NeurIPS2025/3d_vision/from_pixels_to_views_learning_angular-aware_and_physics-consistent_representatio.md)
+- [Station2Radar: Query-Conditioned Gaussian Splatting for Precipitation Field](station2radar_query_conditioned_gaussian_splatting_for_precipitation_field.md)
+- [Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting](augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting.md)
+- [SurfSplat: Conquering Feedforward 2D Gaussian Splatting with Surface Continuity Priors](surfsplat_conquering_feedforward_2d_gaussian_splatting_with_surface_continuity_p.md)
+
+<!-- RELATED:END -->

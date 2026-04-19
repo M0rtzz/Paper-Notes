@@ -152,3 +152,15 @@ Meta-Unlearn 在 FID/CLIP 上与对应 Unlearn 方法接近，不会显著影响
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 6 种遗忘基线、2 个基础模型、3 种攻击场景、版权/风格/安全三类任务
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，Fig.1 的直觉解释非常好
 - 价值: ⭐⭐⭐⭐⭐ 解决了机器遗忘领域的核心实际问题，通用性强，有部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Are Concepts Erased From Diffusion Models?](../../NeurIPS2025/image_generation/when_are_concepts_erased_from_diffusion_models.md)
+- [Memories of Forgotten Concepts](../../CVPR2025/image_generation/memories_of_forgotten_concepts.md)
+- [Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning](holistic_unlearning_benchmark_a_multi-faceted_evaluation_for_text-to-image_diffu.md)
+- [MUNBa: Machine Unlearning via Nash Bargaining](munba_machine_unlearning_via_nash_bargaining.md)
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](../../NeurIPS2025/image_generation/emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+
+<!-- RELATED:END -->

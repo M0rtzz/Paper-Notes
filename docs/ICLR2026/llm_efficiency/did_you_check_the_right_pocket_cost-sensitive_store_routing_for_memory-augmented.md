@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 两阶段评估设计合理，但样本规模小（150 问题）
 - 写作质量: ⭐⭐⭐⭐ 论述逻辑清晰，failure case 分析深入，决策框架优雅
 - 价值: ⭐⭐⭐⭐ "路由是一等公民"观点对记忆增强系统有实际指导意义，16点的 Oracle gap 激励后续研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universe Routing: Why Self-Evolving Agents Need Epistemic Control](universe_routing_why_self-evolving_agents_need_epistemic_control.md)
+- [Tensor Product Attention Is All You Need](../../NeurIPS2025/llm_efficiency/tensor_product_attention_is_all_you_need.md)
+- [Obliviator Reveals the Cost of Nonlinear Guardedness in Concept Erasure](../../NeurIPS2025/llm_efficiency/obliviator_reveals_the_cost_of_nonlinear_guardedness_in_concept_erasure.md)
+- [Dense Associative Memory with Epanechnikov Energy](../../NeurIPS2025/llm_efficiency/dense_associative_memory_with_epanechnikov_energy.md)
+- [PENCIL: Long Thoughts with Short Memory](../../ICML2025/llm_efficiency/pencil_long_thoughts_with_short_memory.md)
+
+<!-- RELATED:END -->

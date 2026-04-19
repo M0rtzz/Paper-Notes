@@ -134,3 +134,15 @@ OAT 包含两个核心组件：(1) 基于 quadric error 的自适应八叉树 to
 | 实用性 | 5/5 |
 | 清晰度 | 4/5 |
 | 综合 | 4/5 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EVATok: Adaptive Length Video Tokenization for Efficient Visual Autoregressive Generation](../../CVPR2026/image_generation/evatok_adaptive_length_video_tokenization_for_eff.md)
+- [DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer](dc-ar_efficient_masked_autoregressive_image_generation_with_deep_compression_hyb.md)
+- [Holistic Tokenizer for Autoregressive Image Generation](holistic_tokenizer_for_autoregressive_image_generation.md)
+- [Grouped Speculative Decoding for Autoregressive Image Generation](grouped_speculative_decoding_for_autoregressive_image_generation.md)
+- [Randomized Autoregressive Visual Generation](randomized_autoregressive_visual_generation.md)
+
+<!-- RELATED:END -->

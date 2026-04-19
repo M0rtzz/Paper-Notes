@@ -111,3 +111,15 @@ $$\mathcal{L}_{rgb} = (1-\lambda)\mathcal{L}_1 + \lambda\mathcal{L}_{D\text{-}SS
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、完整消融、全对焦泛化实验、可定制景深展示
 - 写作质量: ⭐⭐⭐⭐ 物理原理讲解清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ 解决了实际场景中散焦图像的3D重建问题，且提供景深定制能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](../../NeurIPS2025/3d_vision/dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [Blurry-Edges: Photon-Limited Depth Estimation from Defocused Boundaries](blurry-edges_photon-limited_depth_estimation_from_defocused_boundaries.md)
+- [Improving Gaussian Splatting with Localized Points Management](improving_gaussian_splatting_with_localized_points_management.md)
+- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
+- [Hardware-Rasterized Ray-Based Gaussian Splatting](hardware-rasterized_ray-based_gaussian_splatting.md)
+
+<!-- RELATED:END -->

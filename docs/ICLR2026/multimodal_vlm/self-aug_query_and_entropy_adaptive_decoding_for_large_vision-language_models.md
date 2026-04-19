@@ -122,3 +122,15 @@ Self-Aug 是完全免训练的方法。超参数设置：$\alpha=1$，APC 的 $\
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个模型、7个基准、判别+生成两类评估，消融全面
 - 写作质量: ⭐⭐⭐⭐ 技术描述清晰，数学推导严谨
 - 价值: ⭐⭐⭐⭐ 免训练即插即用的设计具有实用价值，但对强模型帮助有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation](look_carefully_adaptive_visual_reinforcements_in_multimodal_large_language_model.md)
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+- [Vision-Zero: Scalable VLM Self-Improvement via Strategic Gamified Self-Play](vision-zero_scalable_vlm_self-improvement_via_strategic_gamified_self-play.md)
+- [Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs](through_the_lens_of_contrast_self-improving_visual_reasoning_in_vlms.md)
+
+<!-- RELATED:END -->

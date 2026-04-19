@@ -131,3 +131,15 @@ RF-HGN 在 3D lattice 系统上比 15 种 PyTorch 优化器快 148-602 倍，精
 - 实验充分度: ⭐⭐⭐⭐⭐ 15 种优化器对比、多种势函数、零样本泛化、NeurIPS benchmark 复现，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论推导完整，图表质量高
 - 价值: ⭐⭐⭐⭐ 对物理模拟社区极有价值，但受限于特定的图网络架构类型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Maximizing Asynchronicity in Event-based Neural Networks](maximizing_asynchronicity_in_event-based_neural_networks.md)
+- [Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks](../../ICML2025/human_understanding/sparse_spectral_training_and_inference_on_euclidean_and_hyperbolic_neural_networ.md)
+- [DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
+- [Distilling and Adapting: A Topology-Aware Framework for Zero-Shot Interaction Prediction in Multiplex Biological Networks](distilling_and_adapting_a_topology-aware_framework_for_zero-shot_interaction_pre.md)
+- [Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks](time_is_all_it_takes_spike-retiming_attacks_on_event-driven_spiking_neural_netwo.md)
+
+<!-- RELATED:END -->

@@ -153,3 +153,15 @@ $$c(X) = \left(\frac{0.144}{\delta_{rel}(X)}\right)^2$$
 - **有效性**: ⭐⭐⭐⭐ — 在四个数据集上一致性优于基线，消融实验全面，多角度分析有说服力
 - **实用性**: ⭐⭐⭐ — 集成简单、开销小，但局限于特定架构和闭卷设置，工程落地场景较窄
 - **推荐阅读**: ⭐⭐⭐⭐ — 适合关注几何深度学习 × NLP 交叉方向的研究者，对理解双曲空间在推理中的作用有很好的参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BELLE: A Bi-Level Multi-Agent Reasoning Framework for Multi-Hop Question Answering](belle_a_bi-level_multi-agent_reasoning_framework_for_multi-hop_question_answerin.md)
+- [Self-Critique Guided Iterative Reasoning for Multi-hop Question Answering](self-critique_guided_iterative_reasoning_for_multi-hop_question_answering.md)
+- [ReSCORE: Label-free Iterative Retriever Training for Multi-hop Question Answering with Relevance-Consistency Supervision](rescore_multihop_qa.md)
+- [iQUEST: An Iterative Question-Guided Framework for Knowledge Base Question Answering](iquest_an_iterative_question-guided_framework_for_knowledge_base_question_answer.md)
+- [Recursive Question Understanding for Complex Question Answering over Heterogeneous Personal Data](recursive_question_understanding_for_complex_question_answering_over_heterogeneo.md)
+
+<!-- RELATED:END -->

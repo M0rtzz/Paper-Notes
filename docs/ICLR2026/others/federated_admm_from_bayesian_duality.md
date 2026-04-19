@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论验证充分但深度学习实验规模较小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，对偶图示直观
 - 价值: ⭐⭐⭐⭐ 为联邦优化提供新的理论基础和实用扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Federated Generalized Expectation-Maximization Algorithm for Mixture Models with an Unknown Number of Components](a_federated_generalized_expectation-maximization_algorithm_for_mixture_models_wi.md)
+- [Rethinking PCA Through Duality](../../NeurIPS2025/others/rethinking_pca_through_duality.md)
+- [Bayesian Network Structural Consensus via Greedy Min-Cut Analysis](../../AAAI2026/others/bayesian_network_structural_consensus_via_greedy_min-cut_analysis.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
+- [Latent Variable Estimation in Bayesian Black-Litterman Models](../../ICML2025/others/latent_variable_estimation_in_bayesian_black-litterman_models.md)
+
+<!-- RELATED:END -->

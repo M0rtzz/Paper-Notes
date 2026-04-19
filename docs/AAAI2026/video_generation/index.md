@@ -10,42 +10,42 @@ description: >-
 
 **🤖 AAAI2026** · **10** 篇论文解读
 
-**[3D4D An Interactive Editable 4D World Model Via 3D Video Generation](3d4d_an_interactive_editable_4d_world_model_via_3d_video_generation.md)**
+**[3D4D: An Interactive Editable 4D World Model via 3D Video Generation](3d4d_an_interactive_editable_4d_world_model_via_3d_video_generation.md)**
 
 :   提出3D4D交互式4D可视化框架，集成WebGL与Supersplat渲染，通过四模块后端管线将静态图片/文本转化为可编辑4D场景，引入VLM引导的注视点渲染策略实现60fps实时交互，在CLIP Consistency和CLIP Score上达到SOTA。
 
-**[Dreamrunner Fine-Grained Compositional Story-To-Video Genera](dreamrunner_fine-grained_compositional_story-to-video_genera.md)**
+**[DreamRunner: Fine-Grained Compositional Story-to-Video Generation with Retrieval-Augmented Motion Adaptation](dreamrunner_fine-grained_compositional_story-to-video_genera.md)**
 
 :   提出 DreamRunner 框架，通过 LLM 双层规划 + 检索增强运动先验学习 + 时空区域3D注意力模块(SR3AI)，实现细粒度可控的多角色多事件故事视频生成。
 
-**[Filmweaver Weaving Consistent Multi-Shot Videos With Cache-Guided Autoregressive](filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)**
+**[FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion](filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)**
 
 :   提出 FilmWeaver 框架，通过双层缓存（Shot Cache + Temporal Cache）引导自回归扩散模型，实现任意长度、跨镜头一致性的多镜头视频生成。
 
-**[Genvidbench A 6-Million Benchmark For Ai-Generated Video Detection](genvidbench_a_6-million_benchmark_for_ai-generated_video_detection.md)**
+**[GenVidBench: A 6-Million Benchmark for AI-Generated Video Detection](genvidbench_a_6-million_benchmark_for_ai-generated_video_detection.md)**
 
 :   提出 GenVidBench——首个 678 万级 AI 生成视频检测数据集，具备跨源（cross-source）和跨生成器（cross-generator）特性，覆盖 11 种 SOTA 视频生成器，并提供丰富的语义标注。
 
-**[Mask2Iv Interaction-Centric Video Generation Via Mask Trajectories](mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)**
+**[Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)**
 
 :   提出 Mask2IV，一个两阶段解耦框架——先预测交互者和物体的 mask 运动轨迹，再基于轨迹生成视频——实现了无需密集 mask 标注的、以交互为中心的可控视频生成，支持人-物交互和机器人操作两个场景。
 
-**[Mofu Scale-Aware Modulation And Fourier Fusion For Multi-Subject Video Generatio](mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)**
+**[MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)**
 
 :   提出 MoFu，通过 Scale-Aware Modulation（LLM 引导的尺度感知调制）和 Fourier Fusion（基于 FFT 的排列不变特征融合）两个核心模块，同时解决多主体视频生成中的**尺度不一致**和**排列敏感性**两大挑战，并构建了 MoFu-1M 训练数据集和 MoFu-Bench 评测基准。
 
-**[Motioncharacter Fine-Grained Motion Controllable Human Video Generation](motioncharacter_fine-grained_motion_controllable_human_video_generation.md)**
+**[MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](motioncharacter_fine-grained_motion_controllable_human_video_generation.md)**
 
 :   提出 MotionCharacter 框架，通过将运动解耦为动作类型和运动强度两个独立可控维度，实现高保真人体视频生成中的细粒度运动控制和身份一致性保持。
 
-**[Omnivdiff Omni Controllable Video Diffusion For Generation And Understanding](omnivdiff_omni_controllable_video_diffusion_for_generation_and_understanding.md)**
+**[OmniVDiff: Omni Controllable Video Diffusion for Generation and Understanding](omnivdiff_omni_controllable_video_diffusion_for_generation_and_understanding.md)**
 
 :   提出 OmniVDiff，一个统一的可控视频扩散框架，通过将多种视觉模态（RGB、深度、分割、Canny）在颜色空间中联合建模，并引入自适应模态控制策略（AMCS），在单一扩散模型中同时支持文本条件生成、X 条件生成和视频理解三种任务，在 VBench 上达到 SOTA。
 
-**[Phased One-Step Adversarial Equilibrium For Video Diffusion Models](phased_one-step_adversarial_equilibrium_for_video_diffusion_models.md)**
+**[Phased One-Step Adversarial Equilibrium for Video Diffusion Models](phased_one-step_adversarial_equilibrium_for_video_diffusion_models.md)**
 
 :   提出 V-PAE（Video Phased Adversarial Equilibrium），通过**稳定性预热 + 统一对抗均衡**两阶段蒸馏框架，将大规模视频扩散模型（如 Wan2.1-I2V-14B）压缩至单步生成，实现 100 倍加速，在 VBench-I2V 上平均质量超越已有加速方法 5.8%。
 
-**[Seeing The Unseen Zooming In The Dark With Event Cameras](seeing_the_unseen_zooming_in_the_dark_with_event_cameras.md)**
+**[Seeing the Unseen: Zooming in the Dark with Event Cameras](seeing_the_unseen_zooming_in_the_dark_with_event_cameras.md)**
 
 :   提出首个事件驱动低光视频超分（LVSR）框架 RetinexEVSR，通过 Retinex 启发的双向融合策略（RBF）——先用光照图引导事件特征去噪（IEE），再用增强后的事件特征恢复反射率细节（ERE），在 SDSD 基准上实现 2.95dB 增益且运行时间减少 65%。

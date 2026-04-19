@@ -147,3 +147,15 @@ $$\hat{y} = f_s(\mathbf{X}, \mathbf{A}) = g(f(\mathbf{X}, \mathbf{A}))$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8个数据集、两种设定、多种victim/surrogate架构、防御评估、McNemar检验
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法逐步展开，Table 1的方法对比一目了然
 - 价值: ⭐⭐⭐⭐ — 切实揭示了GNN的安全漏洞，对模型部署的安全防护有警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport](../../ICML2025/graph_learning/hgot_self-supervised_heterogeneous_graph_neural_network_with_optimal_transport.md)
+- [Self-Adaptive Graph Mixture of Models](self-adaptive_graph_mixture_of_models.md)
+- [BugSweeper: Function-Level Detection of Smart Contract Vulnerabilities Using Graph Neural Networks](bugsweeper_function-level_detection_of_smart_contract_vulnerabilities_using_grap.md)
+- [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
+- [Disentangled Multi-span Evolutionary Network against Temporal Knowledge Graph Reasoning](../../ACL2025/graph_learning/disentangled_multi-span_evolutionary_network_against_temporal_knowledge_graph_re.md)
+
+<!-- RELATED:END -->

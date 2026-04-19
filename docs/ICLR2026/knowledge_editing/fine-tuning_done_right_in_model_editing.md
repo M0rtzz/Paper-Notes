@@ -123,3 +123,15 @@ LocFT-BF = 标准广度优先 mini-batch 训练 + 局部化参数更新（仅调
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个模型 × 2数据集 × 多方法对比 + 100K编辑 + 72B模型
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链非常清晰：发现问题→受控实验→修正→系统优化
 - 价值: ⭐⭐⭐⭐⭐ 一篇改变模型编辑领域baseline认知的工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Energy-Regularized Sequential Model Editing on Hyperspheres](energy-regularized_sequential_model_editing_on_hyperspheres.md)
+- [EAMET: Robust Massive Model Editing via Embedding Alignment Optimization](eamet_robust_massive_model_editing_via_embedding_alignment_optimization.md)
+- [Bilinear Representation Mitigates Reversal Curse and Enables Consistent Model Editing](bilinear_representation_mitigates_reversal_curse_and_enables_consistent_model_ed.md)
+- [GOT-Edit: Geometry-Aware Generic Object Tracking via Online Model Editing](got-edit_geometry-aware_generic_object_tracking_via_online_model_editing.md)
+- [DocMEdit: Towards Document-Level Model Editing](../../ACL2025/knowledge_editing/docmedit_towards_document-level_model_editing.md)
+
+<!-- RELATED:END -->

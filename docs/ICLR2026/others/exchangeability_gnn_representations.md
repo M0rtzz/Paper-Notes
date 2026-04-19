@@ -116,3 +116,15 @@ Pipeline: GNN 编码器 → 节点嵌入矩阵 $\mathbf{X} \in \mathbb{R}^{n \ti
 - 实验充分度: ⭐⭐⭐⭐ 4 数据集 + 100 万图扩展 + MMD 统计检验 + 丰富超参分析，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，reviewer 评 "well-structured and clearly presented"
 - 价值: ⭐⭐⭐⭐ 理论视角新颖，为图检索提供了实用的理论工具，但当前实验数据集偏小限制了实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval](../../AAAI2026/others/leanrag_knowledge-graph-based_generation_with_semantic_aggregation_and_hierarchi.md)
+- [Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
+- [On the Importance of Gaussianizing Representations](../../ICML2025/others/on_the_importance_of_gaussianizing_representations.md)
+- [Learning Fair Representations with Kolmogorov-Arnold Networks](../../AAAI2026/others/learning_fair_representations_with_kolmogorov-arnold_networks.md)
+- [Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ MCQ 准确率普遍远高于 ST-IoU，说明模型能大致定位空间位置但
 | 实验充分度 | ⭐⭐⭐⭐ | 评估了 13 个主流 VLM + 人类基线 + ReID 基线，分析维度丰富（上下文利用、时空对比、失败案例） |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，任务定义明确，表格图表丰富，但部分分析可以更深入 |
 | 价值 | ⭐⭐⭐⭐ | 揭示了 VLM 时空智能的关键瓶颈，对自动驾驶、智能监控等领域有重要参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatial-DISE: A Unified Benchmark for Evaluating Spatial Reasoning in Vision-Language Models](spatial-dise_a_unified_benchmark_for_evaluating_spatial_reasoning_in_vision-lang.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](../../ACL2025/multimodal_vlm/effivlm_bench_acceleration.md)
+- [CityLens: Evaluating Large Vision-Language Models for Urban Socioeconomic Sensing](citylens_evaluating_large_vision-language_models_for_urban_socioeconomic_sensing.md)
+- [SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs](spinbench_perspective_and_rotation_as_a_lens_on_spatial_reasoning_in_vlms.md)
+- [SpatiaLQA: A Benchmark for Evaluating Spatial Logical Reasoning in Vision-Language Models](../../CVPR2026/multimodal_vlm/spatialqa_a_benchmark_for_evaluating_spatial_logical_reasoning_in_vision-languag.md)
+
+<!-- RELATED:END -->

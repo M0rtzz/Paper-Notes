@@ -134,3 +134,15 @@ SnapViT 在 ImageNet 上接近 NViT，但在 7 数据集泛化上远超（k-NN +
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 数据集 + 5 个模型家族 + k-NN/Linear/Seg 三种评估 + 详尽消融
 - 写作质量: ⭐⭐⭐⭐ 方法推导层次分明，但部分符号较密集
 - 价值: ⭐⭐⭐⭐⭐ 对 ViT 部署有直接实用价值，<5分钟生成弹性模型，行业可直接采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Olica: Efficient Structured Pruning of Large Language Models without Retraining](../../ICML2025/model_compression/olica_efficient_structured_pruning_of_large_language_models_without_retraining.md)
+- [Understanding Differential Transformer Unchains Pretrained Self-Attentions](understanding_differential_transformer_unchains_pretrained_self-attentions.md)
+- [AutoJudge: Judge Decoding Without Manual Annotation](autojudge_judge_decoding_without_manual_annotation.md)
+- [Deterministic Continuous Replacement: Fast and Stable Module Replacement in Pretrained Transformers](deterministic_continuous_replacement_fast_and_stable_module_replacement_in_pretr.md)
+- [Robustifying Learning-Augmented Caching Efficiently without Compromising 1-Consistency](robustifying_learning-augmented_caching_efficiently_without_compromising_1-consi.md)
+
+<!-- RELATED:END -->

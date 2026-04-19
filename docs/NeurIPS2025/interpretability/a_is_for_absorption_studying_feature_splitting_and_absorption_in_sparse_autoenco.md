@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 数百个 SAE，三种模型，toy model + 真实验证，因果分析完整
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，案例分析精彩，图表设计优秀
 - 价值: ⭐⭐⭐⭐⭐ 对 AI Safety 和机械可解释性领域有重大影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Do Sparse Autoencoders Generalize? A Case Study of Answerability](../../ICML2025/interpretability/do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)
+- [Distributional Autoencoders Know the Score](distributional_autoencoders_know_the_score.md)
+- [Temporal Sparse Autoencoders: Leveraging the Sequential Nature of Language for Interpretability](../../ICLR2026/interpretability/temporal_sparse_autoencoders_leveraging_the_sequential_nature_of_language_for_in.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](../../CVPR2026/interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+
+<!-- RELATED:END -->

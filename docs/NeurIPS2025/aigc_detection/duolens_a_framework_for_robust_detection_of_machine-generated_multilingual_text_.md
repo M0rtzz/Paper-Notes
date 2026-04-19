@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多语言+多编程语言+跨语言+对抗性评估，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 清晰有条理
 - 价值: ⭐⭐⭐⭐ 对 AIGC 检测实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiSocial: Multilingual Benchmark of Machine-Generated Text Detection of Social-Media Texts](../../ACL2025/aigc_detection/multisocial_mgt_detection.md)
+- [Reliably Bounding False Positives: A Zero-Shot Machine-Generated Text Detection Framework via Multiscaled Conformal Prediction](../../ACL2025/aigc_detection/reliably_bounding_false_positives_a_zero-shot_machine-generated_text_detection_f.md)
+- [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](classical_planning_with_llm-generated_heuristics_challenging_the_state_of_the_ar.md)
+- [CLARC: C/C++ Benchmark for Robust Code Search](../../ICLR2026/aigc_detection/clarc_cc_benchmark_for_robust_code_search.md)
+- [Synthesizing Performance Constraints for Evaluating and Improving Code Efficiency](synthesizing_performance_constraints_for_evaluating_and_improving_code_efficienc.md)
+
+<!-- RELATED:END -->

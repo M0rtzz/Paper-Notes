@@ -213,3 +213,15 @@ CAT-Net 的准确率从 88.08% 仅降至 85.10%（-2.98%），而 EEGNet 和 Dee
 - 实验充分度: ⭐⭐⭐⭐⭐（8 种基线 + 跨被试 + 通道消融 + 模块消融 + 时间特征可视化，非常全面）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，实验设计严谨，可解释性分析到位）
 - 价值: ⭐⭐⭐⭐（对中文 BCI 语音解码具有实际推动意义，开源代码增加可复现性）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm](../../ICCV2025/others/afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons.md)
+- [DW-DGAT: Dynamically Weighted Dual Graph Attention Network for Neurodegenerative Disease Diagnosis](dw-dgat_dynamically_weighted_dual_graph_attention_network_for_neurodegenerative_.md)
+- [Towards Style Alignment in Cross-Cultural Translation](../../ACL2025/others/towards_style_alignment_in_cross-cultural_translation.md)
+- [HEEGNet: Hyperbolic Embeddings for EEG](../../ICLR2026/others/heegnet_hyperbolic_embeddings_for_eeg.md)
+- [Multi-Agent Collaboration via Cross-Team Orchestration](../../ACL2025/others/multi-agent_collaboration_via_cross-team_orchestration.md)
+
+<!-- RELATED:END -->

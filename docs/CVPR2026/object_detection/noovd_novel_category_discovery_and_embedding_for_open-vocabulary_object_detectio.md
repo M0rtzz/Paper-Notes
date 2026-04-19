@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ OV-LVIS/OV-COCO/Objects365三个数据集、多backbone、跨数据集验证、详细消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详尽，图示丰富
 - 价值: ⭐⭐⭐⭐ 提供了一种无需额外数据的OVD新范式，对开放词汇检测社区有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+- [ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](abra_teleporting_fine-tuned_knowledge_across_domains_for_open-vocabulary_object_.md)
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [SpectralGCD: Spectral Concept Selection and Cross-modal Representation Learning for Generalized Category Discovery](../../ICLR2026/object_detection/spectralgcd_spectral_concept_selection_and_cross-modal_representation_learning_f.md)
+- [CQ-DINO: Mitigating Gradient Dilution via Category Queries for Vast Vocabulary Object Detection](../../NeurIPS2025/object_detection/cq-dino_mitigating_gradient_dilution_via_category_queries_for_vast_vocabulary_ob.md)
+
+<!-- RELATED:END -->

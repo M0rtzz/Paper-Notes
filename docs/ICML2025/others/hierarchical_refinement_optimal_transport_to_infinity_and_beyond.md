@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 百万级实验有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 OT 领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaCoOT: Layer Collapse through Optimal Transport](../../ICCV2025/others/lacoot_layer_collapse_through_optimal_transport.md)
+- [Theoretical Performance Guarantees for Partial Domain Adaptation via Partial Optimal Transport](theoretical_performance_guarantees_for_partial_domain_adaptation_via_partial_opt.md)
+- [Lightspeed Geometric Dataset Distance via Sliced Optimal Transport](lightspeed_geometric_dataset_distance_via_sliced_optimal_transport.md)
+- [Quantifying Lexical Semantic Shift via Unbalanced Optimal Transport](../../ACL2025/others/quantifying_lexical_semantic_shift_via_unbalanced_optimal_transport.md)
+- [To Each Metric Its Decoding: Post-Hoc Optimal Decision Rules of Probabilistic Hierarchical Classifiers](to_each_metric_its_decoding_post-hoc_optimal_decision_rules_of_probabilistic_hie.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ $$\mathcal{L}_R = \frac{1}{NH'W'} \sum_i \sum_{x,y} M_{i,\text{norm}} \cdot [\ep
 - 实验充分度: ⭐⭐⭐⭐ — 定量、定性、用户研究和消融实验完整
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，图示直观
 - 价值: ⭐⭐⭐⭐ — 对可控视频生成领域有实际参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamRunner: Fine-Grained Compositional Story-to-Video Generation with Retrieval-Augmented Motion Adaptation](dreamrunner_fine-grained_compositional_story-to-video_genera.md)
+- [MotionAgent: Fine-grained Controllable Video Generation via Motion Field Agent](../../ICCV2025/video_generation/motionagent_fine-grained_controllable_video_generation_via_motion_field_agent.md)
+- [OmniVDiff: Omni Controllable Video Diffusion for Generation and Understanding](omnivdiff_omni_controllable_video_diffusion_for_generation_and_understanding.md)
+- [MoSA: Motion-Coherent Human Video Generation via Structure-Appearance Decoupling](../../ICLR2026/video_generation/mosa_motion-coherent_human_video_generation_via_structure-appearance_decoupling.md)
+- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](../../CVPR2026/video_generation/lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
+
+<!-- RELATED:END -->

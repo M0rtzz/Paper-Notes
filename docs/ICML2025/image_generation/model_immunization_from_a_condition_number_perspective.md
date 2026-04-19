@@ -155,3 +155,15 @@ $$\min_{\omega,\theta} \mathcal{R}_{\text{ill}}(H_H(\theta)) + \mathcal{R}_{\tex
 - 实验充分度: ⭐⭐⭐⭐ — 线性模型+深度网络实验，多基线对比
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，定义严谨
 - 价值: ⭐⭐⭐⭐ — 为模型免疫提供了首个理论框架，尽管应用场景需要进一步拓展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition](broadband_ground_motion_synthesis_by_diffusion_model_with_minimal_condition.md)
+- [A Closer Look at Model Collapse: From a Generalization-to-Memorization Perspective](../../NeurIPS2025/image_generation/a_closer_look_at_model_collapse_from_a_generalization-to-memorization_perspectiv.md)
+- [Pairwise Optimal Transports for Training All-to-All Flow-Based Condition Transfer Model](../../NeurIPS2025/image_generation/pairwise_optimal_transports_for_training_all-to-all_flow-based_condition_transfe.md)
+- [Tree-Sliced Wasserstein Distance: A Geometric Perspective](tree-sliced_wasserstein_distance_a_geometric_perspective.md)
+- [Accelerating Diffusion Model Training under Minimal Budgets: A Condensation-Based Perspective](../../CVPR2026/image_generation/accelerating_diffusion_model_training_under_minimal_budgets_a_condensation-based.md)
+
+<!-- RELATED:END -->

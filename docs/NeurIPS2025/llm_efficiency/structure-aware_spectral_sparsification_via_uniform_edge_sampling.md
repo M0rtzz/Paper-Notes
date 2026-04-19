@@ -166,3 +166,15 @@ $$\|\tilde{\mathbf{V}}_{n-k} \tilde{\mathbf{V}}_{n-k}^T \mathbf{C}\|_F^2 \leq k\
 - 实验充分度: ⭐⭐⭐ — 合成图实验充分但缺乏真实大图验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，从直觉到形式化过渡自然
 - 价值: ⭐⭐⭐⭐ — 理论贡献扎实，实践潜力大（大规模图的简化预处理）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Sparsification of Bipartite-Like Clusters in Graphs](../../ICML2025/llm_efficiency/online_sparsification_of_bipartite-like_clusters_in_graphs.md)
+- [Frequency-Aware Token Reduction for Efficient Vision Transformer](frequency-aware_token_reduction_for_efficient_vision_transformer.md)
+- [Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference](../../ICML2025/llm_efficiency/ladder-residual_parallelism-aware_architecture_for_accelerating_large_model_infe.md)
+- [KV-Latent: Dimensional-level KV Cache Reduction with Frequency-aware Rotary Positional Embedding](../../ACL2025/llm_efficiency/kv_latent_cache_reduction.md)
+- [LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training](../../ACL2025/llm_efficiency/adaptive_grouped_pe_context_window.md)
+
+<!-- RELATED:END -->

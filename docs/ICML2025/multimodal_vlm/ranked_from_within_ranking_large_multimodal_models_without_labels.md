@@ -130,3 +130,15 @@ LMM 生成答案时每个 token 都有 softmax 概率分布。利用这些概率
 - 实验充分度: ⭐⭐⭐⭐⭐ 47 模型 × 9 基准的规模化验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰、实验设计严谨
 - 价值: ⭐⭐⭐⭐⭐ 对 LMM 部署实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Re-ranking Reasoning Context with Tree Search Makes Large Vision-Language Models Stronger](re-ranking_reasoning_context_with_tree_search_makes_large_vision-language_models.md)
+- [Quantization without Tears](../../CVPR2025/multimodal_vlm/quantization_without_tears.md)
+- [Towards Multimodal Domain Generalization with Few Labels](../../CVPR2026/multimodal_vlm/towards_multimodal_domain_generalization_with_few_labels.md)
+- [PARC: A Quantitative Framework Uncovering the Symmetries within Vision Language Models](../../CVPR2025/multimodal_vlm/parc_a_quantitative_framework_uncovering_the_symmetries_within_vision_language_m.md)
+- [Robust Multimodal Large Language Models Against Modality Conflict](robust_multimodal_large_language_models_against_modality_conflict.md)
+
+<!-- RELATED:END -->

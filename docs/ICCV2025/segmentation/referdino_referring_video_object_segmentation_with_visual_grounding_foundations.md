@@ -146,3 +146,15 @@ ReferDINO在GroundingDINO基础上新增三个模块：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 五个数据集+两种骨干+详细消融+效率分析，非常全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 结构清晰，motivation和method对应紧密，图表优质
 - **价值**: ⭐⭐⭐⭐⭐ 在RVOS上建立新SOTA同时实现实时推理，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Expression Generation for Referring Image Segmentation and Grounding](latent_expression_generation_for_referring_image_segmentation_and_grounding.md)
+- [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
+- [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](../../NeurIPS2025/segmentation/unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
+- [Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation](hierarchical_visual_prompt_learning_for_continual_video_instance_segmentation.md)
+
+<!-- RELATED:END -->

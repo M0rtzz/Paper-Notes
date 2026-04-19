@@ -153,3 +153,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{proposal}} + \mathcal{L}_{\tex
 - 实验充分度: 9/10 — 双基准 SOTA + 详尽消融，各组件贡献清晰
 - 写作质量: 8/10 — 结构清晰，图示规范，公式表述完整
 - 价值: 8/10 — 方法实用、性能突出、延迟可控，工程与学术价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DriveSuprim: Towards Precise Trajectory Selection for End-to-End Planning](drivesuprim_towards_precise_trajectory_selection_for_end-to-end_planning.md)
+- [DiffusionDrive: Truncated Diffusion Model for End-to-End Autonomous Driving](../../CVPR2025/autonomous_driving/diffusiondrive_truncated_diffusion_model_for_end-to-end_autonomous_driving.md)
+- [Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution](../../NeurIPS2025/autonomous_driving/future-aware_end-to-end_driving_bidirectional_modeling_of_trajectory_planning_an.md)
+- [Drive As You Like: Strategy-Level Motion Planning Based on A Multi-Head Diffusion Model](drive_as_you_like_strategy-level_motion_planning_based_on_a_multi-head_diffusion.md)
+- [Rethinking the Spatio-Temporal Alignment of End-to-End 3D Perception](rethinking_the_spatio-temporal_alignment_of_end-to-end_3d_perception.md)
+
+<!-- RELATED:END -->

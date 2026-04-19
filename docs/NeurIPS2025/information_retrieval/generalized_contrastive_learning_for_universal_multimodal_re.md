@@ -123,3 +123,15 @@ CoVR 视频检索（Recall@1）：37.32 vs CL 33.76 vs Pretrained 31.22。
 - 实验充分度: ⭐⭐⭐⭐ M-BEIR/MMEB/CoVR 三个 benchmark × VISTA/CLIP/TinyCLIP 三种模型的全面交叉验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，loss 推导简洁，Figure 1 的模态覆盖对比图一目了然
 - 价值: ⭐⭐⭐⭐ 多模态检索的即插即用通用改进，对 fused modality 检索场景（Wikipedia/电商/论文）有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GENIUS: A Generative Framework for Universal Multimodal Search](../../CVPR2025/information_retrieval/genius_a_generative_framework_for_universal_multimodal_search.md)
+- [Advancing Myopia To Holism: Fully Contrastive Language-Image Pre-training](../../CVPR2025/information_retrieval/advancing_myopia_to_holism_fully_contrastive_language-image_pre-training.md)
+- [Scaling Language-Centric Omnimodal Representation Learning](scaling_language-centric_omnimodal_representation_learning.md)
+- [The Narrow Gate: Localized Image-Text Communication in Native Multimodal Models](the_narrow_gate_localized_imagetext_communication_in_native.md)
+- [Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

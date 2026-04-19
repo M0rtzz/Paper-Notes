@@ -140,3 +140,15 @@ DCE 采用双阶段训练范式。每到达一个新域时：
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个 benchmark、5 种域序列、多种 backbone、详细消融和分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰（Figure 2 的共享vs域特定对比很直观），问题定义严谨
 - 价值: ⭐⭐⭐⭐ 填补了 DIL+不平衡的空白，框架设计实用，但适用范围限于视觉分类
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of Lookup Experts](mixture_of_lookup_experts.md)
+- [GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](../../ACL2025/llm_efficiency/gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)
+- [Autonomy-of-Experts Models (AoE)](autonomy-of-experts_models.md)
+- [Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning](../../CVPR2025/llm_efficiency/low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc.md)
+- [CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering](costfilter-ad_enhancing_anomaly_detection_through_matching_cost_filtering.md)
+
+<!-- RELATED:END -->

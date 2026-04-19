@@ -150,3 +150,15 @@ $$\boldsymbol{Z}'_i = \text{MLP}\left(\sum_{j\in\mathcal{N}(i)} \boldsymbol{A}_{
 - 实验充分度: ⭐⭐⭐⭐ — 17 个数据集、8 个基线全面对比，但缺少下游任务验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，技术表述严谨，图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 为空间转录组预测建立了新的 SOTA，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Molecular Conformer Generation with SO(3)-Averaged Flow Matching and Reflow](efficient_molecular_conformer_generation_with_so3-averaged_flow_matching_and_ref.md)
+- [Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics](../../NeurIPS2025/medical_imaging/learning_relative_gene_expression_trends_from_pathology_images_in_spatial_transc.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [SpaCRD: Multimodal Deep Fusion of Histology and Spatial Transcriptomics for Cancer Region Detection](../../AAAI2026/medical_imaging/spacrd_multimodal_deep_fusion_of_histology_and_spatial_transcriptomics_for_cance.md)
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+
+<!-- RELATED:END -->

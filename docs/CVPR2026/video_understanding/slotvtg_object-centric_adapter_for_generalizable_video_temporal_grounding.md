@@ -141,3 +141,15 @@ QVHighlights→其他（3B backbone，R1@0.5）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 诊断分析、跨域评估、详尽消融、可视化、域距离量化
 - 写作质量: ⭐⭐⭐⭐⭐ 问题诊断→方案设计→验证的逻辑链极其清晰
 - 价值: ⭐⭐⭐⭐ 对VTG的OOD泛化有实际推动，adapter设计可推广到其他视频任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning](reconstruction-guided_slot_curriculum_addressing_object_over-fragmentation_in_vi.md)
+- [CVA: Context-aware Video-text Alignment for Video Temporal Grounding](cva_context-aware_video-text_alignment_for_video_temporal_grounding.md)
+- [From Vicious to Virtuous Cycles: Synergistic Representation Learning for Unsupervised Video Object-Centric Learning](../../ICLR2026/video_understanding/from_vicious_to_virtuous_cycles_synergistic_representation_learning_for_unsuperv.md)
+- [Moment Quantization for Video Temporal Grounding](../../ICCV2025/video_understanding/moment_quantization_for_video_temporal_grounding.md)
+- [Mamba-VMR: Multimodal Query Augmentation via Generated Videos for Precise Temporal Grounding](mamba-vmr_multimodal_query_augmentation_via_generated_videos_for_precise_tempora.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ $$L = L_{ssim} + L_1 + L_{lpips} + L_{adv} + L_{sds} + L_{consist} + L_{cas} + L
 - 实验充分度: ⭐⭐⭐⭐⭐ — 消融详尽，用户研究有说服力，多维度评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 微软出品，结构清晰深入浅出
 - 价值: ⭐⭐⭐⭐⭐ — 3D说话头领域的标杆级工作，实时性能达商业标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](../../ICCV2025/human_understanding/avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
+- [MOSPA: Human Motion Generation Driven by Spatial Audio](mospa_human_motion_generation_driven_by_spatial_audio.md)
+- [Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
+- [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](../../CVPR2026/human_understanding/unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
+- [FlexAvatar: Learning Complete 3D Head Avatars with Partial Supervision](../../CVPR2026/human_understanding/flexavatar_learning_complete_3d_head_avatars_with_partial_supervision.md)
+
+<!-- RELATED:END -->

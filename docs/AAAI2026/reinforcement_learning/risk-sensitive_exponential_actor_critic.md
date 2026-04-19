@@ -116,3 +116,15 @@ Exponential TD loss 的梯度形如 $e^x(e^x - e^y)$，需要稳定化：
 - 实验充分度: ⭐⭐⭐ — tabular + 连续控制覆盖合理，但任务多样性偏窄
 - 写作质量: ⭐⭐⭐⭐ — 理论呈现清晰，数值问题可视化直观
 - 价值: ⭐⭐⭐⭐ — 为风险敏感 RL 的实际应用铺平道路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow Actor-Critic for Offline Reinforcement Learning (FAC)](../../ICLR2026/reinforcement_learning/flow_actor-critic_for_offline_reinforcement_learning.md)
+- [Emergence of Spatial Representation in an Actor-Critic Agent with Hippocampus-Inspired Sequence Generator](../../ICLR2026/reinforcement_learning/emergence_of_spatial_representation_in_an_actor-critic_agent_with_hippocampus-in.md)
+- [Global Convergence for Average Reward Constrained MDPs with Primal-Dual Actor-Critic](../../NeurIPS2025/reinforcement_learning/global_convergence_for_average_reward_constrained_mdps_with_primal-dual_actor_cr.md)
+- [MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management](mars_a_meta-adaptive_reinforcement_learning_framework_for_risk-aware_multi-agent.md)
+- [Actor-Critics Can Achieve Optimal Sample Efficiency](../../ICML2025/reinforcement_learning/actor-critics_can_achieve_optimal_sample_efficiency.md)
+
+<!-- RELATED:END -->

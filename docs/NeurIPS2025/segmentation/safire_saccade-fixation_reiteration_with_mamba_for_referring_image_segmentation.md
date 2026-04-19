@@ -153,3 +153,15 @@ SaFiRe 的设计灵感来自人类视觉搜索的两阶段认知过程：
 - 技术深度：⭐⭐⭐⭐ (多轮迭代设计完整)
 - 实验充分性：⭐⭐⭐⭐ (标准+新基准+消融)
 - 实用价值：⭐⭐⭐⭐ (线性复杂度使实际部署可行)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReMamber: Referring Image Segmentation with Mamba Twister](../../ECCV2024/segmentation/remamber_referring_image_segmentation_with_mamba_twister.md)
+- [RoMA: Scaling up Mamba-based Foundation Models for Remote Sensing](roma_scaling_up_mamba-based_foundation_models_for_remote_sensing.md)
+- [Latent Expression Generation for Referring Image Segmentation and Grounding](../../ICCV2025/segmentation/latent_expression_generation_for_referring_image_segmentation_and_grounding.md)
+- [QMamba: On First Exploration of Vision Mamba for Image Quality Assessment](../../ICML2025/segmentation/qmamba_on_first_exploration_of_vision_mamba_for_image_quality_assessment.md)
+- [ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
+
+<!-- RELATED:END -->

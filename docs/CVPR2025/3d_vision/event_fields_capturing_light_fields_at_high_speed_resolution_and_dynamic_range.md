@@ -117,3 +117,15 @@ Event Fields 的数学框架建立在全光函数 $L(\vec{x}, \vec{\omega}, \lam
 - 实验充分度: ⭐⭐⭐⭐ 仿真对比系统公平，硬件原型演示丰富多样，但缺乏量化指标对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学框架推导清晰优美，图表设计精良，仿真和实拍互补验证
 - 价值: ⭐⭐⭐⭐⭐ 开辟了计算成像新范式，对摄影、机器人、AR/VR 有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HDR-NSFF: High Dynamic Range Neural Scene Flow Fields](../../ICLR2026/3d_vision/hdr-nsff_high_dynamic_range_neural_scene_flow_fields.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [Exploiting Deblurring Networks for Radiance Fields](exploiting_deblurring_networks_for_radiance_fields.md)
+- [Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes](../../ICCV2025/3d_vision/relative_illumination_fields_learning_medium_and_light_independent_underwater_sc.md)
+- [GaussHDR: High Dynamic Range Gaussian Splatting via Learning Unified 3D and 2D Local Tone Mapping](gausshdr_high_dynamic_range_gaussian_splatting_via_learning_unified_3d_and_2d_lo.md)
+
+<!-- RELATED:END -->

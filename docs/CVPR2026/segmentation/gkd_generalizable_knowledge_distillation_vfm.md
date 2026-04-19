@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个基准、F2F/F2L 双设置、多 VFM、标签效率、多源域扩展，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机诊断→方法设计→验证的逻辑链完美，Fig.3 的 loss 曲线对比直观有力
 - 价值: ⭐⭐⭐⭐⭐ 解决了 VFM 蒸馏中被忽视的泛化问题，对实际部署有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](generalizable_knowledge_distillation_from_vision_foundation_models_for_semantic_.md)
+- [A Mixed Diet Makes DINO An Omnivorous Vision Encoder](mixed_diet_dino_omnivorous_encoder.md)
+- [Brewing Stronger Features: Dual-Teacher Distillation for Multispectral Earth Observation](brewing_stronger_features_dual-teacher_distillation_for_multispectral_earth_obse.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearthsar_a_sarcentric_and_billionscale_geospa.md)
+- [SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation](spar_single-pass_any-resolution_vit_for_open-vocabulary_segmentation.md)
+
+<!-- RELATED:END -->

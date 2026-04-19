@@ -112,3 +112,15 @@ Test Set 1（Seen User/Unseen QA）的Llama-3.2评估分数：
 - 实验充分度: ⭐⭐⭐⭐ 开/闭源+推理/训练方法+消融
 - 写作质量: ⭐⭐⭐⭐ 需求定义清晰，数据构建透明
 - 价值: ⭐⭐⭐⭐ 个性化助手研究的标准基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMs + Persona-Plug = Personalized LLMs](llms_persona-plug_personalized_llms.md)
+- [Self-Instructed Derived Prompt Generation Meets In-Context Learning: Unlocking New Potential of Black-Box LLMs](self-instructed_derived_prompt_generation_meets_in-context_learning_unlocking_ne.md)
+- [How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian](conceptual_knowledge_org.md)
+- [MAPS: Motivation-Aware Personalized Search via LLM-Driven Consultation Alignment](maps_personalized_search.md)
+- [Do Language Models Mirror Human Confidence? Exploring Psychological Insights to Address Overconfidence in LLMs](do_language_models_mirror_human_confidence_exploring_psychological_insights_to_a.md)
+
+<!-- RELATED:END -->

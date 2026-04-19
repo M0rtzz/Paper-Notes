@@ -121,3 +121,15 @@ STRAP-ViT 嵌入 ViT 推理流程的 patch embedding 和位置编码之后、Tra
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学严谨，部分符号偏重
 - 价值: ⭐⭐⭐⭐ 实际部署价值高——即插即用、零训练的安全加固方案
 - 总体: ⭐⭐⭐⭐ 简单有效的工程化防御方案，对实际部署场景有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Byte Latent Transformer: Patches Scale Better Than Tokens](../../ACL2025/others/byte_latent_transformer.md)
+- [SDD: Self-Degraded Defense against Malicious Fine-tuning](../../ACL2025/others/sdd_self-degraded_defense_against_malicious_fine-tuning.md)
+- [Alias-Free ViT: Fractional Shift Invariance via Linear Attention](../../NeurIPS2025/others/alias-free_vit_fractional_shift_invariance_via_linear_attention.md)
+- [Towards Robust ESG Analysis Against Greenwashing Risks: A3CG](../../ACL2025/others/a3cg_esg_greenwashing.md)
+- [Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting](../../NeurIPS2025/others/tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)
+
+<!-- RELATED:END -->

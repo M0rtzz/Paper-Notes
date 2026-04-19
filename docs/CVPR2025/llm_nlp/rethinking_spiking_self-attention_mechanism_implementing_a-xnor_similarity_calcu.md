@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐（多种架构、多种数据集的全面验证）
 - 写作质量: ⭐⭐⭐⭐（问题分析清晰、逻辑严谨）
 - 价值: ⭐⭐⭐⭐（对脉冲Transformer领域有重要推动意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Transformer with Spatial-Temporal Attention](spiking_transformer_with_spatial-temporal_attention.md)
+- [STAA-SNN: Spatial-Temporal Attention Aggregator for Spiking Neural Networks](staa-snn_spatial-temporal_attention_aggregator_for_spiking_neural_networks.md)
+- [Strassen Attention, Split VC Dimension and Compositionality in Transformers](../../NeurIPS2025/llm_nlp/strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
+- [Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
+- [Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention](exposure-slot_exposure-centric_representations_learning_with_slot-in-slot_attent.md)
+
+<!-- RELATED:END -->

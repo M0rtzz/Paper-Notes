@@ -107,3 +107,15 @@ CelebA数据集上的公平分类结果：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、反事实生成、图像编辑、VLM适用性
 - 写作质量: ⭐⭐⭐⭐ 理论推导完备，信息论框架清晰
 - 价值: ⭐⭐⭐⭐ 为公平表示学习提供了更现实的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seek-CAD: A Self-Refined Generative Modeling for 3D Parametric CAD Using Local Inference via DeepSeek](../../ICLR2026/image_generation/seek-cad_a_self-refined_generative_modeling_for_3d_parametric_cad_using_local_in.md)
+- [CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images](causalclip_causally-informed_feature_disentanglement_and_filtering_for_generaliz.md)
+- [ViStoryBench: Comprehensive Benchmark Suite for Story Visualization](../../CVPR2026/image_generation/vistorybench_comprehensive_benchmark_suite_for_story_visualization.md)
+- [What We Don't C: Manifold Disentanglement for Structured Discovery](../../NeurIPS2025/image_generation/what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)
+- [Leveraging Multispectral Sensors for Color Correction in Mobile Cameras](../../CVPR2026/image_generation/leveraging_multispectral_sensors_for_color_correction_in_mobile_cameras.md)
+
+<!-- RELATED:END -->

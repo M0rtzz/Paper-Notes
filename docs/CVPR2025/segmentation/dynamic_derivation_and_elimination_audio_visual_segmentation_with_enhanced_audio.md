@@ -137,3 +137,15 @@ DDESeg (HTSAT) vs 次优方法：S4 +3.7, MS3 +3.9, **Semantic +6.4**
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 AVS 和 VPO 两大基准，消融清晰展示各模块贡献
 - 写作质量: ⭐⭐⭐⭐ 问题动机图示非常清楚，方法描述详尽
 - 价值: ⭐⭐⭐⭐ AVS-Semantic 上 6.4% 的提升说明方法实质性地推进了该领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Audio-Visual Instance Segmentation](audio-visual_instance_segmentation.md)
+- [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](../../ICCV2025/segmentation/towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
+- [TAViS: Text-bridged Audio-Visual Segmentation with Foundation Models](../../ICCV2025/segmentation/tavis_text-bridged_audio-visual_segmentation_with_foundation_models.md)
+- [SouPLe: Enhancing Audio-Visual Localization and Segmentation with Learnable Prompt Contexts](../../CVPR2026/segmentation/souple_enhancing_audio-visual_localization_and_segmentation_with_learnable_promp.md)
+- [CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](../../ECCV2024/segmentation/cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
+
+<!-- RELATED:END -->

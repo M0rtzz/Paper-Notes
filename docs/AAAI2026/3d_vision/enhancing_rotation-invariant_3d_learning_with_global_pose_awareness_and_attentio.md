@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个基准 + 充分消融，但缺少场景级评估
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，图示清晰，逻辑流畅
 - 价值: ⭐⭐⭐⭐ 为 RI 点云学习提供了优雅的全局信息注入方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RISurConv: Rotation Invariant Surface Attention-Augmented Convolutions for 3D Point Cloud Classification and Segmentation](../../ECCV2024/3d_vision/risurconv_rotation_invariant_surface_attention-augmented_convolutions_for_3d_poi.md)
+- [Hierarchical Direction Perception via Atomic Dot-Product Operators for Rotation-Invariant Point Clouds Learning](hierarchical_direction_perception_via_atomic_dot-product_operators_for_rotation-.md)
+- [Debiasing Diffusion Priors via 3D Attention for Consistent Gaussian Splatting](debiasing_diffusion_priors_via_3d_attention_for_consistent_gaussian_splatting.md)
+- [Global-Aware Edge Prioritization for Pose Graph Initialization](../../CVPR2026/3d_vision/global-aware_edge_prioritization_for_pose_graph_initialization.md)
+- [Enhancing Hands in 3D Whole-Body Pose Estimation with Conditional Hands Modulator](../../CVPR2026/3d_vision/enhancing_hands_in_3d_whole-body_pose_estimation_with_conditional_hands_modulato.md)
+
+<!-- RELATED:END -->

@@ -99,3 +99,15 @@ Token 用量仅为 TAMA 的 **1/27**，SigLLM-PG 的 **1/51**。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 11 数据集 × 多类 baseline，消融和效率分析全面
 - 写作质量: ⭐⭐⭐⭐ — 动机图示直观，方法描述清晰
 - 价值: ⭐⭐⭐⭐ — 为 VLM 在非传统视觉任务上的应用提供了可行范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HeadHunt-VAD: Hunting Robust Anomaly-Sensitive Heads in MLLM for Tuning-Free Video Anomaly Detection](headhunt-vad_hunting_robust_anomaly-sensitive_heads_in_mllm_.md)
+- [LogicQA: Logical Anomaly Detection with Vision Language Model Generated Questions](../../ACL2025/multimodal_vlm/logicqa_logical_anomaly_detection_with_vision_language_model_generated_questions.md)
+- [No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection](../../CVPR2026/multimodal_vlm/no_need_for_real_anomaly_mllm_empowered_zero-shot_video_anomaly_detection.md)
+- [Cross-modal Proxy Evolving for OOD Detection with Vision-Language Models](cross-modal_proxy_evolving_for_ood_detection_with_vision-lan.md)
+- [Learning to Tell Apart: Weakly Supervised Video Anomaly Detection via Disentangled Semantic Alignment](learning_to_tell_apart_weakly_supervised_video_anomaly_detection_via_disentangle.md)
+
+<!-- RELATED:END -->

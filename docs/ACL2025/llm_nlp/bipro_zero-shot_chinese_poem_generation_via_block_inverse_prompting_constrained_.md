@@ -149,3 +149,15 @@ BIPro 显著缩小了 AI 与人类诗歌的差距。
 - **实验完整性**：⭐⭐⭐⭐ — 人类评审设计严谨，但缺乏自动化指标和消融实验
 - **实用价值**：⭐⭐⭐ — 受限于块生成模型的稀缺性，实际应用场景较窄
 - **写作质量**：⭐⭐⭐⭐ — 论文结构清晰，算法描述规范，案例分析生动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Belief: A Hard Problem for LLMs](zero-shot_belief_a_hard_problem_for_llms.md)
+- [HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation](hygenar_an_llm-driven_hybrid_genetic_algorithm_for_few-shot_grammar_generation.md)
+- [Segment-Level Diffusion: A Framework for Controllable Long-Form Generation with Diffusion Language Models](segment_level_diffusion.md)
+- [From Selection to Generation: A Survey of LLM-based Active Learning](from_selection_to_generation_a_survey.md)
+- [Length Controlled Generation for Black-box LLMs](length_controlled_generation_for_black-box_llms.md)
+
+<!-- RELATED:END -->

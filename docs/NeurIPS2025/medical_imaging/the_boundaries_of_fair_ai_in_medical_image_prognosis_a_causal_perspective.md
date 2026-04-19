@@ -133,3 +133,15 @@ FairTTE框架包含三个层次：(1) 基于因果推理的偏差分析理论框
 - 实验充分度: ⭐⭐⭐⭐⭐ 3数据集×多敏感属性×3模型×5算法×10种子，规模惊人
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，理论与实验紧密结合
 - 价值: ⭐⭐⭐⭐⭐ 为医学影像公平性研究开辟了新方向，洞察深刻且可指导实践
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](fairgrpo_fair_reinforcement_learning_for_equitable_clinical_reasoning.md)
+- [One Size Fits None: Rethinking Fairness in Medical AI](../../ACL2025/medical_imaging/one_size_fits_none_rethinking_fairness_in_medical_ai.md)
+- [DualFete: Revisiting Teacher-Student Interactions from a Feedback Perspective for Semi-supervised Medical Image Segmentation](../../AAAI2026/medical_imaging/dualfete_revisiting_teacher-student_interactions_from_a_feedback_perspective_for.md)
+- [Doctor Approved: Generating Medically Accurate Skin Disease Images through AI-Expert Feedback](doctor_approved_generating_medically_accurate_skin_disease_images_through_ai-exp.md)
+- [LoMix: Learnable Weighted Multi-Scale Logits Mixing for Medical Image Segmentation](lomix_learnable_weighted_multi-scale_logits_mixing_for_medical_image_segmentatio.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个模型、4个实验角度、多种控制条件、完整的消融
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰、实验逻辑严密、结论表述准确
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全防御领域的子空间方法路线提出了根本性质疑，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Heterogeneous Federated Fine-Tuning with Parallel One-Rank Adaptation](heterogeneous_federated_fine-tuning_with_parallel_one-rank_adaptation.md)
+- [Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
+- [The Devil behind the Mask: An Emergent Safety Vulnerability of Diffusion LLMs](the_devil_behind_the_mask_an_emergent_safety_vulnerability_of_diffusion_llms.md)
+- [Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection](../../AAAI2026/human_understanding/fine-grained_dino_tuning_with_dual_supervision_for_face_forgery_detection.md)
+- [FedRAG: A Framework for Fine-Tuning Retrieval-Augmented Generation Systems](../../ICML2025/human_understanding/fedrag_a_framework_for_fine-tuning_retrieval-augmented_generation_systems.md)
+
+<!-- RELATED:END -->

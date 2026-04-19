@@ -184,3 +184,15 @@ AutoPresent的pipeline：
 - 实验充分度: ⭐⭐⭐⭐⭐ 10个领域、585个测试样本、8+种方法对比、3种难度设置、用户研究、迭代优化分析，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰、实验组织系统、图表丰富直观，UCB+CMU联合出品质量很高
 - 价值: ⭐⭐⭐⭐ 开辟了结构化视觉生成的新研究方向，开源工具链对社区推动大，但当前效果距离实用仍有差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
+- [Factuality Matters: When Image Generation and Editing Meet Structured Visuals](../../ICLR2026/image_generation/factuality_matters_when_image_generation_and_editing_meet_structured_visuals.md)
+- [IDEA-Bench: How Far are Generative Models from Professional Designing?](idea-bench_how_far_are_generative_models_from_professional_designing.md)
+- [Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing](beyond_convolution_a_taxonomy_of_structured_operators_for_learning-based_image_p.md)
+- [What We Don't C: Manifold Disentanglement for Structured Discovery](../../NeurIPS2025/image_generation/what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)
+
+<!-- RELATED:END -->

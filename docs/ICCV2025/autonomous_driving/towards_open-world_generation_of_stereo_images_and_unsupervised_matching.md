@@ -146,3 +146,15 @@ GenStereo 在 PSNR 上提升约 10 dB，SSIM 提升近一倍。
 - **实验充分度**: ⭐⭐⭐⭐ 多基准测试，消融覆盖关键组件，但缺少推理效率分析
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，图表说明性强
 - **价值**: ⭐⭐⭐⭐⭐ 同时推进了立体图像生成和无监督立体匹配两个方向，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AGO: Adaptive Grounding for Open World 3D Occupancy Prediction](ago_adaptive_grounding_for_open_world_3d_occupancy_predictio.md)
+- [Towards Foundational LiDAR World Models with Efficient Latent Flow Matching](../../NeurIPS2025/autonomous_driving/towards_foundational_lidar_world_models_with_efficient_latent_flow_matching.md)
+- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](../../CVPR2025/autonomous_driving/helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
+- [Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation](hermes_a_unified_self-driving_world_model_for_simultaneous_3d_scene_understandin.md)
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+
+<!-- RELATED:END -->

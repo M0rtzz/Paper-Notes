@@ -155,3 +155,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{ce}} + \lambda(\mathcal{L}_{\t
 - 实验充分度: ⭐⭐⭐⭐⭐ — 128 数据集 + 19 baseline + 消融 + 统计检验非常完整
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，图示直观
 - 价值: ⭐⭐⭐⭐ — 为 shapelet 方法提供了新范式，但仅限单变量场景限制了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Shape-Aware Foundation Model for Time Series Classification](../../AAAI2026/time_series/a_unified_shape-aware_foundation_model_for_time_series_class.md)
+- [MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series](../../NeurIPS2025/time_series/maestro_adaptive_sparse_attention_and_robust_learning_for_multimodal_dynamic_tim.md)
+- [TQNet: Temporal Query Network for Efficient Multivariate Time Series Forecasting](temporal_query_network_for_efficient_multivariate_time_series_forecasting.md)
+- [LETS-C: Leveraging Text Embedding for Time Series Classification](../../ACL2025/time_series/lets-c_leveraging_text_embedding_for_time_series_classification.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+
+<!-- RELATED:END -->

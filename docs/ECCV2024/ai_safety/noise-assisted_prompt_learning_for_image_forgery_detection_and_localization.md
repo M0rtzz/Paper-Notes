@@ -123,3 +123,15 @@ CLIP-IFDL 基于预训练 CLIP 模型，包含两个主要组件：(1) 实例感
 - 实验充分度: ⭐⭐⭐⭐ 多个标准数据集测试，跨数据集泛化实验充分，消融全面
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，方法描述清晰
 - 价值: ⭐⭐⭐⭐ 在 AI 生成内容泛滥的时代，具有泛化能力的篡改检测器有很高的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking VLMs for Image Forgery Detection and Localization](../../CVPR2026/ai_safety/rethinking_vlms_for_image_forgery_detection_and_lo.md)
+- [Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
+- [ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization](../../NeurIPS2025/ai_safety/forensichub_a_unified_benchmark_codebase_for_all-domain_fake_image_detection_and.md)
+- [CLIP-Guided Generative Networks for Transferable Targeted Adversarial Attacks](clip-guided_generative_networks_for_transferable_targeted_adversarial_attacks.md)
+- [Fisher Calibration for Backdoor-Robust Heterogeneous Federated Learning](fisher_calibration_for_backdoor-robust_heterogeneous_federated_learning.md)
+
+<!-- RELATED:END -->

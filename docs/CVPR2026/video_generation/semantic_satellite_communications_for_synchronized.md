@@ -114,3 +114,15 @@ V2A-L2在12dB下AKD=5.8，接近L3的4.8，但带宽仅为L3的约50%。
 - 实验充分度: ⭐⭐⭐⭐ 多维度对比完善，包含案例分析，但缺乏真实卫星实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，系统描述详尽
 - 价值: ⭐⭐⭐⭐ 为卫星语义通信提供了完整的系统范式，但应用场景较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SWIFT: Sliding Window Reconstruction for Few-Shot Training-Free Generated Video Attribution](swift_sliding_window_reconstruction_for_few-shot_training-free_generated_video_a.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+- [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
+- [LightMover: Generative Light Movement with Color and Intensity Controls](lightmover_generative_light_movement_with_color_and_intensity_controls.md)
+- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
+
+<!-- RELATED:END -->

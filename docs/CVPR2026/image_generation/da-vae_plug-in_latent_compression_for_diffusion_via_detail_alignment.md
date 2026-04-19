@@ -208,3 +208,15 @@ DiT 微调端：加权扩散损失 $\mathcal{L}_{DiT}(n) = \frac{1}{|B| + w(n)|R
 - 实验充分度: ⭐⭐⭐⭐ ImageNet 定量 + SD3.5 定性定量，消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，图表精美，逻辑流畅
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高，5 H100-days 获得 4-6x 加速
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Eliminating VAE for Fast and High-Resolution Generative Detail Restoration](../../ICLR2026/image_generation/eliminating_vae_for_fast_and_high-resolution_generative_detail_restoration.md)
+- [CoD: A Diffusion Foundation Model for Image Compression](cod_a_diffusion_foundation_model_for_image_compression.md)
+- [Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework](taming_score-based_denoisers_in_admm_a_convergent_plug-and-play_framework.md)
+- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](dit-ic_aligned_diffusion_transformer_for_efficient_image_compression.md)
+- [BiGain: Unified Token Compression for Joint Generation and Classification](bigain_unified_token_compression_for_joint_generation_and_classification.md)
+
+<!-- RELATED:END -->

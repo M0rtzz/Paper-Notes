@@ -170,3 +170,15 @@ $$R = \alpha \cdot R_{anon} + \beta \cdot R_{utility} + \gamma \cdot R_{fluency}
 - 实验充分性：⭐⭐⭐⭐ （两个数据集，详细消融，多模型规模对比）
 - 写作质量：⭐⭐⭐⭐ （结构清晰，动机阐述到位）
 - 综合评分：⭐⭐⭐⭐ （实用价值高，技术贡献扎实）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Refining Language Model Anonymizers via Adversarial Distillation](self-refining_language_model_anonymizers_via_adversarial_distillation.md)
+- [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [DNA-DetectLLM: Unveiling AI-Generated Text via a DNA-Inspired Mutation-Repair Paradigm](dna-detectllm_unveiling_ai-generated_text_via_a_dna-inspired_mutation-repair_par.md)
+- [PULSE: Practical Evaluation Scenarios for Large Multimodal Model Unlearning](pulse_practical_evaluation_scenarios_for_large_multimodal_model_unlearning.md)
+- [The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](../../ICML2025/ai_safety/the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
+
+<!-- RELATED:END -->

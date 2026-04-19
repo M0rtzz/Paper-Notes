@@ -134,3 +134,15 @@ TAG-MoE 基于 MM-DiT（多模态扩散Transformer）架构，输入包括文本
 - 实验充分度: ⭐⭐⭐⭐⭐ 五个基准、三类专项评估、消融研究、可视化分析、用户研究，非常全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题定义明确，但部分数学符号可进一步简化
 - 价值: ⭐⭐⭐⭐ 对统一生成模型中的任务干扰问题提供了系统性解决方案，语义对齐路由的思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models](flash-unified_a_training-free_and_task-aware_acceleration_framework_for_native_u.md)
+- [CARE-Edit: Condition-Aware Routing of Experts for Contextual Image Editing](care-edit_condition-aware_routing_of_experts_for_contextual_image_editing.md)
+- [Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](../../AAAI2026/image_generation/mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
+- [EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation](edgedit_hardware-aware_diffusion_transformers_for_efficient_on-device_image_gene.md)
+- [OPRO: Orthogonal Panel-Relative Operators for Panel-Aware In-Context Image Generation](opro_orthogonal_panel-relative_operators_for_panel-aware_in-context_image_genera.md)
+
+<!-- RELATED:END -->

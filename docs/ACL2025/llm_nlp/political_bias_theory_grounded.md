@@ -153,3 +153,15 @@ PCT 命题分布严重不均衡（文化右 31 vs 文化左 9），WVS 更精简
 - 写作质量: ⭐⭐⭐⭐ 跨学科论证清晰，PCT 批判有理有据
 - 实用价值: ⭐⭐⭐⭐ 提供可操作的偏见评估建议，代码开源
 - 综合: ⭐⭐⭐⭐ 方法论引领性强，但测试模型偏旧、命题覆盖有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive](theory_of_llm_sampling.md)
+- [Towards Geo-Culturally Grounded LLM Generations](geocultural_grounded_llm.md)
+- [Mitigate Position Bias in LLMs via Scaling a Single Hidden States Channel](mitigate_position_bias_in_large_language_models_via_scaling_a_single_dimension.md)
+- [Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning](veracity_bias_llm_hidden_beliefs.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ MTCT 后类别 token 的高置信比例（>0.75）从 86.33% 提升至 90.23%，
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个 DG 基准 + 双模型消融 + token 级分析 + 参数敏感性
 - 写作质量: ⭐⭐⭐⭐⭐ 挑战发现→分析→方法→验证的完整逻辑闭环
 - 价值: ⭐⭐⭐⭐⭐ 为域泛化开辟推理驱动新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Multimodal Domain Generalization with Few Labels](../../CVPR2026/multimodal_vlm/towards_multimodal_domain_generalization_with_few_labels.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](../../ACL2025/multimodal_vlm/table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
+- [Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective](why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)
+- [WebDS: An End-to-End Benchmark for Web-based Data Science](webds_an_end-to-end_benchmark_for_web-based_data_science.md)
+
+<!-- RELATED:END -->

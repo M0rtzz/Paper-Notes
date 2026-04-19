@@ -121,3 +121,15 @@ ConceptX 分两个阶段：(1) **概念提取**——从输入中识别语义丰
 - 实验充分度: ⭐⭐⭐⭐ 三个 LLM + 三种任务（忠实性/偏见审计/引导）+ 多种变体对比，实验设计全面
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，方法和实验描述详细，符号规范
 - 价值: ⭐⭐⭐⭐ 展示了归因方法在 LLM 安全中的实用价值，为"无需重训练的安全对齐"提供了新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FairSteer: Inference Time Debiasing for LLMs with Dynamic Activation Steering](../../ACL2025/social_computing/fairsteer_inference_time_debiasing_for_llms_with_dynamic_activation_steering.md)
+- [Silencing Empowerment, Allowing Bigotry: Auditing the Moderation of Hate Speech on Twitch](../../ACL2025/social_computing/silencing_empowerment_allowing_bigotry_auditing_the_moderation_of_hate_speech_on.md)
+- [BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses](../../ICLR2026/social_computing/biasfreebench_a_benchmark_for_mitigating_bias_in_large_language_model_responses.md)
+- [Evaluation of LLM Vulnerabilities to Being Misused for Personalized Disinformation Generation](../../ACL2025/social_computing/llm_personalized_disinformation.md)
+- [STATE ToxiCN: A Benchmark for Span-level Target-Aware Toxicity Extraction in Chinese Hate Speech Detection](../../ACL2025/social_computing/state_toxicn_a_benchmark_for_span-level_target-aware_toxicity_extraction_in_chin.md)
+
+<!-- RELATED:END -->

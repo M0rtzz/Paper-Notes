@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个benchmark、详细消融、与MM-Verify的结合、case study极其细致
 - 写作质量: ⭐⭐⭐⭐⭐ Section 3的分析→Section 4的方法设计逻辑非常流畅，4个Takeaway清晰
 - 对我的价值: ⭐⭐⭐⭐⭐ VLM self-correction是关键能力，20K数据的高效训练范式对资源受限场景极有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics](roborefer_towards_spatial_referring_with_reasoning_in_vision-language_models_for.md)
+- [VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism](../../ACL2025/multimodal_vlm/vrest_tree_search_vlm_reasoning.md)
+- [Unveiling Chain of Step Reasoning for Vision-Language Models with Fine-grained Rewards](unveiling_chain_of_step_reasoning_for_visionlanguage_models.md)
+- [Recognition through Reasoning: Reinforcing Image Geo-localization with Large Vision-Language Models](recognition_through_reasoning_reinforcing_image_geo-localization_with_large_visi.md)
+- [MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models](mm-opera_benchmarking_open-ended_association_reasoning_for_large_vision-language.md)
+
+<!-- RELATED:END -->

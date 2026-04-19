@@ -113,3 +113,15 @@ PPO + 回溯奖励塑形。回溯奖励：$r_{bt} = -\alpha \cdot (t_{current} -
 - 实验充分度: ⭐⭐⭐⭐ 多环境验证
 - 写作质量: ⭐⭐⭐⭐ 动机清晰
 - 价值: ⭐⭐⭐⭐ 稀疏奖励探索的重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+- [Steering When Necessary: Flexible Steering Large Language Models with Backtracking](steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)
+- [Learning to Assist: Physics-Grounded Human-Human Control via Multi-Agent Reinforcement Learning](../../CVPR2026/video_understanding/learning_to_assist_physics-grounded_human-human_control_via_multi-agent_reinforc.md)
+- [TempSamp-R1: Effective Temporal Sampling with Reinforcement Fine-Tuning for Video LLMs](tempsampr1_effective_temporal_sampling_with_reinforcement_fi.md)
+- [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](../../ICLR2026/video_understanding/stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
+
+<!-- RELATED:END -->

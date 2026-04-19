@@ -123,3 +123,15 @@ $\mathcal{L}_{\text{Total}} = \mathcal{L}_{\text{BC-cotrain}}(\phi,\theta) + \al
 - 实验充分度: ⭐⭐⭐⭐ 三个真实世界任务（含双臂），仿真消融，潜在空间可视化，充分验证假设
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，方法动机充分，实验条理分明
 - 价值: ⭐⭐⭐⭐⭐ 行为泛化能力是真正的突破——让人类数据不再只是"锦上添花"而是真的能教机器人新技能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination](inner_speech_as_behavior_guides_steerable_imitation_of_diverse_behaviors_for_hum.md)
+- [Continual Knowledge Adaptation for Reinforcement Learning](continual_knowledge_adaptation_for_reinforcement_learning.md)
+- [Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
+- [Quantifying Generalisation in Imitation Learning](quantifying_generalisation_in_imitation_learning.md)
+- [Parameter Efficient Fine-tuning via Explained Variance Adaptation](parameter_efficient_fine-tuning_via_explained_variance_adaptation.md)
+
+<!-- RELATED:END -->

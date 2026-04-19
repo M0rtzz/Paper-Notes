@@ -135,3 +135,15 @@ VLM2-Bench围绕三类视觉线索构建：
 - 实验充分度: ⭐⭐⭐⭐ 12个模型 + 多种提示方法的全面评估，但benchmark规模可以更大
 - 写作质量: ⭐⭐⭐⭐⭐ 8个发现条理清晰，结论具有指导性，图表设计直观
 - 价值: ⭐⭐⭐⭐ 揭示了VLM的根本性能力缺陷，对未来VLM训练方向有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning](../../NeurIPS2025/multimodal_vlm/think_or_not_think_a_study_of_explicit_thinking_in_rule-based_visual_reinforceme.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](effivlm_bench_acceleration.md)
+- [Speaking Beyond Language: A Large-Scale Multimodal Dataset for Learning Nonverbal Cues from Video-Grounded Dialogues](speaking_beyond_language.md)
+- [Visual Interestingness Decoded: How GPT-4o Mirrors Human Interests](../../ICCV2025/multimodal_vlm/visual_interestingness_decoded_how_gpt-4o_mirrors_human_interests.md)
+- [Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](exploring_how_generative_mllms_perceive_more.md)
+
+<!-- RELATED:END -->

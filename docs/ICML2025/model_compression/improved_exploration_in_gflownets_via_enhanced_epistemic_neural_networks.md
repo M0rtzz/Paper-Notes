@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 环境偏简单，缺乏实际应用场景
 - 写作质量: ⭐⭐⭐⭐ 背景介绍充分，方法清晰
 - 价值: ⭐⭐⭐⭐ 为 GFlowNet 探索问题提供了轻量有效的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)
+- [An Efficient Matrix Multiplication Algorithm for Accelerating Inference in Binary and Ternary Neural Networks](an_efficient_matrix_multiplication_algorithm_for_accelerating_inference_in_binar.md)
+- [Adaptive Width Neural Networks](../../ICLR2026/model_compression/adaptive_width_neural_networks.md)
+- [A Recovery Guarantee for Sparse Neural Networks](../../ICLR2026/model_compression/a_recovery_guarantee_for_sparse_neural_networks.md)
+- [QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks](../../NeurIPS2025/model_compression/quadenhancer_leveraging_quadratic_transformations_to_enhance_deep_neural_network.md)
+
+<!-- RELATED:END -->

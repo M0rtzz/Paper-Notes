@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种曲率测量方法交叉验证，投影SGD设计精巧，跨架构/数据集一致
 - 写作质量: ⭐⭐⭐⭐⭐ 物理直觉与数学推导结合流畅，图示清晰，逻辑链完整
 - 价值: ⭐⭐⭐⭐ 对理解损失景观结构和SGD行为有重要理论价值，对权重空间集成等实用方法也有启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Mode Connectivity via Parameter Space Symmetry](../../ICML2025/others/understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [Generalized Linear Mode Connectivity for Transformers](../../NeurIPS2025/others/generalized_linear_mode_connectivity_for_transformers.md)
+- [Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
+- [On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
+- [Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ $$L(D^{f;Q}, D^{f+}, D^{f-}) = \max\{d(D^{f;Q}, D^{f+}) - d(D^{f;Q}, D^{f-}) + m
 ## 评分 ⭐⭐⭐⭐
 
 方法设计简洁有效，数据效率极高（1K vs 1.3M），在最难的 method 分面上取得突破。领域扩展性好（教育领域验证）。扣分点在于 Background 分面提升有限，评测集较小，以及未在更现代的嵌入架构上验证。整体来看是数据增强 + 检索交叉领域的一篇扎实工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
+- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [Unlocking Speech Instruction Data Potential with Query Rewriting](unlocking_speech_instruction_data_potential_with_query_rewriting.md)
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
+
+<!-- RELATED:END -->

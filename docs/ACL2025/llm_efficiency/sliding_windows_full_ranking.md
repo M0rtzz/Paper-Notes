@@ -117,3 +117,15 @@ $$\mathcal{L}_{ia} = -\sum_{i=1}^{|y|} w_i \log P_\theta(y_i | x, y_{<i})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 实验极其全面，涵盖 zero-shot/SFT、多模型、多数据集、效率/效果/成本多维度分析，消融实验详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 写作清晰流畅，问题动机阐述到位，图表设计直观，实验组织有条理
 - 对我的价值: ⭐⭐⭐⭐ 对 LLM-based reranking 系统的设计有直接参考价值，importance-aware loss 的设计思路可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
+- [Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing](scaling_context_not_parameters_training_a_compact_7b_language_model_for_efficien.md)
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+
+<!-- RELATED:END -->

@@ -98,3 +98,15 @@ tags:
 ## 补充说明
 
 HFLS-Weather 数据集的构建使用了来自 Snow100K、RESIDE-OTS、Google Landmark V2 和 OSV5M 的多样化背景图像，保证了场景多样性。数据集在规模（100万对）和天气覆盖（雨/雪/雾及其组合）方面均大幅超越现有基准。GPT-4o 的定性评估结果（Table 3）显示本文方法在 Artifact Removal、Color Accuracy、Detail Preservation 等维度均获得最高分。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration](modem_a_morton-order_degradation_estimation_mechanism_for_adverse_weather_image_.md)
+- [Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration](../../CVPR2026/image_restoration/beyond_ground-truth_leveraging_image_quality_priors_for_real-world_image_restora.md)
+- [Robust Adverse Weather Removal via Spectral-based Spatial Grouping (SSGformer)](../../ICCV2025/image_restoration/robust_adverse_weather_removal_via_spectral-based_spatial_grouping.md)
+- [Decouple to Reconstruct: High Quality UHD Restoration via Active Feature Disentanglement and Reversible Fusion](../../ICCV2025/image_restoration/decouple_to_reconstruct_high_quality_uhd_restoration_via_active_feature_disentan.md)
+- [Restoring Images in Adverse Weather Conditions via Histogram Transformer](../../ECCV2024/image_restoration/restoring_images_in_adverse_weather_conditions_via_histogram_transformer.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ PPO + RLOO（Leave-One-Out baseline），每个 prompt 采样 8 个回答，3.2K
 - 实验充分度: ⭐⭐⭐⭐ 5 数据集 + 2 模型规模 + 多基线 + 消融 + 定性分析 + 忠实度研究
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、方法简洁、理论保证完善、实验图表信息丰富
 - 价值: ⭐⭐⭐⭐⭐ 极高实用价值——几行代码改动、20小时训练就能让推理模型节省一半计算成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+- [EvoLM: In Search of Lost Language Model Training Dynamics](evolm_in_search_of_lost_language_model_training_dynamics.md)
+- [Checklists Are Better Than Reward Models For Aligning Language Models](checklists_are_better_than_reward_models_for_aligning_langua.md)
+- [Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](teaching_language_models_to_evolve_with_users_dynamic_profile_modeling_for_perso.md)
+- [Behavior Injection: Preparing Language Models for Reinforcement Learning](behavior_injection_preparing_language_models_for_reinforcement_learning.md)
+
+<!-- RELATED:END -->

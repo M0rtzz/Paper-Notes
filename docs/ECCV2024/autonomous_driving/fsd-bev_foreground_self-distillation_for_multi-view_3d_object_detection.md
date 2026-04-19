@@ -166,3 +166,15 @@ FSD-BEV 采用统一框架，由三大核心组件构成：
 - **实验质量**: 4/5 - 消融实验充分，多尺度 backbone 验证
 - **写作质量**: 4/5 - 动机清晰，方法描述详细
 - **实用价值**: 4/5 - 推理时不增加计算量，训练时也无需额外预训练
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection](open_object-wise_position_embedding_for_multi-view_3d_object_detection.md)
+- [GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
+- [DySeT: A Dynamic Masked Self-distillation Approach for Robust Trajectory Prediction](dyset_a_dynamic_masked_self-distillation_approach_for_robust_trajectory_predicti.md)
+- [Weakly Supervised 3D Object Detection via Multi-Level Visual Guidance](weakly_supervised_3d_object_detection_via_multi-level_visual_guidance.md)
+- [Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection](equivariant_spatio-temporal_self-supervision_for_lidar_object_detection.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ ChartMuseum的文本提取vs图像差距达46%，远大于ChartQA的13%，证明
 | 写作质量 | ⭐⭐⭐⭐⭐ | 动机链条清晰：旧基准不够→合成实验验证→新基准→全面评估→错误分析 |
 | 实用价值 | ⭐⭐⭐⭐ | 为LVLM视觉推理改进提供了诊断工具和具体方向 |
 | 总分 | 4.6/5 | 高质量基准论文，问题界定精准、实验设计完整 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning](think_or_not_think_a_study_of_explicit_thinking_in_rule-based_visual_reinforceme.md)
+- [CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models](choice_benchmarking_the_remote_sensing_capabilities_of_large_vision-language_mod.md)
+- [FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges](finegrain_evaluating_failure_modes_of_text-to-image_models_with_vision_language_.md)
+- [Recognition through Reasoning: Reinforcing Image Geo-localization with Large Vision-Language Models](recognition_through_reasoning_reinforcing_image_geo-localization_with_large_visi.md)
+- [Visual Structures Help Visual Reasoning: Addressing the Binding Problem in LVLMs](visual_structures_helps_visual_reasoning_addressing_the_binding_problem_in_vlms.md)
+
+<!-- RELATED:END -->

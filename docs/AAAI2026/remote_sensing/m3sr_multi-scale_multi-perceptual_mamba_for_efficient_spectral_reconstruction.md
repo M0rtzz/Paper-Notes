@@ -173,3 +173,15 @@ G=4 在性能和效率之间取得最佳平衡。
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、十种 SOTA 对比、完整消融实验和参数分析
 - 写作质量: ⭐⭐⭐ 结构清晰但部分公式符号不够统一
 - 价值: ⭐⭐⭐⭐ 为高光谱重建提供了高效实用的 Mamba 方案，有开源代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Spatiotemporal Feature Propagation for Video-Level Compressive Spectral Reconstruction](../../CVPR2026/remote_sensing/exploring_spatiotemporal_feature_propagation_for_video-level_compressive_spectra.md)
+- [Consistency-based Abductive Reasoning over Perceptual Errors of Multiple Pre-trained Models in Novel Environments](consistency-based_abductive_reasoning_over_perceptual_errors_of_multiple_pre-tra.md)
+- [MFogHub: Bridging Multi-Regional and Multi-Satellite Data for Global Marine Fog Detection and Forecasting](../../CVPR2025/remote_sensing/mfoghub_bridging_multi-regional_and_multi-satellite_data_for_global_marine_fog_d.md)
+- [Machine Learning for Sustainable Rice Production: Region-Scale Monitoring of Water-Saving Practices in Punjab, India](machine_learning_for_sustainable_rice_production_region-scale_monitoring_of_wate.md)
+- [Joint and Streamwise Distributed MIMO Satellite Communications with Multi-Antenna Ground Users](../../CVPR2026/remote_sensing/joint_and_streamwise_distributed_mimo_satellite_communications_with_multi-antenn.md)
+
+<!-- RELATED:END -->

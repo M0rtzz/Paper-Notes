@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ETH3D、Texture-Poor、IMC 三个数据集覆盖面广，消融研究充分
 - 写作质量: ⭐⭐⭐⭐ 流程图清晰，各模块动机交代充分
 - 价值: ⭐⭐⭐⭐ 解决了稠密匹配融入SfM的实际痛点，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Light3R-SfM: Towards Feed-forward Structure-from-Motion](light3r-sfm_towards_feed-forward_structure-from-motion.md)
+- [MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion](mp-sfm_monocular_surface_priors_for_robust_structure-from-motion.md)
+- [A Unified Image-Dense Annotation Generation Model for Underwater Scenes](a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
+- [MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
+- [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
+
+<!-- RELATED:END -->

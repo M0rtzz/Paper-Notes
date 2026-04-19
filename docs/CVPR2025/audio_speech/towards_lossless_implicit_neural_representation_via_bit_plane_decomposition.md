@@ -91,3 +91,15 @@ MSE 损失。每个比特平面用目标错误界 $\epsilon(n) = \frac{1}{2(2^n-
 - 实验充分度: ⭐⭐⭐⭐ 多激活函数/多精度/多应用
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导优雅
 - 价值: ⭐⭐⭐⭐ 为 INR 的精度问题提供了根本解法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sound Logical Explanations for Mean Aggregation Graph Neural Networks](../../NeurIPS2025/audio_speech/sound_logical_explanations_for_mean_aggregation_graph_neural_networks.md)
+- [Latent-INR: A Flexible Framework for Implicit Representations of Videos with Discriminative Semantics](../../ECCV2024/audio_speech/latent-inr_a_flexible_framework_for_implicit_representations_of_videos_with_disc.md)
+- [Toward Complex-Valued Neural Networks for Waveform Generation](../../ICLR2026/audio_speech/toward_complex-valued_neural_networks_for_waveform_generation.md)
+- [Slimmable NAM: Neural Amp Models with Adjustable Runtime Computational Cost](../../NeurIPS2025/audio_speech/slimmable_nam_neural_amp_models_with_adjustable_runtime_computational_cost.md)
+- [Mixed Monotonicity Reachability Analysis of Neural ODE: A Trade-Off Between Tightness and Efficiency](../../NeurIPS2025/audio_speech/mixed_monotonicity_reachability_analysis_of_neural_ode_a_trade-off_between_tight.md)
+
+<!-- RELATED:END -->

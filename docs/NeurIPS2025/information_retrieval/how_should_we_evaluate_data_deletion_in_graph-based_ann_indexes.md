@@ -127,3 +127,15 @@ Deletion Control验证（SIFT1B, b=10⁵, α=0.84）：
 - 实验充分度: ⭐⭐⭐ 多数据集验证但仅在HNSW上测试，Workshop论文篇幅限制
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，形式化严谨简洁
 - 价值: ⭐⭐⭐⭐ 填补了ANNS删除评估的空白，对向量数据库工程实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation](the_atlas_of_in-context_learning_how_attention_heads_shape_in-context_retrieval_.md)
+- [Graph of Records: Boosting Retrieval Augmented Generation for Long-context Summarization with Graphs](../../ACL2025/information_retrieval/gor_rag_long_context_summary.md)
+- [STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)
+- [When Should Dense Retrievers Be Updated in Evolving Corpora? Detecting Out-of-Distribution Corpora Using GradNormIR](../../ACL2025/information_retrieval/when_should_dense_retrievers_be_updated_in_evolving_corpora_detecting_out-of-dis.md)
+- [G-reasoner: Foundation Models for Unified Reasoning over Graph-structured Knowledge](../../ICLR2026/information_retrieval/g-reasoner_foundation_models_for_unified_reasoning_over_graph-structured_knowled.md)
+
+<!-- RELATED:END -->

@@ -107,3 +107,15 @@ ACT损失基于active M-estimation改进。核心是用采样概率$\pi_B(\hat{\
 - 实验充分度: ⭐⭐⭐⭐⭐ 6数据集、6种MLLM、7种批评策略、3种采样规则、完整消融，极为系统
 - 写作质量: ⭐⭐⭐⭐ 7条洞察总结清晰，理论分析与实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 对降低AI数据标注成本有直接实用价值，指导性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Error-driven Data-efficient Large Multimodal Model Tuning](../../ACL2025/multimodal_vlm/error-driven_data-efficient_large_multimodal_model_tuning.md)
+- [We-Math: Does Your Large Multimodal Model Achieve Human-like Mathematical Reasoning?](../../ACL2025/multimodal_vlm/we-math_does_your_large_multimodal_model_achieve_human-like_mathematical_reasoni.md)
+- [The Illusion of Progress? A Critical Look at Test-Time Adaptation for Vision-Language Models](the_illusion_of_progress_a_critical_look_at_testtime_adaptat.md)
+- [NaViL: Rethinking Scaling Properties of Native Multimodal Large Language Models under Data Constraints](navil_rethinking_scaling_properties_of_native_multimodal_large_language_models_u.md)
+- [Nautilus: A Large Multimodal Model for Underwater Scene Understanding](nautilus_a_large_multimodal_model_for_underwater_scene_understanding.md)
+
+<!-- RELATED:END -->

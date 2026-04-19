@@ -162,3 +162,15 @@ $$\pi_j|_{k+1}(S) \in \arg\max_{a_j} \sum_{\iota=0}^{k} g_\iota \cdot Q^*_{\math
 - 实验充分度: ⭐⭐ 纯理论论文，完全无实验，框架有效性缺乏验证
 - 写作质量: ⭐⭐⭐⭐ 数学形式化严谨清晰，符号系统统一，附录推导完整
 - 价值: ⭐⭐⭐⭐ 对多智能体 ToM 计算框架有重要理论贡献，但距实际应用尚需实验验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](adaptive_theory_of_mind_for_llm-based_multi-agent_coordination.md)
+- [MindPower: Enabling Theory-of-Mind Reasoning in VLM-based Embodied Agents](../../CVPR2026/robotics/mindpower_enabling_theoryofmind_reasoning_in_vlmba.md)
+- [Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems](shadows_in_the_code_exploring_the_risks_and_defenses_of_llm-.md)
+- [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+- [TouchFormer: A Robust Transformer-based Framework for Multimodal Material Perception](touchformer_a_robust_transformer-based_framework_for_multimodal_material_percept.md)
+
+<!-- RELATED:END -->

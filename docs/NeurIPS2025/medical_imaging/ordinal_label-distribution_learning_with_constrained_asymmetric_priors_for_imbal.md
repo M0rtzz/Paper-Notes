@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融和逐级别分析完整
 - 写作质量: ⭐⭐⭐⭐ 动机-方法-实验逻辑清晰
 - 价值: ⭐⭐⭐⭐ 医学影像长尾序数分类有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self Iterative Label Refinement via Robust Unlabeled Learning](self_iterative_label_refinement_via_robust_unlabeled_learning.md)
+- [Generative Distribution Embeddings: Lifting Autoencoders to the Space of Distributions for Multiscale Representation Learning](generative_distribution_embeddings_lifting_autoencoders_to_the_space_of_distribu.md)
+- [CycleULM: A Unified Label-Free Deep Learning Framework for Ultrasound Localisation Microscopy](../../CVPR2025/medical_imaging/cycleulm_a_unified_label-free_deep_learning_framework_for_ultrasound_localisatio.md)
+- [Domain Adaptive Diabetic Retinopathy Grading with Model Absence and Flowing Data](../../CVPR2025/medical_imaging/domain_adaptive_diabetic_retinopathy_grading_with_model_absence_and_flowing_data.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](../../CVPR2025/medical_imaging/semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+
+<!-- RELATED:END -->

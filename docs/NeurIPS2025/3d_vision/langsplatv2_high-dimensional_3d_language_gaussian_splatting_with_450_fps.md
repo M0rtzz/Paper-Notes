@@ -151,3 +151,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、详细时间分析、全面消融
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析→方案推导→实验验证的逻辑链极其流畅
 - 价值: ⭐⭐⭐⭐⭐ 47倍加速+精度提升，直接推动3D语言场落地应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors](planargs_high-fidelity_indoor_3d_gaussian_splatting_guided_by_vision-language_pl.md)
+- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](../../CVPR2026/3d_vision/hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](../../CVPR2025/3d_vision/instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [IBGS: Image-Based Gaussian Splatting](ibgs_image-based_gaussian_splatting.md)
+- [URDF-Anything: Constructing Articulated Objects with 3D Multimodal Language Model](urdf-anything_constructing_articulated_objects_with_3d_multimodal_language_model.md)
+
+<!-- RELATED:END -->

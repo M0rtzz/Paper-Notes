@@ -145,3 +145,15 @@ Token-wise 重加权优于 sample-wise，因为它能对图像中不同概念区
 - **实验充分度**: ⭐⭐⭐⭐ 控制变量实验+三个 benchmark+多种消融，但基础模型规模较小
 - **写作质量**: ⭐⭐⭐⭐ 叙事逻辑清晰，但数学符号较多需要仔细阅读
 - **价值**: ⭐⭐⭐⭐⭐ 对扩散模型训练有普遍指导意义，几行代码即可应用于任何扩散模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ad-hoc Concept Forming in the Game Codenames as a Means for Evaluating Large Language Models](../../ACL2025/llm_evaluation/ad-hoc_concept_forming_in_the_game_codenames_as_a_means_for_evaluating_large_lan.md)
+- [BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](batclip_bimodal_online_test-time_adaptation_for_clip.md)
+- [Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training](../../NeurIPS2025/llm_evaluation/exploiting_vocabulary_frequency_imbalance_in_language_model_pre-training.md)
+- [Improved and Oracle-Efficient Online $\ell_1$-Multicalibration](../../ICML2025/llm_evaluation/improved_and_oracle-efficient_online_ell_1-multicalibration.md)
+- [Conformal Online Learning of Deep Koopman Linear Embeddings](../../NeurIPS2025/llm_evaluation/conformal_online_learning_of_deep_koopman_linear_embeddings.md)
+
+<!-- RELATED:END -->

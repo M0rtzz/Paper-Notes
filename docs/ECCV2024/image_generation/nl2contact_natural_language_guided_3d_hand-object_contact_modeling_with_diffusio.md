@@ -120,3 +120,15 @@ NL2Contact 包含三个核心模块：
 - 技术：★★★★ — 分阶段扩散设计合理，跨模态融合有效
 - 实验：★★★★ — 多任务验证（优化+生成），多数据集评估
 - 写作：★★★★ — 结构清晰，图示直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShapeFusion: A 3D Diffusion Model for Localized Shape Editing](shapefusion_a_3d_diffusion_model_for_localized_shape_editing.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [NeuSDFusion: A Spatial-Aware Generative Model for 3D Shape Completion, Reconstruction, and Generation](neusdfusion_a_spatial-aware_generative_model_for_3d_shape_completion_reconstruct.md)
+- [MacDiff: Unified Skeleton Modeling with Masked Conditional Diffusion](macdiff_unified_skeleton_modeling_with_masked_conditional_diffusion.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+
+<!-- RELATED:END -->

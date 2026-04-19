@@ -191,3 +191,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{VAE}} + \lambda \mathcal{L}_{\text{reg}}$$
 | 写作质量 | 4 | Walk-Through 示例出色，整体结构清晰 |
 | 实用价值 | 3.5 | 需要手动构造物理矩阵，工程落地门槛较高 |
 | **综合** | **4** | 扎实的工作，在物理增强深度学习方向有明确贡献 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [XLinear: A Lightweight and Accurate MLP-Based Model for Long-Term Time Series Forecasting with Exogenous Inputs](../../AAAI2026/human_understanding/xlinear_a_lightweight_and_accurate_mlp-based_model_for_long-term_time_series_for.md)
+- [Homogeneous Dynamics Space for Heterogeneous Humans](../../CVPR2025/human_understanding/homogeneous_dynamics_space_for_heterogeneous_humans.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation](../../CVPR2025/human_understanding/learning_phase_distortion_with_selective_state_space_models_for_video_turbulence.md)
+- [Reactivation: Empirical NTK Dynamics Under Task Shifts](reactivation_empirical_ntk_dynamics_under_task_shifts.md)
+
+<!-- RELATED:END -->

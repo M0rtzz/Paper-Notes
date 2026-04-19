@@ -131,3 +131,15 @@ EarShot 本身不涉及端到端训练，而是一个管道式系统。各组件
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种场景、四类基线方法、多个模型变体、详尽的阈值分析
 - 写作质量: ⭐⭐⭐⭐ 任务定义和动机阐述清晰，伦理考量充分
 - 价值: ⭐⭐⭐⭐ 对内容审核和社交媒体治理有重要实际意义，但精确率仍需大幅提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Voting or Consensus? Decision-Making in Multi-Agent Debate](voting_or_consensus_decision-making_in_multi-agent_debate.md)
+- [Understanding Common Ground Misalignment in Goal-Oriented Dialog: A Case-Study with Ubuntu Chat Logs](understanding_common_ground_misalignment_in_goal-oriented_dialog_a_case-study_wi.md)
+- [Decision Making under the Exponential Family DRO](../../ICML2025/others/decision_making_under_the_exponential_family_distributionally_robust_optimisatio.md)
+- [Finding Diverse Solutions Parameterized by Cliquewidth](../../AAAI2026/others/finding_diverse_solutions_parameterized_by_cliquewidth.md)
+- [Mitigating Confounding in Speech-Based Dementia Detection through Weight Masking](mitigating_confounding_in_speech-based_dementia_detection_through_weight_masking.md)
+
+<!-- RELATED:END -->

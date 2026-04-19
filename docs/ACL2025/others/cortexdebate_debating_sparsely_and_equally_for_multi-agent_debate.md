@@ -132,3 +132,15 @@ $$W_{i \to j}^d = \frac{C_d \times R_d \times I_d}{S_d}$$
 | 价值 | 4 |
 
 McKinsey 信任公式与稀疏辩论图的结合十分新颖。8 个数据集 × 4 类任务的广泛实验和深入的消融分析都令人信服。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tree-of-Debate: Multi-Persona Debate Trees Elicit Critical Thinking for Scientific Comparative Analysis](tree-of-debate_multi-persona_debate_trees_elicit_critical_thinking_for_scientifi.md)
+- [Voting or Consensus? Decision-Making in Multi-Agent Debate](voting_or_consensus_decision-making_in_multi-agent_debate.md)
+- [InspireDebate: Multi-Dimensional Evaluation-Guided Reasoning for Debating](inspiredebate_multidim_evaluation_debating.md)
+- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+
+<!-- RELATED:END -->

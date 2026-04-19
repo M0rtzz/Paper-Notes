@@ -153,3 +153,14 @@ tags:
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，方法与传统源估计的类比增强可理解性
 - **实用价值**: ⭐⭐⭐⭐ 代码开源，对脑科学 AI 临床应用（阿尔茨海默/帕金森/孤独症检测）有直接推动
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memory-Integrated Reconfigurable Adapters: A Unified Framework for Settings with Multiple Tasks](memory-integrated_reconfigurable_adapters_a_unified_framework_for_settings_with_.md)
+- [Manifolds and Modules: How Function Develops in a Neural Foundation Model](manifolds_and_modules_how_function_develops_in_a_neural_foundation_model.md)
+- [TabSTAR: A Tabular Foundation Model for Tabular Data with Text Fields](tabstar_a_tabular_foundation_model_for_tabular_data_with_text_fields.md)
+- [Uncertainty-Guided Model Selection for Tabular Foundation Models in Biomolecule Efficacy Prediction](uncertainty-guided_model_selection_for_tabular_foundation_models_in_biomolecule_.md)
+- [Griffin: Towards a Graph-Centric Relational Database Foundation Model](../../ICML2025/self_supervised/griffin_towards_a_graph-centric_relational_database_foundation_model.md)
+
+<!-- RELATED:END -->

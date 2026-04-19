@@ -190,3 +190,15 @@ Freeze-Flow 训练范式：
 - 实验充分度: ⭐⭐⭐ — 攻击覆盖面广但数据集偏简单，缺少自然图像验证
 - 写作质量: ⭐⭐⭐⭐ — 清晰，拓扑背景介绍到位，但部分表述冗长
 - 价值: ⭐⭐⭐⭐ — 开辟了 TDA 用于对抗防御的新路线，但实用性需在更复杂场景验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Breaking the Adversarial Robustness-Performance Trade-off in Text Classification via Manifold Purification](breaking_the_adversarial_robustness-performance_trade-off_in_text_classification.md)
+- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
+- [Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification](../../NeurIPS2025/ai_safety/keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)
+- [AUVIC: Adversarial Unlearning of Visual Concepts for Multi-modal Large Language Models](auvic_adversarial_unlearning_of_visual_concepts_for_multi-mo.md)
+- [BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models](../../ICLR2026/ai_safety/biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ iGym 是 InnoGym 配套的统一 Agent 执行 SDK，解决了现有 SDK（如 Op
 - 价值: ⭐⭐⭐⭐ 填补了 Agent 创新评估的空白，对 Agent 社区有重要引导作用，但当前 Agent 普遍表现不佳限制了基准的区分力
 
 <!-- END -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](../../NeurIPS2025/code_intelligence/mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
+- [Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)
+- [SPAN: Benchmarking and Improving Cross-Calendar Temporal Reasoning of Large Language Models](../../AAAI2026/code_intelligence/span_benchmarking_and_improving_cross-calendar_temporal_reasoning_of_large_langu.md)
+- [TAPA: Training-Free Adaptation of Programmatic Agents via LLM-Guided Program Synthesis in Dynamic Environments](../../AAAI2026/code_intelligence/tapas_are_free_training-free_adaptation_of_programmatic_agen.md)
+- [Training Software Engineering Agents and Verifiers with SWE-Gym](../../ICML2025/code_intelligence/training_software_engineering_agents_and_verifiers_with_swe-gym.md)
+
+<!-- RELATED:END -->

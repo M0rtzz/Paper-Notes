@@ -10,174 +10,174 @@ description: >-
 
 **💬 ACL2025** · **43** 篇论文解读
 
-**[Aristotle Logical Reasoning](aristotle_logical_reasoning.md)**
+**[Aristotle: Mastering Logical Reasoning with A Logic-Complete Decompose-Search-Resolve Framework](aristotle_logical_reasoning.md)**
 
 :   提出 Aristotle 逻辑推理框架，将符号表达式和逻辑规则全面融入 Decompose-Search-Resolve 的每个阶段，通过逻辑分解器、搜索路由器和消解器三大组件实现逻辑完备的推理，在多个逻辑推理基准上以 GPT-4 平均提升 4.5%、GPT-4o 平均提升 5.4% 超越 SOTA。
 
-**[Bpp-Search Enhancing Tree Of Thought Reasoning For Mathematical Modeling Problem](bpp-search_enhancing_tree_of_thought_reasoning_for_mathematical_modeling_problem.md)**
+**[BPP-Search: Enhancing Tree of Thought Reasoning for Mathematical Modeling Problem Solving](bpp-search_enhancing_tree_of_thought_reasoning_for_mathematical_modeling_problem.md)**
 
 :   提出 BPP-Search 算法，将 Beam Search、过程奖励模型 (PRM) 和 Pairwise Preference 机制整合到 Tree-of-Thought 框架中，用于运筹学数学建模问题的自动求解，在 StructuredOR 等数据集上以更少的推理步骤显著超越 CoT/SC/ToT 基线。
 
-**[Can Large Language Models Detect Errors In Long Chain-Of-Thought Reasoning](can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)**
+**[Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)**
 
 :   本文提出DeltaBench——首个系统评估o1类模型长CoT推理质量和现有LLM/PRM错误检测能力的基准数据集，通过对1,236个样本的精细人工标注，揭示了o1类模型约27%推理冗余、67.8%反思无效，以及最强critic模型GPT-4-turbo-128k也仅达F1=40.8%的令人警醒的现状。
 
-**[Chain-Of-Reasoning Towards Unified Mathematical Reasoning In Large Language Mode](chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)**
+**[Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)**
 
 :   提出Chain-of-Reasoning（CoR）统一框架，将自然语言推理(NLR)、算法推理(AR)和符号推理(SR)三种范式整合在同一推理链中协同工作，配合渐进式范式训练(PPT)策略，使7B模型在定理证明上零样本超越GPT-4o 41%，在MATH上超越RL方法15%。
 
-**[Chain Of Reasoning Unified Math](chain_of_reasoning_unified_math.md)**
+**[Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](chain_of_reasoning_unified_math.md)**
 
 :   提出 Chain-of-Reasoning（CoR）框架，将自然语言推理（NLR）、算法推理（AR）和符号推理（SR）三种范式统一在一个推理链中，通过渐进范式训练（PPT）策略让 7B 模型（CoR-Math-7B）在零样本下超越 GPT-4o 41% 的定理证明准确率，在 MATH 基准上超过 RL 方法 15%。
 
-**[Clozemath Improving Mathematical Reasoning In Language Models By Learning To Fil](clozemath_improving_mathematical_reasoning_in_language_models_by_learning_to_fil.md)**
+**[ClozeMath: Improving Mathematical Reasoning in Language Models by Learning to Fill Equations](clozemath_improving_mathematical_reasoning_in_language_models_by_learning_to_fil.md)**
 
 :   ClozeMath 提出了一种受人类完形填空学习启发的微调策略，通过掩码数学解答中的方程式并训练模型预测它们（text-infilling目标），与标准语言模型目标联合训练，在GSM8K和MATH上显著超越了强基线Masked Thought，并在推理时间扩展和鲁棒性测试中表现出更好的泛化能力。
 
-**[Cot-Icl Lab A Synthetic Framework For Studying Chain-Of-Thought Learning From In](cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)**
+**[CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)**
 
 :   提出 CoT-ICL Lab 框架，通过解耦因果结构（DAG）和 token 处理函数（MLP）生成可控的合成 token 化数据集，系统研究了 CoT 对 ICL 的加速效应、模型深度的关键作用、以及 Transformer 嵌入与注意力图对底层推理结构的学习机制。
 
-**[Cot-Uq Improving Response-Wise Uncertainty Quantification In Llms With Chain-Of-](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)**
+**[CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)**
 
 :   针对 LLM 在推理任务中过度自信的问题，提出 CoT-UQ 框架，将 CoT 推理步骤中的关键词提取和重要性评分整合到不确定性量化过程中，在逻辑和数学推理任务上 AUROC 平均提升 5.9%。
 
-**[Cot-Valve Length-Compressible Chain-Of-Thought Tuning](cot-valve_length-compressible_chain-of-thought_tuning.md)**
+**[CoT-Valve: Length-Compressible Chain-of-Thought Tuning](cot-valve_length-compressible_chain-of-thought_tuning.md)**
 
 :   本文提出CoT-Valve，一种通过在参数空间中识别"长度控制方向"（以LoRA实现）来弹性控制推理链长度的方法，仅训练一次即可生成从长到短不同长度的推理路径，在QwQ-32B-Preview上将GSM8K推理链从741压缩至225 tokens且准确率仅降0.15%（95.07%→94.92%）。
 
-**[Critic-Cot Boosting The Reasoning Abilities Of Large Language Model Via Chain-Of](critic-cot_boosting_the_reasoning_abilities_of_large_language_model_via_chain-of.md)**
+**[Critic-CoT: Boosting the Reasoning Abilities of Large Language Model via Chain-of-Thoughts Critic](critic-cot_boosting_the_reasoning_abilities_of_large_language_model_via_chain-of.md)**
 
 :   提出 Critic-CoT 框架，通过逐步 Chain-of-Thought 批判范式和无需人工标注的弱监督数据自动构建，将 LLM 的自我批判从 System-1 式直觉判断推向 System-2 式慎重逐步分析；两阶段训练（GPT-4 蒸馏 + 自我批判）使 Llama-3-70B-Instruct 在 GSM8K 从 89.6% 提升至 95.4%，MATH500 从 50.4% 提升至 68.4%，并发现批判能力与任务求解能力可以相互增强。
 
-**[Dcot Diverse Cot Refinement](dcot_diverse_cot_refinement.md)**
+**[Fine-Tuning on Diverse Reasoning Chains Drives Within-Inference CoT Refinement in LLMs](dcot_diverse_cot_refinement.md)**
 
 :   提出 Diverse Chain of Thought (DCoT) 训练方法，通过在单次推理中生成多条串行推理链实现"推理内自修正"（within-inference refinement），在 1.3B–70B 模型上均超越标准 CoT 基线，尤其在大输出空间任务（数值/抽取型）上提升显著。
 
-**[Define Decision-Making With Analogical Reasoning Over Factor Profiles](define_decision-making_with_analogical_reasoning_over_factor_profiles.md)**
+**[DeFine: Decision-Making with Analogical Reasoning over Factor Profiles](define_decision-making_with_analogical_reasoning_over_factor_profiles.md)**
 
 :   提出 DeFine 框架，从财报电话会议等复杂场景的语音转录文本中构建概率因子画像(factor profile)，结合 Bradley-Terry 模型识别关键因子并通过因子画像间的 KL 散度做类比推理，用于辅助 LLM 在不确定性下做投资决策，准确率和 F1 均超越基线。
 
-**[Dgprm Dynamic Process Reward](dgprm_dynamic_process_reward.md)**
+**[Dynamic and Generalizable Process Reward Modeling (DG-PRM)](dgprm_dynamic_process_reward.md)**
 
 :   提出DG-PRM框架，通过构建层次化奖励树动态存储和选择多维评估标准，结合Pareto支配估计识别多目标下的正负样本对，实现动态、可泛化的过程奖励建模。
 
-**[Drt Deep Reasoning Translation Via Long Chain-Of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)**
+**[DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)**
 
 :   将长 CoT 推理引入机器翻译，构建多智能体框架（翻译器→顾问→评估器）迭代精炼含比喻/隐喻的文学翻译，合成 22K 长思维翻译训练样本，训练的 DRT-14B 在文学翻译上超越 QwQ-32B 和 DeepSeek-R1-Distill-32B 等大模型。
 
-**[Enhancing Mathematical Reasoning In Llms By Stepwise Correction](enhancing_mathematical_reasoning_in_llms_by_stepwise_correction.md)**
+**[Enhancing Mathematical Reasoning in LLMs by Stepwise Correction](enhancing_mathematical_reasoning_in_llms_by_stepwise_correction.md)**
 
 :   本文提出StepCo（Stepwise Correction），一种迭代式"验证-修正"框架：利用过程监督验证器（PSV）逐步定位LLM推理路径中的首个错误步骤并触发LLM修正，在8个数学推理基准上以GPT-4o为后端取得94.1%平均准确率，超越Best-of-10方法+2.4个点，同时减少77.8%的token消耗。
 
-**[Enhancing Retrieval Systems With Inference-Time Logical Reasoning](enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)**
+**[Enhancing Retrieval Systems with Inference-Time Logical Reasoning](enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)**
 
 :   提出推理时逻辑推理框架（ITLR），利用 LLM 将自然语言查询转换为逻辑表达式（AND/OR/NOT），然后基于模糊逻辑对各子项的 cosine similarity 分数进行组合，在合成数据和 NFCorpus/SciFact/ArguAna 三个真实数据集上一致性超越传统 dense retrieval 和 BRIGHT baseline，尤其在含否定的复杂查询上提升显著。
 
-**[Finereason Evaluating And Improving Llms Deliberate Reasoning Through Reflective](finereason_evaluating_and_improving_llms_deliberate_reasoning_through_reflective.md)**
+**[FineReason: Evaluating and Improving LLMs' Deliberate Reasoning through Reflective Puzzle Solving](finereason_evaluating_and_improving_llms_deliberate_reasoning_through_reflective.md)**
 
 :   提出 FineReason——一个基于逻辑谜题的推理基准，通过"状态检查"（判断当前状态是否可解）和"状态转换"（决定下一步操作）两个任务，对LLM的审慎推理能力（反思、回溯、纠错）进行原子级粒度评估，并证明在谜题数据上的训练可迁移提升数学推理能力（GSM8K 提升 5.1%）。
 
-**[Glore Long Cot Representation](glore_long_cot_representation.md)**
+**[Unlocking General Long Chain-of-Thought Reasoning Capabilities of Large Language Models via Representation Engineering](glore_long_cot_representation.md)**
 
 :   从表示空间角度发现 LLM 将长 CoT 推理编码为一种与普通 CoT 明确区分的通用能力，提出 GLoRE（General Long CoT Reasoning via Representation Engineering）——通过对比推理模式注入和领域特定表示调整来解锁长 CoT 能力，无需训练即可在域内和跨域场景下超越 SFT 方法。
 
-**[Improve Vlm Cot Reasoning](improve_vlm_cot_reasoning.md)**
+**[Improve Vision Language Model Chain-of-thought Reasoning](improve_vlm_cot_reasoning.md)**
 
 :   通过(1)从GPT-4o蒸馏193K多任务CoT推理数据进行SFT，(2)利用模型自生成的推理链构建正负样本对进行DPO强化学习，显著提升VLM的链式推理能力，CoT预测平均+11.7%，同时直接回答也提升+7.3%。
 
-**[Improving Chain-Of-Thought Reasoning Via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)**
+**[Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)**
 
 :   本文提出QuaSAR（Quasi-Symbolic Abstract Reasoning），一种CoT变体方法，通过引导LLM先对问题进行符号化抽象（提取变量/谓词）、再用半形式化表示重构问题、最后基于准符号推理链求解，在GPT-4o上相比CoT提高最多8%准确率，并显著增强了对对抗性变体（选项打乱、数值替换）的鲁棒性。
 
-**[Local Look-Ahead Guidance Via Verifier-In-The-Loop For Automated Theorem Proving](local_look-ahead_guidance_via_verifier-in-the-loop_for_automated_theorem_proving.md)**
+**[Local Look-Ahead Guidance via Verifier-in-the-Loop for Automated Theorem Proving](local_look-ahead_guidance_via_verifier-in-the-loop_for_automated_theorem_proving.md)**
 
 :   提出 LeanListener，在自动定理证明(ATP)中引入 verifier-in-the-loop 设计，利用 Lean 验证器在每步提供中间反馈（子目标数变化）而非仅轨迹级奖励，通过在线 GRPO 训练使 ReProver 的 tactic 有效率和证明率均获提升，证明速度快 20%。
 
-**[Logicpro Program Guided Reasoning](logicpro_program_guided_reasoning.md)**
+**[LogicPro: Improving Complex Logical Reasoning via Program-Guided Learning](logicpro_program_guided_reasoning.md)**
 
 :   提出 LogicPro 数据合成方法，利用 LeetCode 算法题和 Python 代码解作为逻辑源，通过"问题生成→代码中间变量提取→程序引导推理生成"三步流水线，从 2360 道算法题合成 540K 高质量文本推理数据，在 BBH27、LogicBench、DROP 等多个 OOD 基准上显著超越现有推理数据集。
 
-**[Marco-O1 V2 Towards Widening The Distillation Bottleneck For Reasoning Models](marco-o1_v2_towards_widening_the_distillation_bottleneck_for_reasoning_models.md)**
+**[Marco-o1 v2: Towards Widening The Distillation Bottleneck for Reasoning Models](marco-o1_v2_towards_widening_the_distillation_bottleneck_for_reasoning_models.md)**
 
 :   揭示了直接蒸馏大推理模型（如 DeepSeek-R1）的长 CoT 数据到小模型时的「形式化长时间思考」瓶颈，提出基于 MCTS 从头构造树状 CoT 数据并结合思维长度平衡、细粒度 DPO 和联合训练目标来缓解该问题。
 
-**[Mclm Multilingual Test Time Scaling](mclm_multilingual_test_time_scaling.md)**
+**[Linguistic Generalizability of Test-Time Scaling in Mathematical Reasoning](mclm_multilingual_test_time_scaling.md)**
 
 :   提出 MCLM（55 语言的竞赛级数学基准），发现三种 test-time scaling 方法（ORM/PRM/Budget Forcing）在英语上提升显著（如 AIME +20 分），但在其他语言上平均仅提升 1.94 分，表明 test-time scaling 的多语言泛化能力严重不足。
 
-**[Mm-Verify Enhancing Multimodal Reasoning With Chain-Of-Thought Verification](mm-verify_enhancing_multimodal_reasoning_with_chain-of-thought_verification.md)**
+**[MM-Verify: Enhancing Multimodal Reasoning with Chain-of-Thought Verification](mm-verify_enhancing_multimodal_reasoning_with_chain-of-thought_verification.md)**
 
 :   本文提出MM-Verifier和MM-Reasoner两个模型，通过模拟搜索+拒绝采样合成长链CoT验证数据、以及文本蒸馏合成多模态推理数据，仅7B参数即在MathVista上达到65.3%准确率超越GPT-4o（63.8%）和人类表现（60.3%）。
 
-**[On Generalization Across Measurement Systems Llms Entail More Test-Time Compute ](on_generalization_across_measurement_systems_llms_entail_more_test-time_compute_.md)**
+**[On Generalization across Measurement Systems: LLMs Entail More Test-Time Compute for Underrepresented Cultures](on_generalization_across_measurement_systems_llms_entail_more_test-time_compute_.md)**
 
 :   系统研究 LLM 跨度量系统（货币、长度、重量）的泛化能力，发现模型默认使用训练数据中的主导度量（如美元、公制），对非主导度量查询准确率显著下降；CoT 推理可弥补但推理成本增加高达 300%，对欠代表文化用户构成系统性不公平。
 
-**[One Missing Piece For Open-Source Reasoning Models A Dataset To Mitigate Cold-St](one_missing_piece_for_open-source_reasoning_models_a_dataset_to_mitigate_cold-st.md)**
+**[One Missing Piece for Open-Source Reasoning Models: A Dataset to Mitigate Cold-Starting Short CoT LLMs in RL](one_missing_piece_for_open-source_reasoning_models_a_dataset_to_mitigate_cold-st.md)**
 
 :   提出 Long CoT Collection——一个由短链式思维 LLM（如 GPT-4o）标注的 100K 长链式推理数据集，通过从 o1 提取推理流程作为引导，使短 CoT LLM 也能生成长 CoT 数据，从而解决强化学习中的冷启动问题，训练在该数据上初始化的模型在后续 RL 中获得 2-3 倍的性能提升。
 
-**[Pcot Persuasion-Augmented Chain Of Thought For Detecting Fake News And Social Me](pcot_persuasion-augmented_chain_of_thought_for_detecting_fake_news_and_social_me.md)**
+**[PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation](pcot_persuasion-augmented_chain_of_thought_for_detecting_fake_news_and_social_me.md)**
 
 :   将心理学中"学会识别说服技巧可提升真伪判断力"的发现迁移到 LLM，提出两阶段零样本 PCoT 方法：第一阶段识别并分析六类说服策略，第二阶段将分析上下文融入虚假信息检测，在 5 个 LLM × 5 数据集上 F1 平均提升 15%。
 
-**[Pcot Persuasion Chain Of Thought Fake News](pcot_persuasion_chain_of_thought_fake_news.md)**
+**[PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation](pcot_persuasion_chain_of_thought_fake_news.md)**
 
 :   提出 PCoT（说服增强的思维链）方法，通过两阶段推理——先让 LLM 分析文本中的说服策略，再结合说服分析结果判断是否为虚假信息——在零样本设置下，5 个 LLM 和 5 个数据集上平均提升 15% 的检测 F1。
 
-**[Ranked Voting Based Self-Consistency Of Large Language Models](ranked_voting_based_self-consistency_of_large_language_models.md)**
+**[Ranked Voting based Self-Consistency of Large Language Models](ranked_voting_based_self-consistency_of_large_language_models.md)**
 
 :   将 Self-Consistency 的多数投票升级为排序投票，让 LLM 每次推理生成多个候选答案的偏好排序而非单一答案，用三种排序投票方法（IRV/BCV/MRRV）聚合多次推理的排序信息，在 6 个数据集上一致超越传统 SC，最高提升 12.46%。
 
-**[Rethinking The Role Of Prompting Strategies In Llm Test-Time Scaling A Perspecti](rethinking_the_role_of_prompting_strategies_in_llm_test-time_scaling_a_perspecti.md)**
+**[Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory](rethinking_the_role_of_prompting_strategies_in_llm_test-time_scaling_a_perspecti.md)**
 
 :   本文在 6 个 LLM × 8 种 prompting 策略 × 6 个 benchmark 上系统实验发现，随着 majority voting 采样次数增加，简单的 CoT 始终超越复杂 prompting 策略；并从概率论角度给出理论证明，提出 $O(1)$ 复杂度的 scaling 性能预测方法和两种改进策略。
 
-**[Revisiting Self-Consistency From Dynamic Distributional Alignment Perspective On](revisiting_self-consistency_from_dynamic_distributional_alignment_perspective_on.md)**
+**[Revisiting Self-Consistency from Dynamic Distributional Alignment Perspective on Answer Aggregation](revisiting_self-consistency_from_dynamic_distributional_alignment_perspective_on.md)**
 
 :   将 Self-Consistency 重新理解为采样分布与真实答案分布的动态对齐问题，揭示温度不仅控制采样随机性还直接塑造真实答案分布，据此提出置信度驱动的三阶段动态温度调节机制（FSD 阈值理论推导），在 10 个模型 × GSM8K/MATH 上零训练开销同时提升平均和最佳性能。
 
-**[Revisiting The Test-Time Scaling Of O1-Like Models Do They Truly Possess Test-Ti](revisiting_the_test-time_scaling_of_o1-like_models_do_they_truly_possess_test-ti.md)**
+**[Revisiting the Test-Time Scaling of o1-like Models: Do they Truly Possess Test-Time Scaling Capabilities?](revisiting_the_test-time_scaling_of_o1-like_models_do_they_truly_possess_test-ti.md)**
 
 :   系统性地揭示了 QwQ/DeepSeek-R1/LIMO 等 o1-like 模型在测试时并不具备真正的顺序扩展 (sequential scaling) 能力——更长的 CoT 并不带来更高准确率，根因是自我修正 (self-revision) 能力不足——并据此提出 Shortest Majority Vote 并行扩展方法显著超越传统多数投票。
 
-**[Safe Math Reasoning](safe_math_reasoning.md)**
+**[Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](safe_math_reasoning.md)**
 
 :   提出 Safe 框架，首次利用 Lean 4 形式化语言对 LLM 数学推理的每一步进行回顾性逐步验证，通过自动形式化+自动定理证明检测幻觉，并与前瞻性 PRM 分数融合，在多个数学数据集上取得 SOTA，同时发布包含 30,809 条形式化声明的 FormalStep 基准。
 
-**[Softcot Soft Chain Of Thought](softcot_soft_chain_of_thought.md)**
+**[SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs](softcot_soft_chain_of_thought.md)**
 
 :   提出 SoftCoT，用一个冻结的小型辅助模型（如 LLaMA-3.2-1B）生成实例特定的"软思维 token"（连续隐状态），通过可训练的投影模块映射到主 LLM 的表示空间作为推理前缀，实现参数高效的连续空间 CoT 推理，避免了全模型微调导致的灾难性遗忘问题。
 
-**[Stricta Structured Reasoning Peer Review](stricta_structured_reasoning_peer_review.md)**
+**[STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond](stricta_structured_reasoning_peer_review.md)**
 
 :   提出 STRICTA 框架，将专家文本评估（如论文审稿）建模为基于结构因果模型（SCM）的逐步推理图，收集 40+ 生物医学专家对 22 篇论文的 4000+ 推理步骤数据，揭示先验知识差异是评审分歧的主因、写作风格对终审影响过大，并发现 LLM 在人工监督下可有效辅助结构化评估。
 
-**[Test Time Scaling Selective Qa](test_time_scaling_selective_qa.md)**
+**[Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering](test_time_scaling_selective_qa.md)**
 
 :   首次评估 test-time scaling 模型（DeepSeek R1、S1）在选择性问答（允许拒绝回答）场景下的表现，发现增加推理计算不仅提高正确率还提升对正确答案的置信度，提出基于置信度阈值的选择函数和 "Jeopardy Odds" 效用函数来评估非零错误惩罚下的 test-time scaling 性能。
 
-**[Thinkguard Deliberative Slow Thinking Leads To Cautious Guardrails](thinkguard_deliberative_slow_thinking_leads_to_cautious_guardrails.md)**
+**[ThinkGuard: Deliberative Slow Thinking Leads to Cautious Guardrails](thinkguard_deliberative_slow_thinking_leads_to_cautious_guardrails.md)**
 
 :   通过从 GPT-4o/DeepSeek-R1 蒸馏结构化批判（安全标签+详细推理理由），微调护栏模型实现"慢思考"式安全判断，在 4 个安全 benchmark 上达到最高平均 F1（75.5%）和 AUPRC（79.5%），相比 LLaMA Guard 3 准确率提升 16.1%、宏 F1 提升 27.0%。
 
-**[Towards Better Chain-Of-Thought A Reflection On Effectiveness And Faithfulness](towards_better_chain-of-thought_a_reflection_on_effectiveness_and_faithfulness.md)**
+**[Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness](towards_better_chain-of-thought_a_reflection_on_effectiveness_and_faithfulness.md)**
 
 :   从有效性和忠实性两个视角系统分析 CoT 的表现模式：发现问题难度、信息增益和信息流单调性决定 CoT 有效性，并揭示不忠实 CoT 的机制——模型在预测答案时从问题中召回了 CoT 遗漏的正确信息。在此基础上提出 QUIRE 算法，同时提升 CoT 的有效性（+2.4%）和忠实性（+5.6%）。
 
-**[Towards Safety Reasoning In Llms Ai-Agentic Deliberation For Policy-Embedded Cot](towards_safety_reasoning_in_llms_ai-agentic_deliberation_for_policy-embedded_cot.md)**
+**[Towards Safety Reasoning in LLMs: AI-agentic Deliberation for Policy-embedded CoT Data Creation](towards_safety_reasoning_in_llms_ai-agentic_deliberation_for_policy-embedded_cot.md)**
 
 :   提出 AIDsafe 多智能体迭代审议框架，自动生成嵌入安全策略的高质量 CoT 数据，微调后的模型在安全泛化和越狱鲁棒性上显著优于传统安全训练，同时引入 ear-whisperer agent 解决 DPO 偏好数据中 selected/rejected 难以区分的问题。
 
-**[Tract Regression Cot](tract_regression_cot.md)**
+**[TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](tract_regression_cot.md)**
 
 :   提出 TRACT，一种两阶段回归感知微调方法，将 CoT 推理与回归损失（squared error）结合，用于提升 LLM-as-a-Judge 场景中的数值评分精度，显著优于仅用交叉熵训练或仅用回归损失的现有方案。
 
-**[Training Turn-By-Turn Verifiers For Dialogue Tutoring Agents The Curious Case Of](training_turn-by-turn_verifiers_for_dialogue_tutoring_agents_the_curious_case_of.md)**
+**[Training Turn-by-Turn Verifiers for Dialogue Tutoring Agents: The Curious Case of LLMs as Your Coding Tutors](training_turn-by-turn_verifiers_for_dialogue_tutoring_agents_the_curious_case_of.md)**
 
 :   提出 **Traver**（Trace-and-Verify）agent 工作流，通过**知识追踪**显式估计学生知识状态 + **逐轮验证器**（turn-by-turn verifier）对候选辅导话语打分选优，并设计 **Dict** 自动评估协议（模拟学生 + 代码生成测试），在编程辅导场景中将学生 Pass 率从 38.7% 提升至 43.7%（相对提升 106.5%），显著超越 Vanilla Instruct、Self-Refine 和 TreeInstruct。
 
-**[Unveiling The Key Factors For Distilling Chain-Of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)**
+**[Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)**
 
 :   系统研究影响 CoT 蒸馏的三大因素（粒度、格式、教师模型），发现 SLM 与粒度呈非单调关系、格式影响较小、强教师不总是更好。

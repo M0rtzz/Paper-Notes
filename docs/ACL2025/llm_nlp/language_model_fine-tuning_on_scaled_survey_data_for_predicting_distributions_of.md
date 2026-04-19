@@ -121,3 +121,15 @@ tags:
 - ATP 和 GSS 之间的分布转移包括受访者池、校准技术和方法论差异，在这种条件下的泛化说明模型学到的是通用的子群体-意见映射能力
 - 每个子群体均匀分配训练样本是一致性改进的关键设计决策
 - 数据规模实验中各模型的提升斜率相似，暗示性能增益主要由数据和任务决定而非模型架构
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+- [Algorithmic Fidelity of Large Language Models in Generating Synthetic German Public Opinions: A Case Study](algorithmic_fidelity_german_opinion.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [HFT: Half Fine-Tuning for Large Language Models](hft_half_fine-tuning_for_large_language_models.md)
+- [Efficient Ensemble for Fine-tuning Language Models on Multiple Datasets](efficient_ensemble_for_fine-tuning_language_models_on_multiple_datasets.md)
+
+<!-- RELATED:END -->

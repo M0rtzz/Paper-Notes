@@ -142,3 +142,15 @@ ColorMAE-G 作为数据无关方法，在语义分割上超过多数数据自适
 - 实验充分度: 5/5 - 三个下游任务、多种 backbone、多训练轮数、完整消融
 - 写作质量: 4/5 - 逻辑清晰，图示出色
 - 价值: 4/5 - 简洁实用，可直接应用于任何 MIM 预训练流程
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation](un-evimo_unsupervised_event-based_independent_motion_segmentation.md)
+- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](../../CVPR2025/segmentation/multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
+- [SeiT++: Masked Token Modeling Improves Storage-Efficient Training](seit_masked_token_modeling_improves_storage-efficient_training.md)
+- [LASS3D: Language-Assisted Semi-Supervised 3D Semantic Segmentation with Progressive Unreliable Data Exploitation](lass3d_language-assisted_semi-supervised_3d_semantic_segmentation_with_progressi.md)
+- [SARMAE: Masked Autoencoder for SAR Representation Learning](../../CVPR2026/segmentation/sarmae_masked_autoencoder_for_sar_representation_learning.md)
+
+<!-- RELATED:END -->

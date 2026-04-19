@@ -91,3 +91,15 @@ HateDay 构建了首个全球代表性仇恨言论数据集——24 万条随机
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 语言 4 国家 24 万条，分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，发现有冲击力
 - 价值: ⭐⭐⭐⭐⭐ 对仇恨言论检测领域有范式影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ImpliHateVid: Implicit Hate Speech Detection in Videos](implihatevid_video_hate.md)
+- [Silencing Empowerment, Allowing Bigotry: Auditing the Moderation of Hate Speech on Twitch](silencing_empowerment_allowing_bigotry_auditing_the_moderation_of_hate_speech_on.md)
+- [STATE ToxiCN: A Benchmark for Span-level Target-Aware Toxicity Extraction in Chinese Hate Speech Detection](state_toxicn_a_benchmark_for_span-level_target-aware_toxicity_extraction_in_chin.md)
+- [Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](llm_label_propagation.md)
+- [BanStereoSet: A Dataset to Measure Stereotypical Social Biases in LLMs for Bangla](banstereoset_a_dataset_to_measure_stereotypical_social_biases_in_llms_for_bangla.md)
+
+<!-- RELATED:END -->

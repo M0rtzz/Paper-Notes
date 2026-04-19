@@ -110,3 +110,15 @@ CoachMe 包含三个模块：(1) Concept Difference Module 对齐学员与参考
 - 实验充分度: ⭐⭐⭐ 有人类评估和详细消融，但数据集太小，只涵盖两种运动
 - 写作质量: ⭐⭐⭐ 方法描述清晰但符号较多，部分实验结果解读不够深入
 - 价值: ⭐⭐⭐ 贡献了有趣的任务定义和数据集，但实用性受限于数据规模和生成质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EpiCoDe: Boosting Model Performance Beyond Training with Extrapolation and Contrastive Decoding](epicode_boosting_model_performance_beyond_training_with_extrapolation_and_contra.md)
+- [Personalized Generation In Large Model Era: A Survey](personalized_generation_in_large_model_era_a_survey.md)
+- [Decoding Reading Goals from Eye Movements](decoding_reading_goals_from_eye_movements.md)
+- [Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
+- [Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](bone_soups_multi_objective_gen.md)
+
+<!-- RELATED:END -->

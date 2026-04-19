@@ -151,3 +151,15 @@ LPW 是纯推理时方法，不需要额外训练：
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个基准、4种模型、完整消融、成本分析、案例研究，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 流程图清晰，案例说明详实，公式化问题定义规范
 - 价值: ⭐⭐⭐⭐⭐ 新SOTA，方法实用且模型无关，对LLM代码生成领域有显著推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Language Models Efficient Reasoners? A Perspective from Logic Programming](../../NeurIPS2025/llm_nlp/are_language_models_efficient_reasoners_a_perspective_from_logic_programming.md)
+- [EnCompass: Enhancing Agent Programming with Search Over Program Execution Paths](../../NeurIPS2025/llm_nlp/encompass_enhancing_agent_programming_with_search_over_program_execution_paths.md)
+- [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
+- [On the Limit of Language Models as Planning Formalizers](limit_llm_planning_formalizer.md)
+- [INTERACT: Enabling Interactive, Question-Driven Learning in Large Language Models](interact_enabling_interactive_question-driven_learning_in_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -205,3 +205,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6个LLM、多种消融、RAG对比、人类评价、处理时间分析
 - 写作质量: ⭐⭐⭐⭐ — 动机和方法描述清晰，但篇幅较长
 - 价值: ⭐⭐⭐⭐⭐ — 直接解决临床痛点，30%的报告含错误 + 专科医生短缺，实际意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](../../CVPR2026/medical_imaging/momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [Pairing-free Group-level Knowledge Distillation for Robust Gastrointestinal Lesion Classification in White-Light Endoscopy](pairing-free_group-level_knowledge_distillation_for_robust_gastrointestinal_lesi.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](../../CVPR2026/medical_imaging/prototypebased_knowledge_guidance_for_finegrained.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](../../ACL2025/medical_imaging/radar_radiology_report_gen.md)
+
+<!-- RELATED:END -->

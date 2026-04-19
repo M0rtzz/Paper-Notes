@@ -98,3 +98,15 @@ MotionAnymesh包含三个集成阶段：(1) 运动学感知零件分割——提
 - 实验充分度: ⭐⭐⭐⭐ 消融实验验证了核心组件，Real-to-Sim-to-Real验证实用性；但数据集规模未明确说明
 - 写作质量: ⭐⭐⭐⭐ 问题动机清楚，方法描述详细，公式推导严谨
 - 对我的价值: ⭐⭐⭐ 3D铰接建模方向，与当前研究方向关联不大，但物理约束+VLM的思路有普适性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [PhysHead: Simulation-Ready Gaussian Head Avatars](physhead_simulation-ready_gaussian_head_avatars.md)
+- [Wanderland: Geometrically Grounded Simulation for Open-World Embodied AI](wanderland_geometrically_grounded_simulation_for_open-world_embodied_ai.md)
+- [FunREC: Reconstructing Functional 3D Scenes from Egocentric Interaction Videos](funrec_reconstructing_functional_3d_scenes_from_egocentric_interaction_videos.md)
+- [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+
+<!-- RELATED:END -->

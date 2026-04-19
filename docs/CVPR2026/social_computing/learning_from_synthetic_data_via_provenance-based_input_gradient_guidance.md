@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种合成方法×三种任务×多个数据集的全面验证，消融研究详尽（出处质量、超参敏感性、训练效率等）
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法推导严谨，公式形式统一
 - 价值: ⭐⭐⭐⭐ 通用性强、实现简单、零额外标注成本，有望广泛应用于各种数据增强训练流水线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient Extrapolation for Debiased Representation Learning](../../ICCV2025/social_computing/gradient_extrapolation_for_debiased_representation_learning.md)
+- [Distribution-Aware Robust Learning from Long-Tailed Data with Noisy Labels](../../ECCV2024/social_computing/distribution-aware_robust_learning_from_long-tailed_data_with_noisy_labels.md)
+- [Revisiting Unknowns: Towards Effective and Efficient Open-Set Active Learning](revisiting_unknowns_towards_effective_and_efficient_open-set_active_learning.md)
+- [Functional Embeddings Enable Aggregation of Multi-Area SEEG Data for Robust BCI](../../ICLR2026/social_computing/functional_embeddings_enable_aggregation_of_multi-area_seeg_recordings_over_subj.md)
+- [Learning from Neighbors: Category Extrapolation for Long-Tail Learning](../../CVPR2025/social_computing/learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)
+
+<!-- RELATED:END -->

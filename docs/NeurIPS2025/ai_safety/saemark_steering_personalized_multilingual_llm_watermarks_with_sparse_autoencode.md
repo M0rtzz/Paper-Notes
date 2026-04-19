@@ -121,3 +121,15 @@ $N=50$ 时单单元成功率 >99%，$N=10$ 时仍达61%。
 - **实验充分度**: ⭐⭐⭐⭐ 4个数据集跨英中代码、3个骨干LLM、多比特扩展和对抗测试全面，但长文本和极端攻击测试可加强
 - **写作质量**: ⭐⭐⭐⭐⭐ 通用框架→理论分析→具体实例化→工程优化的逻辑链条非常清晰
 - **价值**: ⭐⭐⭐⭐⭐ 为API限定的LLM水印提供了首个真正实用、多语言、多比特的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLM Watermarks Robustly Prevent Unauthorized Knowledge Distillation?](../../ACL2025/ai_safety/llm_watermark_distillation_robustness.md)
+- [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+- [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
+- [Traceable Black-box Watermarks for Federated Learning](../../ICLR2026/ai_safety/traceable_black-box_watermarks_for_federated_learning.md)
+- [SECA: Semantically Equivalent and Coherent Attacks for Eliciting LLM Hallucinations](seca_semantically_equivalent_and_coherent_attacks_for_eliciting_llm_hallucinatio.md)
+
+<!-- RELATED:END -->

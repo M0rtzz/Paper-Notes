@@ -118,3 +118,15 @@ AM框架下的"训练"对应能量景观的塑造过程。典型方法包括：H
 - 写作质量: ⭐⭐⭐⭐⭐ 极优秀的教学写作，渐进式推导清晰流畅
 - 价值: ⭐⭐⭐⭐ 对理解现代架构的理论基础有重要启发意义
 - 总体: ⭐⭐⭐⭐ AM与深度学习的统一视角对理论研究者和架构设计者都有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recurrent Memory for Online Interdomain Gaussian Processes](../../NeurIPS2025/image_generation/recurrent_memory_for_online_interdomain_gaussian_processes.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](../../CVPR2025/image_generation/improving_editability_in_image_generation_with_layer-wise_memory.md)
+- [Memory-Efficient Fine-Tuning for Quantized Diffusion Model](../../ECCV2024/image_generation/memory-efficient_fine-tuning_for_quantized_diffusion_model.md)
+- [Memory-Efficient Fine-Tuning Diffusion Transformers via Dynamic Patch Sampling and Block Skipping](../../CVPR2026/image_generation/memory-efficient_fine-tuning_diffusion_transformers_via_dynamic_patch_sampling_a.md)
+- [MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed Precision Quantization](../../ECCV2024/image_generation/mixdq_memory-efficient_few-step_text-to-image_diffusion_models_with_metric-decou.md)
+
+<!-- RELATED:END -->

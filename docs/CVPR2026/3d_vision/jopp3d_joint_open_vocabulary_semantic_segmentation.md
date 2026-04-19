@@ -149,3 +149,15 @@ JOPP-3D 是**完全免训练**的推理 Pipeline：冻结的 Mask3D/SAM3D 做 3D
 - 实验充分度: ⭐⭐⭐⭐⭐ 两数据集、2D+3D 双任务评估、4 项消融、丰富定性分析
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，图表优质，方法描述系统化
 - 价值: ⭐⭐⭐⭐⭐ 免训练超越监督方法，切向分解和掩码 CLIP 范式可广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmbodiedSplat: Online Feed-Forward Semantic 3DGS for Open-Vocabulary 3D Scene Understanding](embodiedsplat_online_feed-forward_semantic_3dgs_for_open-vocabulary_3d_scene_und.md)
+- [OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting](onlinepg_online_open-vocabulary_panoptic_mapping_with_3d_gaussian_splatting.md)
+- [ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
+- [LightSplat: Fast and Memory-Efficient Open-Vocabulary 3D Scene Understanding in Five Seconds](lightsplat_fast_and_memory-efficient_open-vocabulary_3d_scene_understanding_in_f.md)
+- [Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation](rewis3d_reconstruction_improves_weaklysupervised_s.md)
+
+<!-- RELATED:END -->

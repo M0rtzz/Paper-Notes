@@ -160,3 +160,15 @@ IEC 收敛后每步误差有界：$\|\delta_{t-1}^{(\infty)}\| \leq \frac{C}{1-L
 - **实用性**: ⭐⭐⭐⭐⭐ — 部署后优化，真正的即插即用
 - **实验**: ⭐⭐⭐⭐ — 跨模型、跨技术、跨数据集验证
 - **写作**: ⭐⭐⭐⭐ — 理论推导严谨，实验设置合理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VFScale: Intrinsic Reasoning through Verifier-Free Test-time Scalable Diffusion Model](vfscale_intrinsic_reasoning_through_verifier-free_test-time_scalable_diffusion_m.md)
+- [Compose Your Policies! Improving Diffusion-based or Flow-based Robot Policies via Test-time Distribution-level Composition](compose_your_policies_improving_diffusion-based_or_flow-based_robot_policies_via.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [Physics-Consistent Diffusion for Efficient Fluid Super-Resolution via Multiscale Residual Correction](../../CVPR2026/image_generation/physics-consistent_diffusion_for_efficient_fluid_super-resolution_via_multiscale.md)
+- [SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
+
+<!-- RELATED:END -->

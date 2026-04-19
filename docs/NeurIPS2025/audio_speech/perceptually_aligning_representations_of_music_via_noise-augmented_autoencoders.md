@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop paper 但有重建/惊奇感/EEG 三方面验证
 - 写作质量: ⭐⭐⭐⭐ 理论动机推导清晰
 - 价值: ⭐⭐⭐⭐ 对潜在扩散模型设计有普适性启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
+- [Ethics Statements in AI Music Papers: The Effective and the Ineffective](ethics_statements_in_ai_music_papers_the_effective_and_the_ineffective.md)
+- [BNMusic: Blending Environmental Noises into Personalized Music](bnmusic_blending_environmental_noises_into_personalized_music.md)
+- [Echoes of Humanity: Exploring the Perceived Humanness of AI Music](echoes_of_humanity_exploring_the_perceived_humanness_of_ai_music.md)
+- [WavRAG: Audio-Integrated Retrieval Augmented Generation for Spoken Dialogue Models](../../ACL2025/audio_speech/wavrag_audio-integrated_retrieval_augmented_generation_for_spoken_dialogue_model.md)
+
+<!-- RELATED:END -->

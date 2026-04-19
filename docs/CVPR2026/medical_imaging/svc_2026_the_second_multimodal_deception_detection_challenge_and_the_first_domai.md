@@ -131,3 +131,15 @@ SVC 2026包含两个赛道：(1) **跨域多模态欺骗检测挑战（MMDD）**
 - **实验充分度**: ⭐⭐⭐ — 提供了基线模型和参赛方案描述，但缺乏深入的技术分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，数据集和评估协议描述详尽
 - **价值**: ⭐⭐⭐⭐ — 挑战赛的组织和评估框架对推动社区研究有持续价值，揭示了跨域泛化的重要瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein as a Second Language for LLMs](../../ICLR2026/medical_imaging/protein_as_a_second_language_for_llms.md)
+- [Adaptive Confidence Regularization for Multimodal Failure Detection](adaptive_confidence_regularization_for_multimodal_failure_detection.md)
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [GLEAM: A Multimodal Imaging Dataset and HAMM for Glaucoma Classification](gleam_a_multimodal_imaging_dataset_and_hamm_for_gl.md)
+
+<!-- RELATED:END -->

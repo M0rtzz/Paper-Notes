@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 数据集偏小（EMOPIA 1087, VGMIDI 200），但消融和诊断实验系统
 - 写作质量: ⭐⭐⭐⭐ 从诊断到方案层层递进，逻辑清晰
 - 价值: ⭐⭐⭐⭐ 为符号音乐理解提供可解释的理论驱动方案，范式可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do LLMs Feel? Teaching Emotion Recognition with Prompts, Retrieval, and Curriculum Learning](do_llms_feel_teaching_emotion_recognition_with_prompts_retrieval_and_curriculum_.md)
+- [Cross-Space Synergy: A Unified Framework for Multimodal Emotion Recognition in Conversation](cross-space_synergy_a_unified_framework_for_multimodal_emotion_recognition_in_co.md)
+- [Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization](../../NeurIPS2025/audio_speech/unifying_symbolic_music_arrangement_track-aware_reconstruction_and_structured_to.md)
+- [Aligning Generative Music AI with Human Preferences: Methods and Challenges](aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
+- [Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](../../ICLR2026/audio_speech/query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)
+
+<!-- RELATED:END -->

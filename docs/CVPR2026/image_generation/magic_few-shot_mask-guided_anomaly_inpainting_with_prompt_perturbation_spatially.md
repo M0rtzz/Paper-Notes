@@ -160,3 +160,15 @@ GPP 单独使用显著降低 KID 并提升分类~3%；MGNI 增加多样性虽略
 - 实验充分度: ⭐⭐⭐⭐ — 消融完整、公平对比、下游任务覆盖全面，但仅一个数据集略显不足
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法表述完整，图表质量好
 - 价值: ⭐⭐⭐⭐ — 对工业异常检测的数据增强具有实用价值，技术洞察可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MTADiffusion: Mask Text Alignment Diffusion Model for Object Inpainting](../../CVPR2025/image_generation/mtadiffusion_mask_text_alignment_diffusion_model_for_object_inpainting.md)
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [FreeInpaint: Tuning-free Prompt Alignment and Visual Rationality Enhancement in Image Inpainting](../../AAAI2026/image_generation/freeinpaint_tuning-free_prompt_alignment_and_visual_rationality_enhancement_in_i.md)
+- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
+- [Token Perturbation Guidance for Diffusion Models](../../NeurIPS2025/image_generation/token_perturbation_guidance_for_diffusion_models.md)
+
+<!-- RELATED:END -->

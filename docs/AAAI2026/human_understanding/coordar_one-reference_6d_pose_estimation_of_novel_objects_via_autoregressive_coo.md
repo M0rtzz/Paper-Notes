@@ -175,3 +175,15 @@ AR 提升 +16.1/+20.5，ADD(-S) 提升 +41.2/+48.0，提升幅度巨大。
 - 技术深度: ⭐⭐⭐⭐ — token 化+自回归+模态解耦的组合设计完整
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4 个数据集，详细消融（5 组），速度分析
 - 写作质量: ⭐⭐⭐⭐ — 问题定义形式化清晰，消融分析深入
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One2Any: One-Reference 6D Pose Estimation for Any Object](../../CVPR2025/human_understanding/one2any_one-reference_6d_pose_estimation_for_any_object.md)
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](../../CVPR2025/human_understanding/hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [COG: Confidence-aware Optimal Geometric Correspondence for Unsupervised Single-reference Novel Object Pose Estimation](../../CVPR2026/human_understanding/cog_confidence-aware_optimal_geometric_correspondence_for_unsupervised_single-re.md)
+- [MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
+- [VPHO: Joint Visual-Physical Cue Learning and Aggregation for Hand-Object Pose Estimation](vpho_joint_visual-physical_cue_learning_and_aggregation_for_hand-object_pose_est.md)
+
+<!-- RELATED:END -->

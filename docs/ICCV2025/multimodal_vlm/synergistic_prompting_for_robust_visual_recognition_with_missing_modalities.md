@@ -160,3 +160,15 @@ SyP在所有数据集、所有缺失率、所有缺失模式下均超越SOTA DCP
 - 技术深度：3/5（方法简洁但理论分析不深入）
 - 实验充分度：4/5（三个数据集、多种缺失率、丰富的消融实验）
 - 写作质量：3/5（较清晰但略冗长）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recognition-Synergistic Scene Text Editing](../../CVPR2025/multimodal_vlm/recognition-synergistic_scene_text_editing.md)
+- [Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](../../ECCV2024/multimodal_vlm/meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
+- [Generalizable Object Re-Identification via Visual In-Context Prompting](generalizable_object_re-identification_via_visual_in-context_prompting.md)
+- [MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
+- [Beyond Heuristic Prompting: A Concept-Guided Bayesian Framework for Zero-Shot Image Recognition](../../CVPR2026/multimodal_vlm/beyond_heuristic_prompting_a_concept-guided_bayesian_framework_for_zero-shot_ima.md)
+
+<!-- RELATED:END -->

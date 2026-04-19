@@ -162,3 +162,15 @@ BayesVLM（论文提出的方法名称）的核心思想是：
 - 实验充分度: ⭐⭐⭐⭐ — 不确定性量化和主动学习双场景验证，多 VLM 骨架测试
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，方法描述简洁易懂
 - 价值: ⭐⭐⭐⭐ — 解决了 VLM 部署中的实际需求，安全关键应用前景广阔
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](../../CVPR2025/multimodal_vlm/post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](../../CVPR2026/multimodal_vlm/fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+- [Do Vision-Language Models Respect Contextual Integrity in Location Disclosure?](do_vision-language_models_respect_contextual_integrity_in_location_disclosure.md)
+- [GTR-Bench: Evaluating Geo-Temporal Reasoning in Vision-Language Models](gtr-bench_evaluating_geo-temporal_reasoning_in_vision-language_mod.md)
+- [Mixing Importance with Diversity: Joint Optimization for KV Cache Compression in Large Vision-Language Models](mixing_importance_with_diversity_joint_optimization_for_kv_cache_compression_in_.md)
+
+<!-- RELATED:END -->

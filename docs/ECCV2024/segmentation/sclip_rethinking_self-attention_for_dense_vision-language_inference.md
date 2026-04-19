@@ -125,3 +125,15 @@ SCLIP 在预训练 CLIP 模型（ViT-Base/16）上做最简修改：仅将视觉
 - 实验充分度: ⭐⭐⭐⭐ 8个基准全面评估，消融非常细致（投影选择、替代方案、预处理等）
 - 写作质量: ⭐⭐⭐⭐⭐ 从现象出发层层递进到解决方案，逻辑清晰，可视化有力
 - 价值: ⭐⭐⭐⭐⭐ 证明弱监督预训练模型在密集预测中的巨大潜力，为后续CLIP适配研究提供重要参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
+- [Self-supervised Synthetic Pretraining for Inference of Stellar Mass Embedded in Dense Gas](../../NeurIPS2025/segmentation/self-supervised_synthetic_pretraining_for_inference_of_stellar_mass_embedded_in_.md)
+- [GiT: Towards Generalist Vision Transformer through Universal Language Interface](git_towards_generalist_vision_transformer_through_universal_language_interface.md)
+- [DreamLIP: Language-Image Pre-training with Long Captions](dreamlip_language-image_pre-training_with_long_captions.md)
+- [Attention Decomposition for Cross-Domain Semantic Segmentation](attention_decomposition_for_cross-domain_semantic_segmentation.md)
+
+<!-- RELATED:END -->

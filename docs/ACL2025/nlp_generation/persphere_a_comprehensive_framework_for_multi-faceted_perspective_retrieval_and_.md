@@ -141,3 +141,15 @@ tags:
 ## 评分 ⭐⭐⭐⭐
 
 任务定义有现实意义（对抗信息茧房），数据集构建规范，评估框架完整。实验发现（长上下文瓶颈、观点提取困难、文档顺序敏感性）对 RAG 领域有广泛参考价值。HierSphere 的改进虽然幅度不大但方向正确。主要不足在于数据集规模偏小、二元对立假设过于简化。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DTCRS: Dynamic Tree Construction for Recursive Summarization](dtcrs_dynamic_tree_construction_for_recursive_summarization.md)
+- [What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations](video_text_summarization.md)
+- [Multi-document Summarization through Multi-document Event Relation Graph Reasoning in LLMs](event_graph_bias_mitigation_summarization.md)
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [Towards Better Open-Ended Text Generation: A Multicriteria Evaluation Framework](towards_better_open-ended_text_generation_a_multicriteria_evaluation_framework.md)
+
+<!-- RELATED:END -->

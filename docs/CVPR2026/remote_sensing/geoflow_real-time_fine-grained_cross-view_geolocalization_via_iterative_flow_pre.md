@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ VIGOR+KITTI双基准+效率对比+IRS分析
 - 写作质量: ⭐⭐⭐⭐⭐ 架构图和IRS收敛可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 对自动驾驶/机器人在GPS denied环境的实时定位有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](../../ECCV2024/remote_sensing/adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
+- [RHO: Robust Holistic OSM-Based Metric Cross-View Geo-Localization](rho_robust_holistic_osm-based_metric_cross-view_geo-localization.md)
+- [C3PO: Cross-View Cross-Modality Correspondence by Pointmap Prediction](../../NeurIPS2025/remote_sensing/c3po_cross-view_cross-modality_correspondence_by_pointmap_prediction.md)
+- [Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
+- [UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization](../../AAAI2026/remote_sensing/uniabg_unified_adversarial_view_bridging_and_graph_correspondence_for_unsupervis.md)
+
+<!-- RELATED:END -->

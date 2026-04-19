@@ -141,3 +141,15 @@ $$RR = \sum_{c \in \text{resected}} s_c \Big/ \sum_{c \in \text{all}} s_c$$
 ⭐⭐⭐⭐
 
 本文在数据集构建、基准设计和跨域分析方面做出了扎实贡献。302 名多中心患者、36K 专家标注、统一化流程和全面 baseline 对比为癫痫 iEEG 领域建立了重要的公共基础设施。CLAP 跨域迁移和"可听的"生物标志物发现尤为新颖。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AFD-INSTRUCTION: A Comprehensive Antibody Instruction Dataset with Functional Annotations for LLM-Based Understanding and Design](afd-instruction_a_comprehensive_antibody_instruction_dataset_with_functional_ann.md)
+- [Towards Omni-RAG: Comprehensive Retrieval-Augmented Generation for Large Language Models in Medical Applications](../../ACL2025/medical_imaging/omni_rag_medical.md)
+- [Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset](../../CVPR2026/medical_imaging/instruction-guided_lesion_segmentation_for_chest_x-rays_with_automatically_gener.md)
+- [OphNet: A Large-Scale Video Benchmark for Ophthalmic Surgical Workflow Understanding](../../ECCV2024/medical_imaging/ophnet_a_large-scale_video_benchmark_for_ophthalmic_surgical_workflow_understand.md)
+- [STARC-9: A Large-scale Dataset for Multi-Class Tissue Classification for CRC Histopathology](../../NeurIPS2025/medical_imaging/starc-9_a_large-scale_dataset_for_multi-class_tissue_classification_for_crc_hist.md)
+
+<!-- RELATED:END -->

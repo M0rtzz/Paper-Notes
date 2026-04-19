@@ -172,3 +172,15 @@ LFRD² 包含两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐ — 四个数据集、三种任务、详细消融（核心组件、连续卷积输入、阶数选择）
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导严谨，图示清晰，物理解释充分
 - **价值**: ⭐⭐⭐⭐ — 对物理驱动深度恢复有方法论贡献，跨任务泛化性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Accuracy: Dissecting Mathematical Reasoning for LLMs Under Reinforcement Learning](../../NeurIPS2025/interpretability/beyond_accuracy_dissecting_mathematical_reasoning_for_llms_u.md)
+- [On the Effect of Uncertainty on Layer-wise Inference Dynamics](../../ICML2025/interpretability/on_the_effect_of_uncertainty_on_layer-wise_inference_dynamics.md)
+- [Pixel2Phys: Distilling Governing Laws from Visual Dynamics](../../CVPR2026/interpretability/pixel2phys_distilling_governing_laws_from_visual_dynamics.md)
+- [Dynamic Algorithm for Explainable k-medians Clustering under lp Norm](../../NeurIPS2025/interpretability/dynamic_algorithm_for_explainable_k-medians_clustering_under_lp_norm.md)
+- [Avoiding Leakage Poisoning: Concept Interventions Under Distribution Shifts](../../ICML2025/interpretability/avoiding_leakage_poisoning_concept_interventions_under_distribution_shifts.md)
+
+<!-- RELATED:END -->

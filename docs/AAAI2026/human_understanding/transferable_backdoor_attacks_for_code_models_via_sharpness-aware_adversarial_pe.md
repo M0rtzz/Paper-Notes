@@ -196,3 +196,15 @@ STAB 在跨数据集迁移性上平均 ASR 达到 80.1%，超过 AFRAIDOOR 12.4%
 - 实验充分度: ⭐⭐⭐⭐ （3 数据集 × 2 模型 × 9 组合 + 全面消融）
 - 写作质量: ⭐⭐⭐⭐ （动机清晰、方法严谨，图示质量高）
 - 价值: ⭐⭐⭐⭐ （揭示了代码模型安全的新威胁，推动防御研究）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Anti-adversarial Learning: Desensitizing Prompts for Large Language Models](anti-adversarial_learning_desensitizing_prompts_for_large_la.md)
+- [Authority Backdoor: A Certifiable Backdoor Mechanism for Authoring DNNs](authority_backdoor_a_certifiable_backdoor_mechanism_for_authoring_dnns.md)
+- [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](../../CVPR2026/human_understanding/when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
+- [Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification](../../NeurIPS2025/human_understanding/stealthy_yet_effective_distribution-preserving_backdoor_attacks_on_graph_classif.md)
+- [SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](../../ICCV2025/human_understanding/samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)
+
+<!-- RELATED:END -->

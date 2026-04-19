@@ -139,3 +139,15 @@ $$TD_{\text{target}} = r_t + \gamma \left( Q(s_{t+1}, \pi(s_{t+1})) - \alpha \te
 - 实验充分度: ⭐⭐⭐⭐ — 真实小鼠数据+多维度定量对比；但仅一个环境，泛化分析不足
 - 写作质量: ⭐⭐⭐⭐ — 叙事流畅，图表丰富；数学部分清晰
 - 价值: ⭐⭐⭐⭐ — 揭示了RL与生物行为的根本差距，VP-TD有实用潜力；但单环境限制了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Real-World Reinforcement Learning of Active Perception Behaviors](../../NeurIPS2025/reinforcement_learning/real-world_reinforcement_learning_of_active_perception_behaviors.md)
+- [Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
+- [PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
+- [Meta-World+: An Improved, Standardized, RL Benchmark](../../NeurIPS2025/reinforcement_learning/meta-world_an_improved_standardized_rl_benchmark.md)
+- [Learning Human-Like RL Agents through Trajectory Optimization with Action Quantization](../../NeurIPS2025/reinforcement_learning/learning_human-like_rl_agents_through_trajectory_optimization_with_action_quanti.md)
+
+<!-- RELATED:END -->

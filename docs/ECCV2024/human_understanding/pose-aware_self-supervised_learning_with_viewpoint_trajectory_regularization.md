@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 域内外、多种SSL基线、real data迁移均有覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，动机阐述到位，可视化丰富直观
 - 价值: ⭐⭐⭐⭐ 基准本身对SSL社区有长期价值，轨迹损失简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Soft Equivariance Regularization for Invariant Self-Supervised Learning](../../ICLR2026/human_understanding/soft_equivariance_regularization_for_invariant_self-supervised_learning.md)
+- [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
+- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
+- [Cut Out the Middleman: Revisiting Pose-Based Gait Recognition](cut_out_the_middleman_revisiting_pose-based_gait_recognition.md)
+- [ADen: Adaptive Density Representations for Sparse-view Camera Pose Estimation](aden_adaptive_density_representations_for_sparseview_camera.md)
+
+<!-- RELATED:END -->

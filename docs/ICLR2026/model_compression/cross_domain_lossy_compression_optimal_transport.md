@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论+5个数据集+3种任务（超分/去噪/修复）+ 与基线定量对比 + rebuttal中补充显微镜和SIDD数据
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，但密度高、accessibility一般
 - 价值: ⭐⭐⭐⭐⭐ 信息论领域的重要理论贡献，为跨域压缩和图像恢复提供了基本性能极限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lightweight Optimal-Transport Harmonization on Edge Devices](../../AAAI2026/model_compression/lightweight_optimal-transport_harmonization_on_edge_devices.md)
+- [Reinforced Rate Control for Neural Video Compression via Inter-Frame Rate-Distortion Awareness](../../AAAI2026/model_compression/reinforced_rate_control_for_neural_video_compression_via_inter-frame_rate-distor.md)
+- [FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension](freqkv_key-value_compression_in_frequency_domain_for_context_window_extension.md)
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](../../ACL2025/model_compression/sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](../../NeurIPS2025/model_compression/optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
+
+<!-- RELATED:END -->

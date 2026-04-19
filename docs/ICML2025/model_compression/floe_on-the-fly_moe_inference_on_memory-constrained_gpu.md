@@ -133,3 +133,15 @@ FloE 由三个核心模块组成：专家混合压缩、稀疏性预测器、系
 - 实验充分度: ⭐⭐⭐⭐ （效率+效果双维度，多 GPU、多任务验证）
 - 写作质量: ⭐⭐⭐⭐ （图表丰富，动机-观察-设计逻辑链清晰）
 - 价值: ⭐⭐⭐⭐⭐ （让消费级 GPU 可即时运行 MoE，实用价值极高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs](../../NeurIPS2025/model_compression/casspec_cascade_adaptive_selfspeculative_decoding_for_onthef.md)
+- [KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments](../../NeurIPS2025/model_compression/keydiff_key_similarity-based_kv_cache_eviction_for_long-context_llm_inference_in.md)
+- [MKA: Memory-Keyed Attention for Efficient Long-Context Reasoning](mka_memory-keyed_attention_for_efficient_long-context_reasoning.md)
+- [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
+- [OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference](orthorank_token_selection_via_sink_token_orthogonality_for_efficient_llm_inferen.md)
+
+<!-- RELATED:END -->

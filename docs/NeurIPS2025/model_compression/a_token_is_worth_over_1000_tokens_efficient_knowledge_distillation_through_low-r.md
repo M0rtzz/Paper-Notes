@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多 teacher、消融实验、与多个 SLM 比较，结果有说服力
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，方法描述详细，Lemma 证明规范
 - 价值: ⭐⭐⭐⭐⭐ 1000 倍效率提升具有重大实际价值，可能改变 SLM 训练范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation](beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+- [Single-Teacher View Augmentation: Boosting Knowledge Distillation via Angular Diversity](single-teacher_view_augmentation_boosting_knowledge_distillation_via_angular_div.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [QSVD: Efficient Low-Rank Approximation for Unified Query-Key-Value Weight Compression](qsvd_efficient_low-rank_approximation_for_unified_query-key-value_weight_compres.md)
+
+<!-- RELATED:END -->

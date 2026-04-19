@@ -129,3 +129,15 @@ ECD在4个MLLM上6个测试集上整体一致提升。
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个模型、6个测试集、详细消融和对比分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表可视化quality高
 - 价值: ⭐⭐⭐⭐ 数据合成的系统方法论，对其他可编程图像领域也有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CompCap: Improving Multimodal Large Language Models with Composite Captions](compcap_improving_multimodal_large_language_models_with_composite_captions.md)
+- [SCAN: Bootstrapping Contrastive Pre-training for Data Efficiency](scan_bootstrapping_contrastive_pre-training_for_data_efficiency.md)
+- [Img-Diff: Contrastive Data Synthesis for Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/img-diff_contrastive_data_synthesis_for_multimodal_large_language_models.md)
+- [MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval](../../ACL2025/multimodal_vlm/megapairs_massive_data_synthesis_for_universal_multimodal_retrieval.md)
+- [Harnessing PDF Data for Improving Japanese Large Multimodal Models](../../ACL2025/multimodal_vlm/harnessing_pdf_data_for_improving_japanese_large_multimodal_models.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9 个评估 × 6 个模型 × 6 种人格覆盖广泛，但缺少开源模型和统计检验
 - 写作质量: ⭐⭐⭐⭐ 案例分析生动，定义清晰，但附录依赖较重
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 安全社区极其重要，为 Agent 部署前的安全评估提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EU-Agent-Bench: Measuring Illegal Behavior of LLM Agents Under EU Law](eu-agent-bench_measuring_illegal_behavior_of_llm_agents_under_eu_law.md)
+- [ContextAgent: Context-Aware Proactive LLM Agents with Open-World Sensory Perceptions](contextagent_context-aware_proactive_llm_agents_with_open-world_sensory_percepti.md)
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [LLM Agents for Knowledge Discovery in Atomic Layer Processing](llm_agents_for_knowledge_discovery_in_atomic_layer_processing.md)
+- [Crucible: Quantifying the Potential of Control Algorithms through LLM Agents](crucible_quantifying_the_potential_of_control_algorithms_through_llm_agents.md)
+
+<!-- RELATED:END -->

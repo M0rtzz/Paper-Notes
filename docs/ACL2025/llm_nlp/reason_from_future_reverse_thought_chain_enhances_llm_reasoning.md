@@ -170,3 +170,15 @@ RFF 用 Llama3-8B 达到 89%，超越 GPT-4+CR(n=1) 的 84%，且访问状态数
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了搜索树和 DAG 两类任务，包含冗余和鲁棒性分析，但缺少大模型实验
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，算法伪代码规范，但部分实验分析较简略
 - 价值: ⭐⭐⭐⭐⭐ 提出了一种通用性强、即插即用的推理增强范式，对弱模型的增益尤其显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up](reversal_of_thought_enhancing_large_language.md)
+- [Structural Reasoning Improves Molecular Understanding of LLM](structural_reasoning_improves_molecular_understanding_of_llm.md)
+- [Stepwise Reasoning Disruption Attack of LLMs](seed_stepwise_reasoning_disruption_attack.md)
+- [A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)
+- [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](contrastive_prompting_embeddings.md)
+
+<!-- RELATED:END -->

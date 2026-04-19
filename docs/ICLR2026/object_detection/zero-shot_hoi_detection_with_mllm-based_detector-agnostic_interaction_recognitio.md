@@ -161,3 +161,15 @@ DA-HOI 将 HOI 检测解耦为两个完全独立的阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 四种零样本设定 + 跨检测器 + 跨数据集 + training-free + 全监督 + 多 MLLM 消融 + 训练策略消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、动机阐述到位，公式推导规范，部分 section 略有冗余
 - 价值: ⭐⭐⭐⭐⭐ 提出 MLLM 时代 HOI 检测新范式，解耦设计具有很强的工程价值和学术影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition](../../CVPR2026/object_detection/learning_by_neighbor-aware_semantics_deciding_by_open-form_flows_towards_robust_.md)
+- [Pixels Don't Lie (But Your Detector Might): Bootstrapping MLLM-as-a-Judge for Trustworthy Deepfake Detection and Reasoning Supervision](../../CVPR2026/object_detection/pixels_dont_lie_but_your_detector_might_bootstrapping_mllm-as-a-judge_for_trustw.md)
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](../../CVPR2026/object_detection/evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
+- [Zero-Shot Detection of AI-Generated Images](../../ECCV2024/object_detection/zero-shot_detection_of_ai-generated_images.md)
+- [OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection](../../ECCV2024/object_detection/openkd_opening_prompt_diversity_for_zero-_and_few-shot_keypoint_detection.md)
+
+<!-- RELATED:END -->

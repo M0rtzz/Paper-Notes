@@ -152,3 +152,15 @@ Occ3D 基准上的 3D 占用预测结果（ResNet50 backbone）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 消融全面，效率对比、时序一致性评估都很完善
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式推导连贯
 - **价值**: ⭐⭐⭐⭐ 对占用预测的时序建模提供了新的高效范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussRender: Learning 3D Occupancy with Gaussian Rendering](gaussrender_learning_3d_occupancy_with_gaussian_rendering.md)
+- [SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting](frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast.md)
+- [DiST-4D: Disentangled Spatiotemporal Diffusion with Metric Depth for 4D Driving Scene Generation](dist-4d_disentangled_spatiotemporal_diffusion_with_metric_depth_for_4d_driving_s.md)
+- [Semantic Causality-Aware Vision-Based 3D Occupancy Prediction](semantic_causality-aware_vision-based_3d_occupancy_prediction.md)
+- [EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding](embodiedocc_embodied_3d_occupancy_prediction_for_vision-based_online_scene_under.md)
+
+<!-- RELATED:END -->

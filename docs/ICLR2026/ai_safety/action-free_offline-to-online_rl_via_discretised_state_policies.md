@@ -149,3 +149,15 @@ OSO-DecQN在D4RL和DeepMind Control Suite上与多种基线的归一化平均回
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个环境×4种数据集质量，消融极为完整，每个设计决策都有充分验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析深入，why-discretisation和why-regularisation的分析章节尤为出色
 - 价值: ⭐⭐⭐⭐ 为动作缺失场景的RL开辟了实用路径，但应用验证仍停留在模拟环境
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fair in Mind, Fair in Action? A Synchronous Benchmark for Understanding and Generation in UMLLMs](fair_in_mind_fair_in_action_a_synchronous_benchmark_for_understanding_and_genera.md)
+- [Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
+- [PMark: Towards Robust and Distortion-free Semantic-level Watermarking with Channel Constraints](pmark_towards_robust_and_distortion-free_semantic-level_watermarking_with_channe.md)
+- [Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
+- [Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
+
+<!-- RELATED:END -->

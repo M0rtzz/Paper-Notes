@@ -157,3 +157,15 @@ Multi-Agent Discussion 是平均调用频率最高（1.87 次/项目）且最关
 - 实验充分度: ⭐⭐⭐⭐ 7 个 LLM、3 个基线、4 种策略、完整消融，但基准仅 100 个 C/C++ 项目
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细，但部分段落重复冗长
 - 价值: ⭐⭐⭐⭐ 对软件工程自动化有实际价值，$0.22/项目的低成本使其具备实用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VeriMaAS: Automated Multi-Agent Workflows for RTL Design](../../NeurIPS2025/code_intelligence/automated_multi-agent_workflows_for_rtl_design.md)
+- [TeXpert: A Multi-Level Benchmark for Evaluating LaTeX Code Generation by LLMs](texpert_a_multi-level_benchmark_for_evaluating_latex_code_generation_by_llms.md)
+- [FEA-Bench: A Benchmark for Evaluating Repository-Level Code Generation for Feature Implementation](feabench_repo_code_gen.md)
+- [A Self-Improving Coding Agent](../../NeurIPS2025/code_intelligence/a_selfimproving_coding_agent.md)
+- [Towards Practical Defect-Focused Automated Code Review](../../ICML2025/code_intelligence/towards_practical_defect-focused_automated_code_review.md)
+
+<!-- RELATED:END -->

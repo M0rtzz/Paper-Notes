@@ -129,3 +129,15 @@ $$x_{t+1} = x_t - \eta_t \bar{D}_t^{-1} \bar{m}_t - \eta_t \lambda x_t$$
 - 实验充分度: ⭐⭐⭐⭐ — 视觉 + 语言、CNN + ViT + Transformer，多种 sharpness 指标全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、逻辑严密、理论与实验互相印证
 - 价值: ⭐⭐⭐⭐ — 为二阶优化在深度学习中的实用化打开了新的方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](../../CVPR2025/others/zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [Stable Matching with Ties: Approximation Ratios and Learning](../../NeurIPS2025/others/stable_matching_with_ties_approximation_ratios_and_learning.md)
+- [Overfitting in Adaptive Robust Optimization](../../NeurIPS2025/others/overfitting_in_adaptive_robust_optimization.md)
+- [TANGO: Clustering with Typicality-Aware Nonlocal Mode-Seeking and Graph-Cut Optimization](tango_clustering_with_typicality-aware_nonlocal_mode-seeking_and_graph-cut_optim.md)
+- [Time-Aware World Model for Adaptive Prediction and Control](time-aware_world_model_for_adaptive_prediction_and_control.md)
+
+<!-- RELATED:END -->

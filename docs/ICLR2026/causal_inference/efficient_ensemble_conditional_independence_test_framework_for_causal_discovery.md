@@ -155,3 +155,15 @@ E-CIT 的三步流水线（Figure 1）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成数据 + 真实数据 + 因果发现应用，6 种 CIT 方法 × 多种噪声分布 × 多种样本量，消融充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论和实验衔接好，Figure 1 的框架概览直观；证明放附录保持主文流畅
 - 价值: ⭐⭐⭐⭐ 实用性强——可直接插入现有因果发现流水线；对大规模因果发现有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IRIS: An Iterative and Integrated Framework for Verifiable Causal Discovery](../../ACL2025/causal_inference/iris_an_iterative_and_integrated_framework.md)
+- [Direct Doubly Robust Estimation of Conditional Quantile Contrasts](direct_doubly_robust_estimation_of_conditional_quantile_contrasts.md)
+- [Synthesising Counterfactual Explanations via Label-Conditional Gaussian Mixture Variational Autoencoders](synthesising_counterfactual_explanations_via_label-conditional_gaussian_mixture_.md)
+- [MaskDiME: Adaptive Masked Diffusion for Precise and Efficient Visual Counterfactual Explanations](../../CVPR2026/causal_inference/maskdime_adaptive_masked_diffusion_for_precise_and_efficient_visual_counterfactu.md)
+- [MUG: Multi-agent Undercover Gaming — Hallucination Removal via Counterfactual Test for Multimodal Reasoning](../../AAAI2026/causal_inference/multi-agent_undercover_gaming_hallucination_removal_via_coun.md)
+
+<!-- RELATED:END -->

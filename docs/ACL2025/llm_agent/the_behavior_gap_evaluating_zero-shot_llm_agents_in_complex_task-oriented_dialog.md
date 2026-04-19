@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三数据集+三模型+因果验证+复杂度分析
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，实验分析层次分明
 - 价值: ⭐⭐⭐⭐⭐ 为诊断和改进 LLM agent 提供了可操作的分析工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Play2Prompt: Zero-shot Tool Instruction Optimization for LLM Agents via Tool Play](play2prompt_zero-shot_tool_instruction_optimization_for_llm_agents_via_tool_play.md)
+- [GuideBench: Benchmarking Domain-Oriented Guideline Following for LLM Agents](guidebench_guideline_following.md)
+- [Agent3D-Zero: An Agent for Zero-shot 3D Understanding](../../ECCV2024/llm_agent/agent3d-zero_an_agent_for_zero-shot_3d_understanding.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](../../NeurIPS2025/llm_agent/zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+
+<!-- RELATED:END -->

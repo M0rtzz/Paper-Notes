@@ -160,3 +160,15 @@ Top-4 模型在不同认知任务类型上的表现：
 | 技术深度 | ⭐⭐⭐ | 数据集设计和评估框架扎实，统计显著性分析充分，但作为基准论文缺少新的模型或方法贡献 |
 | 实验充分度 | ⭐⭐⭐⭐ | 覆盖 10 个 SOTA 模型，沿四个维度（领域、任务、质量、分辨率）进行系统分析，发现丰富 |
 | 工程实用性 | ⭐⭐⭐⭐⭐ | 直接来源于 Meta Reality Labs 的产品需求，数据集和评估框架均已开源，对可穿戴 AI 开发有直接指导价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Vision Language Models Ready for Clinical Diagnosis? A 3D Medical Benchmark for Tumor-centric Visual Question Answering](are_vision_language_models_ready_for_clinical_diagnosis_a_3d_medical_benchmark_f.md)
+- [ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering](../../ICCV2025/multimodal_vlm/reasonvqa_a_multi-hop_reasoning_benchmark_with_structural_knowledge_for_visual_q.md)
+- [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
+- [WikiMixQA: A Multimodal Benchmark for Question Answering over Tables and Charts](../../ACL2025/multimodal_vlm/wikimixqa_a_multimodal_benchmark_for_question_answering_over_tables_and_charts.md)
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](../../ACL2025/multimodal_vlm/real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+
+<!-- RELATED:END -->

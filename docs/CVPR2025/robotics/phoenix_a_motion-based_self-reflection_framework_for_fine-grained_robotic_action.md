@@ -131,3 +131,15 @@ RoboMimic 9 个任务的平均成功率：
 - 实验充分度: ⭐⭐⭐⭐ 9个仿真任务+真实世界实验+终身学习+泛化测试
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，但纠正数据构建细节不够充分
 - 价值: ⭐⭐⭐⭐ 为机器人自纠错提供了实用的中间抽象层设计思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CHEER-Ekman: Fine-grained Embodied Emotion Classification](../../ACL2025/robotics/cheer-ekman_fine-grained_embodied_emotion_classification.md)
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [DexFlyWheel: A Scalable Self-Improving Data Generation Framework for Dexterous Manipulation](../../NeurIPS2025/robotics/dexflywheel_a_scalable_and_self-improving_data_generation_framework_for_dexterou.md)
+- [FALCON: Fine-grained Activation Manipulation by Contrastive Orthogonal Unalignment for Large Language Model](../../NeurIPS2025/robotics/falcon_fine-grained_activation_manipulation_by_contrastive_orthogonal_unalignmen.md)
+- [VITRIX-CLIPIN: Enhancing Fine-Grained Visual Understanding in CLIP via Instruction Editing Data and Long Captions](../../NeurIPS2025/robotics/vitrix-clipin_enhancing_fine-grained_visual_understanding_in_clip_via_instructio.md)
+
+<!-- RELATED:END -->

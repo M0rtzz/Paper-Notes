@@ -168,3 +168,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop论文体量限制明显，基准测试的详细数值推迟到配套论文，缺乏数据源组合的消融实验
 - 写作质量: ⭐⭐⭐⭐ 数据集描述系统性强，Table 1对数据源的总结清晰高效，整体逻辑流畅
 - 价值: ⭐⭐⭐⭐ 对空间天气ML社区有重要的基础设施价值，为电离层数字孪生的构建奠定了数据基础，开源的数据和代码降低了入门门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAMMs: Change Understanding and Forecasting in Satellite Image Time Series with Temporal-Aware Multimodal Models](../../ICLR2026/remote_sensing/tamms_change_understanding_and_forecasting_in_satellite_image_time_series_with_t.md)
+- [Debiasing Machine Learning Predictions for Causal Inference Without Additional Ground Truth Data](../../AAAI2026/remote_sensing/debiasing_machine_learning_predictions_for_causal_inference_without_additional_g.md)
+- [EcoCast: A Spatio-Temporal Model for Continual Biodiversity and Climate Risk Forecasting](ecocast_a_spatio-temporal_model_for_continual_biodiversity_and_climate_risk_fore.md)
+- [MapEval: A Map-Based Evaluation of Geo-Spatial Reasoning in Foundation Models](../../ICML2025/remote_sensing/mapeval_a_map-based_evaluation_of_geo-spatial_reasoning_in_foundation_models.md)
+- [Machine Learning for Sustainable Rice Production: Region-Scale Monitoring of Water-Saving Practices in Punjab, India](../../AAAI2026/remote_sensing/machine_learning_for_sustainable_rice_production_region-scale_monitoring_of_wate.md)
+
+<!-- RELATED:END -->

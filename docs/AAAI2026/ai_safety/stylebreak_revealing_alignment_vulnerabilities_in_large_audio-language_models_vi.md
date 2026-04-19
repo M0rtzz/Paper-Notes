@@ -183,3 +183,15 @@ $$\max_\theta \mathbb{E}_{q \sim \mathcal{Q}, s \sim \pi_\theta(q)} [J(M(a_p^s, 
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4个LAM×4种攻击范式×3类属性，含消融、迁移和可视化
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、图表丰富，但方法细节分散在正文和附录
 - 价值: ⭐⭐⭐⭐⭐ — 揭示了 LAM 安全的关键盲区，对对齐训练有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AudioTrust: Benchmarking the Multifaceted Trustworthiness of Audio Large Language Models](../../ICLR2026/ai_safety/audiotrust_benchmarking_the_multifaceted_trustworthiness_of_audio_large_language.md)
+- [Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking](yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md)
+- [Gender Bias in Emotion Recognition by Large Language Models](gender_bias_in_emotion_recognition_by_large_language_models.md)
+- [Detect All-Type Deepfake Audio: Wavelet Prompt Tuning for Enhanced Auditory Perception](detect_all-type_deepfake_audio_wavelet_prompt_tuning_for_enhanced_auditory_perce.md)
+- [ALMGuard: Safety Shortcuts and Where to Find Them as Guardrails for Audio-Language Models](../../NeurIPS2025/ai_safety/almguard_safety_shortcuts_and_where_to_find_them_as_guardrails_for_audio-languag.md)
+
+<!-- RELATED:END -->

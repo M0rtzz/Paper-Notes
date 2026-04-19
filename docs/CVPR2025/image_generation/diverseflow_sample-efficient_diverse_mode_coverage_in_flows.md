@@ -68,3 +68,15 @@ ImageNet-256 (LFM, CFG=2): Recall 0.41→**0.46**，Precision 基本保持（0.7
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实+定性分析
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰
 - 价值: ⭐⭐⭐⭐ 对有限预算下的多样性生成有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
+- [HollowFlow: Efficient Sample Likelihood Evaluation using Hollow Message Passing](../../NeurIPS2025/image_generation/hollowflow_efficient_sample_likelihood_evaluation_using_hollow_message_passing.md)
+- [Sample-Efficient Evidence Estimation of Score-Based Priors for Model Selection](../../ICLR2026/image_generation/sample-efficient_evidence_estimation_of_score_based_priors_for_model_selection.md)
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+
+<!-- RELATED:END -->

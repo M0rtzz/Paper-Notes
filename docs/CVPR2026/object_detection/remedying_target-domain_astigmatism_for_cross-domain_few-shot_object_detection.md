@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6个数据集、3种shot设置、多模块消融、注意力可视化，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题发现→量化分析→仿生启发→技术方案的叙事逻辑非常清晰
 - 价值: ⭐⭐⭐⭐ 散光现象的发现和矫正方法对CD-FSOD社区有重要启发，方法可推广到其他跨域任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps](a_closer_look_at_cross-domain_few-shot_object_detection_fine-tuning_matters_and_.md)
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](evaluating_fewshot_pill_recognition_under_visual_d.md)
+- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
+- [Small Target Detection Based on Mask-Enhanced Attention Fusion of Visible and Infrared Remote Sensing Images](small_target_detection_based_on_mask-enhanced_attention_fusion_of_visible_and_in.md)
+
+<!-- RELATED:END -->

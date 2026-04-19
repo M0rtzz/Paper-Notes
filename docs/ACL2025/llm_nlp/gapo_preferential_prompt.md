@@ -124,3 +124,15 @@ Generator 的目标函数是标准 PPO 形式，采用优势函数 $A_n = Q_\pi(
 - 实验充分度: ⭐⭐⭐⭐ PR vs PP 对比、不同样本量 scaling、对抗训练动态分析等都做得细致，但任务种类偏少
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，motivation 铺陈到位，图表设计合理
 - 价值: ⭐⭐⭐⭐ Preferential Prompt 范式和 encoder-only RM 的思路有广泛启发性，但计算开销限制了实际采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [System Prompt Optimization with Meta-Learning](../../NeurIPS2025/llm_nlp/system_prompt_optimization_with_meta-learning.md)
+- [RiOT: Efficient Prompt Refinement with Residual Optimization Tree](riot_efficient_prompt_refinement_with_residual_optimization_tree.md)
+- [Efficient and Accurate Prompt Optimization: the Benefit of Memory in Exemplar-Guided Reflection](erm_prompt_optimization_memory.md)
+- [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](gapo_multi_objective_alignment.md)
+- [A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)
+
+<!-- RELATED:END -->

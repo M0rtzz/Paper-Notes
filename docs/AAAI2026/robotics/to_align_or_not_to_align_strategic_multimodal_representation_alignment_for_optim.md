@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 设计合理但规模有限，缺少大模型验证
 - 写作质量: ⭐⭐⭐⭐ 论述逻辑清晰，从合成到真实数据的论证链完整
 - 价值: ⭐⭐⭐⭐ 对多模态学习实践有重要指导意义，改变了"对齐总是好的"这一普遍假设
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Embodied Representation Alignment with Mirror Neurons](../../ICCV2025/robotics/embodied_representation_alignment_with_mirror_neurons.md)
+- [Task-Optimized Convolutional Recurrent Networks Align with Tactile Processing in the Rodent Brain](../../NeurIPS2025/robotics/task-optimized_convolutional_recurrent_networks_align_with_tactile_processing_in.md)
+- [Cross Modal Fine-Grained Alignment via Granularity-Aware and Region-Uncertain Modeling](cross_modal_fine-grained_alignment_via_granularity-aware_and_region-uncertain_mo.md)
+- [TouchFormer: A Robust Transformer-based Framework for Multimodal Material Perception](touchformer_a_robust_transformer-based_framework_for_multimodal_material_percept.md)
+- [Towards Reinforcement Learning from Neural Feedback: Mapping fNIRS Signals to Agent Performance](towards_reinforcement_learning_from_neural_feedback_mapping_.md)
+
+<!-- RELATED:END -->

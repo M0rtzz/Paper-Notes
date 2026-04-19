@@ -125,3 +125,15 @@ AVION 采用教师-学生蒸馏架构：冻结的大型教师模型（GeoRSCLIP 
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个分类 + 2 个检索数据集，三种评测协议，详尽消融
 - 写作质量: ⭐⭐⭐⭐⭐ 问题诊断清晰，方法动机明确，消融层层递进
 - 价值: ⭐⭐⭐⭐ 对遥感 VLM 适配有实用价值，LLM 辅助原型构建思路有启发性\n
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
+- [Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments](olbedo_an_albedo_and_shading_aerial_dataset_for_large-scale_outdoor_environments.md)
+- [ACPV-Net: All-Class Polygonal Vectorization for Seamless Vector Map Generation from Aerial Imagery](acpv-net_all-class_polygonal_vectorization_for_seamless_vector_map_generation_fr.md)
+- [Asking like Socrates: Socrates helps VLMs understand remote sensing images](asking_like_socrates_socrates_helps_vlms_understand_remote_sensing_images.md)
+- [Joint and Streamwise Distributed MIMO Satellite Communications with Multi-Antenna Ground Users](joint_and_streamwise_distributed_mimo_satellite_co.md)
+
+<!-- RELATED:END -->

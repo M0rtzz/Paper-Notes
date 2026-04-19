@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 6种分类方法+4种输入组合+t-SNE+逐类别分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 分析透彻，图示清晰
 - 价值: ⭐⭐⭐⭐ 开创了GS点云用于3D理解的新方向，数据集有社区价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [End-to-End Implicit Neural Representations for Classification](end-to-end_implicit_neural_representations_for_classification.md)
+- [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
+- [Hardware-Rasterized Ray-Based Gaussian Splatting](hardware-rasterized_ray-based_gaussian_splatting.md)
+- [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+
+<!-- RELATED:END -->

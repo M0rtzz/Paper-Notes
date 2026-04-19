@@ -163,4 +163,16 @@ $$\text{tscore}(\hat{\mathcal{A}}) = \frac{\sum_{t' \in g(\hat{\mathcal{A}})} \m
 **创新性**: ⭐⭐⭐⭐⭐ — 程序化验证 + 场景图评估的范式新颖，极具影响力  
 **实用性**: ⭐⭐⭐⭐ — 提供了可扩展的自动化评测流程  
 **实验深度**: ⭐⭐⭐⭐ — 覆盖 14 个模型，含人工评估验证  
-**写作质量**: ⭐⭐⭐⭐ — 动机清晰，示例充分，表述严谨  
+**写作质量**: ⭐⭐⭐⭐ — 动机清晰，示例充分，表述严谨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generate, but Verify: Reducing Hallucination in Vision-Language Models with Retrospective Resampling](../../NeurIPS2025/multimodal_vlm/generate_but_verify_reducing_hallucination_in_visionlanguage.md)
+- [MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
+- [Reading Recognition in the Wild](../../NeurIPS2025/multimodal_vlm/reading_recognition_in_the_wild.md)
+- [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](sparsevila_decoupling_visual_sparsity_for_efficient_vlm_infe.md)
+
+<!-- RELATED:END -->

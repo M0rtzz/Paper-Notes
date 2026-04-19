@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 LLM × 4 数据集 + 消融 + 泛化分析 + case study
 - 写作质量: ⭐⭐⭐⭐⭐ 公式推导清晰，可视化丰富，解释性好
 - 价值: ⭐⭐⭐⭐⭐ 幻觉检测的新范式，对理解 LLM 内部机制也有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Dialogue State Tracking through Combinatorial Search for In-Context Examples](improving_dialogue_state_tracking_through_combinatorial_search_for_in-context_ex.md)
+- [GeoDynamics: A Geometric State-Space Neural Network for Understanding Brain Dynamics on Riemannian Manifolds](../../NeurIPS2025/video_understanding/geodynamics_a_geometric_state-space_neural_network_for_understanding_brain_dynam.md)
+- [Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](../../NeurIPS2025/video_understanding/structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
+- [Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)
+- [PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics](../../AAAI2026/video_understanding/pragworld_a_benchmark_evaluating_llms_local_world_model_under_minimal_linguistic.md)
+
+<!-- RELATED:END -->

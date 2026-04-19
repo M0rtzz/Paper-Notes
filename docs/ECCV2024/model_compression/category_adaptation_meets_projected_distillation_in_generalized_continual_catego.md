@@ -162,3 +162,15 @@ $$\mathcal{L}_{PA} = \sum_{i \in B} \| \mathcal{F}^t(x_i) - \psi^{(t-1) \to t}(\
 - 实验充分度: ⭐⭐⭐⭐⭐ （5 个 GCCD 数据集 + 3 个 CIL 数据集 + 详细消融 + 可视化分析）
 - 写作质量: ⭐⭐⭐⭐ （动机清晰，2D 可视化直观，但部分符号较冗长）
 - 价值: ⭐⭐⭐⭐ （在 GCCD 和无样例 CIL 上全面领先，思路对社区有启发意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TALON: Test-time Adaptive Learning for On-the-Fly Category Discovery](../../CVPR2026/model_compression/talon_test-time_adaptive_learning_for_on-the-fly_category_discovery.md)
+- [Learning through Creation: A Hash-Free Framework for On-the-Fly Category Discovery](../../CVPR2026/model_compression/learning_through_creation_a_hash-free_framework_for_on-the-fly_category_discover.md)
+- [Anytime Continual Learning for Open Vocabulary Classification](anytime_continual_learning_for_open_vocabulary_classification.md)
+- [Auto-DAS: Automated Proxy Discovery for Training-free Distillation-aware Architecture Search](auto-das_automated_proxy_discovery_for_training-free_distillation-aware_architec.md)
+- [Break the Tie: Learning Cluster-Customized Category Relationships for Categorical Data Clustering](../../AAAI2026/model_compression/break_the_tie_learning_cluster-customized_category_relationships_for_categorical.md)
+
+<!-- RELATED:END -->

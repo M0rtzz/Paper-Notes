@@ -154,3 +154,15 @@ $$L(\lambda, \epsilon) = L_0(\epsilon) + \lambda L_1(\epsilon)$$
 - 实验充分度: ⭐⭐ — 纯理论工作，应用验证来自配套论文，缺乏独立数值实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、证明详尽，但篇幅极长（2000+行），部分冗余
 - 价值: ⭐⭐⭐⭐ — 为约束动力学与安全控制搭建了统一几何桥梁，理论深度突出但实际影响待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
+- [Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
+- [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [Length-Induced Embedding Collapse in PLM-based Models](../../ACL2025/others/length-induced_embedding_collapse_in_plm-based_models.md)
+- [Sparse Training from Random Initialization: Aligning Lottery Ticket Masks using Weight Symmetry](sparse_training_from_random_initialization_aligning_lottery_ticket_masks_using_w.md)
+
+<!-- RELATED:END -->

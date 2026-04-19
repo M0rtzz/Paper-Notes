@@ -137,3 +137,15 @@ Multi-HMR是首个单阶段多人全身（含手部和面部表情）3D人体网
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖6+评估基准，消融全面（架构/数据/损失/相机/分辨率）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验设置详尽
 - 价值: ⭐⭐⭐⭐ 实用性强，代码开源，推动多人全身HMR普及
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](../../AAAI2026/3d_vision/presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)
+- [Global-to-Pixel Regression for Human Mesh Recovery](global-to-pixel_regression_for_human_mesh_recovery.md)
+- [Divide and Fuse: Body Part Mesh Recovery from Partially Visible Human Images](divide_and_fuse_body_part_mesh_recovery_from_partially_visible_human_images.md)
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+
+<!-- RELATED:END -->

@@ -166,3 +166,15 @@ $$L = \lambda_{track} L_{track} + \lambda_{pred} L_{pred} + \lambda_{feat} L_{fe
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4 个教师模型、5 个基准、详尽消融、多维度泛化验证
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，逐步递进的框架设计表述流畅
 - **价值**: ⭐⭐⭐⭐⭐ 通用框架具有极强的实用性，可直接应用于工业部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Efficient General Feature Prediction in Masked Skeleton Modeling](towards_efficient_general_feature_prediction_in_masked_skeleton_modeling.md)
+- [MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking](../../CVPR2025/video_understanding/must_the_first_dataset_and_unified_framework_for_multispectral_uav_single_object.md)
+- [UETrack: A Unified and Efficient Framework for Single Object Tracking](../../CVPR2026/video_understanding/uetrack_a_unified_and_efficient_framework_for_single_object_tracking.md)
+- [ResidualViT for Efficient Temporally Dense Video Encoding](residualvit_for_efficient_temporally_dense_video_encoding.md)
+- [AllTracker: Efficient Dense Point Tracking at High Resolution](alltracker_efficient_dense_point_tracking_at_high_resolution.md)
+
+<!-- RELATED:END -->

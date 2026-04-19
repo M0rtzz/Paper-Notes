@@ -103,3 +103,15 @@ Burst超分辨率是一种通过融合多帧低分辨率图像来同时降噪和
 - 实验充分度: ⭐⭐⭐⭐⭐ (244场景噪声统计+5种方法对比+合成/真实双轨评测，非常全面)
 - 写作质量: ⭐⭐⭐⭐ (物理分析清晰，但实验结果的呈现可以更突出核心发现)
 - 价值: ⭐⭐⭐⭐ (为偏振成像社区提供了急需的基准和工具，但受众相对小众)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatially-Variant Degradation Model for Dataset-free Super-resolution](../../ECCV2024/image_restoration/spatially-variant_degradation_model_for_dataset-free_super-resolution.md)
+- [Emulating Self-Attention with Convolution for Efficient Image Super-Resolution](emulating_self-attention_with_convolution_for_efficient_image_super-resolution.md)
+- [Outlier-Aware Post-Training Quantization for Image Super-Resolution](outlier-aware_post-training_quantization_for_image_super-resolution.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](../../CVPR2026/image_restoration/toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](../../NeurIPS2025/image_restoration/implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
+
+<!-- RELATED:END -->

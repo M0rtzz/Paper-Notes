@@ -106,3 +106,15 @@ XENON = Adaptive Dependency Graph (ADG) + Failure-Aware Action Memory (FAM) + Co
 - 实验充分度: ⭐⭐⭐⭐ 多平台 × 多目标类型 × 详细消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰
 - 价值: ⭐⭐⭐⭐ 对 LLM Agent 知识管理有重要范式启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
+- [Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](../../ICCV2025/robotics/interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)
+- [Visual Planning: Let's Think Only with Images](visual_planning_lets_think_only_with_images.md)
+- [Sparse Imagination for Efficient Visual World Model Planning](sparse_imagination_for_efficient_visual_world_model_planning.md)
+- [ExoPredicator: Learning Abstract Models of Dynamic Worlds for Robot Planning](exopredicator_learning_abstract_models_of_dynamic_worlds_for_robot_planning.md)
+
+<!-- RELATED:END -->

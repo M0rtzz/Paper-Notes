@@ -127,3 +127,15 @@ ViXML 是一个通用的多模态 XMC 框架，支持 encoder 和 decoder 架构
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、多种 backbone、详细消融、跨方法兼容性验证，非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验组织系统性强
 - 价值: ⭐⭐⭐⭐ 对 XMC 社区有直接的实践指导意义，"一张图胜过数十亿参数"的发现很有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hard vs. Noise: Resolving Hard-Noisy Sample Confusion in Recommender Systems via Large Language Models](hard_vs_noise_resolving_hard-noisy_sample_confusion_in_recommender_systems_via_l.md)
+- [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](../../NeurIPS2025/image_restoration/mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
+- [Clear Nights Ahead: Towards Multi-Weather Nighttime Image Restoration](clear_nights_ahead_towards_multi-weather_nighttime_image_res.md)
+- [MFmamba: A Multi-function Network for Panchromatic Image Resolution Restoration Based on State-Space Model](mfmamba_a_multi-function_network_for_panchromatic_image_resolution_restoration_b.md)
+- [MP-HSIR: A Multi-Prompt Framework for Universal Hyperspectral Image Restoration](../../ICCV2025/image_restoration/mp-hsir_a_multi-prompt_framework_for_universal_hyperspectral_image_restoration.md)
+
+<!-- RELATED:END -->

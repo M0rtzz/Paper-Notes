@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （系统全面，但作为Workshop论文规模适中）
 - 写作质量: ⭐⭐⭐⭐ （清晰简洁，核心信息突出）
 - 价值: ⭐⭐⭐⭐ （为ViT特征利用提供了重要的实践指南）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+- [On the Effect of Uncertainty on Layer-wise Inference Dynamics](../../ICML2025/interpretability/on_the_effect_of_uncertainty_on_layer-wise_inference_dynamics.md)
+- [Towards Interpretability Without Sacrifice: Faithful Dense Layer Decomposition with Mixture of Decoders](../../NeurIPS2025/interpretability/towards_interpretability_without_sacrifice_faithful_dense_layer_decomposition_wi.md)
+- [Dynamic Reflections: Probing Video Representations with Text Alignment](dynamic_reflections_probing_video_representations_with_text_alignment.md)
+- [Probing Subphonemes in Morphology Models](../../ACL2025/interpretability/probing_subphonemes_in_morphology_models.md)
+
+<!-- RELATED:END -->

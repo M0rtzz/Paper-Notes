@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、两种任务、详细消融
 - 写作质量: ⭐⭐⭐⭐ 方法论述清晰，表格设计直观
 - 价值: ⭐⭐⭐⭐ 5× 推理加速对实时 3D 感知系统有重要工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LightSplat: Fast and Memory-Efficient Open-Vocabulary 3D Scene Understanding in Five Seconds](lightsplat_fast_and_memory-efficient_open-vocabulary_3d_scene_understanding_in_f.md)
+- [Masking Matters: Unlocking the Spatial Reasoning Capabilities of LLMs for 3D Scene-Language Understanding](masking_matters_unlocking_the_spatial_reasoning_capabilities_of_llms_for_3d_scen.md)
+- [RAP: Fast Feedforward Rendering-Free Attribute-Guided Primitive Importance Score Prediction for Efficient 3D Gaussian Splatting Processing](rap_fast_feedforward_rendering-free_attribute-guided_primitive_importance_score_.md)
+- [Lifting Unlabeled Internet-level Data for 3D Scene Understanding](lifting_unlabeled_internet-level_data_for_3d_scene_understanding.md)
+- [MegaSaM: Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos](../../CVPR2025/3d_vision/megasam_accurate_fast_and_robust_structure_and_motion_from_casual_dynamic_videos.md)
+
+<!-- RELATED:END -->

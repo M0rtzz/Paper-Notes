@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作无数值实验，但与已知解析结果的交叉验证充分
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，同时为非表示论专家读者提供了循序渐进的讲解层次
 - 价值: ⭐⭐⭐ 为等变网络研究者提供了更直接的理论工具，但缺少实验验证限制了当前实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LocalDPO: Direct Localized Detail Preference Optimization for Video Diffusion Models](mind_the_generative_details_direct_localized_detail_preference_optimization_for_.md)
+- [GlyphPrinter: Region-Grouped Direct Preference Optimization for Glyph-Accurate Visual Text Rendering](glyphprinter_region-grouped_direct_preference_optimization_for_glyph-accurate_vi.md)
+- [Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models](principled_steering_via_null-space_projection_for_jailbreak_defense_in_vision-la.md)
+- [PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization](physmodpo_physically-plausible_humanoid_motion_with_preference_optimization.md)
+- [MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization](mod-dpo_towards_mitigating_cross-modal_hallucinations_in_omni_llms_using_modalit.md)
+
+<!-- RELATED:END -->

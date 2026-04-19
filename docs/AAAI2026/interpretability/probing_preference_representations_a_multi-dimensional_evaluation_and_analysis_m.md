@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 评估了 15+ 个 RM，PPO 端到端验证，Pearson 相关性分析完善
 - 写作质量: ⭐⭐⭐⭐ 三个 RQ 结构清晰，基准设计动机明确
 - 价值: ⭐⭐⭐⭐ 对 RM 选择、数据配比和对齐改进有直接实用指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rectifying Shortcut Behaviors in Preference-based Reward Learning](../../NeurIPS2025/interpretability/rectifying_shortcut_behaviors_in_preference-based_reward_learning.md)
+- [Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
+- [ToC: Tree-of-Claims Search with Multi-Agent Language Models](toc_tree-of-claims_search_with_multi-agent_language_models.md)
+- [Dynamic Reflections: Probing Video Representations with Text Alignment](../../ICLR2026/interpretability/dynamic_reflections_probing_video_representations_with_text_alignment.md)
+- [SOM Directions are Better than One: Multi-Directional Refusal Suppression in Language Models](som_directions_are_better_than_one_multi-directional_refusal_suppression_in_lang.md)
+
+<!-- RELATED:END -->

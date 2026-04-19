@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数据集、7种基线、多种约束条件和超参数鲁棒性分析非常全面
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但数学符号密集，可读性对非专业读者有挑战
 - 价值: ⭐⭐⭐⭐ 提供了约束聚类的新范式，理论贡献和实用性兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
+- [Deep Incomplete Multi-View Clustering via Hierarchical Imputation and Alignment](../../AAAI2026/object_detection/deep_incomplete_multi-view_clustering_via_hierarchical_imputation_and_alignment.md)
+- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](../../CVPR2026/object_detection/slice_semantic_latent_injection_via_compartmentalized_embedding_for_image_waterm.md)
+- [Tackling Resource-Constrained and Data-Heterogeneity in Federated Learning with Double-Weight Sparse Pack](../../AAAI2026/object_detection/tackling_resource-constrained_and_data-heterogeneity_in_federated_learning_with_.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](../../CVPR2026/object_detection/noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+
+<!-- RELATED:END -->

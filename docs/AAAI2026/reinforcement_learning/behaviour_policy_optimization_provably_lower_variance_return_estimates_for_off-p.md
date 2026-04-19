@@ -141,3 +141,15 @@ BPO 在基础策略梯度算法之上增加三个辅助模块：
 - 实验充分度: ⭐⭐⭐ — MuJoCo 结果较好但环境覆盖不全面，缺少离散动作高维任务
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰完整，从直觉到证明层层递进
 - 价值: ⭐⭐⭐⭐ — 提供了一个通用的方差缩减框架，对策略梯度方法有实际改进价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffOP: Reinforcement Learning of Optimization-Based Control Policies via Implicit Policy Gradients](diffop_reinforcement_learning_of_optimization-based_control_policies_via_implici.md)
+- [HCPO: Hierarchical Conductor-Based Policy Optimization in Multi-Agent Reinforcement Learning](hcpo_hierarchical_conductor-based_policy_optimization_in_multi-agent_reinforceme.md)
+- [Wasserstein Policy Optimization](../../ICML2025/reinforcement_learning/wasserstein_policy_optimization.md)
+- [A Unifying View of Coverage in Linear Off-Policy Evaluation](../../ICLR2026/reinforcement_learning/a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
+- [PolicyFlow: Policy Optimization with Continuous Normalizing Flow in Reinforcement Learning](../../ICLR2026/reinforcement_learning/policyflow_policy_optimization_with_continuous_normalizing_flow_in_reinforcement.md)
+
+<!-- RELATED:END -->

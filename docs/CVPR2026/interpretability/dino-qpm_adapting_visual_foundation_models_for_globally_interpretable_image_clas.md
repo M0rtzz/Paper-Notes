@@ -150,3 +150,15 @@ DINO-QPM 在准确率上超越不可解释的 DINOv2 线性探测（88.3 vs 87.9
 - 实验充分度: ⭐⭐⭐⭐⭐ — 消融充分，指标设计严谨，跨骨干验证完整
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导清晰，可视化出色（鸟类特征定位案例尤为精彩）
 - 价值: ⭐⭐⭐⭐ — 为冻结基础模型的可解释分类提供了强有力的工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Does It Look There? Structured Explanations for Image Classification](why_does_it_look_there_structured_explanations_for_image_classification.md)
+- [Interpretable Image Classification via Non-parametric Part Prototype Learning](../../CVPR2025/interpretability/interpretable_image_classification_via_non-parametric_part_prototype_learning.md)
+- [CHiQPM: Calibrated Hierarchical Interpretable Image Classification](../../NeurIPS2025/interpretability/chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
+- [EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis](emoverse_mllm_emotion_representation_dataset.md)
+- [Language Models Can Explain Visual Features via Steering](language_models_can_explain_visual_features_via_steering.md)
+
+<!-- RELATED:END -->

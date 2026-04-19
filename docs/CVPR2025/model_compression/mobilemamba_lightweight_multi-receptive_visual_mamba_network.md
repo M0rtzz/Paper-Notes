@@ -157,3 +157,15 @@ MobileMamba-S6†（带训练策略）在 652M FLOPs 下达到 80.7%，超越所
 | 实验充分度 | ⭐⭐⭐⭐⭐ |
 | 工程实用性 | ⭐⭐⭐⭐⭐ |
 | 总体推荐 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba](jamma_ultra-lightweight_local_feature_matching_with_joint_mamba.md)
+- [Mamba-Adaptor: State Space Model Adaptor for Visual Recognition](mamba-adaptor_state_space_model_adaptor_for_visual_recognition.md)
+- [EfficientViM: Efficient Vision Mamba with Hidden State Mixer based State Space Duality](efficientvim_efficient_vision_mamba_with_hidden_state_mixer_based_state_space_du.md)
+- [Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning](embracing_collaboration_over_competition_condensing_multiple_prompts_for_visual_.md)
+- [Understanding Multi-Layered Transmission Matrices](understanding_multi-layered_transmission_matrices.md)
+
+<!-- RELATED:END -->

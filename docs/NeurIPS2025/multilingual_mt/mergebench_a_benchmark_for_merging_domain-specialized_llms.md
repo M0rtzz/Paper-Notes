@@ -165,3 +165,15 @@ MergeBench 的设计包含三个关键维度：
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个基础模型 × 5 个任务 × 8 种方法 × 3 个评估维度，实验极为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，实用指南总结到位
 - 价值: ⭐⭐⭐⭐ 为模型合并研究提供了急需的标准化评估平台，40 个开源模型具有很高的社区价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](../../ACL2025/multilingual_mt/execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [Consensus-Aligned Neuron Efficient Fine-Tuning Large Language Models for Multi-Domain Machine Translation](../../AAAI2026/multilingual_mt/consensus-aligned_neuron_efficient_fine-tuning_large_language_models_for_multi-d.md)
+- [X-MuTest: A Multilingual Benchmark for Explainable Hate Speech Detection](../../AAAI2026/multilingual_mt/x-mutest_a_multilingual_benchmark_for_explainable_hate_speech_detection_and_a_no.md)
+- [CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](../../ACL2025/multilingual_mt/cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
+- [SMTPD: A New Benchmark for Temporal Prediction of Social Media Popularity](../../CVPR2025/multilingual_mt/smtpd_a_new_benchmark_for_temporal_prediction_of_social_media_popularity.md)
+
+<!-- RELATED:END -->

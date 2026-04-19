@@ -161,3 +161,15 @@ Tabular-TX 在无微调的情况下大幅超越所有微调方法。
 - 实验充分度: ⭐⭐⭐ 核心对比充分但缺乏消融实验和跨语言验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，示例丰富，但论文篇幅较短
 - 价值: ⭐⭐⭐⭐ 对低资源表格摘要场景有很强的实用价值，TX 结构有推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Empirical Study of Many-to-Many Summarization with Large Language Models](an_empirical_study_of_manytomany_summarization.md)
+- [Unveiling Attractor Cycles in Large Language Models: A Dynamical Systems View of Successive Paraphrasing](unveiling_attractor_cycles_in_large_language_models_a_dynamical_systems_view_of_.md)
+- [Tell, Don't Show: Leveraging Language Models' Abstractive Retellings to Model Literary Themes](tell_dont_show_leveraging_language_models_abstractive_retellings_to_model_litera.md)
+- [Context-Aware Hierarchical Merging for Long Document Summarization](context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [DTCRS: Dynamic Tree Construction for Recursive Summarization](dtcrs_dynamic_tree_construction_for_recursive_summarization.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 多层次分析非常系统，因果干预有力，但规模有限
 - **写作质量**: ⭐⭐⭐⭐⭐ 从全局到局部到连接到原理的叙事逻辑非常清晰
 - **价值**: ⭐⭐⭐⭐ 对计算神经科学有重要理论贡献，可组合动力学原语的思想有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention (as Discrete-Time Markov) Chains](attention_as_discrete-time_markov_chains.md)
+- [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
+- [RoMA: Scaling up Mamba-based Foundation Models for Remote Sensing](roma_scaling_up_mamba-based_foundation_models_for_remote_sensing.md)
+- [PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding](partonomy_large_multimodal_models_with_part-level_visual_understanding.md)
+- [Mars-Bench: A Benchmark for Evaluating Foundation Models for Mars Science Tasks](mars-bench_a_benchmark_for_evaluating_foundation_models_for_mars_science_tasks.md)
+
+<!-- RELATED:END -->

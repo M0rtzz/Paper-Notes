@@ -126,3 +126,15 @@ $$A_{n,j}^{(l,h)} = \begin{cases} \alpha \cdot A_{n,j}^{(l,h)} & \text{if } j \i
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 从机制可解释性切入的研究典范。50% 绝对提升的无训练方法令人印象深刻。分析深入、方法简洁、效果显著三者兼备。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Is Attention Sparse in Particle Transformer?](../../NeurIPS2025/interpretability/why_is_attention_sparse_in_particle_transformer.md)
+- [Tropical Attention: Neural Algorithmic Reasoning for Combinatorial Algorithms](../../NeurIPS2025/interpretability/tropical_attention_neural_algorithmic_reasoning_for_combinatorial_algorithms.md)
+- [Learning to Focus: Causal Attention Distillation via Gradient-Guided Token Pruning](../../NeurIPS2025/interpretability/learning_to_focus_causal_attention_distillation_via_gradient-guided_token_prunin.md)
+- [Evolving Prompts In-Context: An Open-ended, Self-replicating Perspective](evolving_prompts_in-context_an_open-ended_self-replicating_perspective.md)
+- [A Reasoning-Based Approach to Cryptic Crossword Clue Solving](a_reasoning-based_approach_to_cryptic_crossword_clue_solving.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ Q3C 由三个组件构成：(1) 控制点生成器 $g_\phi(s)$ 输出 $N$ 个候
 - 实验充分度: ⭐⭐⭐⭐⭐ 标准+受限环境、多基线、详尽消融、高维测试、可视化分析
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机和贡献阐述充分，理论和实验结合紧密
 - 价值: ⭐⭐⭐⭐ 在受限动作空间场景下有明确优势，为连续 Q-learning 开辟了新路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-driven Reinforcement Learning in Continuous Control](../../AAAI2026/reinforcement_learning/test-driven_reinforcement_learning_in_continuous_control.md)
+- [WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](../../ICLR2026/reinforcement_learning/wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [Parameter-Free Algorithms for the Stochastically Extended Adversarial Model](parameter-free_algorithms_for_the_stochastically_extended_adversarial_model.md)
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [When Can Model-Free Reinforcement Learning be Enough for Thinking?](when_can_model-free_reinforcement_learning_be_enough_for_thinking.md)
+
+<!-- RELATED:END -->

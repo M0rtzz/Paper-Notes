@@ -127,3 +127,15 @@ $$\mathcal{L}_{\text{stage2}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{style}
 - 实验充分度: ⭐⭐⭐⭐ 多数据集评估，消融系统性强，但基线对比可以更丰富
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，但部分描述可以更简洁
 - 价值: ⭐⭐⭐⭐ 首个真正可扩展的单次3D风格化方法，实用价值明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](../../CVPR2026/3d_vision/instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [BRepGaussian: CAD Reconstruction from Multi-View Images with Gaussian Splatting](../../CVPR2026/3d_vision/brepgaussian_cad_reconstruction_from_multi-view_images_with_gaussian_splatting.md)
+- [Station2Radar: Query-Conditioned Gaussian Splatting for Precipitation Field](station2radar_query_conditioned_gaussian_splatting_for_precipitation_field.md)
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](../../CVPR2026/3d_vision/anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](../../AAAI2026/3d_vision/sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
+
+<!-- RELATED:END -->

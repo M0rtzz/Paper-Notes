@@ -124,3 +124,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 方法清晰，公式严谨
 - 价值: ⭐⭐⭐⭐⭐ 无外部依赖的自我改进+接近2倍大模型性能，有重大实用意义
 - 综合: 开放域LLM后训练的重要方向性工作，Copeland奖励推导是核心创新点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+- [Relation-R1: Progressively Cognitive Chain-of-Thought Guided Reinforcement Learning for Unified Relation Comprehension](relation-r1_progressively_cognitive_chain-of-thought_guided_reinforcement_learni.md)
+- [The Impact of Quantization on Large Reasoning Model Reinforcement Learning](../../NeurIPS2025/llm_reasoning/the_impact_of_quantization_on_large_reasoning_model_reinforcement_learning.md)
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](../../NeurIPS2025/llm_reasoning/sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](../../NeurIPS2025/llm_reasoning/reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 与13种指标全面对比+五个维度+两种相关性+准确率/F1+消融
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，相关工作梳理充分，实验分析深入（特别是"N-gram反超嵌入"的解释）
 - 价值: ⭐⭐⭐⭐ 对专利AI和领域特定NLP评估有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [All That Glitters is Not Novel: Plagiarism in AI Generated Research](plagiarism_ai_generated_research.md)
+- [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
+- [Are Bias Evaluation Methods Biased?](are_bias_evaluation_methods_biased.md)
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+
+<!-- RELATED:END -->

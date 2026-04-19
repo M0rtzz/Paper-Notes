@@ -136,3 +136,15 @@ Hita 在所有尺寸下均显著优于 LlamaGen，2B 模型以更少参数超越
 - 技术深度：⭐⭐⭐⭐ — 对码本坍塌问题的分析和解决方案设计严谨
 - 实验充分度：⭐⭐⭐⭐ — 全面的消融和与主流方法的对比
 - 实用价值：⭐⭐⭐⭐ — 代码开源，与 Llama 无缝兼容，零样本能力实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spectral Image Tokenizer](spectral_image_tokenizer.md)
+- [DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer](dc-ar_efficient_masked_autoregressive_image_generation_with_deep_compression_hyb.md)
+- [Grouped Speculative Decoding for Autoregressive Image Generation](grouped_speculative_decoding_for_autoregressive_image_generation.md)
+- [Music-Aligned Holistic 3D Dance Generation via Hierarchical Motion Modeling](music-aligned_holistic_3d_dance_generation_via_hierarchical_motion_modeling.md)
+- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+
+<!-- RELATED:END -->

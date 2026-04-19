@@ -119,3 +119,15 @@ GRPO 训练，总奖励 $r_j = R_{\text{Conf},j} + R_{\text{Output},j} + R_{\tex
 - **Perceptual Bluntness**: 模型对视觉输入退化不敏感的现象
 - **VCD (Visual Contrastive Decoding)**: 对比原始和噪声图像的 logit 差异进行解码
 - **Free Lunch**: 校准训练免费获得的 TTS 能力提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?](../../AAAI2026/reinforcement_learning/when_eyes_and_ears_disagree_can_mllms_discern_audio-visual_confusion.md)
+- [Spotlight on Token Perception for Multimodal Reinforcement Learning](../../ICLR2026/reinforcement_learning/spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
+- [APPLE: Toward General Active Perception via Reinforcement Learning](../../ICLR2026/reinforcement_learning/apple_toward_general_active_perception_via_reinforcement_learning.md)
+- [VideoRFT: Incentivizing Video Reasoning Capability in MLLMs via Reinforced Fine-Tuning](../../NeurIPS2025/reinforcement_learning/videorft_incentivizing_video_reasoning_capability_in_mllms_via_reinforced_fine-t.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](../../NeurIPS2025/reinforcement_learning/real-world_reinforcement_learning_of_active_perception_behaviors.md)
+
+<!-- RELATED:END -->

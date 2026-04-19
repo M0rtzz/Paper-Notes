@@ -129,3 +129,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 区域自适应记忆融合设计精巧，核心区域分割监督策略创新实用，实验全面且在真实世界基准上优势突出。数据集贡献（VM800 + YoutubeMatte）为社区提供了更好的训练/评估基础。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Video Propagation](generative_video_propagation.md)
+- [MatAnyone 2: Scaling Video Matting via a Learned Quality Evaluator](../../CVPR2026/segmentation/matanyone_2_scaling_video_matting_via_a_learned_quality_evaluator.md)
+- [MaSS13K: A Matting-level Semantic Segmentation Benchmark](mass13k_a_matting-level_semantic_segmentation_benchmark.md)
+- [A Distractor-Aware Memory for Visual Object Tracking with SAM2](a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
+- [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
+
+<!-- RELATED:END -->

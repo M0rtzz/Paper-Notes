@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种评估方式（DUSt3R/VggSfM/ParticleSfM、VBench、FID等），但消融实验偏少
 - 写作质量: ⭐⭐⭐⭐ Pipeline图清晰，方法描述有条理，但部分技术细节可以更简洁
 - 价值: ⭐⭐⭐⭐ 为统一多条件控制视频生成提供了有效方案，影视/VR应用前景广阔
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Temporally Consistent Video Depth from Video Diffusion Priors](learning_temporally_consistent_video_depth_from_video_diffusion_priors.md)
+- [HunyuanPortrait: Implicit Condition Control for Enhanced Portrait Animation](hunyuanportrait_implicit_condition_control_for_enhanced_portrait_animation.md)
+- [MotiF: Making Text Count in Image Animation with Motion Focal Loss](motif_making_text_count_in_image_animation_with_motion_focal_loss.md)
+- [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
+- [BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration](../../ICLR2026/video_generation/bindweave_subject-consistent_video_generation_via_cross-modal_integration.md)
+
+<!-- RELATED:END -->

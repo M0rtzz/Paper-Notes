@@ -156,3 +156,15 @@ AVA-Bench 包含三个核心组件：
 ## 评分
 
 ⭐⭐⭐⭐ 系统性强、实验扎实的 Benchmark 论文，14 种 AVA 的定义和数据构建非常细致，0.5B 替代 7B 的发现具有很强的实践价值，但缺乏能力组合评测和动态视觉能力覆盖。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ArtHOI: Taming Foundation Models for Monocular 4D Reconstruction of Hand-Articulated-Object Interactions](arthoi_taming_foundation_models_for_monocular_4d_reconstruction_of_hand-articula.md)
+- [Sky2Ground: A Benchmark for Site Modeling under Varying Altitude](sky2ground_a_benchmark_for_site_modeling_under_varying_altitude.md)
+- [Pano360: Perspective to Panoramic Vision with Geometric Consistency](pano360_perspective_to_panoramic_vision_with_geome.md)
+- [PhysGaia: A Physics-Aware Benchmark with Multi-Body Interactions for Dynamic Novel View Synthesis](physgaia_a_physics-aware_benchmark_with_multi-body_interactions_for_dynamic_nove.md)
+- [Random Wins All: Rethinking Grouping Strategies for Vision Tokens](random_wins_all_rethinking_grouping_strategies_for_vision_tokens.md)
+
+<!-- RELATED:END -->

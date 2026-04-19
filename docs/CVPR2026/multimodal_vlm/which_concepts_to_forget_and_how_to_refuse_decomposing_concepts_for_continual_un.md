@@ -114,3 +114,15 @@ CORE在冻结的LVLM（视觉编码器+语言模型不变）上操作，整体pi
 - 实验充分度: ⭐⭐⭐⭐⭐ 双LVLM验证、完整消融、可视化分析、序列稳定性分析全面
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但符号较多，部分定义需要反复对照
 - 价值: ⭐⭐⭐⭐⭐ 概念级遗忘为LVLM安全性提供了实用且精确的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Token's Dilemma: Dynamic MoE with Drift-Aware Token Assignment for Continual Learning of Large Vision Language Models](on_tokens_dilemma_dynamic_moe_with_drift-aware_token_assignment_for_continual_le.md)
+- [Bongard-RWR+: Real-World Representations of Fine-Grained Concepts in Bongard Problems](../../ICLR2026/multimodal_vlm/bongard-rwr_real-world_representations_of_fine-grained_concepts_in_bongard_probl.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_visionlanguage_models_via.md)
+- [Thinking in Dynamics: How Multimodal Large Language Models Perceive, Track, and Reason Dynamics in Physical 4D World](thinking_in_dynamics_how_multimodal_large_language_models_perceive_track_and_rea.md)
+- [DeAR: Fine-Grained VLM Adaptation by Decomposing Attention Head Roles](dear_fine-grained_vlm_adaptation_by_decomposing_attention_head_roles.md)
+
+<!-- RELATED:END -->

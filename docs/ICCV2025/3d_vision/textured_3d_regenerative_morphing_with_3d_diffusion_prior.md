@@ -153,3 +153,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 定量指标全面（FID/GPT/用户研究），消融清晰，但缺少大规模定量评估
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰、分析深入，频域和语义分析有说服力
 - **价值**: ⭐⭐⭐⭐ 为纹理3D morphing开辟新方向，但应用场景相对专业
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Jasmine: Harnessing Diffusion Prior for Self-Supervised Depth Estimation](../../NeurIPS2025/3d_vision/jasmine_harnessing_diffusion_prior_for_self-supervised_depth_estimation.md)
+- [MoGA: 3D Generative Avatar Prior for Monocular Gaussian Avatar Reconstruction](moga_3d_generative_avatar_prior_for_monocular_gaussian_avatar_reconstruction.md)
+- [Bridging Diffusion Models and 3D Representations: A 3D Consistent Super-Resolution Framework](bridging_diffusion_models_and_3d_representations_a_3d_consistent_super-resolutio.md)
+- [3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](bridging_diffusion_models_and_3d_representations_a_3d_consis.md)
+- [Boost 3D Reconstruction using Diffusion-based Monocular Camera Calibration](boost_3d_reconstruction_using_diffusion-based_monocular_camera_calibration.md)
+
+<!-- RELATED:END -->

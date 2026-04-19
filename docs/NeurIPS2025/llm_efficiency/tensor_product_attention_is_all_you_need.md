@@ -94,3 +94,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多规模预训练+下游任务+与MQA/GQA/MLA对比
 - 写作质量: ⭐⭐⭐⭐⭐ 理论和实验结合优秀
 - 价值: ⭐⭐⭐⭐⭐ 对LLM推理基础设施有颠覆性影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One Prompt Fits All: Universal Graph Adaptation for Pretrained Models](one_prompt_fits_all_universal_graph_adaptation_for_pretrained_models.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
+- [The Emergence of Sparse Attention: Impact of Data Distribution and Benefits of Repetition](the_emergence_of_sparse_attention_impact_of_data_distribution_and_benefits_of_re.md)
+- [Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention](dynamics_of_spontaneous_topic_changes_in_next_token_prediction_with_self-attenti.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ $$\lim_{k \to \infty} \text{Acc}(k; \mathcal{D}, \mathcal{M}, \mathcal{S}) \appr
 - 不同于从 Bayesian inference 角度解释 ICL 的工作（Xie et al., 2021），本文从经验学习论角度系统质疑了 ICL 作为稳健学习机制的假说
 - 不同于单因素分析的工作，本文同时控制记忆、分布、模型、风格等多维变量，得出更全面和可靠的否定性结论
 - 不同于纯理论分析的工作，本文将数学论证与大规模实验结合，增强了结论的说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlabeled Data Can Provably Enhance In-Context Learning of Transformers](../../NeurIPS2025/llm_reasoning/unlabeled_data_can_provably_enhance_in-context_learning_of_transformers.md)
+- [Segment-Level Attribution for Selective Learning of Long Reasoning Traces](segment-level_attribution_for_selective_learning_of_long_reasoning_traces.md)
+- [CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)
+- [Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
+- [FastGRPO: Accelerating Policy Optimization via Concurrency-aware Speculative Decoding and Online Draft Learning](fastgrpo_accelerating_policy_optimization_via_concurrency-aware_speculative_deco.md)
+
+<!-- RELATED:END -->

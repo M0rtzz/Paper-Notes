@@ -129,3 +129,15 @@ SealQA包含三种变体：
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖20+模型，含人类评估、多维度消融（问题类型/时间/搜索方法/test-time scaling）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，但部分表格信息密度较高
 - 价值: ⭐⭐⭐⭐⭐ 揭示了当前最强LLM在真实搜索场景下的根本性局限，对RAG系统设计有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
+- [Efficient Test-Time Scaling for Small Vision-Language Models](efficient_test-time_scaling_for_small_vision-language_models.md)
+- [Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
+- [Conflict-Aware Fusion: Resolving Logic Inertia in Large Language Models via Structured Cognitive Priors](conflict-aware_fusion_resolving_logic_inertia_in_large_language_models_via_struc.md)
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+
+<!-- RELATED:END -->

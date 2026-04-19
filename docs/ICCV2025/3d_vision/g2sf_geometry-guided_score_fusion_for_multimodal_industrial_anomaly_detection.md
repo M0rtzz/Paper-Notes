@@ -126,3 +126,15 @@ G2SF 采用冻结的 DINO（图像）和 Point-MAE（点云）提取特征，构
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、详尽消融、各类别分析
 - 写作质量: ⭐⭐⭐⭐⭐ 从几何直觉出发，推导严谨清晰
 - 价值: ⭐⭐⭐⭐ 对多模态融合异常检测具有实际工业应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SiM3D: Single-Instance Multiview Multimodal and Multisetup 3D Anomaly Detection Benchmark](sim3d_single-instance_multiview_multimodal_and_multisetup_3d_anomaly_detection_b.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+- [Stable Score Distillation](stable_score_distillation.md)
+- [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
+- [Geometry Distributions](geometry_distributions.md)
+
+<!-- RELATED:END -->

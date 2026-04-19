@@ -139,3 +139,15 @@ Raptor 回归任务平均比 Merlin 提升 +24%，比 SuPreM 提升 +30%，比 S
 - 实验充分度: ⭐⭐⭐⭐⭐ — 10 个数据集 + 6 个基线 + 完整消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论与实验兼顾
 - 价值: ⭐⭐⭐⭐⭐ — 极大降低 3D 医学影像分析门槛，单 GPU 即可运行
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [Foundation Models for Clinical Records at Health System Scale](foundation_models_for_clinical_records_at_health_system_scale.md)
+- [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](../../CVPR2025/medical_imaging/developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit.md)
+- [Improving 2D Diffusion Models for 3D Medical Imaging with Inter-Slice Consistent Stochasticity](../../ICLR2026/medical_imaging/improving_2d_diffusion_models_for_3d_medical_imaging_with_inter-slice_consistent.md)
+- [PolyPose: Deformable 2D/3D Registration via Polyrigid Transformations](../../NeurIPS2025/medical_imaging/polypose_deformable_2d3d_registration_via_polyrigid_transformations.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ Directer 是纯推理时方法，无需训练。核心超参数仅有两个：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多基准、多模型、多消融、效率分析、生成质量评估面面俱到
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，公式推导严谨
 - 价值: ⭐⭐⭐⭐ — 即插即用的推理时增强模块，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
+- [ODESteer: A Unified ODE-Based Steering Framework for LLM Alignment](odesteer_a_unified_ode-based_steering_framework_for_llm_alignment.md)
+- [ReALFRED: An Embodied Instruction Following Benchmark in Photo-Realistic Environments](../../ECCV2024/robotics/realfred_an_embodied_instruction_following_benchmark_in_photo-realistic_environm.md)
+- [Tracing and Reversing Edits in LLMs](tracing_and_reversing_edits_in_llms.md)
+- [Hi Robot: Open-Ended Instruction Following with Hierarchical Vision-Language-Action Models](../../ICML2025/robotics/hi_robot_open-ended_instruction_following_with_hierarchical_vision-language-acti.md)
+
+<!-- RELATED:END -->

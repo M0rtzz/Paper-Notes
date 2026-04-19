@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 700 样本的众包规模合理，但缺少干预效果的定量评估
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，表格丰富，每个干预配有具体改写示例
 - 价值: ⭐⭐⭐⭐ 为 AI 拟人化这一日益重要的议题提供了急需的研究基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Attractor Cycles in Large Language Models: A Dynamical Systems View of Successive Paraphrasing](unveiling_attractor_cycles_in_large_language_models_a_dynamical_systems_view_of_.md)
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [Personalized Text Generation with Contrastive Activation Steering](personalized_text_generation_with_contrastive_activation_steering.md)
+- [Writing Like the Best: Exemplar-Based Expository Text Generation](writing_like_best_exemplar.md)
+- [CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation](cocolex_legal_text_gen.md)
+
+<!-- RELATED:END -->

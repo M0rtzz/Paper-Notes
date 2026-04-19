@@ -138,3 +138,15 @@ $$\Delta = \sum_{l=1}^{L} s_l \prod_{l'=1}^{l} R^{(l')}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 9种架构、两个任务、多个数据集、详细消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，公式推导严谨，图示直观
 - 价值: ⭐⭐⭐⭐ 与TTA正交的新方向，但绝对增益有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IT³: Idempotent Test-Time Training](../../ICML2025/segmentation/it3_idempotent_test-time_training.md)
+- [Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](../../ICCV2025/segmentation/hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
+- [Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](../../ICCV2025/segmentation/correspondence_as_video_testtime_adaption_on_sam2_for_refere.md)
+- [TopoTTA: Topology-Enhanced Test-Time Adaptation for Tubular Structure Segmentation](../../ICCV2025/segmentation/topotta_topology-enhanced_test-time_adaptation_for_tubular_structure_segmentatio.md)
+- [The Golden Subspace: Where Efficiency Meets Generalization in Continual Test-Time Adaptation](../../CVPR2026/segmentation/the_golden_subspace_where_efficiency_meets_generalization_in_continual_test-time.md)
+
+<!-- RELATED:END -->

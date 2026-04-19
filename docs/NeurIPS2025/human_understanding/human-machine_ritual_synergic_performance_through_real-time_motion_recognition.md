@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 技术验证完整但仅排练论证，样本小
 - 写作质量: ⭐⭐⭐⭐ 哲学动机和技术实现的结合流畅
 - 价值: ⭐⭐⭐ 对新媒体艺术和交互AI有参考，但技术贡献有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LUMIA: A Handheld Vision-to-Music System for Real-Time, Embodied Composition](lumia_a_handheld_vision-to-music_system_for_real-time_embodied_composition.md)
+- [MOSPA: Human Motion Generation Driven by Spatial Audio](mospa_human_motion_generation_driven_by_spatial_audio.md)
+- [HOI-Dyn: Learning Interaction Dynamics for Human-Object Motion Diffusion](hoi-dyn_learning_interaction_dynamics_for_human-object_motion_diffusion.md)
+- [ReMoGen: Real-time Human Interaction-to-Reaction Generation via Modular Learning from Diverse Data](../../CVPR2026/human_understanding/remogen_real-time_human_interaction-to-reaction_generation_via_modular_learning_.md)
+- [Reflective Translation: Improving Low-Resource Machine Translation via Structured Self-Reflection](reflective_translation_improving_low-resource_machine_translation_via_structured.md)
+
+<!-- RELATED:END -->

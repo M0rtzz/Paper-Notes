@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型(Qwen/Llama/DeepSeek)多规模(1.5B~7B)，消融设计精细
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，Figure 2 的训练动态可视化尤其直观
 - 价值: ⭐⭐⭐⭐ 为 RLVR 的学习悬崖问题提供了实用且有理论支撑的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Provable and Practical In-Context Policy Optimization for Self-Improvement](provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
+- [MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization](../../NeurIPS2025/optimization/mecefo_enhancing_llm_training_robustness_via_fault-tolerant_optimization.md)
+- [CogFlow: Bridging Perception and Reasoning through Knowledge Internalization for Visual Mathematical Problem Solving](cogflow_bridging_perception_and_reasoning_through_knowledge_internalization_for_.md)
+- [Co-Layout: LLM-driven Co-optimization for Interior Layout](../../AAAI2026/optimization/co-layout_llm-driven_co-optimization_for_interior_layout.md)
+
+<!-- RELATED:END -->

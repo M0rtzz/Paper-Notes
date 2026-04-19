@@ -168,3 +168,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{SG}} + \lambda\mathcal{L}_{\text{Xing}}, \qua
 | 写作质量 | 4 |
 | 实用价值 | 4 |
 | **综合** | **3.8** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Tail Temporal Action Segmentation with Group-wise Temporal Logit Adjustment](long-tail_temporal_action_segmentation_with_group-wise_temporal_logit_adjustment.md)
+- [VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement](visage_video_instance_segmentation_with_appearance-guided_enhancement.md)
+- [LayerAnimate: Layer-level Control for Animation](../../ICCV2025/segmentation/layeranimate_layer-level_control_for_animation.md)
+- [ReMamber: Referring Image Segmentation with Mamba Twister](remamber_referring_image_segmentation_with_mamba_twister.md)
+- [SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons](../../CVPR2026/segmentation/semlayer_semantic-aware_generative_segmentation_and_layer_construction_for_abstr.md)
+
+<!-- RELATED:END -->

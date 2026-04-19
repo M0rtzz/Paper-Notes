@@ -138,3 +138,15 @@ k=2-4 是最优区间——联合优化最近的 2-4 步即可捕获大部分误
 ⭐⭐⭐⭐ (4/5)
 
 理由：从"误差累积"这一深刻洞察出发的问题驱动研究，方法设计自然优雅。O(1) 内存优化是重要的工程贡献。实验在多种模型和任务上验证充分。主要扣分点在于缺乏在最新生成架构上的验证，且实验表格中部分 FID 数值未给出具体绝对值使可比性受限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising](two-steps_diffusion_policy_for_robotic_manipulation_via_genetic_denoising.md)
+- [Fewer Denoising Steps or Cheaper Per-Step Inference: Towards Compute-Optimal Diffusion Model Deployment](../../ICCV2025/image_generation/fewer_denoising_steps_or_cheaper_per-step_inference_towards_compute-optimal_diff.md)
+- [NeuralOS: Towards Simulating Operating Systems via Neural Generative Models](../../ICLR2026/image_generation/neuralos_towards_simulating_operating_systems_via_neural_generative_models.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
+
+<!-- RELATED:END -->

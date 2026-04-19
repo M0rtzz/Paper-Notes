@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 模型 × 4 提示 × 4 腐蚀类型 × 2 nshot，83K 数据对，自动+人工双评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰系统，图表丰富，维度定义明确
 - 价值: ⭐⭐⭐⭐ 为 LLM 写作辅助提供了首个系统性基准，失败模式的发现有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvoWiki: Evaluating LLMs on Evolving Knowledge](evowiki_evaluating_llms_on_evolving_knowledge.md)
+- [GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning](guessarena_guess_who_i_am_a.md)
+- [From Tools to Teammates: Evaluating LLMs in Multi-Session Coding Interactions](from_tools_to_teammates_evaluating_llms_in_multi-session_coding_interactions.md)
+- [On Evaluating LLM Alignment by Evaluating LLMs as Judges](../../NeurIPS2025/llm_evaluation/on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+- [EducationQ: Evaluating LLMs' Teaching Capabilities Through Multi-Agent Dialogue Framework](educationq_evaluating_llms_teaching_capabilities_through_multi-agent_dialogue_fr.md)
+
+<!-- RELATED:END -->

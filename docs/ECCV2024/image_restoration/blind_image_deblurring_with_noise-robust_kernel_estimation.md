@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 模拟+真实场景均有测试，但数据集和对比方法可更丰富
 - 写作质量: ⭐⭐⭐ 问题动机清晰，但方法细节（频域操作）需要读者有信号处理背景
 - 价值: ⭐⭐⭐ 噪声下盲去模糊是实际需求，方法实用但推理速度限制了部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blind Noisy Image Deblurring Using Residual Guidance Strategy](../../ICCV2025/image_restoration/blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
+- [Learning to Translate Noise for Robust Image Denoising](../../CVPR2026/image_restoration/learning_to_translate_noise_for_robust_image_denoising.md)
+- [Domain-Adaptive Video Deblurring via Test-Time Blurring](domain-adaptive_video_deblurring_via_test-time_blurring.md)
+- [EDformer: Transformer-Based Event Denoising Across Varied Noise Levels](edformer_transformer-based_event_denoising_across_varied_noise_levels.md)
+- [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+
+<!-- RELATED:END -->

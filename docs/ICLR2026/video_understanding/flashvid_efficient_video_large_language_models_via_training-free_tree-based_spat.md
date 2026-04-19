@@ -122,3 +122,15 @@ FlashVID 包含两个协同模块：(1) ADTS（Attention and Diversity-based Tok
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个VLLM x 5个基准 x 多个压缩比例，非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，图示直观，算法描述完整
 - 价值: ⭐⭐⭐⭐⭐ 免训练、即插即用、性能损失极小，实用价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unified Spatiotemporal Token Compression for Video-LLMs at Ultra-Low Retention](../../CVPR2026/video_understanding/unified_spatiotemporal_token_compression_for_video-llms_at_ultra-low_retention.md)
+- [FLoC: Facility Location-Based Efficient Visual Token Compression for Long Video Understanding](floc_facility_location-based_efficient_visual_token_compression_for_long_video_u.md)
+- [Video-KTR: 通过关键 Token 归因增强视频推理](video-ktr_reinforcing_video_reasoning_via_key_token_attribution.md)
+- [Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](../../AAAI2026/video_understanding/listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+
+<!-- RELATED:END -->

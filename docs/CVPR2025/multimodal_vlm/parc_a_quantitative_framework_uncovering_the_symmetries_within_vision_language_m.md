@@ -108,3 +108,15 @@ $$s_{\text{calib}} = \begin{cases} \frac{s - s_{\text{rand}}}{1 - s_{\text{rand}
 - 实验充分度: ⭐⭐⭐⭐⭐ 22个模型×7数据集×11变异，分析极其全面，结论可靠
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，图表直观（特别是校准前后对比），逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 对VLM的可靠性评估和模型选择有重大指导意义，框架可直接被社区采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ranked from Within: Ranking Large Multimodal Models Without Labels](../../ICML2025/multimodal_vlm/ranked_from_within_ranking_large_multimodal_models_without_labels.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](../../ICCV2025/multimodal_vlm/physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+- [Words or Vision: Do Vision-Language Models Have Blind Faith in Text?](words_or_vision_do_vision-language_models_have_blind_faith_in_text.md)
+- [LLaVA-KD: A Framework of Distilling Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/llava-kd_a_framework_of_distilling_multimodal_large_language_models.md)
+- [FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
+
+<!-- RELATED:END -->

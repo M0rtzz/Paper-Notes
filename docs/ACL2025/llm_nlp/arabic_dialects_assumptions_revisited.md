@@ -132,3 +132,15 @@ tags:
 - **实验充分度**: 9/10 — 四个假设均有详尽的定量分析和统计检验
 - **清晰度**: 8/10 — 写作逻辑清晰，假设-方法-结论对应明确
 - **总分**: 7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
+- [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
+- [ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation](atrie_legal_interpretation.md)
+- [Math Neurosurgery: Isolating Language Models' Math Reasoning Abilities Using Only Forward Passes](mathneuro_math_reasoning_isolation.md)
+- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
+
+<!-- RELATED:END -->

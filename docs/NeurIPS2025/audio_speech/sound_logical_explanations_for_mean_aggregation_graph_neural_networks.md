@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 覆盖多个基准但数据集规模有限且仅 2 层模型
 - 写作质量: ⭐⭐⭐⭐ 理论叙述严谨清晰，证明草图有助理解
 - 价值: ⭐⭐⭐⭐ 填补重要理论空白，sound 解释对可信 AI 意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Complex-Valued Neural Networks for Waveform Generation](../../ICLR2026/audio_speech/toward_complex-valued_neural_networks_for_waveform_generation.md)
+- [Seeing Sound, Hearing Sight: Uncovering Modality Bias and Conflict of AI Models in Sound Localization](seeing_sound_hearing_sight_uncovering_modality_bias_and_conflict_of_ai_models_in.md)
+- [AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound](audsemthinker_enhancing_audio-language_models_through_reasoning_over_semantics_o.md)
+- [Generating Physically Sound Designs from Text and a Set of Physical Constraints](generating_physically_sound_designs_from_text_and_a_set_of_physical_constraints.md)
+- [Slimmable NAM: Neural Amp Models with Adjustable Runtime Computational Cost](slimmable_nam_neural_amp_models_with_adjustable_runtime_computational_cost.md)
+
+<!-- RELATED:END -->

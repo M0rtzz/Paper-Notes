@@ -147,3 +147,15 @@ $$\text{Sim}_{\text{MSE}}(A,B) = 1 - \frac{1}{1+e^{-k(d_{\text{path}} - \tau)}}$
 ⭐⭐⭐⭐ (4/5)
 
 问题重要且实用，方法有数学保证且实现简洁。理论与实验结合紧密，不变性证明清晰。主要扣分在实验规模偏小和部分场景（OPT）的判别力不足，以及白盒限制在实际版权纠纷中可能受限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
+- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
+- [Rethinking Target Label Conditioning in Adversarial Attacks: A 2D Tensor-Guided Generative Approach](rethinking_target_label_conditioning_in_adversarial_attacks_a_2d_tensor-guided_g.md)
+- [Learning to Collaborate: An Orchestrated-Decentralized Framework for Peer-to-Peer Collaborative Learning](learning_to_collaborate_an_orchestrated-decentralized_framework_for_peer-to-peer.md)
+
+<!-- RELATED:END -->

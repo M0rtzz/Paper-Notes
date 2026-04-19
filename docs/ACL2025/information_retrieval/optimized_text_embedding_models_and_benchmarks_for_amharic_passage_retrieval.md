@@ -119,3 +119,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 涵盖多种模型规模、多种检索范式、分词分析、微调对比、定性错误分析，实验设计全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，研究问题驱动，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 为低资源语言 IR 社区提供了可复现的基准和公开资源（数据、代码、模型），实践指导性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Don't Reinvent the Wheel: Efficient Instruction-Following Text Embedding based on Guided Space Transformation](dont_reinvent_the_wheel_efficient_instruction-following_text_embedding_based_on_.md)
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [A Text is Worth Several Tokens: Text Embedding from LLMs Secretly Aligns Well with The Key Tokens](a_text_is_worth_several_tokens_text_embedding_from_llms_secretly_aligns_well_wit.md)
+- [Uncovering Visual-Semantic Psycholinguistic Properties from the Distributional Structure of Text Embedding Space](psycholinguistic_visual_semantic.md)
+- [BTZSC: A Benchmark for Zero-Shot Text Classification Across Cross-Encoders, Embedding Models, Rerankers and LLMs](../../ICLR2026/information_retrieval/btzsc_a_benchmark_for_zero-shot_text_classification_across_cross-encoders_embedd.md)
+
+<!-- RELATED:END -->

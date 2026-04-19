@@ -133,3 +133,15 @@ CoT-VLA 在所有四个任务套件上均取得最优或接近最优的结果，
 - 实验充分度: ⭐⭐⭐⭐ LIBERO四个子集全面评估，消融完整
 - 写作质量: ⭐⭐⭐⭐ 两阶段框架阐述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 为VLA提供了新的设计范式，子目标预测+动作生成的分解思路有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improve Vision Language Model Chain-of-thought Reasoning](../../ACL2025/llm_reasoning/improve_vlm_cot_reasoning.md)
+- [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
+- [Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](../../CVPR2026/llm_reasoning/step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)
+- [Latent Chain-of-Thought for Visual Reasoning](../../NeurIPS2025/llm_reasoning/latent_chain-of-thought_for_visual_reasoning.md)
+- [Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision](../../ICLR2026/llm_reasoning/uni-cot_towards_unified_chain-of-thought_reasoning_across_text_and_vision.md)
+
+<!-- RELATED:END -->

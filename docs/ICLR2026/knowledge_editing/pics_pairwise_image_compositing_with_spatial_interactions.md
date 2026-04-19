@@ -169,3 +169,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多场景覆盖
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰
 - 价值: ⭐⭐⭐⭐ 解决多轮合成的实际痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rote Learning Considered Useful: Generalizing over Memorized Data in LLMs](rote_learning_considered_useful_generalizing_over_memorized_data_in_llms.md)
+- [Bilinear Representation Mitigates Reversal Curse and Enables Consistent Model Editing](bilinear_representation_mitigates_reversal_curse_and_enables_consistent_model_ed.md)
+- [Energy-Regularized Sequential Model Editing on Hyperspheres](energy-regularized_sequential_model_editing_on_hyperspheres.md)
+- [GOT-Edit: Geometry-Aware Generic Object Tracking via Online Model Editing](got-edit_geometry-aware_generic_object_tracking_via_online_model_editing.md)
+- [Fine-tuning Done Right in Model Editing](fine-tuning_done_right_in_model_editing.md)
+
+<!-- RELATED:END -->

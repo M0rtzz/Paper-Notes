@@ -128,3 +128,15 @@ GRPO 强化微调效果（跨城市泛化）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 16 个模型系统评估 + 视觉遮蔽对照 + RL 训练基线 + 详细错误分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构完整，发现阐述清楚，表格信息丰富
 - **价值**: ⭐⭐⭐⭐ — 揭示了 MLLM 在细粒度视觉推理上的关键短板，为社区提供了有价值的评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HandVQA: Diagnosing and Improving Fine-Grained Spatial Reasoning about Hands in Vision-Language Models](handvqa_diagnosing_and_improving_fine-grained_spatial_reasoning_about_hands_in_v.md)
+- [MA-Bench: Towards Fine-grained Micro-Action Understanding](ma-bench_towards_fine-grained_micro-action_understanding.md)
+- [Zina: Multimodal Fine-grained Hallucination Detection and Editing](zina_multimodal_fine-grained_hallucination_detection_and_editing.md)
+- [OddGridBench: Exposing the Lack of Fine-Grained Visual Discrepancy Sensitivity in Multimodal Large Language Models](oddgridbench_exposing_the_lack_of_fine-grained_visual_discrepancy_sensitivity_in.md)
+- [EgoMind: Activating Spatial Cognition through Linguistic Reasoning in MLLMs](egomind_activating_spatial_cognition_through_linguistic_reasoning_in_mllms.md)
+
+<!-- RELATED:END -->

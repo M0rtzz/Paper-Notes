@@ -135,3 +135,15 @@ tags:
 - **实验完整性**: ⭐⭐⭐ — 真实世界评估规模小，但分析维度丰富
 - **实用性**: ⭐⭐⭐⭐⭐ — 流程简单、成本低、可立即实践
 - **写作质量**: ⭐⭐⭐⭐ — 组织清晰，研究问题明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mobile-GS: Real-time Gaussian Splatting for Mobile Devices](../../CVPR2025/3d_vision/mobile-gs_real-time_gaussian_splatting_for_mobile_devices.md)
+- [D-REX: Differentiable Real-to-Sim-to-Real Engine for Learning Dexterous Grasping](../../ICLR2026/3d_vision/d-rex_differentiable_real-to-sim-to-real_engine_for_learning_dexterous_grasping.md)
+- [HouseTour: A Virtual Real Estate A(I)gent](housetour_a_virtual_real_estate_aigent.md)
+- [A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision](a_lesson_in_splats_teacherguided_diffusion_for_3d_gaussian_s.md)
+- [Revisiting Point Cloud Completion: Are We Ready For The Real-World?](revisiting_point_cloud_completion_are_we_ready_for_the_real-world.md)
+
+<!-- RELATED:END -->

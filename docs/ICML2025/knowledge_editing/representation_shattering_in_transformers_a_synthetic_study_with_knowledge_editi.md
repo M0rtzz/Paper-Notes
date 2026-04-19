@@ -135,3 +135,15 @@ $$R(D_*) = \frac{\|D_* - D_\varnothing\|_F}{\|D_\varnothing\|_F}$$
 - 实验充分度: ⭐⭐⭐⭐ 合成实验非常精细，LLM验证有说服力，但缺少更多知识图谱几何和更大合成模型的实验
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，从合成到真实的叙事逻辑流畅，可视化出色
 - 价值: ⭐⭐⭐⭐⭐ 对KE领域具有重要指导意义，可能推动"定位-编辑"范式的根本反思
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bilinear Representation Mitigates Reversal Curse and Enables Consistent Model Editing](../../ICLR2026/knowledge_editing/bilinear_representation_mitigates_reversal_curse_and_enables_consistent_model_ed.md)
+- [WikiBigEdit: Understanding the Limits of Lifelong Knowledge Editing in LLMs](wikibigedit_understanding_the_limits_of_lifelong_knowledge_editing_in_llms.md)
+- [Efficient Knowledge Editing via Minimal Precomputation](../../ACL2025/knowledge_editing/efficient_knowledge_editing.md)
+- [UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models](../../NeurIPS2025/knowledge_editing/uniedit_a_unified_knowledge_editing_benchmark_for_large_language_models.md)
+- [Edit Less, Achieve More: Dynamic Sparse Neuron Masking for Lifelong Knowledge Editing in LLMs](../../NeurIPS2025/knowledge_editing/edit_less_achieve_more_dynamic_sparse_neuron_masking_for_lifelong_knowledge_edit.md)
+
+<!-- RELATED:END -->

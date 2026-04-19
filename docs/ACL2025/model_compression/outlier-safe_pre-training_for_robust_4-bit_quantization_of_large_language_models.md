@@ -183,3 +183,15 @@ OSP 与所有 PTQ 方法互补，组合后进一步提升——因为 OSP 消除
 ⭐⭐⭐⭐⭐（5/5）
 
 这是一项极具影响力的工作：从根本上证明 LLM 的激活异常值是可预防的而非不可避免的，并给出了实用的生产级解决方案。方法设计精巧（三个组件各解决一个异常值来源），实验扎实（从 100B 到 1T tokens 的全面验证），分析深入（注意力汇聚与异常值的关系重新审视）。对 LLM 高效部署具有重大意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [PTQ1.61: Push the Real Limit of Extremely Low-Bit Post-Training Quantization Methods for Large Language Models](ptq161_low_bit_quantization.md)
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+- [Accurate KV Cache Quantization with Outlier Tokens Tracing](accurate_kv_cache_quantization_with_outlier_tokens_tracing.md)
+- [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
+
+<!-- RELATED:END -->

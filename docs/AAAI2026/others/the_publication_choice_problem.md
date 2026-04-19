@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为理论工作，仿真验证充分，但缺少真实数据验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，模型动机解释清楚，但数学符号较多、门槛较高
 - 价值: ⭐⭐⭐⭐ 对理解 AI 学术生态有独特价值，Spotlight 效应分析对会议组织者有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automated Reproducibility Has a Problem Statement Problem](automated_reproducibility_has_a_problem_statement_problem.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](../../ACL2025/others/distractor_gen_multiple_choice.md)
+- [Optimizer Choice Matters for the Emergence of Neural Collapse](../../ICLR2026/others/optimizer_choice_matters_for_the_emergence_of_neural_collapse.md)
+- [CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data](cellstream_dynamical_optimal_transport_informed_embeddings_for_reconstructing_ce.md)
+- [Cash Flow Underwriting with Bank Transaction Data: Advancing MSME Financial Inclusion in Malaysia](cash_flow_underwriting_with_bank_transaction_data_advancing_msme_financial_inclu.md)
+
+<!-- RELATED:END -->

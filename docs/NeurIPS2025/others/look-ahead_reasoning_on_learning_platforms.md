@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，缺乏实验验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、定理陈述精练、直觉解释到位
 - 价值: ⭐⭐⭐⭐ 对平台设计、公平性和集体行动理论有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memorization: A Close Look at Books](../../ACL2025/others/memorization_a_close_look_at_books.md)
+- [Learning to Reason Over Time: Timeline Self-Reflection for Temporal Reasoning](../../ACL2025/others/tiser_timeline_self_reflection_temporal.md)
+- [UniFormer: Unified and Efficient Transformer for Reasoning Across General and Custom Computing](uniformer_unified_and_efficient_transformer_for_reasoning_across_general_and_cus.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](../../ACL2025/others/self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [Discrete Neural Algorithmic Reasoning](../../ICML2025/others/discrete_neural_algorithmic_reasoning.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 基准测试较完整，但受限于 abs-only 信息，消融细节不充分
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，pipeline 描述直观
 - 价值: ⭐⭐⭐⭐ 数据集本身具有高价值，将推动跨模态几何匹配研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization](../../AAAI2026/remote_sensing/uniabg_unified_adversarial_view_bridging_and_graph_correspondence_for_unsupervis.md)
+- [GeoFlow: Real-Time Fine-Grained Cross-View Geolocalization via Iterative Flow Prediction](../../CVPR2026/remote_sensing/geoflow_real-time_fine-grained_cross-view_geolocalization_via_iterative_flow_pre.md)
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](../../ICCV2025/remote_sensing/geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+- [GreenHyperSpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction](greenhyperspectra_a_multi-source_hyperspectral_dataset_for_global_vegetation_tra.md)
+- [ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations](../../ECCV2024/remote_sensing/congeo_robust_cross-view_geo-localization_across_ground_view_variations.md)
+
+<!-- RELATED:END -->

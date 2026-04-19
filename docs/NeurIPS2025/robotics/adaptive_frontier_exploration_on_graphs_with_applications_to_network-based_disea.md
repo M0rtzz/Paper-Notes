@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据，5种疾病，噪声鲁棒性分析，但缺少更大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰（HIV检测），理论严谨，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对公共卫生领域有直接影响，理论和实践价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MaNGO: Adaptable Graph Network Simulators via Meta-Learning](mango_-_adaptable_graph_network_simulators_via_meta-learning.md)
+- [T-Rex: Task-Adaptive Spatial Representation Extraction for Robotic Manipulation with VLMs](t-rex_task-adaptive_spatial_representation_extraction_for_robotic_manipulation_w.md)
+- [VLA-Cache: Efficient Vision-Language-Action Manipulation via Adaptive Token Caching](vla-cache_efficient_vision-language-action_manipulation_via_adaptive_token_cachi.md)
+- [Adaptive Articulated Object Manipulation On The Fly with Foundation Model Reasoning and Part Grounding](../../ICCV2025/robotics/adaptive_articulated_object_manipulation_on_the_fly_with_foundation_model_reason.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](../../CVPR2026/robotics/learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+
+<!-- RELATED:END -->

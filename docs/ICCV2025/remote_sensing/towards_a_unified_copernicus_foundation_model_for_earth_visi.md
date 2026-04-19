@@ -205,3 +205,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 对我的价值: ⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
+- [WildSAT: Learning Satellite Image Representations from Wildlife Observations](wildsat_learning_satellite_image_representations_from_wildlife_observations.md)
+- [GeoExplorer: Active Geo-Localization with Curiosity-Driven Exploration](geoexplorer_active_geo-localization_with_curiosity-driven_exploration.md)
+- [CityNav: A Large-Scale Dataset for Real-World Aerial Navigation](citynav_a_large-scale_dataset_for_real-world_aerial_navigation.md)
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+
+<!-- RELATED:END -->

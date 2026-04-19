@@ -130,3 +130,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐（3架构×3属性×2任务×2难度，超参敏感性分析详尽）
 - **写作质量**: ⭐⭐⭐⭐（方法清晰，图示直观，流程算法伪代码完整）
 - **价值**: ⭐⭐⭐⭐（为蛋白质设计提供即插即用的零成本控制方案，实用性强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](../../NeurIPS2025/medical_imaging/steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
+- [CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
+- [Elucidating the Design Space of Multimodal Protein Language Models](elucidating_the_design_space_of_multimodal_protein_language_models.md)
+- [Controlling Repetition in Protein Language Models](../../ICLR2026/medical_imaging/controlling_repetition_in_protein_language_models.md)
+- [Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](../../CVPR2025/medical_imaging/multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)
+
+<!-- RELATED:END -->

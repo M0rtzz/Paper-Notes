@@ -129,3 +129,15 @@ General-to-Specific 范式贡献最大 (+8.9%), C-MoE 再加 (+6.8%).
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个多模态数据集 + 2 个单模态数据集, 完整消融 + 效率对比
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰
 - 价值: ⭐⭐⭐⭐ 统一异常检测框架有工业应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection](no_need_for_real_anomaly_mllm_empowered_zero-shot_video_anomaly_detection.md)
+- [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
+
+<!-- RELATED:END -->

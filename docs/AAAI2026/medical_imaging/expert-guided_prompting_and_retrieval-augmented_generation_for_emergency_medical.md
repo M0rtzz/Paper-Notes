@@ -121,3 +121,15 @@ Filter用AdamW优化器（weight decay 0.01），LoRA参数 $r=8, \alpha=16$，d
 - 实验充分度: ⭐⭐⭐⭐ 多模型、多RAG baseline对比，含认证考试实测
 - 写作质量: ⭐⭐⭐⭐ 图表清晰，数据集构建过程详尽
 - 价值: ⭐⭐⭐⭐ 数据集有持续价值，expertise注入框架可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Q-FSRU: Quantum-Augmented Frequency-Spectral Fusion for Medical Visual Question Answering](q-fsru_quantum-augmented_frequency-spectral_fusion_for_medical_visual_question_a.md)
+- [Towards Omni-RAG: Comprehensive Retrieval-Augmented Generation for Large Language Models in Medical Applications](../../ACL2025/medical_imaging/omni_rag_medical.md)
+- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](../../ACL2025/medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_with_large_language.md)
+- [On the Vulnerability of Applying Retrieval-Augmented Generation within Knowledge-Intensive Application Domains](../../ICML2025/medical_imaging/on_the_vulnerability_of_applying_retrieval-augmented_generation_within_knowledge.md)
+- [NutriScreener: Retrieval-Augmented Multi-Pose Graph Attention Network for Malnourishment Screening](nutriscreener_retrieval-augmented_multi-pose_graph_attention_network_for_malnour.md)
+
+<!-- RELATED:END -->

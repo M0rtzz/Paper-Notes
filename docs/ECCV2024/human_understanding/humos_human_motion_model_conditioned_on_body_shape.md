@@ -136,3 +136,15 @@ $$\mathcal{L} = \lambda_{\text{cycle}}\mathcal{L}_{\text{cycle}} + \lambda_{\tex
 - 实验充分度: ⭐⭐⭐⭐ 物理指标全面，包含感知研究，但缺少与更多最新方法的比较
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰，公式推导完整，图示直观
 - 价值: ⭐⭐⭐⭐ 为体型感知运动生成提供了可行方案，对游戏动画和虚拟人领域有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Motion Model for Unified Multi-Modal Motion Generation](large_motion_model_for_unified_multi-modal_motion_generation.md)
+- [Modeling and Driving Human Body Soundfields through Acoustic Primitives](modeling_and_driving_human_body_soundfields_through_acoustic_primitives.md)
+- [Motion Mamba: Efficient and Long Sequence Motion Generation](motion_mamba_efficient_and_long_sequence_motion_generation.md)
+- [GENMO: A GENeralist Model for Human MOtion](../../ICCV2025/human_understanding/genmo_a_generalist_model_for_human_motion.md)
+- [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+
+<!-- RELATED:END -->

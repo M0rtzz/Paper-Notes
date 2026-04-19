@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （在真实LLM上验证，但可扩展到更大模型）
 - 写作质量: ⭐⭐⭐⭐ （理论深度高，数学推导严谨）
 - 价值: ⭐⭐⭐⭐⭐ （对Transformer机制性理解的重要理论贡献，连接深度学习与语言学）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Do Transformers Learn Implicit Reasoning?](../../NeurIPS2025/interpretability/how_do_transformers_learn_implicit_reasoning.md)
+- [Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
+- [Stretching Beyond the Obvious: A Gradient-Free Framework to Unveil the Hidden Landscape of Visual Invariance](stretching_beyond_the_obvious_a_gradient-free_framework_to_unveil_the_hidden_lan.md)
+- [When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
+- [Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees](formal_mechanistic_interpretability_automated_circuit_discovery_with_provable_gu.md)
+
+<!-- RELATED:END -->

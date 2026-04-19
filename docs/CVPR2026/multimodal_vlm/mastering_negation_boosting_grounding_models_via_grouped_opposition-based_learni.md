@@ -158,3 +158,15 @@ $$L_{\text{total}} = L_{\text{cls}} + L_{\text{loc}} + \alpha L_{\text{PNC}} + \
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多模型（6 种配置）、多基准（D³/D-Negation/RefCOCO）、多维消融（数据/模块/损失/超参/属性）
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机-方法-实验逻辑链完整
 - 价值: ⭐⭐⭐⭐ — 揭示了融合模块这一结构瓶颈，方法高效实用，但数据规模和属性覆盖度限制了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+- [Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery](multi-modal_representation_learning_via_semi-supervised_rate_reduction_for_gener.md)
+- [Uncertainty-Aware Knowledge Distillation for Multimodal Large Language Models](uncertainty-aware_knowledge_distillation_for_multimodal_large_language_models.md)
+- [AdaptVision: Efficient Vision-Language Models via Adaptive Visual Acquisition](adaptvision_efficient_vision-language_models_via_adaptive_visual_acquisition.md)
+
+<!-- RELATED:END -->

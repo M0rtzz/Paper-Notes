@@ -124,3 +124,15 @@ SCRAPL损失是全路径ST损失的无偏估计（Proposition 3.1证明，通过
 - 实验充分度: ⭐⭐⭐⭐ 三个DDSP任务（粒度/chirplet/TR-808）+详细消融+与全路径对比+统计显著性检验
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨（含完整证明），算法伪代码清晰，实验图表信息量密集
 - 价值: ⭐⭐⭐⭐ 让一类高质量但不实用的感知损失函数变得实用——对可微数字信号处理领域有直接影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpreting Fedspeak with Confidence: A LLM-Based Uncertainty-Aware Framework Guided by Monetary Policy Transmission Paths](../../AAAI2026/time_series/interpreting_fedspeak_with_confidence_a_llm-based_uncertainty-aware_framework_gu.md)
+- [ScatterAD: Temporal-Topological Scattering Mechanism for Time Series Anomaly Detection](../../NeurIPS2025/time_series/scatterad_temporal-topological_scattering_mechanism_for_time_series_anomaly_dete.md)
+- [Tensor learning with orthogonal, Lorentz, and symplectic symmetries](tensor_learning_with_orthogonal_lorentz_and_symplectic_symmetries.md)
+- [Towards Generalizable PDE Dynamics Forecasting via Physics-Guided Invariant Learning](towards_generalizable_pde_dynamics_forecasting_via_physics-guided_invariant_lear.md)
+- [PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
+
+<!-- RELATED:END -->

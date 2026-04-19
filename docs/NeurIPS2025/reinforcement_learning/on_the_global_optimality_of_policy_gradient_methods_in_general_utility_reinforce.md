@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论无实验
 - 写作质量: ⭐⭐⭐⭐ 结构严谨，前人对比详尽
 - 价值: ⭐⭐⭐⭐ 为 RLGU 可扩展算法奠定理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust and Diverse Multi-Agent Learning via Rational Policy Gradient](robust_and_diverse_multi-agent_learning_via_rational_policy_gradient.md)
+- [Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning](../../ICLR2026/reinforcement_learning/rethinking_policy_diversity_in_ensemble_policy_gradient_in_large-scale_reinforce.md)
+- [Global Convergence for Average Reward Constrained MDPs with Primal-Dual Actor-Critic](global_convergence_for_average_reward_constrained_mdps_with_primal-dual_actor_cr.md)
+- [Near-Optimal Quantum Algorithms for Computing (Coarse) Correlated Equilibria of General-Sum Games](near-optimal_quantum_algorithms_for_computing_coarse_correlated_equilibria_of_ge.md)
+- [Gradient-Variation Online Adaptivity for Accelerated Optimization with Hölder Smoothness](gradient-variation_online_adaptivity_for_accelerated_optimization_with_hölder_sm.md)
+
+<!-- RELATED:END -->

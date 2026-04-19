@@ -139,3 +139,15 @@ ConvNeXt的参数减少更显著（>50%），因其MLP占比更高。
 - **实验**: ⭐⭐⭐⭐ （覆盖多种架构，消融充分，与SoTA对比全面）
 - **写作**: ⭐⭐⭐⭐ （结构清晰，公式推导严谨）
 - **价值**: ⭐⭐⭐⭐ （简单实用，可直接应用于已有预训练模型的部署优化）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku](../../ACL2025/model_compression/explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo.md)
+- [Who Taught You That? Tracing Teachers in Model Distillation](../../ACL2025/model_compression/who_taught_you_that_tracing_teachers_in_model_distillation.md)
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [Come Together, But Not Right Now: A Progressive Strategy to Boost Low-Rank Adaptation](../../ICML2025/model_compression/come_together_but_not_right_now_a_progressive_strategy_to_boost_low-rank_adaptat.md)
+
+<!-- RELATED:END -->

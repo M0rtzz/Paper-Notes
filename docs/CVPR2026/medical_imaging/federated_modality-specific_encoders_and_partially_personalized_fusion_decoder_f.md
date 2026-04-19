@@ -198,3 +198,15 @@ FedMEPD 框架由三大组件构成：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两个数据集、10+ 方法对比、7 组消融、数据量/质量鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导严谨，图表丰富
 - 价值: ⭐⭐⭐⭐ — 切实解决多模态联邦医学影像中的关键瓶颈问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mambabased_decoder_with.md)
+- [Deep Learning-based Assessment of the Relation Between the Third Molar and Mandibular Canal on Panoramic Radiographs using Local, Centralized, and Federated Learning](deep_learningbased_assessment_of_the_relation_betw.md)
+- [Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study](are_general-purpose_vision_models_all_we_need_for_2d_medical_image_segmentation_.md)
+- [MUST: Modality-Specific Representation-Aware Transformer for Diffusion-Enhanced Survival Prediction with Missing Modality](must_modality-specific_representation-aware_transformer_for_diffusion-enhanced_s.md)
+
+<!-- RELATED:END -->

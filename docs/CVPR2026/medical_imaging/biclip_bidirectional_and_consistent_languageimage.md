@@ -125,3 +125,15 @@ tags:
 ⭐⭐⭐ (3/5)
 
 综合评价：双向融合和增强一致性各自不算新颖，组合在医学场景有效但增量有限（全量数据下仅+0.13% Dice）。核心价值在于极端条件（低标注/退化）下的鲁棒性优势。实验设计关注临床实际场景值得肯定，但仅两个COVID-CT数据集限制了结论的泛化性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration](crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mambabased_decoder_with.md)
+- [T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation](t-gated_adapter_a_lightweight_temporal_adapter_for_vision-language_medical_segme.md)
+
+<!-- RELATED:END -->

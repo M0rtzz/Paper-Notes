@@ -143,3 +143,15 @@ Critic-V包含三个核心阶段：
 - 实验充分度: ⭐⭐⭐⭐ 8个基准、3个Reasoner VLM、充分的消融；但缺少大模型实验
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，公式推导完整但部分地方冗余
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，即插即用的设计、显著的性能提升、低计算开销
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLaVA-Critic: Learning to Evaluate Multimodal Models](llava-critic_learning_to_evaluate_multimodal_models.md)
+- [DocVLM: Make Your VLM an Efficient Reader](docvlm_make_your_vlm_an_efficient_reader.md)
+- [FLAIR: VLM with Fine-grained Language-informed Image Representations](flair_vlm_with_fine-grained_language-informed_image_representations.md)
+- [Self-Evolving Visual Concept Library using Vision-Language Critics](self-evolving_visual_concept_library_using_vision-language_critics.md)
+- [VAGEN: Reinforcing World Model Reasoning for Multi-Turn VLM Agents](../../NeurIPS2025/multimodal_vlm/vagen_reinforcing_world_model_reasoning_for_multi-turn_vlm_agents.md)
+
+<!-- RELATED:END -->

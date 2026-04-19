@@ -126,3 +126,15 @@ DyTC 的自适应路由是性能提升的主要来源。
 - 实验充分度: ⭐⭐⭐⭐ Spec-Bench 全面评估，DyTC 消融清晰，但缺少更新模型和更多 DSIA 策略的实验
 - 写作质量: ⭐⭐⭐⭐ 理论分析（Figure 1 的有效边界）直观，DyTC 算法描述清晰
 - 价值: ⭐⭐⭐⭐ Training-free + 即插即用 + 超越 trained baseline 的组合使其实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VocabTrim: Vocabulary Pruning for Efficient Speculative Decoding in LLMs](../../ICML2025/model_compression/vocabtrim_vocabulary_pruning_for_efficient_speculative_decoding_in_llms.md)
+- [Reject Only Critical Tokens: Pivot-Aware Speculative Decoding](reject_only_critical_tokens_pivot-aware_speculative_decoding.md)
+- [Traversal Verification for Speculative Tree Decoding](traversal_verification_for_speculative_tree_decoding.md)
+- [Speculative Decoding in Decentralized LLM Inference: Turning Communication Latency into Computation Throughput](../../ICML2025/model_compression/speculative_decoding_in_decentralized_llm_inference_turning_communication_latenc.md)
+- [Partial Forward Blocking: A Novel Data Pruning Paradigm for Lossless Training Acceleration](../../ICCV2025/model_compression/partial_forward_blocking_a_novel_data_pruning_paradigm_for_lossless_training_acc.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 概念优美（motion作为运动语言），设计极简（单阶段ControlNet），应用广泛（一个模型多种控制），涌现行为令人惊喜，来自Google DeepMind的扎实工作，对视频生成控制范式有重要影响。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](../../ICCV2025/video_generation/free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+- [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
+- [MotionPro: A Precise Motion Controller for Image-to-Video Generation](motionpro_a_precise_motion_controller_for_image-to-video_generation.md)
+- [Motion Modes: What Could Happen Next?](motion_modes_what_could_happen_next.md)
+- [MotionStone: Decoupled Motion Intensity Modulation with Diffusion Transformer for Image-to-Video Generation](motionstone_decoupled_motion_intensity_modulation_with_diffusion_transformer_for.md)
+
+<!-- RELATED:END -->

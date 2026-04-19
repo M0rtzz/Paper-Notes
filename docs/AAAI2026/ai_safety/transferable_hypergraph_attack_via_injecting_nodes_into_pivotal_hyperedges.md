@@ -191,3 +191,15 @@ TH-Attack 的攻击效果远超所有基线，Accuracy 下降幅度通常为 **3
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6数据集 × 5模型 × 6基线 × 多扰动率，消融和参数分析全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，motivation 图示直观，但部分公式推导可更紧凑
 - 价值: ⭐⭐⭐⭐⭐ — 对 HGNN 安全性研究有重要贡献，揭示了一个通用的结构性脆弱性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction](../../CVPR2026/ai_safety/towards_highly_transferable_vision-language_attack_via_semantic-augmented_dynami.md)
+- [GraphTextack: A Realistic Black-Box Node Injection Attack on LLM-Enhanced GNNs](graphtextack_a_realistic_black-box_node_injection_attack_on_llm-enhanced_gnns.md)
+- [Understanding Model Ensemble in Transferable Adversarial Attack](../../ICML2025/ai_safety/understanding_model_ensemble_in_transferable_adversarial_attack.md)
+- [Reference Recommendation based Membership Inference Attack against Hybrid-based Recommender Systems](reference_recommendation_based_membership_inference_attack_against_hybrid-based_.md)
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+
+<!-- RELATED:END -->

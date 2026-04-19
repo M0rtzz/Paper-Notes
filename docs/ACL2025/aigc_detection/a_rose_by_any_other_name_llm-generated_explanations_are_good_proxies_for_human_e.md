@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ChaosNLI+MNLI+VariErr+ANLI，多场景多模型验证，排列平均消除偏见
 - 写作质量: ⭐⭐⭐⭐ 隐喻标题贴切，方法阐述清晰，实验组织合理
 - 价值: ⭐⭐⭐⭐ 对标注成本优化和 HLV 建模有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Comparing LLM-generated and human-authored news text using formal syntactic theory](llm_vs_human_formal_syntax.md)
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [Low-Perplexity LLM-Generated Sequences and Where To Find Them](low-perplexity_llm-generated_sequences_and_where_to_find_them.md)
+- [HACo-Det: A Study Towards Fine-Grained Machine-Generated Text Detection under Human-AI Coauthoring](haco-det_a_study_towards_fine-grained_machine-generated_text_detection_under_hum.md)
+- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+
+<!-- RELATED:END -->

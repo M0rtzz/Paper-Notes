@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 与多种方法对比、参数量分析、消融实验完善
 - 写作质量: ⭐⭐⭐⭐ 问题定义清楚，方法描述简洁，结果呈现直观
 - 价值: ⭐⭐⭐⭐ 对 HDR 相机 ISP 的实际部署有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Exposure Correction](unsupervised_exposure_correction.md)
+- [Estimation of Stochastic Optimal Transport Maps](../../NeurIPS2025/signal_comm/estimation_of_stochastic_optimal_transport_maps.md)
+- [Generalizable Non-Line-of-Sight Imaging with Learnable Physical Priors](../../ICCV2025/signal_comm/generalizable_non-line-of-sight_imaging_with_learnable_physical_priors.md)
+- [Dual-Imbalance Continual Learning for Real-World Food Recognition](../../CVPR2026/signal_comm/dual-imbalance_continual_learning_for_real-world_food_recognition.md)
+- [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](../../ICLR2026/signal_comm/multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
+
+<!-- RELATED:END -->

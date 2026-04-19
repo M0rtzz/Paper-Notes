@@ -127,3 +127,15 @@ RED是纯推理时方法，**零训练**。只需要对现有LVLM做两次前向
 - 实验充分度: ⭐⭐⭐⭐ 多模型多数据集验证，但任务类型较单一（主要VQA）
 - 写作质量: ⭐⭐⭐⭐⭐ 从发现问题到理论建模到实际算法，叙事流畅
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的推理增强方法，揭示了LVLMs使用CoT的重要局限性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harnessing Chain-of-Thought Reasoning in Multimodal Large Language Models for Face Anti-Spoofing](harnessing_chain-of-thought_reasoning_in_multimodal_large_language_models_for_fa.md)
+- [VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](visref_visual_refocusing_while_thinking_improves_test-time_scaling_in_multi-moda.md)
+- [Reinforcing Structured Chain-of-Thought for Video Understanding](reinforcing_structured_chain-of-thought_for_video_understanding.md)
+- [FaceCoT: Harnessing Chain-of-Thought Reasoning in MLLMs for Face Anti-Spoofing](facecot_cot_reasoning_face_anti_spoofing.md)
+- [Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)
+
+<!-- RELATED:END -->

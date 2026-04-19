@@ -160,3 +160,15 @@ SFT阶段使用标准的next-token prediction损失。GRPO阶段采用group rela
 - 实验充分度: ⭐⭐⭐⭐⭐ 50+模型横评、多训练策略消融、跨语言分析、CoT长度分析等维度全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、数据呈现充分，但CPT分析深度不足
 - 价值: ⭐⭐⭐⭐ 对医疗AI领域的专科适配和推理增强研究有重要参考价值，数据集和模型均开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning](../../ACL2025/llm_evaluation/physreason_a_comprehensive_benchmark_towards_physics-based_reasoning.md)
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](../../ICCV2025/llm_evaluation/3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+- [AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite](astabench_benchmarking_ai_agents.md)
+- [PlanetAlign: A Comprehensive Python Library for Benchmarking Network Alignment](planetalign_a_comprehensive_python_library_for_benchmarking_network_alignment.md)
+- [Predicting LLM Reasoning Performance with Small Proxy Model](predicting_llm_reasoning_performance_with_small_proxy_model.md)
+
+<!-- RELATED:END -->

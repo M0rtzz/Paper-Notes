@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 严格的三位专家评估，但仅用一个模型和有限文本
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，分类法有理论基础，评估方法论完善
 - 价值: ⭐⭐⭐⭐ 对教育 NLP 领域有直接实用价值，"质量高但类型不准"的发现有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Reliably Simulate Real Students' Abilities in Mathematics and Reading Comprehension?](can_llms_reliably_simulate_real_students_abilities_in_mathematics_and_reading_co.md)
+- [NeuSym-RAG: Hybrid Neural Symbolic Retrieval with Multiview Structuring for PDF Question Answering](neusym_rag_pdf_qa.md)
+- [Dynamic Order Template Prediction for Generative Aspect-Based Sentiment Analysis](dot_absa_template.md)
+- [Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA](hierarchical_retrieval_with_evidence_curation_for_open-domain_financial_question.md)
+- [SynGraph: A Dynamic Graph-LLM Synthesis Framework for Sparse Streaming User Sentiment Analysis](syngraph_a_dynamic_graph-llm_synthesis_framework_for_sparse_streaming_user_senti.md)
+
+<!-- RELATED:END -->

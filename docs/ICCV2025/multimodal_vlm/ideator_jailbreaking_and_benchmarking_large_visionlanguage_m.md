@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种baseline comparison，4个受害模型，11个benchmark模型，消融（breadth/depth/模态），防御评估（AdaShield），大量可视化
 - 写作质量: ⭐⭐⭐⭐ 清晰，threat model明确，Figure 1的对比直观
 - 价值: ⭐⭐⭐⭐⭐ 对VLM安全领域有重大意义——证明了VLM自身可以成为最强的红队工具，VLJailbreakBench揭示了商业模型的真实安全水平
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Jailbreaking Multimodal Large Language Models via Shuffle Inconsistency](jailbreaking_multimodal_large_language_models_via_shuffle_inconsistency.md)
+- [GEOBench-VLM: Benchmarking Vision-Language Models for Geospatial Tasks](geobench-vlm_benchmarking_vision-language_models_for_geospatial_tasks.md)
+- [Growing a Twig to Accelerate Large Vision-Language Models](growing_a_twig_to_accelerate_large_vision-language_models.md)
+- [MultiVerse: A Multi-Turn Conversation Benchmark for Evaluating Large Vision and Language Models](multiverse_a_multi-turn_conversation_benchmark_for_evaluating_large_vision_and_l.md)
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+
+<!-- RELATED:END -->

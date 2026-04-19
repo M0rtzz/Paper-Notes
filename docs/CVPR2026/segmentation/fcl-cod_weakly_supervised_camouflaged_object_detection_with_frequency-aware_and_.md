@@ -162,3 +162,15 @@ GCL 子消融：标准 CL 提升 +0.005，加入梯度感知再提升 +0.001。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 四个数据集 + 细致的组件消融 + 超参分析 + 定性可视化 + SOD 扩展
 - 写作质量: ⭐⭐⭐⭐ — 问题分解清晰，但符号略多
 - 价值: ⭐⭐⭐⭐ — 弱监督超全监督的结果令人印象深刻，具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Frequency-Spatial Entanglement Learning for Camouflaged Object Detection](../../ECCV2024/segmentation/frequency-spatial_entanglement_learning_for_camouflaged_object_detection.md)
+- [DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation](discover_segment_and_select_a_progressive_mechanism_for_zero-shot_camouflaged_ob.md)
+- [DSS: Discover, Segment, and Select - A Progressive Mechanism for Zero-shot Camouflaged Object Segmentation](dss_discover_segment_select_zero_shot_cos.md)
+- [EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection](erecu_pseudolabel_evolution_unsupervised_camouflage.md)
+- [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportionaware_dynamic_adaptive_sali.md)
+
+<!-- RELATED:END -->

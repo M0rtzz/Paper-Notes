@@ -163,3 +163,15 @@ CLIP 等判别模型在高层语义理解上表现优异，但在细粒度视觉
 - **实验充分度**: ⭐⭐⭐⭐ — 多 CLIP 骨干、连续/离散双范式、MLLM 集成、零样本保持，但基准偏小
 - **写作质量**: ⭐⭐⭐⭐⭐ — 论述逻辑清晰，三个 Key Points 层层递进，图示精美
 - **价值**: ⭐⭐⭐⭐⭐ — 为 MLLM 的视觉缺陷提供了成本极低的解决方案，启发性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenFlowRL: Shaping Rewards with Generative Object-Centric Flow in Visual Reinforcement Learning](genflowrl_shaping_rewards_with_generative_object-centric_flow_in_visual_reinforc.md)
+- [Mind the Gap: Aligning Vision Foundation Models to Image Feature Matching](mind_the_gap_aligning_vision_foundation_models_to_image_feature_matching.md)
+- [DICE: Staleness-Centric Optimizations for Parallel Diffusion MoE Inference](dice_staleness-centric_optimizations_for_parallel_diffusion_moe_inference.md)
+- [Diff-ICMH: Harmonizing Machine and Human Vision in Image Compression with Generative Prior](../../NeurIPS2025/image_generation/diff-icmh_harmonizing_machine_and_human_vision_in_image_compression_with_generat.md)
+- [UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation](../../NeurIPS2025/image_generation/utilgen_utility-centric_generative_data_augmentation_with_dual-level_task_adapta.md)
+
+<!-- RELATED:END -->

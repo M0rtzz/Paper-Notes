@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两种互补实验 + 10 个模型 + 控制实验，覆盖面广；但无闭源大模型（GPT-4等）的对比
 - 写作质量: ⭐⭐⭐⭐ 语言学和 NLP 两个视角的叙述衔接流畅
 - 价值: ⭐⭐⭐⭐ 揭示了 LLM 在语用理解上的重要盲区，对 NLP 语义评估和语言学计算实验均有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [Algorithmic Fidelity of Large Language Models in Generating Synthetic German Public Opinions: A Case Study](algorithmic_fidelity_german_opinion.md)
+- [LLM-Powered Test Case Generation for Detecting Bugs in Plausible Programs](llm_test_case_gen_bugs.md)
+- [Understanding the Dark Side of LLMs' Intrinsic Self-Correction](understanding_the_dark_side_of_llms_intrinsic_self-correction.md)
+
+<!-- RELATED:END -->

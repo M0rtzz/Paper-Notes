@@ -141,3 +141,15 @@ $$\mathbf{S}_T = \text{resize}\left(\sigma(W_{up} \cdot \sigma(W_{down} \cdot A)
 - **技术质量**: ⭐⭐⭐⭐ — 实验覆盖 GLUE、SuperGLUE、零样本迁移，基线全面，消融实验清晰验证了自注意力的作用。
 - **实用价值**: ⭐⭐⭐ — 方法简单易实现，参数效率高，但仅在中小模型上验证，对当下主流大模型场景的适用性存疑。
 - **表达清晰度**: ⭐⭐⭐⭐ — 论文结构清晰，公式推导完整，图示直观，实验表格规范。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SoftShadow: Leveraging Soft Masks for Penumbra-Aware Shadow Removal](../../CVPR2025/llm_nlp/softshadow_leveraging_soft_masks_for_penumbra-aware_shadow_removal.md)
+- [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](contrastive_prompting_embeddings.md)
+- [SkillAggregation: Reference-free LLM-Dependent Aggregation](skillaggregation_reference-free_llm-dependent_aggregation.md)
+- [Self-Tuning: Instructing LLMs to Effectively Acquire New Knowledge through Self-Teaching](self-tuning_instructing_llms_to_effectively_acquire_new_knowledge_through_self-t.md)
+- [Understanding the Dark Side of LLMs' Intrinsic Self-Correction](understanding_the_dark_side_of_llms_intrinsic_self-correction.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ CrEval-7B 已超越所有同规模和更大规模的通用 LLM，CrEval-14B 在 
 - **实用价值**: ⭐⭐⭐⭐ 数据集和评估器均可开源使用，对 LLM 创造力提升有直接应用价值
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富，方法动机解释充分
 - **总评**: ⭐⭐⭐⭐ 扎实的系统性工作，填补了跨领域文本创造力自动评估的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WebDevJudge: Evaluating (M)LLMs as Critiques for Web Development Quality](webdevjudge_mllm_web_development.md)
+- [Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](../../ACL2025/llm_nlp/palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
+- [First is Not Really Better Than Last: Evaluating Layer Choice and Aggregation Strategies in Language Model Data Influence Estimation](first_is_not_really_better_than_last_evaluating_layer_choice_and_aggregation_str.md)
+- [Geometric Signatures of Compositionality Across a Language Model's Lifetime](../../ACL2025/llm_nlp/geometric_compositionality_lifetime.md)
+- [ELI-Why: Evaluating the Pedagogical Utility of Language Model Explanations](../../ACL2025/llm_nlp/eli-why_evaluating_the_pedagogical_utility_of_language_model_explanations.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ Wavelet Policy 更接近演示数据的多模态分布。
 - 实验充分度: ⭐⭐⭐⭐ 五个基准环境+多种基线对比+消融研究充实
 - 写作质量: ⭐⭐⭐⭐ 信号处理背景讲解清楚，方法推导严谨
 - 价值: ⭐⭐⭐⭐ 提供了策略学习的新视角，但部分任务提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DriveDPO: Policy Learning via Safety DPO For End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/drivedpo_policy_learning_via_safety_dpo_for_end-to-end_autonomous_driving.md)
+- [Causality Meets Locality: Provably Generalizable and Scalable Policy Learning for Networked Systems](../../NeurIPS2025/autonomous_driving/causality_meets_locality_provably_generalizable_and_scalable_policy_learning_for.md)
+- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [VILTA: A VLM-in-the-Loop Adversary for Enhancing Driving Policy Robustness](../../AAAI2026/autonomous_driving/vilta_a_vlm-in-the-loop_adversary_for_enhancing_driving_poli.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{sup}} + \lambda_{\text{cons}}\
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集、两种标注比例、七个基线方法、多个消融实验全面充分
 - **写作质量**: ⭐⭐⭐⭐ 方法论述逻辑清晰，数学符号一致，可视化有效辅助理解
 - **价值**: ⭐⭐⭐⭐⭐ 对组织病理学中低标注场景的拓扑准确分割有直接且重要的实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VQ-Seg: Vector-Quantized Token Perturbation for Semi-Supervised Medical Image Segmentation](vq-seg_vector-quantized_token_perturbation_for_semi-supervised_medical_image_seg.md)
+- [STARC-9: A Large-scale Dataset for Multi-Class Tissue Classification for CRC Histopathology](starc-9_a_large-scale_dataset_for_multi-class_tissue_classification_for_crc_hist.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](../../CVPR2025/medical_imaging/semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [Domain-Adaptive Transformer for Data-Efficient Glioma Segmentation in Sub-Saharan MRI](domain-adaptive_transformer_for_data-efficient_glioma_segmentation_in_sub-sahara.md)
+- [Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos](../../CVPR2026/medical_imaging/uncertainty-aware_concept_and_motion_segmentation_for_semi-supervised_angiograph.md)
+
+<!-- RELATED:END -->

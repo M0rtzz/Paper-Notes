@@ -162,3 +162,15 @@ tags:
 - 实验充分度: 8/10 — 11 个数据集 + 7 个 LLM 覆盖全面，但缺少开源小模型和消融实验
 - 写作质量: 7/10 — 结构清晰，但表格数据密集，核心 insight 的提炼可更精练
 - 价值: 8/10 — 为 LLM 反事实推理提供了系统化的诊断工具和改进方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Knowledge Distillation of LLMs With Counterfactual Explanations](../../NeurIPS2025/causal_inference/few-shot_knowledge_distillation_of_llms_with_counterfactual_explanations.md)
+- [Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
+- [SelfReflect: Can LLMs Communicate Their Internal Answer Distribution?](selfreflect_can_llms_communicate_their_internal_answer_distribution.md)
+- [MUG: Multi-agent Undercover Gaming — Hallucination Removal via Counterfactual Test for Multimodal Reasoning](../../AAAI2026/causal_inference/multi-agent_undercover_gaming_hallucination_removal_via_coun.md)
+- [A Visual Leap in CLIP Compositionality Reasoning through Generation of Counterfactual Sets](../../ICCV2025/causal_inference/a_visual_leap_in_clip_compositionality_reasoning_through_gen.md)
+
+<!-- RELATED:END -->

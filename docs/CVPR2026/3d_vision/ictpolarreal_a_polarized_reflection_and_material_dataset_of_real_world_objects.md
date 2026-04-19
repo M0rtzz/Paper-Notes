@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖了逆渲染、重光照、3D 重建三个下游任务，有多种光照条件对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，物理原理描述详细
 - 价值: ⭐⭐⭐⭐⭐ 数据集价值极高，有望成为逆渲染领域的基础设施级工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnthroTAP: Learning Point Tracking with Real-World Motion](anthrotap_learning_point_tracking_with_real-world_motion.md)
+- [3D Reconstruction of Objects in Hands without Real World 3D Supervision](../../ECCV2024/3d_vision/3d_reconstruction_of_objects_in_hands_without_real_world_3d.md)
+- [Ego-1K: A Large-Scale Multiview Video Dataset for Egocentric Vision](ego-1k_--_a_large-scale_multiview_video_dataset_for_egocentric_vision.md)
+- [SceneScribe-1M: A Large-Scale Video Dataset with Comprehensive Geometric and Semantic Annotations](scenescribe-1m_a_large-scale_video_dataset_with_comprehensive_geometric_and_sema.md)
+- [DuoMo: Dual Motion Diffusion for World-Space Human Reconstruction](duomo_dual_motion_diffusion_for_world-space_human_reconstruction.md)
+
+<!-- RELATED:END -->

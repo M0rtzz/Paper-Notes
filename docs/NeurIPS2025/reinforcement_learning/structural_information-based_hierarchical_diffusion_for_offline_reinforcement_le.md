@@ -173,3 +173,15 @@ SIHD包含三个模块：
 - 实验充分度: ⭐⭐⭐⭐⭐ D4RL全面基准+消融+效率分析+参数敏感度+可视化
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，理论推导完整，但符号系统较复杂
 - 价值: ⭐⭐⭐⭐ 在长horizon稀疏奖励任务中提供了显著且一致的提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Forecasting in Offline Reinforcement Learning for Non-stationary Environments](forecasting_in_offline_reinforcement_learning_for_non-stationary_environments.md)
+- [Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning](../../ICML2025/reinforcement_learning/graph-assisted_stitching_for_offline_hierarchical_reinforcement_learning.md)
+- [RoiRL: Efficient, Self-Supervised Reasoning with Offline Iterative Reinforcement Learning](roirl_efficient_self-supervised_reasoning_with_offline_iterative_reinforcement_l.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Online Optimization for Offline Safe Reinforcement Learning](online_optimization_for_offline_safe_reinforcement_learning.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{dice}} + \mathcal{L}_{\text{mul
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个数据集、多种模态、详细消融、多个backbone对比，非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，方法描述详细
 - 价值: ⭐⭐⭐⭐ 关于解码器设计和分布感知监督的经验对后续工作有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [CLoE: Expert Consistency Learning for Missing Modality Segmentation](cloe_expert_consistency_learning_for_missing_modality_segmentation.md)
+- [Interactive Medical Image Segmentation: A Benchmark Dataset and Baseline](interactive_medical_image_segmentation_a_benchmark_dataset_and_baseline.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+
+<!-- RELATED:END -->

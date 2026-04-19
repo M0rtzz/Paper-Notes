@@ -174,3 +174,15 @@ $$C(k, k') = v_S(k) - v_S(k'), \quad \forall S \in V_k \cap V_{k'}$$
 ⭐⭐⭐
 
 理论贡献扎实，首次建立了在线信息获取问题的实例依赖样本复杂度，改进幅度显著。但问题设定的假设较强（行动可观察 + 行动知情预言机），且缺少实验验证，实际应用场景偏窄。整体是一篇规范的理论工作，对在线学习与机制设计的交叉领域有推进意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Near Optimal Best Arm Identification for Clustered Bandits](near_optimal_best_arm_identification_for_clustered_bandits.md)
+- [Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification](fixing_the_loose_brake_exponential-tailed_stopping_time_in_best_arm_identificati.md)
+- [OOD-Chameleon: Is Algorithm Selection for OOD Generalization Learnable?](ood-chameleon_is_algorithm_selection_for_ood_generalization_learnable.md)
+- [TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification](../../ACL2025/others/taclr_a_scalable_and_efficient_retrieval-based_method_for_industrial_product_att.md)
+- [Fishers for Free? Approximating the Fisher Information Matrix by Recycling the Squared Gradient Accumulator](fishers_for_free_approximating_the_fisher_information_matrix_by_recycling_the_sq.md)
+
+<!-- RELATED:END -->

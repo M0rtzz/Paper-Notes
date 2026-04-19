@@ -138,3 +138,15 @@ tags:
 | 实验充分性 | 5 |
 | 写作质量 | 4 |
 | **总评** | **4.2** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](../../ICCV2025/others/learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
+- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+
+<!-- RELATED:END -->

@@ -181,3 +181,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{triplet}} + \lambda \cdot \mathcal{L}_{\text{
 - 实验充分度: ⭐⭐⭐⭐⭐ （48个基线、710条时序、严格评估协议、多项指标）
 - 写作质量: ⭐⭐⭐⭐ （动机论证充分，对评估问题的讨论有深度）
 - 价值: ⭐⭐⭐⭐⭐ （以极低成本达到 SOTA，实用性极高，有望成为工业界首选方案）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contextual and Seasonal LSTMs for Time Series Anomaly Detection](contextual_and_seasonal_lstms_for_time_series_anomaly_detection.md)
+- [Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
+- [KAN-AD: Time Series Anomaly Detection with Kolmogorov-Arnold Networks](../../ICML2025/time_series/kan-ad_time_series_anomaly_detection_with_kolmogorov-arnold_networks.md)
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](../../ICML2025/time_series/causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+- [GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ I2X 本身不修改模型训练过程。在微调阶段，作者构建"策展数
 - 实验充分度: ⭐⭐⭐ 仅在 MNIST 和 CIFAR-10 上验证，缺乏大规模数据集实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，从 interpretability 到 explainability 的逻辑链条完整
 - 价值: ⭐⭐⭐⭐ 框架思路有启发意义，但实验规模限制了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpretable Image Classification via Non-parametric Part Prototype Learning](interpretable_image_classification_via_non-parametric_part_prototype_learning.md)
+- [EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations](../../ACL2025/interpretability/expert_an_explainable_image_captioning_evaluation_metric_with_structured_explana.md)
+- [Towards Faithful Multimodal Concept Bottleneck Models](towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [Prompt-CAM: Making Vision Transformers Interpretable for Fine-Grained Analysis](prompt-cam_making_vision_transformers_interpretable_for_fine-grained_analysis.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ DRAGON 在所有遗忘比例下偏差分数最低，模型效用完全保持。
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个LLM、3个遗忘任务、持续遗忘、消融实验，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、新指标定义明确，但部分实验表格分散
 - 价值: ⭐⭐⭐⭐⭐ 高度实用——黑盒适用、持续遗忘、零模型退化，直接可部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference](chunkkv_semanticpreserving_kv_cache_compression_for_efficien.md)
+- [KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments](keydiff_key_similarity-based_kv_cache_eviction_for_long-context_llm_inference_in.md)
+- [AI-Generated Video Detection via Perceptual Straightening](ai-generated_video_detection_via_perceptual_straightening.md)
+- [S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection](s2m-former_spiking_symmetric_mixing_branchformer_for_brain_auditory_attention_de.md)
+- [TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs](tokensqueeze_performance-preserving_compression_for_reasoning_llms.md)
+
+<!-- RELATED:END -->

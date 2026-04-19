@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多任务(填补+不等式)、理论验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，直觉解释到位
 - 价值: ⭐⭐⭐⭐ 理论影响超出表格领域，对扩散模型引导有通用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compositional Diffusion with Guided Search for Long-Horizon Planning](compositional_diffusion_long_horizon_planning.md)
+- [Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
+- [Local Guidance for Configuration-Based Multi-Agent Pathfinding](../../AAAI2026/others/local_guidance_for_configuration-based_multi-agent_pathfinding.md)
+- [Exploring Guided Sampling of Conditional GANs](../../ECCV2024/others/exploring_guided_sampling_of_conditional_gans.md)
+- [Unifying Continuous and Discrete Text Diffusion with Non-simultaneous Diffusion Processes](../../ACL2025/others/neodiff_unified_text_diffusion.md)
+
+<!-- RELATED:END -->

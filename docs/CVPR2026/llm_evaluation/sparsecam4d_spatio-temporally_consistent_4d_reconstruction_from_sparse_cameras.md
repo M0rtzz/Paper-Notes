@@ -137,3 +137,15 @@ STDF 消融（Train/Jumping 场景 LPIPS↓ / SSIM↑）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个标准基准+充分消融+跨扩散模型验证+可视化分析，非常扎实
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，时空不一致性的可视化很有说服力
 - **价值**: ⭐⭐⭐⭐⭐ 将4D重建从"需要20+相机"降低到"2-3个相机"，实际应用潜力巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are LLM Belief Updates Consistent with Bayes' Theorem?](../../ICML2025/llm_evaluation/are_llm_belief_updates_consistent_with_bayes_theorem.md)
+- [Deep Cost Ray Fusion for Sparse Depth Video Completion](../../ECCV2024/llm_evaluation/deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
+- [Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning](weakly_supervised_video_anomaly_detection_with_anomaly-connected_components_and_.md)
+- [HeSS: Head Sensitivity Score for Sparsity Redistribution in VGGT](hess_head_sensitivity_score_for_sparsity_redistribution_in_vggt.md)
+- [Pioneering Perceptual Video Fluency Assessment: A Novel Task with Benchmark Dataset and Baseline](pioneering_perceptual_video_fluency_assessment_a_novel_task_with_benchmark_datas.md)
+
+<!-- RELATED:END -->

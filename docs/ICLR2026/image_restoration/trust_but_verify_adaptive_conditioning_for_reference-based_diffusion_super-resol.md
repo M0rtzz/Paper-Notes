@@ -173,3 +173,15 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{rec} + \lambda_2 \mathcal{L}_{per
 - 实验充分度: ⭐⭐⭐⭐⭐ （4个数据集，多维度消融，效率分析，鲁棒性测试，复杂度推导）
 - 写作质量: ⭐⭐⭐⭐⭐ （逻辑清晰，图表精美，公式推导完整）
 - 价值: ⭐⭐⭐⭐ （RefSR领域的实用进展，30倍加速有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](../../CVPR2026/image_restoration/disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+- [AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution](../../CVPR2026/image_restoration/fidesr_high-fidelity_and_detail-preserving_one-step_diffusion_super-resolution.md)
+- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+
+<!-- RELATED:END -->

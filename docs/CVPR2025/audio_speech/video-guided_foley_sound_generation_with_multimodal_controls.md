@@ -132,3 +132,15 @@ VGGSound 测试集（8702 视频）上的 V2A 生成对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ 自动指标+人类评估+多种消融+扩展任务，评估非常全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但部分符号表示可简化
 - 价值: ⭐⭐⭐⭐ 对专业 Foley 制作和视频后期制作有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](../../ICLR2026/audio_speech/ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
+- [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
+- [Exploring Timeline Control for Facial Motion Generation](exploring_timeline_control_for_facial_motion_generation.md)
+- [How Would It Sound? Material-Controlled Multimodal Acoustic Profile Generation for Objects](../../ICCV2025/audio_speech/how_would_it_sound_material-controlled_multimodal_acoustic_profile_generation_fo.md)
+- [Improving Sound Source Localization with Joint Slot Attention on Image and Audio](improving_sound_source_localization_with_joint_slot_attention_on_image_and_audio.md)
+
+<!-- RELATED:END -->

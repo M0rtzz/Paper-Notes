@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 9系统、28人、2968判断、人类+AI评审
 - 写作质量: ⭐⭐⭐⭐ 研究设计严谨，结论有力
 - 价值: ⭐⭐⭐⭐⭐ 为S2S系统的人类相似度评估建立了标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detection of Human and Machine-Authored Fake News in Urdu](../../ACL2025/social_computing/detection_of_human_and_machine-authored_fake_news_in_urdu.md)
+- [Adaptive Debiasing Tsallis Entropy for Test-Time Adaptation](adaptive_debiasing_tsallis_entropy_for_test-time_adaptation.md)
+- [ImpliHateVid: Implicit Hate Speech Detection in Videos](../../ACL2025/social_computing/implihatevid_video_hate.md)
+- [HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter](../../ACL2025/social_computing/hateday_global_hate_speech.md)
+- [Silencing Empowerment, Allowing Bigotry: Auditing the Moderation of Hate Speech on Twitch](../../ACL2025/social_computing/silencing_empowerment_allowing_bigotry_auditing_the_moderation_of_hate_speech_on.md)
+
+<!-- RELATED:END -->

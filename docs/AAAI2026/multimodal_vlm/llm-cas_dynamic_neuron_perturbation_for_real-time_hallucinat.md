@@ -118,3 +118,15 @@ PPO 优化两级策略网络。掩码参数 $\theta_{\text{mask}}$ 和 RL 策略
 - 实验充分度: ⭐⭐⭐⭐ 多选+生成任务、3个模型、消融完整，但缺少更大模型验证
 - 写作质量: ⭐⭐⭐⭐ 形式化严谨，但部分公式略冗长
 - 价值: ⭐⭐⭐⭐⭐ 将幻觉纠正从启发式推向学习化的里程碑式工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](../../CVPR2025/multimodal_vlm/octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)
+- [Cross-Modal Unlearning via Influential Neuron Path Editing in Multimodal Large Language Models](cross-modal_unlearning_via_influential_neuron_path_editing_i.md)
+- [Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models](../../ICLR2026/multimodal_vlm/dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis.md)
+- [Metacognitive Sensitivity for Test-Time Dynamic Model Selection](../../NeurIPS2025/multimodal_vlm/metacognitive_sensitivity_for_test-time_dynamic_model_selection.md)
+- [SDEval: Safety Dynamic Evaluation for Multimodal Large Language Models](sdeval_safety_dynamic_evaluation_for_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

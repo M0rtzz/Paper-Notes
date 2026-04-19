@@ -177,3 +177,15 @@ $$\eta = \eta_{\text{base}} / s, \quad \lambda = s \cdot \lambda_{\text{base}}$$
 | 实用价值 | ⭐⭐⭐⭐⭐ | 直接指导大规模训练，已被后续工作广泛验证 |
 | 写作质量 | ⭐⭐⭐⭐⭐ | 逻辑清晰，直觉解释到位 |
 | **综合** | **⭐⭐⭐⭐☆** | 简洁有力的工作，实用性极强 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning](../../AAAI2026/recommender/travellama_a_multimodal_travel_assistant_with_large-scale_dataset_and_structured.md)
+- [The More You Automate, the Less You See: Hidden Pitfalls of AI Scientist Systems](../../NeurIPS2025/recommender/the_more_you_automate_the_less_you_see_hidden_pitfalls_of_ai_scientist_systems.md)
+- [Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
+- [SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
+- [Estimating Hitting Times Locally At Scale](../../NeurIPS2025/recommender/estimating_hitting_times_locally_at_scale.md)
+
+<!-- RELATED:END -->

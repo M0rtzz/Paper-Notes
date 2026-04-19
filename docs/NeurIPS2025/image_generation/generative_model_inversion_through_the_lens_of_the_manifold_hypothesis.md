@@ -145,3 +145,15 @@ $$\mathcal{L}_{\text{align}}(\theta) = \mathbb{E}\left[\mathcal{L}_{\text{CE}}(f
 - 实验充分度: ⭐⭐⭐⭐ — 多攻击方法 × 多模型 × 多数据集 × 多防御，缺少非人脸场景
 - 写作质量: ⭐⭐⭐⭐⭐ — 观察→假说→验证→方法的叙事结构堪称典范
 - 实用价值: ⭐⭐⭐⭐ — 为 MIA 研究开辟了几何分析新方向，对攻防双方均有启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blind Strong Gravitational Lensing Inversion: Joint Inference of Source and Lens Mass with Score-Based Models](blind_strong_gravitational_lensing_inversion_joint_inference_of_source_and_lens_.md)
+- [When Scores Learn Geometry: Rate Separations under the Manifold Hypothesis](../../ICLR2026/image_generation/when_scores_learn_geometry_rate_separations_under_the_manifold_hypothesis.md)
+- [What We Don't C: Manifold Disentanglement for Structured Discovery](what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)
+- [Enhancing Diffusion Model Guidance through Calibration and Regularization](enhancing_diffusion_model_guidance_through_calibration_and_regularization.md)
+- [ReNoise: Real Image Inversion Through Iterative Noising](../../ECCV2024/image_generation/renoise_real_image_inversion_through_iterative_noising.md)
+
+<!-- RELATED:END -->

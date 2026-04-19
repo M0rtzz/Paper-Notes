@@ -130,3 +130,15 @@ LM head 从 131M 减至 34M，加速进一步提升。
 ## 评分
 
 ⭐⭐⭐⭐ — 方法虽简单但直击痛点，对边缘设备推测解码有实际工程价值，16% 的免训练加速提升值得关注。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gumiho: A Hybrid Architecture to Prioritize Early Tokens in Speculative Decoding](gumiho_a_hybrid_architecture_to_prioritize_early_tokens_in_speculative_decoding.md)
+- [CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs](../../NeurIPS2025/model_compression/casspec_cascade_adaptive_selfspeculative_decoding_for_onthef.md)
+- [Traversal Verification for Speculative Tree Decoding](../../NeurIPS2025/model_compression/traversal_verification_for_speculative_tree_decoding.md)
+- [Reject Only Critical Tokens: Pivot-Aware Speculative Decoding](../../NeurIPS2025/model_compression/reject_only_critical_tokens_pivot-aware_speculative_decoding.md)
+- [Speculative Decoding in Decentralized LLM Inference: Turning Communication Latency into Computation Throughput](speculative_decoding_in_decentralized_llm_inference_turning_communication_latenc.md)
+
+<!-- RELATED:END -->

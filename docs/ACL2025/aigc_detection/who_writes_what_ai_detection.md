@@ -124,3 +124,15 @@ CEFR水平对Binoculars检测器的调整准确率：
 - 实验充分度: ⭐⭐⭐⭐ 10个检测器×12个LLM×4维属性，统计分析严谨（多因素控制+事后校正）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，统计方法论述详尽
 - 价值: ⭐⭐⭐⭐ 对AI检测公平性有重要启示，但实际应用（如何debiasing）只给了方向没有方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](chatgpt_user_ai_text_detection.md)
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [HACo-Det: A Study Towards Fine-Grained Machine-Generated Text Detection under Human-AI Coauthoring](haco-det_a_study_towards_fine-grained_machine-generated_text_detection_under_hum.md)
+- [Are We in the AI-Generated Text World Already? Quantifying and Monitoring AIGT on Social Media](aigt_social_media_monitoring.md)
+- [MultiSocial: Multilingual Benchmark of Machine-Generated Text Detection of Social-Media Texts](multisocial_mgt_detection.md)
+
+<!-- RELATED:END -->

@@ -163,3 +163,15 @@ DC4GS 使用仅约 70% 的原语数量，在所有渲染质量指标上均优于
 | 实验充分性 | 4 — 多数据集验证 + 消融分析 |
 | 写作质量 | 4 — 动机和方法阐述清晰 |
 | 影响力 | 4 — 直接改进 3DGS 核心组件，实用价值高 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting](../../ECCV2024/3d_vision/pixel-gs_density_control_with_pixel-aware_gradient_for_3d_gaussian_splatting.md)
+- [StealthAttack: Robust 3D Gaussian Splatting Poisoning via Density-Guided Illusions](../../ICCV2025/3d_vision/stealthattack_robust_3d_gaussian_splatting_poisoning_via_density-guided_illusion.md)
+- [EF-3DGS: Event-Aided Free-Trajectory 3D Gaussian Splatting](ef-3dgs_event-aided_free-trajectory_3d_gaussian_splatting.md)
+- [STAvatar: Soft Binding and Temporal Density Control for Monocular 3D Head Avatars Reconstruction](../../CVPR2026/3d_vision/stavatar_soft_binding_and_temporal_density_control_for_monocular_3d_head_avatars.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+
+<!-- RELATED:END -->

@@ -92,3 +92,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖奖励塑形/探索/期权发现/迁移四个场景
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验与理论预测一致
 - 价值: ⭐⭐⭐⭐ 为奖励感知表征奠定了理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Risk-Averse Total-Reward Reinforcement Learning](risk-averse_total-reward_reinforcement_learning.md)
+- [Shift Before You Learn: Enabling Low-Rank Representations in Reinforcement Learning](shift_before_you_learn_enabling_low-rank_representations_in_reinforcement_learni.md)
+- [DISCOVER: Automated Curricula for Sparse-Reward Reinforcement Learning](discover_automated_curricula_for_sparse-reward_reinforcement_learning.md)
+- [Spatial-Aware Decision-Making with Ring Attractors in Reinforcement Learning Systems](spatial-aware_decision-making_with_ring_attractors_in_reinforcement_learning_sys.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](learning_from_demonstrations_via_capability-aware_goal_sampling.md)
+
+<!-- RELATED:END -->

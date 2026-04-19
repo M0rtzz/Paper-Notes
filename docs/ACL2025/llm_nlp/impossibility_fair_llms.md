@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论分析论文无实验数据，论证依赖逻辑推理而非数学证明
 - 写作质量: ⭐⭐⭐⭐⭐ 论证结构清晰、逻辑链完整、跨学科视角融合自然
 - 价值: ⭐⭐⭐⭐ 为LLM公平性研究划定边界，具有方向性指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMs + Persona-Plug = Personalized LLMs](llms_persona-plug_personalized_llms.md)
+- [Can LLMs Help Uncover Insights about LLMs? A Large-Scale, Evolving Literature Analysis of Frontier LLMs](can_llms_help_uncover_insights_about_llms_a_large-scale_evolving_literature_anal.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [LlamaDuo: LLMOps Pipeline for Seamless Migration from Service LLMs to Small-Scale Local LLMs](llamaduo_llmops_pipeline_for_seamless_migration_from_service_llms_to_small-scale.md)
+- [Zero-Shot Belief: A Hard Problem for LLMs](zero-shot_belief_a_hard_problem_for_llms.md)
+
+<!-- RELATED:END -->

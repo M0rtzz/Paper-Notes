@@ -198,3 +198,15 @@ GarmentAligner 在所有指标上均取得最优，FID 降低至 8.735，CLIPSco
 - **实用性**：★★★★☆ — 直接解决商业场景的痛点问题，但代码未开源限制了复现
 - **实验充分度**：★★★★☆ — 多维度指标+用户研究+详细消融，数量准确率评估新颖
 - **写作质量**：★★★★☆ — 结构清晰，可视化对比效果好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M2D2M: Multi-Motion Generation from Text with Discrete Diffusion Models](m2d2m_multi-motion_generation_from_text_with_discrete_diffusion_models.md)
+- [TruthfulRAG: Resolving Factual-level Conflicts in Retrieval-Augmented Generation with Knowledge Graphs](../../AAAI2026/image_generation/truthfulrag_resolving_factual-level_conflicts_in_retrieval-augmented_generation_.md)
+- [OMG: Occlusion-friendly Personalized Multi-concept Generation in Diffusion Models](omg_occlusion-friendly_personalized_multi-concept_generation_in_diffusion_models.md)
+- [MultiGen: Zero-Shot Image Generation from Multi-modal Prompts](multigen_zero-shot_image_generation_from_multi-modal_prompts.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+
+<!-- RELATED:END -->

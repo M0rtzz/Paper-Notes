@@ -138,3 +138,15 @@ $$\hat{\tau}_{AMII,1} = \frac{1}{n}\sum_j f(\mathbf{1},X,A)_j + \frac{1}{s_1}\su
 - 实验充分度: ⭐⭐⭐⭐ — 大量消融实验和不同设置，但缺少真实平台 A/B 测试结果
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰，理论与直觉并重，从 MII 到 AMII 的推进逻辑流畅
 - 价值: ⭐⭐⭐⭐ — 对在线实验领域有直接实用价值，理论贡献与实践需求吻合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resisting Contextual Interference in RAG via Parametric-Knowledge Reinforcement](resisting_contextual_interference_in_rag_via_parametric-knowledge_reinforcement.md)
+- [Cyclic Counterfactuals under Shift–Scale Interventions](../../NeurIPS2025/causal_inference/cyclic_counterfactuals_under_shift-scale_interventions.md)
+- [Causal Abstraction Inference under Lossy Representations](../../ICML2025/causal_inference/causal_abstraction_inference_under_lossy_representations.md)
+- [Latent Variable Causal Discovery under Selection Bias](../../ICML2025/causal_inference/latent_variable_causal_discovery_under_selection_bias.md)
+- [Direct Doubly Robust Estimation of Conditional Quantile Contrasts](direct_doubly_robust_estimation_of_conditional_quantile_contrasts.md)
+
+<!-- RELATED:END -->

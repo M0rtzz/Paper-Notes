@@ -134,3 +134,15 @@ $$L_{inp} = \|\epsilon_{inp} - \epsilon_\theta(x_{inp}(t\%t_s), c, x_{inp}, t\%t
 - 实验充分度: ⭐⭐⭐ 评估维度齐全但与 SOTA 对比对象略旧，缺少 user study
 - 写作质量: ⭐⭐⭐ 结构清晰但部分细节（如 $\lambda$ 选择）交代不足
 - 价值: ⭐⭐⭐ 图像美学增强方向有实际应用价值，"不完美配对"数据方案有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+
+<!-- RELATED:END -->

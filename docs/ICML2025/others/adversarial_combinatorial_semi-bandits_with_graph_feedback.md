@@ -203,3 +203,15 @@ $$\mathbb{E}[\mathsf{R}] \leq S\sqrt{T \log(K/S)} + 2\sqrt{\alpha S T \log(K/S) 
 - 实验充分度: ⭐⭐⭐ — 纯理论工作，无数值实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，证明思路自然，示例直观
 - 价值: ⭐⭐⭐⭐⭐ — 解决了重要的开放问题，建立了领域基准结果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lipschitz Bandits with Stochastic Delayed Feedback](../../ICLR2026/others/lipschitz_bandits_with_stochastic_delayed_feedback.md)
+- [Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](../../NeurIPS2025/others/semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
+- [Near Optimal Best Arm Identification for Clustered Bandits](near_optimal_best_arm_identification_for_clustered_bandits.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [Fixed-Confidence Multiple Change Point Identification under Bandit Feedback](fixed-confidence_multiple_change_point_identification_under_bandit_feedback.md)
+
+<!-- RELATED:END -->

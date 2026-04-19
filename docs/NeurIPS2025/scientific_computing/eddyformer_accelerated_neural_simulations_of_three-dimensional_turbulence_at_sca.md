@@ -98,3 +98,15 @@ EddyFormer 将 PDE 初始条件用 SEM 插值，分成 LES stream（全局大尺
 - 实验充分度: ⭐⭐⭐⭐⭐ 3D 湍流 + 2D 域泛化 + The Well benchmark
 - 写作质量: ⭐⭐⭐⭐⭐ 物理背景和方法描述都很详细
 - 价值: ⭐⭐⭐⭐⭐ 30× 加速3D湍流达到DNS级精度，实用价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GyroSwin: 5D Surrogates for Gyrokinetic Plasma Turbulence Simulations](gyroswin_5d_surrogates_for_gyrokinetic_plasma_turbulence_simulations.md)
+- [PhysicsCorrect: A Training-Free Approach for Stable Neural PDE Simulations](../../AAAI2026/scientific_computing/physicscorrect_a_training-free_approach_for_stable_neural_pde_simulations.md)
+- [Towards Universal Neural Operators through Multiphysics Pretraining](towards_universal_neural_operators_through_multiphysics_pretraining.md)
+- [NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training](../../CVPR2026/scientific_computing/nestor_a_nested_moe-based_neural_operator_for_large-scale_pde_pre-training.md)
+- [Hamiltonian Neural PDE Solvers through Functional Approximation](hamiltonian_neural_pde_solvers_through_functional_approximation.md)
+
+<!-- RELATED:END -->

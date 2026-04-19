@@ -170,3 +170,15 @@ COSMO 采用混合架构设计哲学："SSM 负责选择性记忆，Transformer 
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个VLN数据集，详尽的消融和架构设计验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但CS3的描述可以更直观
 - 价值: ⭐⭐⭐⭐⭐ 10倍计算量缩减的同时性能持平或提升，对具身智能的实际部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NavMorph: A Self-Evolving World Model for Vision-and-Language Navigation in Continuous Environments](navmorph_a_self-evolving_world_model_for_vision-and-language_navigation_in_conti.md)
+- [Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method](../../CVPR2025/robotics/towards_long-horizon_vision-language_navigation_platform_benchmark_and_method.md)
+- [Selective Contrastive Learning for Weakly Supervised Affordance Grounding](selective_contrastive_learning_for_weakly_supervised_affordance_grounding.md)
+- [LLM as Copilot for Coarse-Grained Vision-and-Language Navigation](../../ECCV2024/robotics/llm_as_copilot_for_coarse-grained_vision-and-language_navigation.md)
+- [DexVLG: Dexterous Vision-Language-Grasp Model at Scale](dexvlg_dexterous_vision-language-grasp_model_at_scale.md)
+
+<!-- RELATED:END -->

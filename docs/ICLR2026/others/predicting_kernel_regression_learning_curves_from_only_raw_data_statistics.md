@@ -152,3 +152,15 @@ HEA 良好成立的三个条件：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多种核、多种数据集、合成和真实目标，有理论证明+经验验证；但缺少大规模/高分辨率数据实验
 - 写作质量: ⭐⭐⭐⭐⭐ 叙述流畅，直觉解释和形式化证明并重，Figure 1 的端到端 pipeline 可视化极为清晰
 - 价值: ⭐⭐⭐⭐ 对学习理论社区有重要启发，证明了在真实数据上发展端到端理论的可行性；MLP 联系增加了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When to Retrain after Drift: A Data-Only Test of Post-Drift Data Size Sufficiency](when_to_retrain_after_drift_a_data-only_test_of_post-drift_data_size_sufficiency.md)
+- [Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
+- [Kernel Conditional Tests from Learning-Theoretic Bounds](../../NeurIPS2025/others/kernel_conditional_tests_from_learning-theoretic_bounds.md)
+- [Improved Learning via k-DTW: A Novel Dissimilarity Measure for Curves](../../ICML2025/others/improved_learning_via_k-dtw_a_novel_dissimilarity_measure_for_curves.md)
+- [Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)
+
+<!-- RELATED:END -->

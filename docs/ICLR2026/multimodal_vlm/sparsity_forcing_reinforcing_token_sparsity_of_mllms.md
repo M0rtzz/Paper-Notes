@@ -139,3 +139,15 @@ MOBA是可训练稀疏注意力→block-wise attention probing + MoE思路→预
 - **实验充分度**: ⭐⭐⭐⭐⭐ 13基准(7图像+6视频)+4个模型+详细消融(稀疏机制/rollout范围/组大小/幻觉鲁棒性)
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题分析透彻，从"利用"到"强化"的叙事线清晰，图示有效
 - **实用价值**: ⭐⭐⭐⭐⭐ 3×内存+3.3×速度→直接可用于MLLM部署加速，后训练方式降低使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SophiaVL-R1: Reinforcing MLLMs Reasoning with Thinking Reward](sophiavl-r1_reinforcing_mllms_reasoning_with_thinking_reward.md)
+- [SparseMM: Head Sparsity Emerges from Visual Concept Responses in MLLMs](../../ICCV2025/multimodal_vlm/sparsemm_head_sparsity_emerges_from_visual_concept_responses.md)
+- [VLM-Pruner: Buffering for Spatial Sparsity in an Efficient VLM Centrifugal Token Pruning Paradigm](../../CVPR2026/multimodal_vlm/vlm-pruner_buffering_for_spatial_sparsity_in_an_efficient_vlm_centrifugal_token_.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [HiDrop: Hierarchical Vision Token Reduction in MLLMs via Late Injection, Concave Pyramid Pruning, and Early Exit](hidrop_hierarchical_vision_token_reduction_in_mllms_via_late_injection_concave_p.md)
+
+<!-- RELATED:END -->

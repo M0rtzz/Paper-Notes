@@ -112,3 +112,15 @@ tags:
 - 实验充分度: 9/10 — 15个模型全面对比，人类对齐研究，消融实验完善
 - 写作质量: 8/10 — 结构清晰，图表丰富，动机阐述充分
 - 价值: 8/10 — 开源数据集+模型+基准评测，对社区推动作用大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoPresent: Designing Structured Visuals from Scratch](../../CVPR2025/image_generation/autopresent_designing_structured_visuals_from_scratch.md)
+- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](../../CVPR2025/image_generation/from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
+- [EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling](editscore_unlocking_online_rl_for_image_editing_via_high-fidelity_reward_modelin.md)
+- [Draw-In-Mind: Rebalancing Designer-Painter Roles in Unified Multimodal Models Benefits Image Editing](draw-in-mind_rebalancing_designer-painter_roles_in_unified_multimodal_models_ben.md)
+- [Routing Matters in MoE: Scaling Diffusion Transformers with Explicit Routing Guidance](routing_matters_in_moe_scaling_diffusion_transformers_with_explicit_routing_guid.md)
+
+<!-- RELATED:END -->

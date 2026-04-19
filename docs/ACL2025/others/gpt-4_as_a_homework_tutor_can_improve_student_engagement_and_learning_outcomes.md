@@ -188,3 +188,15 @@ tags:
 - **实验充分性**: ⭐⭐⭐⭐ RCT 设计严谨，多维度评估（学习增益、参与度、长期体验、幻觉率、新奇效应），二次分析深入
 - **实用价值**: ⭐⭐⭐⭐⭐ 极简设计、低部署成本、真实课堂验证，对教育实践有直接指导意义
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，统计分析规范（Cohen's d, P 值），伦理考量完善
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Uniform Meaning Representation Help GPT-4 Translate from Indigenous Languages?](can_uniform_meaning_representation_help_gpt-4_translate_from_indigenous_language.md)
+- [Can Third-parties Read Our Emotions?](can_third_parties_read_our_emotions.md)
+- [MEXMA: Token-level Objectives Improve Sentence Representations](mexma_token-level_objectives_improve_sentence_representations.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](distractor_gen_multiple_choice.md)
+- [QG-SMS: Enhancing Test Item Analysis via Student Modeling and Simulation](qg-sms_enhancing_test_item_analysis_via_student_modeling_and_simulation.md)
+
+<!-- RELATED:END -->

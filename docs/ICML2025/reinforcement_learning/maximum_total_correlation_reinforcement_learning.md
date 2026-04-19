@@ -146,3 +146,15 @@ MTC 在 8 个任务中 7 个取得最优或极具竞争力的成绩。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8+3+6 任务、多维度鲁棒性测试、可压缩性分析、消融实验完备
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，动机阐述到位，但下界负值的讨论可更早给出
 - 价值: ⭐⭐⭐⭐ — 为 RL 鲁棒性提供了简洁、通用的信息论工具，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Risk-Averse Total-Reward Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/risk-averse_total-reward_reinforcement_learning.md)
+- [Hierarchical Reinforcement Learning with Targeted Causal Interventions](hierarchical_reinforcement_learning_with_targeted_causal_interventions.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [Extreme Value Policy Optimization for Safe Reinforcement Learning](extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
+- [Hierarchical Reinforcement Learning with Uncertainty-Guided Diffusional Subgoals](hierarchical_reinforcement_learning_with_uncertainty-guided_diffusional_subgoals.md)
+
+<!-- RELATED:END -->

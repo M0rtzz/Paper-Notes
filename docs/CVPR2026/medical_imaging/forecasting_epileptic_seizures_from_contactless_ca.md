@@ -132,3 +132,15 @@ tags:
 - **实验充分度** ⭐⭐⭐：多 baseline 对比 + 数据消融 + 掩码比例消融，但数据量极小（40 视频），统计可靠性存疑
 - **写作质量** ⭐⭐⭐⭐：问题动机清晰，两阶段框架简洁
 - **价值** ⭐⭐⭐⭐⭐：开辟了非接触式癫痫预警的新方向，跨物种学习思路对小数据医学 CV 有示范意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [Meta-learning In-Context Enables Training-Free Cross Subject Brain Decoding](meta-learning_in-context_enables_training-free_cross_subject_brain_decoding.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration](crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr.md)
+- [STEPH: Sparse Task Vector Mixup with Hypernetworks for Efficient Knowledge Transfer in WSI Prognosis](sparse_task_vector_mixup_wsi_prognosis.md)
+
+<!-- RELATED:END -->

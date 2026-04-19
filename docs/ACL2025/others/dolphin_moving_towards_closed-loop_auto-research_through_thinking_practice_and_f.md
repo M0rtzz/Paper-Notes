@@ -169,3 +169,15 @@ PointNet-CSR 通过更简洁的架构实现了更好且更快的性能。
 ## 评分 ⭐⭐⭐⭐
 
 闭环设计理念正确且效果已验证（循环间改进率持续提升），在标准 benchmark 上接近人类 SOTA 的结果令人印象深刻。任务属性引导排序和异常回溯调试都是实用的技术贡献。主要限制在于有效想法比例不高、基线模型相对简单、以及 LLM 知识泄漏的隐患。但整体而言，这是向全自动科研迈出的扎实一步。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Dynamics of RNNs in Closed-Loop Environments](../../NeurIPS2025/others/learning_dynamics_of_rnns_in_closed-loop_environments.md)
+- [FEAT: A Preference Feedback Dataset through a Cost-Effective Auto-Generation and Labeling Framework for English AI Tutoring](feat_a_preference_feedback_dataset_through_a_cost-effective_auto-generation_and_.md)
+- [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
+- [Research Borderlands: Analysing Writing Across Research Cultures](research_borderlands_analysing_writing_across_research_cultures.md)
+- [Regression for the Mean: Auto-Evaluation and Inference with Few Labels through Post-hoc Regression](../../ICML2025/others/regression_for_the_mean_auto-evaluation_and_inference_with_few_labels_through_po.md)
+
+<!-- RELATED:END -->

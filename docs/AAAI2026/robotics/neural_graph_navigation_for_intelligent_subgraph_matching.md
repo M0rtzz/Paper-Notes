@@ -114,3 +114,15 @@ tags:
 
 ⭐⭐⭐⭐ (4/5)
 技术贡献扎实，即插即用兼容8种基线×6数据集的实验设计极其全面，完备性理论保证是重要亮点。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Woofs to Words: Towards Intelligent Robotic Guide Dogs with Verbal Communication](from_woofs_to_words_towards_intelligent_robotic_guide_dogs_with_verbal_communica.md)
+- [Towards Reinforcement Learning from Neural Feedback: Mapping fNIRS Signals to Agent Performance](towards_reinforcement_learning_from_neural_feedback_mapping_.md)
+- [SegMASt3R: Geometry Grounded Segment Matching](../../NeurIPS2025/robotics/segmast3r_geometry_grounded_segment_matching.md)
+- [Probabilistic Concept Graph Reasoning for Multimodal Misinformation Detection](../../CVPR2026/robotics/probabilistic_concept_graph_reasoning_for_multimodal_misinformation_detection.md)
+- [Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation](recursive_visual_imagination_and_adaptive_linguistic_grounding_for_vision_langua.md)
+
+<!-- RELATED:END -->

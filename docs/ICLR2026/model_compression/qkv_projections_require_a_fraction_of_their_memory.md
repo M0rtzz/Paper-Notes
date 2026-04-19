@@ -133,3 +133,15 @@ PAMM 分两阶段工作：(1) 前向时将 $X$ 压缩为少量生成点和辅助
 - 实验充分度: ⭐⭐⭐⭐⭐ 预训练/微调/吞吐量/消融全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 理论和实验结合好，图示清晰
 - 价值: ⭐⭐⭐⭐⭐ 实际可用于 LLM 训练的内存优化工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LightMem: Lightweight and Efficient Memory-Augmented Generation](lightmem_lightweight_and_efficient_memory-augmented_generation.md)
+- [A Good Teacher Adapts Their Knowledge for Distillation](../../ICCV2025/model_compression/a_good_teacher_adapts_their_knowledge_for_distillation.md)
+- [Sharp Eyes and Memory for VideoLLMs: Information-Aware Visual Token Pruning for Efficient and Reliable VideoLLM Reasoning](../../AAAI2026/model_compression/sharp_eyes_and_memory_for_videollms_information-aware_visual_token_pruning_for_e.md)
+- [MSQ: Memory-Efficient Bit Sparsification Quantization](../../ICCV2025/model_compression/msq_memory-efficient_bit_sparsification_quantization.md)
+- [Memory-Efficient Training with In-Place FFT Implementation](../../NeurIPS2025/model_compression/memory-efficient_training_with_in-place_fft_implementation.md)
+
+<!-- RELATED:END -->

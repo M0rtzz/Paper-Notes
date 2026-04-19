@@ -131,3 +131,15 @@ ToTh 包含四个阶段：（1）三个独立智能体分别以溯因/演绎/归
 - **实验充分度**: ⭐⭐⭐ — 两个数据集三个模型，规模偏小
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，数学形式化规范
 - **价值**: ⭐⭐⭐⭐ — 为结构化推理提供了有价值的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Table-Critic: A Multi-Agent Framework for Collaborative Criticism and Refinement in Table Reasoning](table_critic_multi_agent.md)
+- [FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models](fact_audit_factcheck.md)
+- [MedLA: A Logic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models](../../AAAI2026/llm_agent/medla_a_logic-driven_multi-agent_framework_for_complex_medic.md)
+- [ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](toolhop_multi_hop_tool_use.md)
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+
+<!-- RELATED:END -->

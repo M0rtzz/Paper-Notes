@@ -171,4 +171,16 @@ $$\mathbb{E}[T_N] = (1 - \mathbb{E}[o_i] \cdot \mathbb{E}[G_i^{2D}])^N$$
 **创新性**: ⭐⭐⭐⭐ — 简洁想法+严格理论分析，产出 surprising 的质量-效率双赢  
 **实用性**: ⭐⭐⭐⭐⭐ — 即插即用，无超参数敏感性，工程友好  
 **实验深度**: ⭐⭐⭐⭐ — 4数据集×2框架，含完整消融和采样策略对比  
-**写作质量**: ⭐⭐⭐⭐ — 命题证明清晰，实验组织系统  
+**写作质量**: ⭐⭐⭐⭐ — 命题证明清晰，实验组织系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt](3dgslm_faster_gaussiansplatting_optimization_with_levenbergm.md)
+- [FROSS: Faster-than-Real-Time Online 3D Semantic Scene Graph Generation from RGB-D Images](fross_faster-than-real-time_online_3d_semantic_scene_graph_generation_from_rgb-d.md)
+- [Efficient-LVSM: Faster, Cheaper, and Better Large View Synthesis Model via Decoupled Co-Refinement Attention](../../ICLR2026/3d_vision/efficient-lvsm_faster_cheaper_and_better_large_view_synthesis_model_via_decouple.md)
+- [FastGS: Training 3D Gaussian Splatting in 100 Seconds](../../CVPR2026/3d_vision/fastgs_training_3d_gaussian_splatting_in_100_seconds.md)
+- [4D Visual Pre-training for Robot Learning](4d_visual_pretraining_for_robot_learning.md)
+
+<!-- RELATED:END -->

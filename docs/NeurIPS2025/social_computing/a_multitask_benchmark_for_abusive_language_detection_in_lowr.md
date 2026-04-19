@@ -123,3 +123,15 @@ TiALD 的构建流程：(1) 从 51 个 YouTube 频道收集 410 万条 Tigrinya 
 - 实验充分度: ⭐⭐⭐⭐ 覆盖单任务/多任务/LLM 三种范式，消融分析细致
 - 写作质量: ⭐⭐⭐⭐ 排版清晰，动机阐述充分，数据构建过程透明
 - 价值: ⭐⭐⭐⭐ 对低资源 NLP 社区有重要参考价值，迭代采样策略可广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Multi-Task Low-Rank Model Adaptation](../../ICLR2026/social_computing/scalable_multi-task_low-rank_model_adaptation.md)
+- [Exploring Multimodal Challenges in Toxic Chinese Detection: Taxonomy, Benchmark, and Findings](../../ACL2025/social_computing/exploring_multimodal_challenges_in_toxic_chinese_detection_taxonomy_benchmark_an.md)
+- [OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents](os-harm_a_benchmark_for_measuring_safety_of_computer_use_agents.md)
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [As Language Models Scale, Low-order Linear Depth Dynamics Emerge](../../CVPR2025/social_computing/as_language_models_scale_low-order_linear_depth_dynamics_emerge.md)
+
+<!-- RELATED:END -->

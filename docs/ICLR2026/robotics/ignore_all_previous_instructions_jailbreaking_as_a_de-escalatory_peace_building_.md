@@ -118,3 +118,15 @@ tags:
 
 ### 综合评价
 这是一篇立场论文/短文（workshop paper 风格），其最大贡献不在于方法或实验，而在于提出了一个全新的概念框架——将 jailbreaking 从安全研究者的"威胁"视角翻转为社会活动者的"工具"视角。这种视角翻转本身具有理论建设价值，但需要后续实证研究来验证可行性。在当前 LLM 安全和平台治理的讨论中，用户赋权的去中心化路径值得被认真考虑。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation](all-day_multi-scenes_lifelong_vision-and-language_navigation_with_tucker_adaptat.md)
+- [REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?](rei-bench_can_embodied_agents_understand_vague_human_instructions_in_task_planni.md)
+- [Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+- [One Demo Is All It Takes: Planning Domain Derivation with LLMs from A Single Demonstration](one_demo_is_all_it_takes_planning_domain_derivation_with_llms_from_a_single_demo.md)
+- [On Entropy Control in LLM-RL Algorithms](on_entropy_control_in_llm-rl_algorithms.md)
+
+<!-- RELATED:END -->

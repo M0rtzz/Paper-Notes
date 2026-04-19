@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种 baseline、消融充分、用户研究，但缺少更多物体类型和场景的测试
 - 写作质量: ⭐⭐⭐⭐ Pilot study 展示清晰，整体框架图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对数据高效的物理仿真运动生成有重要参考价值，特别是人形机器人领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Cross-Hand Policies of High-DOF Reaching and Grasping](../../ECCV2024/human_understanding/learning_cross-hand_policies_of_high-dof_reaching_and_grasping.md)
+- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
+- [EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding](../../ECCV2024/human_understanding/egoexo-fitness_towards_egocentric_and_exocentric_full-body_action_understanding.md)
+- [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
+- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
+
+<!-- RELATED:END -->

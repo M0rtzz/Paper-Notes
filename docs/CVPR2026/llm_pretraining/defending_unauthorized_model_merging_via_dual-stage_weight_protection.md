@@ -121,3 +121,15 @@ MergeGuard的平均精度下降比PaRaMS多 **21.35个百分点**。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖视觉/语言多架构、多合并方法、自适应攻击、SD图像生成
 - 写作质量: ⭐⭐⭐⭐ — 攻防场景建模清晰，理论推导严谨
 - 价值: ⭐⭐⭐⭐ — 对模型IP保护有重要实践意义，填补了主动防御的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient-Weight Alignment as a Train-Time Proxy for Generalization in Classification Tasks](../../NeurIPS2025/llm_pretraining/gradient-weight_alignment_as_a_train-time_proxy_for_generalization_in_classifica.md)
+- [Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](../../NeurIPS2025/llm_pretraining/power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [Scaling and Transferability of Annealing Strategies in Large Language Model Training](../../AAAI2026/llm_pretraining/scaling_and_transferability_of_annealing_strategies_in_large_language_model_trai.md)
+- [How to Synthesize Text Data without Model Collapse?](../../ICML2025/llm_pretraining/how_to_synthesize_text_data_without_model_collapse.md)
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](../../NeurIPS2025/llm_pretraining/gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+
+<!-- RELATED:END -->

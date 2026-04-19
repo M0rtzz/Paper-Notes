@@ -143,3 +143,15 @@ $$\mathrm{Div}(S_1 \cup P_1, \ldots, S_r \cup P_r) = \mathrm{Div}(S_1, \ldots, S
 - 实验充分度: ⭐⭐ — 纯理论工作，无实验验证，缺乏实证分析
 - 写作质量: ⭐⭐⭐⭐⭐ — 条理清晰，定义严谨，示例丰富（顶点覆盖的完整四节展示、退化行为的Venn图和路径图示例），开放问题讨论充分
 - 价值: ⭐⭐⭐⭐ — 填补了cliquewidth+MSO1的自然理论空白，Venn度量族的提出为多样性研究提供了新视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameterized Approximation Algorithms for TSP on Non-Metric Graphs](parameterized_approximation_algorithms_for_tsp_on_non-metric_graphs.md)
+- [Symbolic Planning and Multi-Agent Path Finding in Extremely Dense Environments with Unassigned Agents](symbolic_planning_and_multi-agent_path_finding_in_extremely_dense_environments_w.md)
+- [The Parameterized Complexity of Computing the VC-Dimension](../../NeurIPS2025/others/the_parameterized_complexity_of_computing_the_vc-dimension.md)
+- [DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces](../../ICLR2026/others/distributions_as_actions_a_unified_framework_for_diverse_action_spaces.md)
+- [Improving Decision Trees through the Lens of Parameterized Local Search](../../NeurIPS2025/others/improving_decision_trees_through_the_lens_of_parameterized_local_search.md)
+
+<!-- RELATED:END -->

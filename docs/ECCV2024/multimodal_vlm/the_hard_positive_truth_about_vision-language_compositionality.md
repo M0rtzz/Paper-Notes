@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 评估了7个硬负例微调方法，消融实验充分，但缺少非CLIP模型
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表设计直观，论证严密
 - 价值: ⭐⭐⭐⭐⭐ 对VLM组合性研究社区有重要警示意义，改变了评估范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [No Hard Negatives Required: Concept Centric Learning Leads to Compositionality without Degrading Zero-shot Capabilities of Contrastive Models](../../CVPR2026/multimodal_vlm/no_hard_negatives_required_concept_centric_learning_leads_to_compositionality_wi.md)
+- [AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization](addressclip_empowering_visionlanguage_models_for_citywide_im.md)
+- [Omniview-Tuning: Boosting Viewpoint Invariance of Vision-Language Pre-training Models](omniview-tuning_boosting_viewpoint_invariance_of_vision-language_pre-training_mo.md)
+- [HandVQA: Diagnosing and Improving Fine-Grained Spatial Reasoning about Hands in Vision-Language Models](../../CVPR2026/multimodal_vlm/handvqa_diagnosing_and_improving_fine-grained_spatial_reasoning_about_hands_in_v.md)
+- [Vary: Scaling up the Vision Vocabulary for Large Vision-Language Models](vary_scaling_up_the_vision_vocabulary_for_large_visionlanguag.md)
+
+<!-- RELATED:END -->

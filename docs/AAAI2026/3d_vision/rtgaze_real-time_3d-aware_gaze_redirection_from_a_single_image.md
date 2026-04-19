@@ -205,3 +205,15 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{\mathcal{R}} + \beta \cdot \mathcal{L}
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集、效率对比、多维度指标评估、消融全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，量化结果丰富，但部分实现细节稍显不足
 - 价值: ⭐⭐⭐⭐⭐ — 实时 3D 视线重定向具有重要实际应用价值，速度突破有里程碑意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GazeGaussian: High-Fidelity Gaze Redirection with 3D Gaussian Splatting](../../ICCV2025/3d_vision/gazegaussian_high-fidelity_gaze_redirection_with_3d_gaussian_splatting.md)
+- [Generalized Geometry Encoding Volume for Real-time Stereo Matching](generalized_geometry_encoding_volume_for_real-time_stereo_matching.md)
+- [Human Interaction-Aware 3D Reconstruction from a Single Image](../../CVPR2026/3d_vision/human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [StreamSTGS: Streaming Spatial and Temporal Gaussian Grids for Real-Time Free-Viewpoint Video](streamstgs_streaming_spatial_and_temporal_gaussian_grids_for_real-time_free-view.md)
+- [PFAvatar: Pose-Fusion 3D Personalized Avatar Reconstruction from Real-World Outfit-of-the-Day Photos](pfavatar_pose-fusion_3d_personalized_avatar_reconstruction_from_real-world_outfi.md)
+
+<!-- RELATED:END -->

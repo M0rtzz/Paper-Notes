@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 29 个数据集，两个基准，两个场景（question-aware/agnostic），多种预算比例
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，从上界→最优性→自适应分配的逻辑链紧密
 - 价值: ⭐⭐⭐⭐⭐ 极度实用——简单、理论完备、即插即用、效果显著，后续工作已广泛采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DSSD: Efficient Edge-Device LLM Deployment and Collaborative Inference via Distributed Split Speculative Decoding](../../ICML2025/human_understanding/dssd_efficient_edge-device_llm_deployment_and_collaborative_inference_via_distri.md)
+- [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates](../../ICLR2026/human_understanding/inference-time_backdoors_via_hidden_instructions_in_llm_chat_templates.md)
+- [LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference](../../CVPR2026/human_understanding/lamogen_language_to_motion_generation_through_llm-guided_symbolic_inference.md)
+- [Data-Juicer 2.0: Cloud-Scale Adaptive Data Processing for and with Foundation Models](data-juicer_20_cloud-scale_adaptive_data_processing_for_and_with_foundation_mode.md)
+- [FACE: A General Framework for Mapping Collaborative Filtering Embeddings into LLM Tokens](face_a_general_framework_for_mapping_collaborative_filtering_embeddings_into_llm.md)
+
+<!-- RELATED:END -->

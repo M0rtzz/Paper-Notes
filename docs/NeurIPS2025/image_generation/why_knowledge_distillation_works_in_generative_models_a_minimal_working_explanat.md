@@ -165,3 +165,15 @@ $$\text{KL}(p'(x; \beta) \| p''(x)) = -\int p'(x; \beta) \log p''(x) dx + \text{
 ⭐⭐⭐⭐ (4/5)
 
 理由：论文提出了一个简洁优雅的"最小化工作解释"——知识蒸馏在生成模型中通过精度-召回权衡起作用，由教师的熵控制。GMM 理论分析清晰，LLM 实验验证了核心假设的普适性。写作清晰、逻辑严密。主要不足在于实验规模有限（最大 1.7B）、仅覆盖预训练阶段的序列级蒸馏、缺乏在实际应用场景中的验证。总体而言是一篇理论扎实、洞察有价值的理解型论文，对蒸馏实践有实际指导意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Distillation Detection for Open-weights Models](knowledge_distillation_detection_for_open-weights_models.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [LeapFactual: Reliable Visual Counterfactual Explanation Using Conditional Flow Matching](leapfactual_reliable_visual_counterfactual_explanation_using_conditional_flow_ma.md)
+- [Blameless Users in a Clean Room: Defining Copyright Protection for Generative Models](blameless_users_in_a_clean_room_defining_copyright_protection_for_generative_mod.md)
+- [Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training](why_diffusion_models_dont_memorize_the_role_of_implicit_dynamical_regularization.md)
+
+<!-- RELATED:END -->

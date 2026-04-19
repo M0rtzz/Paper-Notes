@@ -128,3 +128,15 @@ EagleNet 以 CLIP 为骨干网络，包含两个核心模块：(1) **Fine-Graine
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、两个 CLIP backbone、详尽的消融和多种设计变体分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但公式较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐ 在竞争激烈的 TVR 领域取得一致性的 SOTA 改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoVR-R: Reason-Aware Composed Video Retrieval](covr-rreason-aware_composed_video_retrieval.md)
+- [Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning](../../AAAI2026/multimodal_vlm/heterogeneous_uncertainty-guided_composed_image_retrieval_with_fine-grained_prob.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+- [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
+- [MA-Bench: Towards Fine-grained Micro-Action Understanding](ma-bench_towards_fine-grained_micro-action_understanding.md)
+
+<!-- RELATED:END -->

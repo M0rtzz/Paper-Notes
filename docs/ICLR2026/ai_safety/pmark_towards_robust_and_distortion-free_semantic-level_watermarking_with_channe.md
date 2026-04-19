@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型多数据集多攻击类型，但缺少更多LLM规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，方法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 解决了语义水印的两个核心难题（失真+鲁棒），理论和实用价值双高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Watermarking on Gradient Boosting Decision Trees](../../AAAI2026/ai_safety/robust_watermarking_on_gradient_boosting_decision_trees.md)
+- [RegionMarker: A Region-Triggered Semantic Watermarking Framework for Embedding-as-a-Service](../../AAAI2026/ai_safety/regionmarker_a_region-triggered_semantic_watermarking_framework_for_embedding-as.md)
+- [Data-free Universal Adversarial Perturbation with Pseudo-Semantic Prior](../../CVPR2025/ai_safety/data-free_universal_adversarial_perturbation_with_pseudo-semantic_prior.md)
+- [Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers](../../ICCV2025/ai_safety/semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf.md)
+- [Robust and Minimally Invasive Watermarking for EaaS](../../ACL2025/ai_safety/robust_and_minimally_invasive_watermarking_for_eaas.md)
+
+<!-- RELATED:END -->

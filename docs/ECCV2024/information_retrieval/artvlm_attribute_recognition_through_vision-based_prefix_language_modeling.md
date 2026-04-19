@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集,多种模板详细对比,还提出了新benchmark VGARank,但模型规模单一
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰,概率模型部分的推导严谨,图示直观
 - 价值: ⭐⭐⭐⭐ 对"如何正确从VLM中提取结构化知识"这一问题提供了系统性的解答,对属性识别和更广泛的视觉推理领域都有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Grounding Language Models for Visual Entity Recognition](grounding_language_models_for_visual_entity_recognition.md)
+- [Towards Open-Ended Visual Recognition with Large Language Model](towards_open-ended_visual_recognition_with_large_language_models.md)
+- [HiMo-CLIP: Modeling Semantic Hierarchy and Monotonicity in Vision-Language Alignment](../../AAAI2026/information_retrieval/himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi.md)
+- [Revela: Dense Retriever Learning via Language Modeling](../../ICLR2026/information_retrieval/revela_dense_retriever_learning_via_language_modeling.md)
+- [FlashBack: Efficient Retrieval-Augmented Language Modeling for Fast Inference](../../ACL2025/information_retrieval/flashbackefficient_retrieval-augmented_language_modeling_for_long_context_infere.md)
+
+<!-- RELATED:END -->

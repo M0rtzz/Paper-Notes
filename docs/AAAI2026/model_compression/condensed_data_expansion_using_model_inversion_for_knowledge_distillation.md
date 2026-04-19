@@ -111,3 +111,15 @@ $\theta_S^* = \arg\min \mathbb{E}_{\hat{x}}[D_{KL}(\hat{y}_S || \hat{y}_T)] + \m
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个数据集+多种MI基线+多种教师-学生对+消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，可视化出色
 - 价值: ⭐⭐⭐⭐ 实用的 KD 增强方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](../../ICLR2026/model_compression/pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+- [Data Laundering: Artificially Boosting Benchmark Results through Knowledge Distillation](../../ACL2025/model_compression/data_laundering_artificially_boosting_benchmark_results_through_knowledge_distil.md)
+- [EEG-DLite: Dataset Distillation for Efficient Large EEG Model Training](eeg-dlite_dataset_distillation_for_efficient_large_eeg_model_training.md)
+- [Credal Ensemble Distillation for Uncertainty Quantification](credal_ensemble_distillation_for_uncertainty_quantification.md)
+- [AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution](../../ICLR2026/model_compression/amid_knowledge_distillation_for_llms_with_α-mixture_assistant_distribution.md)
+
+<!-- RELATED:END -->

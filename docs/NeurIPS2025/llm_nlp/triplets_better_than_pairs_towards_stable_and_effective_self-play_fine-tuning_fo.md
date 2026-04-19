@@ -157,3 +157,15 @@ SPIN 在 Iter1 后出现波动和退化，T-SPIN 每轮迭代均稳定提升。
 - **实验充分度**: ⭐⭐⭐⭐ — 10 个 benchmark 覆盖多维度能力，含迭代稳定性分析和消融，但仅两个基础模型
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论推导严谨，问题动机和解决方案的呈现逻辑清晰，图表设计优秀
 - **价值**: ⭐⭐⭐⭐ — 在标注数据稀缺场景下具有重要实践价值，25% 数据就能达到全量 SFT 效果的结论令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPACE: Noise Contrastive Estimation Stabilizes Self-Play Fine-Tuning for Large Language Models](space_noise_contrastive_estimation_stabilizes_self-play_fine-tuning_for_large_la.md)
+- [AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play](acesearcher_bootstrapping_reasoning_and_search_for_llms_via_reinforced_self-play.md)
+- [Sparse MeZO: Less Parameters for Better Performance in Zeroth-Order LLM Fine-Tuning](sparse_mezo_less_parameters_for_better_performance_in_zeroth-order_llm_fine-tuni.md)
+- [Beware of Your Po! Measuring and Mitigating AI Safety Risks in Role-Play Fine-Tuning of LLMs](../../ACL2025/llm_nlp/sarft_roleplay_safety.md)
+- [Synergy over Discrepancy: A Partition-Based Approach to Multi-Domain LLM Fine-Tuning](synergy_over_discrepancy_a_partition-based_approach_to_multi-domain_llm_fine-tun.md)
+
+<!-- RELATED:END -->

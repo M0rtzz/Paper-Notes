@@ -140,3 +140,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 12个指标×3个数据集×3个生成器LLM×高低质量分析×分布可视化×Cohen's Kappa，实验设计极为严谨
 - **写作质量**: ⭐⭐⭐⭐ — Figure 1 的例子直观说明问题，表格丰富但略有冗余，整体结构清晰
 - **价值**: ⭐⭐⭐⭐ — 对GCR评估实践有直接影响：应明确弃用 self-BLEU，转向内容级指标。"多样性不应脱离质量评估"的洞察有深远意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Commonsense Reasoning in Arab Culture](commonsense_arab_culture.md)
+- [What Matters in Evaluating Book-Length Stories? A Systematic Study of Long Story Evaluation](what_matters_in_evaluating_book-length_stories_a_systematic_study_of_long_story_.md)
+- [Are Bias Evaluation Methods Biased?](are_bias_evaluation_methods_biased.md)
+- [Spotting Out-of-Character Behavior: Atomic-Level Evaluation of Persona Fidelity in Open-Ended Generation](spotting_out-of-character_behavior_atomic-level_evaluation_of_persona_fidelity_i.md)
+- [RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation](rmoa_optimizing_mixture-of-agents_through_diversity_maximization_and_residual_co.md)
+
+<!-- RELATED:END -->

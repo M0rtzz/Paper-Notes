@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{vdm}} = \mathbb{E}_{t,\epsilon}\left[\|\epsilon - \epsilon_
 - 实验充分度: ⭐⭐⭐⭐⭐ — 自建基准 HorizonSuite 覆盖全面，消融细致，用户研究规模大
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，但部分符号定义较仓促
 - 价值: ⭐⭐⭐⭐⭐ — 给出自动驾驶仿真场景编辑的明确设计指南，基准和框架均有较大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR](terraseg_self-supervised_ground_segmentation_for_any_lidar.md)
+- [SEAL: Segment Any Events with Language](../../ICLR2026/autonomous_driving/segment_any_events_with_language.md)
+- [Towards Predicting Any Human Trajectory in Context](../../NeurIPS2025/autonomous_driving/towards_predicting_any_human_trajectory_in_context.md)
+- [OpenBox: Annotate Any Bounding Boxes in 3D](../../NeurIPS2025/autonomous_driving/openbox_annotate_any_bounding_boxes_in_3d.md)
+- [LabelAny3D: Label Any Object 3D in the Wild](../../NeurIPS2025/autonomous_driving/labelany3d_label_any_object_3d_in_the_wild.md)
+
+<!-- RELATED:END -->

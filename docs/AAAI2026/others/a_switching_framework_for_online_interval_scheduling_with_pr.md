@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论工作，实验仅作为补充验证，规模和多样性有限
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，从warm-up逐步推进到主框架和随机化，proof sketch直观
 - 价值: ⭐⭐⭐⭐ 对学习增强在线算法领域有贡献，框架的模块化设计具有通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Non-Clairvoyant Scheduling with Progress Bars](../../NeurIPS2025/others/non-clairvoyant_scheduling_with_progress_bars.md)
+- [Enhancing Control Policy Smoothness by Aligning Actions with Predictions from Preceding States](enhancing_control_policy_smoothness_by_aligning_actions_with_predictions_from_pr.md)
+- [DeToNATION: Decoupled Torch Network-Aware Training on Interlinked Online Nodes](detonation_decoupled_torch_network-aware_training_on_interlinked_online_nodes.md)
+- [Learning-Augmented Online Bipartite Fractional Matching](../../NeurIPS2025/others/learning-augmented_online_bipartite_fractional_matching.md)
+- [Online Linear Regression with Paid Stochastic Features](online_linear_regression_with_paid_stochastic_features.md)
+
+<!-- RELATED:END -->

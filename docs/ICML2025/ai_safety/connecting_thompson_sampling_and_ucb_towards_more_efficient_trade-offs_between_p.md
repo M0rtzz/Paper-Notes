@@ -115,3 +115,15 @@ DP-TS-UCB 是一个两阶段算法：
 - 实验充分度: ⭐⭐⭐ — 以理论为主，实验验证有限
 - 写作质量: ⭐⭐⭐⭐ — 表述清晰，proof sketch 简洁
 - 价值: ⭐⭐⭐⭐ — 为隐私在线学习提供了更优的privacy-regret trade-off
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models](../../ICLR2026/ai_safety/improving_the_trade-off_between_watermark_strength_and_speculative_sampling_effi.md)
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
+- [Empirical Privacy Variance](empirical_privacy_variance.md)
+- [Activation Space Interventions Can Be Transferred Between Large Language Models](activation_space_interventions_can_be_transferred_between_large_language_models.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](../../NeurIPS2025/ai_safety/mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+
+<!-- RELATED:END -->

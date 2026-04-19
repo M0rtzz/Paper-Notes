@@ -151,3 +151,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 5个低资源语言、多维度分析（质量/相关性/多样性）、消融实验完整
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，分析深入（backfire现象的发现和解释很精彩）
 - **价值**: ⭐⭐⭐⭐ — 对低资源翻译有直接实用价值，方法简洁易复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GrammaMT: Improving Machine Translation with Grammar-Informed In-Context Learning](grammamt_improving_machine_translation_with_grammar-informed_in-context_learning.md)
+- [Exploring In-Image Machine Translation with Real-World Background](exploring_in-image_machine_translation_with_real-world_background.md)
+- [THOR-MoE: Hierarchical Task-Guided and Context-Responsive Routing for Neural Machine Translation](thor-moe_hierarchical_task-guided_and_context-responsive_routing_for_neural_mach.md)
+- [Multi-perspective Alignment for Increasing Naturalness in Neural Machine Translation](multi-perspective_alignment_for_increasing_naturalness_in_neural_machine_transla.md)
+- [Memorization Inheritance in Sequence-Level Knowledge Distillation for Neural Machine Translation](memorization_inheritance_seqkd.md)
+
+<!-- RELATED:END -->

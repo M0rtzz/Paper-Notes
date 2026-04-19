@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 15 篇 SR + 9 位医学专家用户研究，多维度评估
 - 写作质量: ⭐⭐⭐⭐ 图文并茂，工作流清晰
 - 价值: ⭐⭐⭐⭐⭐ 实际加速系统综述从数月到 1.5 小时，达到 79.7% 人类质量，极具应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IRIS: Interactive Research Ideation System for Accelerating Scientific Discovery](iris_interactive_research_ideation_system_for_accelerating_scientific_discovery.md)
+- [Evaluating In Silico Creativity: An Expert Review of AI Chess Compositions](../../NeurIPS2025/others/evaluating_in_silico_creativity_an_expert_review_of_ai_chess_compositions.md)
+- [STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond](stricta_structured_reasoning_in_critical_text_assessment_for_peer_review_and_bey.md)
+- [What Matters in Evaluating Book-Length Stories? A Systematic Study of Long Story Evaluation](what_matters_in_evaluating_book-length_stories_a_systematic_study_of_long_story_.md)
+- [Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
+
+<!-- RELATED:END -->

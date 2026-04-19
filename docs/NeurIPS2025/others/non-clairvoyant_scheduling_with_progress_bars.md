@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成实验充分验证了理论预测，实际应用场景评估可更多
 - 写作质量: ⭐⭐⭐⭐⭐ 模型定义清晰，结果层次递进，证明思路解释充分
 - 价值: ⭐⭐⭐⭐⭐ 对学习增强调度理论有实质推进，改进了最优一致性-鲁棒性权衡
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Switching Framework for Online Interval Scheduling with Predictions](../../AAAI2026/others/a_switching_framework_for_online_interval_scheduling_with_pr.md)
+- [Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free](learning_non-equilibrium_diffusions_with_schrödinger_bridges_from_exactly_solvab.md)
+- [Directional Non-Commutative Monoidal Structures for Compositional Embeddings in Machine Learning](directional_non-commutative_monoidal_structures_for_compositional_embeddings_in_.md)
+- [Optimal Sensor Scheduling and Selection for Continuous-Discrete Kalman Filtering with Auxiliary Dynamics](../../ICML2025/others/optimal_sensor_scheduling_and_selection_for_continuous-discrete_kalman_filtering.md)
+- [Learning-Augmented Online Bipartite Fractional Matching](learning-augmented_online_bipartite_fractional_matching.md)
+
+<!-- RELATED:END -->

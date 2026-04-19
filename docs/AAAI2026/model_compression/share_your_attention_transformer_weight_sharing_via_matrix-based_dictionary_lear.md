@@ -144,3 +144,15 @@ $$\hat{\mathbf{W}}_l = \sum_{s=1}^{S} c_{ls} \mathbf{D}_s$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 3 个规模的 LLM、Vision Transformer、预训练模型适配，消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论推导与实验结合良好
 - 价值: ⭐⭐⭐⭐ 提供了实用的 Transformer 压缩方案和设计原则（优先压缩 QKV），对后续工作有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Weight Regularization for Low-Rank Continual Learning](../../ICLR2026/model_compression/revisiting_weight_regularization_for_low-rank_continual_learning.md)
+- [Spark Transformer: Reactivating Sparsity in FFN and Attention](../../NeurIPS2025/model_compression/spark_transformer_reactivating_sparsity_in_ffn_and_attention.md)
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](../../CVPR2026/model_compression/binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [Explore and Establish Synergistic Effects between Weight Pruning and Coreset Selection](explore_and_establish_synergistic_effects_between_weight_pruning_and_coreset_sel.md)
+- [CAMERA: Multi-Matrix Joint Compression for MoE Models via Micro-Expert Redundancy Analysis](camera_multi-matrix_joint_compression_for_moe_models_via_mic.md)
+
+<!-- RELATED:END -->

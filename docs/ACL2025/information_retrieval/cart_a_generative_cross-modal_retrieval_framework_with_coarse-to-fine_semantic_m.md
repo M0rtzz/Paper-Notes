@@ -171,3 +171,15 @@ CART 大幅超越 GRACE（使用预定义标识符），在 Flickr30K R@1 上 81
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三种模态、六个数据集、三种检索范式的全面对比
 - **实用性**: ⭐⭐⭐⭐ — 在大规模检索场景下有显著效率优势
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeighborRetr: Balancing Hub Centrality in Cross-Modal Retrieval](../../CVPR2025/information_retrieval/neighborretr_balancing_hub_centrality_in_cross-modal_retrieval.md)
+- [Maximal Matching Matters: Preventing Representation Collapse for Robust Cross-Modal Retrieval](maximal_matching_matters_preventing_representation_collapse_for_robust_cross-mod.md)
+- [GENIUS: A Generative Framework for Universal Multimodal Search](../../CVPR2025/information_retrieval/genius_a_generative_framework_for_universal_multimodal_search.md)
+- [On Synthetic Data Strategies for Domain-Specific Generative Retrieval](on_synthetic_data_strategies_for_domain-specific_generative_retrieval.md)
+- [Neighbor-aware Instance Refining with Noisy Labels for Cross-Modal Retrieval](../../AAAI2026/information_retrieval/neighbor-aware_instance_refining_with_noisy_labels_for_cross-modal_retrieval.md)
+
+<!-- RELATED:END -->

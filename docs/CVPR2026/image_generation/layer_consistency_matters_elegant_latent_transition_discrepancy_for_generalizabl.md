@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三大benchmark全面评测，16+生成器，鲁棒性/消融实验充分
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，可视化有说服力，但方法部分公式偏简单
 - 价值: ⭐⭐⭐⭐ 高实用价值，训练简单高效，泛化性强，适合部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [Diversity over Uniformity: Rethinking Representation in Generated Image Detection](diversity_over_uniformity_rethinking_representation_in_generated_image_detection.md)
+- [CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images](../../AAAI2026/image_generation/causalclip_causally-informed_feature_disentanglement_and_filtering_for_generaliz.md)
+- [Image Diffusion Preview with Consistency Solver](image_diffusion_preview_with_consistency_solver.md)
+- [TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection](tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa.md)
+
+<!-- RELATED:END -->

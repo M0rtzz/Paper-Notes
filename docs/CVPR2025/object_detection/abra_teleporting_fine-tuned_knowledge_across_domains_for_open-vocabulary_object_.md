@@ -160,3 +160,15 @@ ABRA 的流程分为三步：
 - 实验充分度: ⭐⭐⭐⭐ (消融充分，但数据集规模和基线覆盖可加强)
 - 写作质量: ⭐⭐⭐⭐⭐ (条理清晰，数学推导完整)
 - 价值: ⭐⭐⭐⭐ (解决了一个实际且此前被忽视的问题设定)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BACON: Improving Clarity of Image Captions via Bag-of-Concept Graphs](bacon_improving_clarity_of_image_captions_via_bag-of-concept_graphs.md)
+- [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
+- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
+- [Interpreting Object-level Foundation Models via Visual Precision Search](interpreting_object-level_foundation_models_via_visual_precision_search.md)
+- [Multiple Object Tracking as ID Prediction](multiple_object_tracking_as_id_prediction.md)
+
+<!-- RELATED:END -->

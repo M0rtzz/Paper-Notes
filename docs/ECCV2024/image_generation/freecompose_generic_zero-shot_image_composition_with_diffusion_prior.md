@@ -175,3 +175,15 @@ $$\text{Attention}(Q, K_i, V_i), \text{if } t > T \text{ and } l > L$$
 - **实用性**：★★★☆☆ — 零样本+即插即用，但速度限制了实际部署
 - **实验充分度**：★★★☆☆ — 用户研究设计合理，但缺少大规模定量评估
 - **写作质量**：★★★★☆ — 方法阐述清晰，消融实验逻辑严谨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+- [MultiGen: Zero-Shot Image Generation from Multi-modal Prompts](multigen_zero-shot_image_generation_from_multi-modal_prompts.md)
+- [DreamMover: Leveraging the Prior of Diffusion Models for Image Interpolation with Large Motion](dreammover_leveraging_the_prior_of_diffusion_models_for_image_interpolation_with.md)
+- [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
+- [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
+
+<!-- RELATED:END -->

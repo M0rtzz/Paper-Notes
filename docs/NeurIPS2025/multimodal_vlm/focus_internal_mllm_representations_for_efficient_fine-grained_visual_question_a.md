@@ -167,3 +167,15 @@ FOCUS 在推理任务上优于 ZoomEye，感知稍弱，但效率高 5.47 倍。
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、三种模型架构、详细消融和超参分析，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导清晰，方法描述精确，图表设计优秀，与竞品对比公允
 - 价值: ⭐⭐⭐⭐ 解决了实际的效率痛点，方法简洁优雅且即插即用，对工业部署有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment](guiding_cross-modal_representations_with_mllm_priors_via_preference_alignment.md)
+- [WearVQA: A Visual Question Answering Benchmark for Wearables in Egocentric Authentic Real-world scenarios](wearvqa_a_visual_question_answering_benchmark_for_wearables_in_egocentric_authen.md)
+- [AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models](affordbot_3d_fine-grained_embodied_reasoning_via_multimodal_large_language_model.md)
+- [FLAIR: VLM with Fine-grained Language-informed Image Representations](../../CVPR2025/multimodal_vlm/flair_vlm_with_fine-grained_language-informed_image_representations.md)
+- [Visual-Oriented Fine-Grained Knowledge Editing for MultiModal Large Language Models](../../ICCV2025/multimodal_vlm/visual-oriented_fine-grained_knowledge_editing_for_multimodal_large_language_mod.md)
+
+<!-- RELATED:END -->

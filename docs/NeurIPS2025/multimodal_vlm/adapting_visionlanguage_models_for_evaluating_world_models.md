@@ -129,3 +129,15 @@ UNIVERSE 在 AR 上超越所有模型（含全模型微调），在 CR 上仅次
 ## 评分
 
 ⭐⭐⭐ 工程实用价值高，系统性实验全面，但创新点集中在工程选型而非方法论突破，且评估场景局限于游戏环境。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Evaluating Proactive Risk Awareness of Multimodal Language Models](towards_evaluating_proactive_risk_awareness_of_multimodal_language_models.md)
+- [FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges](finegrain_evaluating_failure_modes_of_text-to-image_models_with_vision_language_.md)
+- [Evaluating Multimodal Large Language Models on Core Music Perception Tasks](evaluating_multimodal_large_language_models_on_core_music_perception_tasks.md)
+- [OpenHOI: Open-World Hand-Object Interaction Synthesis with Multimodal Large Language Models](openhoi_open-world_hand-object_interaction_synthesis_with_multimodal_large_langu.md)
+- [Do Vision-Language Models Have Internal World Models? Towards an Atomic Evaluation](../../ACL2025/multimodal_vlm/do_vision-language_models_have_internal_world_models_towards_an_atomic_evaluatio.md)
+
+<!-- RELATED:END -->

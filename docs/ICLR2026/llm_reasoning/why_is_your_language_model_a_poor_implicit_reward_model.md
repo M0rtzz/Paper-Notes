@@ -135,3 +135,15 @@ IM-RM在token分布发生变化（同义改写）时准确率几乎为0，而EX-
 - 实验充分度: ⭐⭐⭐⭐ 受控+真实场景+多种消融，排除了多个替代假说，但缺少下游RL任务验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条极其清晰：反驳旧假说→提出新解释→理论证明→实验验证
 - 价值: ⭐⭐⭐⭐⭐ 对RLHF/DPO社区有重大指导意义，揭示了reward model设计的隐含偏差
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Estimating the Empowerment of Language Model Agents](estimating_the_empowerment_of_language_model_agents.md)
+- [Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
+- [One Token Embedding Is Enough to Deadlock Your Large Reasoning Model](../../NeurIPS2025/llm_reasoning/one_token_embedding_is_enough_to_deadlock_your_large_reasoning_model.md)
+- [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](../../NeurIPS2025/llm_reasoning/unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](../../AAAI2026/llm_reasoning/incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+
+<!-- RELATED:END -->

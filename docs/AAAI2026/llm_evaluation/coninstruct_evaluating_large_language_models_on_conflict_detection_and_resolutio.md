@@ -126,3 +126,15 @@ Claude-4.5-Sonnet 冲突解决行为最佳：
 - 实验充分度: ⭐⭐⭐⭐ 涵盖多种专有和开源模型，冲突类型分析细致，但缺少对冲突解决质量的评估
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰、图表直观、问题动机引人入胜
 - 价值: ⭐⭐⭐⭐ 指出了当前 LLM 指令遵循中的重要盲区，对模型安全性和用户体验改进有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ASIDE: Architectural Separation of Instructions and Data in Language Models](../../ICLR2026/llm_evaluation/aside_architectural_separation_of_instructions_and_data_in_language_models.md)
+- [NeSTR: A Neuro-Symbolic Abductive Framework for Temporal Reasoning in Large Language Models](nestr_a_neuro-symbolic_abductive_framework_for_temporal_reasoning_in_large_langu.md)
+- [AD-LLM: Benchmarking Large Language Models for Anomaly Detection](../../ACL2025/llm_evaluation/ad-llm_benchmarking_large_language_models_for_anomaly_detection.md)
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](../../ACL2025/llm_evaluation/batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [LTD-Bench: Evaluating Large Language Models by Letting Them Draw](../../NeurIPS2025/llm_evaluation/ltd-bench_evaluating_large_language_models_by_letting_them_draw.md)
+
+<!-- RELATED:END -->

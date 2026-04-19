@@ -127,3 +127,15 @@ VisJudge-Bench 的构建遵循三阶段方法论：**(1) 数据收集与处理**
 - **技术深度**: ⭐⭐⭐⭐ — 评估框架设计全面，标注流程严谨
 - **实验充分度**: ⭐⭐⭐⭐ — 12 个模型系统评测，消融充分
 - **实用价值**: ⭐⭐⭐⭐ — 对可视化自动评估有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video](../../NeurIPS2025/multimodal_vlm/rtv-bench_benchmarking_mllm_continuous_perception_understanding_and_reasoning_th.md)
+- [Vision-Zero: Scalable VLM Self-Improvement via Strategic Gamified Self-Play](vision-zero_scalable_vlm_self-improvement_via_strategic_gamified_self-play.md)
+- [WebDS: An End-to-End Benchmark for Web-based Data Science](webds_an_end-to-end_benchmark_for_web-based_data_science.md)
+- [Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective](why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)
+- [Multi-Faceted Attack: Exposing Cross-Model Vulnerabilities in Defense-Equipped Vision-Language Models](../../AAAI2026/multimodal_vlm/multi-faceted_attack_exposing_cross-model_vulnerabilities_in_defense-equipped_vi.md)
+
+<!-- RELATED:END -->

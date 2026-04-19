@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个 LLM + 消融 + 理论验证；但缺生成任务和更大模型
 - 写作质量: ⭐⭐⭐⭐⭐ 三个 Desiderata 的框架化，理论推导清晰，图表精美
 - 价值: ⭐⭐⭐⭐⭐ 弹性推理的新范式，可能改变 LLM 部署方式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tracing Pharmacological Knowledge in Large Language Models](tracing_pharmacological_knowledge_in_large_language_models.md)
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](../../NeurIPS2025/medical_imaging/position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+- [Coarse-to-Fine Open-Set Graph Node Classification with Large Language Models](../../AAAI2026/medical_imaging/coarse-to-fine_open-set_graph_node_classification_with_large_language_models.md)
+- [Knowledgeable Language Models as Black-Box Optimizers for Personalized Medicine](knowledgeable_language_models_as_black-box_optimizers_for_personalized_medicine.md)
+- [Controlling Repetition in Protein Language Models](controlling_repetition_in_protein_language_models.md)
+
+<!-- RELATED:END -->

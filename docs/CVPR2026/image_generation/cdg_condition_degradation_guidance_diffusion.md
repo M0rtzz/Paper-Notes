@@ -136,3 +136,15 @@ GenAI-Bench 组合推理（SD3.5）：CDG 在 Differentiation 上提升 +3.64，
 - **实验充分度**: 9/10 — 四个模型、多个 benchmark、全面的消融和机制验证
 - **写作质量**: 9/10 — 逻辑清晰，几何分析与实验观察紧密结合
 - **价值**: 8/10 — 即插即用的实用方案，为扩散模型引导设计提供了新的原则性框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guiding Diffusion Models with Semantically Degraded Conditions](guiding_diffusion_models_with_semantically_degraded_conditions.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [Guiding a Diffusion Model by Swapping Its Tokens](guiding_a_diffusion_model_by_swapping_its_tokens.md)
+- [Guiding a Diffusion Transformer with the Internal Dynamics of Itself](guiding_a_diffusion_transformer_with_the_internal_dynamics_of_itself.md)
+- [Learnability-Guided Diffusion for Dataset Distillation](learnability-guided_diffusion_for_dataset_distillation.md)
+
+<!-- RELATED:END -->

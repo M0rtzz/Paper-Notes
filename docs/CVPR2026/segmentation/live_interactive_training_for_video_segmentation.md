@@ -143,3 +143,15 @@ LoRA配置：rank=4, $\alpha=4$, dropout=0.1, 学习率 $1 \times 10^{-4}$，每
 - 实验充分度: ⭐⭐⭐⭐⭐ 五个VOS数据集+三个分类数据集+三个模型+用户研究+详细消融，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精准、动机说明清晰、实验设计严谨，补充材料详尽
 - 价值: ⭐⭐⭐⭐ 对标注工作流有直接实用价值（18-34%纠正减少意味着节省数小时标注时间），框架通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [INSID3: Training-Free In-Context Segmentation with DINOv3](insid3_training-free_in-context_segmentation_with_dinov3.md)
+- [VIRTUE: Visual-Interactive Text-Image Universal Embedder](../../ICLR2026/segmentation/virtue_visual-interactive_text-image_universal_embedder.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [RobotSeg: A Model and Dataset for Segmenting Robots in Image and Video](robotseg_a_model_and_dataset_for_segmenting_robots_in_image_and_video.md)
+
+<!-- RELATED:END -->

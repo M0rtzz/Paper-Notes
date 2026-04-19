@@ -155,3 +155,15 @@ SDCI 的核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 合成+生物+体育数据，多场景验证
 - 写作质量: ⭐⭐⭐⭐ 理论框架清晰，分类法有用
 - 价值: ⭐⭐⭐⭐⭐ 推进了非平稳因果发现的前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CausalDynamics: A Large-Scale Benchmark for Structural Discovery of Dynamical Causal Models](../../NeurIPS2025/time_series/causaldynamics_a_large-scale_benchmark_for_structural_discovery_of_dynamical_cau.md)
+- [Towards Non-Stationary Time Series Forecasting with Temporal Stabilization and Frequency Differencing](../../AAAI2026/time_series/towards_non-stationary_time_series_forecasting_with_temporal_stabilization_and_f.md)
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+- [Neural MJD: Neural Non-Stationary Merton Jump Diffusion for Time Series Prediction](../../NeurIPS2025/time_series/neural_mjd_neural_non-stationary_merton_jump_diffusion_for_time_series_predictio.md)
+- [Channel Normalization for Time Series Channel Identification](channel_normalization_for_time_series_channel_identification.md)
+
+<!-- RELATED:END -->

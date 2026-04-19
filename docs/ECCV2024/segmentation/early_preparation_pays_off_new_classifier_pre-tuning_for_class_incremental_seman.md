@@ -175,3 +175,15 @@ NeST在每个增量步骤的正式训练前增加预调优阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、多种设定（10-1/15-1/15-5/19-1等）、适配三种baseline、ResNet和Swin双backbone、完整消融
 - 写作质量: ⭐⭐⭐⭐ 逻辑链清晰，从问题观察到方法设计到实验验证环环相扣
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的通用改进策略，开销极小效果显著，对CISS社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cs2K: Class-Specific and Class-Shared Knowledge Guidance for Incremental Semantic Segmentation](cs2k_class-specific_and_class-shared_knowledge_guidance_for_incremental_semantic.md)
+- [Learning from the Web: Language Drives Weakly-Supervised Incremental Learning for Semantic Segmentation](learning_from_the_web_language_drives_weakly-supervised_incremental_learning_for.md)
+- [CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
+- [DreamLIP: Language-Image Pre-training with Long Captions](dreamlip_language-image_pre-training_with_long_captions.md)
+- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ tags:
 - 实验充分度: 2.5/5 — 数据集规模小，基线对比不够丰富，缺少计算开销分析
 - 写作质量: 3.5/5 — 结构清晰，动机阐述充分，数学符号规范
 - 价值: 3/5 — Workshop paper 级别，验证了融合互补性的假设，但需更多大规模实验支撑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Utility of 3D Hand Poses for Action Recognition](../../ECCV2024/video_understanding/on_the_utility_of_3d_hand_poses_for_action_recognition.md)
+- [Beyond Label Semantics: Language-Guided Action Anatomy for Few-shot Action Recognition](../../ICCV2025/video_understanding/beyond_label_semantics_language-guided_action_anatomy_for_few-shot_action_recogn.md)
+- [When Thinking Drifts: Evidential Grounding for Robust Video Reasoning](when_thinking_drifts_evidential_grounding_for_robust_video_reasoning.md)
+- [Referring Atomic Video Action Recognition](../../ECCV2024/video_understanding/referring_atomic_video_action_recognition.md)
+- [Seeing Beyond the Scene: Analyzing and Mitigating Background Bias in Action Recognition](seeing_beyond_the_scene_analyzing_and_mitigating_background_bias_in_action_recog.md)
+
+<!-- RELATED:END -->

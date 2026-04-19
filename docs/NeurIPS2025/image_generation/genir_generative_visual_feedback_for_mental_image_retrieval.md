@@ -205,3 +205,15 @@ GenIR 的创新在于**首次将文本到图像生成整合到交互式检索循
 - 实验充分度: ⭐⭐⭐⭐ (4个跨域数据集，多生成器对比，含人工评估)
 - 写作质量: ⭐⭐⭐⭐ (动机清晰，对比充分，可视化效果好)
 - 价值: ⭐⭐⭐⭐ (开辟了生成式视觉反馈检索新方向，实用性强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation](imagesentinel_protecting_visual_datasets_from_unauthorized_retrieval-augmented_i.md)
+- [Instance-Level Composed Image Retrieval](instance-level_composed_image_retrieval.md)
+- [UniLumos: Fast and Unified Image and Video Relighting with Physics-Plausible Feedback](unilumos_fast_and_unified_image_and_video_relighting_with_physics-plausible_feed.md)
+- [Generative Image Layer Decomposition with Visual Effects](../../CVPR2025/image_generation/generative_image_layer_decomposition_with_visual_effects.md)
+- [Diffusion Mental Averages](../../CVPR2026/image_generation/diffusion_mental_averages.md)
+
+<!-- RELATED:END -->

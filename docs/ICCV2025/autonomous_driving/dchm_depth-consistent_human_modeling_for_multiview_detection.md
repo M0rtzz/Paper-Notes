@@ -128,3 +128,15 @@ Wildtrack MODP 超 UMPD **31.2%**（80.3 vs 61.2），MultiviewX MODA 超 UMPD *
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多方法对比、详细消融、深度估计方法横评
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，逻辑连贯，技术细节充分
 - 价值: ⭐⭐⭐⭐ 无标签多视角检测具有重要实用价值（部署成本低），但应用场景相对窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modeling Thousands of Human Annotators for Generalizable Text-to-Image Person Re-identification](../../CVPR2025/autonomous_driving/modeling_thousands_of_human_annotators_for_generalizable_text-to-image_person_re.md)
+- [PTC-Depth: Pose-Refined Monocular Depth Estimation with Temporal Consistency](../../CVPR2026/autonomous_driving/ptc-depth_pose-refined_monocular_depth_estimation_with_temporal_consistency.md)
+- [DiST-4D: Disentangled Spatiotemporal Diffusion with Metric Depth for 4D Driving Scene Generation](dist-4d_disentangled_spatiotemporal_diffusion_with_metric_depth_for_4d_driving_s.md)
+- [EMD: Explicit Motion Modeling for High-Quality Street Gaussian Splatting](emd_explicit_motion_modeling_for_high-quality_street_gaussian_splatting.md)
+- [DriveX: Omni Scene Modeling for Learning Generalizable World Knowledge in Autonomous Driving](drivex_omni_scene_modeling_for_learning_generalizable_world_knowledge_in_autonom.md)
+
+<!-- RELATED:END -->

@@ -90,3 +90,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 多语言覆盖面广，但部分语言数据可能不足，跨模型比较可更全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，数据收集和标注流程描述详细，社会意义明确
 - 价值: ⭐⭐⭐⭐ 对多语言内容安全审核和跨文化仇恨言论治理有重要实践参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CCHall: A Novel Benchmark for Joint Cross-Lingual and Cross-Modal Hallucinations Detection in Large Language Models](../../ACL2025/multilingual_mt/cchall_a_novel_benchmark_for_joint_cross-lingual_and_cross-modal_hallucinations_.md)
+- [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](../../ACL2025/multilingual_mt/execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [Data Quality Issues in Multilingual Speech Datasets: The Need for Sociolinguistic Awareness and Proactive Language Planning](../../ACL2025/multilingual_mt/multilingual_speech_data_quality.md)
+- [SEA-Vision: A Multilingual Benchmark for Document and Scene Text Understanding in Southeast Asia](../../CVPR2026/multilingual_mt/sea-vision_a_multilingual_benchmark_for_comprehensive_document_and_scene_text_un.md)
+- [DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](../../NeurIPS2025/multilingual_mt/dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)
+
+<!-- RELATED:END -->

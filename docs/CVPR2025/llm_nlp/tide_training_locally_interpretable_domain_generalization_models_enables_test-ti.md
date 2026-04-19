@@ -85,3 +85,15 @@ TIDE包含三个阶段：(1) 概念标注生成——利用LLM为每个类别生
 - 测试时矫正需要额外推理开销（重新计算显著图）
 - 多源域泛化场景的扩展和验证待研究
 - 前向传播中概念区域的"遮挡"操作可能引入分布外特征
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Visual In-Context Tuning](test-time_visual_in-context_tuning.md)
+- [Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Generalization](attribute-formed_class-specific_concept_space_endowing_language_bottleneck_model.md)
+- [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
+- [A Training-free LLM-based Approach to General Chinese Character Error Correction](../../ACL2025/llm_nlp/a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+- [Understanding the Dark Side of LLMs' Intrinsic Self-Correction](../../ACL2025/llm_nlp/understanding_the_dark_side_of_llms_intrinsic_self-correction.md)
+
+<!-- RELATED:END -->

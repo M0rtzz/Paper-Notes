@@ -124,3 +124,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导+实验+设计建议的三段式非常清晰
 - 价值: ⭐⭐⭐⭐ 对内容溯源/水印设计领域有重要警示和指导意义
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmoEdit: Evoking Emotions through Image Manipulation](emoedit_evoking_emotions_through_image_manipulation.md)
+- [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
+- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+- [Concept Lancet: Image Editing with Compositional Representation Transplant](concept_lancet_image_editing_with_compositional_representation_transplant.md)
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+
+<!-- RELATED:END -->

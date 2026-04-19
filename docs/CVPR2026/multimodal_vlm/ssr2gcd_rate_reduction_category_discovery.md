@@ -91,3 +91,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数据集、大量损失函数对比、可视化分析、单模态验证，消融极其详尽
 - 写作质量: ⭐⭐⭐⭐ 整体清晰，理论和实验分析深入，但符号较多需仔细阅读
 - 价值: ⭐⭐⭐⭐ 对多模态GCD领域有重要启示，核心发现值得推广到更广泛的VLM应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery](multi-modal_representation_learning_via_semi-supervised_rate_reduction_for_gener.md)
+- [Noise-Aware Few-Shot Learning through Bi-directional Multi-View Prompt Alignment](noise-aware_few-shot_learning_through_bi-directional_multi-view_prompt_alignment.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
+
+<!-- RELATED:END -->

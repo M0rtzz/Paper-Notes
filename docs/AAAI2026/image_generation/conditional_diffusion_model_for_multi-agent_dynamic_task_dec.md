@@ -110,3 +110,15 @@ CD3T 是两层层次化 MARL：(1) 用条件扩散模型预训练动作语义表
 - 实验充分度: ⭐⭐⭐⭐ LBF + SMAC(8场景) + SMACv2(3场景) + 消融 + 可视化，比较全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，理论推导严谨（Theorem 1 证明 IGM），可视化出色
 - 价值: ⭐⭐⭐⭐ 为 MARL 中的子任务发现提供了新的技术路线（扩散模型），Super Hard 场景的性能提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-agent Coordination via Flow Matching](../../ICLR2026/image_generation/multi-agent_coordination_via_flow_matching.md)
+- [Diff-V2M: A Hierarchical Conditional Diffusion Model with Explicit Rhythmic Modeling for Video-to-Music Generation](diff-v2m_a_hierarchical_conditional_diffusion_model_with_explicit_rhythmic_model.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2026/image_generation/codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+- [JointDiff: Bridging Continuous and Discrete in Multi-Agent Trajectory Generation](../../ICLR2026/image_generation/jointdiff_bridging_continuous_and_discrete_in_multi-agent_trajectory_generation.md)
+- [Backdoors in Conditional Diffusion: Threats to Responsible Synthetic Data Pipelines](backdoors_in_conditional_diffusion_threats_to_responsible_synthetic_data_pipelin.md)
+
+<!-- RELATED:END -->

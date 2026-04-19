@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖 ShapeNet 单类、多类和 G-Objaverse 开放词汇三个层级，消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题motivation清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐ 数据集+方法的组合贡献对 3D 生成领域有实质推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)
+- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](../../AAAI2026/others/learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
+- [Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification](adaptive_highfrequency_transformer_for_diverse_wildlife_reid.md)
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](../../CVPR2026/others/order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+
+<!-- RELATED:END -->

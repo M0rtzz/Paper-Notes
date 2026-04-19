@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ M-BEIR 全任务评估，消融清晰，但缺少与更多向量检索方法的对比
 - 写作质量: ⭐⭐⭐⭐ 框架讲解清楚，三阶段训练逻辑连贯
 - 价值: ⭐⭐⭐⭐ 对大规模多模态检索系统有重要启示，但精度差距限制了即时应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalized Contrastive Learning for Universal Multimodal Retrieval](../../NeurIPS2025/information_retrieval/generalized_contrastive_learning_for_universal_multimodal_re.md)
+- [OneRestore: A Universal Restoration Framework for Composite Degradation](../../ECCV2024/information_retrieval/onerestore_a_universal_restoration_framework_for_composite_degradation.md)
+- [CART: A Generative Cross-Modal Retrieval Framework with Coarse-To-Fine Semantic Modeling](../../ACL2025/information_retrieval/cart_a_generative_cross-modal_retrieval_framework_with_coarse-to-fine_semantic_m.md)
+- [LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
+- [On Synthetic Data Strategies for Domain-Specific Generative Retrieval](../../ACL2025/information_retrieval/on_synthetic_data_strategies_for_domain-specific_generative_retrieval.md)
+
+<!-- RELATED:END -->

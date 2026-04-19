@@ -121,3 +121,15 @@ $$\mathcal{L} = -\log P(A | \{\boldsymbol{h}_k^m | f_k \in \mathcal{K}\} \cup \{
 - 实验充分度: ⭐⭐⭐⭐ 5个基准+自建VideoNIAH+4个VLM注意力分析（缓存截断）
 - 写作质量: ⭐⭐⭐⭐⭐ Preliminary Studies 驱动方法设计，逻辑清晰，结构严谨
 - 价值: ⭐⭐⭐⭐⭐ 10K帧处理是实际应用的刚需，方向明确且实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Specialized Visual Encoders for Video Language Models](unifying_specialized_visual_encoders_for_video_language_models.md)
+- [Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](../../AAAI2026/video_understanding/listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Factorized Learning for Temporally Grounded Video-Language Models](../../ICCV2025/video_understanding/factorized_learning_for_temporally_grounded_video-language_models.md)
+- [Efficient Transfer Learning for Video-language Foundation Models](../../CVPR2025/video_understanding/efficient_transfer_learning_for_video-language_foundation_models.md)
+
+<!-- RELATED:END -->

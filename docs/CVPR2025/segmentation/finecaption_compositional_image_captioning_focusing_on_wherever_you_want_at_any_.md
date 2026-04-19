@@ -112,3 +112,15 @@ CompositionCap 数据集统计：
 - 实验充分度: ⭐⭐⭐⭐ 数据集构建扎实，多基线对比充分，但缺少更多定量消融
 - 写作质量: ⭐⭐⭐⭐ 任务定义清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ CompositionCap 数据集和多粒度区域描述任务定义有重要的研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Holmes-VAU: Towards Long-term Video Anomaly Understanding at Any Granularity](holmes-vau_towards_long-term_video_anomaly_understanding_at_any_granularity.md)
+- [Panoptic Captioning: An Equivalence Bridge for Image and Text](../../NeurIPS2025/segmentation/panoptic_captioning_an_equivalence_bridge_for_image_and_text.md)
+- [VSC: Visual Search Compositional Text-to-Image Diffusion Model](../../ICCV2025/segmentation/vsc_visual_search_compositional_text-to-image_diffusion_model.md)
+- [SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)
+- [Refer to Any Segmentation Mask Group With Vision-Language Prompts](../../ICCV2025/segmentation/refer_to_any_segmentation_mask_group_with_vision-language_prompts.md)
+
+<!-- RELATED:END -->

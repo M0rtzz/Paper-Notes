@@ -132,3 +132,15 @@ GSO 数据集新视角合成：
 - **实验充分性** ⭐⭐⭐⭐⭐：主实验 + 丰富消融（表示/损失/融合策略/视角数），定性对比清晰
 - **清晰度** ⭐⭐⭐⭐⭐：方法描述清晰，流程图直观
 - **实用价值** ⭐⭐⭐⭐：数秒级生成高质量 3D 对象，工业可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Floating No More: Object-Ground Reconstruction from a Single Image](floating_no_more_object-ground_reconstruction_from_a_single_image.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [Disco4D: Disentangled 4D Human Generation and Animation from a Single Image](disco4d_disentangled_4d_human_generation_and_animation_from_a_single_image.md)
+
+<!-- RELATED:END -->

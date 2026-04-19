@@ -137,4 +137,14 @@ AdaptiveAE的pipeline分为两部分：**训练**和**推理**。
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题动机阐述充分，公式推导完整，但部分符号较多需要反复对照
 - 价值: ⭐⭐⭐⭐ 实用价值高——拍摄端优化的思路比后处理更根本，有向手机/相机部署的潜力，但需要硬件集成才能真正落地
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm](afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons.md)
+- [Recovering Parametric Scenes from Very Few Time-of-Flight Pixels](recovering_parametric_scenes_from_very_few_time-of-flight_pixels.md)
+- [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](../../ACL2025/others/inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
+- [Intrinsic Single-Image HDR Reconstruction](../../ECCV2024/others/intrinsic_single-image_hdr_reconstruction.md)
+- [AutoAL: Automated Active Learning with Differentiable Query Strategy Search](../../ICML2025/others/autoal_automated_active_learning_with_differentiable_query_strategy_search.md)
+
+<!-- RELATED:END -->

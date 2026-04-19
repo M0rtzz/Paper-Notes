@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 综述论文无自有实验，但文献覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，分类学展示专业，文献组织有条理
 - 价值: ⭐⭐⭐⭐ 对 LLM 规划研究者和 Agent 开发者有较高参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+- [DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services](disco_device-server_collaborative_llm-based_text_streaming_services.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+- [Classifying Unreliable Narrators with Large Language Models](classifying_unreliable_narrators.md)
+- [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
+
+<!-- RELATED:END -->

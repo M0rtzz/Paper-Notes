@@ -142,3 +142,15 @@ $$d_{\text{ECT}}(X, Y) := \inf_{\rho \in \text{SO}(n)} \|\text{ECT}(X) - \text{E
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 10 个数据集、多种对比方法，但缺少大规模图实验
 - 写作质量: ⭐⭐⭐⭐ — 数学严谨，理论与实验组织清晰
 - 价值: ⭐⭐⭐⭐ — 为拓扑方法在图学习中的应用开辟新方向，但可扩展性待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Does Graph Prompt Work? A Data Operation Perspective with Theoretical Analysis](does_graph_prompt_work_a_data_operation_perspective_with_theoretical_analysis.md)
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+- [DuetGraph: Coarse-to-Fine Knowledge Graph Reasoning with Dual-Pathway Global-Local Fusion](../../NeurIPS2025/graph_learning/duetgraph_coarse-to-fine_knowledge_graph_reasoning_with_dual-pathway_global-loca.md)
+- [Principled Data Augmentation for Learning to Solve Quadratic Programming Problems](../../NeurIPS2025/graph_learning/principled_data_augmentation_for_learning_to_solve_quadratic_programming_problem.md)
+- [Format as a Prior: Quantifying and Analyzing Bias in LLMs for Heterogeneous Data](../../AAAI2026/graph_learning/format_as_a_prior_quantifying_and_analyzing_bias_in_llms_for_heterogeneous_data.md)
+
+<!-- RELATED:END -->

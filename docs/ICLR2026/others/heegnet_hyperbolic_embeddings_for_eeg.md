@@ -114,3 +114,15 @@ HEEGNet = 欧几里得编码器(时间→空间→时间卷积) → 投影到双
 - 实验充分度: ⭐⭐⭐⭐⭐ 先验研究→多数据集→多任务→消融全面
 - 写作质量: ⭐⭐⭐⭐ 背景知识介绍充分，方法描述清晰
 - 价值: ⭐⭐⭐⭐ 为EEG解码引入新的几何视角，开辟双曲EEG方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
+- [Better Embeddings with Coupled Adam](../../ACL2025/others/better_embeddings_with_coupled_adam.md)
+- [CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding](../../AAAI2026/others/cat-net_a_cross-attention_tone_network_for_cross-subject_eeg-emg_fusion_tone_dec.md)
+- [Partial Colexifications Improve Concept Embeddings](../../ACL2025/others/partial_colexifications_improve_concept_embeddings.md)
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](../../ICCV2025/others/learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
+
+<!-- RELATED:END -->

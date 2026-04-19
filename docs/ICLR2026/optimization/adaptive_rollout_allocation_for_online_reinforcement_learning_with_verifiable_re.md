@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型多预算多基线对比
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，Theorem 有闭式解
 - 价值: ⭐⭐⭐⭐⭐ 为 GRPO/RLOO 训练提供了即插即用的效率提升工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+- [Dynamic Momentum Recalibration in Online Gradient Learning](../../CVPR2026/optimization/dynamic_momentum_recalibration_in_online_gradient_learning.md)
+- [Online Two-Stage Submodular Maximization](../../NeurIPS2025/optimization/online_two-stage_submodular_maximization.md)
+- [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
+- [Optimistic Online-to-Batch Conversions for Accelerated Convergence and Universality](../../NeurIPS2025/optimization/optimistic_online-to-batch_conversions_for_accelerated_convergence_and_universal.md)
+
+<!-- RELATED:END -->

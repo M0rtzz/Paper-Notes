@@ -139,3 +139,15 @@ $$\mathbf{W}_2^u = [(\mathbf{W}^u)^\top, (\mathbf{W}^u)^\top, (\mathbf{W}^u)^\to
 - 技术深度：⭐⭐⭐ — 方法直观，理论分析相对简单
 - 实验完整性：⭐⭐⭐⭐⭐ — 从头训练和预训练微调双验证，覆盖类条件和文本到图像
 - 实用价值：⭐⭐⭐⭐⭐ — 即插即用，低成本微调即可获得显著加速
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Next Visual Granularity Generation](next_visual_granularity_generation.md)
+- [Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
+- [SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
+- [K-Sort Eval: Efficient Preference Evaluation for Visual Generation via Corrected VLM-as-a-Judge](k-sort_eval_efficient_preference_evaluation_for_visual_generation_via_corrected_.md)
+- [RMFlow: Refined Mean Flow by a Noise-Injection Step for Multimodal Generation](rmflow_refined_mean_flow_by_a_noise-injection_step_for_multimodal_generation.md)
+
+<!-- RELATED:END -->

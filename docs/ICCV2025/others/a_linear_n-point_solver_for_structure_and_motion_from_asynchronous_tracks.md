@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 仿真+真实数据、三种传感器模态、多序列验证，但缺少大规模应用
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨清晰，理论分析完整，实验逻辑连贯
 - 价值: ⭐⭐⭐⭐ 为事件相机时代的几何视觉奠定重要理论基础，具有长远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Harmonic Structure of Information Contours](../../ACL2025/others/the_harmonic_structure_of_information_contours.md)
+- [Recover Biological Structure from Sparse-View Diffraction Images with Neural Volumetric Prior](recover_biological_structure_from_sparse-view_diffraction_images_with_neural_vol.md)
+- [From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)
+- [Generalized Linear Mode Connectivity for Transformers](../../NeurIPS2025/others/generalized_linear_mode_connectivity_for_transformers.md)
+- [Using Shapley Interactions to Understand How Models Use Structure](../../ACL2025/others/using_shapley_interactions_to_understand_how_models_use_structure.md)
+
+<!-- RELATED:END -->

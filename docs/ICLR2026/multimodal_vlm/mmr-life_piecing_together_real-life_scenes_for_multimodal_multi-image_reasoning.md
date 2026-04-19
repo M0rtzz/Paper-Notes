@@ -178,3 +178,15 @@ MMR-Life 是一个多图多模态推理评估基准，核心设计：
 ## 总结
 
 MMR-Life 是首个面向真实生活场景的多模态多图推理基准，系统覆盖 7 种推理类型和 21 个任务。通过对 37 个 MLLM 的大规模评估，揭示了当前模型在空间/时序/因果推理上的显著瓶颈（GPT-5 仅 58.69% vs 人类 72.28%），并发现推理增强方法在大模型上失效、开源 thinking 模型泛化不足等关键洞察。该基准为评估和改进下一代多模态推理系统提供了重要基础。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Multi-Image Understanding through Delimiter Token Scaling](enhancing_multi-image_understanding_through_delimiter_token_scaling.md)
+- [Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes](seeing_across_views_benchmarking_spatial_reasoning_of_vision-language_models_in_.md)
+- [Reasoning-Driven Multimodal LLM for Domain Generalization](reasoning-driven_multimodal_llm_for_domain_generalization.md)
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](../../ACL2025/multimodal_vlm/real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+- [Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

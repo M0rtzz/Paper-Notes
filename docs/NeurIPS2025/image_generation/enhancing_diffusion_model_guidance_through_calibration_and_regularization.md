@@ -169,3 +169,15 @@ JS 散度取得最优 FID 2.13，无需重训练扩散模型或分类器。
 - 实验充分度: ⭐⭐⭐ — Workshop 论文规模，仅 128×128 分辨率，缺少大规模验证
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，Proposition 链条完整，直觉解释到位
 - 价值: ⭐⭐⭐⭐ — 零成本即插即用的引导改进具有极强实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Increasing the Utility of Synthetic Images through Chamfer Guidance](increasing_the_utility_of_synthetic_images_through_chamfer_guidance.md)
+- [Beyond One-Hot Labels: Semantic Mixing for Model Calibration](../../ICML2025/image_generation/beyond_one-hot_labels_semantic_mixing_for_model_calibration.md)
+- [Generative Model Inversion Through the Lens of the Manifold Hypothesis](generative_model_inversion_through_the_lens_of_the_manifold_hypothesis.md)
+- [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
+- [Tortoise and Hare Guidance: Accelerating Diffusion Model Inference with Multirate Integration](tortoise_and_hare_guidance_accelerating_diffusion_model_inference_with_multirate.md)
+
+<!-- RELATED:END -->

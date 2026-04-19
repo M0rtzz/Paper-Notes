@@ -157,3 +157,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 自动指标+人类评估+详尽消融(组件/数据量/推理)
 - **写作质量**: ⭐⭐⭐⭐⭐ 逻辑清晰，图表精美，实验设计科学
 - **价值**: ⭐⭐⭐⭐⭐ 数据集和方法均有高实用价值，推理引导归一化技巧可广泛应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-party Collaborative Attention Control for Image Customization](../../CVPR2025/image_generation/multi-party_collaborative_attention_control_for_image_customization.md)
+- [Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning](holistic_unlearning_benchmark_a_multi-faceted_evaluation_for_text-to-image_diffu.md)
+- [Fast Data Attribution for Text-to-Image Models](../../NeurIPS2025/image_generation/fast_data_attribution_for_text-to-image_models.md)
+- [PureCC: Pure Learning for Text-to-Image Concept Customization](../../CVPR2026/image_generation/purecc_pure_learning_for_text-to-image_concept_customization.md)
+- [MMAIF: Multi-task and Multi-degradation All-in-One for Image Fusion with Language Guidance](mmaif_multi-task_and_multi-degradation_all-in-one_for_image_fusion_with_language.md)
+
+<!-- RELATED:END -->

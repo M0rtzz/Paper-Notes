@@ -115,3 +115,15 @@ LLM 最后一层隐状态 $\mathbf{h} \in \mathbb{R}^d$ 经输出权重矩阵 $\
 - 实验充分度: ⭐⭐⭐⭐ 理论验证+prompt分析+ICL分析+文本生成分析，但模型多样性不足
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，但行文略冗长
 - 价值: ⭐⭐⭐⭐ 提供了一个新的 LLM 分析视角，对 prompt 工程和可靠性评估有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models](infinity_and_beyond_compositional_alignment_in_var_and_diffusion_t2i_models.md)
+- [Verifier-Constrained Flow Expansion for Discovery Beyond the Data](verifier-constrained_flow_expansion_for_discovery_beyond_the_data.md)
+- [Improving Discrete Diffusion Unmasking Policies Beyond Explicit Reference Policies (UPO)](improving_discrete_diffusion_unmasking_policies_beyond_explicit_reference_polici.md)
+- [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](../../CVPR2026/image_generation/improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
+- [QVGen: Pushing the Limit of Quantized Video Generative Models](qvgen_pushing_the_limit_of_quantized_video_generative_models.md)
+
+<!-- RELATED:END -->

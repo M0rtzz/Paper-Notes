@@ -125,4 +125,14 @@ tags:
 | 影响力 | ★★★★☆ | 为NL-FOL翻译社区建立了更可靠的评估标准，对AI安全形式化验证有潜在推动 |
 | 总分 | 8.2/10 | 侧重评估方法论革新的高质量工作，为LLM逻辑能力评估提供了重要新视角 |
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [Do Emotions Really Affect Argument Convincingness? A Dynamic Approach with LLM-based Manipulation Checks](../../ACL2025/robotics/do_emotions_really_affect_argument_convincingness_a_dynamic_approach_with_llm-ba.md)
+- [What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering](../../ICLR2026/robotics/whats_the_plan_metrics_for_implicit_planning_in_llms_and_their_application_to_rh.md)
+- [Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](../../NeurIPS2025/robotics/toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
+- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](../../ICLR2026/robotics/robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+- [Tracing and Reversing Edits in LLMs](../../ICLR2026/robotics/tracing_and_reversing_edits_in_llms.md)
+
+<!-- RELATED:END -->

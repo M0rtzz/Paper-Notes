@@ -119,3 +119,15 @@ CoMemo基于InternVL2架构，使用InternLM-1.8B做LLM backbone、InternViT-300
 - 写作质量: ⭐⭐⭐⭐ 设计思考(Section 2)的分析驱动式写作值得学习
 - 价值: ⭐⭐⭐⭐ 对LVLM架构设计有明确指导意义
 - 总体: ⭐⭐⭐⭐ 双路径视觉处理的开创性工作，三阶段训练策略具有重要方法论价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](../../CVPR2025/multimodal_vlm/cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
+- [What's in the Image? A Deep-Dive into the Vision of Vision Language Models](../../CVPR2025/multimodal_vlm/whats_in_the_image_a_deep-dive_into_the_vision_of_vision_language_models.md)
+- [Why LVLMs Are More Prone to Hallucinations in Longer Responses: The Role of Context](../../ICCV2025/multimodal_vlm/why_lvlms_are_more_prone_to_hallucinations_in_longer_responses_the_role_of_conte.md)
+- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](../../CVPR2025/multimodal_vlm/identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+- [Towards Rationale-Answer Alignment of LVLMs via Self-Rationale Calibration](towards_rationale-answer_alignment_of_lvlms_via_self-rationale_calibration.md)
+
+<!-- RELATED:END -->

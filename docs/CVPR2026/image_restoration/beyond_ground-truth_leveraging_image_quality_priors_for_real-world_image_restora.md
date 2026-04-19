@@ -118,3 +118,15 @@ WebPhoto-Test和WIDER-Test上同样全面领先。
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多指标、消融充分，plug-and-play验证有说服力
 - 写作质量: ⭐⭐⭐⭐ 动机图(GT质量分布)直观有力
 - 价值: ⭐⭐⭐⭐⭐ 通用质量引导策略，对修复领域有广泛影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond the Ground Truth: Enhanced Supervision for Image Restoration](beyond_the_ground_truth_enhanced_supervision_for_image_restoration.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+- [TM-BSN: Triangular-Masked Blind-Spot Network for Real-World Self-Supervised Image Denoising](tm-bsn_triangular-masked_blind-spot_network_for_real-world_self-supervised_image.md)
+- [ShiftLUT: Spatial Shift Enhanced Look-Up Tables for Efficient Image Restoration](shiftlut_spatial_shift_enhanced_look-up_tables_for_efficient_image_restoration.md)
+
+<!-- RELATED:END -->

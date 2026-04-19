@@ -183,3 +183,15 @@ $$\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x, y_w,
 | 实验充分性 | 4 | 在多任务上验证互补性，但基准测试覆盖面可更广 |
 | 写作质量 | 4 | 论述清晰，"frustratingly simple"的命名精准传达核心信息 |
 | **综合** | **4.0** | 以极简方法取得显著效果，对偏好学习实践有重要指导意义 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
+- [MultiTab: A Scalable Foundation for Multitask Learning on Tabular Data](../../AAAI2026/recommender/multitab_a_scalable_foundation_for_multitask_learning_on_tabular_data.md)
+- [Measuring What Matters: Construct Validity in Large Language Model Benchmarks](../../NeurIPS2025/recommender/measuring_what_matters_construct_validity_in_large_language_model_benchmarks.md)
+- [LCRON: Learning Cascade Ranking as One Network](learning_cascade_ranking_as_one_network.md)
+- [Adaptive Elicitation of Latent Information Using Natural Language](adaptive_elicitation_of_latent_information_using_natural_language.md)
+
+<!-- RELATED:END -->

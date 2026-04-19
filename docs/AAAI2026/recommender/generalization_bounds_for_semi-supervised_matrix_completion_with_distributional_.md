@@ -119,3 +119,15 @@ DAMC（Distributionally Aware Matrix Completion）算法分两步：
 - **实验充分度** ⭐⭐⭐：合成实验精心设计但真实实验较单薄
 - **写作质量** ⭐⭐⭐⭐：数学推导严谨清晰，假设讨论充分
 - **价值** ⭐⭐⭐⭐：为推荐系统隐式/显式反馈联合利用提供了坚实的理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling](semi-supervised_synthetic_data_generation_with_fine-grained_relevance_control_fo.md)
+- [FreqRec: Exploiting Inter-Session Information with Frequency-enhanced Dual-Path Networks for Sequential Recommendation](exploiting_inter-session_information_with_frequency-enhanced_dual-path_networks_.md)
+- [PAC-Bayes Bounds for Multivariate Linear Regression and Linear Autoencoders](../../NeurIPS2025/recommender/pac-bayes_bounds_for_multivariate_linear_regression_and_linear_autoencoders.md)
+- [Adaptive Elicitation of Latent Information Using Natural Language](../../ICML2025/recommender/adaptive_elicitation_of_latent_information_using_natural_language.md)
+- [Recommendations with Sparse Comparison Data: Provably Fast Convergence for Nonconvex Matrix Factorization](../../ICML2025/recommender/recommendations_with_sparse_comparison_data_provably_fast_convergence_for_noncon.md)
+
+<!-- RELATED:END -->

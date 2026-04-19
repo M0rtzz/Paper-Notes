@@ -139,3 +139,15 @@ DisTime由五个核心组件构成：视觉编码器+投影器、文本编码器
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖MR/DVC/Grounded-VQA三类任务+通用QA，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ 结构完整，方法描述清楚
 - **价值**: ⭐⭐⭐⭐⭐ 解决了Video-LLM的关键短板，数据集贡献巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Effective Tokens with Video Anomaly in Large Language Models](aligning_effective_tokens_with_video_anomaly_in_large_language_models.md)
+- [Seeing the Arrow of Time in Large Multimodal Models](../../NeurIPS2025/video_understanding/seeing_the_arrow_of_time_in_large_multimodal_models.md)
+- [4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding](4dbench_benchmarking_multimodal_large_language_models_for_4d.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Factorized Learning for Temporally Grounded Video-Language Models](factorized_learning_for_temporally_grounded_video-language_models.md)
+
+<!-- RELATED:END -->

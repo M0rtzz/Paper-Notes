@@ -115,3 +115,15 @@ BNN通过最小化ELBO训练：$\text{KL}(q_t(\boldsymbol{\theta}) \| \mathcal{P
 - 实验充分度: ⭐⭐⭐⭐ 18个数据集+用户研究+计算可扩展性分析，多角度验证
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，理论推导严谨，实验展示全面
 - 价值: ⭐⭐⭐ 实际应用场景明确但需要LLM API成本，方法通用性较好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfoCom: Kilobyte-Scale Communication-Efficient Collaborative Perception with Information-Aware Feature Compression](../../AAAI2026/model_compression/infocom_kilobyte-scale_communication-efficient_collaborative_perception_with_inf.md)
+- [Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
+- [Incentivizing Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](incentivizing_agentic_reasoning_in_llm_judges_via_tool-integrated_reinforcement_.md)
+- [Evolution and compression in LLMs: On the emergence of human-aligned categorization](evolution_and_compression_in_llms_on_the_emergence_of_human-aligned_categorizati.md)
+- [A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
+
+<!-- RELATED:END -->

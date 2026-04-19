@@ -170,3 +170,15 @@ $\textsf{GF}\varphi$ 直接构造 vs 最先进约简方法（Table 2）：
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 6 类模式 8+ 来源的全面基准，但缺少端到端规划实验
 - 写作质量: ⭐⭐⭐⭐ — 变换管道清晰，但形式化定义密度高，需要自动机理论背景
 - 价值: ⭐⭐⭐⭐⭐ — 对 LTL 规划、概率验证、RL 均有直接影响的基础性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeepProofLog: Efficient Proving in Deep Stochastic Logic Programs](deepprooflog_efficient_proving_in_deep_stochastic_logic_programs.md)
+- [Efficient Multiagent Planning via Shared Action Suggestions](efficient_multiagent_planning_via_shared_action_suggestions.md)
+- [Horizon Reduction Makes RL Scalable](../../NeurIPS2025/reinforcement_learning/horizon_reduction_makes_rl_scalable.md)
+- [Anticipatory Planning for Multimodal AI Agents](../../CVPR2026/reinforcement_learning/anticipatory_planning_for_multimodal_ai_agents.md)
+- [SUSD: Structured Unsupervised Skill Discovery through State Factorization](../../ICLR2026/reinforcement_learning/susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
+
+<!-- RELATED:END -->

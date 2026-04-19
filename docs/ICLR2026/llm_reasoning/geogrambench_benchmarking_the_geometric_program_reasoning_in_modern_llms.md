@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 19个模型广泛评测，含行为分析、微调消融、CoT分析、绘图语言对比
 - 写作质量: ⭐⭐⭐⭐ 结构完整，研究问题驱动分析，图表丰富清晰
 - 价值: ⭐⭐⭐⭐ 揭示LLM空间推理的根本性短板，对未来模型设计有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TopoBench: Benchmarking LLMs on Hard Topological Reasoning](topobench_benchmarking_llms_on_hard_topological_reasoning.md)
+- [RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
+- [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
+- [DAG-Math: Graph-of-Thought Guided Mathematical Reasoning in LLMs](dag-math_graph-of-thought_guided_mathematical_reasoning_in_llms.md)
+- [Plan and Budget: Effective and Efficient Test-Time Scaling on Reasoning LLMs](plan_and_budget_effective_and_efficient_test-time_scaling_on_reasoning_large_lan.md)
+
+<!-- RELATED:END -->

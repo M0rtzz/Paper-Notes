@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型 + 多策略 + 安全护栏测试 + token 分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，评估严谨（F1 优化阈值、Perfect-ASR）
 - 价值: ⭐⭐⭐⭐⭐ 对红队实践和安全防御设计都有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
+- [Red Queen: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking](red_queen_safeguarding_large_language_models_against_concealed_multi-turn_jailbr.md)
+- [Expectation Confirmation Preference Optimization for Multi-Turn Conversational Recommendation Agent](expectation_confirmation_preference_optimization_for_multi-turn_conversational_r.md)
+- [LLMs Caught in the Crossfire: Malware Requests and Jailbreak Challenges](llms_caught_in_the_crossfire_malware_requests_and_jailbreak_challenges.md)
+- [JailbreakRadar: Comprehensive Assessment of Jailbreak Attacks Against LLMs](jailbreakradar_comprehensive_assessment_jailbreak_attacks.md)
+
+<!-- RELATED:END -->

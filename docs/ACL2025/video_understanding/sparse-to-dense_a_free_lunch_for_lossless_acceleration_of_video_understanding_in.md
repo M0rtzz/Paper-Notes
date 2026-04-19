@@ -123,3 +123,15 @@ StD是完全无训练的方法。超参数设置：KV缓存总量 $K + m_t = 102
 - 实验充分度: ⭐⭐⭐⭐ 两个主流Video-LLM、两个benchmark、三个baseline，实验完整
 - 写作质量: ⭐⭐⭐⭐ 观察→理论→方法→实验的逻辑链清晰
 - 价值: ⭐⭐⭐⭐ 即插即用、无损加速的实用价值高，研究思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoNSA: Native Sparse Attention Scales Video Understanding](../../ICLR2026/video_understanding/videonsa_native_sparse_attention_scales_video_understanding.md)
+- [DynFocus: Dynamic Cooperative Network Empowers LLMs with Video Understanding](../../CVPR2025/video_understanding/dynfocus_dynamic_cooperative_network_empowers_llms_with_video_understanding.md)
+- [Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](../../NeurIPS2025/video_understanding/enhancing_temporal_understanding_in_videollms_through_stacke.md)
+- [BehaviorVLM: Unified Finetuning-Free Behavioral Understanding with Vision-Language Reasoning](../../CVPR2025/video_understanding/behaviorvlm_unified_finetuning-free_behavioral_understanding_with_vision-languag.md)
+- [ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)
+
+<!-- RELATED:END -->

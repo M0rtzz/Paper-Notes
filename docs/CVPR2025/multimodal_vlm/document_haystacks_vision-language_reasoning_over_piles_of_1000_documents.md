@@ -132,3 +132,15 @@ GPT-4o 直接处理 200 张文档准确率仅 23.85%，加 V-RAG 后飙升至 72
 ## 评分
 
 ⭐⭐⭐⭐ — 基准设计严谨、方法思路清晰、实验全面。V-RAG 本身技术含量不算前沿（主要是工程组合），但基准的贡献和暴露的问题（LMM 长上下文弱点、语言偏见）很有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal OCR: Parse Anything from Documents](multimodal_ocr_parse_anything_from_documents.md)
+- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](../../ACL2025/multimodal_vlm/longdocurl_multimodal_long_doc.md)
+- [DocThinker: Explainable Multimodal Large Language Models with Rule-based Reinforcement Learning for Document Understanding](../../ICCV2025/multimodal_vlm/docthinker_explainable_multimodal_large_language_models_with.md)
+- [FinMMDocR: Benchmarking Financial Multimodal Reasoning with Scenario Awareness, Document Understanding, and Multi-Step Computation](../../AAAI2026/multimodal_vlm/finmmdocr_benchmarking_financial_multimodal_reasoning_with_scenario_awareness_do.md)
+- [Relation-Rich Visual Document Generator for Visual Information Extraction](relation-rich_visual_document_generator_for_visual_information_extraction.md)
+
+<!-- RELATED:END -->

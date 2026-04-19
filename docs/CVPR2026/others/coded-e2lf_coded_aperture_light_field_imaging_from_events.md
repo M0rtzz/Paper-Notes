@@ -165,3 +165,15 @@ Coded-E2LF 系统由三部分组成：**(1)** 硬件层——可编程光圈 + e
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，从物理模型到系统设计逻辑通顺
 - 价值: ⭐⭐⭐⭐⭐ — 开辟了 event-based 计算光场成像新方向，理论贡献与工程实践俱全
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting the Predictability of Performative, Social Events](../../ICML2025/others/revisiting_the_predictability_of_performative_social_events.md)
+- [Spike Imaging Velocimetry: Dense Motion Estimation of Fluids Using Spike Cameras](../../AAAI2026/others/spike_imaging_velocimetry_dense_motion_estimation_of_fluids_using_spike_cameras.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sensors_from_deterministic_to_gen.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_widefield_and_highdynamic_range.md)
+- [Neural Force Field: Few-shot Learning of Generalized Physical Reasoning](../../ICLR2026/others/neural_force_field_few-shot_learning_of_generalized_physical_reasoning.md)
+
+<!-- RELATED:END -->

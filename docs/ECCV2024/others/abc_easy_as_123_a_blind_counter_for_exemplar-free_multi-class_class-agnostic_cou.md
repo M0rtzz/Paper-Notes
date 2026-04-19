@@ -98,3 +98,15 @@ ABC123的核心思路是"先盲数，再解释"——先不依赖任何样例，
 - 实验充分度: ⭐⭐⭐⭐ MCAC和FSC-147双数据集验证，消融实验覆盖头数/骨干/训练集，但缺少真实多类场景的评估
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法描述流畅，图示丰富直观
 - 价值: ⭐⭐⭐⭐ 开辟了多类无样例计数这一新赛道，MCAC数据集有持续影响力，但实际部署价值受限于合成-真实gap
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)
+- [AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](../../ACL2025/others/analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)
+- [STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)
+- [Rethinking Data Bias: Dataset Copyright Protection via Embedding Class-Wise Hidden Bias](rethinking_data_bias_dataset_copyright_protection_via_embedding_class-wise_hidde.md)
+- [Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)
+
+<!-- RELATED:END -->

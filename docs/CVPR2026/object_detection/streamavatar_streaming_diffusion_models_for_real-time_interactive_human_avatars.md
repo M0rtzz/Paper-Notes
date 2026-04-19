@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 对比全面、消融详实、有用户研究和实时性能分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，技术细节描述到位
 - 价值: ⭐⭐⭐⭐⭐ 实时交互数字人是刚需，20 秒/5 秒的速度使实际部署成为可能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)
+- [Diffusion Curriculum: Synthetic-to-Real Data Curriculum via Image-Guided Diffusion](../../ICCV2025/object_detection/diffusion_curriculum_synthetic-to-real_data_curriculum_via_image-guided_diffusio.md)
+- [YOLOE: Real-Time Seeing Anything](../../ICCV2025/object_detection/yoloe_realtime_seeing_anything.md)
+- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
+- [An Overall Real-Time Mechanism for Classification and Quality Evaluation of Rice](../../AAAI2026/object_detection/an_overall_real-time_mechanism_for_classification_and_quality_evaluation_of_rice.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ FairFAL 在所有数据集和异构性设置下均一致优于所有基线，且
 - **实验充分度**: ⭐⭐⭐⭐ 5个数据集、多种配置、统计检验、消融完整
 - **写作质量**: ⭐⭐⭐⭐⭐ 论文结构极好：观察→设计→验证，叙述流畅
 - **价值**: ⭐⭐⭐⭐ 填补了 FAL 在极端不平衡+非IID 场景下的空白，对实际部署有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FecalFed: Privacy-Preserving Poultry Disease Detection via Federated Learning](fecalfed_privacy-preserving_poultry_disease_detection_via_federated_learning.md)
+- [FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation](fedafd_multimodal_federated_learning_via_adversarial_fusion_and_distillation.md)
+- [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](domain-skewed_federated_learning_with_feature_decoupling_and_calibration.md)
+- [FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)
+- [ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)
+
+<!-- RELATED:END -->

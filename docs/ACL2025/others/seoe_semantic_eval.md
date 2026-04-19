@@ -169,3 +169,15 @@ SEOE 由两部分组成：**可扩展评估 benchmark** + **语义评估指标**
 | 写作质量 | 8 | 结构清晰，问题定义和解决方案对应精准 |
 | 实用价值 | 9 | 对 ODED 领域有基础设施级别的贡献 |
 | 总分 | 8 | 高质量评估框架工作，对领域发展有重要推动作用 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identifying Reliable Evaluation Metrics for Scientific Text Revision](reliable_eval_metrics_scientific.md)
+- [Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection](explaining_matters_leveraging_definitions_and_semantic_expansion_for_sexism_dete.md)
+- [DoMIX: An Efficient Framework for Exploiting Domain Knowledge in Fine-Tuning](domix_an_efficient_framework_for_exploiting.md)
+- [Explicit and Implicit Data Augmentation for Social Event Detection](explicit_and_implicit_data_augmentation_for_social_event_detection.md)
+- [SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)
+
+<!-- RELATED:END -->

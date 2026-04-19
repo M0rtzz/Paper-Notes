@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ (多基线对比+SUN2CAD新基准+详尽消融+超参分析)
 - 写作质量: ⭐⭐⭐⭐ (问题定义清晰，流程图直观)
 - 价值: ⭐⭐⭐⭐⭐ (零样本泛化能力使实际部署可行性大增)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zero-shot_single-view_3d_indoor_scene_modeling.md)
+- [MonoMobility: Zero-Shot 3D Mobility Analysis from Monocular Videos](monomobility_zero-shot_3d_mobility_analysis_from_monocular_videos.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](../../ECCV2024/3d_vision/zest_zero-shot_material_transfer_from_a_single_image.md)
+- [ZeroStereo: Zero-shot Stereo Matching from Single Images](zerostereo_zero-shot_stereo_matching_from_single_images.md)
+- [BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes](buffer-x_towards_zero-shot_point_cloud_registration_in_diverse_scenes.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ ReSCORE 在一个迭代 RAG 框架内工作：给定问题 $q$，系统迭代地
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多个消融维度、与多种方法交叉对比、统计显著性测试，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰、公式推导流畅、例子生动（FIFA World Cup 的假阳性例子），minor issue 是 table 较多
 - 对我的价值: ⭐⭐⭐⭐ 对 RAG 系统中 retriever 训练方法有参考价值，尤其是 "伪标签优于 GT" 的发现和 relevance-consistency 解耦思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Critique Guided Iterative Reasoning for Multi-hop Question Answering](self-critique_guided_iterative_reasoning_for_multi-hop_question_answering.md)
+- [Multi-Hop Reasoning for Question Answering with Hyperbolic Representations](multi-hop_reasoning_for_question_answering_with_hyperbolic_representations.md)
+- [BELLE: A Bi-Level Multi-Agent Reasoning Framework for Multi-Hop Question Answering](belle_a_bi-level_multi-agent_reasoning_framework_for_multi-hop_question_answerin.md)
+- [iQUEST: An Iterative Question-Guided Framework for Knowledge Base Question Answering](iquest_an_iterative_question-guided_framework_for_knowledge_base_question_answer.md)
+- [Generating Diverse Training Samples for Relation Extraction with Large Language Models](generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+
+<!-- RELATED:END -->

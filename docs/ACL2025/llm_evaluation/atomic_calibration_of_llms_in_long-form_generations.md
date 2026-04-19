@@ -122,3 +122,15 @@ tags:
 - **实验充分度**: 8/10 — 7 个模型、3 个数据集、5 种方法、多种融合策略，分析维度丰富(模型大小、生成位置、方法对齐)
 - **清晰度**: 8/10 — 概念定义清晰，实验结果呈现系统化，图表辅助理解
 - **总分**: 7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Objective Fine-tuning: How LLMs' Prior Knowledge Causes Potential Poor Calibration?](towards_objective_fine-tuning_how_llms_prior_knowledge_causes_potential_poor_cal.md)
+- [GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration](grace_a_granular_benchmark_for_evaluating_model_calibration_against_human_calibr.md)
+- [Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation](../../NeurIPS2025/llm_evaluation/beyond_the_singular_revealing_the_value_of_multiple_generations_in_benchmark_eva.md)
+- [Measuring Uncertainty Calibration](../../ICLR2026/llm_evaluation/measuring_uncertainty_calibration.md)
+- [Improving the Calibration of Confidence Scores in Text Generation Using the Output Distribution's Characteristics](calibration_confidence_text_gen.md)
+
+<!-- RELATED:END -->

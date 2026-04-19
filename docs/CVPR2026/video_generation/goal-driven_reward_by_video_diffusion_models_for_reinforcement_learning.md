@@ -112,3 +112,15 @@ GenReward 包含三个阶段：(a) 微调预训练视频扩散模型（CogVideoX
 - 实验充分度: ⭐⭐⭐⭐ 有完整的消融和敏感性分析，但测试环境较简单，缺少真实机器人实验
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，算法伪代码完整
 - 价值: ⭐⭐⭐⭐ 为RL中利用生成模型先验提供了新范式，但实际应用价值取决于向复杂环境的推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identity-Preserving Image-to-Video Generation via Reward-Guided Optimization](identity-preserving_image-to-video_generation_via_reward-guided_optimization.md)
+- [RLGF: Reinforcement Learning with Geometric Feedback for Autonomous Driving Video Generation](../../NeurIPS2025/video_generation/rlgf_reinforcement_learning_with_geometric_feedback_for_autonomous_driving_video.md)
+- [Disentangled World Models: Learning to Transfer Semantic Knowledge from Distracting Videos for Reinforcement Learning](../../ICCV2025/video_generation/disentangled_world_models_learning_to_transfer_semantic_knowledge_from_distracti.md)
+- [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
+- [Generative Neural Video Compression via Video Diffusion Prior](generative_neural_video_compression_via_video_diffusion_prior.md)
+
+<!-- RELATED:END -->

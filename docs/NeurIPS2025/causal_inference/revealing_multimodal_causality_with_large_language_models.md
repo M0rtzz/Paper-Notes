@@ -171,3 +171,15 @@ MLLM-CD 包含三个核心模块，以迭代方式运行：
 - 实用价值: ⭐⭐⭐⭐⭐ 将因果发现扩展到多模态非结构化数据有重大实际意义
 
 ## 一句话总结
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)
+- [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+- [Counterfactual Reasoning for Steerable Pluralistic Value Alignment of Large Language Models](counterfactual_reasoning_for_steerable_pluralistic_value_alignment_of_large_lang.md)
+- [From Black-box to Causal-box: Towards Building More Interpretable Models](from_black-box_to_causal-box_towards_building_more_interpretable_models.md)
+- [Causality-Induced Positional Encoding for Transformer-Based Representation Learning of Non-Sequential Features](causality-induced_positional_encoding_for_transformer-based_representation_learn.md)
+
+<!-- RELATED:END -->

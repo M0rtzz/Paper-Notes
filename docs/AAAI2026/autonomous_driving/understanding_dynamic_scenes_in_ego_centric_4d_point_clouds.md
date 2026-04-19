@@ -214,3 +214,15 @@ $$F_{cam} = \text{CA}(Q_{cam}, f_{cam}, f_{cam}) \in \mathbb{R}^{M \times d_{vis
 - 实验充分度: ⭐⭐⭐⭐ — 多个基线对比、详细消融，但基线受限于3D LLM
 - 写作质量: ⭐⭐⭐⭐ — 结构完整、图表丰富，但部分实验表格排版偏密
 - 价值: ⭐⭐⭐⭐⭐ — 填补重要研究空白，数据集和基准有长期影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+- [CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking](comptrack_information_bottleneckguided_lowrank_dynamic_token_compres.md)
+- [BuildAnyPoint: 3D Building Structured Abstraction from Diverse Point Clouds](../../CVPR2026/autonomous_driving/buildanypoint_3d_building_structured_abstraction_from_diverse_point_clouds.md)
+- [SFPNet: Sparse Focal Point Network for Semantic Segmentation on General LiDAR Point Clouds](../../ECCV2024/autonomous_driving/sfpnet_sparse_focal_point_network_for_semantic_segmentation_on_general_lidar_poi.md)
+- [STRIDE-QA: Visual Question Answering Dataset for Spatiotemporal Reasoning in Urban Driving Scenes](stride-qa_visual_question_answering_dataset_for_spatiotemporal_reasoning_in_urba.md)
+
+<!-- RELATED:END -->

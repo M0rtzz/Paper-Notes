@@ -128,3 +128,15 @@ $$\min_{\mathbf{W}, \boldsymbol{\eta}, \tilde{\boldsymbol{\eta}}} \frac{1}{2}\|\
 - 实验充分度: ⭐⭐⭐⭐ 理论为主但有系统的数值验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨，证明完整，结构清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 Hopfield 模型和高效注意力领域有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [General Agents Contain World Models](general_agents_contain_world_models.md)
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+- [Judging by the Rules: Compliance-Aligned Framework for Modern Slavery Statement Monitoring](../../AAAI2026/others/judging_by_the_rules_compliance-aligned_framework_for_modern_slavery_statement_m.md)
+- [Length-Induced Embedding Collapse in PLM-based Models](../../ACL2025/others/length-induced_embedding_collapse_in_plm-based_models.md)
+- [Latent Variable Estimation in Bayesian Black-Litterman Models](latent_variable_estimation_in_bayesian_black-litterman_models.md)
+
+<!-- RELATED:END -->

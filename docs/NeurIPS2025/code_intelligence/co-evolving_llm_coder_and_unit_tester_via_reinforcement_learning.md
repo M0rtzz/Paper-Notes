@@ -154,3 +154,15 @@ CURE 是一个基于自博弈强化学习的协同进化框架。整体 pipeline
 - 实验充分度: ⭐⭐⭐⭐ 五个 benchmark、三种模型规模、多种下游应用（BoN/MPSC/AlphaCodium/S*）、跨模型验证（GPT 系列）、reward model 实验，但消融可以更细致
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，理论推导严谨且直觉解释到位，实验组织合理，从动机到方法到应用形成完整叙事
 - 价值: ⭐⭐⭐⭐ 框架实用性强（已开源模型权重），无标注训练的 scalability 有长期价值，但实际影响力取决于在真实软件工程场景的泛化性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReCode: Updating Code API Knowledge with Reinforcement Learning](../../AAAI2026/code_intelligence/recode_updating_code_api_knowledge_with_reinforcement_learning.md)
+- [Supervised Reinforcement Learning: From Expert Trajectories to Step-wise Reasoning](../../ICLR2026/code_intelligence/supervised_reinforcement_learning_from_expert_trajectories_to_step-wise_reasonin.md)
+- [Breaking the SFT Plateau: Multimodal Structured Reinforcement Learning for Chart-to-Code Generation](../../ICLR2026/code_intelligence/breaking_the_sft_plateau_multimodal_structured_reinforcement_learning_for_chart-.md)
+- [MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction](../../CVPR2026/code_intelligence/mm-recoder_advancing_chart-to-code_generation_with_reinforcement_learning_and_se.md)
+- [QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation](qimeng-salv_signal-aware_learning_for_verilog_code_generation.md)
+
+<!-- RELATED:END -->

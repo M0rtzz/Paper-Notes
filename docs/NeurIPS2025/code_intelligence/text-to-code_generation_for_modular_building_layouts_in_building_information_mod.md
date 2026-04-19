@@ -123,3 +123,15 @@ tags:
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ 代码驱动范式替代坐标在建筑领域是首次，BIM 代码架构设计精巧
 - 实验充分度: ⭐⭐⭐⭐ 多模型多尺寸对比充分，但数据规模小限制了结论外推
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TikZero: Zero-Shot Text-Guided Graphics Program Synthesis](../../ICCV2025/code_intelligence/tikzero_zero-shot_text-guided_graphics_program_synthesis.md)
+- [Embedding Alignment in Code Generation for Audio](embedding_alignment_in_code_generation_for_audio.md)
+- [MaintainCoder: Maintainable Code Generation Under Dynamic Requirements](maintaincoder_maintainable_code_generation_under_dynamic_requirements.md)
+- [QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation](qimeng-salv_signal-aware_learning_for_verilog_code_generation.md)
+- [GiFT: Gibbs Fine-Tuning for Code Generation](../../ACL2025/code_intelligence/gift_gibbs_fine_tuning_code_gen.md)
+
+<!-- RELATED:END -->

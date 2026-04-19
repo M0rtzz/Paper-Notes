@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3 个模型 × 7 种攻击 × 4 个效用基准，覆盖全面，但缺少大模型实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，公式-图-表配合得当，从动机到方法到实验逻辑链完整
 - 价值: ⭐⭐⭐⭐ 提供了一个推理时零成本的安全增强方案，实用价值高，但可扩展性待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models](../../CVPR2026/llm_alignment/principled_steering_via_null-space_projection_for_jailbreak_defense_in_vision-la.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [Learning Ordinal Probabilistic Reward from Preferences (OPRM)](learning_ordinal_probabilistic_reward_from_preferences.md)
+- [Swap-guided Preference Learning for Personalized RLHF (SPL)](swap-guided_preference_learning_for_personalized_reinforcement_learning_from_hum.md)
+- [SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks](sema_simple_yet_effective_learning_for_multi-turn_jailbreak_attacks.md)
+
+<!-- RELATED:END -->

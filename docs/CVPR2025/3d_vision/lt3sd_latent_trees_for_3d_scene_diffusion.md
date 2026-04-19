@@ -132,3 +132,15 @@ FID 13.39 远超第二名 45.55（提升 70%+），同时 COV/1-NNA 等全局结
 ## 评分
 
 ⭐⭐⭐⭐ — 表征设计有巧思，定量大幅超越 SOTA，支持无限场景生成很实用；但仅限室内数据集、缺少条件控制能力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models](../../ICCV2025/3d_vision/representing_3d_shapes_with_64_latent_vectors_for_3d_diffusion_models.md)
+- [Ctrl-D: Controllable Dynamic 3D Scene Editing with Personalized 2D Diffusion](ctrl-d_controllable_dynamic_3d_scene_editing_with_personalized_2d_diffusion.md)
+- [FreeScene: Mixed Graph Diffusion for 3D Scene Synthesis from Free Prompts](freescene_mixed_graph_diffusion_for_3d_scene_synthesis_from_free_prompts.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [Decompositional Neural Scene Reconstruction with Generative Diffusion Prior](decompositional_neural_scene_reconstruction_with_generative_diffusion_prior.md)
+
+<!-- RELATED:END -->

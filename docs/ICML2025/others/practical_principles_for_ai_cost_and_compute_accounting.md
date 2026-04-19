@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 政策分析论文无传统实验，但与现有指南的对比分析和漏洞案例充分
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑清晰，原则组织有条理，引用恰当
 - 价值: ⭐⭐⭐⭐ 填补 AI 治理中计算审计的理论空白，七项原则具有直接政策影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis](../../AAAI2026/others/intrinsic_barriers_and_practical_pathways_for_human-ai_alignment_an_agreement-ba.md)
+- [FEAT: A Preference Feedback Dataset through a Cost-Effective Auto-Generation and Labeling Framework for English AI Tutoring](../../ACL2025/others/feat_a_preference_feedback_dataset_through_a_cost-effective_auto-generation_and_.md)
+- [REP: Keys to Robust Edits — From Theoretical Insights to Practical Advances](../../ACL2025/others/rep_robust_knowledge_editing.md)
+- [Cost-Free Neutrality for the River Method](../../AAAI2026/others/cost-free_neutrality_for_the_river_method.md)
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](../../ACL2025/others/targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+
+<!-- RELATED:END -->

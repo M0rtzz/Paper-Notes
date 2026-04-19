@@ -157,3 +157,15 @@ FreeCP 将 MaskCLIP 的平均 mIoU 提升了 **+10.9%**，SCLIP 提升 **+3.9%**
 - **技术质量**: ⭐⭐⭐⭐ — 实验全面，消融充分，但阈值设置依赖先验
 - **实用性**: ⭐⭐⭐⭐⭐ — 训练免费+即插即用，实用价值很高
 - **写作质量**: ⭐⭐⭐⭐ — 动机和方法逻辑清晰，可视化有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FLOSS: Free Lunch in Open-vocabulary Semantic Segmentation](floss_free_lunch_in_openvocabulary_semantic_segmentation.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/looking_beyond_the_window_global-local_aligned_clip_for_training-free_open-vocab.md)
+- [Personalized OVSS: Understanding Personal Concept in Open-Vocabulary Semantic Segmentation](understanding_personal_concept_in_open-vocabulary_semantic_segmentation.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+
+<!-- RELATED:END -->

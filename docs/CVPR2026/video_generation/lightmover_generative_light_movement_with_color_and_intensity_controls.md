@@ -128,3 +128,15 @@ LightMover基于5B参数的视频扩散Transformer，将所有输入编码为伪
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖光源移动/颜色/亮度/联合控制/物体移动/插入/移除，消融全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，物理建模公式严谨，pipeline可视化质量高
 - 价值: ⭐⭐⭐⭐ 对照片后期编辑和虚拟场景制作有直接应用价值，推进了精细光照控制的研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastLightGen: Fast and Light Video Generation with Fewer Steps and Parameters](fastlightgen_fast_and_light_video_generation_with_fewer_steps_and_parameters.md)
+- [Generative Neural Video Compression via Video Diffusion Prior](generative_neural_video_compression_via_video_diffusion_prior.md)
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [Arbitrary Generative Video Interpolation](../../ICLR2026/video_generation/arbitrary_generative_video_interpolation.md)
+- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](../../ICLR2026/video_generation/motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ CAWM-Mamba 在雾+雨场景的 10 个指标中 9 个排名第一，Avg.Rank=1.00
 - 实验充分度: ⭐⭐⭐⭐ 在复合+单一天气+下游任务上全面验证
 - 写作质量: ⭐⭐⭐⭐ 技术细节完整，但贡献列表重复编号为"1."
 - 价值: ⭐⭐⭐⭐⭐ 解决了实际自动驾驶/监控中急需的复合天气场景多模态融合问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GDFusion: Rethinking Temporal Fusion with a Unified Gradient Descent View for 3D Semantic Occupancy Prediction](rethinking_temporal_fusion_with_a_unified_gradient_descent_view_for_3d_semantic_.md)
+- [Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather](../../ECCV2024/autonomous_driving/rethinking_data_augmentation_for_robust_lidar_semantic_segmentation_in_adverse_w.md)
+- [Availability-aware Sensor Fusion via Unified Canonical Space](../../NeurIPS2025/autonomous_driving/availability-aware_sensor_fusion_via_unified_canonical_space.md)
+- [MambaSeg: Harnessing Mamba for Accurate and Efficient Image-Event Semantic Segmentation](../../AAAI2026/autonomous_driving/mambaseg_harnessing_mamba_for_accurate_and_efficient_image-e.md)
+- [UniScene: Unified Occupancy-centric Driving Scene Generation](uniscene_unified_occupancy-centric_driving_scene_generation.md)
+
+<!-- RELATED:END -->

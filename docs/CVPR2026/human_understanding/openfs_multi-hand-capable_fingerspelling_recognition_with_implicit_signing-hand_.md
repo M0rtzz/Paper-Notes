@@ -158,3 +158,15 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \lambda_{SF}\mathcal{L}_{SF} + \lambda_{MA}\m
 - 实验充分度: ⭐⭐⭐⭐ （三个数据集 + 速度对比 + 详尽消融 + 合成数据对其他方法也有效 + 定性分析）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，图示丰富直观，动机-方法-实验逻辑链完整）
 - 价值: ⭐⭐⭐⭐ （开源代码和数据，构建新基准，实际部署友好的实时速度，对聋人社区有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PAD-Hand: Physics-Aware Diffusion for Hand Motion Recovery](pad-hand_physics-aware_diffusion_for_hand_motion_recovery.md)
+- [OMG-Bench: A New Challenging Benchmark for Skeleton-based Online Micro Hand Gesture Recognition](omg-bench_a_new_challenging_benchmark_for_skeleton-based_online_micro_hand_gestu.md)
+- [Sketch2Colab: Sketch-Conditioned Multi-Human Animation via Controllable Flow Distillation](sketch2colab_sketch-conditioned_multi-human_animation_via_controllable_flow_dist.md)
+- [New Synthetic Goldmine: Hand Joint Angle-Driven EMG Data Generation Framework for Micro-Gesture Recognition](../../AAAI2026/human_understanding/new_synthetic_goldmine_hand_joint_angle-driven_emg_data_generation_framework_for.md)
+- [UniDex: A Robot Foundation Suite for Universal Dexterous Hand Control from Egocentric Human Videos](unidex_a_robot_foundation_suite_for_universal_dexterous_hand_control_from_egocen.md)
+
+<!-- RELATED:END -->

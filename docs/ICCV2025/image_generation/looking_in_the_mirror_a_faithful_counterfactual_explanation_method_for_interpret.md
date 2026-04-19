@@ -136,3 +136,15 @@ Mirror-CFE 在所有数据集上同时达到最优或次优的接近性（L1/LPI
 - **技术深度**: ⭐⭐⭐⭐ — 损失函数设计严谨，几何推导清晰
 - **实验充分度**: ⭐⭐⭐⭐ — 四个数据集、六种指标、多方法对比
 - **实用价值**: ⭐⭐⭐⭐ — 动画化 CFE 在医疗影像解释中有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LeapFactual: Reliable Visual Counterfactual Explanation Using Conditional Flow Matching](../../NeurIPS2025/image_generation/leapfactual_reliable_visual_counterfactual_explanation_using_conditional_flow_ma.md)
+- [Revelio: Interpreting and Leveraging Semantic Information in Diffusion Models](revelio_interpreting_and_leveraging_semantic_information_in_diffusion_models.md)
+- [DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer](dc-ar_efficient_masked_autoregressive_image_generation_with_deep_compression_hyb.md)
+- [V-CECE: Visual Counterfactual Explanations via Conceptual Edits](../../NeurIPS2025/image_generation/v-cece_visual_counterfactual_explanations_via_conceptual_edits.md)
+- [Towards a Mechanistic Explanation of Diffusion Model Generalization](../../ICML2025/image_generation/towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+
+<!-- RELATED:END -->

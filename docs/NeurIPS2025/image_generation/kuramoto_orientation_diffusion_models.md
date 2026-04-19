@@ -132,3 +132,15 @@ $$\mathcal{L} = \frac{1}{M}\sum_{m=0}^{M-1}\left(2D_t\|s(\theta_t^m, t) - \nabla
 - 实验充分度: ⭐⭐⭐⭐☆ — 多数据集多步数对比充分，但缺少高分辨率和大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、理论推导完整、可视化丰富
 - 价值: ⭐⭐⭐⭐☆ — 开辟了非线性动力学驱动生成模型的新方向，对方向密集数据应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Orient Anything V2: Unifying Orientation and Rotation Understanding](orient_anything_v2_unifying_orientation_and_rotation_understanding.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
+- [Diffusion Models Meet Contextual Bandits](diffusion_models_meet_contextual_bandits.md)
+- [System-Embedded Diffusion Bridge Models](system-embedded_diffusion_bridge_models.md)
+
+<!-- RELATED:END -->

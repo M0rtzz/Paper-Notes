@@ -154,3 +154,15 @@ $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pred}} + \lambda \mathcal{L}_{\
 
 ## 评分
 ⭐⭐⭐⭐ — 从频谱异质性角度切入极端事件预测非常新颖，CSS 提供了严谨的跨域对齐理论，无标签即超越有标签方法是强有力的结果。模块设计层次清晰、各有分工。不足在于验证场景偏窄（仅水文）、长期预测场景性能一般。总体是极端事件时序预测领域的扎实推进。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [Towards Non-Stationary Time Series Forecasting with Temporal Stabilization and Frequency Differencing](towards_non-stationary_time_series_forecasting_with_temporal_stabilization_and_f.md)
+- [VA-MoE: Variables-Adaptive Mixture of Experts for Incremental Weather Forecasting](../../ICCV2025/time_series/va-moe_variables-adaptive_mixture_of_experts_for_incremental_weather_forecasting.md)
+- [Coherent Multi-Agent Trajectory Forecasting in Team Sports with CausalTraj](coherent_multi-agent_trajectory_forecasting_in_team_sports_with_causaltraj.md)
+- [Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](../../ICLR2026/time_series/learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
+
+<!-- RELATED:END -->

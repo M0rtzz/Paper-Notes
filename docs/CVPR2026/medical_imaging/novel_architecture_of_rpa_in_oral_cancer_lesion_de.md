@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐ 测试集仅31图，缺乏分类精度评估
 - 写作质量: ⭐⭐ 存在重复段落，结构不够精炼
 - 价值: ⭐⭐⭐ 对医疗 AI 部署中 RPA 效率瓶颈有实用参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset](instruction-guided_lesion_segmentation_for_chest_x-rays_with_automatically_gener.md)
+- [Association of Radiologic PPFE Change with Mortality in Lung Cancer Screening Cohorts](association_of_radiologic_ppfe_change_with_mortali.md)
+- [The Invisible Gorilla Effect in Out-of-distribution Detection](the_invisible_gorilla_effect_in_out-of-distribution_detection.md)
+- [MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection](moeclip_patch-specialized_experts_for_zero-shot_anomaly_detection.md)
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversion-based_reconstruction-free_anomaly_detection_with_diffusion_model.md)
+
+<!-- RELATED:END -->

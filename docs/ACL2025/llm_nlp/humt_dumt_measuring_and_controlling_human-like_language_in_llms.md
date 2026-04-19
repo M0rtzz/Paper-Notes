@@ -157,3 +157,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 40 万+样本覆盖 5 个偏好数据集、4 名标注者构造效度、LIWC 分析、DPO+RewardBench+人工评估，但跨语言/跨文化验证缺失
 - **写作质量**: ⭐⭐⭐⭐⭐ NLP+社会心理学+HCI 跨学科融合流畅，度量→发现→控制的论证链条清晰，Table 1 人类化连续谱示例极具说服力
 - **价值**: ⭐⭐⭐⭐⭐ 对 LLM 产品设计、对齐策略和 benchmark 设计都有直接启示，HumT 可作为实用的审计工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Language Models Mirror Human Confidence? Exploring Psychological Insights to Address Overconfidence in LLMs](do_language_models_mirror_human_confidence_exploring_psychological_insights_to_a.md)
+- [Beware of Your Po! Measuring and Mitigating AI Safety Risks in Role-Play Fine-Tuning of LLMs](sarft_roleplay_safety.md)
+- [Logical Forms Complement Probability in Understanding Language Model (and Human) Performance](logical_forms_complement_probability_in_understanding_language_model_and_human_p.md)
+- [Big5-Chat: Shaping LLM Personalities Through Training on Human-Grounded Data](big5-chat_shaping_llm_personalities_through_training_on_human-grounded_data.md)
+- [LLMs instead of Human Judges? A Large Scale Empirical Study across 20 NLP Evaluation Tasks](llm_vs_human_judges_study.md)
+
+<!-- RELATED:END -->

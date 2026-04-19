@@ -163,3 +163,15 @@ $$\text{SHA}(e,j) = \frac{v_s^{K,j} \cdot e^K_{v_s \to v_t} \cdot v_t^{Q,j}}{\sq
 - **实验充分度**: ⭐⭐⭐⭐ — 消融实验详尽，模态组合分析和缺失率分析全面，但数据集仅两个
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，生物学动机阐述充分，符号系统有时略繁琐
 - **价值**: ⭐⭐⭐⭐ — 临床场景下模态缺失是真实痛点，但方法通用性需更多领域验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Heterogeneous Graph Learning for Scene Graph Prediction in 3D Point Clouds](heterogeneous_graph_learning_for_scene_graph_prediction_in_3d_point_clouds.md)
+- [Improving Medical Multi-modal Contrastive Learning with Expert Annotations](improving_medical_multi-modal_contrastive_learning_with_expert_annotations.md)
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](../../CVPR2026/medical_imaging/cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [SimMLM: A Simple Framework for Multi-modal Learning with Missing Modality](../../ICCV2025/medical_imaging/simmlm_a_simple_framework_for_multi-modal_learning_with_missing_modality.md)
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](../../CVPR2026/medical_imaging/omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+
+<!-- RELATED:END -->

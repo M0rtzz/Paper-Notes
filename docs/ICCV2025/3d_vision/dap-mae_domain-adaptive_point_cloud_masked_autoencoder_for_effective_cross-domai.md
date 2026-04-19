@@ -217,3 +217,15 @@ HDA 和 DFG 各自独立贡献 +0.34%，两者协同再额外提升 0.52%。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5个下游任务、多个数据集、详尽消融和可视化分析
 - **实用价值**: ⭐⭐⭐⭐ — 一次预训练多任务适配，显著降低训练成本
 - **综合评分**: ⭐⭐⭐⭐ (8/10)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StruMamba3D: Exploring Structural Mamba for Self-supervised Point Cloud Representation Learning](strumamba3d_exploring_structural_mamba_for_self-supervised_point_cloud_represent.md)
+- [RayletDF: Raylet Distance Fields for Generalizable 3D Surface Reconstruction from Point Clouds or Gaussians](rayletdf_raylet_distance_fields_for_generalizable_3d_surface_reconstruction_from.md)
+- [Towards More Diverse and Challenging Pre-training for Point Cloud Learning: Self-Supervised Cross Reconstruction with Decoupled Views](towards_more_diverse_and_challenging_pre-training_for_point_cloud_learning_self-.md)
+- [CstNet: Constraint-Aware Feature Learning for Parametric Point Cloud](constraint-aware_feature_learning_for_parametric_point_cloud.md)
+- [SkySense V2: A Unified Foundation Model for Multi-Modal Remote Sensing](skysense_v2_a_unified_foundation_model_for_multi-modal_remote_sensing.md)
+
+<!-- RELATED:END -->

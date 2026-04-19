@@ -121,3 +121,15 @@ CBMAS是纯分析框架，不涉及模型训练。所有分析在推理时完成
 - 实验充分度: ⭐⭐⭐ 仅在GPT-2 Small上实验规模严重不足，但在该模型上的分析维度覆盖较全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，数学形式化严谨，图表信息量大
 - 价值: ⭐⭐⭐ 框架设计合理但需在现代大模型上验证才能真正发挥影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
+- [Curvature Tuning: Provable Training-free Model Steering From a Single Parameter](curvature_tuning_provable_training-free_model_steering_from_a_single_parameter.md)
+- [Steering Information Utility in Key-Value Memory for Language Model Post-Training](steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)
+- [Cognitive Mirrors: Exploring the Diverse Functional Roles of Attention Heads in LLM Reasoning](cognitive_mirrors_exploring_the_diverse_functional_roles_of_attention_heads_in_l.md)
+- [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
+
+<!-- RELATED:END -->

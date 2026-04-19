@@ -141,3 +141,15 @@ $$\mathcal{L}_{\text{World}} = \mathcal{L}_{\text{vertices}} + \mathcal{L}_{\tex
 - **实验充分度**: ⭐⭐⭐⭐⭐ EMDB/RICH/Egobody多数据集、详细消融、鲁棒性分析
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义清晰，trade-off分析到位，方法叙述流畅
 - **价值**: ⭐⭐⭐⭐⭐ 世界空间人体重建的显著突破，提升幅度大，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos](../../CVPR2025/3d_vision/hawor_world-space_hand_motion_reconstruction_from_egocentric_videos.md)
+- [RayNova: Scale-Temporal Autoregressive World Modeling in Ray Space](raynova_scale-temporal_autoregressive_world_modeling_in_ray_space.md)
+- [AnthroTAP: Learning Point Tracking with Real-World Motion](anthrotap_learning_point_tracking_with_real-world_motion.md)
+- [OnlineHMR: Video-based Online World-Grounded Human Mesh Recovery](onlinehmr_video-based_online_world-grounded_human_mesh_recovery.md)
+- [Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron Computed Tomography Data](regularizing_inr_with_diffusion_prior_selfsupervis.md)
+
+<!-- RELATED:END -->

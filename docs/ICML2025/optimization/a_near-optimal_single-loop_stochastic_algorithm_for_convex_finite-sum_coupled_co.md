@@ -117,3 +117,15 @@ $$\min_{x} F(x) = h\left(\frac{1}{n}\sum_{i=1}^{n} f_i(g_i(x))\right) + r(x)$$
 - 实验充分度: ⭐⭐⭐ 实验覆盖了主要应用，但规模较小
 - 写作质量: ⭐⭐⭐⭐ 理论严谨，表述清晰
 - 价值: ⭐⭐⭐⭐ 为 cFCCO 问题提供了近乎完整的复杂度图景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](../../NeurIPS2025/optimization/a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)
+- [Isotropic Noise in Stochastic and Quantum Convex Optimization](../../NeurIPS2025/optimization/isotropic_noise_in_stochastic_and_quantum_convex_optimization.md)
+- [Finite-Time Analysis of Stochastic Nonconvex Nonsmooth Optimization on the Riemannian Manifolds](../../NeurIPS2025/optimization/finite-time_analysis_of_stochastic_nonconvex_nonsmooth_optimization_on_the_riema.md)
+- [Improved Last-Iterate Convergence of Shuffling Gradient Methods for Nonsmooth Convex Optimization](improved_last-iterate_convergence_of_shuffling_gradient_methods_for_nonsmooth_co.md)
+- [MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines](metaagent_automatically_constructing_multi-agent_systems_based_on_finite_state_m.md)
+
+<!-- RELATED:END -->

@@ -111,3 +111,15 @@ BayesMM 提出了一个无需训练的动态贝叶斯分布学习框架，将文
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个基础模型×多个基准×多种设置
 - 写作质量: ⭐⭐⭐⭐ 推导清晰，公式严谨
 - 价值: ⭐⭐⭐⭐ 即插即用的实用 TTA 方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ECKConv: Learning Coordinate-based Convolutional Kernels for Continuous SE(3) Equivariant Point Cloud Analysis](learning_coordinate-based_convolutional_kernels_for_continuous_se3_equivariant_a.md)
+- [Deformation-based In-Context Learning for Point Cloud Understanding](deformation-based_in-context_learning_for_point_cloud_understanding.md)
+- [Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](../../AAAI2026/3d_vision/graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)
+- [PhysGS: Bayesian-Inferred Gaussian Splatting for Physical Property Estimation](physgs_bayesian-inferred_gaussian_splatting_for_physical_property_estimation.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+
+<!-- RELATED:END -->

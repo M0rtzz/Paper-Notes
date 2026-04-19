@@ -120,3 +120,15 @@ $$\bm{c}^{\mathcal{I}} = \text{CompSlider}(\bm{c}^{\mathcal{S}}, \bm{c}^{\mathca
 - 实验充分度: ⭐⭐⭐⭐ 人类和非人类属性都做了评估，提出新指标，有消融和扩展
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述详尽，图表丰富
 - 价值: ⭐⭐⭐⭐ 解决了多属性同时控制的实际问题，有明确应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [All-in-One Slider for Attribute Manipulation in Diffusion Models](../../CVPR2026/image_generation/all-in-one_slider_for_attribute_manipulation_in_diffusion_models.md)
+- [Fair Generation without Unfair Distortions: Debiasing Text-to-Image Generation with Entanglement-Free Attention](fair_generation_without_unfair_distortions_debiasing_text-to-image_generation_wi.md)
+- [Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation](../../NeurIPS2025/image_generation/evaluating_the_evaluators_metrics_for_compositional_text-to-image_generation.md)
+- [Adaptive Routing of Text-to-Image Generation Requests Between Large Cloud Models and Small Edge Models](adaptive_routing_of_text-to-image_generation_requests_between_large_cloud_model_.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2025/image_generation/codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+
+<!-- RELATED:END -->

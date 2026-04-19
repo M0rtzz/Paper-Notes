@@ -140,3 +140,15 @@ HSKBenchmark 由四大组件构成：
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：问题定义有独特价值（中文SLA + LLM），基准构建系统完整（数据-训练-评估），课程式微调与语言习得理论结合自然。扣一分因为训练数据量偏小、仅覆盖写作维度、低级别缺失。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Hallucinations: A Composite Score for Measuring Reliability in Open-Source Large Language Models](beyond_hallucinations_a_composite_score_for_measuring_reliability_in_open-source.md)
+- [The Trilemma of Truth in Large Language Models](../../NeurIPS2025/interpretability/the_trilemma_of_truth_in_large_language_models.md)
+- [ToC: Tree-of-Claims Search with Multi-Agent Language Models](toc_tree-of-claims_search_with_multi-agent_language_models.md)
+- [Universal Properties of Activation Sparsity in Modern Large Language Models](../../ICLR2026/interpretability/universal_properties_of_activation_sparsity_in_modern_large_language_models.md)
+- [Supernova Event Dataset: Interpreting Large Language Models' Personality through Critical Event Analysis](../../ICML2025/interpretability/supernova_event_dataset_interpreting_large_language_models_personality_through_c.md)
+
+<!-- RELATED:END -->

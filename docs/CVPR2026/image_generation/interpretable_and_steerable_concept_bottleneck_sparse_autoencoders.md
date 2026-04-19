@@ -132,3 +132,15 @@ CB-SAE的四步pipeline：
 - 实验充分度: ⭐⭐⭐⭐ 两个下游任务、详细消融和敏感性分析，但数据集有限（仅ImageNet）
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，方法自然递进，图表直观
 - 价值: ⭐⭐⭐⭐ 对SAE实用化有重要推动，特别是对需要特定概念控制的应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders](../../NeurIPS2025/image_generation/learning_interpretable_features_in_audio_latent_spaces_via_sparse_autoencoders.md)
+- [TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection](tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa.md)
+- [Intrinsic Concept Extraction Based on Compositional Interpretability](intrinsic_concept_extraction_based_on_compositional_interpretability.md)
+- [Prototype-Guided Concept Erasure in Diffusion Models](prototype-guided_concept_erasure_in_diffusion_models.md)
+- [PureCC: Pure Learning for Text-to-Image Concept Customization](purecc_pure_learning_for_text-to-image_concept_customization.md)
+
+<!-- RELATED:END -->

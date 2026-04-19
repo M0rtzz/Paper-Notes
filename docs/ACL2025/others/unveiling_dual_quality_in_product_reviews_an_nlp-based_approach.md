@@ -122,3 +122,15 @@ tags:
 | 实验充分度 | ⭐⭐⭐⭐ | 20+模型/策略对比，含鲁棒性验证、错误分析和跨语言评估 |
 | 实用价值 | ⭐⭐⭐⭐ | 已在波兰UOKiK部署，有明确的实际落地场景 |
 | 总体推荐 | ⭐⭐⭐⭐ | 任务新颖+实验全面+真实部署，应用型NLP研究范本 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](literature_meets_data_hypothesis.md)
+- [TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification](taclr_a_scalable_and_efficient_retrieval-based_method_for_industrial_product_att.md)
+- [Evaluating Design Decisions for Dual Encoder-based Entity Disambiguation](evaluating_design_decisions_for_dual_encoder-based_entity_disambiguation.md)
+- [Persona Dynamics: Unveiling the Impact of Personality Traits on Agents in Text-Based Games](persona_dynamics_unveiling_the_impact_of_persona_traits_on_agents_in_text-based_.md)
+- [Product Distribution Learning with Imperfect Advice](../../NeurIPS2025/others/product_distribution_learning_with_imperfect_advice.md)
+
+<!-- RELATED:END -->

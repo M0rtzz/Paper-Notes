@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实场景，消融充分，但缺少更多真实场景的定量评估
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，数学推导完整
 - 价值: ⭐⭐⭐⭐ 高效实用的全景3D场景生成方案，对 VR/AR 应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [EmbodiedSplat: Online Feed-Forward Semantic 3DGS for Open-Vocabulary 3D Scene Understanding](embodiedsplat_online_feed-forward_semantic_3dgs_for_open-vocabulary_3d_scene_und.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_singleforward_gaussian_splatting_for_hi.md)
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+
+<!-- RELATED:END -->

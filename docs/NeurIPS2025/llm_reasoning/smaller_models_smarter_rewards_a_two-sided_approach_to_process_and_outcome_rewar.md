@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 分析详尽（balanced/imbalanced、ORM/PRM、per-percentile），但仅一个数据集、两个模型规模，缺乏与其他奖励模型方法的直接对比
 - 写作质量: ⭐⭐⭐⭐ 论文思路清晰，符号定义规范，研究问题（RQ1/RQ2）组织合理
 - 价值: ⭐⭐⭐ Workshop paper，验证了小模型做奖励模型的可行性，但整体贡献偏实验性，深度和广度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PrismAudio: Decomposed Chain-of-Thoughts and Multi-dimensional Rewards for Video-to-Audio Generation](../../ICLR2026/llm_reasoning/prismaudio_decomposed_chain-of-thoughts_and_multi-dimensional_rewards_for_video-.md)
+- [BLM-Guard: Explainable Multimodal Ad Moderation with Chain-of-Thought and Policy-Aligned Rewards](../../AAAI2026/llm_reasoning/blm-guard_explainable_multimodal_ad_moderation_with_chain-of.md)
+- [Two-Stage Learning of Stabilizing Neural Controllers via Zubov Sampling and Iterative Domain Expansion](two-stage_learning_of_stabilizing_neural_controllers_via_zubov_sampling_and_iter.md)
+- [Know What You Don't Know: Uncertainty Calibration of Process Reward Models](know_what_you_dont_know_uncertainty_calibration_of_process_reward_models.md)
+- [Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision](large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u.md)
+
+<!-- RELATED:END -->

@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 14 个黑盒模型、多代理模型、效率分析
 - 写作质量: ⭐⭐⭐⭐ 方法和消融分析清楚
 - 价值: ⭐⭐⭐ 对对抗攻击研究有贡献但应用场景有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Black-Box Generative Attacks via Generator Semantic Consistency](../../ICLR2026/others/improving_black-box_generative_attacks_via_generator_semantic_consistency.md)
+- [Feature Selection for Latent Factor Models](feature_selection_for_latent_factor_models.md)
+- [EDM: Equirectangular Projection-Oriented Dense Kernelized Feature Matching](edm_equirectangular_projection-oriented_dense_kernelized_feature_matching.md)
+- [Membership Inference Attacks with False Discovery Rate Control](../../ICCV2025/others/membership_inference_attacks_with_false_discovery_rate_control.md)
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](../../ACL2025/others/targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+
+<!-- RELATED:END -->

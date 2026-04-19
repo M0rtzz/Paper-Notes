@@ -189,3 +189,15 @@ $$\Pr(\mathbf{vCache}(x) = r(x) \mid \mathcal{D}) \ge 1 - \delta$$
 - 实验充分度: ⭐⭐⭐⭐ — 3 嵌入模型 × 2 LLM × 4 基准，但缺乏真实部署延迟对比
 - 写作质量: ⭐⭐⭐⭐⭐ — 形式化严谨，motivation 清晰，图表设计出色（Figure 1-3 特别直观）
 - 综合价值: ⭐⭐⭐⭐⭐ — 解决了语义缓存的核心信任问题，理论优雅且实用性极强，开源完善
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spectral Attention Steering for Prompt Highlighting](spectral_attention_steering_for_prompt_highlighting.md)
+- [Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
+- [Supercharging Floorplan Localization with Semantic Rays](../../ICCV2025/llm_evaluation/supercharging_floorplan_localization_with_semantic_rays.md)
+- [RefineVAD: Semantic-Guided Feature Recalibration for Weakly Supervised Video Anomaly Detection](../../AAAI2026/llm_evaluation/refinevad_semantic-guided_feature_recalibration_for_weakly_supervised_video_anom.md)
+- [Hyperband-based Bayesian Optimization for Black-box Prompt Selection](../../ICML2025/llm_evaluation/hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
+
+<!-- RELATED:END -->

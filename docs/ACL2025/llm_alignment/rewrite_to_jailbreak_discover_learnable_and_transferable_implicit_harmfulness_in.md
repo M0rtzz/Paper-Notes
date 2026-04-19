@@ -111,3 +111,15 @@ R2J 迭代进行两个阶段：**训练阶段**——从历史攻击尝试中选
 - 实验充分度: ⭐⭐⭐⭐ 多模型多 baseline 对比+迁移实验+防御实验
 - 写作质量: ⭐⭐⭐⭐ 对比清晰（Figure 1 非常直观），算法描述完整
 - 价值: ⭐⭐⭐⭐ 揭示安全对齐脆弱性的同时提供防御启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race](aligned_but_blind_implicit_bias.md)
+- [Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models (UltraBreak)](../../ICLR2026/llm_alignment/toward_universal_and_transferable_jailbreak_attacks_on_vision-language_models.md)
+- [Rethinking Table Instruction Tuning](rethinking_table_instruction_tuning.md)
+- [PIG: Privacy Jailbreak Attack on LLMs via Gradient-based Iterative Prompts](pig_privacy_jailbreak.md)
+- [JsonTuning: Towards Generalizable, Robust, and Controllable Instruction Tuning](jsontuning_towards_generalizable_robust_and_controllable_instruction_tuning.md)
+
+<!-- RELATED:END -->

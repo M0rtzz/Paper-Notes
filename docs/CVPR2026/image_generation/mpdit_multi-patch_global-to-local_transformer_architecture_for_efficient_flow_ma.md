@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ImageNet 上的消融非常详尽，但缺乏其他领域/分辨率的验证
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，与 MaskDiT 的对比分析有说服力
 - 价值: ⭐⭐⭐⭐ 50% GFLOPs 减少且质量不降，对扩散模型训练效率有实际推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memory-Efficient Fine-Tuning Diffusion Transformers via Dynamic Patch Sampling and Block Skipping](memory-efficient_fine-tuning_diffusion_transformers_via_dynamic_patch_sampling_a.md)
+- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](dit-ic_aligned_diffusion_transformer_for_efficient_image_compression.md)
+- [RenderFlow: Single-Step Neural Rendering via Flow Matching](renderflow_single-step_neural_rendering_via_flow_matching.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](../../ICLR2026/image_generation/laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [Multi-agent Coordination via Flow Matching](../../ICLR2026/image_generation/multi-agent_coordination_via_flow_matching.md)
+
+<!-- RELATED:END -->

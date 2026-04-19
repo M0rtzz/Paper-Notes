@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 35 种方法、6 个数据集、10 种指标、OOD 分析、分类器复杂度分析
 - 写作质量: ⭐⭐⭐⭐ 论文组织清晰，Figure 1 的多维可视化非常直观
 - 价值: ⭐⭐⭐⭐⭐ 对自适应检索领域的系统化评测具有重要参考价值，结论对实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](arise_risk_adaptive_search.md)
+- [Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning](micro_act_knowledge_conflict_reasoning.md)
+- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](../../NeurIPS2025/others/hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
+
+<!-- RELATED:END -->

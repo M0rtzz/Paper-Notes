@@ -127,3 +127,15 @@ LAMP在简单(pure)和复杂(mixed)分割上一致超越所有基线的F1分数
 - 实验充分度: ⭐⭐⭐⭐ 在多个基准上定量对比，包含消融和用户研究
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法层次分明，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对视频生成的可控性研究有重大推动，框架设计优雅且可扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-free Motion Factorization for Compositional Video Generation](training-free_motion_factorization_for_compositional_video_generation.md)
+- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](../../AAAI2026/video_generation/motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
+- [AutoCut: End-to-end Advertisement Video Editing Based on Multimodal Discretization and Controllable Generation](autocut_end-to-end_advertisement_video_editing_based_on_multimodal_discretizatio.md)
+- [Infinity-RoPE: Action-Controllable Infinite Video Generation Emerges From Autoregressive Self-Rollout](infinity-rope_action-controllable_infinite_video_generation_emerges_from_autoreg.md)
+
+<!-- RELATED:END -->

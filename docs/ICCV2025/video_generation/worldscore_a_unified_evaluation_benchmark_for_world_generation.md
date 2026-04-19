@@ -123,3 +123,15 @@ WorldScore 本身是评测基准而非训练方法，因此不涉及损失函数
 - **实验充分度**: ⭐⭐⭐⭐⭐ 20 个模型、3000 测试样本、10 项指标，非常全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富，但部分指标细节需翻阅补充材料
 - **价值**: ⭐⭐⭐⭐⭐ 为世界生成社区提供了急需的标准化评测基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VMBench: A Benchmark for Perception-Aligned Video Motion Generation](vmbench_a_benchmark_for_perception-aligned_video_motion_generation.md)
+- [SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation](../../CVPR2026/video_generation/slvmeval_synthetic_meta_evaluation_benchmark_for_text-to-long_video_generation.md)
+- [ETVA: Evaluation of Text-to-Video Alignment via Fine-Grained Question Generation and Answering](etva_evaluation_of_text-to-video_alignment_via_fine-grained_question_generation_.md)
+- [Stable Cinemetrics: Structured Taxonomy and Evaluation for Professional Video Generation](../../NeurIPS2025/video_generation/stable_cinemetrics_structured_taxonomy_and_evaluation_for_professional_video_gen.md)
+- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+
+<!-- RELATED:END -->

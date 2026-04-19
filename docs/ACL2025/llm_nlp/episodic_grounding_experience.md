@@ -163,3 +163,15 @@ $$\mathcal{L}_{\text{DPO}} = -\mathbb{E}_{(\mathbf{x},y^+,y^-) \sim \mathcal{D}}
 | 实用价值 | 3.5 |
 | 写作质量 | 4 |
 | 总体评分 | 4.1 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoGUI: Scaling GUI Grounding with Automatic Functionality Annotations from LLMs](autogui_scaling_gui_grounding_with_automatic.md)
+- [Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
+- [Knockout LLM Assessment: Using Large Language Models for Evaluations through Iterative Pairwise Comparisons](knockout_llm_assessment_using_large_language_models_for_evaluations_through_iter.md)
+- [LESA: Learnable LLM Layer Scaling-Up](lesa_learnable_llm_layer_scaling-up.md)
+
+<!-- RELATED:END -->

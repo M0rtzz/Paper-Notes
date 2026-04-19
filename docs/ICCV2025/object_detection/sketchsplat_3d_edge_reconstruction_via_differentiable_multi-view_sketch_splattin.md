@@ -140,3 +140,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ ABC-NEF 上结果令人印象深刻，DTU/Replica 也有定性评估
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰、方法描述详实、图例质量高
 - **价值**: ⭐⭐⭐⭐ 为 3D 边缘重建开辟了新范式，F5 提升超过 10%
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
+- [3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection](3dmood_lifting_2d_to_3d_for_monocular_openset_object_detecti.md)
+- [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [REXO: Indoor Multi-View Radar Object Detection via 3D Bounding Box Diffusion](../../AAAI2026/object_detection/rexo_indoor_multi-view_radar_object_detection_via_3d_bounding_box_diffusion.md)
+- [VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions](voccl3d_a_video_benchmark_dataset_for_3d_human_pose_and_shape_estimation_under_r.md)
+
+<!-- RELATED:END -->

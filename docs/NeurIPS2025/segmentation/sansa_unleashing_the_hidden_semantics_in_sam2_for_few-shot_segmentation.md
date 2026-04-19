@@ -113,3 +113,15 @@ $$\mathcal{M} = [x_r^k, a_r^k]_{k=1}^K \cup [x_t, \varnothing]$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ LVIS/COCO/FSS-1000 全面评测，消融详尽，PCA 可视化有力
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题引导式叙事（三个研究问题），逻辑清晰
 - **价值**: ⭐⭐⭐⭐⭐ 极简设计+SOTA性能+高效推理，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
+- [Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](../../ICCV2025/segmentation/move_motion-guided_few-shot_video_object_segmentation.md)
+- [Vanish into Thin Air: Cross-prompt Universal Adversarial Attacks for SAM2](vanish_into_thin_air_cross-prompt_universal_adversarial_attacks_for_sam2.md)
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+
+<!-- RELATED:END -->

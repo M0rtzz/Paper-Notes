@@ -152,3 +152,15 @@ Cohen's Kappa 的高模型间一致性源于解码器引入的决策偏差。当
 - **实验设计**: ★★★★★（多层面分析、与 Cohen's Kappa 的系统对比、鲁棒性验证充分）
 - **实用性**: ★★★★☆（开源代码，可直接应用于脑-模型对齐研究）
 - **发现的冲击力**: ★★★★★（负相关、对抗训练悖论等发现颠覆常识）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Training Data Attribution with Representational Optimization](enhancing_training_data_attribution_with_representational_optimization.md)
+- [DipLLM: Fine-Tuning LLM for Strategic Decision-Making in Diplomacy](../../ICML2025/llm_pretraining/dipllm_fine-tuning_llm_for_strategic_decision-making_in_diplomacy.md)
+- [When Can In-Context Learning Generalize Out of Task Distribution?](../../ICML2025/llm_pretraining/when_can_in-context_learning_generalize_out_of_task_distribution.md)
+- [3D Prior is All You Need: Cross-Task Few-shot 2D Gaze Estimation](../../CVPR2025/llm_pretraining/3d_prior_is_all_you_need_cross-task_few-shot_2d_gaze_estimation.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+
+<!-- RELATED:END -->

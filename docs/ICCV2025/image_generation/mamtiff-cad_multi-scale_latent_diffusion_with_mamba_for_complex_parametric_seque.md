@@ -131,3 +131,15 @@ JSD（分布差异）3.19为最优，STEP转换成功率85.38%远超DeepCAD的23
 - 新颖性：★★★★☆ — Mamba+与多尺度扩散的组合针对性强
 - 技术深度：★★★★☆ — 架构设计合理，实验验证充分
 - 实用性：★★★★☆ — 面向工业级CAD生成的实际需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
+- [DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability](dynamicid_zero-shot_multi-id_image_personalization_with_flexible_facial_editabil.md)
+- [Joint Diffusion Models in Continual Learning](joint_diffusion_models_in_continual_learning.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+
+<!-- RELATED:END -->

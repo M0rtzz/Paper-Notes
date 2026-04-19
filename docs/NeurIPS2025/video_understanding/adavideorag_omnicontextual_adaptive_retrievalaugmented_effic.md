@@ -116,3 +116,15 @@ HiVU 基准：在 L3（困难推理）上 Overall Winner 77.13% vs baseline 22.8
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个基准、多个MLLM、消融分析全面
 - 写作质量: ⭐⭐⭐⭐ 系统架构描述清楚、动机分析到位
 - 价值: ⭐⭐⭐⭐ 实用性强，即插即用方案对工业部署有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding](vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+- [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](../../ECCV2024/video_understanding/rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
+- [Unleashing Hour-Scale Video Training for Long Video-Language Understanding](unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
+- [Less is More: Local Intrinsic Dimensions of Contextual Language Models](less_is_more_local_intrinsic_dimensions_of_contextual_language_models.md)
+
+<!-- RELATED:END -->

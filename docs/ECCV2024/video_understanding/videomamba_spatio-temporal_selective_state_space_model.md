@@ -167,3 +167,15 @@ VideoMamba（KAIST 版）采用纯 Mamba 编码器架构。输入视频 $V \in \
 - 实验充分度: ⭐⭐⭐⭐ 消融实验全面（扫描方向、位置编码、帧数、维度），Delta 分析深入
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义明确，可视化分析直观
 - 价值: ⭐⭐⭐⭐ 为视频 SSM 的设计提供了系统性指导，但整体影响力可能被同名 OpenGVLab 版本分流
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMamba: State Space Model for Efficient Video Understanding](videomamba_state_space_model_for_efficient_video_understanding.md)
+- [PASS: Path-Selective State Space Model for Event-Based Recognition](../../NeurIPS2025/video_understanding/pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging](safnet_selective_alignment_fusion_network_for_efficient_hdr_imaging.md)
+
+<!-- RELATED:END -->

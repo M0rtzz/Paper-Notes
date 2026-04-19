@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖三大类适配方法、两种backbone、两种任务设置
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰、理论推导严谨、实验组织系统
 - 价值: ⭐⭐⭐⭐ 揭示了被忽视的重要问题，SaLS方案实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Don't Miss the Forest for the Trees: Attentional Vision Calibration for Large Vision Language Models](../../ACL2025/multimodal_vlm/dont_miss_the_forest_for_the_trees_attentional_vision_calibration_for_large_visi.md)
+- [Vary: Scaling up the Vision Vocabulary for Large Vision-Language Models](vary_scaling_up_the_vision_vocabulary_for_large_vision-language_model.md)
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+- [SQ-LLaVA: Self-Questioning for Large Vision-Language Assistant](sq-llava_self-questioning_for_large_vision-language_assistant.md)
+- [Difference Vector Equalization for Robust Fine-tuning of Vision-Language Models](../../AAAI2026/multimodal_vlm/difference_vector_equalization_for_robust_fine-tuning_of_vis.md)
+
+<!-- RELATED:END -->

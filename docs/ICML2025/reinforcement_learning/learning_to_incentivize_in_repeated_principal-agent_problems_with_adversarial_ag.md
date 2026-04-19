@@ -111,3 +111,15 @@ $$\mathbb{E}[U(\pi^*, j)] - \mathbb{E}[U(\hat\pi, j)] \leq (2L+1)\epsilon$$
 - 理论深度: ⭐⭐⭐⭐⭐ — 多个设定的匹配上下界，分析技巧精致
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机例子直观，但符号较重
 - 实用价值: ⭐⭐⭐ — 纯理论贡献，距实际部署有差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Principal-Agent Bandit Games with Self-Interested and Exploratory Learning Agents](principal-agent_bandit_games_with_self-interested_and_exploratory_learning_agent.md)
+- [Enhancing Cooperative Multi-Agent Reinforcement Learning with State Modelling and Adversarial Exploration](enhancing_cooperative_multi-agent_reinforcement_learning_with_state_modelling_an.md)
+- [Learning Progress Driven Multi-Agent Curriculum](learning_progress_driven_multi-agent_curriculum.md)
+- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [Cross-environment Cooperation Enables Zero-shot Multi-agent Coordination](cross-environment_cooperation_enables_zero-shot_multi-agent_coordination.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ $$\mathcal{L} = \sum_{\boldsymbol{r} \in \mathcal{R}} \|\frac{\hat{C}(\boldsymbo
 - 技术深度: ⭐⭐⭐⭐ (物理模型推导严谨)
 - 实验质量: ⭐⭐⭐ (数据集规模有限，竞争方法少)
 - 实用价值: ⭐⭐⭐⭐ (水下机器人视觉的实际需求)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes](instascene_towards_complete_3d_instance_decomposition_and_reconstruction_from_cl.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [LayerLock: Non-collapsing Representation Learning with Progressive Freezing](layerlock_non-collapsing_representation_learning_with_progressive_freezing.md)
+- [StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting](stochasticsplats_stochastic_rasterization_for_sorting-free_3d_gaussian_splatting.md)
+- [Demeter: A Parametric Model of Crop Plant Morphology from the Real World](demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ (3个合成数据集+1个真实数据集+充分消融+多种定量指标)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论推导严谨，图表精美)
 - 价值: ⭐⭐⭐⭐⭐ (显存5倍节省+性能提升，强实用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discretized Gaussian Representation for Tomographic Reconstruction](discretized_gaussian_representation_for_tomographic_reconstruction.md)
+- [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](../../CVPR2025/3d_vision/hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
+- [REPARO: Compositional 3D Assets Generation with Differentiable 3D Layout Alignment](reparo_compositional_3d_assets_generation_with_differentiable_3d_layout_alignmen.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+- [3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt](3dgs-lm_faster_gaussian-splatting_optimization_with_levenberg-marquardt.md)
+
+<!-- RELATED:END -->

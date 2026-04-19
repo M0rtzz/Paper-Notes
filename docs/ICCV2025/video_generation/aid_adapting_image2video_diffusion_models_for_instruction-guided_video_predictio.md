@@ -143,3 +143,15 @@ FVD改善幅度：SSv2上55.5%，Bridge上**91.2%**，Epic100上80.6%。
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集+全面消融，但缺少与更多最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述逻辑清晰，公式规范
 - 价值: ⭐⭐⭐⭐ 在机器人操控和第一人称场景中的视频预测有实际应用前景，FVD改善幅度惊人
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FuXi-RTM: A Physics-Guided Prediction Framework with Radiative Transfer Modeling](fuxi-rtm_a_physics-guided_prediction_framework_with_radiative_transfer_modeling.md)
+- [OCK: Unsupervised Dynamic Video Prediction with Object-Centric Kinematics](ock_unsupervised_dynamic_video_prediction_with_object-centric_kinematics.md)
+- [V.I.P.: Iterative Online Preference Distillation for Efficient Video Diffusion Models](vip_iterative_online_preference_distillation_for_efficient_video_diffusion_model.md)
+- [LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)
+- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+
+<!-- RELATED:END -->

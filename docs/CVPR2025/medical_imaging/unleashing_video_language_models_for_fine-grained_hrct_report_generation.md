@@ -119,3 +119,15 @@ VideoLMs 的视觉编码器将 CT 输入为 $X \in \mathbb{R}^{T \times H \times
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，架构等价性分析有说服力
 - 价值: ⭐⭐⭐⭐ 为 3D 医学报告生成提供了高效实用的新范式
 - 总评: 8/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis](latent_drifting_in_diffusion_models_for_counterfactual_medical_image_synthesis.md)
+- [EchoWorld: Learning Motion-Aware World Models for Echocardiography Probe Guidance](echoworld_learning_motion-aware_world_models_for_echocardiography_probe_guidance.md)
+
+<!-- RELATED:END -->

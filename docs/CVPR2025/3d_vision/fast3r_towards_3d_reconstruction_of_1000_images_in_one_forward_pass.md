@@ -137,3 +137,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 突破性地解决了多视图 3D 重建的可扩展性问题，速度提升数量级且精度不降
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HandOS: 3D Hand Reconstruction in One Stage](handos_3d_hand_reconstruction_in_one_stage.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [MEt3R: Measuring Multi-View Consistency in Generated Images](met3r_measuring_multi-view_consistency_in_generated_images.md)
+- [Matrix3D: Large Photogrammetry Model All-in-One](matrix3d_large_photogrammetry_model_all-in-one.md)
+- [Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images](../../ICCV2025/3d_vision/amodal3r_amodal_3d_reconstruction_from_occluded_2d_images.md)
+
+<!-- RELATED:END -->

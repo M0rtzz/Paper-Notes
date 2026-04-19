@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型评估、人类基线、余弦相似度分析、消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导环环相扣，从评估到分析到方法逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 对领域有警醒作用，RCAD 可能成为新标准评估
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-Guided Video Masked Autoencoder](text-guided_video_masked_autoencoder.md)
+- [Data Collection-Free Masked Video Modeling](data_collection-free_masked_video_modeling.md)
+- [VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding](../../NeurIPS2025/video_understanding/vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)
+- [AdaVideoRAG: Omni-Contextual Adaptive Retrieval-Augmented Efficient Long Video Understanding](../../NeurIPS2025/video_understanding/adavideorag_omnicontextual_adaptive_retrievalaugmented_effic.md)
+- [RAGTrack: Language-aware RGBT Tracking with Retrieval-Augmented Generation](../../CVPR2026/video_understanding/ragtrack_language-aware_rgbt_tracking_with_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

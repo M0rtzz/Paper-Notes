@@ -129,3 +129,15 @@ MARDM-67 评估协议下，MoLingo (VAE) 取得最优 FID，MoLingo (SAE) 取得
 - 实验充分度: ⭐⭐⭐⭐⭐ 四种评估协议（MARDM-67, TMR-263, MS-272, 用户研究），广泛消融
 - 写作质量: ⭐⭐⭐⭐ 问题驱动的写作方式清晰，两个核心问题层层推进
 - 价值: ⭐⭐⭐⭐ SOTA 结果+可迁移的潜空间设计思路，对动作生成领域有实际推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference](lamogen_language_to_motion_generation_through_llm-guided_symbolic_inference.md)
+- [ParTY: Part-Guidance for Expressive Text-to-Motion Synthesis](party_part-guidance_for_expressive_text-to-motion_synthesis.md)
+- [HandX: Scaling Bimanual Motion and Interaction Generation](handx_scaling_bimanual_motion_and_interaction_generation.md)
+- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](../../AAAI2026/human_understanding/finextrol_controllable_motion_generation_via_fine-grained_text.md)
+- [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ PIMRL 由两个模块 + 消息传递机制组成（Figure 2）：
 - 实验充分度: ⭐⭐⭐⭐ 5 个数据集（1D-3D）、多基线、消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，框架图直观，但部分公式和循环描述较绕
 - 价值: ⭐⭐⭐⭐ 为稀疏/多尺度采样的物理系统建模提供了有效方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empirical Stability Analysis of Kolmogorov-Arnold Networks in Hard-Constrained Recurrent Physics-Informed Discovery](../../ICLR2026/scientific_computing/empirical_stability_analysis_of_kolmogorov-arnold_networks_in_hard-constrained_r.md)
+- [Phys-Liquid: A Physics-Informed Dataset for Estimating 3D Geometry and Volume of Transparent Deformable Liquids](phys-liquid_a_physics-informed_dataset_for_estimating_3d_geometry_and_volume_of_.md)
+- [Astral: Training Physics-Informed Neural Networks with Error Majorants](../../ICLR2026/scientific_computing/astral_training_physics-informed_neural_networks_with_error_majorants.md)
+- [Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data](../../NeurIPS2025/scientific_computing/multi-trajectory_physics-informed_neural_networks_for_hjb_equations_with_hard-ze.md)
+- [NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training](../../CVPR2026/scientific_computing/nestor_a_nested_moe-based_neural_operator_for_large-scale_pde_pre-training.md)
+
+<!-- RELATED:END -->

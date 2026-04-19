@@ -92,3 +92,15 @@ PDE 残差损失 + 表面拟合损失（点云约束）。理论分析证明 $\k
 - 实验充分度: ⭐⭐⭐⭐ 2D+3D 多种复杂形状
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，物理直觉清晰
 - 价值: ⭐⭐⭐⭐⭐ 有望成为 SDF 优化的新标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Condition Matters in Full-head 3D GANs](../../ICLR2026/human_understanding/condition_matters_in_full-head_3d_gans.md)
+- [Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
+- [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
+- [Enhancing Parallelism in Decentralized Stochastic Convex Optimization](../../ICML2025/human_understanding/enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
+- [FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](../../ICCV2025/human_understanding/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ EPA-GRL是两阶段方法：
 - 实验充分度: ⭐⭐⭐⭐ 6个数据集、多种框架、消融、可视化
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法自然，理论分析加分
 - 价值: ⭐⭐⭐⭐ 为图对比学习中"如何做好增强"提供了新的思路和工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Let the Void Be Void: Robust Open-Set Semi-Supervised Learning via Selective Non-Alignment](let_the_void_be_void_robust_open-set_semi-supervised_learning_via_selective_non-.md)
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](../../NeurIPS2025/self_supervised/starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+- [Griffin: Towards a Graph-Centric Relational Database Foundation Model](../../ICML2025/self_supervised/griffin_towards_a_graph-centric_relational_database_foundation_model.md)
+- [Self-Supervised Inductive Logic Programming](self-supervised_inductive_logic_programming.md)
+- [NeuroBridge: Bio-Inspired Self-Supervised EEG-to-Image Decoding via Cognitive Priors and Bidirectional Semantic Alignment](neurobridge_bio-inspired_self-supervised_eeg-to-image_decoding_via_cognitive_pri.md)
+
+<!-- RELATED:END -->

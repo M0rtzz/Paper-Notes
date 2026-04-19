@@ -137,3 +137,15 @@ Space 在 GSM8K 上 **+8.3 点**，IFEval 上 **+12.3 点**。
 - **实验充分度** ⭐⭐⭐⭐：多任务评估、消融实验、效率分析
 - **创新性** ⭐⭐⭐⭐⭐：NCE + Self-play 结合自然优雅
 - **实用价值** ⭐⭐⭐⭐：50K 超越 200K SFT，应用前景好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Triplets Better Than Pairs: Towards Stable and Effective Self-Play Fine-Tuning for LLMs](triplets_better_than_pairs_towards_stable_and_effective_self-play_fine-tuning_fo.md)
+- [AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play](acesearcher_bootstrapping_reasoning_and_search_for_llms_via_reinforced_self-play.md)
+- [HFT: Half Fine-Tuning for Large Language Models](../../ACL2025/llm_nlp/hft_half_fine-tuning_for_large_language_models.md)
+- [GIFT-SW: Gaussian Noise Injected Fine-Tuning of Salient Weights for LLMs](../../ACL2025/llm_nlp/gift-sw_gaussian_noise_injected_fine-tuning_of_salient_weights_for_llms.md)
+- [Synergy over Discrepancy: A Partition-Based Approach to Multi-Domain LLM Fine-Tuning](synergy_over_discrepancy_a_partition-based_approach_to_multi-domain_llm_fine-tun.md)
+
+<!-- RELATED:END -->

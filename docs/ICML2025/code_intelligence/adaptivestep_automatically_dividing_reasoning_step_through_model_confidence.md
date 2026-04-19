@@ -219,3 +219,15 @@ $$\mathcal{L}_{PRM}^\theta = -\sum_{k=1}^{K} (r_k^e \log r_k^\theta + (1 - r_k^e
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖数学和代码两个领域，BoN 和 TVD 两种评估，有迁移性、泛化性、阈值分析和特征分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富且直观，分析深入
 - 价值: ⭐⭐⭐⭐ 实用价值高，降低 PRM 构建成本同时提升性能，对 PRM 研究有重要参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning Through Execution: Unifying Process and Outcome Rewards for Code Generation](reasoning_through_execution_unifying_process_and_outcome_rewards_for_code_genera.md)
+- [Supervised Reinforcement Learning: From Expert Trajectories to Step-wise Reasoning](../../ICLR2026/code_intelligence/supervised_reinforcement_learning_from_expert_trajectories_to_step-wise_reasonin.md)
+- [MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](../../ICLR2026/code_intelligence/mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
+- [FractalBench: Diagnosing Visual-Mathematical Reasoning Through Recursive Program Synthesis](../../NeurIPS2025/code_intelligence/fractalbench_diagnosing_visual-mathematical_reasoning_through_recursive_program_.md)
+- [CoRe: Benchmarking LLMs' Code Reasoning Capabilities through Static Analysis Tasks](../../NeurIPS2025/code_intelligence/core_benchmarking_llms_code_reasoning_capabilities_through_static_analysis_tasks.md)
+
+<!-- RELATED:END -->

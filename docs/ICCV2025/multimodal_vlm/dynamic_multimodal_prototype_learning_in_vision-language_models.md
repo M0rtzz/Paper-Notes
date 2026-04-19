@@ -135,3 +135,15 @@ ProtoMM 由两个模块组成：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 15 数据集+双 backbone+全面消融+OOD 评估+推理时间+可视化
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，图示直观（分布演化、传输热力图）
 - **价值**: ⭐⭐⭐⭐ Training-free TTA 方向的有力推进，多模态原型思路有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Cache Enhanced Prototype Learning for Test-Time Generalization of Vision-Language Models](multi-cache_enhanced_prototype_learning_for_test-time_generalization_of_vision-l.md)
+- [LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
+- [OpenVision: A Fully-Open, Cost-Effective Family of Advanced Vision Encoders for Multimodal Learning](openvision_a_fully-open_cost-effective_family_of_advanced_vision_encoders_for_mu.md)
+- [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [Dynamic Group Detection using VLM-augmented Temporal Groupness Graph](dynamic_group_detection_using_vlm-augmented_temporal_groupness_graph.md)
+
+<!-- RELATED:END -->

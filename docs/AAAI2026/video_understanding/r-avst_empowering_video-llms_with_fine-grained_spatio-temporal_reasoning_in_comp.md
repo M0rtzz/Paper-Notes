@@ -160,3 +160,15 @@ $$R_{\text{spatial}} = \frac{1}{N} \sum_{t=T_{\text{start}}}^{T_{\text{end}}} \t
 - 实验充分度: ⭐⭐⭐⭐ （多任务对比、消融、跨数据集验证、定性分析齐全）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，数据集构建流程详尽）
 - 价值: ⭐⭐⭐⭐ （为音视频时空推理开辟新方向，数据集有长期价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FineTec: Fine-Grained Action Recognition Under Temporal Corruption via Skeleton Decomposition and Sequence Completion](finetec_fine-grained_action_recognition_under_temporal_corruption_via_skeleton_d.md)
+- [TempSamp-R1: Effective Temporal Sampling with Reinforcement Fine-Tuning for Video LLMs](../../NeurIPS2025/video_understanding/tempsampr1_effective_temporal_sampling_with_reinforcement_fi.md)
+- [Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
+- [Frame2Freq: Spectral Adapters for Fine-Grained Video Understanding](../../CVPR2026/video_understanding/frame2freq_spectral_adapters_for_fine-grained_video_understanding.md)
+- [Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos](../../CVPR2026/video_understanding/mistake_attribution_fine-grained_mistake_understanding_in_egocentric_videos.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ ShiftLUT 采用三阶段设计：
 - 实验充分度: ⭐⭐⭐⭐ 3 个任务、5+ 数据集、全面消融（LSS/架构/EAS/bit 分配）
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，三个贡献的动机和关联讲解流畅
 - 价值: ⭐⭐⭐⭐⭐ 面向边缘设备的实用性极强，24KB-104KB 的超高效模型有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond the Ground Truth: Enhanced Supervision for Image Restoration](beyond_the_ground_truth_enhanced_supervision_for_image_restoration.md)
+- [Lightweight and Fast Real-time Image Enhancement via Decomposition of the Spatial-aware Lookup Tables](../../ICCV2025/image_restoration/lightweight_and_fast_real-time_image_enhancement_via_decomposition_of_the_spatia.md)
+- [Blink: Dynamic Visual Token Resolution for Enhanced Multimodal Understanding](blink_dynamic_visual_token_resolution_for_enhanced_multimodal_understanding.md)
+- [Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration](beyond_ground-truth_leveraging_image_quality_priors_for_real-world_image_restora.md)
+- [Efficient Cascaded Multiscale Adaptive Network for Image Restoration](../../ECCV2024/image_restoration/efficient_cascaded_multiscale_adaptive_network_for_image_restoration.md)
+
+<!-- RELATED:END -->

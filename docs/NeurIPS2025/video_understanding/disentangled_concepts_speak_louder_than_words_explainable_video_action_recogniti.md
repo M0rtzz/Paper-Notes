@@ -171,3 +171,15 @@ $$\mathcal{L}_{cls} = -\frac{1}{K}\sum_k y_k\log\hat{y}_k + \lambda[(1-\alpha)\f
 - **实验充分性**: ★★★★★ — 4个数据集、用户研究、消融、模型编辑等全方位评估
 - **写作质量**: ★★★★★ — 图表精美，故事线清晰，Spotlight论文实至名归
 - **实用性**: ★★★★☆ — 模型调试和编辑功能具有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SA-DVAE: Improving Zero-Shot Skeleton-Based Action Recognition by Disentangled Variational Autoencoders](../../ECCV2024/video_understanding/sa-dvae_improving_zero-shot_skeleton-based_action_recognition_by_disentangled_va.md)
+- [ConViS-Bench: Estimating Video Similarity Through Semantic Concepts](convis-bench_estimating_video_similarity_through_semantic_concepts.md)
+- [Seeing Beyond the Scene: Analyzing and Mitigating Background Bias in Action Recognition](seeing_beyond_the_scene_analyzing_and_mitigating_background_bias_in_action_recog.md)
+- [Empower Words: DualGround for Structured Phrase and Sentence-Level Temporal Grounding](empower_words_dualground_for_structured_phrase_and_sentencel.md)
+- [Referring Atomic Video Action Recognition](../../ECCV2024/video_understanding/referring_atomic_video_action_recognition.md)
+
+<!-- RELATED:END -->

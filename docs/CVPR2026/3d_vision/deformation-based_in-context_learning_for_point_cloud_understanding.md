@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ShapeNet 全面 + 跨域评估，但真实世界场景有限
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，对比图直观
 - 价值: ⭐⭐⭐⭐ 在点云 ICL 新兴方向上取得显著进步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mamba Learns in Context: Structure-Aware Domain Generalization for Multi-Task Point Cloud Understanding](mamba_learns_in_context_structure-aware_domain_generalization_for_multi-task_poi.md)
+- [DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding](../../ECCV2024/3d_vision/dg-pic_domain_generalized_point-in-context_learning_for_point_cloud_understandin.md)
+- [Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning](adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning.md)
+- [ECKConv: Learning Coordinate-based Convolutional Kernels for Continuous SE(3) Equivariant Point Cloud Analysis](learning_coordinate-based_convolutional_kernels_for_continuous_se3_equivariant_a.md)
+- [Context-Nav: Context-Driven Exploration and Viewpoint-Aware 3D Spatial Reasoning for Instance Navigation](context-nav_context-driven_exploration_and_viewpoint-aware_3d_spatial_reasoning_.md)
+
+<!-- RELATED:END -->

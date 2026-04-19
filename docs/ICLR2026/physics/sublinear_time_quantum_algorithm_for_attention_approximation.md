@@ -187,3 +187,15 @@ $\lambda$ 增大使统计维度 $s_\lambda$ 减小（加速），但 $\beta$ 增
 - **写作质量**: ⭐⭐⭐⭐ — 技术概览清晰，证明步骤详尽，roadmap 组织良好
 - **实用价值**: ⭐⭐ — 依赖 QRAM，短期无法在真实量子硬件上部署；理论贡献大于实用意义
 - **综合**: ⭐⭐⭐⭐ — 量子计算×Transformer 交叉方向的高质量理论工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feedback-driven Recurrent Quantum Neural Network Universality](feedback-driven_recurrent_quantum_neural_network_universality.md)
+- [Quantum Doubly Stochastic Transformers](../../NeurIPS2025/physics/quantum_doubly_stochastic_transformers.md)
+- [Data Verification is the Future of Quantum Computing Copilots](../../AAAI2026/physics/data_verification_is_the_future_of_quantum_computing_copilots.md)
+- [Robust Fitting on a Gate Quantum Computer](../../ECCV2024/physics/robust_fitting_on_a_gate_quantum_computer.md)
+- [Adaptive Fidelity Estimation for Quantum Programs with Graph-Guided Noise Awareness](../../AAAI2026/physics/adaptive_fidelity_estimation_for_quantum_programs_with_graph.md)
+
+<!-- RELATED:END -->

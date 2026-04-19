@@ -131,3 +131,15 @@ LUCAS gs 通用模型超越 URAvatar +1.4 dB PSNR。
 ## 评分
 
 ⭐⭐⭐⭐ — 首个 mesh-based UPM + 分层面发解耦很有工程价值，实验全面（个性化/通用/消融/驱动），支持实时移动端渲染；但数据获取门槛高、极端变形处理不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
+- [GASP: Gaussian Avatars with Synthetic Priors](gasp_gaussian_avatars_with_synthetic_priors.md)
+- [CLIPGaussian: Universal and Multimodal Style Transfer Based on Gaussian Splatting](../../NeurIPS2025/3d_vision/clipgaussian_universal_and_multimodal_style_transfer_based_on_gaussian_splatting.md)
+- [DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers](dune_distilling_a_universal_encoder_from_heterogeneous_2d_and_3d_teachers.md)
+- [3D Gaussian Head Avatars with Expressive Dynamic Appearances by Compact Tensorial Representations](3d_gaussian_head_avatars_with_expressive_dynamic_appearances_by_compact_tensoria.md)
+
+<!-- RELATED:END -->

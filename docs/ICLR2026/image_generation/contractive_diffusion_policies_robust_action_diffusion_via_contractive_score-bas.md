@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ D4RL + Robomimic + 真机，覆盖离线 RL 和 IL 两种范式
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，实验叙述清晰
 - 价值: ⭐⭐⭐⭐ 以极低实现代价带来一致的性能提升，尤其适用于数据稀缺场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compose Your Policies! Improving Diffusion-based or Flow-based Robot Policies via Test-time Distribution-level Composition](compose_your_policies_improving_diffusion-based_or_flow-based_robot_policies_via.md)
+- [Improving Discrete Diffusion Unmasking Policies Beyond Explicit Reference Policies (UPO)](improving_discrete_diffusion_unmasking_policies_beyond_explicit_reference_polici.md)
+- [Real-Time Execution of Action Chunking Flow Policies](../../NeurIPS2025/image_generation/real-time_execution_of_action_chunking_flow_policies.md)
+- [Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [Error as Signal: Stiffness-Aware Diffusion Sampling via Embedded Runge-Kutta Guidance](error_as_signal_stiffness-aware_diffusion_sampling_via_embedded_runge-kutta_guid.md)
+
+<!-- RELATED:END -->

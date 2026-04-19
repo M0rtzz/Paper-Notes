@@ -181,3 +181,15 @@ MobileIE 架构极其精简：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个 IE 任务全面评估，消融涵盖每个模块、损失函数、注意力机制，还有可视化分析和频域分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，每个模块都有直觉解释和理论分析，可视化丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 对移动端 AI 部署有直接的实用价值，4K 参数的极致效率为移动端开发者提供了新选项
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lightweight and Fast Real-time Image Enhancement via Decomposition of the Spatial-aware Lookup Tables](lightweight_and_fast_real-time_image_enhancement_via_decomposition_of_the_spatia.md)
+- [Learning Pixel-adaptive Multi-layer Perceptrons for Real-time Image Enhancement](learning_pixel-adaptive_multi-layer_perceptrons_for_real-time_image_enhancement.md)
+- [CWNet: Causal Wavelet Network for Low-Light Image Enhancement](cwnet_causal_wavelet_network_for_low-light_image_enhancement.md)
+- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](low-light_image_enhancement_using_event-based_illumination_estimation.md)
+- [Self-Calibrated Variance-Stabilizing Transformations for Real-World Image Denoising](self-calibrated_variance-stabilizing_transformations_for_real-world_image_denois.md)
+
+<!-- RELATED:END -->

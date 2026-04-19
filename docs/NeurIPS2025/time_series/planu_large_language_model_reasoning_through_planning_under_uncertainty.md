@@ -157,3 +157,15 @@ PlanU在TravelPlanner上任务完成率提升61%（vs LATS），WebShop成功率
 - 实验充分度: ⭐⭐⭐⭐ — 5个基准、3种LLM、多种消融，涵盖面广
 - 写作质量: ⭐⭐⭐⭐ — 股票投资的motivating example直观清晰，整体逻辑流畅
 - 价值: ⭐⭐⭐⭐ — 填补LLM决策中环境不确定性处理的空白，对LLM Agent在真实随机环境部署有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [G2S: A General-to-Specific Learning Framework for Temporal Knowledge Graph Forecasting with Large Language Models](../../ACL2025/time_series/g2s_a_general-to-specific_learning_framework_for_temporal_knowledge_graph_foreca.md)
+- [Diffusion Transformers for Imputation: Statistical Efficiency and Uncertainty Quantification](diffusion_transformers_for_imputation_statistical_efficiency_and_uncertainty_qua.md)
+- [MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
+- [Martingale Score: An Unsupervised Metric for Bayesian Rationality in LLM Reasoning](martingale_score_an_unsupervised_metric_for_bayesian_rationality_in_llm_reasonin.md)
+- [CausalDynamics: A Large-Scale Benchmark for Structural Discovery of Dynamical Causal Models](causaldynamics_a_large-scale_benchmark_for_structural_discovery_of_dynamical_cau.md)
+
+<!-- RELATED:END -->

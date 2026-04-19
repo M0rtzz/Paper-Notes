@@ -132,3 +132,15 @@ k值影响(Llama2-7B, rank=256)：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个模型系列、多种rank和bit设置、多维消融分析
 - 写作质量: ⭐⭐⭐⭐⭐ 统一框架presentation非常清晰，图表说服力强
 - 价值: ⭐⭐⭐⭐ 方法简洁有效，对极端压缩场景有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Weight Regularization for Low-Rank Continual Learning](../../ICLR2026/model_compression/revisiting_weight_regularization_for_low-rank_continual_learning.md)
+- [BeamLoRA: Beam-Constraint Low-Rank Adaptation](beamlora_beam_constraint_lora.md)
+- [DenseLoRA: Dense Low-Rank Adaptation of Large Language Models](denselora_dense_low-rank_adaptation_of_large_language_models.md)
+- [TeamLoRA: Boosting Low-Rank Adaptation with Expert Collaboration and Competition](teamlora_boosting_low-rank_adaptation_with_expert_collaboration_and_competition.md)
+- [QSVD: Efficient Low-Rank Approximation for Unified Query-Key-Value Weight Compression](../../NeurIPS2025/model_compression/qsvd_efficient_low-rank_approximation_for_unified_query-key-value_weight_compres.md)
+
+<!-- RELATED:END -->

@@ -101,3 +101,15 @@ $\mathcal{L} = \mathcal{L}_{\text{CoT}} + \mathcal{L}_{\text{ans}} + \mathcal{L}
 - 实验充分度: ⭐⭐⭐⭐ 多 benchmark 评估、详尽消融、oracle 分析、零样本泛化
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，CoT 设计动机到位
 - 价值: ⭐⭐⭐⭐⭐ 定义了 3D 推理的新范式，Good Coherence 指标值得广泛采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](../../CVPR2025/llm_reasoning/argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
+- [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
+- [Verifying Chain-of-Thought Reasoning via Its Computational Graph](verifying_chain-of-thought_reasoning_via_its_computational_graph.md)
+- [CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos](cot-rvs_zero-shot_chain-of-thought_reasoning_segmentation_for_videos.md)
+- [Continuous Chain of Thought Enables Parallel Exploration and Reasoning](continuous_chain_of_thought_enables_parallel_exploration_and_reasoning.md)
+
+<!-- RELATED:END -->

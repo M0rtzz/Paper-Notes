@@ -159,3 +159,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \mathcal{L}_{\text{BCE}
 - 技术深度：⭐⭐⭐⭐ — Transformer+Mamba混合架构+双头编码设计完整
 - 实验完整性：⭐⭐⭐⭐ — 两个数据集SOTA+充分消融
 - 实用价值：⭐⭐⭐ — 室内单目SSC应用明确，但实时性待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Monocular Semantic Scene Completion via Masked Recurrent Networks](monocular_semantic_scene_completion_via_masked_recurrent_networks.md)
+- [UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling](ust-ssm_unified_spatio-temporal_state_space_models_for_point_cloud_video_modelin.md)
+- [MeshMamba: State Space Models for Articulated 3D Mesh Generation and Reconstruction](meshmamba_state_space_models_for_articulated_3d_mesh_generation_and_reconstructi.md)
+- [Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion](disentangling_instance_and_scene_contexts_for_3d_semantic_scene_completion.md)
+- [3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding](3dgraphllm_combining_semantic_graphs_and_large_language_models_for_3d_scene_unde.md)
+
+<!-- RELATED:END -->

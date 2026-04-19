@@ -116,3 +116,15 @@ $$\hat{\boldsymbol{h}} = \boldsymbol{h} - \lambda \boldsymbol{M}_s^\top \boldsym
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 10个模型×11种语言×3个基准，规模庞大且结论一致
 - **写作质量**: ⭐⭐⭐⭐⭐ — 故事线清晰，从假设到验证到分析层层递进
 - **价值**: ⭐⭐⭐⭐⭐ — 免训练提升多语言推理，理论洞察+实践价值兼备
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Checklists Are Better Than Reward Models For Aligning Language Models](checklists_are_better_than_reward_models_for_aligning_langua.md)
+- [RL Tango: Reinforcing Generator and Verifier Together for Language Reasoning](rl_tango_reinforcing_generator_and_verifier_together_for_lan.md)
+- [Horizon Reduction Makes RL Scalable](horizon_reduction_makes_rl_scalable.md)
+- [Training Language Models to Reason Efficiently](training_language_models_to_reason_efficiently.md)
+- [Less is More: Clustered Cross-Covariance Control for Offline RL](../../ICLR2026/reinforcement_learning/less_is_more_clustered_cross-covariance_control_for_offline_rl.md)
+
+<!-- RELATED:END -->

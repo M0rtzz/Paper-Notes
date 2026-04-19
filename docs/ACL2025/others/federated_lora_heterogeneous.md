@@ -238,3 +238,15 @@ LoRA-A² 包含两个核心组件：**交替冻结**（Alternating Freeze）和*
 - 实验充分度: ⭐⭐⭐⭐ 多种异构程度和秩设置下的对比充分，消融实验覆盖各组件，但缺少 NLG 任务和大规模模型实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，理论分析精炼，方法描述系统化；交替冻结+自适应秩选择的组合逻辑流畅
 - 对我的价值: ⭐⭐⭐⭐ 联邦 LoRA 聚合问题的清晰分析和简洁解法，对理解 LoRA 在分布式场景下的行为很有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+- [Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)
+- [MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
+- [Dropout Mixture Low-Rank Adaptation for Visual Parameters-Efficient Fine-Tuning](../../ECCV2024/others/dropout_mixture_low-rank_adaptation_for_visual_parameters-efficient_fine-tuning.md)
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+
+<!-- RELATED:END -->

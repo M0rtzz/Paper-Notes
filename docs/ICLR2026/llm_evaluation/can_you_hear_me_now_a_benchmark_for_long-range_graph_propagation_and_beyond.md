@@ -167,3 +167,15 @@ ECHO-Chem 两个化学任务（Test MAE，越低越好）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 11 种模型、5 个任务、Bayesian 超参搜索、多种分析维度，非常全面
 - **写作质量**: ⭐⭐⭐⭐ 动机论证充分，与已有基准的对比清晰，但部分内容冗长
 - **价值**: ⭐⭐⭐⭐⭐ 为 GNN 长程传播研究提供了急需的标准化评估平台，化学任务有 AI for Science 的应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BLINK-Twice: You See But Do You Observe? A Reasoning Benchmark on Visual Perception](../../NeurIPS2025/llm_evaluation/blink-twice_you_see_but_do_you_observe_a_reasoning_benchmark_on_visual_perceptio.md)
+- [When and Where to Reset Matters for Long-Term Test-Time Adaptation](when_and_where_to_reset_matters_for_long-term_test-time_adaptation.md)
+- [Feedforward Few-shot Species Range Estimation](../../ICML2025/llm_evaluation/feedforward_few-shot_species_range_estimation.md)
+- [Towards Anomaly-Aware Pre-Training and Fine-Tuning for Graph Anomaly Detection](towards_anomaly-aware_pre-training_and_fine-tuning_for_graph_anomaly_detection.md)
+- [Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation](../../NeurIPS2025/llm_evaluation/beyond_the_singular_revealing_the_value_of_multiple_generations_in_benchmark_eva.md)
+
+<!-- RELATED:END -->

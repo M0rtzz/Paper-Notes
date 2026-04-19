@@ -177,3 +177,15 @@ $$\mathcal{L}_F = -\sum_{j=1}^{n} \log P(a_j | H_C, q_{1:m}, a_{1:j-1}; \Theta_{
 - **技术深度**: 7/10 — 实验全面，消融充分，但理论分析偏少
 - **实用性**: 8/10 — 高压缩比对推理加速和成本降低有直接价值，已开源
 - **写作质量**: 7/10 — 结构清晰但部分内容与 ICAE 对比的行文稍显重复
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
+- [DAC: A Dynamic Attention-aware Approach for Task-Agnostic Prompt Compression](dac_prompt_compression.md)
+- [Unveiling Language-Specific Features in Large Language Models via Sparse Autoencoders](language_specific_features.md)
+- [BlockPruner: Fine-grained Pruning for Large Language Models](blockpruner_fine-grained_pruning_for_large_language_models.md)
+
+<!-- RELATED:END -->

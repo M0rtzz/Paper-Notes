@@ -128,3 +128,15 @@ $$\alpha_i = \begin{cases} \frac{m s_i^2}{\eta_i}, & \eta_i > 0 \\ \infty, & \et
 - 实验充分度: ⭐⭐⭐⭐ — 合成+衰老表型+TCGA 多场景验证，缺少与深度方法的对比
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰严谨，算法伪代码完整
 - 价值: ⭐⭐⭐⭐ — 在高维生物统计领域有实际应用价值，代码未开源略有遗憾
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Autonomous Concept Drift Threshold Determination](../../AAAI2026/others/autonomous_concept_drift_threshold_determination.md)
+- [Improve Rule Retrieval and Reasoning with Self-Induction and Relevance ReEstimate](../../ACL2025/others/improve_rule_retrieval_and_reasoning_with_self-induction_and_relevance_reestimat.md)
+- [Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
+- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+- [FSNet: Feasibility-Seeking Neural Network for Constrained Optimization with Guarantees](../../NeurIPS2025/others/fsnet_feasibility-seeking_neural_network_for_constrained_optimization_with_guara.md)
+
+<!-- RELATED:END -->

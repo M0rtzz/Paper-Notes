@@ -147,3 +147,15 @@ $$x^* = \arg\max_x \; p_{K+1}^{aux}(x) \cdot unc_n + r \cdot [1 - p_{K+1}^{aux}(
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集 × 四种开放度，消融完整，可视化分析到位
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，图示直观，整体逻辑流畅
 - 价值: ⭐⭐⭐⭐ — 提供了一个实用的框架将封闭集 AL 方法扩展到开放集场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Operational Open-Set Recognition and PostMax Refinement](operational_open-set_recognition_and_postmax_refinement.md)
+- [Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](../../CVPR2025/others/distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](../../CVPR2025/others/open_set_label_shift_with_test_time_out-of-distribution_reference.md)
+- [Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)
+
+<!-- RELATED:END -->

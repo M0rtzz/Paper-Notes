@@ -165,3 +165,15 @@ $$\tau_d = \sum_{i > d} s_i^2$$
 | 写作质量 | 4 | 理论表述清晰，但内容覆盖面过广 |
 | 实用价值 | 3 | $\tau_d$ 指标有潜力但实用性待大规模验证 |
 | **综合** | **3.8** | 理论优美但实验支撑不足的理论论文 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contrastive Representations for Temporal Reasoning](../../NeurIPS2025/self_supervised/contrastive_representations_for_temporal_reasoning.md)
+- [Test-Time Training Provably Improves Transformers as In-Context Learners](test-time_training_provably_improves_transformers_as_in-context_learners.md)
+- [Clustering Properties of Self-Supervised Learning](clustering_properties_of_self-supervised_learning.md)
+- [MTL-UE: Learning to Learn Nothing for Multi-Task Learning](mtl-ue_learning_to_learn_nothing_for_multi-task_learning.md)
+- [Collapse-Proof Non-Contrastive Self-Supervised Learning](collapse-proof_non-contrastive_self-supervised_learning.md)
+
+<!-- RELATED:END -->

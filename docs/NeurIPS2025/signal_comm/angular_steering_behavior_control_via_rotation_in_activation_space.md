@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个LLM家族×多个尺寸+6个benchmark+定性/定量分析+消融
 - 写作质量: ⭐⭐⭐⭐⭐ 几何直觉、理论证明、实验验证三者衔接流畅
 - 价值: ⭐⭐⭐⭐⭐ 对LLM安全和可控性社区有重要方法论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Continuous Space-Time Video Resampling with Invertible Motion Steganography](../../CVPR2025/signal_comm/continuous_space-time_video_resampling_with_invertible_motion_steganography.md)
+- [AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation](../../CVPR2026/signal_comm/actta_rethinking_test-time_adaptation_via_dynamic_activation.md)
+- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](../../ECCV2024/signal_comm/pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning](the_surprising_effectiveness_of_negative_reinforcement_in_llm_reasoning.md)
+
+<!-- RELATED:END -->

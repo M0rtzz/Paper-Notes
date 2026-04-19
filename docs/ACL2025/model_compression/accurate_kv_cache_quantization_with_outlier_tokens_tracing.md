@@ -160,3 +160,15 @@ KIVI 在 LLaMA-3-8B 的 LCC 任务上出现显著性能下降（56.58→44.42）
 - **实用性**: ★★★★★ — training-free、硬件友好、内存节省显著，工程价值很高
 - **实验充分度**: ★★★★☆ — 4 个模型家族、多种基准、充分的消融实验和效率对比
 - **写作质量**: ★★★★☆ — 结构清晰，动机自然，图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
+- [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
+- [Outlier-Safe Pre-Training for Robust 4-Bit Quantization of Large Language Models](outlier-safe_pre-training_for_robust_4-bit_quantization_of_large_language_models.md)
+- [Quaff: Quantized Parameter-Efficient Fine-Tuning under Outlier Spatial Stability Hypothesis](quaff_quantized_peft.md)
+- [LookaheadKV: Fast and Accurate KV Cache Eviction by Glimpsing into the Future without Generation](../../ICLR2026/model_compression/lookaheadkv_fast_and_accurate_kv_cache_eviction_by_glimpsing_into_the_future_wit.md)
+
+<!-- RELATED:END -->

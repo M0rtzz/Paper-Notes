@@ -133,3 +133,15 @@ tags:
 | 实验充分性 | 2 |
 | 写作质量 | 4 |
 | 总评 | 4 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives](effective_policy_learning_for_multi-agent_online_coordination_beyond_submodular_.md)
+- [Isotropic Noise in Stochastic and Quantum Convex Optimization](isotropic_noise_in_stochastic_and_quantum_convex_optimization.md)
+- [Non-Stationary Bandit Convex Optimization: A Comprehensive Study](non-stationary_bandit_convex_optimization_a_comprehensive_study.md)
+- [Rethinking Neural Combinatorial Optimization for Vehicle Routing Problems with Different Constraint Tightness Degrees](rethinking_neural_combinatorial_optimization_for_vehicle_routing_problems_with_d.md)
+- [Online Two-Stage Submodular Maximization](online_two-stage_submodular_maximization.md)
+
+<!-- RELATED:END -->

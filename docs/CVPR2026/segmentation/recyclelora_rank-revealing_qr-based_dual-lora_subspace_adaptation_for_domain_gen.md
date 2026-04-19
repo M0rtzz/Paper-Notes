@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成到真实、真实到真实、多源训练、多 backbone、详细消融一应俱全
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导清晰，分析（Effective Rank、Grassmann距离、PCA可视化）丰富且令人信服
 - 价值: ⭐⭐⭐⭐ 对 PEFT 初始化策略的理解有实质性贡献，方法简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CA-LoRA: Concept-Aware LoRA for Domain-Aligned Segmentation Dataset Generation](ca-lora_concept-aware_lora_for_domain-aligned_segmentation_dataset_generation.md)
+- [The Golden Subspace: Where Efficiency Meets Generalization in Continual Test-Time Adaptation](the_golden_subspace_where_efficiency_meets_generalization_in_continual_test-time.md)
+- [Causal-Tune: Mining Causal Factors from Vision Foundation Models for Domain Generalized Semantic Segmentation](../../AAAI2026/segmentation/causal-tune_mining_causal_factors_from_vision_foundation_mod.md)
+- [Do We Need Perfect Data? Leveraging Noise for Domain Generalized Segmentation](../../AAAI2026/segmentation/do_we_need_perfect_data_leveraging_noise_for_domain_generalized_segmentation.md)
+- [Phrase-Instance Alignment for Generalized Referring Segmentation](phrase-instance_alignment_for_generalized_referring_segmentation.md)
+
+<!-- RELATED:END -->

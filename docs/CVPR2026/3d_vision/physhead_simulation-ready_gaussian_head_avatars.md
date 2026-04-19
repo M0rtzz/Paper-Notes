@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 定性比较充分展示了动画优势，但定量评估有限（仅静态重建指标），缺少动画质量的定量度量
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法流程条理分明
 - 价值: ⭐⭐⭐⭐ 为可模拟头部Avatar开辟了新方向，是迈向高度真实人类Avatar的重要一步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins](motionanymesh_physics-grounded_articulation_for_simulation-ready_digital_twins.md)
+- [ReWeaver: Towards Simulation-Ready and Topology-Accurate Garment Reconstruction](reweaver_towards_simulation-ready_and_topology-accurate_garment_reconstruction.md)
+- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [ProgressiveAvatars: Progressive Animatable 3D Gaussian Avatars](progressiveavatars_progressive_animatable_3d_gaussian_avatars.md)
+- [Motion-Aware Animatable Gaussian Avatars Deblurring](motion-aware_animatable_gaussian_avatars_deblurring.md)
+
+<!-- RELATED:END -->

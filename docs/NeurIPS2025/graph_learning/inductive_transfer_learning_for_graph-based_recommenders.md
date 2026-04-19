@@ -185,3 +185,15 @@ NBF-Rec 以 NBFNet（神经 Bellman-Ford 网络）为基础，将推荐视为二
 - 实验充分度: ⭐⭐⭐⭐ 7个数据集、三种设置、跨域热力图分析全面
 - 写作质量: ⭐⭐⭐⭐ 方法清晰，公式规范，实验设计合理
 - 价值: ⭐⭐⭐⭐ 为图推荐的迁移学习打开了新方向，轻量设计有实用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+- [Learning Repetition-Invariant Representations for Polymer Informatics](learning_repetition-invariant_representations_for_polymer_informatics.md)
+- [GraphUniverse: Synthetic Graph Generation for Evaluating Inductive Generalization](../../ICLR2026/graph_learning/graphuniverse_synthetic_graph_generation_for_evaluating_inductive_generalization.md)
+- [MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
+
+<!-- RELATED:END -->

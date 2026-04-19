@@ -135,3 +135,15 @@ SHARE-8B 在 BIRD 上实现 14.80% 的相对提升，且推理成本仅为最经
 - **技术深度**: ★★★★☆ — 三阶段管道设计和自演化训练策略设计精细
 - **实验充分性**: ★★★★★ — 4个benchmark + 多个生成器 + 低资源分析 + 跨方言测试
 - **实用价值**: ★★★★☆ — 低成本辅助纠正在隐私受限的实际场景中非常有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Decoding Reading Goals from Eye Movements](decoding_reading_goals_from_eye_movements.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [STaR-SQL: Self-Taught Reasoner for Text-to-SQL](star-sql_self-taught_reasoner_for_text-to-sql.md)
+- [ComfyUI-Copilot: An Intelligent Assistant for Automated Workflow Development](comfyui-copilot_an_intelligent_assistant_for_automated_workflow_development.md)
+
+<!-- RELATED:END -->

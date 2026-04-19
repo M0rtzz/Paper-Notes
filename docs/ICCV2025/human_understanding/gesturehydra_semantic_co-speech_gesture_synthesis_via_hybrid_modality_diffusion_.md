@@ -168,3 +168,15 @@ $$\mathcal{L} = \lambda_t \mathcal{L}_t + \lambda_{vec} \mathcal{L}_{vec} + \lam
 - **实验充分度**: ⭐⭐⭐⭐ 定量+定性实验完整，消融充分，提出新评估指标
 - **写作质量**: ⭐⭐⭐⭐ 论文逻辑清晰，系统设计完整
 - **价值**: ⭐⭐⭐⭐⭐ 直播/虚拟人场景下具有很强的实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
+- [SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
+- [SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)
+- [Understanding Co-speech Gestures in-the-wild](understanding_co-speech_gestures_in-the-wild.md)
+- [HOP: Heterogeneous Topology-based Multimodal Entanglement for Co-Speech Gesture Generation](../../CVPR2025/human_understanding/hop_heterogeneous_topology-based_multimodal_entanglement_for_co-speech_gesture_g.md)
+
+<!-- RELATED:END -->

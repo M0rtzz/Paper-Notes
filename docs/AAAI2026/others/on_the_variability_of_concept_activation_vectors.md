@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种数据模态验证理论预测
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，实用建议明确
 - 价值: ⭐⭐⭐⭐ 对 XAI 方法可靠性的理论理解有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Autonomous Concept Drift Threshold Determination](autonomous_concept_drift_threshold_determination.md)
+- [Partial Colexifications Improve Concept Embeddings](../../ACL2025/others/partial_colexifications_improve_concept_embeddings.md)
+- [Synthia: Novel Concept Design with Affordance Composition](../../ACL2025/others/synthia_novel_concept_design_with_affordance_composition.md)
+- [U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models](../../CVPR2026/others/clipfree_label_free_unsupervised_concept_bottlenec.md)
+- [Enhancing the Comprehensibility of Text Explanations via Unsupervised Concept Discovery](../../ACL2025/others/enhancing_the_comprehensibility_of_text_explanations_via_unsupervised_concept_di.md)
+
+<!-- RELATED:END -->

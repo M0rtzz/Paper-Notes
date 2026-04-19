@@ -160,3 +160,15 @@ Urdu 和 Russian 上 chain-gloss 比 few-shot 高出 2.5+ BLEU。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 3 个数据集 × 16 种语言 × 4 个模型 × 多种消融，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，消融分析深入，ablation 设计精巧
 - **价值**: ⭐⭐⭐⭐⭐ — 对濒危语言翻译有重大实用价值，方法简单有效且门槛极低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+- [Blessing of Multilinguality: A Systematic Analysis of Multilingual In-Context Learning](blessing_of_multilinguality_a_systematic_analysis_of_multilingual_in-context_lea.md)
+- [THOR-MoE: Hierarchical Task-Guided and Context-Responsive Routing for Neural Machine Translation](thor-moe_hierarchical_task-guided_and_context-responsive_routing_for_neural_mach.md)
+- [How Data Mixing Shapes In-Context Learning: Asymptotic Equivalence for Transformers with MLPs](../../NeurIPS2025/multilingual_mt/how_data_mixing_shapes_in-context_learning_asymptotic_equivalence_for_transforme.md)
+- [Multi-perspective Alignment for Increasing Naturalness in Neural Machine Translation](multi-perspective_alignment_for_increasing_naturalness_in_neural_machine_transla.md)
+
+<!-- RELATED:END -->

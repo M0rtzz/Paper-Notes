@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ MTEB + LongEmbed 验证 + 多模型 + 可视化，全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导层层递进，图示直观（Figure 1 完美展示问题），论证严密
 - 价值: ⭐⭐⭐⭐⭐ 对嵌入模型的长文本问题提供了根本性理解，TempScale 实用且免训练
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What Matters in Evaluating Book-Length Stories? A Systematic Study of Long Story Evaluation](what_matters_in_evaluating_book-length_stories_a_systematic_study_of_long_story_.md)
+- [I0T: Embedding Standardization Method Towards Zero Modality Gap](i0t_embedding_standardization_method_towards_zero_modality_gap.md)
+- [LaCoOT: Layer Collapse through Optimal Transport](../../ICCV2025/others/lacoot_layer_collapse_through_optimal_transport.md)
+- [MaxSup: Overcoming Representation Collapse in Label Smoothing](../../NeurIPS2025/others/maxsup_overcoming_representation_collapse_in_label_smoothing.md)
+- [Constrained Hamiltonian Systems on Observation-Induced Fiber Bundles: Theory of Symmetry and Integrability](../../ICML2025/others/constrained_hamiltonian_systems_on_observation-induced_fiber_bundles_theory_of_s.md)
+
+<!-- RELATED:END -->

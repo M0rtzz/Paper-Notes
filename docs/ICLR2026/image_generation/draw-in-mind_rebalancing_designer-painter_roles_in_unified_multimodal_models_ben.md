@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 多 benchmark 验证 + 多设计师泛化测试，但消融可更深入
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，类比直觉，图示精良
 - 价值: ⭐⭐⭐⭐⭐ — 为统一模型的图像编辑提供了全新思路，数据已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models](uni-x_mitigating_modality_conflict_with_a_two-end-separated_architecture_for_uni.md)
+- [ConsistCompose: Unified Multimodal Layout Control for Image Composition](../../CVPR2026/image_generation/consistcompose_multimodal_layout_control.md)
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](../../CVPR2026/image_generation/micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling](editscore_unlocking_online_rl_for_image_editing_via_high-fidelity_reward_modelin.md)
+- [DreamOmni: Unified Image Generation and Editing](../../CVPR2025/image_generation/dreamomni_unified_image_generation_and_editing.md)
+
+<!-- RELATED:END -->

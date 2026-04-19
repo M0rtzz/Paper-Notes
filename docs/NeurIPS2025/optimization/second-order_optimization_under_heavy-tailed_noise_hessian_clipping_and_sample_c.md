@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ （理论贡献突出但仅有合成实验）
 - 写作质量: ⭐⭐⭐⭐⭐ （逻辑清晰，层次分明，图表信息量大）
 - 价值: ⭐⭐⭐⭐ （为重尾噪声下的优化提供了坚实理论基础）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Clipping Improves Adam-Norm and AdaGrad-Norm when the Noise Is Heavy-Tailed](../../ICML2025/optimization/clipping_improves_adam-norm_and_adagrad-norm_when_the_noise_is_heavy-tailed.md)
+- [Improved Sample Complexity for Private Nonsmooth Nonconvex Optimization](../../ICML2025/optimization/improved_sample_complexity_for_private_nonsmooth_nonconvex_optimization.md)
+- [A Unified Approach to Submodular Maximization Under Noise](a_unified_approach_to_submodular_maximization_under_noise.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [Isotropic Noise in Stochastic and Quantum Convex Optimization](isotropic_noise_in_stochastic_and_quantum_convex_optimization.md)
+
+<!-- RELATED:END -->

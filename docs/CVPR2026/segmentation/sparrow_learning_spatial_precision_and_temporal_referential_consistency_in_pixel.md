@@ -183,3 +183,15 @@ VideoGLaMM 在 Ref-DAVIS17 上 F（边界质量）提升高达 +14.5，所有集
 ## 评分
 
 ⭐⭐⭐⭐ 工程导向强、方法模块化设计优雅、实验覆盖全面（3基线×6数据集），但核心技术（proposal+追踪伪标签）创新性中等，更多是已有组件的精巧组合。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning with Pixel-level Precision: QVLM Architecture and SQuID Dataset for Quantitative Geospatial Analytics](reasoning_with_pixel-level_precision_qvlm_architecture_and_squid_dataset_for_qua.md)
+- [Live Interactive Training for Video Segmentation](live_interactive_training_for_video_segmentation.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [RobotSeg: A Model and Dataset for Segmenting Robots in Image and Video](robotseg_a_model_and_dataset_for_segmenting_robots_in_image_and_video.md)
+- [ELVIS: Enhance Low-Light for Video Instance Segmentation in the Dark](elvis_enhance_low-light_for_video_instance_segmentation_in_the_dark.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7种设置×多语言×多任务，极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ 实验设计严谨，结论清晰
 - 价值: ⭐⭐⭐⭐⭐ 对多语言LLM训练有直接指导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Large Language Models Have an English Accent? Evaluating and Improving the Naturalness of Multilingual LLMs](multilingual_llm_english_accent.md)
+- [ShifCon: Enhancing Non-Dominant Language Capabilities with a Shift-based Multilingual Contrastive Framework](shifcon_nondominant_language.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Marco-Bench-MIF: On Multilingual Instruction-Following Capability of Large Language Models](marco_bench_multilingual_if.md)
+
+<!-- RELATED:END -->

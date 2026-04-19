@@ -110,3 +110,15 @@ RAOCO 算法每一轮：(1) 用 OCO 策略（FTRL/OGA）在分数域 $\tilde{\ma
 - 实验充分度: ⭐⭐⭐⭐ 7个数据集覆盖多种应用，含对比和变体分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，理论推导严谨，符号使用一致
 - 价值: ⭐⭐⭐⭐ 对在线组合优化和推荐系统有理论和实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Approach to Submodular Maximization Under Noise](a_unified_approach_to_submodular_maximization_under_noise.md)
+- [Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives](effective_policy_learning_for_multi-agent_online_coordination_beyond_submodular_.md)
+- [Optimistic Online-to-Batch Conversions for Accelerated Convergence and Universality](optimistic_online-to-batch_conversions_for_accelerated_convergence_and_universal.md)
+- [Beyond Õ(√T) Constraint Violation for Online Convex Optimization with Adversarial Constraints](beyond_tildeosqrtt_constraint_violation_for_online_convex_optimization_with_adve.md)
+- [Evaluating LLMs for Combinatorial Optimization: One-Phase and Two-Phase Heuristics for 2D Bin-Packing](evaluating_llms_for_combinatorial_optimization_one-phase_and_two-phase_heuristic.md)
+
+<!-- RELATED:END -->

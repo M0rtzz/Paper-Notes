@@ -117,3 +117,15 @@ VPIR-based Agentic Benchmark Construction Pipeline：(1) Planner 逐层编排推
 - 实验充分度: ⭐⭐⭐⭐ (十个模型，三个域，多维分析)
 - 写作质量: ⭐⭐⭐⭐⭐ (系统描述极其清晰)
 - 价值: ⭐⭐⭐⭐⭐ (揭示 MLLM 核心能力差距，影响广泛)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShowMak3r: Compositional TV Show Reconstruction](showmak3r_compositional_tv_show_reconstruction.md)
+- [From Easy to Hard: The MIR Benchmark for Progressive Interleaved Multi-Image Reasoning](../../ICCV2025/human_understanding/from_easy_to_hard_the_mir_benchmark_for_progressive_interleaved_multi-image_reas.md)
+- [OmniEVA: Embodied Versatile Planner via Task-Adaptive 3D-Grounded and Embodiment-aware Reasoning](../../ICLR2026/human_understanding/omnieva_embodied_versatile_planner_via_task-adaptive_3d-grounded_and_embodiment-.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/human_understanding/in-context_compositional_learning_via_sparse_coding_transformer.md)
+
+<!-- RELATED:END -->

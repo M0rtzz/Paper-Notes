@@ -121,3 +121,15 @@ $$\mathcal{L}_{re} = \mathcal{L}_p(\mathcal{R}_{\hat{k}_n, \hat{k}_p, \hat{c}}(\
 - 技术深度: ⭐⭐⭐⭐ (系统性解决三大瓶颈)
 - 实验质量: ⭐⭐⭐⭐⭐ (全面消融+SOTA大幅提升)
 - 实用价值: ⭐⭐⭐⭐⭐ (毫秒级推理，极高实用性)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Easy3D: A Simple Yet Effective Method for 3D Interactive Segmentation](easy3d_a_simple_yet_effective_method_for_3d_interactive_segmentation.md)
+- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+- [One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images](one_look_is_enough_seamless_patchwise_refinement_for_zero-shot_monocular_depth_e.md)
+- [HORT: Monocular Hand-held Objects Reconstruction with Transformers](hort_monocular_hand-held_objects_reconstruction_with_transformers.md)
+
+<!-- RELATED:END -->

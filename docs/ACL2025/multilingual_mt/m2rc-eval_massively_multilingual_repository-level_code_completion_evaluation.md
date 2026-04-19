@@ -158,3 +158,15 @@ M2rc-Instruct 的微调采用标准的代码补全目标——给定文件内上
 - **实用性**：⭐⭐⭐⭐⭐ — 填补了多语言仓库级代码补全评估的重要空白
 - **实验充分性**：⭐⭐⭐⭐ — 18种语言 × 3种模型 × 3种设置的全面评估
 - **写作质量**：⭐⭐⭐ — 内容详实但表格过多，主线有时不够清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KnowCoder-X: Boosting Multilingual Information Extraction via Code](knowcoder-x_boosting_multilingual_information_extraction_via_code.md)
+- [CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
+- [mOSCAR: A Large-scale Multilingual and Multimodal Document-level Corpus](moscar_a_large-scale_multilingual_and_multimodal_document-level_corpus.md)
+- [MiLiC-Eval: Benchmarking Multilingual LLMs for China's Minority Languages](milic-eval_benchmarking_multilingual_llms_for_chinas_minority_languages.md)
+- [Cross-Lingual Auto Evaluation for Assessing Multilingual LLMs](cross-lingual_auto_evaluation_for_assessing_multilingual_llms.md)
+
+<!-- RELATED:END -->

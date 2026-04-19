@@ -144,3 +144,15 @@ SSPO 在不显著降低翻译质量的前提下大幅提升时长一致性。LLM
 - 实验充分度: ⭐⭐⭐⭐ — 多语言对、多基座模型、人工评估+自动指标+消融+可视化+案例分析覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，符号系统完整，理论推导严谨，附录详尽
 - 价值: ⭐⭐⭐⭐ — 解决阿里优酷实际产业问题，段级偏好优化框架有泛化潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SDPO: Segment-Level Direct Preference Optimization for Social Agents](sdpo_segment-level_direct_preference_optimization_for_social_agents.md)
+- [DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models](../../NeurIPS2025/llm_alignment/densedpo_finegrained_temporal_preference_optimization_for_vi.md)
+- [ASPO: Adaptive Sentence-Level Preference Optimization for Fine-Grained Multimodal Reasoning](aspo_adaptive_sentence-level_preference_optimization_for_fine-grained_multimodal.md)
+- [Reverse Preference Optimization for Complex Instruction Following](reverse_preference_optimization_for_complex_instruction_following.md)
+- [Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization](kpo_protein_safety.md)
+
+<!-- RELATED:END -->

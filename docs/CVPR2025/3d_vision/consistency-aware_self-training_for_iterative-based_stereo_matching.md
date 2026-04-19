@@ -117,3 +117,15 @@ CST-Stereo采用教师-学生自训练框架：教师模型在无标签数据上
 - 实验充分度: ⭐⭐⭐⭐⭐ 多基线、多场景、多数据集验证，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，观察→设计的逻辑链完整
 - 价值: ⭐⭐⭐⭐ 即插即用提升迭代式立体匹配，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](defom-stereo_depth_foundation_model_based_stereo_matching.md)
+- [PIP-Stereo: Progressive Iterations Pruner for Iterative Optimization based Stereo Matching](../../CVPR2026/3d_vision/pip-stereo_progressive_iterations_pruner_for_iterative_optimization_based_stereo.md)
+- [FoundationStereo: Zero-Shot Stereo Matching](foundationstereo_zero-shot_stereo_matching.md)
+- [U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](../../NeurIPS2025/3d_vision/u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
+- [What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](../../CVPR2026/3d_vision/what_makes_good_synthetic_training_data_for_zero-shot_stereo_matching.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ Video-RAG包含三个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 7个LVLM、3个基准、详细的消融实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐⭐ — 即插即用的特性使其具有极强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Caption-Based Queries for Video Moment Retrieval](../../CVPR2026/object_detection/beyond_caption-based_queries_for_video_moment_retrieval.md)
+- [Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](../../ICLR2026/object_detection/toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
+- [Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces](../../AAAI2026/object_detection/beyond_fact_retrieval_episodic_memory_for_rag_with_generative_semantic_workspace.md)
+- [MSTAR: Box-Free Multi-Query Scene Text Retrieval with Attention Recycling](mstar_box-free_multi-query_scene_text_retrieval_with_attention_recycling.md)
+- [Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding](../../ICCV2025/object_detection/sparse-dense_side-tuner_for_efficient_video_temporal_grounding.md)
+
+<!-- RELATED:END -->

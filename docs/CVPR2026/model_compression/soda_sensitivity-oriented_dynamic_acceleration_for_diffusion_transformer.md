@@ -139,3 +139,15 @@ SODA 由三个模块组成：**(1) OFS** — 离线细粒度敏感度建模；**
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个模型、三种任务、完整消融、离线分析、超参敏感度、定性对比，非常充分。
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题驱动，Fig.1 动机图效果好。
 - 价值: ⭐⭐⭐⭐ — 方法实用且泛化性强，开源代码可复现，对 DiT 加速社区有直接贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](ppcl_pluggable_pruning_dit_distillation.md)
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [Dataset Color Quantization: A Training-Oriented Framework for Dataset-Level Compression](../../ICLR2026/model_compression/dataset_color_quantization_a_training-oriented_framework_for_dataset-level_compr.md)
+- [On the Robustness of Diffusion-Based Image Compression to Bit-Flip Errors](on_the_robustness_of_diffusion-based_image_compression_to_bit-flip_errors.md)
+- [SeeDNorm: Self-Rescaled Dynamic Normalization](../../ICLR2026/model_compression/seednorm_self-rescaled_dynamic_normalization.md)
+
+<!-- RELATED:END -->

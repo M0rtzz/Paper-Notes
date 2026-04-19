@@ -143,3 +143,15 @@ SAMA 从三个核心维度——数据集、模型、基准——全面解决上
 - **实验充分度**: ⭐⭐⭐⭐ — 多个benchmark验证，消融充分
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机明确
 - **影响力**: ⭐⭐⭐⭐ — 为视频理解社区提供了重要资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantifying Conversational Reliability of Large Language Models under Multi-Turn Interaction](../../AAAI2026/video_understanding/quantifying_conversational_reliability_of_large_language_models_under_multi-turn.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Steering When Necessary: Flexible Steering Large Language Models with Backtracking](steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)
+- [Factorized Learning for Temporally Grounded Video-Language Models](../../ICCV2025/video_understanding/factorized_learning_for_temporally_grounded_video-language_models.md)
+- [Seeing the Arrow of Time in Large Multimodal Models](seeing_the_arrow_of_time_in_large_multimodal_models.md)
+
+<!-- RELATED:END -->

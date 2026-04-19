@@ -138,3 +138,15 @@ LoRACLR 的输入是 $N$ 个独立训练的单概念 LoRA 模型 $\{V_i\}_{i=1}^
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+用户研究+消融，但缺少在更新模型上的验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图例丰富
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，直接解决社区用户的真实需求，5分钟合并12个概念
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contrastive Flow Matching (ΔFM)](../../ICCV2025/image_generation/contrastive_flow_matching.md)
+- [DreamRelation: Bridging Customization and Relation Generation](dreamrelation_bridging_customization_and_relation_generation.md)
+- [Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge](../../NeurIPS2025/image_generation/towards_general_modality_translation_with_contrastive_and_predictive_latent_diff.md)
+- [Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
+- [IntLoRA: Integral Low-rank Adaptation of Quantized Diffusion Models](../../ICML2025/image_generation/intlora_integral_low-rank_adaptation_of_quantized_diffusion_models.md)
+
+<!-- RELATED:END -->

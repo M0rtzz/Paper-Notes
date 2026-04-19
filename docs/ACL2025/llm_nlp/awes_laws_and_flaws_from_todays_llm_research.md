@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 2,054 篇论文、14 项标准、四维交叉分析、KS 检验、92% 准确率的人工验证，统计方法扎实
 - 写作质量: ⭐⭐⭐⭐ 观点犀利但语气建设性，建议可操作，局限性坦诚（甚至承认自身使用 LLM 标注的悖论）
 - 价值: ⭐⭐⭐⭐⭐ 对整个 NLP/LLM 社区有"照镜子"的反思价值，KS 检验结果和会议机制有效性验证可直接指导审稿制度改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Identify Critical Limitations within Scientific Research? A Systematic Evaluation on AI Research Papers](can_llms_identify_critical_limitations_within_scientific_research_a_systematic_e.md)
+- [TaxoAdapt: Aligning LLM-Based Multidimensional Taxonomy Construction to Evolving Research Corpora](taxoadapt_aligning_llm-based_multidimensional_taxonomy_construction_to_evolving_.md)
+- [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](llm_braces_straightening.md)
+- [LLM-AT: Automatic Transmission for LLM Tiers Optimizing Cost and Accuracy](automatic_transmission_for_llm_tiers_optimizing_cost_and_accuracy_in_large_langu.md)
+- [Towards Geo-Culturally Grounded LLM Generations](geocultural_grounded_llm.md)
+
+<!-- RELATED:END -->

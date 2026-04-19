@@ -124,3 +124,15 @@ tags:
 - 两阶段设计关键：先恢复 VAE 解码能力，再端到端蒸馏，避免一步到位导致的性能塌陷
 - 直通估计器解决 clipping 不可微的问题，工程细节值得关注
 - 与 OSEDiff 教师相比 LPIPS/DISTS 更优，蒸馏后"青出于蓝"
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](../../NeurIPS2025/image_restoration/fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
+- [Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution](../../ECCV2024/image_restoration/pairwise_distance_distillation_for_unsupervised_real-world_image_super-resolutio.md)
+- [Augmenting Perceptual Super-Resolution via Image Quality Predictors](augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](../../CVPR2026/image_restoration/toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [Iterative Predictor-Critic Code Decoding for Real-World Image Dehazing](iterative_predictor-critic_code_decoding_for_real-world_image_dehazing.md)
+
+<!-- RELATED:END -->

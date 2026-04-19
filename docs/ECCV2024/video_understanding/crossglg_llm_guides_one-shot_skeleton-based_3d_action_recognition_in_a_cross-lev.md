@@ -157,3 +157,15 @@ JID插入位置消融（Npre）：第5个编码块最优（太浅特征不够丰
 - 实验充分度: ⭐⭐⭐⭐ (三个数据集+多编码器验证+详细消融)
 - 写作质量: ⭐⭐⭐⭐ (动机清晰，framework图直观)
 - 价值: ⭐⭐⭐⭐⭐ (即插即用+极致效率，实用性极强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SA-DVAE: Improving Zero-Shot Skeleton-Based Action Recognition by Disentangled Variational Autoencoders](sa-dvae_improving_zero-shot_skeleton-based_action_recognition_by_disentangled_va.md)
+- [Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
+- [On the Utility of 3D Hand Poses for Action Recognition](on_the_utility_of_3d_hand_poses_for_action_recognition.md)
+- [SkeletonContext: Skeleton-side Context Prompt Learning for Zero-Shot Skeleton-based Action Recognition](../../CVPR2026/video_understanding/skeletoncontext_skeleton-side_context_prompt_learning_for_zero-shot_skeleton-bas.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+
+<!-- RELATED:END -->

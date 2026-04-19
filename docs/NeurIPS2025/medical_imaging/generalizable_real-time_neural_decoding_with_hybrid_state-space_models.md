@@ -185,3 +185,15 @@ POSSM 在 CPU 上也能实现 ~2.44ms/块（单会话）和 ~5.65ms/块（预训
 - **实验充分度**: ★★★★★ — 三类任务、多数据集、推理效率、样本效率、跨物种迁移全面评估
 - **实用性**: ★★★★★ — 满足实时 BCI 延迟要求，有直接临床价值
 - **总体推荐**: ★★★★★
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BarcodeMamba+: Advancing State-Space Models for Fungal Biodiversity Research](barcodemamba_advancing_state-space_models_for_fungal_biodiversity_research.md)
+- [DyG-Mamba: Continuous State Space Modeling on Dynamic Graphs](dyg-mamba_continuous_state_space_modeling_on_dynamic_graphs.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [Bridging Graph and State-Space Modeling for Intensive Care Unit Length of Stay Prediction](bridging_graph_and_state-space_modeling_for_intensive_care_unit_length_of_stay_p.md)
+- [MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding](more-brain_routed_mixture_of_experts_for_interpretable_and_generalizable_cross-s.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ EgoFlow 提出一种基于 Flow Matching 的生成框架，通过 Mamba-Transfor
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、七个基线、全面的消融、零样本迁移、定性可视化
 - 写作质量: ⭐⭐⭐⭐ 方法描述条理清晰，各模块设计动机明确
 - 价值: ⭐⭐⭐⭐ 物理引导的轨迹生成方法在机器人和 AR 领域有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VeCoR — Velocity Contrastive Regularization for Flow Matching](vecor_--_velocity_contrastive_regularization_for_flow_matching.md)
+- [HazeMatching: Dehazing Light Microscopy Images with Guided Conditional Flow Matching](hazematching_dehazing_light_microscopy_images_with_guided_conditional_flow_match.md)
+- [COT-FM: Cluster-wise Optimal Transport Flow Matching](cot-fm_cluster-wise_optimal_transport_flow_matching.md)
+- [MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching](mpdit_multi-patch_global-to-local_transformer_architecture_for_efficient_flow_ma.md)
+- [Few-shot Acoustic Synthesis with Multimodal Flow Matching](few-shot_acoustic_synthesis_with_multimodal_flow_matching.md)
+
+<!-- RELATED:END -->

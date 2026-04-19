@@ -160,3 +160,15 @@ VLM越来越多地被用于构建通用AI智能体，不仅要理解视觉场景
 - 实验充分度: ⭐⭐⭐⭐⭐（极其系统的控制变量实验+多环境+消融）
 - 写作质量: ⭐⭐⭐⭐⭐（结构清晰，结论明确，图表丰富）
 - 价值: ⭐⭐⭐⭐（为VLM智能体研究提供了重要的实证基础）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs](../../ICLR2026/multimodal_vlm/spinbench_perspective_and_rotation_as_a_lens_on_spatial_reasoning_in_vlms.md)
+- [See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles (StaR)](../../CVPR2026/multimodal_vlm/star_see_think_act_gui_agent_toggles.md)
+- [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](../../NeurIPS2025/multimodal_vlm/ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
+- [The Triangle of Similarity: A Multi-Faceted Framework for Comparing Neural Network Representations](the_triangle_of_similarity_a_multi-faceted_framework_for_comparing_neural_networ.md)
+- [See&Trek: Training-Free Spatial Prompting for Multimodal Large Language Model](../../NeurIPS2025/multimodal_vlm/seetrek_training-free_spatial_prompting_for_multimodal_large_language_model.md)
+
+<!-- RELATED:END -->

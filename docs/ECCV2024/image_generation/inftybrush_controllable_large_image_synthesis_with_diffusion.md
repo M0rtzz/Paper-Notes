@@ -143,3 +143,15 @@ $$\theta^* = \arg\min_\theta \mathbb{E}_{\mathbf{u}_0 \sim \mathbb{Q}_{\text{dat
 - 实验充分度: ⭐⭐⭐⭐（多数据集、消融充分，但缺少自然图像实验）
 - 写作质量: ⭐⭐⭐⭐⭐（理论推导清晰、结构完整、补充材料详尽）
 - 价值: ⭐⭐⭐⭐（开辟新范式，但局部细节不足限制实用性）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Editable Image Elements for Controllable Synthesis](editable_image_elements_for_controllable_synthesis.md)
+- [DreamMover: Leveraging the Prior of Diffusion Models for Image Interpolation with Large Motion](dreammover_leveraging_the_prior_of_diffusion_models_for_image_interpolation_with.md)
+- [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+
+<!-- RELATED:END -->

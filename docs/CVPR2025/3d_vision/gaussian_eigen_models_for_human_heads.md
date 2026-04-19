@@ -124,3 +124,15 @@ CNN 模型训练：$\mathcal{L}_{Color}=(1-\omega)\mathcal{L}_1+\omega\mathcal{L
 - 实验充分度: ⭐⭐⭐⭐⭐ 新视角/新表情/跨人三种评估、完整压缩消融、速度分析、实时demo
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，与 3DMM 的类比恰当，易于理解
 - 价值: ⭐⭐⭐⭐⭐ 极致轻量化的高质量头像方案，7MB+200fps 对 AR/VR 应用价值极大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ViT-Split: Unleashing the Power of Vision Foundation Models via Efficient Splitting Heads](../../ICCV2025/3d_vision/vit-split_unleashing_the_power_of_vision_foundation_models_via_efficient_splitti.md)
+- [Sapiens: Foundation for Human Vision Models](../../ECCV2024/3d_vision/sapiens_foundation_for_human_vision_models.md)
+- [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
+- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
+- [SyncHuman: Synchronizing 2D and 3D Generative Models for Single-View Human Reconstruction](../../NeurIPS2025/3d_vision/synchuman_synchronizing_2d_and_3d_generative_models_for_single-view_human_recons.md)
+
+<!-- RELATED:END -->

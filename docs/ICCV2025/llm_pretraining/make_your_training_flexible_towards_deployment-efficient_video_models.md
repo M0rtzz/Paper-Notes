@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多任务（动作识别+检索+chat）、多规模、多设置，极其充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，消融系统化
 - 价值: ⭐⭐⭐⭐⭐ 对视频模型高效部署有重要实际价值，1/4 token匹配SOTA是强结果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](../../ACL2025/llm_pretraining/towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [FlowMotion: Training-Free Flow Guidance for Video Motion Transfer](../../CVPR2026/llm_pretraining/flowmotion_training-free_flow_guidance_for_video_motion_transfer.md)
+- [Chameleon: A Flexible Data-mixing Framework for Language Model Pretraining and Finetuning](../../ICML2025/llm_pretraining/chameleon_a_flexible_data-mixing_framework_for_language_model_pretraining_and_fi.md)
+- [Dataset Ownership Verification for Pre-trained Masked Models](dataset_ownership_verification_for_pre-trained_masked_models.md)
+- [Broken Tokens: Your Language Model Can Secretly Handle Non-Canonical Tokenization](../../NeurIPS2025/llm_pretraining/broken_tokens_your_language_model_can_secretly_handle_non-canonical_tokenization.md)
+
+<!-- RELATED:END -->

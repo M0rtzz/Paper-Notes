@@ -147,3 +147,15 @@ Edge ratio $r_\text{edge}$ 消融：$r_\text{edge} = 0.0$ → ATE 5.68cm；$r_\t
 - **实验充分度**: ⭐⭐⭐⭐ 合成+真实数据集、组件消融、参数消融完整，但缺乏户外大场景评估
 - **写作质量**: ⭐⭐⭐⭐ 问题动机讲得清楚，方法描述条理分明，图表设计直观
 - **价值**: ⭐⭐⭐⭐ 首次实现完全无外部依赖的 pose-free event-based 3D 重建，拓展了事件相机应用的自主性边界
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IncEventGS: Pose-Free Gaussian Splatting from a Single Event Camera](../../CVPR2025/3d_vision/inceventgs_pose-free_gaussian_splatting_from_a_single_event_camera.md)
+- [Global-Aware Edge Prioritization for Pose Graph Initialization](global-aware_edge_prioritization_for_pose_graph_initialization.md)
+- [OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects](../../NeurIPS2025/3d_vision/onlinesplatter_pose-free_online_3d_reconstruction_for_free-moving_objects.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_singleforward_gaussian_splatting_for_hi.md)
+- [EF-3DGS: Event-Aided Free-Trajectory 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/ef-3dgs_event-aided_free-trajectory_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

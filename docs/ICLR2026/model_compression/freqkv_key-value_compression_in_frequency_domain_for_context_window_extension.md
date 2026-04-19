@@ -166,3 +166,15 @@ FreqKV 首次将频域学习的思想引入 decoder-only LLM 的 KV 缓存压缩
 - 实验充分度: ⭐⭐⭐⭐⭐（PPL + LongBench + RULER + 大海捞针 + LongGenBench，多模型多任务）
 - 实用性: ⭐⭐⭐⭐⭐（无参数、架构无关、少量训练即可）
 - 写作质量: ⭐⭐⭐⭐（频域动机阐述清楚，实验全面）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QSVD: Efficient Low-Rank Approximation for Unified Query-Key-Value Weight Compression](../../NeurIPS2025/model_compression/qsvd_efficient_low-rank_approximation_for_unified_query-key-value_weight_compres.md)
+- [Earth-Adapter: Bridge Geospatial Domain Gaps with Mixture of Frequency Adaptation](../../AAAI2026/model_compression/earth-adapter_bridge_the_geospatial_domain_gaps_with_mixture_of_frequency_adapta.md)
+- [Cross-Domain Lossy Compression via Rate- and Classification-Constrained Optimal Transport](cross_domain_lossy_compression_optimal_transport.md)
+- [FASA: Frequency-aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
+- [In-Context Learning for Pure Exploration](in-context_learning_for_pure_exploration.md)
+
+<!-- RELATED:END -->

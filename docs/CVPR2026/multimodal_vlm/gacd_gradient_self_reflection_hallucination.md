@@ -96,3 +96,15 @@ LLaVA-QA90: GACD(accuracy 6.20, detail 5.13) vs VCD(4.15, 3.85) vs base(3.23, 3.
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个模型、7个基准、生成+判别任务、组件消融、范数消融、大小消融、共现分析
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰严谨，从偏差分析到方法设计到验证的逻辑链完美
 - 价值: ⭐⭐⭐⭐⭐ 在VLM幻觉缓解方法中实现了最佳的准确性-信息保持trade-off
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Multimodal Hallucinations via Gradient-based Self-Reflection](mitigating_multimodal_hallucinations_via_gradient-based_self-reflection.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [KVSmooth: Mitigating Hallucination in Multi-modal Large Language Models through Key-Value Smoothing](kvsmooth_mitigating_hallucination_in_multimodal_la.md)
+- [Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention](tell_model_where_to_look_mitigating_hallucinations_in_mllms_by_vision-guided_att.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs](hulluedit_subspace_editing_hallucination.md)
+
+<!-- RELATED:END -->

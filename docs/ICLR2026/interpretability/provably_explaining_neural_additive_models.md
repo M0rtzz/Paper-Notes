@@ -151,3 +151,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 与多种基线比较，展示了采样方法的不足，但数据集规模有限
 - **写作质量**: ⭐⭐⭐⭐ — 理论部分严谨，但符号密度较高
 - **价值**: ⭐⭐⭐⭐ — 对可解释 AI 和安全关键应用有重要贡献，但受限于 NAM 的适用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Additive Models Explained: A Computational Complexity Approach](../../NeurIPS2025/interpretability/additive_models_explained_a_computational_complexity_approach.md)
+- [FaCT: Faithful Concept Traces for Explaining Neural Network Decisions](../../NeurIPS2025/interpretability/fact_faithful_concept_traces_for_explaining_neural_network_decisions.md)
+- [Modal Logical Neural Networks for Financial AI](modal_logical_neural_networks_for_financial_ai.md)
+- [Distribution-Based Feature Attribution for Explaining the Predictions of Any Classifier](../../AAAI2026/interpretability/distribution-based_feature_attribution_for_explaining_the_predictions_of_any_cla.md)
+- [Concepts' Information Bottleneck Models](concepts_information_bottleneck_models.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 个多样化工作负载，与多种缓存基线对比，开销分析详细
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析（查询 vs 关键词）非常到位，系统设计描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 50% 成本降低对 agent 部署有巨大实际价值，与现有框架兼容性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [AgentTTS: Large Language Model Agent for Test-time Compute-optimal Scaling Strategy in Complex Tasks](agenttts_large_language_model_agent_for_testtime_computeopti.md)
+- [CAM: A Constructivist View of Agentic Memory for LLM-Based Reading Comprehension](cam_a_constructivist_view_of_agentic_memory_for_llm-based_reading_comprehension.md)
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](../../ACL2025/llm_agent/metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [Orchestration Framework for Financial Agents: From Algorithmic Trading to Agentic Trading](orchestration_framework_for_financial_agents_from_algorithmic_trading_to_agentic.md)
+
+<!-- RELATED:END -->

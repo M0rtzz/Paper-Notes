@@ -132,3 +132,15 @@ Majority voting 依赖输出分布的众数，但 agreement bias 导致分布本
 - ⭐⭐⭐⭐⭐ 实验充分度：14 个模型、3 个环境、28+ 模板、离线+下游评估，极为全面
 - ⭐⭐⭐⭐ 写作质量：结构清晰论证严密，但数学符号偏多，部分段落较密集
 - ⭐⭐⭐⭐ 实用价值：SGV 即插即用对 agent 系统有直接帮助，但 token 开销需关注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Planning: Let's Think Only with Images](visual_planning_lets_think_only_with_images.md)
+- [On the Generalization Capacities of MLLMs for Spatial Intelligence](on_the_generalization_capacities_of_mllms_for_spatial_intelligence.md)
+- [Token Taxes: Mitigating AGI's Economic Risks](token_taxes_mitigating_agis_economic_risks.md)
+- [Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping](constructive_distortion_improving_mllms_with_attention-guided_image_warping.md)
+- [JULI: Jailbreak Large Language Models by Self-Introspection](juli_jailbreak_large_language_models_by_self-introspection.md)
+
+<!-- RELATED:END -->

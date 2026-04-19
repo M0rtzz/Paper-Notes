@@ -165,3 +165,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 盲测+客观指标+消融+注意力可视化，全面；与 Sora2 的对比增加说服力
 - 写作质量: ⭐⭐⭐⭐ 技术描述清晰、数据管线和训练策略的document很完整
 - 价值: ⭐⭐⭐⭐⭐ 开源统一音视频生成的重要里程碑，缩小了与闭源模型的差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions](uniavgen_unified_audio_and_video_generation_with_asymmetric_cross-modal_interact.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+- [JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](../../ICLR2026/video_generation/javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
+- [LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation](linvideo_linear_attention_video_generation.md)
+- [PerformRecast: Expression and Head Pose Disentanglement for Portrait Video Editing](performrecast_expression_and_head_pose_disentanglement_for_portrait_video_editin.md)
+
+<!-- RELATED:END -->

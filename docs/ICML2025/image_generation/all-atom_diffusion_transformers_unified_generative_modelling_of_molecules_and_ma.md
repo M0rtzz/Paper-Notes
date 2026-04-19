@@ -175,3 +175,15 @@ ADiT 从 ~30M 扩展至 ~500M 参数，在数据规模不变的情况下：
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集 + DFT 验证 + scaling law 分析 + 效率对比，较为全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、方法描述严谨、图表质量高，Meta FAIR 出品
 - 价值: ⭐⭐⭐⭐ — 为化学生成基础模型指明方向，统一框架+扩展性分析具有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: All Current Generative Fidelity and Diversity Metrics are Flawed](position_all_current_generative_fidelity_and_diversity_metrics_are_flawed.md)
+- [Zatom-1: A Multimodal Flow Foundation Model for 3D Molecules and Materials](../../ICLR2026/image_generation/zatom-1_a_multimodal_flow_foundation_model_for_3d_molecules_and_materials.md)
+- [Kinetic Langevin Diffusion for Crystalline Materials Generation](kinetic_langevin_diffusion_for_crystalline_materials_generation.md)
+- [Normalizing Flows are Capable Generative Models](normalizing_flows_are_capable_generative_models.md)
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](../../CVPR2026/image_generation/quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+
+<!-- RELATED:END -->

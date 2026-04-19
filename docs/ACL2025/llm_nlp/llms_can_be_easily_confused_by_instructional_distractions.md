@@ -130,3 +130,15 @@ DIM-Bench（Distractive Instruction Misunderstanding Benchmark）是一个 2000 
 - 实验充分度: ⭐⭐⭐⭐ 6个模型、20类组合、多种评估方式和缓解策略，但缺少训练级方案
 - 写作质量: ⭐⭐⭐⭐ 问题描述清晰，案例直观，数据组织合理
 - 价值: ⭐⭐⭐⭐ 对实际 LLM 数据处理有直接指导意义，揭示了指令跟随的系统性盲区
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [LLMs Can Simulate Standardized Patients via Agent Coevolution](evopatient_standardized_patient.md)
+- [Enough Coin Flips Can Make LLMs Act Bayesian](coin_flips_bayesian.md)
+- [LLMs can Perform Multi-Dimensional Analytic Writing Assessments](llm_writing_assessment.md)
+- [Can Graph Descriptive Order Affect Solving Graph Problems with LLMs?](graph_descriptive_order_llm.md)
+
+<!-- RELATED:END -->

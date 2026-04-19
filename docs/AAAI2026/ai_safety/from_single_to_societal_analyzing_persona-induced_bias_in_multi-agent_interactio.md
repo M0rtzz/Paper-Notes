@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐（3模型×2任务×5性别×4种族，渐进式实验设计极其严谨）
 - 写作质量: ⭐⭐⭐⭐⭐（结构清晰，研究路线图明确，社会学理论连接恰当）
 - 价值: ⭐⭐⭐⭐⭐（对多智能体系统的公平性和可靠性有重要警示意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](../../ICLR2026/ai_safety/sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
+- [Argumentative Debates for Transparent Bias Detection](argumentative_debates_for_transparent_bias_detection_technic.md)
+- [Convex Markov Games: A New Frontier for Multi-Agent Reinforcement Learning](../../ICML2025/ai_safety/convex_markov_games_a_new_frontier_for_multi-agent_reinforcement_learning.md)
+- [Gender Bias in Emotion Recognition by Large Language Models](gender_bias_in_emotion_recognition_by_large_language_models.md)
+- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
+
+<!-- RELATED:END -->

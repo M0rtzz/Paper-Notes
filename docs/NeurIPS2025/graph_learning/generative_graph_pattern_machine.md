@@ -175,3 +175,15 @@ $$\mathcal{L} = \frac{1}{n} \sum_{i=1}^{n} \text{is\_masked}(\mathbf{p}_i) \cdot
 3. **设计空间探索非常全面**：消融实验揭示的多条洞察（如 MAE 优于 SimMIM、高掩码比例更好、无需位置编码）对后续工作具有重要指导价值
 4. **跨域迁移能力**值得关注：通过学习可迁移的子结构模式，G2PM 可以在域和任务边界之间正迁移，这是消息传递方法难以做到的
 5. **与 GPM 的关系**：G2PM 可视为 GPM（同组前作，ViT 风格子结构建模）的生成式预训练扩展，将对比/监督学习升级为生成式自监督学习
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Message Passing: Neural Graph Pattern Machine](../../ICML2025/graph_learning/beyond_message_passing_neural_graph_pattern_machine.md)
+- [Relieving the Over-Aggregating Effect in Graph Transformers](relieving_the_over-aggregating_effect_in_graph_transformers.md)
+- [Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework](unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)
+- [P-DRUM: Post-hoc Descriptor-based Residual Uncertainty Modeling for Machine Learning Potentials](p-drum_post-hoc_descriptor-based_residual_uncertainty_modeling_for_machine_learn.md)
+- [From Sequence to Structure: Uncovering Substructure Reasoning in Transformers](from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)
+
+<!-- RELATED:END -->

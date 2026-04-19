@@ -180,3 +180,15 @@ $$I_\tau = \frac{1}{|\tau|} \sum_{(s,a)\in\tau} \Delta Q(s) \times R(s,a)$$
 - **实验充分度**: ⭐⭐⭐ — 环境过于简单，缺乏大规模验证
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，反事实验证的可视化很直观
 - **价值**: ⭐⭐⭐ — 在XRL领域提供了有用的工具，但实际落地有一定距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Offline Reinforcement Learning with Generative Trajectory Policies](../../ICLR2026/reinforcement_learning/offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [Learning Human-Like RL Agents through Trajectory Optimization with Action Quantization](../../NeurIPS2025/reinforcement_learning/learning_human-like_rl_agents_through_trajectory_optimization_with_action_quanti.md)
+- [Revealing POMDPs: Qualitative and Quantitative Analysis for Parity Objectives](revealing_pomdps_qualitative_and_quantitative_analysis_for_parity_objectives.md)
+- [Speculative Sampling with Reinforcement Learning](speculative_sampling_with_reinforcement_learning.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+
+<!-- RELATED:END -->

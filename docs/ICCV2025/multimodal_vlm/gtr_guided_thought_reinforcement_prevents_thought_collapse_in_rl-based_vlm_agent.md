@@ -162,3 +162,15 @@ GTR 相比 SOTA 方法（RL4VLM）成功率提升 **7 倍**，且超越了作为
 - **技术深度**: ⭐⭐⭐⭐ — 分析深入，消融充分
 - **实用价值**: ⭐⭐⭐⭐ — 对 VLM 智能体 RL 训练有直接指导意义
 - **写作质量**: ⭐⭐⭐⭐ — 问题阐述清晰，实验设计合理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ERL-VLM: Enhancing Rating-Based RL to Leverage Feedback from Large VLMs](../../ICML2025/multimodal_vlm/enhancing_rating-based_reinforcement_learning_to_effectively_leverage_feedback_f.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](../../CVPR2026/multimodal_vlm/gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning](mmat1m_a_large_reasoning_dataset_for_multimodal_agent_tuning.md)
+- [Towards Efficient Online Tuning of VLM Agents via Counterfactual Soft Reinforcement Learning](../../ICML2025/multimodal_vlm/towards_efficient_online_tuning_of_vlm_agents_via_counterfactual_soft_reinforcem.md)
+- [Praxis-VLM: Vision-Grounded Decision Making via Text-Driven Reinforcement Learning](../../NeurIPS2025/multimodal_vlm/praxisvlm_visiongrounded_decision_making_via_textdriven_rein.md)
+
+<!-- RELATED:END -->

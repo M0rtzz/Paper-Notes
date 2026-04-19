@@ -101,3 +101,15 @@ AccDiffusion是完全**免训练**的plug-and-play方法，无需任何微调或
 - 实验充分度: ⭐⭐⭐⭐ 消融实验充分揭示了各模块的贡献，定量+定性结合，但FID/IS指标难以反映重复程度
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，从问题分析到方案设计环环相扣，图示精美易懂
 - 实用价值: ⭐⭐⭐⭐ 免训练即插即用，实际应用价值高，但推理速度仍是瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+- [ScaleDiff: Higher-Resolution Image Synthesis via Efficient and Model-Agnostic Diffusion](../../NeurIPS2025/image_generation/scalediff_higher-resolution_image_synthesis_via_efficient_and_model-agnostic_dif.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis](fouriscale_a_frequency_perspective_on_training-free_high-resolution_image_synthe.md)
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+
+<!-- RELATED:END -->

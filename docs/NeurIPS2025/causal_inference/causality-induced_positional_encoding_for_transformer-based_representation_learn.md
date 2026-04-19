@@ -120,3 +120,15 @@ CAPE 平均降低 MSE 11.1%，而因果无关的相对PE仅降低 2.7%。
 - 实验充分度: ⭐⭐⭐⭐ 合成+多组学实验全面，但领域覆盖面可更广
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，叙述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 为非序列数据的Transformer建模开辟了新方向，但实际应用场景目前偏窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revealing Multimodal Causality with Large Language Models](revealing_multimodal_causality_with_large_language_models.md)
+- [LLM Interpretability with Identifiable Temporal-Instantaneous Representation](llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](../../ICML2025/causal_inference/learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+- [Transformer-Based Spatial-Temporal Counterfactual Outcomes Estimation](../../ICML2025/causal_inference/transformer-based_spatial-temporal_counterfactual_outcomes_estimation.md)
+- [Integrating Markov Blanket Discovery into Causal Representation Learning for Domain Generalization](../../ECCV2024/causal_inference/integrating_markov_blanket_discovery_into_causal_representation_learning_for_dom.md)
+
+<!-- RELATED:END -->

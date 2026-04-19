@@ -126,3 +126,15 @@ BiM 描述子的两个分量均对性能有贡献，完整 BiM 描述子带来 +
 ## 总结与展望
 
 BiM-VFI 通过引入 BiM 描述子 $[R, \Phi]$ 显式建模双向运动场的内在关系，结合内容感知上采样和知识蒸馏，在仅6.88M参数下实现了 SOTA 的帧插值质量。该方法特别适合处理非均匀运动场景，其设计理念——利用双向光流的约束关系——可以推广到其他需要运动估计的视频理解任务中。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map](../../ECCV2024/video_understanding/iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex.md)
+- [VTinker: Guided Flow Upsampling and Texture Mapping for High-Resolution Video Frame Interpolation](../../AAAI2026/video_understanding/vtinker_guided_flow_upsampling_and_texture_mapping_for_high-resolution_video_fra.md)
+- [M-LLM Based Video Frame Selection for Efficient Video Understanding](m-llm_based_video_frame_selection_for_efficient_video_understanding.md)
+- [Learning Audio-Guided Video Representation with Gated Attention for Video-Text Retrieval](learning_audio-guided_video_representation_with_gated_attention_for_video-text_r.md)
+- [KeyFace: Expressive Audio-Driven Facial Animation for Long Sequences via KeyFrame Interpolation](keyface_expressive_audio-driven_facial_animation_for_long_sequences_via_keyframe.md)
+
+<!-- RELATED:END -->

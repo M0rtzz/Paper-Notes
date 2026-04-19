@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 54 种分类法系统搜索 + 3 种模型规模 + 定制可解释性
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰，从问题到方法到发现衔接紧密
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 记忆化理解有范式级贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](../../ACL2025/llm_nlp/token_prepending_training_free.md)
+- [Regress, Don't Guess — A Regression-like Loss on Number Tokens for Language Models](../../ICML2025/llm_nlp/regress_dont_guess_--_a_regression-like_loss_on_number_tokens_for_language_model.md)
+- [Lost in Literalism: How Supervised Training Shapes Translationese in LLMs](../../ACL2025/llm_nlp/lost_in_literalism_how_supervised_training_shapes_translationese_in_llms.md)
+- [SketchDeco: Training-Free Latent Composition for Precise Sketch Colourisation](../../CVPR2026/llm_nlp/sketchdeco_training-free_latent_composition_for_precise_sketch_colourisation.md)
+- [SubSpec: Speculate Deep and Accurate — Lossless and Training-Free Acceleration for Offloaded LLMs](../../NeurIPS2025/llm_nlp/speculate_deep_and_accurate_lossless_and_training-free_acceleration_for_offloade.md)
+
+<!-- RELATED:END -->

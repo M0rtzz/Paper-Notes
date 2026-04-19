@@ -155,3 +155,15 @@ $$\vec{v}(t) = \text{MLP}_v(\mathcal{G}_f \oplus \Psi(t))$$
 - **实验充分度**: ⭐⭐⭐⭐ — nuScenes 上全面评估，消融极为详尽（注意力/属性/时序/参数量），但仅一个数据集
 - **写作质量**: ⭐⭐⭐⭐⭐ — 论文结构清晰，每个贡献的实验支撑到位，图表质量高
 - **价值**: ⭐⭐⭐⭐⭐ — 推理效率和弱监督特性使其具有极高实用价值，对自动驾驶感知系统架构设计有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](6dopegs_online_6d_object_pose_estimation_using_gaussian_spla.md)
+- [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
+- [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
+- [Self-Supervised Sparse Sensor Fusion for Long Range Perception](self-supervised_sparse_sensor_fusion_for_long_range_perception.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+
+<!-- RELATED:END -->

@@ -194,3 +194,15 @@ EXPERT 在所有无参考指标中取得 SOTA（除 Pascal-50S）。甚至超越
 | 总评 | 4.5 |
 
 实验异常扎实——6 个基准数据集、20+ 个基线对比、人工评估验证解释质量。数据构建和模板设计都很精巧。作为评估指标论文，兼顾了准确性和可解释性两个维度，具有很高的实用价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Does It Look There? Structured Explanations for Image Classification](../../CVPR2025/interpretability/why_does_it_look_there_structured_explanations_for_image_classification.md)
+- [ARECHO: Autoregressive Evaluation via Chain-Based Hypothesis Optimization for Speech Multi-Metric Estimation](../../NeurIPS2025/interpretability/arecho_autoregressive_evaluation_via_chain-based_hypothesis_optimization_for_spe.md)
+- [Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](shortcut_neuron_eval.md)
+- [The Anatomy of Evidence: An Investigation Into Explainable ICD Coding](the_anatomy_of_evidence_an_investigation_into_explainable_icd_coding.md)
+- [Bias Attribution in Filipino Language Models: Extending a Bias Interpretability Metric for Application on Agglutinative Languages](bias_attribution_in_filipino_language_models_extending_a_bias_interpretability_m.md)
+
+<!-- RELATED:END -->

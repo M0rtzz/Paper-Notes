@@ -118,3 +118,15 @@ DRAGON 在所有 forget 比例下 Deviation Score 最低，模型效用完全无
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9 个 LLM、3 个任务、多组消融实验，结果全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式规范，指标定义严谨
 - 价值: ⭐⭐⭐⭐ — 对黑盒 LLM 遗忘场景有很强的实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MKA: Memory-Keyed Attention for Efficient Long-Context Reasoning](mka_memory-keyed_attention_for_efficient_long-context_reasoning.md)
+- [Context Tuning for In-Context Optimization](context_tuning_for_in-context_optimization.md)
+- [ParallelComp: Parallel Long-Context Compressor for Length Extrapolation](parallelcomp_parallel_long-context_compressor_for_length_extrapolation.md)
+- [Steer LLM Latents for Hallucination Detection](steer_llm_latents_for_hallucination_detection.md)
+- [Sample Efficient Demonstration Selection for In-Context Learning](sample_efficient_demonstration_selection_for_in-context_learning.md)
+
+<!-- RELATED:END -->

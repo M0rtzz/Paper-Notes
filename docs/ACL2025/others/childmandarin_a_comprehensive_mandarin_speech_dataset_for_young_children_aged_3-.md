@@ -200,3 +200,15 @@ HuBERT 一致优于 Wav2vec 2.0，与最新研究一致。
 - 实用性：⭐⭐⭐⭐⭐ — 对教育技术和儿童人机交互有直接应用价值
 - 方法新颖度：⭐⭐⭐ — 数据集构建为主，基线评估采用标准方法
 - 实验充分度：⭐⭐⭐⭐ — ASR + SV 双任务，从零训练 + 预训练微调全面覆盖，细粒度分析详实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Comprehensive Argument Analysis in Education: Dataset, Tasks, and Method](towards_comprehensive_argument_analysis_in_education_dataset_tasks_and_method.md)
+- [QualiSpeech: A Speech Quality Assessment Dataset with Natural Language Reasoning](qualispeech_a_speech_quality_assessment_dataset_with_natural_language_reasoning_.md)
+- [PopAlign: Diversifying Contrasting Patterns for a More Comprehensive Alignment](popalign_diversifying_contrasting_patterns_for_a_more_comprehensive_alignment.md)
+- [GA-S3: Comprehensive Social Network Simulation with Group Agents](ga-s3_comprehensive_social_network_simulation_with_group_agents.md)
+- [Unlocking Speech Instruction Data Potential with Query Rewriting](unlocking_speech_instruction_data_potential_with_query_rewriting.md)
+
+<!-- RELATED:END -->

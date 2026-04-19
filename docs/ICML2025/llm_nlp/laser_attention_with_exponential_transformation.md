@@ -139,3 +139,15 @@ $$\text{LASER}(X) = \log\!\Big(\text{softmax}(QK^\top) \cdot \exp(V)\Big)$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 跨模态、跨规模、多种 baseline 和消融，非常充分
 - 写作质量: ⭐⭐⭐⭐ — 推导清晰，从简单 case 出发逐步推广，可读性好
 - 价值: ⭐⭐⭐⭐ — 作为即插即用的注意力改进，实用性强，但提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reparameterized LLM Training via Orthogonal Equivalence Transformation](../../NeurIPS2025/llm_nlp/reparameterized_llm_training_via_orthogonal_equivalence_transformation.md)
+- [Spectral Conditioning of Attention Improves Transformer Performance](../../NeurIPS2025/llm_nlp/spectral_conditioning_of_attention_improves_transformer_performance.md)
+- [Strassen Attention, Split VC Dimension and Compositionality in Transformers](../../NeurIPS2025/llm_nlp/strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
+- [Spiking Transformer with Spatial-Temporal Attention](../../CVPR2025/llm_nlp/spiking_transformer_with_spatial-temporal_attention.md)
+- [Breaking the Low-Rank Dilemma of Linear Attention](../../CVPR2025/llm_nlp/breaking_the_low-rank_dilemma_of_linear_attention.md)
+
+<!-- RELATED:END -->

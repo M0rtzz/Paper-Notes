@@ -133,3 +133,15 @@ Q♯ 是一个迭代式值函数学习算法：每轮 (1) 用当前引导策略 
 - 实验充分度: ⭐⭐⭐⭐⭐ star-graph + 多规模数学推理 + 大模型引导 + 详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论动机清晰，对比精确，实验周密
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 后训练有范式性意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reparameterized LLM Training via Orthogonal Equivalence Transformation](reparameterized_llm_training_via_orthogonal_equivalence_transformation.md)
+- [PT2-LLM: Post-Training Ternarization for Large Language Models](../../ICLR2026/llm_nlp/pt2-llm_post-training_ternarization_for_large_language_models.md)
+- [Post Hoc Regression Refinement via Pairwise Rankings](post_hoc_regression_refinement_via_pairwise_rankings.md)
+- [Nemotron-Flash: Towards Latency-Optimal Hybrid Small Language Models](nemotron-flash_towards_latency-optimal_hybrid_small_language_models.md)
+- [What One Cannot, Two Can: Two-Layer Transformers Provably Represent Induction Heads on Any-Order Markov Chains](what_one_cannot_two_can_two-layer_transformers_provably_represent_induction_head.md)
+
+<!-- RELATED:END -->

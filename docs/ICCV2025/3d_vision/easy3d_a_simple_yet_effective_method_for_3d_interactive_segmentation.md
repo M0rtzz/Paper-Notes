@@ -155,3 +155,15 @@ tags:
 ## 评分 ⭐⭐⭐⭐
 
 方法简洁有效，工程设计优良。消融实验清晰展示了各组件的贡献。跨域泛化能力非常出色，尤其在 KITTI-360 和 GS 场景上。VR 应用演示增加了实用价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SuperMat: Physically Consistent PBR Material Estimation at Interactive Rates](supermat_physically_consistent_pbr_material_estimation_at_interactive_rates.md)
+- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+- [CutS3D: Cutting Semantics in 3D for 2D Unsupervised Instance Segmentation](cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+- [GaussianProperty: Integrating Physical Properties to 3D Gaussians with LMMs](gaussianproperty_integrating_physical_properties_to_3d_gaussians_with_lmms.md)
+
+<!-- RELATED:END -->

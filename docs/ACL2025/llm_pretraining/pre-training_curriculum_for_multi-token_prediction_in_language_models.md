@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 两种模型大小 × 两种 tokenization × 两种 head 类型，但数据规模太小
 - 写作质量: ⭐⭐⭐⭐ 表述清晰，实验设计合理
 - 价值: ⭐⭐⭐⭐ 对 MTP 训练的实用改进，特别是对资源受限场景有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [An Effective Incorporating Heterogeneous Knowledge Curriculum Learning for Sequence Labeling](dual_stage_curriculum_learning_sequence_labeling.md)
+- [Making LLMs Better Many-to-Many Speech-to-Text Translators with Curriculum Learning](making_llms_better_many-to-many_speech-to-text_translators_with_curriculum_learn.md)
+- [Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation](emergent_abilities_continued_pt.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融、steering、跨层分析、多模型验证，实验设计严谨全面
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表丰富，论证层层递进
 - 价值: ⭐⭐⭐⭐ 对SAE可解释性社区有重要推动，但未直接产生新模型或新方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fixed-Point RNNs: Interpolating from Diagonal to Dense](fixed-point_rnns_interpolating_from_diagonal_to_dense.md)
+- [ResidualViT for Efficient Temporally Dense Video Encoding](../../ICCV2025/video_understanding/residualvit_for_efficient_temporally_dense_video_encoding.md)
+- [Online Dense Point Tracking with Streaming Memory](../../ICCV2025/video_understanding/online_dense_point_tracking_with_streaming_memory.md)
+- [AllTracker: Efficient Dense Point Tracking at High Resolution](../../ICCV2025/video_understanding/alltracker_efficient_dense_point_tracking_at_high_resolution.md)
+- [Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](../../ACL2025/video_understanding/sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)
+
+<!-- RELATED:END -->

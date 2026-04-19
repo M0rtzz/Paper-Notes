@@ -109,3 +109,15 @@ ConstStyle分为训练和测试两个阶段：训练阶段包含（i）确定统
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多场景（少域、多未见域、不同域差距）
 - 写作质量: ⭐⭐⭐⭐ 理论与实验结合紧密，结构清晰
 - 价值: ⭐⭐⭐⭐ 方法简洁有效，理论保证完善，可广泛应用于DG场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Clean Generalization and Robust Overfitting in Adversarial Training from Two Theoretical Views: Representation Complexity and Training Dynamics](../../ICML2025/llm_pretraining/on_the_clean_generalization_and_robust_overfitting_in_adversarial_training_from_.md)
+- [A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
+- [ACE-G: Improving Generalization of Scene Coordinate Regression Through Query Pre-Training](aceg_improving_generalization_of_scene_coordinate_regression.md)
+- [Superposition Yields Robust Neural Scaling](../../NeurIPS2025/llm_pretraining/superposition_yields_robust_neural_scaling.md)
+- [Incorporating Domain Knowledge into Materials Tokenization](../../ACL2025/llm_pretraining/incorporating_domain_knowledge_into_materials_tokenization.md)
+
+<!-- RELATED:END -->

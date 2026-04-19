@@ -113,3 +113,15 @@ tags:
 - **实验充分度**: 4/10 — 纯理论工作，缺乏实验验证
 - **清晰度**: 7/10 — 数学符号较多但逻辑清晰，对非理论读者门槛较高
 - **总分**: 8/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Estimation of Tokenisation Bias](causal_tokenisation_bias.md)
+- [Jigsaw++: Imagining Complete Shape Priors for Object Reassembly](../../ICCV2025/others/jigsaw_imagining_complete_shape_priors_for_object_reassembly.md)
+- [The Limitations and Power of NP-Oracle-Based Functional Synthesis Techniques](../../AAAI2026/others/the_limitations_and_power_of_np-oracle-based_functional_synthesis_techniques.md)
+- [Enhancing Conversational Agents with Theory of Mind: Aligning Beliefs, Desires, and Intentions for Human-Like Interaction](enhancing_conversational_agents_with_theory_of_mind_aligning_beliefs_desires_and.md)
+- [LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)
+
+<!-- RELATED:END -->

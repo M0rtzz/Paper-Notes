@@ -120,3 +120,15 @@ $$\mathcal{C}(V(t)_l) = \frac{1}{TN}\sum_{i=1}^{n}\max(0, \delta - |V(t)_i - V_{
 - 实验充分度: ⭐⭐⭐⭐ 多架构×多攻击×多训练策略，消融完整，但缺少AutoAttack评估
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，方法动机清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 为SNN安全部署提供了理论基础和实用工具，推理零开销是重要优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MPD-SGR: Robust Spiking Neural Networks with Membrane Potential Distribution-Driven Surrogate Gradient Regularization](../../AAAI2026/ai_safety/mpd-sgr_robust_spiking_neural_networks_with_membrane_potential_distribution-driv.md)
+- [Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking](../../AAAI2026/ai_safety/yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md)
+- [ATEX-CF: Attack-Informed Counterfactual Explanations for Graph Neural Networks](atex-cf_attack-informed_counterfactual_explanations_for_graph_neural_networks.md)
+- [Hashed Watermark as a Filter: A Unified Defense Against Forging and Overwriting Attacks in Neural Network Watermarking](../../AAAI2026/ai_safety/hashed_watermark_as_a_filter_defeating_forging_and_overwriting_attacks_in_weight.md)
+- [Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)](membership_inference_attacks_against_fine-tuned_diffusion_language_models.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ QG-SMS 包含三个步骤（图 2）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 两个数据集、7 个基线、多维度评估、人工评估、鲁棒性分析，极为充分
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰、案例分析生动、实验设计严谨
 - **价值**: ⭐⭐⭐⭐ 对教育 AI 和 LLM 评估器都有实际指导意义，且方法简单易落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MockConf: A Student Interpretation Dataset: Analysis, Word- and Span-level Alignment and Baselines](mockconf_a_student_interpretation_dataset_analysis_word-_and_span-level_alignmen.md)
+- [TestNUC: Enhancing Test-Time Computing Approaches and Scaling through Neighboring Unlabeled Data Consistency](testnuc_enhancing_test-time_computing_approaches_and_scaling_through_neighboring.md)
+- [Consistent Client Simulation for Motivational Interviewing-based Counseling](consistent_client_simulation_for_motivational_interviewing-based_counseling.md)
+- [GA-S3: Comprehensive Social Network Simulation with Group Agents](ga-s3_comprehensive_social_network_simulation_with_group_agents.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](distractor_gen_multiple_choice.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ $$H_i^{gt}(\mathbf{x}) = \begin{cases} \exp(-\|\mathbf{x}-\hat{\mathbf{x}_i}\|^2
 - 实验充分度: 9/10 — 3 个仿真基准 + 真机 7 种设定 + 充分消融，非常全面
 - 写作质量: 8/10 — 结构清晰，5 个研究问题逐一回答，逻辑性强
 - 价值: 8/10 — 3 条轨迹达 95% 成功率的样本效率突破具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Steer: Input-dependent Steering for Multimodal LLMs](learning_to_steer_input-dependent_steering_for_multimodal_llms.md)
+- [MIMO: A Medical Vision Language Model with Visual Referring Multimodal Input and Pixel Grounding Multimodal Output](../../CVPR2025/multimodal_vlm/mimo_a_medical_vision_language_model_with_visual_referring_multimodal_input_and_.md)
+- [PointAlign: Feature-Level Alignment Regularization for 3D Vision-Language Models](../../CVPR2026/multimodal_vlm/pointalign_feature-level_alignment_regularization_for_3d_vision-language_models.md)
+- [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
+- [ForceVLA: Enhancing VLA Models with a Force-aware MoE for Contact-rich Manipulation](forcevla_enhancing_vla_models_with_a_force-aware_moe_for_contact-rich_manipulati.md)
+
+<!-- RELATED:END -->

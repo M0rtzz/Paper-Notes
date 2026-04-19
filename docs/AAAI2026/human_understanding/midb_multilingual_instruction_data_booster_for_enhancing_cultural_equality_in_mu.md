@@ -169,3 +169,15 @@ $$\theta_m = \arg\max_\theta \sum_{i \in [1,16]} \sum_{x_j \in C_i} \log P(y_j |
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 16 语言覆盖、自动+人工评估、OOD测试、敏感性分析，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，社会影响论述充分，但部分细节较冗余
 - **实用价值**: ⭐⭐⭐⭐⭐ — 直接可用于改善任何多语言 LLM 的训练数据质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/human_understanding/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [Signs as Tokens: A Retrieval-Enhanced Multilingual Sign Language Generator](../../ICCV2025/human_understanding/signs_as_tokens_a_retrieval-enhanced_multilingual_sign_language_generator.md)
+- [Facial Affective Behavior Analysis with Instruction Tuning](../../ECCV2024/human_understanding/facial_affective_behavior_analysis_with_instruction_tuning.md)
+- [Enhancing Robustness of Offline RL Under Data Corruption via SAM](enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)
+- [Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models](../../NeurIPS2025/human_understanding/incentivizing_reasoning_for_advanced_instruction-following_of_large_language_mod.md)
+
+<!-- RELATED:END -->

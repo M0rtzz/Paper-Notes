@@ -172,3 +172,15 @@ R-MSD 在所有 benchmark 上全面超越 Qwen3-VL-4B 基线和同 budget SFT+RL
 - 实验充分度: ⭐⭐⭐⭐ — 消融完整、统计分析扎实，但 student/teacher 组合较单一
 - 写作质量: ⭐⭐⭐⭐ — 问题分析详尽、统计数据支撑有力，方法描述清晰
 - 价值: ⭐⭐⭐⭐ — 多样本蒸馏范式对 LVLM 压缩部署有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochat-m1_collaborative_policy_planning_for_video_understanding_via_multi-age.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_for_efficient_video_understanding.md)
+- [A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a_multi-agent_perception-action_alliance_for_efficient_long_video_reasoning.md)
+- [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](../../AAAI2026/video_understanding/distillation_dynamics_towards_understanding_feature-based_di.md)
+- [Attend Before Attention: Efficient and Scalable Video Understanding via Autoregressive Gazing](attend_before_attention_efficient_and_scalable_video_understanding_via_autoregre.md)
+
+<!-- RELATED:END -->

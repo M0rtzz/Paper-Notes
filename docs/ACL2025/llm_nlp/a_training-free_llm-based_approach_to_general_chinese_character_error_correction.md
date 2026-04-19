@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 26页包含大量实验和分析，多数据集多模型对比充分
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐ 填补了C2EC任务空白，training-free方案实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
+- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+- [NeKo: Cross-Modality Post-Recognition Error Correction with Tasks-Guided Mixture-of-Experts Language Model](neko_cross-modality_post-recognition_error_correction_with_tasks-guided_mixture-.md)
+- [SkillAggregation: Reference-free LLM-Dependent Aggregation](skillaggregation_reference-free_llm-dependent_aggregation.md)
+- [Understanding Silent Data Corruption in LLM Training](understanding_silent_data_corruption_in_llm_training.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ Croto 是一个纯推理时框架，不涉及训练。关键配置：
 - **实验充分度**: ⭐⭐⭐ — 软件开发和故事生成两个任务，但样本规模小（15+10），仅用一个 LLM 基线
 - **写作质量**: ⭐⭐⭐⭐ — 形式化定义清晰（Definition 1-3），图示直观
 - **价值**: ⭐⭐⭐⭐ — 为多 agent 系统提供了一个实用的协作范式，已集成到 ChatDev 开源项目中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](beyond_frameworks_multi_agent_collaboration.md)
+- [Unifying Language Agent Algorithms with Graph-based Orchestration Engine for Reproducible Agent Research](unifying_language_agent_algorithms_with_graph-based_orchestration_engine_for_rep.md)
+- [FCMR: Robust Evaluation of Financial Cross-Modal Multi-Hop Reasoning](fcmr_robust_evaluation_of_financial_cross-modal_multi-hop_reasoning.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+
+<!-- RELATED:END -->

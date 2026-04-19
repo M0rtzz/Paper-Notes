@@ -125,3 +125,15 @@ tags:
 - **有效性**: ⭐⭐⭐⭐ — 7B 模型超越 GPT-4o 和 72B 模型，消融实验充分验证了各设计选择
 - **实用性**: ⭐⭐⭐ — 数据集和代码公开，但领域受限于烹饪，实际下游应用场景待拓展
 - **推荐度**: ⭐⭐⭐⭐ — 问题有价值、方法简洁有效、实验全面，是多模态过程理解的优秀工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Predicting Through Generation: Why Generation Is Better for Prediction](predicting_through_generation_why_generation_is_better_for_prediction.md)
+- [Limited Generalizability in Argument Mining: State-Of-The-Art Models Learn Datasets, Not Arguments](limited_generalizability_in_argument_mining_state-of-the-art_models_learn_datase.md)
+- [Self-Foveate: Enhancing Diversity and Difficulty of Synthesized Instructions from Unsupervised Text via Multi-Level Foveation](self-foveate_enhancing_diversity_and_difficulty_of_synthesized_instructions_from.md)
+- [Explicit and Implicit Data Augmentation for Social Event Detection](explicit_and_implicit_data_augmentation_for_social_event_detection.md)
+- [Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race](aligned_but_blind_implicit_bias.md)
+
+<!-- RELATED:END -->

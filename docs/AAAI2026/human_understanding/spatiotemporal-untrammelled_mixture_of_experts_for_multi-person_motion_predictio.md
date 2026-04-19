@@ -203,3 +203,15 @@ $$L_t = \text{MSE}(\text{Conv}(\textbf{P}_{\text{pred}}), \text{Conv}(\textbf{P}
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4个数据集+丰富消融+可视化分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表设计优秀
 - 价值: ⭐⭐⭐⭐ — 效率-精度权衡的标杆性工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [mmPred: Radar-based Human Motion Prediction in the Dark](mmpred_radar-based_human_motion_prediction_in_the_dark.md)
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)
+- [MoEE: Mixture of Emotion Experts for Audio-Driven Portrait Animation](../../CVPR2025/human_understanding/moee_mixture_of_emotion_experts_for_audio-driven_portrait_animation.md)
+- [Modality-Aware Bias Mitigation and Invariance Learning for Unsupervised Visible-Infrared Person Re-Identification](modality-aware_bias_mitigation_and_invariance_learning_for_unsupervised_visible-.md)
+- [Mingle: Mixture of Null-Space Gated Low-Rank Experts for Test-Time Continual Model Merging](../../NeurIPS2025/human_understanding/mingle_mixture_of_null-space_gated_low-rank_experts_for_test-time_continual_mode.md)
+
+<!-- RELATED:END -->

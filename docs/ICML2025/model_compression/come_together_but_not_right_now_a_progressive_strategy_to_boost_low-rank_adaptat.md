@@ -224,3 +224,15 @@ adapter 越大的变体（DoRA、HiRA）节省越多。
 | **总分** | **⭐⭐⭐⭐** |
 
 方法本身极其简单（新颖性一般），但理论分析扎实，实验覆盖面极广（视觉/语言/扩散模型），且实用价值极高——几乎零成本集成到任何 LoRA 工作流中。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Weight Regularization for Low-Rank Continual Learning](../../ICLR2026/model_compression/revisiting_weight_regularization_for_low-rank_continual_learning.md)
+- [Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [DataDecide: How to Predict Best Pretraining Data with Small Experiments](datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+
+<!-- RELATED:END -->

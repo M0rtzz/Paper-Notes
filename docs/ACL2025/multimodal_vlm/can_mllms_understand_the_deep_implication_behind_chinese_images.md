@@ -158,3 +158,15 @@ GPT-4o总体得分2.71（满分5分），表明模型仅能观察到绘画表面
 - **实用性**：⭐⭐⭐⭐ — 揭示MLLM在跨文化理解上的显著缺陷，对模型改进有指导价值
 - **实验充分性**：⭐⭐⭐⭐⭐ — 多角度、多维度评测十分全面
 - **写作质量**：⭐⭐⭐⭐ — 结构清晰，分析深入
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NegVQA: Can Vision Language Models Understand Negation?](negvqa_can_vision_language_models_understand_negation.md)
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?](cordial_can_multimodal_large_language_models_effectively_understand_coherence_re.md)
+- [MMSciBench: Benchmarking Language Models on Chinese Multimodal Scientific Problems](mmscibench_benchmarking_language_models_on_chinese_multimodal_scientific_problem.md)
+
+<!-- RELATED:END -->

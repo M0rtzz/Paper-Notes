@@ -194,3 +194,15 @@ SeqEMG-GAN 在所有指标上最优，且是唯一支持未知手势生成的方
 - **实验充分度**: ⭐⭐⭐⭐ — 相似性分析+分类验证+消融+跨域泛化，但消融表格有疑点
 - **写作质量**: ⭐⭐⭐ — 部分公式和表格需要更清晰的解释，消融实验数值存在疑问
 - **实用价值**: ⭐⭐⭐⭐ — 对解决 EMG 数据稀缺问题有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OMG-Bench: A New Challenging Benchmark for Skeleton-based Online Micro Hand Gesture Recognition](../../CVPR2026/human_understanding/omg-bench_a_new_challenging_benchmark_for_skeleton-based_online_micro_hand_gestu.md)
+- [VPHO: Joint Visual-Physical Cue Learning and Aggregation for Hand-Object Pose Estimation](vpho_joint_visual-physical_cue_learning_and_aggregation_for_hand-object_pose_est.md)
+- [CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning](clip-fti_fine-grained_face_template_inversion_via_clip-driven_attribute_conditio.md)
+- [NURBGen: High-Fidelity Text-to-CAD Generation through LLM-Driven NURBS Modeling](nurbgen_high-fidelity_text-to-cad_generation_through_llm-driven_nurbs_modeling.md)
+- [Auto-PRE: An Automatic and Cost-Efficient Peer-Review Framework for Language Generation Evaluation](auto-pre_an_automatic_and_cost-efficient_peer-review_framework_for_language_gene.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 数据集零样本评估 + 详细消融（TTF/掩码/训练数据/步数）
 - 写作质量: ⭐⭐⭐⭐⭐ 分阶段叙述清晰，自监督数据构造的解释直观
 - 价值: ⭐⭐⭐⭐⭐ 推进了单目动态 NVS 的 SOTA，且方法思路对更广泛的 3D 视觉任务有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](../../ECCV2024/3d_vision/generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+- [Novel View Synthesis from A Few Glimpses via Test-Time Natural Video Completion](novel_view_synthesis_from_a_few_glimpses_via_test-time_natural_video_completion.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
+- [HyRF: Hybrid Radiance Fields for Memory-efficient and High-quality Novel View Synthesis](hyrf_hybrid_radiance_fields_for_memory-efficient_and_high-quality_novel_view_syn.md)
+
+<!-- RELATED:END -->

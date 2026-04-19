@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 单中心445人数据集，消融充分但缺少外部验证和更多baseline对比
 - 写作质量: ⭐⭐ 明显LLM辅助痕迹，部分段落冗余不自然
 - 价值: ⭐⭐⭐ 临床应用潜力大但需多中心验证确认可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Learning Based Estimation of Blood Glucose Levels from Multidirectional Scleral Blood Vessel Imaging](../../CVPR2025/medical_imaging/deep_learning_based_estimation_of_blood_glucose_levels_from_multidirectional_scl.md)
+- [MuViT: Multi-Resolution Vision Transformers for Learning Across Scales in Microscopy](muvit_multi-resolution_vision_transformers_for_learning_across_scales_in_microsc.md)
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+- [Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?](can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy.md)
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+
+<!-- RELATED:END -->

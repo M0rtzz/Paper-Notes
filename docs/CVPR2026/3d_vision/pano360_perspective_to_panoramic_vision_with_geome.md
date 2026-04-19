@@ -119,3 +119,15 @@ Pano360提出一种基于Transformer的全景拼接框架，将传统2D逐对对
 - 实验充分度: ⭐⭐⭐⭐ 多数据集验证+消融完整，成功率数据令人印象深刻
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义明确
 - 价值: ⭐⭐⭐⭐⭐ 解决了实际场景中的核心痛点，代码开源，高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Random Wins All: Rethinking Grouping Strategies for Vision Tokens](random_wins_all_rethinking_grouping_strategies_for_vision_tokens.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+- [RnG: A Unified Transformer for Complete 3D Modeling from Partial Observations](rng_a_unified_transformer_for_complete_3d_modeling_from_partial_observations.md)
+- [STAC: Plug-and-Play Spatio-Temporal Aware Cache Compression for Streaming 3D Reconstruction](stac_plug-and-play_spatio-temporal_aware_cache_compression_for_streaming_3d_reco.md)
+- [MimiCAT: Mimic with Correspondence-Aware Cascade-Transformer for Category-Free 3D Pose Transfer](mimicat_mimic_with_correspondence-aware_cascade-transformer_for_category-free_3d.md)
+
+<!-- RELATED:END -->

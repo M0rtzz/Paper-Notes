@@ -119,3 +119,15 @@ SFT 阶段使用标准交叉熵监督损失。RFT 阶段使用 GRPO 目标：$\m
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖 8+ 基准、完整消融（数据分片、训练范式、帧数、幻觉检测）、定性可视化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据构建细节充实，图表质量高
 - 价值: ⭐⭐⭐⭐ 提供了大规模数据集（EgoRe-5M）和训练范式，对具身 AI 和可穿戴助手领域有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeSyPr: Neurosymbolic Proceduralization For Efficient Embodied Reasoning](nesypr_neurosymbolic_proceduralization_for_efficient_embodied_reasoning.md)
+- [MMTU: A Massive Multi-Task Table Understanding and Reasoning Benchmark](mmtu_a_massive_multi-task_table_understanding_and_reasoning_benchmark.md)
+- [ThinkAct: Vision-Language-Action Reasoning via Reinforced Visual Latent Planning](thinkact_vision-language-action_reasoning_via_reinforced_visual_latent_planning.md)
+- [MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning](mesatask_towards_task-driven_tabletop_scene_generation_via_3d_spatial_reasoning.md)
+- [LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
+
+<!-- RELATED:END -->

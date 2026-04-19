@@ -122,3 +122,15 @@ $\mathcal{L} = \mathcal{L}_{CE} + \lambda_A \mathcal{L}_{ACGD} + \lambda_T \math
 - 实验充分度: ⭐⭐⭐⭐⭐ 五个 benchmark + 详细消融 + 跨场景评估 + 计算开销分析
 - 写作质量: ⭐⭐⭐⭐ IEEE 风格，公式推导完整，但篇幅较长
 - 价值: ⭐⭐⭐⭐ 持续学习领域的实质推进，boundary vulnerability 这个发现有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)
+- [Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?](can_large_vision-language_models_correct_semantic_grounding_errors_by_themselves.md)
+- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
+- [Every SAM Drop Counts: Embracing Semantic Priors for Multi-Modality Image Fusion and Beyond](every_sam_drop_counts_embracing_semantic_priors_for_multi-modality_image_fusion_.md)
+- [VLsI: Verbalized Layers-to-Interactions from Large to Small Vision Language Models](vlsi_verbalized_layers-to-interactions_from_large_to_small_vision_language_model.md)
+
+<!-- RELATED:END -->

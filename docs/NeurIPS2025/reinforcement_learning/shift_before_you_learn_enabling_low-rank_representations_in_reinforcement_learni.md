@@ -259,3 +259,15 @@ $$Q(s, a, g) \approx \phi_k(s, a)^\top \psi_k(g)$$
 - **表达质量**: 4/5 — 63页的论文内容充实，但篇幅较长
 - **实用性**: 4/5 — 概念简洁且易于集成到现有算法中
 - **综合评分**: 4.5/5
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
+- [Online Minimization of Polarization and Disagreement via Low-Rank Matrix Bandits](../../ICLR2026/reinforcement_learning/online_minimization_of_polarization_and_disagreement_via_low-rank_matrix_bandits.md)
+- [Dual Goal Representations](../../ICLR2026/reinforcement_learning/dual_goal_representations.md)
+- [LineFlow: A Framework to Learn Active Control of Production Lines](../../ICML2025/reinforcement_learning/lineflow_a_framework_to_learn_active_control_of_production_lines.md)
+- [Certifying Stability of Reinforcement Learning Policies using Generalized Lyapunov Functions](certifying_stability_of_reinforcement_learning_policies_using_generalized_lyapun.md)
+
+<!-- RELATED:END -->

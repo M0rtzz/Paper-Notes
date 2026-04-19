@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 6+ 个 3D 基准，消融详细，还做了 2D 保持性验证
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，图表精心设计，动机论证充分
 - 价值: ⭐⭐⭐⭐⭐ 为 2D→3D LMM 的扩展提供了一条简洁高效的路径，影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Easy3D: A Simple Yet Effective Method for 3D Interactive Segmentation](easy3d_a_simple_yet_effective_method_for_3d_interactive_segmentation.md)
+- [A Simple yet Mighty Hartley Diffusion Versatilist for Generalizable Dense Vision Tasks](a_simple_yet_mighty_hartley_diffusion_versatilist_for_genera.md)
+- [3D-LLaVA: Towards Generalist 3D LMMs with Omni Superpoint Transformer](../../CVPR2025/3d_vision/3d-llava_towards_generalist_3d_lmms_with_omni_superpoint_transformer.md)
+- [Ross3D: Reconstructive Visual Instruction Tuning with 3D-Awareness](ross3d_reconstructive_visual_instruction_tuning_with_3d-awareness.md)
+- [GaussianProperty: Integrating Physical Properties to 3D Gaussians with LMMs](gaussianproperty_integrating_physical_properties_to_3d_gaussians_with_lmms.md)
+
+<!-- RELATED:END -->

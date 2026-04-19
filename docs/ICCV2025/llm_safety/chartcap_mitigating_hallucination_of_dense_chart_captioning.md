@@ -143,3 +143,15 @@ ChartCap测试集上各模型表现：
 - 实验充分度: ⭐⭐⭐⭐⭐ 参考指标+人工评估+VCS三维度全面验证，跨数据集泛化测试
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，数据集构建过程详尽透明
 - 价值: ⭐⭐⭐⭐ 56.5万高质量数据集和VCS指标对图表理解社区有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation](../../ACL2025/llm_safety/monitoring_decoding_mitigating_hallucination_via_evaluating_the_factuality_of_pa.md)
+- [On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](../../ACL2025/llm_safety/on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)
+- [HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](../../ACL2025/llm_safety/hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](../../ACL2025/llm_safety/intent_hallucination_eval.md)
+- [Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training](../../ACL2025/llm_safety/hallucination_detox_send.md)
+
+<!-- RELATED:END -->

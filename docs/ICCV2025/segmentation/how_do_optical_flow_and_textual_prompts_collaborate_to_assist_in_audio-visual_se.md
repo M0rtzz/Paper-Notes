@@ -141,3 +141,15 @@ SSP 相比基线 AAVS：S4 +2.2%/+1.9%，MS3 +5.0%/+7.0%，AVSS +1.6%/+1.3%。
 - **实验充分度**: ⭐⭐⭐⭐ 三个数据集、完善的消融实验、文本质量分析和可视化
 - **写作质量**: ⭐⭐⭐ 结构清晰，但部分符号定义较冗余
 - **价值**: ⭐⭐⭐⭐ 为 AVSS 任务提供了一个有效的多模态协同框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAViS: Text-bridged Audio-Visual Segmentation with Foundation Models](tavis_text-bridged_audio-visual_segmentation_with_foundation_models.md)
+- [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
+- [Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics](../../CVPR2025/segmentation/dynamic_derivation_and_elimination_audio_visual_segmentation_with_enhanced_audio.md)
+- [Refer to Any Segmentation Mask Group With Vision-Language Prompts](refer_to_any_segmentation_mask_group_with_vision-language_prompts.md)
+- [Audio-Visual Instance Segmentation](../../CVPR2025/segmentation/audio-visual_instance_segmentation.md)
+
+<!-- RELATED:END -->

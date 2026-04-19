@@ -134,3 +134,15 @@ ReALFRED 本身是一个基准而非模型。作者评估了两类方法：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 评估了 7 种 SOTA 方法、Sim2Real 迁移、人类表现、多维度环境分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，对比全面，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 为具身 AI 社区指出了关键差距，高价值基准数据集将推动更鲁棒的方法研发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Instruction Following of LLMs via Activation Steering with Dynamic Rejection](../../ICLR2026/robotics/enhancing_instruction_following_of_llms_via_activation_steering_with_dynamic_rej.md)
+- [Hi Robot: Open-Ended Instruction Following with Hierarchical Vision-Language-Action Models](../../ICML2025/robotics/hi_robot_open-ended_instruction_following_with_hierarchical_vision-language-acti.md)
+- [See and Think: Embodied Agent in Virtual Environment](see_and_think_embodied_agent_in_virtual_environment.md)
+- [Test-Time Mixture of World Models for Embodied Agents in Dynamic Environments](../../ICLR2026/robotics/test-time_mixture_of_world_models_for_embodied_agents_in_dynamic_environments.md)
+- [LabUtopia: High-Fidelity Simulation and Hierarchical Benchmark for Scientific Embodied Agents](../../NeurIPS2025/robotics/labutopia_high-fidelity_simulation_and_hierarchical_benchmark_for_scientific_emb.md)
+
+<!-- RELATED:END -->

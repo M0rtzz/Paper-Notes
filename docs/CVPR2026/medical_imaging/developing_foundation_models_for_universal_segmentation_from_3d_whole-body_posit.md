@@ -140,3 +140,15 @@ SegAnyPET 在所有评估任务上（器官+病灶）一致显著优胜，归因
 - 实验充分度: ⭐⭐⭐⭐⭐ — 数据规模大，内部+外部+跨模态+跨示踪剂验证全面，含临床实用性评估
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机充分，图表丰富
 - 价值: ⭐⭐⭐⭐ — 对 PET 定量分析和临床工作流有直接推动作用，数据集和代码均开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CARE: A Molecular-Guided Foundation Model with Adaptive Region Modeling for Whole Slide Image Analysis](care_a_molecular-guided_foundation_model_with_adaptive_region_modeling_for_whole.md)
+- [SegAnyPET: Universal Promptable Segmentation from Positron Emission Tomography Images](../../ICCV2025/medical_imaging/seganypet_universal_promptable_segmentation_from_positron_emission_tomography_im.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+- [Sparse Task Vector Mixup with Hypernetworks for Efficient Knowledge Transfer in Whole-Slide Image Prognosis](sparse_task_vector_mixup_with_hypernetworks_for_efficient_knowledge_transfer_in_.md)
+- [MUSE: Harnessing Precise and Diverse Semantics for Few-Shot Whole Slide Image Classification](muse_harnessing_precise_and_diverse_semantics_for_few-shot_whole_slide_image_cla.md)
+
+<!-- RELATED:END -->

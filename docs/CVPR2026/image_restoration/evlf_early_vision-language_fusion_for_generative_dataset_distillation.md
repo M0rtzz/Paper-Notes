@@ -127,3 +127,15 @@ $$z_{\text{fused}} = \psi(\text{LN}(\tilde{z} + \text{softmax}(\frac{QK^\top}{\s
 - 实验充分度: ⭐⭐⭐⭐ 7 个数据集、多 IPC、多架构、消融/可视化/迁移实验
 - 写作质量: ⭐⭐⭐⭐ 问题诊断清晰，框架图优秀，逻辑流畅
 - 价值: ⭐⭐⭐⭐ 即插即用的通用方法，对 DD 社区有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniRain: Unified Image Deraining with RAG-based Dataset Distillation and Multi-objective Reweighted Optimization](unirain_unified_image_deraining_with_rag-based_dataset_distillation_and_multi-ob.md)
+- [Enhancing Infrared Vision: Progressive Prompt Fusion Network and Benchmark](../../NeurIPS2025/image_restoration/enhancing_infrared_vision_progressive_prompt_fusion_network_and_benchmark.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+- [Activation Steering for Masked Diffusion Language Models](../../ICLR2026/image_restoration/activation_steering_for_masked_diffusion_language_models.md)
+- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](../../ICLR2026/image_restoration/toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+
+<!-- RELATED:END -->

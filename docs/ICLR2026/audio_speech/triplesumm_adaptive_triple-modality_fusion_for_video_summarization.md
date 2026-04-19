@@ -120,3 +120,15 @@ L2 回归损失：$\mathcal{L} = \|S - \hat{S}\|_2^2$，预测帧级重要性分
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 benchmark + 消融 + 定性分析 + 缺失模态鲁棒性测试
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ MoSu 数据集和三模态融合方法都具有持久价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solution for 10th Competition on Ambivalence/Hesitancy (AH) Video Recognition Challenge using Divergence-Based Multimodal Fusion](../../CVPR2026/audio_speech/solution_for_10th_competition_on_ambivalencehesitancy_ah_video_recognition_chall.md)
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+- [Improving Multimodal Sentiment Analysis via Modality Optimization and Dynamic Primary Modality Selection](../../AAAI2026/audio_speech/improving_multimodal_sentiment_analysis_via_modality_optimization_and_dynamic_pr.md)
+- [OmniRet: Efficient and High-Fidelity Omni Modality Retrieval](../../CVPR2026/audio_speech/omniret_efficient_and_high-fidelity_omni_modality_retrieval.md)
+- [AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
+
+<!-- RELATED:END -->

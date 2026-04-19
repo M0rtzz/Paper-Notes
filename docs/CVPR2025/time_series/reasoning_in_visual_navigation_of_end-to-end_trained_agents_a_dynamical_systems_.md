@@ -77,3 +77,15 @@ tags:
 - 视觉定位替代AMCL后性能大幅下降，说明精确定位能力并未从RL训练中充分涌现
 - 分析方法本质是post-hoc probing和消融，无法完全解释因果关系
 - 仅在单一建筑环境中进行真实测试，跨场景泛化性未验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](../../NeurIPS2025/time_series/a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)
+- [CausalDynamics: A Large-Scale Benchmark for Structural Discovery of Dynamical Causal Models](../../NeurIPS2025/time_series/causaldynamics_a_large-scale_benchmark_for_structural_discovery_of_dynamical_cau.md)
+- [Context-Aware Sentiment Forecasting via LLM-based Multi-Perspective Role-Playing Agents](../../ACL2025/time_series/context_aware_sentiment_forecasting_agents.md)
+- [Reasoning on Time-Series for Financial Technical Analysis](../../ICLR2026/time_series/reasoning_on_time-series_for_financial_technical_analysis.md)
+- [MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
+
+<!-- RELATED:END -->

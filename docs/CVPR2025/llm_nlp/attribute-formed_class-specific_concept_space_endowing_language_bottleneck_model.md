@@ -60,3 +60,15 @@ tags:
 - 属性维度的定义依赖领域知识或 LLM 生成质量
 - 类别数增多时概念空间的存储和计算开销增长
 - 属性间的依赖关系（如"有翅膀"暗示"会飞"）未被显式建模
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Making Old Film Great Again: Degradation-aware State Space Model for Old Film Restoration](making_old_film_great_again_degradation-aware_state_space_model_for_old_film_res.md)
+- [Training Language Model to Critique for Better Refinement](../../ACL2025/llm_nlp/training_language_model_to_critique_for_better_refinement.md)
+- [Circuit Stability Characterizes Language Model Generalization](../../ACL2025/llm_nlp/circuit_stability_characterizes_language_model_generalization.md)
+- [TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](tide_training_locally_interpretable_domain_generalization_models_enables_test-ti.md)
+- [An Invariant Latent Space Perspective on Language Model Inversion](../../AAAI2026/llm_nlp/an_invariant_latent_space_perspective_on_language_model_inve.md)
+
+<!-- RELATED:END -->

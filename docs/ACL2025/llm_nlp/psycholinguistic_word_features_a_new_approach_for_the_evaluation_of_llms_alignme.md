@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 覆盖13种特征×8个模型，有具体案例佐证（bicycle/bid/lemon），但缺乏精确数值表格和分组分析
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，理论（具身认知/符号接地）与实验结论紧密闭环
 - 价值: ⭐⭐⭐⭐ 开辟了LLM评估新方向，提供可复用的benchmark方法论，对心理语言学社区参与AI研究有推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Comparing Moral Values in Western English-speaking Societies and LLMs with Word Associations](moral_values_western.md)
+- [How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian](conceptual_knowledge_org.md)
+- [SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation](skillverse_tree_eval.md)
+- [Self-Tuning: Instructing LLMs to Effectively Acquire New Knowledge through Self-Teaching](self-tuning_instructing_llms_to_effectively_acquire_new_knowledge_through_self-t.md)
+- [KoGEM: Polishing Every Facet of the GEM: Testing Linguistic Competence of LLMs and Humans in Korean](polishing_every_facet_of_the_gem.md)
+
+<!-- RELATED:END -->

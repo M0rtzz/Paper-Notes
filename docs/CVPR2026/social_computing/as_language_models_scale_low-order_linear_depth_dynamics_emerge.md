@@ -206,3 +206,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 10 个任务、三个 GPT-2 尺度、增益预测与控制两个维度都做了，但模型家族仍偏窄。
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事非常清晰，问题定义、方法结构、核心结论三者衔接紧密。
 - 价值: ⭐⭐⭐⭐⭐ 这篇工作不仅解释为什么某些层更适合干预，还给出可操作的控制策略，对后续可解释 steering 研究很有启发。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning from Synthetic Data via Provenance-Based Input Gradient Guidance](learning_from_synthetic_data_via_provenance-based_input_gradient_guidance.md)
+- [Revisiting Unknowns: Towards Effective and Efficient Open-Set Active Learning](revisiting_unknowns_towards_effective_and_efficient_open-set_active_learning.md)
+- [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
+- [Scalable Multi-Task Low-Rank Model Adaptation](../../ICLR2026/social_computing/scalable_multi-task_low-rank_model_adaptation.md)
+- [BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses](../../ICLR2026/social_computing/biasfreebench_a_benchmark_for_mitigating_bias_in_large_language_model_responses.md)
+
+<!-- RELATED:END -->

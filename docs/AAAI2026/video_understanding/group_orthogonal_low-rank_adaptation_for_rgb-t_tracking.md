@@ -172,3 +172,15 @@ GOLA 比 LoRA 提升 1.2%/0.9%（PR/SR）且可训练参数减少 23%。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 个数据集、19 个属性分析、多种 PEFT 方法对比、详尽消融
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，公式推导完整，可视化分析丰富
 - **价值**: ⭐⭐⭐⭐ — 对 LoRA 使用的通用洞察可迁移到多个领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Updates for Language Adaptation in Visual-Language Tracking](../../CVPR2025/video_understanding/dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
+- [Unified Spatiotemporal Token Compression for Video-LLMs at Ultra-Low Retention](../../CVPR2026/video_understanding/unified_spatiotemporal_token_compression_for_video-llms_at_ultra-low_retention.md)
+- [LongVideo-R1: Smart Navigation for Low-cost Long Video Understanding](../../CVPR2026/video_understanding/longvideo-r1_smart_navigation_for_low-cost_long_video_understanding.md)
+- [XTrack: Multimodal Training Boosts RGB-X Video Object Trackers](../../ICCV2025/video_understanding/xtrack_multimodal_training_boosts_rgb-x_video_object_trackers.md)
+- [PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](../../ICCV2025/video_understanding/prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)
+
+<!-- RELATED:END -->

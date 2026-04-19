@@ -122,3 +122,15 @@ SO(3) 数据集 MMD↓（×10⁻²）：
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖多种流形和数据集，但缺少大规模实际应用验证  
 - **写作质量**: ⭐⭐⭐⭐⭐ 数学推导严谨，运动学解读直观  
 - **价值**: ⭐⭐⭐⭐ 为黎曼流形上的高效生成奠定理论基础，对药物设计等领域有潜在影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
+- [How to Build a Consistency Model: Learning Flow Maps via Self-Distillation](how_to_build_a_consistency_model_learning_flow_maps_via_self-distillation.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](../../ECCV2024/image_generation/motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency](scenedecorator_towards_scene-oriented_story_generation_with_scene_planning_and_s.md)
+- [FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency](freqpolicy_efficient_flow-based_visuomotor_policy_via_frequency_consistency.md)
+
+<!-- RELATED:END -->

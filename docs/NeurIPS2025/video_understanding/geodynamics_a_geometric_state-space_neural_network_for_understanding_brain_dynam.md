@@ -120,3 +120,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 数学公式严谨清晰，但符号较多对非专家有门槛
 - 价值: ⭐⭐⭐⭐ 为脑动力学和流形时间序列分析提供新范式
 <!-- NeurIPS 2025 | video_understanding -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Bi-Linear State Transitions in Recurrent Neural Networks](revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)
+- [PASS: Path-Selective State Space Model for Event-Based Recognition](pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions](neural_stochastic_flows_solver-free_modelling_and_inference_for_sde_solutions.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](../../ECCV2024/video_understanding/videomamba_state_space_model_for_efficient_video_understanding.md)
+- [Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
+
+<!-- RELATED:END -->

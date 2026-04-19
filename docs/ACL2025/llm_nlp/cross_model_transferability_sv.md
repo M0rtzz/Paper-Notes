@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 11 个概念、3 个 RQ 递进、多模型对比
 - 写作质量: ⭐⭐⭐⭐⭐ 柏拉图寓言的类比优美，叙述逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 可解释性和安全研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Representations of Fact, Fiction and Forecast in Large Language Models: Epistemics and Attitudes](representations_of_fact_fiction_and_forecast_in_large_language_models_epistemics.md)
+- [From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
+- [Language-Codec: Bridging Discrete Codec Representations and Speech Language Models](language_codec_bridging_discrete_codec_speech_language_models.md)
+- [NeKo: Cross-Modality Post-Recognition Error Correction with Tasks-Guided Mixture-of-Experts Language Model](neko_cross-modality_post-recognition_error_correction_with_tasks-guided_mixture-.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ NeoPolyp数据集按类别的mDSC（最困难的数据集，差异最大）：
 - 实验充分度: ⭐⭐⭐⭐ 11模型×3数据集×5折CV设计严谨，但缺少3D和OOD评估
 - 写作质量: ⭐⭐⭐⭐ 研究问题明确，实验设计严谨，讨论客观承认局限性
 - 价值: ⭐⭐⭐⭐ 对医学分割领域的模型选择策略和资源分配具有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation](t-gated_adapter_a_lightweight_temporal_adapter_for_vision-language_medical_segme.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+
+<!-- RELATED:END -->

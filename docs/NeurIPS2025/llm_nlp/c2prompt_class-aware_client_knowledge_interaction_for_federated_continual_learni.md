@@ -130,3 +130,15 @@ ImageNet-R上Avg超Powder 2.51%，DomainNet上超2.90%。
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、12个对比方法、消融+可视化充分，但缺少大规模客户端实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，但符号较多，公式推导放附录
 - 价值: ⭐⭐⭐⭐ FCL是实际需求驱动的方向，方法实用且开销小
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recurrent Knowledge Identification and Fusion for Language Model Continual Learning](../../ACL2025/llm_nlp/recurrent_kif_continual_learning.md)
+- [System Prompt Optimization with Meta-Learning](system_prompt_optimization_with_meta-learning.md)
+- [SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning](../../CVPR2025/llm_nlp/sec-promptsemantic_complementary_prompting_for_few-shot_class-incremental_learni.md)
+- [GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization](../../ACL2025/llm_nlp/gapo_preferential_prompt.md)
+- [MonarchAttention: Zero-Shot Conversion to Fast, Hardware-Aware Structured Attention](monarchattention_zero-shot_conversion_to_fast_hardware-aware_structured_attentio.md)
+
+<!-- RELATED:END -->

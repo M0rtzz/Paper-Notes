@@ -131,3 +131,15 @@ $$\text{regularization} = \mathbb{E}\left\|\sum_{i=0}^{K-1} \eta(1-\eta)^{K-1-i}
 - 实验充分度: ⭐⭐⭐⭐ — 三个任务+多维度评估，但MRI实验规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 理论与实验结合清晰，符号体系一致
 - 价值: ⭐⭐⭐⭐ — 对安全关键型逆问题（医学影像）有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [DiN: Diffusion Model for Robust Medical VQA with Semantic Noisy Labels](../../CVPR2025/medical_imaging/din_diffusion_model_for_robust_medical_vqa_with_semantic_noisy_labels.md)
+- [Certification for Differentially Private Prediction in Gradient-Based Training](certification_for_differentially_private_prediction_in_gradient-based_training.md)
+- [Doctor Approved: Generating Medically Accurate Skin Disease Images through AI-Expert Feedback](../../NeurIPS2025/medical_imaging/doctor_approved_generating_medically_accurate_skin_disease_images_through_ai-exp.md)
+- [Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation](../../CVPR2025/medical_imaging/multi-resolution_pathology-language_pre-training_model_with_text-guided_visual_r.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖了基准评估、探测诊断、蒸馏效率、定性分析多个维度
 - **写作质量**: ⭐⭐⭐⭐ 逻辑链清晰，从问题发现到机理分析到解决方案层层递进
 - **价值**: ⭐⭐⭐⭐ 实用性强，plug-and-play 方案可直接应用于各种 VideoLLM
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prompt-CAM: Making Vision Transformers Interpretable for Fine-Grained Analysis](prompt-cam_making_vision_transformers_interpretable_for_fine-grained_analysis.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [Why Does It Look There? Structured Explanations for Image Classification](why_does_it_look_there_structured_explanations_for_image_classification.md)
+- [Learning on Model Weights using Tree Experts](learning_on_model_weights_using_tree_experts.md)
+- [Scaling Vision Pre-Training to 4K Resolution](scaling_vision_pre-training_to_4k_resolution.md)
+
+<!-- RELATED:END -->

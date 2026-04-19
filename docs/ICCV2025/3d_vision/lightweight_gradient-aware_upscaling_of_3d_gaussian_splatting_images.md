@@ -149,3 +149,15 @@ $$\frac{\partial^2 B_i}{\partial x \partial \sigma_k} = \frac{\partial^2 B_i}{\p
 - 技术深度：⭐⭐⭐⭐ — 前向+反向的可微推导完整，数学基础扎实
 - 实验完整性：⭐⭐⭐⭐ — 多数据集、多基线、速度+质量双重评估
 - 实用价值：⭐⭐⭐⭐⭐ — 即插即用，零额外训练，显著加速
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoMoGaussian: Continuous Motion-Aware Gaussian Splatting from Motion-Blurred Images](comogaussian_continuous_motionaware_gaussian_splatting_from.md)
+- [EvaGaussians: Event Stream Assisted Gaussian Splatting from Blurry Images](evagaussians_event_stream_assisted_gaussian_splatting_from_blurry_images.md)
+- [Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction](curve-aware_gaussian_splatting_for_3d_parametric_curve_reconstruction.md)
+- [Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting](../../ECCV2024/3d_vision/pixel-gs_density_control_with_pixel-aware_gradient_for_3d_gaussian_splatting.md)
+- [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
+
+<!-- RELATED:END -->

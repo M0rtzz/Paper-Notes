@@ -132,3 +132,15 @@ $$H^2(P, Q) = O(\epsilon^2), \quad \text{TV}(P, Q) = O(\epsilon)$$
 - 实验充分度: ⭐⭐ (2/5) — 纯理论工作，无实验
 - 写作质量: ⭐⭐⭐ (3/5) — 结果清晰但相关工作过于冗长
 - 价值: ⭐⭐⭐ (3/5) — 理论贡献扎实但实际应用价值有限，缺乏实践桥梁
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [B-score: Detecting biases in large language models using response history](b-score_detecting_biases_in_large_language_models_using_response_history.md)
+- [The Lock-in Hypothesis: Stagnation by Algorithm](the_lock-in_hypothesis_stagnation_by_algorithm.md)
+- [Scaling Up Active Testing to Large Language Models](../../NeurIPS2025/llm_nlp/scaling_up_active_testing_to_large_language_models.md)
+- [The Lattice Representation Hypothesis of Large Language Models](../../ICLR2026/llm_nlp/the_lattice_representation_hypothesis_of_large_language_models.md)
+- [Binary Classifier Optimization for Large Language Model Alignment](../../ACL2025/llm_nlp/bco_binary_classifier_alignment.md)
+
+<!-- RELATED:END -->

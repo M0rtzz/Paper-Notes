@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 19 个模型、280 个提示、15 万+张图像的大规模实验，多角度验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，可区分性度量的形式化处理简洁规范
 - 价值: ⭐⭐⭐⭐ 对 AI 评估基础设施的安全性提出重要警示，对排行榜设计和防御策略有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
+- [OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models](overt_a_benchmark_for_over-refusal_evaluation_on_text-to-image_models.md)
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models](fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)
+
+<!-- RELATED:END -->

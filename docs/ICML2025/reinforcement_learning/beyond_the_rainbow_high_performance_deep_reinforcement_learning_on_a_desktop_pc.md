@@ -120,3 +120,15 @@ Atari-60 benchmark（200M frames）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 60个游戏 + 3D游戏 + 详细消融
 - 写作质量: ⭐⭐⭐⭐ 清晰实用
 - 价值: ⭐⭐⭐⭐⭐ 使高性能RL对所有人可及
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Impact of On-Policy Parallelized Data Collection on Deep Reinforcement Learning Networks](the_impact_of_on-policy_parallelized_data_collection_on_deep_reinforcement_learn.md)
+- [Kimina Lean Server: A High-Performance Lean Server for Large-Scale Verification](../../NeurIPS2025/reinforcement_learning/kimina_lean_server_a_high-performance_lean_server_for_large-scale_verification.md)
+- [Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning](../../NeurIPS2025/reinforcement_learning/beyond_the_8020_rule_highentropy_minority_tokens_drive_effec.md)
+- [Mind the GAP! The Challenges of Scale in Pixel-based Deep Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/mind_the_gap_the_challenges_of_scale_in_pixel-based_deep_reinforcement_learning.md)
+- [Confounding Robust Deep Reinforcement Learning: A Causal Approach](../../NeurIPS2025/reinforcement_learning/confounding_robust_deep_reinforcement_learning_a_causal_approach.md)
+
+<!-- RELATED:END -->

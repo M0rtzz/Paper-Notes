@@ -134,3 +134,15 @@ F1提升20.6%，测地距离从21.32cm大幅降低到2.89cm。
 - 实验充分度: ⭐⭐⭐⭐ 在多个数据集和任务上验证，消融充分，但缺少更大规模的野外评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示丰富，方法描述详尽
 - 价值: ⭐⭐⭐⭐ RLL框架具有通用性，语义接触任务定义有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+- [3D-Mem: 3D Scene Memory for Embodied Exploration and Reasoning](3d-mem_3d_scene_memory_for_embodied_exploration_and_reasoning.md)
+- [SyncHuman: Synchronizing 2D and 3D Generative Models for Single-View Human Reconstruction](../../NeurIPS2025/3d_vision/synchuman_synchronizing_2d_and_3d_generative_models_for_single-view_human_recons.md)
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](../../ICCV2025/3d_vision/learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

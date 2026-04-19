@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 7 个模型 × 7 个数据集的全面矩阵实验，补充了过滤阈值鲁棒性验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，指标定义明确，但公式符号较密集
 - 价值: ⭐⭐⭐⭐ 对 LLM 置信度估计领域有重要的方法论贡献，但缺少改进方案降低了实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Harmonized Uncertainty Estimation for Large Language Models](towards_harmonized_uncertainty_estimation_for_large_language_models.md)
+- [Direct Confidence Alignment: Aligning Verbalized Confidence with Internal Confidence In Large Language Models](direct_confidence_alignment_aligning_verbalized_confidence_with_internal_confide.md)
+- [Uncertainty Unveiled: Can Exposure to More In-context Examples Mitigate Uncertainty for Large Language Models?](uncertainty_unveiled_can_exposure_to_more_in-context_examples_mitigate_uncertain.md)
+- [SConU: Selective Conformal Uncertainty in Large Language Models](sconu_selective_conformal_uncertainty_in_large_language_models.md)
+- [Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability](compositional_generalization_instruction.md)
+
+<!-- RELATED:END -->

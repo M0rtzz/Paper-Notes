@@ -159,3 +159,15 @@ tags:
 - **实验质量**: ⭐⭐⭐⭐ — 两个系统、多组消融、误差分析完整
 - **实用性**: ⭐⭐⭐⭐ — 对数据稀缺的实验科学有直接应用价值
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表信息量大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modeling Neural Activity with Conditionally Linear Dynamical Systems](modeling_neural_activity_with_conditionally_linear_dynamical_systems.md)
+- [Lagrangian neural ODEs: Measuring the existence of a Lagrangian with Helmholtz metrics](lagrangian_neural_odes_measuring_the_existence_of_a_lagrangian_with_helmholtz_me.md)
+- [Efficient Parametric SVD of Koopman Operator for Stochastic Dynamical Systems](efficient_parametric_svd_of_koopman_operator_for_stochastic_dynamical_systems.md)
+- [Regression Trees Know Calculus](regression_trees_know_calculus.md)
+- [Statistical Inference for Gradient Boosting Regression](statistical_inference_for_gradient_boosting_regression.md)
+
+<!-- RELATED:END -->

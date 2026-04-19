@@ -215,3 +215,15 @@ $$\mathcal{L} = -\sum_i \log \frac{\exp(\text{sim}(\mathbf{v}_i, \mathbf{c}_i)/\
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 四种评估协议 + 5 个基准 + 极其详尽的消融，实验设计堪称典范
 - **写作质量**: ⭐⭐⭐⭐⭐ — 从动机分析到方法推导到实验验证，叙述逻辑严密清晰
 - **价值**: ⭐⭐⭐⭐ — 提供了一种高效的 CLIP 视频扩展范式，实用性强，被后续工作广泛引用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+- [R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding](r2tuning_efficient_imagetovideo_transfer_learning_for_video.md)
+- [Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
+- [FinePseudo: Improving Pseudo-Labelling through Temporal-Alignability for Semi-Supervised Fine-Grained Action Recognition](finepseudo_improving_pseudo-labelling_through_temporal-alignablity_for_semi-supe.md)
+- [Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)
+
+<!-- RELATED:END -->

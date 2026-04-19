@@ -137,3 +137,15 @@ SpikeTrack-B256-T3 在 LaSOT 上超越 TransT 2.2% AUC，能耗仅 1/7.6。
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，与神经科学对应关系阐述良好
 - 价值: ⭐⭐⭐⭐ 推动 SNN 在视觉跟踪中的实用化进程
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UETrack: A Unified and Efficient Framework for Single Object Tracking](uetrack_a_unified_and_efficient_framework_for_single_object_tracking.md)
+- [General Compression Framework for Efficient Transformer Object Tracking](../../ICCV2025/video_understanding/general_compression_framework_for_efficient_transformer_object_tracking.md)
+- [UTPTrack: Towards Simple and Unified Token Pruning for Visual Tracking](utptrack_towards_simple_and_unified_token_pruning_for_visual_tracking.md)
+- [VRR-QA: Visual Relational Reasoning in Videos Beyond Explicit Cues](vrr-qa_visual_relational_reasoning_in_videos_beyond_explicit_cues.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_video.md)
+
+<!-- RELATED:END -->

@@ -179,3 +179,15 @@ $$\mathcal{L} = \sum_{t \in \mathcal{T}} \left( \underbrace{\mathcal{H}_\delta(\
 - **实验充分度**: ★★★★★ — 8 种基线对比、详细场景分析、完整消融
 - **写作质量**: ★★★★☆ — 结构清晰，数据集构建流程描述详尽
 - **实用性**: ★★★★☆ — 数据集价值极高，但推理速度仍需优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Surgical Smoke: A Smoke-Type-Aware Laparoscopic Video Desmoking Method and Dataset](rethinking_surgical_smoke_a_smoke-type-aware_laparoscopic_video_desmoking_method.md)
+- [DiA-gnostic VLVAE: Disentangled Alignment-Constrained Vision Language Variational AutoEncoder for Robust Radiology Reporting with Missing Modalities](dia-gnostic_vlvae_disentangled_alignment-constrained_vision_language_variational.md)
+- [CholecTrack20: A Multi-Perspective Tracking Dataset for Surgical Tools](../../CVPR2025/medical_imaging/cholectrack20_a_multi-perspective_tracking_dataset_for_surgical_tools.md)
+- [Sim4Seg: Boosting Multimodal Multi-disease Medical Diagnosis Segmentation with Region-Aware Vision-Language Similarity Masks](sim4seg_boosting_multimodal_multi-disease_medical_diagnosis_segmentation_with_re.md)
+- [Towards Effective and Efficient Context-aware Nucleus Detection in Histopathology Whole Slide Images](towards_effective_and_efficient_context-aware_nucleus_detection_in_histopatholog.md)
+
+<!-- RELATED:END -->

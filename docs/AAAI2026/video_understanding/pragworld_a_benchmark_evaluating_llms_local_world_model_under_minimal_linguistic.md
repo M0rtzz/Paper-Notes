@@ -156,3 +156,15 @@ $$DE(R_\ell^{\hat{x}} \rightarrow R_\ell^x) = P(\hat{y}^{gold} \mid x+q; \text{p
 - 实验充分度: ⭐⭐⭐⭐ — 10 个模型 × 2 个分割 + 可解释性分析 + 微调验证
 - 写作质量: ⭐⭐⭐⭐ — 形式化定义清晰，实验分析系统
 - 价值: ⭐⭐⭐⭐ — 为 LLM 鲁棒性评估提供了有价值的工具和方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RecToM: A Benchmark for Evaluating Machine Theory of Mind in LLM-based Conversational Recommender Systems](rectom_a_benchmark_for_evaluating_machine_theory_of_mind_in_llm-based_conversati.md)
+- [Quantifying Conversational Reliability of Large Language Models under Multi-Turn Interaction](quantifying_conversational_reliability_of_large_language_models_under_multi-turn.md)
+- [UVLM: Benchmarking Video Language Model for Underwater World Understanding](uvlm_benchmarking_video_language_model_for_underwater_world_understanding.md)
+- [VirtueBench: Evaluating Trustworthiness under Uncertainty in Long Video Understanding](../../CVPR2026/video_understanding/virtuebench_evaluating_trustworthiness_under_uncertainty_in_long_video_understan.md)
+- [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](distillation_dynamics_towards_understanding_feature-based_di.md)
+
+<!-- RELATED:END -->

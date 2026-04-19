@@ -124,3 +124,15 @@ MedMNIST（7个数据集）：QontOT在5/7个数据集上最优。
 ## 评分
 
 - ⭐⭐⭐⭐ — 理论新颖，量子-ML交叉有开创性，但受限于小规模验证和量子硬件成熟度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AstroCo: Self-Supervised Conformer-Style Transformers for Light-Curve Embeddings](astroco_self-supervised_conformer-style_transformers_for_light-curve_embeddings.md)
+- [Sublinear Time Quantum Algorithm for Attention Approximation](../../ICLR2026/physics/sublinear_time_quantum_algorithm_for_attention_approximation.md)
+- [Compact Matrix Quantum Group Equivariant Neural Networks](../../ICML2025/physics/compact_matrix_quantum_group_equivariant_neural_networks.md)
+- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](../../ICML2025/physics/rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
+- [Robust Fitting on a Gate Quantum Computer](../../ECCV2024/physics/robust_fitting_on_a_gate_quantum_computer.md)
+
+<!-- RELATED:END -->

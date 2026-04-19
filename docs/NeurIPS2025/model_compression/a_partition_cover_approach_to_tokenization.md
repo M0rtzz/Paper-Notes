@@ -104,3 +104,15 @@ GreedTok用同样token数的文本训练（DCLM约20%数据），在11个benchma
 - 实验充分度: ⭐⭐⭐⭐ 压缩实验充分，预训练实验规模合理但仅限1B模型
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，证明简洁优雅，结构组织良好
 - 价值: ⭐⭐⭐⭐ 为分词领域提供了新理论基础和实用算法，MIP框架有扩展潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [zip2zip: Inference-Time Adaptive Tokenization via Online Compression](zip2zip_inference-time_adaptive_tokenization_via_online_compression.md)
+- [When Worse is Better: Navigating the Compression-Generation Trade-off in Visual Tokenization](when_worse_is_better_navigating_the_compression-generation_tradeoff_in_visual_to.md)
+- [CodeGEMM: A Codebook-Centric Approach to Efficient GEMM in Quantized LLMs](codegemm_a_codebook-centric_approach_to_efficient_gemm_in_quantized_llms.md)
+- [Learning to Factorize and Adapt: A Versatile Approach Toward Universal Spatio-Temporal Foundation Models](learning_to_factorize_and_adapt_a_versatile_approach_toward_universal_spatio-tem.md)
+- [DAC: A Dynamic Attention-aware Approach for Task-Agnostic Prompt Compression](../../ACL2025/model_compression/dac_prompt_compression.md)
+
+<!-- RELATED:END -->

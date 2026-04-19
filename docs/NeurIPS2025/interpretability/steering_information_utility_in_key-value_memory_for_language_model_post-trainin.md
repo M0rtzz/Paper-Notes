@@ -148,3 +148,15 @@ $$\phi_i = \mathbf{v}_i \cdot W_{\text{decode}} \in \mathbb{R}^{|V|}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6 个模型（3 系列 × 2 尺度）、15+ 任务、ID+OOD、消融+任务类型分析
 - **写作质量**: ⭐⭐⭐⭐ 方法直觉清晰，FFN-as-memory 的可视化很有说服力
 - **价值**: ⭐⭐⭐⭐⭐ 即插即用的 SFT 改进方案，适用于所有使用 FFN 的 Transformer 模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Curvature Tuning: Provable Training-free Model Steering From a Single Parameter](curvature_tuning_provable_training-free_model_steering_from_a_single_parameter.md)
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Encoding and Understanding Astrophysical Information in Large Language Model-Generated Summaries](encoding_and_understanding_astrophysical_information_in_large_language_model-gen.md)
+- [URLs Help, Topics Guide: Understanding Metadata Utility in LLM Training](urls_help_topics_guide_understanding_metadata_utility_in_llm_training.md)
+- [Hidden Breakthroughs in Language Model Training](../../ICLR2026/interpretability/hidden_breakthroughs_in_language_model_training.md)
+
+<!-- RELATED:END -->

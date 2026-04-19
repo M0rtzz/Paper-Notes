@@ -129,3 +129,15 @@ DPO 阶段（基于 MATRIX-SFT-Model）：
 - 实验充分性：9/10 — 与 20 种基线在 12 个基准上比较，覆盖多个领域
 - 写作质量：8/10 — 结构清晰，图表丰富
 - 实用价值：9/10 — 高效合成管线对实际 LLM 训练有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
+- [Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](stealing_training_data_from_large_language_models_in_decentralized_training_thro.md)
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
+- [Stochastic Self-Organization in Multi-Agent Systems](../../ICLR2026/llm_pretraining/stochastic_self-organization_in_multi-agent_systems.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+
+<!-- RELATED:END -->

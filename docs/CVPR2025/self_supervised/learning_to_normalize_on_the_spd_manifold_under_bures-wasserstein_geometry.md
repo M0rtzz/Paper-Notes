@@ -82,3 +82,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种任务
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰
 - 价值: ⭐⭐⭐⭐ 为 SPD 流形深度学习提供了实用归一化工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings](../../ICML2025/self_supervised/generalization_analysis_for_supervised_contrastive_representation_learning_under.md)
+- [SMILE: Infusing Spatial and Motion Semantics in Masked Video Learning](smile_infusing_spatial_and_motion_semantics_in_masked_video_learning.md)
+- [Do Your Best and Get Enough Rest for Continual Learning](do_your_best_and_get_enough_rest_for_continual_learning.md)
+- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](boss_a_best-of-strategies_selector_as_an_oracle_for_deep_active_learning.md)
+- [Spectral State Space Model for Rotation-Invariant Visual Representation Learning](spectral_state_space_model_for_rotation-invariant_visual_representation_learning.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ ThinkGuard 分三步：(1) 用 GPT-4o/DeepSeek-R1 对已标注的安全数据生
 - 实验充分度: ⭐⭐⭐⭐ 多 benchmark 验证
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐⭐ 对安全护栏有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking External Slow-Thinking: From Snowball Errors to Probability of Correct Reasoning](../../ICML2025/llm_reasoning/rethinking_external_slow-thinking_from_snowball_errors_to_probability_of_correct.md)
+- [Controlling Thinking Speed in Reasoning Models](../../NeurIPS2025/llm_reasoning/controlling_thinking_speed_in_reasoning_models.md)
+- [Unlocking General Long Chain-of-Thought Reasoning Capabilities of Large Language Models via Representation Engineering](glore_long_cot_representation.md)
+- [Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)
+- [Towards Thinking-Optimal Scaling of Test-Time Compute for LLM Reasoning](../../NeurIPS2025/llm_reasoning/towards_thinking-optimal_scaling_of_test-time_compute_for_llm_reasoning.md)
+
+<!-- RELATED:END -->

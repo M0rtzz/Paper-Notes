@@ -111,3 +111,15 @@ REINFORCE 算法 + Adam 优化器，3 层神经网络 [8, 32, 8]，GELU 激活 +
 - 实验充分度: ⭐⭐⭐⭐ 真实数据 + 长期评估 + 3种LLM + zero/few-shot 对比
 - 写作质量: ⭐⭐⭐ 工业论文风格，数学推导清晰但部分细节可读性一般
 - 价值: ⭐⭐⭐⭐ 工业实用性强，LLM进化RL范式有推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TreeRL: LLM Reinforcement Learning with On-Policy Tree Search](treerl_tree_search_rl.md)
+- [Multi-Agent Collaboration via Evolving Orchestration](../../NeurIPS2025/reinforcement_learning/multi-agent_collaboration_via_evolving_orchestration.md)
+- [Diving into Self-Evolving Training for Multimodal Reasoning](../../ICML2025/reinforcement_learning/diving_into_self-evolving_training_for_multimodal_reasoning.md)
+- [Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics](../../NeurIPS2025/reinforcement_learning/robot-r1_reinforcement_learning_for_enhanced_embodied_reasoning_in_robotics.md)
+- [SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](../../ICLR2026/reinforcement_learning/spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
+
+<!-- RELATED:END -->

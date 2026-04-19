@@ -122,3 +122,15 @@ TRIANGLE提出用高维空间中三模态嵌入向量构成的三角形面积作
 - 实验充分度: ⭐⭐⭐⭐ 7个benchmark、3种任务类型、从头训练+预训练微调+消融实验，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 几何直觉解释清晰，图表设计精良
 - 价值: ⭐⭐⭐⭐ 为多模态对齐提供了新范式，三角面积度量可迁移性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LeVo: High-Quality Song Generation with Multi-Preference Alignment](levo_high-quality_song_generation_with_multi-preference_alignment.md)
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](../../ACL2025/audio_speech/advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment](../../ICLR2026/audio_speech/when_style_breaks_safety_defending_llms_against_superficial_style_alignment.md)
+- [Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents](benchmarking_egocentric_multimodal_goal_inference_for_assist.md)
+- [Contextual AD Narration with Interleaved Multimodal Sequence](../../CVPR2025/audio_speech/contextual_ad_narration_with_interleaved_multimodal_sequence.md)
+
+<!-- RELATED:END -->

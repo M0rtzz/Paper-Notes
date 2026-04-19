@@ -139,3 +139,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{RGB}} + \lambda_1 \cdot \mathcal{L}_{\text{se
 - 实验充分度: ⭐⭐⭐ 仅与LucidDreamer对比，缺乏更多baseline和定量消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分，图示优质
 - 价值: ⭐⭐⭐⭐ 为360°场景生成提供了实用的端到端方案，有明确的工业应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+- [GVGEN: Text-to-3D Generation with Volumetric Representation](gvgen_text-to-3d_generation_with_volumetric_representation.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ CGI 比 Iterative SFT 高 +15.99%，比 GPT-4o 高 +28.74%。
 - 价值: ⭐⭐⭐⭐ Actor-Critic 语言反馈范式对 Agent 训练有实用价值，8B超越GPT-4的结论很实用
 
 ## 实验关键数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LocAgent: Graph-Guided LLM Agents for Code Localization](../../ACL2025/llm_agent/locagent_graph-guided_llm_agents_for_code_localization.md)
+- [Enhancing Interpretable Image Classification Through LLM Agents and Conditional Concept Bottleneck Models](../../ACL2025/llm_agent/llm_agent_image_classification.md)
+- [DefenderBench: A Toolkit for Evaluating Language Agents in Cybersecurity Environments](defenderbench_a_toolkit_for_evaluating_language_agents_in_cybersecurity_environm.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+- [Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement](../../ACL2025/llm_agent/gödel_agent_a_self-referential_agent_framework_for_recursive_self-improvement.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ MetaWriter 将手写文字识别的个性化适配形式化为 prompt tuning 问
 - 实验充分度: ⭐⭐⭐⭐ 消融较全面，但仅两个数据集，缺少多语言/多脚本验证
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，算法描述详尽，但部分章节略冗余
 - 价值: ⭐⭐⭐⭐ 在个性化HTR的实用性上有明确突破，0.08M参数的测试时适应对工业部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DataRater: Meta-Learned Dataset Curation](../../NeurIPS2025/self_supervised/datarater_meta-learned_dataset_curation.md)
+- [Foundation Cures Personalization: Improving Personalized Models' Prompt Consistency via Hidden Foundation Knowledge](../../NeurIPS2025/self_supervised/foundation_cures_personalization_improving_personalized_models_prompt_consistenc.md)
+- [Escaping Plato's Cave: Towards the Alignment of 3D and Text Latent Spaces](escaping_platos_cave_towards_the_alignment_of_3d_and_text_latent_spaces.md)
+- [Towards Reliable and Holistic Visual In-Context Learning Prompt Selection](../../NeurIPS2025/self_supervised/towards_reliable_and_holistic_visual_in-context_learning_prompt_selection.md)
+- [Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval](text-phase_synergy_network_with_dual_priors_for_unsupervised_cross-domain_image_.md)
+
+<!-- RELATED:END -->

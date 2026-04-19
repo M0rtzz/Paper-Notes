@@ -143,3 +143,15 @@ Safe 在标签噪声下比 ADMM 高出 **+10% ~ +30%** 准确率。同时在 CIF
 - 实验充分度: ⭐⭐⭐⭐ — 图像+LLM+鲁棒性全面，但大规模训练中剪枝实验缺乏
 - 写作质量: ⭐⭐⭐⭐⭐ — 推导清晰，理论完整，实验组织有条理
 - 价值: ⭐⭐⭐⭐ — 为剪枝提供了理论更扎实的优化框架，Safe⁺ 的统一视角有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Random Initialization of Gated Sparse Adapters (RIGSA)](random_initialization_of_gated_sparse_adapters.md)
+- [Outlier-Safe Pre-Training for Robust 4-Bit Quantization of Large Language Models](../../ACL2025/model_compression/outlier-safe_pre-training_for_robust_4-bit_quantization_of_large_language_models.md)
+- [Instruction-Following Pruning for Large Language Models](instruction-following_pruning_for_large_language_models.md)
+- [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
+- [Dense Backpropagation Improves Training for Sparse Mixture-of-Experts](../../NeurIPS2025/model_compression/dense_backpropagation_improves_training_for_sparse_mixture-of-experts.md)
+
+<!-- RELATED:END -->

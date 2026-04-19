@@ -133,3 +133,15 @@ TICL 方案（RanPAC + 专用预训练 backbone）取得最佳总体准确率 87
 | 实用价值 | ⭐⭐⭐⭐ |
 
 数据集贡献扎实全面，四个实验场景设计合理，但核心技术创新偏弱（主要是现有方法的系统性组合），且仅限于汽车这一单一品类。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TIDMAD: Time Series Dataset for Discovering Dark Matter with AI Denoising](tidmad_time_series_dataset_for_discovering_dark_matter_with_ai_denoising.md)
+- [A Diffusion Model for Regular Time Series Generation from Irregular Data with Completion and Masking](a_diffusion_model_for_regular_time_series_generation_from_irregular_data_with_co.md)
+- [OmniCast: A Masked Latent Diffusion Model for Weather Forecasting Across Time Scales](omnicast_a_masked_latent_diffusion_model_for_weather_forecasting_across_time_sca.md)
+- [Inference-Time Diffusion Model Distillation](../../ICCV2025/image_generation/inference-time_diffusion_model_distillation.md)
+- [Active Generation for Image Classification](../../ECCV2024/image_generation/active_generation_for_image_classification.md)
+
+<!-- RELATED:END -->

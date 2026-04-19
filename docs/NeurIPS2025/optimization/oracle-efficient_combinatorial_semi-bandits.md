@@ -126,3 +126,15 @@ $$\mathcal{R}(T) = \mathbb{E}\left[\sum_{t=1}^{T}(\bar{r}(a^*) - \bar{r}(a_t))\r
 - 实验充分度: ⭐⭐⭐ 仅有合成数据实验，缺少真实应用
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但多算法变体较难跟踪
 - 价值: ⭐⭐⭐⭐ 对组合在线学习的计算效率有重要推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)
+- [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
+- [Efficient Adaptive Federated Optimization](efficient_adaptive_federated_optimization.md)
+- [FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling](fedrts_federated_robust_pruning_via_combinatorial_thompson_sampling.md)
+- [DartQuant: Efficient Rotational Distribution Calibration for LLM Quantization](dartquant_efficient_rotational_distribution_calibration_for_llm_quantization.md)
+
+<!-- RELATED:END -->

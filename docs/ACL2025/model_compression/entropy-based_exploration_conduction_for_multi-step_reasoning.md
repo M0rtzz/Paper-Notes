@@ -175,3 +175,15 @@ $$\pi_j(a|\mathbf{s}_j) = \begin{cases} 1 - \epsilon, & a = a_j^* \\ \frac{\epsi
 - **实验充分度**: ⭐⭐⭐ — 4 个数据集，消融详细，但仅一个模型，任务类型有限
 - **写作质量**: ⭐⭐⭐⭐ — 数学形式化严谨，四种状态的分析清晰
 - **综合价值**: ⭐⭐⭐⭐ — 为多步推理提供了轻量、透明、免训练的深度控制方案，实用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [Graph Counselor: Adaptive Graph Exploration via Multi-Agent Synergy to Enhance LLM Reasoning](graph_counselor_multiagent_graphrag.md)
+- [MARGE: Improving Math Reasoning for LLMs with Guided Exploration](../../ICML2025/model_compression/marge_improving_math_reasoning_for_llms_with_guided_exploration.md)
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](see_strategic_exploration_exploitation_prompt_optimization.md)
+
+<!-- RELATED:END -->

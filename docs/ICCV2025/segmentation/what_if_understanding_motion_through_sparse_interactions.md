@@ -146,3 +146,15 @@ $$\mathcal{L} = -\log p_\theta(\mathbf{f}(\mathbf{q})|\mathcal{P}, \mathcal{I}) 
 - 实验充分度：⭐⭐⭐⭐ — 多域评估 + 不确定性分析 + 分割
 - 实用性：⭐⭐⭐⭐ — 实时推理 + 通用预训练 + 多下游任务
 - 总体：⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Transformers Through Conditioned Embedded Tokens](enhancing_transformers_through_conditioned_embedded_tokens.md)
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
+- [Temporal Rate Reduction Clustering for Human Motion Segmentation](temporal_rate_reduction_clustering_for_human_motion_segmentation.md)
+- [Aligning Spoken Dialogue Models from User Interactions](../../ICML2025/segmentation/aligning_spoken_dialogue_models_from_user_interactions.md)
+- [Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation](skeleton_motion_words_for_unsupervised_skeleton-based_temporal_action_segmentati.md)
+
+<!-- RELATED:END -->

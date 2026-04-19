@@ -141,3 +141,15 @@ TextSeg 上 SeqAcc-Recon：93%（vs TextDiffuser 68%），LAION-OCR 上 SeqAcc-E
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多任务评估，消融实验清晰，可视化有说服力
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，方法描述详细，公式规范
 - 价值: ⭐⭐⭐⭐ 文字渲染是 T2I 生成的核心痛点，方法实用且有开源代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SegGen: Supercharging Segmentation Models with Text2Mask and Mask2Img Synthesis](seggen_supercharging_segmentation_models_with_text2mask_and_mask2img_synthesis.md)
+- [UniGlyph: Unified Segmentation-Conditioned Diffusion for Precise Visual Text Synthesis](../../ICCV2025/segmentation/uniglyph_unified_segmentation-conditioned_diffusion_for_precise_visual_text_synt.md)
+- [Diffusion Models for Open-Vocabulary Segmentation](diffusion_models_for_open-vocabulary_segmentation.md)
+- [EAFormer: Scene Text Segmentation with Edge-Aware Transformers](eaformer_scene_text_segmentation_with_edge-aware_transformers.md)
+- [Text-guided Controllable Diffusion for Realistic Camouflage Images Generation](../../AAAI2026/segmentation/text-guided_controllable_diffusion_for_realistic_camouflage_images_generation.md)
+
+<!-- RELATED:END -->

@@ -185,3 +185,15 @@ $$L(f_{\hat{c}_\lambda}) \lesssim \hat{L}_m(f_{\hat{c}_\lambda}) + \tilde{\mathc
 - **实验说服力**: ★★★★☆ — 多项式验证充分，动力学系统展示有力，但缺乏大规模实验
 - **实用价值**: ★★★☆☆ — 理论贡献大于实际应用，紧凑基在嵌入式系统中有潜力
 - **表达清晰度**: ★★★★★ — 理论推导层次分明，实验设计循序渐进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Geometry of Reasoning: Flowing Logics in Representation Space](the_geometry_of_reasoning_flowing_logics_in_representation_space.md)
+- [Searching Latent Program Spaces](../../NeurIPS2025/human_understanding/searching_latent_program_spaces.md)
+- [One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
+- [Seeing without Pixels: Perception from Camera Trajectories](../../CVPR2026/human_understanding/seeing_without_pixels_perception_from_camera_trajectories.md)
+- [Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
+
+<!-- RELATED:END -->

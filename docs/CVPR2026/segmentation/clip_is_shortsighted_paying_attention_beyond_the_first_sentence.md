@@ -143,3 +143,15 @@ $$\mathcal{L} = \lambda^s \mathcal{L}^s + (1 - \lambda^s) \mathcal{L}^\ell$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多数据集、多模型、多尺度、消融和鲁棒性分析全面详尽
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，从问题分析到方法设计的展开自然流畅
 - 价值: ⭐⭐⭐⭐ — 零额外参数的即插即用方案具有很高的实用价值，对社区理解 CLIP 偏差有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeBias-CLIP: CLIP Is Shortsighted — Paying Attention Beyond the First Sentence](clip_shortsighted_beyond_first_sentence.md)
+- [Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation](looking_beyond_the_window_global-local_aligned_clip_for_training-free_open-vocab.md)
+- [ConceptPrism: Concept Disentanglement in Personalized Diffusion Models via Residual Token Optimization](conceptprism_concept_disentanglement_in_personalized_diffusion_models_via_residu.md)
+- [A Mixed Diet Makes DINO An Omnivorous Vision Encoder](a_mixed_diet_makes_dino_an_omnivorous_vision_encoder.md)
+- [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
+
+<!-- RELATED:END -->

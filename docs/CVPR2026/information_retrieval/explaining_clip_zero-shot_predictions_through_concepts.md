@@ -130,3 +130,15 @@ EZPC 的工作流程：(1) 定义一组 $m$ 个人类可理解的概念（如 "h
 - 实验充分度: ⭐⭐⭐⭐ 5个数据集+多种定性分析+跨域实验+效率对比，较全面
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，数学符号规范，实验展示直观
 - 价值: ⭐⭐⭐⭐ 为 VLM 可解释性提供了实用且高效的方案，有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EZSR: Event-based Zero-Shot Recognition](../../CVPR2025/information_retrieval/ezsr_event-based_zero-shot_recognition.md)
+- [OAD-Promoter: Enhancing Zero-shot VQA using Large Language Models with Object Attribute Description](../../AAAI2026/information_retrieval/oad-promoter_enhancing_zero-shot_vqa_using_large_language_models_with_object_att.md)
+- [BTZSC: A Benchmark for Zero-Shot Text Classification Across Cross-Encoders, Embedding Models, Rerankers and LLMs](../../ICLR2026/information_retrieval/btzsc_a_benchmark_for_zero-shot_text_classification_across_cross-encoders_embedd.md)
+- [SuperCLIP: CLIP with Simple Classification Supervision](../../NeurIPS2025/information_retrieval/superclip_clip_with_simple_classification_supervision.md)
+- [Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals](../../NeurIPS2025/information_retrieval/worse_than_zero-shot_a_fact-checking_dataset_for_evaluating_the_robustness_of_ra.md)
+
+<!-- RELATED:END -->

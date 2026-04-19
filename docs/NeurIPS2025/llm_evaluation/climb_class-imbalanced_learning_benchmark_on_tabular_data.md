@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 80 万次超参搜索、1000 万基模型、多维度分析，极其充分
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、RQ 驱动的分析框架好，表格信息密度高
 - 价值: ⭐⭐⭐⭐ — 对 CIL 研究者和实践者都有直接参考意义，开源库有持续影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TabStruct: Measuring Structural Fidelity of Tabular Data](../../ICLR2026/llm_evaluation/tabstruct_measuring_structural_fidelity_of_tabular_data.md)
+- [LCDB 1.1: A Database Illustrating Learning Curves Are More Ill-Behaved Than Previously Thought](lcdb_11_a_database_illustrating_learning_curves_are_more_ill-behaved_than_previo.md)
+- [Versatile Incremental Learning: Towards Class and Domain-Agnostic Incremental Learning](../../ECCV2024/llm_evaluation/versatile_incremental_learning_towards_class_and_domain-agnostic_incremental_lea.md)
+- [EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving](evalearn_quantifying_the_learning_capability_and_efficiency_of_llms_via_sequenti.md)
+- [Sampling Control for Imbalanced Calibration in Semi-Supervised Learning](../../AAAI2026/llm_evaluation/sampling_control_for_imbalanced_calibration_in_semi-supervised_learning.md)
+
+<!-- RELATED:END -->

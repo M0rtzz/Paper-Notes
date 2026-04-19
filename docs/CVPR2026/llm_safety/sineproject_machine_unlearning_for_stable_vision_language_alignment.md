@@ -168,4 +168,14 @@ SineProject 的核心架构非常简洁：在标准 MLLM（视觉编码器 + 投
 
 ⭐⭐⭐⭐ 问题切入极精准、方法极简且有严格理论支撑，在两个基准上全面 SOTA；唯一遗憾是仅作用于投影层，对更广泛架构的适用性有待验证。
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [SIMU: Selective Influence Machine Unlearning](../../NeurIPS2025/llm_safety/simu_selective_influence_machine_unlearning.md)
+- [NegMerge: Sign-Consensual Weight Merging for Machine Unlearning](../../ICML2025/llm_safety/negmerge_sign-consensual_weight_merging_for_machine_unlearning.md)
+- [Designing to Forget: Deep Semi-parametric Models for Unlearning](designing_to_forget_deep_semi-parametric_models_for_unlearning.md)
+- [A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](../../NeurIPS2025/llm_safety/a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
+- [UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](../../ACL2025/llm_safety/ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)
+
+<!-- RELATED:END -->

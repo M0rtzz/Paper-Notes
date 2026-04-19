@@ -126,3 +126,15 @@ W4A4 极低比特量化结果（CogVideoX-2B）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多模型、多比特、完整消融、效率分析全面  
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，观察→方法→实验逻辑连贯  
 - **价值**: ⭐⭐⭐⭐ 实际部署价值高，3.9×压缩+无损性能对视频生成落地意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VSA: Faster Video Diffusion with Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)
+- [VORTA: Efficient Video Diffusion via Routing Sparse Attention](vorta_efficient_video_diffusion_via_routing_sparse_attention.md)
+- [Training-Free Efficient Video Generation via Dynamic Token Carving (Jenga)](training-free_efficient_video_generation_via_dynamic_token_carving.md)
+- [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
+- [Data-Juicer Sandbox: A Feedback-Driven Suite for Multimodal Data-Model Co-development](../../ICML2025/video_generation/data-juicer_sandbox_a_feedback-driven_suite_for_multimodal_data-model_co-develop.md)
+
+<!-- RELATED:END -->

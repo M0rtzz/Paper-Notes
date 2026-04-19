@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+模态消融+预训练消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰
 - 价值: ⭐⭐⭐⭐⭐ 模态dropout对实际部署极有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TimePoint: Accelerated Time Series Alignment via Self-Supervised Keypoint and Descriptor Learning](../../ICML2025/time_series/timepoint_accelerated_time_series_alignment_via_self-supervised_keypoint_and_des.md)
+- [Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning](../../NeurIPS2025/time_series/universal_spectral_tokenization_via_self-supervised_panchromatic_representation_.md)
+- [V2XPnP: Vehicle-to-Everything Spatio-Temporal Fusion for Multi-Agent Perception and Prediction](../../ICCV2025/time_series/v2xpnp_vehicle-to-everything_spatio-temporal_fusion_for_multi-agent_perception_a.md)
+- [Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting](../../ICML2025/time_series/breaking_silos_adaptive_model_fusion_unlocks_better_time_series_forecasting.md)
+- [Multi-person Pose Forecasting with Individual Interaction Perceptron and Prior Learning](multi-person_pose_forecasting_with_individual_interaction_perceptron_and_prior_l.md)
+
+<!-- RELATED:END -->

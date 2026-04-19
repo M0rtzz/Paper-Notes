@@ -139,3 +139,15 @@ VSF 将子结构计数误差降低了约 **8 个数量级**。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 7 个数据集、多种基线、消融实验、子结构分析、自适应分析一应俱全
 - 写作质量: ⭐⭐⭐⭐ — 三个 RQ 结构清晰，分析详实，但符号较重
 - 价值: ⭐⭐⭐⭐⭐ — 打开了图学习+视觉的新方向，实验结果扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Message Passing: Neural Graph Pattern Machine](beyond_message_passing_neural_graph_pattern_machine.md)
+- [What Expressivity Theory Misses: Message Passing Complexity for GNNs](../../NeurIPS2025/graph_learning/what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)
+- [GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training](modeling_all-atom_glycan_structures_via_hierarchical_message_passing_and_multi-s.md)
+- [TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](../../NeurIPS2025/graph_learning/tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](../../NeurIPS2025/graph_learning/graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+
+<!-- RELATED:END -->

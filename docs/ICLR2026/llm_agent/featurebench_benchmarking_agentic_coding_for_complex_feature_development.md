@@ -127,3 +127,15 @@ FeatureBench 是评估基准而非训练方法。评估指标：
 - 实验充分度: ⭐⭐⭐⭐ 7 种 scaffold+模型配置，24 个真实仓库，与 SWE-bench 深度对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 Agent 编程的真实差距，为社区提供了更有区分度的评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
+- [The Tool Decathlon: Benchmarking Language Agents for Diverse, Realistic, and Long-Horizon Task Execution](the_tool_decathlon_benchmarking_language_agents_for_diverse_realistic_and_long-h.md)
+- [Judge Reliability Harness: Stress Testing the Reliability of LLM Judges](judge_reliability_harness_stress_testing_the_reliability_of_llm_judges.md)
+- [FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
+- [A Benchmark for Deep Information Synthesis (DeepSynth)](a_benchmark_for_deep_information_synthesis.md)
+
+<!-- RELATED:END -->

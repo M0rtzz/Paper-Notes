@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，无实验验证（但理论完整不需补充实验）
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，问题定位清晰，但符号密度高
 - 价值: ⭐⭐⭐⭐⭐ 对神经网络特征学习理论的里程碑贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Orthogonal Multi-Index Models: A Fine-Grained Information Exponent Analysis](../../NeurIPS2025/optimization/learning_orthogonal_multi-index_models_a_fine-grained_information_exponent_analy.md)
+- [Unifying Formal Explanations: A Complexity-Theoretic Perspective](unifying_formal_explanations_a_complexity-theoretic_perspective.md)
+- [Πnet: Optimizing Hard-Constrained Neural Networks with Orthogonal Projection Layers](pinet_optimizing_hard-constrained_neural_networks_with_orthogonal_projection_lay.md)
+- [Rethinking Consistent Multi-Label Classification Under Inexact Supervision](rethinking_consistent_multi-label_classification_under_inexact_supervision.md)
+- [Learning Single-Index Models via Harmonic Decomposition](../../NeurIPS2025/optimization/learning_single-index_models_via_harmonic_decomposition.md)
+
+<!-- RELATED:END -->

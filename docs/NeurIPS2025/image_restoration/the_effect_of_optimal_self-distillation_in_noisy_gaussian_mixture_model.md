@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论为主的论文，CIFAR-10实验做了基本验证但不够深入
 - 写作质量: ⭐⭐⭐⭐ 理论结果陈述清晰，物理直觉解释得当
 - 价值: ⭐⭐⭐ 对理解自蒸馏机制有洞察，但toy model的局限性制约了直接实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise](../../CVPR2025/image_restoration/generalized_recorrupted-to-recorrupted_self-supervised_learning_beyond_gaussian_.md)
+- [MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes](moe-gyro_self-supervised_over-range_reconstruction_and_denoising_for_mems_gyrosc.md)
+- [SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning](scan_self-denoising_monte_carlo_annotation_for_robust_process_reward_learning.md)
+- [Blind Noisy Image Deblurring Using Residual Guidance Strategy](../../ICCV2025/image_restoration/blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
+- [MAD-Avatar: Motion-Aware Animatable Gaussian Avatars Deblurring](../../CVPR2026/image_restoration/motionaware_animatable_gaussian_avatars_deblurring.md)
+
+<!-- RELATED:END -->

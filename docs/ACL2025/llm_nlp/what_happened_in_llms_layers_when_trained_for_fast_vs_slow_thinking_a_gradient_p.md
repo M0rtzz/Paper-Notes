@@ -132,3 +132,15 @@ MAD 从无 CoT 到详细 CoT 下降了一个数量级以上，说明慢思考显
 - 实验充分性：8/10 — 10 个模型、13 个数据集、多种条件对比，覆盖面广
 - 写作质量：7/10 — 结构清晰，但受篇幅限制主文中呈现的结果有限
 - 实用价值：7/10 — 分析洞察有价值，但直接应用方案待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [LazyReview: A Dataset for Uncovering Lazy Thinking in NLP Peer Reviews](lazyreview_peer_review.md)
+- [Composing Linear Layers from Irreducibles](../../NeurIPS2025/llm_nlp/composing_linear_layers_from_irreducibles.md)
+- [GORP: Continual Gradient Low-Rank Projection Fine-Tuning for LLMs](gorp_continual_gradient_projection.md)
+- [Unlocking Recursive Thinking of LLMs: Alignment via Refinement](unlocking_recursive_thinking_of_llms_alignment_via_refinement.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 有定量对比+人类评估+消融，但仅有一个baseline
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，美学原则的形式化描述做得好
 - 价值: ⭐⭐⭐⭐ 文化遗产数字化是重要方向，GardenVerse数据集有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](graph2eval_multimodal_task_generation_agents.md)
+- [See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles](see_think_act_teaching_multimodal_agents_to_effectively_interact_with_gui_by_ide.md)
+- [Scaling Generalist Data-Analytic Agents](../../ICLR2026/human_understanding/scaling_generalist_data-analytic_agents.md)
+- [Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding](../../ECCV2024/human_understanding/occlusion_handling_in_3d_human_pose_estimation_with_perturbed_positional_encodin.md)
+- [Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning](../../NeurIPS2025/human_understanding/counteractive_rl_rethinking_core_principles_for_efficient_and_scalable_deep_rein.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ $$\Omega(c_i) = \begin{cases} 1 + \beta \cdot e^{\frac{iter_{num}}{max_{iter}}},
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多种模态（视频、图像、雷达、交通），消融充分，但对比模型偏旧
 - 写作质量: ⭐⭐⭐ 整体清晰但部分表述冗余，数学符号不够统一，图表可以更精炼
 - 价值: ⭐⭐⭐⭐ 开辟了MLLM周期能力的新研究方向，RLO策略有实用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model](seqafford_sequential_3d_affordance_reasoning_via_multimodal_large_language_model.md)
+- [Distraction is All You Need for Multimodal Large Language Model Jailbreaking](distraction_is_all_you_need_for_multimodal_large_language_model_jailbreaking.md)
+- [4D LangSplat: 4D Language Gaussian Splatting via Multimodal Large Language Models](4d_langsplat_4d_language_gaussian_splatting_via_multimodal_large_language_models.md)
+- [Img-Diff: Contrastive Data Synthesis for Multimodal Large Language Models](img-diff_contrastive_data_synthesis_for_multimodal_large_language_models.md)
+- [Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](../../ICLR2026/multimodal_vlm/vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

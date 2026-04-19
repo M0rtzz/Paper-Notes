@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 四大标准数据集 + 高光合成数据集 + 详尽消融，但缺少与更多最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，流程图信息量大，但部分公式推导需看附录
 - 价值: ⭐⭐⭐⭐ 后处理即插即用的设计有很强的实用价值，为 3DGS 高光建模提供了简洁的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Station2Radar: Query-Conditioned Gaussian Splatting for Precipitation Field](station2radar_query_conditioned_gaussian_splatting_for_precipitation_field.md)
+- [3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes](../../CVPR2025/3d_vision/3d_convex_splatting_radiance_field_rendering_with_3d_smooth_convexes.md)
+- [FeDaL: Federated Dataset Learning for General Time Series Foundation Models](fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
+- [MoE-GS: Mixture of Experts for Dynamic Gaussian Splatting](moe-gs_mixture_of_experts_for_dynamic_gaussian_splatting.md)
+- [LiTo: Surface Light Field Tokenization](lito_surface_light_field_tokenization.md)
+
+<!-- RELATED:END -->

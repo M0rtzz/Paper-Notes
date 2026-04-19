@@ -151,3 +151,15 @@ KITAB-Bench 包含三大核心组成：（1）多来源数据收集策略；（2
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 9 个任务、多类模型、多维度指标，评估全面系统
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，表格丰富，但部分章节内容较为平铺直叙
 - **价值**: ⭐⭐⭐⭐ — 对阿拉伯语 NLP 和文档处理社区有重要基础设施价值，推动低资源语言文档理解研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisFocus: Prompt-Guided Vision Encoders for OCR-Free Dense Document Understanding](../../ECCV2024/llm_evaluation/visfocus_prompt-guided_vision_encoders_for_ocr-free_dense_document_understanding.md)
+- [PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning](physreason_a_comprehensive_benchmark_towards_physics-based_reasoning.md)
+- [READoc: A Unified Benchmark for Realistic Document Structured Extraction](readoc_a_unified_benchmark_for_realistic_document_structured_extraction.md)
+- [MDBench: A Synthetic Multi-Document Reasoning Benchmark Generated with Knowledge Guidance](mdbench_a_synthetic_multi-document_reasoning_benchmark_generated_with_knowledge_.md)
+- [MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark](mmlu-cf_a_contamination-free_multi-task_language_understanding_benchmark.md)
+
+<!-- RELATED:END -->

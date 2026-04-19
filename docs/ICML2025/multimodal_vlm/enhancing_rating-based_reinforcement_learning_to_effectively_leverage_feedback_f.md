@@ -147,3 +147,15 @@ $$\mathcal{L}_{MAE}(\psi, \mathcal{D}) = \mathbb{E}_{(\sigma, \tilde{y}) \sim \m
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖低级控制 / 高级导航 / 真实机器人三个层次，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 清晰流畅，图表信息量大
 - 价值: ⭐⭐⭐⭐ — 在 VLM 驱动 RL 奖励学习方向上给出了扎实的 baseline 和实用增强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Outcome Reward-Based RL Training of MLLMs with Self-Consistency Sampling](../../NeurIPS2025/multimodal_vlm/enhancing_the_outcome_reward-based_rl_training_of_mllms_with_self-consistency_sa.md)
+- [GTR: Guided Thought Reinforcement Prevents Thought Collapse in RL-Based VLM Agent](../../ICCV2025/multimodal_vlm/gtr_guided_thought_reinforcement_prevents_thought_collapse_in_rl-based_vlm_agent.md)
+- [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](../../NeurIPS2025/multimodal_vlm/ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
+- [Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback](../../ACL2025/multimodal_vlm/improving_medical_large_vision-language_models_with_abnormal-aware_feedback.md)
+- [From Black Boxes to Transparent Minds: Evaluating and Enhancing the Theory of Mind in Multimodal Large Language Models](from_black_boxes_to_transparent_minds_evaluating_and_enhancing_the_theory_of_min.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ BugSweeper F1 超过最强基线 AME 约 **3.1 个百分点**，同时 Precision
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面，多数据集验证，统计显著性测试完备；但漏洞类型偏少
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 端到端免规则检测方向有实际意义，精度提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Riemannian Graph Neural Networks](adaptive_riemannian_graph_neural_networks.md)
+- [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
+- [Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](../../ICLR2026/graph_learning/are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)
+- [Graph Neural Networks for Interferometer Simulations](../../NeurIPS2025/graph_learning/graph_neural_networks_for_interferometer_simulations.md)
+- [Over-squashing in Spatiotemporal Graph Neural Networks](../../NeurIPS2025/graph_learning/over-squashing_in_spatiotemporal_graph_neural_networks.md)
+
+<!-- RELATED:END -->

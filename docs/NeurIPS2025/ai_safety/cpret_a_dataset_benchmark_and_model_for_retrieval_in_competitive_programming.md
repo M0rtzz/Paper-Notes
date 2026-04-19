@@ -158,3 +158,15 @@ $$\mathcal{L}_{\text{triplet}} = \max(0, \mathrm{sim}(x, x^-) - \mathrm{sim}(x, 
 - 实验充分度: ⭐⭐⭐⭐⭐ 20+ 模型对比，四任务全覆盖，LiveCodeBench 相似性分析有说服力
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机充分，图表丰富，实验设计严谨
 - 价值: ⭐⭐⭐⭐ 数据集/模型/在线 Demo 全部开源，对竞赛编程社区和 LLM 评测社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Differentially Private High-dimensional Variable Selection via Integer Programming](differentially_private_high-dimensional_variable_selection_via_integer_programmi.md)
+- [ORBIT -- Open Recommendation Benchmark for Reproducible Research with Hidden Tests](orbit_--_open_recommendation_benchmark_for_reproducible_research_with_hidden_tes.md)
+- [Differential Privacy for Euclidean Jordan Algebra with Applications to Private Symmetric Cone Programming](differential_privacy_for_euclidean_jordan_algebra_with_applications_to_private_s.md)
+- [Impact of Dataset Properties on Membership Inference Vulnerability of Deep Transfer Learning](impact_of_dataset_properties_on_membership_inference_vulnerability_of_deep_trans.md)
+- [ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization](forensichub_a_unified_benchmark_codebase_for_all-domain_fake_image_detection_and.md)
+
+<!-- RELATED:END -->

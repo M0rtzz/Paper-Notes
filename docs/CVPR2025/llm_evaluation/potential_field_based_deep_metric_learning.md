@@ -83,3 +83,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三数据集+噪声鲁棒性
 - 写作质量: ⭐⭐⭐⭐ 理论和直觉兼顾
 - 价值: ⭐⭐⭐⭐ 提供了 DML 新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Conformal Online Learning of Deep Koopman Linear Embeddings](../../NeurIPS2025/llm_evaluation/conformal_online_learning_of_deep_koopman_linear_embeddings.md)
+- [Improving the Effective Receptive Field of Message-Passing Neural Networks](../../ICML2025/llm_evaluation/improving_the_effective_receptive_field_of_message-passing_neural_networks.md)
+- [Towards Objective Fine-tuning: How LLMs' Prior Knowledge Causes Potential Poor Calibration?](../../ACL2025/llm_evaluation/towards_objective_fine-tuning_how_llms_prior_knowledge_causes_potential_poor_cal.md)
+- [ConText-CIR: Learning from Concepts in Text for Composed Image Retrieval](context-cir_learning_from_concepts_in_text_for_composed_image_retrieval.md)
+- [Dual Consolidation for Pre-Trained Model-Based Domain-Incremental Learning](dual_consolidation_for_pre-trained_model-based_domain-incremental_learning.md)
+
+<!-- RELATED:END -->

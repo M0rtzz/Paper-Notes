@@ -122,3 +122,15 @@ $$g(y^{(0)}) = \sum_{i=1}^T \left\| \frac{\partial \epsilon_\theta(y^{(i-1)}, i)
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 跨三个域（机器人/图像/视频）的全面验证
 - **写作质量**: ⭐⭐⭐⭐ — 清晰的running example和直观的图示
 - **价值**: ⭐⭐⭐⭐ — 提供了通用的长时域生成方案，但推理开销可能限制实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Controllable Financial Market Generation with Diffusion Guided Meta Agent](../../AAAI2026/others/controllable_financial_market_generation_with_diffusion_guided_meta_agent.md)
+- [Extreme Value Monte Carlo Tree Search for Classical Planning](../../AAAI2026/others/extreme_value_monte_carlo_tree_search_for_classical_planning.md)
+- [Hilbert-Guided Sparse Local Attention](hilbert-guided_sparse_local_attention.md)
+- [Harpoon: Generalised Manifold Guidance for Conditional Tabular Diffusion](harpoon_generalised_manifold_guidance_for_conditional_tabular_diffusion.md)
+- [Graph-guided Cross-composition Feature Disentanglement for Compositional Zero-shot Learning](../../ACL2025/others/graph-guided_cross-composition_feature_disentanglement_for_compositional_zero-sh.md)
+
+<!-- RELATED:END -->

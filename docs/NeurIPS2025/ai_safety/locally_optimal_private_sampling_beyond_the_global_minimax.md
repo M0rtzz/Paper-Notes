@@ -140,3 +140,15 @@ $$q(x) = \text{clip}\left(\frac{1}{r_P} p(x); \frac{\gamma+1}{\gamma+e^\varepsil
 ⭐⭐⭐⭐ (4/5)
 - 理论贡献优美精炼，从全局到局部的还原令人印象深刻
 - 但缺乏真实数据实验和高维可扩展性验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Last-Click: An Optimal Mechanism for Ad Attribution](beyond_last-click_an_optimal_mechanism_for_ad_attribution.md)
+- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+- [Differentially Private Federated Low Rank Adaptation Beyond Fixed-Matrix](differentially_private_federated_low_rank_adaptation_beyond_fixed-matrix.md)
+- [Private Zeroth-Order Optimization with Public Data](private_zeroth-order_optimization_with_public_data.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ PVChat 基于 Mistral-7B-Instruct-v0.3，包含视觉编码器、ReMoH 增强的
 - **实验充分度**: ⭐⭐⭐⭐ 多场景多指标评估、ReMoH/SPR/HAE/数据类型完整消融、头激活可视化
 - **写作质量**: ⭐⭐⭐⭐ 结构完整，管道描述详细，图示丰富
 - **价值**: ⭐⭐⭐⭐ 开辟个性化视频理解新方向，医疗/智能家居应用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Personalized Scanpath Prediction](../../CVPR2025/medical_imaging/few-shot_personalized_scanpath_prediction.md)
+- [UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)
+- [SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)
+- [ProGait: A Multi-Purpose Video Dataset and Benchmark for Transfemoral Prosthesis Users](progait_a_multi-purpose_video_dataset_and_benchmark_for_transfemoral_prosthesis_.md)
+- [GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule](gdkvm_echocardiography_video_segmentation_via_spatiotemporal_key-value_memory_wi.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ Laplacian 金字塔级数分析（NUS-8 → Gehler）：
 - 实验充分度: ⭐⭐⭐ 跨数据集实验有说服力，但三折交叉验证和同域对比不够充分，缺少与最新方法的全面比较
 - 写作质量: ⭐⭐⭐⭐ 想法清晰易懂，但缓存仅含补充材料，主论文结构无法完全评估
 - 价值: ⭐⭐⭐⭐ 为颜色恒常性提供了新范式，跨相机泛化是实际应用的核心需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Color Alignment in Diffusion](color_alignment_in_diffusion.md)
+- [ColorPeel: Color Prompt Learning with Diffusion Models via Color and Shape Disentanglement](../../ECCV2024/image_generation/colorpeel_color_prompt_learning_with_diffusion_models_via_color_and_shape_disent.md)
+- [Video Color Grading via Look-Up Table Generation](../../ICCV2025/image_generation/video_color_grading_via_look-up_table_generation.md)
+- [Too Vivid to Be Real? Benchmarking and Calibrating Generative Color Fidelity](../../CVPR2026/image_generation/too_vivid_to_be_real_benchmarking_and_calibrating_generative_color_fidelity.md)
+- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+
+<!-- RELATED:END -->

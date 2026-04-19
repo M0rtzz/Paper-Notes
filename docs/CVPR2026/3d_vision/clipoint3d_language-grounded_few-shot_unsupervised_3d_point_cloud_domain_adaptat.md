@@ -141,3 +141,15 @@ $$\mathbf{L}_{total} = \mathbf{L}_{ce} + \alpha(\mathbf{L}_{ortho} + \mathbf{L}_
 - 实验充分度: ⭐⭐⭐⭐ （两个基准、8 项消融、效率分析和可视化，但数据集规模和任务类型有限）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，理论与实验衔接好）
 - 价值: ⭐⭐⭐⭐ （为 3D 域自适应开辟了轻量化的 VLM 路线）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](../../AAAI2026/3d_vision/multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [Progressive Classifier and Feature Extractor Adaptation for Unsupervised Domain Adaptation on Point Clouds](../../ECCV2024/3d_vision/progressive_classifier_and_feature_extractor_adaptation_for_unsupervised_domain_.md)
+- [QD-PCQA: Quality-Aware Domain Adaptation for Point Cloud Quality Assessment](qd-pcqa_quality-aware_domain_adaptation_for_point_cloud_quality_assessment.md)
+- [EPSegFZ: Efficient Point Cloud Semantic Segmentation for Few- and Zero-Shot Scenarios](../../AAAI2026/3d_vision/epsegfz_efficient_point_cloud_semantic_segmentation_for_few-_and_zero-shot_scena.md)
+- [Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
+
+<!-- RELATED:END -->

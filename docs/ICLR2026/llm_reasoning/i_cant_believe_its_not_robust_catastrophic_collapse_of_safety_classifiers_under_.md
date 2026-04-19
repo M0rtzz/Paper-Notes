@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验设计清晰但模型和分类器种类偏少，缺乏缓解措施的实证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学分析精炼
 - 价值: ⭐⭐⭐⭐ 对 AI 安全生产部署有重要实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
+- [Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
+- [RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
+- [Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision](../../NeurIPS2025/llm_reasoning/large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u.md)
+- [Chain-of-Thought Driven Adversarial Scenario Extrapolation for Robust Language Models](../../AAAI2026/llm_reasoning/chain-of-thought_driven_adversarial_scenario_extrapolation_for_robust_language_m.md)
+
+<!-- RELATED:END -->

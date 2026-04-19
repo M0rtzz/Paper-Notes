@@ -155,3 +155,15 @@ $$\mathcal{J} = \mathcal{S} + \mathcal{A}$$
 - 实验充分度: ⭐⭐⭐⭐ — 2D 函数 + GAN 训练覆盖多种动态模式，但缺少大规模实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机到理论到实验的逻辑链完整
 - 实用价值: ⭐⭐⭐⭐ — 为 min-max 训练中动量选择和更新规则提供可操作的理论指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semi-infinite Nonconvex Constrained Min-Max Optimization](../../NeurIPS2025/others/semi-infinite_nonconvex_constrained_min-max_optimization.md)
+- [Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
+- [Deep Continuous-Time State-Space Models for Marked Event Sequences](../../NeurIPS2025/others/deep_continuous-time_state-space_models_for_marked_event_sequences.md)
+- [Bayesian Network Structural Consensus via Greedy Min-Cut Analysis](../../AAAI2026/others/bayesian_network_structural_consensus_via_greedy_min-cut_analysis.md)
+- [Optimal Sensor Scheduling and Selection for Continuous-Discrete Kalman Filtering with Auxiliary Dynamics](optimal_sensor_scheduling_and_selection_for_continuous-discrete_kalman_filtering.md)
+
+<!-- RELATED:END -->

@@ -110,3 +110,15 @@ Waymo 零样本泛化：PSNR 23.43, SSIM 0.786。
 - 实验充分度: ⭐⭐⭐⭐ KITTI-360 + Waymo 零样本，充分的消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图表说服力强
 - 价值: ⭐⭐⭐⭐ 为城市场景前馈3DGS提供了强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Extrapolated Urban View Synthesis Benchmark](../../ICCV2025/autonomous_driving/extrapolated_urban_view_synthesis_benchmark.md)
+- [LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction](lr-sgs_robust_lidar-reflectance-guided_salient_gaussian_splatting_for_self-drivi.md)
+- [GaussianFormer-2: Probabilistic Gaussian Superposition for Efficient 3D Occupancy Prediction](gaussianformer-2_probabilistic_gaussian_superposition_for_efficient_3d_occupancy.md)
+- [Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](../../ICCV2025/autonomous_driving/3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+
+<!-- RELATED:END -->

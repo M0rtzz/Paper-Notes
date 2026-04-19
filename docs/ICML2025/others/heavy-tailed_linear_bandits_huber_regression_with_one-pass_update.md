@@ -143,3 +143,15 @@ $$\text{Reg}_T \leq \widetilde{\mathcal{O}}\!\left(d\, T^{\frac{1-\varepsilon}{2
 - 实验充分度: ⭐⭐ — 纯理论无实验
 - 写作质量: ⭐⭐⭐⭐ — 证明思路清晰，case study 由浅入深
 - 价值: ⭐⭐⭐⭐ — 填补了重尾 bandit 计算效率的理论空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit](../../ACL2025/others/one_for_all_update_parameterized_knowledge_across_multiple_models_with_once_edit.md)
+- [Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](../../NeurIPS2025/others/transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)
+- [Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination](../../NeurIPS2025/others/information-computation_tradeoffs_for_noiseless_linear_regression_with_oblivious.md)
+- [Regression for the Mean: Auto-Evaluation and Inference with Few Labels through Post-hoc Regression](regression_for_the_mean_auto-evaluation_and_inference_with_few_labels_through_po.md)
+- [Online Linear Regression with Paid Stochastic Features](../../AAAI2026/others/online_linear_regression_with_paid_stochastic_features.md)
+
+<!-- RELATED:END -->

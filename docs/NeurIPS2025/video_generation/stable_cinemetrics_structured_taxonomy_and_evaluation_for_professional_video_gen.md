@@ -147,3 +147,15 @@ SCINE 由三部分组成：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 13 个模型、20K 视频、248K 标注、84 位专业标注者，规模和质量惊人
 - **写作质量**: ⭐⭐⭐⭐ 内容丰富但篇幅较长，分类体系的展示可以更紧凑
 - **价值**: ⭐⭐⭐⭐⭐ 对视频生成领域的评估范式有重要推动作用，分类体系和基准将被广泛引用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldScore: A Unified Evaluation Benchmark for World Generation](../../ICCV2025/video_generation/worldscore_a_unified_evaluation_benchmark_for_world_generation.md)
+- [ETVA: Evaluation of Text-to-Video Alignment via Fine-Grained Question Generation and Answering](../../ICCV2025/video_generation/etva_evaluation_of_text-to-video_alignment_via_fine-grained_question_generation_.md)
+- [NeuS-V: Neuro-Symbolic Evaluation of Text-to-Video Models using Formal Verification](../../CVPR2025/video_generation/neuro-symbolic_evaluation_of_text-to-video_models_using_formal_verification.md)
+- [SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation](../../CVPR2026/video_generation/slvmeval_synthetic_meta_evaluation_benchmark_for_text-to-long_video_generation.md)
+- [LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation](lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)
+
+<!-- RELATED:END -->

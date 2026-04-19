@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 13个模型、3种自动指标、人工评估、多维度分析，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析深入，但部分表格可以更精炼
 - 价值: ⭐⭐⭐ 对英韩翻译方向有参考价值，但结论的可推广性（到其他语言对）有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [THOR-MoE: Hierarchical Task-Guided and Context-Responsive Routing for Neural Machine Translation](thor-moe_hierarchical_task-guided_and_context-responsive_routing_for_neural_mach.md)
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+- [GrammaMT: Improving Machine Translation with Grammar-Informed In-Context Learning](grammamt_improving_machine_translation_with_grammar-informed_in-context_learning.md)
+- [Multi-perspective Alignment for Increasing Naturalness in Neural Machine Translation](multi-perspective_alignment_for_increasing_naturalness_in_neural_machine_transla.md)
+- [Memorization Inheritance in Sequence-Level Knowledge Distillation for Neural Machine Translation](memorization_inheritance_seqkd.md)
+
+<!-- RELATED:END -->

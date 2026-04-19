@@ -116,3 +116,15 @@ tags:
 - 实证分析（引用 DBM Neurips Section B）显示 1990 Census 和 UCI Adult 数据集满足间距条件
 - Corollary 2.4 进一步导出了高概率 Frobenius 范数界和重构误差界
 - 相比 Mangoubi-Vishnoi 还消除了 $\log^{\log\log n} n$ 因子和 $\lambda_1 \leq n^{50}$ 的限制性假设
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [Differentially Private Federated Low Rank Adaptation Beyond Fixed-Matrix](differentially_private_federated_low_rank_adaptation_beyond_fixed-matrix.md)
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+
+<!-- RELATED:END -->

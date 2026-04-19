@@ -135,3 +135,15 @@ FlipSketch 首次实现从单张静态草图 + 文本描述自动生成无约束
 ## 评分
 
 ⭐⭐⭐⭐ — 创意性很强，将翻页动画的简洁体验与现代 T2V 技术优雅结合。三个核心创新（LoRA+参考帧+双注意力）各司其职、互相配合，形成了一个实用且有趣的系统。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text to Sketch Generation with Multi-Styles](../../NeurIPS2025/image_generation/text_to_sketch_generation_with_multi-styles.md)
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation](mvportrait_text-guided_motion_and_emotion_control_for_multi-view_vivid_portrait_.md)
+- [Text Embedding Knows How to Quantize Text-Guided Diffusion Models](../../ICCV2025/image_generation/text_embedding_knows_how_to_quantize_text-guided_diffusion_models.md)
+
+<!-- RELATED:END -->

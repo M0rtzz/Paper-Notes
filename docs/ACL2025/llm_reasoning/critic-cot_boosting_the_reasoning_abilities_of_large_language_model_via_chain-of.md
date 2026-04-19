@@ -163,3 +163,15 @@ tags:
 - 实验充分性: ⭐⭐⭐⭐ (in-domain + OOD 泛化，消融较完整，两种推理策略都有对比)
 - 实用价值: ⭐⭐⭐⭐⭐ (Critic-as-Filter 即插即用，弱监督数据构建可规模化)
 - 总体推荐: ⭐⭐⭐⭐ (在 self-critic 方向上有扎实推进，批判-求解互增强发现有启发意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improve Vision Language Model Chain-of-thought Reasoning](improve_vlm_cot_reasoning.md)
+- [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](../../CVPR2025/llm_reasoning/cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](../../AAAI2026/llm_reasoning/incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](chain_of_reasoning_unified_math.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 15+ 模型 + 消融 + 人类基线 + 学习过程可视化，但只有两种游戏
 - 写作质量: ⭐⭐⭐⭐ Jean Piaget 的引用很有品味，方法描述清晰，附录的推理过程示例非常详尽
 - 价值: ⭐⭐⭐⭐ 动态空间推理是 LLM 的明确短板，benchmark 和无参数学习方法都有研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](adaptive_theory_of_mind_for_llm-based_multi-agent_coordination.md)
+- [Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](../../ICLR2026/robotics/evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
+- [A Computable Game-Theoretic Framework for Multi-Agent Theory of Mind](a_computable_game-theoretic_framework_for_multi-agent_theory_of_mind.md)
+- [MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning](../../NeurIPS2025/robotics/mesatask_towards_task-driven_tabletop_scene_generation_via_3d_spatial_reasoning.md)
+- [SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation](spatialactor_exploring_disentangled_spatial_representations_for_robust_robotic_m.md)
+
+<!-- RELATED:END -->

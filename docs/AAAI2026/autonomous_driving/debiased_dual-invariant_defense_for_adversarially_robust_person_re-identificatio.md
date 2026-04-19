@@ -175,3 +175,15 @@ $$\min_E \max_D \mathcal{L}(E,D) = \mathbb{E}_x[\log D(E(x))] + \mathbb{E}_{x^{\
 | 实验质量 | ★★★★★ | 白盒/黑盒/跨数据集/消融/可视化全面 |
 | 写作质量 | ★★★★☆ | 问题分析清晰，实验证据充分 |
 | 实用价值 | ★★★★☆ | 有代码开源，对安防ReID系统防御有参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification](hierarchical_prompt_learning_for_image-_and_text-based_person_re-identification.md)
+- [When Person Re-Identification Meets Event Camera: A Benchmark Dataset and An Attribute-guided Re-Identification Framework](when_person_re-identification_meets_event_camera_a_benchmark_dataset_and_an_attr.md)
+- [FedBPrompt: Federated Domain Generalization Person Re-Identification via Body Distribution Aware Visual Prompts](../../CVPR2026/autonomous_driving/fedbprompt_federated_domain_generalization_person.md)
+- [Modeling Thousands of Human Annotators for Generalizable Text-to-Image Person Re-identification](../../CVPR2025/autonomous_driving/modeling_thousands_of_human_annotators_for_generalizable_text-to-image_person_re.md)
+- [GSAlign: Geometric and Semantic Alignment Network for Aerial-Ground Person Re-Identification](../../NeurIPS2025/autonomous_driving/gsalign_geometric_and_semantic_alignment_network_for_aerial-ground_person_re-ide.md)
+
+<!-- RELATED:END -->

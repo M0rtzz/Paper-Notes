@@ -117,3 +117,15 @@ AdaRPG 包含三个核心组件：（1）零件级可操作性数据集构建与
 - 实验充分度: ⭐⭐⭐⭐ 7类仿真+4类真实物体，消融完整，基线对比全面
 - 写作质量: ⭐⭐⭐⭐ 图文配合好，流水线清晰
 - 价值: ⭐⭐⭐⭐ 为机器人自适应操作提供了实用的零样本泛化方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors](../../ICLR2026/robotics/from_spatial_to_actions_grounding_vision-language-action_model_in_spatial_founda.md)
+- [Magma: A Foundation Model for Multimodal AI Agents](../../CVPR2025/robotics/magma_a_foundation_model_for_multimodal_ai_agents.md)
+- [FOUNDER: Grounding Foundation Models in World Models for Open-Ended Embodied Decision Making](../../ICML2025/robotics/founder_grounding_foundation_models_in_world_models_for_open-ended_embodied_deci.md)
+- [Selective Contrastive Learning for Weakly Supervised Affordance Grounding](selective_contrastive_learning_for_weakly_supervised_affordance_grounding.md)
+- [DexVLG: Dexterous Vision-Language-Grasp Model at Scale](dexvlg_dexterous_vision-language-grasp_model_at_scale.md)
+
+<!-- RELATED:END -->

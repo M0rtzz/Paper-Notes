@@ -148,3 +148,15 @@ ClearAIR 达到 29.34 dB / 0.886 SSIM，比 OneRestore (28.72 dB) 提升 0.62 dB
 - 实验充分度: ⭐⭐⭐⭐ — 四种 AiOIR 设定 + 消融实验 + 定性比较，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ — 层次清晰，HVP 类比贯穿全文，公式表达规范
 - 价值: ⭐⭐⭐⭐ — 在 AiOIR 领域推动了区域级自适应感知的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Degradation-Aware Feature Perturbation for All-in-One Image Restoration](../../CVPR2025/image_restoration/degradation-aware_feature_perturbation_for_all-in-one_image_restoration.md)
+- [Clear Nights Ahead: Towards Multi-Weather Nighttime Image Restoration](clear_nights_ahead_towards_multi-weather_nighttime_image_res.md)
+- [Zero-Reference Joint Low-Light Enhancement and Deblurring via Visual Autoregressive Modeling with VLM-Derived Modulation](zero-reference_joint_low-light_enhancement_and_deblurring_via_visual_autoregress.md)
+- [Bridging the Perception Gap in Image Super-Resolution Evaluation](../../CVPR2026/image_restoration/bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
+- [ICLR: Inter-Chrominance and Luminance Interaction for Natural Color Restoration in Low-Light Image Enhancement](iclr_inter-chrominance_and_luminance_interaction_for_natural_color_restoration_i.md)
+
+<!-- RELATED:END -->

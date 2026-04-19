@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 仿真+真实、两种平台、多种数据量、预训练消融、域迁移、行为泛化全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，数学直觉与视觉直觉兼备，实验叙述层层递进
 - 价值: ⭐⭐⭐⭐⭐ 为机器人基础模型指出了 SFT→RL 后训练的系统性路径，BananaTable 的行为泛化具有范式意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [Exploration with Foundation Models: Capabilities, Limitations, and Hybrid Approaches](exploration_with_foundation_models_capabilities_limitations_and_hybrid_approache.md)
+- [FedRAIN-Lite: Federated Reinforcement Algorithms for Improving Idealised Numerical Weather and Climate Models](fedrain-lite_federated_reinforcement_algorithms_for_improving_idealised_numerica.md)
+- [Communicating Plans, Not Percepts: Scalable Multi-Agent Coordination with Embodied World Models](communicating_plans_not_percepts_scalable_multi-agent_coordination_with_embodied.md)
+- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](../../ICML2025/reinforcement_learning/sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+
+<!-- RELATED:END -->

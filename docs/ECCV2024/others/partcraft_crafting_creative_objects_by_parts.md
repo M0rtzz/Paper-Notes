@@ -138,3 +138,15 @@ PartCraft 在 EMR（精确匹配率）上比最强基线 Break-a-Scene 高 7%，
 - 实验充分度: ⭐⭐⭐⭐ （两个数据集 + 定量定性 + 消融 + 可视化 + 迁移实验丰富）
 - 写作质量: ⭐⭐⭐⭐⭐ （motivating examples 直观，方法描述清晰）
 - 价值: ⭐⭐⭐⭐ （对创意设计领域有实际应用潜力）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Articulation in Motion: Prior-Free Part Mobility Analysis for Articulated Objects](../../ICLR2026/others/articulation_in_motion_prior-free_part_mobility_analysis_for_articulated_objects.md)
+- [A Closer Look at GAN Priors: Exploiting Intermediate Features for Enhanced Model Inversion Attacks](a_closer_look_at_gan_priors_exploiting_intermediate_features.md)
+- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
+- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [COIN-Matting: Confounder Intervention for Image Matting](coin-matting_confounder_intervention_for_image_matting.md)
+
+<!-- RELATED:END -->

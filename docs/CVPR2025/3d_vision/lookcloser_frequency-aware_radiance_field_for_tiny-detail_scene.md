@@ -137,3 +137,15 @@ Music Room 场景（Multi-Frequency Dataset）：
 - 实验充分度: ⭐⭐⭐⭐ 自建多频率数据集+标准数据集+详细消融，但缺少更多 baseline 对比
 - 写作质量: ⭐⭐⭐⭐ 方法流程清晰，toy example 的说明直观
 - 价值: ⭐⭐⭐⭐ 解决了真实场景中的实际需求（远景+近景），框架通用性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](../../ECCV2024/3d_vision/taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
+- [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
+- [3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes](3d_convex_splatting_radiance_field_rendering_with_3d_smooth_convexes.md)
+- [S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis](../../ECCV2024/3d_vision/s3d-nerf_single-shot_speech-driven_neural_radiance_field_for_high_fidelity_talki.md)
+- [Exploiting Deblurring Networks for Radiance Fields](exploiting_deblurring_networks_for_radiance_fields.md)
+
+<!-- RELATED:END -->

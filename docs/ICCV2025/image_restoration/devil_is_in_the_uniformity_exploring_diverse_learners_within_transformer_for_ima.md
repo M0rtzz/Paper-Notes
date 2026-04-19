@@ -156,3 +156,15 @@ HINT比Retinexformer高0.9dB，比通用恢复方案至少高1.74dB。
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个benchmark、5类任务、全面消融、效率分析、真实场景评估、下游任务评估
 - 写作质量: ⭐⭐⭐⭐ 问题诊断+可视化支撑清晰有力，方法描述详细
 - 价值: ⭐⭐⭐⭐ 方法通用性强，可作为即插即用模块改进现有Transformer恢复模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Image Restoration Transformer via Adaptive Translation Equivariance](enhancing_image_restoration_transformer_via_adaptive_translation_equivariance.md)
+- [Complexity Experts are Task-Discriminative Learners for Any Image Restoration](../../CVPR2025/image_restoration/complexity_experts_are_task-discriminative_learners_for_any_image_restoration.md)
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](../../ECCV2024/image_restoration/seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [UniRes: Universal Image Restoration for Complex Degradations](unires_universal_image_restoration_for_complex_degradations.md)
+- [Exploiting Diffusion Prior for Task-driven Image Restoration](exploiting_diffusion_prior_for_task-driven_image_restoration.md)
+
+<!-- RELATED:END -->

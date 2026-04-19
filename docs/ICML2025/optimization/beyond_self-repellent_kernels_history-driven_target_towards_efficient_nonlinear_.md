@@ -171,3 +171,15 @@ $$\hat{x}_j = \tilde{\mu}_j \cdot |\bar{\mathcal{N}}(i) \cap \mathcal{C}|^{-1} \
 | 写作质量 | ⭐⭐⭐⭐⭐ | 动机清晰、对比到位、图示直观 |
 
 **总评**: 4.5/5 — ICML Oral 当之无愧。以极简设计解决 SRRW 核心痛点，理论完备且实验验证充分。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-Layout: LLM-driven Co-optimization for Interior Layout](../../AAAI2026/optimization/co-layout_llm-driven_co-optimization_for_interior_layout.md)
+- [GHOST: Solving the Traveling Salesman Problem on Graphs of Convex Sets](../../AAAI2026/optimization/ghost_solving_the_traveling_salesman_problem_on_graphs_of_convex_sets.md)
+- [Test-Time Meta-Adaptation with Self-Synthesis](../../ICLR2026/optimization/test-time_meta-adaptation_with_self-synthesis.md)
+- [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](../../NeurIPS2025/optimization/a_theoretical_study_on_bridging_internal_probability_and_sel.md)
+- [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
+
+<!-- RELATED:END -->

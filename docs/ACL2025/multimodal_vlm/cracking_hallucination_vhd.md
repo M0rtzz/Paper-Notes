@@ -122,3 +122,15 @@ tags:
 - **实验充分度** ⭐⭐⭐⭐：三个 LVLM、多个基准、消融实验覆盖全面
 - **写作质量** ⭐⭐⭐⭐：理论推导清晰，可视化分析直观
 - **价值** ⭐⭐⭐⭐：免训练、高效、有理论支撑的幻觉缓解方案，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MathCoder-VL: Bridging Vision and Code for Enhanced Multimodal Mathematical Reasoning](mathcoder-vl_bridging_vision_and_code_for_enhanced_multimodal_mathematical_reaso.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [ChartCoder: Advancing Multimodal Large Language Model for Chart-to-Code Generation](chartcoder_chart_to_code.md)
+- [HAWK: Head Importance-Aware Visual Token Pruning in Multimodal Models](../../CVPR2026/multimodal_vlm/hawk_head_importance-aware_visual_token_pruning_in_multimodal_models.md)
+- [Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](code_guided_text_rich_image.md)
+
+<!-- RELATED:END -->

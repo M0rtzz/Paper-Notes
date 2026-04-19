@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 零样本+监督+多系统对比+子任务分解分析
 - 写作质量: ⭐⭐⭐⭐⭐ 任务定义严谨(Definition 3.1/3.2)，Figure 1 案例直观
 - 价值: ⭐⭐⭐⭐⭐ 对全球冲突分析和人道主义应用有直接贡献，数据集长期价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring In-Image Machine Translation with Real-World Background](exploring_in-image_machine_translation_with_real-world_background.md)
+- [Towards Global AI Inclusivity: A Large-Scale Multilingual Terminology Dataset (GIST)](towards_global_ai_inclusivity_a_large-scale_multilingual_terminology_dataset_gis.md)
+- [Beyond N-Grams: Rethinking Evaluation Metrics and Strategies for Multilingual Abstractive Summarization](beyond_n-grams_rethinking_evaluation_metrics_and_strategies_for_multilingual_abs.md)
+- [STELLAR: Scene Text Editor for Low-Resource Languages and Real-World Data](../../AAAI2026/multilingual_mt/stellar_scene_text_editor_for_low-resource_languages_and_real-world_data.md)
+- [LangMark: A Multilingual Dataset for Automatic Post-Editing](langmark_a_multilingual_dataset_for_automatic_post-editing.md)
+
+<!-- RELATED:END -->

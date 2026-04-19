@@ -145,3 +145,15 @@ HyMN（Hybrid Marking Network）分两步：
 - 实验充分度: ⭐⭐⭐⭐⭐ 小图/大图/消融/多种中心性对比极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ 理论+实验结合完美，表达力互补性证明优雅
 - 价值: ⭐⭐⭐⭐⭐ 使子图方法实际可用——从理论方法变为实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Logical Expressiveness in GNNs via Path-Neighbor Aggregation](../../AAAI2026/graph_learning/enhancing_logical_expressiveness_in_graph_neural_networks_via_path-neighbor_aggr.md)
+- [TINED: GNNs-to-MLPs by Teacher Injection and Dirichlet Energy Distillation](tined_gnns-to-mlps_by_teacher_injection_and_dirichlet_energy_distillation.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](../../NeurIPS2025/graph_learning/logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+- [Machines and Mathematical Mutations: Using GNNs to Characterize Quiver Mutation Classes](machines_and_mathematical_mutations_using_gnns_to_characterize_quiver_mutation_c.md)
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+
+<!-- RELATED:END -->

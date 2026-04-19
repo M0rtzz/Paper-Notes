@@ -115,3 +115,15 @@ MDM-Prime包含三步：(1) 用可逆函数 $f$ 将每个token $x_0^i \in \mathc
 - 实验充分度: ⭐⭐⭐⭐ 文本+图像跨模态验证，七个零样本基准，消融充分
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，图示清晰
 - 价值: ⭐⭐⭐⭐⭐ 对离散扩散模型领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [Information-Theoretic Discrete Diffusion](information-theoretic_discrete_diffusion.md)
+
+<!-- RELATED:END -->

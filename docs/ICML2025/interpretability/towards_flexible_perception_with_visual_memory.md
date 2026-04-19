@@ -178,3 +178,15 @@ JFT memory 在 IN-R、IN-Sketch 上大幅超越 linear probe；Gemini re-ranking
 - 实验充分度: ⭐⭐⭐⭐⭐ (七大能力、十亿级规模、多数据集验证)
 - 写作质量: ⭐⭐⭐⭐⭐ (叙事流畅，动机清晰)
 - 价值: ⭐⭐⭐⭐ (对知识表示范式有启发意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
+- [KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception](../../CVPR2025/interpretability/kvq_boosting_video_quality_assessment_via_saliency-guided_local_perception.md)
+- [Steering Information Utility in Key-Value Memory for Language Model Post-Training](../../NeurIPS2025/interpretability/steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)
+- [TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Ditching](../../ICLR2026/interpretability/tokenseek_memory_efficient_fine_tuning_via_instance-aware_token_ditching.md)
+- [Learning Visual Composition through Improved Semantic Guidance](../../CVPR2025/interpretability/learning_visual_composition_through_improved_semantic_guidance.md)
+
+<!-- RELATED:END -->

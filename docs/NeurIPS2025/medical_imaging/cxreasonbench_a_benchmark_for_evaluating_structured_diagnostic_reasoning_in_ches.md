@@ -148,3 +148,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：问题定义清晰、管道设计系统全面、实验覆盖12个模型和12个任务；但任务范围局限于结构可推导的发现，且多选评估格式可能无法完全反映实际临床推理能力。作为基准贡献非常有价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CheX: Interactive Localization and Region Description in Chest X-rays](../../ECCV2024/medical_imaging/chex_interactive_localization_and_region_description_in_chest_x-rays.md)
+- [Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset](../../CVPR2026/medical_imaging/instruction-guided_lesion_segmentation_for_chest_x-rays_with_automatically_gener.md)
+- [FGBench: A Dataset and Benchmark for Molecular Property Reasoning at Functional Group-Level in Large Language Models](fgbench_a_dataset_and_benchmark_for_molecular_property_reasoning_at_functional_g.md)
+- [3D-RAD: A Comprehensive 3D Radiology Med-VQA Dataset with Multi-Temporal Analysis and Diverse Diagnostic Tasks](3drad_a_comprehensive_3d_radiology_medvqa_dataset_with_multi.md)
+- [RadZero: Similarity-Based Cross-Attention for Explainable Vision-Language Alignment in Chest X-ray](radzero_similarity-based_cross-attention_for_explainable_vision-language_alignme.md)
+
+<!-- RELATED:END -->

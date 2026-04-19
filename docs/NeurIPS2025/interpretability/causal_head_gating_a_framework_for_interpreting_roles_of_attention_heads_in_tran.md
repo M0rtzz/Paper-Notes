@@ -126,3 +126,15 @@ NLL + L1 正则化。先用 $\lambda=0$ 拟合初始化 $G$，再分别用 $\lam
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型多任务，与 CMA 交叉验证，消融完整
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表精美
 - 价值: ⭐⭐⭐⭐⭐ 提供了一个轻量、可扩展、因果性的 head 分析工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cognitive Mirrors: Exploring the Diverse Functional Roles of Attention Heads in LLM Reasoning](cognitive_mirrors_exploring_the_diverse_functional_roles_of_attention_heads_in_l.md)
+- [Learning to Focus: Causal Attention Distillation via Gradient-Guided Token Pruning](learning_to_focus_causal_attention_distillation_via_gradient-guided_token_prunin.md)
+- [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
+- [Tropical Attention: Neural Algorithmic Reasoning for Combinatorial Algorithms](tropical_attention_neural_algorithmic_reasoning_for_combinatorial_algorithms.md)
+- [What Happens During the Loss Plateau? Understanding Abrupt Learning in Transformers](what_happens_during_the_loss_plateau_understanding_abrupt_learning_in_transforme.md)
+
+<!-- RELATED:END -->

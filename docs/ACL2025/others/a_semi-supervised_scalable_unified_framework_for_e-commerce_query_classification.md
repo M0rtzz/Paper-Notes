@@ -137,3 +137,15 @@ SSUF 的核心是一个共享 BERT 文本编码器，叠加三个高度可插拔
 - 实验充分度: ⭐⭐⭐⭐⭐ 大规模真实数据（6700万+训练样本）、完整消融、线上A/B验证
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，公式推导完整，但动机部分偏工业化
 - 价值: ⭐⭐⭐⭐ 已上线工业系统，对电商搜索有直接价值，模块化设计有迁移参考性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prediction-Powered Semi-Supervised Learning with Online Power Tuning](../../NeurIPS2025/others/prediction-powered_semi-supervised_learning_with_online_power_tuning.md)
+- [Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](seoe_semantic_eval.md)
+- [Semi-supervised Graph Anomaly Detection via Robust Homophily Learning](../../NeurIPS2025/others/semi-supervised_graph_anomaly_detection_via_robust_homophily_learning.md)
+- [ConECT Dataset: Overcoming Data Scarcity in Context-Aware E-Commerce MT](conect_dataset_overcoming_data_scarcity_in_context-aware_e-commerce_mt.md)
+
+<!-- RELATED:END -->

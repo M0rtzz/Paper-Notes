@@ -140,3 +140,15 @@ SCGN 在三个指标上均取得最优：PSNR 超过 Restormer **0.58 dB**，IoU
 - 实验充分度: ⭐⭐⭐ — 合成和真实数据均有验证，但数据集规模偏小，对比方法可以更丰富
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、方法描述严谨，代码已开源
 - 价值: ⭐⭐⭐⭐ — 对材料科学中的原子尺度动态观测有直接应用价值，方法可推广到其他科学成像去噪场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution](fidesr_high-fidelity_and_detail-preserving_one-step_diffusion_super-resolution.md)
+- [DenoiSplit: A Method for Joint Microscopy Image Splitting and Unsupervised Denoising](../../ECCV2024/image_restoration/denoisplit_a_method_for_joint_microscopy_image_splitting_and_unsupervised_denois.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_wide-field_and_high-dynamic_range_interferometric_image_recons.md)
+- [Learning to Translate Noise for Robust Image Denoising](learning_to_translate_noise_for_robust_image_denoising.md)
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+
+<!-- RELATED:END -->

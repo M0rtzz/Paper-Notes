@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个基准、7个消融维度、plug-and-play验证、可视化分析、详尽补充材料
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述清晰、对比表(Table 1)直观、理论推导完整
 - 价值: ⭐⭐⭐⭐⭐ 速度+精度双SOTA，plug-and-play设计使其可直接融入现有系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilist.md)
+- [MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection](moeclip_patch-specialized_experts_for_zero-shot_anomaly_detection.md)
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [cryoSENSE: Compressive Sensing Enables High-throughput Microscopy with Sparse and Generative Priors on the Protein Cryo-EM Image Manifold](cryosense_compressive_sensing_enables_high-throughput_microscopy_with_sparse_and.md)
+
+<!-- RELATED:END -->

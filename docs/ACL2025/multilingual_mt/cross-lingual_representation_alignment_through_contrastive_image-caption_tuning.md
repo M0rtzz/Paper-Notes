@@ -129,3 +129,15 @@ $$L(E_i, E_c) = \text{CrossEntropy}(S, I)$$
 | 价值 | 3.5 |
 
 研究思路清晰、假设新颖（图像作为跨语言桥梁），但方法本身（CLIP 风格对比学习）较为标准。实验设置合理但规模有限（仅 118k 数据、4-5 种语言、1 个下游任务）。作为短论文（ACL Findings），质量不错。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Middle-Layer Representation Alignment for Cross-Lingual Transfer in Fine-Tuned LLMs](mid_layer_crosslingual_alignment.md)
+- [Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models](statement-tuning_enables_efficient_cross-lingual_generalization_in_encoder-only_.md)
+- [Modular Sentence Encoders: Separating Language Specialization from Cross-Lingual Alignment](modular_sentence_encoders.md)
+- [ShifCon: Enhancing Non-Dominant Language Capabilities with a Shift-based Multilingual Contrastive Framework](shifcon_nondominant_language.md)
+- [Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon](cross-lingual_transfer_of_cultural_knowledge_an_asymmetric_phenomenon.md)
+
+<!-- RELATED:END -->

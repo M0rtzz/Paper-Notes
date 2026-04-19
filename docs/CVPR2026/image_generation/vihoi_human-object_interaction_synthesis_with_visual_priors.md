@@ -127,3 +127,15 @@ ViHOI由两个核心组件构成：VLM-based Prior Extractor和Vision-aware HOI 
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、三个基线模型、未见物体泛化和详细消融
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，方法介绍有层次
 - 价值: ⭐⭐⭐⭐ 即插即用框架实用性强，范式创新可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](../../CVPR2025/image_generation/an_image-like_diffusion_method_for_human-object_interaction_detection.md)
+- [ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion](../../ICCV2025/image_generation/scorehoi_physically_plausible_reconstruction_of_human-object_interaction_via_sco.md)
+- [Object-WIPER: Training-Free Object and Associated Effect Removal in Videos](object-wiper_training-free_object_and_associated_effect_removal_in_videos.md)
+- [InterAct: Advancing Large-Scale Versatile 3D Human-Object Interaction Generation](../../CVPR2025/image_generation/interact_advancing_large-scale_versatile_3d_human-object_interaction_generation.md)
+- [HaltNav: Reactive Visual Halting over Lightweight Topological Priors for Robust Vision-Language Navigation](haltnav_reactive_visual_halting_over_lightweight_topological_priors_for_robust_v.md)
+
+<!-- RELATED:END -->

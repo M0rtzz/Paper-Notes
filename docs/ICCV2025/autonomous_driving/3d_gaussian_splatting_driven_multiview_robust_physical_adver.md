@@ -180,3 +180,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{det}}(T(\mathcal{I}_{\text{det
 - 实验充分度: ⭐⭐⭐⭐⭐ 数字域+物理域多层验证，6个SOTA对比，4个检测器，多距离多角度多天气完整覆盖
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题-方案对应明确，图示直观
 - 价值: ⭐⭐⭐⭐ 对自动驾驶安全具有重要参考价值，攻击效果显著，但缺乏防御讨论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow](gaussianflowocc_sparse_and_weakly_supervised_occupancy_estimation_using_gaussian.md)
+- [A Constrained Optimization Approach for Gaussian Splatting from Coarsely-posed Images and Noisy Lidar Point Clouds](a_constrained_optimization_approach_for_gaussian_splatting_from_coarsely-posed_i.md)
+- [IGL-Nav: Incremental 3D Gaussian Localization for Image-goal Navigation](igl-nav_incremental_3d_gaussian_localization_for_image-goal_navigation.md)
+- [CCL-LGS: Contrastive Codebook Learning for 3D Language Gaussian Splatting](ccl-lgs_contrastive_codebook_learning_for_3d_language_gaussian_splatting.md)
+- [EVT: Efficient View Transformation for Multi-Modal 3D Object Detection](evt_efficient_view_transformation_for_multi-modal_3d_object_detection.md)
+
+<!-- RELATED:END -->

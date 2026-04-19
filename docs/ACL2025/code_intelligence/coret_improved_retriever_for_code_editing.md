@@ -140,3 +140,15 @@ $$\mathcal{L}(\theta) = \frac{1}{N} \sum_i^N \frac{1}{|\mathcal{C}_i^*|} \sum_{c
 - **实验充分度**: ★★★★☆ — 消融实验全面，但数据集仅两个且都以 Python 为主
 - **写作质量**: ★★★★☆ — 问题定义和动机阐述清晰，方法描述严谨
 - **价值**: ★★★★☆ — 为 SWE-bench 等代码编辑任务提供了实用的检索增强基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OASIS: Order-Augmented Strategy for Improved Code Search](oasis_order-augmented_strategy_for_improved_code_search.md)
+- [GALLa: Graph Aligned Large Language Models for Improved Source Code Understanding](galla_graph_aligned_large_language_models.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [CodeDPO: Aligning Code Models with Self Generated and Verified Source Code](codedpo_code_alignment.md)
+- [Tree-of-Code: A Tree-Structured Exploring Framework for End-to-End Code Generation](tree-of-code_a_tree-structured_exploring_framework_for_end-to-end_code_generatio.md)
+
+<!-- RELATED:END -->

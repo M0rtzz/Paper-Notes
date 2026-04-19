@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12 步序列、风格/物体两种设定、多种基线方法、消融和分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题-诊断-方案的逻辑链非常清晰，理论分析与实验相互验证
 - 价值: ⭐⭐⭐⭐⭐ 定义了一个重要的新问题方向，具有直接的社会/法律意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Spacetime of Diffusion Models: An Information Geometry Perspective](the_spacetime_of_diffusion_models_an_information_geometry_perspective.md)
+- [Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning](../../ICCV2025/image_generation/holistic_unlearning_benchmark_a_multi-faceted_evaluation_for_text-to-image_diffu.md)
+- [Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)
+- [Joint Diffusion Models in Continual Learning](../../ICCV2025/image_generation/joint_diffusion_models_in_continual_learning.md)
+- [Asynchronous Denoising Diffusion Models for Aligning Text-to-Image Generation](asynchronous_denoising_diffusion_models_for_aligning_text-to-image_generation.md)
+
+<!-- RELATED:END -->

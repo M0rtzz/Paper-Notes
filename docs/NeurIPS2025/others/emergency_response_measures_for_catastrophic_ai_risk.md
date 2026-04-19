@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为政策分析论文无实验，但制度对比分析较为系统
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，论证逻辑严密，政策引用准确详实
 - 价值: ⭐⭐⭐⭐ 为AI灾难性风险的治理实践提供了可操作的制度融合方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
+- [ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](../../ACL2025/others/arise_risk_adaptive_search.md)
+- [Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures](../../ICML2025/others/maximum_coverage_in_turnstile_streams_with_applications_to_fingerprinting_measur.md)
+- [Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures](../../ICML2025/others/randomized_dimensionality_reduction_for_euclidean_maximization_and_diversity_mea.md)
+- [Evaluating In Silico Creativity: An Expert Review of AI Chess Compositions](evaluating_in_silico_creativity_an_expert_review_of_ai_chess_compositions.md)
+
+<!-- RELATED:END -->

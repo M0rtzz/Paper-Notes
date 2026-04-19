@@ -141,3 +141,15 @@ $$\min_{\alpha \in A} f(\alpha | S) \quad \text{s.t.} \quad f = \arg\min_{S, f \
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融极其详尽（计算量、分配、代理、聚类、初始化），覆盖 350M-1B 多尺度验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 发布高质量开源数据集 + 实用的自动混合框架，对 LLM 预训练社区价值极大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](language_model_behavioral_phases_are_consistent_across_archi.md)
+- [Metadata Conditioning Accelerates Language Model Pre-training](../../ICML2025/llm_pretraining/metadata_conditioning_accelerates_language_model_pre-training.md)
+- [Through the River: Understanding the Benefit of Schedule-Free Methods for Language Model Training](through_the_river_understanding_the_benefit_of_schedule-free_methods_for_languag.md)
+- [The Sharpness Disparity Principle in Transformers for Accelerating Language Model Pre-Training](../../ICML2025/llm_pretraining/the_sharpness_disparity_principle_in_transformers_for_accelerating_language_mode.md)
+- [Optimizing Pre-Training Data Mixtures with Mixtures of Data Expert Models](../../ACL2025/llm_pretraining/optimizing_pre-training_data_mixtures_with_mixtures_of_data_expert_models.md)
+
+<!-- RELATED:END -->

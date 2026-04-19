@@ -114,3 +114,15 @@ Grokking/IB压缩 ← 群体类内方差收缩 ← 经验类内方差收缩(RNC1
 - 实验充分度: ⭐⭐⭐⭐ — 多架构多 λ 验证充分，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ — 定理-命题-实验层层递进，Figure 1 的逻辑图极清晰
 - 价值: ⭐⭐⭐⭐ — 对理解 DNN 训练后期行为有深刻洞察，对实践中 weight decay 调参有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via Grokking](../../NeurIPS2025/llm_pretraining/flatness_is_necessary_neural_collapse_is_not_rethinking_generalization_via_grokk.md)
+- [Deconstructing Positional Information: From Attention Logits to Training Biases](deconstructing_positional_information_from_attention_logits_to_training_biases.md)
+- [Understanding the Emergence of Seemingly Useless Features in Next-Token Predictors](understanding_the_emergence_of_seemingly_useless_features_in_next-token_predicto.md)
+- [Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](../../NeurIPS2025/llm_pretraining/neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
+- [Intrinsic Training Dynamics of Deep Neural Networks](intrinsic_training_dynamics_of_deep_neural_networks.md)
+
+<!-- RELATED:END -->

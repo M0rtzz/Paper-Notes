@@ -180,3 +180,15 @@ AR vs NAR（非自回归）GUI Grounding 对比（120K 训练数据）：
 - 实验充分度: ⭐⭐⭐⭐ （4个基准、推理参数消融、数据扩展分析，但缺少与更多GUI Agent的对比）
 - 写作质量: ⭐⭐⭐⭐ （定位清晰，诚实呈现优缺点，但部分表格格式略凌乱）
 - 价值: ⭐⭐⭐⭐ （为GUI Agent开辟了扩散模型的新方向，但实用性受限于延迟和性能差距）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents](gui-ceval_a_hierarchical_and_comprehensive_chinese_benchmark_for_mobile_gui_agen.md)
+- [EchoTrail-GUI: Building Actionable Memory for GUI Agents via Critic-Guided Self-Exploration](echotrail-gui_building_actionable_memory_for_gui_agents_via_critic-guided_self-e.md)
+- [GUICourse: From General Vision Language Model to Versatile GUI Agent](../../ACL2025/llm_agent/guicourse_from_general_vision_language_model_to_versatile_gui_agent.md)
+- [HATS: Hardness-Aware Trajectory Synthesis for GUI Agents](hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)
+- [Co-EPG: A Framework for Co-Evolution of Planning and Grounding in Autonomous GUI Agents](../../AAAI2026/llm_agent/co-epg_a_framework_for_co-evolution_of_planning_and_groundin.md)
+
+<!-- RELATED:END -->

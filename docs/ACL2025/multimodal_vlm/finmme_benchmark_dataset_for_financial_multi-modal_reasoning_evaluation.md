@@ -150,3 +150,15 @@ FinScore 将领域归一化性能与幻觉惩罚相结合：
 - 实验充分度: ⭐⭐⭐⭐⭐ 测试了 17 个模型，多维度分析详尽，鲁棒性验证充分
 - 写作质量: ⭐⭐⭐⭐ 结构完整清晰，但部分统计描述冗余
 - 价值: ⭐⭐⭐⭐⭐ 填补了金融 MLLM 评估空白，FinScore 具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+- [Beyond Final Answers: CRYSTAL Benchmark for Transparent Multimodal Reasoning Evaluation](../../CVPR2025/multimodal_vlm/beyond_final_answers_crystal_benchmark_for_transparent_multimodal_reasoning_eval.md)
+- [ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools](../../ICCV2025/multimodal_vlm/toolvqa_a_dataset_for_multistep_reasoning_vqa_with_external.md)
+- [Mitigating Visual Forgetting via Take-along Visual Conditioning for Multi-modal Long CoT Reasoning](tvc_mitigating_visual_forgetting.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+
+<!-- RELATED:END -->

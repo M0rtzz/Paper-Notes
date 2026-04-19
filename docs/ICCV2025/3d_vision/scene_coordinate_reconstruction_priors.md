@@ -141,3 +141,15 @@ Indoor6数据集上扩散先验效果尤为突出：注册率从57.1%提升到61
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集、多种先验变体、SfM和重定位双任务验证，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机阐述清晰，概率框架推导优雅，实验组织有条理
 - 价值: ⭐⭐⭐⭐ — 即插即用的先验策略对SCR社区有直接实用价值，概率化视角具有方法论启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAS: Segment Any 3D Scene with Integrated 2D Priors](sas_segment_any_3d_scene_with_integrated_2d_priors.md)
+- [Proactive Scene Decomposition and Reconstruction](proactive_scene_decomposition_and_reconstruction.md)
+- [Back on Track: Bundle Adjustment for Dynamic Scene Reconstruction](back_on_track_bundle_adjustment_for_dynamic_scene_reconstruction.md)
+- [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+
+<!-- RELATED:END -->

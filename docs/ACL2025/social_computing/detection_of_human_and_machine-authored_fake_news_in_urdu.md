@@ -139,3 +139,15 @@ tags:
 - **实验充分度**: 8/10 — 四个数据集、多种组合、49组跨域评估非常充分，分析也很深入
 - **写作质量**: 7/10 — 结构清晰，分析到位，但部分叙述稍显冗长
 - **价值**: 7/10 — 对低资源语言假新闻检测有重要贡献，但方法的技术深度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](llm_label_propagation.md)
+- [FactGuard: Event-Centric and Commonsense-Guided Fake News Detection](../../AAAI2026/social_computing/factguard_event-centric_and_commonsense-guided_fake_news_detection.md)
+- [Human or Machine? A Preliminary Turing Test for Speech-to-Speech Interaction](../../ICLR2026/social_computing/human_or_machine_a_preliminary_turing_test_for_speech-to-speech_interaction.md)
+- [ImpliHateVid: Implicit Hate Speech Detection in Videos](implihatevid_video_hate.md)
+- [Exploring Multimodal Challenges in Toxic Chinese Detection: Taxonomy, Benchmark, and Findings](exploring_multimodal_challenges_in_toxic_chinese_detection_taxonomy_benchmark_an.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ $$\mathcal{L}_{GMFlow} = \mathbb{E}_{t, x_0, \epsilon} \left[ D_{KL}\left(\mathc
 - 实验充分度: ⭐⭐⭐⭐ ImageNet 上有系统的消融和对比，但缺少大规模 T2I 实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导完整，概念清晰
 - 价值: ⭐⭐⭐⭐⭐ 少步采样和过饱和修复都是实际部署的关键痛点，价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Flow Matching by Aligning Flow Divergence](improving_flow_matching_by_aligning_flow_divergence.md)
+- [ContinualFlow: Learning and Unlearning with Neural Flow Matching](continualflow_learning_and_unlearning_with_neural_flow_matching.md)
+- [BinauralFlow: A Causal and Streamable Approach for High-Quality Binaural Speech Synthesis with Flow Matching Models](binauralflow_a_causal_and_streamable_approach_for_high-quality_binaural_speech_s.md)
+- [Elucidating Flow Matching ODE Dynamics via Data Geometry and Denoisers](elucidating_flow_matching_ode_dynamics_with_respect_to_data_geometries_and_denoi.md)
+- [Shortcutting Pre-trained Flow Matching Diffusion Models is Almost Free Lunch](../../NeurIPS2025/image_generation/shortcutting_pre-trained_flow_matching_diffusion_models_is_almost_free_lunch.md)
+
+<!-- RELATED:END -->

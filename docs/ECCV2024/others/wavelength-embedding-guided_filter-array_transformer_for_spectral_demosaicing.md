@@ -116,3 +116,15 @@ WeFAT（Wavelength Embedding guided Filter Array Attention Transformer）接受 
 - 实验充分度: ⭐⭐⭐⭐ 跨相机泛化实验设计精巧，消融分析深入
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，物理动机阐述充分
 - 价值: ⭐⭐⭐⭐ 为光谱成像领域提供了通用且优雅的去马赛克方案，波长嵌入思路可广泛借鉴
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification](adaptive_highfrequency_transformer_for_diverse_wildlife_reid.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](../../CVPR2026/others/shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+- [Exploring Guided Sampling of Conditional GANs](exploring_guided_sampling_of_conditional_gans.md)
+- [Rethinking Data Bias: Dataset Copyright Protection via Embedding Class-Wise Hidden Bias](rethinking_data_bias_dataset_copyright_protection_via_embedding_class-wise_hidde.md)
+
+<!-- RELATED:END -->

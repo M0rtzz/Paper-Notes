@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多角度验证（统计分析+受控实验+理论证明+扰动实验）
 - 写作质量: ⭐⭐⭐⭐⭐ 图表极为直观，从观察→验证→理论→应用的链条完整
 - 价值: ⭐⭐⭐⭐⭐ 对理解 LLM 内部机制和改进位置编码都有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ConsistencyChecker: Tree-based Evaluation of LLM Generalization Capabilities](consistencychecker_tree_evaluation.md)
+- [LLM as Effective Streaming Processor: Bridging Streaming-Batch Mismatches with Group Position Encoding](llm_as_effective_streaming_processor_bridging_streaming-batch_mismatches_with_gr.md)
+- [Mitigate Position Bias in LLMs via Scaling a Single Hidden States Channel](mitigate_position_bias_in_large_language_models_via_scaling_a_single_dimension.md)
+- [Circuit Stability Characterizes Language Model Generalization](circuit_stability_characterizes_language_model_generalization.md)
+- [A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)
+
+<!-- RELATED:END -->

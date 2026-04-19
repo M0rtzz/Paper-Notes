@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ TOFU+BLUR多基准验证充分，但缺少真实场景实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题提出→反驳前人→受控实验→机制分析→解决方案，逻辑极为紧凑
 - 价值: ⭐⭐⭐⭐ 对机器遗忘领域的评估方法和防御策略有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure](rethinking_uncertainty_estimation_in_llms_a_principled_single-sequence_measure.md)
+- [Harnessing the Unseen: The Hidden Influence of Intrinsic Knowledge in Long-Context Language Models](../../AAAI2026/llm_efficiency/harnessing_the_unseen_the_hidden_influence_of_intrinsic_knowledge_in_long-contex.md)
+- [Not All Splits Are Equal: Rethinking Attribute Generalization Across Unrelated Categories](../../NeurIPS2025/llm_efficiency/not_all_splits_are_equal_rethinking_attribute_generalization_across_unrelated_ca.md)
+- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
+- [SwingArena: Adversarial Programming Arena for Long-context GitHub Issue Solving](swingarena_competitive_programming_arena_for_long-context_github_issue_solving.md)
+
+<!-- RELATED:END -->

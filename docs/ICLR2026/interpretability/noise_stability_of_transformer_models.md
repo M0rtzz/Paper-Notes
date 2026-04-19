@@ -165,3 +165,15 @@ $$R_{M,S,\rho}(X) = (-1)^S \cdot \sum_{i=1}^C M(X)_i \cdot M(Y)_i$$
 - 实验充分度: ⭐⭐⭐ (理论扎实但实验规模偏小，缺乏大模型验证)
 - 写作质量: ⭐⭐⭐⭐ (理论推导清晰，行文流畅，图表直观)
 - 价值: ⭐⭐⭐⭐ (为理解 Transformer 内部机制提供了新工具，正则化方法有实用潜力)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Closing the Curvature Gap: Full Transformer Hessians and Their Implications for Scaling Laws](closing_the_curvature_gap_full_transformer_hessians_and_their_implications_for_s.md)
+- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](../../NeurIPS2025/interpretability/born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
+- [AdaptGrad: Adaptive Sampling to Reduce Noise](../../NeurIPS2025/interpretability/adaptgrad_adaptive_sampling_to_reduce_noise.md)
+- [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](../../CVPR2026/interpretability/feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
+- [Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models](../../NeurIPS2025/interpretability/bigram_subnetworks_mapping_to_next_tokens_in_transformer_language_models.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 数据集特性和采集流程描述清晰，统计分析详尽
 - 价值: ⭐⭐⭐⭐⭐ 填补了真实3D车辆数据集的空白，对自动驾驶仿真有重要实际意义
 - 总评: 数据集贡献型工作的标杆，采集-处理-标注-基准的完整流程可供后续工作参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](6dope-gs_online_6d_object_pose_estimation_using_gaussian_splatting.md)
+- [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
+- [Detect Anything 3D in the Wild](detect_anything_3d_in_the_wild.md)
+- [LangTraj: Diffusion Model and Dataset for Language-Conditioned Trajectory Simulation](langtraj_diffusion_model_and_dataset_for_language-conditioned_trajectory_simulat.md)
+- [UAVScenes: A Multi-Modal Dataset for UAVs](uavscenes_a_multi-modal_dataset_for_uavs.md)
+
+<!-- RELATED:END -->

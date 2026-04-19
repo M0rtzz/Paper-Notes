@@ -112,3 +112,15 @@ MangaNinja 在所有指标上大幅领先，尤其 DINO 相似度（+6.12 vs Any
 - 实验充分度: ⭐⭐⭐⭐ 构建了专门的评测基准，消融实验充分，多种挑战场景展示完整
 - 写作质量: ⭐⭐⭐⭐ 图示丰富直观，方法讲解清晰
 - 价值: ⭐⭐⭐⭐⭐ 对动漫/漫画产业有直接实用价值，多参考图和跨角色上色功能开拓了新应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+- [Free-viewpoint Human Animation with Pose-correlated Reference Selection](free-viewpoint_human_animation_with_pose-correlated_reference_selection.md)
+- [InsightEdit: Towards Better Instruction Following for Image Editing](insightedit_towards_better_instruction_following_for_image_editing.md)
+- [CompleteMe: Reference-based Human Image Completion](../../ICCV2025/image_generation/completeme_reference-based_human_image_completion.md)
+- [Precise Object and Effect Removal with Adaptive Target-Aware Attention](../../CVPR2026/image_generation/precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+
+<!-- RELATED:END -->

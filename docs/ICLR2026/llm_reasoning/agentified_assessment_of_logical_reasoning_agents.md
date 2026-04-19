@@ -114,3 +114,15 @@ Agentified Agent Assessment (AAA) = Assessor Agent(评估协议) + Agent Under T
 - 实验充分度: ⭐⭐ (单数据集、少对比方法、规模极小)
 - 写作质量: ⭐⭐⭐⭐ (清晰规范，问题定义精确)
 - 价值: ⭐⭐⭐ (评测agent化范式有启发性，数据清洗有实践价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Estimating the Empowerment of Language Model Agents](estimating_the_empowerment_of_language_model_agents.md)
+- [LogicReward: Incentivizing LLM Reasoning via Step-Wise Logical Supervision](logicreward_incentivizing_llm_reasoning_via_step-wise_logical_supervision.md)
+- [Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
+- [STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond](../../ACL2025/llm_reasoning/stricta_structured_reasoning_peer_review.md)
+- [Enhancing Retrieval Systems with Inference-Time Logical Reasoning](../../ACL2025/llm_reasoning/enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)
+
+<!-- RELATED:END -->

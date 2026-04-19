@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验非常完整，覆盖两种 MLLM、多种聚类方法、不同数据规模
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述完整，图示直观
 - 价值: ⭐⭐⭐⭐ 对行人 ReID 领域的数据构建有重要参考价值，思路可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification](../../AAAI2026/autonomous_driving/hierarchical_prompt_learning_for_image-_and_text-based_person_re-identification.md)
+- [GSAlign: Geometric and Semantic Alignment Network for Aerial-Ground Person Re-Identification](../../NeurIPS2025/autonomous_driving/gsalign_geometric_and_semantic_alignment_network_for_aerial-ground_person_re-ide.md)
+- [Certified Human Trajectory Prediction](certified_human_trajectory_prediction.md)
+- [LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation](lidar-rt_gaussian-based_ray_tracing_for_dynamic_lidar_re-simulation.md)
+- [Multi-modal Knowledge Distillation-based Human Trajectory Forecasting](multi-modal_knowledge_distillation-based_human_trajectory_forecasting.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ tags:
 ⭐⭐⭐⭐
 
 **推荐理由**：首次为VLM污染检测提供了可靠、实用、一致的解决方案。核心洞察——必须扰动图像语义而非仅扰动文本——简单但深刻。实验设计的系统性和全面性是该领域同类工作中最好的，为后续VLM评估可信度研究奠定了基础。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [Steering and Rectifying Latent Representation Manifolds in Frozen Multi-Modal LLMs for Video Anomaly Detection](steering_and_rectifying_latent_representation_manifolds_in_frozen_multi-modal_ll.md)
+- [UniMMAD: Unified Multi-Modal and Multi-Class Anomaly Detection via MoE-Driven Feature Decompression](../../CVPR2026/multimodal_vlm/unimmad_multimodal_moe_anomaly_detection.md)
+- [Multi-Agent VLMs Guided Self-Training with PNU Loss for Low-Resource Offensive Content Detection](../../AAAI2026/multimodal_vlm/multi-agent_vlms_guided_self-training_with_pnu_loss_for_low-resource_offensive_c.md)
+- [DASH: Detection and Assessment of Systematic Hallucinations of VLMs](../../ICCV2025/multimodal_vlm/dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)
+
+<!-- RELATED:END -->

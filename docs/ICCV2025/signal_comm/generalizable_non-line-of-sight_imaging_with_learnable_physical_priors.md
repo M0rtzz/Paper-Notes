@@ -153,3 +153,15 @@ $$\mathcal{L} = \mathcal{L_I}(I, \hat{I}) + \lambda \mathcal{L_D}(D, \hat{D})$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 合成+公开真实+自采真实数据全面验证，多种SNR条件下的泛化测试
 - **写作质量**: ⭐⭐⭐⭐ — 物理公式推导清晰，方法动机论述充分
 - **价值**: ⭐⭐⭐⭐ — 显著提升NLOS成像的泛化能力和实用性，对低SNR场景尤其有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimizing Illuminant Estimation in Dual-Exposure HDR Imaging](../../ECCV2024/signal_comm/optimizing_illuminant_estimation_in_dual-exposure_hdr_imaging.md)
+- [Boosting Multimodal Learning via Disentangled Gradient Learning](boosting_multimodal_learning_via_disentangled_gradient_learning.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](../../NeurIPS2025/signal_comm/multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/signal_comm/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [DiTASK: Multi-Task Fine-Tuning with Diffeomorphic Transformations](../../CVPR2025/signal_comm/ditask_multi-task_fine-tuning_with_diffeomorphic_transformations.md)
+
+<!-- RELATED:END -->

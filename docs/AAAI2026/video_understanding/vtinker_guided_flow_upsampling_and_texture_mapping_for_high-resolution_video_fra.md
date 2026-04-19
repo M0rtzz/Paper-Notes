@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多分辨率（720p/1080p/2K/4K）多数据集全面评测，消融充分，视觉对比清晰
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，方法流程图清晰，消融实验设计合理
 - 价值: ⭐⭐⭐⭐ 对高分辨率 VFI 的实际应用有显著意义，代码开源增加了可复现性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](../../ICCV2025/video_understanding/memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map](../../ECCV2024/video_understanding/iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex.md)
+- [Q-Frame: Query-aware Frame Selection and Multi-Resolution Adaptation for Video-LLMs](../../ICCV2025/video_understanding/q-frame_query-aware_frame_selection_and_multi-resolution_adaptation_for_video-ll.md)
+- [AllTracker: Efficient Dense Point Tracking at High Resolution](../../ICCV2025/video_understanding/alltracker_efficient_dense_point_tracking_at_high_resolution.md)
+- [UniINR: Event-guided Unified Rolling Shutter Correction, Deblurring, and Interpolation](../../ECCV2024/video_understanding/uniinr_event-guided_unified_rolling_shutter_correction_deblurring_and_interpolat.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ SCORE 由三个分支构成：(1) 上下文分支（蓝）——使用遥感 CLI
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多数据集训练/评估、详尽消融（组件/VLM选择/上下文类型/注入方式/OV分类）
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，图 1 的船/车区分示例直观有力
 - **价值**: ⭐⭐⭐⭐ 为遥感 OV 分割奠定基础，但受限于遥感 CLIP 泛化能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LeGrad: An Explainability Method for Vision Transformers via Feature Formation Sensitivity](legrad_an_explainability_method_for_vision_transformers_via_feature_formation_se.md)
+- [Stepping Out of Similar Semantic Space for Open-Vocabulary Segmentation](stepping_out_of_similar_semantic_space_for_open-vocabulary_segmentation.md)
+- [Training-Free Class Purification for Open-Vocabulary Semantic Segmentation](training-free_class_purification_for_open-vocabulary_semantic_segmentation.md)
+- [CAVIS: Context-Aware Video Instance Segmentation](cavis_context-aware_video_instance_segmentation.md)
+- [SPADE: Spatial-Aware Denoising Network for Open-vocabulary Panoptic Scene Graph Generation](spade_spatial-aware_denoising_network_for_open-vocabulary_panoptic_scene_graph_g.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、两种范式、CFG 实验；但分辨率和模型规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条非常清晰：发现→分析→解释→干预，叙述引人入胜
 - 价值: ⭐⭐⭐⭐ 对理解 AI 时代数据生态的"死亡螺旋"有重要启示，但实验规模限制了直接实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](../../ICML2025/image_generation/gram_a_generative_foundation_reward_model_for_reward_generalization.md)
+- [Towards a Mechanistic Explanation of Diffusion Model Generalization](../../ICML2025/image_generation/towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [Model Immunization from a Condition Number Perspective](../../ICML2025/image_generation/model_immunization_from_a_condition_number_perspective.md)
+- [Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
+- [Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs](../../ICLR2026/image_generation/model_collapse_is_not_a_bug_but_a_feature_in_machine_unlearning_for_llms.md)
+
+<!-- RELATED:END -->

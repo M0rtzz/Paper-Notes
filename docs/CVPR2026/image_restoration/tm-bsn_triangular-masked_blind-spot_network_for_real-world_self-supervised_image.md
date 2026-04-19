@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ SIDD + DND 标准基准全面评估，包含详细消融和复杂度分析，但数据集种类偏少
 - 写作质量: ⭐⭐⭐⭐⭐ 从噪声物理成因到架构设计的推导链条清晰完整，图示直观
 - 价值: ⭐⭐⭐⭐ 在自监督去噪领域达到新 SOTA，实用性强，思路对其他需要利用噪声结构先验的任务有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Asymmetric Mask Scheme for Self-supervised Real Image Denoising](../../ECCV2024/image_restoration/asymmetric_mask_scheme_for_self-supervised_real_image_denoising.md)
+- [Blind2Sound: Self-Supervised Image Denoising without Residual Noise](../../ICCV2025/image_restoration/blind2sound_self-supervised_image_denoising_without_residual_noise.md)
+- [Self-Calibrated Variance-Stabilizing Transformations for Real-World Image Denoising](../../ICCV2025/image_restoration/self-calibrated_variance-stabilizing_transformations_for_real-world_image_denois.md)
+- [Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration](beyond_ground-truth_leveraging_image_quality_priors_for_real-world_image_restora.md)
+- [Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset](toward_real-world_infrared_image_super-resolution_a_unified_autoregressive_frame.md)
+
+<!-- RELATED:END -->

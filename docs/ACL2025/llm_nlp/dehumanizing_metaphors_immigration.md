@@ -137,3 +137,15 @@ tags:
 - **技术深度**: ⭐⭐⭐ — 方法简洁有效但技术挑战有限，无模型训练，组合策略（直接加法）较简单
 - **实验充分度**: ⭐⭐⭐⭐ — 三种 LLM × 两种提示 × 有无 SBERT 全面对比，众包评估集设计合理，回归分析控制了多种混淆变量
 - **实用价值**: ⭐⭐⭐⭐⭐ — 方法无需标注即可迁移，代码开源，对计算社会科学和政治话语分析有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues](enhancing_spoken_discourse_modeling_in_language_models_using_gestural_cues.md)
+- [Is It JUST Semantics? A Case Study of Discourse Particle Understanding in LLMs](is_it_just_semantics_a_case_study_of_discourse_particle_understanding_in_llms.md)
+- [Identifying and Analyzing Performance-Critical Tokens in Large Language Models](../../AAAI2026/llm_nlp/identifying_and_analyzing_performance-critical_tokens_in_large_language_models.md)
+- [Open-Set Living Need Prediction with Large Language Models](open-set_living_need_prediction_with_large_language_models.md)
+
+<!-- RELATED:END -->

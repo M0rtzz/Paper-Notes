@@ -118,3 +118,15 @@ ConMo 通过解耦-重组范式解锁了多种应用，值得展开说明：
 - 实验充分度: ⭐⭐⭐⭐ 定性对比丰富，消融实验系统，但数据集规模偏小，定量指标较少
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示丰富直观，但符号系统略显复杂
 - 价值: ⭐⭐⭐⭐ 开辟了多主体精细运动控制的方向，应用前景广，但受限于当前T2V模型的整体质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DisMo: Disentangled Motion Representations for Open-World Motion Transfer](../../NeurIPS2025/video_generation/dismo_disentangled_motion_representations_for_openworld_moti.md)
+- [Let Your Image Move with Your Motion! – Implicit Multi-Object Multi-Motion Transfer](../../CVPR2026/video_generation/let_your_image_move_with_your_motion_--_implicit_multi-object_multi-motion_trans.md)
+- [Motion Prompting: Controlling Video Generation with Motion Trajectories](motion_prompting_controlling_video_generation_with_motion_trajectories.md)
+- [Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer](../../ICCV2025/video_generation/decouple_and_track_benchmarking_and_improving_video_diffusion_transformers_for_m.md)
+- [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](../../ICCV2025/video_generation/motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
+
+<!-- RELATED:END -->

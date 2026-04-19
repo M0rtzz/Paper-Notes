@@ -152,3 +152,15 @@ CalibRAG 使用通用域数据训练，但在医学领域（unseen 检索器 + O
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多数据集、多检索器、多领域，消融实验完整
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，数学形式化规范，但部分符号较密
 - 价值: ⭐⭐⭐⭐ 对 RAG 系统的可靠性提升有实际价值，适用于高风险决策场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Retrieval-Augmented Generation for Reliable Interpretation of Radio Regulations](retrieval-augmented_generation_for_reliable_interpretation_of_radio_regulations.md)
+- [Chain-of-Retrieval Augmented Generation (CoRAG)](chain-of-retrieval_augmented_generation.md)
+- [Controllable and Reliable Knowledge-Intensive Task-Oriented Conversational Agents with Declarative Genie Worksheets](../../ACL2025/information_retrieval/genie_worksheets_tod_agent.md)
+- [Cooperative Retrieval-Augmented Generation for Question Answering: Mutual Information Exchange and Ranking by Contrasting Layers](cooperative_retrieval-augmented_generation_for_question_answering_mutual_informa.md)
+- [Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

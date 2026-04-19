@@ -163,3 +163,15 @@ $$b_i(h,w) = F_{\text{merge}}(\{b_i^n(h,w) \mid n \in 1, \ldots, M\})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 超分辨率 5 个基准 + 压缩 3 个基准 + 多帧压缩 + 充分的消融实验
 - 写作质量: ⭐⭐⭐⭐ 从 Fourier 变换到 Factorized Features 的推导清晰有说服力
 - 价值: ⭐⭐⭐⭐ 即插即用地提升多个现有 SR 模型，压缩上大幅超越 VTM，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [Audio Super-Resolution with Latent Bridge Models](audio_super-resolution_with_latent_bridge_models.md)
+- [Augmenting Perceptual Super-Resolution via Image Quality Predictors](../../CVPR2025/image_restoration/augmenting_perceptual_super-resolution_via_image_quality_predictors.md)
+- [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
+- [Spiking Meets Attention: Efficient Remote Sensing Image Super-Resolution with Attention Spiking Neural Networks](spiking_meets_attention_efficient_remote_sensing_image_super-resolution_with_att.md)
+
+<!-- RELATED:END -->

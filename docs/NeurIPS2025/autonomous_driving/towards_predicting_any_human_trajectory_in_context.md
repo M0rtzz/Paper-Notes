@@ -118,3 +118,15 @@ TrajICL 为边缘设备上的轨迹预测提供了一种新范式：用合成数
 - 实验充分度: ⭐⭐⭐⭐⭐ （6 个数据集、多种微调方法对比、丰富消融）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，动机阐述充分）
 - 价值: ⭐⭐⭐⭐ （对边缘部署场景有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Certified Human Trajectory Prediction](../../CVPR2025/autonomous_driving/certified_human_trajectory_prediction.md)
+- [Multi-modal Knowledge Distillation-based Human Trajectory Forecasting](../../CVPR2025/autonomous_driving/multi-modal_knowledge_distillation-based_human_trajectory_forecasting.md)
+- [OpenBox: Annotate Any Bounding Boxes in 3D](openbox_annotate_any_bounding_boxes_in_3d.md)
+- [LabelAny3D: Label Any Object 3D in the Wild](labelany3d_label_any_object_3d_in_the_wild.md)
+- [Adaptive Human Trajectory Prediction via Latent Corridors](../../ECCV2024/autonomous_driving/adaptive_human_trajectory_prediction_via_latent_corridors.md)
+
+<!-- RELATED:END -->

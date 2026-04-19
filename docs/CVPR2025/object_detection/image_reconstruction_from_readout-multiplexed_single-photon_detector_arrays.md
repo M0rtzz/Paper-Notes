@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仿真全面但缺少真实硬件实验
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，图表直观
 - 价值: ⭐⭐⭐⭐ 对大规模单光子探测器阵列的实际应用有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Discrepancy-aware Detector for Image Forgery Identification](../../ICCV2025/object_detection/semantic_discrepancy-aware_detector_for_image_forgery_identification.md)
+- [PandaPose: 3D Human Pose Lifting from a Single Image via Propagating 2D Pose Prior to 3D Anchor Space](../../NeurIPS2025/object_detection/pandapose_3d_human_pose_lifting_from_a_single_image_via_propagating_2d_pose_prio.md)
+- [Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](../../NeurIPS2025/object_detection/dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+- [All You Need is One: Capsule Prompt Tuning with a Single Vector](../../NeurIPS2025/object_detection/all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
+
+<!-- RELATED:END -->

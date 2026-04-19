@@ -112,3 +112,15 @@ SFC 的梯度被 detach，仅作为加权系数，不参与反向传播。
 ## 评分
 
 ⭐⭐⭐⭐ — 问题识别深刻，SFD 和 SFC 的设计优雅。实验设计（跨分布泛化矩阵）系统全面。但技术方案本质是加权重采样，方法层面的创新幅度中等。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniGaze: Reward-inspired Generalizable Gaze Estimation in the Wild](../../NeurIPS2025/multimodal_vlm/omnigaze_reward-inspired_generalizable_gaze_estimation_in_the_wild.md)
+- [Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)
+- [ELEMENTAL: Interactive Learning from Demonstrations and Vision-Language Models for Reward Design in Robotics](elemental_interactive_learning_from_demonstrations_and_vision-language_models_fo.md)
+- [InternLM-XComposer2.5-Reward: A Simple Yet Effective Multi-Modal Reward Model](../../ACL2025/multimodal_vlm/internlm-xcomposer25-reward_a_simple_yet_effective_multi-modal_reward_model.md)
+- [Multimodal LLMs as Customized Reward Models for Text-to-Image Generation](../../ICCV2025/multimodal_vlm/multimodal_llms_as_customized_reward_models_for_text-to-image_generation.md)
+
+<!-- RELATED:END -->

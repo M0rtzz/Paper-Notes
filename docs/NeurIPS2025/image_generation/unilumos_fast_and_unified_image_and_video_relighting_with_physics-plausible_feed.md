@@ -126,3 +126,15 @@ $$\mathcal{L} = \lambda_0 \mathcal{L}_0 + \lambda_1 \mathcal{L}_{\text{fast}} + 
 - **实验充分度**: ⭐⭐⭐⭐⭐ 涵盖图像和视频、多种基线、完整消融和效率分析，还提出了新的评估基准
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，问题阐述到位，但部分公式细节可更精简
 - **价值**: ⭐⭐⭐⭐ 20倍加速和显著质量提升对实际应用有重要意义，新benchmark有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Physics-Driven Spatiotemporal Modeling for AI-Generated Video Detection](physics-driven_spatiotemporal_modeling_for_ai-generated_video_detection.md)
+- [GenIR: Generative Visual Feedback for Mental Image Retrieval](genir_generative_visual_feedback_for_mental_image_retrieval.md)
+- [PI-Light: Physics-Inspired Diffusion for Full-Image Relighting](../../ICLR2026/image_generation/pi-light_physics-inspired_diffusion_for_full-image_relighting.md)
+- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
+- [Show-o2: Improved Native Unified Multimodal Models](show-o2_improved_native_unified_multimodal_models.md)
+
+<!-- RELATED:END -->

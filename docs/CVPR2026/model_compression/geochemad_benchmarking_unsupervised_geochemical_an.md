@@ -88,3 +88,15 @@ GeoChemFormer 在 8 个子集中的 6 个上达到最优，sed2 上 IF 和 OSVM 
 - 实验充分度: ⭐⭐⭐⭐⭐ (12种基线×8子集×多种预处理策略的系统对比)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，数据集描述详尽)
 - 价值: ⭐⭐⭐ (跨领域应用，对 CV 社区直接价值有限但数据集贡献显著)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [CHEEM: Continual Learning by Reuse, New, Adapt and Skip -- A Hierarchical Exploration-Exploitation Approach](cheem_continual_learning_by_reuse_new_adapt_and_skip_--_a_hierarchical_explorati.md)
+- [MINE-JEPA: In-Domain Self-Supervised Learning for Mineral Exploration](mine-jepa_in-domain_self-supervised_learning_for_mine-like_object_classification.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [DAGE: Dual-Stream Architecture for Efficient and Fine-Grained Geometry Estimation](dage_dual-stream_architecture_for_efficient_and_fine-grained_geometry_estimation.md)
+
+<!-- RELATED:END -->

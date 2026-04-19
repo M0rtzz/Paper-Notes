@@ -177,3 +177,15 @@ $$\tilde{H}_{sub}^{-1} \approx \text{diag}(\tilde{F}_{sub})^{-1}$$
 - **实验**：⭐⭐⭐⭐ — RNA+蛋白质双模态验证，多种下游任务全面评估
 - **写作**：⭐⭐⭐⭐ — 理论推导清晰，实验呈现规范
 - **实用性**：⭐⭐⭐⭐⭐ — 直接降低 BioFMs 的预训练成本，对计算资源受限的研究组有巨大价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [G2L: From Giga-Scale to Cancer-Specific Large-Scale Pathology Foundation Models via Efficient Fine-Tuning](g2lfrom_giga-scale_to_cancer-specific_large-scale_pathology_foundation_models_vi.md)
+- [Personalization of Large Foundation Models for Health Interventions](personalization_of_large_foundation_models_for_health_interventions.md)
+- [Foundation Models for Clinical Records at Health System Scale](../../ICML2025/medical_imaging/foundation_models_for_clinical_records_at_health_system_scale.md)
+- [From Token to Rhythm: A Multi-Scale Approach for ECG-Language Pretraining](../../ICML2025/medical_imaging/from_token_to_rhythm_a_multi-scale_approach_for_ecg-language_pretraining.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+
+<!-- RELATED:END -->

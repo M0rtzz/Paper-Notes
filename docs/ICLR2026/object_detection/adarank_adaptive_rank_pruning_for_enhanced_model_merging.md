@@ -115,3 +115,15 @@ $$\arg\min_B \sum_{i=1}^T \sum_{x_i \in \mathcal{D}_i} H_i(f(\theta(B), x_i))$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 视觉+NLP，多backbone，8/20任务，消融充分
 - 写作质量: ⭐⭐⭐⭐ 分析清晰，动机图示直观
 - 价值: ⭐⭐⭐⭐ 模型合并领域实用且通用的方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](../../CVPR2025/object_detection/efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
+- [Traceable Evidence Enhanced Visual Grounded Reasoning: Evaluation and Method](traceable_evidence_enhanced_visual_grounded_reasoning_evaluation_and_methodology.md)
+- [Test-Time Adaptive Object Detection with Foundation Model](../../NeurIPS2025/object_detection/test-time_adaptive_object_detection_with_foundation_model.md)
+- [Thinking in Latents: Adaptive Anchor Refinement for Implicit Reasoning in LLMs](thinking_in_latents_adaptive_anchor_refinement_for_implicit_reasoning_in_llms.md)
+- [SAGE: Spatial-visual Adaptive Graph Exploration for Efficient Visual Place Recognition](sage_spatial-visual_adaptive_graph_exploration_for_efficient_visual_place_recogn.md)
+
+<!-- RELATED:END -->

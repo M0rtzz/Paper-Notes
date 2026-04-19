@@ -136,3 +136,15 @@ ObCLIP 的两个核心组件构成完整流程：
 - **实验充分度**: ⭐⭐⭐⭐ 多模型多数据集验证全面，延迟和 FLOPs 都有详细比较
 - **写作质量**: ⭐⭐⭐⭐ 问题动机清晰，两个研究问题的实证回答结构化
 - **价值**: ⭐⭐⭐⭐ 解决了实际的隐私-效率-质量三角困境，对图像生成服务有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Meets Diffusion: A Hybrid Framework for Crystal Material Generation](llm_meets_diffusion_a_hybrid_framework_for_crystal_material_generation.md)
+- [Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models](perturb_a_model_not_an_image_towards_robust_privacy_protection_via_anti-personal.md)
+- [Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation](vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)
+- [VIGFace: Virtual Identity Generation for Privacy-Free Face Recognition Dataset](../../ICCV2025/image_generation/vigface_virtual_identity_generation_for_privacy-free_face_recognition_dataset.md)
+- [EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation](../../CVPR2026/image_generation/edgedit_hardware-aware_diffusion_transformers_for_efficient_on-device_image_gene.md)
+
+<!-- RELATED:END -->

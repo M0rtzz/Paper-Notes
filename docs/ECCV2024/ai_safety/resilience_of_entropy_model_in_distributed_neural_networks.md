@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 多架构多熵模型多参数的 ablation 覆盖全面，且考虑了自适应攻击
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，可视化分析（bit rate map / TV map / 空间对比图）直观有力
 - 价值: ⭐⭐⭐⭐ — 揭示被忽视的安全问题，防御方案实用且可组合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
+- [Robust Spiking Neural Networks Against Adversarial Attacks](../../ICLR2026/ai_safety/robust_spiking_neural_networks_against_adversarial_attacks.md)
+- [Solving Probabilistic Verification Problems of Neural Networks Using Branch and Bound](../../ICML2025/ai_safety/solving_probabilistic_verification_problems_of_neural_networks_using_branch_and_.md)
+- [CLIP-Guided Generative Networks for Transferable Targeted Adversarial Attacks](clip-guided_generative_networks_for_transferable_targeted_adversarial_attacks.md)
+- [ATEX-CF: Attack-Informed Counterfactual Explanations for Graph Neural Networks](../../ICLR2026/ai_safety/atex-cf_attack-informed_counterfactual_explanations_for_graph_neural_networks.md)
+
+<!-- RELATED:END -->

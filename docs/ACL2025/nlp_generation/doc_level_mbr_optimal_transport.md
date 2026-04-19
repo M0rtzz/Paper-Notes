@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个任务（机器翻译/文本简化/密集图像描述）+多种 OT 变体+多种效用函数对比+WMT系统级相关性验证，但缺少人工评估
 - 写作质量: ⭐⭐⭐⭐⭐ 数学形式化严谨，直觉解释清晰（Figure 1 的句子分裂示例解释了 WD 优于 LA 的原因），LA→WD→EWD 的递进自然
 - 价值: ⭐⭐⭐⭐ 为文档级文本生成的解码和评估提供了通用工具——随着句子级指标的进步（如 MetricX），MBR-OT 的效果也会自动提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation](cocolex_legal_text_gen.md)
+- [Multi-document Summarization through Multi-document Event Relation Graph Reasoning in LLMs](event_graph_bias_mitigation_summarization.md)
+- [A Representation Level Analysis of NMT Model Robustness to Grammatical Errors](a_representation_level_analysis_of_nmt_model_robustness_to_grammatical_errors.md)
+- [Context-Aware Hierarchical Merging for Long Document Summarization](context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+
+<!-- RELATED:END -->

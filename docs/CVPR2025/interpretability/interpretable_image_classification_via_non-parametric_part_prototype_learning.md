@@ -114,3 +114,15 @@ Prototypical Part Networks（ProtoPNet）通过学习代表物体部件的原型
 - 实验充分度: ⭐⭐⭐⭐ 消融全面，引入了新的定量指标，但数据集限于细粒度分类（3个）
 - 写作质量: ⭐⭐⭐⭐ 方法描述清楚，但阶段一和阶段二的衔接可以更紧凑
 - 价值: ⭐⭐⭐⭐ 在可解释性上有显著突破（独特性+12%），对可解释AI社区有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Does It Look There? Structured Explanations for Image Classification](why_does_it_look_there_structured_explanations_for_image_classification.md)
+- [CHiQPM: Calibrated Hierarchical Interpretable Image Classification](../../NeurIPS2025/interpretability/chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
+- [DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](../../CVPR2026/interpretability/dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [Differentiable Inverse Rendering with Interpretable Basis BRDFs](differentiable_inverse_rendering_with_interpretable_basis_brdfs.md)
+
+<!-- RELATED:END -->

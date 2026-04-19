@@ -119,3 +119,15 @@ $$\frac{\|\hat{\Lambda}_{\mathbf{L}_t} - \text{diag}(\hat{\Lambda}_{\mathbf{L}_t
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了AlgoPerf工作负载、多种模型架构，消融详细
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导循序渐进，实验验证与理论预测对应清晰
 - 价值: ⭐⭐⭐⭐⭐ 对理解和改进Shampoo类优化器有重要推动作用，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Average-Iterate to Last-Iterate Convergence in Games: A Reduction and Its Applications](from_average-iterate_to_last-iterate_convergence_in_games_a_reduction_and_its_ap.md)
+- [Evaluating LLMs for Combinatorial Optimization: One-Phase and Two-Phase Heuristics for 2D Bin-Packing](evaluating_llms_for_combinatorial_optimization_one-phase_and_two-phase_heuristic.md)
+- [Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization](../../AAAI2026/optimization/pareto-grid-guided_large_language_models_for_fast_and_high-quality_heuristics_de.md)
+- [MAR-FL: A Communication Efficient Peer-to-Peer Federated Learning System](mar-fl_a_communication_efficient_peer-to-peer_federated_learning_system.md)
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+
+<!-- RELATED:END -->

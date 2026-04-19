@@ -155,3 +155,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三项实验设计严谨，但模型覆盖有限（4个）
 - 写作质量: ⭐⭐⭐⭐⭐ 引言精彩，论证逻辑清晰，结论坦诚（混合证据不过度解读）
 - 价值: ⭐⭐⭐⭐⭐ 对"LLM是否真正理解世界"这一核心问题提供了方法论和实证贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling](autotom_scaling_model-based_mental_inference_via_automated_agent_modeling.md)
+- [Chain of World: World Model Thinking in Latent Motion (CoWVLA)](../../CVPR2026/robotics/chain_of_world_world_model_thinking_in_latent_motion.md)
+- [C-NAV: Towards Self-Evolving Continual Object Navigation in Open World](c-nav_towards_self-evolving_continual_object_navigation_in_open_world.md)
+- [UniDomain: Pretraining a Unified PDDL Domain from Real-World Demonstrations for Generalizable Task Planning](pretraining_a_unified_pddl_domain_from_real-world_demonstrations_for_generalizab.md)
+- [Rethinking the Simulation vs. Rendering Dichotomy: No Free Lunch in Spatial World Modelling](rethinking_the_simulation_vs_rendering_dichotomy_no_free_lunch_in_spatial_world_.md)
+
+<!-- RELATED:END -->

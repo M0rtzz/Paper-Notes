@@ -121,3 +121,15 @@ $$\hat{p}^{(i)} = \sum_{k \in K_i} \alpha_k \, p_k$$
 - 实验充分度：⭐⭐⭐☆☆ — 仅一个数据集，缺乏消融实验深度
 - 写作质量：⭐⭐⭐⭐☆ — 方法叙述清晰，公式推导严谨
 - 价值：⭐⭐⭐⭐☆ — 为临床时间序列分类提供了兼顾性能和可解释性的实用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thompson Sampling via Fine-Tuning of LLMs](../../ICLR2026/medical_imaging/thompson_sampling_via_fine-tuning_of_llms.md)
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](../../AAAI2026/medical_imaging/fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
+- [Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity](scaling_laws_and_pathologies_of_single-layer_pinns_network_width_and_pde_nonline.md)
+- [Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis](scalable_diffusion_transformer_for_conditional_4d_fmri_synthesis.md)
+
+<!-- RELATED:END -->

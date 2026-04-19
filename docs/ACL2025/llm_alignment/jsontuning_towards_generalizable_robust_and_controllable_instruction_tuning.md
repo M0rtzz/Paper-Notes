@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型 × 6 类任务 × 泛化/鲁棒/可控三维度评估，对比非常全面
 - 写作质量: ⭐⭐⭐⭐ 对比设置公平清晰，案例直观
 - 价值: ⭐⭐⭐⭐ 即插即用的数据格式改进，与行业趋势一致，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Table Instruction Tuning](rethinking_table_instruction_tuning.md)
+- [Measuring Data Diversity for Instruction Tuning: A Systematic Analysis and A Reliable Metric](measuring_data_diversity_for_instruction_tuning_a_systematic_analysis_and_a_reli.md)
+- [Call for Rigor in Reporting Quality of Instruction Tuning Data](call_for_rigor_in_reporting_quality_of_instruction_tuning_data.md)
+- [Upcycling Instruction Tuning from Dense to Mixture-of-Experts via Parameter Merging](upcycling_instruction_tuning_from_dense_to_mixture-of-experts_via_parameter_merg.md)
+- [RPO: Retrieval Preference Optimization for Robust Retrieval-Augmented Generation](rpo_retrieval_preference_optimization_for_robust_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

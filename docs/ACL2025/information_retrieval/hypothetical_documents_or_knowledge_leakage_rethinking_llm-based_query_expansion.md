@@ -147,3 +147,15 @@ HyDE 假设生成的假设性文档即使有事实错误也能辅助检索。本
 - **实验充分度**: ⭐⭐⭐⭐ — 7 个 LLM × 3 个数据集 × 2 种方法的全面覆盖，统计检验严格
 - **写作质量**: ⭐⭐⭐⭐ — 问题阐述清晰，实验逻辑严密，Discussion 深入
 - **价值**: ⭐⭐⭐⭐ — 对 IR 社区有重要警示意义，推动更严格的 benchmark 评估标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LightRetriever: A LLM-based Text Retrieval Architecture with Extremely Faster Query Inference](../../ICLR2026/information_retrieval/lightretriever_a_llm-based_text_retrieval_architecture_with_extremely_faster_que.md)
+- [VDocRAG: Retrieval-Augmented Generation over Visually-Rich Documents](../../CVPR2025/information_retrieval/vdocrag_retrieval-augmented_generation_over_visually-rich_documents.md)
+- [Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
+- [Rethinking Addressing in Language Models via Contextualized Equivariant Positional Encoding](../../ICML2025/information_retrieval/rethinking_addressing_in_language_models_via_contexualized_equivariant_positiona.md)
+- [Health-LLM: Personalized Retrieval-Augmented Disease Prediction System](health-llm_personalized_retrieval-augmented_disease_prediction_system.md)
+
+<!-- RELATED:END -->

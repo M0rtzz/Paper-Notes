@@ -120,3 +120,15 @@ LG（逻辑泛化）指标：MEMIT 从 18.6% → 58.7%（**+40.1%**），FT 从 
 - 实验充分度: ⭐⭐⭐⭐ 多种编辑方法×两个模型，消融和数据集变体分析充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，例子直观，框架图表现力强
 - 价值: ⭐⭐⭐⭐ 知识编辑的逻辑泛化是真实痛点，40+%的提升很显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToxEdit: Adaptive Detoxification Safeguarding General Capabilities of LLMs through Toxicity-Aware Knowledge Editing](adaptive_detoxification_safeguarding_general_capabilities_of_llms_through_toxici.md)
+- [Memorizing is Not Enough: Deep Knowledge Injection Through Reasoning](memorizing_is_not_enough_deep_knowledge_injection_through_reasoning.md)
+- [Mitigating Negative Interference in Multilingual Sequential Knowledge Editing through Null-Space Constraints](mitigating_negative_interference_in_multilingual_sequential_knowledge_editing_th.md)
+- [CompKe: Complex Question Answering under Knowledge Editing](compke_complex_question_answering_under_knowledge_editing.md)
+- [Attribution-Guided Model Rectification of Unreliable Neural Network Behaviors](../../CVPR2026/knowledge_editing/attribution-guided_model_rectification_of_unreliable_neural_network_behaviors.md)
+
+<!-- RELATED:END -->

@@ -197,3 +197,15 @@ HEGNN的训练采用标准图学习流程：
 - **实验充分度**: ⭐⭐⭐ — 实验展示了可行性但规模较小
 - **实用性**: ⭐⭐⭐ — 理论贡献巨大，实际应用受计算限制
 - **总体**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Over-squashing in Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Enhancing Logical Expressiveness in GNNs via Path-Neighbor Aggregation](../../AAAI2026/graph_learning/enhancing_logical_expressiveness_in_graph_neural_networks_via_path-neighbor_aggr.md)
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+- [Graph Neural Networks for Interferometer Simulations](graph_neural_networks_for_interferometer_simulations.md)
+
+<!-- RELATED:END -->

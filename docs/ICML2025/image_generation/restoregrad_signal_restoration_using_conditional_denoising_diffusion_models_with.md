@@ -157,3 +157,15 @@ Posterior Net 对稳定训练和提升性能至关重要。
 - 实验充分度: ⭐⭐⭐⭐ — 跨模态验证 + 丰富消融 + OOD 泛化测试
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ — 即插即用地加速现有条件 DDPM，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](../../CVPR2025/image_generation/hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+- [Navigating Image Restoration with VAR's Distribution Alignment Prior](../../CVPR2025/image_generation/navigating_image_restoration_with_vars_distribution_alignment_prior.md)
+- [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
+- [DIIP: Diffusion Image Prior](../../ICCV2025/image_generation/diffusion_image_prior.md)
+- [MoFRR: Mixture of Diffusion Models for Face Retouching Restoration](../../ICCV2025/image_generation/mofrr_mixture_of_diffusion_models_for_face_retouching_restoration.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ LLP 数据集上的帧级 F1（%）：
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、详细消融、伪标签质量分析
 - 写作质量: ⭐⭐⭐⭐ 方法逐步展开，逻辑清晰
 - 价值: ⭐⭐⭐ 刷新了 LLP 数据集的 SOTA，但novelty有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing](../../ICCV2025/audio_speech/mug_pseudo_labeling_augmented_audio-visual_mamba_network_for_audio-visual_video_.md)
+- [CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing](../../ECCV2024/audio_speech/coleaf_a_contrastive-collaborative_learning_framework_for_weakly_supervised_audi.md)
+- [Towards Open-Vocabulary Audio-Visual Event Localization](towards_open-vocabulary_audio-visual_event_localization.md)
+- [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
+- [Crab: A Unified Audio-Visual Scene Understanding Model with Explicit Cooperation](crab_a_unified_audio-visual_scene_understanding_model_with_explicit_cooperation.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ MINERVA-Cultural 由两部分组成：(1) 基准数据集——540 个视频、2
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型、18 个地区、多维度分析（音频/帧数/思考预算/错误类型）、人类基准
 - 写作质量: ⭐⭐⭐⭐⭐ 动机充分，标注流程描述详尽，分析深入且有洞察力
 - 价值: ⭐⭐⭐⭐⭐ 暴露了 AI 系统的文化偏见，定义了模型改进的关键方向，对公平 AI 和全球化部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
+- [A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a_multi-agent_perception-action_alliance_for_efficient_long_video_reasoning.md)
+- [MovieRecapsQA: A Multimodal Open-Ended Video Question-Answering Benchmark](movierecapsqa_a_multimodal_open-ended_video_question-answering_benchmark.md)
+- [A4VL: A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a4vl_multiagent_long_video_reasoning.md)
+- [HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
+
+<!-- RELATED:END -->

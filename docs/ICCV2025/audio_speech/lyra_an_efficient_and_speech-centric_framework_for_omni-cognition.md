@@ -159,3 +159,15 @@ LMME 效率提升：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖视觉-语言、视觉-语音、语音-语言全面比较，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机论述有说服力
 - **价值**: ⭐⭐⭐⭐⭐ — 填补了语音中心全模态 MLLM 的空白，开源代码和数据集对社区有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [MemoryTalker: Personalized Speech-Driven 3D Facial Animation via Audio-Guided Stylization](memorytalker_personalized_speech-driven_3d_facial_animation_via_audio-guided_sty.md)
+- [2.5 Years in Class: A Multimodal Textbook for Vision-Language Pretraining](25_years_in_class_a_multimodal_textbook_for_visionlanguage_p.md)
+- [VGGSounder: Audio-Visual Evaluations for Foundation Models](vggsounder_audio-visual_evaluations_for_foundation_models.md)
+- [How Would It Sound? Material-Controlled Multimodal Acoustic Profile Generation for Objects](how_would_it_sound_material-controlled_multimodal_acoustic_profile_generation_fo.md)
+
+<!-- RELATED:END -->

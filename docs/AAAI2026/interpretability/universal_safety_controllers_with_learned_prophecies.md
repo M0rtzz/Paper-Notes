@@ -114,3 +114,15 @@ UCLearn 包含三个循环阶段：(1) 初始化——将安全 LTL 规范转为
 - 实验充分度: ⭐⭐⭐⭐ 多个基准测试覆盖可扩展性和适应性，但实际应用场景有限
 - 写作质量: ⭐⭐⭐⭐ 形式化定义清晰，算法伪代码完整，示例贯穿始终
 - 价值: ⭐⭐⭐⭐ 在形式化方法/控制合成领域有重要理论和实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal Properties of Activation Sparsity in Modern Large Language Models](../../ICLR2026/interpretability/universal_properties_of_activation_sparsity_in_modern_large_language_models.md)
+- [GAVEL: Towards Rule-Based Safety through Activation Monitoring](../../ICLR2026/interpretability/gavel_towards_rule-based_safety_through_activation_monitoring.md)
+- [Safety is Not Only About Refusal: Reasoning-Enhanced Fine-tuning for Interpretable LLM Safety](../../ACL2025/interpretability/safety_is_not_only_about_refusal_reasoning-enhanced_fine-tuning_for_interpretabl.md)
+- [Beyond Linear Probes: Dynamic Safety Monitoring for Language Models](../../ICLR2026/interpretability/beyond_linear_probes_dynamic_safety_monitoring_for_language_models.md)
+- [SafeDrive: Fine-Grained Safety Reasoning for End-to-End Driving in a Sparse World](../../CVPR2026/interpretability/safedrive_fine-grained_safety_reasoning_for_end-to-end_driving_in_a_sparse_world.md)
+
+<!-- RELATED:END -->

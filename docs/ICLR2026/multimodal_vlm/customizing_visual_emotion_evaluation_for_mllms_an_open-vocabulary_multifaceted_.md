@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 评估了 19 个 MLLMs、5 种适配策略、25 名人类参与者，分析全面深入
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，心理学理论与技术方案结合自然，伦理讨论详尽
 - 价值: ⭐⭐⭐⭐ 为视觉情感评估提供了新范式，MVEI benchmark 和 INSETS-462k 语料对后续研究有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [O3SLM: Open Weight, Open Data, and Open Vocabulary Sketch-Language Model](../../AAAI2026/multimodal_vlm/o3slm_open_weight_open_data_and_open_vocabulary_sketch-language_model.md)
+- [Vision-Zero: Scalable VLM Self-Improvement via Strategic Gamified Self-Play](vision-zero_scalable_vlm_self-improvement_via_strategic_gamified_self-play.md)
+- [Sparsity Forcing: Reinforcing Token Sparsity of MLLMs](sparsity_forcing_reinforcing_token_sparsity_of_mllms.md)
+- [SophiaVL-R1: Reinforcing MLLMs Reasoning with Thinking Reward](sophiavl-r1_reinforcing_mllms_reasoning_with_thinking_reward.md)
+- [Breaking the Limits of Open-Weight CLIP: An Optimization Framework for Self-supervised Fine-tuning of CLIP](breaking_the_limits_of_open-weight_clip_an_optimization_framework_for_self-super.md)
+
+<!-- RELATED:END -->

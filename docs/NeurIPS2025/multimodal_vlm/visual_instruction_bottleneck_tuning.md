@@ -155,3 +155,15 @@ Vittle将干净-扰动样本的JSD从0.068降至0.047（降幅31%），验证了
 - 实验充分度: ⭐⭐⭐⭐⭐ — 45个数据集、30种分布偏移、多种MLLM架构、多项消融，实验规模和覆盖面极为全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、理论自洽，定量与定性分析互相呼应，图表设计精良
 - 价值: ⭐⭐⭐⭐ — 提供了实用的鲁棒性增强方案，但仍限于7B-13B规模且OCR能力轻微损失
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Instruct for Visual Instruction Tuning](learning_to_instruct_for_visual_instruction_tuning.md)
+- [CoIDO: Efficient Data Selection for Visual Instruction Tuning via Coupled Importance-Diversity Optimization](coido_efficient_data_selection_for_visual_instruction_tuning_via_coupled_importa.md)
+- [Parrot: Multilingual Visual Instruction Tuning](../../ICML2025/multimodal_vlm/parrot_multilingual_visual_instruction_tuning.md)
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](../../ICCV2025/multimodal_vlm/metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)
+- [Enhancing Multimodal Continual Instruction Tuning with BranchLoRA](../../ACL2025/multimodal_vlm/branchlora_continual_instruction.md)
+
+<!-- RELATED:END -->

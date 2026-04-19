@@ -126,3 +126,15 @@ Mixtral-8×7B-Instruct + EAGLE speculation head：
 - 实验充分度: ⭐⭐⭐⭐ 多硬件、多模型、多数据集验证，理论与实验吻合度高，但缺少大规模EP实验
 - 写作质量: ⭐⭐⭐⭐⭐ 从理论推导到实验验证逻辑清晰，公式推导严谨，图表丰富
 - 价值: ⭐⭐⭐⭐ 为MoE推理加速提供了新视角，对私有部署、延迟敏感场景有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowMoE: 分布式MoE训练的可扩展流水线调度框架](flowmoe_a_scalable_pipeline_scheduling_framework_for_distributed_mixture-of-expe.md)
+- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
+- [笔记5：ReSearch - 学习通过搜索推理](research_learning_to_reason_with_search_for_llms_via_reinforcement_learning.md)
+- [EPHAD: An Evidence-Based Post-Hoc Adjustment Framework for Anomaly Detection Under Data Contamination](an_evidence-based_post-hoc_adjustment_framework_for_anomaly_detection_under_data.md)
+- [Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points](hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)
+
+<!-- RELATED:END -->

@@ -242,3 +242,15 @@ Lowe 等、Akata 等已关注多体行为建模。
 这篇论文最有价值的地方不是“又测了一个榜单”，而是纠正了评测目标本身。
 如果一个系统要在多轮交互中代表用户或与用户协作，仅有高 Literal ToM 分数远远不够。
 未来 ToM benchmark 若不显式加入 Functional ToM 维度，仍会继续高估 LLM 的真实社会交互能力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [Robust Utility-Preserving Text Anonymization Based on Large Language Models](../../ACL2025/llm_efficiency/robust_utility-preserving_text_anonymization_based_on_large_language_models.md)
+- [Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
+- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ Top-$k$ 假设数量：$k=3$ 最优（CIDEr 57.04），$k=10$ 时下降至 53.66
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、完整消融（组件/假设数/系数/适配器），分析详尽
 - 写作质量: ⭐⭐⭐⭐ 从人类认知出发的动机清晰，方法阐述详细
 - 价值: ⭐⭐⭐⭐ 扩散模型作为推理引导而非生成器的思路值得推广，但与人类差距仍大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperbolic Hierarchical Alignment Reasoning Network for Text-3D Retrieval](hyperbolic_hierarchical_alignment_reasoning_network_for_text-3d_retrieval.md)
+- [FGM-HD: Boosting Generation Diversity of Fractal Generative Models through Hausdorff Dimension Induction](fgm-hd_boosting_generation_diversity_of_fractal_generative_models_through_hausdo.md)
+- [Textual-Visual Logic Challenge: Understanding and Reasoning in Text-to-Image Generation](../../ECCV2024/image_generation/textual-visual_logic_challenge_understanding_and_reasoning_in_text-to-image_gene.md)
+- [FreeInpaint: Tuning-free Prompt Alignment and Visual Rationality Enhancement in Image Inpainting](freeinpaint_tuning-free_prompt_alignment_and_visual_rationality_enhancement_in_i.md)
+- [Boosting Generative Image Modeling via Joint Image-Feature Synthesis](../../NeurIPS2025/image_generation/boosting_generative_image_modeling_via_joint_imagefeature_sy.md)
+
+<!-- RELATED:END -->

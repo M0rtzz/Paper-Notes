@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三任务+多指标+消融
 - 写作质量: ⭐⭐⭐⭐ 形式化清晰
 - 价值: ⭐⭐⭐⭐ 对 LLM 可解释性和安全性有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition](songcomposer_llm_lyric_melody_generation.md)
+- [OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
+- [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+- [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
+
+<!-- RELATED:END -->

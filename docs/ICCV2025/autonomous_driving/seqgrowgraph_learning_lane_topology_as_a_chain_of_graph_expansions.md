@@ -113,3 +113,15 @@ $$\mathcal{L} = -\frac{1}{T}\sum_{t=1}^T \log p(\hat{x}_t | x_1, x_2, \ldots, x_
 - **技术深度**: ⭐⭐⭐⭐ — 数学建模严谨，序列化设计精巧
 - **实验充分性**: ⭐⭐⭐⭐ — 两个大规模数据集，两种数据划分
 - **写作质量**: ⭐⭐⭐⭐⭐ — 图示清晰，逐步扩展过程易懂
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resonance: Learning to Predict Social-Aware Pedestrian Trajectories as Co-Vibrations](resonance_learning_to_predict_social-aware_pedestrian_trajectories_as_co-vibrati.md)
+- [RESCUE: Crowd Evacuation Simulation via Controlling SDM-United Characters](rescue_crowd_evacuation_simulation_via_controlling_sdm-united_characters.md)
+- [World4Drive: End-to-End Autonomous Driving via Intention-aware Physical Latent World Model](world4drive_end-to-end_autonomous_driving_via_intention-aware_physical_latent_wo.md)
+- [Fine-Grained Representation for Lane Topology Reasoning](../../AAAI2026/autonomous_driving/fine-grained_representation_for_lane_topology_reasoning.md)
+- [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](../../NeurIPS2025/autonomous_driving/self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
+
+<!-- RELATED:END -->

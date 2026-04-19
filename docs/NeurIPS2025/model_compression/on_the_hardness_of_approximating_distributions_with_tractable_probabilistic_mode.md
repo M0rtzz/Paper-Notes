@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论论文，无实验验证，但理论结果自洽完整
 - 写作质量: ⭐⭐⭐⭐⭐ 定义清晰、证明严谨、结论表述精确，论文组织逻辑性强
 - 价值: ⭐⭐⭐⭐ 为概率电路和可处理概率模型社区提供了重要的理论基础，但与主流深度学习实践的关联较弱
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHAP Meets Tensor Networks: Provably Tractable Explanations with Parallelism](shap_meets_tensor_networks_provably_tractable_explanations_with_parallelism.md)
+- [REOrdering Patches Improves Vision Models](reordering_patches_improves_vision_models.md)
+- [Geometry of Decision Making in Language Models](geometry_of_decision_making_in_language_models.md)
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [Elastic ViTs from Pretrained Models without Retraining](elastic_vits_from_pretrained_models_without_retraining.md)
+
+<!-- RELATED:END -->

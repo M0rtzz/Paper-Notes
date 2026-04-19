@@ -150,3 +150,15 @@ DMin 本身不训练模型，而是对已训练好的扩散模型进行后分析
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三种模型规模、多子集评估、存储/时间/精度全方位对比，消融充分
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，公式推导完整，但部分表格过长影响阅读
 - **价值**: ⭐⭐⭐⭐⭐ — 首次将影响力估计扩展到数十亿参数扩散模型，对模型审计和数据版权有重要实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Reconstruction-Based Data Likelihood Estimation for Core-Set Selection](../../AAAI2026/image_generation/diffusion_reconstruction-based_data_likelihood_estimation_for_core-set_selection.md)
+- [Learning a Distance Measure from the Information-Estimation Geometry of Data](../../ICLR2026/image_generation/learning_a_distance_measure_from_the_information-estimation_geometry_of_data.md)
+- [Erasing Undesirable Influence in Diffusion Models (EraseDiff)](../../CVPR2025/image_generation/erasing_undesirable_influence_in_diffusion_models.md)
+- [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
+- [Difficulty Controlled Diffusion Model for Synthesizing Effective Training Data](../../AAAI2026/image_generation/difficulty_controlled_diffusion_model_for_synthesizing_effec.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ LRM 将崩溃阈值推迟 2-3 级，但最终仍完全崩溃。
 - 实验充分度: ⭐⭐⭐⭐ 4 个拼图×5+ 模型×连续复杂度，但缺人类基线和开源模型的深层分析
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，图表信息密度极高，限制性讨论诚恳
 - 价值: ⭐⭐⭐⭐⭐ 对推理模型研究和部署有根本性启示，改变我们对"思考"机制的理解
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties](topology_of_reasoning_understanding_large_reasoning_models_through_reasoning_gra.md)
+- [Controlling Thinking Speed in Reasoning Models](controlling_thinking_speed_in_reasoning_models.md)
+- [Towards Thinking-Optimal Scaling of Test-Time Compute for LLM Reasoning](towards_thinking-optimal_scaling_of_test-time_compute_for_llm_reasoning.md)
+- [Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
+- [Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought](visual_thoughts_a_unified_perspective_of_understanding_multi.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ $$\mathcal{L} = \lambda_b \mathcal{L}_b + \lambda_{re} \mathcal{L}_{re}$$
 | 实验充分性 | 4 | 多数据集、多任务设置，定量+定性对比全面 |
 | 实用性 | 4 | 极轻量参数 + 高推理速度，实用性强 |
 | 总体 | 4 | 方法简洁优雅，效果显著，是事件相机视频恢复领域的优秀工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMoTive: Event-Guided Trajectory Modeling for 3D Motion Estimation](../../ICCV2025/video_understanding/emotive_event-guided_trajectory_modeling_for_3d_motion_estimation.md)
+- [IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map](iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex.md)
+- [VTinker: Guided Flow Upsampling and Texture Mapping for High-Resolution Video Frame Interpolation](../../AAAI2026/video_understanding/vtinker_guided_flow_upsampling_and_texture_mapping_for_high-resolution_video_fra.md)
+- [RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos](rgnet_a_unified_clip_retrieval_and_grounding_network_for_long_videos.md)
+- [Text-Guided Video Masked Autoencoder](text-guided_video_masked_autoencoder.md)
+
+<!-- RELATED:END -->

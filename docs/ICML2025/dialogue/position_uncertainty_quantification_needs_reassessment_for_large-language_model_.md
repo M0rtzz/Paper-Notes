@@ -133,3 +133,15 @@ tags:
 | 实验充分度 | ⭐⭐ | Position Paper 不要求实验，但引用的证据主要来自他人工作 |
 | 写作质量 | ⭐⭐⭐⭐⭐ | 论证逻辑清晰、例子精炼、正反双方公平讨论 |
 | 实用性 | ⭐⭐⭐⭐ | 为 LLM agent UQ 研究提供了有价值的路线图 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniConv: Unifying Retrieval and Response Generation for Large Language Models in Conversations](../../ACL2025/dialogue/uniconv_retrieval_response_gen.md)
+- [Non-Collaborative User Simulators for Tool Agents](../../ICLR2026/dialogue/non-collaborative_user_simulators_for_tool_agents.md)
+- [Understanding Language Prior of LVLMs by Contrasting Chain-of-Embedding](../../ICLR2026/dialogue/understanding_language_prior_of_lvlms_by_contrasting_chain-of-embedding.md)
+- [Agent WARPP: Workflow Adherence via Runtime Parallel Personalization](agent_warpp_workflow_adherence_via_runtime_parallel_personalization.md)
+- [Investigating Non-Transitivity in LLM-as-a-Judge](investigating_non-transitivity_in_llm-as-a-judge.md)
+
+<!-- RELATED:END -->

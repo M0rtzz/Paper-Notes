@@ -169,3 +169,15 @@ SpecQuant是两阶段框架：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8个模型、多种量化配置、详细消融和效率测评
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，但框架略复杂
 - 价值: ⭐⭐⭐⭐⭐ — W4A4实用性强，加速和内存节省数据令人信服
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LittleBit: Ultra Low-Bit Quantization via Latent Factorization](../../NeurIPS2025/model_compression/littlebit_ultra_low-bit_quantization_via_latent_factorization.md)
+- [Beyond Sharpness: A Flatness Decomposition Framework for Efficient Continual Learning](beyond_sharpness_a_flatness_decomposition_framework_for_efficient_continual_lear.md)
+- [QuEPT: Quantized Elastic Precision Transformers with One-Shot Calibration for Multi-Bit Switching](quept_quantized_elastic_precision_transformers_with_one-shot_calibration_for_mul.md)
+- [any4: Learned 4-bit Numeric Representation for LLMs](../../ICML2025/model_compression/any4_learned_4-bit_numeric_representation_for_llms.md)
+- [MSQ: Memory-Efficient Bit Sparsification Quantization](../../ICCV2025/model_compression/msq_memory-efficient_bit_sparsification_quantization.md)
+
+<!-- RELATED:END -->

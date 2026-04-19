@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个基准、详尽消融、效率比较、GT替换验证、注意力可视化
 - 写作质量: ⭐⭐⭐⭐ — 问题分析清晰，图表丰富直观
 - 价值: ⭐⭐⭐⭐ — 性能和效率双优，可解释性强，对 VAD 分类问题提供新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos](actionswitch_class-agnostic_detection_of_simultaneous_actions_in_streaming_video.md)
+- [Bayesian Evidential Deep Learning for Online Action Detection](bayesian_evidential_deep_learning_for_online_action_detection.md)
+- [SA-DVAE: Improving Zero-Shot Skeleton-Based Action Recognition by Disentangled Variational Autoencoders](sa-dvae_improving_zero-shot_skeleton-based_action_recognition_by_disentangled_va.md)
+- [Occluded Gait Recognition with Mixture of Experts: An Action Detection Perspective](occluded_gait_recognition_with_mixture_of_experts_an_action_detection_perspectiv.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+
+<!-- RELATED:END -->

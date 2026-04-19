@@ -122,3 +122,15 @@ Plana3R在从未见过的NYUv2上实现零样本度量深度估计，超越MASt3
 - **实验充分度**: ⭐⭐⭐⭐⭐ 跨4个数据集、5个任务的全面评估，零样本泛化令人印象深刻
 - **写作质量**: ⭐⭐⭐⭐ 模块化描述清晰，公式规范
 - **价值**: ⭐⭐⭐⭐ 为室内3D重建提供了一种更紧凑、更有语义的替代方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors](planargs_high-fidelity_indoor_3d_gaussian_splatting_guided_by_vision-language_pl.md)
+- [Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting](learning_efficient_fuse-and-refine_for_feed-forward_3d_gaussian_splatting.md)
+- [Fin3R: Fine-tuning Feed-forward 3D Reconstruction Models via Monocular Knowledge Distillation](fin3r_fine-tuning_feed-forward_3d_reconstruction_models_via_monocular_knowledge_.md)
+- [Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera](../../CVPR2025/3d_vision/depth_any_camera_zero-shot_metric_depth_estimation_from_any_camera.md)
+- [ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS](zpressor_bottleneck-aware_compression_for_scalable_feed-forward_3dgs.md)
+
+<!-- RELATED:END -->

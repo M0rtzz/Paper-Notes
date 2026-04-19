@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基准评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰
 - 价值: ⭐⭐⭐⭐ 有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/human_understanding/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
+- [Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [Distilling and Adapting: A Topology-Aware Framework for Zero-Shot Interaction Prediction in Multiplex Biological Networks](../../ICLR2026/human_understanding/distilling_and_adapting_a_topology-aware_framework_for_zero-shot_interaction_pre.md)
+- [Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/human_understanding/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
+- [VisionTS: Visual Masked Autoencoders Are Free-Lunch Zero-Shot Time Series Forecasters](../../ICML2025/human_understanding/visionts_visual_masked_autoencoders_are_free-lunch_zero-shot_time_series_forecas.md)
+
+<!-- RELATED:END -->

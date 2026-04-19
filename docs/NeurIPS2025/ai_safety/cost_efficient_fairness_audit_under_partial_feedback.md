@@ -155,3 +155,15 @@ $$\text{cost} \leq \widetilde{O}\left(\sum_{a \in \mathcal{A}} \left(\frac{c_{fe
 - 实验充分度: ⭐⭐⭐ （数据集规模偏小，但理论验证充分）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，问题动机阐述充分）
 - 价值: ⭐⭐⭐⭐ （填补重要空白，理论贡献扎实）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fairness under Competition](fairness_under_competition.md)
+- [Efficient Fairness-Performance Pareto Front Computation](efficient_fairness-performance_pareto_front_computation.md)
+- [Accelerating Spectral Clustering under Fairness Constraints](../../ICML2025/ai_safety/accelerating_spectral_clustering_under_fairness_constraints.md)
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [FLUX: Efficient Descriptor-Driven Clustered Federated Learning under Arbitrary Distribution Shifts](flux_efficient_descriptor-driven_clustered_federated_learning_under_arbitrary_di.md)
+
+<!-- RELATED:END -->

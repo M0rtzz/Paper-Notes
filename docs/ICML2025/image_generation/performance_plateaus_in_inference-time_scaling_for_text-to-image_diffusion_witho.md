@@ -163,3 +163,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 多算法 × 多数据集 × 多骨干的系统性实验，较为全面；但骨干模型和评估指标可以更丰富
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，实验设计合理，结论表述明确
 - 价值: ⭐⭐⭐⭐ — 对 T2I 推理时缩放的实际部署有直接指导意义，为该方向的研究者节省了大量试错成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](../../NeurIPS2025/image_generation/remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [One Image is Worth a Thousand Words: A Usability Preservable Text-Image Collaborative Erasing Framework](one_image_is_worth_a_thousand_words_a_usability_preservable_text-image_collabora.md)
+- [Inference-Time Scaling for Flow Models via Stochastic Generation and Rollover Budget Forcing](../../NeurIPS2025/image_generation/inference-time_scaling_for_flow_models_via_stochastic_generation_and_rollover_bu.md)
+- [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](../../NeurIPS2025/image_generation/progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [Tiny Inference-Time Scaling with Latent Verifiers](../../CVPR2026/image_generation/tiny_inference-time_scaling_with_latent_verifiers.md)
+
+<!-- RELATED:END -->

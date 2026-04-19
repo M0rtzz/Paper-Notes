@@ -139,3 +139,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 方法简洁实用，用 LoRA 微调即可将 Flux 变为 3D 生成器，数据效率高。ControlNet 兼容性开启丰富应用。但 3D 表征和重建精度仍有提升空间，属于工程驱动的实用工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+- [Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models](fine-grained_erasure_in_text-to-image_diffusion-based_foundation_models.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model](mvgenmaster_scaling_multi-view_generation_from_any_image_via_3d_priors_enhanced_.md)
+- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/3d_vision/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+
+<!-- RELATED:END -->

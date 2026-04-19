@@ -135,3 +135,15 @@ LAPS 流水线包含三个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 公共基准+工业数据集+VLM语义验证覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，流水线描述详细
 - 价值: ⭐⭐⭐⭐ 解决 VLA 数据瓶颈的实用方案，工业应用前景好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Joint-Aligned Latent Action: Towards Scalable VLA Pretraining in the Wild](joint-aligned_latent_action_towards_scalable_vla_pretraining_in_the_wild.md)
+- [MA-Bench: Towards Fine-grained Micro-Action Understanding](ma-bench_towards_fine-grained_micro-action_understanding.md)
+- [World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](rehearsevla_simulated_posttraining_world_model.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [Rethinking MLLM Itself as a Segmenter with a Single Segmentation Token](rethinking_mllm_itself_as_a_segmenter_with_a_single_segmentation_token.md)
+
+<!-- RELATED:END -->

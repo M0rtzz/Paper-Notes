@@ -149,3 +149,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验覆盖了所有关键设计选择，4 种模型 × 4 个 benchmark
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析深入，图表丰富
 - 价值: ⭐⭐⭐⭐ 实用性强，方法简单有效，对 LRM 部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Let Me Think! A Long Chain-of-Thought Can Be Worth Exponentially Many Short Ones](let_me_think_a_long_chainofthought_can_be_worth_exponentiall.md)
+- [笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计](value-guided_search_for_efficient_chain-of-thought_reasoning.md)
+- [The Virtues of Brevity: Avoid Overthinking in Parallel Test-Time Reasoning](the_virtues_of_brevity_avoid_overthinking_in_parallel_test-time_reasoning.md)
+- [Mind the Gap: Bridging Thought Leap for Improved Chain-of-Thought Tuning](mind_the_gap_bridging_thought_leap_for_improved_chain-of-thought_tuning.md)
+- [Scalable Best-of-N Selection for Large Language Models via Self-Certainty](scalable_best-of-n_selection_for_large_language_models_via_self-certainty.md)
+
+<!-- RELATED:END -->

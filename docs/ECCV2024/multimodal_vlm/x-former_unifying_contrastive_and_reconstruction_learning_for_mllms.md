@@ -153,3 +153,15 @@ X-Former采用两阶段训练：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集验证+详尽消融，但缺少与更多MLLM方法的对比
 - 写作质量: ⭐⭐⭐⭐ 动机-实验-分析逻辑链完整，循序渐进，从失败尝试引出最终方案
 - 价值: ⭐⭐⭐⭐ 数据高效且即插即用，对MLLM视觉表征改进有实际参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts](clap_isolating_content_from_style_through_contrastive_learning_with_augmented_pr.md)
+- [Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
+- [DisenQ: Disentangling Q-Former for Activity-Biometrics](../../ICCV2025/multimodal_vlm/disenq_disentangling_q-former_for_activity-biometrics.md)
+- [BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning](../../NeurIPS2025/multimodal_vlm/bioclip_2_emergent_properties_from_scaling_hierarchical_contrastive_learning.md)
+- [READ: Enhancing Compositional Reasoning in CLIP via Reconstruction and Alignment of Text Descriptions](../../NeurIPS2025/multimodal_vlm/enhancing_compositional_reasoning_in_clip_via_reconstruction.md)
+
+<!-- RELATED:END -->

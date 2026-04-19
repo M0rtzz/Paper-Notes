@@ -127,3 +127,15 @@ Sun et al. 依赖人工标注将现有题目改为不可回答，仅产出 2600 
 - 实验充分度: ⭐⭐⭐⭐ (覆盖6个模型×多参数配置，zero-shot/few-shot对比，结构因素分析全面)
 - 写作质量: ⭐⭐⭐⭐ (形式化清晰，图示直观，但论文较短，部分分析不够深入)
 - 价值: ⭐⭐⭐⭐ (为LLM幻觉评估提供了可扩展的系统化工具，对理解推理缺陷有重要意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UAQFact: Evaluating Factual Knowledge Utilization of LLMs on Unanswerable Questions](uaqfact_evaluating_factual_knowledge_utilization_of_llms_on_unanswerable_questio.md)
+- [Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)
+- [HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](halogen_hallucinations.md)
+- [A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](../../NeurIPS2025/llm_safety/a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
+- [Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)
+
+<!-- RELATED:END -->

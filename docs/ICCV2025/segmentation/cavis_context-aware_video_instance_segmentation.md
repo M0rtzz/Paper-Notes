@@ -167,3 +167,15 @@ OVIS数据集上各组件贡献：
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖VIS和VPS多个benchmark，消融充分
 - 写作质量: ⭐⭐⭐⭐ — Motivation从认知科学引入很吸引人，符号体系完整
 - 价值: ⭐⭐⭐⭐ — 在challenging VIS场景（遮挡、相似外观）上的提升有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation](hierarchical_visual_prompt_learning_for_continual_video_instance_segmentation.md)
+- [SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation](score_scene_context_matters_in_openvocabulary_remote_sensing.md)
+- [VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement](../../ECCV2024/segmentation/visage_video_instance_segmentation_with_appearance-guided_enhancement.md)
+- [ConText: Driving In-context Learning for Text Removal and Segmentation](../../ICML2025/segmentation/context_driving_in-context_learning_for_text_removal_and_segmentation.md)
+- [VINCIE: Unlocking In-context Image Editing from Video](../../ICLR2026/segmentation/vincie_unlocking_in-context_image_editing_from_video.md)
+
+<!-- RELATED:END -->

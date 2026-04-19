@@ -153,3 +153,15 @@ $$\tilde{\mathbf{x}}^{\text{goal}} = \mathbf{x}^{\text{goal}} + \delta_{\text{ba
 ⭐⭐⭐⭐⭐ (5/5)
 
 综合评价：1次演示达85.3%→在双臂操作效率和泛化性之间取得了突破性平衡，不变/可适应分离的设计原则具有方法论层面的启发价值，10个真机任务+跨具身体验证了实用性——是双臂操作领域的标杆工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation](../../CVPR2026/object_detection/rehark_refined_hybrid_adaptive_rbf_kernels_for_robust_one-shot_vision-language_a.md)
+- [FSOD-VFM: Few-Shot Object Detection with Vision Foundation Models and Graph Diffusion](fsod-vfm_few-shot_object_detection_with_vision_foundation_models_and_graph_diffu.md)
+- [SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](../../AAAI2026/object_detection/semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
+- [PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation](../../CVPR2026/object_detection/palm_progress-aware_policy_learning_via_affordance_reasoning_for_long-horizon_ro.md)
+- [H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation](../../AAAI2026/object_detection/h-gar_a_hierarchical_interaction_framework_via_goal-driven_observation-action_re.md)
+
+<!-- RELATED:END -->

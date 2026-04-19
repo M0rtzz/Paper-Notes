@@ -124,3 +124,15 @@ CDTSDE在几乎所有指标上居首，在效率方面仅需5个采样步（1.8s
 - 实验充分度: ⭐⭐⭐⭐ 三个不同难度任务+消融+效率分析完整，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，Fig.1的流形路径可视化直观，整体逻辑清晰
 - 价值: ⭐⭐⭐⭐ 在医学图像和遥感领域有实际应用价值，自适应调度idea可迁移到其他条件生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Domain-Aware Task Prompt Representations for Multi-Domain All-in-One Image Restoration](learning_domain-aware_task_prompt_representations_for_multi-domain_all-in-one_im.md)
+- [SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](../../ICCV2025/medical_imaging/scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)
+- [Fine-Tuning Diffusion Models via Intermediate Distribution Shaping](fine-tuning_diffusion_models_via_intermediate_distribution_shaping.md)
+- [DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction](dm4ct_benchmarking_diffusion_models_for_computed_tomography_reconstruction.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](../../CVPR2026/medical_imaging/interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+
+<!-- RELATED:END -->

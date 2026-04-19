@@ -121,3 +121,15 @@ tags:
 - 与同期发表的其他 NeurIPS 2025 论文在技术和方法论上有互补性
 - 论文的写作对问题动机和技术路径的阐述值得学习
 - 建议结合 paper 中的附录部分获取更完整的实验细节和证明
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](a_theoretical_study_on_bridging_internal_probability_and_sel.md)
+- [Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks](../../ICLR2026/optimization/directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Training Robust Graph Neural Networks by Modeling Noise Dependencies](training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)
+
+<!-- RELATED:END -->

@@ -170,3 +170,15 @@ DiffuseDef 在编码器与分类器之间插入一个扩散去噪层，训练时
 - 实验充分度: ⭐⭐⭐⭐ 3数据集+5种攻击+多基线+白盒+效率分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，算法框图直观
 - 价值: ⭐⭐⭐⭐ 即插即用的防御方法，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Deep Speech Denoising Models Robust to Adversarial Noise?](../../ICLR2026/image_restoration/are_deep_speech_denoising_models_robust_to_adversarial_noise.md)
+- [DenoiseRotator: Enhance Pruning Robustness for LLMs via Importance Concentration](../../NeurIPS2025/image_restoration/denoiserotator_enhance_pruning_robustness_for_llms_via_importance_concentration.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [Spend Wisely: Maximizing Post-Training Gains in Iterative Synthetic Data Bootstrapping](../../NeurIPS2025/image_restoration/spend_wisely_maximizing_post-training_gains_in_iterative_synthetic_data_bootstra.md)
+- [ε-VAE: Denoising as Visual Decoding](../../ICML2025/image_restoration/epsilon-vae_denoising_as_visual_decoding.md)
+
+<!-- RELATED:END -->

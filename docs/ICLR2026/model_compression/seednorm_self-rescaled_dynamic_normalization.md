@@ -157,3 +157,15 @@ $$\text{AdaSeeDNorm}(\mathbf{x}, c) = [(\sigma(\mathbf{x} \cdot \boldsymbol{\bet
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖 LLM（MoE+Dense）、分类、生成、自监督，消融详尽
 - 写作质量: ⭐⭐⭐⭐ — 理论推导完整，实验叙述清晰，附录充实
 - 价值: ⭐⭐⭐⭐ — 实用性强的即插即用组件，但需要 kernel 融合才能广泛部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stronger Normalization-Free Transformers](../../CVPR2026/model_compression/stronger_normalization-free_transformers.md)
+- [GASP: Guided Asymmetric Self-Play For Coding LLMs](gasp_guided_asymmetric_self-play_for_coding_llms.md)
+- [LD-MoLE: Learnable Dynamic Routing for Mixture of LoRA Experts](ld-mole_learnable_dynamic_routing_for_mixture_of_lora_experts.md)
+- [Dependency Parsing is More Parameter-Efficient with Normalization](../../NeurIPS2025/model_compression/dependency_parsing_is_more_parameter-efficient_with_normalization.md)
+- [SODA: Sensitivity-Oriented Dynamic Acceleration for Diffusion Transformer](../../CVPR2026/model_compression/soda_sensitivity-oriented_dynamic_acceleration_for_diffusion_transformer.md)
+
+<!-- RELATED:END -->

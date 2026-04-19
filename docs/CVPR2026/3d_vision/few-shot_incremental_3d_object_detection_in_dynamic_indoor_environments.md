@@ -138,3 +138,15 @@ SUN RGB-D 批量增量设置（1-way 5-shot）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集，批量和序列两种增量设置，多组消融，超参分析完整
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详细，图示丰富
 - 价值: ⭐⭐⭐⭐ 为具身智能中的动态环境感知开辟了新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)
+- [R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection# R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](r4det_4d_radar_camera_fusion_3d_detection.md)
+- [VGGT-Det: Mining VGGT Internal Priors for Sensor-Geometry-Free Multi-View Indoor 3D Object Detection](vggt-det_mining_vggt_internal_priors_for_sensor-geometry-free_multi-view_indoor_.md)
+- [Indoor Asset Detection in Large Scale 360° Drone-Captured Imagery via 3D Gaussian Splatting](indoor_asset_detection_in_large_scale_360_drone-captured_imagery_via_3d_gaussian.md)
+- [MonoSAOD: Monocular 3D Object Detection with Sparsely Annotated Label](monosaod_monocular_3d_object_detection_with_sparsely_annotated_label.md)
+
+<!-- RELATED:END -->

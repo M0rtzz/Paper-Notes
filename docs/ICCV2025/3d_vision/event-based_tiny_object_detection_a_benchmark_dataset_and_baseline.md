@@ -199,3 +199,15 @@ STC loss在所有点云分割方法上都有一致提升，证明通用性。
 - 实验：⭐⭐⭐⭐⭐（13种方法对比+多维度消融+STC泛化验证+定性分析，非常完整）
 - 写作：⭐⭐⭐⭐（问题动机清晰，数据集描述详尽，方法直觉性好）
 - 实用性：⭐⭐⭐⭐⭐（35.9ms的极速推理+开源数据集/代码，直接可用于反无人机系统）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Griffin: Aerial-Ground Cooperative Detection and Tracking Dataset and Benchmark](../../AAAI2026/3d_vision/griffin_aerial-ground_cooperative_detection_and_tracking_dataset_and_benchmark.md)
+- [SiM3D: Single-Instance Multiview Multimodal and Multisetup 3D Anomaly Detection Benchmark](sim3d_single-instance_multiview_multimodal_and_multisetup_3d_anomaly_detection_b.md)
+- [MVGBench: a Comprehensive Benchmark for Multi-view Generation Models](mvgbench_a_comprehensive_benchmark_for_multi-view_generation_models.md)
+- [MuGS: Multi-Baseline Generalizable Gaussian Splatting Reconstruction](mugs_multi-baseline_generalizable_gaussian_splatting_reconstruction.md)
+- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
+
+<!-- RELATED:END -->

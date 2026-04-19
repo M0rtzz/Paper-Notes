@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 仿真+真实IMC+CODEX三级验证，定量分析扎实
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰，图表设计精良，决策表实用
 - 价值: ⭐⭐⭐⭐ 对空间蛋白质组学实验设计有直接指导意义，但受众相对较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context-Nav: Context-Driven Exploration and Viewpoint-Aware 3D Spatial Reasoning for Instance Navigation](context-nav_context-driven_exploration_and_viewpoint-aware_3d_spatial_reasoning_.md)
+- [Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning](adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning.md)
+- [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](span_spatial_projection_alignment_mono3d.md)
+- [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
+- [Metropolis-Hastings Sampling for 3D Gaussian Reconstruction](../../NeurIPS2025/3d_vision/metropolis-hastings_sampling_for_3d_gaussian_reconstruction.md)
+
+<!-- RELATED:END -->

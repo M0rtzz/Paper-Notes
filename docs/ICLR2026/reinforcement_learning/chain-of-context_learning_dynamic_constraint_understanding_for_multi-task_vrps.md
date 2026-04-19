@@ -115,3 +115,15 @@ CCL 沿用 encoder-decoder 范式。Encoder：Transformer 将约束标记+节点
 - 实验充分度: ⭐⭐⭐⭐⭐ 48 种 VRP 变体（16 in-dist + 32 OOD），多个规模，消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题定义清楚，三个挑战+三个解决方案的对应结构清晰
 - 价值: ⭐⭐⭐⭐ 对组合优化 RL 的解码过程有通用启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+- [MergeMix: A Unified Augmentation Paradigm for Visual and Multi-Modal Understanding](mergemix_a_unified_augmentation_paradigm_for_visual_and_multi-modal_understandin.md)
+- [Where and What Matters: Sensitivity-Aware Task Vectors for Many-Shot Multimodal In-Context Learning](../../AAAI2026/reinforcement_learning/where_and_what_matters_sensitivity-aware_task_vectors_for_many-shot_multimodal_i.md)
+- [Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+- [One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
+
+<!-- RELATED:END -->

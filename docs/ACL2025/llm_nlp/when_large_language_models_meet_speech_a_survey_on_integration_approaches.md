@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 汇总了大量定量结果进行横向对比，但受限于非统一实验设置
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，分类学图表出色，语言精练，背景知识介绍全面
 - 价值: ⭐⭐⭐⭐⭐ 填补 Speech-LLM 集成方法综述空白，对领域研究者有很高参考价值，尤其适合新入门者快速了解领域全貌
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recent Advances in Speech Language Models: A Survey](recent_advances_in_speech_language_models_a_survey.md)
+- [Locate-and-Focus: Enhancing Terminology Translation in Speech Language Models](locateandfocus_enhancing_terminology_translation_in_speech.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [Dynamic Knowledge Integration for Evidence-Driven Counter-Argument Generation with Large Language Models](dynamic_knowledge_integration_for_evidence-driven_counter-argument_generation_wi.md)
+
+<!-- RELATED:END -->

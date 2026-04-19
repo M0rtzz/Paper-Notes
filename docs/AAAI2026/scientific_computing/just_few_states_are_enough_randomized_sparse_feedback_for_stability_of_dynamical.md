@@ -154,3 +154,15 @@ Monte Carlo 模拟验证：$p \geq p^\star$ 时所有轨迹均方收敛至零；
 - 实验充分度: ⭐⭐⭐ — 数值仿真充分验证理论，但缺乏真实系统实验
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，结构清晰，符号定义完整
 - 价值: ⭐⭐⭐⭐ — 开辟新方向，对大规模物联网控制系统有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empirical Stability Analysis of Kolmogorov-Arnold Networks in Hard-Constrained Recurrent Physics-Informed Discovery](../../ICLR2026/scientific_computing/empirical_stability_analysis_of_kolmogorov-arnold_networks_in_hard-constrained_r.md)
+- [From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics](../../NeurIPS2025/scientific_computing/from_black_hole_to_galaxy_neural_operator_framework_for_accretion_and_feedback_d.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/scientific_computing/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [SAOT: An Enhanced Locality-Aware Spectral Transformer for Solving PDEs](saot_an_enhanced_locality-aware_spectral_transformer_for_solving_pdes.md)
+- [PhysicsCorrect: A Training-Free Approach for Stable Neural PDE Simulations](physicscorrect_a_training-free_approach_for_stable_neural_pde_simulations.md)
+
+<!-- RELATED:END -->

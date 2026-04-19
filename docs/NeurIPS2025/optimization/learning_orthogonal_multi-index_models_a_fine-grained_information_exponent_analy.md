@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论，无实验
 - 写作质量: ⭐⭐⭐⭐⭐ 定理表述清晰，直觉→形式化的推进流畅
 - 价值: ⭐⭐⭐⭐⭐ 对学习理论中的样本复杂度分析有重要基础贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD](from_information_to_generative_exponent_learning_rate_induces_phase_transitions_.md)
+- [Learning Single-Index Models via Harmonic Decomposition](learning_single-index_models_via_harmonic_decomposition.md)
+- [Neural Networks Learn Generic Multi-Index Models Near Information-Theoretic Limit](../../ICLR2026/optimization/neural_networks_learn_generic_multi-index_models_near_information-theoretic_limi.md)
+- [MOBO-OSD: Batch Multi-Objective Bayesian Optimization via Orthogonal Search Directions](mobo-osd_batch_multi-objective_bayesian_optimization_via_orthogonal_search_direc.md)
+- [PROFIT: A Specialized Optimizer for Deep Fine Tuning](profit_a_specialized_optimizer_for_deep_fine_tuning.md)
+
+<!-- RELATED:END -->

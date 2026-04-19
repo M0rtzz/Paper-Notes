@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 模块化和端到端方案的对比全面，但缺少跨域评估和实际应用验证
 - 写作质量: ⭐⭐⭐⭐ 任务定义和数据集描述详细清晰，方法部分结构稍显复杂
 - 价值: ⭐⭐⭐⭐⭐ 填补了关键研究空白，数据集将推动交通规则理解和HD地图完整性的研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction](mapgclr_geospatial_contrastive_learning_of_representations_for_online_vectorized.md)
+- [Stream Query Denoising for Vectorized HD-Map Construction](../../ECCV2024/autonomous_driving/stream_query_denoising_for_vectorized_hd-map_construction.md)
+- [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
+- [SafeMap: Robust HD Map Construction from Incomplete Observations](../../ICML2025/autonomous_driving/safemap_robust_hd_map_construction_from_incomplete_observations.md)
+- [InteractionMap: Improving Online Vectorized HDMap Construction with Interaction](interactionmap_improving_online_vectorized_hdmap_construction_with_interaction.md)
+
+<!-- RELATED:END -->

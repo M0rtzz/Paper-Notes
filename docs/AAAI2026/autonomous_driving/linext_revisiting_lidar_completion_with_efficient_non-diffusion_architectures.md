@@ -187,3 +187,15 @@ Coarse和Refine两阶段独立训练。仅在SemanticKITTI上训练，不在KITT
 - 实验充分度: ⭐⭐⭐⭐ — 双数据集+跨数据集泛化+效率对比+消融完善
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，结构清晰，Figure 1非常直观
 - 价值: ⭐⭐⭐⭐⭐ — 199.8倍加速对实际部署意义重大，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLC: Communication-Efficient Collaborative Perception with LiDAR Completion](../../CVPR2026/autonomous_driving/colc_communication-efficient_collaborative_perception_with_lidar_completion.md)
+- [LiDAR-GS++: Improving LiDAR Gaussian Reconstruction via Diffusion Priors](lidar-gsimproving_lidar_gaussian_reconstruction_via_diffusion_priors.md)
+- [Towards 3D Object-Centric Feature Learning for Semantic Scene Completion](towards_3d_object-centric_feature_learning_for_semantic_scene_completion.md)
+- [HD2-SSC: High-Dimension High-Density Semantic Scene Completion for Autonomous Driving](hd2-ssc_high-dimension_high-density_semantic_scene_completion_for_autonomous_dri.md)
+- [Unlocking Efficient Vehicle Dynamics Modeling via Analytic World Models](unlocking_efficient_vehicle_dynamics_modeling_via_analytic_world_models.md)
+
+<!-- RELATED:END -->

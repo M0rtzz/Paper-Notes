@@ -149,3 +149,15 @@ $$\theta^{(k+1)} = \theta^{(k)} - \gamma[\theta^{(k)} - \tilde{\theta} + (f(\the
 - **实验**: ⭐⭐⭐ — 实验结果有说服力但规模偏小，缺少大模型/大数据验证
 - **写作**: ⭐⭐⭐⭐ — 物理直觉清晰，理论推导严谨，图示优美
 - **价值**: ⭐⭐⭐⭐ — 开辟了非局部优化器的新方向，但实际应用还需克服计算成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
+- [Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules](../../NeurIPS2025/optimization/gradient_descent_as_loss_landscape_navigation_a_normative_framework_for_deriving.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](../../NeurIPS2025/optimization/generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+- [DeepAFL: Deep Analytic Federated Learning](deepafl_deep_analytic_federated_learning.md)
+- [Personalized Collaborative Learning with Affinity-Based Variance Reduction](personalized_collaborative_learning_with_affinity-based_variance_reduction.md)
+
+<!-- RELATED:END -->

@@ -154,3 +154,15 @@ BaCa 在全部 10 个数据集上超越 GOODAT 和所有其他基线（包括 gr
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：方法设计优雅（优先队列 + graphon + 注意力校准三位一体），理论推导扎实，实验全面且提升显著。扣一分因为超参数较多且对初始分组质量的依赖未充分讨论。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
+- [Distribution Alignment for Fully Test-Time Adaptation with Dynamic Online Data Streams](../../ECCV2024/llm_evaluation/distribution_alignment_for_fully_test-time_adaptation_with_dynamic_online_data_s.md)
+- [Enhancing Out-of-Distribution Detection with Extended Logit Normalization](../../CVPR2026/llm_evaluation/enhancing_out-of-distribution_detection_with_extended_logit_normalization.md)
+- [Gradient-Regularized Out-of-Distribution Detection](../../ECCV2024/llm_evaluation/gradient-regularized_out-of-distribution_detection.md)
+- [DcMatch: Unsupervised Multi-Shape Matching with Dual-Level Consistency](dcmatch_unsupervised_multi-shape_matching_with_dual-level_consistency.md)
+
+<!-- RELATED:END -->

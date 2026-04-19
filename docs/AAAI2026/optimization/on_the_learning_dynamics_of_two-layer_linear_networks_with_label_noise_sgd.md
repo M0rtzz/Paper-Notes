@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成实验充分验证理论，但真实实验规模受限于 NTK 计算复杂度
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，两阶段图景清晰，但符号较重
 - 价值: ⭐⭐⭐⭐ 对理解 SGD 隐式偏置和 feature learning 有理论贡献，实践影响需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks](../../ICLR2026/optimization/directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two.md)
+- [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](../../NeurIPS2025/optimization/learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
+- [Training Dynamics of In-Context Learning in Linear Attention](../../ICML2025/optimization/training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)
+- [Explore How to Inject Beneficial Noise in MLLMs](explore_how_to_inject_beneficial_noise_in_mllms.md)
+
+<!-- RELATED:END -->

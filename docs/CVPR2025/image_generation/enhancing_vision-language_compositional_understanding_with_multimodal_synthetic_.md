@@ -119,3 +119,15 @@ SPARCL框架分为两阶段：数据生成阶段和模型训练阶段。
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个基准测评+详细消融+多种对比方法，非常充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述详细，图表丰富
 - 价值: ⭐⭐⭐⭐ 对VLM组合理解研究有实践指导意义，自适应margin可广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Font-Agent: Enhancing Font Understanding with Large Language Models](font-agent_enhancing_font_understanding_with_large_language_models.md)
+- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](../../ICML2025/image_generation/understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
+- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
+- [Overcoming Visual Clutter in Vision Language Action Models via Concept-Gated Visual Distillation](overcoming_visual_clutter_in_vision_language_action_models_via_concept-gated_vis.md)
+- [Privacy Amplification Through Synthetic Data: Insights from Linear Regression](../../ICML2025/image_generation/privacy_amplification_through_synthetic_data_insights_from_linear_regression.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 全图和对象级均有完整评估，但缺少 SDXL 等新模型的验证
 - **写作质量**: ⭐⭐⭐⭐ 方法清晰，实验详尽
 - **价值**: ⭐⭐⭐⭐⭐ 极高的实际应用价值，参数效率和即插即用设计使其易于部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Invisible Watermarks, Visible Gains: Steering Machine Unlearning with Bi-Level Watermarking Design](invisible_watermarks_visible_gains_steering_machine_unlearning_with_bi-level_wat.md)
+- [Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation](efficient_input-level_backdoor_defense_on_text-to-image_synthesis_via_neuron_act.md)
+- [Enhancing Diffusion Models with Text-Encoder Reinforcement Learning](../../ECCV2024/image_generation/enhancing_diffusion_models_with_text-encoder_reinforcement_learning.md)
+- [GlyphMastero: A Glyph Encoder for High-Fidelity Scene Text Editing](../../CVPR2025/image_generation/glyphmastero_a_glyph_encoder_for_high-fidelity_scene_text_editing.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](../../ECCV2024/image_generation/lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+
+<!-- RELATED:END -->

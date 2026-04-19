@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在两个任务（轨迹估计、光流）和多个数据集上验证，消融完整
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ 为缓解事件相机运动估计的 sim-to-real gap 提供了有效工具，对事件相机社区有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMoTive: Event-Guided Trajectory Modeling for 3D Motion Estimation](../../ICCV2025/video_understanding/emotive_event-guided_trajectory_modeling_for_3d_motion_estimation.md)
+- [IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map](iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex.md)
+- [Simultaneous Motion And Noise Estimation with Event Cameras](../../ICCV2025/video_understanding/simultaneous_motion_and_noise_estimation_with_event_cameras.md)
+- [Flow4Agent: Long-form Video Understanding via Motion Prior from Optical Flow](../../ICCV2025/video_understanding/flow4agent_long-form_video_understanding_via_motion_prior_from_optical_flow.md)
+- [EgoPoser: Robust Real-Time Egocentric Pose Estimation from Sparse and Intermittent Observations Everywhere](egoposer_robust_real-time_egocentric_pose_estimation_from_sparse_and_intermitten.md)
+
+<!-- RELATED:END -->

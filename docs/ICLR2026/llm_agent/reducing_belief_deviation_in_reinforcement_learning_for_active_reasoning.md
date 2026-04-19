@@ -131,3 +131,15 @@ T³ 通过早期截断减少每次 rollout 的平均 token 数，实现更高的
 - ⭐⭐⭐⭐ 实验充分度：5 个任务、3 种 RL 算法、OOD 分析、消融实验、理论验证实验，覆盖面广
 - ⭐⭐⭐⭐ 实用价值：即插即用特性使其可直接应用于现有 RL 训练流程，token 节省具有工程价值
 - ⭐⭐⭐⭐ 清晰度：理论推导与实践设计衔接自然，代理信号的任务实例化描述清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoralReason: Generalizable Moral Decision Alignment For LLM Agents Using Reasoning-Level Reinforcement Learning](../../AAAI2026/llm_agent/moralreason_generalizable_moral_decision_alignment_for_llm_agents_using_reasonin.md)
+- [Solving the Granularity Mismatch: Hierarchical Preference Learning for Long-Horizon LLM Agents](solving_the_granularity_mismatch_hierarchical_preference_learning_for_long-horiz.md)
+- [CoMind: Towards Community-Driven Agents for Machine Learning Engineering](comind_towards_community-driven_agents_for_machine_learning_engineering.md)
+- [REMem: Reasoning with Episodic Memory in Language Agents](remem_reasoning_with_episodic_memory_in_language_agent.md)
+- [Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
+
+<!-- RELATED:END -->

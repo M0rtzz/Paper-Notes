@@ -117,3 +117,15 @@ ADFormer 采用编码器-解码器架构，设计思路是"轻编码器 + 复杂
 - 实验充分度: ⭐⭐⭐ 两个标准基准验证，但缺乏更多域迁移场景
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，推导逻辑严谨
 - 价值: ⭐⭐⭐⭐ 对 Transformer 域自适应领域有较好的启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpreting ResNet-based CLIP via Neuron-Attention Decomposition](../../NeurIPS2025/segmentation/interpreting_resnet-based_clip_via_neuron-attention_decomposition.md)
+- [Adapter Naturally Serves as Decoupler for Cross-Domain Few-Shot Semantic Segmentation](../../ICML2025/segmentation/adapter_naturally_serves_as_decoupler_for_cross-domain_few-shot_semantic_segment.md)
+- [Bridging Granularity Gaps: Hierarchical Semantic Learning for Cross-Domain Few-Shot Segmentation](../../AAAI2026/segmentation/bridging_granularity_gaps_hierarchical_semantic_learning_for_cross-domain_few-sh.md)
+- [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+
+<!-- RELATED:END -->

@@ -239,3 +239,15 @@ VESSA的流程包含三个主要模块：帧选择（Frame Selection）、预处
 - 实验充分度: ⭐⭐⭐⭐⭐ 33个基础模型×22个数据集，消融非常充分
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，层层递进
 - 价值: ⭐⭐⭐⭐ 实用性强，为缺乏标注数据的场景提供了可行方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Semi-Supervised Learning in the Era of Foundation Models](revisiting_semi-supervised_learning_in_the_era_of_foundation_models.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
+
+<!-- RELATED:END -->

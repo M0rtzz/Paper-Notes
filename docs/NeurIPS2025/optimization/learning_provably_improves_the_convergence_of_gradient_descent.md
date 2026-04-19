@@ -136,3 +136,15 @@ $$F(W^k) \leq \left(1 - 4\eta \frac{\beta_0^2}{\beta^2} \delta_4 \alpha_0^2\righ
 - 实验充分度: ⭐⭐⭐ — 仅在合成数据上验证，缺乏真实应用场景实验
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，结构清晰，但大量符号定义增加阅读难度
 - 价值: ⭐⭐⭐⭐ — 填补L2O收敛理论空白，但二次规划限制降低了通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent](multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)
+- [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+- [Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules](gradient_descent_as_loss_landscape_navigation_a_normative_framework_for_deriving.md)
+- [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+- [Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression](large_stepsizes_accelerate_gradient_descent_for_regularized_logistic_regression.md)
+
+<!-- RELATED:END -->

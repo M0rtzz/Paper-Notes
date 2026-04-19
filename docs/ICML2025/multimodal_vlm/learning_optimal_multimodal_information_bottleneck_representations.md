@@ -109,3 +109,15 @@ $$M_u = \frac{1}{(1+r)(H(v_1)+H(v_2)-I(v_1;v_2))}$$
 - 与 L-MIB、E-MIB、C-MIB、MMIB-Zhang、DMIB 等基线全面对比
 - 非 MIB 基线包括 Concat、BiGated、MISA 等融合方法
 - 变分近似使用 KL 散度，重参数化技巧保证可微性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph4MM: Weaving Multimodal Learning with Structural Information](graph4mm_weaving_multimodal_learning_with_structural_information.md)
+- [Conditional Information Bottleneck for Multimodal Fusion: Overcoming Shortcut Learning in Sarcasm Detection](../../AAAI2026/multimodal_vlm/conditional_information_bottleneck_for_multimodal_fusion_overcoming_shortcut_lea.md)
+- [Information Theoretic Optimal Surveillance for Epidemic Prevalence in Networks](../../AAAI2026/multimodal_vlm/information_theoretic_optimal_surveillance_for_epidemic_prevalence_in_networks.md)
+- [Visual Instruction Bottleneck Tuning](../../NeurIPS2025/multimodal_vlm/visual_instruction_bottleneck_tuning.md)
+- [Learning Shared Representations from Unpaired Data](../../NeurIPS2025/multimodal_vlm/learning_shared_representations_from_unpaired_data.md)
+
+<!-- RELATED:END -->

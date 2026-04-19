@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ImageNet标准基准全面对比，消融验证理论预测
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-方法-实验逻辑环环相扣
 - 价值: ⭐⭐⭐⭐⭐ 为连续自回归生成提供了统一理论基础和实用高效方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Randomized Autoregressive Visual Generation](../../ICCV2025/image_generation/randomized_autoregressive_visual_generation.md)
+- [InfinityStar: Unified Spacetime AutoRegressive Modeling for Visual Generation](../../NeurIPS2025/image_generation/infinitystar_unified_spacetime_autoregressive_modeling_for_v.md)
+- [Visual Generation Without Guidance](visual_generation_without_guidance.md)
+- [Continuous Semi-Implicit Models](continuous_semi-implicit_models.md)
+- [Watermarking Autoregressive Image Generation](../../NeurIPS2025/image_generation/watermarking_autoregressive_image_generation.md)
+
+<!-- RELATED:END -->

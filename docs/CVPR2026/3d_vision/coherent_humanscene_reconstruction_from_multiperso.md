@@ -154,3 +154,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个数据集、单目/多视图、详尽消融、运行时分析齐全
 - 写作质量: ⭐⭐⭐⭐ 贡献清晰，每个设计决策都有实验验证
 - 价值: ⭐⭐⭐⭐ 快速推理+无需预处理对实际部署有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PixARMesh: Autoregressive Mesh-Native Single-View Scene Reconstruction](pixarmesh_autoregressive_mesh-native_single-view_scene_reconstruction.md)
+- [MV-RoMa: From Pairwise Matching into Multi-View Track Reconstruction](mv-roma_from_pairwise_matching_into_multi-view_track_reconstruction.md)
+- [BRepGaussian: CAD Reconstruction from Multi-View Images with Gaussian Splatting](brepgaussian_cad_reconstruction_from_multi-view_images_with_gaussian_splatting.md)
+- [Changes in Real Time: Online Scene Change Detection with Multi-View Fusion](changes_in_real_time_online_scene_change_detection_with_multi-view_fusion.md)
+- [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3 个 LLM x 3 个数据集 + 3 个公开基准 + 鲁棒性 + 消融 + 效率分析，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 生物学类比清晰，公式推导完整可跟，论文结构规范
 - 价值: ⭐⭐⭐⭐ SOTA 提升明显（公开基准 AUROC +5.55%），方法简洁高效适合部署，新范式有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text](agentstealth_reinforcing_large_language_model_for_anonymizing_user-generated_tex.md)
+- [AI Should Sense Better, Not Just Scale Bigger: Adaptive Sensing as a Paradigm Shift](ai_should_sense_better_not_just_scale_bigger_adaptive_sensin.md)
+- [The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](../../ICML2025/ai_safety/the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
+- [Watermark-based Detection and Attribution of AI-Generated Content](../../ICLR2026/ai_safety/watermark-based_attribution_of_ai-generated_content.md)
+
+<!-- RELATED:END -->

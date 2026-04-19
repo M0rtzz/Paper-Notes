@@ -132,3 +132,15 @@ R2D2 提出了一个结合 Remember（经验回放缓冲区 + A* 搜索导航）
 - 实验充分度: ⭐⭐⭐⭐ WebArena 详细消融和错误分析，但仅在一个 benchmark 上测试
 - 写作质量: ⭐⭐⭐⭐ 形式化定义清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 对 Web Agent 的实用提升巨大（3倍完成率），思路可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A-MEM: Agentic Memory for LLM Agents](../../NeurIPS2025/llm_agent/a-mem_agentic_memory_for_llm_agents.md)
+- [WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [Visual Agentic AI for Spatial Reasoning with a Dynamic API](../../CVPR2025/llm_agent/visual_agentic_ai_for_spatial_reasoning_with_a_dynamic_api.md)
+- [Unveiling Privacy Risks in LLM Agent Memory](mextra_agent_memory_privacy.md)
+- [CAM: A Constructivist View of Agentic Memory for LLM-Based Reading Comprehension](../../NeurIPS2025/llm_agent/cam_a_constructivist_view_of_agentic_memory_for_llm-based_reading_comprehension.md)
+
+<!-- RELATED:END -->

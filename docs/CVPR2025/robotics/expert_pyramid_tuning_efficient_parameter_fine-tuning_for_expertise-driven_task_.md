@@ -155,3 +155,15 @@ EPT 的整体架构类似参数金字塔，由三个核心组件构成：
 - 实验充分度: ⭐⭐⭐⭐ GLUE + 常识推理覆盖面好，消融实验详尽，但缺少生成任务和更大模型的验证
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，图示直观，数学表述规范
 - 价值: ⭐⭐⭐⭐ 用更少参数 (0.41M) 超越更多参数的 SOTA，实用价值高；金字塔思想有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction](phoenix_a_motion-based_self-reflection_framework_for_fine-grained_robotic_action.md)
+- [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
+- [Let Humanoids Hike! Integrative Skill Development on Complex Trails](let_humanoids_hike_integrative_skill_development_on_complex_trails.md)
+- [Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method](towards_long-horizon_vision-language_navigation_platform_benchmark_and_method.md)
+- [3D-MVP: 3D Multiview Pretraining for Robotic Manipulation](3d-mvp_3d_multiview_pretraining_for_manipulation.md)
+
+<!-- RELATED:END -->

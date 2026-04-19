@@ -208,3 +208,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 四个数据集、充分消融、计算开销分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式完整
 - 价值: ⭐⭐⭐⭐ — 提供了实用的医学分割解码器设计范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](../../CVPR2026/medical_imaging/decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation](funkan_functional_kolmogorov-arnold_network_for_medical_image_enhancement_and_se.md)
+- [FIA-Edit: Frequency-Interactive Attention for Efficient and High-Fidelity Inversion-Free Text-Guided Image Editing](fia-edit_frequency-interactive_attention_for_efficient_and_high-fidelity_inversi.md)
+- [MIRNet: Integrating Constrained Graph-Based Reasoning with Pre-training for Diagnostic Medical Imaging](mirnet_integrating_constrained_graph-based_reasoning_with_pre-training_for_diagn.md)
+- [Domesticating SAM for Breast Ultrasound Image Segmentation via Spatial-Frequency Fusion and Uncertainty Correction](../../ECCV2024/medical_imaging/domesticating_sam_for_breast_ultrasound_image_segmentation_via_spatial-frequency.md)
+
+<!-- RELATED:END -->

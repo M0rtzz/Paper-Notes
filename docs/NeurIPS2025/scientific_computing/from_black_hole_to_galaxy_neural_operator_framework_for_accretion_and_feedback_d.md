@@ -129,3 +129,15 @@ $$\mathcal{L} = \mathcal{L}_{\mathbf{B}} + \mathcal{L}_{\mathbf{v}} + \mathcal{L
 - 实验充分度: ⭐⭐⭐ MHD+GRMHD 两套实验 + 系统消融，但缺乏定量长期指标和泛化实验
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，方法-物理耦合描述详细，附录完备
 - 价值: ⭐⭐⭐⭐⭐ 有望革命性改变宇宙学模拟中的黑洞反馈建模，影响 FIRE/IllustrisTNG 等主流框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JPEG Processing Neural Operator for Backward-Compatible Coding](../../ICCV2025/scientific_computing/jpeg_processing_neural_operator_for_backward-compatible_coding.md)
+- [One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](../../ICLR2026/scientific_computing/one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
+- [From Images to Physics: Probabilistic Inference of Galaxy Parameters and Emission Lines via VAE–Normalizing Flows](one-shot_transfer_learning_for_nonlinear_pdes_with_perturbative_pinns.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](../../ICLR2026/scientific_computing/drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training](../../CVPR2026/scientific_computing/nestor_a_nested_moe-based_neural_operator_for_large-scale_pde_pre-training.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ $$\mathcal{L}_{\text{stage}} = \mathcal{L}_{\text{BCE}} + \mathcal{L}_{\text{Dic
 - 实验充分度: ⭐⭐⭐⭐ diffusion inpainting + 传统篡改 + 完整消融，但缺少 deepfake 人脸场景
 - 写作质量: ⭐⭐⭐⭐ 动机阐述优秀，"流形偏差"概念直观清晰
 - 价值: ⭐⭐⭐⭐⭐ 跨生成器泛化能力使方法具有实际部署价值，范式可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Detecting Salient and Camouflaged Objects in Unconstrained Scenes](../../ICCV2025/segmentation/rethinking_detecting_salient_and_camouflaged_objects_in_unconstrained_scenes.md)
+- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_re.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [UnrealPose: Leveraging Game Engine Kinematics for Large-Scale Synthetic Human Pose Data](unrealpose_leveraging_game_engine_kinematics_for_large-scale_synthetic_human_pos.md)
+- [Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation](spatio-semantic_expert_routing_architecture_with_mixture-of-experts_for_referrin.md)
+
+<!-- RELATED:END -->

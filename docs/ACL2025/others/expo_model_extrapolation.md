@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个模型(1.8B-70B)、多种对齐方法、详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，从观察到假设到验证到方法的逻辑链完美
 - 价值: ⭐⭐⭐⭐⭐ 零成本提升LLM对齐的实用方法，非常有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EpiCoDe: Boosting Model Performance Beyond Training with Extrapolation and Contrastive Decoding](epicode_boosting_model_performance_beyond_training_with_extrapolation_and_contra.md)
+- [From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding](well_begun_is_half_done_low-resource_preference_alignment_by_weak-to-strong_deco.md)
+- [Towards Style Alignment in Cross-Cultural Translation](towards_style_alignment_in_cross-cultural_translation.md)
+- [SudoLM: Learning Access Control of Parametric Knowledge with Authorization Alignment](sudolm_authorization_alignment.md)
+
+<!-- RELATED:END -->

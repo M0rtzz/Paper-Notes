@@ -137,3 +137,15 @@ DIME 基于预训练 ViT 骨干网络，采用参数高效微调策略：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 四个数据集、多个不平衡比、完整消融、效率对比、敏感性分析
 - 写作质量: ⭐⭐⭐⭐ — 问题形式化严谨，符号一致
 - 价值: ⭐⭐⭐⭐ — 解决了一个实际且被忽视的问题，方法具有推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning](../../NeurIPS2025/signal_comm/contrastive_consolidation_of_top-down_modulations_achieves_sparsely_supervised_c.md)
+- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
+- [Optimizing Illuminant Estimation in Dual-Exposure HDR Imaging](../../ECCV2024/signal_comm/optimizing_illuminant_estimation_in_dual-exposure_hdr_imaging.md)
+- [Boosting Multimodal Learning via Disentangled Gradient Learning](../../ICCV2025/signal_comm/boosting_multimodal_learning_via_disentangled_gradient_learning.md)
+- [Learning Molecular Chirality via Chiral Determinant Kernels](../../ICLR2026/signal_comm/learning_molecular_chirality_via_chiral_determinant_kernels.md)
+
+<!-- RELATED:END -->

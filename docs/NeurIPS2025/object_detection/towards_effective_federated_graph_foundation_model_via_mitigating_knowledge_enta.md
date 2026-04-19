@@ -152,3 +152,15 @@ $$\mathcal{L}_{pretrain} = \mathcal{L}_{feat} + \mathcal{L}_{topo} + \text{codeb
 - 实验充分度: ⭐⭐⭐⭐⭐ （8数据集、20基线、3大任务类型、消融+超参数分析）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，但方法涉及联邦+GFM+VQ-VAE+提示学习多个概念，读起来信息量大）
 - 价值: ⭐⭐⭐⭐ （开辟了有前景的研究方向，但离真实部署还有隐私和规模化的挑战）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Adaptive Object Detection with Foundation Model](test-time_adaptive_object_detection_with_foundation_model.md)
+- [Towards Effective, Stealthy, and Persistent Backdoor Attacks Targeting Graph Foundation Models](../../AAAI2026/object_detection/towards_effective_stealthy_and_persistent_backdoor_attacks_targeting_graph_found.md)
+- [Generalizable Insights for Graph Transformers in Theory and Practice](generalizable_insights_for_graph_transformers_in_theory_and_practice.md)
+- [CQ-DINO: Mitigating Gradient Dilution via Category Queries for Vast Vocabulary Object Detection](cq-dino_mitigating_gradient_dilution_via_category_queries_for_vast_vocabulary_ob.md)
+- [Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ $$R_t^{\text{response}} = N \cdot R \cdot L \cdot G \cdot F$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融、长期稳定性、偏好冲突、推理效率等分析全面
 - **写作质量**: ⭐⭐⭐⭐☆ — 结构清晰，图示直观，但部分细节在附录中
 - **价值**: ⭐⭐⭐⭐☆ — 对个性化 LLM 有实际参考价值，3B 打败 GPT-4o 的结果很有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Language Models to Reason Efficiently](training_language_models_to_reason_efficiently.md)
+- [Checklists Are Better Than Reward Models For Aligning Language Models](checklists_are_better_than_reward_models_for_aligning_langua.md)
+- [RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
+- [Router-R1: Teaching LLMs Multi-Round Routing and Aggregation via Reinforcement Learning](router-r1_teaching_llms_multi-round_routing_and_aggregation_via_reinforcement_le.md)
+- [Behavior Injection: Preparing Language Models for Reinforcement Learning](behavior_injection_preparing_language_models_for_reinforcement_learning.md)
+
+<!-- RELATED:END -->

@@ -10,114 +10,114 @@ description: >-
 
 **🎞️ ECCV2024** · **28** 篇论文解读
 
-**[A Cephalometric Landmark Regression Method Based On Dual-Encoder For High-Resolu](a_cephalometric_landmark_regression_method_based_on_dual-encoder_for_high-resolu.md)**
+**[A Cephalometric Landmark Regression Method Based on Dual-Encoder for High-Resolution X-Ray Image](a_cephalometric_landmark_regression_method_based_on_dual-encoder_for_high-resolu.md)**
 
 :   本文提出 D-CeLR，一种基于双编码器（Dual-Encoder）的端到端回归方法，仅利用 Transformer 编码器设计特征提取+参考编码器+精调编码器的三阶段架构，实现从粗到细的头影测量标志点检测，在 Mean Radical Error (MRE) 和 2mm Success Detection Rate (SDR) 指标上显著超越现有 SOTA。
 
-**[A Rotation-Invariant Texture Vit For Fine-Grained Recognition Of Esophageal Canc](a_rotation-invariant_texture_vit_for_fine-grained_recognition_of_esophageal_canc.md)**
+**[A Rotation-Invariant Texture ViT for Fine-Grained Recognition of Esophageal Cancer Endoscopic Ultrasound Images](a_rotation-invariant_texture_vit_for_fine-grained_recognition_of_esophageal_canc.md)**
 
 :   本文提出 SRRM-ViT，通过在 ViT 中引入统计旋转不变性增强机制(SRRM)，自适应选择关键区域并融合直方图统计特征，实现了对食管癌内镜超声图像中任意径向位置病灶的无偏细粒度分类，在临床和公开数据集上取得了显著性能提升。
 
-**[Adaptive Compressed Sensing With Diffusionbased Posterior Sa](adaptive_compressed_sensing_with_diffusionbased_posterior_sa.md)**
+**[Adaptive Compressed Sensing with Diffusion-Based Posterior Sampling](adaptive_compressed_sensing_with_diffusionbased_posterior_sa.md)**
 
 :   提出AdaSense，利用预训练扩散模型的零样本后验采样来量化重建不确定性，从而自适应地选择最优测量矩阵，无需额外训练即可在人脸图像、MRI和CT等多领域实现优于非自适应方法的压缩感知重建。
 
-**[Adaptive Correspondence Scoring For Unsupervised Medical Ima](adaptive_correspondence_scoring_for_unsupervised_medical_ima.md)**
+**[Adaptive Correspondence Scoring for Unsupervised Medical Image Registration](adaptive_correspondence_scoring_for_unsupervised_medical_ima.md)**
 
 :   针对医学图像无监督配准中噪声、遮挡等干扰因素导致的虚假重建误差问题，提出了一个自适应对应关系评分框架（AdaCS），通过学习像素级的对应置信度图来重新加权误差残差，以即插即用方式一致提升三种主流配准架构在三个数据集上的性能。
 
-**[Alternate Diverse Teaching For Semi-Supervised Medical Image Segmentation](alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)**
+**[Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation](alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)**
 
 :   提出 AD-MT（Alternate Diverse Mean Teacher），通过随机周期性交替更新两个教师模型 + 基于熵的冲突调和策略，在半监督医学分割中解决 confirmation bias 问题，在 ACDC/LA/Pancreas 上全面超越 SOTA。
 
-**[Architecture-Agnostic Untrained Network Priors For Image Reconstruction With Fre](architecture-agnostic_untrained_network_priors_for_image_reconstruction_with_fre.md)**
+**[Architecture-Agnostic Untrained Network Priors for Image Reconstruction with Frequency Regularization](architecture-agnostic_untrained_network_priors_for_image_reconstruction_with_fre.md)**
 
 :   提出三种与架构无关的频率正则化技术（带宽受限输入、带宽可控上采样、Lipschitz 正则化卷积层），统一解决 untrained network prior 的架构敏感性、过拟合和运行效率问题，在 MRI 重建任务中显著缩小不同架构间的性能差距。
 
-**[Brain-Id Learning Contrast-Agnostic Anatomical Representations For Brain Imaging](brain-id_learning_contrast-agnostic_anatomical_representations_for_brain_imaging.md)**
+**[Brain-ID: Learning Contrast-agnostic Anatomical Representations for Brain Imaging](brain-id_learning_contrast-agnostic_anatomical_representations_for_brain_imaging.md)**
 
 :   本文提出 Brain-ID，一种对比度无关的脑解剖表征学习模型，通过"轻度到重度"的受试者内图像合成策略，在全合成数据上训练获得对MRI对比度、分辨率、方向和伪影鲁棒的解剖特征，仅需一层适配即可在四种下游任务和六个公开数据集上达到 SOTA。
 
-**[Cardiacnet Learning To Reconstruct Abnormalities For Cardiac Disease Assessment ](cardiacnet_learning_to_reconstruct_abnormalities_for_cardiac_disease_assessment_.md)**
+**[CardiacNet: Learning to Reconstruct Abnormalities for Cardiac Disease Assessment from Echocardiogram Videos](cardiacnet_learning_to_reconstruct_abnormalities_for_cardiac_disease_assessment_.md)**
 
 :   提出基于重建的心脏疾病评估框架 CardiacNet，通过 Consistency Deformation Codebook (CDC) 和 Consistency Deformation Discriminator (CDD) 学习正常与异常心脏超声视频之间的结构和运动差异，在射血分数预测、肺动脉高压和房间隔缺损分类三个任务上达到 SOTA。
 
-**[Chameleon A Data-Efficient Generalist For Dense Visual Prediction In The Wild](chameleon_a_data-efficient_generalist_for_dense_visual_prediction_in_the_wild.md)**
+**[Chameleon: A Data-Efficient Generalist for Dense Visual Prediction in the Wild](chameleon_a_data-efficient_generalist_for_dense_visual_prediction_in_the_wild.md)**
 
 :   提出 Chameleon，一个基于 meta-learning 和 token matching 的数据高效视觉通才模型，仅需几十张标注图像即可适应全新的密集预测任务（包括医学图像、视频、3D 等），在六个下游基准上显著超越现有通才方法。
 
-**[Chex Interactive Localization And Region Description In Chest X-Rays](chex_interactive_localization_and_region_description_in_chest_x-rays.md)**
+**[CheX: Interactive Localization and Region Description in Chest X-rays](chex_interactive_localization_and_region_description_in_chest_x-rays.md)**
 
 :   提出ChEX——一个同时支持文本提示和边界框查询的交互式胸部X光解释模型，通过DETR风格的prompt检测器和多任务联合训练，在9个胸部X光任务上与SOTA竞争，同时提供独特的定位可解释性和用户交互能力。
 
-**[Co-Synthesis Of Histopathology Nuclei Image-Label Pairs Using A Context-Conditio](co-synthesis_of_histopathology_nuclei_image-label_pairs_using_a_context-conditio.md)**
+**[Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model](co-synthesis_of_histopathology_nuclei_image-label_pairs_using_a_context-conditio.md)**
 
 :   提出一种上下文条件化的联合扩散模型，能够同时合成组织病理学细胞核图像、语义标签和距离图，通过点图（centroid layout）和文本提示两种条件实现对合成过程的精确控制，并生成高质量的实例级标签用于下游核分割和分类任务。
 
-**[Domesticating Sam For Breast Ultrasound Image Segmentation Via Spatial-Frequency](domesticating_sam_for_breast_ultrasound_image_segmentation_via_spatial-frequency.md)**
+**[Domesticating SAM for Breast Ultrasound Image Segmentation via Spatial-Frequency Fusion and Uncertainty Correction](domesticating_sam_for_breast_ultrasound_image_segmentation_via_spatial-frequency.md)**
 
 :   本文提出 SF-RecSAM 模型，通过空间-频率特征融合模块弥补SAM在低级特征提取上的不足，并设计双假校正器（Dual False Corrector）利用不确定性估计识别并修正假阳性和假阴性区域，在BUSI和UDIAT两个乳腺超声数据集上显著超越SOTA方法。
 
-**[Energy-Induced Explicit Quantification For Multi-Modality Mri Fusion](energy-induced_explicit_quantification_for_multi-modality_mri_fusion.md)**
+**[Energy-induced Explicit Quantification for Multi-modality MRI Fusion](energy-induced_explicit_quantification_for_multi-modality_mri_fusion.md)**
 
 :   提出能量引导的显式传播与对齐框架E²PA，通过能量引导的层级融合（EHF）和能量正则化的空间对齐（ESA）两个模块，显式量化并优化多模态MRI融合中的模态间依赖传播和信息流一致性，在三个公开数据集上超越SOTA。
 
-**[Gtp-4O Modality-Prompted Heterogeneous Graph Learning For Omni-Modal Biomedical ](gtp-4o_modality-prompted_heterogeneous_graph_learning_for_omni-modal_biomedical_.md)**
+**[GTP-4o: Modality-Prompted Heterogeneous Graph Learning for Omni-Modal Biomedical Representation](gtp-4o_modality-prompted_heterogeneous_graph_learning_for_omni-modal_biomedical_.md)**
 
 :   提出基于异构图的全模态生物医学表征学习框架 GTP-4o，通过异构图嵌入显式建模跨模态关系，利用图提示机制补全缺失模态，并设计知识引导的层次化跨模态聚合，在胶质瘤分级和生存预测任务上取得SOTA。
 
-**[Heterogeneous Graph Learning For Scene Graph Prediction In 3D Point Clouds](heterogeneous_graph_learning_for_scene_graph_prediction_in_3d_point_clouds.md)**
+**[Heterogeneous Graph Learning for Scene Graph Prediction in 3D Point Clouds](heterogeneous_graph_learning_for_scene_graph_prediction_in_3d_point_clouds.md)**
 
 :   提出 3D-HetSGP 框架，将3D场景图预测建模为异构图学习问题，通过两阶段的异构图结构学习（HGSL）和异构图推理（HGR），解决了现有同构全连接图方法中不加区分的消息传递导致的次优性能问题。
 
-**[I-Medsam Implicit Medical Image Segmentation With Segment Anything](i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)**
+**[I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)**
 
 :   提出 I-MedSAM，将 SAM 的强泛化能力与隐式神经表示（INR）的连续空间预测优势结合，通过频率适配器增强边界高频信息、不确定性引导采样精细化分割，仅用 1.6M 可训练参数即超越现有离散和隐式方法。
 
-**[Improving Medical Multi-Modal Contrastive Learning With Expert Annotations](improving_medical_multi-modal_contrastive_learning_with_expert_annotations.md)**
+**[Improving Medical Multi-modal Contrastive Learning with Expert Annotations](improving_medical_multi-modal_contrastive_learning_with_expert_annotations.md)**
 
 :   提出 eCLIP，通过整合放射科专家的眼动注视热力图作为额外监督信号，结合 mixup 增强和课程学习策略，在不修改 CLIP 核心架构的前提下增强医学多模态对比学习的表征质量。
 
-**[Is User Feedback Always Informative Retrieval Latent Defending For Semi-Supervis](is_user_feedback_always_informative_retrieval_latent_defending_for_semi-supervis.md)**
+**[Is User Feedback Always Informative? Retrieval Latent Defending for Semi-Supervised Domain Adaptation without Source Data](is_user_feedback_always_informative_retrieval_latent_defending_for_semi-supervis.md)**
 
 :   发现用户反馈在域适应中并非总是有益——偏向纠正错误预测的"负偏反馈"(NBF)会导致现有半监督域适应方法性能下降，并提出 Retrieval Latent Defending 方法，通过在每个 mini-batch 中加入伪标签防御样本来平衡监督信号。
 
-**[Ophnet A Large-Scale Video Benchmark For Ophthalmic Surgical Workflow Understand](ophnet_a_large-scale_video_benchmark_for_ophthalmic_surgical_workflow_understand.md)**
+**[OphNet: A Large-Scale Video Benchmark for Ophthalmic Surgical Workflow Understanding](ophnet_a_large-scale_video_benchmark_for_ophthalmic_surgical_workflow_understand.md)**
 
 :   构建了OphNet——目前最大规模的眼科手术视频基准数据集（2278个视频、285小时、66种手术类型、102种手术阶段、150种精细操作），支持手术类型识别、阶段识别、时序定位和阶段预测四大任务，其规模约为现有最大手术工作流分析基准的20倍。
 
-**[Pathology-Knowledge Enhanced Multi-Instance Prompt Learning For Few-Shot Whole S](pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)**
+**[Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)**
 
 :   提出 PEMP 框架，将病理学先验知识（视觉样例 + 文本描述）融入 patch 级和 slide 级的 prompt 中，结合 CLIP 进行多实例 prompt learning，在少样本弱监督 WSI 分类任务上平均超越 SOTA 方法 4%。
 
-**[Radedit Stress-Testing Biomedical Vision Models Via Diffusion Image Editing](radedit_stress-testing_biomedical_vision_models_via_diffusion_image_editing.md)**
+**[RadEdit: Stress-Testing Biomedical Vision Models via Diffusion Image Editing](radedit_stress-testing_biomedical_vision_models_via_diffusion_image_editing.md)**
 
 :   提出 RadEdit，一种基于扩散模型的医学图像编辑方法，通过引入 edit mask 和 keep mask 的双重掩码机制，打破数据中的虚假关联（spurious correlations），生成高质量的合成测试集来压力测试（stress-test）生物医学视觉模型对数据集偏移的鲁棒性。
 
-**[Radiative Gaussian Splatting For Efficient X-Ray Novel View Synthesis](radiative_gaussian_splatting_for_efficient_x-ray_novel_view_synthesis.md)**
+**[Radiative Gaussian Splatting for Efficient X-ray Novel View Synthesis](radiative_gaussian_splatting_for_efficient_x-ray_novel_view_synthesis.md)**
 
 :   提出 X-Gaussian，首个将 3D 高斯泼溅（3DGS）应用于 X 射线新视角合成的框架，通过设计辐射高斯点云模型（替代球谐函数）和角度位姿长方体均匀初始化策略（替代 SfM），在性能上超越 SOTA NeRF 方法 6.5 dB 的同时，实现 73× 推理加速和仅 15% 的训练时间。
 
-**[Shape-Guided Configuration-Aware Learning For Endoscopic-Image-Based Pose Estima](shape-guided_configuration-aware_learning_for_endoscopic-image-based_pose_estima.md)**
+**[Shape-Guided Configuration-Aware Learning for Endoscopic-Image-Based Pose Estimation of Flexible Robotic Instruments](shape-guided_configuration-aware_learning_for_endoscopic-image-based_pose_estima.md)**
 
 :   利用柔性机器人的3D形状先验引导图像特征学习，通过部件级几何表示提取和动态形状变形机制，实现了高精度的内窥镜图像柔性机器人位姿估计，在外部朝向和内部弯曲角度估计上显著超越了关键点、骨架和直接回归等基线方法。
 
-**[Textttnephi Neural Deformation Fields For Approximately Diff](textttnephi_neural_deformation_fields_for_approximately_diff.md)**
+**[NePhi: Neural Deformation Fields for Approximately Diffeomorphic Medical Image Registration](textttnephi_neural_deformation_fields_for_approximately_diff.md)**
 
 :   NePhi 提出用神经隐式函数（SIREN）替代传统体素形变场来表示图像配准中的形变，通过编码器预测潜码实现快速推理、通过实例优化提升精度，在肺部和脑部 3D 配准任务中匹配 SOTA 精度的同时将训练内存降低 5 倍，且天然产生近似微分同胚的光滑形变。
 
-**[Tip Tabular-Image Pre-Training For Multimodal Classification With Incomplete Dat](tip_tabular-image_pre-training_for_multimodal_classification_with_incomplete_dat.md)**
+**[TIP: Tabular-Image Pre-training for Multimodal Classification with Incomplete Data](tip_tabular-image_pre-training_for_multimodal_classification_with_incomplete_dat.md)**
 
 :   提出 TIP 框架，通过掩码表格重建、图像-表格匹配和对比学习三种自监督任务，对表格数据和图像进行联合预训练，学习对不完整表格数据鲁棒的多模态表征，用于下游分类任务。
 
-**[Topology-Preserving Downsampling Of Binary Images](topology-preserving_downsampling_of_binary_images.md)**
+**[Topology-Preserving Downsampling of Binary Images](topology-preserving_downsampling_of_binary_images.md)**
 
 :   提出首个基于离散优化（整数规划）的拓扑保持二值图像下采样方法，通过将下采样像素的黑白决策编码为布尔变量、拓扑保持作为硬约束、与原图相似度作为目标函数来求解，保证下采样结果具有与原图完全相同的Betti数（连通分量数和孔洞数），同时保持与传统方法竞争性的像素级相似度。
 
-**[Unleashing The Power Of Prompt-Driven Nucleus Instance Segmentation](unleashing_the_power_of_prompt-driven_nucleus_instance_segmentation.md)**
+**[Unleashing the Power of Prompt-driven Nucleus Instance Segmentation](unleashing_the_power_of_prompt-driven_nucleus_instance_segmentation.md)**
 
 :   提出 PromptNucSeg 框架，通过训练一个 prompter 自动生成细胞核中心点 prompt，并微调 SAM 进行逐核分割，同时引入相邻核作为 negative prompt 解决重叠核分割问题，无需复杂后处理即在三个 benchmark 上达到 SOTA。
 
-**[Unsupervised Multi-Modal Medical Image Registration Via Invertible Translation](unsupervised_multi-modal_medical_image_registration_via_invertible_translation.md)**
+**[Unsupervised Multi-modal Medical Image Registration via Invertible Translation](unsupervised_multi-modal_medical_image_registration_via_invertible_translation.md)**
 
 :   本文提出 INNReg，通过可逆神经网络将多模态医学图像翻译为单模态，再利用单模态图像进行配准，结合基于归一化互信息的 barrier 损失函数，在 MRI T1/T2 和 MRI/CT 数据集上取得了优于现有方法的配准精度。

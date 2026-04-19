@@ -149,3 +149,15 @@ tags:
 - 实验充分度: 8/10 — 消融实验全面，涵盖表征类型、注意力机制、动作头、slot 数量等多个维度
 - 写作质量: 7/10 — 结构清晰，但部分数学符号较密集，可视化分析有待加强
 - 价值: 7/10 — 在特权设置下验证了 slot 的有效性，但依赖 GT BEV 限制了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniScene: Unified Occupancy-centric Driving Scene Generation](../../CVPR2025/autonomous_driving/uniscene_unified_occupancy-centric_driving_scene_generation.md)
+- [Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection](equivariant_spatio-temporal_self-supervision_for_lidar_object_detection.md)
+- [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](../../NeurIPS2025/autonomous_driving/self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
+- [FSD-BEV: Foreground Self-Distillation for Multi-View 3D Object Detection](fsd-bev_foreground_self-distillation_for_multi-view_3d_object_detection.md)
+- [Towards 3D Object-Centric Feature Learning for Semantic Scene Completion](../../AAAI2026/autonomous_driving/towards_3d_object-centric_feature_learning_for_semantic_scene_completion.md)
+
+<!-- RELATED:END -->

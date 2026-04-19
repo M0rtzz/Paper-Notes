@@ -126,3 +126,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨 + 实验丰富 + 实践指导清晰，40页完整附录
 - 价值: ⭐⭐⭐⭐ 理论有深度、实践有指导，但数学推理的关键瓶颈可能不在精度
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Characterizing the Expressivity of Fixed-Precision Transformer Language Models](../../NeurIPS2025/llm_nlp/characterizing_the_expressivity_of_fixed-precision_transformer_language_models.md)
+- [Linear Transformers Implicitly Discover Unified Numerical Algorithms](../../NeurIPS2025/llm_nlp/linear_transformers_implicitly_discover_unified_numerical_algorithms.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+- [Stepwise Reasoning Disruption Attack of LLMs](stepwise_reasoning_disruption_attack_of_llms.md)
+- [Are Your LLMs Capable of Stable Reasoning?](are_your_llms_capable_of_stable_reasoning.md)
+
+<!-- RELATED:END -->

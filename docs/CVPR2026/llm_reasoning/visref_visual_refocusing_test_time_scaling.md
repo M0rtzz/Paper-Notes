@@ -139,3 +139,15 @@ VisRef 完全不需要训练。所有操作在推理时完成：视觉 token 选
 - **实验充分度**: ⭐⭐⭐⭐⭐（3模型×3基准，丰富消融包含相关性/多样性分解、训练式方法对比、token 预算分析、test-time scaling 曲线）
 - **写作质量**: ⭐⭐⭐⭐⭐（问题动机明确，方法推导严谨，图表信息量大）
 - **价值**: ⭐⭐⭐⭐⭐（免训练即插即用 + 显著且一致的提升 + 与训练式方法正交互补，实用价值很高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](red_rationale_enhanced_decoding_cot.md)
+- [Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)
+- [Efficient Test-Time Scaling for Small Vision-Language Models](../../ICLR2026/llm_reasoning/efficient_test-time_scaling_for_small_vision-language_models.md)
+- [Harnessing Chain-of-Thought Reasoning in Multimodal Large Language Models for Face Anti-Spoofing](harnessing_chain-of-thought_reasoning_in_multimodal_large_language_models_for_fa.md)
+- [FaceCoT: Harnessing Chain-of-Thought Reasoning in MLLMs for Face Anti-Spoofing](facecot_cot_reasoning_face_anti_spoofing.md)
+
+<!-- RELATED:END -->

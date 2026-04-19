@@ -152,3 +152,15 @@ CALVIN ABCD 上各组件消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两大仿真基准+三种真实世界泛化设定，消融完备，数据消融也做了
 - 写作质量: ⭐⭐⭐⭐ 整体结构清晰，插图丰富，但方法细节较多需要反复阅读
 - 价值: ⭐⭐⭐⭐⭐ 在长时域操作这一核心挑战上取得大幅提升，进度信号的思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward](../../AAAI2026/object_detection/actor-critic_for_continuous_action_chunks_a_reinforcement_le.md)
+- [Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models](neighbor_grpo_contrastive_ode_policy_optimization_aligns_flow_models.md)
+- [SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)
+- [SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](../../AAAI2026/object_detection/semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
+- [Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition](learning_by_neighbor-aware_semantics_deciding_by_open-form_flows_towards_robust_.md)
+
+<!-- RELATED:END -->

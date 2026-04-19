@@ -154,3 +154,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (数值验证充分，但限于理论设定)
 - 写作质量: ⭐⭐⭐⭐ (理论严谨，清晰度良好)
 - 价值: ⭐⭐⭐⭐ (对理解 Transformer 记忆能力有重要贡献)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning](../../CVPR2026/optimization/scope_semantic_coreset_with_orthogonal_projection.md)
+- [Markovian Transformers for Informative Language Modeling](markovian_transformers_for_informative_language_modeling.md)
+- [The Affine Divergence: Aligning Activation Updates Beyond Normalisation](the_affine_divergence_aligning_activation_updates_beyond_normalisation.md)
+- [Beyond the Mean: Fisher-Orthogonal Projection for Natural Gradient Descent in Large Batch Training](../../AAAI2026/optimization/beyond_the_mean_fisher-orthogonal_projection_for_natural_gradient_descent_in_lar.md)
+- [Πnet: Optimizing Hard-Constrained Neural Networks with Orthogonal Projection Layers](pinet_optimizing_hard-constrained_neural_networks_with_orthogonal_projection_lay.md)
+
+<!-- RELATED:END -->

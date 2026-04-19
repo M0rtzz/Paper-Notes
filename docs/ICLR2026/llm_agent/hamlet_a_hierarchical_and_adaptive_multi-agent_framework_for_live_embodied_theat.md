@@ -172,3 +172,15 @@ HAMLET 框架解耦为两个主要阶段：
 - 实验充分度: ⭐⭐⭐ — 排行榜评估有价值但缺乏人类评估和消融研究
 - 写作质量: ⭐⭐⭐⭐ — 框架描述清晰，图示丰富，但论文较长
 - 价值: ⭐⭐⭐⭐ — 对交互叙事和 AI 戏剧领域有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAT-Agent: Adaptive Multi-Agent Training Optimization](../../NeurIPS2025/llm_agent/mat-agent_adaptive_multi-agent_training_optimization.md)
+- [Nerfify: A Multi-Agent Framework for Turning NeRF Papers into Code](../../CVPR2026/llm_agent/nerfify_a_multi-agent_framework_for_turning_nerf_papers_into_code.md)
+- [Solving the Granularity Mismatch: Hierarchical Preference Learning for Long-Horizon LLM Agents](solving_the_granularity_mismatch_hierarchical_preference_learning_for_long-horiz.md)
+- [FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models](../../ACL2025/llm_agent/fact_audit_factcheck.md)
+- [AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML](../../ICML2025/llm_agent/automl-agent_a_multi-agent_llm_framework_for_full-pipeline_automl.md)
+
+<!-- RELATED:END -->

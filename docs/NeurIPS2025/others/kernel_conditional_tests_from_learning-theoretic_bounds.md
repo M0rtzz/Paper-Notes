@@ -112,3 +112,15 @@ KRR标准目标 $f_{D,\lambda} = \arg\min_f \sum_n \|y_n - f(x_n)\|^2 + \lambda\
 - 实验充分度: ⭐⭐⭐⭐ 覆盖合成数据、参数消融和过程监控应用，对核选择有系统分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-算法-实验高度一体化，材料组织清晰
 - 价值: ⭐⭐⭐⭐ 为条件检验提供统一且可实践的框架，理论和实用价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting](tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)
+- [K²IE: Kernel Method-based Kernel Intensity Estimators for Inhomogeneous Poisson Processes](../../ICML2025/others/k2ie_kernel_method-based_kernel_intensity_estimators_for_inhomogeneous_poisson_p.md)
+- [Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](../../ICLR2026/others/predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
+- [The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets](the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)
+
+<!-- RELATED:END -->

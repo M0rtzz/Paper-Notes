@@ -131,3 +131,15 @@ $$\mathcal{L} = (1 - w_{\text{drift}}) \cdot \mathcal{L}_{\text{MLE}} + w_{\text
 - 实验充分度: ⭐⭐⭐⭐ 三个仿真平台+真实机器人+完整消融，但缺少与 Consistency Policy 的直接对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，从 ODE 平均化问题自然引出解决方案
 - 价值: ⭐⭐⭐⭐⭐ 1-step 多模态策略对机器人实时控制有重大意义，思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation](hyperbolic_multiview_pretraining_for_robotic_manipulation.md)
+- [Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow](easy3e_feed-forward_3d_asset_editing_via_rectified_voxel_flow.md)
+- [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
+- [GeodesicNVS: Probability Density Geodesic Flow Matching for Novel View Synthesis](geodesicnvs_probability_density_geodesic_flow_matching_for_novel_view_synthesis.md)
+- [SonoWorld: From One Image to a 3D Audio-Visual Scene](sonoworld_from_one_image_to_a_3d_audio-visual_scene.md)
+
+<!-- RELATED:END -->

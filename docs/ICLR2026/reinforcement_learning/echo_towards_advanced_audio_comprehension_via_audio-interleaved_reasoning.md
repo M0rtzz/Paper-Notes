@@ -158,3 +158,15 @@ Echo 以 7B 开源模型超越 GPT-4o-Audio (+5.9%) 和 Gemini-2.0-Flash (+2.1%)
 - 实验充分度: ⭐⭐⭐⭐⭐ (3 个基准，详细消融，训练动态分析)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，图表精美，分析深入)
 - 价值: ⭐⭐⭐⭐⭐ (为音频理解开辟新方向，实验证据充分)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?](../../AAAI2026/reinforcement_learning/when_eyes_and_ears_disagree_can_mllms_discern_audio-visual_confusion.md)
+- [LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts](loongrl_rl_for_reasoning_long_contexts.md)
+- [LadderSym: A Multimodal Interleaved Transformer for Music Practice Error Detection](laddersym_a_multimodal_interleaved_transformer_for_music_practice_error_detectio.md)
+- [RM-R1: Reward Modeling as Reasoning](rm-r1_reward_modeling_as_reasoning.md)
+- [Reasoning Boosts Opinion Alignment in LLMs](reasoning_boosts_opinion_alignment_in_llms.md)
+
+<!-- RELATED:END -->

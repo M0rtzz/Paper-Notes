@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论证明+模拟+DHS真实数据三层验证，5种方法全面对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，Proposition链条逻辑清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 对遥感/发展经济学跨学科研究有重大实用价值，方法通用性强: "One Map, Many Trials" in Satellite-Driven Poverty Analysis
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](../../ECCV2024/remote_sensing/adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
+- [Machine Learning for Sustainable Rice Production: Region-Scale Monitoring of Water-Saving Practices in Punjab, India](machine_learning_for_sustainable_rice_production_region-scale_monitoring_of_wate.md)
+- [TDCNet: Spatio-Temporal Context Learning with Temporal Difference Convolution for Moving IRSTD](spatio-temporal_context_learning_with_temporal_difference_convolution_for_moving.md)
+- [Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models](../../NeurIPS2025/remote_sensing/connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)
+- [Causal Foundation Models: Disentangling Physics from Instrument Properties](../../ICML2025/remote_sensing/causal_foundation_models_disentangling_physics_from_instrument_properties.md)
+
+<!-- RELATED:END -->

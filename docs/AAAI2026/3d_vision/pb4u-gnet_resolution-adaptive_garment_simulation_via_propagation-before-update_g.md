@@ -162,3 +162,15 @@ $$\mathbf{s}_i = \frac{1}{|\mathcal{N}(i)|} \sum_{j \in \mathcal{N}(i)} l_{ij}$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多分辨率定量比较、未见服装泛化、消融、效率分析全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题分析清晰，方法动机明确，结构合理
 - **实用价值**: ⭐⭐⭐⭐ — 解决了实际部署中的关键瓶颈（训练低分辨率，部署高分辨率）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvoMesh: Adaptive Physical Simulation with Hierarchical Graph Evolutions](../../ICML2025/3d_vision/evomesh_adaptive_physical_simulation_with_hierarchical_graph_evolutions.md)
+- [ReWeaver: Towards Simulation-Ready and Topology-Accurate Garment Reconstruction](../../CVPR2026/3d_vision/reweaver_towards_simulation-ready_and_topology-accurate_garment_reconstruction.md)
+- [Arbitrary-Scale 3D Gaussian Super-Resolution](arbitrary-scale_3d_gaussian_super-resolution.md)
+- [Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)
+- [Open-World 3D Scene Graph Generation for Retrieval-Augmented Reasoning](open-world_3d_scene_graph_generation_for_retrieval-augmented_reasoning.md)
+
+<!-- RELATED:END -->

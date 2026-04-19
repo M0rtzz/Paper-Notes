@@ -151,3 +151,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9个模型、3种问题、2种冲突、多种缓解方法对比，分析细致
 - 写作质量: ⭐⭐⭐⭐⭐ 动机链清晰，图表丰富（relevancy map分析令人印象深刻），案例分析生动
 - 价值: ⭐⭐⭐⭐ 揭示了MLLM的重要缺陷（CoT反而有害），对trustworthy AI研究有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging](exploring_compositional_generalization_of_multimodal_llms_for_medical_imaging.md)
+- [Insight-V: Exploring Long-Chain Visual Reasoning with Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/insight-v_exploring_long-chain_visual_reasoning_with_multimodal_large_language_m.md)
+- [Are They the Same? Exploring Visual Correspondence Shortcomings of Multimodal LLMs](../../ICCV2025/multimodal_vlm/are_they_the_same_exploring_visual_correspondence_shortcomings_of_multimodal_llm.md)
+- [MM-Spatial: Exploring 3D Spatial Understanding in Multimodal LLMs](../../ICCV2025/multimodal_vlm/mm-spatial_exploring_3d_spatial_understanding_in_multimodal_llms.md)
+- [Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](exploring_how_generative_mllms_perceive_more.md)
+
+<!-- RELATED:END -->

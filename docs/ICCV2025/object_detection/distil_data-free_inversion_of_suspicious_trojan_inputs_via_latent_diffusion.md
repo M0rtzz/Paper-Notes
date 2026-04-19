@@ -163,3 +163,15 @@ DISTIL 在 BackdoorBench 上平均精度 **88.5%**，比最佳基线高约 **7.1
 - 技术深度：⭐⭐⭐⭐ — 噪声注入正则化设计精巧，理论动机清晰
 - 实验充分度：⭐⭐⭐⭐⭐ — 覆盖 3 个基准、11 种攻击、12 个基线方法
 - 实用性：⭐⭐⭐⭐ — 零样本特性使部署门槛大幅降低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Curriculum: Synthetic-to-Real Data Curriculum via Image-Guided Diffusion](diffusion_curriculum_synthetic-to-real_data_curriculum_via_image-guided_diffusio.md)
+- [DiffDoctor: Diagnosing Image Diffusion Models Before Treating](diffdoctor_diagnosing_image_diffusion_models_before_treating.md)
+- [EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision](evrt-detr_latent_space_adaptation_of_image_detectors_for_event-based_vision.md)
+- [Attention to Neural Plagiarism: Diffusion Models Can Plagiarize Your Copyrighted Images!](attention_to_neural_plagiarism_diffusion_models_can_plagiarize_your_copyrighted_.md)
+- [SFUOD: Source-Free Unknown Object Detection](sfuod_source-free_unknown_object_detection.md)
+
+<!-- RELATED:END -->

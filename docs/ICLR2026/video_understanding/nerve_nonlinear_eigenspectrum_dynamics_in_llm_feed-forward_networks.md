@@ -158,3 +158,15 @@ GPT-2 基线模型不同配置的困惑度：
 - 实验充分度: ⭐⭐⭐⭐⭐ （极其全面：多架构 × 多优化器 × 多归一化 × 多激活函数 × 多尺度 × 跨架构验证）
 - 写作质量: ⭐⭐⭐⭐ （内容丰富但篇幅很长，附录详尽）
 - 价值: ⭐⭐⭐⭐⭐ （为 LLM 架构设计和优化器选择提供了实质性的诊断工具和理论洞察）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Log Probability Tracking of LLM APIs](log_probability_tracking_of_llm_apis.md)
+- [Emergence of Superposition: Unveiling the Training Dynamics of Chain of Continuous Thought](emergence_of_superposition_unveiling_the_training_dynamics_of_chain_of_continuou.md)
+- [Decomposition and Preprocessing of Ternary Constraint Networks](../../AAAI2026/video_understanding/decomposition_and_preprocessing_of_ternary_constraint_networks.md)
+- [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
+- [Learning Topology-Driven Multi-Subspace Fusion for Grassmannian Deep Networks](../../AAAI2026/video_understanding/learning_topology-driven_multi-subspace_fusion_for_grassmannian_deep_network.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个模型、多种 beam size，但缺乏下游任务评估
 - 写作质量: ⭐⭐⭐⭐⭐ 数学叙述极为严谨清晰，示例生动
 - 价值: ⭐⭐⭐⭐ 对整个 LLM 接口层有基础性影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Persistent Topological Features in Large Language Models](persistent_topological_features_in_large_language_models.md)
+- [Weak-to-Strong Jailbreaking on Large Language Models](weak-to-strong_jailbreaking_on_large_language_models.md)
+- [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
+- [DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models](../../CVPR2025/model_compression/dycoke_dynamic_compression_of_tokens_for_fast_video_large_language_models.md)
+- [Instruction-Following Pruning for Large Language Models](instruction-following_pruning_for_large_language_models.md)
+
+<!-- RELATED:END -->

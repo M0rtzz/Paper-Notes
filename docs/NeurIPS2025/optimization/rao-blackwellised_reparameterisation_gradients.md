@@ -136,3 +136,15 @@ R2-G2 在不同模型深度下的方差降低比率:
 - ⭐ 创新性: 7/10 — 理论联系虽优雅,但 Rao-Blackwell 化思想本身已有先例
 - ⭐ 实用性: 7/10 — 对概率模型从业者有价值,但应用范围相对狭窄
 - ⭐ 写作质量: 9/10 — 理论推导精准,与已有工作的关系阐述清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients](efficient_federated_learning_against_byzantine_attacks_and_data_heterogeneity_vi.md)
+- [Deep Taxonomic Networks for Unsupervised Hierarchical Prototype Discovery](deep_taxonomic_networks_for_unsupervised_hierarchical_prototype_discovery.md)
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+- [Learning Parameterized Skills from Demonstrations](learning_parameterized_skills_from_demonstrations.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ LEAD 采用两阶段自适应切换：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多模型、多环境、多提示条件的全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论与实验紧密结合，行为分析深入透彻
 - 价值: ⭐⭐⭐⭐ — 对 LLM 决策能力的理解有重要贡献，LEAD 框架思想可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CORE: Full-Path Evaluation of LLM Agents Beyond Final State](../../NeurIPS2025/llm_agent/core_full-path_evaluation_of_llm_agents_beyond_final_state.md)
+- [Self-Taught Agentic Long-Context Understanding](self_taught_agentic_long_ctx.md)
+- [ContextAgent: Context-Aware Proactive LLM Agents with Open-World Sensory Perceptions](../../NeurIPS2025/llm_agent/contextagent_context-aware_proactive_llm_agents_with_open-world_sensory_percepti.md)
+- [Beyond ReAct: A Planner-Centric Framework for Complex Tool-Augmented LLM Reasoning](../../AAAI2026/llm_agent/beyond_react_a_planner-centric_framework_for_complex_tool-au.md)
+- [When Refusals Fail: Unstable Safety Mechanisms in Long-Context LLM Agents](../../AAAI2026/llm_agent/when_refusals_fail_unstable_safety_mechanisms_in_long-context_llm_agents.md)
+
+<!-- RELATED:END -->

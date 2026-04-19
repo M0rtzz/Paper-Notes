@@ -138,3 +138,15 @@ $$\hat{\mathcal{L}}(f, G) = \underbrace{\frac{1}{n_s}\sum_{i=1}^{n_s}\|f(\mathtt
 - **实验充分度**: ⭐⭐⭐ — 消融实验较充分但数据集规模偏小，缺少大规模验证和最新 SOTA 对比
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机阐述清晰，理论推导严谨，符号体系统一
 - **价值**: ⭐⭐⭐⭐ — 揭示了协方差正则化 SSL 的根本偏差问题并给出零成本解决方案，对理解和改进 SSL 有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Ice Crystal Habit Diversity with Self-Supervised Learning](understanding_ice_crystal_habit_diversity_with_self-supervised_learning.md)
+- [T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning](t-regs_minimum_spanning_tree_regularization_for_self-supervised_learning.md)
+- [Clustering Properties of Self-Supervised Learning](../../ICML2025/self_supervised/clustering_properties_of_self-supervised_learning.md)
+- [SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction](../../ACL2025/self_supervised/shubert_self-supervised_sign_language_representation_learning_via_multi-stream_c.md)
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ tags:
 - 与同期发表的其他 NeurIPS 2025 论文在技术和方法论上有互补性
 - 论文的写作对问题动机和技术路径的阐述值得学习
 - 建议结合 paper 中的附录部分获取更完整的实验细节和证明
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Challenges to the Interpretation of Disaggregated Evaluations of AI](understanding_challenges_to_the_interpretation_of_disaggregated_evaluations_of_a.md)
+- [CTRL-ALT-DECEIT: Sabotage Evaluations for Automated AI R&D](ctrl-alt-deceit_sabotage_evaluations_for_automated_ai_rd.md)
+- [Fairness under Competition](fairness_under_competition.md)
+- [Reconstruction and Secrecy under Approximate Distance Queries](reconstruction_and_secrecy_under_approximate_distance_queries.md)
+- [Cost Efficient Fairness Audit Under Partial Feedback](cost_efficient_fairness_audit_under_partial_feedback.md)
+
+<!-- RELATED:END -->

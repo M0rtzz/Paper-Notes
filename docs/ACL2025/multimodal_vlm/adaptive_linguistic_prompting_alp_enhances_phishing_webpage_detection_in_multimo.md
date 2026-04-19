@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 数据集规模偏小，缺少与更多 baseline 的对比和鲁棒性测试
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验描述详细，附录提供了完整的提示模板和输出示例
 - 价值: ⭐⭐⭐ 实用性强，提示工程的发现（特别是 suspicious-first）有参考价值，但整体深度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](unsolvable_problem_detection.md)
+- [Visual Evidence Prompting Mitigates Hallucinations in Large Vision-Language Models](visual_evidence_prompting.md)
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+- [AdaShield: Safeguarding Multimodal Large Language Models from Structure-based Attack via Adaptive Shield Prompting](../../ECCV2024/multimodal_vlm/adashield_safeguarding_multimodal_large_language_models_from_structure-based_att.md)
+- [AVG-LLaVA: An Efficient Large Multimodal Model with Adaptive Visual Granularity](avg-llava_an_efficient_large_multimodal_model_with_adaptive_visual_granularity.md)
+
+<!-- RELATED:END -->

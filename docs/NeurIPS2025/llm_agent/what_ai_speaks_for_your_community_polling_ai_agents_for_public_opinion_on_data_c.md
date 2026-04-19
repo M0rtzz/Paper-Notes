@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 跨模型跨地区分析有说服力，但仅两个县+校准未实施，规模偏小
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Disclosure部分坦诚，方法论严谨但易读
 - 价值: ⭐⭐⭐⭐ 为AI基础设施的负责任部署提供了实用工具原型，具有政策参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LC-Opt: Benchmarking Reinforcement Learning and Agentic AI for End-to-End Liquid Cooling Optimization in Data Centers](lc-opt_benchmarking_reinforcement_learning_and_agentic_ai_for_end-to-end_liquid_.md)
+- [Generative AI Agents for Controllable and Protected Content Creation](generative_ai_agents_for_controllable_and_protected_content_creation.md)
+- [Enhancing Demand-Oriented Regionalization with Agentic AI and Local Heterogeneous Data for Adaptation Planning](enhancing_demand-oriented_regionalization_with_agentic_ai_and_local_heterogeneou.md)
+- [SuffixDecoding: Extreme Speculative Decoding for Emerging AI Applications](suffixdecoding_extreme_speculative_decoding_for_emerging_ai_applications.md)
+- [PANDA: Towards Generalist Video Anomaly Detection via Agentic AI Engineer](panda_towards_generalist_video_anomaly_detection_via_agentic_ai_engineer.md)
+
+<!-- RELATED:END -->

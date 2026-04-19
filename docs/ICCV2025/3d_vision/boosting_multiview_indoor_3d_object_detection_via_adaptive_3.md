@@ -140,3 +140,15 @@ SGCDet在不使用GT几何的方法中全面领先，且效率接近甚至超过
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集+详尽的消融（五组）+计算代价分析+鲁棒性实验+可视化，非常完备
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，动机分析到位，图示直观，数学符号规范
 - **对我的价值**: ⭐⭐⭐ 占据预测和稀疏化策略可借鉴，但室内3D检测与当前主要研究方向关联度中等
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SGCDet: Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction](boosting_multi-view_indoor_3d_object_detection_via_adaptive_3d_volume_constructi.md)
+- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](diorama_unleashing_zero-shot_single-view_3d_indoor_scene_modeling.md)
+- [Multi-View 3D Point Tracking](multi-view_3d_point_tracking.md)
+- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
+- [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
+
+<!-- RELATED:END -->

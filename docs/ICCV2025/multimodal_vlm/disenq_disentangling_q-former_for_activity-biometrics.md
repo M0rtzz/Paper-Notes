@@ -147,3 +147,15 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{ID} + \lambda_2 \mathcal{L}_{Tri} + \lamb
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4个数据集、详细消融、特征空间可视化、VLM/编码器选择分析
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰、方法描述完整，图表质量高
 - **价值**: ⭐⭐⭐⭐ 为活动感知行人识别提供了有效方案，有监控/智能环境应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProbRes: Probabilistic Jump Diffusion for Open-World Egocentric Activity Recognition](probres_probabilistic_jump_diffusion_for_open-world_egocentric_activity_recognit.md)
+- [X-Former: Unifying Contrastive and Reconstruction Learning for MLLMs](../../ECCV2024/multimodal_vlm/x-former_unifying_contrastive_and_reconstruction_learning_for_mllms.md)
+- [OpenVision: A Fully-Open, Cost-Effective Family of Advanced Vision Encoders for Multimodal Learning](openvision_a_fully-open_cost-effective_family_of_advanced_vision_encoders_for_mu.md)
+- [Synergistic Prompting for Robust Visual Recognition with Missing Modalities](synergistic_prompting_for_robust_visual_recognition_with_missing_modalities.md)
+- [IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves](ideator_jailbreaking_and_benchmarking_large_visionlanguage_m.md)
+
+<!-- RELATED:END -->

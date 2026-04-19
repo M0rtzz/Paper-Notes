@@ -108,3 +108,15 @@ $$L = \lambda_{tot}(L_2(z_0, z_{gt}) + L_2(x_0, x_{gt}) + L_p(x_0, x_{gt}))$$
 - 实用性：⭐⭐⭐⭐⭐（直接解决长序列面部动画的核心痛点，有明确的应用场景）
 - 技术深度：⭐⭐⭐⭐（双阶段扩散设计、分离式CFG/Autoguidance、多损失组合）
 - 表达清晰度：⭐⭐⭐⭐⭐（结构清晰，消融实验充分，新指标定义合理）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Little Depth Goes a Long Way: The Expressive Power of Log-Depth Transformers](../../NeurIPS2025/video_understanding/a_little_depth_goes_a_long_way_the_expressive_power_of_logde.md)
+- [Learning Audio-Guided Video Representation with Gated Attention for Video-Text Retrieval](learning_audio-guided_video_representation_with_gated_attention_for_video-text_r.md)
+- [BiM-VFI: Bidirectional Motion Field-Guided Frame Interpolation for Video with Non-uniform Motions](bim-vfi_bidirectional_motion_field-guided_frame_interpolation_for_video_with_non.md)
+- [The Expressive Limits of Diagonal SSMs for State-Tracking](../../ICLR2026/video_understanding/the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)
+- [SpikeTrack: A Spike-driven Framework for Efficient Visual Tracking](../../CVPR2026/video_understanding/spiketrack_a_spike-driven_framework_for_efficient_visual_tracking.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ tags:
 - **实验充分度** ⭐⭐⭐⭐：8 种配置系统对比，两种融合策略，单/双/三模态全覆盖
 - **写作质量** ⭐⭐⭐⭐：结构清晰，融合策略公式化完整
 - **价值** ⭐⭐⭐⭐：对情感计算 + VLM 交叉领域有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PULSE: Privileged Knowledge Transfer from Rich to Deployable Sensors for Embodied Multi-Sensory Learning](pulse_privileged_knowledge_transfer_from_rich_to_deployable_sensors_for_embodied.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)
+- [Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](graph2eval_multimodal_task_generation_agents.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+
+<!-- RELATED:END -->

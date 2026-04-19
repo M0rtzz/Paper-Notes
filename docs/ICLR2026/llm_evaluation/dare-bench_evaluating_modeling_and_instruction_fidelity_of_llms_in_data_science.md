@@ -116,3 +116,15 @@ DARE-bench 包含三大任务族（分类、回归、时间序列预测），每
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型评测+SFT+RL，6300 任务规模可观
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，流水线描述详细
 - 价值: ⭐⭐⭐⭐ 填补 DS agent 训练+评估的重要空白，RL 训练结果尤其有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TabStruct: Measuring Structural Fidelity of Tabular Data](tabstruct_measuring_structural_fidelity_of_tabular_data.md)
+- [Benchmarking LLMs for Political Science: A United Nations Perspective](../../AAAI2026/llm_evaluation/benchmarking_llms_for_political_science_a_united_nations_perspective.md)
+- [Truthfulness Despite Weak Supervision: Evaluating and Training LLMs Using Peer Prediction](truthfulness_despite_weak_supervision_evaluating_and_training_llms_using_peer_pr.md)
+- [RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases](../../NeurIPS2025/llm_evaluation/rdb2g-bench_a_comprehensive_benchmark_for_automatic_graph_modeling_of_relational.md)
+- [Revisiting the Past: Data Unlearning with Model State History](revisiting_the_past_data_unlearning_with_model_state_history.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个实际案例（偏好对比 + 越狱拒绝），batch/sequential 双模式对比
 - 写作质量: ⭐⭐⭐⭐⭐ 面向统计学受众的教学式写作，公式推导完整清晰
 - 价值: ⭐⭐⭐⭐ 为 LLM 评估提供了统计学上严格的不确定性量化工具，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)
+- [AbGen: Evaluating Large Language Models in Ablation Study Design and Evaluation for Scientific Research](../../ACL2025/llm_evaluation/abgen_evaluating_large_language_models_in.md)
+- [Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training](exploiting_vocabulary_frequency_imbalance_in_language_model_pre-training.md)
+- [Can Large Language Models Master Complex Card Games?](can_large_language_models_master_complex_card_games.md)
+- [LTD-Bench: Evaluating Large Language Models by Letting Them Draw](ltd-bench_evaluating_large_language_models_by_letting_them_draw.md)
+
+<!-- RELATED:END -->

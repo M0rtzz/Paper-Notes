@@ -240,3 +240,15 @@ Token classification 数据集包括 GUM 和 CoNLL-2012 文档级 NER。
 - 实验充分度: ⭐⭐⭐⭐ 同时覆盖文档分类与 NER，并分析更长输入和消融，证据链比较完整。
 - 写作质量: ⭐⭐⭐⭐ 方法动机和实验叙事清楚，附录提供了较多实现与消融细节。
 - 价值: ⭐⭐⭐⭐ 对“如何在不暴力扩窗的情况下做长文档理解”给出了一个轻量、可复用且效果强的方案。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility](meaning_beyond_truth_conditions_evaluating_discourse_level_understanding_via_ana.md)
+- [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)
+- [Rank, Chunk, and Expand: Lineage-Oriented Reasoning for Taxonomy Expansion](rank_chunk_and_expand_lineage-oriented_reasoning_for_taxonomy_expansion.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [MDCure: A Scalable Pipeline for Multi-Document Instruction-Following](mdcure_a_scalable_pipeline_for_multi-document_instruction-following.md)
+
+<!-- RELATED:END -->

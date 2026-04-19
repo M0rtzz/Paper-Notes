@@ -153,3 +153,15 @@ StructFlowBench 包含两个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐ 13 个模型、多维度指标、结构类型分析详尽
 - **写作质量**: ⭐⭐⭐⭐ 分类体系描述清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ 为多轮对话评估开辟了结构化分析的新维度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CFBench: A Comprehensive Constraints-Following Benchmark for LLMs](cfbench_a_comprehensive_constraints-following_benchmark_for_llms.md)
+- [READoc: A Unified Benchmark for Realistic Document Structured Extraction](readoc_a_unified_benchmark_for_realistic_document_structured_extraction.md)
+- [CodeAssistBench (CAB): Dataset & Benchmarking for Multi-turn Chat-Based Code Assistance](../../NeurIPS2025/llm_evaluation/codeassistbench_cab_dataset_benchmarking_for_multi-turn_chat-based_code_assistan.md)
+- [KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding](kitab-bench_a_comprehensive_multi-domain_benchmark_for_arabic_ocr_and_document_u.md)
+- [McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
+
+<!-- RELATED:END -->

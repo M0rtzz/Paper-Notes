@@ -123,3 +123,15 @@ Align-then-Unlearn 分两阶段：
 - 实验充分度: ⭐⭐⭐ 仅一个基准、一个模型，缺少改写鲁棒性的定量对比
 - 写作质量: ⭐⭐⭐⭐ 清晰简洁，图示直观
 - 价值: ⭐⭐⭐⭐ 提出有前景的概念级遗忘范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Invariance Makes LLM Unlearning Resilient Even to Unanticipated Downstream Fine-Tuning](invariance_makes_llm_unlearning_resilient_even_to_unanticipated_downstream_fine-.md)
+- [SecEmb: Sparsity-Aware Secure Federated Learning of On-Device Recommender System with Large Embedding](secemb_sparsity-aware_secure_federated_learning_of_on-device_recommender_system_.md)
+- [A Certified Unlearning Approach without Access to Source Data](a_certified_unlearning_approach_without_access_to_source_data.md)
+- [Cascade: Token-Sharded Private LLM Inference](cascade_token-sharded_private_llm_inference.md)
+- [Robust Multi-bit Text Watermark with LLM-based Paraphrasers](robust_multi-bit_text_watermark_with_llm-based_paraphrasers.md)
+
+<!-- RELATED:END -->

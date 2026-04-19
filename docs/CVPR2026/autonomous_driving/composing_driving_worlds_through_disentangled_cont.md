@@ -165,3 +165,15 @@ CompoSIA 基于 Wan2.1-T2V-1.3B 初始化的 Flow Matching DiT，为三类控制
 - 实验充分度: ⭐⭐⭐⭐ 三任务定量比较 + 多维消融 + 下游规划器压力测试
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，技术陈述精确，图表丰富
 - 价值: ⭐⭐⭐⭐ 对自动驾驶安全评估和场景多样性有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CompoSIA: Composing Driving Worlds through Disentangled Control for Adversarial Scenario Generation](../../CVPR2025/autonomous_driving/composing_driving_worlds_through_disentangled_control_for_adversarial_scenario_g.md)
+- [Steerable Adversarial Scenario Generation through Test-Time Preference Alignment (SAGE)](../../ICLR2026/autonomous_driving/steerable_adversarial_scenario_generation_through_test-time_preference_alignment.md)
+- [Learning Mutual View Information Graph for Adaptive Adversarial Collaborative Perception](learning_mutual_view_information_graph_for_adaptive_adversarial_collaborative_pe.md)
+- [MeanFuser: Fast One-Step Multi-Modal Trajectory Generation and Adaptive Reconstruction via MeanFlow for End-to-End Autonomous Driving](meanfuser_fast_one-step_multi-modal_trajectory_generation_and_adaptive_reconstru.md)
+- [Points-to-3D: Structure-Aware 3D Generation with Point Cloud Priors](points-to-3d_structure-aware_3d_generation_with_point_cloud_priors.md)
+
+<!-- RELATED:END -->

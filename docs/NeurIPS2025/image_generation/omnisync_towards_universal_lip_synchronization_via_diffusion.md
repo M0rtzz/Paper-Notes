@@ -146,3 +146,15 @@ OmniSync的pipeline很直观：给定一段源视频 $V_{cd}$ 和目标音频 $A
 - 实验充分度: ⭐⭐⭐⭐⭐ HDTF+自建AIGC Benchmark双评估，7个baseline，完整消融，39人user study，Cronbach's α=0.98
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、公式规范、动机阐述清楚，附录详细解释了设计选择的原因
 - 价值: ⭐⭐⭐⭐ NeurIPS Spotlight，首次将唇形同步推广到AI生成视频场景，建立了新benchmark，对产业界有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Diffusion Transformers Efficiently via μP](scaling_diffusion_transformers_efficiently_via_μp.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+- [Unleashing Diffusion Transformers for Visual Correspondence by Modulating Massive Activations](unleashing_diffusion_transformers_for_visual_correspondence_by_modulating_massiv.md)
+- [The Universal Normal Embedding](../../CVPR2026/image_generation/the_universal_normal_embedding.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](../../ICCV2025/image_generation/edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+
+<!-- RELATED:END -->

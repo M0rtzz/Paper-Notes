@@ -116,3 +116,14 @@ ACE-G将传统的单一场景坐标回归器拆分为两部分：
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，方法动机解释得非常好，项目页面也做得很优秀
 - 价值: ⭐⭐⭐⭐ 开源代码和预训练模型，对视觉定位领域有实际推动作用
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Continual Pre-training Through Seamless Data Packing](../../ACL2025/llm_pretraining/improving_continual_pre-training_through_seamless_data_packing.md)
+- [ConstStyle: Robust Domain Generalization with Unified Style Transformation](conststyle_robust_domain_generalization_with_unified_style_transformation.md)
+- [Dataset Ownership Verification for Pre-trained Masked Models](dataset_ownership_verification_for_pre-trained_masked_models.md)
+- [The Sharpness Disparity Principle in Transformers for Accelerating Language Model Pre-Training](../../ICML2025/llm_pretraining/the_sharpness_disparity_principle_in_transformers_for_accelerating_language_mode.md)
+- [The Scene Language: Representing Scenes with Programs, Words, and Embeddings](../../CVPR2025/llm_pretraining/the_scene_language_representing_scenes_with_programs_words_and_embeddings.md)
+
+<!-- RELATED:END -->

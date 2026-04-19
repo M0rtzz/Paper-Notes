@@ -133,3 +133,15 @@ AMO+FT 在所有 NR-IQA 指标上超越 UPos（HGGT SOTA），且无需人工标
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 系统的 IQA 指标分析（42 个变体）+ 两个架构 + 完整消融 + 用户研究
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，从分析到方法到实验层层递进
 - **价值**: ⭐⭐⭐⭐ — 为感知超分提供了可扩展、无需人工标注的训练范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal Inconsistency Guidance for Super-resolution Video Quality Assessment](../../AAAI2026/image_restoration/temporal_inconsistency_guidance_for_super-resolution_video_quality_assessment.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [FIPER: Factorized Features for Robust Image Super-Resolution and Compression](../../NeurIPS2025/image_restoration/fiper_factorized_features_for_robust_image_super-resolution_and_compression.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
+- [Overcoming Distribution Mismatch in Quantizing Image Super-Resolution Networks](../../ECCV2024/image_restoration/overcoming_distribution_mismatch_in_quantizing_image_super-resolution_networks.md)
+
+<!-- RELATED:END -->

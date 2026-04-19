@@ -197,3 +197,15 @@ Bolt3D 采用两阶段前馈管线：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三类方法的全面对比（回归/前馈生成/优化式），5个数据集，详细的VAE消融和Gaussian Head消融，低分辨率公平对比
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，动机明确，图表丰富（交互式viewer），补充材料详尽
 - 价值: ⭐⭐⭐⭐⭐ 将3D场景生成从分钟级推向秒级，300×加速具有重大实用价值；几何VAE的分析为后续工作提供了重要指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hearing Hands: Generating Sounds from Physical Interactions in 3D Scenes](../../CVPR2025/3d_vision/hearing_hands_generating_sounds_from_physical_interactions_in_3d_scenes.md)
+- [A Recipe for Generating 3D Worlds from a Single Image](a_recipe_for_generating_3d_worlds_from_a_single_image.md)
+- [Auto-Regressively Generating Multi-View Consistent Images](auto-regressively_generating_multi-view_consistent_images.md)
+- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](articulate3d_holistic_understanding_of_3d_scenes_as_universal_scene_description.md)
+- [InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes](instascene_towards_complete_3d_instance_decomposition_and_reconstruction_from_cl.md)
+
+<!-- RELATED:END -->

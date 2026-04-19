@@ -126,3 +126,15 @@ RCC 微调将 valuemetric 鲁棒性从 0.26 提升到 0.92；同步层将 geomet
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个模型、多种攻击（valuemetric/geometric/对抗/压缩）、与后处理方法对比
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，挑战分析深入，实验全面
 - 价值: ⭐⭐⭐⭐⭐ 为快速发展的自回归图像生成领域填补了水印溯源的重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BitMark: Watermarking Bitwise Autoregressive Image Generative Models](bitmark_watermarking_bitwise_autoregressive_image_generative_models.md)
+- [Conditional Panoramic Image Generation via Masked Autoregressive Modeling](conditional_panoramic_image_generation_via_masked_autoregres.md)
+- [Grouped Speculative Decoding for Autoregressive Image Generation](../../ICCV2025/image_generation/grouped_speculative_decoding_for_autoregressive_image_generation.md)
+- [Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation](understand_before_you_generate_self-guided_training_for_autoregressive_image_gen.md)
+- [Randomized Autoregressive Visual Generation](../../ICCV2025/image_generation/randomized_autoregressive_visual_generation.md)
+
+<!-- RELATED:END -->

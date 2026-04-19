@@ -397,3 +397,15 @@ SFT 阶段使用交叉熵损失，仅对 `<answer>` 标记内的 token 计算损
 - 实验充分度: ⭐⭐⭐⭐⭐ 自建基准+7 个外部基准，消融详尽，比较全面
 - 写作质量: ⭐⭐⭐⭐ 结构系统清晰，图示有效
 - 实用价值: ⭐⭐⭐⭐⭐ 数据构建流水线和训练范式可直接复用，提升幅度显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GoIRL: Graph-Oriented Inverse Reinforcement Learning for Multimodal Trajectory Prediction](../../ICML2025/autonomous_driving/goirl_graph-oriented_inverse_reinforcement_learning_for_multimodal_trajectory_pr.md)
+- [SHARP: Short-Window Streaming for Accurate and Robust Prediction in Motion Forecasting](sharp_short-window_streaming_for_accurate_and_robust_prediction_in_motion_foreca.md)
+- [BayesG: Bayesian Ego-Graph Inference for Networked Multi-Agent Reinforcement Learning](../../NeurIPS2025/autonomous_driving/bayesian_ego-graph_inference_for_networked_multi-agent_reinforcement_learning.md)
+- [RAW2Drive: Reinforcement Learning with Aligned World Models for End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/raw2drive_reinforcement_learning_with_aligned_world_models_for_end-to-end_autono.md)
+- [FlashCap: Millisecond-Accurate Human Motion Capture via Flashing LEDs and Event-Based Vision](flashcap_millisecond-accurate_human_motion_capture_via_flashing_leds_and_event-b.md)
+
+<!-- RELATED:END -->

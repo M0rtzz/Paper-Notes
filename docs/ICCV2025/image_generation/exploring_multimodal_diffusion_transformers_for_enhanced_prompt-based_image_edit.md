@@ -132,3 +132,15 @@ $$\mathbf{q}\mathbf{k}^T = \begin{bmatrix} \mathbf{q}_i\mathbf{k}_i^T & \mathbf{
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖6种MM-DiT变体，包含定量、定性和用户研究
 - **写作质量**: ⭐⭐⭐⭐⭐ 分析清晰，图表丰富，逻辑严谨
 - **价值**: ⭐⭐⭐⭐ 为新架构的编辑奠定基础，实用且计算高效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers](rethinking_cross-modal_interaction_in_multimodal_diffusion_transformers.md)
+- [Calibrating MLLM-as-a-Judge via Multimodal Bayesian Prompt Ensembles](calibrating_mllm-as-a-judge_via_multimodal_bayesian_prompt_ensembles.md)
+- [Addressing Text Embedding Leakage in Diffusion-Based Image Editing](addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)
+- [NuiScene: Exploring Efficient Generation of Unbounded Outdoor Scenes](nuiscene_exploring_efficient_generation_of_unbounded_outdoor_scenes.md)
+- [PLA: Prompt Learning Attack against Text-to-Image Generative Models](pla_prompt_learning_attack_against_text-to-image_generative_models.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ $$p(z_j|c_j) = q_\phi(z_j|c_j)$$
 - **技术深度**: ⭐⭐⭐⭐ — 信息论形式化严谨，变分推导清晰
 - **实验充分性**: ⭐⭐⭐⭐ — 5 个数据集，8+ 种方法对比，多角度分析
 - **实用价值**: ⭐⭐⭐⭐ — 为真正可解释的概念模型提供原则性解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Concepts' Information Bottleneck Models](concepts_information_bottleneck_models.md)
+- [Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2026/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Flexible Concept Bottleneck Model](../../AAAI2026/interpretability/flexible_concept_bottleneck_model.md)
+- [Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](../../AAAI2026/interpretability/concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/interpretability/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ HAWK 完全无需训练。头重要性权重的离线计算使用 HallBench、MM
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖两种模型架构、图像+视频、4种剪枝率、效率分析、消融实验
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、动机明确、实验组织有条理
 - 价值: ⭐⭐⭐⭐⭐ 方法简洁高效、效果显著、工程落地性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Token Pruning is Worse than Random: Understanding Visual Token Information in VLLMs](when_token_pruning_is_worse_than_random_understanding_visual_token_information_i.md)
+- [VLM-Pruner: Buffering for Spatial Sparsity in an Efficient VLM Centrifugal Token Pruning Paradigm](vlm-pruner_buffering_for_spatial_sparsity_in_an_efficient_vlm_centrifugal_token_.md)
+- [IVC-Prune: Revealing the Implicit Visual Coordinates in LVLMs for Vision Token Pruning](../../ICLR2026/multimodal_vlm/ivc-prune_revealing_the_implicit_visual_coordinates_in_lvlms_for_vision_token_pr.md)
+- [SCOPE: Saliency-Coverage Oriented Token Pruning for Efficient Multimodal LLMs](../../NeurIPS2025/multimodal_vlm/scope_saliency-coverage_oriented_token_pruning_for_efficient_multimodel_llms.md)
+- [On Token's Dilemma: Dynamic MoE with Drift-Aware Token Assignment for Continual Learning of Large Vision Language Models](on_tokens_dilemma_dynamic_moe_with_drift-aware_token_assignment_for_continual_le.md)
+
+<!-- RELATED:END -->

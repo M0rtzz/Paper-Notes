@@ -132,3 +132,15 @@ Tanks & Temples数据集上的结果：
 - 实验充分度: ⭐⭐⭐⭐ 主实验+初始点丢弃实验充分验证了动机
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，方法描述简洁
 - 价值: ⭐⭐⭐⭐ 简洁有效的改进，对3DGS社区实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization](cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization.md)
+- [Global-to-Pixel Regression for Human Mesh Recovery](global-to-pixel_regression_for_human_mesh_recovery.md)
+- [SAGS: Structure-Aware 3D Gaussian Splatting](sags_structure-aware_3d_gaussian_splatting.md)
+- [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
+- [G3R: Gradient Guided Generalizable Reconstruction](g3r_gradient_guided_generalizable_reconstruction.md)
+
+<!-- RELATED:END -->

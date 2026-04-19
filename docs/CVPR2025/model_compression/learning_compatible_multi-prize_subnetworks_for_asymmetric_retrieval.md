@@ -89,3 +89,15 @@ GLDv2 地标检索 mAP（20%/40%/60%/80%/100% 容量）：
 - 实验充分度: ⭐⭐⭐⭐ GLDv2/In-Shop/VeRi 多数据集
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 对多设备部署场景有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](../../NeurIPS2025/model_compression/find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
+- [Understanding Multi-Layered Transmission Matrices](understanding_multi-layered_transmission_matrices.md)
+- [Mitigating Semantic Collapse in Partially Relevant Video Retrieval](../../NeurIPS2025/model_compression/mitigating_semantic_collapse_in_partially_relevant_video_retrieval.md)
+- [GPTAQ: Efficient Finetuning-Free Quantization for Asymmetric Calibration](../../ICML2025/model_compression/gptaq_efficient_finetuning-free_quantization_for_asymmetric_calibration.md)
+- [Incremental Object Keypoint Learning (KAMP)](incremental_object_keypoint_learning.md)
+
+<!-- RELATED:END -->

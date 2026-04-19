@@ -184,3 +184,15 @@ $$D_{\text{lineage}}(\mathcal{C}; \mathcal{T}) = \frac{\log|\mathcal{T}| - \log 
 | 写作质量 | 4 | 结构清晰，但 LaTeX 公式密集，部分读者可能需要较强数学背景 |
 | 影响力 | 5 | 对 AI 安全、对齐、治理均有深远意义 |
 | **总分** | **4.6** | 非常优秀的跨学科工作，理论与实证兼备 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Binary Hypothesis Testing for Softmax Models and Leverage Score Models](binary_hypothesis_testing_for_softmax_models_and_leverage_score_models.md)
+- [The Lattice Representation Hypothesis of Large Language Models](../../ICLR2026/llm_nlp/the_lattice_representation_hypothesis_of_large_language_models.md)
+- [A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](../../ACL2025/llm_nlp/a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)
+- [MOOSE-Chem2: Exploring LLM Limits in Fine-Grained Scientific Hypothesis Discovery](../../NeurIPS2025/llm_nlp/moose-chem2_exploring_llm_limits_in_fine-grained_scientific_hypothesis_discovery.md)
+- [HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation](../../ACL2025/llm_nlp/hygenar_an_llm-driven_hybrid_genetic_algorithm_for_few-shot_grammar_generation.md)
+
+<!-- RELATED:END -->

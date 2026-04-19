@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 两项人类研究 + 四个模型家族自动化分析，但人类研究仅覆盖 GPT-4
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表直观，Sankey 图展示年级错配非常有说服力
 - 价值: ⭐⭐⭐⭐ — 对教育 AI 领域有重要警示意义，基准和评估框架均有长期复用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MExGen: Multi-Level Explanations for Generative Language Models](mexgen_multi_level_explanations.md)
+- [Exploring Explanations Improves the Robustness of In-Context Learning](exploring_explanations_improves_the_robustness_of_in-context_learning.md)
+- [Evaluating Language Models as Synthetic Data Generators](evaluating_lms_synthetic_data_gen.md)
+- [Why Not Act on What You Know? Unleashing Safety Potential of LLMs via Self-Aware Guard Enhancement](why_not_act_on_what_you_know_unleashing_safety_potential_of_llms_via_self-aware_.md)
+- [STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing](stem-pom_evaluating_language_models_math-symbol_reasoning_in_document_parsing.md)
+
+<!-- RELATED:END -->

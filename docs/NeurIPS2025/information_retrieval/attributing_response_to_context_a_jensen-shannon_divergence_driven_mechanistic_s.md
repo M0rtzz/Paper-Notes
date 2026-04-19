@@ -121,3 +121,15 @@ ARC-JSD 提出基于 Jensen-Shannon 散度的 RAG 上下文归因方法——通
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 基准 + 4 模型 + 机制分析 + 幻觉缓解 + 因果消融 + Token 级分析
 - 写作质量: ⭐⭐⭐⭐⭐ 方法动机清晰，度量选择论证充分
 - 价值: ⭐⭐⭐⭐⭐ 为 RAG 可解释性和幻觉缓解提供了高效实用的工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attributing Response to Context: A Jensen-Shannon Divergence Driven Mechanistic Study of Context Attribution in Retrieval-Augmented Generation](../../ICLR2026/information_retrieval/attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)
+- [The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation](the_atlas_of_in-context_learning_how_attention_heads_shape_in-context_retrieval_.md)
+- [MIR-Bench: Can Your LLM Recognize Complicated Patterns via Many-Shot In-Context Reasoning?](mir-bench_can_your_llm_recognize_complicated_patterns_via_many-shot_in-context_r.md)
+- [Learning Task-Agnostic Representations through Multi-Teacher Distillation](learning_task-agnostic_representations_through_multi-teacher_distillation.md)
+- [Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

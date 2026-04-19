@@ -142,3 +142,15 @@ SegFormer 在腓骨松质骨（小目标）IoU 提升 **+20.43%**，整体变异
 - 实验充分度: ⭐⭐⭐ — 分割评估充分，但分类数据量偏小（122人/24人测试），缺乏多中心验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，方法描述详尽，图表丰富
 - 价值: ⭐⭐⭐⭐ — 挑战了"骨质疏松只看骨"的范式，提示软组织在代谢骨病诊断中的潜在价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CARE: A Molecular-Guided Foundation Model with Adaptive Region Modeling for Whole Slide Image Analysis](care_a_molecular-guided_foundation_model_with_adaptive_region_modeling_for_whole.md)
+- [MuViT: Multi-Resolution Vision Transformers for Learning Across Scales in Microscopy](muvit_multi-resolution_vision_transformers_for_learning_across_scales_in_microsc.md)
+- [GLEAM: A Multimodal Imaging Dataset and HAMM for Glaucoma Classification](gleam_a_multimodal_imaging_dataset_and_hamm_for_glaucoma_classification.md)
+- [MUSE: Harnessing Precise and Diverse Semantics for Few-Shot Whole Slide Image Classification](muse_harnessing_precise_and_diverse_semantics_for_few-shot_whole_slide_image_cla.md)
+- [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit.md)
+
+<!-- RELATED:END -->

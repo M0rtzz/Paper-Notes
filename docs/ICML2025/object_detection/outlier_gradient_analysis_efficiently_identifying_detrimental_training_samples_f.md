@@ -174,3 +174,15 @@ $$\mathcal{I}(z_j) = -\sum_{z \in T/V} \nabla_{\hat{\theta}} \ell(z; \hat{\theta
 | 实用价值 | ⭐⭐⭐⭐ | 方法简单、通用、高效，直接可落地 |
 | 写作质量 | ⭐⭐⭐⭐ | 逻辑清晰，图表丰富 |
 | **综合** | **⭐⭐⭐⭐** | 扎实的工作，在数据中心学习领域有实际影响力 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The COTe Score: A Decomposable Framework for Evaluating Document Layout Analysis Models](../../CVPR2026/object_detection/the_cote_score_a_decomposable_framework_for_evaluating_document_layout_analysis_.md)
+- [YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information](../../ECCV2024/object_detection/yolov9_learning_what_you_want_to_learn_using_programmable_gradient_information.md)
+- [Uncertainty-Aware Gradient Stabilization for Small Object Detection](../../ICCV2025/object_detection/uncertainty-aware_gradient_stabilization_for_small_object_detection.md)
+- [Open-Det: An Efficient Learning Framework for Open-Ended Detection](open-det_an_efficient_learning_framework_for_open-ended_detection.md)
+- [CQ-DINO: Mitigating Gradient Dilution via Category Queries for Vast Vocabulary Object Detection](../../NeurIPS2025/object_detection/cq-dino_mitigating_gradient_dilution_via_category_queries_for_vast_vocabulary_ob.md)
+
+<!-- RELATED:END -->

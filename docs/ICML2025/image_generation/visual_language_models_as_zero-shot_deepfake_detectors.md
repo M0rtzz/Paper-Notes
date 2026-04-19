@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多 VLM + 多检测器对比全面
 - 写作质量: ⭐⭐⭐⭐ 方法推导清晰，prompt 和 algorithm 细节完整
 - 价值: ⭐⭐⭐⭐ 开拓了 VLM 在安全检测中的新应用范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models](zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
+- [Semantic Surgery: Zero-Shot Concept Erasure in Diffusion Models](../../NeurIPS2025/image_generation/semantic_surgery_zero-shot_concept_erasure_in_diffusion_models.md)
+- [AnyPortal: Zero-Shot Consistent Video Background Replacement](../../ICCV2025/image_generation/anyportal_zero-shot_consistent_video_background_replacement.md)
+- [Overcoming Visual Clutter in Vision Language Action Models via Concept-Gated Visual Distillation](../../CVPR2025/image_generation/overcoming_visual_clutter_in_vision_language_action_models_via_concept-gated_vis.md)
+
+<!-- RELATED:END -->

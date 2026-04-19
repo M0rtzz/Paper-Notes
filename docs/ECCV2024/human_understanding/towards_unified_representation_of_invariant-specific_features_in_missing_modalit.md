@@ -122,3 +122,15 @@ MMA-FAS基于预训练的ViT构建。输入为多模态人脸图像（RGB、Dept
 - 实验充分度: ⭐⭐⭐⭐ 涵盖所有缺失场景、消融完整、有跨数据集验证
 - 写作质量: ⭐⭐⭐⭐ 问题formulation清晰，方法动机阐述充分
 - 价值: ⭐⭐⭐⭐ 模态缺失是多模态学习的核心问题，本文方案具有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TF-FAS: Twofold-Element Fine-Grained Semantic Guidance for Generalizable Face Anti-Spoofing](tf-fas_twofold-element_fine-grained_semantic_guidance_for_generalizable_face_ant.md)
+- [DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](../../ICCV2025/human_understanding/dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)
+- [PA-FAS: Towards Interpretable and Generalizable Multimodal Face Anti-Spoofing via Path-Augmented Reinforcement Learning](../../AAAI2026/human_understanding/pa-fas_towards_interpretable_and_generalizable_multimodal_face_anti-spoofing_via.md)
+- [FoundPose: Unseen Object Pose Estimation with Foundation Features](foundpose_unseen_object_pose_estimation_with_foundation_features.md)
+- [Exemplar-Free Continual Representation Learning via Learnable Drift Compensation](exemplar-free_continual_representation_learning_via_learnable_drift_compensation.md)
+
+<!-- RELATED:END -->

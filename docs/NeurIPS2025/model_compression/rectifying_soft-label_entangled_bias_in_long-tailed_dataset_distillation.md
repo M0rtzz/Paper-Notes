@@ -162,3 +162,15 @@ ImageNet-1k-LT 上的结果（EDC+IPC=50）：
 - 实验充分度: ⭐⭐⭐⭐⭐ （多数据集、多方法、多IPC/IF组合、消融完整）
 - 写作质量: ⭐⭐⭐⭐⭐ （理论推导清晰，实验设计和分析逻辑性强）
 - 价值: ⭐⭐⭐⭐ （即插即用模块有实际应用价值，为长尾蒸馏提供了关键洞察）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling Long-tailed Datasets](../../CVPR2025/model_compression/distilling_long-tailed_datasets.md)
+- [Rethinking Long-tailed Dataset Distillation: A Uni-Level Framework with Unbiased Recovery and Relabeling](../../AAAI2026/model_compression/rethinking_long-tailed_dataset_distillation_a_uni-level_framework_with_unbiased_.md)
+- [Heavy Labels Out! Dataset Distillation with Label Space Lightening](../../ICCV2025/model_compression/heavy_labels_out_dataset_distillation_with_label_space_lightening.md)
+- [Hyperbolic Dataset Distillation](hyperbolic_dataset_distillation.md)
+- [Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
+
+<!-- RELATED:END -->

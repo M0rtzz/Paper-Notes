@@ -268,3 +268,15 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{t,\epsilon} \| \epsilon_t - \epsilon_\theta(
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计精巧，SAGI+SALQ 互补机制新颖，无训练开销是一大优势；但基于 SD v1.5 的基础模型限制了上限，且需要4个超参的调整。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating Multi-Image Synthetic Data for Text-to-Image Customization](../../ICCV2025/image_generation/generating_multi-image_synthetic_data_for_text-to-image_customization.md)
+- [Collaborative Control for Geometry-Conditioned PBR Image Generation](../../ECCV2024/image_generation/collaborative_control_for_geometry-conditioned_pbr_image_generation.md)
+- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
+- [OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions](../../NeurIPS2025/image_generation/omnivcus_feedforward_subject-driven_video_customization_with_multimodal_control_.md)
+- [M2SFormer: Multi-Spectral and Multi-Scale Attention with Edge-Aware Difficulty Guidance for Image Forgery Localization](../../ICCV2025/image_generation/m2sformer_multi-spectral_and_multi-scale_attention_with_edge-aware_difficulty_gu.md)
+
+<!-- RELATED:END -->

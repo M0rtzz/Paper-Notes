@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+多个消融，但动态场景标注数据有限
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 开辟了4D动态语言场的新方向，对机器人和场景理解有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thinking in Dynamics: How Multimodal Large Language Models Perceive, Track, and Reason Dynamics in Physical 4D World](../../CVPR2026/multimodal_vlm/thinking_in_dynamics_how_multimodal_large_language_models_perceive_track_and_rea.md)
+- [Img-Diff: Contrastive Data Synthesis for Multimodal Large Language Models](img-diff_contrastive_data_synthesis_for_multimodal_large_language_models.md)
+- [Period-LLM: Extending the Periodic Capability of Multimodal Large Language Model](period-llm_extending_the_periodic_capability_of_multimodal_large_language_model.md)
+- [SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model](seqafford_sequential_3d_affordance_reasoning_via_multimodal_large_language_model.md)
+- [Cross-modal Information Flow in Multimodal Large Language Models](cross-modal_information_flow_in_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

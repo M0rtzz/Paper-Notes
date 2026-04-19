@@ -166,3 +166,15 @@ T1平均MSE 0.027，比第二名PatchTST (0.050) 降低**46%**，比专用填充
 - 实验充分度: ⭐⭐⭐⭐⭐ 11数据集×3种缺失场景×4种缺失率+自然缺失+消融+表示分析
 - 写作质量: ⭐⭐⭐⭐⭐ 动机逻辑链完整，四种范式的对比图直观，消融设计有洞察力
 - 价值: ⭐⭐⭐⭐⭐ 46%MSE降低是时序填充领域的突破性贡献，统一超参极具实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens](../../CVPR2026/time_series/a_frame_is_worth_one_token_efficient_generative_world_modeling_with_delta_tokens.md)
+- [CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time.md)
+- [Channel Matters: Estimating Channel Influence for Multivariate Time Series](../../NeurIPS2025/time_series/channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
+- [Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
+- [Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
+
+<!-- RELATED:END -->

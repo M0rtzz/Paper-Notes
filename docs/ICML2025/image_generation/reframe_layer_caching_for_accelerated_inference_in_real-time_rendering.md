@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 任务和场景数量偏少
 - 写作质量: ⭐⭐⭐⭐ 清晰系统，图示丰富
 - 价值: ⭐⭐⭐⭐ 对渲染 pipeline 优化有实用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Diffusion Model Distillation](../../ICCV2025/image_generation/inference-time_diffusion_model_distillation.md)
+- [Real-Time Execution of Action Chunking Flow Policies](../../NeurIPS2025/image_generation/real-time_execution_of_action_chunking_flow_policies.md)
+- [Remasking Discrete Diffusion Models with Inference-Time Scaling](../../NeurIPS2025/image_generation/remasking_discrete_diffusion_models_with_inference-time_scaling.md)
+- [StreamDiffusion: A Pipeline-level Solution for Real-time Interactive Generation](../../ICCV2025/image_generation/streamdiffusion_a_pipeline-level_solution_for_real-time_interactive_generation.md)
+- [Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models](performance_plateaus_in_inference-time_scaling_for_text-to-image_diffusion_witho.md)
+
+<!-- RELATED:END -->

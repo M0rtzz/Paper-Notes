@@ -108,3 +108,15 @@ AGFT 提出了一种对齐引导的微调框架，通过文本引导的对抗训
 - 实验充分度: ⭐⭐⭐⭐⭐ 15个数据集×多种攻击×多个基线，极为全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导和方法阐述逻辑严密
 - 价值: ⭐⭐⭐⭐ 对 VLM 对抗鲁棒性研究有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRivia: Self-supervised Fine-tuning of Vision-Language Models for Table Recognition](trivia_self-supervised_fine-tuning_of_vision-language_models_for_table_recogniti.md)
+- [Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](../../NeurIPS2025/multimodal_vlm/zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+- [AnomalyVFM -- Transforming Vision Foundation Models into Zero-Shot Anomaly Detectors](anomalyvfm_--_transforming_vision_foundation_models_into_zero-shot_anomaly_detec.md)
+- [No Hard Negatives Required: Concept Centric Learning Leads to Compositionality without Degrading Zero-shot Capabilities of Contrastive Models](no_hard_negatives_required_concept_centric_learning_leads_to_compositionality_wi.md)
+- [PointAlign: Feature-Level Alignment Regularization for 3D Vision-Language Models](pointalign_feature-level_alignment_regularization_for_3d_vision-language_models.md)
+
+<!-- RELATED:END -->

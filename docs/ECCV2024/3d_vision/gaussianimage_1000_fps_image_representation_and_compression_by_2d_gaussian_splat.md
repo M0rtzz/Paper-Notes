@@ -173,3 +173,15 @@ GaussianImage包含两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ Kodak和DIV2K两个标准数据集，完整的表示/压缩对比，详细消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，技术细节完整，从3D GS到2D的适配过程逻辑通顺
 - 价值: ⭐⭐⭐⭐⭐ 2000 FPS解码速度开创了神经图像编解码器的新milestone，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianImage++: Boosted Image Representation and Compression with 2D Gaussian Splatting](../../AAAI2026/3d_vision/gaussianimage_boosted_image_representation_and_compression_with_2d_gaussian_spla.md)
+- [HAC: Hash-grid Assisted Context for 3D Gaussian Splatting Compression](hac_hash-grid_assisted_context_for_3d_gaussian_splatting_compression.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ CORE4D 和 InterHuman 两个多人交互基准
 - 写作质量: ⭐⭐⭐⭐ 方法描述系统但公式密集
 - 价值: ⭐⭐⭐⭐⭐ 对动画和游戏行业的多人协作动作生成有重大推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenFS: Multi-Hand-Capable Fingerspelling Recognition with Implicit Signing-Hand Detection and Frame-Wise Letter-Conditioned Synthesis](openfs_multi-hand-capable_fingerspelling_recognition_with_implicit_signing-hand_.md)
+- [HUMOS: Human Motion Model Conditioned on Body Shape](../../ECCV2024/human_understanding/humos_human_motion_model_conditioned_on_body_shape.md)
+- [Few-Shot Precise Event Spotting via Unified Multi-Entity Graph and Distillation](../../AAAI2026/human_understanding/few-shot_precise_event_spotting_via_unified_multi-entity_graph_and_distillation.md)
+- [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](../../ICLR2026/human_understanding/uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
+- [DreamActor-M1: Holistic, Expressive and Robust Human Image Animation with Hybrid Guidance](../../ICCV2025/human_understanding/dreamactor-m1_holistic_expressive_and_robust_human_image_animation_with_hybrid_g.md)
+
+<!-- RELATED:END -->

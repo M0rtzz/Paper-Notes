@@ -168,3 +168,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为 Position Paper 无需实验，但若能包含案例分析（如对某个具体解释算法做 interpretation 讨论的示范）会更有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ 论证清晰、逻辑严密，数学定义简洁优雅，哲学讨论有深度但不晦涩
 - 价值: ⭐⭐⭐⭐ 对 XAI 社区具有重要的方向性指导意义，尤其是"请讨论你的解释算法到底回答了什么问题"这一呼吁切中要害
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Machine Learning Gets Personal: Evaluating Prediction and Explanation](../../ICLR2026/interpretability/when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
+- [Explainable Melanoma Diagnosis with Contrastive Learning and LLM-based Report Generation](../../AAAI2026/interpretability/explainable_melanoma_diagnosis_with_contrastive_learning_and_llm-based_report_ge.md)
+- [SpEx: A Spectral Approach to Explainable Clustering](../../NeurIPS2025/interpretability/spex_a_spectral_approach_to_explainable_clustering.md)
+- [The Anatomy of Evidence: An Investigation Into Explainable ICD Coding](../../ACL2025/interpretability/the_anatomy_of_evidence_an_investigation_into_explainable_icd_coding.md)
+- [On the Power of Context-Enhanced Learning in LLMs](on_the_power_of_context-enhanced_learning_in_llms.md)
+
+<!-- RELATED:END -->

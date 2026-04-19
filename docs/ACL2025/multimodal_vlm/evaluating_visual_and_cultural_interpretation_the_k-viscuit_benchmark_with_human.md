@@ -182,3 +182,15 @@ VLM（GPT-4-Turbo）接收以下输入生成问答对：
 | 总评 | 4 |
 
 框架设计合理，分析全面深入，特别是检索增强和生成式评估的拓展分析很有价值。作为 benchmark 论文，数据量偏小（657 题），但问题质量高、实验充分。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiMM: Cultural Bias Matters — Cross-Cultural Benchmark for Multimodal Metaphors](multimm_cultural_metaphor.md)
+- [Unveiling Cultural Blind Spots: Analyzing the Limitations of mLLMs in Procedural Text Comprehension](unveiling_cultural_blind_spots_analyzing_the_limitations_of_mllms_in_procedural_.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](effivlm_bench_vlm_acceleration.md)
+- [CAPability: A Comprehensive Visual Caption Benchmark for Evaluating Both Correctness and Thoroughness](../../NeurIPS2025/multimodal_vlm/capability_a_comprehensive_visual_caption_benchmark_for_eval.md)
+- [VipAct: Visual-Perception Enhancement via Specialized VLM Agent Collaboration and Tool-use](../../AAAI2026/multimodal_vlm/vipact_visual-perception_enhancement_via_specialized_vlm_age.md)
+
+<!-- RELATED:END -->

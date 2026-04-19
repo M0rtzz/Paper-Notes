@@ -120,3 +120,15 @@ CFG 强度消融（lb=0.6）：$\omega=2$ 达到最优（93.63%），过大的 $
 - 实验充分度: ⭐⭐⭐⭐ 多基线、多benchmark、多角度消融（多样性/一致性/属性/可分性），非常全面
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，图示直观，实验组织有条理
 - 价值: ⭐⭐⭐⭐ 零成本即插即用提升合成人脸数据质量，对隐私保护场景的 FR 训练有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer](../../AAAI2026/human_understanding/enhancing_noise_resilience_in_face_clustering_via_sparse_differential_transforme.md)
+- [SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control](../../AAAI2026/human_understanding/soscontrol_enhancing_human_motion_generation_through_saliency-aware_symbolic_ori.md)
+- [New Synthetic Goldmine: Hand Joint Angle-Driven EMG Data Generation Framework for Micro-Gesture Recognition](../../AAAI2026/human_understanding/new_synthetic_goldmine_hand_joint_angle-driven_emg_data_generation_framework_for.md)
+- [Face Time Traveller: Travel Through Ages Without Losing Identity](face_time_traveller_travel_through_ages_without_losing_identity.md)
+- [HandX: Scaling Bimanual Motion and Interaction Generation](handx_scaling_bimanual_motion_and_interaction_generation.md)
+
+<!-- RELATED:END -->

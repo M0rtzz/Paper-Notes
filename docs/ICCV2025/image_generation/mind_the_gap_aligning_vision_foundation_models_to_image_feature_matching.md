@@ -164,3 +164,15 @@ ScanNet 上 AUC@5° 比 PRISM 提升 24.6%，IMIM 多实例匹配提升 ~12% 相
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个基准全面评测、详细消融、模型容量对比、新基准提出
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，两个挑战的组织逻辑好
 - 价值: ⭐⭐⭐⭐⭐ 刷新多个基准 SOTA，多实例匹配的发现对社区有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AlignTok: Aligning Visual Foundation Encoders to Tokenizers for Diffusion Models](../../ICLR2026/image_generation/aligntok_aligning_visual_foundation_encoders_to_tokenizers_for_diffusion_models.md)
+- [Rethinking the Embodied Gap in Vision-and-Language Navigation: A Holistic Study of Physical and Visual Disparities](rethinking_the_embodied_gap_in_vision-and-language_navigation_a_holistic_study_o.md)
+- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+- [LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching](lazymar_accelerating_masked_autoregressive_models_via_feature_caching.md)
+- [Improving Flow Matching by Aligning Flow Divergence](../../ICML2025/image_generation/improving_flow_matching_by_aligning_flow_divergence.md)
+
+<!-- RELATED:END -->

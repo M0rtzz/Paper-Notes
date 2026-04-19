@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ CIFAR-100 规模有限，仅 2 种架构（ViT + MLP）
 - 写作质量: ⭐⭐⭐⭐ 物理直觉清晰，实现代码内嵌直观
 - 价值: ⭐⭐⭐⭐ 极简实用的稳定化工具，"20% → 72%"的修复效果令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning](../../NeurIPS2025/self_supervised/t-regs_minimum_spanning_tree_regularization_for_self-supervised_learning.md)
+- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](../../CVPR2026/self_supervised/boss_a_best-of-strategies_selector_as_an_oracle_for_deep_active_learning.md)
+- [Deep Learning is Not So Mysterious or Different](../../ICML2025/self_supervised/deep_learning_is_not_so_mysterious_or_different.md)
+- [SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](../../CVPR2026/self_supervised/sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
+- [Enhancing Molecular Property Predictions by Learning from Bond Modelling and Interactions](enhancing_molecular_property_predictions_by_learning_from_bond_modelling_and_int.md)
+
+<!-- RELATED:END -->

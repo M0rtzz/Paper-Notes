@@ -153,3 +153,15 @@ Latent-VG 在 GRES 上仅需为无目标情况添加一个空 token 即可大幅
 - **实验充分度**: ⭐⭐⭐⭐⭐ RIS/REC/GRES 三任务全面验证，消融实验覆盖每个组件和超参数
 - **写作质量**: ⭐⭐⭐⭐ 动机图示直观，方法描述清晰，公式推导完整
 - **价值**: ⭐⭐⭐⭐⭐ 统一框架刷新三个任务 SOTA，正间距对比损失具有广泛应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
+- [DeRIS: Decoupling Perception and Cognition for Enhanced Referring Image Segmentation through Loopback Synergy](deris_decoupling_perception_and_cognition_for_enhanced_referring_image_segmentat.md)
+- [SaFiRe: Saccade-Fixation Reiteration with Mamba for Referring Image Segmentation](../../NeurIPS2025/segmentation/safire_saccade-fixation_reiteration_with_mamba_for_referring_image_segmentation.md)
+- [ARGenSeg: Image Segmentation with Autoregressive Image Generation Model](../../NeurIPS2025/segmentation/argenseg_image_segmentation_with_autoregressive_image_generation_model.md)
+- [ReMamber: Referring Image Segmentation with Mamba Twister](../../ECCV2024/segmentation/remamber_referring_image_segmentation_with_mamba_twister.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多种模型、多种指标、有人工验证，但缺少ground truth蒸馏关系的验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验组织合理，但部分符号和公式可以更简洁
 - 价值: ⭐⭐⭐⭐ 对LLM开发透明性有重要推动作用，但量化结果的可靠性仍需更多验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AlignDistil: Token-Level Language Model Alignment as Adaptive Policy Distillation](aligndistil_token_level_alignment.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization](drpruning_robust_pruning.md)
+- [Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)
+- [Credal Ensemble Distillation for Uncertainty Quantification](../../AAAI2026/model_compression/credal_ensemble_distillation_for_uncertainty_quantification.md)
+
+<!-- RELATED:END -->

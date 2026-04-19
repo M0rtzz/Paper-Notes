@@ -157,3 +157,15 @@ RPG 是一个迭代训练框架：每次迭代中，参考模型 $\pi_{\text{old
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8 种变体 × 2 种优化器 × 2 种模型，消融充分
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨清晰，但因变体众多显得冗长
 - 价值: ⭐⭐⭐⭐ — 为 LLM RL 社区提供了重要的理论参考和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
+- [DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
+- [Nudging the Boundaries of LLM Reasoning](nudging_the_boundaries_of_llm_reasoning.md)
+- [RAIN-Merging: A Gradient-Free Method to Enhance Instruction Following in Large Reasoning Models with Preserved Thinking Format](rain-merging_a_gradient-free_method_to_enhance_instruction_following_in_large_re.md)
+- [Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
+
+<!-- RELATED:END -->

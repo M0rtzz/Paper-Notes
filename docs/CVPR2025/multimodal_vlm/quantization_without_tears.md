@@ -116,3 +116,15 @@ QwT 的核心范式转变：允许量化后的网络结构从 $S^{\mathbb{Z}} = 
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖CNN/ViT/CLIP/DiT/LLaMA五类模型和分类/检测/分割/生成/NLU五类任务，极其全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机论述有说服力，公式推导简洁
 - 价值: ⭐⭐⭐⭐ 作为量化工具箱的通用插件有很高实用价值，但LLM上的提升较为有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [It's a (Blind) Match! Towards Vision-Language Correspondence without Parallel Data](its_a_blind_match_towards_vision-language_correspondence_without_parallel_data.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](../../CVPR2026/multimodal_vlm/fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+- [MBQ: Modality-Balanced Quantization for Large Vision-Language Models](mbq_modality-balanced_quantization_for_large_vision-language_models.md)
+- [Ranked from Within: Ranking Large Multimodal Models Without Labels](../../ICML2025/multimodal_vlm/ranked_from_within_ranking_large_multimodal_models_without_labels.md)
+- [MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/masquant_modality-aware_smoothing_quantization_for_multimodal_large_language_mod.md)
+
+<!-- RELATED:END -->

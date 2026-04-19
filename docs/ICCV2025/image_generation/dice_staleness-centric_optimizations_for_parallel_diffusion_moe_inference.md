@@ -144,3 +144,15 @@ DICE 是一个推理优化框架，不涉及训练。核心是在推理时合理
 - **实验充分度**: ⭐⭐⭐⭐ 多配置（batch size/步数/模型规模）、消融充分
 - **写作质量**: ⭐⭐⭐⭐⭐ 图示极其清晰，特别是 Figure 2 的执行流对比
 - **价值**: ⭐⭐⭐⭐ 对大规模 MoE 扩散模型的部署有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation](dense2moe_restructuring_diffusion_transformer_to_moe_for_efficient_text-to-image.md)
+- [Accelerating Parallel Diffusion Model Serving with Residual Compression](../../NeurIPS2025/image_generation/accelerating_parallel_diffusion_model_serving_with_residual_compression.md)
+- [Inference-Time Diffusion Model Distillation](inference-time_diffusion_model_distillation.md)
+- [GLASS: Guided Latent Slot Diffusion for Object-Centric Learning](../../CVPR2025/image_generation/glass_guided_latent_slot_diffusion_for_object-centric_learning.md)
+- [IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](../../ICML2025/image_generation/impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)
+
+<!-- RELATED:END -->

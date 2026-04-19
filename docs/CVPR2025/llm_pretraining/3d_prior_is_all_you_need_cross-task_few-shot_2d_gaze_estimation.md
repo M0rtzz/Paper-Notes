@@ -113,3 +113,15 @@ $$\mathcal{L} = \mathcal{L}_{proj} + 0.4\mathcal{L}_{flip} + 0.25\mathcal{L}_{un
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机极清晰，物理推导严谨，实验分析深入
 - 价值: ⭐⭐⭐⭐ 实用性强（1分钟部署到新设备），但视线估计领域偏小众
 - 复现性: ⭐⭐⭐⭐ 方法简洁且代码已开源，单卡RTX 3090可训练
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning](../../ICML2025/llm_pretraining/revisiting_continuity_of_image_tokens_for_cross-domain_few-shot_learning.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+- [Learning to Obstruct Few-Shot Image Classification over Restricted Classes](../../ECCV2024/llm_pretraining/learning_to_obstruct_few-shot_image_classification_over_restricted_classes.md)
+- [Position: The Future of Bayesian Prediction Is Prior-Fitted](../../ICML2025/llm_pretraining/position_the_future_of_bayesian_prediction_is_prior-fitted.md)
+- [PRESCRIBE: Predicting Single-Cell Responses with Bayesian Estimation](../../NeurIPS2025/llm_pretraining/prescribe_predicting_single-cell_responses_with_bayesian_estimation.md)
+
+<!-- RELATED:END -->

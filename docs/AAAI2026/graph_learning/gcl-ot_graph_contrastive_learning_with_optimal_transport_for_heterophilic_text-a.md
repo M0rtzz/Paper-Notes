@@ -145,3 +145,15 @@ GCL-OT 在 9 个数据集上全面超越基线，尤其在异质性数据集（W
 ⭐⭐⭐⭐ (4/5)
 
 问题定义清晰（多粒度异质性），方法设计精巧（三个模块各有针对性），实验全面（9 个数据集、有监督+无监督、消融、鲁棒性）。理论分析为方法提供了互信息和 Bayes 错误的形式保证。主要扣分在于对 LLM 增强的依赖和大规模可扩展性验证不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](../../NeurIPS2025/graph_learning/unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)
+- [HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport](../../ICML2025/graph_learning/hgot_self-supervised_heterogeneous_graph_neural_network_with_optimal_transport.md)
+- [Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](../../NeurIPS2025/graph_learning/dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)
+- [GRAPHITE: Graph Homophily Booster — Reimagining the Role of Discrete Features in Heterophilic Graph Learning](../../ICLR2026/graph_learning/graph_homophily_booster_reimagining_the_role_of_discrete_features_in_heterophili.md)
+- [EchoLess: Label-Based Pre-Computation for Memory-Efficient Heterogeneous Graph Learning](echoless_label-based_pre-computation_for_memory-efficient_heterogeneous_graph_le.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ DiME 在不使用先验得分的情况下达到与 SMC 可比的精度。
 - 理论性：⭐⭐⭐⭐⭐ — 推导严格，多个引理支撑
 - 实验：⭐⭐⭐⭐ — 从玩具到真实科学应用的全面验证
 - 实用性：⭐⭐⭐⭐ — 对科学成像和模型选择有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Reconstruction-Based Data Likelihood Estimation for Core-Set Selection](../../AAAI2026/image_generation/diffusion_reconstruction-based_data_likelihood_estimation_for_core-set_selection.md)
+- [Monocular Normal Estimation via Shading Sequence Estimation](monocular_normal_estimation_via_shading_sequence_estimation.md)
+- [Learning a Distance Measure from the Information-Estimation Geometry of Data](learning_a_distance_measure_from_the_information-estimation_geometry_of_data.md)
+- [DiverseFlow: Sample-Efficient Diverse Mode Coverage in Flows](../../CVPR2025/image_generation/diverseflow_sample-efficient_diverse_mode_coverage_in_flows.md)
+- [DragFlow: Unleashing DiT Priors with Region Based Supervision for Drag Editing](dragflow_unleashing_dit_priors_with_region_based_supervision_for_drag_editing.md)
+
+<!-- RELATED:END -->

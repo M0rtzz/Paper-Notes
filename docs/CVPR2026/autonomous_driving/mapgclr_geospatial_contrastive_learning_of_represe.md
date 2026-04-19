@@ -263,3 +263,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多个标注比例的系统实验 + PCA 定性分析
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表准确
 - 实用价值: ⭐⭐⭐⭐⭐ 直接解决 HD 地图标注成本过高的工业痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMDUL: Expanding mmWave Datasets for Human Pose Estimation with Unlabeled Data and LiDAR Datasets](expanding_mmwave_datasets_for_human_pose_estimation_with_unlabeled_data_and_lida.md)
+- [Failure Modes for Deep Learning-Based Online Mapping: How to Measure and Address Them](failure_modes_for_deep_learning-based_online_mapping_how_to_measure_and_address_.md)
+- [Learning Mutual View Information Graph for Adaptive Adversarial Collaborative Perception](learning_mutual_view_information_graph_for_adaptive_adversarial_collaborative_pe.md)
+- [Le MuMo JEPA: Multi-Modal Self-Supervised Representation Learning with Learnable Fusion Tokens](le_mumo_jepa_multi-modal_self-supervised_representation_learning_with_learnable_.md)
+- [ReMoT: Reinforcement Learning with Motion Contrast Triplets](remot_reinforcement_learning_with_motion_contrast_triplets.md)
+
+<!-- RELATED:END -->

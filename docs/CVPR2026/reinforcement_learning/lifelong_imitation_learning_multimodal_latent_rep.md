@@ -95,3 +95,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验非常详尽，覆盖了几乎所有设计选择，有UMAP可视化和计算效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图表信息量大
 - 价值: ⭐⭐⭐⭐ 在LIBERO所有基准上刷新SOTA，开源代码，对终身机器人学习有实际参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion](graspldp_towards_generalizable_grasping_policy_via_latent_diffusion.md)
+- [MSRL: Scaling Generative Multimodal Reward Modeling via Multi-Stage Reinforcement Learning](msrl_scaling_generative_multimodal_reward_modeling_via_multi-stage_reinforcement.md)
+- [Anticipatory Planning for Multimodal AI Agents](anticipatory_planning_for_multimodal_ai_agents.md)
+- [BRIDGE: Multimodal-to-Text Retrieval via Reinforcement-Learned Query Alignment](bridge_multimodal-to-text_retrieval_via_reinforcement-learned_query_alignment.md)
+- [See It, Say It, Sorted: An Iterative Training-Free Framework for Visually-Grounded Multimodal Reasoning in LVLMs](see_it_say_it_sorted_an_iterative_training-free_framework_for_visually-grounded_.md)
+
+<!-- RELATED:END -->

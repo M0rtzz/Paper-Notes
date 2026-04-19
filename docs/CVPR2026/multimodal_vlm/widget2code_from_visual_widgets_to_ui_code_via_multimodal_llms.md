@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 对比全面（通用 MLLM + 专用 UI2Code），消融清晰，但数据集偏小
 - 写作质量: ⭐⭐⭐⭐ 动机清楚，系统设计描述详细
 - 价值: ⭐⭐⭐⭐ 开辟新任务方向，提供完整的 benchmark + baseline + 基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Customized Visual Storytelling with Unified Multimodal LLMs](customized_visual_storytelling_with_unified_multimodal_llms.md)
+- [Aria-UI: Visual Grounding for GUI Instructions](../../ACL2025/multimodal_vlm/aria-ui_visual_grounding_for_gui_instructions.md)
+- [Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verification](demographic_fairness_in_multimodal_llms_a_benchmark_of_gender_and_ethnicity_bias.md)
+- [TimeLens: Rethinking Video Temporal Grounding with Multimodal LLMs](timelens_rethinking_video_temporal_grounding_with_multimodal_llms.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

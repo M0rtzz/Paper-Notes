@@ -146,3 +146,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 跨 4 个模型、4 个任务对验证，辅以消融、因果干预、热力图分析；但电路发现未完美满足 faithfulness/completeness
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，概念定义精确，图表信息量大，running example 贯穿全文
 - **价值**: ⭐⭐⭐⭐ — 深化了对 ICL 和隐式多步推理的机制理解，对模型评估和预训练设计有实际指导意义；但仅限合成任务，自然场景验证待补
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Eligibility of LLMs for Counterfactual Reasoning: A Decompositional Study](on_the_eligibility_of_llms_for_counterfactual_reasoning_a_decompositional_study.md)
+- [Validating Interpretability in siRNA Efficacy Prediction: A Perturbation-Based, Dataset-Aware Protocol](validating_interpretability_in_sirna_efficacy_prediction_a_perturbation-based_da.md)
+- [Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning](../../CVPR2025/causal_inference/joint_scheduling_of_causal_prompts_and_tasks_for_multi-task_learning.md)
+- [LLM Interpretability with Identifiable Temporal-Instantaneous Representation](../../NeurIPS2025/causal_inference/llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
+- [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](../../CVPR2025/causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
+
+<!-- RELATED:END -->

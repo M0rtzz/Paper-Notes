@@ -204,3 +204,15 @@ $$\%C = \frac{c}{C} \times 100\%$$
 | **综合** | **⭐⭐⭐⭐** |
 
 > 本文是一项扎实的实验型贡献，通过大规模受控实验回答了一个非常实用的问题。实验设计严谨，结论清晰且可操作，开源资源丰富。虽然目标规模局限于 1B 和架构/比例的单一性略显不足，但其方法论框架可直接推广，对工业界和学术界的预训练数据选择实践都有重要参考价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Come Together, But Not Right Now: A Progressive Strategy to Boost Low-Rank Adaptation](come_together_but_not_right_now_a_progressive_strategy_to_boost_low-rank_adaptat.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+- [Who Taught You That? Tracing Teachers in Model Distillation](../../ACL2025/model_compression/who_taught_you_that_tracing_teachers_in_model_distillation.md)
+- [SEE: Strategic Exploration and Exploitation for Cohesive In-Context Prompt Optimization](../../ACL2025/model_compression/see_strategic_exploration_exploitation_prompt_optimization.md)
+- [Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku](../../ACL2025/model_compression/explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo.md)
+
+<!-- RELATED:END -->

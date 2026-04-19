@@ -139,3 +139,15 @@ EgoDex 的核心贡献分两部分：
 - 实验充分度: ⭐⭐⭐⭐ 系统评估了 14 个模型变体、多个 ablation，但缺少关键的 robot transfer 实验。
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，图表丰富，数据集对比表一目了然。
 - 价值: ⭐⭐⭐⭐⭐ 作为数据集论文，潜在影响力巨大——829 小时开源数据可推动整个灵巧操作领域发展。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Drive is a Free Gift: Large-Scale Label-Free Autonomy Pretraining from Unposed In-The-Wild Videos](../../CVPR2026/autonomous_driving/learning_to_drive_is_a_free_gift_large-scale_label-free_autonomy_pretraining_fro.md)
+- [Ghost-FWL: A Large-Scale Full-Waveform LiDAR Dataset for Ghost Detection and Removal](../../CVPR2026/autonomous_driving/ghost-fwl_a_large-scale_full-waveform_lidar_dataset_for_ghost_detection_and_remo.md)
+- [H-V2X: A Large Scale Highway Dataset for BEV Perception](../../ECCV2024/autonomous_driving/h-v2x_a_large_scale_highway_dataset_for_bev_perception.md)
+- [DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
+- [MARC: Memory-Augmented RL Token Compression for Efficient Video Understanding](marc_memory-augmented_rl_token_compression_for_efficient_video_un.md)
+
+<!-- RELATED:END -->

@@ -166,3 +166,15 @@ IMMP 分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种规划模型、多种基线、两个目标域、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，但数学符号稍多
 - 价值: ⭐⭐⭐⭐ 为运动规划的跨域适应提供了实用、高效的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](../../ICLR2026/robotics/evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
+- [Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
+- [Experience-based Knowledge Correction for Robust Planning in Minecraft](../../ICLR2026/robotics/experience-based_knowledge_correction_for_robust_planning_in_minecraft.md)
+- [Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction](../../CVPR2025/robotics/phoenix_a_motion-based_self-reflection_framework_for_fine-grained_robotic_action.md)
+- [Efficient Robotic Policy Learning via Latent Space Backward Planning](../../ICML2025/robotics/efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+
+<!-- RELATED:END -->

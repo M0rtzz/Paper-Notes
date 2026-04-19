@@ -133,3 +133,15 @@ D-CeLR 的整体架构包含三个主要模块：(1) 特征提取模块：从高
 - 实验充分度: ⭐⭐⭐⭐ 在标准挑战赛数据集上有完整的对比和消融实验，包括跨域验证
 - 写作质量: ⭐⭐⭐ 描述清晰，但方法部分可以更简洁
 - 价值: ⭐⭐⭐⭐ 对医学图像标志点检测领域有实用价值，端到端设计简化了部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?](../../ICCV2025/medical_imaging/hrscene_how_far_are_vlms_from_effective_high-resolution_image_understanding.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](../../CVPR2026/medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+- [Radiative Gaussian Splatting for Efficient X-ray Novel View Synthesis](radiative_gaussian_splatting_for_efficient_x-ray_novel_view_synthesis.md)
+- [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
+- [MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss](../../AAAI2026/medical_imaging/maisi-v2_accelerated_3d_high-resolution_medical_image_synthesis_with_rectified_f.md)
+
+<!-- RELATED:END -->

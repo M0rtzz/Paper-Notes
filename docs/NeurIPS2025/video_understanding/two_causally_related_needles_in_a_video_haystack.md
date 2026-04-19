@@ -129,3 +129,15 @@ VLM在Causal2Needles上的准确率（%，取Forward/Reverse平均）：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖10+模型、4类问题、正逆序对比、质量评估全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，动机论证有力
 - 价值: ⭐⭐⭐⭐⭐ 揭示现有VLM在联合推理上的根本性弱点，高度有临床诊断价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT](../../CVPR2026/video_understanding/rethinking_twostage_referringbytracking_in_referri.md)
+- [Unleashing Hour-Scale Video Training for Long Video-Language Understanding](unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+- [InFlux: A Benchmark for Self-Calibration of Dynamic Intrinsics of Video Cameras](influx_a_benchmark_for_self-calibration_of_dynamic_intrinsics_of_video_cameras.md)
+- [ConViS-Bench: Estimating Video Similarity Through Semantic Concepts](convis-bench_estimating_video_similarity_through_semantic_concepts.md)
+
+<!-- RELATED:END -->

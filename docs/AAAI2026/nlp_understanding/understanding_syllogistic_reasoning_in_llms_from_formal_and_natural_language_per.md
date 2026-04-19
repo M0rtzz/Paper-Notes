@@ -157,3 +157,15 @@ $C_{\text{all}}$衡量模型在同一三段论4个变体上的完全一致比例
 - 实验充分度: ⭐⭐⭐⭐ — 14模型×4策略×3温度的全因素设计严谨，统计分析充分，但数据规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，发现表述精炼有力，统计报告规范
 - 价值: ⭐⭐⭐⭐ — 对理解LLM推理本质有深刻洞察，但三段论范围较窄，泛化性待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language Models and Logic Programs for Trustworthy Tax Reasoning](language_models_and_logic_programs_for_trustworthy_tax_reasoning.md)
+- [Adapting Psycholinguistic Research for LLMs: Gender-Inclusive Language in a Coreference Context](../../ACL2025/nlp_understanding/adapting_psycholinguistic_research_for_llms_gender-inclusive_language_in_a_coref.md)
+- [Recursive Question Understanding for Complex Question Answering over Heterogeneous Personal Data](../../ACL2025/nlp_understanding/recursive_question_understanding_for_complex_question_answering_over_heterogeneo.md)
+- [Sentiment Reasoning for Healthcare](../../ACL2025/nlp_understanding/sentiment_reasoning_for_healthcare.md)
+- [Can LLMs Reliably Simulate Real Students' Abilities in Mathematics and Reading Comprehension?](../../ACL2025/nlp_understanding/can_llms_reliably_simulate_real_students_abilities_in_mathematics_and_reading_co.md)
+
+<!-- RELATED:END -->

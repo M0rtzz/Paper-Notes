@@ -122,3 +122,15 @@ CLIP-GS 在 Text→3D 上提升 +9.0，Image→3D 上提升 +10.5。
 - **实验充分度**: ⭐⭐⭐⭐ 检索+零样本+少样本+消融覆盖全面，与多个基线对比公平
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，方法介绍详细，图示直观
 - **价值**: ⭐⭐⭐⭐ 开拓了 3DGS 多模态学习的新方向，实验结果有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Language Splatting](online_language_splatting.md)
+- [3D Gaussian Map with Open-Set Semantic Grouping for Vision-Language Navigation](3d_gaussian_map_with_openset_semantic_grouping_for_visionlan.md)
+- [PCR-GS: COLMAP-Free 3D Gaussian Splatting via Pose Co-Regularizations](pcr-gs_colmap-free_3d_gaussian_splatting_via_pose_co-regularizations.md)
+- [LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting](../../ICML2025/3d_vision/tackling_view-dependent_semantics_in_3d_language_gaussian_splatting.md)
+- [GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](../../CVPR2026/3d_vision/gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)
+
+<!-- RELATED:END -->

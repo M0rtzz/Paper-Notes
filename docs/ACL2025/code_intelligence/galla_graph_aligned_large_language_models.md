@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 模型(350M-14B) × 5 任务 + 跨语言泛化验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，两阶段训练逻辑连贯
 - 价值: ⭐⭐⭐⭐⭐ 推理零开销+模型无关+任务无关，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongCodeU: Benchmarking Long-Context Language Models on Long Code Understanding](benchmarking_long-context_language_models_on_long_code_understanding.md)
+- [Personality-Guided Code Generation Using Large Language Models](personality_guided_code_gen.md)
+- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+- [CodeDPO: Aligning Code Models with Self Generated and Verified Source Code](codedpo_code_alignment.md)
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+
+<!-- RELATED:END -->

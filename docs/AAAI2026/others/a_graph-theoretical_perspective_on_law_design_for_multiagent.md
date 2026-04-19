@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作，定理完备自洽，但缺乏实证或案例研究支撑
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，工厂排污例子贯穿始终，定义→引理→定理层次分明
 - 价值: ⭐⭐⭐⭐ 为多智能体规范合成提供了新的算法工具箱，对AI责任问题提供了形式化方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Epistemic Perspective on Agent Awareness](an_epistemic_perspective_on_agent_awareness.md)
+- [Private Frequency Estimation via Residue Number Systems](private_frequency_estimation_via_residue_number_systems.md)
+- [Theoretical and Empirical Analysis of Lehmer Codes to Search Permutation Spaces with Evolutionary Algorithms](theoretical_and_empirical_analysis_of_lehmer_codes_to_search_permutation_spaces_.md)
+- [Designing Incident Reporting Systems for Harms from General-Purpose AI](designing_incident_reporting_systems_for_harms_from_general-purpose_ai.md)
+- [Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
+
+<!-- RELATED:END -->

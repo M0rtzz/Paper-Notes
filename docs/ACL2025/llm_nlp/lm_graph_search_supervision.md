@@ -140,3 +140,15 @@ $$L_B = \sum_{i=1}^{M}\sum_{j=i}^{M}\sum_{k=j+1}^{M}\max(0, 1-(\sigma_i[j]-\sigm
 - **技术深度**: ⭐⭐⭐⭐ — 六种正交方法设计精巧，实验分析细致（尤其是负面结果的深入讨论）
 - **实用性**: ⭐⭐⭐ — 核心发现限于合成任务，向真实 NLP 场景的迁移路径不明
 - **表达清晰度**: ⭐⭐⭐⭐⭐ — 逻辑链条严密，图示优秀，概念命名准确直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents](membench_towards_more_comprehensive_evaluation_on_the_memory_of_llm-based_agents.md)
+- [Fine-Grained Activation Steering: Steering Less, Achieving More](../../ICLR2026/llm_nlp/fine-grained_activation_steering_steering_less_achieving_more.md)
+- [Uncertainty Unveiled: Can Exposure to More In-context Examples Mitigate Uncertainty for Large Language Models?](uncertainty_unveiled_can_exposure_to_more_in-context_examples_mitigate_uncertain.md)
+- [CodeTool: Enhancing Programmatic Tool Invocation of LLMs via Process Supervision](codetool_enhancing_programmatic_tool_invocation_of_llms_via_process_supervision.md)
+- [Can Graph Descriptive Order Affect Solving Graph Problems with LLMs?](graph_descriptive_order_llm.md)
+
+<!-- RELATED:END -->

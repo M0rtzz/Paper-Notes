@@ -140,3 +140,15 @@ Precision 和 Recall 对比（部分数据集）：
 - 实用性：⭐⭐⭐⭐ — 少样本场景价值高
 - 表现力：⭐⭐⭐⭐⭐ — 全部数据集SOTA，平均45.9%提升
 - 综合评分：9/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+- [MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed Precision Quantization](mixdq_memory-efficient_few-step_text-to-image_diffusion_models_with_metric-decou.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)
+
+<!-- RELATED:END -->

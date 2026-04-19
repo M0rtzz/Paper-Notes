@@ -126,3 +126,15 @@ $$\mathcal{L}_{\text{reg}}^R = \frac{1}{|\mathcal{N}_r|}\sum_{(i,j)\in\mathcal{N
 - **技术深度**: ⭐⭐⭐⭐⭐ — 旋转/平移参数化数学严谨，损失设计周密
 - **实验充分性**: ⭐⭐⭐⭐ — 多数据集评估和详细消融
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式规范
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OrderChain: Towards General Instruct-Tuning for Stimulating the Ordinal Understanding Ability of MLLM](orderchain_towards_general_instruct-tuning_for_stimulating_the_ordinal_understan.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [What's Making That Sound Right Now? Video-centric Audio-Visual Localization](whats_making_that_sound_right_now_video-centric_audio-visual_localization.md)
+- [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
+- [OpenAnimals: Revisiting Person Re-Identification for Animals Towards Better Generalization](openanimals_revisiting_person_re-identification_for_animals_towards_better_gener.md)
+
+<!-- RELATED:END -->

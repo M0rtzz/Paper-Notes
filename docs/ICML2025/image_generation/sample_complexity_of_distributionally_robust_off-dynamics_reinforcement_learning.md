@@ -133,3 +133,15 @@ $$\mathbb{E}[\text{Regret}(K)] = \Omega(C_{vr}^{1/2} \sqrt{K})$$
 - 实验充分度: ⭐⭐⭐ (实验规模偏小，仅有表格型环境验证)
 - 写作质量: ⭐⭐⭐⭐ (理论严谨，符号较多但逻辑清晰)
 - 价值: ⭐⭐⭐⭐⭐ (为 off-dynamics RL 在线学习的理论基础做出关键贡献)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ORVIT: Near-Optimal Online Distributionally Robust Reinforcement Learning](../../AAAI2026/image_generation/orvit_near-optimal_online_distributionally_robust_reinforcement_learning.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
+- [PAK-UCB Contextual Bandit: An Online Learning Approach to Prompt-Aware Selection of Generative Models and LLMs](pak-ucb_contextual_bandit_an_online_learning_approach_to_prompt-aware_selection_.md)
+- [Composite Flow Matching for Reinforcement Learning with Shifted-Dynamics Data](../../NeurIPS2025/image_generation/composite_flow_matching_for_reinforcement_learning_with_shifted-dynamics_data.md)
+- [Hierarchical Reinforcement Learning with Uncertainty-Guided Diffusional Subgoals](hierarchical_reinforcement_learning_with_uncertainty-guided_diffusional_subgoals.md)
+
+<!-- RELATED:END -->

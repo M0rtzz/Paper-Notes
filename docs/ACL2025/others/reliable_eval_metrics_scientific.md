@@ -145,3 +145,15 @@ tags:
 | 实用性 | 8 | 为科学写作辅助系统提供了具体的指标选择指南和成本效益分析 |
 | 实验充分度 | 8 | 6 个生成模型、9 种指标、1548 对人工标注、按难度和类型的精细分析 |
 | 写作质量 | 7 | 结构清晰，分析层层递进，但部分结论重复 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](seoe_semantic_eval.md)
+- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](../../NeurIPS2025/others/are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
+- [A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [IRIS: Interactive Research Ideation System for Accelerating Scientific Discovery](iris_interactive_research_ideation_system_for_accelerating_scientific_discovery.md)
+- [TabXEval: Why this is a Bad Table? An eXhaustive Rubric for Table Evaluation](tabxeval_why_this_is_a_bad_table_an_exhaustive_rubric_for_table_evaluation.md)
+
+<!-- RELATED:END -->

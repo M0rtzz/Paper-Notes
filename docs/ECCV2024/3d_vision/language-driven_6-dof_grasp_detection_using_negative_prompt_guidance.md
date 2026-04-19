@@ -141,3 +141,15 @@ $$\mathcal{L} = 0.9\mathcal{L}_{\text{noise}} + 0.1\mathcal{L}_{\text{negative}}
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 基准对比 + 跨数据集 + DDIM加速 + t-SNE分析 + 真实机器人，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导+实验+实际机器人验证，结构清晰
 - **价值**: ⭐⭐⭐⭐ — 大规模数据集+有效方法，对语言驱动操控方向有实质推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](../../ICCV2025/3d_vision/egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
+- [ComboVerse: Compositional 3D Assets Creation Using Spatially-Aware Diffusion Guidance](comboverse_compositional_3d_assets_creation_using_spatially-aware_diffusion_guid.md)
+- [FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)
+
+<!-- RELATED:END -->

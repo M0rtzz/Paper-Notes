@@ -129,3 +129,15 @@ BDD100K（自动驾驶场景分类，Stop/Move）：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖CNN/ViT/LVLM多种分类器，包含人类评估，但人评规模偏小
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题动机阐述精准，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 揭示的explanatory gap对XAI领域有根本性意义，改变了对反事实解释的理解
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LeapFactual: Reliable Visual Counterfactual Explanation Using Conditional Flow Matching](leapfactual_reliable_visual_counterfactual_explanation_using_conditional_flow_ma.md)
+- [Counterfactual Identifiability via Dynamic Optimal Transport](counterfactual_identifiability_via_dynamic_optimal_transport.md)
+- [DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models](dexter_diffusion-guided_explanations_with_textual_reasoning_for_vision_models.md)
+- [GenIR: Generative Visual Feedback for Mental Image Retrieval](genir_generative_visual_feedback_for_mental_image_retrieval.md)
+- [Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation](mind-the-glitch_visual_correspondence_for_detecting_inconsistencies_in_subject-d.md)
+
+<!-- RELATED:END -->

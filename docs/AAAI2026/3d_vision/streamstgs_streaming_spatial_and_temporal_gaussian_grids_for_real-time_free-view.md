@@ -204,3 +204,15 @@ $$\mathcal{L} = \mathcal{L}_c + 2\mathcal{L}_t + \mathcal{L}_{spatial} + \alpha_
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 两个数据集、全面的定量对比和详细的消融实验
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，但符号较多需要仔细阅读
 - **价值**: ⭐⭐⭐⭐⭐ — 解决了 FVV 实时流传输的实际瓶颈，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Motion Matters: Compact Gaussian Streaming for Free-Viewpoint Video Reconstruction](../../NeurIPS2025/3d_vision/motion_matters_compact_gaussian_streaming_for_free-viewpoint_video_reconstructio.md)
+- [Physics-Informed Deformable Gaussian Splatting: Towards Unified Constitutive Laws for Time-Evolving Material Field](physics-informed_deformable_gaussian_splatting_towards_unified_constitutive_laws.md)
+- [Generalized Geometry Encoding Volume for Real-time Stereo Matching](generalized_geometry_encoding_volume_for_real-time_stereo_matching.md)
+- [FlashDepth: Real-time Streaming Video Depth Estimation at 2K Resolution](../../ICCV2025/3d_vision/flashdepth_real-time_streaming_video_depth_estimation_at_2k_resolution.md)
+- [RTGaze: Real-Time 3D-Aware Gaze Redirection from a Single Image](rtgaze_real-time_3d-aware_gaze_redirection_from_a_single_image.md)
+
+<!-- RELATED:END -->

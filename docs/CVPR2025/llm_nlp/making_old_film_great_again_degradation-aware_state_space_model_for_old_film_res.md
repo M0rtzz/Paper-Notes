@@ -82,3 +82,15 @@ MambaOFR采用多帧输入的编码器-解码器架构，核心是Mamba-based时
 - 合成退化与真实退化之间仍有domain gap
 - 颜色恢复依赖训练数据的色彩分布，对特殊色彩风格的胶片可能效果有限
 - 未来可结合生成模型（如扩散模型）进行修复区域的语义重建
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Generalization](attribute-formed_class-specific_concept_space_endowing_language_bottleneck_model.md)
+- [An Invariant Latent Space Perspective on Language Model Inversion](../../AAAI2026/llm_nlp/an_invariant_latent_space_perspective_on_language_model_inve.md)
+- [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
+- [SoftShadow: Leveraging Soft Masks for Penumbra-Aware Shadow Removal](softshadow_leveraging_soft_masks_for_penumbra-aware_shadow_removal.md)
+- [PosterO: Structuring Layout Trees to Enable Language Models in Generalized Content-Aware Layout Generation](postero_structuring_layout_trees_to_enable_language_models_in_generalized_conten.md)
+
+<!-- RELATED:END -->

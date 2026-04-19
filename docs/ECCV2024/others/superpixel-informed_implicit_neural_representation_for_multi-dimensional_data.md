@@ -149,3 +149,15 @@ $\mathbf{D} \in \mathbb{R}^{s \times r}$ 在所有超像素间共享，类似字
 - **实用性**: ★★★☆☆ — 参数效率待改进，超参数较多
 - **实验完整性**: ★★★★★ — 图像+点数据+多任务的全面验证
 - **写作质量**: ★★★★☆ — 数学定义严谨，结构清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Functional Transform-Based Low-Rank Tensor Factorization for Multi-Dimensional Data Recovery](functional_transform-based_low-rank_tensor_factorization_for_multi-dimensional_d.md)
+- [SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](../../ICML2025/others/suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
+- [EVOS: Efficient Implicit Neural Training via EVOlutionary Selector](../../CVPR2025/others/evos_efficient_implicit_neural_training_via_evolutionary_selector.md)
+- [Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization](mahalanobis_distance-based_multi-view_optimal_transport_for_multi-view_crowd_loc.md)
+- [CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)
+
+<!-- RELATED:END -->

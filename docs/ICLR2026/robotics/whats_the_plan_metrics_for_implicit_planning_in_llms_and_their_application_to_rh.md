@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 23 模型（4 家族×多尺度×base+IT）× 2 任务 + 电路分析 + 注意力消融
 - 写作质量: ⭐⭐⭐⭐ 前向/后向规划定义清晰，实验直观可复现
 - 价值: ⭐⭐⭐⭐⭐ 对理解 LLM 内部机制有基础性贡献，方法论可广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Agents Persuade: Propaganda Generation and Mitigation in LLMs](when_agents_persuade_propaganda_generation_and_mitigation_in_llms.md)
+- [String Seed of Thought: Prompting LLMs for Distribution-Faithful and Diverse Generation](string_seed_of_thought_prompting_llms_for_distribution-faithful_and_diverse_gene.md)
+- [One Demo Is All It Takes: Planning Domain Derivation with LLMs from A Single Demonstration](one_demo_is_all_it_takes_planning_domain_derivation_with_llms_from_a_single_demo.md)
+- [Do LLMs Really Struggle at NL-FOL Translation? Revealing Their Strengths via a Novel Benchmarking Strategy](../../AAAI2026/robotics/do_llms_really_struggle_at_nl-fol_translation_revealing_their_strengths_via_a_no.md)
+- [Tracing and Reversing Edits in LLMs](tracing_and_reversing_edits_in_llms.md)
+
+<!-- RELATED:END -->

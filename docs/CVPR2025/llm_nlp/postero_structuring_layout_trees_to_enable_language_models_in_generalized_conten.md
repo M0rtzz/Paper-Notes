@@ -82,3 +82,15 @@ PosterO的核心流程：(1) 数据预处理——将训练集中的海报布局
 - 复杂布局（>20个元素）时LLM上下文长度可能不足
 - 当前主要在静态海报上验证，交互式的多轮设计编辑待探索
 - fine-tuning可能进一步提升生成质量，但会失去通用性优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](../../ACL2025/llm_nlp/buzzword_understanding_ugc.md)
+- [Aligning Large Language Models with Implicit Preferences from User-Generated Content](../../ACL2025/llm_nlp/pugc_align_implicit_pref_ugc.md)
+- [Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction](improving_autoregressive_visual_generation_with_cluster-oriented_token_predictio.md)
+- [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
+- [COSMIC: Generalized Refusal Direction Identification in LLM Activations](../../ACL2025/llm_nlp/cosmic_generalized_refusal_direction_identification_in_llm_activations.md)
+
+<!-- RELATED:END -->

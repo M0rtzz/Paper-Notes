@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 类任务、10 个数据集、4 种模型规模、大量 baseline 对比、充分消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，数学推导完整，实验设计合理
 - 价值: ⭐⭐⭐⭐⭐ 提供了高效且通用的搜索增强 LLM 训练方案，1.5B 模型即可实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Triplets Better Than Pairs: Towards Stable and Effective Self-Play Fine-Tuning for LLMs](triplets_better_than_pairs_towards_stable_and_effective_self-play_fine-tuning_fo.md)
+- [SPACE: Noise Contrastive Estimation Stabilizes Self-Play Fine-Tuning for Large Language Models](space_noise_contrastive_estimation_stabilizes_self-play_fine-tuning_for_large_la.md)
+- [Dynamic Parallel Tree Search for Efficient LLM Reasoning](../../ACL2025/llm_nlp/dynamic_parallel_tree_search_for_efficient_llm_reasoning.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](../../ACL2025/llm_nlp/boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+- [Self-Training Elicits Concise Reasoning in Large Language Models](../../ACL2025/llm_nlp/self-training_elicits_concise_reasoning_in_large_language_models.md)
+
+<!-- RELATED:END -->

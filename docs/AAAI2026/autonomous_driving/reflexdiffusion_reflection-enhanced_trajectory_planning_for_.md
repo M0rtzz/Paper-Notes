@@ -203,3 +203,15 @@ tags:
 
 ⭐⭐⭐⭐⭐ (5/5)
 方法创新性强（首次反思机制用于轨迹规划），架构无关的即插即用设计优雅实用。nuPlan实验全面，长尾安全场景改善显著。直接服务自动驾驶安全关键需求。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+- [FQ-PETR: Fully Quantized Position Embedding Transformation for Multi-View 3D Object Detection](fq-petr_fully_quantized_position_embedding_transformation_fo.md)
+- [FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
+- [Multimodal Data Fusion to Capture Dynamic Interactions between Built Environment and Vulnerable Older Adults](multimodal_data_fusion_to_capture_dynamic_interactions_between_built_environment.md)
+- [SparseCoop: Cooperative Perception with Kinematic-Grounded Queries](sparsecoop_cooperative_perception_with_kinematic-grounded_queries.md)
+
+<!-- RELATED:END -->

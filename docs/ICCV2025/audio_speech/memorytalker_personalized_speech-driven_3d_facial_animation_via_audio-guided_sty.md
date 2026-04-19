@@ -163,3 +163,15 @@ $$\mathcal{L}_{2\text{-stage}} = \mathcal{L}_{mse} + \mathcal{L}_{vel} + \lambda
 - **实用性**: ⭐⭐⭐⭐⭐ — 无需额外先验、极低延迟、小参数量，直接可部署
 - **实验质量**: ⭐⭐⭐⭐ — 定量+定性+用户研究全面，消融充分，但数据集规模偏小
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，图示直观，动机论证有力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dialectal Coverage and Generalization in Arabic Speech Recognition](../../ACL2025/audio_speech/dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
+- [In-the-wild Audio Spatialization with Flexible Text-guided Localization](../../ACL2025/audio_speech/tas_audio_spatialization.md)
+- [BNMusic: Blending Environmental Noises into Personalized Music](../../NeurIPS2025/audio_speech/bnmusic_blending_environmental_noises_into_personalized_music.md)
+- [Exploring Timeline Control for Facial Motion Generation](../../CVPR2025/audio_speech/exploring_timeline_control_for_facial_motion_generation.md)
+- [Talking Together: Synthesizing Co-Located 3D Conversations from Audio](../../CVPR2026/audio_speech/talking_together_synthesizing_co-located_3d_conversations_from_audio.md)
+
+<!-- RELATED:END -->

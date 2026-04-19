@@ -171,3 +171,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 合成+真实数据、单帧+burst、多 fps 级别、完整消融，还贡献了首个 color SPAD burst 数据集和 XD benchmark
 - **写作质量**: ⭐⭐⭐⭐ 物理模型和方法动机交代清晰，encoder collapse 的分析可视化直观
 - **价值**: ⭐⭐⭐⭐ 为计算成像领域引入生成先验开辟新方向，代码+数据集开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
+- [Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models](attention_may_i_have_your_decision_localizing_generative_choices_in_diffusion_mo.md)
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+
+<!-- RELATED:END -->

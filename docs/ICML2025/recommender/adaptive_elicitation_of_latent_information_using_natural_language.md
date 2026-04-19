@@ -207,3 +207,15 @@ $$
 | 实用性 | ⭐⭐⭐⭐ | 框架通用，但需要大量历史数据和计算资源 |
 | 写作质量 | ⭐⭐⭐⭐⭐ | 动机清晰，叙事流畅，图表精美 |
 | **综合** | **⭐⭐⭐⭐⭐** | ICML 2025 高质量论文，开创性地将 LLM 引入自适应信息获取 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SIMPLEMIX: Frustratingly Simple Mixing of Off- and On-policy Data in Language Model Preference Learning](simplemix_frustratingly_simple_mixing_of_off-_and_on-policy_data_in_language_mod.md)
+- [Wavelet Enhanced Adaptive Frequency Filter for Sequential Recommendation](../../AAAI2026/recommender/wavelet_enhanced_adaptive_frequency_filter_for_sequential_re.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+- [Inference-Time Reward Hacking in Large Language Models](../../NeurIPS2025/recommender/inference-time_reward_hacking_in_large_language_models.md)
+- [Generalization Bounds for Semi-supervised Matrix Completion with Distributional Side Information](../../AAAI2026/recommender/generalization_bounds_for_semi-supervised_matrix_completion_with_distributional_.md)
+
+<!-- RELATED:END -->

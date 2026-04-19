@@ -247,3 +247,15 @@ tags:
 | **综合** | **⭐⭐⭐⭐** |
 
 > 评测类工作，核心贡献在于识别了多视角+机器人操作这一关键 gap 并构建了高质量基准。实验覆盖 30+ 个模型非常全面，内外部相关性分析有洞见。但技术方法上偏数据构建，无模型创新。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatial-DISE: A Unified Benchmark for Evaluating Spatial Reasoning in Vision-Language Models](spatial-dise_a_unified_benchmark_for_evaluating_spatial_reasoning_in_vision-lang.md)
+- [Spatial CAPTCHA: Generatively Benchmarking Spatial Reasoning for Human-Machine Differentiation](spatial_captcha_generatively_benchmarking_spatial_reasoning_for_human-machine_di.md)
+- [FRIEDA: Benchmarking Multi-Step Cartographic Reasoning in Vision-Language Models](frieda_benchmarking_multi-step_cartographic_reasoning_in_vision-language_models.md)
+- [OmniSpatial: Towards Comprehensive Spatial Reasoning Benchmark for Vision Language Models](omnispatial_towards_comprehensive_spatial_reasoning_benchmark_for_vision_languag.md)
+- [SpatiaLab: Can Vision-Language Models Perform Spatial Reasoning in the Wild?](spatialab_can_vision-language_models_perform_spatial_reasoning_in_the_wild.md)
+
+<!-- RELATED:END -->

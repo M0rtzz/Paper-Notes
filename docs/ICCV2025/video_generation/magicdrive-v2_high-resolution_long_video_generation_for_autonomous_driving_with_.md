@@ -123,3 +123,15 @@ FVD 降低了 55%+，mAP 提升 50%+，同时分辨率是前者的 3.3 倍，帧
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融研究全面，包含 VAE 对比、编码方式对比、训练策略对比和外推验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，问题动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 显著推进了自动驾驶视频生成的分辨率和帧数上限，具有重要应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RLGF: Reinforcement Learning with Geometric Feedback for Autonomous Driving Video Generation](../../NeurIPS2025/video_generation/rlgf_reinforcement_learning_with_geometric_feedback_for_autonomous_driving_video.md)
+- [Long Context Tuning for Video Generation](long_context_tuning_for_video_generation.md)
+- [DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation](dh-facevid-1k_a_large-scale_high-quality_dataset_for_face_video_generation.md)
+- [Foresight: Adaptive Layer Reuse for Accelerated and High-Quality Text-to-Video Generation](../../NeurIPS2025/video_generation/foresight_adaptive_layer_reuse_for_accelerated_and_highquali.md)
+- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+
+<!-- RELATED:END -->

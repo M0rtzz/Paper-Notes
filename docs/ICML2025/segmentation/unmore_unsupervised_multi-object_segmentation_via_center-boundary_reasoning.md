@@ -143,3 +143,15 @@ $$\ell = \text{CE}(\tilde{f^e}, f^e) + \ell_2(\tilde{\boldsymbol{f}^c}, \boldsym
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 个数据集全面评估，含消融和 COCO* 补充标注
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图示优秀
 - 价值: ⭐⭐⭐⭐ — 无监督分割新 SOTA，拥挤场景突破性进展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pixel-Level Reasoning Segmentation via Multi-turn Conversations](../../ACL2025/segmentation/pixel-level_reasoning_segmentation_via_multi-turn_conversations.md)
+- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](../../ECCV2024/segmentation/unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
+- [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](../../NeurIPS2025/segmentation/unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
+- [Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning](../../CVPR2025/segmentation/hierarchical_compact_clustering_attention_coca_for_unsupervised_object-centric_l.md)
+- [Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection](../../ICCV2025/segmentation/beyond_single_images_retrieval_self-augmented_unsupervised_camouflaged_object_de.md)
+
+<!-- RELATED:END -->

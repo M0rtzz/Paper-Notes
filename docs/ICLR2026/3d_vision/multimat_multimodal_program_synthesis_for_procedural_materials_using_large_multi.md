@@ -162,3 +162,15 @@ MultiMat 的核心贡献在于揭示了一个重要洞察：**程序化材质本
 增量树搜索是另一个精巧设计——通过拓扑排序将"事后验证"变为"即时验证"，这种思路可推广到任何具有可验证中间状态的序列生成任务。指数级回溯策略 $2^{(i-1)}$ 也值得借鉴，它在探索效率和回溯深度间取得了平衡。
 
 局限性方面，训练效率问题是多模态程序合成的固有代价——每步渲染中间状态的开销不可避免。实际部署中可能需要考虑轻量级的中间表示（如低分辨率缩略图或特征摘要）来降低计算成本。此外，6878 个材质虽是目前最大，但相比通用视觉数据集仍极其稀少，可能需要探索预训练-微调范式或跨领域迁移学习。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoboTron-Mani: All-in-One Multimodal Large Model for Robotic Manipulation](../../ICCV2025/3d_vision/robotron-mani_all-in-one_multimodal_large_model_for_robotic_manipulation.md)
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](../../AAAI2026/3d_vision/rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning](../../CVPR2026/3d_vision/adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning.md)
+- [Point Cloud Quantization through Multimodal Prompting for 3D Understanding](../../AAAI2026/3d_vision/point_cloud_quantization_through_multimodal_prompting_for_3d_understanding.md)
+- [EgoM2P: Egocentric Multimodal Multitask Pretraining](../../ICCV2025/3d_vision/egom2p_egocentric_multimodal_multitask_pretraining.md)
+
+<!-- RELATED:END -->

@@ -153,3 +153,15 @@ IDF 采用迭代去噪方案：输入噪声图像 $\mathbf{I}_{Noisy}$ 经过 T 
 - **实验充分度**: ⭐⭐⭐⭐⭐ 合成/真实/蒙特卡洛三类噪声，6种合成类型，4个真实数据集，消融彻底
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，模块动机明确
 - **价值**: ⭐⭐⭐⭐⭐ 0.04M参数的通用去噪器具有极高实用价值，对边缘设备部署友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SIC: Similarity-Based Interpretable Image Classification with Neural Networks](sic_similarity-based_interpretable_image_classification_with_neural_networks.md)
+- [UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)
+- [DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup](dictas_a_framework_for_class-generalizable_few-shot_anomaly_segmentation_via_dic.md)
+- [Iterative Foundation Model Fine-Tuning on Multiple Rewards](../../NeurIPS2025/medical_imaging/iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
+- [Self Iterative Label Refinement via Robust Unlabeled Learning](../../NeurIPS2025/medical_imaging/self_iterative_label_refinement_via_robust_unlabeled_learning.md)
+
+<!-- RELATED:END -->

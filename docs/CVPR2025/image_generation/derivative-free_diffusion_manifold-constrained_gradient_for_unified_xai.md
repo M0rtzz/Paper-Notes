@@ -68,3 +68,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 归因+反事实+人类评估
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨
 - 价值: ⭐⭐⭐⭐ 黑盒流形约束 XAI 对商用模型解释有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-Free Constrained Generation with Stable Diffusion Models](../../NeurIPS2025/image_generation/training-free_constrained_generation_with_stable_diffusion_models.md)
+- [Local Manifold Approximation and Projection for Manifold-Aware Diffusion Planning](../../ICML2025/image_generation/local_manifold_approximation_and_projection_for_manifold-aware_diffusion_plannin.md)
+- [Constrained Discrete Diffusion](../../NeurIPS2025/image_generation/constrained_discrete_diffusion.md)
+- [Decoupling Training-Free Guided Diffusion by ADMM](decoupling_training-free_guided_diffusion_by_admm.md)
+- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+
+<!-- RELATED:END -->

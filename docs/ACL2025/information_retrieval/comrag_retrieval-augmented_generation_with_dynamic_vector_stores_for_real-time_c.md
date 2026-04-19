@@ -141,3 +141,15 @@ ComRAG由三个向量库和三种查询路径组成：
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集+消融+迭代评估+存储分析，覆盖全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，形式化完整
 - **价值**: ⭐⭐⭐⭐ — 工业场景实用性强，阿里巴巴的PolarDB场景有真实落地背景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRAF: Graph Retrieval Augmented by Facts for Romanian Legal Multi-Choice Question Answering](graf_graph_retrieval_augmented_by_facts_for_romanian_legal_multi-choice_question.md)
+- [Benchmarking Retrieval-Augmented Multimodal Generation for Document Question Answering](../../NeurIPS2025/information_retrieval/benchmarking_retrievalaugmented_multimodal_generation_for_do.md)
+- [HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation](hoh_a_dynamic_benchmark_for_evaluating_the_impact_of_outdated_information_on_ret.md)
+- [VoxRAG: A Step Toward Transcription-Free RAG Systems in Spoken Question Answering](voxrag_a_step_toward_transcription-free_rag_systems_in_spoken_question_answering.md)
+- [VISA: Retrieval Augmented Generation with Visual Source Attribution](visa_retrieval_augmented_generation_with_visual_source_attribution.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ DAPS 在几乎所有线性和非线性任务上均取得最优结果，尤其在
 - 实验充分度: ⭐⭐⭐⭐⭐ 8种逆问题任务、像素+潜空间、两个数据集、与众多 baseline 对比
 - 写作质量: ⭐⭐⭐⭐⭐ 论文写作清晰，2D 合成实验的可视化特别直观，理论推导完整
 - 价值: ⭐⭐⭐⭐⭐ 对扩散逆问题领域有重要推进，尤其在非线性逆问题上开辟了新可能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Channel-wise Noise Scheduled Diffusion for Inverse Rendering in Indoor Scenes](channel-wise_noise_scheduled_diffusion_for_inverse_rendering_in_indoor_scenes.md)
+- [A Gradient Flow Approach to Solving Inverse Problems with Latent Diffusion Models](../../NeurIPS2025/image_generation/a_gradient_flow_approach_to_solving_inverse_problems_with_latent_diffusion_model.md)
+- [Integrating Intermediate Layer Optimization and Projected Gradient Descent for Solving Inverse Problems with Diffusion Models](../../ICML2025/image_generation/integrating_intermediate_layer_optimization_and_projected_gradient_descent_for_s.md)
+- [Constrained Particle Seeking: Solving Diffusion Inverse Problems with Just Forward Passes](../../AAAI2026/image_generation/constrained_particle_seeking_solving_diffusion_inverse_problems_with_just_forwar.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
+
+<!-- RELATED:END -->

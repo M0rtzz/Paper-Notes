@@ -149,3 +149,15 @@ INTERACT连接了主动学习、知识蒸馏和会话式机器学习三个方向
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个模型、1347个概念、5个领域、5个研究问题，实验系统且全面
 - 写作质量: ⭐⭐⭐⭐⭐ 研究问题清晰、实验设计严谨、发现总结凝练
 - 价值: ⭐⭐⭐⭐ 为LLM交互式学习奠定基础，但距离实际应用还有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
+- [MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments](mirage_exploring_how_large_language_models_perform_in_complex_social_interactive.md)
+- [Dynamic Knowledge Integration for Evidence-Driven Counter-Argument Generation with Large Language Models](dynamic_knowledge_integration_for_evidence-driven_counter-argument_generation_wi.md)
+- [Planning-Driven Programming: A Large Language Model Programming Workflow](planning-driven_programming_a_large_language_model_programming_workflow.md)
+- [WarriorCoder: Learning from Expert Battles to Augment Code Large Language Models](warriorcoder_learning_from_expert_battles_to_augment_code_large_language_models.md)
+
+<!-- RELATED:END -->

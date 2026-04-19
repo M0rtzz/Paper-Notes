@@ -135,3 +135,15 @@ GBP的优化目标等价于最小化加权残差平方和 $\Theta^* = \arg\min_\
 - 实验充分度: ⭐⭐⭐ 以模拟实验为主，真实场景验证较少
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨完整，但密度较高
 - 价值: ⭐⭐⭐⭐ 为分布式多智能体CTSLAM奠定理论和工程基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting](versatilegaussian_real-time_neural_rendering_for_versatile_tasks_using_gaussian_.md)
+- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [I²-SLAM: Inverting Imaging Process for Robust Photorealistic Dense SLAM](i2-slam_inverting_imaging_process_for_robust_photorealistic_dense_slam.md)
+- [CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field](cg-slam_efficient_dense_rgb-d_slam_in_a_consistent_uncertainty-aware_3d_gaussian.md)
+- [GaussReg: Fast 3D Registration with Gaussian Splatting](gaussreg_fast_3d_registration_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多任务验证
 - 写作质量: ⭐⭐⭐⭐ 动机和理论阐述清晰
 - 价值: ⭐⭐⭐⭐⭐ 100×加速对实际部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Augmentation Improves Efficiency in Conformal Prediction](../../CVPR2025/others/test-time_augmentation_improves_efficiency_in_conformal_prediction.md)
+- [Sample-Adaptivity Tradeoff in On-Demand Sampling](sample-adaptivity_tradeoff_in_on-demand_sampling.md)
+- [Distributionally Robust Feature Selection](distributionally_robust_feature_selection.md)
+- [Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
+- [DPA: A One-Stop Metric to Measure Bias Amplification in Classification Datasets](dpa_a_one-stop_metric_to_measure_bias_amplification_in_classification_datasets.md)
+
+<!-- RELATED:END -->

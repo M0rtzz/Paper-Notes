@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验设置较为简单，缺少与更多基线的对比和详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题表述明确，图表设计合理
 - 价值: ⭐⭐⭐⭐ 数据集本身对农业AI领域有较大实用价值，开源资源有助于推动研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](../../ACL2025/multimodal_vlm/multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [Are Vision Language Models Ready for Clinical Diagnosis? A 3D Medical Benchmark for Tumor-centric Visual Question Answering](../../NeurIPS2025/multimodal_vlm/are_vision_language_models_ready_for_clinical_diagnosis_a_3d_medical_benchmark_f.md)
+- [Dataset Growth (InfoGrowth)](dataset_growth.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+- [CAT: Enhancing Multimodal Large Language Model to Answer Questions in Dynamic Audio-Visual Scenarios](cat_enhancing_multimodal_large_language_model_to_answer_questions_in_dynamic_aud.md)
+
+<!-- RELATED:END -->

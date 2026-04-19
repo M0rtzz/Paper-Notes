@@ -142,3 +142,15 @@ VideoMamba 严格遵循 vanilla ViT 的架构设计。输入视频 $\mathbf{X}^v
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 ImageNet、K400、SSV2、Breakfast、COIN、LVU 及多模态检索，消融极其详尽
 - 写作质量: ⭐⭐⭐⭐ 四大能力的组织方式清晰，但表格密度较高
 - 价值: ⭐⭐⭐⭐⭐ 开创性工作，为视频 SSM 奠定基础，代码完全开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMamba: Spatio-Temporal Selective State Space Model](videomamba_spatio-temporal_selective_state_space_model.md)
+- [PASS: Path-Selective State Space Model for Event-Based Recognition](../../NeurIPS2025/video_understanding/pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [Towards Model-Agnostic Dataset Condensation by Heterogeneous Models](towards_model-agnostic_dataset_condensation_by_heterogeneous_models.md)
+
+<!-- RELATED:END -->

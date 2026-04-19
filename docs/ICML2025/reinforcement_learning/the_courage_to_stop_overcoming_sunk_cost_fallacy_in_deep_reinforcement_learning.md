@@ -147,3 +147,15 @@ LEAST 在 Finger Turn Hard 上收敛速度比 DrQv2 快约 30%，归一化分数
 - 实验充分度: ⭐⭐⭐⭐ MuJoCo 4 任务 × 4 算法 + DMC 4 任务 + 详尽消融，覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、类比精准、论证层层递进，开头引语增加趣味性
 - 价值: ⭐⭐⭐⭐ 即插即用的通用改进，对 off-policy RL 实践有直接贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Cooperative Transmission Design for URLLC via Deep RL](../../NeurIPS2025/reinforcement_learning/adaptive_cooperative_transmission_design_for_ultra-reliable_low-latency_communic.md)
+- [Deep RL Needs Deep Behavior Analysis: Exploring Implicit Planning by Model-Free Agents](../../NeurIPS2025/reinforcement_learning/deep_rl_needs_deep_behavior_analysis_exploring_implicit_planning_by_model-free_a.md)
+- [Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC](beyond_the_rainbow_high_performance_deep_reinforcement_learning_on_a_desktop_pc.md)
+- [The Impact of On-Policy Parallelized Data Collection on Deep Reinforcement Learning Networks](the_impact_of_on-policy_parallelized_data_collection_on_deep_reinforcement_learn.md)
+- [Embedding Safety into RL: A New Take on Trust Region Methods](embedding_safety_into_rl_a_new_take_on_trust_region_methods.md)
+
+<!-- RELATED:END -->

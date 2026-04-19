@@ -154,3 +154,15 @@ Vireo包含三个核心模块：
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数据集、5种评测设置、多backbone验证、详细消融
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，实验组织有条理，方法描述完整
 - 价值: ⭐⭐⭐⭐⭐ 统一OV+DG对自动驾驶场景非常实用，参数效率高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open-Vocabulary Domain Generalization in Urban-Scene Segmentation](../../CVPR2026/autonomous_driving/open-vocabulary_domain_generalization_in_urban-scene_segmentation.md)
+- [SPIRAL: Semantic-Aware Progressive LiDAR Scene Generation and Understanding](spiral_semantic-aware_progressive_lidar_scene_generation_and_understanding.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](../../CVPR2025/autonomous_driving/o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
+- [SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction](sdtagnet_leveraging_text-annotated_navigation_maps_for_online_hd_map_constructio.md)
+- [CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection](../../CVPR2026/autonomous_driving/ccf_complementary_collaborative_fusion_for_domain_generalized_multi-modal_3d_obj.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ Planner 提供强安全但大幅牺牲 utility；Validator 恢复 utility（+22%
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个 benchmark，5 个 LLM，6 个 baseline，adaptive attack 压力测试，消融研究，开销分析
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，各模块职责分明
 - 价值: ⭐⭐⭐⭐⭐ 对实际 Agent 部署的安全防护有直接指导意义，开源代码和训练数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChatInject: Abusing Chat Templates for Prompt Injection in LLM Agents](../../ICLR2026/llm_agent/chatinject_abusing_chat_templates_for_prompt_injection_in_llm_agents.md)
+- [Toward a Dynamic Stackelberg Game-Theoretic Framework for Agentic AI Defense Against LLM Jailbreaking](../../ICLR2026/llm_agent/toward_a_dynamic_stackelberg_game-theoretic_framework_for_agentic_ai_defense_aga.md)
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [LLM Agents for Knowledge Discovery in Atomic Layer Processing](llm_agents_for_knowledge_discovery_in_atomic_layer_processing.md)
+- [Gaia2: Benchmarking LLM Agents on Dynamic and Asynchronous Environments](../../ICLR2026/llm_agent/gaia2_benchmarking_llm_agents_on_dynamic_and_asynchronous_environments.md)
+
+<!-- RELATED:END -->

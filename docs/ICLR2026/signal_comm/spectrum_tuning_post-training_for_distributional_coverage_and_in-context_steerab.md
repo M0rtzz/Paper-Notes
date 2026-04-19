@@ -129,3 +129,15 @@ Spectrum Tuning在保持能力引出的同时改善可操控性：
 - 实验充分度: ⭐⭐⭐⭐ 三个模型系列、90+任务、完整的对比分析
 - 写作质量: ⭐⭐⭐⭐⭐ 概念明确，逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 揭示了后训练的重要盲区，对LLM开发有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks](../../CVPR2025/signal_comm/tuning_the_frequencies_robust_training_for_sinusoidal_neural_networks.md)
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [Neural Video Compression with Context Modulation](../../CVPR2025/signal_comm/neural_video_compression_with_context_modulation.md)
+- [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+- [DiTASK: Multi-Task Fine-Tuning with Diffeomorphic Transformations](../../CVPR2025/signal_comm/ditask_multi-task_fine-tuning_with_diffeomorphic_transformations.md)
+
+<!-- RELATED:END -->

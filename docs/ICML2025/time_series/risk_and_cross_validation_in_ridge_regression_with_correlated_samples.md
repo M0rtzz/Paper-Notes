@@ -152,3 +152,15 @@ $$R_g \simeq \underbrace{\kappa^2 \bar{\mathbf{w}}^\top(\boldsymbol{\Sigma}+\kap
 - 实验充分度: ⭐⭐⭐⭐ 多种相关结构下验证充分，理论-实验匹配精确
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，物理直觉清晰，结构合理
 - 价值: ⭐⭐⭐⭐⭐ 对时间序列回归的超参数调优有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting](../../ICLR2026/time_series/from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting.md)
+- [CTPD: Cross-Modal Temporal Pattern Discovery for Enhanced Multimodal Electronic Health Records Analysis](../../ACL2025/time_series/ctpd_cross-modal_temporal_pattern_discovery_for_enhanced_multimodal_electronic_h.md)
+- [HydroDCM: Hydrological Domain-Conditioned Modulation for Cross-Reservoir Inflow Prediction](../../AAAI2026/time_series/hydrodcm_hydrological_domain-conditioned_modulation_for_cross-reservoir_inflow_p.md)
+- [LightGTS: A Lightweight General Time Series Forecasting Model](lightgts_a_lightweight_general_time_series_forecasting_model.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+
+<!-- RELATED:END -->

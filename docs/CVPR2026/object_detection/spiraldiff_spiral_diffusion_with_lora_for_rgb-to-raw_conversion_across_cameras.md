@@ -134,3 +134,15 @@ SpiralDiff 基于 ResShift（一种高效残差偏移扩散框架）构建，仅
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4 数据集 + 过曝/真实 ISP/下游检测/消融/插件实验
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、公式推导完整、图示直观
 - 价值: ⭐⭐⭐⭐ — 对 RAW 域数据增强和跨相机适配有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimROD: A Simple Baseline for Raw Object Detection with Global and Local Enhancements](../../AAAI2026/object_detection/simrod_a_simple_baseline_for_raw_object_detection_with_global_and_local_enhancem.md)
+- [Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance](../../ECCV2024/object_detection/tracking_meets_lora_faster_training_larger_model_stronger_performance.md)
+- [Adaptive Auxiliary Prompt Blending for Target-Faithful Diffusion Generation](adaptive_auxiliary_prompt_blending_for_target-faithful_diffusion_generation.md)
+- [ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](abra_teleporting_finetuned_knowledge_across_domain.md)
+- [Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)
+
+<!-- RELATED:END -->

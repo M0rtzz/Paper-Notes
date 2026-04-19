@@ -121,3 +121,15 @@ HPL 在参考策略的探索数据上构建三个层次的偏好对：① 轨迹
 - 实验充分度: ⭐⭐⭐⭐ 三个 benchmark，多种分割策略对比
 - 写作质量: ⭐⭐⭐⭐ 理论与实验结合好
 - 价值: ⭐⭐⭐⭐ 为长时序 Agent 对齐提供了实用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harnessing Uncertainty: Entropy-Modulated Policy Gradients for Long-Horizon LLM Agents](harnessing_uncertainty_entropy-modulated_policy_gradients_for_long-horizon_llm_a.md)
+- [The Tool Decathlon: Benchmarking Language Agents for Diverse, Realistic, and Long-Horizon Task Execution](the_tool_decathlon_benchmarking_language_agents_for_diverse_realistic_and_long-h.md)
+- [NexusSum: Hierarchical LLM Agents for Long-Form Narrative Summarization](../../ACL2025/llm_agent/nexussum_narrative_summarization.md)
+- [Reducing Belief Deviation in Reinforcement Learning for Active Reasoning of LLM Agents](reducing_belief_deviation_in_reinforcement_learning_for_active_reasoning.md)
+- [CoMind: Towards Community-Driven Agents for Machine Learning Engineering](comind_towards_community-driven_agents_for_machine_learning_engineering.md)
+
+<!-- RELATED:END -->

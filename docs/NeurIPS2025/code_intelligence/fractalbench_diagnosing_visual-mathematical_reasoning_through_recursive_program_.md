@@ -139,3 +139,15 @@ FractalBench 包含 12 种经典分形（Cantor 集、Koch 曲线、Sierpiński 
 - 抗污染的参数化设计（可调递归深度+颜色变体）是 benchmark 设计的通用范式，可应用于任何需要防止数据泄露的评估
 - 反 CoT 发现对 prompting 研究有重要启示：精确空间/数值输出任务可能不适合先推理再输出的范式
 - Kolmogorov 复杂度视角为分析模型是否真正理解结构（而非记忆模式）提供了新工具——代码长度作为结构理解的代理指标
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Once Upon an Input: Reasoning via Per-Instance Program Synthesis](once_upon_an_input_reasoning_via_per-instance_program_synthesis.md)
+- [Program Synthesis via Test-Time Transduction](program_synthesis_via_test-time_transduction.md)
+- [MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](../../ICLR2026/code_intelligence/mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
+- [CoRe: Benchmarking LLMs' Code Reasoning Capabilities through Static Analysis Tasks](core_benchmarking_llms_code_reasoning_capabilities_through_static_analysis_tasks.md)
+- [TikZero: Zero-Shot Text-Guided Graphics Program Synthesis](../../ICCV2025/code_intelligence/tikzero_zero-shot_text-guided_graphics_program_synthesis.md)
+
+<!-- RELATED:END -->

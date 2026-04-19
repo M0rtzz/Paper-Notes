@@ -117,3 +117,15 @@ CVPT 的 pipeline 与 VPT 类似：冻结预训练 ViT 主干参数，只训练 
 - 实验充分度: ⭐⭐⭐⭐⭐ 25 个数据集、3 类任务、详尽的消融和效率分析
 - 写作质量: ⭐⭐⭐⭐ 分析清晰，问题-方法-实验逻辑链完整
 - 价值: ⭐⭐⭐⭐ 推翻了 prompt vs adapter 的固有认知，对 PEFT 社区有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention to the Burstiness in Visual Prompt Tuning!](attention_to_the_burstiness_in_visual_prompt_tuning.md)
+- [PRO-VPT: Distribution-Adaptive Visual Prompt Tuning via Prompt Relocation](pro-vpt_distribution-adaptive_visual_prompt_tuning_via_prompt_relocation.md)
+- [FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
+- [Revisit Visual Prompt Tuning: The Expressiveness of Prompt Experts](../../ICLR2026/multimodal_vlm/revisit_visual_prompt_tuning_the_expressiveness_of_prompt_experts.md)
+- [DPC: Dual-Prompt Collaboration for Tuning Vision-Language Models](../../CVPR2025/multimodal_vlm/dpc_dual-prompt_collaboration_for_tuning_vision-language_models.md)
+
+<!-- RELATED:END -->

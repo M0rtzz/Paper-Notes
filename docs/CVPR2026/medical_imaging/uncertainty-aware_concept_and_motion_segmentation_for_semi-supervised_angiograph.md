@@ -124,3 +124,15 @@ SMART 采用两阶段训练：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集、完整消融、跨机构泛化验证
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，各组件动机充分
 - 价值: ⭐⭐⭐⭐ — 标注效率极高，临床应用前景好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Synergistic Bleeding Region and Point Detection in Laparoscopic Surgical Videos](synergistic_bleeding_region_and_point_detection_in_laparoscopic_surgical_videos.md)
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)
+- [Better than Average: Spatially-Aware Aggregation of Segmentation Uncertainty Improves Downstream Performance](better_than_average_spatially-aware_aggregation_of_segmentation_uncertainty_impr.md)
+
+<!-- RELATED:END -->

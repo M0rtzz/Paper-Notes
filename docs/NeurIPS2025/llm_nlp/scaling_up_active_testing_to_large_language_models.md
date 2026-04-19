@@ -137,3 +137,15 @@ $$\hat{R}_{\text{LURE}} = \frac{1}{M}\sum_{m=1}^M v_m \ell(f(x_{i_m}), y_{i_m})$
 - 实验充分度: ⭐⭐⭐⭐ 多模型、多数据集、多设置，包含失败案例分析
 - 写作质量: ⭐⭐⭐⭐⭐ 三个瓶颈的分析框架清晰，实验设计系统
 - 价值: ⭐⭐⭐⭐ 对 LLM 评估效率提升有实用价值，尤其在标注昂贵的场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](../../ACL2025/llm_nlp/genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [LESA: Learnable LLM Layer Scaling-Up](../../ACL2025/llm_nlp/lesa_learnable_llm_layer_scaling-up.md)
+- [PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)
+- [Solving Inequality Proofs with Large Language Models](solving_inequality_proofs_with_large_language_models.md)
+- [Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up](../../ACL2025/llm_nlp/reversal_of_thought_enhancing_large_language.md)
+
+<!-- RELATED:END -->

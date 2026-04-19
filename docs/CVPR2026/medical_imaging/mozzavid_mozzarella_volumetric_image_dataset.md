@@ -126,3 +126,15 @@ MozzaVID 的构建流程为：(1) 从 25 种不同配方的马苏里拉奶酪中
 - 实验充分度: ⭐⭐⭐⭐ 5种架构×3种配置×2种粒度×2/3D全面覆盖，UMAP分析有深度
 - 写作质量: ⭐⭐⭐⭐ 数据集论文典范，相关工作调研极为全面
 - 价值: ⭐⭐⭐⭐ 填补了3D benchmark的重要空白，有望成为体积深度学习的标准测试集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianPile: A Unified Sparse Gaussian Splatting Framework for Slice-based Volumetric Reconstruction](gaussianpile_a_unified_sparse_gaussian_splatting_framework_for_slice-based_volum.md)
+- [Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study](are_general-purpose_vision_models_all_we_need_for_2d_medical_image_segmentation_.md)
+- [RDFace: A Benchmark Dataset for Rare Disease Facial Image Analysis under Extreme Data Scarcity and Phenotype-Aware Synthetic Generation](rdface_a_benchmark_dataset_for_rare_disease_facial_image_analysis_under_extreme_.md)
+- [GLEAM: A Multimodal Imaging Dataset and HAMM for Glaucoma Classification](gleam_a_multimodal_imaging_dataset_and_hamm_for_gl.md)
+- [Interactive Medical Image Segmentation: A Benchmark Dataset and Baseline](../../CVPR2025/medical_imaging/interactive_medical_image_segmentation_a_benchmark_dataset_and_baseline.md)
+
+<!-- RELATED:END -->

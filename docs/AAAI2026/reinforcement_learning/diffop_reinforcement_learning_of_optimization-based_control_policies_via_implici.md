@@ -164,3 +164,15 @@ DiffOP 在瞬态代价上取得所有方法中最优，稳态代价与 TASRL 持
 - 实验充分度: ⭐⭐⭐⭐ — 非线性控制和电压控制两组实验覆盖面好，但缺少高维任务和更多真实场景
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，结构清晰
 - 价值: ⭐⭐⭐⭐ — 为优化型策略的 RL 训练提供了理论基础，对安全控制方向有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Behaviour Policy Optimization: Provably Lower Variance Return Estimates for Off-Policy Reinforcement Learning](behaviour_policy_optimization_provably_lower_variance_return_estimates_for_off-p.md)
+- [HCPO: Hierarchical Conductor-Based Policy Optimization in Multi-Agent Reinforcement Learning](hcpo_hierarchical_conductor-based_policy_optimization_in_multi-agent_reinforceme.md)
+- [Test-driven Reinforcement Learning in Continuous Control](test-driven_reinforcement_learning_in_continuous_control.md)
+- [PolicyFlow: Policy Optimization with Continuous Normalizing Flow in Reinforcement Learning](../../ICLR2026/reinforcement_learning/policyflow_policy_optimization_with_continuous_normalizing_flow_in_reinforcement.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+
+<!-- RELATED:END -->

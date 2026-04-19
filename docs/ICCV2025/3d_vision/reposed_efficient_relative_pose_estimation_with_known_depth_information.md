@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖极广，5种MDE×3种匹配器×3种数据集×2种RANSAC，实验设计堪称标杆
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，数学推导详尽
 - 价值: ⭐⭐⭐⭐ 对"MDE深度是否有助于位姿估计"给出了实用指南，有实际工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Amodal Depth Anything: Amodal Depth Estimation in the Wild](amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
+- [FiffDepth: Feed-forward Transformation of Diffusion-Based Generators for Detailed Depth Estimation](fiffdepth_feed-forward_transformation_of_diffusion-based_generators_for_detailed.md)
+- [BoxDreamer: Dreaming Box Corners for Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pos.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+- [Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses](../../CVPR2025/3d_vision/efficient_depth_estimation_for_unstable_stereo_camera_systems_on_ar_glasses.md)
+
+<!-- RELATED:END -->

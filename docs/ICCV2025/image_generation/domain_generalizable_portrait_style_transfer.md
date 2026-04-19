@@ -141,3 +141,15 @@ DGPST 提出了一个基于扩散模型的人像风格迁移框架，通过 sema
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集+跨域测试+完善消融+推理效率对比+区域控制+风格插值
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示丰富，消融逐个验证每个模块
 - 价值: ⭐⭐⭐⭐ 实用性强，仅在小规模真实数据训练即可跨域泛化，推理速度快
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HSI: A Holistic Style Injector for Arbitrary Style Transfer](../../CVPR2025/image_generation/hsi_a_holistic_style_injector_for_arbitrary_style_transfer.md)
+- [SA-LUT: Spatial Adaptive 4D Look-Up Table for Photorealistic Style Transfer](sa-lut_spatial_adaptive_4d_look-up_table_for_photorealistic_style_transfer.md)
+- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [DogFit: Domain-guided Fine-tuning for Efficient Transfer Learning of Diffusion Models](../../AAAI2026/image_generation/dogfit_domain-guided_fine-tuning_for_efficient_transfer_learning_of_diffusion_mo.md)
+
+<!-- RELATED:END -->

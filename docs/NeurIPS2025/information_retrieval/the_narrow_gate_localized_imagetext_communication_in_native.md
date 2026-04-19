@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个模型、4种分析方法、4个任务、因果验证+修复方案，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 分析→发现→验证→操控→修复的递进逻辑清晰流畅
 - 价值: ⭐⭐⭐⭐⭐ 对理解统一多模态模型的内部机制和token压缩策略都有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalized Contrastive Learning for Universal Multimodal Retrieval](generalized_contrastive_learning_for_universal_multimodal_re.md)
+- [DocoPilot: Improving Multimodal Models for Document-Level Understanding](../../CVPR2025/information_retrieval/docopilot_improving_multimodal_models_for_document-level_understanding.md)
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](../../ACL2025/information_retrieval/enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [Optimized Text Embedding Models and Benchmarks for Amharic Passage Retrieval](../../ACL2025/information_retrieval/optimized_text_embedding_models_and_benchmarks_for_amharic_passage_retrieval.md)
+- [Knowledge Completes the Vision: A Multimodal Entity-aware Retrieval-Augmented Generation Framework for News Image Captioning](../../AAAI2026/information_retrieval/knowledge_completes_the_vision_a_multimodal_entity-aware_retrieval-augmented_gen.md)
+
+<!-- RELATED:END -->

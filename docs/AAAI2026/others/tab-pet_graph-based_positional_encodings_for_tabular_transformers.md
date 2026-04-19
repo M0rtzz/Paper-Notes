@@ -155,3 +155,15 @@ FT-Transformer+PET 在分类上 rank 2.44 排名第一，SAINT+PET 在回归上 
 - 实验充分度: ⭐⭐⭐⭐⭐ 50 个数据集、3种 Transformer 架构、5种图估计方法、合成+真实实验、消融/统计显著性检验一应俱全
 - 写作质量: ⭐⭐⭐⭐ 理论和实验叙述清晰，Figure 1 的框架图直观易懂，但部分定理的假设条件较强
 - 价值: ⭐⭐⭐⭐ 提供了即插即用的增强方案且几乎零额外计算开销，对表格 Transformer 从业者有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph](../../ACL2025/others/why_are_positional_encodings_nonessential_for_deep_autoregressive_transformers_r.md)
+- [Structure-Aware Encodings of Argumentation Properties for Clique-width](structure-aware_encodings_of_argumentation_properties_for_clique-width.md)
+- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
+- [The Counting Power of Transformers](../../ICLR2026/others/the_counting_power_of_transformers.md)
+- [LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval](leanrag_knowledge-graph-based_generation_with_semantic_aggregation_and_hierarchi.md)
+
+<!-- RELATED:END -->

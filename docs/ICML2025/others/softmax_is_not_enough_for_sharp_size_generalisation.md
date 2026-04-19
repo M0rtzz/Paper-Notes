@@ -128,3 +128,15 @@ OOD 规模上均有统计显著提升（paired t-test），且规模越大改善
 - 实验充分度: ⭐⭐⭐⭐ — max retrieval 很干净，CLRS-Text 覆盖面广，但缺少真实LLM场景验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，行文优雅，从动机到结论一气呵成
 - 价值: ⭐⭐⭐⭐⭐ — 对 Transformer 架构设计和长度泛化研究有深远启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Residual Matrix Transformers: Scaling the Size of the Residual Stream](residual_matrix_transformers_scaling_the_size_of_the_residual_stream.md)
+- [One Sample is Enough to Make Conformal Prediction Robust](../../NeurIPS2025/others/one_sample_is_enough_to_make_conformal_prediction_robust.md)
+- [Do not Abstain! Identify and Solve the Uncertainty](../../ACL2025/others/do_not_abstain_identify_and_solve_the_uncertainty.md)
+- [Coreset for Robust Geometric Median: Eliminating Size Dependency on Outliers](../../NeurIPS2025/others/coreset_for_robust_geometric_median_eliminating_size_dependency_on_outliers.md)
+- [Limited Generalizability in Argument Mining: State-Of-The-Art Models Learn Datasets, Not Arguments](../../ACL2025/others/limited_generalizability_in_argument_mining_state-of-the-art_models_learn_datase.md)
+
+<!-- RELATED:END -->

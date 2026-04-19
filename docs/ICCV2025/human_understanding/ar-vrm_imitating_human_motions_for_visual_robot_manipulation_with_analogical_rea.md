@@ -147,3 +147,15 @@ Few-shot (10% data)：AR-VRM 45.6% vs GR-1 40.0%（**+5.6%**）
 - 实验充分度: ⭐⭐⭐⭐⭐ CALVIN全设置+真实机器人+完整消融+可视化分析
 - 写作质量: ⭐⭐⭐⭐ 动机和方法描述清晰，对比分析到位
 - 价值: ⭐⭐⭐⭐ 为数据稀缺下的机器人操控提供了实用的预训练方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Large Motion Models with Million-Level Human Motions](../../ICML2025/human_understanding/scaling_large_motion_models_with_million-level_human_motions.md)
+- [Theory of Mind for Explainable Human-Robot Interaction](../../AAAI2026/human_understanding/theory_of_mind_for_explainable_human-robot_interaction.md)
+- [Learning Visual Proxy for Compositional Zero-Shot Learning](learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [Generating Attribute-Aware Human Motions from Textual Prompt](../../AAAI2026/human_understanding/generating_attribute-aware_human_motions_from_textual_prompt.md)
+- [EgoPoseFormer v2: Accurate Egocentric Human Motion Estimation for AR/VR](../../CVPR2026/human_understanding/egoposeformer_v2_accurate_egocentric_human_motion_estimation_for_arvr.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ $$W_2^2 = \|\mu_1 - \mu_2\|_2^2 + \text{tr}(\Sigma_1 + \Sigma_2 - 2(\Sigma_1^{1/
 | **总评** | **4.0** |
 
 核心贡献在于发现扩散模型中间特征的通道统计量就是优秀的风格描述符，方法极简但效果显著。ArtSplit 数据集填补了风格归因评估的空白。美中不足是方法绑定 UNet 架构，且"内省"能力的理论解释不够深入。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaRender: Training-Free Occlusion Control in Image Generation via Latent Rendering](larender_training-free_occlusion_control_in_image_generation_via_latent_renderin.md)
+- [AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](../../AAAI2026/image_generation/aedr_training-free_ai-generated_image_attribution_via_autoen.md)
+- [MatchDiffusion: Training-free Generation of Match-Cuts](matchdiffusion_training-free_generation_of_match-cuts.md)
+- [MosaicDiff: Training-free Structural Pruning for Diffusion Model Acceleration Reflecting Pretraining Dynamics](mosaicdiff_training-free_structural_pruning_for_diffusion_model_acceleration_ref.md)
+- [K-LoRA: Unlocking Training-Free Fusion of Any Subject and Style LoRAs](../../CVPR2025/image_generation/k-lora_unlocking_training-free_fusion_of_any_subject_and_style_loras.md)
+
+<!-- RELATED:END -->

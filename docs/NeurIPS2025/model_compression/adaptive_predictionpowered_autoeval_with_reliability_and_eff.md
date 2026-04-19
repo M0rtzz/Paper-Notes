@@ -102,3 +102,15 @@ R-AutoEval+基于testing-by-betting框架进行模型评估。给定目标风险
 - 实验充分度: ⭐⭐⭐⭐ 三个LLM评估场景+丰富消融（S、策略、评判器质量、排序敏感性、置信区间）
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，Example 1/2的可视化有效辅助理解
 - 价值: ⭐⭐⭐⭐ 对LLM自动评估建立统计保证有重要实际意义，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAT: Bridging RNN Efficiency and Attention Accuracy via Chunk-based Sequence Modeling](rat_bridging_rnn_efficiency_and_attention_accuracy_via_chunk-based_sequence_mode.md)
+- [Adaptive Stochastic Coefficients for Accelerating Diffusion Sampling](adaptive_stochastic_coefficients_for_accelerating_diffusion_sampling.md)
+- [Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning](twilight_adaptive_attention_sparsity_with_hierarchical_top-p_pruning.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees](admtree_compressing_lengthy_context_with_adaptive_semantic_trees.md)
+
+<!-- RELATED:END -->

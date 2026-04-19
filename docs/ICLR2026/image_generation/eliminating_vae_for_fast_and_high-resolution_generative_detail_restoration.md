@@ -162,3 +162,15 @@ $$\mathcal{L}_{\mathcal{G}_2} = \|y_{\text{tea}} - y_{\text{stu}}\|_1 + \lambda_
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多指标、详尽消融、用户研究、效率分析面面俱到
 - 写作质量: ⭐⭐⭐⭐ 路线图式的展示清晰直观，但公式密度较高
 - 价值: ⭐⭐⭐⭐⭐ 实际加速效果显著（2.8× 加速/60% 省显存），4K/1秒具有工业应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenDR: Lighten Generative Detail Restoration](gendr_lighten_generative_detail_restoration.md)
+- [LVTINO: LAtent Video consisTency INverse sOlver for High Definition Video Restoration](lvtino_latent_video_consistency_inverse_solver_for_high_definition_video_restora.md)
+- [DA-VAE: Plug-in Latent Compression for Diffusion via Detail Alignment](../../CVPR2026/image_generation/da-vae_plug-in_latent_compression_for_diffusion_via_detail_alignment.md)
+- [GLYPH-SR: Can We Achieve Both High-Quality Image Super-Resolution and High-Fidelity Text Recovery via VLM-Guided Latent Diffusion Model?](glyph-sr_can_we_achieve_both_high-quality_image_super-resolution_and_high-fideli.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](../../CVPR2026/image_generation/pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+
+<!-- RELATED:END -->

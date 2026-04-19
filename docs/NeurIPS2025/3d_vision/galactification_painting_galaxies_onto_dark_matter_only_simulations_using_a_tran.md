@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 多层级统计验证全面但缺乏显式消融实验和数值 baseline 对比表
 - 写作质量: ⭐⭐⭐⭐ 4 页正文紧凑清晰，问题定义和方法描述均到位
 - 价值: ⭐⭐⭐⭐⭐ 100× 加速对宇宙学 SBI 推断有重大实际意义，可直接部署到推断流水线中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RGB-Only Supervised Camera Parameter Optimization in Dynamic Scenes](rgb-only_supervised_camera_parameter_optimization_in_dynamic_scenes.md)
+- [Locality-Sensitive Hashing-Based Efficient Point Transformer for Charged Particle Reconstruction](locality-sensitive_hashing-based_efficient_point_transformer_for_charged_particl.md)
+- [How Many Tokens Do 3D Point Cloud Transformer Architectures Really Need?](how_many_tokens_do_3d_point_cloud_transformer_architectures_really_need.md)
+- [Dark3R: Learning Structure from Motion in the Dark](../../CVPR2026/3d_vision/dark3r_learning_structure_from_motion_in_the_dark.md)
+- [MVPaint: Synchronized Multi-View Diffusion for Painting Anything 3D](../../CVPR2025/3d_vision/mvpaint_synchronized_multi-view_diffusion_for_painting_anything_3d.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ R@1相比最强竞争者LoGG3D-Net平均提升**7.38%**。
 ⭐⭐⭐⭐ (4/5)
 
 问题选择独特且有实际应用价值，方法设计逻辑清晰、实验全面。多BEV交互机制新颖且有效。不过核心技术创新点相对集中在多高度BEV的引入，后续可考虑结合语义信息进一步提升判别力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery](../../NeurIPS2025/autonomous_driving/l2rsi_cross-view_lidar-based_place_recognition_for_large-scale_urban_scenes_via_.md)
+- [Rethinking LiDAR Domain Generalization: Single Source as Multiple Density Domains](../../ECCV2024/autonomous_driving/rethinking_lidar_domain_generalization_single_source_as_multiple_density_domains.md)
+- [BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images](../../CVPR2026/autonomous_driving/bev-sld_self-supervised_scene_landmark_detection_for_global_localization_with_li.md)
+- [Learning to Detect Objects from Multi-Agent LiDAR Scans without Manual Labels](learning_to_detect_objects_from_multi-agent_lidar_scans_without_manual_labels.md)
+- [LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation](lidar-rt_gaussian-based_ray_tracing_for_dynamic_lidar_re-simulation.md)
+
+<!-- RELATED:END -->

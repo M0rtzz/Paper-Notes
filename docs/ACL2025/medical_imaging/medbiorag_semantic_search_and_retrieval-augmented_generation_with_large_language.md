@@ -143,3 +143,15 @@ MedBioRAG 的工作流分为三个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多任务类型和多数据集，但缺乏专家人工评估
 - 写作质量: ⭐⭐⭐ 结构完整，有些地方表述冗余，公式定义比较基础
 - 价值: ⭐⭐⭐⭐ 提供了生物医学QA的完整解决方案和全面的baseline比较，实际部署参考价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Omni-RAG: Comprehensive Retrieval-Augmented Generation for Large Language Models in Medical Applications](omni_rag_medical.md)
+- [On the Vulnerability of Applying Retrieval-Augmented Generation within Knowledge-Intensive Application Domains](../../ICML2025/medical_imaging/on_the_vulnerability_of_applying_retrieval-augmented_generation_within_knowledge.md)
+- [A Retrieval-Based Approach to Medical Procedure Matching in Romanian](a_retrieval-based_approach_to_medical_procedure_matching_in_romanian.md)
+- [AfriMed-QA: A Pan-African, Multi-Specialty, Medical Question-Answering Benchmark Dataset](afrimed_qa_pan_african.md)
+- [Demo: Guide-RAG: Evidence-Driven Corpus Curation for Retrieval-Augmented Generation in Long COVID](../../NeurIPS2025/medical_imaging/demo_guide-rag_evidence-driven_corpus_curation_for_retrieval-augmented_generatio.md)
+
+<!-- RELATED:END -->

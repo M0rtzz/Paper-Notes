@@ -134,3 +134,15 @@ IS成功捕捉到：$\mathcal{IS}(F \to L) \leq \mathcal{IS}(F\vee L \to L)$，$
 - 实验充分度: ⭐⭐⭐ 合成实验+NLP pipeline实验作为概念验证可信，但5个任务、2个模型规模偏小；缺乏与更多baseline的数值比较
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，附录极为丰富（34页含8个appendix），但正文信息密度高需要信息论背景
 - 对我的价值: ⭐⭐⭐⭐ 任务关系的形式化框架对理解multitask/transfer learning有启发，IS度量可用于数据配比和benchmark设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Infogen: Generating Complex Statistical Infographics from Documents](infogen_generating_complex_statistical_infographics_from_documents.md)
+- [Statistical Inference Under Performativity](../../NeurIPS2025/others/statistical_inference_under_performativity.md)
+- [Robust Sampling for Active Statistical Inference](../../NeurIPS2025/others/robust_sampling_for_active_statistical_inference.md)
+- [Statistical Inference for Gradient Boosting Regression](../../NeurIPS2025/others/statistical_inference_for_gradient_boosting_regression.md)
+- [Causal Estimation of Tokenisation Bias](causal_tokenisation_bias.md)
+
+<!-- RELATED:END -->

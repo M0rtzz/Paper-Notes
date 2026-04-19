@@ -141,3 +141,15 @@ $$\mathbf{x}_i' = \text{Normalize}(\mathbf{x}_i - \bar{\mathbf{x}}), \quad \math
 - **实验充分性**：8/10 — 多种方法对比、多任务评估、消融全面
 - **实用价值**：9/10 — I0T-Score 直接可用作更好的评估指标
 - **总体评分**：8/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The AI Gap: How Socioeconomic Status Affects Language Technology Interactions](the_ai_gap_how_socioeconomic_status_affects_language_technology_interactions.md)
+- [Improving Language and Modality Transfer in Translation by Character-level Modeling](improving_language_and_modality_transfer_in.md)
+- [Are Any-to-Any Models More Consistent Across Modality Transfers Than Specialists?](are_any-to-any_models_more_consistent_across_modality_transfers_than_specialists.md)
+- [Zero-Shot Conversational Stance Detection: Dataset and Approaches](zero-shot_conversational_stance_detection_dataset_and_approaches.md)
+- [Entropy-UID: A Method for Optimizing Information Density](entropy-uid_a_method_for_optimizing_information_density.md)
+
+<!-- RELATED:END -->

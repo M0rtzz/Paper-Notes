@@ -136,3 +136,15 @@ $$L = \text{CrossEntropy}(p_i, \hat{p}_i)$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个模型×8个数据集×2个温度，消融分析详尽
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但符号较多
 - 实用价值: ⭐⭐⭐⭐⭐ 直接可部署的VLM推理加速方案，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Balanced Token Pruning: Accelerating Vision Language Models Beyond Local Optimization](balanced_token_pruning_accelerating_vision_language_models_b.md)
+- [Enhancing Vision-Language Model Reliability with Uncertainty-Guided Dropout Decoding](enhancing_visionlanguage_model_reliability_with_uncertaintyg.md)
+- [Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+- [Test-Time Spectrum-Aware Latent Steering for Zero-Shot Generalization in Vision-Language Models](test-time_spectrum-aware_latent_steering_for_zero-shot_generalization_in_vision-.md)
+- [Residual Decoding: Mitigating Hallucinations in Large Vision-Language Models via History-Aware Residual Guidance](../../CVPR2026/multimodal_vlm/residual_decoding_mitigating_hallucinations_in_large_vision-language_models_via_.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3 语言 × 5 模型 × 多种条件 × 控制实验，设计严谨
 - 写作质量: ⭐⭐⭐⭐⭐ 引入示例生动，实验设计逻辑清晰
 - 价值: ⭐⭐⭐⭐ 对 LLM 语言学评估和 prompting 方法论有实用贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Input Attributions Explain Inductive Reasoning in In-Context Learning?](can_input_attributions_explain_inductive_reasoning_in_in-context_learning.md)
+- [CodeTool: Enhancing Programmatic Tool Invocation of LLMs via Process Supervision](codetool_enhancing_programmatic_tool_invocation_of_llms_via_process_supervision.md)
+- [Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs](input_dependent_soft_prompting.md)
+- [HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation](hygenar_an_llm-driven_hybrid_genetic_algorithm_for_few-shot_grammar_generation.md)
+- [Deontological Keyword Bias: The Impact of Modal Expressions on Normative Judgments of Language Models](deontological_keyword_bias.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ tags:
 | 综合评价 | ⭐⭐⭐⭐ |
 
 > 这是一篇非常全面的安全研究论文，实验覆盖面广（13种攻击×10数据集×7检测器），系统性强。核心贡献在于首次量化了LLM驱动的证据污染风险，且发现现有防御策略存在明显不足。对AI安全和内容审核领域有重要参考价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stress-testing Machine Generated Text Detection: Shifting Language Models Writing Style to Fool Detectors](stress-testing_machine_generated_text_detection_shifting_language_models_writing.md)
+- [Synergizing Unsupervised Episode Detection with LLMs for Large-Scale News Events](synergizing_unsupervised_episode_detection_with_llms_for_large-scale_news_events.md)
+- [DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services](disco_device-server_collaborative_llm-based_text_streaming_services.md)
+- [Natural Language Processing in Support of Evidence-based Medicine: A Scoping Review](natural_language_processing_in_support_of_evidence-based_medicine_a_scoping_revi.md)
+- [EdiText: Controllable Coarse-to-Fine Text Editing with Diffusion Language Models](editext_diffusion_text_editing.md)
+
+<!-- RELATED:END -->

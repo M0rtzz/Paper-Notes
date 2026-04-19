@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ViewBench 设计合理，消融全面，但仅限室内场景和单一 MLLM
 - 写作质量: ⭐⭐⭐⭐⭐ 论述清晰，从理论到实验的逻辑链完整，图表直观
 - 价值: ⭐⭐⭐⭐ 无训练推理时增强有强实用价值，但应用场景受限于近视角变换
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention](tell_model_where_to_look_mitigating_hallucinations_in_mllms_by_vision-guided_att.md)
+- [EgoMind: Activating Spatial Cognition through Linguistic Reasoning in MLLMs](egomind_activating_spatial_cognition_through_linguistic_reasoning_in_mllms.md)
+- [When to Think and When to Look: Uncertainty-Guided Lookback](when_to_think_and_when_to_look_uncertainty-guided_lookback.md)
+- [Sparsity Forcing: Reinforcing Token Sparsity of MLLMs](../../ICLR2026/multimodal_vlm/sparsity_forcing_reinforcing_token_sparsity_of_mllms.md)
+- [HouseMind: Tokenization Allows MLLMs to Understand, Generate and Edit Architectural Floor Plans](housemind_tokenization_mllm_floor_plan.md)
+
+<!-- RELATED:END -->

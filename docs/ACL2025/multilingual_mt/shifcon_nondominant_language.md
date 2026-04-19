@@ -153,3 +153,15 @@ ShifCon 包含两个核心模块：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多模型、多任务、多语言（高/低资源）、丰富的消融实验
 - 写作质量: ⭐⭐⭐⭐ — 框架图清晰，LDA 可视化直观，数学形式化完整
 - 价值: ⭐⭐⭐⭐⭐ — 对低资源多语言 LLM 有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+- [Cross-Lingual Representation Alignment Through Contrastive Image-Caption Tuning](cross-lingual_representation_alignment_through_contrastive_image-caption_tuning.md)
+- [Alleviating Distribution Shift in Synthetic Data for Machine Translation Quality Estimation](alleviating_distribution_shift_in_synthetic_data_for_machine_translation_quality.md)
+- [How Does Alignment Enhance LLMs' Multilingual Capabilities? A Language Neurons Perspective](../../AAAI2026/multilingual_mt/how_does_alignment_enhance_llms_multilingual_capabilities_a_language_neurons_per.md)
+- [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](../../NeurIPS2025/multilingual_mt/enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
+
+<!-- RELATED:END -->

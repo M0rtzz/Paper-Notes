@@ -127,3 +127,15 @@ NExtLong 分为两个阶段：(1) **负文档扩展 (Negative Document Extension
 - 实验充分度: ⭐⭐⭐⭐（HELMET + RULER 双基准，完整消融）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，方法描述详细）
 - 价值: ⭐⭐⭐⭐⭐（高度实用，解决了长上下文 LLM 开发的核心瓶颈——训练数据稀缺）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training](../../ACL2025/llm_efficiency/adaptive_grouped_pe_context_window.md)
+- [What are the Essential Factors in Crafting Effective Long Context Multi-Hop Instruction Datasets? Insights and Best Practices](../../ACL2025/llm_efficiency/what_are_the_essential_factors_in_crafting_effective_long_context_multi-hop_inst.md)
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
+- [Curse of High Dimensionality Issue in Transformer for Long-context Modeling](curse_of_high_dimensionality_issue_in_transformer_for_long-context_modeling.md)
+
+<!-- RELATED:END -->

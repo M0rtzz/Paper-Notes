@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 20+模型、3 数据集、多消融，但数据集规模有限
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，人类实验增加说服力
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 对齐和安全研究有深刻启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Which of These Best Describes Multiple Choice Evaluation with LLMs?](multiple_choice_eval.md)
+- [ArithmAttack: Evaluating Robustness of LLMs to Noisy Context in Math Problem Solving](arithmattack_evaluating_robustness_of_llms_to_noisy_context_in_math_problem_solv.md)
+- [Exploring Explanations Improves the Robustness of In-Context Learning](exploring_explanations_improves_the_robustness_of_in-context_learning.md)
+- [Efficient Ensemble for Fine-tuning Language Models on Multiple Datasets](efficient_ensemble_for_fine-tuning_language_models_on_multiple_datasets.md)
+- [Zero-Shot Belief: A Hard Problem for LLMs](zero-shot_belief_a_hard_problem_for_llms.md)
+
+<!-- RELATED:END -->

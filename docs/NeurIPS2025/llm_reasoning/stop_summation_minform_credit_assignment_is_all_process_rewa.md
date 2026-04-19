@@ -95,3 +95,15 @@ PURE (Process sUpervised Reinforcement lEarning) 保持标准 PPO/GRPO 框架，
 - 实验充分度: ⭐⭐⭐⭐ 3 个基座模型 + 5 基准 + reward hacking 案例分析
 - 写作质量: ⭐⭐⭐⭐ 问题定位清晰，但符号可以更简洁
 - 价值: ⭐⭐⭐⭐⭐ 解决了 PRM 用于 RL 的核心障碍，使 dense process reward 终于可以安全使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamPRM: Domain-Reweighted Process Reward Model for Multimodal Reasoning](dreamprm_domain-reweighted_process_reward_model_for_multimodal_reasoning.md)
+- [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
+- [Segment Policy Optimization: Effective Segment-Level Credit Assignment in RL for Large Language Models](segment_policy_optimization_effective_segment-level_credit_assignment_in_rl_for_.md)
+- [Know What You Don't Know: Uncertainty Calibration of Process Reward Models](know_what_you_dont_know_uncertainty_calibration_of_process_reward_models.md)
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+
+<!-- RELATED:END -->

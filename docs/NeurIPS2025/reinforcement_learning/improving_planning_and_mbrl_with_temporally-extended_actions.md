@@ -129,3 +129,15 @@ CEM 每决策步输出 $(a_k, \delta t_k)$。回报：$J_2 = \sum_k \gamma^{e_{<
 - 实验充分度: ⭐⭐⭐⭐⭐ 两大场景 7+ 环境，消融完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，notation 一致
 - 价值: ⭐⭐⭐⭐ 实用性强，可直接集成到现有 MBRL 框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Free Algorithms for the Stochastically Extended Adversarial Model](parameter-free_algorithms_for_the_stochastically_extended_adversarial_model.md)
+- [Self-Improving Embodied Foundation Models](self-improving_embodied_foundation_models.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [FedRAIN-Lite: Federated Reinforcement Algorithms for Improving Idealised Numerical Weather and Climate Models](fedrain-lite_federated_reinforcement_algorithms_for_improving_idealised_numerica.md)
+- [Retrosynthesis Planning via Worst-path Policy Optimisation in Tree-structured MDPs](retrosynthesis_planning_via_worst-path_policy_optimisation_in_tree-structured_md.md)
+
+<!-- RELATED:END -->

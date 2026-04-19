@@ -120,3 +120,15 @@ TL-DPO包含两个互补的损失函数：(1) **目标生成损失**——仅在
 ## 评分
 
 ⭐⭐⭐⭐ — 直觉清晰、理论扎实、效果显著（CHAIR_s降低70%），跨模型泛化验证充分，但假设的实际合理性和数据构建对GPT-4的依赖是潜在限制
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation](../../CVPR2026/multimodal_vlm/locate-then-sparsify_attribution_guided_sparse_strategy_for_visual_hallucination.md)
+- [Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](../../ICML2025/multimodal_vlm/look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)
+- [MAVias: Mitigate Any Visual Bias](../../ICCV2025/multimodal_vlm/mavias_mitigate_any_visual_bias.md)
+
+<!-- RELATED:END -->

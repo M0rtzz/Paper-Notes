@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 真实系统搭建+多场景测试
 - 写作质量: ⭐⭐⭐⭐ 物理模型推导清楚
 - 价值: ⭐⭐⭐⭐⭐ 低成本实时高光谱3D有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaSpectra+: A Compact Broadband Metasurface Camera for Snapshot Hyperspectral+ Imaging](metaspectra_a_compact_broadband_metasurface_camera_for_snapshot_hyperspectral_im.md)
+- [GreenHyperSpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction](../../NeurIPS2025/remote_sensing/greenhyperspectra_a_multi-source_hyperspectral_dataset_for_global_vegetation_tra.md)
+- [Lumosaic: Hyperspectral Video via Active Illumination and Coded-Exposure Pixels](../../CVPR2026/remote_sensing/lumosaic_hyperspectral_video_via_active_illumination_and_coded-exposure_pixels.md)
+- [Spectral Gaps and Spatial Priors: Studying Hyperspectral Downstream Adaptation Using TerraMind](../../ICLR2026/remote_sensing/spectral_gaps_and_spatial_priors_studying_hyperspectral_downstream_adaptation_us.md)
+- [EarthDial: Turning Multi-sensory Earth Observations to Interactive Dialogues](earthdial_turning_multi-sensory_earth_observations_to_interactive_dialogues.md)
+
+<!-- RELATED:END -->

@@ -97,3 +97,15 @@ L = L1(合成模糊帧, 观测模糊帧) + L_reg(帧间位姿连续性正则)。
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实数据集，10+种消融，多种鲁棒性测试(扰动/blur强度/视角数/mask方法)，还有iPhone demo
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表信息量丰富，问题动机交代得很好
 - 对我的价值: ⭐⭐⭐ 3D blur formation的方法论可借鉴，不过人体avatar方向本身非核心
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NEC-Diff: Noise-Robust Event–RAW Complementary Diffusion for Seeing Motion in Extreme Darkness](nec-diff_noise-robust_event-raw_complementary_diffusion_for_seeing_motion_in_ext.md)
+- [BluRef: Unsupervised Image Deblurring with Dense-Matching References](bluref_unsupervised_image_deblurring_with_dense-matching_references.md)
+- [BAMM: Bidirectional Autoregressive Motion Model](../../ECCV2024/image_restoration/bamm_bidirectional_autoregressive_motion_model.md)
+- [Sharpness-Aware Machine Unlearning](../../ICLR2026/image_restoration/sharpness-aware_machine_unlearning.md)
+- [The Effect of Optimal Self-Distillation in Noisy Gaussian Mixture Model](../../NeurIPS2025/image_restoration/the_effect_of_optimal_self-distillation_in_noisy_gaussian_mixture_model.md)
+
+<!-- RELATED:END -->

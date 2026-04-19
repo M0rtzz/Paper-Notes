@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 消融全面（15 seeds × 8 配置），但仅一个环境，缺乏与 MARL SOTA 对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、实验设置严谨、结论明确，自认 preliminary study 很诚实
 - 价值: ⭐⭐⭐ 为 NGU→MARL 方向奠定了实证基础，共享回放的结论有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empirical Study on Robustness and Resilience in Cooperative Multi-Agent Reinforcement Learning](empirical_study_on_robustness_and_resilience_in_cooperative_multi-agent_reinforc.md)
+- [Sequential Multi-Agent Dynamic Algorithm Configuration](sequential_multi-agent_dynamic_algorithm_configuration.md)
+- [Robust and Diverse Multi-Agent Learning via Rational Policy Gradient](robust_and_diverse_multi-agent_learning_via_rational_policy_gradient.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Multi-Agent Collaboration via Evolving Orchestration](multi-agent_collaboration_via_evolving_orchestration.md)
+
+<!-- RELATED:END -->

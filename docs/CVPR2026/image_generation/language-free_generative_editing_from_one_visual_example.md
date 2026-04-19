@@ -122,3 +122,15 @@ VDC在所有6个基准上设定了新SOTA，超越了训练免和全微调的文
 - 实验充分度: ⭐⭐⭐⭐ 6个编辑基准、多种基线对比，但缺少语义级编辑实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机极清晰，图2的注意力图可视化非常有说服力
 - 价值: ⭐⭐⭐⭐⭐ 对扩散模型编辑和图像恢复领域有重要启发，框架简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChordEdit: One-Step Low-Energy Transport for Image Editing](chordedit_one-step_low-energy_transport_for_image_editing.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Group Editing: Edit Multiple Images in One Go](group_editing_edit_multiple_images_in_one_go.md)
+- [SAO-Instruct: Free-form Audio Editing using Natural Language Instructions](../../NeurIPS2025/image_generation/sao-instruct_free-form_audio_editing_using_natural_language_instructions.md)
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+
+<!-- RELATED:END -->

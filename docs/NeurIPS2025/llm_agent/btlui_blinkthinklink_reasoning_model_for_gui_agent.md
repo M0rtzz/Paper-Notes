@@ -124,3 +124,15 @@ BTL-UI 使用仅 4K 数据进行 RFT 训练，在 ScreenSpot 系列 grounding be
 -    实验充分度: ⭐⭐⭐⭐ 多个 GUI benchmark 全面评估 + 充分消融
 -    写作质量: ⭐⭐⭐⭐ 认知科学动机与技术设计结合紧密
 -    价值: ⭐⭐⭐⭐ GUI agent 的过程引导 RL 有开创意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GUICourse: From General Vision Language Model to Versatile GUI Agent](../../ACL2025/llm_agent/guicourse_from_general_vision_language_model_to_versatile_gui_agent.md)
+- [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
+- [TrajAgent: An LLM-Agent Framework for Trajectory Modeling via Large-and-Small Model Collaboration](trajagent_an_llm-agent_framework_for_trajectory_modeling_via_large-and-small_mod.md)
+- [History-Aware Reasoning for GUI Agents](../../AAAI2026/llm_agent/history-aware_reasoning_for_gui_agents.md)
+- [AgentTTS: Large Language Model Agent for Test-time Compute-optimal Scaling Strategy in Complex Tasks](agenttts_large_language_model_agent_for_testtime_computeopti.md)
+
+<!-- RELATED:END -->

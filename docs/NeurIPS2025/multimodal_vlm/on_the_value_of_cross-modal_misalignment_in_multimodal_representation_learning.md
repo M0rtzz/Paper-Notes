@@ -185,3 +185,15 @@ $$\mathcal{L}_{\text{SymAlignMaxEnt}} = \mathbb{E}[\|f_x(\mathbf{x}) - f_t(\math
 ⭐⭐⭐⭐⭐ (5/5)
 
 理论贡献扎实，统一了跨模态失配的两种对立观点，实验验证从合成数据到真实 CLIP 模型，兼具理论深度和实际指导意义。是多模态表征学习理论分析的重要工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIDAS: Misalignment-based Data Augmentation Strategy for Imbalanced Multimodal Learning](midas_misalignment-based_data_augmentation_strategy_for_imbalanced_multimodal_le.md)
+- [Rethinking Visual Token Reduction in LVLMs under Cross-Modal Misalignment](../../AAAI2026/multimodal_vlm/rethinking_visual_token_reduction_in_lvlms_under_cross-modal_misalignment.md)
+- [Structure-Aware Fusion with Progressive Injection for Multimodal Molecular Representation Learning](structure-aware_fusion_with_progressive_injection_for_multimodal_molecular_repre.md)
+- [Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment](guiding_cross-modal_representations_with_mllm_priors_via_preference_alignment.md)
+- [Continual Multimodal Contrastive Learning](continual_multimodal_contrastive_learning.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ $$\mathcal{U}_\sigma(C^1, I) \subsetneq \mathcal{U}_\sigma(\mathbb{R}^n, \mathbb
 - 实验充分度: ⭐⭐⭐ 纯理论工作无实验，但理论结果本身足够有力
 - 写作质量: ⭐⭐⭐⭐ 数学符号密集但定义清晰，例子选择得当（PointNet, CNN 读者直觉友好）
 - 价值: ⭐⭐⭐⭐⭐ 对等变深度学习理论的基础性贡献，将影响后续架构设计的理论分析范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [Permutation Equivariant Neural Networks for Symmetric Tensors](../../ICML2025/others/permutation_equivariant_neural_networks_for_symmetric_tensors.md)
+- [The Price of Freedom: Exploring Expressivity and Runtime Tradeoffs in Equivariant Networks](../../ICML2025/others/the_price_of_freedom_exploring_expressivity_and_runtime_tradeoffs_in_equivariant.md)
+- [Equivariance by Contrast: Identifiable Equivariant Embeddings from Unlabeled Finite Group Actions](equivariance_by_contrast_identifiable_equivariant_embeddings_from_unlabeled_fini.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+
+<!-- RELATED:END -->

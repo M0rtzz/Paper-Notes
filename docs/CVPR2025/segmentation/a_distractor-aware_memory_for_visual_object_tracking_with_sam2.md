@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个benchmark全面评估，消融实验逐步验证每个设计决策
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑严谨，每个设计选择都有实验验证，DiDi数据集贡献也很有价值
 - 价值: ⭐⭐⭐⭐⭐ 零训练改进SAM2跟踪性能显著，在多个benchmark设立新SOTA，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient-SAM2: Accelerating SAM2 with Object-Aware Visual Encoding and Memory Retrieval](../../ICLR2026/segmentation/efficient-sam2_accelerating_sam2_with_object-aware_visual_encoding_and_memory_re.md)
+- [MatAnyone: Stable Video Matting with Consistent Memory Propagation](matanyone_stable_video_matting_with_consistent_memory_propagation.md)
+- [RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images](rdnet_region_proportion-aware_dynamic_adaptive_salient_object_detection_network_.md)
+- [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
+- [DefMamba: Deformable Visual State Space Model](defmamba_deformable_visual_state_space_model.md)
+
+<!-- RELATED:END -->

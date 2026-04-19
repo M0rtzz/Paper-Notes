@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 18 个数据集、9 个模型、完善的消融实验
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ — 即插即用设计实用性强，但适用场景受限于配对文本可用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework](towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo.md)
+- [Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
+- [A Unified Shape-Aware Foundation Model for Time Series Classification](../../AAAI2026/time_series/a_unified_shape-aware_foundation_model_for_time_series_class.md)
+- [Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
+- [GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ $$\eta_\ell^* = \frac{g_{\ell,\text{tot}}^\top F_\ell^{-1} g_{\ell,\text{comb}}}
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 CNN/ViT、多数据集、长尾场景，多 seed 重复，但缺 NLP 实验
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，实验组织良好
 - 价值: ⭐⭐⭐⭐ — 对大 batch 训练有实际意义，即插即用设计降低使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Recall with Transformers Beyond Orthogonal Embeddings](../../ICLR2026/optimization/learning_to_recall_with_transformers_beyond_orthogonal_embeddings.md)
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](../../NeurIPS2025/optimization/natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+- [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated learning](../../CVPR2026/optimization/scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
+- [Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression](../../NeurIPS2025/optimization/large_stepsizes_accelerate_gradient_descent_for_regularized_logistic_regression.md)
+- [Πnet: Optimizing Hard-Constrained Neural Networks with Orthogonal Projection Layers](../../ICLR2026/optimization/pinet_optimizing_hard-constrained_neural_networks_with_orthogonal_projection_lay.md)
+
+<!-- RELATED:END -->

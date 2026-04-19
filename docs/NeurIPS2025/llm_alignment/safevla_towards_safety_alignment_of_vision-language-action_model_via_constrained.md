@@ -139,3 +139,15 @@ CC 平均下降 **83.58%**，SR 平均提升 **+3.85%**。
 - 实验充分度: ⭐⭐⭐⭐⭐ 主实验+消融+OOD+极端失败+跨模型+Sim-to-Real
 - 写作质量: ⭐⭐⭐⭐ 四阶段 ISA 框架清晰，但论文篇幅较长
 - 价值: ⭐⭐⭐⭐⭐ 对具身 AI 安全领域有里程碑意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models](../../ICML2025/llm_alignment/layer-wise_alignment_examining_safety_alignment_across_image_encoder_layers_in_v.md)
+- [Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons](towards_understanding_safety_alignment_a_mechanistic_perspective_from_safety_neu.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](../../ICLR2026/llm_alignment/mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [Human-assisted Robotic Policy Refinement via Action Preference Optimization](human-assisted_robotic_policy_refinement_via_action_preference_optimization.md)
+- [Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis](limited_preference_data_learning_better_reward_model_with_latent_space_synthesis.md)
+
+<!-- RELATED:END -->

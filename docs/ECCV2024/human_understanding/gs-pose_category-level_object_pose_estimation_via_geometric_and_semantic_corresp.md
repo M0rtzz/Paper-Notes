@@ -171,3 +171,15 @@ $$L = -\frac{1}{|A_{pos}|}\sum_{\hat{A}_{i,j} \in A_{pos}}(1-\hat{A}_{i,j})^\gam
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个数据集全面评估，组件消融/数据量消融/t-SNE分析非常详尽
 - **写作质量**: ⭐⭐⭐⭐ — 动机阐述清晰，方法描述完整，对比公平
 - **实用价值**: ⭐⭐⭐⭐⭐ — 仅需10个合成模型就能在真实场景工作，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [U-COPE: Taking a Further Step to Universal 9D Category-Level Object Pose Estimation](u-cope_taking_a_further_step_to_universal_9d_category-level_object_pose_estimati.md)
+- [LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation](lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose.md)
+- [FoundPose: Unseen Object Pose Estimation with Foundation Features](foundpose_unseen_object_pose_estimation_with_foundation_features.md)
+- [SCAPE: A Simple and Strong Category-Agnostic Pose Estimator](scape_a_simple_and_strong_category-agnostic_pose_estimator.md)
+- [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](../../ICCV2025/human_understanding/cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
+
+<!-- RELATED:END -->

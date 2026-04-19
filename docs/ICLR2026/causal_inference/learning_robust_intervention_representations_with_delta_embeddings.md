@@ -154,3 +154,15 @@ $$\mathcal{L}_{\text{contrast}} = \sum_{i=1}^{B} \frac{-1}{|P(i)|} \sum_{p \in P
 - **实验充分度**: ⭐⭐⭐⭐ — Causal Triplet 三个难度递增的评估场景覆盖全面，消融实验完整；但缺少更大规模的评估
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学定义严谨，从属性→损失→架构的推导逻辑清晰，可视化（反平行语义结构）非常直观
 - **价值**: ⭐⭐⭐⭐ — 为因果表示学习提供了新的研究方向（干预表示），在机器人和 embodied AI 领域有潜在应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Counterfactual Explanations on Robust Perceptual Geodesics](counterfactual_explanations_on_robust_perceptual_geodesics.md)
+- [Direct Doubly Robust Estimation of Conditional Quantile Contrasts](direct_doubly_robust_estimation_of_conditional_quantile_contrasts.md)
+- [A Principle of Targeted Intervention for Multi-Agent Reinforcement Learning](../../NeurIPS2025/causal_inference/a_principle_of_targeted_intervention_for_multi-agent_reinforcement_learning.md)
+- [Learning Chain of Counterfactual Thought for Bias-Robust Vision-Language Reasoning](../../ECCV2024/causal_inference/learning_chain_of_counterfactual_thought_for_bias-robust_vision-language_reasoni.md)
+- [Causal Abstraction Inference under Lossy Representations](../../ICML2025/causal_inference/causal_abstraction_inference_under_lossy_representations.md)
+
+<!-- RELATED:END -->

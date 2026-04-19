@@ -123,3 +123,15 @@ tags:
 - 实验充分性: ⭐⭐⭐⭐ (规模覆盖广，但缺少干预实验)
 - 实用价值: ⭐⭐⭐⭐ (指出方向但未落地)
 - 总体推荐: ⭐⭐⭐⭐⭐ (scaling law 领域的重要理论贡献)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](../../NeurIPS2025/llm_pretraining/gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](../../NeurIPS2025/llm_pretraining/power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding](diversity_explains_inference_scaling_laws_through_a_case_study_of_minimum_bayes_.md)
+- [Scaling and Transferability of Annealing Strategies in Large Language Model Training](../../AAAI2026/llm_pretraining/scaling_and_transferability_of_annealing_strategies_in_large_language_model_trai.md)
+- [AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts](autonomous_data_selection_with_zero-shot_generative_classifiers_for_mathematical.md)
+
+<!-- RELATED:END -->

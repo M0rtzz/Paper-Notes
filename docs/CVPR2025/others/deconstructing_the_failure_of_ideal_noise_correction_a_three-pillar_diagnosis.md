@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (CIFAR-10/100+Clothing1M，多种噪声率，但缺少更多大规模实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (逻辑严密，从悖论提出→决定性验证→三层分析→解决方案，叙事极佳)
 - 价值: ⭐⭐⭐⭐⭐ (对LNL社区的范式认知有深远影响，诊断为后续工作指明方向)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](open_set_label_shift_with_test_time_out-of-distribution_reference.md)
+- [Locally Orderless Images for Optimization in Differentiable Rendering](locally_orderless_images_for_optimization_in_differentiable_rendering.md)
+- [Full-DoF Egomotion Estimation for Event Cameras Using Geometric Solvers](full-dof_egomotion_estimation_for_event_cameras_using_geometric_solvers.md)
+- [Focal Split: Untethered Snapshot Depth from Differential Defocus](focal_split_untethered_snapshot_depth_from_differential_defocus.md)
+
+<!-- RELATED:END -->

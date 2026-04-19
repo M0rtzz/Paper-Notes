@@ -119,3 +119,15 @@ tags:
 
 ## 评分
 ⭐⭐⭐⭐ — 数据集规模和标注pipeline质量扎实，三类任务定义清晰有实际意义。核心发现（通用VLM时空推理≈0、微调后巨大提升）具有重要参考价值。局限在于仅前视野评估，且未验证对下游规划的实际收益。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoadSceneVQA: Benchmarking Visual Question Answering in Roadside Perception Systems for Intelligent Transportation System](roadscenevqa_benchmarking_visual_question_answering_in_roadside_perception_syste.md)
+- [Understanding Dynamic Scenes in Egocentric 4D Point Clouds](understanding_dynamic_scenes_in_ego_centric_4d_point_clouds.md)
+- [Fine-Grained Representation for Lane Topology Reasoning](fine-grained_representation_for_lane_topology_reasoning.md)
+- [Invisible Triggers, Visible Threats! Road-Style Adversarial Creation Attack for Visual 3D Detection in Autonomous Driving](invisible_triggers_visible_threats_road-style_adversarial_creation_attack_for_vi.md)
+- [MindDriver: Introducing Progressive Multimodal Reasoning for Autonomous Driving](../../CVPR2026/autonomous_driving/minddriver_introducing_progressive_multimodal_reasoning_for_autonomous_driving.md)
+
+<!-- RELATED:END -->

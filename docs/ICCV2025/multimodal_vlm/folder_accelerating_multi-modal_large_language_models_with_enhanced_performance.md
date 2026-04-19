@@ -137,3 +137,15 @@ FOLDER 有两种使用模式：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多模型（LLaVA、MiniGPT4v2）、多规模（7B/13B）、多场景（推理/训练）、详细消融
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，从"三个问题"到解决方案的叙事结构优秀
 - **价值**: ⭐⭐⭐⭐⭐ 即插即用、开源、实用性强，对 MLLM 部署有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [Multi-Cache Enhanced Prototype Learning for Test-Time Generalization of Vision-Language Models](multi-cache_enhanced_prototype_learning_for_test-time_generalization_of_vision-l.md)
+- [Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval](bidirectional_likelihood_estimation_with_multi-modal_large_language_models_for_t.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+- [Efficient Multi-modal Large Language Models via Progressive Consistency Distillation](../../NeurIPS2025/multimodal_vlm/efficient_multi-modal_large_language_models_via_progressive_consistency_distilla.md)
+
+<!-- RELATED:END -->

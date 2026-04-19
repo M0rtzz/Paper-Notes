@@ -118,3 +118,15 @@ tags:
 - **实验充分度** ⭐⭐：仅有 FLOPs 实测，缺少系统实验验证
 - **写作质量** ⭐⭐⭐⭐：6 页内论证清晰，例子直观
 - **价值** ⭐⭐⭐：对 LLM 能力边界的理论认识有贡献，但论证深度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](../../ACL2025/llm_safety/intent_hallucination_eval.md)
+- [TRUST -- Transformer-Driven U-Net for Sparse Target Recovery](../../NeurIPS2025/llm_safety/trust_--_transformer-driven_u-net_for_sparse_target_recovery.md)
+- [Unveiling and Addressing Pseudo Forgetting in Large Language Models](../../ACL2025/llm_safety/unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)
+- [Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](../../ACL2025/llm_safety/chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)
+- [Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training](../../ACL2025/llm_safety/hallucination_detox_send.md)
+
+<!-- RELATED:END -->

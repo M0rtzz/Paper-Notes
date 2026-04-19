@@ -160,3 +160,15 @@ CFT 对 Transformer 架构效果最显著，ConvNeXt 也有改善但幅度较小
 - 实验充分度: ⭐⭐⭐⭐ — 5个OOD基准+4种架构+完整消融，但缺少下游任务验证
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，流水线图描述直观，公式简洁
 - 价值: ⭐⭐⭐⭐ — 低成本提升鲁棒性的实用方案，对OOD部署有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DDB: Diffusion Driven Balancing to Address Spurious Correlations](../../ICCV2025/segmentation/ddb_diffusion_driven_balancing_to_address_spurious_correlations.md)
+- [ConceptPrism: Concept Disentanglement in Personalized Diffusion Models via Residual Token Optimization](conceptprism_concept_disentanglement_in_personalized_diffusion_models_via_residu.md)
+- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](../../ECCV2024/segmentation/efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
+- [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
+- [RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)
+
+<!-- RELATED:END -->

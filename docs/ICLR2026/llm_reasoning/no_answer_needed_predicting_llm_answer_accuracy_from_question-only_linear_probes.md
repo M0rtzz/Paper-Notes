@@ -184,3 +184,15 @@ $$\text{score}(h) = \frac{(h - \mu)^\top w}{\|w\|}$$
 - **实验充分度**: ⭐⭐⭐⭐ — 6 模型 × 6 数据集，含多基线和定性分析
 - **实用价值**: ⭐⭐⭐⭐ — 低成本失败预警具有直接部署价值
 - **总体推荐**: ⭐⭐⭐⭐ — 简洁有力的发现，尤其是事实/推理正确性的分离具有深远意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning or Retrieval? A Study of Answer Attribution on Large Reasoning Models](reasoning_or_retrieval_a_study_of_answer_attribution_on_large_reasoning_models.md)
+- [Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering](../../ACL2025/llm_reasoning/test_time_scaling_selective_qa.md)
+- [When Shallow Wins: Silent Failures and the Depth-Accuracy Paradox in Latent Reasoning](when_shallow_wins_silent_failures_and_the_depth-accuracy_paradox_in_latent_reaso.md)
+- [Harder Is Better: Boosting Mathematical Reasoning via Difficulty-Aware GRPO and Multi-Aspect Question Reformulation](harder_is_better_boosting_mathematical_reasoning_via_difficulty-aware_grpo_and_m.md)
+- [Nudging the Boundaries of LLM Reasoning](nudging_the_boundaries_of_llm_reasoning.md)
+
+<!-- RELATED:END -->

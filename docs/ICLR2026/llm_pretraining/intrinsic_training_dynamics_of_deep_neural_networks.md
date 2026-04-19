@@ -144,3 +144,15 @@ $$\text{Intrinsic Recoverability} \Rightarrow \text{Intrinsic Metric} \Rightarro
 - **实验充分度**: ⭐⭐⭐ 纯理论工作，定理严谨但缺数值验证
 - **写作质量**: ⭐⭐⭐⭐⭐ 定义、定理层层递进，框架优雅清晰
 - **价值**: ⭐⭐⭐⭐ 为理解隐式偏置提供重要理论基石
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization Bounds for Rank-sparse Neural Networks](../../NeurIPS2025/llm_pretraining/generalization_bounds_for_rank-sparse_neural_networks.md)
+- [MoMa: A Simple Modular Deep Learning Framework for Material Property Prediction](moma_a_modular_deep_learning_framework_for_material_property_prediction.md)
+- [Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks](../../ICML2025/llm_pretraining/bayesian_neural_scaling_law_extrapolation_with_prior-data_fitted_networks.md)
+- [Alternating Gradient Flows: A Theory of Feature Learning in Two-layer Neural Networks](../../NeurIPS2025/llm_pretraining/alternating_gradient_flows_a_theory_of_feature_learning_in_two-layer_neural_netw.md)
+- [Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](../../NeurIPS2025/llm_pretraining/neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
+
+<!-- RELATED:END -->

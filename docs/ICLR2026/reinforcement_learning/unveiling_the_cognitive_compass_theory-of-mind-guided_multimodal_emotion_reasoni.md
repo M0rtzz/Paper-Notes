@@ -124,3 +124,15 @@ $$\max_{\pi_\theta} \mathbb{E}_{y_i \sim \pi_{\text{old}}} \left[ \frac{\pi_\the
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 24 个数据集的全面评估
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，方法动机充分
 - **实用性**: ⭐⭐⭐⭐ — 提供评估工具包和优化方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RebuttalAgent: Strategic Persuasion in Academic Rebuttal via Theory of Mind](rebuttalagent_strategic_persuasion_in_academic_rebuttal_via_theory_of_mind.md)
+- [Intention-Guided Cognitive Reasoning for Egocentric Long-Term Action Anticipation](../../AAAI2026/reinforcement_learning/intention-guided_cognitive_reasoning_for_egocentric_long-term_action_anticipatio.md)
+- [UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings](ume-r1_exploring_reasoning-driven_generative_multimodal_embeddings.md)
+- [MMhops-R1: Multimodal Multi-hop Reasoning](../../AAAI2026/reinforcement_learning/mmhops-r1_multimodal_multi-hop_reasoning.md)
+- [Regret-Guided Search Control for Efficient Learning in AlphaZero](regret-guided_search_control_for_efficient_learning_in_alphazero.md)
+
+<!-- RELATED:END -->

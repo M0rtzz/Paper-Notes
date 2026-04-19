@@ -132,3 +132,15 @@ $$\text{Visiontoken}_{\text{LLM}_2} = P \cdot V_{\text{shared}}$$
 ## 评分
 
 ⭐⭐⭐⭐ — 机理分析深刻，方法设计优雅，跨 LLM 迁移实用价值高，但在某些 benchmark 上迁移性能仍有损失。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](../../ACL2025/information_retrieval/enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [Advancing Myopia To Holism: Fully Contrastive Language-Image Pre-training](../../CVPR2025/information_retrieval/advancing_myopia_to_holism_fully_contrastive_language-image_pre-training.md)
+- [Redundancy, Isotropy and Intrinsic Dimensionality of Prompt-Based Text Embeddings](../../ACL2025/information_retrieval/redundancy_isotropy_and_intrinsic_dimensionality_of_prompt-based_text_embeddings.md)
+- [The Narrow Gate: Localized Image-Text Communication in Native Multimodal Models](../../NeurIPS2025/information_retrieval/the_narrow_gate_localized_imagetext_communication_in_native.md)
+- [LDIR: Low-Dimensional Dense and Interpretable Text Embeddings with Relative Representations](../../ACL2025/information_retrieval/ldir_low-dimensional_dense_and_interpretable_text_embeddings_with_relative_repre.md)
+
+<!-- RELATED:END -->

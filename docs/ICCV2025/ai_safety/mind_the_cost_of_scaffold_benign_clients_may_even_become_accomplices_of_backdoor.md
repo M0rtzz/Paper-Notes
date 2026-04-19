@@ -150,3 +150,15 @@ BadSFL 包含 4 个步骤：
 - **实验充分度**: ⭐⭐⭐⭐ — 三数据集 + 三种触发方式 + 四种防御 + 消融，覆盖面广
 - **写作质量**: ⭐⭐⭐ — 方法描述清晰但部分实验图表需参考附录，主文的定量结果不够精确（多为图表而非表格）
 - **价值**: ⭐⭐⭐⭐⭐ — 对 FL 安全研究领域有重要警示意义，揭示了算法改进可能带来新安全风险的深层问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](../../CVPR2025/ai_safety/infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+- [Taught Well, Learned Ill: Towards Distillation-Conditional Backdoor Attack](../../NeurIPS2025/ai_safety/taught_well_learned_ill_towards_distillation-conditional_backdoor_attack.md)
+- [INACTIVE: Invisible Backdoor Attack against Self-supervised Learning](../../CVPR2025/ai_safety/invisible_backdoor_attack_against_self-supervised_learning.md)
+- [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
+- [Backdoor Mitigation by Distance-Driven Detoxification](backdoor_mitigation_by_distance-driven_detoxification.md)
+
+<!-- RELATED:END -->

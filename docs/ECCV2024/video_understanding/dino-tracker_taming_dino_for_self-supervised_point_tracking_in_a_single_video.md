@@ -166,3 +166,15 @@ Phi(I) = Phi_DINO(I) + Phi_Delta(I)
 - 实验充分度: ⭐⭐⭐⭐⭐ (三个基准+遮挡率分析+详尽消融+DINO层选择+LoRA对比)
 - 写作质量: ⭐⭐⭐⭐⭐ (图示精美，t-SNE可视化和轨迹一致性示意图直观)
 - 价值: ⭐⭐⭐⭐⭐ (开创性工作，长期遮挡追踪取得实质性突破)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Any-Point Tracking by Contrastive Random Walks](self-supervised_any-point_tracking_by_contrastive_random_walks.md)
+- [Local All-Pair Correspondence for Point Tracking](local_all-pair_correspondence_for_point_tracking.md)
+- [Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training](boosting_3d_single_object_tracking_with_2d_matching_distillation_and_3d_pre-trai.md)
+- [TimeCraft: Navigate Weakly-Supervised Temporal Grounded Video Question Answering via Bi-directional Reasoning](timecraft_navigate_weakly-supervised_temporal_grounded_video_question_answering_.md)
+- [FinePseudo: Improving Pseudo-Labelling through Temporal-Alignability for Semi-Supervised Fine-Grained Action Recognition](finepseudo_improving_pseudo-labelling_through_temporal-alignablity_for_semi-supe.md)
+
+<!-- RELATED:END -->

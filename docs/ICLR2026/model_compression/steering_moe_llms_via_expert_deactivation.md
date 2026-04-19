@@ -118,3 +118,15 @@ $\Delta_{\ell,i} > 0$ 表示专家 $i$ 与行为 1 关联，$\Delta_{\ell,i} < 0
 - **技术深度**: ⭐⭐⭐⭐ — 方法简洁但分析全面
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 11 基准 × 6 模型，安全与忠实双维度
 - **实用性**: ⭐⭐⭐⭐ — 推理时零成本引导，但安全攻击面需关注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuidedSampling: Steering LLMs Towards Diverse Candidate Solutions at Inference-Time](guidedsampling_steering_llms_towards_diverse_candidate_solutions_at_inference-ti.md)
+- [SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
+- [CAMERA: Multi-Matrix Joint Compression for MoE Models via Micro-Expert Redundancy Analysis](../../AAAI2026/model_compression/camera_multi-matrix_joint_compression_for_moe_models_via_mic.md)
+- [KBVQ-MoE: KLT-guided SVD with Bias-Corrected Vector Quantization for MoE Large Language Models](kbvq-moe_klt-guided_svd_with_bias-corrected_vector_quantization_for_moe_large_la.md)
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
+
+<!-- RELATED:END -->

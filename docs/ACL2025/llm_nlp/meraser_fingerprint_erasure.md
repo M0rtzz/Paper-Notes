@@ -143,3 +143,15 @@ MEraser 在三种模型架构 × 三种指纹方法上的擦除效果（FSR: 指
 - **有效性**: ⭐⭐⭐⭐⭐ 9/9 场景 100% 擦除率，全面超越所有基线方法
 - **实用性**: ⭐⭐⭐⭐ 数据量少、流程简单、可迁移，但仅限后门型指纹
 - **研究价值**: ⭐⭐⭐⭐ 揭露指纹脆弱性的对偶安全研究，为更鲁棒的 IP 保护指明方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Psycho-Lexical Approach for Constructing Value Systems in Large Language Models](generative_psycholexical_approach_for_constructing_value.md)
+- [A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)
+- [How to Enable Effective Cooperation Between Humans and NLP Models: A Survey of Principles, Formalizations, and Beyond](human_nlp_cooperation_survey.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+
+<!-- RELATED:END -->

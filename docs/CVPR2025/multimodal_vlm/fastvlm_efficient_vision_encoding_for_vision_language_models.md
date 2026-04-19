@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 极其全面的对比实验，包括 vs ViT/ConvNeXt/token pruning、不同 LLM 规模、静态 vs 动态分辨率、数据规模消融
 - 写作质量: ⭐⭐⭐⭐ 实验组织清晰，帕累托分析图很有说服力，但方法部分偏简短
 - 价值: ⭐⭐⭐⭐⭐ 对移动端和实时 VLM 部署有直接工程价值，Apple 出品有落地可信度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Skip Tuning: Pre-trained Vision-Language Models are Effective and Efficient Adapters Themselves](skip_tuning_pre-trained_vision-language_models_are_effective_and_efficient_adapt.md)
+- [BRAVE: Broadening the Visual Encoding of Vision-Language Models](../../ECCV2024/multimodal_vlm/brave_broadening_the_visual_encoding_of_vision-language_models.md)
+- [NVILA: Efficient Frontier Visual Language Models](nvila_efficient_frontier_visual_language_models.md)
+- [ForensicZip: More Tokens are Better but Not Necessary in Forensic Vision-Language Models](forensiczip_more_tokens_are_better_but_not_necessary_in_forensic_vision-language.md)
+- [What's in the Image? A Deep-Dive into the Vision of Vision Language Models](whats_in_the_image_a_deep-dive_into_the_vision_of_vision_language_models.md)
+
+<!-- RELATED:END -->

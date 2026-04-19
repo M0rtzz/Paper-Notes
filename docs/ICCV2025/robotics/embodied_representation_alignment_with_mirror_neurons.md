@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 18个操作任务+动作识别评估+消融+表征可视化，但仅在模拟环境验证
 - 写作质量: ⭐⭐⭐⭐⭐ 从神经科学到方法设计的叙事流畅，图表设计精美
 - 价值: ⭐⭐⭐⭐ 提出了连接感知和行动的统一表征学习范式，对具身AI领域有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance](../../AAAI2026/robotics/to_align_or_not_to_align_strategic_multimodal_representation_alignment_for_optim.md)
+- [Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)
+- [EvolvingGrasp: Evolutionary Grasp Generation via Efficient Preference Alignment](evolvinggrasp_evolutionary_grasp_generation_via_efficient_preference_alignment.md)
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2025/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](../../CVPR2025/robotics/asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)
+
+<!-- RELATED:END -->

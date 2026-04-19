@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 基线验证了数据集可用性，但分析深度有限
 - 写作质量: ⭐⭐⭐⭐ 语言学背景充分，数据集构建过程透明
 - 价值: ⭐⭐⭐⭐⭐ 对低资源语言 NLP 有重要资源价值，推动包容性 AI 研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [Speaking Beyond Language: A Large-Scale Multimodal Dataset for Learning Nonverbal Cues from Video-Grounded Dialogues](speaking_beyond_language.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+- [iNews: A Multimodal Dataset for Modeling Personalized Affective Responses to News](inews_a_multimodal_dataset_for_modeling_personalized_affective_responses_to_news.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ ActINR 由两个网络组成。**Frame INR** 接收空间坐标 $(x,y)$，输出
 - 实验充分度: ⭐⭐⭐⭐ 覆盖四大任务+多数据集+充分消融，但缺少与扩散模型方法的对比
 - 写作质量: ⭐⭐⭐⭐⭐ 从直觉到理论到实验层层推进，玩具实验辅助理解效果极佳
 - 价值: ⭐⭐⭐⭐ 为视频INR开辟了新范式，去噪/修复+3-5dB提升有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Implicit Bias Injection Attacks against Text-to-Image Diffusion Models](implicit_bias_injection_attacks_against_text-to-image_diffusion_models.md)
+- [COSMO-INR: Complex Sinusoidal Modulation for Implicit Neural Representations](../../ICLR2026/image_generation/cosmo-inr_complex_sinusoidal_modulation_for_implicit_neural_representations.md)
+- [Dissecting and Mitigating Diffusion Bias via Mechanistic Interpretability](dissecting_and_mitigating_diffusion_bias_via_mechanistic_interpretability.md)
+- [How Bias Binds: Measuring Hidden Associations for Bias Control in Text-to-Image Compositions](../../AAAI2026/image_generation/how_bias_binds_measuring_hidden_associations_for_bias_control_in_text-to-image_c.md)
+- [FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models](../../NeurIPS2025/image_generation/fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐ (纯理论无实验)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，技术概览部分讲解透彻)
 - 价值: ⭐⭐⭐⭐ (理论上完全解决问题，技术手段有迁移潜力)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
+- [Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](../../NeurIPS2025/others/improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)
+- [Coresets for Clustering Under Stochastic Noise](../../NeurIPS2025/others/coresets_for_clustering_under_stochastic_noise.md)
+- [Improved Differentially Private Algorithms for Rank Aggregation](../../AAAI2026/others/improved_differentially_private_algorithms_for_rank_aggregation.md)
+- [Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting](../../NeurIPS2025/others/tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)
+
+<!-- RELATED:END -->

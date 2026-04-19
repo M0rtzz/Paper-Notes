@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个领域 + OOD 泛化验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰
 - 价值: ⭐⭐⭐⭐ 对 Agent 系统设计有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement](gödel_agent_a_self-referential_agent_framework_for_recursive_self-improvement.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](../../ICLR2026/llm_agent/simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
+- [Agentic Knowledgeable Self-Awareness](agentic_knowledgeable_self-awareness.md)
+- [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](meco_metacognition_tool_use.md)
+- [Play2Prompt: Zero-shot Tool Instruction Optimization for LLM Agents via Tool Play](play2prompt_zero-shot_tool_instruction_optimization_for_llm_agents_via_tool_play.md)
+
+<!-- RELATED:END -->

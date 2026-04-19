@@ -132,3 +132,15 @@ Pipeline:
 - 实验充分度: ⭐⭐⭐⭐⭐ 闭集+开集+跨域+消融+backbone对比+评估指标分析，非常完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机明确，但部分表格和公式排版可以更紧凑
 - 价值: ⭐⭐⭐⭐⭐ 开创了开放集单目3DOD新方向，提供了benchmark和评估指标，后续工作必引
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PandaPose: 3D Human Pose Lifting from a Single Image via Propagating 2D Pose Prior to 3D Anchor Space](../../NeurIPS2025/object_detection/pandapose_3d_human_pose_lifting_from_a_single_image_via_propagating_2d_pose_prio.md)
+- [ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition](viewsrd_3d_visual_grounding_via_structured_multi-view_decomposition.md)
+- [SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting](sketchsplat_3d_edge_reconstruction_via_differentiable_multi-view_sketch_splattin.md)
+- [VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions](voccl3d_a_video_benchmark_dataset_for_3d_human_pose_and_shape_estimation_under_r.md)
+- [OpenRSD: Towards Open-prompts for Object Detection in Remote Sensing Images](openrsd_towards_open-prompts_for_object_detection_in_remote_sensing_images.md)
+
+<!-- RELATED:END -->

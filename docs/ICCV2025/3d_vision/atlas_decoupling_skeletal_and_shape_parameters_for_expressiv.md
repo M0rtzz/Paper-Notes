@@ -147,3 +147,15 @@ ATLAS相比SKEL的核心优势：SKEL将SMPL的顶点形状空间映射到骨骼
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集定量对比、多维度消融（解耦/校正/拟合项）、定性可视化、运行时分析均非常充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述清晰，Figure 1/2的对比直观有力，数学表述严谨，补充材料详尽
 - 价值: ⭐⭐⭐⭐⭐ 作为SMPL-X的潜在替代，对3D人体理解/动画/VR/动捕等应用有广泛影响，60万扫描数据的规模优势难以复制
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [SceneMI: Motion In-betweening for Modeling Human-Scene Interactions](scenemi_motion_in-betweening_for_modeling_human-scene_interaction.md)
+- [LocalDyGS: Multi-view Global Dynamic Scene Modeling via Adaptive Local Implicit Feature Decoupling](localdygs_multi-view_global_dynamic_scene_modeling_via_adaptive_local_implicit_f.md)
+- [FaceLift: Learning Generalizable Single Image 3D Face Reconstruction from Synthetic Heads](facelift_learning_generalizable_single_image_3d_face_reconstruction_from_synthet.md)
+- [RobustSplat: Decoupling Densification and Dynamics for Transient-Free 3DGS](robustsplat_decoupling_densification_and_dynamics_for_transient-free_3dgs.md)
+
+<!-- RELATED:END -->

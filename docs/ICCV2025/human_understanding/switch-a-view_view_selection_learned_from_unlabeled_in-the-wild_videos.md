@@ -136,3 +136,15 @@ Switch-a-view 分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 消融完整，人类标注实验严谨，但绝对性能有限
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 对自动视频编辑领域有实际意义，但绝对性能还需提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+- [Multi-view Gaze Target Estimation](multi-view_gaze_target_estimation.md)
+- [Neural Multi-View Self-Calibrated Photometric Stereo without Photometric Stereo Cues](neural_multi-view_self-calibrated_photometric_stereo_without_photometric_stereo_.md)
+- [Monocular Facial Appearance Capture in the Wild](monocular_facial_appearance_capture_in_the_wild.md)
+- [Understanding Co-speech Gestures in-the-wild](understanding_co-speech_gestures_in-the-wild.md)
+
+<!-- RELATED:END -->

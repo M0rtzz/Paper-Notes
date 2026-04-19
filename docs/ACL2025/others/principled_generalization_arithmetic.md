@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 12种组合全面验证+多模型规模+多数据规模+鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，但公式较多，对非数学背景读者有门槛
 - 价值: ⭐⭐⭐⭐⭐ 对理解 Transformer 泛化本质有根本性贡献，认识论层面的范式转换
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Measuring the Effect of Transcription Noise on Downstream Language Understanding Tasks](measuring_the_effect_of_transcription_noise_on_downstream_language_understanding.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)
+- [AmbiK: Dataset of Ambiguous Tasks in Kitchen Environment](ambik_dataset_of_ambiguous_tasks_in_kitchen_environment.md)
+- [DeepRTL2: A Versatile Model for RTL-Related Tasks](deeprtl2_a_versatile_model_for_rtl-related_tasks.md)
+
+<!-- RELATED:END -->

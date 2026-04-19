@@ -157,3 +157,15 @@ $$Loss_{DM} = y \cdot \max(0, dis - m)^2 + (1-y) \cdot \max(0, n - dis)^2$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个多语言数据集+跨数据集迁移+详细消融+backbone对比+可视化分析
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，图示丰富直观
 - 价值: ⭐⭐⭐⭐ 在OSV任务上取得显著SOTA提升，且具有良好的可解释性和跨语言泛化能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Visual Composition through Improved Semantic Guidance](../../CVPR2025/interpretability/learning_visual_composition_through_improved_semantic_guidance.md)
+- [VIRO: Robust and Efficient Neuro-Symbolic Reasoning with Verification for Referring Expression Comprehension](../../CVPR2026/interpretability/viro_robust_and_efficient_neuro-symbolic_reasoning_with_verification_for_referri.md)
+- [Semantic Regexes: Auto-Interpreting LLM Features with a Structured Language](../../ICLR2026/interpretability/semantic_regexes_auto-interpreting_llm_features_with_a_structured_language.md)
+- [Adaptive Evidential Learning for Temporal-Semantic Robustness in Moment Retrieval](../../AAAI2026/interpretability/adaptive_evidential_learning_for_temporal-semantic_robustnes.md)
+- [Unsupervised Feature Selection Through Group Discovery](../../AAAI2026/interpretability/unsupervised_feature_selection_through_group_discovery.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ X-Transfer 在 OpenFlamingo-3B、LLaVA-7B、MiniGPT-4、BLIP2 等大型VLM上同
 ## 评分
 
 ⭐⭐⭐⭐ — 首次实现并系统验证了CLIP上的"超级迁移性"UAP，代理缩放策略设计精巧且高效。实验覆盖面广（多数据集、多模型、多任务），结果令人印象深刻。对理解CLIP在VLM生态中的安全风险有重要贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIP-Guided Generative Networks for Transferable Targeted Adversarial Attacks](../../ECCV2024/ai_safety/clip-guided_generative_networks_for_transferable_targeted_adversarial_attacks.md)
+- [Adversarial Inception Backdoor Attacks against Reinforcement Learning](adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [Understanding Model Ensemble in Transferable Adversarial Attack](understanding_model_ensemble_in_transferable_adversarial_attack.md)
+- [The Ripple Effect: On Unforeseen Complications of Backdoor Attacks](the_ripple_effect_on_unforeseen_complications_of_backdoor_attacks.md)
+- [ICLShield: Exploring and Mitigating In-Context Learning Backdoor Attacks](iclshield_exploring_and_mitigating_in-context_learning_backdoor_attacks.md)
+
+<!-- RELATED:END -->

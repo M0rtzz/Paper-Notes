@@ -145,3 +145,15 @@ $$z_{\text{tw}}^{(k)} = z_{\text{dc}}^{(k)} + (\sigma^{(k)})^2 s_\theta(z_{\text
 - **写作质量**: ⭐⭐⭐⭐ — 理论部分严谨清晰，但符号系统较重
 - **实用性**: ⭐⭐⭐☆ — 方法有效但计算开销限制了实际部署
 - **综合推荐**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+- [Trans-Adapter: A Plug-and-Play Framework for Transparent Image Inpainting](../../ICCV2025/image_generation/trans-adapter_a_plug-and-play_framework_for_transparent_image_inpainting.md)
+- [Decoupling Training-Free Guided Diffusion by ADMM](decoupling_training-free_guided_diffusion_by_admm.md)
+- [LEDiff: Latent Exposure Diffusion for HDR Generation](lediff_latent_exposure_diffusion_for_hdr_generation.md)
+- [Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
+
+<!-- RELATED:END -->

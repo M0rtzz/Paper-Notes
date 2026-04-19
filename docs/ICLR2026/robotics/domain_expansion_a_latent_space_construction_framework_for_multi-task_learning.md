@@ -121,3 +121,15 @@ Domain Expansion 是一个在训练过程中动态执行的三步框架，每个
 - 实验充分度: ⭐⭐⭐ 数据集规模偏小，缺乏大规模验证
 - 写作质量: ⭐⭐⭐⭐ 数学定义严谨，变形艺术类比直观
 - 价值: ⭐⭐⭐⭐ 为 MTL 的表征学习提供了新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](../../ICCV2025/robotics/resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)
+- [Efficient Robotic Policy Learning via Latent Space Backward Planning](../../ICML2025/robotics/efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+- [Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](../../ICCV2025/robotics/rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)
+- [Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective](../../ICCV2025/robotics/beyond_losses_reweighting_empowering_multi-task_learning_via_the_generalization_.md)
+
+<!-- RELATED:END -->

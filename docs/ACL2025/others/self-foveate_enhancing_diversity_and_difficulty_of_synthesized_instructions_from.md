@@ -150,3 +150,15 @@ $$\mathcal{D}_{\text{gen}} = \mathcal{F}(\mathcal{D}) = \bigcup_{d_i \in \mathca
 - **实验充分度**: ⭐⭐⭐⭐ 三个数据集、三个基座模型、多样性/难度/下游任务三维度评估、完整消融
 - **写作质量**: ⭐⭐⭐⭐ 图文并茂，方法描述清晰，类比恰当
 - **价值**: ⭐⭐⭐⭐ 为无监督指令合成提供了系统性的多粒度信息利用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing the Comprehensibility of Text Explanations via Unsupervised Concept Discovery](enhancing_the_comprehensibility_of_text_explanations_via_unsupervised_concept_di.md)
+- [STaR-SQL: Self-Taught Reasoner for Text-to-SQL](star-sql_self-taught_reasoner_for_text-to-sql.md)
+- [Predicting Implicit Arguments in Procedural Video Instructions](implicit_arguments_video_instructions.md)
+- [GETReason: Enhancing Image Context Extraction through Hierarchical Multi-Agent Reasoning](getreason_enhancing_image_context_extraction_through_hierarchical_multi-agent_re.md)
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+
+<!-- RELATED:END -->

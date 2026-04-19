@@ -132,3 +132,15 @@ Q/K/V 参数化方式对比（CLIP-L, avg pool）：
 - 实验充分度: ⭐⭐⭐ 任务覆盖视觉和语言，但序列长度太短，缺少长序列任务验证和误差棒
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，消融设计合理，但部分概念重复叙述略冗长
 - 价值: ⭐⭐⭐⭐ 为高效注意力设计提供了新思路，但causal场景的限制降低了对LLM的实际适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Strassen Attention, Split VC Dimension and Compositionality in Transformers](strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)
+- [Vision Transformers are Circulant Attention Learners](../../AAAI2026/llm_nlp/vision_transformers_are_circulant_attention_learners.md)
+- [msf-CNN: Patch-based Multi-Stage Fusion with Convolutional Neural Networks for TinyML](msf-cnn_patch-based_multi-stage_fusion_with_convolutional_neural_networks_for_ti.md)
+- [Linear Transformers Implicitly Discover Unified Numerical Algorithms](linear_transformers_implicitly_discover_unified_numerical_algorithms.md)
+- [Spectral Conditioning of Attention Improves Transformer Performance](spectral_conditioning_of_attention_improves_transformer_performance.md)
+
+<!-- RELATED:END -->

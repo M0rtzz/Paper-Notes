@@ -160,3 +160,15 @@ FD_DINOv2 显著优于 CTM（70.2 vs 157.7），说明 MAC 在感知质量上优
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 4 种框架、4 个数据集、多种消融，SOTA 结果有说服力
 - 写作质量: ⭐⭐⭐⭐ — 数学形式化清晰，符号统一，图示直观
 - 价值: ⭐⭐⭐⭐ — 即插即用特性和训练效率使其具有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Straighten Viscous Rectified Flow via Noise Optimization](../../ICCV2025/image_generation/straighten_viscous_rectified_flow_via_noise_optimization.md)
+- [GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](../../ICLR2026/image_generation/glass_flows_reward_alignment_diffusion.md)
+- [Integrating Intermediate Layer Optimization and Projected Gradient Descent for Solving Inverse Problems with Diffusion Models](integrating_intermediate_layer_optimization_and_projected_gradient_descent_for_s.md)
+- [GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer](../../NeurIPS2025/image_generation/guideflow3d_optimization-guided_rectified_flow_for_appearance_transfer.md)
+- [Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models](performance_plateaus_in_inference-time_scaling_for_text-to-image_diffusion_witho.md)
+
+<!-- RELATED:END -->

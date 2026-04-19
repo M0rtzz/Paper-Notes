@@ -130,3 +130,15 @@ Biogen 各子指标: HLM 33.7(vs 39.7), RLM 39.8(vs 48.4), ER 35.2(vs 39.2), 溶
 - 实验充分度: ⭐⭐⭐⭐⭐ 728个任务、9个数据集、20+基线、详尽消融和超参分析，极为充分
 - 写作质量: ⭐⭐⭐⭐ 方法部分数学化程度高，符号系统清晰，但整体篇幅偏长
 - 价值: ⭐⭐⭐⭐ 对药物发现中的分子表征学习有明确的实践意义，特别是在处理模态缺失场景下
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [Learning Domain-Aware Task Prompt Representations for Multi-Domain All-in-One Image Restoration](../../ICLR2026/medical_imaging/learning_domain-aware_task_prompt_representations_for_multi-domain_all-in-one_im.md)
+- [PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)
+- [Bridging Vision and Language for Robust Context-Aware Surgical Point Tracking: The VL-SurgPT Dataset and Benchmark](bridging_vision_and_language_for_robust_context-aware_surgical_point_tracking_th.md)
+- [Intervention Efficiency and Perturbation Validation Framework: Capacity-Aware and Robust Clinical Model Selection under the Rashomon Effect](intervention_efficiency_and_perturbation_validation_framework_capacity-aware_and.md)
+
+<!-- RELATED:END -->

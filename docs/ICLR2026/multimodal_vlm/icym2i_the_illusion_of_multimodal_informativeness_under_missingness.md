@@ -135,3 +135,15 @@ Observed 方法在 XOR 中严重高估 X2 的 AUC（0.80 vs 真实 0.49）和 Un
 - 实验充分度: ⭐⭐⭐ 实验较小规模，缺乏大型多模态 benchmark 上的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化严谨，动机示例（比特逻辑运算）直观有力
 - 价值: ⭐⭐⭐⭐ 对多模态学习的评估实践有重要指导意义，但需要更多实证支持
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BALM: A Model-Agnostic Framework for Balanced Multimodal Learning under Imbalanced Missing Rates](../../CVPR2026/multimodal_vlm/balm_a_model-agnostic_framework_for_balanced_multimodal_learning_under_imbalance.md)
+- [COUNTS: Benchmarking Object Detectors and Multimodal Large Language Models under Distribution Shifts](../../CVPR2025/multimodal_vlm/counts_benchmarking_object_detectors_and_multimodal_large_language_models_under_.md)
+- [Rethinking Visual Token Reduction in LVLMs under Cross-Modal Misalignment](../../AAAI2026/multimodal_vlm/rethinking_visual_token_reduction_in_lvlms_under_cross-modal_misalignment.md)
+- [The Illusion of Progress? A Critical Look at Test-Time Adaptation for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/the_illusion_of_progress_a_critical_look_at_testtime_adaptat.md)
+- [Mastering Collaborative Multi-modal Data Selection: A Focus on Informativeness, Uniqueness, and Representativeness](../../ICCV2025/multimodal_vlm/mastering_collaborative_multi-modal_data_selection_a_focus_on_informativeness_un.md)
+
+<!-- RELATED:END -->

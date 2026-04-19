@@ -169,3 +169,15 @@ MIMIC 在成功率和行为多样性（熵）上全面超越 SOTA BC 基线。
 - 实验充分度: ⭐⭐⭐⭐ 多环境多指标+消融+VLM/编码器对比，但环境复杂度有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，架构对应关系清晰，认知科学-ML桥接出色
 - 价值: ⭐⭐⭐⭐⭐ 为模仿学习引入全新范式，对人机协作和AI安全评估有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data](egobridge_domain_adaptation_for_generalizable_imitation_from_egocentric_human_da.md)
+- [Interactive and Hybrid Imitation Learning: Provably Beating Behavior Cloning](interactive_and_hybrid_imitation_learning_provably_beating_behavior_cloning.md)
+- [Quantifying Generalisation in Imitation Learning](quantifying_generalisation_in_imitation_learning.md)
+- [AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](../../ICLR2026/reinforcement_learning/autoqd_automatic_discovery_of_diverse_behaviors_with_quality-diversity_optimizat.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](real-world_reinforcement_learning_of_active_perception_behaviors.md)
+
+<!-- RELATED:END -->

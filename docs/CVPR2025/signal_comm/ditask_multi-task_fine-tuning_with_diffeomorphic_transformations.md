@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ PASCAL MTL 验证充分，但任务类型单一
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨
 - 价值: ⭐⭐⭐⭐ 为 MTL 微调提供了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+- [Tuning the Frequencies: Robust Training for Sinusoidal Neural Networks](tuning_the_frequencies_robust_training_for_sinusoidal_neural_networks.md)
+- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/signal_comm/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
+- [Continuous Space-Time Video Resampling with Invertible Motion Steganography](continuous_space-time_video_resampling_with_invertible_motion_steganography.md)
+- [ABC-Former: Auxiliary Bimodal Cross-domain Transformer with Interactive Channel Attention](abc-former_auxiliary_bimodal_cross-domain_transformer_with_interactive_channel_a.md)
+
+<!-- RELATED:END -->

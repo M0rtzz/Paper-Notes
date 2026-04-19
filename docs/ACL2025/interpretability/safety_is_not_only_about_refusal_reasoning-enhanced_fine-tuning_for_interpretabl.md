@@ -152,3 +152,15 @@ $$\max_\theta \sum_{(p,r) \in \mathcal{D}_{rationale}} \log P_\theta(r | p)$$
 - **实验充分度**: ★★★★★ — 覆盖 3 个安全基准 + 通用基准，攻击类型全面，消融深入
 - **写作质量**: ★★★★☆ — 动机清晰，认知心理学的引入增加了说服力
 - **价值**: ★★★★★ — 数据效率高、即插即用的安全增强方法，实践意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SafeDrive: Fine-Grained Safety Reasoning for End-to-End Driving in a Sparse World](../../CVPR2026/interpretability/safedrive_fine-grained_safety_reasoning_for_end-to-end_driving_in_a_sparse_world.md)
+- [SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](../../ICML2025/interpretability/safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)
+- [GAVEL: Towards Rule-Based Safety through Activation Monitoring](../../ICLR2026/interpretability/gavel_towards_rule-based_safety_through_activation_monitoring.md)
+- [IRT-Router: Effective and Interpretable Multi-LLM Routing via Item Response Theory](irt_router_multi_llm.md)
+- [Universal Safety Controllers with Learned Prophecies](../../AAAI2026/interpretability/universal_safety_controllers_with_learned_prophecies.md)
+
+<!-- RELATED:END -->

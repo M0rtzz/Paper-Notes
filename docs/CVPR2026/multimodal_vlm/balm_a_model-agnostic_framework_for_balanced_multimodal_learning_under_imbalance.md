@@ -133,3 +133,15 @@ BALM 由两个互补模块组成，插入到骨干网络的编码和优化过程
 - 实验充分度: ⭐⭐⭐⭐ 多个基准、多种骨干、多种 IMR 配置，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，IMR 的形式化定义有价值
 - 价值: ⭐⭐⭐⭐ 即插即用的模型无关框架，对实际部署有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Purify-then-Align: Towards Robust Human Sensing under Modality Missing with Knowledge Distillation from Noisy Multimodal Teacher](purify-then-align_towards_robust_human_sensing_under_modality_missing_with_knowl.md)
+- [Explore with Long-term Memory: A Benchmark and Multimodal LLM-based Reinforcement Learning Framework for Embodied Exploration](explore_with_long-term_memory_a_benchmark_and_multimodal_llm-based_reinforcement.md)
+- [MIDAS: Misalignment-based Data Augmentation Strategy for Imbalanced Multimodal Learning](../../NeurIPS2025/multimodal_vlm/midas_misalignment-based_data_augmentation_strategy_for_imbalanced_multimodal_le.md)
+- [HIVE: Query, Hypothesize, Verify — An LLM Framework for Multimodal Reasoning-Intensive Retrieval](hive_query_hypothesize_verify_an_llm_framework_for_multimodal_reasoning-intensiv.md)
+- [Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality](benchmarking_vision-language_models_under_contradictory_virtual_content_attacks_.md)
+
+<!-- RELATED:END -->

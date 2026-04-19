@@ -266,3 +266,15 @@ tags:
 - 实验充分度: ⭐⭐ 评测指标单一，缺少深度对比和人类评估
 - 写作质量: ⭐⭐⭐ 系统架构描述清晰，但技术深度偏浅
 - 价值: ⭐⭐⭐ 作为可交互 4D 系统 Demo 有应用展示价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeoVerse: Enhancing 4D World Model with in-the-wild Monocular Videos](../../CVPR2026/video_generation/neoverse_enhancing_4d_world_model_with_in-the-wild_monocular_videos.md)
+- [SeeU: Seeing the Unseen World via 4D Dynamics-aware Generation](../../CVPR2026/video_generation/seeu_seeing_the_unseen_world_via_4d_dynamics-aware_generation.md)
+- [MotionStream: Real-Time Video Generation with Interactive Motion Controls](../../ICLR2026/video_generation/motionstream_real-time_video_generation_with_interactive_motion_controls.md)
+- [RealCam-I2V: Real-World Image-to-Video Generation with Interactive Complex Camera Control](../../ICCV2025/video_generation/realcam-i2v_real-world_image-to-video_generation_with_interactive_complex_camera.md)
+- [SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation](../../CVPR2025/video_generation/saw_toward_a_surgical_action_world_model_via_controllable_and_scalable_video_gen.md)
+
+<!-- RELATED:END -->

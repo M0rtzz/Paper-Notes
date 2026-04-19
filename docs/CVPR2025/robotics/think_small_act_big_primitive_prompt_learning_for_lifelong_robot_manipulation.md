@@ -131,3 +131,15 @@ LIBERO 终身学习（7 个顺序任务）的前向/后向迁移：
 - 实验充分度: ⭐⭐⭐⭐ 仿真+真实世界、多基线对比、消融充分，但任务规模有限（最多 9 个技能）
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，可视化分析有说服力
 - 价值: ⭐⭐⭐⭐ 为机器人终身学习提供了轻量且有效的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](../../NeurIPS2025/robotics/understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+- [DRAE: Dynamic Retrieval-Augmented Expert Networks for Lifelong Learning and Task Adaptation in Robotics](../../ACL2025/robotics/drae_dynamic_retrieval-augmented_expert_networks_for_lifelong_learning_and_task_.md)
+- [A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](../../CVPR2026/robotics/learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](../../ICCV2025/robotics/moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
+
+<!-- RELATED:END -->

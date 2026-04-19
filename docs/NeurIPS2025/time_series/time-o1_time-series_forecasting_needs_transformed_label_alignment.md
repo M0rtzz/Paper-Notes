@@ -115,3 +115,15 @@ Time-o1 是模型无关的——可直接替换任意预测模型的训练损失
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8个数据集、多种基线模型、5个以上学习目标对比、消融详尽
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严密，动机阐述清楚
 - 价值: ⭐⭐⭐⭐⭐ — 模型无关的训练技巧，可直接应用于现有系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting](../../AAAI2026/time_series/revitalizing_canonical_pre-alignment_for_irregular_multivariate_time_series_fore.md)
+- [Selective Learning for Deep Time Series Forecasting](selective_learning_for_deep_time_series_forecasting.md)
+- [SEMPO: Lightweight Foundation Models for Time Series Forecasting](sempo_lightweight_foundation_models_for_time_series_forecasting.md)
+- [How Foundational are Foundation Models for Time Series Forecasting?](how_foundational_are_foundation_models_for_time_series_forecasting.md)
+- [TimePoint: Accelerated Time Series Alignment via Self-Supervised Keypoint and Descriptor Learning](../../ICML2025/time_series/timepoint_accelerated_time_series_alignment_via_self-supervised_keypoint_and_des.md)
+
+<!-- RELATED:END -->

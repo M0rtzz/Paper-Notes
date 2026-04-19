@@ -134,3 +134,15 @@ tags:
 position paper 视角新颖，六大不可靠性来源的分析有价值，但作为研究贡献较为有限——缺乏具体算法和定量验证，更多是对现有问题的文献综述和讨论。未来方向的提出也相对宽泛，可操作性有限。适合作为该领域的入门阅读和问题定义参考。
 
 值得注意的是，数据质量优先于数据规模的发现具有广泛适用性——Li et al. (2024d) 仅用 5% Alpaca 数据训练即超越全量数据，Lu et al. (2024) 用 6K 数据超越 50K 数据，这些发现对降低对齐成本有重要意义。本文最大的引领性贡献在于将"数据中心 AI"的理念系统性地引入对齐领域，为后续更具体的技术方案奠定了问题框架。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: The Complexity of Perfect AI Alignment -- Formalizing the RLHF Trilemma](../../NeurIPS2025/llm_alignment/position_the_complexity_of_perfect_ai_alignment_--_formalizing_the_rlhf_trilemma.md)
+- [Skywork-Reward-V2: Scaling Preference Data Curation via Human-AI Synergy](../../ICLR2026/llm_alignment/skywork-reward-v2_scaling_preference_data_curation_via_human-ai_synergy.md)
+- [LLMs Caught in the Crossfire: Malware Requests and Jailbreak Challenges](../../ACL2025/llm_alignment/llms_caught_in_the_crossfire_malware_requests_and_jailbreak_challenges.md)
+- [Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models](layer-wise_alignment_examining_safety_alignment_across_image_encoder_layers_in_v.md)
+- [On the Robustness of Reward Models for Language Model Alignment](on_the_robustness_of_reward_models_for_language_model_alignment.md)
+
+<!-- RELATED:END -->

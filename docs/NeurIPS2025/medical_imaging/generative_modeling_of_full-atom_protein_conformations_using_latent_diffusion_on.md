@@ -134,3 +134,15 @@ $$H^{(l+1)} = \sigma\left(\sum_{k=0}^{K-1} \Theta_k^{(l)} T_k(\tilde{L}) H^{(l)}
 ⭐⭐⭐⭐ (4/5)
 
 填补了全原子蛋白质构象生成的重要空白。框架设计合理，三种池化策略的系统比较提供了有价值的设计指导。主要不足是碰撞问题、单系统验证和多epoch采样需求。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
+- [Towards Multiscale Graph-based Protein Learning with Geometric Secondary Structural Motifs](towards_multiscale_graph-based_protein_learning_with_geometric_secondary_structu.md)
+- [Generative Distribution Embeddings: Lifting Autoencoders to the Space of Distributions for Multiscale Representation Learning](generative_distribution_embeddings_lifting_autoencoders_to_the_space_of_distribu.md)
+- [Geometric Generative Modeling with Noise-Conditioned Graph Networks](../../ICML2025/medical_imaging/geometric_generative_modeling_with_noise-conditioned_graph_networks.md)
+- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
+
+<!-- RELATED:END -->

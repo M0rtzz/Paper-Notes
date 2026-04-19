@@ -163,3 +163,15 @@ $$T_t = o_t \cdot (T_{grasp}^{-1} \cdot o_{grasp})^{-1}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三种灵巧手、三种场景、多个 baseline、完整消融、真实机器人验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，模块化表述便于理解，但部分公式符号较密集
 - 价值: ⭐⭐⭐⭐ — 提供了实用的灵巧操作数据生成方案，对数据驱动的机器人操作研究有直接推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](../../CVPR2025/human_understanding/maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
+- [OPERA: A Reinforcement Learning--Enhanced Orchestrated Planner-Executor Architecture for Reasoning-Oriented Multi-Hop Retrieval](opera_a_reinforcement_learning--enhanced_orchestrated_planner-executor_architect.md)
+- [RENEW: Risk- and Energy-Aware Navigation in Dynamic Waterways](renew_risk-_and_energy-aware_navigation_in_dynamic_waterways.md)
+- [UniFit: Towards Universal Virtual Try-on with MLLM-Guided Semantic Alignment](unifit_towards_universal_virtual_try-on_with_mllm-guided_semantic_alignment.md)
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](../../ICLR2026/human_understanding/rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+
+<!-- RELATED:END -->

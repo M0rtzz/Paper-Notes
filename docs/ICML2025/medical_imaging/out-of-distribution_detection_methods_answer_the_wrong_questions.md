@@ -124,3 +124,15 @@ $$\mathcal{L} = \mathbb{E}_{(x,y)\sim\mathcal{D}_{in}} \ell_{CE}(f(x), y) + \alp
 - 实验充分度: ⭐⭐⭐⭐⭐（54个模型/9架构/6预训练/多数据集）
 - 写作质量: ⭐⭐⭐⭐⭐（逻辑清晰，论证层层递进）
 - 价值: ⭐⭐⭐⭐（分析深刻但缺乏建设性方案）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Invisible Gorilla Effect in Out-of-distribution Detection](../../CVPR2026/medical_imaging/the_invisible_gorilla_effect_in_out-of-distribution_detection.md)
+- [DIsoN: Decentralized Isolation Networks for Out-of-Distribution Detection in Medical Imaging](../../NeurIPS2025/medical_imaging/dison_decentralized_isolation_networks_for_out-of-distribution_detection_in_medi.md)
+- [Neural Stochastic Differential Equations on Compact State Spaces: Theory, Methods and Applications](neural_stochastic_differential_equations_on_compact_state_spaces_theory_methods_.md)
+- [iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
+- [MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks](../../NeurIPS2025/medical_imaging/medagentboard_benchmarking_multi-agent_collaboration_with_conventional_methods_f.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ $$\ell(\boldsymbol{x}_i) = \|\boldsymbol{x} - f_c(\boldsymbol{x}_i)\|_2^2 + \tex
 - 技术深度：⭐⭐⭐⭐ — 结构嵌入、Structure-Aware RoPE 设计精巧
 - 实验完整性：⭐⭐⭐⭐ — 全面对比和清晰的缩放分析
 - 实用价值：⭐⭐⭐⭐ — 提供了新的图像生成范式和结构控制能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pyramidal Patchification Flow for Visual Generation](pyramidal_patchification_flow_for_visual_generation.md)
+- [AS-Bridge: A Bidirectional Generative Framework Bridging Next-Generation Astronomical Surveys](../../CVPR2026/image_generation/asbridge_a_bidirectional_generative_framework_brid.md)
+- [SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
+- [Randomized Autoregressive Visual Generation](../../ICCV2025/image_generation/randomized_autoregressive_visual_generation.md)
+- [K-Sort Eval: Efficient Preference Evaluation for Visual Generation via Corrected VLM-as-a-Judge](k-sort_eval_efficient_preference_evaluation_for_visual_generation_via_corrected_.md)
+
+<!-- RELATED:END -->

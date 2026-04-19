@@ -134,3 +134,15 @@ FCMR 的动机就是解决这两个痛点：用金融领域数据避免污染，
 - **实验充分度**: ⭐⭐⭐⭐⭐ 模型覆盖全面，分析维度丰富（模态级、阶段级、错误分类、图表类型），人工分析深入
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，图表设计精美，分析层层递进
 - **价值**: ⭐⭐⭐⭐ 为 MLLM 多模态推理能力提供了一个高质量的测试平台，揭示了重要的能力缺陷
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InspireDebate: Multi-Dimensional Evaluation-Guided Reasoning for Debating](inspiredebate_multidim_evaluation_debating.md)
+- [Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)
+- [Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
+- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
+- [AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning](aide_attribute-guided_multi-hop_data_expansion_for_data_scarcity_in_task-specifi.md)
+
+<!-- RELATED:END -->

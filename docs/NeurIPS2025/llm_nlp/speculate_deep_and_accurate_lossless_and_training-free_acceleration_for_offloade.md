@@ -133,3 +133,15 @@ SubSpec 完全不需要任何训练——这是其最核心的实用优势。所
 - 实验充分度: ⭐⭐⭐⭐ 多模型多基准测试，消融完整，但模型家族覆盖可以更广
 - 写作质量: ⭐⭐⭐⭐ 动机清晰方法简洁
 - 价值: ⭐⭐⭐⭐⭐ 实际部署价值极高，零训练+无损+高加速的组合非常有吸引力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](../../ACL2025/llm_nlp/token_prepending_training_free.md)
+- [Training-free LLM Merging for Multi-task Learning](../../ACL2025/llm_nlp/training-free_llm_merging_for_multi-task_learning.md)
+- [Deep Learning for Continuous-Time Stochastic Control with Jumps](deep_learning_for_continuous-time_stochastic_control_with_jumps.md)
+- [A Training-free LLM-based Approach to General Chinese Character Error Correction](../../ACL2025/llm_nlp/a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+- [Don't Be Lazy: CompleteP Enables Compute-Efficient Deep Transformers](dont_be_lazy_completep_enables_compute-efficient_deep_transformers.md)
+
+<!-- RELATED:END -->

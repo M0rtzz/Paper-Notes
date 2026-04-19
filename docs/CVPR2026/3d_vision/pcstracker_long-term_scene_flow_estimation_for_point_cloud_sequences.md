@@ -146,3 +146,15 @@ ADT3D 数据集（真实世界）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集（合成+真实）、多维度消融、时序漂移分析、效率对比，非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，方法层次分明，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 开创性工作+数据集贡献+实时运行，对3D运动分析领域有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LTGS: Long-Term Gaussian Scene Chronology From Sparse View Updates](ltgs_long-term_gaussian_scene_chronology_from_sparse_view_updates.md)
+- [MAGICIAN: Efficient Long-Term Planning with Imagined Gaussians for Active Mapping](magician_efficient_long-term_planning_with_imagined_gaussians_for_active_mapping.md)
+- [Neu-PiG: Neural Preconditioned Grids for Fast Dynamic Surface Reconstruction on Long Sequences](neu-pig_neural_preconditioned_grids_for_fast_dynamic_surface_reconstruction_on_l.md)
+- [Rectified Point Flow: Generic Point Cloud Pose Estimation](../../NeurIPS2025/3d_vision/rectified_point_flow_generic_point_cloud_pose_estimation.md)
+- [milliFlow: Scene Flow Estimation on mmWave Radar Point Cloud for Human Motion Sensing](../../ECCV2024/3d_vision/milliflow_scene_flow_estimation_on_mmwave_radar_point_cloud_for_human_motion_sen.md)
+
+<!-- RELATED:END -->

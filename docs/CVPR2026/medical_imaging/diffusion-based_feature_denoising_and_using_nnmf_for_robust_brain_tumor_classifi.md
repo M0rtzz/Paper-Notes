@@ -134,3 +134,15 @@ tags:
 4. **扩散步数为固定超参数**：$t=41$ 步的选择缺乏系统消融，不同攻击强度可能需要不同的噪声注入量
 5. **仅评估 $L_\infty$ 攻击**：未考虑 $L_2$、$L_1$ 或更高级的攻击方式（如 C&W attack），防御的泛化鲁棒性未充分验证
 6. **去噪器结构简单**：使用基础回归网络，未探索更强的去噪架构（如 U-Net 风格或 Transformer-based），可能限制了恢复质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiationinduced_cont.md)
+- [PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation](pgr-net_prior-guided_roi_reasoning_network_for_brain_tumor_mri_segmentation.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modalityspecific_encoders_and_partially.md)
+- [CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration](crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr.md)
+- [Robust Multi-Source Covid-19 Detection in CT Images](robust_multi-source_covid-19_detection_in_ct_images.md)
+
+<!-- RELATED:END -->

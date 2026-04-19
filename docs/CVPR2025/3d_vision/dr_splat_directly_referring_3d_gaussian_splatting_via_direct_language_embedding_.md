@@ -114,3 +114,15 @@ Dr. Splat 在不需逐场景优化的前提下超越 OpenGaussian。
 - 实验充分度: ⭐⭐⭐⭐ 三个任务×两个数据集，消融覆盖PQ和Top-k关键参数
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，数学符号规范，图示直观展示嵌入失真
 - 价值: ⭐⭐⭐⭐ 显著降低了开放词汇3D理解的使用门槛（无需逐场景训练，10分钟完成）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReferSplat: Referring Segmentation in 3D Gaussian Splatting](../../ICML2025/3d_vision/refersplat_referring_segmentation_in_3d_gaussian_splatting.md)
+- [Online Language Splatting](../../ICCV2025/3d_vision/online_language_splatting.md)
+- [Per-Gaussian Embedding-Based Deformation for Deformable 3D Gaussian Splatting](../../ECCV2024/3d_vision/per-gaussian_embedding-based_deformation_for_deformable_3d_gaussian_splatting.md)
+- [CLIP-GS: Unifying Vision-Language Representation with 3D Gaussian Splatting](../../ICCV2025/3d_vision/clip-gs_unifying_vision-language_representation_with_3d_gaussian_splatting.md)
+- [LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting](../../ICML2025/3d_vision/tackling_view-dependent_semantics_in_3d_language_gaussian_splatting.md)
+
+<!-- RELATED:END -->

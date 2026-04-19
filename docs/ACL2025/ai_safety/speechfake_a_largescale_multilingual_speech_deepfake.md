@@ -105,3 +105,15 @@ tags:
 | 实验充分性 | 4 |
 | 写作质量 | 4 |
 | 总评 | 4.0 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ferret: Federated Full-Parameter Tuning at Scale for Large Language Models](../../ICML2025/ai_safety/ferret_federated_full-parameter_tuning_at_scale_for_large_language_models.md)
+- [Towards Fairness Assessment of Dutch Hate Speech Detection](towards_fairness_assessment_of_dutch_hate_speech_detection.md)
+- [SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](../../NeurIPS2025/ai_safety/saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
+- [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming](../../NeurIPS2025/ai_safety/cpret_a_dataset_benchmark_and_model_for_retrieval_in_competitive_programming.md)
+
+<!-- RELATED:END -->

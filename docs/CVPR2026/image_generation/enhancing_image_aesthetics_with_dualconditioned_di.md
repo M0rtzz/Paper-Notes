@@ -123,3 +123,15 @@ DIAE提出多模态美学感知（MAP）模块将模糊的美学指令转为HSV+
 - 实验充分度: ⭐⭐⭐ 缺少用户研究，CLIP-I不能完全反映人类感知的内容一致性，消融不够深入
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，动机推导流畅，图表丰富
 - 价值: ⭐⭐⭐⭐ 美学增强是实际有需求的任务，弱监督数据构建思路有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [LumiCtrl: Learning Illuminant Prompts for Lighting Control in Personalized Text-to-Image Models](lumictrl_learning_illuminant_prompts_for_lighting_control_in_personalized_text-t.md)
+- [Prototype-Guided Concept Erasure in Diffusion Models](prototype-guided_concept_erasure_in_diffusion_models.md)
+- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
+- [Learnability-Guided Diffusion for Dataset Distillation](learnability-guided_diffusion_for_dataset_distillation.md)
+
+<!-- RELATED:END -->

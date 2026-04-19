@@ -145,3 +145,15 @@ $$m'^{(l)} = \sum_{j=1}^N \bar{w}_j^{(l)} m_j^{(l)} - \eta \nabla_{m'^{(l)}} \le
 - 底层 LLM 仅用 Llama-3.2-1B/3B，性能天花板较低；论文未讨论与更大模型的组合效果
 - 精炼率 $\alpha$ 需手动设定且 $\alpha \geq 0.5$ 才有效，自适应调节机制缺失
 - 多智能体等高度非平稳环境下，世界模型的预测准确性可能快速退化，论文仅在单智能体场景验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
+- [ExoPredicator: Learning Abstract Models of Dynamic Worlds for Robot Planning](exopredicator_learning_abstract_models_of_dynamic_worlds_for_robot_planning.md)
+- [REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?](rei-bench_can_embodied_agents_understand_vague_human_instructions_in_task_planni.md)
+- [FOUNDER: Grounding Foundation Models in World Models for Open-Ended Embodied Decision Making](../../ICML2025/robotics/founder_grounding_foundation_models_in_world_models_for_open-ended_embodied_deci.md)
+- [Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+
+<!-- RELATED:END -->

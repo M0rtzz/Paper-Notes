@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多模型多语言多任务，逃逸策略分析详尽，但缺少理论推导
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，图表直观，但部分notation稍显冗余
 - 价值: ⭐⭐⭐⭐ 对理解LLM迭代生成的局限性有重要启示，对数据增强等应用有实际指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Empirical Study of Many-to-Many Summarization with Large Language Models](an_empirical_study_of_manytomany_summarization.md)
+- [Theme-Explanation Structure for Table Summarization Using Large Language Models](theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+- [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](dehumanizing_machines_anthropomorphic.md)
+- [Tell, Don't Show: Leveraging Language Models' Abstractive Retellings to Model Literary Themes](tell_dont_show_leveraging_language_models_abstractive_retellings_to_model_litera.md)
+- [Dense Match Summarization for Faster Two-view Estimation](../../CVPR2025/nlp_generation/dense_match_summarization_for_faster_two-view_estimation.md)
+
+<!-- RELATED:END -->

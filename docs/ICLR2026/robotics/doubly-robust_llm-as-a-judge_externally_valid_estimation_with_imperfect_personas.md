@@ -133,3 +133,15 @@ $$\beta_0 = \arg\min_\beta \{\mathbb{E}_s[C \cdot \beta(W^s)^2] - 2\mathbb{E}_t[
 - 实验充分度: ⭐⭐⭐⭐ — PSF 框架设计精巧，合成与半合成实验互补，但真实人工评分规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论展开清晰，问题动机阐述充分，实验可视化直观
 - 价值: ⭐⭐⭐⭐ — 为 GenAI 评估提供了理论严谨的偏差修正工具，有明确的实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Experience-based Knowledge Correction for Robust Planning in Minecraft](experience-based_knowledge_correction_for_robust_planning_in_minecraft.md)
+- [On Entropy Control in LLM-RL Algorithms](on_entropy_control_in_llm-rl_algorithms.md)
+- [Capability-Based Scaling Trends for LLM-Based Red-Teaming](capability-based_scaling_trends_for_llm-based_red-teaming.md)
+- [ODESteer: A Unified ODE-Based Steering Framework for LLM Alignment](odesteer_a_unified_ode-based_steering_framework_for_llm_alignment.md)
+- [TouchFormer: A Robust Transformer-based Framework for Multimodal Material Perception](../../AAAI2026/robotics/touchformer_a_robust_transformer-based_framework_for_multimodal_material_percept.md)
+
+<!-- RELATED:END -->

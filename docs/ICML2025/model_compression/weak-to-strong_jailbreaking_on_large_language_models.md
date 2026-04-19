@@ -165,3 +165,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个模型、3 个组织、2 个数据集、完整消融、对比防御
 - 写作质量: ⭐⭐⭐⭐ 洞察解释清晰，流水线简洁明了
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全社区有重大警示价值，推动更强防御研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Persistent Topological Features in Large Language Models](persistent_topological_features_in_large_language_models.md)
+- [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
+- [Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing](../../NeurIPS2025/model_compression/synergy_between_the_strong_and_the_weak_spiking_neural_networks_are_inherently_s.md)
+- [From Language Models over Tokens to Language Models over Characters](from_language_models_over_tokens_to_language_models_over_characters.md)
+- [Instruction-Following Pruning for Large Language Models](instruction-following_pruning_for_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ $$\mathcal{L}_{\text{VITAL}}(x^*, \mathcal{X}_{ref}) = \mathcal{L}_{\text{SM}}(x
 - **实验充分度**: ⭐⭐⭐⭐⭐ 五种架构、多种定量指标、两项人类用户研究
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，方法阐述严谨，图示丰富
 - **价值**: ⭐⭐⭐⭐⭐ 对可解释AI社区有重要影响，开辟了特征可视化的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distribution-Based Feature Attribution for Explaining the Predictions of Any Classifier](../../AAAI2026/interpretability/distribution-based_feature_attribution_for_explaining_the_predictions_of_any_cla.md)
+- [Unsupervised Feature Selection Through Group Discovery](../../AAAI2026/interpretability/unsupervised_feature_selection_through_group_discovery.md)
+- [ArgoTweak: Towards Self-Updating HD Maps through Structured Priors](argotweak_towards_self-updating_hd_maps_through_structured_priors.md)
+- [Out of Control -- Why Alignment Needs Formal Control Theory (and an Alignment Control Stack)](../../NeurIPS2025/interpretability/out_of_control_--_why_alignment_needs_formal_control_theory_and_an_alignment_con.md)
+- [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](../../NeurIPS2025/interpretability/a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)
+
+<!-- RELATED:END -->

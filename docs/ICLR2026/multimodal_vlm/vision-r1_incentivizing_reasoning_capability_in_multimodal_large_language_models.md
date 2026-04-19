@@ -135,3 +135,15 @@ Vision-R1-7B vs 基座Qwen2.5-VL-7B：GEO +13.4, ALG +10.3, GPS +16.4, MathVista
 - 实验充分度: ⭐⭐⭐⭐⭐ 多基准(MathVista/MathVerse/MM-Math/DynaMath)、多规模(7B/32B/72B)、丰富消融
 - 写作质量: ⭐⭐⭐⭐ 论述流畅，问题驱动的叙事结构好，但部分符号较密
 - 价值: ⭐⭐⭐⭐⭐ 7B参数达到O1水平的多模态推理能力，对社区有重大启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Shuffle-R1: Efficient RL Framework for Multimodal Large Language Models via Data-centric Dynamic Shuffle](shuffle-r1_efficient_rl_framework_for_multimodal_large_language_models_via_data-.md)
+- [DIVA-GRPO: Enhancing Multimodal Reasoning through Difficulty-Adaptive Variant Advantage](diva-grpo_enhancing_multimodal_reasoning_through_difficulty-adaptive_variant_adv.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [SophiaVL-R1: Reinforcing MLLMs Reasoning with Thinking Reward](sophiavl-r1_reinforcing_mllms_reasoning_with_thinking_reward.md)
+- [Topo-R1: Detecting Topological Anomalies via Vision-Language Models](../../CVPR2025/multimodal_vlm/topo-r1_detecting_topological_anomalies_via_vision-language_models.md)
+
+<!-- RELATED:END -->

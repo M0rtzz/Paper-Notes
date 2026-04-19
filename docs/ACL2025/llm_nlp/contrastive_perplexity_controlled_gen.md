@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 白盒/黑盒、多模型、消融、下游任务、多样性、嵌入空间可视化都做了
 - 写作质量: ⭐⭐⭐⭐ 清晰有条理，Rumi 引言有趣但略冗余
 - 价值: ⭐⭐⭐⭐ 实用性强，训练高效，黑盒模式应用价值大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Length Controlled Generation for Black-box LLMs](length_controlled_generation_for_black-box_llms.md)
+- [Segment-Level Diffusion: A Framework for Controllable Long-Form Generation with Diffusion Language Models](segment_level_diffusion.md)
+- [Genetic Instruct: Scaling up Synthetic Generation of Coding Instructions for Large Language Models](genetic_instruct_scaling_up_synthetic_generation_of_coding_instructions_for_larg.md)
+- [Dynamic Knowledge Integration for Evidence-Driven Counter-Argument Generation with Large Language Models](dynamic_knowledge_integration_for_evidence-driven_counter-argument_generation_wi.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](cadllm_cad_modeling_from_text.md)
+
+<!-- RELATED:END -->

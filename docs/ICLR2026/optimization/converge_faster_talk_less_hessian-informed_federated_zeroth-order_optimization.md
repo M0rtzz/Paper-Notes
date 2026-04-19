@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种 OPT 规模 × 三个任务的完整网格，与一阶和 ZO 基线全面对比，但缺少生成式任务验证
 - 写作质量: ⭐⭐⭐⭐ 框架推导和理论分析清晰，从子问题到算法到理论的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 对通信受限的联邦 LLM 微调有直接实用价值，通用框架打开了后续研究空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving the Straight-Through Estimator with Zeroth-Order Information](../../NeurIPS2025/optimization/improving_the_straight-through_estimator_with_zeroth-order_information.md)
+- [FedPM: Federated Learning Using Second-order Optimization with Preconditioned Mixing of Local Parameters](../../AAAI2026/optimization/fedpm_federated_learning_using_second-order_optimization_with_preconditioned_mix.md)
+- [Faster Gradient Methods for Highly-Smooth Stochastic Bilevel Optimization](faster_gradient_methods_for_highly-smooth_stochastic_bilevel_optimization.md)
+- [Second-Order Optimization Under Heavy-Tailed Noise: Hessian Clipping and Sample Complexity](../../NeurIPS2025/optimization/second-order_optimization_under_heavy-tailed_noise_hessian_clipping_and_sample_c.md)
+- [Multiplayer Federated Learning: Reaching Equilibrium with Less Communication](../../NeurIPS2025/optimization/multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)
+
+<!-- RELATED:END -->

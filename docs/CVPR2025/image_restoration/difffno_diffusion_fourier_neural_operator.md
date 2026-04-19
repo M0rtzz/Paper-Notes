@@ -47,3 +47,15 @@
 - 实验充分度: ⭐⭐⭐⭐ 多尺度+多编码器+消融
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 任意尺度超分的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gyro-based Neural Single Image Deblurring](gyro-based_neural_single_image_deblurring.md)
+- [DiffusionBlocks: Block-wise Neural Network Training via Diffusion Interpretation](../../ICLR2026/image_restoration/diffusionblocks_block-wise_neural_network_training_via_diffusion_interpretation.md)
+- [Adaptive Selection of Sampling-Reconstruction in Fourier Compressed Sensing](../../ECCV2024/image_restoration/adaptive_selection_of_samplingreconstruction_in_fourier_comp.md)
+- [The Surprising Effectiveness of Noise Pretraining for Implicit Neural Representations](../../CVPR2026/image_restoration/the_surprising_effectiveness_of_noise_pretraining_for_implicit_neural_representa.md)
+- [Efficient Diffusion as Low Light Enhancer (ReDDiT)](efficient_diffusion_as_low_light_enhancer.md)
+
+<!-- RELATED:END -->

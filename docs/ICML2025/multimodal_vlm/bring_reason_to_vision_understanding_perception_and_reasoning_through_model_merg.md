@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多VLM、多LLM、层级消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，分析深入
 - 价值: ⭐⭐⭐⭐⭐ 实用且有洞察力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transferring Textual Preferences to Vision-Language Understanding through Model Merging](../../ACL2025/multimodal_vlm/transferring_textual_preferences_to_vision-language_understanding_through_model_.md)
+- [RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video](../../NeurIPS2025/multimodal_vlm/rtv-bench_benchmarking_mllm_continuous_perception_understanding_and_reasoning_th.md)
+- [Defending LVLMs Against Vision Attacks through Partial-Perception Supervision](defending_lvlms_against_vision_attacks_through_partial-perception_supervision.md)
+- [MODA: MOdular Duplex Attention for Multimodal Perception, Cognition, and Emotion Understanding](moda_modular_duplex_attention_for_multimodal_perception_cognition_and_emotion_un.md)
+- [Enhancing Target-unspecific Tasks through a Features Matrix](enhancing_target-unspecific_tasks_through_a_features_matrix.md)
+
+<!-- RELATED:END -->

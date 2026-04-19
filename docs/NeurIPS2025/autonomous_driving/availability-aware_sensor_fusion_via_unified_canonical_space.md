@@ -121,3 +121,15 @@ K-Radar 数据集 3D 物体检测（IoU=0.5）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 全组合测试+恶劣天气+效率分析+可视化
 - 写作质量: ⭐⭐⭐⭐ 清晰，t-SNE 可视化很有说服力
 - 价值: ⭐⭐⭐⭐⭐ 对自动驾驶传感器鲁棒性有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Layer-wise Modality Decomposition for Interpretable Multimodal Sensor Fusion](layer-wise_modality_decomposition_for_interpretable_multimodal_sensor_fusion.md)
+- [Self-Supervised Sparse Sensor Fusion for Long Range Perception](../../ICCV2025/autonomous_driving/self-supervised_sparse_sensor_fusion_for_long_range_perception.md)
+- [UniMotion: A Unified Motion Framework for Simulation, Prediction and Planning](unimotion_a_unified_motion_framework_for_simulation_prediction_and_planning.md)
+- [x2-Fusion: Cross-Modality and Cross-Dimension Flow Estimation in Event Edge Space](../../CVPR2026/autonomous_driving/x2-fusion_cross-modality_and_cross-dimension_flow_estimation_in_event_edge_space.md)
+- [CAWM-Mamba: A Unified Model for Infrared-Visible Image Fusion and Compound Adverse Weather Restoration](../../CVPR2025/autonomous_driving/cawm-mamba_a_unified_model_for_infrared-visible_image_fusion_and_compound_advers.md)
+
+<!-- RELATED:END -->

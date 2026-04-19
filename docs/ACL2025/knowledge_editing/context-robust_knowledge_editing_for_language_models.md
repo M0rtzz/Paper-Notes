@@ -118,3 +118,15 @@ tags:
 - 实验充分性: ⭐⭐⭐⭐ (多方法比较、消融完整)
 - 实用价值: ⭐⭐⭐⭐⭐ (CHED 基准 + CoRE 方法均可直接使用)
 - 总体推荐: ⭐⭐⭐⭐ (知识编辑评估方向的重要推进)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structure-aware Domain Knowledge Injection for Large Language Models](structure-aware_domain_knowledge_injection_for_large_language_models.md)
+- [MEGen: Generative Backdoor into Large Language Models via Model Editing](megen_generative_backdoor_into_large_language_models_via_model_editing.md)
+- [BMIKE-53: Investigating Cross-Lingual Knowledge Editing with In-Context Learning](bmike-53_investigating_cross-lingual_knowledge_editing_with_in-context_learning.md)
+- [Neuron-Level Sequential Editing for Large Language Models](neuron-level_sequential_editing_for_large_language_models.md)
+- [UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models](../../NeurIPS2025/knowledge_editing/uniedit_a_unified_knowledge_editing_benchmark_for_large_language_models.md)
+
+<!-- RELATED:END -->

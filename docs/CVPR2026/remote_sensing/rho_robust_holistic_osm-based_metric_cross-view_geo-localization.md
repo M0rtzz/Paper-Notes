@@ -151,3 +151,15 @@ RHO在匹配训测条件下几乎不退化，PR@1m甚至略有提升。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多条件、多设置、跨区域、Sim2Real实验全面覆盖
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 数据集和鲁棒性分析对社区有较大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations](../../ECCV2024/remote_sensing/congeo_robust_cross-view_geo-localization_across_ground_view_variations.md)
+- [UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization](../../AAAI2026/remote_sensing/uniabg_unified_adversarial_view_bridging_and_graph_correspondence_for_unsupervis.md)
+- [GeoFlow: Real-Time Fine-Grained Cross-View Geolocalization via Iterative Flow Prediction](geoflow_real-time_fine-grained_cross-view_geolocalization_via_iterative_flow_pre.md)
+- [Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](../../ICCV2025/remote_sensing/geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+
+<!-- RELATED:END -->

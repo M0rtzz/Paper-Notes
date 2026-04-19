@@ -118,3 +118,15 @@ Time-MQA学习函数 f:(X, C, Q) → A：
 - **实验充分度**: ⭐⭐⭐ — 多模型对比+用户研究，但每任务仅50条评测样本略显不足
 - **写作质量**: ⭐⭐⭐⭐ — 框架和数据集描述清晰，图示丰富
 - **价值**: ⭐⭐⭐⭐ — 数据集贡献最有价值，是时序+LLM研究的重要资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context-Aware Sentiment Forecasting via LLM-based Multi-Perspective Role-Playing Agents](context_aware_sentiment_forecasting_agents.md)
+- [SwiftTS: A Swift Selection Framework for Time Series Pre-trained Models via Multi-task Meta-Learning](../../ICLR2026/time_series/swiftts_a_swift_selection_framework_for_time_series_pre-trained_models_via_multi.md)
+- [LETS-C: Leveraging Text Embedding for Time Series Classification](lets-c_leveraging_text_embedding_for_time_series_classification.md)
+- [FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](../../AAAI2026/time_series/freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [M2FMoE: Multi-Resolution Multi-View Frequency Mixture-of-Experts for Extreme-Adaptive Time Series Forecasting](../../AAAI2026/time_series/m2fmoe_multi-resolution_multi-view_frequency_mixture-of-experts_for_extreme-adap.md)
+
+<!-- RELATED:END -->

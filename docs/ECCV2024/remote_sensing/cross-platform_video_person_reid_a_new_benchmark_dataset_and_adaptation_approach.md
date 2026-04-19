@@ -167,3 +167,15 @@ $$\mathcal{L}_{stage2} = \mathcal{L}_{v2sce} + \beta\mathcal{L}_{tri} + \gamma\m
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集全面验证，消融充分，SOTA在所有数据集上
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，逻辑流畅
 - 价值: ⭐⭐⭐⭐ 数据集和方法对跨平台ReID领域有推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](../../CVPR2026/remote_sensing/cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
+- [Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
+- [ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations](congeo_robust_cross-view_geo-localization_across_ground_view_variations.md)
+- [CityNav: A Large-Scale Dataset for Real-World Aerial Navigation](../../ICCV2025/remote_sensing/citynav_a_large-scale_dataset_for_real-world_aerial_navigation.md)
+- [No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors](../../CVPR2026/remote_sensing/no_labels_no_look-ahead_unsupervised_online_video_stabilization_with_classical_p.md)
+
+<!-- RELATED:END -->

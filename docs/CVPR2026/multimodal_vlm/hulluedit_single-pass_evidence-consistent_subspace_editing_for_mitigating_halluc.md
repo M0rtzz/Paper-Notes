@@ -162,3 +162,15 @@ $$g(h) = \begin{cases} 1 & \text{if } \text{VCR}(h) < \gamma_v \lor \text{PCR}(h
 - ⭐⭐⭐⭐ 实用性：单次前向、无训练、无参考模型，部署友好，推理开销极低
 - ⭐⭐⭐ 实验充分度：POPE/CHAIR/MME覆盖全面、消融实验详尽，但缺少更新的模型（如LLaVA-Next、InternVL2等）
 - ⭐⭐⭐⭐ 写作质量：数学推导严谨清晰，理论保证完整，图表直观有效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs](hulluedit_subspace_editing_hallucination.md)
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+- [Multi-Faceted Attack: Exposing Cross-Model Vulnerabilities in Defense-Equipped Vision-Language Models](../../AAAI2026/multimodal_vlm/multi-faceted_attack_exposing_cross-model_vulnerabilities_in_defense-equipped_vi.md)
+- [DSCA: Dynamic Subspace Concept Alignment for Lifelong VLM Editing](dsca_dynamic_subspace_concept_alignment_for_lifelong_vlm_editing.md)
+
+<!-- RELATED:END -->

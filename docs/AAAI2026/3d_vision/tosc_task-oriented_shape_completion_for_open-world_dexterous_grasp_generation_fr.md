@@ -195,3 +195,15 @@ FlowGrasp：标准 CFM 损失 + 单步梯度修正。
 - **实验充分度**: ⭐⭐⭐⭐ — 评估指标全面（物理 + 语义 + 人类），但缺少真实机器人实验
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，图示丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 为部分观测下的灵巧抓取提供了范式级的解决思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [Open-World 3D Scene Graph Generation for Retrieval-Augmented Reasoning](open-world_3d_scene_graph_generation_for_retrieval-augmented_reasoning.md)
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Revisiting Point Cloud Completion: Are We Ready For The Real-World?](../../ICCV2025/3d_vision/revisiting_point_cloud_completion_are_we_ready_for_the_real-world.md)
+- [Simba: Towards High-Fidelity and Geometrically-Consistent Point Cloud Completion via Transformation Diffusion](simba_towards_high-fidelity_and_geometrically-consistent_point_cloud_completion_.md)
+
+<!-- RELATED:END -->

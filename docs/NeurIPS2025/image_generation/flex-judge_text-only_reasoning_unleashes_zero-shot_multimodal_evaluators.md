@@ -166,3 +166,15 @@ Flex-VL-7B 配合多数投票，总体性能超过 GPT-4o。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖图像理解/生成、视频、音频、分子四大模态，7个基准，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ — 极低成本的通用多模态评估方案，对资源受限领域有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Zero-Shot Reinforcement Learning](towards_robust_zero-shot_reinforcement_learning.md)
+- [Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation](evaluating_the_evaluators_metrics_for_compositional_text-to-image_generation.md)
+- [Semantic Surgery: Zero-Shot Concept Erasure in Diffusion Models](semantic_surgery_zero-shot_concept_erasure_in_diffusion_models.md)
+- [Calibrating MLLM-as-a-Judge via Multimodal Bayesian Prompt Ensembles](../../ICCV2025/image_generation/calibrating_mllm-as-a-judge_via_multimodal_bayesian_prompt_ensembles.md)
+- [AnyPortal: Zero-Shot Consistent Video Background Replacement](../../ICCV2025/image_generation/anyportal_zero-shot_consistent_video_background_replacement.md)
+
+<!-- RELATED:END -->

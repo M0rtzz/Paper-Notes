@@ -173,3 +173,15 @@ Omni-MMSI-R 在身份归因上超越 Omni-LLM 约 23.7%（Ego4D）和 18.9%（Yo
 - 实验充分度: ⭐⭐⭐⭐⭐ （多基线、多 LLM 对比、详尽消融、定性分析）
 - 写作质量: ⭐⭐⭐⭐ （问题动机清晰，定量证据充分展示了从 oracle 到 raw 的性能差距）
 - 价值: ⭐⭐⭐⭐ （推动了 MMSI 领域向更真实场景的发展）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniRet: Efficient and High-Fidelity Omni Modality Retrieval](omniret_efficient_and_high-fidelity_omni_modality_retrieval.md)
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](../../ACL2025/audio_speech/dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+- [Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](../../ICLR2026/audio_speech/query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)
+- [Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition](../../ICCV2025/audio_speech/lyra_an_efficient_and_speech-centric_framework_for_omni-cognition.md)
+- [DualSpeechLM: Towards Unified Speech Understanding and Generation via Dual Speech Token Modeling](../../AAAI2026/audio_speech/dualspeechlm_towards_unified_speech_understanding_and_generation_via_dual_speech.md)
+
+<!-- RELATED:END -->

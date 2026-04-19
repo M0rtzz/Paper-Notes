@@ -157,3 +157,15 @@ $$\mathcal{L}_{joint} = w_{align}\mathcal{L}_{xy} + w_{seg}(\mathcal{L}_{xa} + \
 - **实验充分度**: ⭐⭐⭐⭐⭐ 7 个数据集，全面的消融和超参数敏感性分析
 - **写作质量**: ⭐⭐⭐⭐ 公式推导严谨，整体结构清晰
 - **价值**: ⭐⭐⭐⭐ 理论贡献扎实，多任务互惠的发现对社区有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Structural Degradation in Dense Representations for Self-supervised Learning](../../NeurIPS2025/segmentation/exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)
+- [CLOT: Closed Loop Optimal Transport for Unsupervised Action Segmentation](clot_closed_loop_optimal_transport_for_unsupervised_action_segmentation.md)
+- [Prompt Guidance and Human Proximal Perception for HOT Prediction with Regional Joint Loss](prompt_guidance_and_human_proximal_perception_for_hot_prediction_with_regional_j.md)
+- [Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation](skeleton_motion_words_for_unsupervised_skeleton-based_temporal_action_segmentati.md)
+- [Self-supervised Co-salient Object Detection via Feature Correspondences at Multiple Scales](../../ECCV2024/segmentation/self-supervised_co-salient_object_detection_via_feature_correspondences_at_multi.md)
+
+<!-- RELATED:END -->

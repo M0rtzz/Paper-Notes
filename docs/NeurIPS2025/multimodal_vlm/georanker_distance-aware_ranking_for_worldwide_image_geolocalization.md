@@ -136,3 +136,15 @@ $$\mathcal{L}_{PL}^{(2)} = -\frac{1}{K^{(2)}} \sum_{i=1}^{K^{(2)}} \log \frac{\e
 - 实验充分度: ⭐⭐⭐⭐⭐ (全面的消融、超参分析、排序基线对比)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，数学推导严谨)
 - 价值: ⭐⭐⭐⭐ (显著的性能提升和开源数据集贡献)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](../../ICLR2026/multimodal_vlm/self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+- [Recognition through Reasoning: Reinforcing Image Geo-localization with Large Vision-Language Models](recognition_through_reasoning_reinforcing_image_geo-localization_with_large_visi.md)
+- [Completion as Enhancement: A Degradation-Aware Selective Image Guided Network](../../CVPR2025/multimodal_vlm/completion_as_enhancement_a_degradation-aware_selective_image_guided_network_for.md)
+- [Ranked from Within: Ranking Large Multimodal Models Without Labels](../../ICML2025/multimodal_vlm/ranked_from_within_ranking_large_multimodal_models_without_labels.md)
+- [Aligning by Misaligning: Boundary-aware Curriculum Learning for Multimodal Alignment](aligning_by_misaligning_boundaryaware_curriculum_learning_fo.md)
+
+<!-- RELATED:END -->

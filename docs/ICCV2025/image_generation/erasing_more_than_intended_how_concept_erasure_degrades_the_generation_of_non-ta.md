@@ -142,3 +142,15 @@ Gecko VQA评估结果（6246对文本-图像评估）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5种方法、4个维度、3种指标、人类评估，极为全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，发现有条理，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ 对AI安全领域有重要警示意义，基准测试具有持久价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Less-to-More Generalization: Unlocking More Controllability by In-Context Generation](less-to-more_generalization_unlocking_more_controllability_by_in-context_generat.md)
+- [TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
+- [Mass Concept Erasure in Diffusion Models with Concept Hierarchy](../../AAAI2026/image_generation/mass_concept_erasure_in_diffusion_models_with_concept_hierarchy.md)
+- [Concept-TRAK: Understanding how diffusion models learn concepts through concept-level attribution](../../ICLR2026/image_generation/concept-trak_understanding_how_diffusion_models_learn_concepts_through_concept-l.md)
+- [Meta-Unlearning on Diffusion Models: Preventing Relearning Unlearned Concepts](meta-unlearning_on_diffusion_models_preventing_relearning_unlearned_concepts.md)
+
+<!-- RELATED:END -->

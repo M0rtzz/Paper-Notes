@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个仿真+2 个真实任务，多方法对比，消融充分
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表精美，方法图示直观
 - 价值: ⭐⭐⭐⭐ 实用贡献，可直接集成到任何基于 Transformer 的世界模型流水线中
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+- [Visual Planning: Let's Think Only with Images](visual_planning_lets_think_only_with_images.md)
+- [Chain of World: World Model Thinking in Latent Motion (CoWVLA)](../../CVPR2026/robotics/chain_of_world_world_model_thinking_in_latent_motion.md)
+- [Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation](../../AAAI2026/robotics/recursive_visual_imagination_and_adaptive_linguistic_grounding_for_vision_langua.md)
+- [Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning](../../CVPR2026/robotics/fast-thinkact_efficient_vision-language-action_reasoning_via_verbalizable_latent.md)
+
+<!-- RELATED:END -->

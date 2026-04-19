@@ -159,3 +159,15 @@ $$\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x, y_w,
 - **实验充分度**: ⭐⭐⭐⭐⭐ 11个judge×5基准+两个基座模型+参考质量消融+任务类别分析+统计显著性检验——非常全面。
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机链条清晰(RLVR→gap→参考引导→评估→训练)，实验逻辑层层递进，结论不过度外推。
 - **实用价值**: ⭐⭐⭐⭐⭐ $40参考+自改进=匹配微调RM——对资源有限的团队做LLM对齐具有直接指导意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for RL of Open-ended Generation](from_verifiable_dot_to_reward_chain_harnessing_verifiable_reference-based_reward.md)
+- [Reasoning Boosts Opinion Alignment in LLMs](reasoning_boosts_opinion_alignment_in_llms.md)
+- [TROLL: Trust Regions improve Reinforcement Learning for Large Language Models](troll_trust_regions_improve_reinforcement_learning_for_large_language_models.md)
+- [Trinity: An Evolved LLM Coordinator](trinity_an_evolved_llm_coordinator.md)
+- [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+
+<!-- RELATED:END -->

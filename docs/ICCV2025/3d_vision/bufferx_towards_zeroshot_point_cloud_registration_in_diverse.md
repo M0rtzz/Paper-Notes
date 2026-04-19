@@ -138,3 +138,15 @@ BUFFER-X的pipeline分三个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个数据集的综合Benchmark极为全面，消融实验覆盖了每个设计决策，还包括KITTI训练的cross验证和详细的trade-off分析
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链条清晰（问题分析→关键观察→对应解决方案），图表精心设计，附录也很充实（数据集选择理由、全局最优歧义性分析等）
 - 价值: ⭐⭐⭐⭐⭐ 作为Highlight论文实至名归——零样本跨域配准有很强的实用价值，Benchmark和代码开源对社区贡献大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TurboReg: TurboClique for Robust and Efficient Point Cloud Registration](turboreg_turboclique_for_robust_and_efficient_point_cloud_registration.md)
+- [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](../../CVPR2025/3d_vision/colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
+- [RobuSTereo: Robust Zero-Shot Stereo Matching under Adverse Weather](robustereo_robust_zero-shot_stereo_matching_under_adverse_weather.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [Blended Point Cloud Diffusion for Localized Text-guided Shape Editing](blended_point_cloud_diffusion_for_localized_textguided_shape.md)
+
+<!-- RELATED:END -->

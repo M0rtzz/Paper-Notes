@@ -154,3 +154,15 @@ $$\theta^* = \arg\min_\theta -\frac{1}{|\mathcal{L}|}\sum_{(x,y)\in\mathcal{L}} 
 - **实验充分性**: ★★★★★ — 4个数据集全面评估，消融实验详尽，定性分析丰富
 - **写作质量**: ★★★★☆ — 结构清晰，图表质量高
 - **实用性**: ★★★★☆ — 代码开源，极低预算场景有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
+- [OmniSegmentor: A Flexible Multi-Modal Learning Framework for Semantic Segmentation](omnisegmentor_a_flexible_multi-modal_learning_framework_for_semantic_segmentatio.md)
+- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](../../CVPR2025/segmentation/multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
+- [Seg4Diff: Unveiling Open-Vocabulary Segmentation in Text-to-Image Diffusion Transformers](seg4diff_unveiling_open-vocabulary_segmentation_in_text-to-image_diffusion_trans.md)
+- [DDB: Diffusion Driven Balancing to Address Spurious Correlations](../../ICCV2025/segmentation/ddb_diffusion_driven_balancing_to_address_spurious_correlations.md)
+
+<!-- RELATED:END -->

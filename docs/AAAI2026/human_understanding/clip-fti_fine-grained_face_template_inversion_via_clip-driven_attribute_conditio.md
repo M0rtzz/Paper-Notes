@@ -141,3 +141,15 @@ $$\tilde{s} = \text{MHA}(Q = t', K = [s'_1, \ldots, s'_R], V = [s'_1, \ldots, s'
 - 技术深度: ⭐⭐⭐⭐ — TAA + MHA 融合 + WGAN 对齐的完整技术栈
 - 实验充分度: ⭐⭐⭐⭐ — 3 数据集 × 5 FR 模型 × 30 跨架构场景
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，攻击场景形式化严谨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIPPan: Adapting CLIP as A Supervisor for Unsupervised Pansharpening](clippan_adapting_clip_as_a_supervisor_for_unsupervised_pansharpening.md)
+- [Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection](fine-grained_dino_tuning_with_dual_supervision_for_face_forgery_detection.md)
+- [DEIG: Detail-Enhanced Instance Generation with Fine-Grained Semantic Control](deig_detail-enhanced_instance_generation_with_fine-grained_semantic_control.md)
+- [Forensics Adapter: Adapting CLIP for Generalizable Face Forgery Detection](../../CVPR2025/human_understanding/forensics_adapter_adapting_clip_for_generalizable_face_forgery_detection.md)
+- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](finextrol_controllable_motion_generation_via_fine-grained_text.md)
+
+<!-- RELATED:END -->

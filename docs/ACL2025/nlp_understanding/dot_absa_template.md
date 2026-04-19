@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个数据集、多个backbone、跨域实验、LLM对比、详细消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图表丰富，附录充实
 - 价值: ⭐⭐⭐⭐ 对ABSA任务有明确的效率和性能提升，方法思想可迁移到其他结构化生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SynGraph: A Dynamic Graph-LLM Synthesis Framework for Sparse Streaming User Sentiment Analysis](syngraph_a_dynamic_graph-llm_synthesis_framework_for_sparse_streaming_user_senti.md)
+- [Analyzing Political Bias in LLMs via Target-Oriented Sentiment Classification](analyzing_political_bias_in_llms_via_target-oriented_sentiment_classification.md)
+- [Sentiment Reasoning for Healthcare](sentiment_reasoning_for_healthcare.md)
+- [iQUEST: An Iterative Question-Guided Framework for Knowledge Base Question Answering](iquest_an_iterative_question-guided_framework_for_knowledge_base_question_answer.md)
+- [Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing](disambiguate_first_parse_later_generating_interpretations_for_ambiguity_resoluti.md)
+
+<!-- RELATED:END -->

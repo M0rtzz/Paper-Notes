@@ -127,3 +127,15 @@ InfoGrowth 本身不改变下游模型的训练损失。BLIP 使用对比损失 
 - 实验充分度: ⭐⭐⭐⭐ 多模态和单模态都有验证，消融全面，但缺少更大规模数据集的实验
 - 写作质量: ⭐⭐⭐⭐ 理论分析清晰，动机到方法推导流畅
 - 价值: ⭐⭐⭐⭐ 解决实际问题，方法实用且可扩展，对大规模数据工程有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](../../ACL2025/multimodal_vlm/vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](../../ACL2025/multimodal_vlm/multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning](../../ICCV2025/multimodal_vlm/mmat1m_a_large_reasoning_dataset_for_multimodal_agent_tuning.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+
+<!-- RELATED:END -->

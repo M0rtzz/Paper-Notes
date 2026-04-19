@@ -174,3 +174,15 @@ $$\mathcal{L}_{\text{FT}} = \mathbb{E}\left[\|\tilde{\boldsymbol{\epsilon}}(\mat
 - 实验充分度: ⭐⭐⭐⭐ （MD17 + QH9 双基准全面验证，含消融和下游应用，但分子规模有限）
 - 写作质量: ⭐⭐⭐⭐ （技术细节严谨，数学推导完整，结构清晰）
 - 价值: ⭐⭐⭐⭐⭐ （性能提升巨大，MD17 误差降低 73%，DFT 加速 54%，对计算化学有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
+- [Fast Solvers for Discrete Diffusion Models: Theory and Applications of High-Order Algorithms](fast_solvers_for_discrete_diffusion_models_theory_and_applications_of_high-order.md)
+- [Flow Matching Neural Processes](flow_matching_neural_processes.md)
+- [EC-Flow: Enabling Versatile Robotic Manipulation from Action-Unlabeled Videos via Equivariant Flow Matching](../../ICCV2025/image_generation/ec-flow_enabling_versatile_robotic_manipulation_from_action-unlabeled_videos_via.md)
+- [Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
+
+<!-- RELATED:END -->

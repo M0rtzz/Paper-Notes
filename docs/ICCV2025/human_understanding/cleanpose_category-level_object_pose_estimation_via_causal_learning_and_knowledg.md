@@ -169,3 +169,15 @@ HouseCat6D数据集：CleanPose在所有指标上超越AG-Pose（IoU50: +2.9%, 5
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集全面验证，消融设计科学，但类别数有限
 - 写作质量: ⭐⭐⭐⭐ 公式推导严谨，但LaTeX渲染格式对阅读有一定影响
 - 价值: ⭐⭐⭐⭐⭐ 在REAL275上5°2cm指标实现61.7%的突破性成绩，超越SOTA 4.7%
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [U-COPE: Taking a Further Step to Universal 9D Category-Level Object Pose Estimation](../../ECCV2024/human_understanding/u-cope_taking_a_further_step_to_universal_9d_category-level_object_pose_estimati.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](../../CVPR2025/human_understanding/gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+- [GS-Pose: Category-Level Object Pose Estimation via Geometric and Semantic Correspondence](../../ECCV2024/human_understanding/gs-pose_category-level_object_pose_estimation_via_geometric_and_semantic_corresp.md)
+- [MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
+- [Mitigating Object Hallucinations via Sentence-Level Early Intervention](mitigating_object_hallucinations_via_sentence-level_early_intervention.md)
+
+<!-- RELATED:END -->

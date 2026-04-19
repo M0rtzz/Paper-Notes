@@ -173,3 +173,15 @@ CharaConsist 在几乎所有指标上取得最优，尤其在背景一致性（C
 | 实用价值 | 4 | 免训练、低显存、高质量，实用性强 |
 | 写作清晰度 | 4 | 问题定义清晰，方法动机充分，公式推导完整 |
 | **总分** | **3.9** | 高质量的系统性工作，对 DiT 时代的一致性生成具有参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TaxaDiffusion: Progressively Trained Diffusion Model for Fine-Grained Species Generation](taxadiffusion_progressively_trained_diffusion_model_for_fine-grained_species_gen.md)
+- [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](../../CVPR2025/image_generation/clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
+- [Multi-turn Consistent Image Editing](multi-turn_consistent_image_editing.md)
+- [AnyPortal: Zero-Shot Consistent Video Background Replacement](anyportal_zero-shot_consistent_video_background_replacement.md)
+- [FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction](../../ECCV2024/image_generation/finematch_aspect-based_fine-grained_image_and_text_mismatch_detection_and_correc.md)
+
+<!-- RELATED:END -->

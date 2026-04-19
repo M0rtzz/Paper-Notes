@@ -141,3 +141,15 @@ SCoTS 采用三阶段流程：(1) 学习时间距离保持的潜表示；(2) 基
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多环境、多数据集类型、多基线、丰富消融
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ 为扩散规划器的数据瓶颈提供了系统性解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Koopman Diffusion: Fast Generation with Interpretable Diffusion Trajectory](hierarchical_koopman_diffusion_fast_generation_with_interpretable_diffusion_traj.md)
+- [Diffuse Everything: Multimodal Diffusion Models on Arbitrary State Spaces](../../ICML2025/image_generation/diffuse_everything_multimodal_diffusion_models_on_arbitrary_state_spaces.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/image_generation/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
+- [Learning Few-Step Diffusion Models by Trajectory Distribution Matching](../../ICCV2025/image_generation/learning_few-step_diffusion_models_by_trajectory_distribution_matching.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ CoordTok 包含编码器和解码器：编码器将视频 $\mathbf{x}$ 分为时
 ## 评分
 
 ⭐⭐⭐⭐ — 思路新颖且简洁优雅，将3D生成的坐标采样思想无缝迁移到视频tokenizer，训练效率突破显著（128帧直接训练），且下游生成效果出色。但分辨率和数据集规模受限，高分辨率大规模场景有待验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EVATok: Adaptive Length Video Tokenization for Efficient Visual Autoregressive Generation](../../CVPR2026/image_generation/evatok_adaptive_length_video_tokenization_for_eff.md)
+- [Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](../../ICCV2025/image_generation/efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
+- [Language-Guided Image Tokenization for Generation](language-guided_image_tokenization_for_generation.md)
+- [PatchScaler: An Efficient Patch-Independent Diffusion Model for Image Super-Resolution](../../ICCV2025/image_generation/patchscaler_an_efficient_patch-independent_diffusion_model_for_image_super-resol.md)
+
+<!-- RELATED:END -->

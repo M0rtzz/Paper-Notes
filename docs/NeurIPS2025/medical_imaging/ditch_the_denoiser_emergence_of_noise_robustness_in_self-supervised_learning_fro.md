@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多种噪声类型/强度、多数据集规模、多 SSL 框架、分类 + 检索两种下游任务
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从 toy example 到大规模实验层层推进
 - 价值: ⭐⭐⭐⭐ 对医学影像、遥感等噪声数据场景有实际应用价值，推理无需去噪器是很好的实用特性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](../../ICML2025/medical_imaging/scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
+- [Towards Self-Supervised Foundation Models for Critical Care Time Series](towards_self-supervised_foundation_models_for_critical_care_time_series.md)
+- [Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](../../CVPR2025/medical_imaging/addressing_data_scarcity_in_3d_trauma_detection_through_self-supervised_and_semi.md)
+
+<!-- RELATED:END -->

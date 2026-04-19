@@ -183,3 +183,15 @@ DP 提供了一定的隐私保护（$\epsilon = 0.1$ 时 ASR 接近 0.5），但
 - 实验充分度: ⭐⭐⭐⭐ — 2个RS×2个数据集，含参数分析和防御评估
 - 写作质量: ⭐⭐⭐⭐ — 数学分析严谨，但部分符号稍显冗余
 - 价值: ⭐⭐⭐⭐ — 揭示了重要的隐私漏洞，对推荐系统安全有预警意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+- [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](../../ICCV2025/ai_safety/find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
+- [Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)](../../ICLR2026/ai_safety/membership_inference_attacks_against_fine-tuned_diffusion_language_models.md)
+- [InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference](infodecom_decomposing_information_for_defending_against_privacy_leakage_in_split.md)
+- [Plug-and-Play Parameter-Efficient Tuning of Embeddings for Federated Recommendation](plug-and-play_parameter-efficient_tuning_of_embeddings_for_federated_recommendat.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ RWPM 不需要任何额外训练，仅在推理阶段使用。直接应用于已
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多数据集、多架构、多指标，消融详尽，可视化有说服力
 - **写作质量**: ⭐⭐⭐⭐ — 图 1 的 toy example 和 t-SNE 可视化很好地传达了核心思想
 - **实用价值**: ⭐⭐⭐⭐ — 即插即用无需训练，但推理开销限制了实时应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ClimaOoD: Improving Anomaly Segmentation via Physically Realistic Synthetic Data](../../CVPR2026/autonomous_driving/climaood_improving_anomaly_segmentation_via_physically_realistic_synthetic_data.md)
+- [Monocular Occupancy Prediction for Scalable Indoor Scenes](monocular_occupancy_prediction_for_scalable_indoor_scenes.md)
+- [TOD³Cap: Towards 3D Dense Captioning in Outdoor Scenes](tod3cap_towards_3d_dense_captioning_in_outdoor_scenes.md)
+- [Reliability in Semantic Segmentation: Can We Use Synthetic Data?](reliability_in_semantic_segmentation_can_we_use_synthetic_data.md)
+- [Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather](rethinking_data_augmentation_for_robust_lidar_semantic_segmentation_in_adverse_w.md)
+
+<!-- RELATED:END -->

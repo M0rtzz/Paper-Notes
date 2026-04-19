@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5配置完整消融+统计显著性验证
 - 写作质量: ⭐⭐⭐⭐ 方法和评估设计细致
 - 价值: ⭐⭐⭐⭐ 对对话AI测试方法论有实用贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
+- [DeltaProduct: Improving State-Tracking in Linear RNNs via Householder Products](deltaproduct_improving_state-tracking_in_linear_rnns_via_householder_products.md)
+- [MEMTRACK: Evaluating Long-Term Memory and State Tracking in Multi-Platform Dynamic Agent Environments](memtrack_evaluating_long-term_memory_and_state_tracking_in_multi-platform_dynami.md)
+- [KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills](kungfubot_physics-based_humanoid_whole-body_control_for_learning_highly-dynamic_.md)
+- [Tool-Augmented Spatiotemporal Reasoning for Streamlining Video Question Answering Task](toolaugmented_spatiotemporal_reasoning_for_streamlining_vide.md)
+
+<!-- RELATED:END -->

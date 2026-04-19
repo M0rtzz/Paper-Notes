@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 分类实验充分，但回归分析受限于数据稀缺性，因果推断不够深入
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，两步法逻辑顺畅，但部分结论的解读过于谨慎缺少深入分析
 - 价值: ⭐⭐⭐ 跨学科框架有实际应用价值，但方法论创新有限，更多是工程应用层面的贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation](../../ACL2025/multilingual_mt/laca_crosslingual_absa.md)
+- [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
+- [How Data Mixing Shapes In-Context Learning: Asymptotic Equivalence for Transformers with MLPs](how_data_mixing_shapes_in-context_learning_asymptotic_equivalence_for_transforme.md)
+- [DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)
+- [SeqPO-SiMT: Sequential Policy Optimization for Simultaneous Machine Translation](../../ACL2025/multilingual_mt/seqpo-simt_sequential_policy_optimization_for_simultaneous_machine_translation.md)
+
+<!-- RELATED:END -->

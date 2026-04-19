@@ -109,3 +109,15 @@ COCO 验证集 5000 张图，SD v1.5 + DDIM 50 步：
 ## 评分
 
 ⭐⭐⭐⭐ — 理论清晰、方法优雅（无训练的测试时优化），多骨干多任务一致有效。计算开销和显存增加是主要局限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [Mitigating Sexual Content Generation via Embedding Distortion in Text-conditioned Diffusion Models](mitigating_sexual_content_generation_via_embedding_distortion_in_text-conditione.md)
+- [Text Embedding Knows How to Quantize Text-Guided Diffusion Models](../../ICCV2025/image_generation/text_embedding_knows_how_to_quantize_text-guided_diffusion_models.md)
+- [Addressing Text Embedding Leakage in Diffusion-Based Image Editing](../../ICCV2025/image_generation/addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)
+- [Aligning Text to Image in Diffusion Models is Easier Than You Think](aligning_text_to_image_in_diffusion_models_is_easier_than_you_think.md)
+
+<!-- RELATED:END -->

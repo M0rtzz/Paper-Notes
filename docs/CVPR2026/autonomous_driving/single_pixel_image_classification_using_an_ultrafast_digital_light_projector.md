@@ -111,3 +111,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ 消融和分析全面，但仅限 MNIST 一个数据集，缺乏自然场景验证
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，光学系统描述详尽，实验分析逻辑严密
 - **价值**: ⭐⭐⭐ 验证了超高速单像素分类的可行性，为极端波长/速度场景下的机器视觉提供了新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OneOcc: Semantic Occupancy Prediction for Legged Robots with a Single Panoramic Camera](oneocc_semantic_occupancy_prediction_for_legged_robots_with_a_single_panoramic_c.md)
+- [A Prediction-as-Perception Framework for 3D Object Detection](a_predictionasperception_framework_for_3d_object_d.md)
+- [Learning Mutual View Information Graph for Adaptive Adversarial Collaborative Perception](learning_mutual_view_information_graph_for_adaptive_adversarial_collaborative_pe.md)
+- [Efficient Equivariant Transformer for Self-Driving Agent Modeling](efficient_equivariant_transformer_for_self-driving_agent_modeling.md)
+- [Le MuMo JEPA: Multi-Modal Self-Supervised Representation Learning with Learnable Fusion Tokens](le_mumo_jepa_multi-modal_self-supervised_representation_learning_with_learnable_.md)
+
+<!-- RELATED:END -->

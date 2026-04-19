@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐ 纯综述无原始实验
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，形式化定义严谨
 - **价值**: ⭐⭐⭐⭐ 填补跨社区认知空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoPresent: Designing Structured Visuals from Scratch](autopresent_designing_structured_visuals_from_scratch.md)
+- [Data-Free Group-Wise Fully Quantized Winograd Convolution via Learnable Scales](data-free_group-wise_fully_quantized_winograd_convolution_via_learnable_scales.md)
+- [FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models](../../NeurIPS2025/image_generation/fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)
+- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
+- [Any-Resolution AI-Generated Image Detection by Spectral Learning](any-resolution_ai-generated_image_detection_by_spectral_learning.md)
+
+<!-- RELATED:END -->

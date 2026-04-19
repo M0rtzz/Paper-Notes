@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 自动评估+人类评估+消融+定性分析齐全，但只有一个数据集
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，图例直观，方法描述详尽
 - 价值: ⭐⭐⭐⭐ 对媒体偏见消除有实际意义，结构化知识注入 LLM 的范式有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PerSphere: A Comprehensive Framework for Multi-Faceted Perspective Retrieval and Summarization](persphere_a_comprehensive_framework_for_multi-faceted_perspective_retrieval_and_.md)
+- [Context-Aware Hierarchical Merging for Long Document Summarization](context-aware_hierarchical_merging_for_long_document_summarization.md)
+- [TagRouter: Learning Route to LLMs through Tags for Open-Domain Text Generation Tasks](tagrouter_learning_route_to_llms_through_tags_for_open-domain_text_generation_ta.md)
+- [Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+- [Theme-Explanation Structure for Table Summarization Using Large Language Models](theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+
+<!-- RELATED:END -->

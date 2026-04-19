@@ -163,3 +163,15 @@ $$p(a|q) = \sum_{\mathcal{Z} \subseteq \mathcal{G}} p_\phi(a|q, \mathcal{Z}) \cd
 - **技术深度**: ⭐⭐⭐ — 框架形式化清晰，检索方法涵盖全面，但缺乏理论分析和新算法设计。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5 个 LLM × 多种检索策略 × 多类查询 × 4 种扰动方法 × 多粒度扰动级别，实验极为详尽。
 - **实用价值**: ⭐⭐⭐⭐ — OKGQA 基准和 50% 扰动阈值等发现对 KG+LLM 系统的实际设计有直接指导意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ontology-Guided Reverse Thinking Makes Large Language Models Stronger on Knowledge Graph Question Answering](ontology-guided_reverse_thinking_makes_large_language_models_stronger_on_knowled.md)
+- [FiDeLiS: Faithful Reasoning in Large Language Model for Knowledge Graph Question Answering](fidelis_faithful_reasoning_in_large_language_model_for_knowledge_graph_question_.md)
+- [The Role of Exploration Modules in Small Language Models for Knowledge Graph Question Answering](the_role_of_exploration_modules_in_small_language_models_for_knowledge_graph_que.md)
+- [Can LLMs Evaluate Complex Attribution in QA? Automatic Benchmarking using Knowledge Graphs](paper_2401_14640.md)
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](../../ICML2025/graph_learning/graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+
+<!-- RELATED:END -->

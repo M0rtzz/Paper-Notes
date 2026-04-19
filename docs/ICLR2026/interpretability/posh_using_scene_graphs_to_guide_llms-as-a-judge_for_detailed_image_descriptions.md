@@ -121,3 +121,15 @@ PoSh是推理时指标，无训练过程。QA评分器Ψ使用Qwen3-14B，存在
 - 实验充分度: ⭐⭐⭐⭐⭐ DOCENT细粒度+粗粒度+CapArena跨域+RL奖励函数+子组件验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、社会影响有说服力、实验系统全面
 - 价值: ⭐⭐⭐⭐ 为详细图像描述评估提供了可部署的开源工具，推动辅助文本生成进步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
+- [On the Possible Detectability of Image-in-Image Steganography](../../CVPR2026/interpretability/on_the_possible_detectability_of_image-in-image_steganography.md)
+- [Enhancing Automated Interpretability with Output-Centric Feature Descriptions](../../ACL2025/interpretability/output_centric_interpretability.md)
+- [Edit-As-Act: Goal-Regressive Planning for Open-Vocabulary 3D Indoor Scene Editing](../../CVPR2026/interpretability/edit-as-act_goal-regressive_planning_for_open-vocabulary_3d_indoor_scene_editing.md)
+- [Recursive Think-Answer Process for LLMs and VLMs](../../CVPR2026/interpretability/recursive_think-answer_process_for_llms_and_vlms.md)
+
+<!-- RELATED:END -->

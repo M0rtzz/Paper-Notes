@@ -187,3 +187,15 @@ $$\mathcal{A}_{CS}[u,v] \geq \tau \text{ 且 } (u,v) \in \text{DFS}(\mathcal{S})
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个数据集、系统性探索实验、全面消融、多种基线对比）
 - 写作质量: ⭐⭐⭐⭐⭐ （准则引导式论述清晰流畅，图表高质量）
 - 价值: ⭐⭐⭐⭐ （免训练框架实用性强，但绝对性能仍有提升空间）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InstructSAM: A Training-Free Framework for Instruction-Oriented Remote Sensing Object Recognition](../../NeurIPS2025/segmentation/instructsam_a_training-free_framework_for_instruction-oriented_remote_sensing_ob.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+- [Target Refocusing via Attention Redistribution for Open-Vocabulary Semantic Segmentation: An Explainability Perspective](target_refocusing_via_attention_redistribution_for_open-vocabulary_semantic_segm.md)
+- [LWGANet: Addressing Spatial and Channel Redundancy in Remote Sensing Visual Tasks with Light-Weight Grouped Attention](lwganet_addressing_spatial_and_channel_redundancy_in_remote_sensing_visual_tasks.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+
+<!-- RELATED:END -->

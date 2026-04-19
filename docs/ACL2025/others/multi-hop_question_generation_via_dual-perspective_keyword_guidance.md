@@ -168,3 +168,15 @@ DPKG 框架包含三个主要组件：
 - **实验充分度**: ⭐⭐⭐ — 在 HotpotQA 上实验全面（主实验、关键词类型分析、消融），但缺少其他数据集验证
 - **写作质量**: ⭐⭐⭐⭐ — 关键词定义和标注过程用图示直观说明，框架描述清晰
 - **价值**: ⭐⭐⭐⭐ — 为 MQG 任务提供了新的视角和有效方法，代码已开源，关键词标注方法可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Follow-up Question Generation for Enhanced Patient-Provider Conversations](follow-up_question_generation_for_enhanced_patient-provider_conversations.md)
+- [FCMR: Robust Evaluation of Financial Cross-Modal Multi-Hop Reasoning](fcmr_robust_evaluation_of_financial_cross-modal_multi-hop_reasoning.md)
+- [AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning](aide_attribute-guided_multi-hop_data_expansion_for_data_scarcity_in_task-specifi.md)
+- [DRS: Deep Question Reformulation With Structured Output](drs_deep_question_reformulation_with_structured_output.md)
+- [DocAgent: A Multi-Agent System for Automated Code Documentation Generation](docagent_a_multi-agent_system_for_automated_code_documentation_generation.md)
+
+<!-- RELATED:END -->

@@ -171,3 +171,15 @@ LVFace 采用标准 ViT 作为骨干网络，配合 MLP 头（两层 512-d FC + 
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多基准、多骨干、多数据集的全面消融，MFR-Ongoing 竞赛验证
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，公式推导完整，可视化分析到位
 - **价值**: ⭐⭐⭐⭐ 为 ViT 在人脸识别中的应用提供了有效的训练方案，开源代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
+- [On Large Multimodal Models as Open-World Image Classifiers](on_large_multimodal_models_as_open-world_image_classifiers.md)
+- [Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization](../../NeurIPS2025/human_understanding/learning_to_watermark_a_selective_watermarking_framework_for_large_language_mode.md)
+- [From Easy to Hard: The MIR Benchmark for Progressive Interleaved Multi-Image Reasoning](from_easy_to_hard_the_mir_benchmark_for_progressive_interleaved_multi-image_reas.md)
+- [AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition](../../ECCV2024/human_understanding/adadistill_adaptive_knowledge_distillation_for_deep_face_rec.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ Pipeline 分为四步（见图1）：(1) 输入视频分割为 shot，每个 sho
 - 实验充分度: ⭐⭐⭐⭐ benchmark 构建严谨、消融充分，但缺少真实视频评估
 - 写作质量: ⭐⭐⭐⭐⭐ "benchmark→diagnosis→injection" 结构清晰，图表质量高
 - 价值: ⭐⭐⭐⭐ 揭示了 VideoLLM 的一个严重能力缺口，方案实用且 plug-and-play
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-guided Fine-Grained Video Anomaly Understanding](text-guided_fine-grained_video_anomaly_understanding.md)
+- [Missing No More: Dictionary-Guided Cross-Modal Image Fusion under Missing Infrared](missing_no_more_dictionary-guided_cross-modal_image_fusion_under_missing_infrare.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+- [Measuring the (Un)Faithfulness of Concept-Based Explanations](measuring_the_unfaithfulness_of_concept-based_explanations.md)
+- [Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
+
+<!-- RELATED:END -->

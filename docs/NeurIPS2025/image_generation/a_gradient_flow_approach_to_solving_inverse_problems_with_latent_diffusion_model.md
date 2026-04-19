@@ -120,3 +120,15 @@ DWGF 框架：在隐空间 $\mathcal{Z}$ 中维护 $N$ 个粒子 $\{z_0^{(i)}\}$
 - 实验充分度: ⭐⭐⭐ 只有两个任务、一个数据集，FID 表现差，实验不够全面
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨清晰，但实验部分过于简略
 - 价值: ⭐⭐⭐ 理论贡献有价值但实验性能（FID）不足以令人信服，需要进一步改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integrating Intermediate Layer Optimization and Projected Gradient Descent for Solving Inverse Problems with Diffusion Models](../../ICML2025/image_generation/integrating_intermediate_layer_optimization_and_projected_gradient_descent_for_s.md)
+- [FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems](../../ICCV2025/image_generation/flowdps_flow-driven_posterior_sampling_for_inverse_problems.md)
+- [Constrained Particle Seeking: Solving Diffusion Inverse Problems with Just Forward Passes](../../AAAI2026/image_generation/constrained_particle_seeking_solving_diffusion_inverse_problems_with_just_forwar.md)
+- [KLASS: KL-Guided Fast Inference in Masked Diffusion Models](klass_kl-guided_fast_inference_in_masked_diffusion_models.md)
+- [NPN: Non-Linear Projections of the Null-Space for Imaging Inverse Problems](npn_non-linear_projections_of_the_null-space_for_imaging_inverse_problems.md)
+
+<!-- RELATED:END -->

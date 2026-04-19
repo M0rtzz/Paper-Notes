@@ -116,3 +116,15 @@ MyVLM采用两阶段pipeline：(1) 外部概念头识别图像中是否存在目
 - 实验充分度: ⭐⭐⭐⭐ 对比了多种基线和GPT-4V，但缺少更大规模数据集的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，方法动机和设计逻辑链条完整
 - 价值: ⭐⭐⭐⭐⭐ 开创VLM个性化新方向，具有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [To See or To Read: User Behavior Reasoning in Multimodal LLMs](../../NeurIPS2025/multimodal_vlm/to_see_or_to_read_user_behavior_reasoning_in_multimodal_llms.md)
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
+- [MIRe: Enhancing Multimodal Queries Representation via Fusion-Free Modality Interaction](../../ACL2025/multimodal_vlm/mire_enhancing_multimodal_queries_representation_via_fusion-free_modality_intera.md)
+- [Chimera: Improving Generalist Model with Domain-Specific Experts](../../ICCV2025/multimodal_vlm/chimera_improving_generalist_model_with_domain-specific_experts.md)
+- [LADA: Scalable Label-Specific CLIP Adapter for Continual Learning](../../ICML2025/multimodal_vlm/lada_scalable_label-specific_clip_adapter_for_continual_learning.md)
+
+<!-- RELATED:END -->

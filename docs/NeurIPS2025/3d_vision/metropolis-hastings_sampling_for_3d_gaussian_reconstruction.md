@@ -128,3 +128,15 @@ Mip-NeRF360 + Tanks&Temples + Deep Blending综合结果：
 ## 评分
 
 ⭐⭐⭐⭐ — 理论贡献扎实，将启发式密度控制提升为有原则的概率框架，实验验证充分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantifying and Alleviating Co-Adaptation in Sparse-View 3D Gaussian Splatting](quantifying_and_alleviating_co-adaptation_in_sparse-view_3d_gaussian_splatting.md)
+- [Sampling-Aware 3D Spatial Analysis in Multiplexed Imaging](../../CVPR2026/3d_vision/sampling-aware_3d_spatial_analysis_in_multiplexed_imaging.md)
+- [MICAS: Multi-grained In-Context Adaptive Sampling for 3D Point Cloud Processing](../../CVPR2025/3d_vision/micas_multi-grained_in-context_adaptive_sampling_for_3d_point_cloud_processing.md)
+- [OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects](onlinesplatter_pose-free_online_3d_reconstruction_for_free-moving_objects.md)
+- [SyncHuman: Synchronizing 2D and 3D Generative Models for Single-View Human Reconstruction](synchuman_synchronizing_2d_and_3d_generative_models_for_single-view_human_recons.md)
+
+<!-- RELATED:END -->

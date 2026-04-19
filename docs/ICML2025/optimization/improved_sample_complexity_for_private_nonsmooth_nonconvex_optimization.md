@@ -119,3 +119,15 @@ $$n = \widetilde{\Omega}\!\left(\frac{d}{\beta^2} + \frac{d^{3/4}}{\varepsilon\a
 - 实验充分度: ⭐⭐ — 纯理论工作，无实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，从单遍到多遍逐步递进，符号一致性好
 - 价值: ⭐⭐⭐⭐ — 系统性改进 NSNC DP 优化的样本复杂度，理论贡献扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finite-Time Analysis of Stochastic Nonconvex Nonsmooth Optimization on the Riemannian Manifolds](../../NeurIPS2025/optimization/finite-time_analysis_of_stochastic_nonconvex_nonsmooth_optimization_on_the_riema.md)
+- [Improved Last-Iterate Convergence of Shuffling Gradient Methods for Nonsmooth Convex Optimization](improved_last-iterate_convergence_of_shuffling_gradient_methods_for_nonsmooth_co.md)
+- [Nearly Optimal Sample Complexity for Learning with Label Proportions](nearly_optimal_sample_complexity_for_learning_with_label_proportions.md)
+- [Second-Order Optimization Under Heavy-Tailed Noise: Hessian Clipping and Sample Complexity](../../NeurIPS2025/optimization/second-order_optimization_under_heavy-tailed_noise_hessian_clipping_and_sample_c.md)
+- [POPri: Private Federated Learning using Preference-Optimized Synthetic Data](popri_private_federated_learning_using_preference-optimized_synthetic_data.md)
+
+<!-- RELATED:END -->

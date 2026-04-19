@@ -83,3 +83,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个模型+360提示+人类标注相关
 - 写作质量: ⭐⭐⭐⭐⭐ 跨领域概念解释清晰
 - 价值: ⭐⭐⭐⭐⭐ 可能改变 T2V 评估范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mimir: Improving Video Diffusion Models for Precise Text Understanding](mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
+- [ETVA: Evaluation of Text-to-Video Alignment via Fine-Grained Question Generation and Answering](../../ICCV2025/video_generation/etva_evaluation_of_text-to-video_alignment_via_fine-grained_question_generation_.md)
+- [SLVMEval: Synthetic Meta Evaluation Benchmark for Text-to-Long Video Generation](../../CVPR2026/video_generation/slvmeval_synthetic_meta_evaluation_benchmark_for_text-to-long_video_generation.md)
+- [VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](../../ICCV2025/video_generation/vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [Navigation World Models](navigation_world_models.md)
+
+<!-- RELATED:END -->

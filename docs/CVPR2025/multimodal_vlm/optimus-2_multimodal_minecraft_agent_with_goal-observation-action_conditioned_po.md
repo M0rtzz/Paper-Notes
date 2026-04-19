@@ -86,3 +86,15 @@ Optimus-2采用规划器-策略架构：MLLM规划器（GPT-4V）将复杂任务
 - GOAP的基础模型DeepSeek-VL-1.3B参数量较小，扩展到更大的MLLM是否能进一步提升尚未探索
 - 数据生成依赖现有策略（STEVE-1）的能力，对于STEVE-1无法完成的任务无法生成训练数据
 - 训练需要8张L40 GPU约2天，对计算资源有一定要求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Observation to Action: Latent Action-based Primitive Segmentation for VLA Pre-training in Industrial Settings](../../CVPR2026/multimodal_vlm/from_observation_to_action_latent_action-based_primitive_segmentation_for_vla_pr.md)
+- [Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](../../ICCV2025/multimodal_vlm/dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
+- [HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios](homesafe-bench_evaluating_vision-language_models_on_unsafe_action_detection_for_.md)
+- [GoalLadder: Incremental Goal Discovery with Vision-Language Models](../../NeurIPS2025/multimodal_vlm/goalladder_incremental_goal_discovery_with_vision-language_models.md)
+- [MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning](../../ICCV2025/multimodal_vlm/mmat1m_a_large_reasoning_dataset_for_multimodal_agent_tuning.md)
+
+<!-- RELATED:END -->

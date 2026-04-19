@@ -203,3 +203,15 @@ $$\mathcal{J}_{GRPO}(\theta) = \min\left(\frac{\pi_\theta(o_i|q)}{\pi_{\theta_{o
 - 实验充分度: ⭐⭐⭐⭐⭐ — 离线评估+消融+跨数据集泛化+真实业务部署，非常完整
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐⭐ — 解决了推荐系统中长期被忽视但极其重要的负反馈理解问题，具有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling](semi-supervised_synthetic_data_generation_with_fine-grained_relevance_control_fo.md)
+- [Tokenize Once, Recommend Anywhere: Unified Item Tokenization for Multi-domain LLM-based Recommendation](tokenize_once_recommend_anywhere_unified_item_tokenization_for_multi-domain_llm-.md)
+- [GRAM: Generative Recommendation via Semantic-aware Multi-granular Late Fusion](../../ACL2025/recommender/gram_generative_recommendation.md)
+- [Length-Adaptive Interest Network for Balancing Long and Short Sequence Modeling in CTR Prediction](length-adaptive_interest_network_for_balancing_long_and_short_sequence_modeling_.md)
+- [Preference is More Than Comparisons: Rethinking Dueling Bandits with Augmented Human Feedback](preference_is_more_than_comparisons_rethinking_dueling_bandits_with_augmented_hu.md)
+
+<!-- RELATED:END -->

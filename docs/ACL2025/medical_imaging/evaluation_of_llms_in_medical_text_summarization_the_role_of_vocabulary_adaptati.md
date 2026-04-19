@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 360 种评估组合，4 个模型 × 3 数据集 × 5 场景 × 多策略，极其全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构化 RQ 分析清晰，表格丰富
 - **价值**: ⭐⭐⭐⭐ — 揭示了 LLM 在医学领域的 tokenization 瓶颈，对实际应用有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge](biore_llm_judge_evaluation.md)
+- [Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs](../../NeurIPS2025/medical_imaging/shallow_robustness_deep_vulnerabilities_multi-turn_evaluation_of_medical_llms.md)
+- [Faithful Summarization of Consumer Health Queries: A Cross-Lingual Framework with LLMs](../../NeurIPS2025/medical_imaging/faithful_summarization_of_consumer_health_queries_a_cross-lingual_framework_with.md)
+- [Protein Design with Dynamic Protein Vocabulary](../../NeurIPS2025/medical_imaging/protein_design_with_dynamic_protein_vocabulary.md)
+- [CSTRL: Context-Driven Sequential Transfer Learning for Abstractive Radiology Report Summarization](cstrl_context-driven_sequential_transfer_learning_for_abstractive_radiology_repo.md)
+
+<!-- RELATED:END -->

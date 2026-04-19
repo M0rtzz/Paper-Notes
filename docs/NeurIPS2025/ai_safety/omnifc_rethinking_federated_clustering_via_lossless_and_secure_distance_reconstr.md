@@ -122,3 +122,15 @@ OmniFC 包含三个步骤：（1）Local Lagrange-Encoded Sharing：每个客户
 - 实验充分度: ⭐⭐⭐⭐ 7 数据集 × 5 Non-IID 水平 × 7 聚类算法，覆盖全面；但缺乏大规模数据实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，定理和证明完整
 - 价值: ⭐⭐⭐⭐ 联邦聚类的新范式，距离矩阵思路可推广到联邦图学习
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reconstruction and Secrecy under Approximate Distance Queries](reconstruction_and_secrecy_under_approximate_distance_queries.md)
+- [Unifying Proportional Fairness in Centroid and Non-Centroid Clustering](unifying_proportional_fairness_in_centroid_and_non-centroid_clustering.md)
+- [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
+- [SecEmb: Sparsity-Aware Secure Federated Learning of On-Device Recommender System with Large Embedding](../../ICML2025/ai_safety/secemb_sparsity-aware_secure_federated_learning_of_on-device_recommender_system_.md)
+- [Backdoor Mitigation by Distance-Driven Detoxification](../../ICCV2025/ai_safety/backdoor_mitigation_by_distance-driven_detoxification.md)
+
+<!-- RELATED:END -->

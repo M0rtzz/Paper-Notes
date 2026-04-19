@@ -180,3 +180,15 @@ $$R(s_t, \pi(s_{t-1})) = C_\pi(T_{\text{step}} \cdot (t+1)) - C_\pi(T_{\text{ste
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stochastic Encodings for Active Feature Acquisition](stochastic_encodings_for_active_feature_acquisition.md)
+- [Learning Mean Field Control on Sparse Graphs](learning_mean_field_control_on_sparse_graphs.md)
+- [SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models](sensei_semantic_exploration_guided_by_foundation_models_to_learn_versatile_world.md)
+- [APPLE: Toward General Active Perception via Reinforcement Learning](../../ICLR2026/reinforcement_learning/apple_toward_general_active_perception_via_reinforcement_learning.md)
+- [Shift Before You Learn: Enabling Low-Rank Representations in Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/shift_before_you_learn_enabling_low-rank_representations_in_reinforcement_learni.md)
+
+<!-- RELATED:END -->

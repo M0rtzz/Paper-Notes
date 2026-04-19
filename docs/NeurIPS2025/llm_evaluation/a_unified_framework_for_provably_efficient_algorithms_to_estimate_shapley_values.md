@@ -144,3 +144,15 @@ Shapley 值 → 约束回归问题 (Eq.1.2)
 - 实验充分度: ⭐⭐⭐⭐ — 8 个表格数据集 + 2 个图像数据集，100 种子，多指标对比
 - 写作质量: ⭐⭐⭐⭐ — 符号系统清晰，理论与实验组织良好
 - 价值: ⭐⭐⭐⭐ — 为 XAI 社区最常用工具提供理论依据，具有实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing](../../ICML2025/llm_evaluation/provably_cost-sensitive_adversarial_defense_via_randomized_smoothing.md)
+- [READoc: A Unified Benchmark for Realistic Document Structured Extraction](../../ACL2025/llm_evaluation/readoc_a_unified_benchmark_for_realistic_document_structured_extraction.md)
+- [HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
+- [TUMLU: A Unified and Native Language Understanding Benchmark for Turkic Languages](../../ACL2025/llm_evaluation/tumlu_a_unified_and_native_language_understanding_benchmark_for_turkic_languages.md)
+- [PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory](../../ACL2025/llm_evaluation/papersplease_a_benchmark_for_evaluating_motivational_values_of_large_language_mo.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ CIFAR-100 / ImageNet 上的 ECE (Expected Calibration Error)↓：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多方法对比、充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，理论+实验结合优秀
 - 价值: ⭐⭐⭐⭐⭐ 校准是可信AI的关键问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Diffusion Model Guidance through Calibration and Regularization](../../NeurIPS2025/image_generation/enhancing_diffusion_model_guidance_through_calibration_and_regularization.md)
+- [Beyond Bradley-Terry Models: A General Preference Model for Language Model Alignment](beyond_bradley-terry_models_a_general_preference_model_for_language_model_alignm.md)
+- [Towards a Mechanistic Explanation of Diffusion Model Generalization](towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [Direct Discriminative Optimization: Your Likelihood-Based Visual Generative Model is also a GAN Discriminator](direct_discriminative_optimization_your_likelihood-based_visual_generative_model.md)
+
+<!-- RELATED:END -->

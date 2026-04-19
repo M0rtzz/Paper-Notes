@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 与单图方法和 NeRF 方法都进行了全面对比，消融实验覆盖所有组件
 - 写作质量: ⭐⭐⭐⭐ 问题分解清晰，方法描述层次分明
 - 价值: ⭐⭐⭐⭐ 在泛化性和质量之间取得了良好平衡，具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)
+- [TalkingGaussian: Structure-Persistent 3D Talking Head Synthesis via Gaussian Splatting](talkinggaussian_structure-persistent_3d_talking_head_synthesis_via_gaussian_spla.md)
+- [Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
+- [Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation](mesh2nerf_direct_mesh_supervision_for_neural_radiance_field_representation_and_g.md)
+- [Invertible Neural Warp for NeRF](invertible_neural_warp_for_nerf.md)
+
+<!-- RELATED:END -->

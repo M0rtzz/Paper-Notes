@@ -117,3 +117,15 @@ $$\mathcal{L}_{\text{MM}} = \lambda \cdot \mathcal{L}_{\text{SIGReg}}(\mathbf{Z}
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、多种基线、详细消融、计算效率分析；但训练epoch短、模型规模小
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，实验设置透明（from-scratch），消融有说服力
 - 价值: ⭐⭐⭐⭐ 对多模态自监督领域提供了高效融合范式，但实际部署价值待在更大规模验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection](ccf_complementary_collaborative_fusion_for_domain_generalized_multi-modal_3d_obj.md)
+- [Towards Balanced Multi-Modal Learning in 3D Human Pose Estimation](towards_balanced_multi_modal_learning_in_3d_human_pose_estimation.md)
+- [Dual-branch Spatial-Temporal Self-supervised Representation for Enhanced Road Network Learning](../../AAAI2026/autonomous_driving/dual-branch_spatial-temporal_self-supervised_representation_for_enhanced_road_ne.md)
+- [TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR](terraseg_self-supervised_ground_segmentation_for_any_lidar.md)
+- [Self-Supervised Sparse Sensor Fusion for Long Range Perception](../../ICCV2025/autonomous_driving/self-supervised_sparse_sensor_fusion_for_long_range_perception.md)
+
+<!-- RELATED:END -->

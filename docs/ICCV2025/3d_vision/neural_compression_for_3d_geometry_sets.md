@@ -129,3 +129,15 @@ $$\mathcal{L}(\widehat{\mathbf{V}}_i, \mathbf{V}_i) = \|\widehat{\mathbf{V}}_i -
 - 技术深度: ⭐⭐⭐⭐ (两阶段设计完整,量化感知训练)
 - 实验充分度: ⭐⭐⭐⭐⭐ (四个数据集,全面消融)
 - 实用价值: ⭐⭐⭐⭐ (900x压缩比,支持动态添加)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LINR-PCGC: Lossless Implicit Neural Representations for Point Cloud Geometry Compression](linr-pcgc_lossless_implicit_neural_representations_for_point_cloud_geometry_comp.md)
+- [Geometry Distributions](geometry_distributions.md)
+- [Compression of 3D Gaussian Splatting with Optimized Feature Planes and Standard Video Codecs](compression_of_3d_gaussian_splatting_with_optimized_feature_planes_and_standard_.md)
+- [Learning 3D Scene Analogies with Neural Contextual Scene Maps](learning_3d_scene_analogies_with_neural_contextual_scene_maps.md)
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+
+<!-- RELATED:END -->

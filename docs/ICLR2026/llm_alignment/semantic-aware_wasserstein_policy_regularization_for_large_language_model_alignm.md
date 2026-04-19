@@ -117,3 +117,15 @@ WPR 将标准 RLHF 目标中的 KL 正则化项替换为熵正则化 Wasserstein
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个任务×七种散度对比，多模型规模，代码生成，完整消融和分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，直觉解释到位，案例分析精彩
 - 价值: ⭐⭐⭐⭐⭐ 对RLHF正则化的根本性改进，有望成为新标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Understanding Valuable Preference Data for Large Language Model Alignment](towards_understanding_valuable_preference_data_for_large_language_model_alignmen.md)
+- [GuardAlign: Test-time Safety Alignment in Multimodal Large Language Models](guardalign_test-time_safety_alignment_in_multimodal_large_language_models.md)
+- [Chasing the Tail: Effective Rubric-based Reward Modeling for Large Language Model Post-Training](chasing_the_tail_effective_rubric-based_reward_modeling_for_large_language_model.md)
+- [GVPO: Group Variance Policy Optimization for Large Language Model Post-Training](../../NeurIPS2025/llm_alignment/gvpo_group_variance_policy_optimization_for_large_language_model_post-training.md)
+- [Unifying Stable Optimization and Reference Regularization in RLHF (DAR)](unifying_stable_optimization_and_reference_regularization_in_rlhf.md)
+
+<!-- RELATED:END -->

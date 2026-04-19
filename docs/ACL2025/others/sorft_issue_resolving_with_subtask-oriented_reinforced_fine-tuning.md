@@ -116,3 +116,15 @@ SoRFT 包含三个核心部分：
 - 实验: ⭐⭐⭐⭐ — 消融充分，与多个框架和基线对比公平
 - 写作: ⭐⭐⭐⭐ — 流程清晰，图示直观
 - 实用性: ⭐⭐⭐⭐⭐ — 直接降低 Issue 解决的成本，开源模型替代商业模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DoMIX: An Efficient Framework for Exploiting Domain Knowledge in Fine-Tuning](domix_an_efficient_framework_for_exploiting.md)
+- [SDD: Self-Degraded Defense against Malicious Fine-tuning](sdd_self-degraded_defense_against_malicious_fine-tuning.md)
+- [Intuitive Fine-Tuning: Towards Simplifying Alignment into a Single Process](intuitive_fine_tuning.md)
+- [AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning](aide_attribute-guided_multi-hop_data_expansion_for_data_scarcity_in_task-specifi.md)
+- [Rank, Chunk, and Expand: Lineage-Oriented Reasoning for Taxonomy Expansion](rank_chunk_and_expand_lineage-oriented_reasoning_for_taxonomy_expansion.md)
+
+<!-- RELATED:END -->

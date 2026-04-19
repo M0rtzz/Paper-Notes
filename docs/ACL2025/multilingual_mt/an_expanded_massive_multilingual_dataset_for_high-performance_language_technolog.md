@@ -156,3 +156,15 @@ HPLT v2 延续了多语言语料库不断扩大规模和覆盖范围的趋势，
 - **实用性**: ★★★★★ — 对多语言 NLP 社区价值极高
 - **实验充分度**: ★★★★★ — MLM、生成式 LM、MT 三条评估线，22 种语言人工检查
 - **写作质量**: ★★★★☆ — 结构清晰，详尽但略显冗长
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LangMark: A Multilingual Dataset for Automatic Post-Editing](langmark_a_multilingual_dataset_for_automatic_post-editing.md)
+- [Towards Global AI Inclusivity: A Large-Scale Multilingual Terminology Dataset (GIST)](towards_global_ai_inclusivity_a_large-scale_multilingual_terminology_dataset_gis.md)
+- [M3FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset](m3finmeeting_a_multilingual_multi-sector_and_multi-task_financial_meeting_unders.md)
+- [Zero-Shot Performance Prediction for Probabilistic Scaling Laws](../../NeurIPS2025/multilingual_mt/zero-shot_performance_prediction_for_probabilistic_scaling_laws.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+
+<!-- RELATED:END -->

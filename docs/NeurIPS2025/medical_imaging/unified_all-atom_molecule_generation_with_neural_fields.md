@@ -136,3 +136,15 @@ $$\hat{z}_\theta(y|z^{tar}, \sigma, c) = \frac{1}{\sigma^2+1}y + \frac{\sigma}{\
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三模态全面评估 + 湿实验验证 + 新数据集贡献
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，技术描述完整
 - **价值**: ⭐⭐⭐⭐⭐ 统一分子生成框架具有重要实际意义，湿实验结果增强说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number](prior-guided_flow_matching_for_target-aware_molecule_design_with_learnable_atom_.md)
+- [Geometric Representation Condition Improves Equivariant Molecule Generation](../../ICML2025/medical_imaging/geometric_representation_condition_improves_equivariant_molecule_generation.md)
+- [FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](../../CVPR2025/medical_imaging/ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/medical_imaging/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [NePhi: Neural Deformation Fields for Approximately Diffeomorphic Medical Image Registration](../../ECCV2024/medical_imaging/textttnephi_neural_deformation_fields_for_approximately_diff.md)
+
+<!-- RELATED:END -->

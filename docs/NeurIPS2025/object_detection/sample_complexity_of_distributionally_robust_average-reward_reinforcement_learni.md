@@ -136,3 +136,15 @@ $$\widetilde{O}\left(|S||A| \cdot t_{\mathrm{minorize}}^2 \cdot \mathfrak{p}_\we
 - 实验充分度: ⭐⭐⭐ — 仅在简单Hard MDP上验证，缺乏更大规模和实际应用实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论体系完整，上下文引用详尽
 - 价值: ⭐⭐⭐⭐ — 填补重要理论空白，但强假设限制了实际适用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Complexity of Finding Local Optima in Contrastive Learning](the_complexity_of_finding_local_optima_in_contrastive_learning.md)
+- [Diffusion-Classifier Synergy: Reward-Aligned Learning via Mutual Boosting Loop for FSCIL](diffusion-classifier_synergy_reward-aligned_learning_via_mutual_boosting_loop_fo.md)
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+- [Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward](../../AAAI2026/object_detection/actor-critic_for_continuous_action_chunks_a_reinforcement_le.md)
+- [Robust Hallucination Detection in LLMs via Adaptive Token Selection](robust_hallucination_detection_in_llms_via_adaptive_token_selection.md)
+
+<!-- RELATED:END -->

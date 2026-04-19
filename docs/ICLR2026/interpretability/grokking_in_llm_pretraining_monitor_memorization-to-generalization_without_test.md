@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 域 × 多数据组 + 层级分析 + 理论支撑，但仅 1 个模型
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机推导严谨，发现的逐步揭示非常引人入胜
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 训练动态理解的根本性贡献+实用的泛化监控工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
+- [Semantic Regexes: Auto-Interpreting LLM Features with a Structured Language](semantic_regexes_auto-interpreting_llm_features_with_a_structured_language.md)
+- [Inside-Out: Measuring Generalization in Vision Transformers Through Inner Workings](../../CVPR2026/interpretability/inside-out_measuring_generalization_in_vision_transformers_through_inner_working.md)
+- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](../../NeurIPS2025/interpretability/born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
+- [Probing the Geometry of Truth: Consistency and Generalization of Truth Directions](../../ACL2025/interpretability/probing_the_geometry_of_truth_consistency_and_generalization_of_truth_directions.md)
+
+<!-- RELATED:END -->

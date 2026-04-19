@@ -156,3 +156,15 @@ SCOPE 提出了一种背景引导的原型丰富化框架用于增量少样本 3
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、消融充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰
 - 价值: ⭐⭐⭐⭐ 对 3D 增量少样本学习有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Functionality Understanding and Segmentation in 3D Scenes](functionality_understanding_and_segmentation_in_3d_scenes.md)
+- [3D Dental Model Segmentation with Geometrical Boundary Preserving](3d_dental_model_segmentation_with_geometrical_boundary_preserving.md)
+- [BFANet: Revisiting 3D Semantic Segmentation with Boundary Feature Analysis](bfanet_revisiting_3d_semantic_segmentation_with_boundary_feature_analysis.md)
+- [Any3DIS: Class-Agnostic 3D Instance Segmentation by 2D Mask Tracking](any3dis_class-agnostic_3d_instance_segmentation_by_2d_mask_tracking.md)
+- [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
+
+<!-- RELATED:END -->

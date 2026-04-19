@@ -133,3 +133,15 @@ RadEdit 基于 DDPM 反演（inversion）和文本引导的扩散模型编辑。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个偏移场景设计精妙，强弱预测器对比令人信服，方法对比全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 论文逻辑清晰，问题动机描述充分，算法伪代码规范
 - **实用价值**: ⭐⭐⭐⭐ 对医学 AI 部署前的安全评估有重要意义，但需要人工设计测试场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Extending ZACH-ViT to Robust Medical Imaging: Corruption and Adversarial Stress Testing in Low-Data Regimes](../../CVPR2026/medical_imaging/extending_zach-vit_to_robust_medical_imaging_corruption_and_adversarial_stress_t.md)
+- [Adaptive Compressed Sensing with Diffusion-Based Posterior Sampling](adaptive_compressed_sensing_with_diffusionbased_posterior_sa.md)
+- [Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model](co-synthesis_of_histopathology_nuclei_image-label_pairs_using_a_context-conditio.md)
+- [GTP-4o: Modality-Prompted Heterogeneous Graph Learning for Omni-Modal Biomedical Representation](gtp-4o_modality-prompted_heterogeneous_graph_learning_for_omni-modal_biomedical_.md)
+- [Orochi: Versatile Biomedical Image Processor](../../NeurIPS2025/medical_imaging/orochi_versatile_biomedical_image_processor.md)
+
+<!-- RELATED:END -->

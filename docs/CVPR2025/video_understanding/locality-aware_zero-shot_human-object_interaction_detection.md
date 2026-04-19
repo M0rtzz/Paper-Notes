@@ -122,3 +122,15 @@ LAIN 是一个两阶段 HOI 检测框架：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种零样本设定 + 全监督 + 详尽消融
 - 写作质量: ⭐⭐⭐⭐⭐ 动机图清晰, 公式规范, 逻辑严密
 - 价值: ⭐⭐⭐⭐ CLIP 适配范式具有通用参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VDRP: Visual Diversity and Region-aware Prompt Learning for Zero-shot HOI Detection](../../NeurIPS2025/video_understanding/visual_diversity_and_region-aware_prompt_learning_for_zero-shot_hoi_detection.md)
+- [No More Sibling Rivalry: Debiasing Human-Object Interaction Detection](../../ICCV2025/video_understanding/no_more_sibling_rivalry_debiasing_human-object_interaction_detection.md)
+- [Part-Aware Bottom-Up Group Reasoning for Fine-Grained Social Interaction Detection](../../NeurIPS2025/video_understanding/part-aware_bottom-up_group_reasoning_for_fine-grained_social_interaction_detecti.md)
+- [HuMoCon: Concept Discovery for Human Motion Understanding](humocon_concept_discovery_for_human_motion_understanding.md)
+- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+
+<!-- RELATED:END -->

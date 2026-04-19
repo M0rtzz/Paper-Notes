@@ -153,3 +153,15 @@ ORPS 随计算预算增加持续提升，而 REx 出现收益递减，PRM 甚至
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5个模型、3+1个基准、详尽消融、PRM训练对比、计算成本控制实验、案例分析
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、形式化严谨、实验组织有条理
 - 价值: ⭐⭐⭐⭐ — 实际证明推理时方法可超越训练 PRM，对社区有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaptiveStep: Automatically Dividing Reasoning Step through Model Confidence](adaptivestep_automatically_dividing_reasoning_step_through_model_confidence.md)
+- [Execution-Grounded Credit Assignment for GRPO in Code Generation](../../ICLR2026/code_intelligence/execution-grounded_credit_assignment_for_grpo_in_code_generation.md)
+- [EffiCoder: Enhancing Code Generation in Large Language Models through Efficiency-Aware Fine-tuning](efficoder_enhancing_code_generation_in_large_language_models_through_efficiency-.md)
+- [EpiCoder: Encompassing Diversity and Complexity in Code Generation](epicoder_encompassing_diversity_and_complexity_in_code_generation.md)
+- [CoRe: Benchmarking LLMs' Code Reasoning Capabilities through Static Analysis Tasks](../../NeurIPS2025/code_intelligence/core_benchmarking_llms_code_reasoning_capabilities_through_static_analysis_tasks.md)
+
+<!-- RELATED:END -->

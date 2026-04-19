@@ -116,3 +116,15 @@ PartiBandits 是一个两阶段算法：
 - 实验充分度: ⭐⭐⭐⭐ 有模拟和真实数据验证，但场景较简单
 - 写作质量: ⭐⭐⭐⭐ 理论严谨清晰，但符号较多，入门门槛高
 - 价值: ⭐⭐⭐⭐ 理论贡献扎实，对调查抽样和医疗公平领域有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
+- [Robust Estimation Under Heterogeneous Corruption Rates](robust_estimation_under_heterogeneous_corruption_rates.md)
+- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
+- [On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts](on_minimax_estimation_of_parameters_in_softmax-contaminated_mixture_of_experts.md)
+- [A Unified View on Learning Unnormalized Distributions via Noise-Contrastive Estimation](../../ICML2025/optimization/a_unified_view_on_learning_unnormalized_distributions_via_noise-contrastive_esti.md)
+
+<!-- RELATED:END -->

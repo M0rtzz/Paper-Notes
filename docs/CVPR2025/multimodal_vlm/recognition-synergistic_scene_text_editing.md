@@ -130,3 +130,15 @@ $$\mathcal{L}^{cyc} = \lambda_4 \mathcal{L}_{mse}^{cyc} + \lambda_5 \mathcal{L}_
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实+STR benchmark+下游增强全覆盖，消融极其详尽
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，实验丰富，但方法描述略偏冗长
 - 价值: ⭐⭐⭐⭐ STE 领域的 SOTA，且下游数据增强的应用使其实用价值翻倍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synergistic Prompting for Robust Visual Recognition with Missing Modalities](../../ICCV2025/multimodal_vlm/synergistic_prompting_for_robust_visual_recognition_with_missing_modalities.md)
+- [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
+- [StarVector: Generating Scalable Vector Graphics Code from Images and Text](starvector_generating_scalable_vector_graphics_code_from_images_and_text.md)
+- [CoMM: A Coherent Interleaved Image-Text Dataset for Multimodal Understanding and Generation](comm_a_coherent_interleaved_image-text_dataset_for_multimodal_understanding_and_.md)
+- [Words or Vision: Do Vision-Language Models Have Blind Faith in Text?](words_or_vision_do_vision-language_models_have_blind_faith_in_text.md)
+
+<!-- RELATED:END -->

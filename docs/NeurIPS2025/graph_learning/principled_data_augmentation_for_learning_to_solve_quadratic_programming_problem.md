@@ -164,3 +164,15 @@ $$\begin{bmatrix} \mathbf{Q} & \mathbf{A}^\top \\ \mathbf{A} & \mathbf{0} \end{b
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖监督/预训练/OOD三类场景，基线对比全面，但问题规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，变换分类系统化，实验设计合理
 - 价值: ⭐⭐⭐⭐ — 填补LP/QP数据增强空白，方法简洁实用，但应用场景需进一步拓展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](../../ICML2025/graph_learning/toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+- [Inductive Transfer Learning for Graph-Based Recommenders](inductive_transfer_learning_for_graph-based_recommenders.md)
+- [Learning Repetition-Invariant Representations for Polymer Informatics](learning_repetition-invariant_representations_for_polymer_informatics.md)
+- [MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+
+<!-- RELATED:END -->

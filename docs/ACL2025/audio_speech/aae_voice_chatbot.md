@@ -131,3 +131,15 @@ SODA 多轮对话数据集 → SAE 回复生成 → LLM 方言翻译（SAE→AAE
 - **vs Obremski et al. (2022)**：Obremski 发现口音适应对跨语言对话代理有负面影响；本文发现在方言内部口音适应反而是正面的——关键区别在于方言 vs 语言的距离
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Does Your Voice Assistant Remember? Analyzing Conversational Context Recall and Utilization in Voice Interaction Models](does_your_voice_assistant_remember_analyzing_conversational_context_recall_and_u.md)
+- [OmniFlatten: An End-to-end GPT Model for Seamless Voice Conversation](omniflatten_an_end-to-end_gpt_model_for_seamless_voice_conversation.md)
+- [Distilling an End-to-End Voice Assistant Without Instruction Training Data](distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
+- [TCSinger 2: Customizable Multilingual Zero-shot Singing Voice Synthesis](tcsinger_2_customizable_multilingual_zero-shot_singing_voice_synthesis.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+
+<!-- RELATED:END -->

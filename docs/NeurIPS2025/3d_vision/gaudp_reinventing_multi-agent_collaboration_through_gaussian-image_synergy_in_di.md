@@ -151,3 +151,15 @@ GauDP 的核心流程分为四步：
 - 实验充分度: ⭐⭐⭐⭐ 消融全面，包含仿真+真实机器人实验
 - 写作质量: ⭐⭐⭐⭐ 框架设计清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 为多智能体协作的视觉表示开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-Agent: Tri-Modal Multi-Agent Collaboration for Scalable 3D Object Annotation](3d-agenttri-modal_multi-agent_collaboration_for_scalable_3d_object_annotation.md)
+- [Scaffold Diffusion: Sparse Multi-Category Voxel Structure Generation with Discrete Diffusion](scaffold_diffusion_sparse_multi-category_voxel_structure_generation_with_discret.md)
+- [IBGS: Image-Based Gaussian Splatting](ibgs_image-based_gaussian_splatting.md)
+- [WildCAT3D: Appearance-Aware Multi-View Diffusion in the Wild](wildcat3d_appearance-aware_multi-view_diffusion_in_the_wild.md)
+- [GeoComplete: Geometry-Aware Diffusion for Reference-Driven Image Completion](geocomplete_geometry-aware_diffusion_for_reference-driven_image_completion.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ $$\frac{t_{\text{sisa}}}{t_{\text{PURGE}}} = N \cdot \frac{6c^2r + 6c}{4c^2r + 3
 - 实验充分度: ⭐⭐⭐⭐ 速度和性能评估全面，理论与实验吻合良好，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，理论推导完整，图示直观
 - 价值: ⭐⭐⭐⭐ 填补了 KD+verified unlearning 的空白，对隐私合规下的模型部署有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Position: Bridge the Gaps between Machine Unlearning and AI Regulation](position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)
+- [The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples](the_unseen_threat_residual_knowledge_in_machine_unlearning_under_perturbed_sampl.md)
+- [Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research](machine_unlearning_doesnt_do_what_you_think_lessons_for_generative_ai_policy_and.md)
+- [Self-Refining Language Model Anonymizers via Adversarial Distillation](self-refining_language_model_anonymizers_via_adversarial_distillation.md)
+
+<!-- RELATED:END -->

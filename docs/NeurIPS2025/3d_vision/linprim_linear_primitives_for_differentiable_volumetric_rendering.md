@@ -138,3 +138,15 @@ LinPrim 建立在3DGS的pipeline之上，替换了核心的场景表示和渲染
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、两种基元、MCMC对比，消融较全
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，方法推导严谨，讨论诚实
 - 价值: ⭐⭐⭐⭐ 拓展了3D表示设计空间，但性能尚未超越3DGS
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UTrice: Unifying Primitives in Differentiable Ray Tracing and Rasterization via Triangles for Particle-Based 3D Scenes](../../CVPR2026/3d_vision/utrice_unifying_primitives_in_differentiable_ray_tracing_and_rasterization_via_t.md)
+- [UMAMI: Unifying Masked Autoregressive Models and Deterministic Rendering for View Synthesis](umami_unifying_masked_autoregressive_models_and_deterministic_rendering_for_view.md)
+- [DynaRend: Learning 3D Dynamics via Masked Future Rendering for Robotic Manipulation](dynarend_learning_3d_dynamics_via_masked_future_rendering_for_robotic_manipulati.md)
+- [3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes](../../CVPR2025/3d_vision/3d_convex_splatting_radiance_field_rendering_with_3d_smooth_convexes.md)
+- [Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization](../../CVPR2025/3d_vision/evolving_high-quality_rendering_and_reconstruction_in_a_unified_framework_with_c.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ MITRA 的工作流程分为**离线数据库创建**和**在线推理**两部分
 - 实验充分度: ⭐⭐⭐ 检索评估完整且对比清晰，但查询数量少、缺乏生成质量评估和用户研究
 - 写作质量: ⭐⭐⭐⭐ 系统描述清晰，动机充分，问题定位准确
 - 价值: ⭐⭐⭐ 对大型科学协作组有直接实用价值，但技术贡献和评估深度对 NeurIPS 标准稍显不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](../../CVPR2025/information_retrieval/lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
+- [Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval](mind_the_gap_aligning_knowledge_bases_with_user_needs_to_enhance_mental_health_r.md)
+- [HybGRAG: Hybrid Retrieval-Augmented Generation on Textual and Relational Knowledge Bases](../../ACL2025/information_retrieval/hybgrag_hybrid_rag_skb.md)
+- [Parenting: Optimizing Knowledge Selection of Retrieval-Augmented Language Models with Parameter Decoupling and Tailored Tuning](../../ACL2025/information_retrieval/parenting_optimizing_knowledge_selection_of_retrievalaugmented.md)
+- [SeaKR: Self-aware Knowledge Retrieval for Adaptive Retrieval Augmented Generation](../../ACL2025/information_retrieval/seakr_self-aware_knowledge_retrieval_for_adaptive_retrieval_augmented_generation.md)
+
+<!-- RELATED:END -->

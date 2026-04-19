@@ -184,3 +184,15 @@ G-Sim-SBI 在全部三个环境中均取得最佳性能，特别是在复杂的 
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Correlated Errors in Large Language Models](correlated_errors_in_large_language_models.md)
+- [Generative Zoo](../../ICCV2025/llm_evaluation/generative_zoo.md)
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](../../ACL2025/llm_evaluation/codemenv_benchmarking_large_language_models_on_code_migration.md)
+- [Can Large Language Models Master Complex Card Games?](../../NeurIPS2025/llm_evaluation/can_large_language_models_master_complex_card_games.md)
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](../../ACL2025/llm_evaluation/batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+
+<!-- RELATED:END -->

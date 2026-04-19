@@ -163,3 +163,15 @@ DSD 的核心优势之一是**完全不需要训练或微调**：
 - 实验充分度: ⭐⭐⭐ — 覆盖5个基准和2个主流模型，但仅限8B规模，缺少大规模和长文本评测
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，理论分析与实验结合良好，Roofline 分析直观
 - 价值: ⭐⭐⭐⭐ — 去中心化推理日益重要，DSD 的即插即用特性和无训练开销使其具有很高的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Traversal Verification for Speculative Tree Decoding](../../NeurIPS2025/model_compression/traversal_verification_for_speculative_tree_decoding.md)
+- [Gumiho: A Hybrid Architecture to Prioritize Early Tokens in Speculative Decoding](gumiho_a_hybrid_architecture_to_prioritize_early_tokens_in_speculative_decoding.md)
+- [VocabTrim: Vocabulary Pruning for Efficient Speculative Decoding in LLMs](vocabtrim_vocabulary_pruning_for_efficient_speculative_decoding_in_llms.md)
+- [Steering Pretrained Drafters during Speculative Decoding](../../AAAI2026/model_compression/steering_pretrained_drafters_during_speculative_decoding.md)
+- [CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs](../../NeurIPS2025/model_compression/casspec_cascade_adaptive_selfspeculative_decoding_for_onthef.md)
+
+<!-- RELATED:END -->

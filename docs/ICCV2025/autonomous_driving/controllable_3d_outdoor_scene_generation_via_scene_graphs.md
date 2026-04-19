@@ -123,3 +123,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 消融全面（辅助任务/训练策略/无条件比例/用户研究），但仅一个模拟数据集
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，图示直观，管线易于理解
 - **对我的价值**: ⭐⭐⭐ 场景图→3D生成的范式有启发，但与当前研究方向距离稍远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation](hermes_a_unified_self-driving_world_model_for_simultaneous_3d_scene_understandin.md)
+- [Decoupled Diffusion Sparks Adaptive Scene Generation](decoupled_diffusion_sparks_adaptive_scene_generation.md)
+- [DiST-4D: Disentangled Spatiotemporal Diffusion with Metric Depth for 4D Driving Scene Generation](dist-4d_disentangled_spatiotemporal_diffusion_with_metric_depth_for_4d_driving_s.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](../../NeurIPS2025/autonomous_driving/x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+- [EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding](embodiedocc_embodied_3d_occupancy_prediction_for_vision-based_online_scene_under.md)
+
+<!-- RELATED:END -->

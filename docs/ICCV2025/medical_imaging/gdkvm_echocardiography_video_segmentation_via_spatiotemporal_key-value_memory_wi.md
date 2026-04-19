@@ -153,3 +153,15 @@ GDR 内部消融（状态更新策略）：
 - **实验充分度**: ⭐⭐⭐⭐ 两个数据集 + 临床指标 + 详细消融 + 可视化分析
 - **写作质量**: ⭐⭐⭐⭐ 方法推导清晰，从 softmax attention 到线性化的推导自然流畅
 - **价值**: ⭐⭐⭐⭐ 实时高精度的超声分割对临床应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation](../../CVPR2026/medical_imaging/t-gated_adapter_a_lightweight_temporal_adapter_for_vision-language_medical_segme.md)
+- [PVChat: Personalized Video Chat with One-Shot Learning](pvchat_personalized_video_chat_with_one-shot_learning.md)
+- [SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)
+- [ProGait: A Multi-Purpose Video Dataset and Benchmark for Transfemoral Prosthesis Users](progait_a_multi-purpose_video_dataset_and_benchmark_for_transfemoral_prosthesis_.md)
+- [Progressive Test Time Energy Adaptation for Medical Image Segmentation](progressive_test_time_energy_adaptation_for_medical_image_segmentation.md)
+
+<!-- RELATED:END -->

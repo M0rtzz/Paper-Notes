@@ -180,3 +180,15 @@ $$\Delta \operatorname{EF}(e_f) \coloneq |\operatorname{EF}(\nabla f) - \operato
 - **实验充分度**: ⭐⭐⭐⭐ — 跨数据集、跨架构验证充分，消融实验覆盖深度、学习率等多种因素
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学推导严谨，叙述清晰，理论与实验紧密结合
 - **价值**: ⭐⭐⭐⭐ — 为可解释性社区提供了重要的分析工具，但实际应用场景有待进一步拓展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training](failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per.md)
+- [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](../../NeurIPS2025/others/the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
+- [Enhancing the Comprehensibility of Text Explanations via Unsupervised Concept Discovery](../../ACL2025/others/enhancing_the_comprehensibility_of_text_explanations_via_unsupervised_concept_di.md)
+- [Statistical Inference for Gradient Boosting Regression](../../NeurIPS2025/others/statistical_inference_for_gradient_boosting_regression.md)
+- [The Parameterized Complexity of Computing the VC-Dimension](../../NeurIPS2025/others/the_parameterized_complexity_of_computing_the_vc-dimension.md)
+
+<!-- RELATED:END -->

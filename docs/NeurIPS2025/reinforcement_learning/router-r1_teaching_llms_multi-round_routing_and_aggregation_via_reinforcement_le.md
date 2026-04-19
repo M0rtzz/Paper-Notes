@@ -149,3 +149,15 @@ Router-R1 在全部 7 个数据集上超越所有基线，平均精确匹配 0.4
 - **实验充分度**: ⭐⭐⭐⭐ 7 个基准 + 成本分析 + 泛化实验 + 训练动态分析 + 两个基模型
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式简洁，实验设计合理
 - **价值**: ⭐⭐⭐⭐ 为 LLM 路由提供了新方向，成本感知路由和零样本泛化具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics](robot-r1_reinforcement_learning_for_enhanced_embodied_reasoning_in_robotics.md)
+- [MTL-KD: Multi-Task Learning Via Knowledge Distillation for Generalizable Neural Vehicle Routing Solver](mtl-kd_multi-task_learning_via_knowledge_distillation_for_generalizable_neural_v.md)
+- [Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](teaching_language_models_to_evolve_with_users_dynamic_profile_modeling_for_perso.md)
+- [The Challenge of Teaching Reasoning to LLMs Without RL or Distillation](../../ICML2025/reinforcement_learning/the_challenge_of_teaching_reasoning_to_llms_without_rl_or_distillation.md)
+- [Routing, Cascades, and User Choice for LLMs](../../ICLR2026/reinforcement_learning/routing_cascades_and_user_choice_for_llms.md)
+
+<!-- RELATED:END -->

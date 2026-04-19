@@ -121,3 +121,15 @@ EmbQA 比 SuRe 平均 EM 高 +4.1，F1 高 +4.4
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个 LLM × 3 个检索器 × 4 个数据集，含详细消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述详细，理论分析有深度
 - 价值: ⭐⭐⭐⭐ 实用的 RAG 效率提升方案，嵌入级操作思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA](hierarchical_retrieval_with_evidence_curation_for_open-domain_financial_question.md)
+- [iQUEST: An Iterative Question-Guided Framework for Knowledge Base Question Answering](iquest_an_iterative_question-guided_framework_for_knowledge_base_question_answer.md)
+- [Towards a More Generalized Approach in Open Relation Extraction](generalized_open_relation_extract.md)
+- [A Comprehensive Graph Framework for Question Answering with Mode-Seeking Preference Alignment](a_comprehensive_graph_framework_for_question_answering_with_mode-seeking_prefere.md)
+- [BELLE: A Bi-Level Multi-Agent Reasoning Framework for Multi-Hop Question Answering](belle_a_bi-level_multi-agent_reasoning_framework_for_multi-hop_question_answerin.md)
+
+<!-- RELATED:END -->

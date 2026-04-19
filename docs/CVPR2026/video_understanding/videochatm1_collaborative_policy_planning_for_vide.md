@@ -183,3 +183,15 @@ $$\max_{\pi_\theta} \mathbb{E}_{o \sim \pi_{\theta_{\text{old}}}} \left[ \sum_{k
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个 benchmark × 4 个任务类型 + 丰富消融（agent 数量/异构性/奖励组件/训练阶段/决策机制）
 - 写作质量: ⭐⭐⭐⭐ 整体清晰，方法-实验逻辑连贯，表格略多但信息量大
 - 价值: ⭐⭐⭐⭐⭐ 37B 参数超越 GPT-4o 和 235B 级模型，提供了多 agent 视频理解的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Assist: Physics-Grounded Human-Human Control via Multi-Agent Reinforcement Learning](learning_to_assist_physics-grounded_human-human_control_via_multi-agent_reinforc.md)
+- [LensWalk: Agentic Video Understanding by Planning How You See in Videos](lenswalk_agentic_video_understanding_by_planning_how_you_see_in_videos.md)
+- [A4VL: A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](a4vl_multiagent_long_video_reasoning.md)
+- [TrajTok: Learning Trajectory Tokens Enhances Video Understanding](trajtok_trajectory_token_video_understanding.md)
+- [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](../../ICLR2026/video_understanding/stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
+
+<!-- RELATED:END -->

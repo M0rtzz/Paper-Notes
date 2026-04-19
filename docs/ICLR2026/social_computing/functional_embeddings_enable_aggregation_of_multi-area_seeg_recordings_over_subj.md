@@ -104,3 +104,15 @@ FunctionalMap 分两阶段：
 - 实验充分度: ⭐⭐⭐⭐ 模拟验证 + 真实数据 + 多层消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ 对临床神经科学和 BCI 有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distribution-Aware Robust Learning from Long-Tailed Data with Noisy Labels](../../ECCV2024/social_computing/distribution-aware_robust_learning_from_long-tailed_data_with_noisy_labels.md)
+- [Scalable Multi-Task Low-Rank Model Adaptation](scalable_multi-task_low-rank_model_adaptation.md)
+- [Stop Wasting Your Tokens: Towards Efficient Runtime Multi-Agent Systems](stop_wasting_your_tokens_towards_efficient_runtime_multi-agent_systems.md)
+- [Learning from Synthetic Data via Provenance-Based Input Gradient Guidance](../../CVPR2026/social_computing/learning_from_synthetic_data_via_provenance-based_input_gradient_guidance.md)
+- [GRADIEND: Feature Learning within Neural Networks Exemplified through Biases](gradiend_feature_learning_within_neural_networks_exemplified_through_biases.md)
+
+<!-- RELATED:END -->

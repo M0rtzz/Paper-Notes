@@ -78,3 +78,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ CIFAR-10/ImageNet/风格遗忘多场景
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 为 CLIP 隐私合规提供了实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Logits DeConfusion with CLIP for Few-Shot Learning](logits_deconfusion_with_clip_for_few-shot_learning.md)
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](mambaic_state_space_models_for_high-performance_learned_image_compression.md)
+- [Layered Image Vectorization via Semantic Simplification](layered_image_vectorization_via_semantic_simplification.md)
+- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+- [Improving Zero-Shot Generalization for CLIP with Variational Adapter](../../ECCV2024/model_compression/improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
+
+<!-- RELATED:END -->

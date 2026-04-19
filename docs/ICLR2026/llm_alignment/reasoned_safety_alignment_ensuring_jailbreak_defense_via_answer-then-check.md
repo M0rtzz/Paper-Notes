@@ -156,3 +156,15 @@ tags:
 - 新颖性: ⭐⭐⭐⭐ 中间安全推理的新范式
 - 实验充分度: ⭐⭐⭐⭐⭐ 13种方法对比
 - 价值: ⭐⭐⭐⭐⭐ LLM安全的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SafePTR: Token-Level Jailbreak Defense in Multimodal LLMs via Prune-then-Restore Mechanism](../../NeurIPS2025/llm_alignment/safeptr_token-level_jailbreak_defense_in_multimodal_llms_via_prune-then-restore_.md)
+- [Superficial Safety Alignment Hypothesis](superficial_safety_alignment_hypothesis.md)
+- [Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models](../../CVPR2026/llm_alignment/principled_steering_via_null-space_projection_for_jailbreak_defense_in_vision-la.md)
+- [AlignTree: Efficient Defense Against LLM Jailbreak Attacks](../../AAAI2026/llm_alignment/aligntree_efficient_defense_against_llm_jailbreak_attacks.md)
+- [A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models](a2d_any-order_any-step_safety_alignment_for_diffusion_language_models.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ $$\mathcal{L}_{\text{PPO}} = -\mathbb{E}_{m \sim p_\theta}\left[\min\left(r(m) \
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3 数据集、5 基线、16 种替代多目标策略消融、3 组件消融、3 扩散架构对比、MD+ADMET 验证
 - 写作质量: ⭐⭐⭐⭐ — 结构完整、公式推导清晰，但内容量大导致主文较为密集
 - 价值: ⭐⭐⭐⭐ — 对 RL 引导分子生成和多目标药物设计均有实用价值，MD/ADMET 验证增强了实际可信度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
+- [Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
+- [Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
+- [UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](../../ICML2025/medical_imaging/unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
+- [De novo generation of functional terpene synthases using TpsGPT](de_novo_generation_of_functional_terpene_synthases_using_tpsgpt.md)
+
+<!-- RELATED:END -->

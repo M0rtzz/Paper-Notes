@@ -121,3 +121,15 @@ SceneFun3D 数据集上的 affordance grounding + motion estimation
 - 实验充分度: ⭐⭐⭐⭐ 多 MLLM 对比、逐组件消融、逐类型分析全面
 - 写作质量: ⭐⭐⭐⭐ 图表设计精美，方法叙述清晰
 - 价值: ⭐⭐⭐⭐ 为具身智能的细粒度操作推理开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Chain of Step Reasoning for Vision-Language Models with Fine-grained Rewards](unveiling_chain_of_step_reasoning_for_visionlanguage_models.md)
+- [Visual-Oriented Fine-Grained Knowledge Editing for MultiModal Large Language Models](../../ICCV2025/multimodal_vlm/visual-oriented_fine-grained_knowledge_editing_for_multimodal_large_language_mod.md)
+- [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
+- [PhysVLM-AVR: Active Visual Reasoning for Multimodal Large Language Models in Physical Environments](physvlm-avr_active_visual_reasoning_for_multimodal_large_language_models_in_phys.md)
+- [Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models](situat3dchange_situated_3d_change_understanding_dataset_for_multimodal_large_lan.md)
+
+<!-- RELATED:END -->

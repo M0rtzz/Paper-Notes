@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ (22 个基准覆盖 8 种域差距，与 10+ 方法对比，消融实验覆盖数据/MoE/学习率/专家数量/物理描述符)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，问题定义精准，可视化丰富；论文较长但信息密度高)
 - 价值: ⭐⭐⭐⭐⭐ (填补 SAR 域泛化基础模型空白，提供数据集+基准+模型全栈贡献，开源代码和数据)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+- [Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](prompt-driven_lightweight_foundation_model_for_instance_segmentation-based_fault.md)
+- [Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning](hierarchical_compact_clustering_attention_coca_for_unsupervised_object-centric_l.md)
+- [EdgeTAM: On-Device Track Anything Model](edgetam_on-device_track_anything_model.md)
+- [SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](../../ICML2025/segmentation/stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)
+
+<!-- RELATED:END -->

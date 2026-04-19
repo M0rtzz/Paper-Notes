@@ -125,3 +125,15 @@ SpeechLM 是一个自回归基础模型，直接处理和生成语音序列 $\ma
 - 实验充分度: ⭐⭐ 纯综述无实验
 - 写作质量: ⭐⭐⭐⭐ 分类体系清晰，图表丰富（尤其 Figure 4 的分类树）
 - 价值: ⭐⭐⭐⭐⭐ 对快速发展的 SpeechLM 领域提供了急需的系统化参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Language-Codec: Bridging Discrete Codec Representations and Speech Language Models](language_codec_bridging_discrete_codec_speech_language_models.md)
+- [Locate-and-Focus: Enhancing Terminology Translation in Speech Language Models](locateandfocus_enhancing_terminology_translation_in_speech.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+
+<!-- RELATED:END -->

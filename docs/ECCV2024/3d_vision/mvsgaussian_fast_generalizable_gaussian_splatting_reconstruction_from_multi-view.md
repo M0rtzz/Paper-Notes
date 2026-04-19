@@ -87,3 +87,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、详尽消融、per-scene breakdown
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，消融分析充分
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，45秒快速优化对实际应用非常有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussReg: Fast 3D Registration with Gaussian Splatting](gaussreg_fast_3d_registration_with_gaussian_splatting.md)
+- [MuGS: Multi-Baseline Generalizable Gaussian Splatting Reconstruction](../../ICCV2025/3d_vision/mugs_multi-baseline_generalizable_gaussian_splatting_reconstruction.md)
+- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [Track Everything Everywhere Fast and Robustly](track_everything_everywhere_fast_and_robustly.md)
+
+<!-- RELATED:END -->

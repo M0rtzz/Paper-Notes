@@ -127,3 +127,15 @@ $$C = \mathcal{T}(E; \theta) = g_\theta(w(E))$$
 - 实验充分度: ⭐⭐⭐⭐ (新数据集+合成数据，消融完整，但实际场景规模偏小)
 - 写作质量: ⭐⭐⭐⭐ (框架清晰，动机阐述充分，图表质量高)
 - 价值: ⭐⭐⭐⭐ (开辟了动态 HDR 4D 重建的新方向，数据集对社区有价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mono4DGS-HDR: High Dynamic Range 4D Gaussian Splatting from Alternating-exposure Monocular Videos](mono4dgs-hdr_high_dynamic_range_4d_gaussian_splatting_from_alternating-exposure_.md)
+- [Dynamic Novel View Synthesis in High Dynamic Range](dynamic_novel_view_synthesis_in_high_dynamic_range.md)
+- [Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](../../CVPR2025/3d_vision/event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](../../CVPR2026/3d_vision/instanthdr_singleforward_gaussian_splatting_for_hi.md)
+- [Dynamic Black-hole Emission Tomography with Physics-informed Neural Fields](../../CVPR2026/3d_vision/dynamic_black-hole_emission_tomography_with_physics-informed_neural_fields.md)
+
+<!-- RELATED:END -->

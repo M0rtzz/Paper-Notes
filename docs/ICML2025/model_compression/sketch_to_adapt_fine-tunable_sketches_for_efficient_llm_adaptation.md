@@ -133,3 +133,15 @@ SpaLLM 的流程分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多模型多指标，GPR 消融详细，效率对比充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，与 QLoRA 的对比图非常直观
 - 价值: ⭐⭐⭐⭐⭐ 提出了新的压缩微调范式，在低比特场景下优势显著，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference](blockdialect_block-wise_fine-grained_mixed_format_quantization_for_energy-effici.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](../../NeurIPS2025/model_compression/data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
+
+<!-- RELATED:END -->

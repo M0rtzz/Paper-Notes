@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 14 个基准、~20 种算法变体、多维消融，极其全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、背景详尽，但部分表格太密集难以快速阅读
 - 价值: ⭐⭐⭐⭐ "bonus × 后验精度"的权衡是实用且普适的洞察，benchmark + 代码有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits](variance-aware_feel-good_thompson_sampling_for_contextual_bandits.md)
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [Ensemble++: Scalable Exploration via Ensemble](scalable_exploration_via_ensemble.md)
+- [Thompson Sampling in Function Spaces via Neural Operators](thompson_sampling_in_function_spaces_via_neural_operators.md)
+
+<!-- RELATED:END -->

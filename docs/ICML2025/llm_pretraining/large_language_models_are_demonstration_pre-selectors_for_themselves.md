@@ -164,3 +164,15 @@ $$\min_{\mathcal{D}_{\text{FEEDER}} \subseteq \mathcal{D}_{\text{TRAIN}}} |\math
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 8 种 LLM（335M~32B）、9 个数据集、6 种选择器，ICL+微调双场景
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，形式化严谨，但符号较多读起来有一定门槛
 - **价值**: ⭐⭐⭐⭐ — 实用性强，即插即用的预选模块，但核心提升在小模型上更明显
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](../../ACL2025/llm_pretraining/towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [Large Vocabulary Size Improves Large Language Models](../../ACL2025/llm_pretraining/large_vocabulary_size_improves_large_language_models.md)
+- [Scalable Fingerprinting of Large Language Models](../../NeurIPS2025/llm_pretraining/scalable_fingerprinting_of_large_language_models.md)
+- [The Curse of Depth in Large Language Models](../../NeurIPS2025/llm_pretraining/the_curse_of_depth_in_large_language_models.md)
+- [Language Models over Canonical Byte-Pair Encodings](language_models_over_canonical_byte-pair_encodings.md)
+
+<!-- RELATED:END -->

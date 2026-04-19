@@ -116,3 +116,15 @@ MagShield 作为 IMU 方向估计模块，输入 6 个 IMU 的传感器本地原
 - **实验充分度**: ⭐⭐⭐⭐ 新数据集 MagIMU 收集、两种下游系统验证、完整消融、干净环境测试
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，方法推导完整，物理机理解释到位
 - **价值**: ⭐⭐⭐⭐ 解决实际应用痛点，即插即用设计工程价值高，实时性满足需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Sparse IMU-based Motion Capture with Motion Label Smoothing](../../AAAI2026/human_understanding/improving_sparse_imu-based_motion_capture_with_motion_label_smoothing.md)
+- [Monocular Facial Appearance Capture in the Wild](monocular_facial_appearance_capture_in_the_wild.md)
+- [Enhancing Robustness of Offline RL Under Data Corruption via SAM](../../AAAI2026/human_understanding/enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)
+- [UDC-VIT: A Real-World Video Dataset for Under-Display Cameras](udc-vit_a_real-world_video_dataset_for_under-display_cameras.md)
+- [OpenAnimals: Revisiting Person Re-Identification for Animals Towards Better Generalization](openanimals_revisiting_person_re-identification_for_animals_towards_better_gener.md)
+
+<!-- RELATED:END -->

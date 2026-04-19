@@ -123,3 +123,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 5 个模型 × 5 个 benchmark + 相关性分析 + 数据集/损失函数双消融 + 多阶段训练实验
 - **写作质量**: ⭐⭐⭐⭐ 三个 RQ 层层递进，从动机验证到主实验到消融，逻辑清晰
 - **实用价值**: ⭐⭐⭐⭐ 5000 样本即可提升已对齐强模型，方法简单可复现，对代码对齐有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization](kpo_protein_safety.md)
+- [RISE: Subtle Errors in Reasoning: Preference Learning via Error-injected Self-editing](rise_error_inject_preference.md)
+- [RPO: Retrieval Preference Optimization for Robust Retrieval-Augmented Generation](rpo_retrieval_preference_optimization_for_robust_retrieval-augmented_generation.md)
+- [Dynamic Scaling of Unit Tests for Code Reward Modeling](dynamic_scaling_of_unit_tests_for_code_reward_modeling.md)
+- [g-DPO: Scalable Preference Optimization for Protein Language Models](../../NeurIPS2025/llm_alignment/g-dpo_scalable_preference_optimization_for_protein_language_models.md)
+
+<!-- RELATED:END -->

@@ -108,3 +108,15 @@ RGB 图像 → 单编码器 ViT + GSA（几何自注意力）→ 轻量解码头
 - 实验充分度: ⭐⭐⭐⭐ NYU/SUN/Deliver 三数据集，详细的融合策略对比
 - 写作质量: ⭐⭐⭐⭐ 方法动机清楚
 - 价值: ⭐⭐⭐⭐⭐ 对 RGBD 理解领域有重要意义，效率优势显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training](cosmos_cross-modality_self-distillation_for_vision_language_pre-training.md)
+- [SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference](../../ECCV2024/segmentation/sclip_rethinking_self-attention_for_dense_vision-language_inference.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [Attention Decomposition for Cross-Domain Semantic Segmentation](../../ECCV2024/segmentation/attention_decomposition_for_cross-domain_semantic_segmentation.md)
+- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

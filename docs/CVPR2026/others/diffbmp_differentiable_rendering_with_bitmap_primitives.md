@@ -129,3 +129,15 @@ DiffBMP 的流程：**输入**一组位图图元和目标图像 → 通过可微
 - 实验充分度: ⭐⭐⭐⭐ — 性能对比、消融实验、多场景应用均覆盖，但缺少与更多 baseline 的定量对比
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰、公式推导完整、图表丰富且直观
 - 价值: ⭐⭐⭐⭐ — 打开了位图梯度优化的新范式，工具实用性强，但实际影响取决于社区采纳度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Locally Orderless Images for Optimization in Differentiable Rendering](../../CVPR2025/others/locally_orderless_images_for_optimization_in_differentiable_rendering.md)
+- [WildCap: Facial Albedo Capture in the Wild via Hybrid Inverse Rendering](wildcap_facial_albedo_capture_in_the_wild_via_hybrid_inverse_rendering.md)
+- [MeshA*: Efficient Path Planning With Motion Primitives](../../AAAI2026/others/mesha_efficient_path_planning_with_motion_primitives.md)
+- [Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning](../../AAAI2026/others/expandable_and_differentiable_dual_memories_with_orthogonal_regularization_for_e.md)
+- [Exact Learning of Arithmetic with Differentiable Agents](../../NeurIPS2025/others/exact_learning_of_arithmetic_with_differentiable_agents.md)
+
+<!-- RELATED:END -->

@@ -107,3 +107,15 @@ DiPVNet 包含三个核心组件：(1) L2DP 算子提取局部方向特征 → (
 - 实验充分度: ⭐⭐⭐⭐ (消融完善，但缺少大场景实验)
 - 写作质量: ⭐⭐⭐⭐ (数学推导严谨，结构清晰)
 - 价值: ⭐⭐⭐⭐ (旋转不变点云学习的新 SOTA)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Rotation-Invariant 3D Learning with Global Pose Awareness and Attention Mechanisms](enhancing_rotation-invariant_3d_learning_with_global_pose_awareness_and_attentio.md)
+- [RISurConv: Rotation Invariant Surface Attention-Augmented Convolutions for 3D Point Cloud Classification and Segmentation](../../ECCV2024/3d_vision/risurconv_rotation_invariant_surface_attention-augmented_convolutions_for_3d_poi.md)
+- [Learning Conjugate Direction Fields for Planar Quadrilateral Mesh Generation](learning_conjugate_direction_fields_for_planar_quadrilateral_mesh_generation.md)
+- [Point-SRA: Self-Representation Alignment for 3D Representation Learning](point-sra_self-representation_alignment_for_3d_representation_learning.md)
+- [CASL: Curvature-Augmented Self-supervised Learning for 3D Anomaly Detection](casl_curvature-augmented_self-supervised_learning_for_3d_anomaly_detection.md)
+
+<!-- RELATED:END -->

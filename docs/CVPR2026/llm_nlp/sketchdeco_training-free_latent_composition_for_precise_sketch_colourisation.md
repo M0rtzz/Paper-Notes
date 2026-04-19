@@ -145,3 +145,15 @@ SketchDeco采用两阶段的分治策略（图2）：
 - **实验充分度**: ⭐⭐⭐⭐ — 多数据集、多对比方法，包含全局和局部两种设置
 - **写作质量**: ⭐⭐⭐⭐ — 图示清晰，流程描述详细，动机分析到位
 - **价值**: ⭐⭐⭐⭐ — 对创意工作流有直接实用价值，无需训练是核心优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](../../ACL2025/llm_nlp/token_prepending_training_free.md)
+- [Training-free LLM Merging for Multi-task Learning](../../ACL2025/llm_nlp/training-free_llm_merging_for_multi-task_learning.md)
+- [A Training-free LLM-based Approach to General Chinese Character Error Correction](../../ACL2025/llm_nlp/a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)
+- [SubSpec: Speculate Deep and Accurate — Lossless and Training-Free Acceleration for Offloaded LLMs](../../NeurIPS2025/llm_nlp/speculate_deep_and_accurate_lossless_and_training-free_acceleration_for_offloade.md)
+- [An Invariant Latent Space Perspective on Language Model Inversion](../../AAAI2026/llm_nlp/an_invariant_latent_space_perspective_on_language_model_inve.md)
+
+<!-- RELATED:END -->

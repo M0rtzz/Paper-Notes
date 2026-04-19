@@ -160,3 +160,15 @@ PPR10K数据集上也保持最优或次优PSNR。
 - **实验充分度**: ⭐⭐⭐⭐ FiveK和PPR10K两个主流基准+详细消融+可视化分析
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，图表信息量大
 - **实用价值**: ⭐⭐⭐⭐⭐ 实时4K增强，代码开源，部署价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MobileIE: An Extremely Lightweight and Effective ConvNet for Real-Time Image Enhancement on Mobile Devices](mobileie_an_extremely_lightweight_and_effective_convnet_for_real-time_image_enha.md)
+- [Learning Pixel-adaptive Multi-layer Perceptrons for Real-time Image Enhancement](learning_pixel-adaptive_multi-layer_perceptrons_for_real-time_image_enhancement.md)
+- [Outlier-Aware Post-Training Quantization for Image Super-Resolution](outlier-aware_post-training_quantization_for_image_super-resolution.md)
+- [CWNet: Causal Wavelet Network for Low-Light Image Enhancement](cwnet_causal_wavelet_network_for_low-light_image_enhancement.md)
+- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](low-light_image_enhancement_using_event-based_illumination_estimation.md)
+
+<!-- RELATED:END -->

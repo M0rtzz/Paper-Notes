@@ -193,3 +193,15 @@ BiLaLoRA 在 4 种不同的去雾骨干网络上均有效：
 - **实用性**: ⭐⭐⭐⭐⭐ — 训练时间降 77.7% 且性能不降，对实际部署非常友好
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，双层优化的数学推导完整
 - **综合评分**: ⭐⭐⭐⭐ (4.0/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LASER: Layer-wise Scale Alignment for Training-Free Streaming 4D Reconstruction](laser_layer-wise_scale_alignment_for_training-free_streaming_4d_reconstruction.md)
+- [AdvMark: Decoupling Defense Strategies for Robust Image Watermarking](decoupling_defense_strategies_for_robust_image_watermarking.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
+- [DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation](decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_.md)
+- [Unleashing Vision-Language Semantics for Deepfake Video Detection](unleashing_vision-language_semantics_for_deepfake_video_detection.md)
+
+<!-- RELATED:END -->

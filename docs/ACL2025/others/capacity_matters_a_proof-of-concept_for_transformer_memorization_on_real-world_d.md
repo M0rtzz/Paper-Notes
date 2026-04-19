@@ -147,3 +147,15 @@ tags:
 | 实用价值 | ⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐ |
 | 总体推荐 | ⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](../../NeurIPS2025/others/4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)
+- [Suitability Filter: A Statistical Framework for Classifier Evaluation in Real-World Settings](../../ICML2025/others/suitability_filter_a_statistical_framework_for_classifier_evaluation_in_real-wor.md)
+- [Memorization: A Close Look at Books](memorization_a_close_look_at_books.md)
+- [Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks](principled_generalization_arithmetic.md)
+- [Partial Colexifications Improve Concept Embeddings](partial_colexifications_improve_concept_embeddings.md)
+
+<!-- RELATED:END -->

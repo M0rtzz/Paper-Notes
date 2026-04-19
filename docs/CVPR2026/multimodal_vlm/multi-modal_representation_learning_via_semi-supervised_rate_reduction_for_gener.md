@@ -138,3 +138,15 @@ $$\mathcal{L}_{\text{SSR}^2} = -R(\mathbf{Z}) + R_c^{\text{s}}(\mathbf{Z}_{\text
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8个数据集全面评测，6种表征学习配置对比，多维度分析（秩、一致性、分布、可视化）
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，数学推导严谨，但部分符号较密集
 - 价值: ⭐⭐⭐⭐ — 为多模态GCD的表征学习提供了新思路，在细粒度数据集上改进显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SSR2-GCD: Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery](ssr2gcd_rate_reduction_category_discovery.md)
+- [SALMUBench: A Benchmark for Sensitive Association-Level Multimodal Unlearning](salmubench_a_benchmark_for_sensitive_association-level_multimodal_unlearning.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [CAPT: Confusion-Aware Prompt Tuning for Reducing Vision-Language Misalignment](capt_confusion-aware_prompt_tuning_for_reducing_vision-language_misalignment.md)
+- [Beyond Heuristic Prompting: A Concept-Guided Bayesian Framework for Zero-Shot Image Recognition](beyond_heuristic_prompting_a_concept-guided_bayesian_framework_for_zero-shot_ima.md)
+
+<!-- RELATED:END -->

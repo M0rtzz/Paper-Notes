@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 涵盖单/多子结构、不同图表示、LLM验证、Tins、属性图，但规模有限
 - 写作质量: ⭐⭐⭐⭐ 逻辑链清晰（单→多→LLM→扩展），理论定义严谨；但内容量大导致部分细节需查附录
 - 价值: ⭐⭐⭐⭐⭐ 对"LLM如何理解图结构"这一基础问题有重要推进，ISF可指导未来图推理方法设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relieving the Over-Aggregating Effect in Graph Transformers](relieving_the_over-aggregating_effect_in_graph_transformers.md)
+- [Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework](unifying_and_enhancing_graph_transformers_via_a_hierarchical_mask_framework.md)
+- [Banyan: Improved Representation Learning with Explicit Structure](../../ICML2025/graph_learning/banyan_improved_representation_learning_with_explicit_structure.md)
+- [Deliberation on Priors: Trustworthy Reasoning of LLMs on Knowledge Graphs](deliberation_on_priors_trustworthy_reasoning_of_large_language_models_on_knowled.md)
+- [GrokFormer: Graph Fourier Kolmogorov-Arnold Transformers](../../ICML2025/graph_learning/grokformer_graph_fourier_kolmogorov-arnold_transformers.md)
+
+<!-- RELATED:END -->

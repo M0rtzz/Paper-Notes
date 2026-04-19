@@ -129,3 +129,15 @@ EscapeAgent 是一个无需训练的框架，依赖 prompting 和运行时推理
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 个模型对比、人类基线、EscapeAgent 在 8 个模型上的全面消融、错误分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机论述深入，三元智力理论的引用准确且有说服力
 - 价值: ⭐⭐⭐⭐⭐ 开创了 Agent 创意智能评估的新方向，benchmark 和 agent 框架均有长期影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SocialEval: Evaluating Social Intelligence of Large Language Models](socialeval_evaluating_social_intelligence_of_large_language_models.md)
+- [Writing in Symbiosis: Mapping Human Creative Agency in the AI Era](../../NeurIPS2025/llm_nlp/writing_in_symbiosis_mapping_human_creative_agency_in_the_ai_era.md)
+- [Improve Language Model and Brain Alignment via Associative Memory](improve_language_model_and_brain_alignment_via_associative_memory.md)
+- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
+- [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
+
+<!-- RELATED:END -->

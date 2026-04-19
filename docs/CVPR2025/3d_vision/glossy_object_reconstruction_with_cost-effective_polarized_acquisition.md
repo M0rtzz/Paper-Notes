@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据、与多种方法对比、消融完整，GT获取方式也很规范
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析严谨，pipeline图清晰，物理推导自洽
 - 价值: ⭐⭐⭐⭐ 极具实用价值，降低了偏振3D重建的硬件门槛，有望在手机等消费级设备上应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Floating No More: Object-Ground Reconstruction from a Single Image](floating_no_more_object-ground_reconstruction_from_a_single_image.md)
+- [ICTPolarReal: A Polarized Reflection and Material Dataset of Real World Objects](../../CVPR2026/3d_vision/ictpolarreal_a_polarized_reflection_and_material_dataset_of_real_world_objects.md)
+- [Easy3D: A Simple Yet Effective Method for 3D Interactive Segmentation](../../ICCV2025/3d_vision/easy3d_a_simple_yet_effective_method_for_3d_interactive_segmentation.md)
+- [GS-2DGS: Geometrically Supervised 2DGS for Reflective Object Reconstruction](gs-2dgs_geometrically_supervised_2dgs_for_reflective_object_reconstruction.md)
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ MIL-PF 分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集（EMBED/VinDr/RSNA），多编码器对比，多基线，36次运行
 - 写作质量: ⭐⭐⭐⭐ MIL问题形式化清晰，设计选择有据可依
 - 价值: ⭐⭐⭐⭐ 对资源受限的医学AI研究组有直接实用价值，工程意义大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LUMINA: A Multi-Vendor Mammography Benchmark with Energy Harmonization Protocol](lumina_a_multi-vendor_mammography_benchmark_with_energy_harmonization_protocol.md)
+- [Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](fair_lung_disease_diagnosis_from_chest_ct_via_gend.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+- [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](developing_foundation_models_for_universal_segment.md)
+- [Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)
+
+<!-- RELATED:END -->

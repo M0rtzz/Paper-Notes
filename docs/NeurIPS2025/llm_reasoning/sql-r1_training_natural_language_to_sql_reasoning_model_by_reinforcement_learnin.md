@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Spider+BIRD+衍生集+难度分层分析全面，但缺冷启动消融和训练成本分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题设置明确，但部分细节（自洽投票机制）描述不足
 - 价值: ⭐⭐⭐⭐⭐ 开源、低成本、高性能的 NL2SQL 方案，对企业部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SQL-of-Thought: Multi-agentic Text-to-SQL with Guided Error Correction](sql-of-thought_multi-agentic_text-to-sql_with_guided_error_correction.md)
+- [The Impact of Quantization on Large Reasoning Model Reinforcement Learning](the_impact_of_quantization_on_large_reasoning_model_reinforcement_learning.md)
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+- [ARM: Adaptive Reasoning Model](arm_adaptive_reasoning_model.md)
+- [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ $$\mathcal{L}_{\text{HPO}}(\theta) = \mathbb{E}_{(v_0^w, v_0^l) \sim \mathcal{D}
 - **实验充分度**: ⭐⭐⭐⭐ — 定量+定性+用户研究+消融均有，但基线方法数量偏少
 - **写作质量**: ⭐⭐⭐⭐ — 问题诊断清晰，两阶段框架逻辑自然
 - **价值**: ⭐⭐⭐⭐ — 为视频定制化提供了新的训练范式，身份+动态的双重提升具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](../../ACL2025/llm_alignment/probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
+- [Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization](../../NeurIPS2025/llm_alignment/mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)
+- [D-Fusion: Direct Preference Optimization for Aligning Diffusion Models with Visually Consistent Samples](../../ICML2025/llm_alignment/d-fusion_direct_preference_optimization_for_aligning_diffusion_models_with_visua.md)
+- [Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs](../../ICLR2026/llm_alignment/uni-dpo_a_unified_paradigm_for_dynamic_preference_optimization_of_llms.md)
+- [DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models](../../NeurIPS2025/llm_alignment/densedpo_finegrained_temporal_preference_optimization_for_vi.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ $$\mathscr{R}_{\tilde\theta}^{P^{Target}}(N) = \mathbb{E}_{\tau^*} \mathbb{E}_{P
 - **实验充分度**: ⭐⭐⭐⭐ 控制实验详尽，但规模受限
 - **写作质量**: ⭐⭐⭐⭐⭐ 逻辑清晰，理论与实验紧密结合
 - **价值**: ⭐⭐⭐⭐ 为理解提示调优提供了重要的基础理论，但离实际应用有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MaNGO: Adaptable Graph Network Simulators via Meta-Learning](mango_-_adaptable_graph_network_simulators_via_meta-learning.md)
+- [Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
+- [Think Small, Act Big: Primitive Prompt Learning for Lifelong Robot Manipulation](../../CVPR2025/robotics/think_small_act_big_primitive_prompt_learning_for_lifelong_robot_manipulation.md)
+- [Learning to Stop: Deep Learning for Mean Field Optimal Stopping](../../ICML2025/robotics/learning_to_stop_deep_learning_for_mean_field_optimal_stopping.md)
+- [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
+
+<!-- RELATED:END -->

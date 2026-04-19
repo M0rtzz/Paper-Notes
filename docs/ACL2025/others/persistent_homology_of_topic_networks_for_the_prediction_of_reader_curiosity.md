@@ -133,3 +133,15 @@ tags:
 ## 评分 ⭐⭐⭐⭐
 
 创新性强，跨学科贡献有意义。主要扣分点在于实验仅基于单一小说的小样本验证（n=27 章节），泛化性存在较大不确定性。但作为概念验证，pipeline 设计合理，理论动机清晰，结果令人鼓舞。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PIPHEN: Physical Interaction Prediction with Hamiltonian Energy Networks](../../AAAI2026/others/piphen_physical_interaction_prediction_with_hamiltonian_energy_networks.md)
+- [S2WTM: Spherical Sliced-Wasserstein Autoencoder for Topic Modeling](s2wtm_spherical_sliced-wasserstein_autoencoder_for_topic_modeling.md)
+- [ProxAnn: Use-Oriented Evaluations of Topic Models and Document Clustering](proxann_topic_model_eval.md)
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+- [Cautious Next Token Prediction](cautious_next_token_prediction.md)
+
+<!-- RELATED:END -->

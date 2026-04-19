@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 六类场景全面验证，消融实验详尽系统
 - 写作质量: ⭐⭐⭐⭐⭐ 概念清晰，理论推导严谨，结构极好
 - 价值: ⭐⭐⭐⭐ 即插即用的正则化器，对3D形状匹配领域贡献大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Continuous and Discrete Text Diffusion with Non-simultaneous Diffusion Processes](../../ACL2025/others/neodiff_unified_text_diffusion.md)
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](../../CVPR2026/others/order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+- [Non-parametric Sensor Noise Modeling and Synthesis](non-parametric_sensor_noise_modeling_and_synthesis.md)
+- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
+
+<!-- RELATED:END -->

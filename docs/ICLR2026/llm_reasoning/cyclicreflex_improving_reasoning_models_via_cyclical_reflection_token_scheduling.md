@@ -121,3 +121,15 @@ $$\delta(t) = A \left| \frac{4 \cdot (t - C/4) \bmod C}{C} - 2 \right| - A$$
 - 实验充分度: ⭐⭐⭐⭐⭐ （多模型、多数据集、消融实验详尽、可视化分析到位）
 - 写作质量: ⭐⭐⭐⭐⭐ （叙事流畅，类比清晰，图表出色）
 - 价值: ⭐⭐⭐⭐ （实用性强，但理论基础有待加强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness](../../ACL2025/llm_reasoning/towards_better_chain-of-thought_a_reflection_on_effectiveness_and_faithfulness.md)
+- [Fixing the Broken Compass: Diagnosing and Improving Inference-Time Reward Modeling](fixing_the_broken_compass_diagnosing_and_improving_inference-time_reward_modelin.md)
+- [One Token Embedding Is Enough to Deadlock Your Large Reasoning Model](../../NeurIPS2025/llm_reasoning/one_token_embedding_is_enough_to_deadlock_your_large_reasoning_model.md)
+- [ClozeMath: Improving Mathematical Reasoning in Language Models by Learning to Fill Equations](../../ACL2025/llm_reasoning/clozemath_improving_mathematical_reasoning_in_language_models_by_learning_to_fil.md)
+- [CoRVid: Improving Multimodal Large Language Models Towards Chain-of-Thought Reasoning](../../ICCV2025/llm_reasoning/corvid_improving_multimodal_large_language_models_towards_chain-of-thought_reaso.md)
+
+<!-- RELATED:END -->

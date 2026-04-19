@@ -197,3 +197,15 @@ $$\mathcal{L} = -\sum_{i=1}^{L} y_i \log \hat{y}_i$$
 | **综合** | **⭐⭐⭐⭐** |
 
 > 本文在机械可解释性领域做出了显著贡献——将 induction head 研究扩展到元学习场景，发现了多阶段电路涌现的现象，并为 ICL 中多个已知"谜题"（如随机标签鲁棒性）提供了电路层面的解释。实验设计精巧、分析清晰，理论推导与实验结果吻合良好。主要不足是模型规模过小，但作者在 GPT2-XL 上做了初步的跨模型验证，展示了从玩具实验到实际 LLM 的桥梁潜力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](../../ACL2025/llm_nlp/problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
+- [Math Neurosurgery: Isolating Language Models' Math Reasoning Abilities Using Only Forward Passes](../../ACL2025/llm_nlp/mathneuro_math_reasoning_isolation.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](../../ACL2025/llm_nlp/boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+- [Classifying Unreliable Narrators with Large Language Models](../../ACL2025/llm_nlp/classifying_unreliable_narrators.md)
+- [DiSCo: Device-Server Collaborative LLM-Based Text Streaming Services](../../ACL2025/llm_nlp/disco_device-server_collaborative_llm-based_text_streaming_services.md)
+
+<!-- RELATED:END -->

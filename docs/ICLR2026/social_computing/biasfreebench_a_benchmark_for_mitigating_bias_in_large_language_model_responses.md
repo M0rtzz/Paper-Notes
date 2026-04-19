@@ -132,3 +132,15 @@ BiasFreeBench 的设计包含三个核心组件：(1) 8 种去偏技术的统一
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型、8 种方法、2 个数据集、多维度分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，表格丰富，分析深入
 - 价值: ⭐⭐⭐⭐ 作为统一基准对社区有持续价值，实验发现对实践有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [Translate With Care: Addressing Gender Bias, Neutrality, and Reasoning in Large Language Model Translations](../../ACL2025/social_computing/translate_with_care_addressing_gender_bias_neutrality_and_reasoning_in_large_lan.md)
+- [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
+- [Scalable Multi-Task Low-Rank Model Adaptation](scalable_multi-task_low-rank_model_adaptation.md)
+- [How does Misinformation Affect Large Language Model Behaviors and Preferences?](../../ACL2025/social_computing/how_does_misinformation_affect_large_language.md)
+
+<!-- RELATED:END -->

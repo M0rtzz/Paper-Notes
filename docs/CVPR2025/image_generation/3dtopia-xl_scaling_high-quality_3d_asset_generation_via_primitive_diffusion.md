@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 表示对比、生成对比、大量消融实验都很充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ 首个支持PBR材质的高质量原生3D生成模型，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmoDubber: Towards High Quality and Emotion Controllable Movie Dubbing](emodubber_towards_high_quality_and_emotion_controllable_movie_dubbing.md)
+- [ArtiFade: Learning to Generate High-quality Subject from Blemished Images](artifade_learning_to_generate_high-quality_subject_from_blemished_images.md)
+- [RefAny3D: 3D Asset-Referenced Diffusion Models for Image Generation](../../ICLR2026/image_generation/refany3d_3d_asset-referenced_diffusion_models_for_image_generation.md)
+- [RepLDM: Reprogramming Pretrained Latent Diffusion Models for High-Quality, High-Efficiency, High-Resolution Image Generation](../../NeurIPS2025/image_generation/repldm_reprogramming_pretrained_latent_diffusion_models_for_high-quality_high-ef.md)
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+
+<!-- RELATED:END -->

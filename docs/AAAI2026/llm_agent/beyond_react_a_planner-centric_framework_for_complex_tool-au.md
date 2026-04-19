@@ -163,3 +163,15 @@ $$\mathcal{L}_{\text{SFT}}(\theta) = -\mathbb{E}_{(Q,G_{gt})\sim D_{\text{train}
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了规划质量和端到端两个维度，消融实验详细；但缺少与最新Agent框架的对比，Hard集结果说明问题远未解决
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题定义明确，图表设计合理；但Related Work部分引用太密集影响可读性
 - 价值: ⭐⭐⭐⭐ 对Agent规划领域有实际指导意义，数据构建流水线和层次化奖励设计可复用；但单次规划的限制降低了实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedLA: A Logic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models](medla_a_logic-driven_multi-agent_framework_for_complex_medic.md)
+- [PhyScensis: Physics-Augmented LLM Agents for Complex Physical Scene Arrangement](../../ICLR2026/llm_agent/physcensis_physics-augmented_llm_agents_for_complex_physical_scene_arrangement.md)
+- [Automating Complex Document Workflows via Stepwise and Rollback-Enabled Operations](automating_complex_document_workflows_via_stepwise_and_rollback-enabled_operatio.md)
+- [MoralReason: Generalizable Moral Decision Alignment For LLM Agents Using Reasoning-Level Reinforcement Learning](moralreason_generalizable_moral_decision_alignment_for_llm_agents_using_reasonin.md)
+- [AutoTool: Efficient Tool Selection for Large Language Model Agents](autotool_efficient_tool_selection_for_large_language_model_a.md)
+
+<!-- RELATED:END -->

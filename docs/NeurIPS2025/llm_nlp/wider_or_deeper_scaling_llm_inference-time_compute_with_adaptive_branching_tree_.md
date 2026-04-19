@@ -128,3 +128,15 @@ AB-MCTS 构建搜索树 $T$，每个非根节点对应一个 LLM 生成的答案
 - 实验充分度: ⭐⭐⭐⭐ 四个基准 × 两个前沿模型 × 多种预算设置 × 搜索树分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，两种变体的推导严谨，图表专业
 - 价值: ⭐⭐⭐⭐ 对 LLM 推理时计算扩展有直接意义，特别适合编程任务场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
+- [Dynamic Parallel Tree Search for Efficient LLM Reasoning](../../ACL2025/llm_nlp/dynamic_parallel_tree_search_for_efficient_llm_reasoning.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](../../ACL2025/llm_nlp/boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+- [Valid Inference with Imperfect Synthetic Data](valid_inference_with_imperfect_synthetic_data.md)
+- [Don't Be Lazy: CompleteP Enables Compute-Efficient Deep Transformers](dont_be_lazy_completep_enables_compute-efficient_deep_transformers.md)
+
+<!-- RELATED:END -->

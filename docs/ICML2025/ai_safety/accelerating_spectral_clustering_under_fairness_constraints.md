@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据，扩展性验证充分
 - 写作质量: ⭐⭐⭐⭐ 数学清晰，结构规范
 - 价值: ⭐⭐⭐⭐ 使公平聚类在实际规模数据上可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Proportional Fairness in Centroid and Non-Centroid Clustering](../../NeurIPS2025/ai_safety/unifying_proportional_fairness_in_centroid_and_non-centroid_clustering.md)
+- [Fairness under Competition](../../NeurIPS2025/ai_safety/fairness_under_competition.md)
+- [Relative Error Fair Clustering in the Weak-Strong Oracle Model](relative_error_fair_clustering_in_the_weak-strong_oracle_model.md)
+- [Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
+- [Truth, Justice, and Secrecy: Cake Cutting Under Privacy Constraints](../../AAAI2026/ai_safety/truth_justice_and_secrecy_cake_cutting_under_privacy_constraints.md)
+
+<!-- RELATED:END -->

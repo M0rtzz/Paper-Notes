@@ -147,3 +147,15 @@ $$\mathbf{s}^{(t+1)} = \mathbf{s}^{(t)} \oplus \sum_k \mathbf{r}_k^{(t)} \otimes
 - 实验充分度: ⭐⭐ 纯概念性框架，无实验验证
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，代数推导优雅，跨领域综合功底深厚
 - 价值: ⭐⭐⭐⭐ 为理解Transformer推理能力与局限性提供了强有力的代数视角，但落地需后续实验支撑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TouchFormer: A Robust Transformer-based Framework for Multimodal Material Perception](touchformer_a_robust_transformer-based_framework_for_multimodal_material_percept.md)
+- [TransiT: Transient Transformer for Non-line-of-sight Videography](../../ICCV2025/robotics/transit_transient_transformer_for_non-line-of-sight_videography.md)
+- [Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping](../../ICLR2026/robotics/constructive_distortion_improving_mllms_with_attention-guided_image_warping.md)
+- [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+- [Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective](../../ICCV2025/robotics/beyond_losses_reweighting_empowering_multi-task_learning_via_the_generalization_.md)
+
+<!-- RELATED:END -->

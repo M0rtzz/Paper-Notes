@@ -125,3 +125,15 @@ MinT 在事件文本对齐（TA +0.55 vs Concat）和时序一致性（TC +0.29 
 - 实验充分度: ⭐⭐⭐⭐⭐ T2V/I2V/prompt增强多个设置，自动+人工评估，消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，动机→方法→实验逻辑严密，可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ 解决了视频生成领域一个重要且实用的问题，开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-subject Open-set Personalization in Video Generation](multi-subject_open-set_personalization_in_video_generation.md)
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](../../CVPR2026/video_generation/switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](../../CVPR2026/video_generation/u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+- [Exploring Temporally-Aware Features for Point Tracking](exploring_temporally-aware_features_for_point_tracking.md)
+- [Learning Temporally Consistent Video Depth from Video Diffusion Priors](learning_temporally_consistent_video_depth_from_video_diffusion_priors.md)
+
+<!-- RELATED:END -->

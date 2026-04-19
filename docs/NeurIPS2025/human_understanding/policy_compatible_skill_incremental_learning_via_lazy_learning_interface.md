@@ -133,3 +133,15 @@ $$d_c(x) = \min_{k \leq K_c} \sqrt{(x - \mu_{c,k})^\top \Sigma_{c,k}^{-1} (x - \
 - 实验充分度: ⭐⭐⭐⭐ — 两个环境多种场景，消融实验、鲁棒性、few-shot、分辨率分析均完整
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，图示直观，实验组织系统化
 - 价值: ⭐⭐⭐⭐ — 解决了层次化持续学习中的实际痛点，模块化设计有工程价值，但仿真环境限制了直接应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Skill-Attributes for Transferable Assessment in Video](learning_skill-attributes_for_transferable_assessment_in_video.md)
+- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [External Knowledge Injection for CLIP-Based Class-Incremental Learning](../../ICCV2025/human_understanding/external_knowledge_injection_for_clip-based_class-incremental_learning.md)
+- [Doubly Robust Fusion of Many Treatments for Policy Learning](../../ICML2025/human_understanding/doubly_robust_fusion_of_many_treatments_for_policy_learning.md)
+- [Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](../../ICML2025/human_understanding/log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
+
+<!-- RELATED:END -->

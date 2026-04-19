@@ -188,3 +188,15 @@ $$\mathcal{L}_{\text{CE}}(\mathbf{w}, \hat{\mathbf{w}}) = -\frac{1}{N}\sum_{n=1}
 | 实用价值 | 8 | 低资源语言场景直接可用，14 参数极易部署 |
 | 写作质量 | 8 | 结构清晰，图示直观，Banyan 命名有巧思 |
 | **综合** | **8.2** | 一篇令人眼前一亮的工作，用极简方案挑战 scaling law |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Sequence to Structure: Uncovering Substructure Reasoning in Transformers](../../NeurIPS2025/graph_learning/from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)
+- [Feature-Centric Unsupervised Node Representation Learning Without Homophily Assumption](../../AAAI2026/graph_learning/feature-centric_unsupervised_node_representation_learning_without_homophily_assu.md)
+- [UniHR: Hierarchical Representation Learning for Unified Knowledge Graph Link Prediction](../../AAAI2026/graph_learning/unihr_hierarchical_representation_learning_for_unified_knowledge_graph_link_pred.md)
+- [Towards Improved Sentence Representations using Token Graphs](../../ICLR2026/graph_learning/towards_improved_sentence_representations_using_token_graphs.md)
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+
+<!-- RELATED:END -->

@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 9 个 frontier 模型（含 3 个闭源）× 2 个 benchmark × 跨模型迁移 × 防御评估
 - 写作质量: ⭐⭐⭐⭐ 攻击动机和实验设计清晰，但表格数据密集
 - 价值: ⭐⭐⭐⭐ 揭示了 LLM Agent 安全的一个根本性漏洞，对安全研究和工程实践都有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRIFT: Dynamic Rule-Based Defense with Injection Isolation for Securing LLM Agents](../../NeurIPS2025/llm_agent/drift_dynamic_rulebased_defense_with_injection_isolation_for.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
+- [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
+- [NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
+- [FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
+
+<!-- RELATED:END -->

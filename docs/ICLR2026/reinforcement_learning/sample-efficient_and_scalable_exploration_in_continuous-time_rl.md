@@ -115,3 +115,15 @@ $$R_N \leq \mathcal{O}\left(\sqrt{\mathcal{I}_N^3(\bm{f}^*, S) \cdot N}\right)$$
 - 理论深度: ⭐⭐⭐⭐ — 次线性后悔和样本复杂度双重保证
 - 实验充分性: ⭐⭐⭐⭐ — 多环境对比、消融、自动调优验证
 - 实用价值: ⭐⭐⭐⭐ — 计算高效，适用于连续时间物理控制系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](continuous-time_value_iteration_for_multi-agent_reinforcement_learning.md)
+- [Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form](safe_continuous-time_multi-agent_reinforcement_learning_via_epigraph_form.md)
+- [Spectral Bellman Method: Unifying Representation and Exploration in RL](spectral_bellman_method_unifying_representation_and_exploration_in_rl.md)
+- [Ensemble++: Scalable Exploration via Ensemble](../../NeurIPS2025/reinforcement_learning/scalable_exploration_via_ensemble.md)
+
+<!-- RELATED:END -->

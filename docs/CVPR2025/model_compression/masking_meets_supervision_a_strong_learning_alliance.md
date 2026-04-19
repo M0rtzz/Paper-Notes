@@ -146,3 +146,15 @@ MaskSub 在标准监督训练基础上增加一个子分支：主分支 $f_\thet
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 ViT/ResNet/Swin、预训练/微调/BERT、多种配方，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 分析透彻（loss 曲线、梯度分析、难度控制），伪代码简洁直观，论文结构组织优秀
 - 价值: ⭐⭐⭐⭐⭐ 提供了一种通用、零超参、即插即用的监督学习改进方案，适用范围极广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangling Latent Shifts of In-Context Learning with Weak Supervision](../../NeurIPS2025/model_compression/disentangling_latent_shifts_of_in-context_learning_with_weak_supervision.md)
+- [Weak-to-Strong Jailbreaking on Large Language Models](../../ICML2025/model_compression/weak-to-strong_jailbreaking_on_large_language_models.md)
+- [Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing](../../NeurIPS2025/model_compression/synergy_between_the_strong_and_the_weak_spiking_neural_networks_are_inherently_s.md)
+- [Incremental Object Keypoint Learning (KAMP)](incremental_object_keypoint_learning.md)
+- [SHAP Meets Tensor Networks: Provably Tractable Explanations with Parallelism](../../NeurIPS2025/model_compression/shap_meets_tensor_networks_provably_tractable_explanations_with_parallelism.md)
+
+<!-- RELATED:END -->

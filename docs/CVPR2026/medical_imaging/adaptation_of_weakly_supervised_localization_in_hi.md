@@ -137,3 +137,15 @@ GlaS→CAMELYON系列跨器官/跨中心适应的6个目标域平均指标：
 - 实验充分度: ⭐⭐⭐⭐ 三种WSOL模型×多个跨域设定，消融和可视化充分，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，Fig.1的偏差可视化非常直观
 - 价值: ⭐⭐⭐⭐ 揭示并解决了SFDA+WSOL的核心瓶颈，对计算病理领域有实际部署意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+- [Weakly Supervised Teacher-Student Framework with Progressive Pseudo-mask Refinement for Gland Segmentation](weakly_supervised_teacher-student_framework_with_progressive_pseudo-mask_refinem.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ $$\mathcal{L} = \beta_1 \mathcal{L}_S + \beta_2 \mathcal{L}_D + \beta_3 \mathcal
 - 实验充分度: ⭐⭐⭐⭐ — 两个数据集、9个基线、消融+稀疏+参数敏感性分析
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，模块设计逻辑递进
 - 价值: ⭐⭐⭐⭐ — 旅行推荐的实际应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
+- [DuetGraph: Coarse-to-Fine Knowledge Graph Reasoning with Dual-Pathway Global-Local Fusion](duetgraph_coarse-to-fine_knowledge_graph_reasoning_with_dual-pathway_global-loca.md)
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](../../ACL2025/graph_learning/kg_rag_recommendation.md)
+- [Unbiased Video Scene Graph Generation via Visual and Semantic Dual Debiasing](../../CVPR2025/graph_learning/unbiased_video_scene_graph_generation_via_visual_and_semantic_dual_debiasing.md)
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](../../ICML2025/graph_learning/toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+
+<!-- RELATED:END -->

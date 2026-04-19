@@ -144,3 +144,15 @@ RRPO 在所有 setup 上超越 TPO，VideoHallucer 提升达 5.2%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个基础模型 × 8个基准，全面的对比和消融
 - 写作质量: ⭐⭐⭐⭐ 梯度分析清晰，实验丰富
 - 价值: ⭐⭐⭐⭐ 对视频 LLM 对齐有实用参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongVPO: From Anchored Cues to Self-Reasoning for Long-Form Video Preference Optimization](longvpo_from_anchored_cues_to_selfreasoning_for_longform_vid.md)
+- [Reinforcement Learning Finetunes Small Subnetworks in Large Language Models](reinforcement_learning_finetunes_small_subnetworks_in_large_language_models.md)
+- [g-DPO: Scalable Preference Optimization for Protein Language Models](g-dpo_scalable_preference_optimization_for_protein_language_models.md)
+- [Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](../../CVPR2025/llm_alignment/task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
+- [DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models](densedpo_finegrained_temporal_preference_optimization_for_vi.md)
+
+<!-- RELATED:END -->

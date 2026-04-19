@@ -124,3 +124,15 @@ LBFGS投影使NS方程的MSE降低了~80%，约束残差降低了~900倍。
 - 实验充分度: ⭐⭐⭐⭐ 三个不同复杂度的PDE系统、多分辨率、多baseline，但缺少3D复杂几何实验
 - 写作质量: ⭐⭐⭐⭐⭐ 数学表述严谨，约束景观分析的可视化非常有洞察力
 - 价值: ⭐⭐⭐⭐ 实用性强，无需重训模型就能显著改善物理一致性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hamiltonian Neural PDE Solvers through Functional Approximation](hamiltonian_neural_pde_solvers_through_functional_approximation.md)
+- [PhysicsCorrect: A Training-Free Approach for Stable Neural PDE Simulations](../../AAAI2026/scientific_computing/physicscorrect_a_training-free_approach_for_stable_neural_pde_simulations.md)
+- [INC: An Indirect Neural Corrector for Auto-Regressive Hybrid PDE Solvers](inc_an_indirect_neural_corrector_for_auto-regressive_hybrid_pde_solvers.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [Neural Emulator Superiority: When Machine Learning for PDEs Surpasses its Training Data](neural_emulator_superiority_when_machine_learning_for_pdes_surpasses_its_trainin.md)
+
+<!-- RELATED:END -->

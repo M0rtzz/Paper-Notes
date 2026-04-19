@@ -139,3 +139,15 @@ $$E(I) \propto (1 - D_{fal}) \cdot D_{dif} \cdot (1 - D_{red}) \cdot D_{div}$$
 - 技术深度：⭐⭐⭐⭐ （信息论推导+三级自动化流水线设计）
 - 实验充分度：⭐⭐⭐⭐ （19 个 benchmark、17912 样本、多维度对比）
 - 实用价值：⭐⭐⭐⭐⭐ （直接指导 benchmark 选择和开发）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Redundancy Principles for MLLMs Benchmarks](../../ACL2025/multimodal_vlm/redundancy_principles_for_mllms_benchmarks.md)
+- [Boosting MLLM Reasoning with Text-Debiased Hint-GRPO](boosting_mllm_reasoning_with_text-debiased_hint-grpo.md)
+- [Pi-GPS: Enhancing Geometry Problem Solving by Unleashing the Power of Diagrammatic Information](pi-gps_enhancing_geometry_problem_solving_by_unleashing_the_power_of_diagrammati.md)
+- [Effective Training Data Synthesis for Improving MLLM Chart Understanding](effective_training_data_synthesis_for_improving_mllm_chart_understanding.md)
+- [Learning Optimal Multimodal Information Bottleneck Representations](../../ICML2025/multimodal_vlm/learning_optimal_multimodal_information_bottleneck_representations.md)
+
+<!-- RELATED:END -->

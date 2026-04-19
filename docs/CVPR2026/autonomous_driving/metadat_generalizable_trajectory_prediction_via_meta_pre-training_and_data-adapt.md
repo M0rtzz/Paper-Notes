@@ -135,3 +135,15 @@ $$\frac{\partial \mathcal{L}_{mae}(\theta_{p-1})}{\partial \alpha} = -\nabla_\th
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，框架图直观，但部分数学推导可更精简
 - 价值: ⭐⭐⭐⭐ 实用性强（鲁棒性、效率、少样本），对自动驾驶在线部署有直接参考价值
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FoSS: Modeling Long-Range Dependencies and Multimodal Uncertainty in Trajectory Prediction via Fourier–State Space Integration](foss_modeling_long_range_dependencies_and_multimodal_uncertainty_in_trajectory_p.md)
+- [DLWM: Dual Latent World Models enable Holistic Gaussian-centric Pre-training in Autonomous Driving](dlwm_dual_latent_world_models_enable_holistic_gaussian-centric_pre-training_in_a.md)
+- [Recover to Predict: Progressive Retrospective Learning for Variable-Length Trajectory Prediction](recover_to_predict_progressive_retrospective_learning_for_variable-length_trajec.md)
+- [MeanFuser: Fast One-Step Multi-Modal Trajectory Generation and Adaptive Reconstruction via MeanFlow for End-to-End Autonomous Driving](meanfuser_fast_one-step_multi-modal_trajectory_generation_and_adaptive_reconstru.md)
+- [TT-Occ: Test-Time 3D Occupancy Prediction](test-time_3d_occupancy_prediction.md)
+
+<!-- RELATED:END -->

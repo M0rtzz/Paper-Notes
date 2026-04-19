@@ -169,3 +169,15 @@ MUNBa 在对抗 UnlearnDiffAtk 攻击时表现尤为突出：攻击成功率仅 
 - 实验充分度: 5/5 - 覆盖分类(ResNet)、VLM(CLIP)、生成(SD)三大类模型，含对抗攻击鲁棒性评估
 - 写作质量: 4/5 - 问题动机清晰，理论推导完整，可视化直观
 - 价值: 4/5 - 通用性强，理论与实验均扎实，对 MU 领域有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Invisible Watermarks, Visible Gains: Steering Machine Unlearning with Bi-Level Watermarking Design](invisible_watermarks_visible_gains_steering_machine_unlearning_with_bi-level_wat.md)
+- [Meta-Unlearning on Diffusion Models: Preventing Relearning Unlearned Concepts](meta-unlearning_on_diffusion_models_preventing_relearning_unlearned_concepts.md)
+- [Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning](holistic_unlearning_benchmark_a_multi-faceted_evaluation_for_text-to-image_diffu.md)
+- [Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs](../../ICLR2026/image_generation/model_collapse_is_not_a_bug_but_a_feature_in_machine_unlearning_for_llms.md)
+- [Challenging Forgets: Unveiling the Worst-Case Forget Sets in Machine Unlearning](../../ECCV2024/image_generation/challenging_forgets_unveiling_the_worst-case_forget_sets_in_machine_unlearning.md)
+
+<!-- RELATED:END -->

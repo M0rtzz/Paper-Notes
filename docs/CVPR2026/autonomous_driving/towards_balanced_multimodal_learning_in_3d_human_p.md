@@ -123,3 +123,15 @@ $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{MPJPE}} + \mathcal{L}_{\text{AW
 - 实验充分度: ⭐⭐⭐ 仅一个数据集，但消融和分析详尽
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，动机推导清晰
 - 价值: ⭐⭐⭐⭐ 对多模态回归任务的平衡优化提供了通用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMDUL: Expanding mmWave Datasets for Human Pose Estimation with Unlabeled Data and LiDAR Datasets](expanding_mmwave_datasets_for_human_pose_estimation_with_unlabeled_data_and_lida.md)
+- [Le MuMo JEPA: Multi-Modal Self-Supervised Representation Learning with Learnable Fusion Tokens](le_mumo_jepa_multi-modal_self-supervised_representation_learning_with_learnable_.md)
+- [InCaRPose: In-Cabin Relative Camera Pose Estimation Model and Dataset](incarpose_in-cabin_relative_camera_pose_estimation_model_and_dataset.md)
+- [PTC-Depth: Pose-Refined Monocular Depth Estimation with Temporal Consistency](ptc-depth_pose-refined_monocular_depth_estimation_with_temporal_consistency.md)
+- [VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)
+
+<!-- RELATED:END -->

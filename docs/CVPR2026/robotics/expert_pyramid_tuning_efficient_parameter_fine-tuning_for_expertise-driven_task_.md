@@ -152,3 +152,15 @@ EPT替换Transformer中线性层的LoRA模块。输入token经过router选择top
 - 实验充分度: ⭐⭐⭐⭐ GLUE 8任务 + 常识推理4任务 + 完整消融 + expert分配可视化，但缺少生成任务和大模型验证
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰（Table 1展示不同任务最优rank不同），方法描述系统化
 - 价值: ⭐⭐⭐⭐ 0.41M参数达87.0% GLUE平均分是很强的结果，re-parameterization推理零开销使其实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [AtomicVLA: Unlocking the Potential of Atomic Skill Learning in Robots](atomicvla_unlocking_the_potential_of_atomic_skill_learning_in_robots.md)
+- [Unintended Misalignment from Agentic Fine-Tuning: Risks and Mitigation](../../AAAI2026/robotics/unintended_misalignment_from_agentic_fine-tuning_risks_and_m.md)
+
+<!-- RELATED:END -->

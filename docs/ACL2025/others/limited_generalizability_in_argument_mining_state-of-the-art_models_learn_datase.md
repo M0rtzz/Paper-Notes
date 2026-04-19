@@ -156,3 +156,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 17 个数据集、4 个模型、成对+联合+操纵三类实验、严格统计检验
 - **写作质量**: ⭐⭐⭐⭐ — Q1-Q3 的组织方式清晰，数据集综述有价值，但部分统计细节较密集
 - **价值**: ⭐⭐⭐⭐ — 对论辩挖掘社区是重要的清醒呼声，对其他 NLP 领域也有启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Analysis of Datasets, Metrics and Models in Keyphrase Generation](an_analysis_of_datasets_metrics_and_models_in_keyphrase_generation.md)
+- [Towards Comprehensive Argument Analysis in Education: Dataset, Tasks, and Method](towards_comprehensive_argument_analysis_in_education_dataset_tasks_and_method.md)
+- [Predicting Implicit Arguments in Procedural Video Instructions](implicit_arguments_video_instructions.md)
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](../../ICML2025/others/unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+- [Hard Negative Mining for Domain-Specific Retrieval in Enterprise Systems](hard_negative_mining_for_domain-specific_retrieval_in_enterprise_systems.md)
+
+<!-- RELATED:END -->

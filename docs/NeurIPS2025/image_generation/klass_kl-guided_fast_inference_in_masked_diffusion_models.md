@@ -139,3 +139,15 @@ KLASS 在几乎所有任务上都优于标准 Top-1 解码，同时步数减少 
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖文本推理、文本生成、图像生成、分子生成四种模态，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，理论部分简洁有力，图表设计直观
 - 价值: ⭐⭐⭐⭐ 即插即用的加速方法，实用价值高，但受限于掩码扩散模型的生态
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [Safe and Stable Control via Lyapunov-Guided Diffusion Models](safe_and_stable_control_via_lyapunov-guided_diffusion_models.md)
+- [Beyond Masked and Unmasked: Discrete Diffusion Models via Partial Masking](beyond_masked_and_unmasked_discrete_diffusion_models_via_par.md)
+- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
+
+<!-- RELATED:END -->

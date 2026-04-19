@@ -238,3 +238,15 @@ TabPFN 当前限制在 500 维以内。对于 1152D 的 32×2 SRAM，用 GBDT（
 - 实验充分度: ⭐⭐⭐⭐ 工业级 SRAM 基准，多角多电路规模评估，调优敏感性分析有力
 - 写作质量: ⭐⭐⭐⭐⭐ "调优屏障"概念立论清晰，从理论到实验逻辑严密
 - 价值: ⭐⭐⭐⭐ 零调优特性对工业部署有实际价值，有望推动 AI 在 EDA 中的真正落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [Sketch2Colab: Sketch-Conditioned Multi-Human Animation via Controllable Flow Distillation](sketch2colab_sketch-conditioned_multi-human_animation_via_controllable_flow_dist.md)
+- [Seeing without Pixels: Perception from Camera Trajectories](seeing_without_pixels_perception_from_camera_trajectories.md)
+- [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
+- [TriLite: Efficient WSOL with Universal Visual Features and Tri-Region Disentanglement](trilite_efficient_weakly_supervised_object_localization_with_universal_visual_fe.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ LAION-C 是评估基准而非训练数据集。为验证数据集可解性，作
 - 实验充分度: ⭐⭐⭐⭐⭐ 58个模型+19人心理物理实验+FID/错误一致性多维度验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑严密，从问题定义到基准设计到实验分析层层递进
 - 价值: ⭐⭐⭐⭐⭐ 为网络规模视觉模型的OOD评估提供了急需的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FA: Forced Prompt Learning of Vision-Language Models for Out-of-Distribution Detection](../../ICCV2025/multimodal_vlm/fa_forced_prompt_learning_of_vision-language_models_for_out-of-distribution_dete.md)
+- [Revisiting Logit Distributions for Reliable Out-of-Distribution Detection](../../NeurIPS2025/multimodal_vlm/revisiting_logit_distributions_for_reliable_out-of-distribution_detection.md)
+- [Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection](../../ICCV2025/multimodal_vlm/adaptive_prompt_learning_via_gaussian_outlier_synthesis_for_out-of-distribution_.md)
+- [Playing the Fool: Jailbreaking LLMs and Multimodal LLMs with Out-of-Distribution Strategy](../../CVPR2025/multimodal_vlm/playing_the_fool_jailbreaking_llms_and_multimodal_llms_with_out-of-distribution_.md)
+- [WebDS: An End-to-End Benchmark for Web-based Data Science](../../ICLR2026/multimodal_vlm/webds_an_end-to-end_benchmark_for_web-based_data_science.md)
+
+<!-- RELATED:END -->

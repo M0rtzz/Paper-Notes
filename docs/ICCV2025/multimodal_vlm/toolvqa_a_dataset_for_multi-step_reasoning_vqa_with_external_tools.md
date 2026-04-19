@@ -164,3 +164,15 @@ LCS 匹配对数据质量至关重要：移除后准确率从 90.8% 降至 41.6%
 实验 ★★★★☆：覆盖多种模型和 OOD 基准，分析全面
 写作 ★★★★☆：数据质量评估透彻，错误分析有深度
 实用性 ★★★★★：公开代码和数据集，可直接用于工具代理训练和评估
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Acknowledging Focus Ambiguity in Visual Questions](acknowledging_focus_ambiguity_in_visual_questions.md)
+- [MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning](mmat1m_a_large_reasoning_dataset_for_multimodal_agent_tuning.md)
+- [LLaVA-CoT: Let Vision Language Models Reason Step-by-Step](llavacot_let_vision_language_models_reason_stepbystep.md)
+- [ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering](reasonvqa_a_multi-hop_reasoning_benchmark_with_structural_knowledge_for_visual_q.md)
+- [Understanding Museum Exhibits using Vision-Language Reasoning](understanding_museum_exhibits_using_vision-language_reasoning.md)
+
+<!-- RELATED:END -->

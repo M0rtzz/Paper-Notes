@@ -182,3 +182,15 @@ FaCT 的概念一致性显著优于所有基线方法。
 - 实验充分度: ⭐⭐⭐⭐⭐ (多架构、多层、用户研究、消融实验、概念删除、误分类分析)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，数学推导严谨，可视化优秀)
 - 价值: ⭐⭐⭐⭐ (对可解释 AI 领域有实质推进，但 B-cos 依赖限制了通用性)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Faithful Multimodal Concept Bottleneck Models](../../CVPR2025/interpretability/towards_faithful_multimodal_concept_bottleneck_models.md)
+- [Provably Explaining Neural Additive Models](../../ICLR2026/interpretability/provably_explaining_neural_additive_models.md)
+- [Towards Interpretability Without Sacrifice: Faithful Dense Layer Decomposition with Mixture of Decoders](towards_interpretability_without_sacrifice_faithful_dense_layer_decomposition_wi.md)
+- [Explaining Similarity in Vision-Language Encoders with Weighted Banzhaf Interactions](explaining_similarity_in_vision-language_encoders_with_weighted_banzhaf_interact.md)
+- [Tropical Attention: Neural Algorithmic Reasoning for Combinatorial Algorithms](tropical_attention_neural_algorithmic_reasoning_for_combinatorial_algorithms.md)
+
+<!-- RELATED:END -->

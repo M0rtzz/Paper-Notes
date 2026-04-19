@@ -132,3 +132,15 @@ ZO-SAM 保持 SAM 的两步结构，但修改了第一步：
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 种方法 × 3 稀疏度 × 多数据集/架构，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 动机分析（梯度方差、损失面可视化）做得好
 - 价值: ⭐⭐⭐⭐ 让 SAM 在稀疏训练中真正可用，实际工程价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+- [Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model](rethinking_snn_online_training_and_deployment_gradient-coherent_learning_via_hyb.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)
+- [Revisiting Sharpness-Aware Minimization: A More Faithful and Effective Implementation](../../ICLR2026/others/revisiting_sharpness-aware_minimization_a_more_faithful_and_effective_implementa.md)
+- [What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
+
+<!-- RELATED:END -->

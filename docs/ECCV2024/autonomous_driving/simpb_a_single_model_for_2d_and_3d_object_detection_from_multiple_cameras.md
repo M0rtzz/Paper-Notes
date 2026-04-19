@@ -155,3 +155,15 @@ SimPB 遵循 DETR-like 框架：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融全面（decoder 配置、分配策略、聚合策略、观察角损失、泛化性），2D/3D 双任务评估
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，Fig.1 的三种范式对比非常直观
 - **价值**: ⭐⭐⭐⭐ — 为多视角感知提供了 2D+3D 统一建模的新思路，泛化性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Approaching Outside: Scaling Unsupervised 3D Object Detection from 2D Scene](approaching_outside_scaling_unsupervised_3d_object_detection_from_2d_scene.md)
+- [MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection](monowad_weather-adaptive_diffusion_model_for_robust_monocular_3d_object_detectio.md)
+- [Rethinking LiDAR Domain Generalization: Single Source as Multiple Density Domains](rethinking_lidar_domain_generalization_single_source_as_multiple_density_domains.md)
+- [OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection](open_object-wise_position_embedding_for_multi-view_3d_object_detection.md)
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+
+<!-- RELATED:END -->

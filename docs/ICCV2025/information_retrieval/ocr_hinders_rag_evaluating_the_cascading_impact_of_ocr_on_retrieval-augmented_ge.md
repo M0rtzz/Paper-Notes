@@ -157,3 +157,15 @@ OHRBench 由三部分组成：
 - 技术深度：⭐⭐⭐⭐ （噪声建模+三级评估+扰动生成方法论严谨）
 - 实验充分度：⭐⭐⭐⭐⭐ （6 种 OCR 方案 × 2 检索器 × 3 LLM × 多级噪声 × 7 领域）
 - 实用价值：⭐⭐⭐⭐⭐ （直接指导 RAG 系统的 OCR 选型和噪声处理策略）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation](../../ACL2025/information_retrieval/hoh_a_dynamic_benchmark_for_evaluating_the_impact_of_outdated_information_on_ret.md)
+- [Benchmarking Retrieval-Augmented Multimodal Generation for Document Question Answering](../../NeurIPS2025/information_retrieval/benchmarking_retrievalaugmented_multimodal_generation_for_do.md)
+- [Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals](../../NeurIPS2025/information_retrieval/worse_than_zero-shot_a_fact-checking_dataset_for_evaluating_the_robustness_of_ra.md)
+- [MAIN-RAG: Multi-Agent Filtering Retrieval-Augmented Generation](../../ACL2025/information_retrieval/main-rag_multi-agent_filtering_retrieval-augmented_generation.md)
+- [RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering](../../NeurIPS2025/information_retrieval/rag-igbench_innovative_evaluation_for_rag-based_interleaved_generation_in_open-d.md)
+
+<!-- RELATED:END -->

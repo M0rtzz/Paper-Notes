@@ -101,3 +101,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 40+架构、4个数据集、全面消融、概念干预、零样本描述
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、方法简洁、理论insight深入、附录详尽（16节）
 - 价值: ⭐⭐⭐⭐⭐ 让可解释AI从CLIP依赖中解放出来，任意legacy模型均可plug-and-play转CBM
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cost-Free Neutrality for the River Method](../../AAAI2026/others/cost-free_neutrality_for_the_river_method.md)
+- [Enhancing the Comprehensibility of Text Explanations via Unsupervised Concept Discovery](../../ACL2025/others/enhancing_the_comprehensibility_of_text_explanations_via_unsupervised_concept_di.md)
+- [Training Deep Normalization-Free Spiking Neural Networks with Lateral Inhibition](../../ICLR2026/others/training_deep_normalization-free_spiking_neural_networks_with_lateral_inhibition.md)
+- [Articulation in Motion: Prior-Free Part Mobility Analysis for Articulated Objects](../../ICLR2026/others/articulation_in_motion_prior-free_part_mobility_analysis_for_articulated_objects.md)
+- [Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning](../../AAAI2026/others/expandable_and_differentiable_dual_memories_with_orthogonal_regularization_for_e.md)
+
+<!-- RELATED:END -->

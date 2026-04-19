@@ -152,3 +152,15 @@ SUDO相比最优基线Superior Model提升了**5.7倍**。
 - 实验充分度: ⭐⭐⭐⭐ 6个VLM、3个target agent、50个任务、多轮迭代的系统评估，但MANUS/OmniParser仅12个任务略显不足
 - 写作质量: ⭐⭐⭐⭐ 论文标题炫酷（sudo rm -rf），框架描述清晰，实验组织有条理，命名一致性好
 - 价值: ⭐⭐⭐⭐⭐ 揭示了computer-use agent这一新兴范式的重大安全盲区，SUDO Dataset为后续安全研究提供了标准化基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentAuditor: Human-Level Safety and Security Evaluation for LLM Agents](../../NeurIPS2025/llm_agent/agentauditor_humanlevel_safety_and_security_evaluation_for_l.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](agentic_reasoning_tools.md)
+- [Agentic Knowledgeable Self-Awareness](agentic_knowledgeable_self-awareness.md)
+- [Self-Taught Agentic Long-Context Understanding](self_taught_agentic_long_ctx.md)
+- [SynWorld: Virtual Scenario Synthesis for Agentic Action Knowledge Refinement](synworld_agentic_action_knowledge.md)
+
+<!-- RELATED:END -->

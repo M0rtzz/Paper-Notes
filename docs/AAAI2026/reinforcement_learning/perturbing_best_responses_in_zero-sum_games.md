@@ -151,3 +151,15 @@ SDO实验比较（$\varepsilon=0.1$）：
 - 实验充分度: ⭐⭐⭐ — 理论验证充分，但缺乏真正大规模应用场景的实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学严谨，逻辑清晰，证明完整
 - 价值: ⭐⭐⭐⭐ — 解决了博弈论中的重要理论问题，对多智能体RL有潜在启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solving Zero-Sum Convex Markov Games](../../ICML2025/reinforcement_learning/solving_zero-sum_convex_markov_games.md)
+- [SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](../../ICLR2026/reinforcement_learning/spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
+- [Certifying Concavity and Monotonicity in Games via Sum-of-Squares Hierarchies](../../NeurIPS2025/reinforcement_learning/certifying_concavity_and_monotonicity_in_games_via_sum-of-squares_hierarchies.md)
+- [Beyond the Lower Bound: Bridging Regret Minimization and Best Arm Identification in Lexicographic Bandits](beyond_the_lower_bound_bridging_regret_minimization_and_best_arm_identification_.md)
+- [A Multi-Agent Conversational Bandit Approach to Online Evaluation and Selection of User-Aligned LLM Responses](a_multi-agent_conversational_bandit_approach_to_online_evaluation_and_selection_.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ BrainCoDec 分为两个阶段的层级推理：
 - 实验充分度: ⭐⭐⭐⭐⭐ NSD 四被试留一交叉验证、BOLD5000 跨扫描仪、ROI dropout、注意力可视化、多 backbone 验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，方法描述详尽，图表精美且信息量大
 - 价值: ⭐⭐⭐⭐⭐ 向通用脑解码基础模型迈出关键一步，实际性能提升巨大，对 BCI 领域意义深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex](../../NeurIPS2025/medical_imaging/meta-learning_an_in-context_transformer_model_of_human_higher_visual_cortex.md)
+- [MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding](../../NeurIPS2025/medical_imaging/more-brain_routed_mixture_of_experts_for_interpretable_and_generalizable_cross-s.md)
+- [MindCross: Fast New Subject Adaptation with Limited Data for Cross-subject Video Reconstruction from Brain Signals](../../AAAI2026/medical_imaging/mindcross_fast_new_subject_adaptation_with_limited_data_for_cross-subject_video_.md)
+- [Zebra: Towards Zero-Shot Cross-Subject Generalization for Universal Brain Visual Decoding](../../NeurIPS2025/medical_imaging/zebra_towards_zero-shot_cross-subject_generalization_for_universal_brain_visual_.md)
+- [Mind the Discriminability Trap in Source-Free Cross-domain Few-shot Learning](mind_the_discriminability_trap_in_source-free_cross-domain_few-shot_learning.md)
+
+<!-- RELATED:END -->

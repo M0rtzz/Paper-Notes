@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 重建质量和聚类结果充分，但缺少与其他无监督方法的对比消融
 - 写作质量: ⭐⭐⭐⭐ 清晰，天文学背景和方法描述平衡好
 - 价值: ⭐⭐⭐⭐ 对高红移天文学有重大发现价值，5 类稀有种群数量翻倍是实质性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](../../ICML2025/physics/mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+- [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
+- [Neural Deprojection of Galaxy Stellar Mass Profiles](neural_deprojection_of_galaxy_stellar_mass_profiles.md)
+- [From Simulations to Surveys: Domain Adaptation for Galaxy Observations](from_simulations_to_surveys_domain_adaptation_for_galaxy_observations.md)
+
+<!-- RELATED:END -->

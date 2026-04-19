@@ -204,3 +204,15 @@ $\pi^3$ 无参考帧和相机 token 依赖，可直接应用 GSA。实验发现 
 ## 评分
 
 ⭐⭐⭐⭐ — 首个面向 feed-forward 3D重建的可训练稀疏注意力方法，12.4× 加速实用意义大，双分支设计优雅且消融充分；但短序列严格指标下精度仍有差距，且方法受限于3D重建中位姿回归的高精度需求。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VGG-T3: Offline Feed-Forward 3D Reconstruction at Scale](vgg-t3_offline_feed-forward_3d_reconstruction_at_scale.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+
+<!-- RELATED:END -->

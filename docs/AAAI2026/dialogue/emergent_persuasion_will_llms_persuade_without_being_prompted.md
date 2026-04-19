@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验设计合理但仅限单一模型，结论的普适性需更多验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，threats model 区分明确
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 安全治理有直接影响，揭示了后训练的隐性风险
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Canoe: Teaching LLMs to Maintain Contextual Faithfulness via Synthetic Tasks and RL](teaching_large_language_models_to_maintain_contextual_faithfulness_via_synthetic.md)
+- [AC-LoRA: (Almost) Training-Free Access Control-Aware Multi-Modal LLMs](../../NeurIPS2025/dialogue/aclora_almost_trainingfree_access_controlaware_multimodal_ll.md)
+- [MCTSr-Zero: Self-Reflective Psychological Counseling Dialogues Generation via Principles and Adaptive Exploration](mctsr-zero_self-reflective_psychological_counseling_dialogues_generation_via_pri.md)
+- [Evolutionary Multimodal Reasoning via Hierarchical Semantic Representation for Intent Recognition](../../CVPR2026/dialogue/evolutionary_multimodal_reasoning_via_hierarchical_semantic_representation_for_i.md)
+- [Non-Collaborative User Simulators for Tool Agents](../../ICLR2026/dialogue/non-collaborative_user_simulators_for_tool_agents.md)
+
+<!-- RELATED:END -->

@@ -205,3 +205,15 @@ $$\nabla_{\mathcal{E}} \mathbb{E}[\alpha] = \mathbb{E}[\alpha_i \nabla_{\mathcal
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个设置、多基线（含7个LLM）、消融、迁移性测试、多样性分析全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，案例分析生动，理论与实践结合好
 - 价值: ⭐⭐⭐⭐ — 零样本DEAE的新思路，合成数据可迁移性有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Agent Collaboration via Evolving Orchestration](../../NeurIPS2025/reinforcement_learning/multi-agent_collaboration_via_evolving_orchestration.md)
+- [MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management](mars_a_meta-adaptive_reinforcement_learning_framework_for_risk-aware_multi-agent.md)
+- [BAMAS: Structuring Budget-Aware Multi-Agent Systems](bamas_structuring_budget-aware_multi-agent_systems.md)
+- [Cross-environment Cooperation Enables Zero-shot Multi-agent Coordination](../../ICML2025/reinforcement_learning/cross-environment_cooperation_enables_zero-shot_multi-agent_coordination.md)
+- [Where and What Matters: Sensitivity-Aware Task Vectors for Many-Shot Multimodal In-Context Learning](where_and_what_matters_sensitivity-aware_task_vectors_for_many-shot_multimodal_i.md)
+
+<!-- RELATED:END -->

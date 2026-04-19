@@ -141,3 +141,15 @@ $$L = -\sum_{k=1}^{N} \log P(y_k | x_1, x_2, \ldots, x_{k-1})$$
 - 实验充分度: ⭐⭐⭐⭐ 3 模型 × 4 数据集 × 7 种 PII 类型 × 多维度消融，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，动机推导逻辑严谨，图示直观
 - 价值: ⭐⭐⭐⭐ 对去中心化训练安全性有重要警示意义，推动该方向的防御研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
+- [DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
+- [Synthesizing Post-Training Data for LLMs through Multi-Agent Simulation](synthesizing_post-training_data_for_llms_through_multi-agent_simulation.md)
+- [Large Vocabulary Size Improves Large Language Models](large_vocabulary_size_improves_large_language_models.md)
+
+<!-- RELATED:END -->

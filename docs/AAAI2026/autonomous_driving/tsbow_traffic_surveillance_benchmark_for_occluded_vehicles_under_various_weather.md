@@ -136,3 +136,15 @@ TSBOW在规模、分辨率、类别数和天气多样性上全面超越现有基
 - 实验充分度: ⭐⭐⭐⭐ — 提供4款SOTA检测器基准，跨场景/天气/尺度维度的详细分析，跨数据集泛化验证
 - 写作质量: ⭐⭐⭐⭐ — 数据集构建流程清晰，统计分析详尽
 - 价值: ⭐⭐⭐⭐ — 数据集公开可用，对智能交通系统研究具有较高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HG-Lane: High-Fidelity Generation of Lane Scenes under Adverse Weather and Lighting Conditions without Re-annotation](../../CVPR2026/autonomous_driving/hg-lane_high-fidelity_generation_of_lane_scenes_under_adverse_weather_and_lighti.md)
+- [Walking Further: Semantic-aware Multimodal Gait Recognition Under Long-Range Conditions](walking_further_semantic-aware_multimodal_gait_recognition_under_long-range_cond.md)
+- [TrafficLoc: Localizing Traffic Surveillance Cameras in 3D Scenes](../../ICCV2025/autonomous_driving/trafficloc_localizing_traffic_surveillance_cameras_in_3d_scenes.md)
+- [URB -- Urban Routing Benchmark for RL-Equipped Connected Autonomous Vehicles](../../NeurIPS2025/autonomous_driving/urb_--_urban_routing_benchmark_for_rl-equipped_connected_autonomous_vehicles.md)
+- [Perception Characteristics Distance: Measuring Stability and Robustness of Perception System in Dynamic Conditions under a Certain Decision Rule](../../CVPR2026/autonomous_driving/perception_characteristics_distance_measuring_stability_and_robustness_of_percep.md)
+
+<!-- RELATED:END -->

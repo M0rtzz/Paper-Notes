@@ -161,3 +161,15 @@ $$\mathcal{L} = \lambda_{ce}\mathcal{L}_{ce} + \lambda_{dice}\mathcal{L}_{dice} 
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个数据集，全面的消融实验，覆盖多个阈值指标）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，图表丰富）
 - 价值: ⭐⭐⭐⭐ （为 SAM2 在遥感指称分割的适配提供了有效方案，实验提升显著）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DTeethSAM: Taming SAM2 for 3D Teeth Segmentation](3dteethsam_taming_sam2_for_3d_teeth_segmentation.md)
+- [Efficient-SAM2: Accelerating SAM2 with Object-Aware Visual Encoding and Memory Retrieval](../../ICLR2026/segmentation/efficient-sam2_accelerating_sam2_with_object-aware_visual_encoding_and_memory_re.md)
+- [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](../../NeurIPS2025/segmentation/sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
+- [Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](../../ICCV2025/segmentation/correspondence_as_video_testtime_adaption_on_sam2_for_refere.md)
+- [A Distractor-Aware Memory for Visual Object Tracking with SAM2](../../CVPR2025/segmentation/a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
+
+<!-- RELATED:END -->

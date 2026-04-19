@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐ Position paper无实验，LQG玩具模型过于简化
 - 写作质量: ⭐⭐⭐⭐ 论述清晰有条理，数学推导严谨，但篇幅偏长
 - 价值: ⭐⭐⭐ 提供了有用的思维框架，但距离实际应用还有很大距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probabilistic Token Alignment for Large Language Model Fusion](probabilistic_token_alignment_for_large_language_model_fusion.md)
+- [SCoPe: Intrinsic Semantic Space Control for Mitigating Copyright Infringement in LLMs](../../AAAI2026/interpretability/scope_intrinsic_semantic_space_control_for_mitigating_copyright_infringement_in_.md)
+- [VL-SAE: Interpreting and Enhancing Vision-Language Alignment with a Unified Concept Set](vlsae_interpreting_and_enhancing_visionlanguage_alignment_wi.md)
+- [SALVE: Sparse Autoencoder-Latent Vector Editing for Mechanistic Control of Neural Networks](../../ICLR2026/interpretability/salve_sparse_autoencoder-latent_vector_editing_for_mechanistic_control_of_neural.md)
+- [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
+
+<!-- RELATED:END -->

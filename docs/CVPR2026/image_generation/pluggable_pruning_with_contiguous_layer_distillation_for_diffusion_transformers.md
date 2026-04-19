@@ -149,3 +149,15 @@ PPCL 分两个阶段：**深度剪枝**和**宽度剪枝**。
 | 实用价值 | 9 | 训练成本低、压缩比高、即插即用，工业落地价值大 |
 | 写作质量 | 7 | 结构清晰，但公式符号较多，部分描述可以更简洁 |
 | **总分** | **7.6** | 面向 MMDiT 的高效压缩方案，工程实用性突出 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAZOR: Ratio-Aware Layer Editing for Targeted Unlearning in Vision Transformers and Diffusion Models](razor_ratio_aware_unlearning_vit_diffusion.md)
+- [Circuit Mechanisms for Spatial Relation Generation in Diffusion Transformers](circuit_mechanisms_for_spatial_relation_generation_in_diffusion_transformers.md)
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [Learnability-Guided Diffusion for Dataset Distillation](learnability-guided_diffusion_for_dataset_distillation.md)
+- [One Model, Many Budgets: Elastic Latent Interfaces for Diffusion Transformers](one_model_many_budgets_elastic_latent_interfaces_f.md)
+
+<!-- RELATED:END -->

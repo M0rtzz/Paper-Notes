@@ -101,3 +101,15 @@ hardmax 的梯度几乎处处为零，采用 softmax 作为反向传播的代理
 | 写作质量 | 9/10 | 行文清晰，理论与实验组织逻辑性强，图表质量高 |
 | 实用价值 | 7/10 | 适用于需要精确状态追踪的场景，但大规模实用性待验证 |
 | **总分** | **8.5/10** | 兼具理论优雅和实验验证的高质量工作，对 SSM 表达力研究有重要推动 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GG-SSMs: Graph-Generating State Space Models](../../CVPR2025/video_understanding/gg-ssms_graph-generating_state_space_models.md)
+- [PASS: Path-Selective State Space Model for Event-Based Recognition](pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [KineST: A Kinematics-guided Spatiotemporal State Space Model for Human Motion Tracking from Sparse Signals](../../AAAI2026/video_understanding/kinest_a_kinematics-guided_spatiotemporal_state_space_model_for_human_motion_tra.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [GeoDynamics: A Geometric State-Space Neural Network for Understanding Brain Dynamics on Riemannian Manifolds](geodynamics_a_geometric_state-space_neural_network_for_understanding_brain_dynam.md)
+
+<!-- RELATED:END -->

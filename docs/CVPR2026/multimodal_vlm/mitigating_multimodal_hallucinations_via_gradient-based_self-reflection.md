@@ -158,3 +158,15 @@ GACD 是推理阶段方法，不涉及训练损失。核心优化目标是在概
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 个模型 × 4 个数据集，生成+判别任务全覆盖，消融细致到组件/范数/梯度方法
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨，动机清晰，公式/图示配合良好
 - 价值: ⭐⭐⭐⭐ — 即插即用的推理方法实用性强，但白盒限制和倍增开销限制了适用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GACD: Mitigating Multimodal Hallucinations via Gradient-based Self-Reflection](gacd_gradient_self_reflection_hallucination.md)
+- [Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention](tell_model_where_to_look_mitigating_hallucinations_in_mllms_by_vision-guided_att.md)
+- [Residual Decoding: Mitigating Hallucinations in Large Vision-Language Models via History-Aware Residual Guidance](residual_decoding_mitigating_hallucinations_in_large_vision-language_models_via_.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards](evolmm_self-evolving_large_multimodal_models_with_continuous_rewards.md)
+
+<!-- RELATED:END -->

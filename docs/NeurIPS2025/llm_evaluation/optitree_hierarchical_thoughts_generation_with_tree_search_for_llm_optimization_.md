@@ -168,3 +168,15 @@ $$\mathcal{P}^{(1)} = \underset{\mathcal{P}_t^{(0)}}{\text{argmax}} \; \mathbb{I
 - **写作质量** ⭐⭐⭐⭐：动机清晰，三个观察层层递进
 - **实用价值** ⭐⭐⭐⭐：对 OR 从业者和 LLM 应用落地有直接参考价值
 - **理论深度** ⭐⭐⭐：子问题定义有形式化，但保序性证明较简单
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Robust Optimization for LLM Alignment under Distribution Shifts](leveraging_robust_optimization_for_llm_alignment_under_distribution_shifts.md)
+- [HPSS: Heuristic Prompting Strategy Search for LLM Evaluators](../../ACL2025/llm_evaluation/hpss_heuristic_prompting_strategy_search_for_llm_evaluators.md)
+- [RealHiTBench: A Comprehensive Realistic Hierarchical Table Benchmark for Evaluating LLM-Based Table Analysis](../../ACL2025/llm_evaluation/realhitbench_a_comprehensive_realistic_hierarchical_table_benchmark_for_evaluati.md)
+- [RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases](rdb2g-bench_a_comprehensive_benchmark_for_automatic_graph_modeling_of_relational.md)
+- [Incomplete Multi-view Clustering via Hierarchical Semantic Alignment and Cooperative Completion](incomplete_multi-view_clustering_via_hierarchical_semantic_alignment_and_coopera.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ tags:
 | 实验充分度 | 3.5 | 三组 RQ 实验设计完整，但数据集和模型家族偏少 |
 | 写作质量 | 4 | 问题形式化清晰，实验结构条理分明 |
 | 价值 | 4 | 为 LLM 对齐提供了新范式，兼具理论深度和实用潜力 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
+- [A Practical Approach for Building Production-Grade Conversational Agents with Workflow Graphs](a_practical_approach_for_building_production-grade_conversational_agents_with_wo.md)
+- [Visual Cues Enhance Predictive Turn-Taking for Two-Party Human Interaction](visual_cues_enhance_predictive_turn-taking_for_two-party_human_interaction.md)
+- [Enhancing Hyperbole and Metaphor Detection with Their Bidirectional Dynamic Interaction and Emotion Knowledge](hyperbole_metaphor_detection.md)
+- [Synergistic Weak-Strong Collaboration by Aligning Preferences](synergistic_weak-strong_collaboration_by_aligning_preferences.md)
+
+<!-- RELATED:END -->

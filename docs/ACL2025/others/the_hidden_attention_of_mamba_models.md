@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了视觉和NLP两个领域的可解释性验证，但定量对比可以更深入
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，结构清晰，但公式密度较高可能影响部分读者理解
 - 价值: ⭐⭐⭐⭐⭐ 为理解和改进SSM模型提供了重要理论基础，有广泛的后续研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
+- [A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](../../ICCV2025/others/a_hidden_stumbling_block_in_generalized_category_discovery_d.md)
+- [Inferring Functionality of Attention Heads from their Parameters](inferring_functionality_of_attention_heads_from_their_parameters.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
+
+<!-- RELATED:END -->

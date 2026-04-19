@@ -136,3 +136,15 @@ $$\mathcal{L}_{\text{total}} = \lambda_1\mathcal{L}_{\text{lpips}} + \lambda_2\m
 - 技术深度：⭐⭐⭐⭐ — LUT 融合与四线性插值设计完整
 - 实验充分度：⭐⭐⭐⭐⭐ — 定量+定性+用户研究+新基准
 - 实用价值：⭐⭐⭐⭐⭐ — 实时 4K 处理，专业级色彩分级
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video Color Grading via Look-Up Table Generation](video_color_grading_via_look-up_table_generation.md)
+- [Domain Generalizable Portrait Style Transfer](domain_generalizable_portrait_style_transfer.md)
+- [Free4D: Tuning-free 4D Scene Generation with Spatial-Temporal Consistency](free4d_tuning-free_4d_scene_generation_with_spatial-temporal_consistency.md)
+- [HSI: A Holistic Style Injector for Arbitrary Style Transfer](../../CVPR2025/image_generation/hsi_a_holistic_style_injector_for_arbitrary_style_transfer.md)
+- [Balanced Image Stylization with Style Matching Score](balanced_image_stylization_with_style_matching_score.md)
+
+<!-- RELATED:END -->

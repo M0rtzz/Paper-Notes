@@ -115,3 +115,15 @@ $$\mathcal{L} = (1-\lambda)\mathcal{L}_1 + \lambda\mathcal{L}_{SSIM}, \quad \lam
 - 创新性：★★★★★ 首次将GNN引入3DGS，结构感知思想新颖
 - 实用性：★★★★☆ 实时渲染、大幅压缩对VR/AR应用价值大
 - 实验质量：★★★★★ 13个场景3个数据集完全评估，消融详尽
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TalkingGaussian: Structure-Persistent 3D Talking Head Synthesis via Gaussian Splatting](talkinggaussian_structure-persistent_3d_talking_head_synthesis_via_gaussian_spla.md)
+- [Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting](pixel-gs_density_control_with_pixel-aware_gradient_for_3d_gaussian_splatting.md)
+- [On the Error Analysis of 3D Gaussian Splatting and an Optimal Projection Strategy](on_the_error_analysis_of_3d_gaussian_splatting_and_an_optimal_projection_strateg.md)
+- [Per-Gaussian Embedding-Based Deformation for Deformable 3D Gaussian Splatting](per-gaussian_embedding-based_deformation_for_deformable_3d_gaussian_splatting.md)
+- [HAC: Hash-grid Assisted Context for 3D Gaussian Splatting Compression](hac_hash-grid_assisted_context_for_3d_gaussian_splatting_compression.md)
+
+<!-- RELATED:END -->

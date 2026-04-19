@@ -127,3 +127,15 @@ ARECHO 将语音多指标评估建模为链式自回归 token 预测任务——
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个场景 + 87 个指标 + Base/Scale 两种训练规模 + 充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 挑战-解决方案的对应关系清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ 目前最全面的语音评估框架，对语音/音频社区有重大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations](../../ACL2025/interpretability/expert_an_explainable_image_captioning_evaluation_metric_with_structured_explana.md)
+- [Better Estimation of the Kullback-Leibler Divergence Between Language Models](better_estimation_of_the_kullback--leibler_divergence_between_language_models.md)
+- [AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
+- [Sloth: Scaling Laws for LLM Skills to Predict Multi-Benchmark Performance Across Families](sloth_scaling_laws_for_llm_skills_to_predict_multi-benchmark_performance_across_.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](../../AAAI2026/interpretability/probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
+
+<!-- RELATED:END -->

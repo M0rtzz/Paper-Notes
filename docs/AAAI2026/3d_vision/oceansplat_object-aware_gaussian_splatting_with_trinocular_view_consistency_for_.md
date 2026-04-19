@@ -186,3 +186,15 @@ $$L_{total} = L_{photo} + \lambda_{tri} L_{tri} + \lambda_{epi} L_{epi} + \lambd
 - 实验充分度: ⭐⭐⭐⭐⭐ （真实+模拟，NVS+恢复，消融完整，效率比较详尽）
 - 写作质量: ⭐⭐⭐⭐⭐ （公式推导完整，图示清晰，物理动机解释充分）
 - 价值: ⭐⭐⭐⭐ （水下场景重建的重要推进，自监督设计实用性强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Splat-SAP: Feed-Forward Gaussian Splatting for Human-Centered Scene with Scale-Aware Point Map Reconstruction](splat-sap_feed-forward_gaussian_splatting_for_human-centered_scene_with_scale-aw.md)
+- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
+- [MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting](meshsplat_generalizable_sparse-view_surface_reconstruction_via_gaussian_splattin.md)
+- [Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction](sparse4dgs_4d_gaussian_splatting_for_sparse-frame_dynamic_scene_reconstruction.md)
+- [Opt3DGS: Optimizing 3D Gaussian Splatting with Adaptive Exploration and Curvature-Aware Exploitation](opt3dgs_optimizing_3d_gaussian_splatting_with_adaptive_exploration_and_curvature.md)
+
+<!-- RELATED:END -->

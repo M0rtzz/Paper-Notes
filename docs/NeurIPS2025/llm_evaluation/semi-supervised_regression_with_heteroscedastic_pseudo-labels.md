@@ -153,3 +153,15 @@ $$\min_\phi -\langle \nabla_\theta \mathcal{L}^{inner}(\theta, \phi), \nabla_\th
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集三个标注比例、多个基线、消融、可视化、计算成本分析俱全
 - **写作质量**: ⭐⭐⭐⭐ 动机叙述清晰，双层优化的推导严谨，理论与实验互相呼应
 - **价值**: ⭐⭐⭐⭐ 为 SSR 提供了简洁高效的解决方案，低标注场景优势明显
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Keep It on a Leash: Controllable Pseudo-label Generation Towards Realistic Long-Tailed Semi-Supervised Learning](keep_it_on_a_leash_controllable_pseudo-label_generation_towards_realistic_long-t.md)
+- [DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning](../../AAAI2026/llm_evaluation/dicap_distribution-calibrated_pseudo-labeling_for_semi-supervised_multi-label_le.md)
+- [Fully Heteroscedastic Count Regression with Deep Double Poisson Networks](../../ICML2025/llm_evaluation/fully_heteroscedastic_count_regression_with_deep_double_poisson_networks.md)
+- [Sampling Control for Imbalanced Calibration in Semi-Supervised Learning](../../AAAI2026/llm_evaluation/sampling_control_for_imbalanced_calibration_in_semi-supervised_learning.md)
+- [Reliably Detecting Model Failures in Deployment Without Labels](reliably_detecting_model_failures_in_deployment_without_labels.md)
+
+<!-- RELATED:END -->

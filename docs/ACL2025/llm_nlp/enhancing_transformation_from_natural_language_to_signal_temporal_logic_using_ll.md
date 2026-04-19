@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+自动评估+人工评估，但消融实验可以更细致
 - 写作质量: ⭐⭐⭐⭐ 结构完整，STL 形式化定义清晰
 - 价值: ⭐⭐⭐⭐ 数据集和框架对形式化规约自动生成领域有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Internal and External Impacts of Natural Language Processing Papers](internal_and_external_impacts_of_natural_language_processing_papers.md)
+- [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
+- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+
+<!-- RELATED:END -->

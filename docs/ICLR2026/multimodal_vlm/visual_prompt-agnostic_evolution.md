@@ -114,3 +114,15 @@ PAE 包含两个互补模块：MPA（初始化阶段）和 KLD（训练阶段）
 - 实验充分度: ⭐⭐⭐⭐⭐ — 25 个数据集、8 种 VPT 变体、4 种架构、分类+分割、消融+可视化全面
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰、理论推导完整，但符号较多读起来较重
 - 价值: ⭐⭐⭐⭐ — 即插即用的通用 VPT 加速器，对 prompt tuning 社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisit Visual Prompt Tuning: The Expressiveness of Prompt Experts](revisit_visual_prompt_tuning_the_expressiveness_of_prompt_experts.md)
+- [VIPAMIN: Visual Prompt Initialization via Embedding Selection and Subspace Expansion](../../NeurIPS2025/multimodal_vlm/vipamin_visual_prompt_initialization_via_embedding_selection_and_subspace_expans.md)
+- [PRO-VPT: Distribution-Adaptive Visual Prompt Tuning via Prompt Relocation](../../ICCV2025/multimodal_vlm/pro-vpt_distribution-adaptive_visual_prompt_tuning_via_prompt_relocation.md)
+- [CVPT: Cross Visual Prompt Tuning](../../ICCV2025/multimodal_vlm/cvpt_cross_visual_prompt_tuning.md)
+- [Attention to the Burstiness in Visual Prompt Tuning!](../../ICCV2025/multimodal_vlm/attention_to_the_burstiness_in_visual_prompt_tuning.md)
+
+<!-- RELATED:END -->

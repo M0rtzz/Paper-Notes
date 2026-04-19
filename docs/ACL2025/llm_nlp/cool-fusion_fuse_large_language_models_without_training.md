@@ -154,3 +154,15 @@ $$PPL_u(s) = \exp\left(\frac{1}{|s|}\sum_{s_i \in s} -\log p_u(s_i)\right)$$
 - **实用性**：⭐⭐⭐⭐ — 真正的零训练方案，部署方便
 - **实验充分性**：⭐⭐⭐⭐ — 覆盖数学、QA、多语言等多领域，消融详尽
 - **写作质量**：⭐⭐⭐⭐ — 示例清晰，理论分析到位
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Large Language Models Perform Latent Multi-Hop Reasoning without Exploiting Shortcuts?](do_large_language_models_perform_latent_multi-hop_reasoning_without_exploiting_s.md)
+- [Self-Training Elicits Concise Reasoning in Large Language Models](self-training_elicits_concise_reasoning_in_large_language_models.md)
+- [Recurrent Knowledge Identification and Fusion for Language Model Continual Learning](recurrent_kif_continual_learning.md)
+- [ProFuser: Progressive Fusion of Large Language Models](../../AAAI2026/llm_nlp/profuser_progressive_fusion_of_large_language_models.md)
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+
+<!-- RELATED:END -->

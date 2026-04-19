@@ -149,3 +149,15 @@ StreamBridge由三个即插即用组件构成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种基座模型验证、流式/离线双重评估、消融详细、数据集分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精准、方法描述清晰、伪代码完整
 - 价值: ⭐⭐⭐⭐⭐ 将离线Video-LLM转化为流式模型的实用方案，Stream-IT数据集可直接使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](../../ACL2025/llm_nlp/selfelicit_evidence_highlighting.md)
+- [IPO: Your Language Model is Secretly a Preference Classifier](../../ACL2025/llm_nlp/ipo_your_language_model_is_secretly_a_preference_classifier.md)
+- [Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings](../../ICML2025/llm_nlp/towards_universal_offline_black-box_optimization_via_learning_language_model_emb.md)
+- [SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies](symphony_synergistic_multi-agent_planning_with_heterogeneous_language_model_asse.md)
+- [InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model](../../ACL2025/llm_nlp/infinisst_simultaneous_translation_of_unbounded_speech_with_large_language_model.md)
+
+<!-- RELATED:END -->

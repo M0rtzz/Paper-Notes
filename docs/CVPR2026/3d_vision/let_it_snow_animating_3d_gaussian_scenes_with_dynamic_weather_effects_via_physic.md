@@ -142,3 +142,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{Video-SDS}} + \lambda_{\text{x
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5 场景 × 4 天气 × 多视角，消融极为详尽（碰撞、运动、外观、物理引导、自适应权重、各正则项、轨迹漂移）
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表配合好，问题动机阐述到位
 - 价值: ⭐⭐⭐⭐ — 为 3DGS 动态编辑开辟新方向，框架可扩展到更多动态效果场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysSplat: Efficient Physics Simulation for 3D Scenes via MLLM-Guided Gaussian Splatting](../../ICCV2025/3d_vision/physsplat_efficient_physics_simulation_for_3d_scenes_via_mllm-guided_gaussian_sp.md)
+- [RAP: Fast Feedforward Rendering-Free Attribute-Guided Primitive Importance Score Prediction for Efficient 3D Gaussian Splatting Processing](rap_fast_feedforward_rendering-free_attribute-guided_primitive_importance_score_.md)
+- [Stable Score Distillation](../../ICCV2025/3d_vision/stable_score_distillation.md)
+- [Dynamic Black-hole Emission Tomography with Physics-informed Neural Fields](dynamic_black-hole_emission_tomography_with_physics-informed_neural_fields.md)
+- [Identity Preserving 3D Head Stylization with Multiview Score Distillation](../../ICCV2025/3d_vision/identity_preserving_3d_head_stylization_with_multiview_score_distillation.md)
+
+<!-- RELATED:END -->

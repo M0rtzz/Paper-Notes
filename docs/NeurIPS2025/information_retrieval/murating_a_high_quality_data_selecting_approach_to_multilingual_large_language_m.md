@@ -183,3 +183,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pairwise}} + \lambda \cdot \ma
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 1.2B 和 7B 两个规模、18 种语言、多个基线对比、充分的消融实验
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，实验组织有条理，但相关工作与方法部分略显冗余
 - 价值: ⭐⭐⭐⭐⭐ 填补了多语言预训练数据选择的重要空白，框架可扩展、可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SafeRAG: Benchmarking Security in Retrieval-Augmented Generation of Large Language Model](../../ACL2025/information_retrieval/saferag_benchmarking_security_in_retrieval-augmented_generation_of_large_languag.md)
+- [Towards Open-Ended Visual Recognition with Large Language Model](../../ECCV2024/information_retrieval/towards_open-ended_visual_recognition_with_large_language_models.md)
+- [Investigating Language Preference of Multilingual RAG Systems](../../ACL2025/information_retrieval/investigating_language_preference_of_multilingual_rag_systems.md)
+- [LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant](../../CVPR2025/information_retrieval/lamra_large_multimodal_model_as_your_advanced_retrieval_assistant.md)
+- [STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)
+
+<!-- RELATED:END -->

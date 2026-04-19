@@ -157,3 +157,15 @@ tags:
 - 实验充分度: ⭐⭐ — 引用已有结果进行对比，未在统一基准上重新实验
 - 写作质量: ⭐⭐⭐ — 22 页覆盖面广，结构完整，适合入门者阅读
 - 价值: ⭐⭐⭐ — 为脑胶质瘤分割领域提供了方法全景图，对新研究者有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging. Review Paper](comparative_evaluation_of_traditional_methods_and.md)
+- [3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion](3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros.md)
+- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](sparrow_learning_spatial_precision_and_temporal_re.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction](learning_cross-view_object_correspondence_via_cycle-consistent_mask_prediction.md)
+
+<!-- RELATED:END -->

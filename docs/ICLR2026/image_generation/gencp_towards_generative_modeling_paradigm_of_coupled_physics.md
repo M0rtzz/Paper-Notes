@@ -146,3 +146,15 @@ GenCP 在 FNO* 骨干上平均误差降低 ~26.77%，推理速度快 14 倍。
 - **实验充分度**: ⭐⭐⭐⭐ — 合成+两个FSI+核热共四个场景，但仅两场耦合，长时演化未验证
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导严谨清晰，但数学密度较高，对非数学背景读者不友好
 - **价值**: ⭐⭐⭐⭐⭐ — 为多物理场仿真提供了全新范式，理论+实践价值兼备
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
+- [Test-Time Instance-Specific Parameter Composition: A New Paradigm for Adaptive Generative Modeling](../../CVPR2026/image_generation/test-time_instance-specific_parameter_composition_a_new_paradigm_for_adaptive_ge.md)
+- [PI-Light: Physics-Inspired Diffusion for Full-Image Relighting](pi-light_physics-inspired_diffusion_for_full-image_relighting.md)
+- [Seek-CAD: A Self-Refined Generative Modeling for 3D Parametric CAD Using Local Inference via DeepSeek](seek-cad_a_self-refined_generative_modeling_for_3d_parametric_cad_using_local_in.md)
+
+<!-- RELATED:END -->

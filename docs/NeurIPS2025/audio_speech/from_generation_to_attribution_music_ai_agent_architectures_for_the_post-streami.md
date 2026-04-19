@@ -216,3 +216,15 @@ tags:
 ⭐⭐⭐ (3/5)
 
 **理由**：论文提出了一个具有前瞻性的架构愿景，将 AI 音乐生成中的公平性和归因问题提升到系统设计层面。然而作为 workshop paper，技术深度有限，缺乏系统实现和实验验证。核心概念（Block、归因层、代理编排）的具体设计细节不够充分，可行性论证较弱。该工作更多是一个有价值的问题提出和方向性探索。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Echoes of Humanity: Exploring the Perceived Humanness of AI Music](echoes_of_humanity_exploring_the_perceived_humanness_of_ai_music.md)
+- [Ethics Statements in AI Music Papers: The Effective and the Ineffective](ethics_statements_in_ai_music_papers_the_effective_and_the_ineffective.md)
+- [Sensorium Arc: AI Agent System for Oceanic Data Exploration and Interactive Eco-Art](sensorium_arc_ai_agent_system_for_oceanic_data_exploration_and_interactive_eco-a.md)
+- [Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
+- [LiveCC: Learning Video LLM with Streaming Speech Transcription at Scale](../../CVPR2025/audio_speech/livecc_learning_video_llm_with_streaming_speech_transcription_at_scale.md)
+
+<!-- RELATED:END -->

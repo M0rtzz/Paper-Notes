@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 从小规模到大规模QP再到非线性SQP，涵盖金融/ML/控制多领域
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论推导严谨
 - 价值: ⭐⭐⭐⭐⭐ 解决SQP的核心工程痛点，有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeepAFL: Deep Analytic Federated Learning](deepafl_deep_analytic_federated_learning.md)
+- [Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
+- [Parametrized Multi-Agent Routing via Deep Attention Models](../../AAAI2026/optimization/parametrized_multi-agent_routing_via_deep_attention_models.md)
+- [PROFIT: A Specialized Optimizer for Deep Fine Tuning](../../NeurIPS2025/optimization/profit_a_specialized_optimizer_for_deep_fine_tuning.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](../../NeurIPS2025/optimization/viking_deep_variational_inference_with_stochastic_projections.md)
+
+<!-- RELATED:END -->

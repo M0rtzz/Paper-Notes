@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 8 个模型、严格统计分析、多条件控制，但缺少人类对照和闭源模型
 - 写作质量: ⭐⭐⭐⭐⭐ 语言学理论与 NLP 实验结合紧密，论述清晰有深度，跨学科视角精彩
 - 价值: ⭐⭐⭐⭐ 揭示 LLM 不确定性表达的底层瓶颈，对 uncertainty-aware LLM 研究有方向性启发，为服化不确定性校准提供了新视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts](cross_model_transferability_sv.md)
+- [Language-Codec: Bridging Discrete Codec Representations and Speech Language Models](language_codec_bridging_discrete_codec_speech_language_models.md)
+- [Exploring Graph Representations of Logical Forms for Language Modeling](exploring_graph_representations_of_logical_forms_for_language_modeling.md)
+- [Theory of Mind in Large Language Models: Assessment and Enhancement](theory_of_mind_llm.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+
+<!-- RELATED:END -->

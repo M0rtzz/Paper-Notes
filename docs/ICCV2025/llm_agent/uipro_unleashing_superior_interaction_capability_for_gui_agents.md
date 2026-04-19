@@ -145,3 +145,15 @@ UIPro 采用两阶段训练：
 - 实验充分度: ⭐⭐⭐⭐⭐ （5 个基准 + 6 个 grounding 基准 + 全面消融 + 迁移实验）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，细节完整）
 - 价值: ⭐⭐⭐⭐⭐ （对 GUI agent 社区的数据和方法论贡献均很重要）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](../../ICML2025/llm_agent/aguvis_unified_pure_vision_agents_for_autonomous_gui_interaction.md)
+- [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](../../ACL2025/llm_agent/os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
+- [Less is More: Empowering GUI Agent with Context-Aware Simplification](less_is_more_empowering_gui_agent_with_context-aware_simplification.md)
+- [GUI-Xplore: Empowering Generalizable GUI Agents with One Exploration](../../CVPR2025/llm_agent/gui-xplore_empowering_generalizable_gui_agents_with_one_exploration.md)
+- [Towards GUI Agents: Vision-Language Diffusion Models for GUI Grounding](../../CVPR2026/llm_agent/towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)
+
+<!-- RELATED:END -->

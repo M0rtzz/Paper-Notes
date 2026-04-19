@@ -127,3 +127,15 @@ LSLM（Qwen2-Audio-7B-Instruct）训练效果对比：
 - **实验充分度**: 4/5 — 多设置、多消融验证
 - **实用性**: 4/5 — 对构建语音指令数据集具有直接参考价值
 - **综合评分**: 3.5/5
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruction-Tuning Data Synthesis from Scratch via Web Reconstruction](instruction-tuning_data_synthesis_from_scratch_via_web_reconstruction.md)
+- [GeNRe: A French Gender-Neutral Rewriting System Using Collective Nouns](genre_a_french_gender-neutral_rewriting_system_using_collective_nouns.md)
+- [Tag-Evol: Achieving Efficient Instruction Evolving via Tag Injection](tag-evol_achieving_efficient_instruction_evolving_via_tag_injection.md)
+- [SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)
+- [CoachMe: Decoding Sport Elements with a Reference-Based Coaching Instruction Generation Model](coachme_sport_instruction.md)
+
+<!-- RELATED:END -->

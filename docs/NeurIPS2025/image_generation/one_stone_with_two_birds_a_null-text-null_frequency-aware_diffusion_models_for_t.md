@@ -134,3 +134,15 @@ $$\tilde{z}_t^{in} = \text{IDCT}(\text{DCT}(z_t^{text}) \odot m_{mid} + \text{DC
 - **实验充分度**: ⭐⭐⭐⭐ BrushBench和EditBench两个benchmark，消融实验充分，超参数分析详细
 - **写作质量**: ⭐⭐⭐⭐ 动机阐述清晰，频率分析可视化直观，但方法描述略显冗长
 - **价值**: ⭐⭐⭐⭐ 同时解决修复中两大挑战有实际意义，频率视角为后续工作提供新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NPN: Non-Linear Projections of the Null-Space for Imaging Inverse Problems](npn_non-linear_projections_of_the_null-space_for_imaging_inverse_problems.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+- [FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models](fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)
+- [DEFT: Decompositional Efficient Fine-Tuning for Text-to-Image Models](deft_decompositional_efficient_finetuning_for_texttoimage_mo.md)
+
+<!-- RELATED:END -->

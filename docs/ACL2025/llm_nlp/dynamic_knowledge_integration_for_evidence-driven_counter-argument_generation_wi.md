@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种评估方法对比（人工+LLM-Judge+参考度量），但模型种类偏少
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，研究问题明确，分析深入
 - 价值: ⭐⭐⭐ LLM-as-a-Judge 在论辩评估中的验证有实用价值，但方法本身创新性有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RetroLLM: Empowering Large Language Models to Retrieve Fine-grained Evidence within Generation](retrollm_empowering_large_language_models_to_retrieve_fine-grained_evidence_with.md)
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [INTERACT: Enabling Interactive, Question-Driven Learning in Large Language Models](interact_enabling_interactive_question-driven_learning_in_large_language_models.md)
+- [Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
+
+<!-- RELATED:END -->

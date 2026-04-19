@@ -145,3 +145,15 @@ $$\tau \dot{v}_i = \lambda_{m+1}^2 v_i^2 - \lambda_{m+1}^3 \left(1 + \frac{1 + \
 - 实验充分度: ⭐⭐⭐⭐ (理论-仿真匹配度极高，softmax泛化验证有说服力，但缺乏大规模实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，等价性→landscape→动态→ICL算法的逻辑链非常流畅)
 - 价值: ⭐⭐⭐⭐⭐ (为理解ICL训练动态提供了迄今最完整的理论框架)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+- [On Understanding Attention-Based In-Context Learning for Categorical Data](on_understanding_attention-based_in-context_learning_for_categorical_data.md)
+- [Compelling ReLU Networks to Exhibit Exponentially Many Linear Regions at Initialization and During Training](compelling_relu_networks_to_exhibit_exponentially_many_linear_regions_at_initial.md)
+- [Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More](understanding_sharpness_dynamics_in_nn_training_with_a_minimalist_example_the_ef.md)
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+
+<!-- RELATED:END -->

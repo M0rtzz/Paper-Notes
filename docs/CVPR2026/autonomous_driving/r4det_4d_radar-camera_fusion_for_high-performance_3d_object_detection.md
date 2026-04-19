@@ -158,3 +158,15 @@ R4Det 是渐进式 BEV 特征纯化流水线：(1) **PDF** 从多模态输入生
 - 实验充分度: ⭐⭐⭐⭐⭐ (两数据集 SOTA + 即插即用验证 + 详细逐模块消融)
 - 写作质量: ⭐⭐⭐⭐ (问题-方案对应清晰，消融设计合理)
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](../../ICCV2025/autonomous_driving/cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [A Prediction-as-Perception Framework for 3D Object Detection](a_predictionasperception_framework_for_3d_object_d.md)
+- [Look Before You Fuse: 2D-Guided Cross-Modal Alignment for Robust 3D Detection](look_before_you_fuse_2d-guided_cross-modal_alignment_for_robust_3d_detection.md)
+- [CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection](ccf_complementary_collaborative_fusion_for_domain_generalized_multi-modal_3d_obj.md)
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](../../ECCV2024/autonomous_driving/detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+
+<!-- RELATED:END -->

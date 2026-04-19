@@ -138,3 +138,15 @@ Spots-10（动物纹理分类，10类，50K灰度32×32图像）：
 - 实验充分度: ⭐⭐ 缺乏消融实验、基线不够公平、数据集规模太小
 - 写作质量: ⭐⭐⭐⭐ 理论框架的阐述清晰优雅，几何诠释引人入胜
 - 价值: ⭐⭐⭐ 理论视角有启发性，但实验支撑不足以证明设计的有效性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reframing Long-Tailed Learning via Loss Landscape Geometry](../../CVPR2026/llm_evaluation/reframing_long-tailed_learning_via_loss_landscape_geometry.md)
+- [Flow3r: Factored Flow Prediction for Scalable Visual Geometry Learning](../../CVPR2026/llm_evaluation/flow3r_factored_flow_prediction_for_scalable_visual_geometry_learning.md)
+- [Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation](../../ICLR2026/llm_evaluation/disentangling_shared_and_private_neural_dynamics_with_spire_a_latent_modeling_fr.md)
+- [CodeAssistBench (CAB): Dataset & Benchmarking for Multi-turn Chat-Based Code Assistance](codeassistbench_cab_dataset_benchmarking_for_multi-turn_chat-based_code_assistan.md)
+- [Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation](beyond_the_singular_revealing_the_value_of_multiple_generations_in_benchmark_eva.md)
+
+<!-- RELATED:END -->

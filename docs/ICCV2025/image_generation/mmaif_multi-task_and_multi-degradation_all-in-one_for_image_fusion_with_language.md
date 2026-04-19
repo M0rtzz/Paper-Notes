@@ -143,3 +143,15 @@ MMAIF 在简化推理流程的同时大幅超越现有方法。
 | 实验充分性 | 4 |
 | 写作质量 | 4 |
 | **综合** | **4.0** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M2SFormer: Multi-Spectral and Multi-Scale Attention with Edge-Aware Difficulty Guidance for Image Forgery Localization](m2sformer_multi-spectral_and_multi-scale_attention_with_edge-aware_difficulty_gu.md)
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration](../../CVPR2025/image_generation/gendeg_diffusion-based_degradation_synthesis_for_generalizable_all-in-one_image_.md)
+- [Multi-turn Consistent Image Editing](multi-turn_consistent_image_editing.md)
+- [UniCombine: Unified Multi-Conditional Combination with Diffusion Transformer](unicombine_unified_multi-conditional_combination_with_diffusion_transformer.md)
+
+<!-- RELATED:END -->

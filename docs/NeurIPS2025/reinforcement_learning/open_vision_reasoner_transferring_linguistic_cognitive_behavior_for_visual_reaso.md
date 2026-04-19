@@ -146,3 +146,15 @@ OVR 在 AIME 2024/2025 上超越同规模模型 10% 以上，MATH500 达到 95.3
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 8+ 个视觉基准和 6 个语言基准，训练动态分析详尽
 - **写作质量**: ⭐⭐⭐⭐ 概念清晰，认知行为表格定义简洁明了
 - **价值**: ⭐⭐⭐⭐⭐ 最大规模开源多模态 RL 实践 + 深层机制分析，对领域发展有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NoisyRollout: Reinforcing Visual Reasoning with Data Augmentation](noisyrollout_reinforcing_visual_reasoning_with_data_augmenta.md)
+- [SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution](swe-rl_advancing_llm_reasoning_via_reinforcement_learning_on_open_software_evolu.md)
+- [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
+- [STELAR-Vision: Self-Topology-Aware Efficient Learning for Aligned Reasoning in Vision](../../AAAI2026/reinforcement_learning/stelar-vision_self-topology-aware_efficient_learning_for_aligned_reasoning_in_vi.md)
+- [Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering](knowledge-based_visual_question_answer_with_multimodal_processing_retrieval_and_.md)
+
+<!-- RELATED:END -->

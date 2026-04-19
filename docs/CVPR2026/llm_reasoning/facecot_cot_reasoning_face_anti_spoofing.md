@@ -335,3 +335,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 11 个跨域基准 + 两种协议 + 多种消融 + 跨 backbone 验证 + 细粒度攻击类型分析
 - 写作质量: ⭐⭐⭐⭐ 整体清晰但信息量极大，补充材料内容丰富
 - 价值: ⭐⭐⭐⭐⭐ 数据集和方法论对 FAS 和更广泛的安全 AI 领域都有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harnessing Chain-of-Thought Reasoning in Multimodal Large Language Models for Face Anti-Spoofing](harnessing_chain-of-thought_reasoning_in_multimodal_large_language_models_for_fa.md)
+- [Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](red_rationale_enhanced_decoding_cot.md)
+- [Reinforcing Structured Chain-of-Thought for Video Understanding](reinforcing_structured_chain-of-thought_for_video_understanding.md)
+- [Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)
+- [E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)
+
+<!-- RELATED:END -->

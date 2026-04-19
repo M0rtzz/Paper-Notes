@@ -177,3 +177,15 @@ $$\mathcal{L}_{\text{BSS}} = (1-\lambda_{\text{BSS}}) \mathcal{L}(\theta; \mathc
 - **实验充分度**: ⭐⭐⭐⭐⭐ — TOFU/MUSE/WMDP×3个模型族×多种设置，LaaJ+传统指标双评估，消融全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机→诊断→方案→理论→实验的逻辑链环环相扣，图表精美
 - **实用价值**: ⭐⭐⭐⭐⭐ — 代码已合并至OpenUnlearning，与现有方法兼容，对LLM遗忘领域的方法和评估都有根本性影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests](socialharmbench_revealing_llm_vulnerabilities_to_socially_harmful_requests.md)
+- [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates](inference-time_backdoors_via_hidden_instructions_in_llm_chat_templates.md)
+- [Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval](evoking_user_memory_personalizing_llm_via_recollection-familiarity_adaptive_retr.md)
+- [One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations](one_language_two_scripts_probing_script-invariance_in_llm_concept_representation.md)
+- [Bias Association Discovery Framework for Open-Ended LLM Generations](../../AAAI2026/human_understanding/bias_association_discovery_framework_for_open-ended_llm_generations.md)
+
+<!-- RELATED:END -->

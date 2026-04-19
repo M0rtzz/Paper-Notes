@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 8个物种+多物种+域泛化设置覆盖全面，消融也够详细
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，公式推导完整，图表规范
 - 价值: ⭐⭐⭐⭐ 统一了野生动物ReID的实验设置，对这一小众但重要的领域贡献较大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
+- [Re-identification of De-identified Documents with Autoregressive Infilling](../../ACL2025/others/reidentification_deidentified.md)
+- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](../../ACL2025/others/inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 1092+ 实验覆盖 4 检索器 × 3 LLM × 5 扰动 × 3 数据集，分析全面深入
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，建议部分有实用价值
 - 价值: ⭐⭐⭐⭐ 对 RAG 工程实践有较强指导意义，模块解耦方法论可复用性高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FaithfulRAG: Fact-Level Conflict Modeling for Context-Faithful Retrieval-Augmented Generation](faithfulrag_fact_level_conflict.md)
+- [Multilingual Retrieval Augmented Generation for Culturally-Sensitive Tasks: A Benchmark for Cross-lingual Robustness](multilingual_retrieval_augmented_generation_for_culturally-sensitive_tasks_a_ben.md)
+- [A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
+- [Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation](towards_adaptive_memory-based_optimization_for_enhanced_retrieval-augmented_gene.md)
+- [Investigating Language Preference of Multilingual RAG Systems](investigating_language_preference_of_multilingual_rag_systems.md)
+
+<!-- RELATED:END -->

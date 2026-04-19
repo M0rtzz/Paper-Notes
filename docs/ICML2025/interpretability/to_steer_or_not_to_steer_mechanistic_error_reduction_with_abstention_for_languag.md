@@ -164,3 +164,15 @@ MERA 在各error percentile上均表现出正面或中性影响，尤其对高er
 ## 评分
 
 ⭐⭐⭐⭐ — 理论贡献扎实（闭式解+安全保证），实验设计全面，但仍局限于简单分类任务，对真实世界幻觉缓解的适用性有待验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mechanistic Interpretability of Emotion Inference in Large Language Models](../../ACL2025/interpretability/mechanistic_interpretability_of_emotion_inference_in_large_language_models.md)
+- [Reasoning Circuits in Language Models: A Mechanistic Interpretation of Syllogistic Inference](../../ACL2025/interpretability/reasoning_circuits_in_language_models_a_mechanistic_interpretation_of_syllogisti.md)
+- [MIB: A Mechanistic Interpretability Benchmark](mib_a_mechanistic_interpretability_benchmark.md)
+- [CLEME2.0: Towards Interpretable Evaluation by Disentangling Edits for Grammatical Error Correction](../../ACL2025/interpretability/cleme2_gec_evaluation.md)
+- [Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](../../NeurIPS2025/interpretability/auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
+
+<!-- RELATED:END -->

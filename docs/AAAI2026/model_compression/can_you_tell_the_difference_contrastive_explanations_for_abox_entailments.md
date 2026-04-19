@@ -168,3 +168,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ (理论为主，实验验证有限)
 - 写作质量: ⭐⭐⭐⭐ (形式化严谨，示例生动)
 - 价值: ⭐⭐⭐ (理论贡献扎实，但与模型压缩关联较弱)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHAP Meets Tensor Networks: Provably Tractable Explanations with Parallelism](../../NeurIPS2025/model_compression/shap_meets_tensor_networks_provably_tractable_explanations_with_parallelism.md)
+- [TiTok: Transfer Token-level Knowledge via Contrastive Excess to Transplant LoRA](../../ICLR2026/model_compression/titok_transfer_token-level_knowledge_via_contrastive_excess_to_transplant_lora.md)
+- [Who Taught You That? Tracing Teachers in Model Distillation](../../ACL2025/model_compression/who_taught_you_that_tracing_teachers_in_model_distillation.md)
+- [FAIR-Pruner: Leveraging Tolerance of Difference for Flexible Automatic Layer-Wise Neural Network Pruning](../../CVPR2026/model_compression/fair-pruner_leveraging_tolerance_of_difference_for_flexible_automatic_layer-wise.md)
+- [Uni-LoRA: One Vector is All You Need](../../NeurIPS2025/model_compression/uni-lora_one_vector_is_all_you_need.md)
+
+<!-- RELATED:END -->

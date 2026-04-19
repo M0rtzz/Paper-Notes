@@ -128,3 +128,15 @@ Progressor在所有任务上一致优于所有基线，尤其在困难任务（P
 - **实验充分度**: ⭐⭐⭐⭐⭐ 仿真+真实机器人，多基线对比和消融
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，方法动机充分
 - **综合价值**: ⭐⭐⭐⭐ 为视觉奖励学习提供了实用且有效的框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoiRL: Efficient, Self-Supervised Reasoning with Offline Iterative Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/roirl_efficient_self-supervised_reasoning_with_offline_iterative_reinforcement_l.md)
+- [Reward-free World Models for Online Imitation Learning](../../ICML2025/reinforcement_learning/reward-free_world_models_for_online_imitation_learning.md)
+- [Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](../../ICLR2026/reinforcement_learning/co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
+- [RL-Selector: Reinforcement Learning-Guided Data Selection via Redundancy Assessment](reinforcement_learning-guided_data_selection_via_redundancy_assessment.md)
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](../../ICML2025/reinforcement_learning/online_pre-training_for_offline-to-online_reinforcement_learning.md)
+
+<!-- RELATED:END -->

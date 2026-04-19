@@ -131,3 +131,15 @@ I2X 是分析框架，不引入新的训练损失。但发现的"不确定原型
 - 实验充分度: ⭐⭐⭐ 仅 MNIST 和 CIFAR-10，数据集规模和复杂度偏低
 - 写作质量: ⭐⭐⭐⭐ 概念阐述清晰，图表信息密度高
 - 价值: ⭐⭐⭐⭐ 提供了理解和改进模型的新视角，有实用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
+- [On the Possible Detectability of Image-in-Image Steganography](on_the_possible_detectability_of_image-in-image_steganography.md)
+- [Measuring the (Un)Faithfulness of Concept-Based Explanations](measuring_the_unfaithfulness_of_concept-based_explanations.md)
+- [Neurodynamics-Driven Coupled Neural P Systems for Multi-Focus Image Fusion](neurodynamics-driven_coupled_neural_p_systems_for_multi-focus_image_fusion.md)
+- [Missing No More: Dictionary-Guided Cross-Modal Image Fusion under Missing Infrared](missing_no_more_dictionary-guided_cross-modal_image_fusion_under_missing_infrare.md)
+
+<!-- RELATED:END -->

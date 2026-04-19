@@ -151,3 +151,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 种路径的系统消融 + 融合策略对比 + SOTA 比较
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑链严密，消融分析深受启发
 - 价值: ⭐⭐⭐⭐ — 状态锚定思想有推广价值，但数据集规模限制了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal Object-Aware Vision Transformer for Few-Shot Video Object Detection](temporal_object-aware_vision_transformer_for_few-shot_video_object_detection.md)
+- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](../../CVPR2026/object_detection/da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
+- [Large-scale Pre-training for Grounded Video Caption Generation](../../ICCV2025/object_detection/large-scale_pre-training_for_grounded_video_caption_generation.md)
+- [CORDS: Continuous Representations of Discrete Structures](../../ICLR2026/object_detection/cords_continuous_representations_of_discrete_structures.md)
+- [Procedural Mistake Detection via Action Effect Modeling](../../ICLR2026/object_detection/procedural_mistake_detection_via_action_effect_modeling.md)
+
+<!-- RELATED:END -->

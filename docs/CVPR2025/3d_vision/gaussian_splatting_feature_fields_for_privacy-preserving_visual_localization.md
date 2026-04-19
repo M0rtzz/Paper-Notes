@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集评估，包含隐私和非隐私两种模式对比，但消融可更详细
 - 写作质量: ⭐⭐⭐⭐ 方法描述详细，从特征→分割的逻辑链清晰
 - 价值: ⭐⭐⭐⭐ 隐私保护定位是重要的实际问题，GSFFs 提供了精度和隐私的良好平衡
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feature-Preserving Mesh Decimation for Normal Integration](feature-preserving_mesh_decimation_for_normal_integration.md)
+- [3D Dental Model Segmentation with Geometrical Boundary Preserving](3d_dental_model_segmentation_with_geometrical_boundary_preserving.md)
+- [CF³: Compact and Fast 3D Feature Fields](../../ICCV2025/3d_vision/cf3_compact_and_fast_3d_feature_fields.md)
+- [Adversarial Exploitation of Data Diversity Improves Visual Localization](../../ICCV2025/3d_vision/adversarial_exploitation_of_data_diversity_improves_visual_localization.md)
+- [GIFStream: 4D Gaussian-based Immersive Video with Feature Stream](gifstream_4d_gaussian-based_immersive_video_with_feature_stream.md)
+
+<!-- RELATED:END -->

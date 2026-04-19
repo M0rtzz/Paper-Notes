@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多任务评估（NVS、深度、位姿、光流），消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机明确，技术细节完整
 - 价值: ⭐⭐⭐⭐ 统一框架的思路有重要启发意义，新视角光流可能催生新的下游应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Floxels: Fast Unsupervised Voxel Based Scene Flow Estimation](floxels_fast_unsupervised_voxel_based_scene_flow_estimation.md)
+- [End-to-End Implicit Neural Representations for Classification](end-to-end_implicit_neural_representations_for_classification.md)
+- [A Unified Image-Dense Annotation Generation Model for Underwater Scenes](a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
+- [GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector](go-n3rdet_geometry_optimized_nerf-enhanced_3d_object_detector.md)
+- [E-MoFlow: Learning Egomotion and Optical Flow from Event Data via Implicit Regularization](../../NeurIPS2025/3d_vision/e-moflow_learning_egomotion_and_optical_flow_from_event_data_via_implicit_regula.md)
+
+<!-- RELATED:END -->

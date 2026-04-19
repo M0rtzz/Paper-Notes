@@ -134,3 +134,15 @@ Lyapunov Learning 的整体思路可以分为三步：
 - 实验充分度: ⭐⭐⭐ [仅在单一低维混沌系统上验证，缺乏高维/真实数据实验和与持续学习方法的对比]
 - 写作质量: ⭐⭐⭐⭐ [思路清晰，概念解释到位，与现有方法的联系讨论有深度，但实验部分略显单薄]
 - 价值: ⭐⭐⭐⭐ [理论框架有统一性潜力（将 SSM、RNN 等的稳定性技巧归纳为 Lyapunov 控制），但实际应用价值需更多实验验证]
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](../../NeurIPS2025/time_series/syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+- [TimePoint: Accelerated Time Series Alignment via Self-Supervised Keypoint and Descriptor Learning](timepoint_accelerated_time_series_alignment_via_self-supervised_keypoint_and_des.md)
+- [Learning Soft Sparse Shapes for Efficient Time-Series Classification](learning_soft_sparse_shapes_for_efficient_time-series_classification.md)
+- [Selective Learning for Deep Time Series Forecasting](../../NeurIPS2025/time_series/selective_learning_for_deep_time_series_forecasting.md)
+
+<!-- RELATED:END -->

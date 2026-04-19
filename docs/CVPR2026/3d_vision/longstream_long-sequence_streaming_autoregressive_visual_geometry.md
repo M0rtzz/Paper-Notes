@@ -133,3 +133,15 @@ $$\mathcal{L} = \mathcal{L}_{geom} + \mathcal{L}_{depth} + \mathcal{L}_{pose} + 
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义精准，理论推导清晰，图表信息量大
 - **价值**: ⭐⭐⭐⭐⭐ 首次实现公里级实时流式重建，对自动驾驶/机器人的实际部署有重要意义
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LONG3R: Long Sequence Streaming 3D Reconstruction](../../ICCV2025/3d_vision/long3r_long_sequence_streaming_3d_reconstruction.md)
+- [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
+- [STAC: Plug-and-Play Spatio-Temporal Aware Cache Compression for Streaming 3D Reconstruction](stac_plug-and-play_spatio-temporal_aware_cache_compression_for_streaming_3d_reco.md)
+- [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
+- [AvatarPointillist: AutoRegressive 4D Gaussian Avatarization](avatarpointillist_autoregressive_4d_gaussian_avatarization.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ $$\min_\Psi \mathbb{E}_{x, y_\omega, y_r} \left[ -\log \sigma \left( \tau \log \
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集多设置、消融完整，但缺少非文本验证
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、算法描述详细、图表直观
 - 价值: ⭐⭐⭐⭐ — 对隐私联邦学习领域有实际推动，LargeFedBench 也有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Streaming Federated Learning with Markovian Data](../../NeurIPS2025/optimization/streaming_federated_learning_with_markovian_data.md)
+- [Improved Sample Complexity for Private Nonsmooth Nonconvex Optimization](improved_sample_complexity_for_private_nonsmooth_nonconvex_optimization.md)
+- [FedSWA: Improving Generalization in Federated Learning with Highly Heterogeneous Data via Momentum-Based Stochastic Controlled Weight Averaging](fedswa_improving_generalization_in_federated_learning_with_highly_heterogeneous_.md)
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](../../NeurIPS2025/optimization/learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Clean First, Align Later: Benchmarking Preference Data Cleaning for Reliable LLM Alignment](../../NeurIPS2025/optimization/clean_first_align_later_benchmarking_preference_data_cleaning_for_reliable_llm_a.md)
+
+<!-- RELATED:END -->

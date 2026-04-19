@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+in-the-wild两个数据集，消融实验清晰证明各模块贡献，但缺乏对不同相机配置的系统分析
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，方法描述详细可复现，图表信息丰富
 - 价值: ⭐⭐⭐⭐ 解决3D生成实际痛点，即插即用设计实用性强，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffPortrait360: Consistent Portrait Diffusion for 360° View Synthesis](diffportrait360_consistent_portrait_diffusion_for_360_view_synthesis.md)
+- [MVPaint: Synchronized Multi-View Diffusion for Painting Anything 3D](mvpaint_synchronized_multi-view_diffusion_for_painting_anything_3d.md)
+- [SpinMeRound: Consistent Multi-View Identity Generation Using Diffusion Models](../../ICCV2025/3d_vision/spinmeround_consistent_multi-view_identity_generation_using_diffusion_models.md)
+- [Auto-Regressively Generating Multi-View Consistent Images](../../ICCV2025/3d_vision/auto-regressively_generating_multi-view_consistent_images.md)
+- [MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model](mvgenmaster_scaling_multi-view_generation_from_any_image_via_3d_priors_enhanced_.md)
+
+<!-- RELATED:END -->

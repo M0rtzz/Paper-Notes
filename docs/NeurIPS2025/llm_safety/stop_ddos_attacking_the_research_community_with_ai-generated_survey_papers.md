@@ -170,3 +170,15 @@ tags:
 - **方案可行性** ⭐⭐⭐：六项政策建议中透明度要求和审查标准提升具有较高可行性，但冗余限制和AI检测辅助面临实操困难；"动态活综述"愿景精彩但落地路径模糊
 - **前瞻性** ⭐⭐⭐⭐⭐：在AI综述泛滥尚未成为主流议题时就提出系统性预警，"动态活综述"理念对学术出版的未来走向具有启发性
 - **学术严谨度** ⭐⭐⭐：作为立场论文，定量分析部分严谨度良好，但"异常作者"定义和AI检测工具的校准存在改进空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRUST -- Transformer-Driven U-Net for Sparse Target Recovery](trust_--_transformer-driven_u-net_for_sparse_target_recovery.md)
+- [Buffer Layers for Test-Time Adaptation](buffer_layers_for_test-time_adaptation.md)
+- [A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing](a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)
+- [A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
+- [Angular Steering: Behavior Control via Rotation in Activation Space](angular_steering_behavior_control_via_rotation_in_activation_space.md)
+
+<!-- RELATED:END -->

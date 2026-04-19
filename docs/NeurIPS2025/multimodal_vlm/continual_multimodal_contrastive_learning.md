@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 数据集、3 backbone、多 baseline，稳定性/可塑性分析详尽
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，符号体系完整，但可读性受大量数学符号影响
 - 价值: ⭐⭐⭐⭐ 填补了多模态对比学习与持续学习交叉领域的重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning](bioclip_2_emergent_properties_from_scaling_hierarchical_contrastive_learning.md)
+- [KeepLoRA: Continual Learning with Residual Gradient Adaptation](../../ICLR2026/multimodal_vlm/keeplora_continual_learning_with_residual_gradient_adaptation.md)
+- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](../../ICLR2026/multimodal_vlm/enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+- [LADA: Scalable Label-Specific CLIP Adapter for Continual Learning](../../ICML2025/multimodal_vlm/lada_scalable_label-specific_clip_adapter_for_continual_learning.md)
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+
+<!-- RELATED:END -->

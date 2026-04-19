@@ -221,3 +221,15 @@ DiCo是一族完全由标准ConvNet模块构建的扩散模型，不使用任何
 - 实验充分度: ⭐⭐⭐⭐ ImageNet-256/512+MS-COCO，效率和质量全面对比
 - 写作质量: ⭐⭐⭐⭐ 从发现问题（注意力冗余）→定位原因（通道冗余）→解决（通道注意力）逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ Spotlight当选，为高效扩散模型架构开辟了ConvNet新路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GSPN-2: Efficient Parallel Sequence Modeling](gspn-2_efficient_parallel_sequence_modeling.md)
+- [Efficient Generative Modeling with Residual Vector Quantization-Based Tokens](../../ICML2025/image_generation/efficient_generative_modeling_with_residual_vector_quantization-based_tokens.md)
+- [Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
+- [SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](../../ICLR2026/image_generation/speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ $$\nabla_\theta \frac{1}{B}\sum_B(\lambda Q_\phi(x_t, \epsilon_\theta(x_t, t, \t
 - 实用性：⭐⭐⭐⭐ — 即插即用，轻量级
 - 表现力：⭐⭐⭐⭐ — 视觉保真度大幅领先
 - 综合评分：8/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OMG: Occlusion-friendly Personalized Multi-concept Generation in Diffusion Models](omg_occlusion-friendly_personalized_multi-concept_generation_in_diffusion_models.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
+- [LEGO: Learning EGOcentric Action Frame Generation via Visual Instruction Tuning](lego_learning_egocentric_action_frame_generation_via_visual_instruction_tuning.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+
+<!-- RELATED:END -->

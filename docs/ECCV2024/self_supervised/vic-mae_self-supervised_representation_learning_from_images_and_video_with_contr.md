@@ -148,3 +148,15 @@ ViT-B/16 在 ImageNet-1K 线性评估：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 4 个主要基准 + 8 个迁移数据集 + COCO 检测分割 + 丰富的消融（帧间距、池化、增强、数据量、图像-视频比例）
 - **写作质量**: ⭐⭐⭐⭐ 方法部分清晰，实验部分有很好的 scaling 分析（图3），但公式符号略有冗余
 - **实用价值**: ⭐⭐⭐⭐⭐ 一个统一的图像-视频自监督预训练模型，直接即插即用地服务于图像和视频下游任务，代码和权重已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-supervised Video Copy Localization with Regional Token Representation](self-supervised_video_copy_localization_with_regional_token_representation.md)
+- [Efficient Image Pre-Training with Siamese Cropped Masked Autoencoders](efficient_image_pre-training_with_siamese_cropped_masked_autoencoders.md)
+- [Adaptive Multi-head Contrastive Learning](adaptive_multihead_contrastive_learning.md)
+- [FlowCon: Out-of-Distribution Detection using Flow-Based Contrastive Learning](flowcon_out-of-distribution_detection_using_flow-based_contrastive_learning.md)
+- [SCPNet: Unsupervised Cross-modal Homography Estimation via Intra-modal Self-supervised Learning](scpnet_unsupervised_cross-modal_homography_estimation_via_intra-modal_self-super.md)
+
+<!-- RELATED:END -->

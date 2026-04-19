@@ -144,3 +144,15 @@ tags:
 ## 启发与关联
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Human-Machine Ritual: Synergic Performance through Real-Time Motion Recognition](human-machine_ritual_synergic_performance_through_real-time_motion_recognition.md)
+- [TalkSketch: Multimodal Generative AI for Real-time Sketch Ideation with Speech](../../AAAI2026/human_understanding/talksketch_multimodal_generative_ai_for_real-time_sketch_ideation_with_speech.md)
+- [Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps](vision_transformers_for_cosmological_fields_application_to_weak_lensing_mass_map.md)
+- [MDD: A Dataset for Text-and-Music Conditioned Duet Dance Generation](../../ICCV2025/human_understanding/mdd_a_dataset_for_text-and-music_conditioned_duet_dance_generation.md)
+- [ReMoGen: Real-time Human Interaction-to-Reaction Generation via Modular Learning from Diverse Data](../../CVPR2026/human_understanding/remogen_real-time_human_interaction-to-reaction_generation_via_modular_learning_.md)
+
+<!-- RELATED:END -->

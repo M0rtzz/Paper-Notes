@@ -147,3 +147,15 @@ JARVIS-VLA在所有四类任务上均达到最优。特别是Craft和Smelt任务
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面（训练范式、数据类型、缩放定律、骨干选择），但仅限Minecraft一个环境
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表信息量大，训练流程讲解透彻
 - 价值: ⭐⭐⭐⭐ — 揭示了非轨迹后训练对VLA的重要性，对后续VLA研究有启发；开源贡献突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](../../CVPR2025/multimodal_vlm/post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
+- [World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](../../CVPR2026/multimodal_vlm/rehearsevla_simulated_posttraining_world_model.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](effivlm_bench_vlm_acceleration.md)
+- [Speaking Beyond Language: A Large-Scale Multimodal Dataset for Learning Nonverbal Cues from Video-Grounded Dialogues](speaking_beyond_language.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](../../CVPR2026/multimodal_vlm/fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+
+<!-- RELATED:END -->

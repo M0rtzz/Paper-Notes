@@ -143,3 +143,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 21 个模型、428K 图像、组件级分析、消融实验非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，分析深入，可视化直观
 - **价值**: ⭐⭐⭐⭐ — 揭示了 LVLM 的根本性缺陷，对社区的架构改进方向有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VLSBench: Unveiling Visual Leakage in Multimodal Safety](vlsbench_unveiling_visual_leakage_in_multimodal_safety.md)
+- [VisuoThink: Empowering LVLM Reasoning with Multimodal Tree Search](visuothink_empowering_lvlm_reasoning_with_multimodal_tree_search.md)
+- [VLMInferSlow: Evaluating the Efficiency Robustness of Large Vision-Language Models as a Service](vlminferslow_evaluating_the_efficiency_robustness_of.md)
+- [Unveiling Cultural Blind Spots: Analyzing the Limitations of mLLMs in Procedural Text Comprehension](unveiling_cultural_blind_spots_analyzing_the_limitations_of_mllms_in_procedural_.md)
+- [SPHERE: Unveiling Spatial Blind Spots in Vision-Language Models Through Hierarchical Evaluation](sphere_unveiling_spatial_blind_spots_in.md)
+
+<!-- RELATED:END -->

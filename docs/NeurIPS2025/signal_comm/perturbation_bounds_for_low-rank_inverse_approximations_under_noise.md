@@ -136,3 +136,15 @@ $$\|(\tilde{A}^{-1})_p - A_p^{-1}\| \leq \frac{4\|E\|}{\lambda_n^2} + \frac{5\|E
 - **实验充分度**: ⭐⭐⭐⭐ 在合成和真实数据上均验证了界的紧致性
 - **写作质量**: ⭐⭐⭐⭐ 证明框架三步清晰，但数学密度高
 - **价值**: ⭐⭐⭐⭐ 填补了噪声低秩逆近似理论的重要空白，PCG 应用展示实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deterministic Bounds and Random Estimates of Metric Tensors on Neuromanifolds](../../ICLR2026/signal_comm/deterministic_bounds_and_random_estimates_of_metric_tensors_on_neuromanifolds.md)
+- [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+- [Text-Guided Channel Perturbation and Pretrained Knowledge Integration for Unified Multi-Modality Image Fusion](../../AAAI2026/signal_comm/text-guided_channel_perturbation_and_pretrained_knowledge_integration_for_unifie.md)
+- [Masked Symbol Modeling for Demodulation of Oversampled Baseband Communication Signals](masked_symbol_modeling_for_demodulation_of_oversampled_baseband_communication_si.md)
+- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
+
+<!-- RELATED:END -->

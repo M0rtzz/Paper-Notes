@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 5 个模型、4 个任务、3 种 off-policy 程度，消融全面；但缺少更多 agentic 和对话场景验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导极其清晰，三步结构层层递进；统一框架的呈现方式教科书级别
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM RL 社区有根本性指导——"去掉 IS、扩大 clipping 范围"是可立即落地的工程优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PURGE: Reinforcement Unlearning via Group Relative Policy Optimization](reinforcement_unlearning_via_group_relative_policy_optimization.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [Learning More with Less: A Dynamic Dual-Level Down-Sampling Framework for Efficient Policy Optimization](learning_more_with_less_a_dynamic_dual-level_down-sampling_framework_for_efficie.md)
+- [Hierarchy-of-Groups Policy Optimization for Long-Horizon Agentic Tasks](hierarchy-of-groups_policy_optimization_for_long-horizon_agentic_tasks.md)
+- [Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment](semantic-aware_wasserstein_policy_regularization_for_large_language_model_alignm.md)
+
+<!-- RELATED:END -->

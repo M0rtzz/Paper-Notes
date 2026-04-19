@@ -135,3 +135,15 @@ CoE 在所有 5 个数据集上均取得最优，且标准差最低（如 ACM ±
 - 实验充分度: ⭐⭐⭐⭐ — 9 个数据集 + 消融 + 鲁棒性 + 超参数敏感性分析，较为全面
 - 写作质量: ⭐⭐⭐⭐ — 理论分析严谨，框架阐述清晰，top-down 的表述方式易于理解
 - 价值: ⭐⭐⭐⭐ — 对多重网络学习和专家机制都有启发，代码已开源，可复现性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Small Language Models as Compiler Experts: Auto-Parallelization for Heterogeneous Systems](../../NeurIPS2025/llm_evaluation/small_language_models_as_compiler_experts_auto-parallelization_for_heterogeneous.md)
+- [Disentangling and Integrating Relational and Sensory Information in Transformer Architectures](disentangling_and_integrating_relational_and_sensory_information_in_transformer_.md)
+- [Let the Experts Speak: Improving Survival Prediction & Calibration via Mixture-of-Experts Heads](../../NeurIPS2025/llm_evaluation/let_the_experts_speak_improving_survival_prediction_calibration_via_mixture-of-e.md)
+- [Correlated Errors in Large Language Models](correlated_errors_in_large_language_models.md)
+- [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
+
+<!-- RELATED:END -->

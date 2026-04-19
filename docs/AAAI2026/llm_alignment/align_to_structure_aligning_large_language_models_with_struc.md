@@ -115,3 +115,15 @@ tags:
 
 ## 补充说明
 - 对结构化输出（如 JSON/XML/代码生成）的对齐方法有启发，可结合树结构约束做更精细的格式控制
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring the Effects of Alignment on Numerical Bias in Large Language Models](exploring_the_effects_of_alignment_on_numerical_bias_in_large_language_models.md)
+- [BiasJailbreak: Analyzing Ethical Biases and Jailbreak Vulnerabilities in Large Language Models](biasjailbreakanalyzing_ethical_biases_and_jailbreak_vulnerabilities_in_large_lan.md)
+- [Margin-aware Preference Optimization for Aligning Diffusion Models without Reference](margin-aware_preference_optimization_for_aligning_diffusion_models_without_refer.md)
+- [Reducing the Scope of Language Models](reducing_the_scope_of_language_models.md)
+- [GuardAlign: Test-time Safety Alignment in Multimodal Large Language Models](../../ICLR2026/llm_alignment/guardalign_test-time_safety_alignment_in_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

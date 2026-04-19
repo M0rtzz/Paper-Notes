@@ -124,3 +124,15 @@ ESWM 的输入是一个**记忆库 $M$**（由多个不相连的 one-step transi
 - 实验充分度: ⭐⭐⭐⭐ 从简单网格到 3D 环境逐步验证，分析充分，但真实场景验证不足
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表精美，神经科学动机与计算方法结合自然
 - 价值: ⭐⭐⭐⭐⭐ 提出了一个具有广泛影响力的新范式，在认知科学和 AI 的交叉点上做出了重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse Imagination for Efficient Visual World Model Planning](sparse_imagination_for_efficient_visual_world_model_planning.md)
+- [Theory of Space: Can Foundation Models Construct Spatial Beliefs through Active Exploration?](theory_of_space_can_foundation_models_construct_spatial_beliefs_through_active_e.md)
+- [FOUNDER: Grounding Foundation Models in World Models for Open-Ended Embodied Decision Making](../../ICML2025/robotics/founder_grounding_foundation_models_in_world_models_for_open-ended_embodied_deci.md)
+- [Test-Time Mixture of World Models for Embodied Agents in Dynamic Environments](test-time_mixture_of_world_models_for_embodied_agents_in_dynamic_environments.md)
+- [From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors](from_spatial_to_actions_grounding_vision-language-action_model_in_spatial_founda.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ $$\mathbb{E}_{g \sim \mathcal{N}(0,1)}\left[\frac{1}{(\theta_\sigma(\beta^*) - \
 ⭐⭐⭐⭐⭐
 
 理论深度极佳，将随机矩阵理论、自由概率与算法设计优雅结合。"无用信息+谱方法→大幅提升"的洞察非常深刻。结果对理解谱方法的改进空间和GNN的理论基础都有重要意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](../../ICML2025/graph_learning/llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+- [PASTA: Part-Aware Sketch-to-3D Shape Generation with Text-Aligned Prior](../../ICCV2025/graph_learning/pasta_part-aware_sketch-to-3d_shape_generation_with_text-aligned_prior.md)
+- [Does Graph Prompt Work? A Data Operation Perspective with Theoretical Analysis](../../ICML2025/graph_learning/does_graph_prompt_work_a_data_operation_perspective_with_theoretical_analysis.md)
+- [Format as a Prior: Quantifying and Analyzing Bias in LLMs for Heterogeneous Data](../../AAAI2026/graph_learning/format_as_a_prior_quantifying_and_analyzing_bias_in_llms_for_heterogeneous_data.md)
+- [Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily](../../AAAI2026/graph_learning/beyond_fixed_depth_adaptive_graph_neural_networks_for_node_classification_under_.md)
+
+<!-- RELATED:END -->

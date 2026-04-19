@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个跟踪基准 + 详细消融 + 属性分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ 为多源特征融合提供了通用的零空间方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Residual Distribution in Locate-then-Edit Model Editing](../../NeurIPS2025/knowledge_editing/rethinking_residual_distribution_in_locate-then-edit_model_editing.md)
+- [Energy-Regularized Sequential Model Editing on Hyperspheres](energy-regularized_sequential_model_editing_on_hyperspheres.md)
+- [Fine-tuning Done Right in Model Editing](fine-tuning_done_right_in_model_editing.md)
+- [EAMET: Robust Massive Model Editing via Embedding Alignment Optimization](eamet_robust_massive_model_editing_via_embedding_alignment_optimization.md)
+- [Bilinear Representation Mitigates Reversal Curse and Enables Consistent Model Editing](bilinear_representation_mitigates_reversal_curse_and_enables_consistent_model_ed.md)
+
+<!-- RELATED:END -->

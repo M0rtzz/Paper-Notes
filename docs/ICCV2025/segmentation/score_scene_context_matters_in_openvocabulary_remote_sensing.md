@@ -121,3 +121,15 @@ SCORE包含三个分支：
 - 实验充分度: ⭐⭐⭐⭐ 两个训练集×四个测试集的完整cross-dataset评估，消融覆盖全面（模块、VLM选择、上下文类型、注入方式、OV分类器），还扩展到语义分割验证通用性。缺少推理速度对比
 - 写作质量: ⭐⭐⭐⭐ 动机用Figure 1的ship/car例子讲得很清楚，结构工整，各消融都有分析。部分notation有inconsistency（正文有时称GCA有时称VCA）
 - 价值: ⭐⭐⭐⭐ 建立了新任务的benchmark和strong baseline，对遥感OV分割领域有开拓意义，区域上下文思路可迁移到其他遥感下游任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CAVIS: Context-Aware Video Instance Segmentation](cavis_context-aware_video_instance_segmentation.md)
+- [SPADE: Spatial-Aware Denoising Network for Open-vocabulary Panoptic Scene Graph Generation](spade_spatial-aware_denoising_network_for_open-vocabulary_panoptic_scene_graph_g.md)
+- [FLOSS: Free Lunch in Open-vocabulary Semantic Segmentation](floss_free_lunch_in_openvocabulary_semantic_segmentation.md)
+- [Personalized OVSS: Understanding Personal Concept in Open-Vocabulary Semantic Segmentation](understanding_personal_concept_in_open-vocabulary_semantic_segmentation.md)
+- [RAGNet: Large-scale Reasoning-based Affordance Segmentation Benchmark towards General Grasping](ragnet_large-scale_reasoning-based_affordance_segmentation_benchmark_towards_gen.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ SECA 注意力模块效果（CIFAR-100, ResNet-18）：78.45% → 79.33%（+0.88
 - 实验充分度: ⭐⭐⭐⭐ 5 个数据集、多维度指标、详细消融和不同配置对比
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，模型家族设计层层递进，但符号较多需反复对照
 - 价值: ⭐⭐⭐⭐ 首次打破在线训练精度天花板，对 SNN 实际部署有重要推动意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness](irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)
+- [Dual-Band Thermal Videography: Separating Time-Varying Reflection and Emission Near Ambient Conditions](dual_band_thermal_videography_separating_time-varying_reflection_and_emission_ne.md)
+- [What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁](what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin.md)
+
+<!-- RELATED:END -->

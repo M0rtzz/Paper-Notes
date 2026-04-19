@@ -153,3 +153,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{loc}} + \lambda_{\text{qual}}\
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集 + 鲁棒性测试 + 详尽消融 + 诊断实验
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，图表直观，Table 1 的诊断分析尤为出色
 - 价值: ⭐⭐⭐⭐ — 提供了时序定位中 DETR 范式的新思路，方法简洁且效果显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [Sim-DETR: Unlock DETR for Temporal Sentence Grounding](../../ICCV2025/object_detection/sim-detr_unlock_detr_for_temporal_sentence_grounding.md)
+- [HAT: History-Augmented Anchor Transformer for Online Temporal Action Localization](hat_history-augmented_anchor_transformer_for_online_temporal_action_localization.md)
+- [AugDETR: Improving Multi-scale Learning for Detection Transformer](augdetr_improving_multi-scale_learning_for_detection_transformer.md)
+- [Stepwise Multi-grained Boundary Detector for Point-Supervised Temporal Action Localization](stepwise_multi-grained_boundary_detector_for_point-supervised_temporal_action_lo.md)
+
+<!-- RELATED:END -->

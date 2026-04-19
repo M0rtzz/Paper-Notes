@@ -140,3 +140,15 @@ $$|(\gamma_2^0 - \gamma_2^1)\beta_1 + (\gamma_1^0 - \gamma_1^1)\beta_2 + (\gamma
 - 实验充分度: ⭐⭐⭐⭐ 理论与实验互补，但缺少真实保护属性和更多数据集
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨、例子直觉、层次清晰
 - 价值: ⭐⭐⭐⭐ 对公平性政策制定有重要启示，但缺乏具体干预方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cost Efficient Fairness Audit Under Partial Feedback](cost_efficient_fairness_audit_under_partial_feedback.md)
+- [Accelerating Spectral Clustering under Fairness Constraints](../../ICML2025/ai_safety/accelerating_spectral_clustering_under_fairness_constraints.md)
+- [Matchings Under Biased and Correlated Evaluations](matchings_under_biased_and_correlated_evaluations.md)
+- [Reconstruction and Secrecy under Approximate Distance Queries](reconstruction_and_secrecy_under_approximate_distance_queries.md)
+- [Preserving Task-Relevant Information Under Linear Concept Removal](preserving_task-relevant_information_under_linear_concept_removal.md)
+
+<!-- RELATED:END -->

@@ -192,3 +192,15 @@ RBE 贡献最大（PSNR +3.68），说明亮度恢复是暗光雨天重建的关
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集评估+消融+真实场景+数据集对比，但 baseline 偏少
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、框架清晰，但部分细节（如训练策略的切换时机）可更详细
 - 价值: ⭐⭐⭐⭐ — 数据集和方法均有实用价值，为恶劣天气 3D 重建提供基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [Gaussian Blending: Rethinking Alpha Blending in 3D Gaussian Splatting](gaussian_blending_rethinking_alpha_blending_in_3d_gaussian_splatting.md)
+- [SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting](../../CVPR2026/3d_vision/sr3r_rethinking_super-resolution_3d_reconstruction_with_feed-forward_gaussian_sp.md)
+- [Dynamic Gaussian Scene Reconstruction from Unsynchronized Videos](dynamic_gaussian_scene_reconstruction_from_unsynchronized_videos.md)
+- [Parameter-Free Fine-tuning via Redundancy Elimination for Vision Foundation Models](parameter-free_fine-tuning_via_redundancy_elimination_for_vision_foundation_mode.md)
+
+<!-- RELATED:END -->

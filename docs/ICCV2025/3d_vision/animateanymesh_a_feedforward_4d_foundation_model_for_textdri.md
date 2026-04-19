@@ -131,3 +131,15 @@ AnimateAnyMesh由三部分组成：
 - 实验充分度: ⭐⭐⭐⭐ 消融实验详尽（5个组件 + FPS比例 + Scaling），但定量比较只用了10个测试样本，对比方法仅3个
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，动机阐述充分，技术细节完整，图表丰富且信息量大
 - 价值: ⭐⭐⭐⭐⭐ 4M+数据集 + 首个实用的前馈4D框架，对4D内容创作领域有标杆性贡献；承诺全部开源进一步提升价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysGM: Large Physical Gaussian Model for Feed-Forward 4D Synthesis](../../CVPR2026/3d_vision/physgm_large_physical_gaussian_4d_synthesis.md)
+- [FiffDepth: Feed-forward Transformation of Diffusion-Based Generators for Detailed Depth Estimation](fiffdepth_feed-forward_transformation_of_diffusion-based_generators_for_detailed.md)
+- [SkySense V2: A Unified Foundation Model for Multi-Modal Remote Sensing](skysense_v2_a_unified_foundation_model_for_multi-modal_remote_sensing.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](../../CVPR2026/3d_vision/more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis](gaussian_variation_field_diffusion_for_high-fidelity_video-to-4d_synthesis.md)
+
+<!-- RELATED:END -->

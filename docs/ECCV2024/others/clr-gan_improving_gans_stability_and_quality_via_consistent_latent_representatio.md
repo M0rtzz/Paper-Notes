@@ -133,3 +133,15 @@ CLR-GAN在标准GAN训练的基础上增加了两个额外任务：（1）隐码
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多架构验证，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述清楚
 - 价值: ⭐⭐⭐ 在扩散模型主导的时代，GAN改进的边际价值有所降低，但思路本身有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Guided Sampling of Conditional GANs](exploring_guided_sampling_of_conditional_gans.md)
+- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [A Closer Look at GAN Priors: Exploiting Intermediate Features for Enhanced Model Inversion Attacks](a_closer_look_at_gan_priors_exploiting_intermediate_features.md)
+- [Φ-GAN: Physics-Inspired GAN for Generating SAR Images Under Limited Data](../../ICCV2025/others/ph-gan_physics-inspired_gan_for_generating_sar_images_under_limited_data.md)
+- [Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)
+
+<!-- RELATED:END -->

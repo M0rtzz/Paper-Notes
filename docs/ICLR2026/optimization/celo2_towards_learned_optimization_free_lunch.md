@@ -184,3 +184,15 @@ VeLO 在所有 RL 任务上出现训练停滞（与 VeLO 原论文 Figure 11 一
 - 实验充分度: ⭐⭐⭐⭐⭐ — 语言建模(30M→1.3B)、ImageNet ViT、Atari RL，覆盖了多个领域和规模
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，消融实验组织得当，附录提供了完整的代码和背景知识
 - 价值: ⭐⭐⭐⭐⭐ — 学习型优化器领域的里程碑式工作，首次实现了到十亿参数规模的实用泛化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Better NTK Conditioning: A Free Lunch from ReLU Nonlinear Activation in Wide Neural Networks](../../NeurIPS2025/optimization/better_ntk_conditioning_a_free_lunch_from_relu_nonlinear_activation_in_wide_neur.md)
+- [Problem-Parameter-Free Decentralized Bilevel Optimization](../../NeurIPS2025/optimization/problem-parameter-free_decentralized_bilevel_optimization.md)
+- [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](../../NeurIPS2025/optimization/covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
+- [Provable and Practical In-Context Policy Optimization for Self-Improvement](provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [RRNCO: Towards Real-World Routing with Neural Combinatorial Optimization](rrnco_towards_real-world_routing_with_neural_combinatorial_optimization.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ $$u_{t+1} = \arg\max_{u \in \mathcal{U}} J(f_t(u))$$
 - **实验充分性**: ⭐⭐⭐⭐ — 多个 PDE 任务验证
 - **实际影响**: ⭐⭐⭐⭐ — 对科学计算和工程优化有潜在价值
 - **写作质量**: ⭐⭐⭐⭐ — 理论部分略显密集，但整体清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thompson Sampling for Multi-Objective Linear Contextual Bandit](thompson_sampling_for_multi-objective_linear_contextual_bandit.md)
+- [Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits](variance-aware_feel-good_thompson_sampling_for_contextual_bandits.md)
+- [Feel-Good Thompson Sampling for Contextual Bandits: a Markov Chain Monte Carlo Showdown](feel-good_thompson_sampling_for_contextual_bandits_a_markov_chain_monte_carlo_sh.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](learning_from_demonstrations_via_capability-aware_goal_sampling.md)
+- [Complexity Scaling Laws for Neural Models using Combinatorial Optimization](complexity_scaling_laws_for_neural_models_using_combinatorial_optimization.md)
+
+<!-- RELATED:END -->

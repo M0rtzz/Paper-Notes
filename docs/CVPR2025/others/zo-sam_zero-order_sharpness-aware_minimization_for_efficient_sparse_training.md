@@ -115,3 +115,15 @@ ZO-SAM 的核心思想是在 SAM 的两步过程中**选择性**使用零阶/一
 - 实验充分度: ⭐⭐⭐⭐⭐（大量方法/架构/数据集/指标的全面覆盖）
 - 写作质量: ⭐⭐⭐⭐（动机清晰、逻辑流畅）
 - 价值: ⭐⭐⭐⭐（稀疏训练实践中有直接应用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EVOS: Efficient Implicit Neural Training via EVOlutionary Selector](evos_efficient_implicit_neural_training_via_evolutionary_selector.md)
+- [Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation](../../ICML2025/others/sassha_sharpness-aware_adaptive_second-order_optimization_with_stable_hessian_ap.md)
+- [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](../../NeurIPS2025/others/sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
+- [SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embedding-based_approach_for_ab-initio_reconstruction_of_helica.md)
+
+<!-- RELATED:END -->

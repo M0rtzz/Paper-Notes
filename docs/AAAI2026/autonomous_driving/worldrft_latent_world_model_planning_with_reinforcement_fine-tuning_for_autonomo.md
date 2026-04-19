@@ -131,3 +131,15 @@ tags:
 
 ## 评分
 ⭐⭐⭐⭐⭐ — 工作完整度极高，三模块各解决一个核心问题且消融充分。GRPO引入驾驶规划是一大亮点，碰撞率降低83%的结果有说服力。仅相机在NavSim逼近LiDAR SOTA，展现无标注范式巨大潜力。消融覆盖backbone、精炼迭代数、路径配置、目标建模、数据量等各维度。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning](../../NeurIPS2025/autonomous_driving/autovla_a_vision-language-action_model_for_end-to-end_autonomous_driving_with_ad.md)
+- [Improving Agent Behaviors with RL Fine-tuning for Autonomous Driving](../../ECCV2024/autonomous_driving/improving_agent_behaviors_with_rl_fine-tuning_for_autonomous_driving.md)
+- [DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving](diffrefiner_coarse_to_fine_trajectory_planning_via_diffusion_refinement_with_sem.md)
+- [World4Drive: End-to-End Autonomous Driving via Intention-aware Physical Latent World Model](../../ICCV2025/autonomous_driving/world4drive_end-to-end_autonomous_driving_via_intention-aware_physical_latent_wo.md)
+- [SMART-R1: Advancing Multi-agent Traffic Simulation via R1-Style Reinforcement Fine-Tuning](../../ICLR2026/autonomous_driving/advancing_multi-agent_traffic_simulation_via_r1-style_reinforcement_fine-tuning.md)
+
+<!-- RELATED:END -->

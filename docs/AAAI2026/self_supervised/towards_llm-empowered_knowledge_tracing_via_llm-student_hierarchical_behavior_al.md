@@ -129,3 +129,15 @@ L-HAKT 分三个部分：
 - **实验充分度** ⭐⭐⭐⭐：4 个数据集、16 种基线、详细消融
 - **写作质量** ⭐⭐⭐：部分符号定义不够规范，公式排版有改进空间
 - **价值** ⭐⭐⭐⭐：为教育智能中的知识追踪提供了有理论动机的新框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](../../ACL2025/self_supervised/llm_back_gen_treebank.md)
+- [Hyperbolic Category Discovery](../../CVPR2025/self_supervised/hyperbolic_category_discovery.md)
+- [Let the Void Be Void: Robust Open-Set Semi-Supervised Learning via Selective Non-Alignment](let_the_void_be_void_robust_open-set_semi-supervised_learning_via_selective_non-.md)
+- [NeuroBridge: Bio-Inspired Self-Supervised EEG-to-Image Decoding via Cognitive Priors and Bidirectional Semantic Alignment](neurobridge_bio-inspired_self-supervised_eeg-to-image_decoding_via_cognitive_pri.md)
+- [PonderLM: Pretraining Language Models to Ponder in Continuous Space](../../ICLR2026/self_supervised/ponderlm_pretraining_language_models_to_ponder_in_continuous_space.md)
+
+<!-- RELATED:END -->

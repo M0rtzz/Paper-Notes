@@ -131,3 +131,15 @@ MedCLIPSeg在所有数据比例下均大幅领先。尤其在仅10%数据时，D
 - 实验充分度: ⭐⭐⭐⭐⭐ （16个数据集、5种模态、详尽消融，非常充分）
 - 写作质量: ⭐⭐⭐⭐ （清晰有条理，图表丰富）
 - 价值: ⭐⭐⭐⭐ （概率建模对域泛化的增益令人印象深刻，有临床部署潜力）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decoupling Vision and Language: Codebook Anchored Visual Adaptation](decoupling_vision_and_language_codebook_anchored_visual_adaptation.md)
+- [T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation](t-gated_adapter_a_lightweight_temporal_adapter_for_vision-language_medical_segme.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [DeNAS-ViT: Data Efficient NAS-Optimized Vision Transformer for Ultrasound Image Segmentation](../../AAAI2026/medical_imaging/denas-vit_data_efficient_nas-optimized_vision_transformer_for_ultrasound_image_s.md)
+
+<!-- RELATED:END -->

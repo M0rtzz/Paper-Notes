@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 主要是理论工作，实验相对有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨，证明完整
 - 价值: ⭐⭐⭐⭐ 对算法设计范式有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
+- [Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors](learning-augmented_algorithms_for_mts_with_bandit_access_to_multiple_predictors.md)
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+- [Learning-Augmented Online Bipartite Fractional Matching](../../NeurIPS2025/others/learning-augmented_online_bipartite_fractional_matching.md)
+- [CAE: Hierarchical Semantic Alignment for Image Clustering](../../AAAI2026/others/hierarchical_semantic_alignment_for_image_clustering.md)
+
+<!-- RELATED:END -->

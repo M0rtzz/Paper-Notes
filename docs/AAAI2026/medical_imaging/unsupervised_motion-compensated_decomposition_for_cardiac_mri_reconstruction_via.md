@@ -121,3 +121,15 @@ $$\mathcal{L}_{DVF} = \|u_t\|_1 + \|\nabla u_t\|_1 + \|\nabla^2 u_t\|_1$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 回顾性+前瞻性实验、多种采样模式、多个加速因子、完整消融分析、DVF 可视化、运行时间对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图表丰富，公式准确
 - 价值: ⭐⭐⭐⭐⭐ 无监督+快速收敛+超高加速因子，对临床实时心脏MRI有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FDP: A Frequency-Decomposition Preprocessing Pipeline for Unsupervised Anomaly Detection in Brain MRI](fdp_a_frequency-decomposition_preprocessing_pipeline_for_unsupervised_anomaly_de.md)
+- [Unsupervised Multi-Parameter Inverse Solving for Reducing Ring Artifacts in 3D X-Ray CBCT](unsupervised_multi-parameter_inverse_solving_for_reducing_ring_artifacts_in_3d_x.md)
+- [Causal Interpretation of Neural Network Computations with Contribution Decomposition](../../ICLR2026/medical_imaging/causal_interpretation_of_neural_network_computations_with_contribution_decomposi.md)
+- [Multivariate Gaussian Representation Learning for Medical Action Evaluation](multivariate_gaussian_representation_learning_for_medical_action_evaluation.md)
+- [Neural Bandit Based Optimal LLM Selection for a Pipeline of Tasks](neural_bandit_based_optimal_llm_selection_for_a_pipeline_of_tasks.md)
+
+<!-- RELATED:END -->

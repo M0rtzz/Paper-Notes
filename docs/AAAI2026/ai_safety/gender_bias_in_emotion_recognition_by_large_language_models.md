@@ -168,3 +168,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐（6 个 LLM + 4 种去偏方法 + 非均衡训练模拟，统计检验严谨）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，方法论描述详尽）
 - 价值: ⭐⭐⭐⭐（对 LLM 公平性部署有实际指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Confidence Trap: Gender Bias and Predictive Certainty in LLMs](the_confidence_trap_gender_bias_and_predictive_certainty_in_llms.md)
+- [BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models](../../ICLR2026/ai_safety/biasbusters_uncovering_and_mitigating_tool_selection_bias_in_large_language_mode.md)
+- [SproutBench: A Benchmark for Safe and Ethical Large Language Models for Youth](sproutbench_a_benchmark_for_safe_and_ethical_large_language_models_for_youth.md)
+- [AUVIC: Adversarial Unlearning of Visual Concepts for Multi-modal Large Language Models](auvic_adversarial_unlearning_of_visual_concepts_for_multi-mo.md)
+- [StyleBreak: Revealing Alignment Vulnerabilities in Large Audio-Language Models via Style-Aware Audio Jailbreak](stylebreak_revealing_alignment_vulnerabilities_in_large_audio-language_models_vi.md)
+
+<!-- RELATED:END -->

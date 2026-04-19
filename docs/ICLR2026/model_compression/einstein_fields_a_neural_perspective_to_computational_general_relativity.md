@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Schwarzschild/Kerr/引力波三个解析解+中子星NR模拟，覆盖面好，但缺少二元合并等最有挑战性的场景
 - 写作质量: ⭐⭐⭐⭐⭐ 物理背景介绍清晰，方法与结果衔接流畅，附录极为详尽
 - 价值: ⭐⭐⭐⭐ 对数值相对论和科学计算ML社区都有重要参考价值，但实际影响取决于后续能否扩展到动态二元系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BaSIC: BayesNet Structure Learning for Computational Scalable Neural Image Compression](../../ECCV2024/model_compression/basic_bayesnet_structure_learning_for_computational_scalable_neural_image_compre.md)
+- [Dataset Distillation with Neural Characteristic Function: A Minmax Perspective](../../CVPR2025/model_compression/dataset_distillation_with_neural_characteristic_function_a_minmax_perspective.md)
+- [Why Attention Patterns Exist: A Unifying Temporal Perspective Analysis](why_attention_patterns_exist_a_unifying_temporal_perspective_analysis.md)
+- [FlyPrompt: Brain-Inspired Random-Expanded Routing with Temporal-Ensemble Experts for General Continual Learning](flyprompt_brain-inspired_random-expanded_routing_with_temporal-ensemble_experts_.md)
+- [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个 benchmark 覆盖字符串/代码/视觉/世界模型，查询效率分析完整
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义严谨，算法描述清晰，Vapnik 的转导原则引用精准
 - 价值: ⭐⭐⭐⭐⭐ 开辟了一个新的程序合成范式，+196% 的提升令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Once Upon an Input: Reasoning via Per-Instance Program Synthesis](once_upon_an_input_reasoning_via_per-instance_program_synthesis.md)
+- [FractalBench: Diagnosing Visual-Mathematical Reasoning Through Recursive Program Synthesis](fractalbench_diagnosing_visual-mathematical_reasoning_through_recursive_program_.md)
+- [TikZero: Zero-Shot Text-Guided Graphics Program Synthesis](../../ICCV2025/code_intelligence/tikzero_zero-shot_text-guided_graphics_program_synthesis.md)
+- [IMSE: Intrinsic Mixture of Spectral Experts Fine-tuning for Test-Time Adaptation](../../ICLR2026/code_intelligence/imse_intrinsic_mixture_of_spectral_experts_fine-tuning_for_test-time_adaptation.md)
+- [TAPA: Training-Free Adaptation of Programmatic Agents via LLM-Guided Program Synthesis in Dynamic Environments](../../AAAI2026/code_intelligence/tapas_are_free_training-free_adaptation_of_programmatic_agen.md)
+
+<!-- RELATED:END -->

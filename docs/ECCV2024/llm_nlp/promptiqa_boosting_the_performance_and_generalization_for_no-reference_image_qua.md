@@ -143,3 +143,15 @@ ISP Prompt（$n$ 对图像-分数对）→ Visual Encoder + Score Expansion → 
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 个数据集、5 类任务、21 种 SOTA 对比、泛化测试、prompt 影响分析、消融齐全
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题定义到位，但表格和实验较多导致阅读量大
 - 价值: ⭐⭐⭐⭐⭐ 解决了 IQA 领域"换需求就要重训"的根本痛点，10-shot 适配新需求有极大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Product of Experts with LLMs: Boosting Performance on ARC Is a Matter of Perspective](../../ICML2025/llm_nlp/product_of_experts_with_llms_boosting_performance_on_arc_is_a_matter_of_perspect.md)
+- [Soft Filtering: Guiding Zero-Shot Composed Image Retrieval with Prescriptive and Proscriptive Prompts](../../AAAI2026/llm_nlp/soft_filtering_guiding_zero-shot_composed_image_retrieval_with_prescriptive_and_.md)
+- [Rectification Reimagined: A Unified Mamba Model for Image Correction and Rectangling with Prompts](../../AAAI2026/llm_nlp/rectification_reimagined_a_unified_mamba_model_for_image_cor.md)
+- [Reprojection Errors as Prompts for Efficient Scene Coordinate Regression](reprojection_errors_as_prompts_for_efficient_scene_coordinate_regression.md)
+- [AdaCLIP: Adapting CLIP with Hybrid Learnable Prompts for Zero-Shot Anomaly Detection](adaclip_adapting_clip_with_hybrid_learnable_prompts_for_zero.md)
+
+<!-- RELATED:END -->

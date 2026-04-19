@@ -124,3 +124,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖矢量化、光线追踪、光栅化三种渲染器，含真实数据实验
 - **写作质量**: ⭐⭐⭐⭐⭐ 从 1D 示例逐步构建直觉，理论与实验紧密结合
 - **价值**: ⭐⭐⭐⭐ 提供了逆渲染优化的新范式，与现有方法互补
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffBMP: Differentiable Rendering with Bitmap Primitives](../../CVPR2026/others/diffbmp_differentiable_rendering_with_bitmap_primitives.md)
+- [Scalable GPU-Accelerated Euler Characteristic Curves: Optimization and Differentiable Learning for PyTorch](../../NeurIPS2025/others/scalable_gpu-accelerated_euler_characteristic_curves_optimization_and_differenti.md)
+- [Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
+- [CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images](cadcrafter_generating_computer-aided_design_models_from_unconstrained_images.md)
+- [A Differentiable Model of Supply-Chain Shocks](../../NeurIPS2025/others/a_differentiable_model_of_supply-chain_shocks.md)
+
+<!-- RELATED:END -->

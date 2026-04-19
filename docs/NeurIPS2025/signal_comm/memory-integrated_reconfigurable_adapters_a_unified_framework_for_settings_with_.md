@@ -135,3 +135,15 @@ MIRA 基于一个冻结的 ViT-B/16 骨干网络（CLIP 初始化），在每一
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 CIL/DIL/DG 三种场景、7+ 数据集，消融分析详尽
 - 写作质量: ⭐⭐⭐⭐ 生物动机叙述生动，从理论到实验链路完整
 - 价值: ⭐⭐⭐⭐ 为统一多任务学习提供了优雅框架，AM+adapter 范式可能启发后续工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-Guided Channel Perturbation and Pretrained Knowledge Integration for Unified Multi-Modality Image Fusion](../../AAAI2026/signal_comm/text-guided_channel_perturbation_and_pretrained_knowledge_integration_for_unifie.md)
+- [Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning](contrastive_consolidation_of_top-down_modulations_achieves_sparsely_supervised_c.md)
+- [The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning](the_surprising_effectiveness_of_negative_reinforcement_in_llm_reasoning.md)
+- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+
+<!-- RELATED:END -->

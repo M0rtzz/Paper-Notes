@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 两个数据集，有统计显著性检验，但场景类型有限
 - 写作质量: ⭐⭐⭐⭐ 清晰简洁，SWGMM 的数学描述严谨
 - 价值: ⭐⭐⭐⭐ 对机器人导航中的运动建模有实用贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I-INR: Iterative Implicit Neural Representations](../../AAAI2026/autonomous_driving/i-inr_iterative_implicit_neural_representations.md)
+- [Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](../../CVPR2026/autonomous_driving/spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)
+- [SG-NLF: Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](../../CVPR2026/autonomous_driving/sgnlf_spectralgeometric_neural_fields_for_posefre.md)
+- [Rethinking the Spatio-Temporal Alignment of End-to-End 3D Perception](../../AAAI2026/autonomous_driving/rethinking_the_spatio-temporal_alignment_of_end-to-end_3d_perception.md)
+- [RAST: A Retrieval Augmented Spatio-Temporal Framework for Traffic Prediction](../../AAAI2026/autonomous_driving/rast_a_retrieval_augmented_spatio-temporal_framework_for_traffic_prediction.md)
+
+<!-- RELATED:END -->

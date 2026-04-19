@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 10+ VLM 全面对比，消融实验充分，包含输入成分分析
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑结构清晰，问题定义明确，对比表格丰富
 - 价值: ⭐⭐⭐⭐ 为 VLM 在设计领域的应用奠定评估基础，训练策略有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisJudge-Bench: Aesthetics and Quality Assessment of Visualizations](visjudge-bench_aesthetics_and_quality_assessment_of_visualizations.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+- [Can Vision-Language Models Answer Face to Face Questions in the Real-World?](can_vision-language_models_answer_face_to_face_questions_in_the_real-world.md)
+- [MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness](../../NeurIPS2025/multimodal_vlm/mmperspective_do_mllms_understand_perspective_a_comprehensive_benchmark_for_pers.md)
+- [Can Vision-Language Models Count? A Synthetic Benchmark and Analysis of Attention-Based Interventions](../../CVPR2026/multimodal_vlm/can_vision-language_models_count_a_synthetic_benchmark_and_analysis_of_attention.md)
+
+<!-- RELATED:END -->

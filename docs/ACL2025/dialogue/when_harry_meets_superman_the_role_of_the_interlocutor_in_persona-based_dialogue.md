@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 微调/零样本×4种信息披露×熟悉/陌生配对和话题的全面交叉实验，含人工评估
 - 写作质量: ⭐⭐⭐⭐ 研究问题明确（Q1-Q3），每个实验段落对应回答一个问题，结构清晰
 - 价值: ⭐⭐⭐⭐ 揭示了零样本"复制粘贴"假象和对话者适应的重要性，对角色扮演LLM开发和评估有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Persona Sentiment Sensitivity in Personalized Dialogue Generation](persona_sentiment_dialogue.md)
+- [KokoroChat: A Japanese Psychological Counseling Dialogue Dataset Collected via Role-Playing by Trained Counselors](kokorochat_a_japanese_psychological_counseling_dialogue.md)
+- [Wizard of Shopping: Target-Oriented E-commerce Dialogue Generation with Decision Tree Branching](wizard_of_shopping_target-oriented_e-commerce_dialogue_generation_with_decision_.md)
+- [Dialogue Systems for Emotional Support via Value Reinforcement](dialogue_systems_for_emotional_support_via_value_reinforcement.md)
+- [EnSToM: Enhancing Dialogue Systems with Entropy-Scaled Steering Vectors for Topic Maintenance](enstom_enhancing_dialogue_systems_with_entropy-scaled_steering_vectors_for_topic.md)
+
+<!-- RELATED:END -->

@@ -178,3 +178,15 @@ MIS 在所有数据集和所有指标上实现了完美精度（precision = 1）
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个真实大规模网络、3 种抵抗系数分布、5 种基线、3 种指标，评估极其全面
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，算法伪代码清晰，但公式密度较高
 - 价值: ⭐⭐⭐⭐ 为社交网络舆论优化提供了实用的精确算法，5870 万节点的扩展性令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [msf-CNN: Patch-based Multi-Stage Fusion with Convolutional Neural Networks for TinyML](msf-cnn_patch-based_multi-stage_fusion_with_convolutional_neural_networks_for_ti.md)
+- [Internal and External Impacts of Natural Language Processing Papers](../../ACL2025/llm_nlp/internal_and_external_impacts_of_natural_language_processing_papers.md)
+- [SocialEval: Evaluating Social Intelligence of Large Language Models](../../ACL2025/llm_nlp/socialeval_evaluating_social_intelligence_of_large_language_models.md)
+- [STAA-SNN: Spatial-Temporal Attention Aggregator for Spiking Neural Networks](../../CVPR2025/llm_nlp/staa-snn_spatial-temporal_attention_aggregator_for_spiking_neural_networks.md)
+- [To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization](../../ACL2025/llm_nlp/to_code_or_not_to_code_adaptive_tool_integration_for_math_language_models_via_ex.md)
+
+<!-- RELATED:END -->

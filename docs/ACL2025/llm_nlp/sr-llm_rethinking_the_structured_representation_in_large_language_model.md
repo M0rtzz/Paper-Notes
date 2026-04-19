@@ -126,3 +126,15 @@ SR-LLM 包含两种配置：(1) Training-Free：通过 SR-to-NLD 模块将结构
 | 实验充分度 | 4 | 10 个任务、3 个模型、多种 SR 的全面实验 |
 | 写作质量 | 3 | 结构清晰但符号较多，部分地方冗长 |
 | 总分 | 3.5 | 有价值的洞察，打破了 LLM 时代 SR 无用的迷思 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights](praise_enhancing_product_descriptions_with_llm-driven_structured_insights.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [Pre³: Enabling Deterministic Pushdown Automata for Faster Structured LLM Generation](pre3_deterministic_pda_structured_gen.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{total}} = \lambda_{\text{rgb}} \mathcal{L}_{\text{rgb}} + \
 - 实验充分度: ⭐⭐⭐⭐ — 提供了详尽的消融实验（BLCE、LCEE、$N_l$、$s$），包含多种 baseline 对比和定性可视化分析
 - 写作质量: ⭐⭐⭐⭐ — 论文结构清晰，动机阐述和方法推导逻辑完整，图表设计直观
 - 价值: ⭐⭐⭐⭐ — 端到端动态去模糊 NVS 是实际应用中的重要问题，性能和速度双重提升具有很高的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](../../NeurIPS2025/3d_vision/dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](../../CVPR2026/3d_vision/4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)
+- [Motion-Aware Animatable Gaussian Avatars Deblurring](../../CVPR2026/3d_vision/motion-aware_animatable_gaussian_avatars_deblurring.md)
+- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](../../CVPR2026/3d_vision/learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
+- [Gaussian Blending: Rethinking Alpha Blending in 3D Gaussian Splatting](gaussian_blending_rethinking_alpha_blending_in_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

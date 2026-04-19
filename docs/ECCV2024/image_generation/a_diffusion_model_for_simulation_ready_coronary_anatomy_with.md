@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融设计系统（5种引导策略对比、条件组合消融、拓扑消融），但数据集太小（62例）且缺乏外部验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，问题定义→方案设计→消融实验的逻辑链严密，图表质量高
 - 价值: ⭐⭐⭐⭐ 对虚拟介入仿真领域有直接应用价值，ANG的思想对扩散模型条件控制社区有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [MagicEraser: Erasing Any Objects via Semantics-Aware Control](magiceraser_erasing_any_objects_via_semantics-aware_control.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [Memory-Efficient Fine-Tuning for Quantized Diffusion Model](memory-efficient_fine-tuning_for_quantized_diffusion_model.md)
+- [ZigMa: A DiT-style Zigzag Mamba Diffusion Model](zigma_a_dit-style_zigzag_mamba_diffusion_model.md)
+
+<!-- RELATED:END -->

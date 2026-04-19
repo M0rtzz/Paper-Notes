@@ -126,3 +126,15 @@ DeepBooTS 由双流架构组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 6+ 数据集、多变量+单变量、大规模实验、消融完整
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但符号较密需耐心跟踪
 - 价值: ⭐⭐⭐⭐⭐ 15.8% 平均提升 + 理论保证，为时序预测抗漂移提供了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harmonic Dataset Distillation for Time Series Forecasting](harmonic_dataset_distillation_for_time_series_forecasting.md)
+- [FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [HN-MVTS: HyperNetwork-based Multivariate Time Series Forecasting](hn-mvts_hypernetwork-based_multivariate_time_series_forecasting.md)
+- [CometNet: Contextual Motif-guided Long-term Time Series Forecasting](cometnet_contextual_motif-guided_long-term_time_series_forecasting.md)
+- [Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting](revitalizing_canonical_pre-alignment_for_irregular_multivariate_time_series_fore.md)
+
+<!-- RELATED:END -->

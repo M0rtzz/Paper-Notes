@@ -167,3 +167,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5 个基准、多种 query-gallery 组合、详细消融和效率分析
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题动机清晰、数学推导完整、实验呈现规范
 - 价值: ⭐⭐⭐⭐ — 为边缘设备 VPR 部署提供了实用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Correcting False Alarms from Unseen: Adapting Graph Anomaly Detectors at Test Time](correcting_false_alarms_from_unseen_adapting_graph_anomaly_detectors_at_test_tim.md)
+- [Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era](../../NeurIPS2025/model_compression/towards_implicit_aggregation_robust_image_representation_for_place_recognition_i.md)
+- [TALON: Test-time Adaptive Learning for On-the-Fly Category Discovery](../../CVPR2026/model_compression/talon_test-time_adaptive_learning_for_on-the-fly_category_discovery.md)
+- [Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](../../ICLR2026/model_compression/specialization_after_generalization_towards_understanding_test-time_training_in_.md)
+- [Mamba-Adaptor: State Space Model Adaptor for Visual Recognition](../../CVPR2025/model_compression/mamba-adaptor_state_space_model_adaptor_for_visual_recognition.md)
+
+<!-- RELATED:END -->

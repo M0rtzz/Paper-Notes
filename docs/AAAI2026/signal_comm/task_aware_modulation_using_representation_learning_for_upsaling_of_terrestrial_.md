@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 579 个站点的验证充分，但消融不够详细
 - 写作质量: ⭐⭐⭐ 领域交叉性强，对 ML 读者需要更多背景铺垫
 - 价值: ⭐⭐⭐⭐ 对气候科学+AI 交叉领域有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/signal_comm/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
+- [FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection](../../CVPR2026/signal_comm/faar_efficient_frequency-aware_multi-task_fine-tuning_via_automatic_rank_selecti.md)
+- [Neural Video Compression with Context Modulation](../../CVPR2025/signal_comm/neural_video_compression_with_context_modulation.md)
+- [FASA: Frequency-Aware Sparse Attention](../../ICLR2026/signal_comm/fasa_frequency-aware_sparse_attention.md)
+- [Boosting Multimodal Learning via Disentangled Gradient Learning](../../ICCV2025/signal_comm/boosting_multimodal_learning_via_disentangled_gradient_learning.md)
+
+<!-- RELATED:END -->

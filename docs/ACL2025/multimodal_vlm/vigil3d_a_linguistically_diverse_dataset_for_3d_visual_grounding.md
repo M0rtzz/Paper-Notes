@@ -113,3 +113,15 @@ tags:
 - ⭐⭐⭐⭐ 实用性：分析框架可直接复用于评估任何 3DVG 数据集，子组分析指导模型改进
 - ⭐⭐⭐ 实验充分度：7 个方法覆盖三大类，但数据集规模限制了统计显著性
 - ⭐⭐⭐⭐ 写作质量：结构清晰，表格和可视化丰富，语言分析框架阐述详尽
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [Aria-UI: Visual Grounding for GUI Instructions](aria-ui_visual_grounding_for_gui_instructions.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/situat3dchange_situated_3d_change_understanding_dataset_for_multimodal_large_lan.md)
+- [Teaching Vision-Language Models to Ask: Resolving Ambiguity in Visual Questions](teaching_vlm_ask_ambiguity.md)
+
+<!-- RELATED:END -->

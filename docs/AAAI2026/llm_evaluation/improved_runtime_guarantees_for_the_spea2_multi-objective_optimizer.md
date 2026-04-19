@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐ （纯理论工作，无实验验证）
 - 写作质量: ⭐⭐⭐⭐⭐ （证明严谨详尽，结构清晰，动机阐述充分）
 - 价值: ⭐⭐⭐⭐ （为经典算法提供了新的理论理解，具有实际参数调优指导意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Runtime Analysis of Evolutionary NAS for Multiclass Classification](../../ICML2025/llm_evaluation/runtime_analysis_of_evolutionary_nas_for_multiclass_classification.md)
+- [MAPS: Multi-Agent Personality Shaping for Collaborative Reasoning](maps_multi-agent_personality_shaping_for_collaborative_reaso.md)
+- [Movie101v2: Improved Movie Narration Benchmark](../../ACL2025/llm_evaluation/movie101v2_improved_movie_narration_benchmark.md)
+- [DcMatch: Unsupervised Multi-Shape Matching with Dual-Level Consistency](dcmatch_unsupervised_multi-shape_matching_with_dual-level_consistency.md)
+- [DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning](dicap_distribution-calibrated_pseudo-labeling_for_semi-supervised_multi-label_le.md)
+
+<!-- RELATED:END -->

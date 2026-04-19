@@ -114,3 +114,15 @@ $$\mathcal{L} = \|\hat{\mathbf{I}}^B - \mathbf{I}^B\|_1 + \mathcal{L}_{reg}$$
 - 技术深度：★★★★☆ 物理模糊建模+B-spline+姿态变形CNN+帧间正则化的组合设计精巧
 - 实验完整性：★★★★★ 合成+真实数据集，丰富消融实验，DIY iPhone 16 Pro演示
 - 实用价值：★★★★☆ 实际场景中运动模糊非常常见，方法填补了重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProgressiveAvatars: Progressive Animatable 3D Gaussian Avatars](progressiveavatars_progressive_animatable_3d_gaussian_avatars.md)
+- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [Sequential Gaussian Avatars with Hierarchical Motion Context](../../ICCV2025/3d_vision/sequential_gaussian_avatars_with_hierarchical_motion_context.md)
+- [Zero-Shot Reconstruction of Animatable 3D Avatars with Cloth Dynamics from a Single Image](zero-shot_reconstruction_of_animatable_3d_avatars_with_cloth_dynamics_from_a_sin.md)
+- [PhysHead: Simulation-Ready Gaussian Head Avatars](physhead_simulation-ready_gaussian_head_avatars.md)
+
+<!-- RELATED:END -->

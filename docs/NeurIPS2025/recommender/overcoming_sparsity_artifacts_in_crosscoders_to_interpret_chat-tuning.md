@@ -249,3 +249,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 单模型对但分析深入
 - 写作质量: ⭐⭐⭐⭐ 问题-诊断-解决的叙事清晰
 - 价值: ⭐⭐⭐⭐ 推进可解释性方法论的最佳实践
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
+- [RecLM: Recommendation Instruction Tuning](../../ACL2025/recommender/reclm_recommendation_instruction_tuning.md)
+- [Radial Neighborhood Smoothing Recommender System](radial_neighborhood_smoothing_recommender_system.md)
+- [Validating LLM-as-a-Judge Systems under Rating Indeterminacy](validating_llm-as-a-judge_systems_under_rating_indeterminacy.md)
+- [TV-Rec: Time-Variant Convolutional Filter for Sequential Recommendation](tv-rec_time-variant_convolutional_filter_for_sequential_recommendation.md)
+
+<!-- RELATED:END -->

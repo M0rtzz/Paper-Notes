@@ -127,3 +127,15 @@ $$V_h^*(s) = \max_{a \in \mathcal{A}} \left\{ r_h(s,a) + \sum_{s'} P_h(s'|s,a) V
 - 实验充分度: ⭐⭐ — 纯理论无实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，两大设定×四种算法的组织逻辑性强
 - 价值: ⭐⭐⭐⭐ — 量子RL理论的重要推进，但实际影响需等量子硬件成熟
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow Matching Neural Processes](../../NeurIPS2025/image_generation/flow_matching_neural_processes.md)
+- [Recurrent Memory for Online Interdomain Gaussian Processes](../../NeurIPS2025/image_generation/recurrent_memory_for_online_interdomain_gaussian_processes.md)
+- [ALE-Bench: A Benchmark for Long-Horizon Objective-Driven Algorithm Engineering](../../NeurIPS2025/image_generation/alebench_a_benchmark_for_longhorizon_objectivedriven_algorit.md)
+- [Fast Solvers for Discrete Diffusion Models: Theory and Applications of High-Order Algorithms](../../NeurIPS2025/image_generation/fast_solvers_for_discrete_diffusion_models_theory_and_applications_of_high-order.md)
+- [Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models](../../CVPR2026/image_generation/attention_may_i_have_your_decision_localizing_generative_choices_in_diffusion_mo.md)
+
+<!-- RELATED:END -->

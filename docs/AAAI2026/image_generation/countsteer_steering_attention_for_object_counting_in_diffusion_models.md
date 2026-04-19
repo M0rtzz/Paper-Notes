@@ -131,3 +131,15 @@ $$h_{t,b}' = h_{t,b} + \alpha_{t,b} \cdot s_{t,b}$$
 - 实验充分度: 2/5（仅 SD v1.5，缺少 baseline 对比，数量范围小）
 - 写作质量: 3/5（动机清晰、结构完整，但实验部分偏薄）
 - 价值: 3/5（提供了有价值的分析发现，但实际提升有限）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+- [Precise Object and Effect Removal with Adaptive Target-Aware Attention](../../CVPR2026/image_generation/precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+- [ToMA: Token Merge with Attention for Diffusion Models](../../ICML2025/image_generation/toma_token_merge_with_attention_for_diffusion_models.md)
+- [Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models](../../CVPR2026/image_generation/attention_may_i_have_your_decision_localizing_generative_choices_in_diffusion_mo.md)
+- [Steering One-Step Diffusion Model with Fidelity-Rich Decoder for Fast Image Compression](steering_one-step_diffusion_model_with_fidelity-rich_decoder_for_fast_image_comp.md)
+
+<!-- RELATED:END -->

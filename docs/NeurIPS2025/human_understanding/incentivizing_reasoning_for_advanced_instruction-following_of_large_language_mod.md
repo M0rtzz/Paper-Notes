@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个 benchmark + cold/warm start + 多模型尺寸 + OOD 泛化 + 充分消融
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，与数学推理的对比清晰
 - 价值: ⭐⭐⭐⭐⭐ 对复杂指令跟随和 RL 推理激励研究有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models](../../ICLR2026/human_understanding/timeomni-1_incentivizing_complex_reasoning_with_time_series_in_large_language_mo.md)
+- [GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining](graphchain_large_language_models_for_large-scale_graph_analysis_via_tool_chainin.md)
+- [Mapping Faithful Reasoning in Language Models](mapping_faithful_reasoning_in_language_models.md)
+- [Uncovering Strategic Egoism Behaviors in Large Language Models](uncovering_strategic_egoism_behaviors_in_large_language_models.md)
+- [A Simple Linear Patch Revives Layer-Pruned Large Language Models](a_simple_linear_patch_revives_layerpruned_large_language_mod.md)
+
+<!-- RELATED:END -->

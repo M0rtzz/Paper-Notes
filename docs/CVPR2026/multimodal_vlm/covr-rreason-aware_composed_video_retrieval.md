@@ -155,3 +155,15 @@ R@1 提升 **+13.13** 个百分点，超越所有基线。
 - **实验充分度**: ⭐⭐⭐⭐ — 两个基准、多维消融、模型规模分析全面
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，推理记录的形式化定义规范
 - **价值**: ⭐⭐⭐⭐ — 推动 CoVR 从关键词匹配向推理驱动转变
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EagleNet: Energy-Aware Fine-Grained Relationship Learning Network for Text-Video Retrieval](eaglenet_energy-aware_fine-grained_relationship_learning_network_for_text-video_.md)
+- [Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning](../../AAAI2026/multimodal_vlm/heterogeneous_uncertainty-guided_composed_image_retrieval_with_fine-grained_prob.md)
+- [AutoComPose: Automatic Generation of Pose Transition Descriptions for Composed Pose Retrieval Using Multimodal LLMs](../../ICCV2025/multimodal_vlm/autocompose_automatic_generation_of_pose_transition_descriptions_for_composed_po.md)
+- [Thinking in Dynamics: How Multimodal Large Language Models Perceive, Track, and Reason Dynamics in Physical 4D World](thinking_in_dynamics_how_multimodal_large_language_models_perceive_track_and_rea.md)
+- [ViRC: Enhancing Visual Interleaved Mathematical CoT with Reason Chunking](virc_enhancing_visual_interleaved_mathematical_cot_with_reason_chunking.md)
+
+<!-- RELATED:END -->

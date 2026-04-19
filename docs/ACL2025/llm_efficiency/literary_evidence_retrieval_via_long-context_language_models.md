@@ -165,3 +165,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 15+ 模型对比 + 人类基线 + 过度生成分析 + 案例研究
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，案例分析生动
 - 价值: ⭐⭐⭐⭐ 对长上下文理解和解释性推理研究有重要参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+- [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
+- [How to Train Long-Context Language Models (Effectively)](train_long_context_effectively.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [Efficient Length-Generalizable Attention via Causal Retrieval for Long-Context Language Modeling](../../ICML2025/llm_efficiency/efficient_length-generalizable_attention_via_causal_retrieval_for_long-context_l.md)
+
+<!-- RELATED:END -->

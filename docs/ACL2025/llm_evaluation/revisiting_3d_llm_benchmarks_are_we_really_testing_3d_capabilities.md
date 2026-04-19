@@ -129,3 +129,15 @@ VLM 仅用单视角图像就全面超越 3D SOTA → 这些物体基准存在严
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖物体/场景基准、多种视角策略、定量原则验证，但 VLM 种类偏少。
 - **写作质量**: ⭐⭐⭐⭐ — 概念清晰、论证逻辑严密，图表直观。
 - **价值**: ⭐⭐⭐⭐⭐ — 对 3D LLM 社区的评测方法论有重要的纠偏作用，四条原则将影响未来基准设计。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](../../ICCV2025/llm_evaluation/3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+- [ONEBench to Test Them All: Sample-Level Benchmarking Over Open-Ended Capabilities](onebench_to_test_them_all_sample-level_benchmarking_over_open-ended_capabilities.md)
+- [EducationQ: Evaluating LLMs' Teaching Capabilities Through Multi-Agent Dialogue Framework](educationq_evaluating_llms_teaching_capabilities_through_multi-agent_dialogue_fr.md)
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+
+<!-- RELATED:END -->

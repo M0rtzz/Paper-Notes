@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 50+篇论文的系统性分析，数据集相似性分析扎实
 - 写作质量: ⭐⭐⭐⭐⭐ 分析论文需要清晰的逻辑，本文组织结构很好
 - 价值: ⭐⭐⭐⭐ 对KG领域评估标准的反思有重要推动作用，发布基线模型有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Limited Generalizability in Argument Mining: State-Of-The-Art Models Learn Datasets, Not Arguments](limited_generalizability_in_argument_mining_state-of-the-art_models_learn_datase.md)
+- [Identifying Reliable Evaluation Metrics for Scientific Text Revision](reliable_eval_metrics_scientific.md)
+- [A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [MapQaTor: An Extensible Framework for Efficient Annotation of Map-Based QA Datasets](mapqator_an_extensible_framework_for_efficient_annotation_of_map-based_qa_datase.md)
+- [Predicting Through Generation: Why Generation Is Better for Prediction](predicting_through_generation_why_generation_is_better_for_prediction.md)
+
+<!-- RELATED:END -->

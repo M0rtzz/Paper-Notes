@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 评估规模小、领域覆盖少、数据不可公开，限制了结论的可信度
 - 写作质量: ⭐⭐⭐⭐ 流程描述清晰，实际案例（HR/SOC）帮助理解
 - 价值: ⭐⭐⭐⭐ 对企业 AI Agent 安全部署有直接参考价值，但需提升策略提取准确率才能真正实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?](position_paper_if_innovation_in_ai_systematically_violates_fundamental_rights_is.md)
+- [Factor(U,T): Controlling Untrusted AI by Monitoring their Plans](../../AAAI2026/social_computing/factorut_controlling_untrusted_ai_by_monitoring_their_plans.md)
+- [OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents](os-harm_a_benchmark_for_measuring_safety_of_computer_use_agents.md)
+- [Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](../../ICLR2026/social_computing/propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
+- [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ UR-JiGen额外加入 $L_{jig}$（权重设为1）。
 - 实验充分度: ⭐⭐⭐⭐ 多种DG方法×多种模态组合，实验设计完整
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，Figure 1很直观
 - 价值: ⭐⭐⭐⭐ 提供了MMDG的通用解决范式，有较好的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective](beyond_losses_reweighting_empowering_multi-task_learning_via_the_generalization_.md)
+- [UniDomain: Pretraining a Unified PDDL Domain from Real-World Demonstrations for Generalizable Task Planning](../../NeurIPS2025/robotics/pretraining_a_unified_pddl_domain_from_real-world_demonstrations_for_generalizab.md)
+- [On the Generalization Capacities of MLLMs for Spatial Intelligence](../../ICLR2026/robotics/on_the_generalization_capacities_of_mllms_for_spatial_intelligence.md)
+- [Generalizable Domain Adaptation for Sim-and-Real Policy Co-Training](../../NeurIPS2025/robotics/generalizable_domain_adaptation_for_sim-and-real_policy_co-training.md)
+- [Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
+
+<!-- RELATED:END -->

@@ -102,3 +102,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 13 模型 × 5 攻击 × 5 数据集 × 3 防御，极其全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，"冰山"比喻生动
 - 价值: ⭐⭐⭐⭐ 对 SLM 安全部署有直接警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Surface-Level Patterns: An Essence-Driven Defense Framework Against Jailbreak Attacks in LLMs](beyond_surface-level_patterns_an_essence-driven_defense_framework_against_jailbr.md)
+- [JailbreakRadar: Comprehensive Assessment of Jailbreak Attacks Against LLMs](jailbreakradar_comprehensive_assessment_jailbreak_attacks.md)
+- [HiddenDetect: Detecting Jailbreak Attacks against Large Vision-Language Models via Monitoring Hidden States](hiddendetect_detecting_jailbreak_attacks_against_multimodal_large_language_model.md)
+- [Breaking the Ceiling: Exploring the Potential of Jailbreak Attacks through Expanding Strategy Space](breaking_the_ceiling_exploring_the_potential_of_jailbreak_attacks_through_expand.md)
+- [Reinforcement Learning Finetunes Small Subnetworks in Large Language Models](../../NeurIPS2025/llm_alignment/reinforcement_learning_finetunes_small_subnetworks_in_large_language_models.md)
+
+<!-- RELATED:END -->

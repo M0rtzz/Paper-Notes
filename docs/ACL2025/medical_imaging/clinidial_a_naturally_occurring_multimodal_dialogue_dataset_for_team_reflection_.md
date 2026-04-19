@@ -163,3 +163,15 @@ CliniDial 不是提出新方法，而是：
 - **实验充分度**: ⭐⭐⭐⭐ (三个案例研究系统覆盖数据集三大特征，多种模型对比)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰，数据分析充分，定性案例有说服力)
 - **价值**: ⭐⭐⭐⭐ (填补临床操作对话数据集空白，为 LLM 在高风险领域的评估提供基准)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReflecTool: Towards Reflection-Aware Tool-Augmented Clinical Agents](reflectool_clinical_agent.md)
+- [Enhancing Medical Dialogue Generation through Knowledge Refinement and Dynamic Prompt Adjustment](enhancing_medical_dialogue_generation_through_knowledge_refinement_and_dynamic_p.md)
+- [MTBBench: A Multimodal Sequential Clinical Decision-Making Benchmark in Oncology](../../NeurIPS2025/medical_imaging/mtbbench_a_multimodal_sequential_clinical_decision-making_benchmark_in_oncology.md)
+- [RedactX: An LLM-Powered Framework for Automatic Clinical Data De-Identification](redactor_an_llm-powered_framework_for_automatic_clinical_data_de-identification.md)
+- [Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson's Disease Gait Assessment](../../NeurIPS2025/medical_imaging/care-pd_a_multi-site_anonymized_clinical_dataset_for_parkinsons_disease_gait_ass.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 有详细的分类/回归/Bland-Altman分析，但单中心小样本且缺少与其他无创方法对比
 - 写作质量: ⭐⭐⭐ 临床背景阐述充分，但方法描述部分行文冗余
 - 价值: ⭐⭐⭐ 概念验证阶段，需多中心验证和自动化改进才有临床转化可能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Learning Based Estimation of Blood Glucose Levels from Multidirectional Scleral Blood Vessel Imaging](../../CVPR2025/medical_imaging/deep_learning_based_estimation_of_blood_glucose_levels_from_multidirectional_scl.md)
+- [MuViT: Multi-Resolution Vision Transformers for Learning Across Scales in Microscopy](muvit_multi-resolution_vision_transformers_for_learning_across_scales_in_microsc.md)
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+- [Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?](can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy.md)
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+
+<!-- RELATED:END -->

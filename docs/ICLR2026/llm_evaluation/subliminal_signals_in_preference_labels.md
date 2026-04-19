@@ -161,3 +161,15 @@ DPO 的迭代对齐信号反而减弱，可能与 DPO 的 KL 正则化有关。
 - **实用性**: ⭐⭐⭐⭐ — 揭示的安全风险对 RLHF 部署具有直接警示意义
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，实验设计严谨
 - **综合评分**: ⭐⭐⭐⭐ (3.5/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
+- [Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_with_the_hu.md)
+- [ComPO: Preference Alignment via Comparison Oracles](../../NeurIPS2025/llm_evaluation/compo_preference_alignment_via_comparison_oracles.md)
+- [Semi-Supervised Regression with Heteroscedastic Pseudo-Labels](../../NeurIPS2025/llm_evaluation/semi-supervised_regression_with_heteroscedastic_pseudo-labels.md)
+- [Reliably Detecting Model Failures in Deployment Without Labels](../../NeurIPS2025/llm_evaluation/reliably_detecting_model_failures_in_deployment_without_labels.md)
+
+<!-- RELATED:END -->

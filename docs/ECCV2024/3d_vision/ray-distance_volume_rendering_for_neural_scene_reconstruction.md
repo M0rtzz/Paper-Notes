@@ -166,3 +166,15 @@ ScanNet 上 MLP 表示的消融（F-score ↑）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个数据集、两种表示、详细消融与定性分析
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机通过 toy example 阐述极为清晰
 - **实用价值**: ⭐⭐⭐⭐ — 作为即插即用模块适配现有 SDF 基方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+- [Implicit Filtering for Learning Neural Signed Distance Functions from 3D Point Clouds](implicit_filtering_for_learning_neural_signed_distance_functions_from_3d_point_c.md)
+- [VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting](versatilegaussian_real-time_neural_rendering_for_versatile_tasks_using_gaussian_.md)
+- [Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields](omni-recon_harnessing_image-based_rendering_for_general-purpose_neural_radiance_.md)
+- [CaesarNeRF: Calibrated Semantic Representation for Few-Shot Generalizable Neural Rendering](caesarnerf_calibrated_semantic_representation_for_few-shot_generalizable_neural_.md)
+
+<!-- RELATED:END -->

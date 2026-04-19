@@ -154,3 +154,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda \mathcal{L}_{QR}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多种 task 配置、详细消融、GFLOPs/延迟对比、不同预训练权重、不同 prompt formation 策略
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富，动机-观察-方法链条流畅
 - 价值: ⭐⭐⭐⭐ 50% 推理加速对 PCL 的实际部署有重要意义，QR loss 的设计思路有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exemplar-Free Continual Representation Learning via Learnable Drift Compensation](exemplar-free_continual_representation_learning_via_learnable_drift_compensation.md)
+- [Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework](human_motion_forecasting_in_dynamic_domain_shifts_a_homeostatic_continual_test-t.md)
+- [Learning Cross-Hand Policies of High-DOF Reaching and Grasping](learning_cross-hand_policies_of_high-dof_reaching_and_grasping.md)
+- [Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)
+- [FOZO: Forward-Only Zeroth-Order Prompt Optimization for Test-Time Adaptation](../../CVPR2026/human_understanding/fozo_forward-only_zeroth-order_prompt_optimization_for_test-time_adaptation.md)
+
+<!-- RELATED:END -->

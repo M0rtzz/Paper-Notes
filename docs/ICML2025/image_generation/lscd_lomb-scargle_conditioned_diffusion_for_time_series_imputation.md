@@ -114,3 +114,15 @@ LSCD 在 CSDI 的条件扩散框架基础上：(1) 用 Lomb-Scargle 层从观测
 - 实验充分度: ⭐⭐⭐ 数据集偏少，缺少大规模验证
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，背景全面
 - 价值: ⭐⭐⭐⭐ 为不规则时序的频域建模提供了可行方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BRIDGE: Bootstrapping Text to Control Time-Series Generation via Multi-Agent Iterative Optimization and Diffusion Modeling](bridge_bootstrapping_text_to_control_time-series_generation_via_multi-agent_iter.md)
+- [A Diffusion Model for Regular Time Series Generation from Irregular Data with Completion and Masking](../../NeurIPS2025/image_generation/a_diffusion_model_for_regular_time_series_generation_from_irregular_data_with_co.md)
+- [TIDMAD: Time Series Dataset for Discovering Dark Matter with AI Denoising](../../NeurIPS2025/image_generation/tidmad_time_series_dataset_for_discovering_dark_matter_with_ai_denoising.md)
+- [Conditionally Whitened Generative Models for Probabilistic Time Series Forecasting](../../ICLR2026/image_generation/conditionally_whitened_generative_models_for_probabilistic_time_series_forecasti.md)
+- [SimDiff: Simpler Yet Better Diffusion Model for Time Series Point Forecasting](../../AAAI2026/image_generation/simdiff_simpler_yet_better_diffusion_model_for_time_series_point_forecasting.md)
+
+<!-- RELATED:END -->

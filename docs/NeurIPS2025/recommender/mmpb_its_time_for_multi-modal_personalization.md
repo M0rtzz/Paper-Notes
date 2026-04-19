@@ -119,3 +119,15 @@ MMPB 评测分三阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 23 个模型 + 15 任务类型 + 多维度分析
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，形式化严谨，分析深入
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 个性化研究方向有重大推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisualLens: Personalization through Task-Agnostic Visual History](visuallens_personalization_through_task-agnostic_visual_history.md)
+- [PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](../../ICML2025/recommender/parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
+- [Inference-Time Reward Hacking in Large Language Models](inference-time_reward_hacking_in_large_language_models.md)
+- [TV-Rec: Time-Variant Convolutional Filter for Sequential Recommendation](tv-rec_time-variant_convolutional_filter_for_sequential_recommendation.md)
+- [EMPATHIA: Multi-Faceted Human-AI Collaboration for Refugee Integration](empathia_multi-faceted_human-ai_collaboration_for_refugee_integration.md)
+
+<!-- RELATED:END -->

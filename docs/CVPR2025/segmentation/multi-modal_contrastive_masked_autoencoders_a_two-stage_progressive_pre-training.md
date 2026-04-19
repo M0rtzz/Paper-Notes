@@ -125,3 +125,15 @@ ViT-L扩展：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖语义分割、深度估计、实例分割、低数据场景，消融全面彻底
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但公式较多可能影响可读性
 - 价值: ⭐⭐⭐⭐ 渐进式多范式预训练策略和去噪预训练目标可广泛应用于多模态SSL
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training](cosmos_cross-modality_self-distillation_for_vision_language_pre-training.md)
+- [Diffusion-Driven Two-Stage Active Learning for Low-Budget Semantic Segmentation](../../NeurIPS2025/segmentation/diffusion-driven_two-stage_active_learning_for_low-budget_semantic_segmentation.md)
+- [DreamLIP: Language-Image Pre-training with Long Captions](../../ECCV2024/segmentation/dreamlip_language-image_pre-training_with_long_captions.md)
+- [ColorMAE: Exploring Data-Independent Masking Strategies in Masked AutoEncoders](../../ECCV2024/segmentation/colormae_exploring_data-independent_masking_strategies_in_masked_autoencoders.md)
+- [OmniSegmentor: A Flexible Multi-Modal Learning Framework for Semantic Segmentation](../../NeurIPS2025/segmentation/omnisegmentor_a_flexible_multi-modal_learning_framework_for_semantic_segmentatio.md)
+
+<!-- RELATED:END -->

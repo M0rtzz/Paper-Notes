@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖10+模型和3种输入配置，但缺少 few-shot 等进阶实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据构建流程详尽，表格丰富
 - 价值: ⭐⭐⭐⭐ 开源工具和数据集对金融 NLP 社区有实际贡献，揭示 LLM 金融推理的不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning on Time-Series for Financial Technical Analysis](reasoning_on_time-series_for_financial_technical_analysis.md)
+- [MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
+- [Event-Aware Sentiment Factors from LLM-Augmented Financial Tweets: A Transparent Framework for Interpretable Quant Trading](../../ICML2025/time_series/event-aware_sentiment_factors_from_llm-augmented_financial_tweets_a_transparent_.md)
+- [scits scientific time series understanding and generation with llms](scits_scientific_time_series_understanding_and_generation_with_llms.md)
+- [Are LLMs Prescient? A Continuous Evaluation using Daily News as the Oracle](../../ICML2025/time_series/are_llms_prescient_a_continuous_evaluation_using_daily_news_as_the_oracle.md)
+
+<!-- RELATED:END -->

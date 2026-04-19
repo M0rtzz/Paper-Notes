@@ -356,3 +356,15 @@ $$\mathcal{L}_{pseudo} = \sum_{i,j} \mathcal{M}_{feat}^{(i,j)} [1 - \mathcal{C}o
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个数据集，两种稀疏设定，详尽消融和对比
 - **写作质量**: ⭐⭐⭐⭐ — 动机分析透彻，方法推导清晰
 - **实用价值**: ⭐⭐⭐⭐ — 稀疏视角表面重建有广泛应用需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting](meshsplat_generalizable_sparse-view_surface_reconstruction_via_gaussian_splattin.md)
+- [Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction](sparse4dgs_4d_gaussian_splatting_for_sparse-frame_dynamic_scene_reconstruction.md)
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](../../CVPR2026/3d_vision/3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+- [Splats in Splats: Robust and Effective 3D Steganography towards Gaussian Splatting](splats_in_splats_robust_and_effective_3d_steganography_towards_gaussian_splattin.md)
+- [Surface-Based Visibility-Guided Uncertainty for Continuous Active 3D Neural Reconstruction](surface-based_visibility-guided_uncertainty_for_continuous_active_3d_neural_reco.md)
+
+<!-- RELATED:END -->

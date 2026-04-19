@@ -169,3 +169,15 @@ $$\mathcal{L}_{\text{dyn}} = \lambda_{\text{ba}} \mathcal{L}_{\text{ba}} + \lamb
 - 实验充分度: ⭐⭐⭐⭐⭐ — 相机姿态、深度精度、稀疏3D跟踪、稠密2D跟踪四维度全面评估+丰富消融
 - 写作质量: ⭐⭐⭐⭐☆ — 流水线描述清晰，问题定义准确
 - 价值: ⭐⭐⭐⭐⭐ — 为稠密3D跟踪建立了新的性能标杆，可作为多个下游任务的基础模块
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open-World Drone Active Tracking with Goal-Centered Rewards](open-world_drone_active_tracking_with_goal-centered_rewards.md)
+- [Local All-Pair Correspondence for Point Tracking](../../ECCV2024/video_understanding/local_all-pair_correspondence_for_point_tracking.md)
+- [Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity](lattice_boltzmann_model_for_learning_real-world_pixel_dynamicity.md)
+- [egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
+- [Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training](../../ECCV2024/video_understanding/boosting_3d_single_object_tracking_with_2d_matching_distillation_and_3d_pre-trai.md)
+
+<!-- RELATED:END -->

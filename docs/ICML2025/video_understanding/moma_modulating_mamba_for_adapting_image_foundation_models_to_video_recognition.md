@@ -170,3 +170,15 @@ $$\mathbf{V}^{i+1} = \text{FFN}(\text{SeqMod}(\mathbf{x}^i, \mathbf{y}_1^i, \mat
 - 实验充分度: 4/5 - 覆盖 K400、SSv2、长视频、零样本，消融实验分析了多种融合方式
 - 写作质量: 4/5 - 结构清晰，公式推导完整，动机阐述充分
 - 价值: 4/5 - 为 Mamba 嵌入预训练 Transformer 提供了一种通用的非破坏性融合范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Transfer Learning for Video-language Foundation Models](../../CVPR2025/video_understanding/efficient_transfer_learning_for_video-language_foundation_models.md)
+- [MimeQA: Towards Socially-Intelligent Nonverbal Foundation Models](../../NeurIPS2025/video_understanding/mimeqa_towards_socially-intelligent_nonverbal_foundation_models.md)
+- [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](../../ICCV2025/video_understanding/flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
+- [Mamba-3: Improved Sequence Modeling using State Space Principles](../../ICLR2026/video_understanding/mamba-3_improved_sequence_modeling_using_state_space_principles.md)
+- [Adapt2Reward: Adapting Video-Language Models to Generalizable Robotic Rewards via Failure Prompts](../../ECCV2024/video_understanding/adapt2reward_adapting_videolanguage_models_to_generalizable.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ DISCODE 在真实域同样一致领先 FLEUR，在 Flickr8k-CF 上超越 GPT-4o 
 ## 评分
 
 ⭐⭐⭐⭐ — 方法简洁优雅（解析解）、实验全面（10个模型×5个基准）、新基准有价值；但适用场景限于图像描述评估且依赖开源模型特征。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward Robust Hyper-Detailed Image Captioning: A Multiagent Approach and Dual Evaluation Metrics for Factuality and Coverage](../../ICML2025/multimodal_vlm/toward_robust_hyper-detailed_image_captioning_a_multiagent_approach_and_dual_eva.md)
+- [Teaching Large Language Models to Regress Accurate Image Quality Scores Using Score Distribution](../../CVPR2025/multimodal_vlm/teaching_large_language_models_to_regress_accurate_image_quality_scores_using_sc.md)
+- [Aligning the True Semantics: Constrained Decoupling and Distribution Sampling for Cross-Modal Alignment](aligning_the_true_semantics_constrained_decoupling_and_distr.md)
+- [Difference Vector Equalization for Robust Fine-tuning of Vision-Language Models](difference_vector_equalization_for_robust_fine-tuning_of_vis.md)
+- [CreBench: Human-Aligned Creativity Evaluation from Idea to Process to Product](crebench_human-aligned_creativity_evaluation_from_idea_to_process_to_product.md)
+
+<!-- RELATED:END -->

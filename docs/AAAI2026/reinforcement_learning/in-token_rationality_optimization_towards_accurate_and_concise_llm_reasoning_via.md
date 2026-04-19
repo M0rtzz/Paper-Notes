@@ -168,3 +168,15 @@ $$w_{t,i} = \frac{\pi_\theta(z_t^i|x\oplus y, z_{<t})}{\pi_\theta(z_t^i|x, z_{<t
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多模型多基准+消融+OOD+效率分析
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，但符号较多
 - **价值**: ⭐⭐⭐⭐⭐ — 为LLM推理训练提供了全新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning](well_begun_half_done_reinforcement_learning_with_prefix_optimization_for_llm_rea.md)
+- [STELAR-Vision: Self-Topology-Aware Efficient Learning for Aligned Reasoning in Vision](stelar-vision_self-topology-aware_efficient_learning_for_aligned_reasoning_in_vi.md)
+- [MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization](mars_multi-agent_adaptive_reasoning_with_socratic_guidance_f.md)
+- [Spotlight on Token Perception for Multimodal Reinforcement Learning](../../ICLR2026/reinforcement_learning/spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
+- [G-UBS: Towards Robust Understanding of Implicit Feedback via Group-Aware User Behavior Simulation](g-ubs_towards_robust_understanding_of_implicit_feedback_via_group-aware_user_beh.md)
+
+<!-- RELATED:END -->

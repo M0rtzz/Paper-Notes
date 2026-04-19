@@ -183,3 +183,15 @@ $$\mathcal{L} = \text{BCE}(R(\mathbf{o}_{1:t}, \mathbf{g}), y_t)$$
 - **实验充分度**: ⭐⭐⭐⭐ — LIBERO 四子集 + 消融 + 真实世界实验全覆盖，但真实场景只有 4 个简单任务
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 提出了 VLA post-training 的实用新范式，有代码开源，但真实场景效果仍需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaptVision: Efficient Vision-Language Models via Adaptive Visual Acquisition](adaptvision_efficient_vision-language_models_via_adaptive_visual_acquisition.md)
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+- [CAPT: Confusion-Aware Prompt Tuning for Reducing Vision-Language Misalignment](capt_confusion-aware_prompt_tuning_for_reducing_vision-language_misalignment.md)
+- [Joint-Aligned Latent Action: Towards Scalable VLA Pretraining in the Wild](joint-aligned_latent_action_towards_scalable_vla_pretraining_in_the_wild.md)
+- [Devil is in Narrow Policy: Unleashing Exploration in Driving VLA Models](devil_is_in_narrow_policy_unleashing_exploration_in_driving_vla_models.md)
+
+<!-- RELATED:END -->

@@ -165,3 +165,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖 GLUE、BEIR、MLDR、CodeSearchNet、StackQA 等广泛任务，含效率评测和消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，工程细节详实，贡献声明透明
 - 价值: ⭐⭐⭐⭐⭐ — 对 encoder-only 模型的一次全面代际升级，直接可用于生产 pipeline 替换老旧 BERT
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SkyLadder: Better and Faster Pretraining via Context Window Scheduling](../../NeurIPS2025/llm_efficiency/skyladder_better_and_faster_pretraining_via_context_window_scheduling.md)
+- [Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing](scaling_context_not_parameters_training_a_compact_7b_language_model_for_efficien.md)
+- [EasyInv: Toward Fast and Better DDIM Inversion](../../ICML2025/llm_efficiency/easyinv_toward_fast_and_better_ddim_inversion.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](../../NeurIPS2025/llm_efficiency/linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+- [LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training](adaptive_grouped_pe_context_window.md)
+
+<!-- RELATED:END -->

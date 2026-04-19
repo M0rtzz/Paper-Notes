@@ -104,3 +104,15 @@ ImageNet分类结果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖ImageNet、CIFAR、EuroSAT三个数据集，多种模型架构，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，方法动机阐述充分，图示设计直观
 - 价值: ⭐⭐⭐⭐ 大幅降低了生成式数据增强的计算门槛，具有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NAPPure: Adversarial Purification for Robust Image Classification under Non-Additive Perturbations](../../ICCV2025/others/nappure_adversarial_purification_for_robust_image_classification_under_non-addit.md)
+- [Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)
+- [Image Demoiréing in RAW and sRGB Domains](image_demoiréing_in_raw_and_srgb_domains.md)
+- [COIN-Matting: Confounder Intervention for Image Matting](coin-matting_confounder_intervention_for_image_matting.md)
+- [ET: The Exceptional Trajectories - Text-to-Camera-Trajectory Generation with Character Awareness](et_the_exceptional_trajectories_text-to-camera-trajectory_generation_with_charac.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ MOT20 高密度场景（约150目标/帧）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 种 SOTA 跟踪器 × 2 个数据集 × 数字+物理攻击，对比全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但公式符号较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐ 对安全关键应用（自动驾驶、监控）中 TBP 跟踪器的脆弱性提供了重要警示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)
+- [Rethinking Progression of Memory State in Robotic Manipulation: An Object-Centric Perspective](../../AAAI2026/video_understanding/rethinking_progression_of_memory_state_in_robotic_manipulation_an_object-centric.md)
+- [Occlusion-Aware SORT: Observing Occlusion for Robust Multi-Object Tracking](occlusion-aware_sort_observing_occlusion_for_robust_multi-object_tracking.md)
+- [DPU: Dynamic Prototype Updating for Multimodal Out-of-Distribution Detection](../../CVPR2025/video_understanding/dpu_dynamic_prototype_updating_for_multimodal_out-of-distribution_detection.md)
+- [Echoes of Ownership: Adversarial-Guided Dual Injection for Copyright Protection in MLLMs](echoes_of_ownership_adversarial-guided_dual_injection_for_copyright_protection_i.md)
+
+<!-- RELATED:END -->

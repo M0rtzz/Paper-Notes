@@ -146,3 +146,15 @@ ODM 是一个量化感知训练（QAT）框架，适用于任意 SR 网络（EDS
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三种架构（CNN×2+Transformer）、三个比特（4/3/2）、四个数据集、完整消融、复杂度分析、分布可视化，非常全面
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，观察→动机→方案的逻辑链条紧密，分布可视化和梯度冲突图很好地支撑了叙事
 - **价值**: ⭐⭐⭐⭐ 实用价值高——无推理开销的 SR 量化方案对部署有直接意义，2-bit 场景的大幅提升对边缘设备部署重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Accelerating Image Super-Resolution Networks with Pixel-Level Classification](accelerating_image_super-resolution_networks_with_pixel-level_classification.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](rethinking_image_super-resolution_from_training_data_perspectives.md)
+- [Contourlet Residual for Prompt Learning Enhanced Infrared Image Super-Resolution](contourlet_residual_for_prompt_learning_enhanced_infrared_image_super-resolution.md)
+- [Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution](pairwise_distance_distillation_for_unsupervised_real-world_image_super-resolutio.md)
+- [TTT-MIM: Test-Time Training with Masked Image Modeling for Denoising Distribution Shifts](ttt-mim_test-time_training_with_masked_image_modeling_for_denoising_distribution.md)
+
+<!-- RELATED:END -->

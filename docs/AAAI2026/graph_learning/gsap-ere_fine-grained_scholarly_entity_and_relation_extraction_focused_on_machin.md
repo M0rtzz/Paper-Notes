@@ -149,3 +149,15 @@ GSAP-ERE在实体数、关系数、类型丰富度和标注密度上全面超越
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，数据模型定义详尽，对比表格丰富
 - 价值: ⭐⭐⭐⭐ — 为ML研究可复现性监控和知识图谱构建提供了高质量基准，揭示LLM在领域IE上的不足
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MyGram: Modality-aware Graph Transformer with Global Distribution for Multi-modal Entity Alignment](mygram_modality-aware_graph_transformer_with_global_distribution_for_multi-modal.md)
+- [RSCF: Relation-Semantics Consistent Filter for Entity Embedding of Knowledge Graph](../../ACL2025/graph_learning/rscf_relationsemantics_consistent_filter_for_entity.md)
+- [Fine-Grained Scene Graph Generation via Sample-Level Bias Prediction](../../ECCV2024/graph_learning/fine-grained_scene_graph_generation_via_sample-level_bias_prediction.md)
+- [RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA](rfkg-cot_relation-driven_adaptive_hop-count_selection_and_few-shot_path_guidance.md)
+- [Relatron: Automating Relational Machine Learning over Relational Databases](../../ICLR2026/graph_learning/relatron_automating_relational_machine_learning_over_relational_databases.md)
+
+<!-- RELATED:END -->

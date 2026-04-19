@@ -114,3 +114,15 @@ MATR 在 THUMOS14 上超越前 SOTA OAT-OSN 4.9 个点，在 MUSES 上超越 0.7
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、详尽的消融（模块/记忆大小/片段大小/预测头/记忆压缩/推理时间）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示丰富，方法阐述到位
 - 价值: ⭐⭐⭐⭐ 对在线 TAL 任务有实际推动，填补了长期上下文建模的空缺
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification](adaptive_highfrequency_transformer_for_diverse_wildlife_reid.md)
+- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
+- [Learning-Augmented Online Bipartite Fractional Matching](../../NeurIPS2025/others/learning-augmented_online_bipartite_fractional_matching.md)
+- [Spatio-Temporal Proximity-Aware Dual-Path Model for Panoramic Activity Recognition](spatio-temporal_proximity-aware_dual-path_model_for_panoramic_activity_recogniti.md)
+- [Action2Sound: Ambient-Aware Generation of Action Sounds from Egocentric Videos](action2sound_ambientaware_generation_of_action_sounds_from_e.md)
+
+<!-- RELATED:END -->

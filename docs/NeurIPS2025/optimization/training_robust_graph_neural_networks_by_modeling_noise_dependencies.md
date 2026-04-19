@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{final}} = \mathcal{L}_{\text{cls-enc}} + \lambda_1 \mathcal
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖合成/真实DANG、单一噪声、极端噪声等多种场景，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 因果建模部分清晰，但模型实例化细节较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐⭐ 对鲁棒GNN研究范式的推进——从"假设某数据源干净"到"所有数据源都可能含噪"
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [Quantitative Convergence of Trained Single Layer Neural Networks to Gaussian Processes](quantitative_convergence_of_trained_single_layer_neural_networks_to_gaussian_pro.md)
+- [Do Neural Networks Need Gradient Descent to Generalize? A Theoretical Study](do_neural_networks_need_gradient_descent_to_generalize_a_theoretical_study.md)
+- [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
+
+<!-- RELATED:END -->

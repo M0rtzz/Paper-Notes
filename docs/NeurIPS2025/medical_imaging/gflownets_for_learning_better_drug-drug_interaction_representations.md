@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐ 单数据集、缺乏对比方法和消融实验
 - 写作质量: ⭐⭐⭐ 方法描述清晰，但实验部分过于简略
 - 价值: ⭐⭐⭐ 思路有价值，但实验验证不够充分限制了说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpreting GFlowNets for Drug Discovery: Extracting Actionable Insights for Medicinal Chemistry](interpreting_gflownets_for_drug_discovery_extracting_actionable_insights_for_med.md)
+- [Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
+- [Compressing Biology: Evaluating the Stable Diffusion VAE for Phenotypic Drug Discovery](compressing_biology_evaluating_the_stable_diffusion_vae_for_phenotypic_drug_disc.md)
+- [Robust or Suggestible? Exploring Non-Clinical Induction in LLM Drug-Safety Decisions](robust_or_suggestible_exploring_non-clinical_induction_in_llm_drug-safety_decisi.md)
+- [GenMol: A Drug Discovery Generalist with Discrete Diffusion](../../ICML2025/medical_imaging/genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+
+<!-- RELATED:END -->

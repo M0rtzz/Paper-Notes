@@ -167,3 +167,15 @@ UnmaskFormer 由三大部分组成：
 - **实验充分度**: ⭐⭐⭐⭐ 三个数据集验证、详尽消融、可视化丰富，但测试集规模偏小
 - **写作质量**: ⭐⭐⭐⭐ 三重 "unmask" 叙事贯穿全文，逻辑清晰，图表美观
 - **价值**: ⭐⭐⭐⭐ 数据集和基准有长期价值，但绝对性能仍偏低，实际应用仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EAFormer: Scene Text Segmentation with Edge-Aware Transformers](eaformer_scene_text_segmentation_with_edge-aware_transformers.md)
+- [A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction](../../CVPR2026/segmentation/from_2d_alignment_to_3d_plausibility_unifying_hete.md)
+- [UDiffText: A Unified Framework for High-quality Text Synthesis in Arbitrary Images via Character-aware Diffusion Models](udifftext_a_unified_framework_for_high-quality_text_synthesis_in_arbitrary_image.md)
+- [CAVIS: Context-Aware Video Instance Segmentation](../../ICCV2025/segmentation/cavis_context-aware_video_instance_segmentation.md)
+- [AMLRIS: Alignment-aware Masked Learning for Referring Image Segmentation](../../ICLR2026/segmentation/amlris_alignment-aware_masked_learning_for_referring_image_segmentation.md)
+
+<!-- RELATED:END -->

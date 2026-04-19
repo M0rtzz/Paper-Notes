@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 架构对比（4种Head）、放置策略（3种）、scale-up对比、多训练预算，极其系统
 - 写作质量: ⭐⭐⭐⭐ 动机验证充分（单图过拟合实验很说服力），图表清晰
 - 价值: ⭐⭐⭐⭐⭐ 为像素空间扩散提供了实用的高效方案，有望推动无VAE生成的发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taming Sampling Perturbations with Variance Expansion Loss for Latent Diffusion Models](taming_sampling_perturbations_with_variance_expansion_loss_for_latent_diffusion_.md)
+- [Pixel Motion Diffusion Is What We Need for Robot Control](pixel_motion_diffusion_is_what_we_need_for_robot_control.md)
+- [Taming Video Models for 3D and 4D Generation via Zero-Shot Camera Control](taming_video_models_for_3d_and_4d_generation_via_zero-shot_camera_control.md)
+- [PixPerfect: Seamless Latent Diffusion Local Editing with Discriminative Pixel-Space Refinement](../../NeurIPS2025/image_generation/pixperfect_seamless_latent_diffusion_local_editing_with_discriminative_pixel-spa.md)
+- [Taming Preference Mode Collapse via Directional Decoupling Alignment in Diffusion Reinforcement Learning](taming_preference_mode_collapse_via_directional_decoupling_alignment_in_diffusio.md)
+
+<!-- RELATED:END -->

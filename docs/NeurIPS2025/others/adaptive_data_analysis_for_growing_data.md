@@ -118,3 +118,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 理论贡献清晰，填补了动态数据自适应分析的理论空白，渐近最优性与静态设定匹配
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+- [Radar: Benchmarking Language Models on Imperfect Tabular Data](radar_benchmarking_language_models_on_imperfect_tabular_data.md)
+- [Weight Weaving: Parameter Pooling for Data-Free Model Merging](weight_weaving_parameter_pooling_for_data-free_model_merging.md)
+- [TARGA: Targeted Synthetic Data Generation for Practical Reasoning over Structured Data](../../ACL2025/others/targa_targeted_synthetic_data_generation_for_practical_reasoning_over_structured.md)
+- [Score Matching with Missing Data](../../ICML2025/others/score_matching_with_missing_data.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ $$\mathbb{E}[f(\bar{x}_T) - f^*] \leq \mathcal{O}\left(\frac{\sigma D_1}{\sqrt{M
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stochastic Momentum Methods for Non-smooth Non-Convex Finite-Sum Coupled Compositional Optimization](../../NeurIPS2025/human_understanding/stochastic_momentum_methods_for_non-smooth_non-convex_finite-sum_coupled_composi.md)
+- [Enhancing Decision-Making of Large Language Models via Actor-Critic](enhancing_decision-making_of_large_language_models_via_actor-critic.md)
+- [SymRTLO: Enhancing RTL Code Optimization with LLMs and Neuron-Inspired Symbolic Reasoning](../../NeurIPS2025/human_understanding/symrtlo_enhancing_rtl_code_optimization_with_llms_and_neuron-inspired_symbolic_r.md)
+- [Emergent World Beliefs: Exploring Transformers in Stochastic Games](../../NeurIPS2025/human_understanding/emergent_world_beliefs_exploring_transformers_in_stochastic_games.md)
+- [SignRep: Enhancing Self-Supervised Sign Representations](../../ICCV2025/human_understanding/signrep_enhancing_self-supervised_sign_representations.md)
+
+<!-- RELATED:END -->

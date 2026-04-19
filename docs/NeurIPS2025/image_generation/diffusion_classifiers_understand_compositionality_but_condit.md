@@ -159,3 +159,15 @@ $$\mathcal{L}_{\mathrm{RF}}(\mathbf{x}_0) = \mathbb{E}_{t,\epsilon}[w_t \|\epsil
 - 实验充分度: ⭐⭐⭐⭐⭐ 3模型×10数据集×33任务，规模前所未有，消融实验详尽
 - 写作质量: ⭐⭐⭐⭐ 三个假设-验证的结构清晰系统，图表质量高
 - 对我的价值: ⭐⭐⭐ 理解扩散模型判别能力的边界、域差距的影响机制对生成质量评估有参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guiding Diffusion Models with Semantically Degraded Conditions](../../CVPR2026/image_generation/guiding_diffusion_models_with_semantically_degraded_conditions.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](../../CVPR2026/image_generation/exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation](understand_before_you_generate_self-guided_training_for_autoregressive_image_gen.md)
+- [OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions](omnivcus_feedforward_subject-driven_video_customization_with_multimodal_control_.md)
+- [DiffA: Large Language Diffusion Models Can Listen and Understand](../../AAAI2026/image_generation/diffa_large_language_diffusion_models_can_listen_and_understand.md)
+
+<!-- RELATED:END -->

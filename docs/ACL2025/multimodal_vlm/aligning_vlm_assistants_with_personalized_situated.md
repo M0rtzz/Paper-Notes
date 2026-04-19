@@ -122,3 +122,15 @@ PCogAlign 框架分三步：(a) 估计用户的情境认知 $c$ 和最优行动 
 - 实验充分度: ⭐⭐⭐⭐ 4 种设置 + 消融 + 人类评估，较为全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法流程图直观
 - 价值: ⭐⭐⭐⭐ 为 VLM 个性化研究开辟了新方向，基准和代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [iNews: A Multimodal Dataset for Modeling Personalized Affective Responses to News](inews_a_multimodal_dataset_for_modeling_personalized_affective_responses_to_news.md)
+- [Evaluating Multimodal Language Models as Visual Assistants for Visually Impaired Users](evaluating_multimodal_language_models_as_visual_assistants_for_visually_impaired.md)
+- [Visual Intention Grounding for Egocentric Assistants](../../ICCV2025/multimodal_vlm/visual_intention_grounding_for_egocentric_assistants.md)
+- [Symmetrical Visual Contrastive Optimization: Aligning Vision-Language Models with Minimal Contrastive Images](symmetrical_visual_contrastive_optimization_aligning_visionlanguage.md)
+- [HSCR: Hierarchical Self-Contrastive Rewarding for Aligning Medical Vision Language Models](hscr_hierarchical_self-contrastive_rewarding_for_aligning_medical_vision_languag.md)
+
+<!-- RELATED:END -->

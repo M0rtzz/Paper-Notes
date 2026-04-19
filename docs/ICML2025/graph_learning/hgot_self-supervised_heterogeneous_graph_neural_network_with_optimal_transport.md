@@ -152,3 +152,15 @@ $$\mathcal{D}_g(\mathcal{G}_p, \mathcal{G}_{\text{agg}}) = \min_{\pi} \;\sigma \
 - 实验充分度: ⭐⭐⭐ — 4 个数据集 2 个任务，消融完整但规模/任务覆盖有限
 - 写作质量: ⭐⭐⭐⭐ — 公式体系清晰，行文逻辑通顺
 - 价值: ⭐⭐⭐⭐ — 为异质图自监督学习提供了对比学习之外的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](../../NeurIPS2025/graph_learning/self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [GCL-OT: Graph Contrastive Learning with Optimal Transport for Heterophilic Text-Attributed Graphs](../../AAAI2026/graph_learning/gcl-ot_graph_contrastive_learning_with_optimal_transport_for_heterophilic_text-a.md)
+- [On Stealing Graph Neural Network Models](../../AAAI2026/graph_learning/on_stealing_graph_neural_network_models.md)
+- [SENC: Handling Self-collision in Neural Cloth Simulation](../../ECCV2024/graph_learning/senc_handling_self-collision_in_neural_cloth_simulation.md)
+- [Beyond Message Passing: Neural Graph Pattern Machine](beyond_message_passing_neural_graph_pattern_machine.md)
+
+<!-- RELATED:END -->

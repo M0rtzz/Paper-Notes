@@ -140,3 +140,15 @@ GRAPHITE 在全部 4 个异质图上显著第一，超越最佳基线 +4.17%/+5.
 - 实验充分度: ⭐⭐⭐⭐⭐ 27 基线全面对比 + 同质性量化 + 即插即用验证 + 消融 + 效率分析
 - 写作质量: ⭐⭐⭐⭐⭐ 从朴素方法（NHB）到高效方案（GRAPHITE）的递进论述逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 方法简单有效 + 新范式开创性 + 理论保证完备，有很高的后续研究潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](../../NeurIPS2025/graph_learning/sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+- [GCL-OT: Graph Contrastive Learning with Optimal Transport for Heterophilic Text-Attributed Graphs](../../AAAI2026/graph_learning/gcl-ot_graph_contrastive_learning_with_optimal_transport_for_heterophilic_text-a.md)
+- [Feature-Centric Unsupervised Node Representation Learning Without Homophily Assumption](../../AAAI2026/graph_learning/feature-centric_unsupervised_node_representation_learning_without_homophily_assu.md)
+- [A Geometric Perspective on the Difficulties of Learning GNN-based SAT Solvers](a_geometric_perspective_on_the_difficulties_of_learning_gnn-based_sat_solvers.md)
+- [Relatron: Automating Relational Machine Learning over Relational Databases](relatron_automating_relational_machine_learning_over_relational_databases.md)
+
+<!-- RELATED:END -->

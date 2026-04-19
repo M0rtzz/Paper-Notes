@@ -106,3 +106,15 @@ AdaLog作用于标准ViT block中的post-Softmax层(MatMul2)和post-GELU层(FC2)
 - 实验充分度: ⭐⭐⭐⭐⭐ 分类/检测/分割三个任务，7种模型，3/4/6-bit，消融全面
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，图示直观，但部分符号较多需要仔细跟读
 - 价值: ⭐⭐⭐⭐ 对ViT低bit PTQ有实质性推进，FPCS搜索策略可复用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision Transformers with Self-Distilled Registers](../../NeurIPS2025/segmentation/vision_transformers_with_self-distilled_registers.md)
+- [EAFormer: Scene Text Segmentation with Edge-Aware Transformers](eaformer_scene_text_segmentation_with_edge-aware_transformers.md)
+- [MPM: Mutual Pair Merging for Efficient Vision Transformers](../../CVPR2026/segmentation/mpm_mutual_pair_merging_for_efficient_vision_transformers.md)
+- [Revisiting \[CLS\] and Patch Token Interaction in Vision Transformers](../../ICLR2026/segmentation/revisiting_cls_and_patch_token_interaction_in_vision_transformers.md)
+- [DreamLIP: Language-Image Pre-training with Long Captions](dreamlip_language-image_pre-training_with_long_captions.md)
+
+<!-- RELATED:END -->

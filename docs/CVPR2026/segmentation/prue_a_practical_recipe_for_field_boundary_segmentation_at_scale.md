@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 18个模型的大规模对比非常全面，消融实验覆盖损失/增强/架构/权重多个维度，还发布了5个国家的地图
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，实验组织合理，部署指标的动机阐述很有说服力
 - 价值: ⭐⭐⭐⭐ 对遥感社区的实用价值很高，提供了可复现的最优实践方案和公开的模型/数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FoV-Net: Rotation-Invariant CAD B-rep Learning via Field-of-View Ray Casting](fov-net_rotation-invariant_cad_b-rep_learning_via_field-of-view_ray_casting.md)
+- [Making Training-Free Diffusion Segmentors Scale with the Generative Power](making_training-free_diffusion_segmentors_scale_with_the_generative_power.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearthsar_a_sarcentric_and_billionscale_geospa.md)
+- [UnrealPose: Leveraging Game Engine Kinematics for Large-Scale Synthetic Human Pose Data](unrealpose_leveraging_game_engine_kinematics_for_large-scale_synthetic_human_pos.md)
+- [Online Generic Event Boundary Detection](../../ICCV2025/segmentation/online_generic_event_boundary_detection.md)
+
+<!-- RELATED:END -->

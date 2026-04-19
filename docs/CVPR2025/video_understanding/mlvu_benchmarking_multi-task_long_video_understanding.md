@@ -106,3 +106,15 @@ MLVU 是一个包含 3,102 个问题、9 类任务的多任务长视频理解基
 - 实验充分度: ⭐⭐⭐⭐⭐ 23个模型的全面评测，多维度消融分析非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析有深度
 - 价值: ⭐⭐⭐⭐⭐ 填补了长视频理解系统性评测的空白，对社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HierarQ: Task-Aware Hierarchical Q-Former for Enhanced Video Understanding](hierarq_task-aware_hierarchical_q-former_for_enhanced_video_understanding.md)
+- [VideoLucy: Deep Memory Backtracking for Long Video Understanding](../../NeurIPS2025/video_understanding/videolucy_deep_memory_backtracking_for_long_video_understanding.md)
+- [4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding](../../ICCV2025/video_understanding/4dbench_benchmarking_multimodal_large_language_models_for_4d.md)
+- [MMVU: Measuring Expert-Level Multi-Discipline Video Understanding](mmvu_measuring_expert-level_multi-discipline_video_understanding.md)
+- [In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting](../../NeurIPS2025/video_understanding/in_the_eye_of_mllm_benchmarking_egocentric_video_intent_understanding_with_gaze-.md)
+
+<!-- RELATED:END -->

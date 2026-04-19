@@ -173,3 +173,15 @@ $m_{\text{FRM}}$ 敏感性分析：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 7 个基线、4 个数据集、详细消融和超参分析
 - 写作质量: ⭐⭐⭐⭐ — 分析清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ — 提供了一个通用的预处理提升方案，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Motion-Compensated Decomposition for Cardiac MRI Reconstruction via Neural Representation](unsupervised_motion-compensated_decomposition_for_cardiac_mri_reconstruction_via.md)
+- [Neural Bandit Based Optimal LLM Selection for a Pipeline of Tasks](neural_bandit_based_optimal_llm_selection_for_a_pipeline_of_tasks.md)
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](../../CVPR2026/medical_imaging/invad_inversionbased_reconstructionfree_anomaly_de.md)
+- [WDT-MD: Wavelet Diffusion Transformers for Microaneurysm Detection in Fundus Images](wdt-md_wavelet_diffusion_transformers_for_microaneurysm_detection_in_fundus_imag.md)
+- [Dual Distillation for Few-Shot Anomaly Detection](../../ICLR2026/medical_imaging/dual_distillation_for_few-shot_anomaly_detection.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ CFC 的核心区别在于利用 LLM 获取语义化的真实 OOD 样本，而非
 - 实验充分度: ⭐⭐⭐⭐ — 6 个数据集、多种 LLM、完整消融实验和理论分析
 - 写作质量: ⭐⭐⭐⭐ — 问题阐述清晰，图示直观，方法描述系统
 - 价值: ⭐⭐⭐⭐ — 解决了开放集分类中长期被忽视的 OOD 细分类问题，实用意义强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Measuring Stability Beyond Accuracy in Small Open-Source Medical Large Language Models for Pediatric Endocrinology](measuring_stability_beyond_accuracy_in_small_open-source_medical_large_language_.md)
+- [Tracing Pharmacological Knowledge in Large Language Models](../../ICLR2026/medical_imaging/tracing_pharmacological_knowledge_in_large_language_models.md)
+- [PriorRG: Prior-Guided Contrastive Pre-training and Coarse-to-Fine Decoding for Chest X-ray Report Generation](priorrg_prior-guided_contrastive_pre-training_and_coarse-to-fine_decoding_for_ch.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [G2L: From Giga-Scale to Cancer-Specific Large-Scale Pathology Foundation Models via Efficient Fine-Tuning](g2lfrom_giga-scale_to_cancer-specific_large-scale_pathology_foundation_models_vi.md)
+
+<!-- RELATED:END -->

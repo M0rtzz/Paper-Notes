@@ -117,3 +117,15 @@ Adam 优化器，70/15/15 分割，平衡数据集。GPT-4o + Claude Sonnet 4.5 
 - 实验充分度: ⭐⭐⭐⭐⭐ 10000 图、双 LLM、双嵌入模型、多基线、随机嵌入控制，非常全面
 - 写作质量: ⭐⭐⭐⭐ 可视化出色，逐层分析清晰
 - 价值: ⭐⭐⭐⭐ 对学术诚信和 AI 辅助写作有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](../../ICML2025/graph_learning/llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+- [RAS: Retrieval-And-Structuring for Knowledge-Intensive LLM Generation](ras_retrieval-and-structuring_for_knowledge-intensive_llm_generation.md)
+- [On the Expressive Power of GNNs for Boolean Satisfiability](on_the_expressive_power_of_gnns_for_boolean_satisfiability.md)
+- [Entropy-Guided Dynamic Tokens for Graph-LLM Alignment in Molecular Understanding](entropy-guided_dynamic_tokens_for_graph-llm_alignment_in_molecular_understanding.md)
+- [Sentient: Detecting APTs Via Capturing Indirect Dependencies and Behavioral Logic](../../AAAI2026/graph_learning/sentient_detecting_apts_via_capturing_indirect_dependencies_and_behavioral_logic.md)
+
+<!-- RELATED:END -->

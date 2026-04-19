@@ -122,3 +122,15 @@ TableDART 平均准确率 74.86%，超越最强多模态基线 HIPPO-8B **+4.02%
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个 benchmark、丰富的消融、路由策略分析、效率分析、泛化性验证，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机论证有力，图表丰富
 - 价值: ⭐⭐⭐⭐ 提供了一种训练高效的多模态融合范式，对表格理解和更广泛的多专家系统都有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AVR: Adaptive VLM Routing for Computer Use Agents](../../CVPR2026/multimodal_vlm/adaptive_vision-language_model_routing_for_computer_use_agents.md)
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [Adaptive Vision-Language Model Routing for Computer Use Agents](../../CVPR2026/multimodal_vlm/adaptive_visionlanguage_model_routing_for_computer.md)
+- [Enhancing Multi-Image Understanding through Delimiter Token Scaling](enhancing_multi-image_understanding_through_delimiter_token_scaling.md)
+- [TabFlash: Efficient Table Understanding with Progressive Question Conditioning and Token Focusing](../../AAAI2026/multimodal_vlm/tabflash_efficient_table_understanding_with_progressive_question_conditioning_an.md)
+
+<!-- RELATED:END -->

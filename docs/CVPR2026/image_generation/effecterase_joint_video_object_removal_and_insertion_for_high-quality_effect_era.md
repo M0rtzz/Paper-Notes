@@ -126,3 +126,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{denoise}}^{\text{remove}} + \m
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、用户研究、消融完整、插入任务展示
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，图示丰富
 - 价值: ⭐⭐⭐⭐⭐ VOR数据集和效应感知移除框架对该领域有重要推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-WIPER: Training-Free Object and Associated Effect Removal in Videos](object-wiper_training-free_object_and_associated_effect_removal_in_videos.md)
+- [Precise Object and Effect Removal with Adaptive Target-Aware Attention](precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting](../../ICCV2025/image_generation/omnipaint_mastering_object-oriented_editing_via_disentangled_insertion-removal_i.md)
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+
+<!-- RELATED:END -->

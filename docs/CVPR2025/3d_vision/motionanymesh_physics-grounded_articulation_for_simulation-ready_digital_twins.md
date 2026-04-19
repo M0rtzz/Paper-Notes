@@ -152,3 +152,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据源+5个基线+消融+机器人部署
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，动机分析到位
 - 价值: ⭐⭐⭐⭐⭐ 对具身AI仿真资产生成有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Digital Twin Catalog: A Large-Scale Photorealistic 3D Object Digital Twin Dataset](digital_twin_catalog_a_large-scale_photorealistic_3d_object_digital_twin_dataset.md)
+- [HD-EPIC: A Highly-Detailed Egocentric Video Dataset](hd-epic_a_highly-detailed_egocentric_video_dataset.md)
+- [FreeGave: 3D Physics Learning from Dynamic Videos by Gaussian Velocity](freegave_3d_physics_learning_from_dynamic_videos_by_gaussian_velocity.md)
+- [HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos](hawor_world-space_hand_motion_reconstruction_from_egocentric_videos.md)
+- [ARM: Appearance Reconstruction Model for Relightable 3D Generation](arm_appearance_reconstruction_model_for_relightable_3d_generation.md)
+
+<!-- RELATED:END -->

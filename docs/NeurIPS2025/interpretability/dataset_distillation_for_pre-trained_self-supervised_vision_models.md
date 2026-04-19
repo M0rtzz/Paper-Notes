@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 种 backbone、多个数据集、跨模型/对抗/细粒度/OOD 全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ 图文精美，故事线清晰，可解释性分析引人入胜
 - 价值: ⭐⭐⭐⭐ 在预训练模型日益普及的今天，为 few-shot linear probing 提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)
+- [AIM: Amending Inherent Interpretability via Self-Supervised Masking](../../ICCV2025/interpretability/aim_amending_inherent_interpretability_via_self-supervised_masking.md)
+- [Scaling Vision Pre-Training to 4K Resolution](../../CVPR2025/interpretability/scaling_vision_pre-training_to_4k_resolution.md)
+- [Latent Principle Discovery for Language Model Self-Improvement](latent_principle_discovery_for_language_model_self-improvement.md)
+- [ConceptScope: Characterizing Dataset Bias via Disentangled Visual Concepts](conceptscope_characterizing_dataset_bias_via_disentangled_visual_concepts.md)
+
+<!-- RELATED:END -->

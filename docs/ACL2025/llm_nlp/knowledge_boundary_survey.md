@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 系统全面，从动机到识别到缓解
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，Summary Box便于把握
 - 价值: ⭐⭐⭐⭐⭐ 对LLM可靠性改进有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Analyzing LLMs' Knowledge Boundary Cognition Across Languages Through the Lens of Internal Representations](knowledge_boundary_crosslingual.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Recent Advances in Speech Language Models: A Survey](recent_advances_in_speech_language_models_a_survey.md)
+
+<!-- RELATED:END -->

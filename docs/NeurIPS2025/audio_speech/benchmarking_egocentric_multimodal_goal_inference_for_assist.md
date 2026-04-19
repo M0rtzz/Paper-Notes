@@ -138,3 +138,15 @@ WAGIBench 的设计包含三大组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型家族、详细的模态消融、严格的人工元评估、丰富的定性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，图表精美，Appendix 极其详尽（含完整 prompt 模板）
 - 价值: ⭐⭐⭐⭐ NeurIPS Spotlight，为可穿戴智能体的目标推断建立了标准基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AVRobustBench: Benchmarking the Robustness of Audio-Visual Recognition Models at Test-Time](textttavrobustbench_benchmarking_the_robustness_of_audio-visual_recognition_mode.md)
+- [Generalizing Analogical Inference from Boolean to Continuous Domains](../../AAAI2026/audio_speech/generalizing_analogical_inference_from_boolean_to_continuous_domains.md)
+- [Listen to Look into the Future: Audio-Visual Egocentric Gaze Anticipation](../../ECCV2024/audio_speech/listen_to_look_into_the_future_audio-visual_egocentric_gaze_anticipation.md)
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](../../ACL2025/audio_speech/audio_dialogue_benchmark.md)
+- [A TRIANGLE Enables Multimodal Alignment Beyond Cosine Similarity](a_triangle_enables_multimodal_alignment_beyond_cosine_simila.md)
+
+<!-- RELATED:END -->

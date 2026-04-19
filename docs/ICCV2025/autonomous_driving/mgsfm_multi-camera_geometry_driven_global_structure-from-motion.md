@@ -164,3 +164,15 @@ MGSfM 在所有场景上均大幅优于 GLOMAP，精度提升 10-40 个百分点
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多个数据集、消融实验、定量定性全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ — 代码开源，兼容 COLMAP 生态，直接可用于自动驾驶三维重建
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration](../../ICML2025/autonomous_driving/geometry-to-image_synthesis-driven_generative_point_cloud_registration.md)
+- [3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multi-view_robust_physical_adversarial_camouflage_g.md)
+- [Language Driven Occupancy Prediction (LOcc)](language_driven_occupancy_prediction.md)
+- [DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion and Bi-directional Structure Alignment](../../ECCV2024/autonomous_driving/dvlo_deep_visual-lidar_odometry_with_local-to-global_feature_fusion_and_bi-direc.md)
+- [Future-Aware Interaction Network For Motion Forecasting](future-aware_interaction_network_for_motion_forecasting.md)
+
+<!-- RELATED:END -->

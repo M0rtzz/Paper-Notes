@@ -125,3 +125,15 @@ Qwen3-1.7B类似趋势：Rewrite实现 Acc -0.7, Len -35%, Judge +8.1。
 - 实验充分度: ⭐⭐⭐⭐ 多个基准+多个baseline+多个模型大小+细粒度分析，但模型规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 图表清晰，四种推理缺陷的分类和示例直观，算法伪代码清晰
 - 价值: ⭐⭐⭐⭐ 对LRM推理效率和质量的实用改进，10%overhead极具工程吸引力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SERL: Self-Examining Reinforcement Learning on Open-Domain](serl_self-examining_reinforcement_learning_on_open-domain.md)
+- [The Impact of Quantization on Large Reasoning Model Reinforcement Learning](../../NeurIPS2025/llm_reasoning/the_impact_of_quantization_on_large_reasoning_model_reinforcement_learning.md)
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](../../NeurIPS2025/llm_reasoning/sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+- [The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
+- [BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models](badthink_triggered_overthinking_attacks_on_chain-of-thought_reasoning_in_large_l.md)
+
+<!-- RELATED:END -->

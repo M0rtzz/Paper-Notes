@@ -146,3 +146,15 @@ LLaMA2-7B 上常识推理：EPT 以更少参数取得更高均分。
 - 实验充分度: ⭐⭐⭐⭐ GLUE 8 任务 + Commonsense 4 任务，消融完整，含参数效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学推导完整，动机阐述有说服力
 - 价值: ⭐⭐⭐⭐ 在多任务 PEFT 领域提供了更高效的框架，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [Unintended Misalignment from Agentic Fine-Tuning: Risks and Mitigation](../../AAAI2026/robotics/unintended_misalignment_from_agentic_fine-tuning_risks_and_m.md)
+- [PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments](panoaffordancenet_towards_holistic_affordance_grou.md)
+
+<!-- RELATED:END -->

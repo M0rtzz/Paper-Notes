@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多维度指标、丰富对比和消融
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐ 贴近临床实际需求的实用方法，多视角纵向融合方向值得进一步探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Impact of Auxiliary Patient Data on Automated Chest X-Ray Report Generation and How to Incorporate It](../../ACL2025/medical_imaging/auxiliary_patient_data_xray.md)
+- [PriorRG: Prior-Guided Contrastive Pre-training and Coarse-to-Fine Decoding for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/priorrg_prior-guided_contrastive_pre-training_and_coarse-to-fine_decoding_for_ch.md)
+- [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
+- [CheXalign: Preference Fine-tuning in Chest X-ray Interpretation Models without Human Feedback](../../ACL2025/medical_imaging/chexalign_preference_finetuning.md)
+- [GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)
+
+<!-- RELATED:END -->

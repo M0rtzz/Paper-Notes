@@ -105,3 +105,15 @@ GGA的核心价值：可以即插即用地与任何DG方法组合，为其提供
 - 实验充分度: ⭐⭐⭐ 五个标准DG基准，但具体数字需要更详细的报告
 - 写作质量: ⭐⭐⭐⭐ 理论动机分析深入，问题定义清晰
 - 价值: ⭐⭐⭐⭐ 即插即用的DG预处理方法，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching](../../ICML2025/llm_evaluation/fedtail_federated_long-tailed_domain_generalization_with_sharpness-guided_gradie.md)
+- [Set-Valued Predictions for Robust Domain Generalization](../../ICML2025/llm_evaluation/set_valued_predictions_for_robust_domain_generalization.md)
+- [Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](../../ICLR2026/llm_evaluation/noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
+- [Dual Consolidation for Pre-Trained Model-Based Domain-Incremental Learning](dual_consolidation_for_pre-trained_model-based_domain-incremental_learning.md)
+- [Do ImageNet-trained Models Learn Shortcuts? The Impact of Frequency Shortcuts on Generalization](do_imagenet-trained_models_learn_shortcuts_the_impact_of_frequency_shortcuts_on_.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ t-SNE 可视化证实 SemiTooth 学生输出的多源特征比原始数据更加
 - 实验充分度: 3/5 — 消融和可视化充分，但仅在自建数据集上评估
 - 写作质量: 3/5 — 结构清晰但部分细节（如 Wasserstein 距离的使用方式、mixed 子集划分阈值）交代不够
 - 价值: 3/5 — 临床牙科场景有实用价值，但方法的通用性有待更多实验验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos](uncertainty-aware_concept_and_motion_segmentation_for_semi-supervised_angiograph.md)
+- [Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](addressing_data_scarcity_in_3d_trauma_detection_through_self-supervised_and_semi.md)
+- [Transformer-Based Multi-Region Segmentation and Radiomic Analysis of HR-pQCT Imaging for Osteoporosis Classification](transformer-based_multi-region_segmentation_and_radiomic_analysis_of_hr-pqct_ima.md)
+
+<!-- RELATED:END -->

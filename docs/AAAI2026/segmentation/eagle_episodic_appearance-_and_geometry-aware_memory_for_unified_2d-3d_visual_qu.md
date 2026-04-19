@@ -178,3 +178,15 @@ GLM 消融：
 - 技术深度: ⭐⭐⭐⭐⭐ — 元学习优化、DCF 最速下降、多视图置信度融合等技术组合深入
 - 实验充分度: ⭐⭐⭐⭐ — 在 VQ2D/VQ3D 两个子任务上全面消融
 - 写作质量: ⭐⭐⭐⭐ — 生物灵感叙事引人入胜，框架阐述清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient-SAM2: Accelerating SAM2 with Object-Aware Visual Encoding and Memory Retrieval](../../ICLR2026/segmentation/efficient-sam2_accelerating_sam2_with_object-aware_visual_encoding_and_memory_re.md)
+- [A Distractor-Aware Memory for Visual Object Tracking with SAM2](../../CVPR2025/segmentation/a_distractor-aware_memory_for_visual_object_tracking_with_sam2.md)
+- [AFRO: Bootstrap Dynamic-Aware 3D Visual Representation for Scalable Robot Learning](../../CVPR2026/segmentation/bootstrap_dynamic-aware_3d_visual_representation_for_scalable_robot_learning.md)
+- [From 2D Alignment to 3D Plausibility: Unifying Heterogeneous 2D Priors and Penetration-Free Diffusion for Occlusion-Robust Two-Hand Reconstruction](../../CVPR2026/segmentation/from_2d_alignment_to_3d_plausibility_unifying_heterogeneous_2d_priors_and_penetr.md)
+- [A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction](../../CVPR2026/segmentation/from_2d_alignment_to_3d_plausibility_unifying_hete.md)
+
+<!-- RELATED:END -->

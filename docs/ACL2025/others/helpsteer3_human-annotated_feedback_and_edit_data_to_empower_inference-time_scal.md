@@ -151,3 +151,15 @@ Feedback-Edit 系统在所有三个指标上显著提升基础模型表现，且
 ## 评分
 
 ⭐⭐⭐⭐ — 在开放域通用任务推理时扩展方面建立了新范式，数据集规模和实验设计扎实，消融分析清晰有力。Arena Hard 上超越 o1-preview 和 DeepSeek R1 具有说服力。局限在于计算成本优化和数据规模的进一步扩展空间。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TestNUC: Enhancing Test-Time Computing Approaches and Scaling through Neighboring Unlabeled Data Consistency](testnuc_enhancing_test-time_computing_approaches_and_scaling_through_neighboring.md)
+- [A Little Human Data Goes A Long Way](a_little_human_data_goes_a_long_way.md)
+- [One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit](one_for_all_update_parameterized_knowledge_across_multiple_models_with_once_edit.md)
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [Behind Closed Words: Creating and Investigating the forePLay Annotated Dataset for Polish Erotic Discourse](foreplay_polish_erotic_detection.md)
+
+<!-- RELATED:END -->

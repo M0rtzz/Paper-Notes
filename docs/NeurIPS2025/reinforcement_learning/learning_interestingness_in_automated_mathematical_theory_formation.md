@@ -133,3 +133,15 @@ EvoAbstract 和 FunSearch 在所有起始配置上显著超越所有基线，其
 - 实验充分度: ⭐⭐⭐⭐ 多个起始配置、丰富基线对比、定性分析，但规模受限于 Z3 性能
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，但产生规则的技术细节较重
 - 价值: ⭐⭐⭐⭐⭐ 为自动数学发现开辟了新方向，Fermat 框架有广泛的后续研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DISCOVER: Automated Curricula for Sparse-Reward Reinforcement Learning](discover_automated_curricula_for_sparse-reward_reinforcement_learning.md)
+- [A Theory of Multi-Agent Generative Flow Networks](a_theory_of_multi-agent_generative_flow_networks.md)
+- [The Physical Basis of Prediction: World Model Formation in Neural Organoids via an LLM-Generated Curriculum](the_physical_basis_of_prediction_world_model_formation_in_neural_organoids_via_a.md)
+- [MathSmith: Towards Extremely Hard Mathematical Reasoning by Forging Synthetic Problems with a Reinforced Policy](../../AAAI2026/reinforcement_learning/mathsmith_towards_extremely_hard_mathematical_reasoning_by_forging_synthetic_pro.md)
+- [Decoding Rewards in Competitive Games: Inverse Game Theory with Entropy Regularization](../../ICML2025/reinforcement_learning/decoding_rewards_in_competitive_games_inverse_game_theory_with_entropy_regulariz.md)
+
+<!-- RELATED:END -->

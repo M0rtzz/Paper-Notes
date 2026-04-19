@@ -127,3 +127,15 @@ FrontierCO 涵盖 8 类 CO 问题（路由: TSP/CVRP; 图: MIS/MDS; 设施选址
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 类问题 × 16 个 ML 求解器 + SOTA 传统方法的全面评测
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据呈现直观
 - 价值: ⭐⭐⭐⭐⭐ 对 ML for CO 社区有"照妖镜"般的警示价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RRNCO: Towards Real-World Routing with Neural Combinatorial Optimization](rrnco_towards_real-world_routing_with_neural_combinatorial_optimization.md)
+- [Celo2: Towards Learned Optimization Free Lunch](celo2_towards_learned_optimization_free_lunch.md)
+- [Provable and Practical In-Context Policy Optimization for Self-Improvement](provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
+- [Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization](../../AAAI2026/optimization/pareto-grid-guided_large_language_models_for_fast_and_high-quality_heuristics_de.md)
+
+<!-- RELATED:END -->

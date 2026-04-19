@@ -130,3 +130,15 @@ COCA-Net 编码器端分割同样远超竞争方法，如 ShapeStacks 上 ENC-FG
 ## 评分
 
 ⭐⭐⭐⭐ — 在无监督目标中心学习领域提出了新颖且有效的范式转变，物理直觉与网络设计结合优雅，实验充分但缺乏真实场景验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [G2HFNet: GeoGran-Aware Hierarchical Feature Fusion Network for Salient Object Detection in Optical Remote Sensing Images](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)
+- [unMORE: Unsupervised Multi-Object Segmentation via Center-Boundary Reasoning](../../ICML2025/segmentation/unmore_unsupervised_multi-object_segmentation_via_center-boundary_reasoning.md)
+- [Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation](../../ICCV2025/segmentation/hierarchical_visual_prompt_learning_for_continual_video_instance_segmentation.md)
+- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](../../ECCV2024/segmentation/unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
+- [Beyond Single Images: Retrieval Self-Augmented Unsupervised Camouflaged Object Detection](../../ICCV2025/segmentation/beyond_single_images_retrieval_self-augmented_unsupervised_camouflaged_object_de.md)
+
+<!-- RELATED:END -->

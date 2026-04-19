@@ -127,3 +127,15 @@ Selector 和 Reader 交替迭代工作，直到 Selector 输出终止信号 `<En
 - 实验充分度: ⭐⭐⭐⭐ 三个基座模型×五种策略×多种输入配置+人工评估，非常全面
 - 写作质量: ⭐⭐⭐⭐ 架构图清晰，公式化表述规范，case study 直观
 - 价值: ⭐⭐⭐⭐ 对学术写作辅助有实际意义，验证了全文 RWG 和图结构的必要性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML](../../ICML2025/llm_agent/automl-agent_a_multi-agent_llm_framework_for_full-pipeline_automl.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+- [Table-Critic: A Multi-Agent Framework for Collaborative Criticism and Refinement in Table Reasoning](table_critic_multi_agent.md)
+- [A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems](multi_agent_dialect_bias_privacy_qa.md)
+
+<!-- RELATED:END -->

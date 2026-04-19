@@ -130,3 +130,15 @@ $$r_{\text{int}} = \|f(s; \theta) - \hat{f}(s; \hat{\theta})\|^2$$
 - ⭐ 实验充分度: 3/5 — Workshop paper 实验充分但规模有限
 - ⭐ 写作质量: 4/5 — MDP 形式化清晰，局限性讨论坦诚
 - ⭐ 价值: 3/5 — 探索性工作，打开新方向但距实用仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [Exploration-Driven Generative Interactive Environments](../../CVPR2025/model_compression/exploration-driven_generative_interactive_environments.md)
+- [Fleet of Agents: Coordinated Problem Solving with Large Language Models](../../ICML2025/model_compression/fleet_of_agents_coordinated_problem_solving_with_large_language_models.md)
+- [Semantic Exploration with Adaptive Gating for Efficient Problem Solving with Language Models](../../ACL2025/model_compression/semantic_exploration_adaptive_gating.md)
+- [CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](../../AAAI2026/model_compression/coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)
+
+<!-- RELATED:END -->

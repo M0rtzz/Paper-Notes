@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Re-ID 和图像质量评估全面，但缺少关键消融（多智能体 vs 单智能体、不同 LVLM 对比等）
 - 写作质量: ⭐⭐⭐⭐ 系统架构描述清晰，表格和案例分析详尽，但正文含大量实现细节显得冗长
 - 价值: ⭐⭐⭐⭐ 提出了实际可部署的 GDPR 合规匿名化方案，首次系统性地处理间接 PII，对工业界有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guideline-Consistent Segmentation via Multi-Agent Refinement](../../AAAI2026/segmentation/guideline-consistent_segmentation_via_multi-agent_refinement.md)
+- [INSID3: Training-Free In-Context Segmentation with DINOv3](insid3_training-free_in-context_segmentation_with_dinov3.md)
+- [VINCIE: Unlocking In-context Image Editing from Video](../../ICLR2026/segmentation/vincie_unlocking_in-context_image_editing_from_video.md)
+- [RegionReasoner: Region-Grounded Multi-Round Visual Reasoning](../../ICLR2026/segmentation/regionreasoner_region-grounded_multi-round_visual_reasoning.md)
+- [CAVIS: Context-Aware Video Instance Segmentation](../../ICCV2025/segmentation/cavis_context-aware_video_instance_segmentation.md)
+
+<!-- RELATED:END -->

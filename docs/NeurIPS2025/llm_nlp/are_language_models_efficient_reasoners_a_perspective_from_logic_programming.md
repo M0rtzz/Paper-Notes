@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型 + 系统化的无关信息变体 + 效率和准确率双重评估
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化定义严谨，实验设计精巧
 - 价值: ⭐⭐⭐⭐⭐ 对理解和改进 LLM 推理质量有重要学术价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Planning-Driven Programming: A Large Language Model Programming Workflow](../../ACL2025/llm_nlp/planning-driven_programming_a_large_language_model_programming_workflow.md)
+- [EnCompass: Enhancing Agent Programming with Search Over Program Execution Paths](encompass_enhancing_agent_programming_with_search_over_program_execution_paths.md)
+- [Perspective Transition of Large Language Models for Solving Subjective Tasks](../../ACL2025/llm_nlp/perspective_transition_of_large_language_models_for_solving_subjective_tasks.md)
+- [Understanding the Repeat Curse in Large Language Models from a Feature Perspective](../../ACL2025/llm_nlp/understanding_the_repeat_curse_in_large_language_models_from_a_feature_perspecti.md)
+- [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](../../ACL2025/llm_nlp/rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
+
+<!-- RELATED:END -->

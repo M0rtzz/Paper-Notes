@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 只有两个任务，可以更丰富
 - 写作质量: ⭐⭐⭐⭐ 数学严谨但对非数学背景读者可能较难
 - 价值: ⭐⭐⭐⭐ 填补了理论空白，跨尺度泛化的性质很有前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Price of Freedom: Exploring Expressivity and Runtime Tradeoffs in Equivariant Networks](the_price_of_freedom_exploring_expressivity_and_runtime_tradeoffs_in_equivariant.md)
+- [On Universality Classes of Equivariant Networks](../../NeurIPS2025/others/on_universality_classes_of_equivariant_networks.md)
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](../../NeurIPS2025/others/learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [The Computational Complexity of Counting Linear Regions in ReLU Neural Networks](../../NeurIPS2025/others/the_computational_complexity_of_counting_linear_regions_in_relu_neural_networks.md)
+
+<!-- RELATED:END -->

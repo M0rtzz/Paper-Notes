@@ -119,3 +119,15 @@ SudoLM 将模型知识分为 $\kappa_{pub}$（公开知识）和 $\kappa_{priv}$
 - 实验充分度: ⭐⭐⭐⭐ 粗粒度+细粒度两场景，多模型验证，鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，SUDO 类比直观，形式化完整
 - 价值: ⭐⭐⭐⭐ 对企业级 LLM 部署有直接价值，但 key 安全性需进一步加强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors](../../ICML2025/others/learning-augmented_algorithms_for_mts_with_bandit_access_to_multiple_predictors.md)
+- [Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
+- [Towards Style Alignment in Cross-Cultural Translation](towards_style_alignment_in_cross-cultural_translation.md)
+- [Knowledge Tracing in Programming Education Integrating Students' Questions](knowledge_tracing_in_programming_education_integrating_students_questions.md)
+- [ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](arise_risk_adaptive_search.md)
+
+<!-- RELATED:END -->

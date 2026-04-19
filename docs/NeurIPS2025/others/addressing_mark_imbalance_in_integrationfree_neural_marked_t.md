@@ -113,3 +113,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 问题重要且被忽视，方法设计精巧（统一积分+反转预测顺序），实验改善显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Continuous-Time State-Space Models for Marked Event Sequences](deep_continuous-time_state-space_models_for_marked_event_sequences.md)
+- [A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior](../../ACL2025/others/a_spatio-temporal_point_process_for_fine-grained_modeling_of_reading_behavior.md)
+- [Addressing Divergent Representations from Causal Interventions on Neural Networks](../../ICLR2026/others/addressing_divergent_representations_causal.md)
+- [Position: There Is No Free Bayesian Uncertainty Quantification](position_there_is_no_free_bayesian_uncertainty_quantification.md)
+- [Alias-Free ViT: Fractional Shift Invariance via Linear Attention](alias-free_vit_fractional_shift_invariance_via_linear_attention.md)
+
+<!-- RELATED:END -->

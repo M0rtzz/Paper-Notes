@@ -133,3 +133,15 @@ $Q$ 随 $N$ 增大而急剧增长，与 progressive sharpening 趋势一致。
 - 实验充分度: ⭐⭐⭐⭐ — 在多数据集、多架构、多优化器上系统性验证，scatter plot 相关性分析有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ — 组织清晰，理论与实验穿插得当，图表精简
 - 价值: ⭐⭐⭐⭐ — 为理解 sharpness 动态提供了实用的理论工具和简洁的分析框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [Tilted Sharpness-Aware Minimization](tilted_sharpness-aware_minimization.md)
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+- [Minor First, Major Last: A Depth-Induced Implicit Bias of Sharpness-Aware Minimization](../../ICLR2026/optimization/minor_first_major_last_a_depth-induced_implicit_bias_of_sharpness-aware_minimiza.md)
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+
+<!-- RELATED:END -->

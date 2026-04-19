@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多传感器、多ISO验证，有KL散度和下游任务双重评估
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，方法描述完整，标定流程详细
 - 价值: ⭐⭐⭐⭐ 对需要真实噪声合成的去噪研究有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Predict and Resist: Long-Term Accident Anticipation under Sensor Noise](../../AAAI2026/others/predict_and_resist_long-term_accident_anticipation_under_sensor_noise.md)
+- [AddMe: Zero-Shot Group-Photo Synthesis by Inserting People Into Scenes](addme_zero-shot_group-photo_synthesis_by_inserting_people_into_scenes.md)
+- [Synchronous Diffusion for Unsupervised Smooth Non-Rigid 3D Shape Matching](synchronous_diffusion_for_unsupervised_smooth_non-rigid_3d_shape_matching.md)
+- [Coresets for Clustering Under Stochastic Noise](../../NeurIPS2025/others/coresets_for_clustering_under_stochastic_noise.md)
+- [SudoLM: Learning Access Control of Parametric Knowledge with Authorization Alignment](../../ACL2025/others/sudolm_authorization_alignment.md)
+
+<!-- RELATED:END -->

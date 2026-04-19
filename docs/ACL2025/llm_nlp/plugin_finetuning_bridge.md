@@ -115,3 +115,15 @@ PiFi（Plug-in and Fine-tuning）框架的核心思想是：从 LLM（如 Llama-
 | 实验充分度 | 8/10 |
 | 写作质量 | 7/10 |
 | 总分 | 7.5/10 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HFT: Half Fine-Tuning for Large Language Models](hft_half_fine-tuning_for_large_language_models.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [Efficient Ensemble for Fine-tuning Language Models on Multiple Datasets](efficient_ensemble_for_fine-tuning_language_models_on_multiple_datasets.md)
+- [Team Anotheroption at SemEval-2025 Task 8: Bridging the Gap Between Open-Source and Proprietary LLMs in Table QA](team_anotheroption_at_semeval-2025_task_8_bridging_the_gap_between_open-source_a.md)
+- [A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)
+
+<!-- RELATED:END -->

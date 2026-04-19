@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个 VTG 基准 + OOD 评估 + token 密度分析 + 训练阶段消融 + 采样策略消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 帧率敏感性分析作为引入动机的叙事很好，方法描述清晰
 - 价值: ⭐⭐⭐⭐ 为 Vid-LLM 的视觉 token 利用提供了新视角，性能提升显著且思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TimeLens: Rethinking Video Temporal Grounding with Multimodal LLMs](timelens_rethinking_video_temporal_grounding_with_multimodal_llms.md)
+- [Enrich and Detect: Video Temporal Grounding with Multimodal LLMs](../../ICCV2025/multimodal_vlm/enrich_and_detect_video_temporal_grounding_with_multimodal_llms.md)
+- [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
+- [Video-Only ToM: Enhancing Theory of Mind in Multimodal Large Language Models](video-only_tom_enhancing_theory_of_mind_in_multimodal_large_language_models.md)
+- [HAWK: Head Importance-Aware Visual Token Pruning in Multimodal Models](hawk_head_importance-aware_visual_token_pruning_in_multimodal_models.md)
+
+<!-- RELATED:END -->

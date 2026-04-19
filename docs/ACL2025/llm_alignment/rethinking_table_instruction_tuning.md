@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个学习率×多个数据量×多个epoch×5个基座模型×13个数据集，消融极其充分
 - 写作质量: ⭐⭐⭐⭐ 诊断-消融-构建的逻辑清晰，数据呈现直观
 - 价值: ⭐⭐⭐⭐⭐ 对所有领域微调工作都有直接实用价值，TAMA模型和数据已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TableDreamer: Progressive and Weakness-Guided Data Synthesis from Scratch for Table Instruction Tuning](tabledreamer_progressive_and_weakness-guided_data_synthesis_from_scratch_for_tab.md)
+- [Call for Rigor in Reporting Quality of Instruction Tuning Data](call_for_rigor_in_reporting_quality_of_instruction_tuning_data.md)
+- [JsonTuning: Towards Generalizable, Robust, and Controllable Instruction Tuning](jsontuning_towards_generalizable_robust_and_controllable_instruction_tuning.md)
+- [Upcycling Instruction Tuning from Dense to Mixture-of-Experts via Parameter Merging](upcycling_instruction_tuning_from_dense_to_mixture-of-experts_via_parameter_merg.md)
+- [Measuring Data Diversity for Instruction Tuning: A Systematic Analysis and A Reliable Metric](measuring_data_diversity_for_instruction_tuning_a_systematic_analysis_and_a_reli.md)
+
+<!-- RELATED:END -->

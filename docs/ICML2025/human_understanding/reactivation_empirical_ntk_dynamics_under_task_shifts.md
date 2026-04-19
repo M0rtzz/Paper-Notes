@@ -133,3 +133,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐（控制变量实验设计非常严谨，多数据集、多宽度、多学习率验证）
 - **写作质量**: ⭐⭐⭐⭐（结构清晰，观察描述细致，但缺乏理论解释导致深度稍欠）
 - **价值**: ⭐⭐⭐⭐（对持续学习理论基础提出了重要质疑，为后续理论发展指明了方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Electromagnetic Structure Design Under Limited Evaluation Budgets](deep_electromagnetic_structure_design_under_limited_evaluation_budgets.md)
+- [Homogeneous Dynamics Space for Heterogeneous Humans](../../CVPR2025/human_understanding/homogeneous_dynamics_space_for_heterogeneous_humans.md)
+- [A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments](a_generalizable_physics-enhanced_state_space_model_for_long-term_dynamics_foreca.md)
+- [Less is More: Efficient Model Merging with Binary Task Switch](../../CVPR2025/human_understanding/less_is_more_efficient_model_merging_with_binary_task_switch.md)
+- [HOI-Dyn: Learning Interaction Dynamics for Human-Object Motion Diffusion](../../NeurIPS2025/human_understanding/hoi-dyn_learning_interaction_dynamics_for_human-object_motion_diffusion.md)
+
+<!-- RELATED:END -->

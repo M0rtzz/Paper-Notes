@@ -155,3 +155,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 22种方法、多维度评估、跨数据集验证、下游任务分析，极为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据分析透彻，图表丰富
 - 价值: ⭐⭐⭐⭐ 为手术图像复原社区提供了标准化平台和重要基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synergistic Bleeding Region and Point Detection in Laparoscopic Surgical Videos](synergistic_bleeding_region_and_point_detection_in_laparoscopic_surgical_videos.md)
+- [Learning Domain-Aware Task Prompt Representations for Multi-Domain All-in-One Image Restoration](../../ICLR2026/medical_imaging/learning_domain-aware_task_prompt_representations_for_multi-domain_all-in-one_im.md)
+- [Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control](beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token.md)
+- [Focus-to-Perceive Representation Learning: A Cognition-Inspired Hierarchical Framework for Endoscopic Video Analysis](focus-to-perceive_representation_learning_a_cognition-inspired_hierarchical_fram.md)
+- [Shape-Guided Configuration-Aware Learning for Endoscopic-Image-Based Pose Estimation of Flexible Robotic Instruments](../../ECCV2024/medical_imaging/shape-guided_configuration-aware_learning_for_endoscopic-image-based_pose_estima.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ DBDI 分为离线校准和在线推理两个阶段：
 
 ## 补充说明
 - 该方法揭示了安全对齐不是单一维度的，危害检测和拒绝执行可以被独立操控——未来的安全训练应考虑多维度鲁棒性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SafeNlidb: A Privacy-Preserving Safety Alignment Framework for LLM-based Natural Language Database Interfaces](safenlidb_a_privacy-preserving_safety_alignment_framework_for_llm-based_natural_.md)
+- [EASE: Practical and Efficient Safety Alignment for Small Language Models](ease_practical_and_efficient_safety_alignment_for_small_language_models.md)
+- [Improving LLM Safety Alignment with Dual-Objective Optimization](../../ICML2025/llm_alignment/improving_llm_safety_alignment_with_dual-objective_optimization.md)
+- [Superficial Safety Alignment Hypothesis](../../ICLR2026/llm_alignment/superficial_safety_alignment_hypothesis.md)
+- [AlignTree: Efficient Defense Against LLM Jailbreak Attacks](aligntree_efficient_defense_against_llm_jailbreak_attacks.md)
+
+<!-- RELATED:END -->

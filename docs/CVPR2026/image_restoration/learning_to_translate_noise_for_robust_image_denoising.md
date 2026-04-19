@@ -157,3 +157,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9 个 OOD 基准、详尽消融、可视化分析、迁移性验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 从直觉到理论到实验，论述逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ — 即插即用、轻量高效，对图像去噪领域有实际推动意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Deep Speech Denoising Models Robust to Adversarial Noise?](../../ICLR2026/image_restoration/are_deep_speech_denoising_models_robust_to_adversarial_noise.md)
+- [PNG: Diffusion-Based sRGB Real Noise Generation via Prompt-Driven Noise Representation Learning](diffusion-based_srgb_real_noise_generation_via_prompt-driven_noise_representatio.md)
+- [NEC-Diff: Noise-Robust Event–RAW Complementary Diffusion for Seeing Motion in Extreme Darkness](nec-diff_noise-robust_event-raw_complementary_diffusion_for_seeing_motion_in_ext.md)
+- [Classic Video Denoising in a Machine Learning World: Robust, Fast, and Controllable](../../CVPR2025/image_restoration/classic_video_denoising_in_a_machine_learning_world_robust_fast_and_controllable.md)
+- [Blind Image Deblurring with Noise-Robust Kernel Estimation](../../ECCV2024/image_restoration/blind_image_deblurring_with_noise-robust_kernel_estimation.md)
+
+<!-- RELATED:END -->

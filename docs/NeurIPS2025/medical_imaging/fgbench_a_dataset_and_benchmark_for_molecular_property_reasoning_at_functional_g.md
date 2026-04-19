@@ -131,3 +131,15 @@ FGBench 构建流程：从 MoleculeNet 的 10 个数据集（ESOL, Lipophilicity
 ⭐⭐⭐⭐ (4/5)
 
 数据构建方法扎实（验证-重构策略），任务设计合理（三维度 × 两类别），规模可观（625K QA）。揭示了化学微调 LLM 的泛化困境这一重要发现。作为 benchmark 论文，模型评估充分。局限在于属于相对常规的 benchmark 贡献，方法论创新有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mol-LLaMA: Towards General Understanding of Molecules in Large Molecular Language Models](mol-llama_towards_general_understanding_of_molecules_in_large_molecular_language.md)
+- [Large Language Models as Medical Codes Selectors: A Benchmark Using the International Classification of Primary Care](large_language_models_as_medical_codes_selectors_a_benchmark_using_the_internati.md)
+- [EDBench: Large-Scale Electron Density Data for Molecular Modeling](edbench_large-scale_electron_density_data_for_molecular_modeling.md)
+- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+
+<!-- RELATED:END -->

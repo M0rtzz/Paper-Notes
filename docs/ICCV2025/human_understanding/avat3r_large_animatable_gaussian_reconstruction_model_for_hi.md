@@ -125,3 +125,15 @@ CSIM（身份相似度）从GPAvatar的0.31提升到0.59，说明Avat3r生成的
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、丰富消融、单图/多图/应用场景全覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，动机阐述充分，每个设计选择都有实验支撑
 - 价值: ⭐⭐⭐⭐ 实用价值高（手机拍4张→分钟级可驱动头像），对数字人领域有推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](../../NeurIPS2025/human_understanding/vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
+- [Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)
+- [ImHead: A Large-scale Implicit Morphable Model for Localized Head Modeling](imhead_a_large-scale_implicit_morphable_model_for_localized_head_modeling.md)
+- [GGTalker: Talking Head Synthesis with Generalizable Gaussian Priors and Identity-Specific Adaptation](ggtalker_talking_head_systhesis_with_generalizable_gaussian_priors_and_identity-.md)
+- [HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity](hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu.md)
+
+<!-- RELATED:END -->

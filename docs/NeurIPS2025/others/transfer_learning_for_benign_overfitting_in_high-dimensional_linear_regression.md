@@ -149,3 +149,15 @@ $$\text{SSR}_q < 1 \quad \text{且} \quad \text{SNR}_q(1 - \text{SSR}_q) > \frac
 - 实验充分度: ⭐⭐⭐⭐ — 涵盖良性过拟合和无害插值两类设定，多种偏移组合，50次独立重复
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论体系完整，从各向同性到一般协变量逐层推进，行文清晰
 - 价值: ⭐⭐⭐⭐ — 填补了过参数化迁移学习的理论空白，但限于线性模型削弱了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination](information-computation_tradeoffs_for_noiseless_linear_regression_with_oblivious.md)
+- [SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](../../ICML2025/others/suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
+- [Overfitting in Adaptive Robust Optimization](overfitting_in_adaptive_robust_optimization.md)
+- [Regression Trees Know Calculus](regression_trees_know_calculus.md)
+- [Online Linear Regression with Paid Stochastic Features](../../AAAI2026/others/online_linear_regression_with_paid_stochastic_features.md)
+
+<!-- RELATED:END -->

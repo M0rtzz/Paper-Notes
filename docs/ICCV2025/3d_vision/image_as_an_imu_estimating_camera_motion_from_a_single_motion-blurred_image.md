@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (真实世界评估+IMU对比+机器人应用，但数据集规模较小)
 - 写作质量: ⭐⭐⭐⭐⭐ (motivation清晰，pipeline紧凑，图表直观)
 - 价值: ⭐⭐⭐⭐⭐ (实时+无漂移+单帧，对SLAM/VR有重大实用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoMoGaussian: Continuous Motion-Aware Gaussian Splatting from Motion-Blurred Images](comogaussian_continuous_motionaware_gaussian_splatting_from.md)
+- [AnyI2V: Animating Any Conditional Image with Motion Control](anyi2v_animating_any_conditional_image_with_motion_control.md)
+- [Easi3R: Estimating Disentangled Motion from DUSt3R Without Training](easi3r_estimating_disentangled_motion_from_dust3r_without_training.md)
+- [Shape of Motion: 4D Reconstruction from a Single Video](shape_of_motion_4d_reconstruction_from_a_single_video.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](../../NeurIPS2025/3d_vision/dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+
+<!-- RELATED:END -->

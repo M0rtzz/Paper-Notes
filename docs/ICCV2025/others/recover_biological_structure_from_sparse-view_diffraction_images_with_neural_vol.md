@@ -122,3 +122,15 @@ NVP在19张荧光图像下重建MDCK活细胞，PSNR比Explicit高4.05dB，比Tr
 - 实验充分度：★★★★☆（合成+真实实验充分，但baseline较少且都是自行实现）
 - 实用价值：★★★★★（实现~50倍测量减少对活体动态成像意义重大）
 - 写作质量：★★★★☆（物理模型阐述清晰，图示丰富）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auto-Regressively Generating Multi-View Consistent Images (MV-AR)](autoregressively_generating_multiview_consistent_images.md)
+- [Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](../../NeurIPS2025/others/are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)
+- [A Linear N-Point Solver for Structure and Motion from Asynchronous Tracks](a_linear_n-point_solver_for_structure_and_motion_from_asynchronous_tracks.md)
+- [Thermal Polarimetric Multi-view Stereo](thermal_polarimetric_multi-view_stereo.md)
+- [Φ-GAN: Physics-Inspired GAN for Generating SAR Images Under Limited Data](ph-gan_physics-inspired_gan_for_generating_sar_images_under_limited_data.md)
+
+<!-- RELATED:END -->

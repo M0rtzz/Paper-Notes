@@ -197,3 +197,15 @@ CLIP等视觉-语言预训练模型在分类、检索等下游任务上表现优
 - 实验充分度: ⭐⭐⭐⭐⭐ 4种backbone、3种偏见类型、域内域外评估、消融实验齐全
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从问题分析到方法设计环环相扣
 - 价值: ⭐⭐⭐⭐ 为V-L模型公平性研究提供了新的分析视角和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiMo-CLIP: Modeling Semantic Hierarchy and Monotonicity in Vision-Language Alignment](../../AAAI2026/information_retrieval/himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi.md)
+- [Efficient Discriminative Joint Encoders for Large Scale Vision-Language Re-ranking](../../ICLR2026/information_retrieval/efficient_discriminative_joint_encoders_for_large_scale_vision-language_rerankin.md)
+- [Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms](../../ACL2025/information_retrieval/llm_reranking_harmful_content.md)
+- [ViLU: Learning Vision-Language Uncertainties for Failure Prediction](../../ICCV2025/information_retrieval/vilu_learning_vision-language_uncertainties_for_failure_prediction.md)
+- [Evaluation of Attribution Bias in Generator-Aware Retrieval-Augmented Large Language Models](../../ACL2025/information_retrieval/evaluation_of_attribution_bias_in_generator-aware_retrieval-augmented_large_lang.md)
+
+<!-- RELATED:END -->

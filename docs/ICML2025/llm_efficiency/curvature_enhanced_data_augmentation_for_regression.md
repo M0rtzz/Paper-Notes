@@ -146,3 +146,15 @@ $$z_\eta = f(\eta) = B_u \cdot [\eta, g(\eta)] + z$$
 | 实用性 | 3.5 | 领域无关且额外开销小，但对大内在维度数据有限制 |
 | 写作质量 | 4 | 结构清晰，理论与实验并重 |
 | **总分** | **4/5** | 流形学习视角下的回归 DA 统一框架，理论扎实实验充分 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
+- [Efficient Data Driven Mixture-of-Expert Extraction from Trained Networks](../../CVPR2025/llm_efficiency/efficient_data_driven_mixture-of-expert_extraction_from_trained_networks.md)
+- [The Emergence of Sparse Attention: Impact of Data Distribution and Benefits of Repetition](../../NeurIPS2025/llm_efficiency/the_emergence_of_sparse_attention_impact_of_data_distribution_and_benefits_of_re.md)
+- [Collaborative LLM Numerical Reasoning with Local Data Protection](../../AAAI2026/llm_efficiency/collaborative_llm_numerical_reasoning_with_local_data_protection.md)
+- [From Shortcut to Induction Head: How Data Diversity Shapes Algorithm Selection in Transformers](../../NeurIPS2025/llm_efficiency/from_shortcut_to_induction_head_how_data_diversity_shapes_algorithm_selection_in.md)
+
+<!-- RELATED:END -->

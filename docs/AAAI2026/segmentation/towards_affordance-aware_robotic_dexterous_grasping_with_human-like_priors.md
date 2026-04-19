@@ -185,3 +185,15 @@ HTI和NAA模块可即插即用地增强其他RL方法。
 - 实验充分度: ⭐⭐⭐⭐ （多设置评估，详尽消融，但缺少真实世界实验）
 - 写作质量: ⭐⭐⭐⭐⭐ （问题动机清晰，框架图精美，消融逻辑严密）
 - 价值: ⭐⭐⭐⭐⭐ （从任务层面重新定义灵巧抓取评价标准，对具身智能发展意义重大）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAGNet: Large-scale Reasoning-based Affordance Segmentation Benchmark towards General Grasping](../../ICCV2025/segmentation/ragnet_large-scale_reasoning-based_affordance_segmentation_benchmark_towards_gen.md)
+- [Vista: Scene-Aware Optimization for Streaming Video Question Answering Under Post-Hoc Queries](vista_scene-aware_optimization_for_streaming_video_question_answering_under_post.md)
+- [EAGLE: Episodic Appearance- and Geometry-Aware Memory for Unified 2D-3D Visual Query Localization](eagle_episodic_appearance-_and_geometry-aware_memory_for_unified_2d-3d_visual_qu.md)
+- [HAODiff: Human-Aware One-Step Diffusion via Dual-Prompt Guidance](../../NeurIPS2025/segmentation/haodiff_human-aware_one-step_diffusion_via_dual-prompt_guidance.md)
+- [Guideline-Consistent Segmentation via Multi-Agent Refinement](guideline-consistent_segmentation_via_multi-agent_refinement.md)
+
+<!-- RELATED:END -->

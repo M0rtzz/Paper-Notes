@@ -157,3 +157,15 @@ Wire/Cell对比（11个基准，Yosys）：
 - 实验充分度: ⭐⭐⭐⭐ 涵盖功能正确性和PPA两类评估、消融完整，但部分与RTLRewriter不可直接对比
 - 写作质量: ⭐⭐⭐⭐ 结构合理，方法描述详尽
 - 价值: ⭐⭐⭐⭐⭐ 解决了EDA领域的实际痛点，对芯片设计自动化有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Parallelism in Decentralized Stochastic Convex Optimization](../../ICML2025/human_understanding/enhancing_parallelism_in_decentralized_stochastic_convex_optimization.md)
+- [RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning](../../ICML2025/human_understanding/rulebreakers_challenging_llms_at_the_crossroads_between_formal_logic_and_human-l.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs](recurrent_attention-based_token_selection_for_efficient_streaming_video-llms.md)
+- [Mapping Faithful Reasoning in Language Models](mapping_faithful_reasoning_in_language_models.md)
+
+<!-- RELATED:END -->

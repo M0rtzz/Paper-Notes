@@ -126,3 +126,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \beta \cdot \mathcal{L}_{SAMD} + \gam
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖三个静态数据集+一个神经形态数据集，多架构(CNN+Transformer)，详尽的消融、能效分析、可视化、理论分析
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，方法描述系统，理论分析部分稍显冗长但增强了说服力
 - 价值: ⭐⭐⭐⭐ 对SNN-KD领域贡献明确，SOTA提升显著，但影响范围受限于SNN这一相对小众方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ElementaryNet: A Non-Strategic Neural Network for Predicting Human Behavior in Normal-Form Games](elementarynet_a_non-strategic_neural_network_for_predicting_human_behavior_in_no.md)
+- [FaCT: Faithful Concept Traces for Explaining Neural Network Decisions](../../NeurIPS2025/interpretability/fact_faithful_concept_traces_for_explaining_neural_network_decisions.md)
+- [Enhancing Binary Encoded Crime Linkage Analysis Using Siamese Network](enhancing_binary_encoded_crime_linkage_analysis_using_siamese_network.md)
+- [FourierPET: Deep Fourier-based Unrolled Network for Low-count PET Reconstruction](fourierpet_deep_fourier-based_unrolled_network_for_low-count_pet_reconstruction.md)
+- [A Cross Modal Knowledge Distillation & Data Augmentation Recipe for Improving Transcriptomics Representations through Morphological Features](../../ICML2025/interpretability/a_cross_modal_knowledge_distillation_data_augmentation_recipe_for_improving_tran.md)
+
+<!-- RELATED:END -->

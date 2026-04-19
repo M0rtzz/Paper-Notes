@@ -159,3 +159,15 @@ $$\theta_{\text{steered}} = \theta_{\text{pre}} + k \cdot w_b$$
 - **实用性**: ⭐⭐⭐⭐⭐ — 方法简单、开销低、代码开源，可直接应用于模型部署
 - **写作质量**: ⭐⭐⭐⭐ — 实验设计清晰，图表信息丰富
 - **综合评分**: ⭐⭐⭐⭐ (4/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
+- [EvoEngineer: Mastering Automated CUDA Kernel Code Evolution with Large Language Models](evoengineer_mastering_automated_cuda_kernel_code_evolution_with_large_language_m.md)
+- [On the Entropy Calibration of Language Models](../../NeurIPS2025/llm_efficiency/on_the_entropy_calibration_of_language_models.md)
+- [Scaling Inference-Efficient Language Models](../../ICML2025/llm_efficiency/scaling_inference-efficient_language_models.md)
+
+<!-- RELATED:END -->

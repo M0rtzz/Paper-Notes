@@ -133,3 +133,15 @@ I2MoE-MulT 与 7 种融合方法在 5 个数据集上的对比：
 理论基础（PID）与工程实现（MoE）的结合自然优雅，弱监督交互损失设计巧妙，可解释性分析（局部+全局）有实际价值。实验涵盖医疗和通用数据集共5个，消融充分。不足之处在于部分数据集上效果有限（MIMIC 准确率下降），计算开销未得到足够关注，且对 PID 理论的近似程度缺乏严格分析。整体是一篇扎实的多模态融合方法论文。
 
 从应用角度看，I2MoE 在医疗场景中的价值尤为突出：ADNI 数据集上 5.5% 的准确率提升对阿尔茨海默症诊断具有临床意义，而权重可解释性可帮助医生理解"哪种信息来源"驱动了预测——这在医疗 AI 审批和临床信任建设中至关重要。框架的骨干无关特性也意味着可迅速适配到其他医疗多模态融合系统中。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding](../../NeurIPS2025/medical_imaging/more-brain_routed_mixture_of_experts_for_interpretable_and_generalizable_cross-s.md)
+- [Mamba Goes HoME: Hierarchical Soft Mixture-of-Experts for 3D Medical Image Segmentation](../../NeurIPS2025/medical_imaging/mamba_goes_home_hierarchical_soft_mixture-of-experts_for_3d_medical_image_segmen.md)
+- [Dual Mixture-of-Experts Framework for Discrete-Time Survival Analysis](../../NeurIPS2025/medical_imaging/dual_mixture-of-experts_framework_for_discrete-time_survival_analysis.md)
+- [DFLMoE: Decentralized Federated Learning via Mixture of Experts for Medical Data](../../CVPR2025/medical_imaging/dflmoe_decentralized_federated_learning_via_mixture_of_experts_for_medical_data_.md)
+- [Bayesian Inference for Correlated Human Experts and Classifiers](bayesian_inference_for_correlated_human_experts_and_classifiers.md)
+
+<!-- RELATED:END -->

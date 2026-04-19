@@ -118,3 +118,15 @@ CRISP pipeline 包含三个层次：(1) 编码器-解码器形状估计（DINOv2
 ## 评分
 
 ⭐⭐⭐⭐ — 理论与系统设计均扎实，active shape model 的线性化思想优雅，自训练策略实用。形状解码器凸包行为的 insight 特别有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-op: Correspondence-Based Novel Object Pose Estimation](co-op_correspondence-based_novel_object_pose_estimation.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+- [One2Any: One-Reference 6D Pose Estimation for Any Object](one2any_one-reference_6d_pose_estimation_for_any_object.md)
+- [FOZO: Forward-Only Zeroth-Order Prompt Optimization for Test-Time Adaptation](../../CVPR2026/human_understanding/fozo_forward-only_zeroth-order_prompt_optimization_for_test-time_adaptation.md)
+- [LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation](../../ECCV2024/human_understanding/lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose.md)
+
+<!-- RELATED:END -->

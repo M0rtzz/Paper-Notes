@@ -155,3 +155,15 @@ Token 使用统计：
 - 实验充分度: ⭐⭐⭐ 五个模型的评估规模适中，但缺乏人类基线对比和更多开源模型测试
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，场景设计细节充足，但指标公式散布在附录中不够直观
 - 价值: ⭐⭐⭐⭐ 填补了复杂社交互动场景的评估空白，TII 揭示的信任偏差现象对 LLM 安全研究也有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SocialEval: Evaluating Social Intelligence of Large Language Models](socialeval_evaluating_social_intelligence_of_large_language_models.md)
+- [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
+- [Masking in Multi-hop QA: How LMs Perform with Context Permutation](masking_in_multi-hop_qa_an_analysis_of_how_language_models_perform_with_context_.md)
+- [INTERACT: Enabling Interactive, Question-Driven Learning in Large Language Models](interact_enabling_interactive_question-driven_learning_in_large_language_models.md)
+- [AfroBench: How Good are Large Language Models on African Languages?](afrobench_how_good_are_large_language_models_on_african_languages.md)
+
+<!-- RELATED:END -->

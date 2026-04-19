@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多帧长度、多脑区、多基线、InterRecon、下游解码全面验证，但仅6个受试者且单一数据集
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，方法描述清楚，但对神经科学背景的读者可能偏向机器学习
 - 价值: ⭐⭐⭐⭐ 为多模态神经影像联合建模提供了新范式，但应用场景相对小众
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?](can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy.md)
+- [ConfRover: Simultaneous Modeling of Protein Conformation and Dynamics via Autoregression](../../NeurIPS2025/medical_imaging/confrover_simultaneous_modeling_of_protein_conformation_and_dynamics_via_autoreg.md)
+- [Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model](../../ICLR2026/medical_imaging/brain-semantoks_learning_semantic_tokens_of_brain_dynamics_with_a_self-distilled.md)
+- [Multimodal Disease Progression Modeling via Spatiotemporal Disentanglement and Multiscale Alignment](../../NeurIPS2025/medical_imaging/multimodal_disease_progression_modeling_via_spatiotemporal_disentanglement_and_m.md)
+- [HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?](../../ICCV2025/medical_imaging/hrscene_how_far_are_vlms_from_effective_high-resolution_image_understanding.md)
+
+<!-- RELATED:END -->

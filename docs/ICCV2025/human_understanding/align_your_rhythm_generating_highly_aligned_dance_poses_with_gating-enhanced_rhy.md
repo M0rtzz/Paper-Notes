@@ -117,3 +117,15 @@ Danceba沿用Bailando的VQ-VAE + 自回归框架：先用预训练的Pose VQ-VAE
 - 实验充分度: ⭐⭐⭐⭐ 消融全面（含5次独立训练均值），但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，热力图可视化直观，模块间关系说明充分
 - 价值: ⭐⭐⭐⭐ 在音乐驱动舞蹈生成方向贡献显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Reconstruction of Hand-Object Interaction with Distributed Force-aware Contact Representation](dynamic_reconstruction_of_hand-object_interaction_with_distributed_force-aware_c.md)
+- [MDD: A Dataset for Text-and-Music Conditioned Duet Dance Generation](mdd_a_dataset_for_text-and-music_conditioned_duet_dance_generation.md)
+- [Generating Attribute-Aware Human Motions from Textual Prompt](../../AAAI2026/human_understanding/generating_attribute-aware_human_motions_from_textual_prompt.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [Signs as Tokens: A Retrieval-Enhanced Multilingual Sign Language Generator](signs_as_tokens_a_retrieval-enhanced_multilingual_sign_language_generator.md)
+
+<!-- RELATED:END -->

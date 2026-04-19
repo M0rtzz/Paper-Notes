@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 750 万数据 + 多基准 + 消融 + 全开源
 - 写作质量: ⭐⭐⭐⭐ 算法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 开源数据集对社区有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LESA: Learnable LLM Layer Scaling-Up](lesa_learnable_llm_layer_scaling-up.md)
+- [Evaluating Language Models as Synthetic Data Generators](evaluating_lms_synthetic_data_gen.md)
+- [Scaling Up Active Testing to Large Language Models](../../NeurIPS2025/llm_nlp/scaling_up_active_testing_to_large_language_models.md)
+- [DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models](difflm_controllable_synthetic_data_generation_via_diffusion_language_models.md)
+- [HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation](hygenar_an_llm-driven_hybrid_genetic_algorithm_for_few-shot_grammar_generation.md)
+
+<!-- RELATED:END -->

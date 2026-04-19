@@ -125,3 +125,15 @@ $\mathcal{L} = \lambda_{rgb}\mathcal{L}_{rgb} + \lambda_{ue}\mathcal{L}_{ue} + \
 - 实验充分度: ⭐⭐⭐⭐⭐ 25 个场景（合成+真实）、多种曝光模式、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 方法复杂但描述清晰，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 解决了实际HDR视频重建的核心问题，161FPS实时渲染
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HDR-NSFF: High Dynamic Range Neural Scene Flow Fields](hdr-nsff_high_dynamic_range_neural_scene_flow_fields.md)
+- [Dynamic Novel View Synthesis in High Dynamic Range](dynamic_novel_view_synthesis_in_high_dynamic_range.md)
+- [Uncertainty Matters in Dynamic Gaussian Splatting for Monocular 4D Reconstruction](uncertainty_matters_in_dynamic_gaussian_splatting_for_monocular_4d_reconstructio.md)
+- [MoE-GS: Mixture of Experts for Dynamic Gaussian Splatting](moe-gs_mixture_of_experts_for_dynamic_gaussian_splatting.md)
+- [High Dynamic Range Novel View Synthesis with Single Exposure](../../ICML2025/3d_vision/high_dynamic_range_novel_view_synthesis_with_single_exposure.md)
+
+<!-- RELATED:END -->

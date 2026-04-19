@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐ (仅有 2D 高斯先验可视化，缺乏真实逆问题实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (定理陈述简洁清晰，直觉解释到位，证明思路阐述清楚)
 - 价值: ⭐⭐⭐⭐ (理论贡献显著，为一个重要的实践方法类别提供了理论基础，但需扩展到非对数凹先验才能真正影响实践)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Cocoercive Conservative Denoisers via Helmholtz Decomposition for Poisson Inverse Problems](learning_cocoercive_conservative_denoisers_via_helmholtz_decomposition_for_poiss.md)
+- [MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration](modem_a_morton-order_degradation_estimation_mechanism_for_adverse_weather_image_.md)
+- [Adaptive Estimation and Learning under Temporal Distribution Shift](../../ICML2025/image_restoration/adaptive_estimation_and_learning_under_temporal_distribution_shift.md)
+- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](../../ICCV2025/image_restoration/low-light_image_enhancement_using_event-based_illumination_estimation.md)
+- [Blind Image Deblurring with Noise-Robust Kernel Estimation](../../ECCV2024/image_restoration/blind_image_deblurring_with_noise-robust_kernel_estimation.md)
+
+<!-- RELATED:END -->

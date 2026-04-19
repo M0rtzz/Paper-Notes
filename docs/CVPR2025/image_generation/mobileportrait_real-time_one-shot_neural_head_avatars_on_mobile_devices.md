@@ -132,3 +132,15 @@ $$\mathcal{L} = \mathcal{L}_{percep} + \mathcal{L}_{L1} + \mathcal{L}_{kp} + \ma
 ## 评分
 
 ⭐⭐⭐⭐ — 首个移动端实时 NHA 方法，10x 计算量压缩下匹敌 SOTA，实用价值极高；核心思想（外部知识降低任务难度）简洁且具有启发性。扣 1 星因为跨身份保持和音频驱动部分相对初步。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Real-Time Execution of Action Chunking Flow Policies](../../NeurIPS2025/image_generation/real-time_execution_of_action_chunking_flow_policies.md)
+- [StreamDiffusion: A Pipeline-level Solution for Real-time Interactive Generation](../../ICCV2025/image_generation/streamdiffusion_a_pipeline-level_solution_for_real-time_interactive_generation.md)
+- [ReFrame: Layer Caching for Accelerated Inference in Real-Time Rendering](../../ICML2025/image_generation/reframe_layer_caching_for_accelerated_inference_in_real-time_rendering.md)
+- [Generation of Maximal Snake Polyominoes Using a Deep Neural Network](generation_of_maximal_snake_polyominoes_using_a_deep_neural_network.md)
+- [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](../../ICCV2025/image_generation/sana-sprint_one-step_diffusion_with_continuous-time_consistency_distillation.md)
+
+<!-- RELATED:END -->

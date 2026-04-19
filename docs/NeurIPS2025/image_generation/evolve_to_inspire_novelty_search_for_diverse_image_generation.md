@@ -138,3 +138,15 @@ $$\text{VS}(K) = \exp\left(-\sum_{i=1}^{n} \lambda_i \log \lambda_i\right)$$
 - 实验充分度: ⭐⭐⭐⭐ (多基线对比、消融实验、LLM 对比充分)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，问题定义明确)
 - 价值: ⭐⭐⭐ (Workshop 论文，实际影响力有限但方向有趣)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation](../../CVPR2025/image_generation/learning_to_sample_effective_and_diverse_prompts_for_text-to-image_generation.md)
+- [Continuous Uniqueness and Novelty Metrics for Generative Modeling of Inorganic Crystals](continuous_uniqueness_and_novelty_metrics_for_generative_modeling_of_inorganic_c.md)
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+- [Watermarking Autoregressive Image Generation](watermarking_autoregressive_image_generation.md)
+- [DiverseFlow: Sample-Efficient Diverse Mode Coverage in Flows](../../CVPR2025/image_generation/diverseflow_sample-efficient_diverse_mode_coverage_in_flows.md)
+
+<!-- RELATED:END -->

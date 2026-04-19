@@ -166,3 +166,15 @@ argmin_theta L_NCE(theta) = argmax_theta { I(Z;Y) - lambda * I(Z; S|Y) }
 ## 评分
 
 4/5 优秀。方法设计简洁优雅、理论分析完整、实验充分对比。核心思想即配对策略等价信息瓶颈是令人印象深刻的洞察。主要遗憾是仅验证了表格数据和组公平场景。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+- [Backdooring Self-Supervised Contrastive Learning by Noisy Alignment](../../ICCV2025/ai_safety/backdooring_self-supervised_contrastive_learning_by_noisy_alignment.md)
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](../../CVPR2025/ai_safety/a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+- [Geo-Sign: Hyperbolic Contrastive Regularisation for Geometrically Aware Sign Language Translation](geo-sign_hyperbolic_contrastive_regularisation_for_geometrically_aware_sign_lang.md)
+- [Less is More: Towards Simple Graph Contrastive Learning](../../ICLR2026/ai_safety/less_is_more_towards_simple_graph_contrastive_learning.md)
+
+<!-- RELATED:END -->

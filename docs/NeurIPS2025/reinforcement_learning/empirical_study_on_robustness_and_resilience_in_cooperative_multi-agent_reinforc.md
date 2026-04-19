@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 82,620 次实验，严格的统计检验，四个真实世界环境，极其充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，发现总结为实用建议表格，便于从业者参考
 - 价值: ⭐⭐⭐⭐ 对 MARL 社区有重要指导意义，挑战了多个普遍假设
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+- [Extending NGU to Multi-Agent RL: A Preliminary Study](extending_ngu_to_multi-agent_rl_a_preliminary_study.md)
+- [Enhancing Cooperative Multi-Agent Reinforcement Learning with State Modelling and Adversarial Exploration](../../ICML2025/reinforcement_learning/enhancing_cooperative_multi-agent_reinforcement_learning_with_state_modelling_an.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Multi-Agent Collaboration via Evolving Orchestration](multi-agent_collaboration_via_evolving_orchestration.md)
+
+<!-- RELATED:END -->

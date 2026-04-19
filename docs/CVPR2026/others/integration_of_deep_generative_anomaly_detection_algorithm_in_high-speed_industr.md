@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 真实工业数据验证有说服力，但缺少公开benchmark和基线方法对比
 - 写作质量: ⭐⭐⭐ 工程细节详尽，但论文结构略显冗长，数学符号有时不够简洁
 - 价值: ⭐⭐⭐⭐ 对工业部署异常检测有很好的实践参考价值，展示了从研究到产线的完整路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples](novel_anomaly_detection_scenarios_and_evaluation_metrics_to_address_the_ambiguit.md)
+- [RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](../../AAAI2026/others/rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
+- [ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization](enhancing_outofdistribution_detection_with_extende.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_widefield_and_highdynamic_range.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)
+
+<!-- RELATED:END -->

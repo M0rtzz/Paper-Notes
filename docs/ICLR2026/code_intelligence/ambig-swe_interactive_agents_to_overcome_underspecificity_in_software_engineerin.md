@@ -112,3 +112,15 @@ N/A（评估论文，不训练模型）
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个模型、3 种设置、3 级 prompt、多维分析
 - 写作质量: ⭐⭐⭐⭐⭐ 实验设计严谨，分析深入
 - 价值: ⭐⭐⭐⭐⭐ 对 agent 交互能力的重要诊断，直接指导未来训练方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Software Engineering Agents and Verifiers with SWE-Gym](../../ICML2025/code_intelligence/training_software_engineering_agents_and_verifiers_with_swe-gym.md)
+- [SWE-rebench: An Automated Pipeline for Task Collection and Decontaminated Evaluation of Software Engineering Agents](../../NeurIPS2025/code_intelligence/swe-rebench_an_automated_pipeline_for_task_collection_and_decontaminated_evaluat.md)
+- [InnoGym: Benchmarking the Innovation Potential of AI Agents](innogym_benchmarking_the_innovation_potential_of_ai_agents.md)
+- [Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
+- [The Limits of Long-Context Reasoning in Automated Bug Fixing](the_limits_of_long-context_reasoning_in_automated_bug_fixing.md)
+
+<!-- RELATED:END -->

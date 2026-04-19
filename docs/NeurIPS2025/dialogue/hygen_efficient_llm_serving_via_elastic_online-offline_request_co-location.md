@@ -124,3 +124,15 @@ HyGen采用双队列架构，将延迟敏感的在线请求与吞吐导向的离
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型（7B/14B/34B/2.7B）、多硬件（A100/A40/A5000）、多数据集（Azure/Mooncake/arXiv/MMLU/CNN）、多SLO指标的全面验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰、方案设计逻辑严谨，但某些算法细节需查附录
 - 价值: ⭐⭐⭐⭐⭐ 直接可应用于工业LLM推理集群，代码开源，3.87-5.84×的吞吐提升极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Human and LLM Judgments: Understanding and Narrowing the Gap](bridging_human_and_llm_judgments_understanding_and_narrowing_the_gap.md)
+- [Investigating Non-Transitivity in LLM-as-a-Judge](../../ICML2025/dialogue/investigating_non-transitivity_in_llm-as-a-judge.md)
+- [AC-LoRA: (Almost) Training-Free Access Control-Aware Multi-Modal LLMs](aclora_almost_trainingfree_access_controlaware_multimodal_ll.md)
+- [MetaMind: Modeling Human Social Thoughts with Metacognitive Multi-Agent Systems](metamind_modeling_human_social_thoughts_with_metacognitive_multi-agent_systems.md)
+- [SciArena: An Open Evaluation Platform for Non-Verifiable Scientific Literature-Grounded Tasks](sciarena_an_open_evaluation_platform_for_non-verifiable_scientific_literature-gr.md)
+
+<!-- RELATED:END -->

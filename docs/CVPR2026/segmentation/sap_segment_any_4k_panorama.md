@@ -141,3 +141,15 @@ $$M^{ERP}(u,v) = \max_{i: (u,v) \in \mathcal{V}_i} \tilde{M}_i(u,v)$$
 | 实用性 | ⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐⭐ |
 | 综合评价 | ⭐⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Live Interactive Training for Video Segmentation](live_interactive_training_for_video_segmentation.md)
+- [RobotSeg: A Model and Dataset for Segmenting Robots in Image and Video](robotseg_a_model_and_dataset_for_segmenting_robots_in_image_and_video.md)
+- [DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime](dsflash_comprehensive_panoptic_scene_graph_generation_in_realtime.md)
+- [SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation](spar_single-pass_any-resolution_vit_for_open-vocabulary_segmentation.md)
+- [Unified Spherical Frontend: Learning Rotation-Equivariant Representations of Spherical Images from Any Camera](unified_spherical_frontend_learning_rotation-equivariant_representations_of_sphe.md)
+
+<!-- RELATED:END -->

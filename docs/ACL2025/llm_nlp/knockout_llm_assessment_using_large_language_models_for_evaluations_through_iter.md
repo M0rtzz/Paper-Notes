@@ -123,3 +123,15 @@ Knockout Assessment 的核心流程：（1）将 $N$ 个回答随机配对；（
 - 实验充分度: ⭐⭐⭐ 两个数据集 + 三个模型，但缺少与更多 baseline 的对比和更大规模闭源模型的验证
 - 写作质量: ⭐⭐⭐⭐ 清晰简洁，方法描述到位
 - 价值: ⭐⭐⭐ 提供了一种简单有效的 LLM 评估改进策略，但适用范围有限（主要对复杂任务有效）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Theory of Mind in Large Language Models: Assessment and Enhancement](theory_of_mind_llm.md)
+- [LLM as a Broken Telephone: Iterative Generation Distorts Information](llm_broken_telephone.md)
+- [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
+- [Growing Through Experience: Scaling Episodic Grounding in Language Models](episodic_grounding_experience.md)
+- [CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis](cot-based_synthesizer_enhancing_llm_performance_through_answer_synthesis.md)
+
+<!-- RELATED:END -->

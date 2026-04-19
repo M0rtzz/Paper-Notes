@@ -137,3 +137,15 @@ $$
 - 实验充分度: ⭐⭐⭐ — benchmark 多样但仅限 2D，缺乏高维和实际问题验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 从物理动机到数学推导再到算法实现，逻辑清晰完整
 - 价值: ⭐⭐⭐⭐ — 为量子优化算法设计提供了有力的新方向，但实用性受限于量子硬件
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Isotropic Noise in Stochastic and Quantum Convex Optimization](../../NeurIPS2025/optimization/isotropic_noise_in_stochastic_and_quantum_convex_optimization.md)
+- [Benefits of Early Stopping in Gradient Descent for Overparameterized Logistic Regression](benefits_of_early_stopping_in_gradient_descent_for_overparameterized_logistic_re.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](../../NeurIPS2025/optimization/learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Incremental Gradient Descent with Small Epoch Counts is Surprisingly Slow on Ill-Conditioned Problems](incremental_gradient_descent_with_small_epoch_counts_is_surprisingly_slow_on_ill.md)
+- [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](../../NeurIPS2025/optimization/optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+
+<!-- RELATED:END -->

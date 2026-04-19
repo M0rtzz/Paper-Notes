@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖4个模型、10+实例、选择/生成/persona/CoT 多种模式
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，与经济学文献衔接好
 - 价值: ⭐⭐⭐⭐ 为 LLM 公平性对齐提供了重要的实证基础和改进方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Fairness of Large Language Models in Multi-document Summarization](../../ACL2025/ai_safety/improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [Exploring the Limits of Strong Membership Inference Attacks on Large Language Models](exploring_the_limits_of_strong_membership_inference_attacks_on_large_language_mo.md)
+- [ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](../../ACL2025/ai_safety/dialect_fairness_robustness.md)
+- [The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](../../ACL2025/ai_safety/tug_of_war_fairness_privacy.md)
+- [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ DDPM+SD双验证、类遗忘+概念擦除、速度比较、梯度分析，较全面
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，但符号和公式较多，入门门槛高
 - 价值: ⭐⭐⭐⭐ 为扩散模型遗忘提供了有理论保证的高效方法，对AI安全和隐私保护有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DMin: Scalable Training Data Influence Estimation for Diffusion Models](../../CVPR2026/image_generation/dmin_scalable_training_data_influence_estimation_for_diffusion_models.md)
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+- [Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception](enhancing_image_aesthetics_with_dual-conditioned_diffusion_models_guided_by_mult.md)
+- [Nearly Zero-Cost Protection Against Mimicry by Personalized Diffusion Models](nearly_zero-cost_protection_against_mimicry_by_personalized_diffusion_models.md)
+- [One Image is Worth a Thousand Words: A Usability Preservable Text-Image Collaborative Erasing Framework](../../ICML2025/image_generation/one_image_is_worth_a_thousand_words_a_usability_preservable_text-image_collabora.md)
+
+<!-- RELATED:END -->

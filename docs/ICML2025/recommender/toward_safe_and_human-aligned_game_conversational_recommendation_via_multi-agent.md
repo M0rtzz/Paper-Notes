@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 八个指标覆盖面广但数据集偏小，缺少大规模在线 A/B 测试
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，问题定义准确，但数学符号使用不够规范
 - 价值: ⭐⭐⭐⭐ 对游戏推荐系统的工程实践有很高的参考价值，安全模块的设计思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Coming Crisis of Multi-Agent Misalignment: AI Alignment Must Be a Dynamic and Social Process](../../NeurIPS2025/recommender/the_coming_crisis_of_multi-agent_misalignment_ai_alignment_must_be_a_dynamic_and.md)
+- [EMPATHIA: Multi-Faceted Human-AI Collaboration for Refugee Integration](../../NeurIPS2025/recommender/empathia_multi-faceted_human-ai_collaboration_for_refugee_integration.md)
+- [Beyond Single Labels: Improving Conversational Recommendation through LLM-Powered Data Augmentation](../../ACL2025/recommender/beyond_single_labels_improving_conversational_recommendation_through_llm-powered.md)
+- [RLTHF: Targeted Human Feedback for LLM Alignment](rlthf_targeted_human_feedback_for_llm_alignment.md)
+- [Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations](recommendations_and_reporting_checklist_for_rigorous_transparent_human_baselines.md)
+
+<!-- RELATED:END -->

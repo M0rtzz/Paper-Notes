@@ -141,3 +141,15 @@ RestGPT 引入粗到细的在线规划模块，但仍局限于文本范式。Too
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 3 个基准、7 个基线、多模型规模和消融实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图示丰富，类比软件工程易于理解
 - 价值: ⭐⭐⭐⭐ — 提供了实用且可扩展的工具学习框架，对 LLM agent 开发有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization](to_code_or_not_to_code_adaptive_tool_integration_for_math_language_models_via_ex.md)
+- [OpenCoder: The Open Cookbook for Top-Tier Code Large Language Models](opencoder_the_open_cookbook_for_top-tier_code_large_language_models.md)
+- [Can Language Models Replace Programmers for Coding? RepoCod Says 'Not Yet'](can_language_models_replace_programmers_for_coding_repocod_says_not_yet.md)
+- [WarriorCoder: Learning from Expert Battles to Augment Code Large Language Models](warriorcoder_learning_from_expert_battles_to_augment_code_large_language_models.md)
+- [Towards Harmonized Uncertainty Estimation for Large Language Models](towards_harmonized_uncertainty_estimation_for_large_language_models.md)
+
+<!-- RELATED:END -->

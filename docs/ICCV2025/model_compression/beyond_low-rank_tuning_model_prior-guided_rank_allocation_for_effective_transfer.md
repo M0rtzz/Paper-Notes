@@ -144,3 +144,15 @@ SR-LoRA的流程极其简洁：（1）计算预训练模型每个目标层权重
 - 实验充分度: ⭐⭐⭐⭐ MedFM+VTAB覆盖医学/遥感多域，多LoRA变体对比全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，从观察到理论到方法逻辑通顺
 - 价值: ⭐⭐⭐⭐ 实用价值高，方法简单有效，特别适合资源有限的领域迁移场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](../../NeurIPS2025/model_compression/data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](../../NeurIPS2025/model_compression/accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+- [DenseLoRA: Dense Low-Rank Adaptation of Large Language Models](../../ACL2025/model_compression/denselora_dense_low-rank_adaptation_of_large_language_models.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](../../NeurIPS2025/model_compression/gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+
+<!-- RELATED:END -->

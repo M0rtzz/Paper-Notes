@@ -168,3 +168,15 @@ $$\mathcal{L}_{SD}^{\text{new}} = \mathbb{E}_{\mathbf{z}, \epsilon \sim \mathcal
 - **实验充分度**: ⭐⭐⭐⭐ — 用户研究设计合理，消融全面，但缺少大规模定量评估
 - **写作质量**: ⭐⭐⭐⭐ — 清晰的问题定义和方法阐述，图示直观
 - **价值**: ⭐⭐⭐⭐ — 为图像编辑提供了新范式，特别是空间编辑方面的潜力巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [∞-Brush: Controllable Large Image Synthesis with Diffusion Models in Infinite Dimensions](inftybrush_controllable_large_image_synthesis_with_diffusion.md)
+- [FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis](fouriscale_a_frequency_perspective_on_training-free_high-resolution_image_synthe.md)
+- [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
+- [MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model](motionlcm_real-time_controllable_motion_generation_via_latent_consistency_model.md)
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+
+<!-- RELATED:END -->

@@ -91,3 +91,15 @@ VAU: GPT-C在UCF-Crime从0.384提升到0.444(+InterTC)
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个VAD数据集、VAL实验、VAU实验、10+消融、VLM/LLM泛化测试、运行时间分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Table 1的scope对比和Figure 1的框架图很好，prompt设计全部开放
 - 价值: ⭐⭐⭐⭐ 首个全任务零样本视频异常分析方法，实用性强，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [SVIP: Semantically Contextualized Visual Patches for Zero-Shot Learning](../../ICCV2025/interpretability/svip_semantically_contextualized_visual_patches_for_zero-shot_learning.md)
+- [Induce, Align, Predict: Zero-Shot Stance Detection via Cognitive Inductive Reasoning](../../AAAI2026/interpretability/induce_align_predict_zero-shot_stance_detection_via_cognitive_inductive_reasonin.md)
+- [Text-guided Fine-Grained Video Anomaly Understanding](../../CVPR2026/interpretability/text-guided_fine-grained_video_anomaly_understanding.md)
+- [Evaluating Neuron Explanations: A Unified Framework with Sanity Checks](../../ICML2025/interpretability/evaluating_neuron_explanations_a_unified_framework_with_sanity_checks.md)
+
+<!-- RELATED:END -->

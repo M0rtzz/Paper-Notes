@@ -113,3 +113,15 @@ Vision LLM (VLLM)统一了多种视觉任务，具有构建这样的通用系统
 - 6个分类法涵盖生物学和人工制品两大类，层次深度2-7层不等
 - iNaturalist分类法HCA普遍极低（最好的GPT-4o仅42.95%），说明这是一个困难且被忽视的问题
 - Oxford-Pets数据集上BioCLIP2的HCA达58%+，说明领域专用训练有帮助
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models](taxonomy-aware_representation_alignment_for_hierarchical_visual_recognition_with.md)
+- [Beyond Recognition: Evaluating Visual Perspective Taking in Vision Language Models](beyond_recognition_evaluating_visual_perspective_taking_in_vision_language_model.md)
+- [Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](../../ECCV2024/multimodal_vlm/meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
+- [CLIP-Free, Label-Free, Unsupervised Concept Bottleneck Models](clip-free_label_free_unsupervised_concept_bottleneck_models.md)
+- [Visual Instruction Bottleneck Tuning](../../NeurIPS2025/multimodal_vlm/visual_instruction_bottleneck_tuning.md)
+
+<!-- RELATED:END -->

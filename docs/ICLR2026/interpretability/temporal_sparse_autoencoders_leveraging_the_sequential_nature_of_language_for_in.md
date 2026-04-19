@@ -136,3 +136,15 @@ T-SAE 高层特征在引导任务上 **Pareto 支配**所有基线 SAE：
 - **技术深度**: ⭐⭐⭐⭐ — 数据生成模型 + 对比损失设计清晰
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 探测 + 可视化 + 引导 + 安全案例 + 消融全面
 - **实用性**: ⭐⭐⭐⭐⭐ — 解锁序列级可解释性和更有效的引导能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](../../NeurIPS2025/interpretability/transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](../../CVPR2026/interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+- [Do Sparse Autoencoders Generalize? A Case Study of Answerability](../../ICML2025/interpretability/do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)
+- [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](../../NeurIPS2025/interpretability/a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)
+- [Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+
+<!-- RELATED:END -->

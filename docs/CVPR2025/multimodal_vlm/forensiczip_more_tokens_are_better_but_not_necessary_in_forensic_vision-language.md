@@ -123,3 +123,14 @@ OT 求解开销 $O((T-1) \cdot I_{sk} \cdot (N+1)^2)$，Sinkhorn 20 轮，在 LL
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，但公式密集
 - 价值: ⭐⭐⭐⭐ 对 forensic MLLM 的实际部署有直接意义，training-free 即插即用
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VisionZip: Longer is Better but Not Necessary in Vision Language Models](visionzip_longer_is_better_but_not_necessary_in_vision_language_models.md)
+- [FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [Rethinking Vision-Language Model in Face Forensics: Multi-Modal Interpretable Forged Face Detector](rethinking_vision-language_model_in_face_forensics_multi-modal_interpretable_for.md)
+- [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](../../NeurIPS2025/multimodal_vlm/better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ AdaHuman是一个两阶段pipeline：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个benchmark定量评测、用户研究、重姿态评测、详尽消融、in-the-wild展示，实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，方法描述详细，图表质量高。个别地方有typo
 - 价值: ⭐⭐⭐⭐ 在单图3D人体生成领域推进了state-of-the-art，但推理速度是实际应用的瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution](bridging_diffusion_models_and_3d_representations_a_3d_consis.md)
+- [REPARO: Compositional 3D Assets Generation with Differentiable 3D Layout Alignment](reparo_compositional_3d_assets_generation_with_differentiable_3d_layout_alignmen.md)
+- [MVGBench: a Comprehensive Benchmark for Multi-view Generation Models](mvgbench_a_comprehensive_benchmark_for_multi-view_generation_models.md)
+- [FiffDepth: Feed-forward Transformation of Diffusion-Based Generators for Detailed Depth Estimation](fiffdepth_feed-forward_transformation_of_diffusion-based_generators_for_detailed.md)
+- [A Recipe for Generating 3D Worlds from a Single Image](a_recipe_for_generating_3d_worlds_from_a_single_image.md)
+
+<!-- RELATED:END -->

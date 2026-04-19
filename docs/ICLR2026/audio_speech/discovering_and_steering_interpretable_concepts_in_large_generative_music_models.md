@@ -145,3 +145,15 @@ $$\mathbf{x}' = \mathbf{x} + \alpha \cdot \beta \cdot \mathbf{W}_{d,j}$$
 - 实验充分度: 8/10（多模型、多层、多超参数组合，含人工评估，但仅限 MusicGen）
 - 写作质量: 9/10（行文清晰，图表丰富，流水线各步骤阐述完整）
 - 价值: 8/10（开辟了音乐模型可解释性新方向，steering 应用有实际价值但成功率尚待提升）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
+- [AHAMask: Reliable Task Specification for Large Audio Language Models without Instructions](../../AAAI2026/audio_speech/ahamask_reliable_task_specification_for_large_audio_language.md)
+- [Mind the Gap! Static and Interactive Evaluations of Large Audio Models](../../ACL2025/audio_speech/mind_the_gap_static_and_interactive_evaluations_of_large_audio_models.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [EchoMind: An Interrelated Multi-level Benchmark for Evaluating Empathetic Speech Language Models](echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)
+
+<!-- RELATED:END -->

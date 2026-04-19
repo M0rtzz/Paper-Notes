@@ -146,3 +146,15 @@ ARJudge 在所有微调评估器中最优，在 LLMBar 上比最佳微调基线 
 - **实验充分度**: ⭐⭐⭐⭐ — 5 个测试集、多种基线、消融实验和 case study 全面
 - **写作质量**: ⭐⭐⭐⭐ — 语料库构建流程清晰，图表丰富，但部分内容较冗长
 - **价值**: ⭐⭐⭐⭐ — 为构建更可靠的 LLM 评估器提供了实用框架，代码分析思路有推广价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FCMR: Robust Evaluation of Financial Cross-Modal Multi-Hop Reasoning](fcmr_robust_evaluation_of_financial_cross-modal_multi-hop_reasoning.md)
+- [Multi-Facet Blending for Faceted Query-by-Example Retrieval](multi-facet_blending_for_faceted_query-by-example_retrieval.md)
+- [SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)
+- [InspireDebate: Multi-Dimensional Evaluation-Guided Reasoning for Debating](inspiredebate_multidim_evaluation_debating.md)
+- [SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection](seoe_semantic_eval.md)
+
+<!-- RELATED:END -->

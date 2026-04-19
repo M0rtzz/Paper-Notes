@@ -136,3 +136,15 @@ $$L_{CE} = \text{CrossEntropy}(\hat{S}, S(\mathbf{M})_{>0})$$
 ## 评分 ⭐⭐⭐⭐⭐
 
 定位精准（局部性是关键瓶颈），方案优雅（壳结构分词+双流条件），效果显著（压缩 4x、用户满意度 88.68%、首次 5000 面生成）。新指标 Local Ratio 有普适价值。论文完成度高，是直接网格生成领域的重要推进。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MeshAnything V2: Artist-Created Mesh Generation with Adjacent Mesh Tokenization](meshanything_v2_artist-created_mesh_generation_with_adjacent_mesh_tokenization.md)
+- [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](../../CVPR2025/3d_vision/mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
+- [MeshMamba: State Space Models for Articulated 3D Mesh Generation and Reconstruction](meshmamba_state_space_models_for_articulated_3d_mesh_generation_and_reconstructi.md)
+- [VertexRegen: Mesh Generation with Continuous Level of Detail](vertexregen_mesh_generation_with_continuous_level_of_detail.md)
+- [MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ $$\frac{df(\theta^*_\epsilon, \mathcal{G}^\epsilon)}{d\epsilon}\bigg|_{\epsilon=
 - 实验充分度: ⭐⭐⭐⭐ 5 个数据集、3 种 GNN、3 种评估指标、多种应用场景
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，实验设计与理论紧密对应
 - 价值: ⭐⭐⭐⭐ 为 GNN 的可解释性和鲁棒性分析提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATEX-CF: Attack-Informed Counterfactual Explanations for Graph Neural Networks](../../ICLR2026/ai_safety/atex-cf_attack-informed_counterfactual_explanations_for_graph_neural_networks.md)
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Lyapunov Stable Graph Neural Flow](../../CVPR2025/ai_safety/lyapunov_stable_graph_neural_flow.md)
+- [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
+- [Enhancing Graph Classification Robustness with Singular Pooling](enhancing_graph_classification_robustness_with_singular_pooling.md)
+
+<!-- RELATED:END -->

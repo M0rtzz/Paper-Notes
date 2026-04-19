@@ -148,3 +148,15 @@ SMSD 模块的核心设计：
 - **实用性**: ★★★★☆ — 应用场景广泛（有声书、虚拟助手定制化），但依赖特定预训练编解码器
 - **实验充分度**: ★★★★☆ — 四个测试集覆盖不同评估维度，消融实验充分，但缺乏跨语言评估
 - **写作质量**: ★★★★☆ — 问题定义清晰，方法阐述详细，图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Text-to-Speech for Vietnamese](zero-shot_text-to-speech_for_vietnamese.md)
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [TCSinger 2: Customizable Multilingual Zero-shot Singing Voice Synthesis](tcsinger_2_customizable_multilingual_zero-shot_singing_voice_synthesis.md)
+- [Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](../../ICCV2025/audio_speech/zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+
+<!-- RELATED:END -->

@@ -128,3 +128,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ — 三个任务都有实验但数据量偏小，部分关系类型样本极少
 - **写作质量**: ⭐⭐⭐⭐ — 标注方案描述清晰，实验设计系统
 - **价值**: ⭐⭐⭐ — 对教育NLP和论证挖掘有参考价值，但数据规模限制了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AmbiK: Dataset of Ambiguous Tasks in Kitchen Environment](ambik_dataset_of_ambiguous_tasks_in_kitchen_environment.md)
+- [ChildMandarin: A Comprehensive Mandarin Speech Dataset for Young Children Aged 3-5](childmandarin_a_comprehensive_mandarin_speech_dataset_for_young_children_aged_3-.md)
+- [MockConf: A Student Interpretation Dataset: Analysis, Word- and Span-level Alignment and Baselines](mockconf_a_student_interpretation_dataset_analysis_word-_and_span-level_alignmen.md)
+- [Limited Generalizability in Argument Mining: State-Of-The-Art Models Learn Datasets, Not Arguments](limited_generalizability_in_argument_mining_state-of-the-art_models_learn_datase.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+
+<!-- RELATED:END -->

@@ -178,3 +178,15 @@ $K$ 越大模型越紧凑但保真度略降，$K=10$ 为最佳折中。
 ## 评分 ⭐⭐⭐⭐
 
 扎实的系统性工作，将种子结构+熵编码+多尺度优化三者有机结合，在大规模图像表示任务上取得了存储、速度、质量三方面的显著改进。实验全面，消融充分。但 per-image 优化范式和泛化能力是固有局限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianImage++: Boosted Image Representation and Compression with 2D Gaussian Splatting](../../AAAI2026/3d_vision/gaussianimage_boosted_image_representation_and_compression_with_2d_gaussian_spla.md)
+- [SwiftTailor: Efficient 3D Garment Generation with Geometry Image Representation](swifttailor_efficient_3d_garment_generation_with_geometry_image_representation.md)
+- [GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting](../../ECCV2024/3d_vision/gaussianimage_1000_fps_image_representation_and_compression_by_2d_gaussian_splat.md)
+- [MAGICIAN: Efficient Long-Term Planning with Imagined Gaussians for Active Mapping](magician_efficient_long-term_planning_with_imagined_gaussians_for_active_mapping.md)
+- [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
+
+<!-- RELATED:END -->

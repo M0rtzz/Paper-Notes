@@ -134,3 +134,15 @@ Gödel Agent = 初始策略 $\pi_0$ + 自引用学习算法 $I_0$。形式化为
 - 实验充分度: ⭐⭐⭐⭐ 4 个benchmark + 详细消融 + Game of 24 案例分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论形式化清晰，与 Gödel Machine 的类比恰当
 - 价值: ⭐⭐⭐⭐⭐ 为 Agent 自改进开辟了全新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SMART: Self-Aware Agent for Tool Overuse Mitigation](smart_self-aware_agent_for_tool_overuse_mitigation.md)
+- [Agentic Knowledgeable Self-Awareness](agentic_knowledgeable_self-awareness.md)
+- [Self-Taught Agentic Long-Context Understanding](self_taught_agentic_long_ctx.md)
+- [InfiAgent: Self-Evolving Pyramid Agent Framework for Infinite Scenarios](../../ICLR2026/llm_agent/infiagent_self-evolving_pyramid_agent_framework_for_infinite_scenarios.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ tags:
 | 实验完整度 | ⭐⭐⭐ | 理论驱动为主，经验验证数据稀疏 |
 | 写作质量 | ⭐⭐⭐⭐ | 核心论证逻辑清晰，治理讨论有深度 |
 | 实用性 | ⭐⭐⭐⭐⭐ | 对 AI 战略、投资决策、治理政策有直接参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Correlated Errors in Large Language Models](correlated_errors_in_large_language_models.md)
+- [Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models](../../ACL2025/llm_evaluation/retrieval_models_arent_tool-savvy_benchmarking_tool_retrieval_for_large_language.md)
+- [Learning Distribution-Wise Control in Representation Space for Language Models](learning_distribution-wise_control_in_representation_space_for_language_models.md)
+- [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](../../ACL2025/llm_evaluation/codemenv_benchmarking_large_language_models_on_code_migration.md)
+
+<!-- RELATED:END -->

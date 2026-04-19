@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个扩散模型 + 大量基线 + 鲁棒性测试 + 详细消融
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，理论推导严谨，实验设计合理
 - 价值: ⭐⭐⭐⭐⭐ 重要的安全任务 + 优雅的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+- [One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting](../../NeurIPS2025/image_generation/one_stone_with_two_birds_a_null-text-null_frequency-aware_diffusion_models_for_t.md)
+- [Text Embedding Knows How to Quantize Text-Guided Diffusion Models](../../ICCV2025/image_generation/text_embedding_knows_how_to_quantize_text-guided_diffusion_models.md)
+- [Nonparametric Identification of Latent Concepts](nonparametric_identification_of_latent_concepts.md)
+- [Preference Adaptive and Sequential Text-to-Image Generation](preference_adaptive_and_sequential_text-to-image_generation.md)
+
+<!-- RELATED:END -->

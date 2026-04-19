@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 零样本+学习型+深度估计全面验证，可视化丰富
 - 写作质量: ⭐⭐⭐⭐⭐ 类比驱动的叙事优雅，图表清晰
 - 价值: ⭐⭐⭐⭐⭐ 改变CVC预训练模型的使用范式，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVSAnywhere: Zero-Shot Multi-View Stereo](mvsanywhere_zero-shot_multi-view_stereo.md)
+- [GenPC: Zero-shot Point Cloud Completion via 3D Generative Priors](genpc_zero-shot_point_cloud_completion_via_3d_generative_priors.md)
+- [FoundationStereo: Zero-Shot Stereo Matching](foundationstereo_zero-shot_stereo_matching.md)
+- [Zero-Shot Multi-Object Scene Completion](../../ECCV2024/3d_vision/zero-shot_multi-object_scene_completion.md)
+- [3D Gaussian Inpainting with Depth-Guided Cross-View Consistency](3d_gaussian_inpainting_with_depth-guided_cross-view_consistency.md)
+
+<!-- RELATED:END -->

@@ -172,3 +172,15 @@ tags:
 | 实用价值 | 4 | 对模型选择和人机协作有实际指导意义 |
 | 写作质量 | 4 | 结构清晰，案例丰富，可读性强 |
 | **综合** | **3.5** | 理念有价值，但需更严格的验证框架 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Decomposition of Activations (ITDA): A Scalable Approach to Interpreting Large Language Models](inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)
+- [Cracking Factual Knowledge: A Comprehensive Analysis of Degenerate Knowledge Neurons in Large Language Models](../../ACL2025/interpretability/cracking_factual_knowledge_a_comprehensive_analysis_of_degenerate_knowledge_neur.md)
+- [The Trilemma of Truth in Large Language Models](../../NeurIPS2025/interpretability/the_trilemma_of_truth_in_large_language_models.md)
+- [Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework](../../ACL2025/interpretability/towards_explainable_temporal_reasoning_in_large_language_models_a_structure-awar.md)
+- [HSKBenchmark: Modeling and Benchmarking Chinese Second Language Acquisition in Large Language Models through Curriculum Tuning](../../AAAI2026/interpretability/hskbenchmark_modeling_and_benchmarking_chinese_second_language_acquisition_in_la.md)
+
+<!-- RELATED:END -->

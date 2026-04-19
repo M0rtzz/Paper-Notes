@@ -112,3 +112,15 @@ Stage 1: 标准SFT（交叉熵）。Stage 2: DPO + NLL 混合对比损失，$\be
 - 实验充分度: ⭐⭐⭐⭐ 两个环境、三个 VLM、详细消融
 - 写作质量: ⭐⭐⭐⭐ 威胁模型清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐⭐ 揭示了重大安全风险，对具身 AI 部署有直接警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VPI-Bench: Visual Prompt Injection Attacks for Computer-Use Agents](vpi-bench_visual_prompt_injection_attacks_for_computer-use_agents.md)
+- [IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding](../../CVPR2026/ai_safety/iag_input-aware_backdoor_attack_on_vlm-based_visual_grounding.md)
+- [Less is More: Towards Simple Graph Contrastive Learning](less_is_more_towards_simple_graph_contrastive_learning.md)
+- [Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
+- [An LLM-Based Simulation Framework for Embodied Conversational Agents in Psychological Counseling](../../AAAI2026/ai_safety/an_llm-based_simulation_framework_for_embodied_conversationa.md)
+
+<!-- RELATED:END -->

@@ -187,3 +187,15 @@ ImageSentinel 包含三个核心组件：**密钥生成**、**哨兵图像合成
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集、多 RAIG 系统、多基线对比、消融实验和自适应攻击评估，但缺少更大规模验证
 - 写作质量: ⭐⭐⭐⭐ — 问题形式化清晰，方法阐述系统，图示直观
 - 价值: ⭐⭐⭐⭐ — 解决了 RAIG 领域的实际痛点，但哨兵图像中的显式文字嵌入是明显弱点，限制了实际部署的安全性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?](can_knowledge-graph-based_retrieval_augmented_generation_really_retrieve_what_yo.md)
+- [GenIR: Generative Visual Feedback for Mental Image Retrieval](genir_generative_visual_feedback_for_mental_image_retrieval.md)
+- [Instance-Level Composed Image Retrieval](instance-level_composed_image_retrieval.md)
+- [GarmentAligner: Text-to-Garment Generation via Retrieval-augmented Multi-level Corrections](../../ECCV2024/image_generation/garmentaligner_text-to-garment_generation_via_retrieval-augmented_multi-level_co.md)
+- [Anti-Tamper Protection for Unauthorized Individual Image Generation](../../ICCV2025/image_generation/anti-tamper_protection_for_unauthorized_individual_image_generation.md)
+
+<!-- RELATED:END -->

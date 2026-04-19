@@ -159,3 +159,15 @@ $$\mathbf{s}_{\mathbf{A}}(\mathbf{x}) = \frac{\mathbf{A}}{\sqrt{p}} \sigma\left(
 - 实验充分度: ⭐⭐⭐⭐ — U-Net + RFNN 双重验证，系统变化 $n$ 和 $p$，但仅在低分辨率灰度图上验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论与实验结合紧密，相图可视化直觉清晰，符号体系一致
 - 价值: ⭐⭐⭐⭐ — 为扩散模型训练的早停策略提供理论依据，对数据稀缺领域（如科学数据生成）有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Diffusion Model Guidance through Calibration and Regularization](enhancing_diffusion_model_guidance_through_calibration_and_regularization.md)
+- [Understanding Flatness in Generative Models: Its Role and Benefits](../../ICCV2025/image_generation/understanding_flatness_in_generative_models_its_role_and_benefits.md)
+- [When Diffusion Models Memorize: Inductive Biases in Probability Flow of Minimum-Norm Shallow Neural Nets](../../ICML2025/image_generation/when_diffusion_models_memorize_inductive_biases_in_probability_flow_of_minimum-n.md)
+- [Why Knowledge Distillation Works in Generative Models: A Minimal Working Explanation](why_knowledge_distillation_works_in_generative_models_a_minimal_working_explanat.md)
+- [Continuous Semi-Implicit Models](../../ICML2025/image_generation/continuous_semi-implicit_models.md)
+
+<!-- RELATED:END -->

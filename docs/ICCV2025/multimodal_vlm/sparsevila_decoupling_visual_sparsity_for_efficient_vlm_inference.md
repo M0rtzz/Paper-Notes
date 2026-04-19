@@ -172,3 +172,15 @@ SparseVILA检索出的token呈现两种角色：
 - 实验：⭐⭐⭐⭐⭐（图像9种benchmark+视频4种+多模型+多轮评测+端到端实测，极其完整）
 - 写作：⭐⭐⭐⭐⭐（动机-方法-实验的逻辑链极为清晰，oracle实验令人信服）
 - 实用性：⭐⭐⭐⭐⭐（免训练+架构无关+2.6×端到端加速，直接可集成到生产系统）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](llavaprumerge_adaptive_token_reduction_for_efficient_large_m.md)
+- [SparseMM: Head Sparsity Emerges from Visual Concept Responses in MLLMs](sparsemm_head_sparsity_emerges_from_visual_concept_responses.md)
+- [Feather the Throttle: Revisiting Visual Token Pruning for Vision-Language Model Acceleration](feather_the_throttle_revisiting_visual_token_pruning_for_vision-language_model_a.md)
+- [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension](scaling_inferencetime_search_with_vision_value_model_for_imp.md)
+
+<!-- RELATED:END -->

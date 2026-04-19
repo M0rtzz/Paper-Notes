@@ -173,3 +173,15 @@ $$\mathcal{L}_n = \bar{\Phi}(\nu, h) + V_{n+1}(\bar{F}(\nu, h))$$
 | 实用价值 | ⭐⭐⭐ | 框架优雅但应用场景需进一步开发 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，理论与实验并重 |
 | **总分** | **⭐⭐⭐⭐** | 理论扎实的开创性工作，为 MFOS 计算方法奠基 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rolling the DICE on Idiomaticity: How LLMs Fail to Grasp Context](../../ACL2025/robotics/dice_idiomaticity.md)
+- [Machine Learning from Explanations](machine_learning_from_explanations.md)
+- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](../../NeurIPS2025/robotics/understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+- [BiAssemble: Learning Collaborative Affordance for Bimanual Geometric Assembly](biassemble_learning_collaborative_affordance_for_bimanual_geometric_assembly.md)
+- [Efficient Robotic Policy Learning via Latent Space Backward Planning](efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+
+<!-- RELATED:END -->

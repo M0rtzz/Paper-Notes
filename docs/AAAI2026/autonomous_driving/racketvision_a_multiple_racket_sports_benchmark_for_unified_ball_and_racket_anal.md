@@ -172,3 +172,15 @@ $$\{(x_i, y_i)\}_{i=1}^{5} \in \mathbb{R}^{10}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ （三任务全面评估，多维度分析）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，分析深入）
 - 价值: ⭐⭐⭐⭐ （数据集和融合洞察对社区有重要贡献）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniOcc: A Unified Benchmark for Occupancy Forecasting and Prediction in Autonomous Driving](../../ICCV2025/autonomous_driving/uniocc_a_unified_benchmark_for_occupancy_forecasting_and_prediction_in_autonomou.md)
+- [TSBOW: Traffic Surveillance Benchmark for Occluded Vehicles Under Various Weather Conditions](tsbow_traffic_surveillance_benchmark_for_occluded_vehicles_under_various_weather.md)
+- [When Person Re-Identification Meets Event Camera: A Benchmark Dataset and An Attribute-guided Re-Identification Framework](when_person_re-identification_meets_event_camera_a_benchmark_dataset_and_an_attr.md)
+- [UniTraj: A Unified Framework for Scalable Vehicle Trajectory Prediction](../../ECCV2024/autonomous_driving/unitraj_a_unified_framework_for_scalable_vehicle_trajectory_prediction.md)
+- [An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving](../../CVPR2026/autonomous_driving/an_instance-centric_panoptic_occupancy_prediction_benchmark_for_autonomous_drivi.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ K=5 即可达到峰值性能的 98%，性能随 K 增大变化极小（<0.015 F1
 - 实验充分度: ⭐⭐⭐⭐⭐ — 18种配置 + 4种启发式方法 + 3维迁移实验 + K值消融 + NDCG排序分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，图表丰富，分析深入
 - 价值: ⭐⭐⭐⭐ — 提供了实用的攻击无关检测框架，计算效率优势明显，但需白盒访问限制了部分场景的应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Adversarial Transferability via Ensemble Non-Attention](boosting_adversarial_transferability_via_ensemble_non-attention.md)
+- [Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](../../ECCV2024/others/wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)
+- [On the Importance of Gaussianizing Representations](../../ICML2025/others/on_the_importance_of_gaussianizing_representations.md)
+- [Controllable Financial Market Generation with Diffusion Guided Meta Agent](controllable_financial_market_generation_with_diffusion_guided_meta_agent.md)
+- [Verification-Guided Context Optimization for Tool Calling via Hierarchical LLMs-as-editors](verification-guided_context_optimization_for_tool_calling_via_hierarchical_llms-.md)
+
+<!-- RELATED:END -->

@@ -196,3 +196,15 @@ SciVid 的评估范式遵循统一的表示学习流程：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6 类 backbone × 5 个任务的全矩阵评估，时序消融、readout 消融、规模消融均覆盖
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，表格和图示丰富，关键结论一目了然
 - **价值**: ⭐⭐⭐⭐ — 为科学领域使用 ViFM 提供了重要参考，但实际贡献是基准而非方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](../../NeurIPS2025/medical_imaging/endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
+- [Adaptive Domain Shift in Diffusion Models for Cross-Modality Image Translation](../../ICLR2026/medical_imaging/adaptive_domain_shift_in_diffusion_models_for_cross-modality_image_translation.md)
+- [PVChat: Personalized Video Chat with One-Shot Learning](pvchat_personalized_video_chat_with_one-shot_learning.md)
+- [Towards Omni-RAG: Comprehensive Retrieval-Augmented Generation for Large Language Models in Medical Applications](../../ACL2025/medical_imaging/omni_rag_medical.md)
+- [ProGait: A Multi-Purpose Video Dataset and Benchmark for Transfemoral Prosthesis Users](progait_a_multi-purpose_video_dataset_and_benchmark_for_transfemoral_prosthesis_.md)
+
+<!-- RELATED:END -->

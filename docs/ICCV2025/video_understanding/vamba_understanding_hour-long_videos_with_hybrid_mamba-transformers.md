@@ -152,3 +152,15 @@ Vamba 在 LVBench 上超越所有高效 LMM **4.3%**，甚至超过基线 Qwen2-
 - **实验充分度**: ⭐⭐⭐⭐⭐ 消融全面，涵盖小时级到短视频的广泛基准，效率分析详尽
 - **写作质量**: ⭐⭐⭐⭐⭐ 结构清晰，公式推导完整，与基线对比合理
 - **价值**: ⭐⭐⭐⭐ 为长视频 LMM 的效率问题提供了新的架构解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMiner: Iteratively Grounding Key Frames of Hour-Long Videos via Tree-based Group Relative Policy Optimization](videominer_iteratively_grounding_key_frames_of_hour-long_videos_via_tree-based_g.md)
+- [Unleashing Hour-Scale Video Training for Long Video-Language Understanding](../../NeurIPS2025/video_understanding/unleashing_hour-scale_video_training_for_long_video-language_understanding.md)
+- [VideoLLaMB: Long Streaming Video Understanding with Recurrent Memory Bridges](videollamb_long_streaming_video_understanding_with_recurrent_memory_bridges.md)
+- [HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics](hermes_temporal-coherent_long-form_understanding_with_episodes_and_semantics.md)
+- [Estimating 2D Camera Motion with Hybrid Motion Basis](estimating_2d_camera_motion_with_hybrid_motion_basis.md)
+
+<!-- RELATED:END -->

@@ -113,3 +113,15 @@ Wikitext PPL 下降 9.2%，下游平均提升 2.45%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 550M-7B 多规模+密集+MoE，梯度可视化和消融详尽
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，理论部分有形式化精度，首层处理动机略显粗糙
 - 价值: ⭐⭐⭐⭐⭐ 零计算开销的 2-3% 提升对工业界 LLM 训练有即时应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpikCommander: A High-Performance Spiking Transformer with Multi-View Learning for Efficient Speech Command Recognition](../../AAAI2026/llm_evaluation/spikcommander_a_high-performance_spiking_transformer_with_multi-view_learning_fo.md)
+- [AdaBet: Gradient-free Layer Selection for Efficient Training of Deep Neural Networks](../../CVPR2026/llm_evaluation/adabet_gradient-free_layer_selection_for_efficient_training_of_deep_neural_netwo.md)
+- [AdaSTaR: Adaptive Data Sampling for Training Self-Taught Reasoners](adastar_adaptive_data_sampling_for_training_self-taught_reasoners.md)
+- [Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training](exploiting_vocabulary_frequency_imbalance_in_language_model_pre-training.md)
+- [Efficient Semantic Uncertainty Quantification in Language Models via Diversity-Steered Sampling](efficient_semantic_uncertainty_quantification_in_language_models_via_diversity-s.md)
+
+<!-- RELATED:END -->

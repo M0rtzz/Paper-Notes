@@ -150,3 +150,15 @@ $$\mathcal{L}_{st\text{-}2} = \mathcal{L}_{ce}(\hat{y}_{des}, y_{des})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ (9 基准 + 检测/定位/可解释性三维评估 + 人类评估)
 - 写作质量: ⭐⭐⭐⭐⭐ (动机清晰，从观察到方案的推导逻辑严谨)
 - 价值: ⭐⭐⭐⭐⭐ (对 IFDL 领域有范式级贡献)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction](towards_highly_transferable_vision-language_attack_via_semantic-augmented_dynami.md)
+- [V-Attack: Targeting Disentangled Value Features for Controllable Adversarial Attacks on LVLMs](v-attack_targeting_disentangled_value_features_for_controllable_adversarial_atta.md)
+- [PinPoint: Evaluation of Composed Image Retrieval with Explicit Negatives, Multi-Image Queries, and Paraphrase Testing](pinpoint_evaluation_of_composed_image_retrieval_with_explicit_negatives_multi-im.md)
+- [Noise-Assisted Prompt Learning for Image Forgery Detection and Localization](../../ECCV2024/ai_safety/noise-assisted_prompt_learning_for_image_forgery_detection_and_localization.md)
+- [Tutor-Student Reinforcement Learning: A Dynamic Curriculum for Robust Deepfake Detection](tutor-student_reinforcement_learning_a_dynamic_curriculum_for_robust_deepfake_de.md)
+
+<!-- RELATED:END -->

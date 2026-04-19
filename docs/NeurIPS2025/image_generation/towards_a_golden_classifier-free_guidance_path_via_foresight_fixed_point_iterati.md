@@ -181,3 +181,15 @@ FSG是纯推理时方法，无需训练。核心决策：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 数据集、模型、采样器、协同方法的组合覆盖极为全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 从统一框架到具体算法的推导层层递进，图表直观
 - **价值**: ⭐⭐⭐⭐⭐ — 为CFG这一核心组件提供了深刻理解和系统改进方案，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Studying Classifier(-Free) Guidance From A Classifier-Centric Perspective](../../AAAI2026/image_generation/studying_classifier-free_guidance_from_a_classifier-centric_perspective.md)
+- [CFG-Ctrl: Control-Based Classifier-Free Diffusion Guidance](../../CVPR2026/image_generation/cfg-ctrl_control-based_classifier-free_diffusion_guidance.md)
+- [DICE: Distilling Classifier-Free Guidance into Text Embeddings](../../AAAI2026/image_generation/dice_distilling_classifier-free_guidance_into_text_embedding.md)
+- [TeEFusion: Blending Text Embeddings to Distill Classifier-Free Guidance](../../ICCV2025/image_generation/teefusion_blending_text_embeddings_to_distill_classifier-free_guidance.md)
+- [Classifier-Free Guidance inside the Attraction Basin May Cause Memorization](../../CVPR2025/image_generation/classifier-free_guidance_inside_the_attraction_basin_may_cause_memorization.md)
+
+<!-- RELATED:END -->

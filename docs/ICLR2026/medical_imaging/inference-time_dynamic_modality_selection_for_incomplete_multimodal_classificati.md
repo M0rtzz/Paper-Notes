@@ -134,3 +134,15 @@ PolyMNIST 80%缺失：DyMo超OnlineMAE +5.67%；DVM全表缺失：超ModDrop +4.
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集+9种SOTA对比+完整消融+可视化分析
 - 写作质量: ⭐⭐⭐⭐ 理论与实验结合紧密，公式推导清晰
 - 价值: ⭐⭐⭐⭐ 不完整多模态学习的通用框架，医学图像场景直接适用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DriftLite: Lightweight Drift Control for Inference-Time Scaling of Diffusion Models](driftlite_lightweight_drift_control_for_inference-time_scaling_of_diffusion_mode.md)
+- [TIP: Tabular-Image Pre-training for Multimodal Classification with Incomplete Data](../../ECCV2024/medical_imaging/tip_tabular-image_pre-training_for_multimodal_classification_with_incomplete_dat.md)
+- [DistMLIP: A Distributed Inference Platform for Machine Learning Interatomic Potentials](distmlip_a_distributed_inference_platform_for_machine_learning_interatomic_poten.md)
+- [MIRAGE: Scaling Test-Time Inference with Parallel Graph-Retrieval-Augmented Reasoning Chains](../../AAAI2026/medical_imaging/mirage_scaling_test-time_inference_with_parallel_graph-retrieval-augmented_reaso.md)
+- [Adaptive Domain Shift in Diffusion Models for Cross-Modality Image Translation](adaptive_domain_shift_in_diffusion_models_for_cross-modality_image_translation.md)
+
+<!-- RELATED:END -->

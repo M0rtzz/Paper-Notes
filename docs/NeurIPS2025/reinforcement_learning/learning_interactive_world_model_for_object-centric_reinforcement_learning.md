@@ -128,3 +128,15 @@ FIOC-WM 分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐ — 多环境+全面消融+泛化测试
 - 写作质量: ⭐⭐⭐⭐ — 公式化清晰，框架图直观
 - 价值: ⭐⭐⭐⭐ — 对 Object-Centric RL 有实质推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-Centric World Models for Causality-Aware Reinforcement Learning](../../AAAI2026/reinforcement_learning/object-centric_world_models_for_causality-aware_reinforcement_learning.md)
+- [Bootstrap Off-policy with World Model](boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [Bootstrap Off-policy with World Model (BOOM)](bootstrap_off-policy_with_world_model.md)
+- [Object-Centric Latent Action Learning](../../AAAI2026/reinforcement_learning/object-centric_latent_action_learning.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](real-world_reinforcement_learning_of_active_perception_behaviors.md)
+
+<!-- RELATED:END -->

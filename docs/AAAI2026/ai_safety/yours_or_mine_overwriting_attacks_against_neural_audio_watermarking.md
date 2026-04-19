@@ -212,3 +212,15 @@ $$x_w^{(N)} = (\mathcal{E}_N \circ \mathcal{E}_{N-1} \circ \cdots \circ \mathcal
 - 实验充分度: ⭐⭐⭐⭐ — 3种方法 × 3种威胁模型 × 多种设置，BER分布分析细致
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，threat model 定义严谨，motivation 有说服力
 - 价值: ⭐⭐⭐⭐⭐ — 揭示了神经音频水印的系统性安全缺陷，对领域有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hashed Watermark as a Filter: A Unified Defense Against Forging and Overwriting Attacks in Neural Network Watermarking](hashed_watermark_as_a_filter_defeating_forging_and_overwriting_attacks_in_weight.md)
+- [Robust Spiking Neural Networks Against Adversarial Attacks](../../ICLR2026/ai_safety/robust_spiking_neural_networks_against_adversarial_attacks.md)
+- [StyleBreak: Revealing Alignment Vulnerabilities in Large Audio-Language Models via Style-Aware Audio Jailbreak](stylebreak_revealing_alignment_vulnerabilities_in_large_audio-language_models_vi.md)
+- [Detect All-Type Deepfake Audio: Wavelet Prompt Tuning for Enhanced Auditory Perception](detect_all-type_deepfake_audio_wavelet_prompt_tuning_for_enhanced_auditory_perce.md)
+- [RegionMarker: A Region-Triggered Semantic Watermarking Framework for Embedding-as-a-Service](regionmarker_a_region-triggered_semantic_watermarking_framework_for_embedding-as.md)
+
+<!-- RELATED:END -->

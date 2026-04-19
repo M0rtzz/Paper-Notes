@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 充分/必要性消融 + 鲁棒性测试 + 信念偏差分析 + 15 种格式 + 4 种架构
 - 写作质量: ⭐⭐⭐⭐⭐ 方法论严谨，发现描述清晰，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 对理解 LLM 推理本质（规则 vs 模式、知识 vs 推理的纠缠）有重要理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mechanistic Interpretability of Emotion Inference in Large Language Models](mechanistic_interpretability_of_emotion_inference_in_large_language_models.md)
+- [Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework](towards_explainable_temporal_reasoning_in_large_language_models_a_structure-awar.md)
+- [Separating Tongue from Thought: Activation Patching Reveals Language-Agnostic Concept Representations in Transformers](separating_tongue_from_thought_activation_patching_reveals_language-agnostic_con.md)
+- [To Steer or Not to Steer? Mechanistic Error Reduction with Abstention for Language Models](../../ICML2025/interpretability/to_steer_or_not_to_steer_mechanistic_error_reduction_with_abstention_for_languag.md)
+- [Inference-Time Decomposition of Activations (ITDA): A Scalable Approach to Interpreting Large Language Models](../../ICML2025/interpretability/inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)
+
+<!-- RELATED:END -->

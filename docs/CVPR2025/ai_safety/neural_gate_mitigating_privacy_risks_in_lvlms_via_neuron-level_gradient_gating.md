@@ -122,3 +122,15 @@ PrivacyPair 数据构建 → 逐层可学习向量 $m_l$ 量化特征变化 → 
 - 实验充分度: ⭐⭐⭐⭐ 2 个模型、6 个 benchmark、详细消融和分析
 - 写作质量: ⭐⭐⭐⭐ 神经元分析图表丰富清晰
 - 价值: ⭐⭐⭐⭐ LVLM 隐私保护的实用方案，分析性发现有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](../../ECCV2024/ai_safety/unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
+- [FedMeNF: Privacy-Preserving Federated Meta-Learning for Neural Fields](../../ICCV2025/ai_safety/fedmenf_privacy-preserving_federated_meta-learning_for_neural_fields.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](../../NeurIPS2025/ai_safety/mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [Lyapunov Stable Graph Neural Flow](lyapunov_stable_graph_neural_flow.md)
+- [The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](../../ICML2025/ai_safety/the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
+
+<!-- RELATED:END -->

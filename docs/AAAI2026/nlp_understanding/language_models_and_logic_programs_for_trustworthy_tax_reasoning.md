@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8+模型×5+方法×多种组合，消融详尽，经济分析完整
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，方法递进合理，经济学视角引入自然
 - 价值: ⭐⭐⭐⭐ 对法律AI和神经符号系统有重要启示，break-even price框架可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Syllogistic Reasoning in LLMs from Formal and Natural Language Perspectives](understanding_syllogistic_reasoning_in_llms_from_formal_and_natural_language_per.md)
+- [Rethinking Semantic Parsing for Large Language Models: Enhancing LLM Performance with Semantic Hints](../../ACL2025/nlp_understanding/rethinking_semantic_parsing_for_large_language_models_enhancing_llm_performance_.md)
+- [Generating Diverse Training Samples for Relation Extraction with Large Language Models](../../ACL2025/nlp_understanding/generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+- [Sentiment Reasoning for Healthcare](../../ACL2025/nlp_understanding/sentiment_reasoning_for_healthcare.md)
+- [Multi-Hop Reasoning for Question Answering with Hyperbolic Representations](../../ACL2025/nlp_understanding/multi-hop_reasoning_for_question_answering_with_hyperbolic_representations.md)
+
+<!-- RELATED:END -->

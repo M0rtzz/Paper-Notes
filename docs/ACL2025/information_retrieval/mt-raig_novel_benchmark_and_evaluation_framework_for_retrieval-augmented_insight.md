@@ -148,3 +148,15 @@ MT-RAIG Eval在两个维度上均大幅超越现有指标，与人类判断的Pe
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖5种检索器、11种生成器、元评估、多维分析实验，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，构建流程详尽，图表丰富
 - 价值: ⭐⭐⭐⭐ — 为表格推理社区提供了高质量的挑战性基准和可靠评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation](memerag_a_multilingual_end-to-end_meta-evaluation_benchmark_for_retrieval_augmen.md)
+- [Unanswerability Evaluation for Retrieval Augmented Generation](unanswerability_evaluation_for_retrieval_augmented_generation.md)
+- [GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation](garage_a_benchmark_with_grounding_annotations_for_rag_evaluation.md)
+- [FlexRAG: A Flexible and Comprehensive Framework for Retrieval-Augmented Generation](flexrag_a_flexible_and_comprehensive_framework_for_retrieval-augmented_generatio.md)
+- [HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation](hoh_a_dynamic_benchmark_for_evaluating_the_impact_of_outdated_information_on_ret.md)
+
+<!-- RELATED:END -->

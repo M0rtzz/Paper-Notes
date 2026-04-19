@@ -121,3 +121,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ (7模型×6语言×1319实体×450句子≈2500万数据点，分析极为全面)
 - **写作质量**: ⭐⭐⭐⭐ (方法清晰，可视化丰富，但论文较长)
 - **价值**: ⭐⭐⭐⭐ (对AI公平性和LLM可信度研究有重要参考价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Variational Approach for Mitigating Entity Bias in Relation Extraction](a_variational_approach_for_mitigating_entity_bias_in_relation_extraction.md)
+- [Sentiment Reasoning for Healthcare](sentiment_reasoning_for_healthcare.md)
+- [Dynamic Order Template Prediction for Generative Aspect-Based Sentiment Analysis](dot_absa_template.md)
+- [SynGraph: A Dynamic Graph-LLM Synthesis Framework for Sparse Streaming User Sentiment Analysis](syngraph_a_dynamic_graph-llm_synthesis_framework_for_sparse_streaming_user_senti.md)
+- [Adapting Psycholinguistic Research for LLMs: Gender-Inclusive Language in a Coreference Context](adapting_psycholinguistic_research_for_llms_gender-inclusive_language_in_a_coref.md)
+
+<!-- RELATED:END -->

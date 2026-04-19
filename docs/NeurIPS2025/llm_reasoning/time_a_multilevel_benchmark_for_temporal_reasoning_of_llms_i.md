@@ -119,3 +119,15 @@ TimE 由三个子数据集组成：(1) TimE-Wiki（13,848 QA）——基于 Wiki
 - 实验充分度: ⭐⭐⭐⭐⭐ 24个模型 × 11个子任务 × 3个数据集的全面评估
 - 写作质量: ⭐⭐⭐⭐ 任务定义清晰，数据构建流程完整
 - 价值: ⭐⭐⭐⭐ 揭示了 LLM 时间推理的根本性缺陷，为社区提供了重要评估工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics](realmath_a_continuous_benchmark_for_evaluating_language_models_on_research-level.md)
+- [Putnam-AXIOM: A Functional & Static Benchmark for Measuring Higher Level Mathematical Reasoning in LLMs](../../ICML2025/llm_reasoning/putnam-axiom_a_functional_and_static_benchmark_for_measuring_higher_level_mathem.md)
+- [No Soundness in the Real World: On the Challenges of the Verification of Deployed Neural Networks](../../ICML2025/llm_reasoning/no_soundness_in_the_real_world_on_the_challenges_of_the_verification_of_deployed.md)
+- [Segment Policy Optimization: Effective Segment-Level Credit Assignment in RL for Large Language Models](segment_policy_optimization_effective_segment-level_credit_assignment_in_rl_for_.md)
+- [笔记6：Self-Evaluating LLMs - 多步任务的步级置信度估计](value-guided_search_for_efficient_chain-of-thought_reasoning.md)
+
+<!-- RELATED:END -->

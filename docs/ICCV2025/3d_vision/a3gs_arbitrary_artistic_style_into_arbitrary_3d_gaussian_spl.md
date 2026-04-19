@@ -81,3 +81,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅基于摘要，缺少全文定量数据
 - 写作质量: ⭐⭐⭐ 摘要清晰，但无法评估全文
 - 价值: ⭐⭐⭐⭐ 10秒风格化对元宇宙应用有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Arbitrary-Scale 3D Gaussian Super-Resolution](../../AAAI2026/3d_vision/arbitrary-scale_3d_gaussian_super-resolution.md)
+- [Tune-Your-Style: Intensity-Tunable 3D Style Transfer with Gaussian Splatting](tune-your-style_intensity-tunable_3d_style_transfer_with_gaussian_splatting.md)
+- [Styl3R: Instant 3D Stylized Reconstruction for Arbitrary Scenes and Styles](../../NeurIPS2025/3d_vision/styl3r_instant_3d_stylized_reconstruction_for_arbitrary_scenes_and_styles.md)
+- [Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction](curve-aware_gaussian_splatting_for_3d_parametric_curve_reconstruction.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+
+<!-- RELATED:END -->

@@ -183,3 +183,15 @@ ETVA分两阶段工作：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7种baseline指标对比、详细消融、15个模型评测、人类标注验证，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，C1/C2挑战框架有说服力，案例分析直观
 - **价值**: ⭐⭐⭐⭐⭐ — 为T2V评估提供了远超现有指标的方法，构建的benchmark对社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionAgent: Fine-grained Controllable Video Generation via Motion Field Agent](motionagent_fine-grained_controllable_video_generation_via_motion_field_agent.md)
+- [Can Text-to-Video Generation Help Video-Language Alignment?](../../CVPR2025/video_generation/can_text-to-video_generation_help_video-language_alignment.md)
+- [WorldScore: A Unified Evaluation Benchmark for World Generation](worldscore_a_unified_evaluation_benchmark_for_world_generation.md)
+- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](../../AAAI2026/video_generation/motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
+- [DreamRunner: Fine-Grained Compositional Story-to-Video Generation with Retrieval-Augmented Motion Adaptation](../../AAAI2026/video_generation/dreamrunner_fine-grained_compositional_story-to-video_genera.md)
+
+<!-- RELATED:END -->

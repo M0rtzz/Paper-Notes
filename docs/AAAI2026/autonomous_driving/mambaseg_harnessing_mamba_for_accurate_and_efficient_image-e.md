@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融实验非常系统（模块级+子组件级+融合方法对比+效率对比），但仅两个驾驶数据集，缺少其他场景验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表规范，公式推导完整，但 Related Work 偏简略
 - 价值: ⭐⭐⭐⭐ 在 RGB-Event 分割这个小方向上有明确推进，效率优势明显，但受限于事件相机的实际应用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlashCap: Millisecond-Accurate Human Motion Capture via Flashing LEDs and Event-Based Vision](../../CVPR2026/autonomous_driving/flashcap_millisecond-accurate_human_motion_capture_via_flashing_leds_and_event-b.md)
+- [CAWM-Mamba: A Unified Model for Infrared-Visible Image Fusion and Compound Adverse Weather Restoration](../../CVPR2025/autonomous_driving/cawm-mamba_a_unified_model_for_infrared-visible_image_fusion_and_compound_advers.md)
+- [StreamForest: Efficient Online Video Understanding with Persistent Event Memory](../../NeurIPS2025/autonomous_driving/streamforest_efficient_online_video_understanding_with_persistent_event_memory.md)
+- [Reliability in Semantic Segmentation: Can We Use Synthetic Data?](../../ECCV2024/autonomous_driving/reliability_in_semantic_segmentation_can_we_use_synthetic_data.md)
+- [Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification](hierarchical_prompt_learning_for_image-_and_text-based_person_re-identification.md)
+
+<!-- RELATED:END -->

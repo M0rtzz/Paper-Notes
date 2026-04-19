@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Waymo标准基准上的全面评估，加上新提出的评估维度
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述简洁
 - 价值: ⭐⭐⭐⭐ 30次引用，对自动驾驶仿真领域有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldRFT: Latent World Model Planning with Reinforcement Fine-Tuning for Autonomous Driving](../../AAAI2026/autonomous_driving/worldrft_latent_world_model_planning_with_reinforcement_fine-tuning_for_autonomo.md)
+- [SMART-R1: Advancing Multi-agent Traffic Simulation via R1-Style Reinforcement Fine-Tuning](../../ICLR2026/autonomous_driving/advancing_multi-agent_traffic_simulation_via_r1-style_reinforcement_fine-tuning.md)
+- [AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning](../../NeurIPS2025/autonomous_driving/autovla_a_vision-language-action_model_for_end-to-end_autonomous_driving_with_ad.md)
+- [Neural Volumetric World Models for Autonomous Driving](neural_volumetric_world_models_for_autonomous_driving.md)
+- [Reason2Drive: Towards Interpretable and Chain-based Reasoning for Autonomous Driving](reason2drive_towards_interpretable_and_chain-based_reasoning_for_autonomous_driv.md)
+
+<!-- RELATED:END -->

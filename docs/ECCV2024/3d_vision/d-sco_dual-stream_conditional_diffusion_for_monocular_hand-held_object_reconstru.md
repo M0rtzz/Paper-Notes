@@ -135,3 +135,15 @@ DexYCB 上 F-5 0.63 vs gSDF 的 0.44（+43%）。
 - 实验充分度: ⭐⭐⭐⭐ 合成+3个真实数据集、详细消融、遮挡分析、Oracle 实验
 - 写作质量: ⭐⭐⭐⭐ 方法推导清晰，消融设计合理
 - 价值: ⭐⭐⭐⭐ 手持物体重建的新 SOTA，质心固定技术可泛化到其他扩散 3D 生成任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HORT: Monocular Hand-held Objects Reconstruction with Transformers](../../ICCV2025/3d_vision/hort_monocular_hand-held_objects_reconstruction_with_transformers.md)
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [Deceptive-NeRF/3DGS: Diffusion-Generated Pseudo-observations for High-Quality Sparse-View Reconstruction](deceptive-nerf3dgs_diffusion-generated_pseudo-observations_for_high-quality_spar.md)
+- [Diffusion Models for Monocular Depth Estimation: Overcoming Challenging Conditions](diffusion_models_for_monocular_depth_estimation_overcoming_challenging_condition.md)
+- [DuoMo: Dual Motion Diffusion for World-Space Human Reconstruction](../../CVPR2026/3d_vision/duomo_dual_motion_diffusion_for_world-space_human_reconstruction.md)
+
+<!-- RELATED:END -->

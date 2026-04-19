@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖RGB+热红外、真实+合成、多个OOD场景，三角化和深度估计分别评估，近/远距离分析深入
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰完整，框架图直观，实验分析有层次
 - 价值: ⭐⭐⭐⭐ 对机器人和自动驾驶的实际部署价值高——无需训练、无需额外深度传感器、跨模态工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling Monocular Foundation Model for Fine-grained Depth Completion](../../CVPR2025/autonomous_driving/distilling_monocular_foundation_model_for_fine-grained_depth_completion.md)
+- [Towards Balanced Multi-Modal Learning in 3D Human Pose Estimation](towards_balanced_multimodal_learning_in_3d_human_p.md)
+- [InCaRPose: In-Cabin Relative Camera Pose Estimation Model and Dataset](incarpose_in-cabin_relative_camera_pose_estimation_model_and_dataset.md)
+- [Dr.Occ: Depth- and Region-Guided 3D Occupancy from Surround-View Cameras for Autonomous Driving](drocc_depth-_and_region-guided_3d_occupancy_from_surround-view_cameras_for_auton.md)
+- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](../../CVPR2025/autonomous_driving/helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ Sprint 包含两部分：（1）训练时的数据整理 pipeline，把普通的
 - 实验充分度: ⭐⭐⭐⭐ 三个基准（含 2 个 OOD）+ 多种 baseline + 按难度分析效率，但缺少实际 wall-clock 时间和更大模型的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，图表设计精美，示例充分展示了方法的工作方式
 - 价值: ⭐⭐⭐⭐ 为推理模型加速提供了一个优雅的思路，1700 条数据就能解锁能力很有实践价值，但实际部署还需硬件端配合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interleaved-Modal Chain-of-Thought](../../CVPR2025/llm_reasoning/interleaved-modal_chain-of-thought.md)
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+- [Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties](topology_of_reasoning_understanding_large_reasoning_models_through_reasoning_gra.md)
+- [Reasoning Models Better Express Their Confidence](reasoning_models_better_express_their_confidence.md)
+- [The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity](the_illusion_of_thinking_understanding_the_strengths_and_limitations_of_reasonin.md)
+
+<!-- RELATED:END -->

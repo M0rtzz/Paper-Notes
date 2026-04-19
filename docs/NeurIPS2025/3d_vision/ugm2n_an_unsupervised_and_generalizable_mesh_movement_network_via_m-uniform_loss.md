@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多种 PDE、多种几何、多种分辨率、消融实验、1000个随机域测试
 - 写作质量: ⭐⭐⭐⭐ 方法推导严谨，从等分布条件到损失函数的连接清晰
 - 价值: ⭐⭐⭐⭐ 解决了科学计算中的实际问题，无监督+泛化的组合有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mesh Interpolation Graph Network for Dynamic and Spatially Irregular Global Weather Forecasting](mesh_interpolation_graph_network_for_dynamic_and_spatially_irregular_global_weat.md)
+- [Flux4D: Flow-based Unsupervised 4D Reconstruction](flux4d_flow-based_unsupervised_4d_reconstruction.md)
+- [Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning](mesh-rft_enhancing_mesh_generation_via_fine-grained_reinforcement_fine-tuning.md)
+- [U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
+- [ELECTRA: A Cartesian Network for 3D Charge Density Prediction with Floating Orbitals](electra_a_cartesian_network_for_3d_charge_density_prediction_with_floating_orbit.md)
+
+<!-- RELATED:END -->

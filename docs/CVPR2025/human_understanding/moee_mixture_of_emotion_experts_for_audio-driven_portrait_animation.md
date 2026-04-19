@@ -139,3 +139,15 @@ $$L = L_{latent} + \lambda L_{spatial}$$
 ## 评分
 
 ⭐⭐⭐⭐ — MoE 与情绪解耦的结合自然且有效，数据集贡献实质性弥补领域空缺，在情绪控制的自然度和准确度上大幅超越现有方法。扣 1 星因为情绪种类仍有限，且推理效率不支持实时应用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](../../ICCV2025/human_understanding/a_quality-guided_mixture_of_score-fusion_experts_framework_for_human_recognition.md)
+- [MOSPA: Human Motion Generation Driven by Spatial Audio](../../NeurIPS2025/human_understanding/mospa_human_motion_generation_driven_by_spatial_audio.md)
+- [Spatiotemporal-Untrammelled Mixture of Experts for Multi-Person Motion Prediction](../../AAAI2026/human_understanding/spatiotemporal-untrammelled_mixture_of_experts_for_multi-person_motion_predictio.md)
+- [VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image](../../NeurIPS2025/human_understanding/vasa-3d_lifelike_audio-driven_gaussian_head_avatars_from_a_single_image.md)
+- [Mingle: Mixture of Null-Space Gated Low-Rank Experts for Test-Time Continual Model Merging](../../NeurIPS2025/human_understanding/mingle_mixture_of_null-space_gated_low-rank_experts_for_test-time_continual_mode.md)
+
+<!-- RELATED:END -->

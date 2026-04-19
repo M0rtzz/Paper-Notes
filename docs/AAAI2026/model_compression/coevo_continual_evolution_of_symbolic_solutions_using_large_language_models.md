@@ -193,3 +193,15 @@ CoEvo在Oscillation 2和E. coli Growth上比LLM-SR好**数个数量级**。
 - 实验充分度: ⭐⭐⭐ (benchmark规模偏小，但分析深入)
 - 写作质量: ⭐⭐⭐⭐ (框架图清晰，消融完整)
 - 价值: ⭐⭐⭐⭐ (开辟了LLM驱动科学发现的新范式)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Reasoning for Large Reasoning Language Models via Certainty-Guided Reflection Suppression](efficient_reasoning_for_large_reasoning_language_models_via_certainty-guided_ref.md)
+- [First-Order Error Matters: Accurate Compensation for Quantized Large Language Models](first-order_error_matters_accurate_compensation_for_quantized_large_language_mod.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](../../NeurIPS2025/model_compression/gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [PocketLLM: Ultimate Compression of Large Language Models via Meta Networks](pocketllm_ultimate_compression_of_large_language_models_via_meta_networks.md)
+- [SkipCat: Rank-Maximized Low-Rank Compression of Large Language Models via Shared Projection and Block Skipping](skipcat_rank-maximized_low-rank_compression_of_large_language_models_via_shared_.md)
+
+<!-- RELATED:END -->

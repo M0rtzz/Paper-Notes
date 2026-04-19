@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 四种下游任务+多种方法集成+详细消融+方差分析，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析（方差分解图）极具说服力，实验组织清晰
 - 价值: ⭐⭐⭐⭐⭐ 所有使用扩散特征的工作都可直接受益，低训练成本使其高度可部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Personalization of Quantized Diffusion Model without Backpropagation (ZOODiP)](efficient_personalization_of_quantized_diffusion_model_without_backpropagation.md)
+- [Improving Diffusion Inverse Problem Solving with Decoupled Noise Annealing](improving_diffusion_inverse_problem_solving_with_decoupled_noise_annealing.md)
+- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+- [Channel-wise Noise Scheduled Diffusion for Inverse Rendering in Indoor Scenes](channel-wise_noise_scheduled_diffusion_for_inverse_rendering_in_indoor_scenes.md)
+- [IntroStyle: Training-Free Introspective Style Attribution using Diffusion Features](../../ICCV2025/image_generation/introstyle_training-free_introspective_style_attribution_using_diffusion_feature.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — KITTI/Make3D/Cityscapes三个数据集，多种训练模式，完整消融
 - **写作质量**: ⭐⭐⭐⭐ — 动机阐述清晰，pipeline图表设计好
 - **实用价值**: ⭐⭐⭐⭐⭐ — 直接降低自动驾驶深度估计的传感器需求，且推理速度无额外开销
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProDepth: Boosting Self-Supervised Multi-Frame Monocular Depth with Probabilistic Fusion](prodepth_boosting_self-supervised_multi-frame_monocular_depth_with_probabilistic.md)
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [Improving Domain Generalization in Self-Supervised Monocular Depth Estimation via Stabilized Adversarial Training](improving_domain_generalization_in_self-supervised_monocular_depth_estimation_vi.md)
+- [Jasmine: Harnessing Diffusion Prior for Self-Supervised Depth Estimation](../../NeurIPS2025/3d_vision/jasmine_harnessing_diffusion_prior_for_self-supervised_depth_estimation.md)
+- [Diffusion Models for Monocular Depth Estimation: Overcoming Challenging Conditions](diffusion_models_for_monocular_depth_estimation_overcoming_challenging_condition.md)
+
+<!-- RELATED:END -->

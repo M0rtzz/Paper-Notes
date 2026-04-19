@@ -108,3 +108,15 @@ tags:
 
 <!-- RAG-based re-identification attack on de-identified documents -->
 <!-- Four levels of background knowledge systematically quantify privacy risks -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification](../../ECCV2024/others/adaptive_highfrequency_transformer_for_diverse_wildlife_reid.md)
+- [SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](../../CVPR2025/others/sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)
+- [Infogen: Generating Complex Statistical Infographics from Documents](infogen_generating_complex_statistical_infographics_from_documents.md)
+- [Advancing Sequential Numerical Prediction in Autoregressive Models](advancing_sequential_numerical_prediction_in_autoregressive_models.md)
+- [Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph](why_are_positional_encodings_nonessential_for_deep_autoregressive_transformers_r.md)
+
+<!-- RELATED:END -->

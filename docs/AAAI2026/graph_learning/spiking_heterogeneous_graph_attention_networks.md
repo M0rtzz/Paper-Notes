@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+多维度效率分析+消融完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，与 HAN 的对比图示直观
 - 价值: ⭐⭐⭐⭐ 对边缘部署异构图学习有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
+- [MUG: Meta-path-aware Universal Heterogeneous Graph Pre-Training](mug_meta-path-aware_universal_heterogeneous_graph_pre-training.md)
+- [NeuroCircuitry-Inspired Hierarchical Graph Causal Attention Networks for Explainable Depression Identification](../../ICLR2026/graph_learning/neurocircuitry-inspired_hierarchical_graph_causal_attention_networks_for_explain.md)
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [EchoLess: Label-Based Pre-Computation for Memory-Efficient Heterogeneous Graph Learning](echoless_label-based_pre-computation_for_memory-efficient_heterogeneous_graph_le.md)
+
+<!-- RELATED:END -->

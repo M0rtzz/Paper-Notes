@@ -131,3 +131,15 @@ $$\mathcal{L}_{layout} = \frac{1}{2}(\mathcal{L}_{layout}^{q2g} + \mathcal{L}_{l
 - 实验充分度: ⭐⭐⭐⭐ （多维度评估全面，消融研究充分）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，但部分细节过于冗长）
 - 价值: ⭐⭐⭐⭐ （推动了从物体级到场景级 3D 检索的发展）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
+- [MOS: Modeling Object-Scene Associations in Generalized Category Discovery](../../CVPR2025/others/mos_modeling_object-scene_associations_in_generalized_category_discovery.md)
+- [I Can't Believe It's Not Scene Flow!](../../ECCV2024/others/i_canapost_believe_itaposs_not_scene_flow.md)
+- [GeAR: Generation Augmented Retrieval](../../ACL2025/others/gear_generation_augmented_retrieval.md)
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](../../CVPR2026/others/simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ $$\max_\mathbf{M}\;\mathbb{E}_{\phi\sim\mathbf{M}}[\mathcal{L}(f(x+\delta(\phi))
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8 种模型、3 种代理、VLLM、详尽消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，由分析到设计逻辑通顺
 - 综合价值: ⭐⭐⭐⭐ — 对抗迁移攻击领域的重要进展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+- [Predicting the Performance of Black-Box LLMs through Follow-Up Queries](predicting_the_performance_of_black-box_llms_through_follow-up_queries.md)
+- [MMTU: A Massive Multi-Task Table Understanding and Reasoning Benchmark](mmtu_a_massive_multi-task_table_understanding_and_reasoning_benchmark.md)
+- [Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
+- [Learning Spatial-Aware Manipulation Ordering](learning_spatial-aware_manipulation_ordering.md)
+
+<!-- RELATED:END -->

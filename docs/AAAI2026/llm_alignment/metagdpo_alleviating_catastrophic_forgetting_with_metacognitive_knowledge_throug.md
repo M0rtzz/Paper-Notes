@@ -137,3 +137,15 @@ Qwen3-8B上的知识&安全结果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个benchmark、3个base model、多种baseline、详细消融、理论分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，数据构建流程完整，但GDPO的推导部分略显冗长
 - 价值: ⭐⭐⭐⭐ 小模型推理蒸馏中的灾难性遗忘是实际痛点，MetaGDPO提供了可行的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Direct Preference Optimization in Diffusion Models](rethinking_direct_preference_optimization_in_diffusion_models.md)
+- [Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization](../../ACL2025/llm_alignment/kpo_protein_safety.md)
+- [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](../../CVPR2026/llm_alignment/φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+- [SafeDPO: A Simple Approach to Direct Preference Optimization with Enhanced Safety](../../ICLR2026/llm_alignment/safedpo_preference_optimization_safety.md)
+- [Alignment through Meta-Weighted Online Sampling: Bridging the Gap between Data Generation and Preference Optimization](../../ICLR2026/llm_alignment/alignment_through_meta-weighted_online_sampling_bridging_the_gap_between_data_ge.md)
+
+<!-- RELATED:END -->

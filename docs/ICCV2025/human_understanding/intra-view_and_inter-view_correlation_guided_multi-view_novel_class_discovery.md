@@ -149,3 +149,15 @@ IICMVNCD 是一个端到端的一阶段方法，包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 8 个数据集覆盖面广，但缺少深度特征基线
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，理论分析完整
 - 价值: ⭐⭐⭐⭐ 开辟新方向，对生物信息学等多视图场景有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-view Gaze Target Estimation](multi-view_gaze_target_estimation.md)
+- [Switch-a-View: View Selection Learned from Unlabeled In-the-wild Videos](switch-a-view_view_selection_learned_from_unlabeled_in-the-wild_videos.md)
+- [Neural Multi-View Self-Calibrated Photometric Stereo without Photometric Stereo Cues](neural_multi-view_self-calibrated_photometric_stereo_without_photometric_stereo_.md)
+- [3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](../../ECCV2024/human_understanding/3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
+- [External Knowledge Injection for CLIP-Based Class-Incremental Learning](external_knowledge_injection_for_clip-based_class-incremental_learning.md)
+
+<!-- RELATED:END -->

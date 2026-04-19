@@ -120,3 +120,15 @@ M-Attack 包含两个核心组件：(1) Local Matching (LM)——每步对源图
 - 实验充分度: ⭐⭐⭐⭐⭐ 在 7 个商业 LVLM 上测试，包括推理模型 o1 和 Claude-3.7-thinking，消融细致
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，从动机到方法到实验的叙事流畅
 - 价值: ⭐⭐⭐⭐⭐ 对 LVLM 安全领域有重要警示意义，90%+ 的攻击成功率表明当前商业模型的对抗鲁棒性堪忧
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InternLM-XComposer2.5-Reward: A Simple Yet Effective Multi-Modal Reward Model](../../ACL2025/multimodal_vlm/internlm-xcomposer25-reward_a_simple_yet_effective_multi-modal_reward_model.md)
+- [Mint: A Simple Test-Time Adaptation of Vision-Language Models against Common Corruptions](mint_a_simple_testtime_adaptation_of_visionlanguage_models_a.md)
+- [Visual Interestingness Decoded: How GPT-4o Mirrors Human Interests](../../ICCV2025/multimodal_vlm/visual_interestingness_decoded_how_gpt-4o_mirrors_human_interests.md)
+- [AdaLRS: Loss-Guided Adaptive Learning Rate Search for Efficient Foundation Model Pretraining](adalrs_lossguided_adaptive_learning_rate_search_for_efficien.md)
+- [Prime Once, then Reprogram Locally: An Efficient Alternative to Black-Box Service Model Adaptation](../../CVPR2026/multimodal_vlm/prime_once_then_reprogram_locally_an_efficient_alternative_to_black-box_service_.md)
+
+<!-- RELATED:END -->

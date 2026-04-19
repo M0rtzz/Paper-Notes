@@ -93,3 +93,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅 miniImageNet，规模有限
 - 写作质量: ⭐⭐⭐⭐ 理论清晰
 - 价值: ⭐⭐⭐⭐ 为 SSM 在空间任务中的根本局限提供了优雅解法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Language-Free Visual Representation Learning](../../ICCV2025/self_supervised/scaling_languagefree_visual_representation_learning.md)
+- [Towards Reliable and Holistic Visual In-Context Learning Prompt Selection](../../NeurIPS2025/self_supervised/towards_reliable_and_holistic_visual_in-context_learning_prompt_selection.md)
+- [One Filters All: A Generalist Filter for State Estimation](../../NeurIPS2025/self_supervised/one_filters_all_a_generalist_filter_for_state_estimation.md)
+- [MarineInst: A Foundation Model for Marine Image Analysis with Instance Visual Description](../../ECCV2024/self_supervised/marineinst_a_foundation_model_for_marine_image_analysis_with_instance_visual_des.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
+
+<!-- RELATED:END -->

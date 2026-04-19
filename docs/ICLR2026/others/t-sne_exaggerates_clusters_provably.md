@@ -125,3 +125,15 @@ t-SNE 对输入的平方距离不仅具有乘法尺度不变性，还具有**加
 - **技术深度**: ⭐⭐⭐⭐⭐ — 证明精美，加法不变性的发现深刻
 - **实验充分性**: ⭐⭐⭐⭐ — 理论与实验紧密结合
 - **实用价值**: ⭐⭐⭐⭐ — 对实际使用 t-SNE 的科研人员有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Provably Data-Driven Projection Method for Quadratic Programming](../../AAAI2026/others/provably_data-driven_projection_method_for_quadratic_programming.md)
+- [Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](../../ICML2025/others/provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
+- [Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
+- [On the Impact of the Utility in Semivalue-based Data Valuation](on_the_impact_of_the_utility_in_semivalue-based_data_valuation.md)
+- [HEEGNet: Hyperbolic Embeddings for EEG](heegnet_hyperbolic_embeddings_for_eeg.md)
+
+<!-- RELATED:END -->

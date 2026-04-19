@@ -119,3 +119,15 @@ HouseTour在所有指标上超越基线，特别是文本生成（BT +8.1）。
 - **实用性**: ★★★★★ — 直接面向价值万亿美元的房地产市场
 - **实验**: ★★★★☆ — 提出新数据集和评估指标，消融充分
 - **写作**: ★★★★☆ — 结构清晰，问题定义明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmbodiedSplat: Personalized Real-to-Sim-to-Real Navigation with Gaussian Splats from a Mobile Device](embodiedsplat_personalized_real-to-sim-to-real_navigation_with_gaussian_splats_f.md)
+- [Revisiting Point Cloud Completion: Are We Ready For The Real-World?](revisiting_point_cloud_completion_are_we_ready_for_the_real-world.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [Demeter: A Parametric Model of Crop Plant Morphology from the Real World](demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
+- [FlashDepth: Real-time Streaming Video Depth Estimation at 2K Resolution](flashdepth_real-time_streaming_video_depth_estimation_at_2k_resolution.md)
+
+<!-- RELATED:END -->

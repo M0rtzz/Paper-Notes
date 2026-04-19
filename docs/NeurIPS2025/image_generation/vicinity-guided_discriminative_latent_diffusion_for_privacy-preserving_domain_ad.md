@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{adapt}} = \mathcal{L}_{\text{InfoNCE}}(f_T(x_T), g_\theta(z
 | 写作质量 | 4 |
 | 实用价值 | 4 |
 | 总体推荐 | 4.5 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
+- [PixPerfect: Seamless Latent Diffusion Local Editing with Discriminative Pixel-Space Refinement](pixperfect_seamless_latent_diffusion_local_editing_with_discriminative_pixel-spa.md)
+- [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](../../ICCV2025/image_generation/whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+- [Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models](perturb_a_model_not_an_image_towards_robust_privacy_protection_via_anti-personal.md)
+- [ObCLIP: Oblivious Cloud-Device Hybrid Image Generation with Privacy Preservation](obclip_oblivious_cloud-device_hybrid_image_generation_with_privacy_preservation.md)
+
+<!-- RELATED:END -->

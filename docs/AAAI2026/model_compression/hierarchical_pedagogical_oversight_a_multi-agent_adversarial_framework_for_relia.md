@@ -187,3 +187,15 @@ HPO是一个三阶段流水线：
 - 实验充分度: ⭐⭐⭐⭐ （消融实验详细，但仅在单一数据集上评估，缺乏跨领域验证）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，示例生动，附录详细，失败模式分析深入）
 - 价值: ⭐⭐⭐⭐ （"结构>规模"的发现对实际部署有重要指导意义，但应用场景目前较窄）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression](hcf_hierarchical_cascade_framework_for_distributed_multi-stage_image_compression.md)
+- [SafeSieve: From Heuristics to Experience in Progressive Pruning for LLM-based Multi-Agent Communication](safesieve_from_heuristics_to_experience_in_progressive_pruning_for_llm-based_mul.md)
+- [AgentODRL: A Large Language Model-based Multi-agent System for ODRL Generation](agentodrl_a_large_language_model-based_multi-agent_system_fo.md)
+- [HeurekaBench: A Benchmarking Framework for AI Co-scientist](../../ICLR2026/model_compression/heurekabench_a_benchmarking_framework_for_ai_co-scientist.md)
+- [A Mathematical Framework for AI-Human Integration in Work](../../ICML2025/model_compression/a_mathematical_framework_for_ai-human_integration_in_work.md)
+
+<!-- RELATED:END -->

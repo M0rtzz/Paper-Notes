@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ SOTA模型评估、5次重复、诊断分析
 - 写作质量: ⭐⭐⭐⭐ POMDP形式化、任务设计清晰
 - 价值: ⭐⭐⭐⭐⭐ 对EHR Agent部署的安全可靠性有直接警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReflecTool: Towards Reflection-Aware Tool-Augmented Clinical Agents](../../ACL2025/medical_imaging/reflectool_clinical_agent.md)
+- [Incentives in Federated Learning with Heterogeneous Agents](incentives_in_federated_learning_with_heterogeneous_agents.md)
+- [DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction](dm4ct_benchmarking_diffusion_models_for_computed_tomography_reconstruction.md)
+- [Shoot First, Ask Questions Later? Building Rational Agents that Explore and Act Like People](shoot_first_ask_questions_later_building_rational_agents_that_explore_and_act_li.md)
+- [Benchmarking ECG FMs: A Reality Check Across Clinical Tasks](benchmarking_ecg_fms_a_reality_check_across_clinical_tasks.md)
+
+<!-- RELATED:END -->

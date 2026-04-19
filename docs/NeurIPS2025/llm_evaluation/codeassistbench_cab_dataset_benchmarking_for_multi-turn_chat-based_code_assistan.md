@@ -144,3 +144,15 @@ CAB 包含两个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 6 个 SOTA 模型、7 种语言、合成消融、人工评估三重验证，较全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰、体系完整，附录极其详尽（含所有 prompt 模板和人工标注协议）
 - 价值: ⭐⭐⭐⭐⭐ 揭示 LLM 编程辅助的真实能力边界（项目上下文理解是核心瓶颈），对 coding agent 研发有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following](../../ACL2025/llm_evaluation/structflowbench_a_structured_flow_benchmark_for_multi-turn_instruction_following.md)
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](../../ACL2025/llm_evaluation/codemenv_benchmarking_large_language_models_on_code_migration.md)
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](../../ACL2025/llm_evaluation/mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+- [Merlin L48 Spectrogram Dataset](merlin_l48_spectrogram_dataset.md)
+- [VITAL: A New Dataset for Benchmarking Pluralistic Alignment in Healthcare](../../ACL2025/llm_evaluation/vital_pluralistic_alignment_healthcare.md)
+
+<!-- RELATED:END -->

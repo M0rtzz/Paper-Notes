@@ -119,3 +119,15 @@ Gen1 和 Gen4 自动驾驶检测数据集 mAP 对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三类方法全面对比 + 硬件部署验证 + 充分消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，消融分析有说服力
 - 价值: ⭐⭐⭐⭐ 为事件相机检测的高效部署提供了可行路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlexEvent: Towards Flexible Event-Frame Object Detection at Varying Operational Frequencies](../../NeurIPS2025/object_detection/flexevent_towards_flexible_event-frame_object_detection_at_varying_operational_f.md)
+- [Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding](../../ICCV2025/object_detection/intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net.md)
+- [Efficient Test-Time Adaptive Object Detection via Sensitivity-Guided Pruning](efficient_test-time_adaptive_object_detection_via_sensitivity-guided_pruning.md)
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](../../CVPR2026/object_detection/training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+- [Attention to Neural Plagiarism: Diffusion Models Can Plagiarize Your Copyrighted Images!](../../ICCV2025/object_detection/attention_to_neural_plagiarism_diffusion_models_can_plagiarize_your_copyrighted_.md)
+
+<!-- RELATED:END -->

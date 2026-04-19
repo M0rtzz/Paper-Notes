@@ -218,3 +218,15 @@ $$\mathcal{L} = \sum_{t=1}^{T} \left[\sum_{m=1}^{M_t} \lambda_{cls} \cdot \mathc
 - 实验充分度: ⭐⭐⭐⭐⭐（4个数据集、多种shot设置、全面消融、效率分析、误差分析）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，问题阐述到位）
 - 价值: ⭐⭐⭐⭐（为FSVOD这一新兴领域提供了强基线，OWL-ViT的引入方向有价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FSOD-VFM: Few-Shot Object Detection with Vision Foundation Models and Graph Diffusion](../../ICLR2026/object_detection/fsod-vfm_few-shot_object_detection_with_vision_foundation_models_and_graph_diffu.md)
+- [Beyond Boundaries: Leveraging Vision Foundation Models for Source-Free Object Detection](beyond_boundaries_leveraging_vision_foundation_models_for_so.md)
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](../../CVPR2026/object_detection/learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [Remedying Target-Domain Astigmatism for Cross-Domain Few-Shot Object Detection](../../CVPR2026/object_detection/remedying_target-domain_astigmatism_for_cross-domain_few-shot_object_detection.md)
+- [Adaptive Multi-task Learning for Few-Shot Object Detection](../../ECCV2024/object_detection/adaptive_multi-task_learning_for_few-shot_object_detection.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ MetaShadow 由两个协同组件构成：Stage I 的 Shadow Analyzer（基于CM-
 - 实验充分度: ⭐⭐⭐⭐⭐ 在4个benchmark上三个任务全面评估，构建了2个新测试集
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示精美，但部分公式符号稍显复杂
 - 价值: ⭐⭐⭐⭐ 对图像编辑中的阴影处理有直接实用价值，但128分辨率限制了实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BootPlace: Bootstrapped Object Placement with Detection Transformers](bootplace_bootstrapped_object_placement_with_detection_transformers.md)
+- [Structure-Guided Diffusion Models for High-Fidelity Portrait Shadow Removal](../../ICCV2025/image_generation/structure-guided_diffusion_models_for_high-fidelity_portrait_shadow_removal.md)
+- [HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](an_image-like_diffusion_method_for_human-object_interaction_detection.md)
+- [Object-WIPER: Training-Free Object and Associated Effect Removal in Videos](../../CVPR2026/image_generation/object-wiper_training-free_object_and_associated_effect_removal_in_videos.md)
+- [OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting](../../ICCV2025/image_generation/omnipaint_mastering_object-oriented_editing_via_disentangled_insertion-removal_i.md)
+
+<!-- RELATED:END -->

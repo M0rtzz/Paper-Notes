@@ -149,3 +149,15 @@ Sparfels在多个数据集上的NVS指标（PSNR/SSIM/LPIPS）以及相机位姿
 - 实验充分度: ⭐⭐⭐⭐⭐ （5个数据集，3项任务，详细消融）
 - 写作质量: ⭐⭐⭐⭐ （方法描述清晰，理论推导完整）
 - 价值: ⭐⭐⭐⭐ （3分钟重建的效率优势明显，实用性强）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration](reggs_unposed_sparse_views_gaussian_splatting_with_3dgs_registration.md)
+- [SpatialSplat: Efficient Semantic 3D from Sparse Unposed Images](spatialsplat_efficient_semantic_3d_from_sparse_unposed_images.md)
+- [Baking Gaussian Splatting into Diffusion Denoiser for Fast and Scalable Single-stage Image-to-3D Generation and Reconstruction](baking_gaussian_splatting_into_diffusion_denoiser_for_fast_a.md)
+- [CF³: Compact and Fast 3D Feature Fields](cf3_compact_and_fast_3d_feature_fields.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ $$\max_{S\in\mathcal{S}_{2n}} F(S), \quad F(S)=\min_{\pi\in\Gamma_n}\sum_{i,j}\p
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实数据覆盖检验/检测/生成三个任务，对比充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论-算法-实验结构清晰，定理陈述精确
 - 价值: ⭐⭐⭐⭐ — 为核最优传输的理论与计算奠定坚实基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees](understanding_the_statistical_accuracy-communication_trade-off_in_personalized_f.md)
+- [Wasserstein Transfer Learning](../../NeurIPS2025/optimization/wasserstein_transfer_learning.md)
+- [Learning Theory for Kernel Bilevel Optimization](../../NeurIPS2025/optimization/learning_theory_for_kernel_bilevel_optimization.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+- [Kernel Learning with Adversarial Features: Numerical Efficiency and Adaptive Regularization](../../NeurIPS2025/optimization/kernel_learning_with_adversarial_features_numerical_efficiency_and_adaptive_regu.md)
+
+<!-- RELATED:END -->

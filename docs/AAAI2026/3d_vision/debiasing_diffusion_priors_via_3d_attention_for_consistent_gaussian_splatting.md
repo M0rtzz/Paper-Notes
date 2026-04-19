@@ -164,3 +164,15 @@ HAM 针对 UNet 不同层对视角偏好的异质性进行精细调制：
 - 实验充分度: ⭐⭐⭐⭐ （生成+编辑双任务验证，多基线对比+消融，但缺少几何定量指标）
 - 写作质量: ⭐⭐⭐⭐ （数学推导清晰，但篇幅较长）
 - 价值: ⭐⭐⭐⭐⭐ （通用插件思路对 3DGS 社区有重要实用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Simba: Towards High-Fidelity and Geometrically-Consistent Point Cloud Completion via Transformation Diffusion](simba_towards_high-fidelity_and_geometrically-consistent_point_cloud_completion_.md)
+- [3D-Free Meets 3D Priors: Novel View Synthesis from a Single Image with Pretrained Diffusion Guidance](3d-free_meets_3d_priors_novel_view_synthesis_from_a_single_image_with_pretrained.md)
+- [Gaussian Blending: Rethinking Alpha Blending in 3D Gaussian Splatting](gaussian_blending_rethinking_alpha_blending_in_3d_gaussian_splatting.md)
+- [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](../../ICCV2025/3d_vision/ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
+- [3D Gaussian Splatting with Self-Constrained Priors for High Fidelity Surface Reconstruction](../../CVPR2026/3d_vision/3d_gaussian_splatting_with_self-constrained_priors_for_high_fidelity_surface_rec.md)
+
+<!-- RELATED:END -->

@@ -112,3 +112,15 @@ LLM 同时充当三个角色（均接收原子事实增强）：
 - 实验充分度: ⭐⭐⭐⭐ TextFrozenLake 和 ALFWorld 验证充分，但更多复杂环境待测
 - 写作质量: ⭐⭐⭐⭐ 理论动机和算法描述清晰，Dyna 类比自然
 - 价值: ⭐⭐⭐⭐⭐ 为 LLM Agent 的在线纯上下文学习提供了系统性解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](../../ICLR2026/llm_agent/agentic_context_engineering_evolving_contexts_for_self-improving_language_models.md)
+- [FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models](../../ACL2025/llm_agent/fact_audit_factcheck.md)
+- [PaSa: An LLM Agent for Comprehensive Academic Paper Search](../../ACL2025/llm_agent/pasa_an_llm_agent_for_comprehensive_academic_paper_search.md)
+- [ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning](../../ICLR2026/llm_agent/tooltree_efficient_llm_agent_tool_planning_via_dual-feedback_monte_carlo_tree_se.md)
+- [LLM Agents for Knowledge Discovery in Atomic Layer Processing](../../NeurIPS2025/llm_agent/llm_agents_for_knowledge_discovery_in_atomic_layer_processing.md)
+
+<!-- RELATED:END -->

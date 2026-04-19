@@ -116,3 +116,15 @@ CTNN 建立在三个层次之上：
 
 ## 评分
 - ⭐⭐⭐⭐ 理论框架极其统一漂亮，用余预层和组合复形构建了深度学习的元框架；实验规模偏小但一致性好，方向感强；实际可扩展性有待验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CosmoBench: A Multiscale, Multiview, Multitask Cosmology Benchmark for Geometric Deep Learning](cosmobench_a_multiscale_multiview_multitask_cosmology_benchmark_for_geometric_de.md)
+- [Learning Neural Exposure Fields for View Synthesis](learning_neural_exposure_fields_for_view_synthesis.md)
+- [Thickness-aware E(3)-Equivariant 3D Mesh Neural Networks](../../ICML2025/3d_vision/thickness-aware_e3-equivariant_3d_mesh_neural_networks.md)
+- [Node-RF: Learning Generalized Continuous Space-Time Scene Dynamics with Neural ODE-based NeRFs](../../CVPR2025/3d_vision/node-rf_learning_generalized_continuous_space-time_scene_dynamics_with_neural_od.md)
+- [High Resolution UDF Meshing via Iterative Networks](high_resolution_udf_meshing_via_iterative_networks.md)
+
+<!-- RELATED:END -->

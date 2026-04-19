@@ -165,3 +165,15 @@ $$
 - **与 CAD 生成的联系**：本文的方法思路与 CAD 模型生成（如 DeepCAD）有相通之处，都是用序列模型建模离散的几何操作序列；不同之处在于本文的 primitive 更加标准化
 - **Classifier-Free Guidance 的通用性**：CFG 从图像扩散模型到 3D 自回归生成的成功迁移，说明这项技术在条件生成任务中具有范式级的通用价值
 - **游戏行业的实际需求**：来自 LIGHTSPEED 工作室的合作背景使得这篇论文更具工程落地潜力，也表明工业界对 AI 辅助内容创建的真实需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Circuit Compositions: Exploring Modular Structures in Transformer-Based Language Models](../../ACL2025/llm_nlp/circuit_compositions_modular_structures.md)
+- [ScaMo: Exploring the Scaling Law in Autoregressive Motion Generation Model](../../CVPR2025/llm_nlp/scamo_exploring_the_scaling_law_in_autoregressive_motion_generation_model.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](../../ACL2025/llm_nlp/cadllm_cad_modeling_from_text.md)
+- [A Modular Dataset to Demonstrate LLM Abstraction Capability](../../ACL2025/llm_nlp/a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
+- [Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction](../../CVPR2025/llm_nlp/improving_autoregressive_visual_generation_with_cluster-oriented_token_predictio.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ SPAR 比单次基线 +10.5 mIoU，甚至超过教师（滑窗s=24）+2.4 mIoU。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 3种backbone×6个数据集×多种分辨率×与多种方法组合，全面扎实
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，trade-off图直观，方法描述简洁
 - **价值**: ⭐⭐⭐⭐⭐ 实用性极高——简单、通用、高效、效果好，可广泛应用于所有需要 ViT 高分辨率推理的场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation](geoguide_hierarchical_geometric_guidance_for_open-vocabulary_3d_semantic_segment.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [Diffusion Models for Open-Vocabulary Segmentation](../../ECCV2024/segmentation/diffusion_models_for_open-vocabulary_segmentation.md)
+- [VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](videomt_encoder_only_video_segmentation.md)
+
+<!-- RELATED:END -->

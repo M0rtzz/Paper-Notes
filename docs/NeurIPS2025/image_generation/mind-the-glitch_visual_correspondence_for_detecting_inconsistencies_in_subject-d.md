@@ -142,3 +142,15 @@ VSM 在与 Oracle 的相关性上远超所有现有指标。
 - **实验充分度**: ⭐⭐⭐⭐ — 控制实验+真实场景+消融，与多种基线全面对比
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑链条完整，图表精美
 - **实用价值**: ⭐⭐⭐⭐⭐ — 直接解决 subject-driven generation 社区的痛点评估问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unleashing Diffusion Transformers for Visual Correspondence by Modulating Massive Activations](unleashing_diffusion_transformers_for_visual_correspondence_by_modulating_massiv.md)
+- [Track, Inpaint, Resplat: Subject-driven 3D and 4D Generation with Progressive Texture Infilling](track_inpaint_resplat_subject-driven_3d_and_4d_generation_with_progressive_textu.md)
+- [OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions](omnivcus_feedforward_subject-driven_video_customization_with_multimodal_control_.md)
+- [HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](../../ECCV2024/image_generation/hybridbooth_hybrid_prompt_inversion_for_efficient_subject-driven_generation.md)
+- [Detecting Generated Images by Fitting Natural Image Distributions](detecting_generated_images_by_fitting_natural_image_distributions.md)
+
+<!-- RELATED:END -->

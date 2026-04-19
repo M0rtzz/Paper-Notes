@@ -95,3 +95,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 真实硬件演示充分但定量评估场景有限
 - 写作质量: ⭐⭐⭐⭐ 光学推导清晰，DIY 指南实用
 - 价值: ⭐⭐⭐⭐ 为边缘设备深度感知开辟了极低功耗新路线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration](../../ICCV2025/others/omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](../../NeurIPS2025/others/depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
+- [Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking](../../ACL2025/others/inner_thinking_transformer_leveraging_dynamic_depth_scaling_to_foster_adaptive_i.md)
+- [Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](../../ECCV2024/others/teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept.md)
+
+<!-- RELATED:END -->

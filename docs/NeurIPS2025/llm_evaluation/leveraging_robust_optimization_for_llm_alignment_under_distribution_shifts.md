@@ -197,3 +197,15 @@ DoRA 在分布不断漂移的自训练场景下依然有效。
 - **实验严谨度**: ⭐⭐⭐⭐⭐ — 覆盖 7 种算法、噪声测试、自训练、消融、奖励-置信度分析
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，但对 DRO 背景知识要求较高
 - **推荐阅读指数**: ⭐⭐⭐⭐ — 做 LLM 对齐/偏好学习/鲁棒优化的研究者强烈推荐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Evaluating LLM Alignment by Evaluating LLMs as Judges](on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+- [MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](../../AAAI2026/llm_evaluation/moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
+- [Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)
+- [OptiTree: Hierarchical Thoughts Generation with Tree Search for LLM Optimization Modeling](optitree_hierarchical_thoughts_generation_with_tree_search_for_llm_optimization_.md)
+- [Beyond the Surface: Enhancing LLM-as-a-Judge Alignment with Human via Internal Representations](beyond_the_surface_enhancing_llm-as-a-judge_alignment_with_human_via_internal_re.md)
+
+<!-- RELATED:END -->

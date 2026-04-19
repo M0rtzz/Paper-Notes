@@ -153,3 +153,15 @@ SRF满足五个关键性质，数学上证明其缓解GNN三大限制：
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实任务，消融+复杂度+架构泛化全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导严谨，性质与GNN限制的对应关系清晰
 - 价值: ⭐⭐⭐⭐⭐ — 简单高效的即插即用方案，理论与实践价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Measuring Long-Range Interactions in Graph Neural Networks](../../ICML2025/graph_learning/on_measuring_long-range_interactions_in_graph_neural_networks.md)
+- [Over-squashing in Spatiotemporal Graph Neural Networks](over-squashing_in_spatiotemporal_graph_neural_networks.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+- [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ $$S_{cn} = (\tilde{f} \cdot C^T) \cdot (C \cdot U^T) = \tilde{f} \cdot \underbra
 - 实验充分度: ⭐⭐⭐⭐⭐ — 40+ 模型、4 个数据集、消融/干预/零样本描述
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，Gram 矩阵洞察优雅
 - 价值: ⭐⭐⭐⭐⭐ — 解除可解释 CBM 对 CLIP 的依赖，通用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Label-Free Cross-Task LoRA Merging with Null-Space Compression](label-free_cross-task_lora_merging_with_null-space_compression.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr_turbo_merged_checkpoint_free_teacher.md)
+- [LLMind: Bio-inspired Training-free Adaptive Visual Representations for Vision-Language Models](llmind_bio-inspired_training-free_adaptive_visual_representations_for_vision-lan.md)
+- [Generate, Analyze, and Refine: Training-Free Sound Source Localization via MLLM Meta-Reasoning](generate_analyze_and_refine_training-free_sound_source_localization_via_mllm_met.md)
+- [The LLM Bottleneck: Why Open-Source Vision LLMs Struggle with Hierarchical Visual Recognition](the_llm_bottleneck_why_open-source_vision_llms_struggle_with_hierarchical_visual.md)
+
+<!-- RELATED:END -->

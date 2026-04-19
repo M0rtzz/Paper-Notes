@@ -119,3 +119,15 @@ GPT-4 高质量 rationale 使 RED 大幅提升（+4.70），随机 rationale 导
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个基准、4 个模型族、干预分析、规模可扩展性、消融、幻觉评估，非常完整
 - 写作质量: ⭐⭐⭐⭐⭐ 动机实验-理论推导-实验验证的逻辑链极其清晰
 - 价值: ⭐⭐⭐⭐⭐ 即插即用、免训练且一致提升的解码策略，实用价值和启发性都很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FaceCoT: Harnessing Chain-of-Thought Reasoning in MLLMs for Face Anti-Spoofing](facecot_cot_reasoning_face_anti_spoofing.md)
+- [VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](visref_visual_refocusing_while_thinking_improves_test-time_scaling_in_multi-moda.md)
+- [Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning](../../ICLR2026/llm_reasoning/fine-r1_make_multi-modal_llms_excel_in_fine-grained_visual_recognition_by_chain-.md)
+- [Reinforcing Structured Chain-of-Thought for Video Understanding](reinforcing_structured_chain-of-thought_for_video_understanding.md)
+- [Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)
+
+<!-- RELATED:END -->

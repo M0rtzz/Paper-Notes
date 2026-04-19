@@ -148,3 +148,15 @@ SENSEI 在 KeyRoom-S15 上比 PPO 快约 **两个数量级**。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三类环境全面验证，消融实验详尽（Go-Explore、零先验、标注噪声、数据质量）
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机与方法衔接流畅
 - 价值: ⭐⭐⭐⭐ — 为VLM引导的自主探索提供了实用且可扩展的范式，随VLM进步价值更大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds](../../NeurIPS2025/reinforcement_learning/foundation_models_as_world_models_a_foundational_study_in_text-based_gridworlds.md)
+- [PIGDreamer: Privileged Information Guided World Models for Safe Partially Observable RL](pigdreamer_privileged_information_guided_world_models_for_safe_partially_observa.md)
+- [Exploration with Foundation Models: Capabilities, Limitations, and Hybrid Approaches](../../NeurIPS2025/reinforcement_learning/exploration_with_foundation_models_capabilities_limitations_and_hybrid_approache.md)
+- [Reward-free World Models for Online Imitation Learning](reward-free_world_models_for_online_imitation_learning.md)
+- [Self-Improving Embodied Foundation Models](../../NeurIPS2025/reinforcement_learning/self-improving_embodied_foundation_models.md)
+
+<!-- RELATED:END -->

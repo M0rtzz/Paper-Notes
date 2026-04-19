@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 评分验证+偏好调优+新基准，但仅在一个基础模型上验证
 - 写作质量: ⭐⭐⭐⭐ 三维度拆解清晰，动机到位
 - 价值: ⭐⭐⭐⭐⭐ 数据集+评估指标+基准的三重贡献，对 TTA 领域有重大推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](speechweave_diverse_multilingual_synthetic_text_audio_data_generation_pipeline_f.md)
+- [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](../../CVPR2025/audio_speech/vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
+- [In-the-wild Audio Spatialization with Flexible Text-guided Localization](tas_audio_spatialization.md)
+- [Double Entendre: Robust Audio-Based AI-Generated Lyrics Detection via Multi-View Fusion](double_entendre_robust_audio-based_ai-generated_lyrics_detection_via_multi-view_.md)
+- [OmniSonic: Towards Universal and Holistic Audio Generation from Video and Text](../../CVPR2026/audio_speech/omnisonic_towards_universal_and_holistic_audio_generation_from_video_and_text.md)
+
+<!-- RELATED:END -->

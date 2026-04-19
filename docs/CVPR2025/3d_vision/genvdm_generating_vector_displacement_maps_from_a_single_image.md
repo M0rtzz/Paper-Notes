@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 与多个基线对比，参数化方式消融详尽，但测试集仅 50 张图
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，流程图完整，每个设计选择都有对比验证
 - 价值: ⭐⭐⭐⭐⭐ 直接可用于 3D 建模工作流，首个公开 VDM 数据集对后续研究有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text2VDM: Text to Vector Displacement Maps for Expressive and Interactive 3D Sculpting](../../ICCV2025/3d_vision/text2vdm_text_to_vector_displacement_maps_for_expressive_and_interactive_3d_scul.md)
+- [Floating No More: Object-Ground Reconstruction from a Single Image](floating_no_more_object-ground_reconstruction_from_a_single_image.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [A Recipe for Generating 3D Worlds from a Single Image](../../ICCV2025/3d_vision/a_recipe_for_generating_3d_worlds_from_a_single_image.md)
+
+<!-- RELATED:END -->

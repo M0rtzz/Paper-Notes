@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 详细消融+多数据集评估+多baseline对比，但缺少ground truth定量比较
 - 写作质量: ⭐⭐⭐⭐⭐ 步骤清晰如"食谱"，每个设计决策都有充分的对比说明
 - 价值: ⭐⭐⭐⭐ 低训练代价+高质量输出，对VR内容创作有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenVDM: Generating Vector Displacement Maps From a Single Image](../../CVPR2025/3d_vision/genvdm_generating_vector_displacement_maps_from_a_single_image.md)
+- [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
+- [WonderPlay: Dynamic 3D Scene Generation from a Single Image and Actions](wonderplay_dynamic_3d_scene_generation_from_a_single_image_and_actions.md)
+- [GAS: Generative Avatar Synthesis from a Single Image](gas_generative_avatar_synthesis_from_a_single_image.md)
+- [Bolt3D: Generating 3D Scenes in Seconds](bolt3d_generating_3d_scenes_in_seconds.md)
+
+<!-- RELATED:END -->

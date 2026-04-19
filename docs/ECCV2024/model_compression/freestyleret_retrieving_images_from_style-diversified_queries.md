@@ -152,3 +152,15 @@ FreestyleRet-BLIP在所有4种查询风格上均取得最优R@1，Sketch提升14
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多个基线对比、详细消融、定性分析完整
 - 写作质量: ⭐⭐⭐⭐ 图示精美，问题动机清晰，三个模块的逻辑递进清楚
 - 价值: ⭐⭐⭐⭐ 定义新任务且提供了强基线，对检索社区有长远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images](spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)
+- [Is Retain Set All You Need in Machine Unlearning? Restoring Performance of Unlearned Models with Out-Of-Distribution Images](is_retain_set_all_you_need_in_machine_unlearning_restoring_performance_of_unlear.md)
+- [DuoLoRA: Cycle-Consistent and Rank-Disentangled Content-Style Personalization](../../ICCV2025/model_compression/duolora_cycle-consistent_and_rank-disentangled_content-style_personalization.md)
+- [A Fano-Style Accuracy Upper Bound for LLM Single-Pass Reasoning in Multi-Hop QA](../../ICLR2026/model_compression/a_fano-style_accuracy_upper_bound_for_llm_single-pass_reasoning_in_multi-hop_qa.md)
+- [Adversarially Robust Distillation by Reducing the Student-Teacher Variance Gap](adversarially_robust_distillation_by_reducing_the_student-teacher_variance_gap.md)
+
+<!-- RELATED:END -->

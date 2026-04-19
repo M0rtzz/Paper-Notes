@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型多任务，steering vs prompting 公平对比全面
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，数学表达简洁
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全控制有直接实用价值，steering 研究的重要推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering off Course: Reliability Challenges in Steering Language Models](steering_off_course_reliability_challenges_in_steering_language_models.md)
+- [Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering](contrastive_prompting_embeddings.md)
+- [Safer or Luckier? LLMs as Safety Evaluators Are Not Robust to Artifacts](safer_or_luckier_llms_as_safety_evaluators_are_not_robust_to_artifacts.md)
+- [Beyond Profile: From Surface-Level Facts to Deep Persona Simulation in LLMs](beyond_profile_from_surface-level_facts_to_deep_persona_simulation_in_llms.md)
+- [Can Large Language Models Address Open-Target Stance Detection?](can_large_language_models_address_open-target_stance_detection.md)
+
+<!-- RELATED:END -->

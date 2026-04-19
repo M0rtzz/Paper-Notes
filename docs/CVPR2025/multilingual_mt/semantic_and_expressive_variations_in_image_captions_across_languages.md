@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 人类标注+模型生成、语义+表达两个维度、Visual Genome 对照、微调验证，分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑严密，每步都有"为什么这种差异不是假象"的验证，方法论值得学习
 - 价值: ⭐⭐⭐⭐ 为多语言视觉-语言研究提供了实证基础，影响训练数据策略和模型设计决策
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HelpSteer3-Preference: Open Human-Annotated Preference Data across Diverse Tasks and Languages](../../NeurIPS2025/multilingual_mt/helpsteer3-preference_open_human-annotated_preference_data_across_diverse_tasks_.md)
+- [DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection](../../NeurIPS2025/multilingual_mt/dcad-2000_a_multilingual_dataset_across_2000_languages_with_data_cleaning_as_ano.md)
+- [Exploring In-Image Machine Translation with Real-World Background](../../ACL2025/multilingual_mt/exploring_in-image_machine_translation_with_real-world_background.md)
+- [MERIT: Multilingual Semantic Retrieval with Interleaved Multi-Condition Query](../../NeurIPS2025/multilingual_mt/merit_multilingual_semantic_retrieval_with_interleaved_multi-condition_query.md)
+- [Cross-Lingual Representation Alignment Through Contrastive Image-Caption Tuning](../../ACL2025/multilingual_mt/cross-lingual_representation_alignment_through_contrastive_image-caption_tuning.md)
+
+<!-- RELATED:END -->

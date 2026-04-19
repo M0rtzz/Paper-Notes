@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 分析极其系统，覆盖两个旧基准+一个新时序基准，6 种 SOTA 方法，包含含否定/不含否定的多种查询类型
 - 写作质量: ⭐⭐⭐⭐⭐ 论文逻辑清晰，Figure 1 的示例非常直观，从诊断到验证到新基准构建层层推进
 - 价值: ⭐⭐⭐⭐⭐ 对 CQA 社区的基准评估范式有根本性影响，新基准将成为后续工作的标准测试平台
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Extending Complex Logical Queries on Uncertain Knowledge Graphs](../../ACL2025/graph_learning/extending_complex_logical_queries_uncertain_knowledge_graphs.md)
+- [Can LLMs Evaluate Complex Attribution in QA? Automatic Benchmarking using Knowledge Graphs](../../ACL2025/graph_learning/paper_2401_14640.md)
+- [Human Cognition Inspired RAG with Knowledge Graph for Complex Problem Solving](../../AAAI2026/graph_learning/human_cognition_inspired_rag_with_knowledge_graph_for_complex_problem_solving.md)
+- [Relink: Constructing Query-Driven Evidence Graph On-the-Fly for GraphRAG](../../AAAI2026/graph_learning/relink_constructing_query-driven_evidence_graph_on-the-fly_for_graphrag.md)
+- [From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)
+
+<!-- RELATED:END -->

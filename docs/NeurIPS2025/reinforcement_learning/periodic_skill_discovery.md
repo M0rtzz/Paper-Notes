@@ -143,3 +143,15 @@ PSD 框架包含三个核心组件：
 - 技术深度：⭐⭐⭐⭐ (理论动机清晰)
 - 实验充分性：⭐⭐⭐⭐ (多环境+下游任务+消融)
 - 实用价值：⭐⭐⭐⭐ (运动控制的直接应用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SUSD: Structured Unsupervised Skill Discovery through State Factorization](../../ICLR2026/reinforcement_learning/susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
+- [Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](../../ICLR2026/reinforcement_learning/self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
+- [AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](../../ICLR2026/reinforcement_learning/autoqd_automatic_discovery_of_diverse_behaviors_with_quality-diversity_optimizat.md)
+- [Actor-Free Continuous Control via Structurally Maximizable Q-Functions](actorfree_continuous_control_via_structurally_maximizable_qf.md)
+- [CORE: Constraint-Aware One-Step Reinforcement Learning for Simulation-Guided Neural Network Accelerator Design](core_constraint-aware_one-step_reinforcement_learning_for_simulation-guided_neur.md)
+
+<!-- RELATED:END -->

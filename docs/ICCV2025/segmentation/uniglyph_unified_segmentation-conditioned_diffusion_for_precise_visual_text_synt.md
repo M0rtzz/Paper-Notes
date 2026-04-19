@@ -161,3 +161,15 @@ AGC 的必要性：
 - **技术质量**: ⭐⭐⭐⭐ — 自适应策略设计精巧，但消融实验在缩小分辨率上进行
 - **实用性**: ⭐⭐⭐⭐⭐ — 中英文支持、小字体能力强、架构简洁
 - **写作质量**: ⭐⭐⭐⭐ — 问题分析清晰，实验设置完善
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VSC: Visual Search Compositional Text-to-Image Diffusion Model](vsc_visual_search_compositional_text-to-image_diffusion_model.md)
+- [UDiffText: A Unified Framework for High-quality Text Synthesis in Arbitrary Images via Character-aware Diffusion Models](../../ECCV2024/segmentation/udifftext_a_unified_framework_for_high-quality_text_synthesis_in_arbitrary_image.md)
+- [TAViS: Text-bridged Audio-Visual Segmentation with Foundation Models](tavis_text-bridged_audio-visual_segmentation_with_foundation_models.md)
+- [Enhancing Transformers Through Conditioned Embedded Tokens](enhancing_transformers_through_conditioned_embedded_tokens.md)
+- [Learning Precise Affordances from Egocentric Videos for Robotic Manipulation](learning_precise_affordances_from_egocentric_videos_for_robotic_manipulation.md)
+
+<!-- RELATED:END -->

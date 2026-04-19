@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 提出新 benchmark、定量+人工评估全面，但缺少更多模型上的验证
 - 写作质量: ⭐⭐⭐⭐ 图示清晰（尤其 Fig.2 的框架图），公式推导明了
 - 价值: ⭐⭐⭐⭐ 填补了迭代图像编辑的空白，Training-free 实用性高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Image Layer Decomposition with Visual Effects](generative_image_layer_decomposition_with_visual_effects.md)
+- [Conditional Balance: Improving Multi-Conditioning Trade-Offs in Image Generation](conditional_balance_improving_multi-conditioning_trade-offs_in_image_generation.md)
+- [Channel-wise Noise Scheduled Diffusion for Inverse Rendering in Indoor Scenes](channel-wise_noise_scheduled_diffusion_for_inverse_rendering_in_indoor_scenes.md)
+- [Improving Diffusion Inverse Problem Solving with Decoupled Noise Annealing](improving_diffusion_inverse_problem_solving_with_decoupled_noise_annealing.md)
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](../../CVPR2026/image_generation/from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+
+<!-- RELATED:END -->

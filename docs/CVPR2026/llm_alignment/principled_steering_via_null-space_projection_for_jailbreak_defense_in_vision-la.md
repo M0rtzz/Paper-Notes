@@ -148,3 +148,15 @@ $$\tilde{\Delta}^* = \arg\min_{\tilde{\Delta}} \left( \|\tilde{\Delta}\mathbf{P}
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个模型、多种攻击强度、自适应攻击、完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导清晰、动机阐述到位
 - 价值: ⭐⭐⭐⭐ — 提供了VLM安全防御的实用且理论可解释的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AlphaSteer: Learning Refusal Steering with Principled Null-Space Constraint](../../ICLR2026/llm_alignment/alphasteer_learning_refusal_steering_with_principled_null-space_constraint.md)
+- [Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models (UltraBreak)](../../ICLR2026/llm_alignment/toward_universal_and_transferable_jailbreak_attacks_on_vision-language_models.md)
+- [Reasoned Safety Alignment: Ensuring Jailbreak Defense via Answer-Then-Check](../../ICLR2026/llm_alignment/reasoned_safety_alignment_ensuring_jailbreak_defense_via_answer-then-check.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](../../ICLR2026/llm_alignment/mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [AlignTree: Efficient Defense Against LLM Jailbreak Attacks](../../AAAI2026/llm_alignment/aligntree_efficient_defense_against_llm_jailbreak_attacks.md)
+
+<!-- RELATED:END -->

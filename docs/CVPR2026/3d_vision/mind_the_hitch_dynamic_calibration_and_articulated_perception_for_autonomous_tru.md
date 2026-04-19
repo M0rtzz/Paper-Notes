@@ -147,3 +147,15 @@ dCAP 包含三个主要组件：(1) 冻结的 VGGT backbone 将六个环视 RGB 
 - 实验充分度: ⭐⭐⭐⭐ 基准对比全面，消融实验详尽（含场景级分析），但缺少真实数据验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，数据集描述详尽，方法表述条理分明
 - 价值: ⭐⭐⭐⭐ 填补了自动驾驶卡车铰接感知的空白，STT4AT 数据集对社区有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PE3R: Perception-Efficient 3D Reconstruction](pe3r_perception-efficient_3d_reconstruction.md)
+- [ArtLLM: Generating Articulated Assets via 3D LLM](artllm_generating_articulated_assets_via_3d_llm.md)
+- [FreeArtGS: Articulated Gaussian Splatting Under Free-Moving Scenario](freeartgs_articulated_gaussian_splatting_under_free-moving_scenario.md)
+- [No Calibration, No Depth, No Problem: Cross-Sensor View Synthesis with 3D Consistency](no_calibration_no_depth_no_problem_cross-sensor_view_synthesis_with_3d_consisten.md)
+- [ArtHOI: Taming Foundation Models for Monocular 4D Reconstruction of Hand-Articulated-Object Interactions](arthoi_taming_foundation_models_for_monocular_4d_reconstruction_of_hand-articula.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多设置(直接对齐+标准RLHF)×多模型×多评估器，消融详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，问题动机清晰
 - 价值: ⭐⭐⭐⭐⭐ 为RLHF训练稳定性提供了新理论视角和实用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Mismatch within Reference-based Preference Optimization](mitigating_mismatch_within_reference-based_preference_optimization.md)
+- [Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment](semantic-aware_wasserstein_policy_regularization_for_large_language_model_alignm.md)
+- [General Exploratory Bonus for Optimistic Exploration in RLHF](general_exploratory_bonus_for_optimistic_exploration_in_rlhf.md)
+- [Beyond RLHF and NLHF: Population-Proportional Alignment under an Axiomatic Framework](beyond_rlhf_and_nlhf_population-proportional_alignment_under_an_axiomatic_framew.md)
+- [T-REG: Preference Optimization with Token-Level Reward Regularization](../../ACL2025/llm_alignment/t-reg_preference_optimization_with_token-level_reward_regularization.md)
+
+<!-- RELATED:END -->

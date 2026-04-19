@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验主要验证理论，规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 论文组织清晰，数学证明严谨，图示直观
 - 价值: ⭐⭐⭐⭐ 解决了领域内公开问题，对学习增强在线优化有重要理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](../../ICML2025/others/near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+- [Stable Matching with Ties: Approximation Ratios and Learning](stable_matching_with_ties_approximation_ratios_and_learning.md)
+- [Learning-Augmented Streaming Algorithms for Correlation Clustering](learning-augmented_streaming_algorithms_for_correlation_clustering.md)
+- [Computable Universal Online Learning](computable_universal_online_learning.md)
+- [Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors](../../ICML2025/others/learning-augmented_algorithms_for_mts_with_bandit_access_to_multiple_predictors.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐⭐ 工程和方法完成度极高的系统性工作：首次统一多主体定制与全运动控制，两阶段范式设计合理，消融充分，数据集和 Benchmark 均有贡献，1.3B 超越 14B 的结果令人印象深刻。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization](mokus_leveraging_crossmodal_knowledge_transfer_for.md)
+- [PRISM: Video Dataset Condensation with Progressive Refinement and Insertion for Sparse Motion](prism_video_dataset_condensation_with_progressive_refinement_and_insertion_for_s.md)
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](slice_semantic_latent_injection_via_compartmentalized_embedding_for_image_waterm.md)
+- [DualReg: Dual-Space Filtering and Reinforcement for Rigid Registration](dualreg_dual-space_filtering_and_reinforcement_for_rigid_registration.md)
+
+<!-- RELATED:END -->

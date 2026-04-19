@@ -127,3 +127,15 @@ CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 tok
 - 实验充分度: ⭐⭐⭐ 仅限合成任务，缺乏真实 LLM 规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，直觉解释到位，图表设计精美
 - 价值: ⭐⭐⭐⭐ 对连续推理的理论理解贡献卓越，但实用性有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought](../../NeurIPS2025/llm_reasoning/reasoning_by_superposition_a_theoretical_perspective_on_chain_of_continuous_thou.md)
+- [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
+- [Verifying Chain-of-Thought Reasoning via Its Computational Graph](verifying_chain-of-thought_reasoning_via_its_computational_graph.md)
+- [SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes](scenecot_eliciting_grounded_chain-of-thought_reasoning_in_3d_scenes.md)
+- [CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos](cot-rvs_zero-shot_chain-of-thought_reasoning_segmentation_for_videos.md)
+
+<!-- RELATED:END -->

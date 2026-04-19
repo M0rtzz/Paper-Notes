@@ -177,3 +177,15 @@ $$s' = \mathcal{S}(\mathbf{b}(\mathbf{x}'), s, \mathbf{v}; \varphi)$$
 - **实验质量**: ★★★☆☆ — 缓存截断无法完整评估，但从声明看对比实验覆盖面合理
 - **实用性**: ★★★★☆ — 去除光标定和视图对齐约束大幅提升采集灵活性，文化遗产和材质数字化等领域有应用前景
 - **表达清晰度**: ★★★★★ — 公式推导详细严谨，场景参数化和渲染 pipeline 描述清楚
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MERLiN: Single-Shot Material Estimation and Relighting for Photometric Stereo](../../ECCV2024/human_understanding/merlin_single-shot_material_estimation_and_relighting_for_photometric_stereo.md)
+- [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+- [Multi-view Gaze Target Estimation](multi-view_gaze_target_estimation.md)
+- [Switch-a-View: View Selection Learned from Unlabeled In-the-wild Videos](switch-a-view_view_selection_learned_from_unlabeled_in-the-wild_videos.md)
+- [SignRep: Enhancing Self-Supervised Sign Representations](signrep_enhancing_self-supervised_sign_representations.md)
+
+<!-- RELATED:END -->

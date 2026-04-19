@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集/正常+退化场景/全面消融/效率分析/下游任务/时序可视化
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，数据集构建详细，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ M3SVD数据集填补空白，VideoFusion从图像融合推进到视频融合，实际意义大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CRIT: Graph-Based Automatic Data Synthesis to Enhance Cross-Modal Multi-Hop Reasoning](crit_graph-based_automatic_data_synthesis_to_enhance_cross-modal_multi-hop_reaso.md)
+- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [TimeLens: Rethinking Video Temporal Grounding with Multimodal LLMs](timelens_rethinking_video_temporal_grounding_with_multimodal_llms.md)
+
+<!-- RELATED:END -->

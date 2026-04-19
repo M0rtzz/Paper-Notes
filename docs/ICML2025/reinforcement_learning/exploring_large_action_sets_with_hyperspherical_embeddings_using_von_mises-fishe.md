@@ -166,3 +166,15 @@ $$P_0(a | n, d, V, \kappa) = \frac{f_{\text{vMF}}(A | V, \kappa) \cdot \mathcal{
 - 实验充分度: ⭐⭐⭐⭐⭐ — 理论+模拟+真实公开数据+工业部署四层验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，理论推导严谨，表述流畅
 - 价值: ⭐⭐⭐⭐ — 对大规模推荐系统等场景有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings](../../ICLR2026/reinforcement_learning/ume-r1_exploring_reasoning-driven_generative_multimodal_embeddings.md)
+- [Action-Constrained Imitation Learning](action-constrained_imitation_learning.md)
+- [Fast and Robust: Task Sampling with Posterior and Diversity Synergies for Adaptive Decision-Makers in Randomized Environments](fast_and_robust_task_sampling_with_posterior_and_diversity_synergies_for_adaptiv.md)
+- [Demystifying the Paradox of Importance Sampling with an Estimated History-Dependent Behavior Policy in Off-Policy Evaluation](demystifying_the_paradox_of_importance_sampling_with_an_estimated_history-depend.md)
+- [Action-Dependent Optimality-Preserving Reward Shaping (ADOPS)](action-dependent_optimality-preserving_reward_shaping.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ $$\mathcal{L} = \mathcal{L}_{r1}^{\mathbf{M}_h} + \mathcal{L}_{r2}^{\mathbf{M}_s
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集全面评估，消融详细，训练效率也有对比
 - 写作质量: ⭐⭐⭐⭐ 逻辑线清晰，从观察到方法到实现层层推进
 - 价值: ⭐⭐⭐⭐ 为野外3DGS重建提供了有效且高效的解决方案，EMA-GS具有很强的实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DroneSplat: 3D Gaussian Splatting for Robust 3D Reconstruction from In-the-Wild Drone Imagery](../../CVPR2025/3d_vision/dronesplat_3d_gaussian_splatting_for_robust_3d_reconstruction_from_in-the-wild_d.md)
+- [RPBG: Towards Robust Neural Point-based Graphics in the Wild](../../ECCV2024/3d_vision/rpbg_towards_robust_neural_point-based_graphics_in_the_wild.md)
+- [LODGE: Level-of-Detail Large-Scale Gaussian Splatting with Efficient Rendering](lodge_level-of-detail_large-scale_gaussian_splatting_with_efficient_rendering.md)
+- [Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting](learning_efficient_fuse-and-refine_for_feed-forward_3d_gaussian_splatting.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](../../ICCV2025/3d_vision/robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+
+<!-- RELATED:END -->

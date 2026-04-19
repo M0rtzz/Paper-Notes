@@ -130,3 +130,15 @@ MP-SAE 在所有测试骨干（SigLIP, DINOv2, CLIP, ViT）上，在可比稀疏
 - MP-SAE 的跨模态特征发现能力可用于检验 VLM 中视觉和文本嵌入是否真正对齐（而非表面上的余弦相似度）
 - 自适应稀疏度特性使 MP-SAE 适合需要动态调节解释粒度的应用——用少量步骤获取粗粒度解释，增加步骤获取精细解释
 - "暗物质"的构造性解释为 SAE 社区指出了明确的改进方向——标准 SAE 未解释的部分并非噪声，而是需要非线性访问的有意义特征
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](../../AAAI2026/interpretability/concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
+- [CHiQPM: Calibrated Hierarchical Interpretable Image Classification](chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
+- [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
+- [SHAP Values via Sparse Fourier Representation](shap_values_via_sparse_fourier_representation.md)
+
+<!-- RELATED:END -->

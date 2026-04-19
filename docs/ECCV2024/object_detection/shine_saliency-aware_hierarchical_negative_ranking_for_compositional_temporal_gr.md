@@ -177,3 +177,15 @@ $$\mathcal{L} = \mathcal{L}_{base} + \alpha \mathcal{L}_{cr} + \beta \mathcal{L}
 - 实验充分度: ⭐⭐⭐⭐ 两个基准、两个 baseline、详细消融、多个 LLM 对比
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，方法描述清晰，可视化说服力强
 - 价值: ⭐⭐⭐⭐ 即插即用的设计实用性好，但受限于组合泛化这一细分方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HieraMamba: Video Temporal Grounding via Hierarchical Anchor-Mamba Pooling](../../CVPR2026/object_detection/hieramamba_video_temporal_grounding_via_hierarchical_anchor-mamba_pooling.md)
+- [Weak-to-Strong Compositional Learning from Generative Models for Language-based Object Detection](weak-to-strong_compositional_learning_from_generative_models_for_language-based_.md)
+- [BAM-DETR: Boundary-Aligned Moment Detection Transformer for Temporal Sentence Grounding in Videos](bam-detr_boundary-aligned_moment_detection_transformer_for_temporal_sentence_gro.md)
+- [Sim-DETR: Unlock DETR for Temporal Sentence Grounding](../../ICCV2025/object_detection/sim-detr_unlock_detr_for_temporal_sentence_grounding.md)
+- [ReGround: Improving Textual and Spatial Grounding at No Cost](reground_improving_textual_and_spatial_grounding_at_no_cost.md)
+
+<!-- RELATED:END -->

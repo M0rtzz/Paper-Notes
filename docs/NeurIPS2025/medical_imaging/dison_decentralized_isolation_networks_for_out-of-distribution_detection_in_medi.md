@@ -145,3 +145,15 @@ Near-OOD 中 CC-DIsoN 比次优方法高 8.4%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 4数据集12任务+全面消融（α、网络大小、增强、类条件、误分类鲁棒性）
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、理论推导完整、实验设计系统
 - 价值: ⭐⭐⭐⭐⭐ 解决了 OOD 检测在隐私约束下利用训练数据这一核心实际问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Invisible Gorilla Effect in Out-of-distribution Detection](../../CVPR2026/medical_imaging/the_invisible_gorilla_effect_in_out-of-distribution_detection.md)
+- [Out-of-Distribution Detection Methods Answer the Wrong Questions](../../ICML2025/medical_imaging/out-of-distribution_detection_methods_answer_the_wrong_questions.md)
+- [EWC-Guided Diffusion Replay for Exemplar-Free Continual Learning in Medical Imaging](ewc-guided_diffusion_replay_for_exemplar-free_continual_learning_in_medical_imag.md)
+- [FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification](firegnn_neuro-symbolic_graph_neural_networks_with_trainable_fuzzy_rules_for_inte.md)
+- [Random Search Neural Networks for Efficient and Expressive Graph Learning](random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
+
+<!-- RELATED:END -->

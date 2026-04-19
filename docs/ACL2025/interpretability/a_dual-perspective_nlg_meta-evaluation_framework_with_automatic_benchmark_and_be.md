@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 16个LLM、2个NLG任务、多维度对比分析，实验非常充分
 - 写作质量: ⭐⭐⭐⭐⭐ 动机论证严谨（有人类重评实验支撑），结构清晰
 - 价值: ⭐⭐⭐⭐ 对 NLG 评估和 LLM-as-a-Judge 实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIB: A Mechanistic Interpretability Benchmark](../../ICML2025/interpretability/mib_a_mechanistic_interpretability_benchmark.md)
+- [Position-aware Automatic Circuit Discovery](position-aware_automatic_circuit_discovery.md)
+- [Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](shortcut_neuron_eval.md)
+- [Llama See, Llama Do: A Mechanistic Perspective on Contextual Entrainment and Distraction in LLMs](llama_see_llama_do_entrainment.md)
+- [EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations](expert_an_explainable_image_captioning_evaluation_metric_with_structured_explana.md)
+
+<!-- RELATED:END -->

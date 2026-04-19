@@ -137,3 +137,15 @@ $$\mathcal{L} = \mathcal{L}_{task} + \lambda_1 \mathcal{L}_{spectral} + \lambda_
 - **实验充分度**: ⭐⭐⭐⭐⭐ 四个大规模基准（15-25 任务）、充分消融、视觉+NLP 双域、效率分析一应俱全
 - **写作质量**: ⭐⭐⭐⭐ Figure 1 的三个 motivating observations 可视化清晰有说服力，整体结构好
 - **价值**: ⭐⭐⭐⭐⭐ 首次使多任务 LoRA 在 15+ 任务上可用，实际部署价值极高，开源代码可直接使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings](../../NeurIPS2025/social_computing/a_multitask_benchmark_for_abusive_language_detection_in_lowr.md)
+- [Adaptive Debiasing Tsallis Entropy for Test-Time Adaptation](adaptive_debiasing_tsallis_entropy_for_test-time_adaptation.md)
+- [BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses](biasfreebench_a_benchmark_for_mitigating_bias_in_large_language_model_responses.md)
+- [Stop Wasting Your Tokens: Towards Efficient Runtime Multi-Agent Systems](stop_wasting_your_tokens_towards_efficient_runtime_multi-agent_systems.md)
+- [Functional Embeddings Enable Aggregation of Multi-Area SEEG Data for Robust BCI](functional_embeddings_enable_aggregation_of_multi-area_seeg_recordings_over_subj.md)
+
+<!-- RELATED:END -->

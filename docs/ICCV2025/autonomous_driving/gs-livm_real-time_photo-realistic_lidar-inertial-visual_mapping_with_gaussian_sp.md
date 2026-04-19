@@ -121,3 +121,15 @@ $$\mathcal{L} = (1-\lambda_s)\|C - C_{gt}\|_1 + \lambda_s \mathcal{L}_{ssim} + \
 - 实验充分度: ⭐⭐⭐⭐ 多 LiDAR 配置验证，消融详细，但缺少与最新 Gaussian-LIC 的直接数值对比
 - 写作质量: ⭐⭐⭐⭐ 算法伪代码清晰，系统设计描述完整，图表信息丰富
 - 价值: ⭐⭐⭐⭐⭐ 实时大规模室外光真实感建图是机器人和自动驾驶的刚需，开源代码加分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+- [RTMap: Real-Time Recursive Mapping with Change Detection and Localization](rtmap_real-time_recursive_mapping_with_change_detection_and_localization.md)
+- [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
+- [6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](6dopegs_online_6d_object_pose_estimation_using_gaussian_spla.md)
+- [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
+
+<!-- RELATED:END -->

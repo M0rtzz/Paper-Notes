@@ -137,3 +137,15 @@ $Gain_{att} \approx 0$ 表明自适应攻击完全被中和，攻击者无法从
 - 实验充分度: ⭐⭐⭐⭐ — 4 架构×4 数据集，完整攻防评估+消融实验+信息论分析
 - 写作质量: ⭐⭐⭐⭐ — 问题驱动，三阶段递进清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐ — 开创 DNN 主动访问控制新范式，但效用损失和硬件依赖限制实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation](transferable_backdoor_attacks_for_code_models_via_sharpness-aware_adversarial_pe.md)
+- [Stealthy Yet Effective: Distribution-Preserving Backdoor Attacks on Graph Classification](../../NeurIPS2025/human_understanding/stealthy_yet_effective_distribution-preserving_backdoor_attacks_on_graph_classif.md)
+- [From Imitation to Discrimination: Toward A Generalized Curriculum Advantage Mechanism Enhancing Cross-Domain Reasoning Tasks](from_imitation_to_discrimination_toward_a_generalized_curriculum_advantage_mecha.md)
+- [Personality-guided Public-Private Domain Disentangled Hypergraph-Former Network for Multimodal Depression Detection](personality-guided_public-private_domain_disentangled_hypergraph-former_network_.md)
+- [Yes FLoReNce, I Will Do Better Next Time! Agentic Feedback Reasoning for Humorous Meme Detection](yes_florence_i_will_do_better_next_time_agentic_feedback_reasoning_for_humorous_.md)
+
+<!-- RELATED:END -->

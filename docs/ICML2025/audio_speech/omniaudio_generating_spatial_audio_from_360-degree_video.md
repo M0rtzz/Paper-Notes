@@ -181,3 +181,15 @@ FOA 音频包含四个通道（W/X/Y/Z），分别编码全方向声压、前后
 | 数据集贡献 | ⭐⭐⭐⭐⭐ | 103K 样本的 Sphere360 + 标准化基准，社区价值高 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，图表丰富，动机阐述到位 |
 | 综合评分 | ⭐⭐⭐⭐⭐ | 任务新颖 + 方法完整 + 数据集贡献 = 高影响力工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating Physically Sound Designs from Text and a Set of Physical Constraints](../../NeurIPS2025/audio_speech/generating_physically_sound_designs_from_text_and_a_set_of_physical_constraints.md)
+- [Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](../../ICLR2026/audio_speech/query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)
+- [VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation](../../CVPR2025/audio_speech/vintage_joint_video_and_text_conditioning_for_holistic_audio_generation.md)
+- [MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing](../../ICCV2025/audio_speech/mug_pseudo_labeling_augmented_audio-visual_mamba_network_for_audio-visual_video_.md)
+- [UWAV: Uncertainty-Weighted Weakly-Supervised Audio-Visual Video Parsing](../../CVPR2025/audio_speech/uwav_uncertainty-weighted_weakly-supervised_audio-visual_video_parsing.md)
+
+<!-- RELATED:END -->

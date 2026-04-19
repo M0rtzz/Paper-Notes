@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 评估指标全面但问题规模较小，缺乏更广泛的对比
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，方法论表述完整
 - 价值: ⭐⭐⭐ 为 LLM 在组合优化领域的评估提供了初步方法论参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD](from_information_to_generative_exponent_learning_rate_induces_phase_transitions_.md)
+- [Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)
+- [Online Two-Stage Submodular Maximization](online_two-stage_submodular_maximization.md)
+- [Autoformulation of Mathematical Optimization Models Using LLMs](../../ICML2025/optimization/autoformulation_of_mathematical_optimization_models_using_llms.md)
+- [Rethinking Neural Combinatorial Optimization for Vehicle Routing Problems with Different Constraint Tightness Degrees](rethinking_neural_combinatorial_optimization_for_vehicle_routing_problems_with_d.md)
+
+<!-- RELATED:END -->

@@ -108,3 +108,15 @@ DeQA-Score基于mPLUG-Owl2架构（CLIP ViT-L + Q-Former视觉抽象器 + LLaMA-
 - 实验充分度: ⭐⭐⭐⭐⭐ 9个IQA数据集、单/多数据集训练、分布预测、消融、等级文本实验全面到位
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，与Q-Align的对比直观，图表设计好
 - 价值: ⭐⭐⭐⭐ 通用方法可推广到任何MLLM连续值回归任务，soft label+fidelity loss组合具有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DisCode: Distribution-Aware Score Decoder for Robust Automatic Evaluation of Image Captioning](../../AAAI2026/multimodal_vlm/discode_distribution-aware_score_decoder_for_robust_automatic_evaluation_of_imag.md)
+- [SlimLLM: Accurate Structured Pruning for Large Language Models](../../ICML2025/multimodal_vlm/slimllm_accurate_structured_pruning_for_large_language_models.md)
+- [Grounding-IQA: Grounding Multimodal Language Models for Image Quality Assessment](../../ICLR2026/multimodal_vlm/grounding-iqa_grounding_multimodal_language_model_for_image_quality_assessment.md)
+- [COUNTS: Benchmarking Object Detectors and Multimodal Large Language Models under Distribution Shifts](counts_benchmarking_object_detectors_and_multimodal_large_language_models_under_.md)
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](../../ICLR2026/multimodal_vlm/self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+
+<!-- RELATED:END -->

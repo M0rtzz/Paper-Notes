@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 20个模型 × 18个数据量 × 30个种子的全面实验设计
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，实验设计严谨，讨论深入
 - 价值: ⭐⭐⭐⭐⭐ 对计算神经科学方法论有根本性影响，是"负面结果"的优秀范例
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bayesian Evaluation of Large Language Model Behavior](bayesian_evaluation_of_large_language_model_behavior.md)
+- [Leveraging Robust Optimization for LLM Alignment under Distribution Shifts](leveraging_robust_optimization_for_llm_alignment_under_distribution_shifts.md)
+- [Reliably Detecting Model Failures in Deployment Without Labels](reliably_detecting_model_failures_in_deployment_without_labels.md)
+- [MVSMamba: Multi-View Stereo with State Space Model](mvsmamba_multi-view_stereo_with_state_space_model.md)
+- [Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training](exploiting_vocabulary_frequency_imbalance_in_language_model_pre-training.md)
+
+<!-- RELATED:END -->

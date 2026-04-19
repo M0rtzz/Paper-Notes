@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 历史数据验证+多 LLM 提供商+反事实分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机充分，框架图示清晰
 - 价值: ⭐⭐⭐⭐⭐ 对公共卫生政策制定有重大潜在影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Information Processing of One-Dimensional Wasserstein Distances with Finite Samples](on_the_information_processing_of_one-dimensional_wasserstein_distances_with_fini.md)
+- [Optimal Welfare in Noncooperative Network Formation under Attack](optimal_welfare_in_noncooperative_network_formation_under_attack.md)
+- [Predict and Resist: Long-Term Accident Anticipation under Sensor Noise](predict_and_resist_long-term_accident_anticipation_under_sensor_noise.md)
+- [Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics](data_complexity_of_querying_description_logic_knowledge_bases_under_cost-based_s.md)
+- [Neural Network for Simulating Radio Emission from Extensive Air Showers](../../NeurIPS2025/others/neural_network_for_simulating_radio_emission_from_extensive_air_showers.md)
+
+<!-- RELATED:END -->

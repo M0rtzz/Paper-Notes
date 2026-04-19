@@ -118,3 +118,15 @@ tags:
 - **有效性**: ⭐⭐⭐⭐⭐ — 10 倍提升，结果非常令人信服
 - **可复现性**: ⭐⭐⭐⭐⭐ — 所有组件开源，实验细节完整
 - **影响力**: ⭐⭐⭐⭐ — 为质谱分子生成建立了强基线，明确了未来方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Atomic Diffusion Models for Small Molecule Structure Elucidation from NMR Spectra](atomic_diffusion_models_for_small_molecule_structure_elucidation_from_nmr_spectr.md)
+- [De novo generation of functional terpene synthases using TpsGPT](de_novo_generation_of_functional_terpene_synthases_using_tpsgpt.md)
+- [EchoONE: Segmenting Multiple Echocardiography Planes in One Model](../../CVPR2025/medical_imaging/echoone_segmenting_multiple_echocardiography_planes_in_one_model.md)
+- [PVChat: Personalized Video Chat with One-Shot Learning](../../ICCV2025/medical_imaging/pvchat_personalized_video_chat_with_one-shot_learning.md)
+- [Unified All-Atom Molecule Generation with Neural Fields](unified_all-atom_molecule_generation_with_neural_fields.md)
+
+<!-- RELATED:END -->

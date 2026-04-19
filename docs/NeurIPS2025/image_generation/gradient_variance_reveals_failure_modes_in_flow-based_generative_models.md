@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 理论严谨但实验限于 CelebA
 - 写作质量: ⭐⭐⭐⭐ — 理论证明清晰，图示直观
 - 价值: ⭐⭐⭐⭐ — 对 flow matching 社区有重要的警示和指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
+- [Failure Prediction at Runtime for Generative Robot Policies](failure_prediction_at_runtime_for_generative_robot_policies.md)
+- [A Gradient Flow Approach to Solving Inverse Problems with Latent Diffusion Models](a_gradient_flow_approach_to_solving_inverse_problems_with_latent_diffusion_model.md)
+- [Value Gradient Guidance for Flow Matching Alignment](value_gradient_guidance_for_flow_matching_alignment.md)
+- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](../../CVPR2025/image_generation/editing_away_the_evidence_diffusion-based_image_manipulation_and_the_failure_mod.md)
+
+<!-- RELATED:END -->

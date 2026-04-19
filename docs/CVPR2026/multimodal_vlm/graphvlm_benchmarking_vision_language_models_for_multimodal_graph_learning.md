@@ -132,3 +132,15 @@ GraphVLM 将 VLM 在 MMGL 中的角色分为三类，构建统一评估协议：
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，但部分实验表格较密集
 - 价值: ⭐⭐⭐⭐ 对多模态图学习领域有重要推动作用，benchmark价值长期存在
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VL-RouterBench: A Benchmark for Vision-Language Model Routing](vl-routerbench_a_benchmark_for_vision-language_model_routing.md)
+- [Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality](benchmarking_vision-language_models_under_contradictory_virtual_content_attacks_.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](continual_learning_with_visionlanguage_models_via.md)
+- [Multi-Crit: Benchmarking Multimodal Judges on Pluralistic Criteria-Following](multi-crit_benchmarking_multimodal_judges_on_pluralistic_criteria-following.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+
+<!-- RELATED:END -->

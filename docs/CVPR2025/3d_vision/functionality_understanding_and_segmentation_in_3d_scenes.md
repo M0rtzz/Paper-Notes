@@ -127,3 +127,15 @@ Fun3DU 在 AP25 上超越最近对手 OpenMask3D 达 32.9 个点（split0）和 
 - 实验充分度: ⭐⭐⭐⭐ 在专用基准上全面评测，但缺少更多消融分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，四模块管线逻辑流畅
 - 价值: ⭐⭐⭐⭐⭐ 对具身AI和人机交互领域有直接意义，填补了3D功能性理解的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Action-guided Generation of 3D Functionality Segmentation Data](../../CVPR2026/3d_vision/action-guided_generation_of_3d_functionality_segmentation_data.md)
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
+- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](../../ICCV2025/3d_vision/articulate3d_holistic_understanding_of_3d_scenes_as_universa.md)
+- [Hearing Hands: Generating Sounds from Physical Interactions in 3D Scenes](hearing_hands_generating_sounds_from_physical_interactions_in_3d_scenes.md)
+- [Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding](masked_point-entity_contrast_for_open-vocabulary_3d_scene_understanding.md)
+
+<!-- RELATED:END -->

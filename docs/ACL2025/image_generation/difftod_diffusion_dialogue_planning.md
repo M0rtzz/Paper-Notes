@@ -112,3 +112,15 @@ DiffTOD 将对话规划建模为轨迹生成问题，利用掩码扩散语言模
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+多基线+消融+逐轮分析+人工评估
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 为目标导向对话提供了全新的非顺序规划范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency](../../NeurIPS2025/image_generation/scenedecorator_towards_scene-oriented_story_generation_with_scene_planning_and_s.md)
+- [Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation](../../NeurIPS2025/image_generation/diffusion-driven_progressive_target_manipulation_for_source-free_domain_adaptati.md)
+- [Energy Loss Functions for Physical Systems](../../NeurIPS2025/image_generation/energy_loss_functions_for_physical_systems.md)
+- [Fractals made Practical: Denoising Diffusion as Partitioned Iterated Function Systems](../../CVPR2025/image_generation/fractals_made_practical_denoising_diffusion_as_partitioned_iterated_function_sys.md)
+- [NeuralOS: Towards Simulating Operating Systems via Neural Generative Models](../../ICLR2026/image_generation/neuralos_towards_simulating_operating_systems_via_neural_generative_models.md)
+
+<!-- RELATED:END -->

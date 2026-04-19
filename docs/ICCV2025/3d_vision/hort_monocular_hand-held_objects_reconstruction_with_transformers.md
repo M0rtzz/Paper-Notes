@@ -149,3 +149,15 @@ HORT 推理一张图像约 **0.08秒**（含网格化），而 D-SCO 需要 **13
 - **技术深度**: ⭐⭐⭐⭐ — 多坐标系手部编码和联合解码设计巧妙
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4个数据集、全面消融、推理速度对比
 - **实用价值**: ⭐⭐⭐⭐⭐ — 0.08秒推理使其具备实时应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JointDiT: Enhancing RGB-Depth Joint Modeling with Diffusion Transformers](jointdit_enhancing_rgb-depth_joint_modeling_with_diffusion_transformers.md)
+- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+- [Discretized Gaussian Representation for Tomographic Reconstruction](discretized_gaussian_representation_for_tomographic_reconstruction.md)
+- [One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images](one_look_is_enough_seamless_patchwise_refinement_for_zero-shot_monocular_depth_e.md)
+
+<!-- RELATED:END -->

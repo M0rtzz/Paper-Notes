@@ -167,3 +167,15 @@ Mint 比最强 baseline WATT-S 快 **45 倍**且准确率高 2.2%。高效的原
 - 实验充分度: ⭐⭐⭐⭐ 3 架构 × 3 基准 × 15 种损坏 + batch size 鲁棒性 + 效率 + 消融
 - 写作质量: ⭐⭐⭐⭐⭐ 现象→理论→方法→实验逻辑链条完美
 - 价值: ⭐⭐⭐⭐⭐ 极简方法解决实际部署中 VLM 损坏鲁棒性问题，兼顾效果与效率
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DOTA: DistributiOnal Test-time Adaptation of Vision-Language Models](dota_distributional_testtime_adaptation_of_visionlanguage_mo.md)
+- [The Illusion of Progress? A Critical Look at Test-Time Adaptation for Vision-Language Models](the_illusion_of_progress_a_critical_look_at_testtime_adaptat.md)
+- [Panda: Test-Time Adaptation with Negative Data Augmentation](../../AAAI2026/multimodal_vlm/panda_test-time_adaptation_with_negative_data_augmentation.md)
+- [Realistic Test-Time Adaptation of Vision-Language Models](../../CVPR2025/multimodal_vlm/realistic_test-time_adaptation_of_vision-language_models.md)
+- [LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](../../ICCV2025/multimodal_vlm/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
+
+<!-- RELATED:END -->

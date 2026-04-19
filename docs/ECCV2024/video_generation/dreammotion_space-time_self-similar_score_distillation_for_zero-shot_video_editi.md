@@ -149,3 +149,15 @@ DreamMotion的优化策略由三个部分组成：
 - **实验充分度**: ⭐⭐⭐⭐ — 自动指标+用户研究，两种框架验证，消融充分
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机到方法逻辑连贯
 - **价值**: ⭐⭐⭐⭐ — 零样本+模型无关的视频编辑框架，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing](magdiff_multi-alignment_diffusion_for_high-fidelity_video_generation_and_editing.md)
+- [Videoshop: Localized Semantic Video Editing with Noise-Extrapolated Diffusion Inversion](videoshop_localized_semantic_video_editing_with_noise-extrapolated_diffusion_inv.md)
+- [Q2E: Query-to-Event Decomposition for Zero-Shot Multilingual Text-to-Video Retrieval](../../ACL2025/video_generation/q2e_query-to-event_decomposition_for_zero-shot_multilingual_text-to-video_retrie.md)
+- [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](../../CVPR2025/video_generation/conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
+- [MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model](mofa-video_controllable_image_animation_via_generative_motion_field_adaptions_in.md)
+
+<!-- RELATED:END -->

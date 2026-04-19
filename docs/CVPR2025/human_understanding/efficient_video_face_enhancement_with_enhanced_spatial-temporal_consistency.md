@@ -128,3 +128,15 @@ VFHQ-Test 上盲人脸视频修复对比（24帧/1秒视频）：
 - 实验充分度: ⭐⭐⭐⭐⭐ BFVR + 两种去闪烁任务 + 详细消融，指标全面（质量、一致性、效率）
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，框架描述完整，图表丰富
 - 价值: ⭐⭐⭐⭐ 在效率和效果上同时取得突破，具有明确的工业落地价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RePOSE: 3D Human Pose Estimation via Spatio-Temporal Depth Relational Consistency](../../ECCV2024/human_understanding/repose_3d_human_pose_estimation_via_spatio-temporal_depth_relational_consistency.md)
+- [IDFace: Face Template Protection for Efficient and Secure Identification](../../ICCV2025/human_understanding/idface_face_template_protection_for_efficient_and_secure_identification.md)
+- [Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs](../../NeurIPS2025/human_understanding/recurrent_attention-based_token_selection_for_efficient_streaming_video-llms.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+- [MOSPA: Human Motion Generation Driven by Spatial Audio](../../NeurIPS2025/human_understanding/mospa_human_motion_generation_driven_by_spatial_audio.md)
+
+<!-- RELATED:END -->

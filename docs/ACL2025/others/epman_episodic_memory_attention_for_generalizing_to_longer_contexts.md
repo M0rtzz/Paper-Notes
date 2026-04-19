@@ -159,3 +159,15 @@ $$L = \mathbb{E}_\mathcal{D} [\alpha \ln p(l|q, C) + \ln(a|q, C, a_{mem})]$$
 ## 评分 ⭐⭐⭐⭐
 
 巧妙地将情景记忆与自注意力结合，训练高效（4K 泛化到 256K），在最难设置下表现优异。方法直觉清晰、实验充分，但 scalability（KV cache 内存）和检索器依赖是实际部署的瓶颈。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient OpAmp Adaptation for Zoom Attention to Golden Contexts](efficient_opamp_adaptation_for_zoom_attention_to_golden_contexts.md)
+- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
+
+<!-- RELATED:END -->

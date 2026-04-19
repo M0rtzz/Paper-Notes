@@ -125,3 +125,15 @@ VSI-Bench 空间推理（不使用3D输入）：
 - 实验充分度: ⭐⭐⭐⭐⭐ VSI-Bench/SQA3D/ScanQA/ScanRefer/Re10k 多基准+详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但部分表述可更凝练
 - 价值: ⭐⭐⭐⭐⭐ 对统一3D理解与生成有开创性贡献，SOTA性能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Masking Matters: Unlocking the Spatial Reasoning Capabilities of LLMs for 3D Scene-Language Understanding](../../CVPR2026/3d_vision/masking_matters_unlocking_the_spatial_reasoning_capabilities_of_llms_for_3d_scen.md)
+- [EgoNight: Towards Egocentric Vision Understanding at Night with a Challenging Benchmark](egonight_towards_egocentric_vision_understanding_at_night_with_a_challenging_ben.md)
+- [UniVG: A Generalist Diffusion Model for Unified Image Generation and Editing](../../ICCV2025/3d_vision/univg_a_generalist_diffusion_model_for_unified_image_generation_and_editing.md)
+- [A Unified Image-Dense Annotation Generation Model for Underwater Scenes](../../CVPR2025/3d_vision/a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
+- [UniEgoMotion: A Unified Model for Egocentric Motion Reconstruction, Forecasting, and Generation](../../ICCV2025/3d_vision/uniegomotion_a_unified_model_for_egocentric_motion_reconstruction_forecasting_an.md)
+
+<!-- RELATED:END -->

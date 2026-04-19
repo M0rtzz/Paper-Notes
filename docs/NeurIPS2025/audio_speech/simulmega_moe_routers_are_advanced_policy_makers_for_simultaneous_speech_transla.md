@@ -130,3 +130,15 @@ $$\text{Action} = \begin{cases} \text{Write} & \text{if } p_{t,i} < \lambda \\ \
 - 技术深度：⭐⭐⭐⭐⭐ （完整的系统设计+全面消融）
 - 实验充分性：⭐⭐⭐⭐⭐ （6语言×多基线×S2TT/TTS/S2ST）
 - 写作质量：⭐⭐⭐⭐ （清晰全面）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](../../ICLR2026/audio_speech/scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
+- [Different Speech Translation Models Encode and Translate Speaker Gender Differently](../../ACL2025/audio_speech/different_speech_translation_models_encode_and_translate_speaker_gender_differen.md)
+- [DeepDebater: A Superpersuasive Autonomous Policy Debating System](../../AAAI2026/audio_speech/a_superpersuasive_autonomous_policy_debating_system.md)
+- [ControlSpeech: Towards Simultaneous and Independent Zero-shot Speaker Cloning and Zero-shot Language Style Control](../../ACL2025/audio_speech/controlspeech_zero_shot.md)
+- [MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition](mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)
+
+<!-- RELATED:END -->

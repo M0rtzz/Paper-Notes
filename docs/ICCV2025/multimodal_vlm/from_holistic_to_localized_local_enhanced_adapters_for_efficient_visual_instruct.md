@@ -129,3 +129,15 @@ Dual-LoRA 内部设计消融：
 - **实验充分度**: ⭐⭐⭐⭐ 多数据集、多 baseline、消融充分，但基础模型单一
 - **写作质量**: ⭐⭐⭐⭐ 动机图示清晰，理论推导严谨
 - **价值**: ⭐⭐⭐⭐ 对 MLLM 高效微调社区有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Instruction Bottleneck Tuning](../../NeurIPS2025/multimodal_vlm/visual_instruction_bottleneck_tuning.md)
+- [SMoLoRA: Exploring and Defying Dual Catastrophic Forgetting in Continual Visual Instruction Tuning](smolora_exploring_and_defying_dual_catastrophic_forgetting_in_continual_visual_i.md)
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)
+- [Parrot: Multilingual Visual Instruction Tuning](../../ICML2025/multimodal_vlm/parrot_multilingual_visual_instruction_tuning.md)
+- [Learning to Instruct for Visual Instruction Tuning](../../NeurIPS2025/multimodal_vlm/learning_to_instruct_for_visual_instruction_tuning.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ DressCode-Upper: LPIPS **0.0615** vs IDM-VTON 0.0761
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集+完整消融+多个基线+定性定量，实验非常扎实
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，方法描述详细，图表丰富
 - 价值: ⭐⭐⭐⭐ 去掉了试穿的解析器依赖，对实际应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniVTON: Training-Free Universal Virtual Try-On](../../ICCV2025/image_generation/omnivton_training-free_universal_virtual_try-on.md)
+- [WildVidFit: Video Virtual Try-On in the Wild via Image-Based Controlled Diffusion Models](../../ECCV2024/image_generation/wildvidfit_video_virtual_try-on_in_the_wild_via_image-based_controlled_diffusion.md)
+- [Decoupling Training-Free Guided Diffusion by ADMM](decoupling_training-free_guided_diffusion_by_admm.md)
+- [Data-Free Group-Wise Fully Quantized Winograd Convolution via Learnable Scales](data-free_group-wise_fully_quantized_winograd_convolution_via_learnable_scales.md)
+- [MTADiffusion: Mask Text Alignment Diffusion Model for Object Inpainting](mtadiffusion_mask_text_alignment_diffusion_model_for_object_inpainting.md)
+
+<!-- RELATED:END -->

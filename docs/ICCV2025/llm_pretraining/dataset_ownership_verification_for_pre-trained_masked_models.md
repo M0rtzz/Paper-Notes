@@ -137,3 +137,15 @@ $$\Delta\mathcal{R} = \{\overline{R'}_k - \overline{R}_k | k \in [1, K]\}$$
 - **实验充分度**: ⭐⭐⭐⭐ 10种MIM+4种架构+语言模型跨模态验证+全面消融
 - **写作质量**: ⭐⭐⭐⭐ 数学定义严谨，方法流程清晰
 - **价值**: ⭐⭐⭐⭐ 数据安全领域的重要贡献，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Does Sequence Modeling Architecture Influence Base Capabilities of Pre-trained Language Models?](../../NeurIPS2025/llm_pretraining/how_does_sequence_modeling_architecture_influence_base_capabilities_of_pre-train.md)
+- [No-Regret Strategy Solving in Imperfect-Information Games via Pre-Trained Embedding](../../AAAI2026/llm_pretraining/no-regret_strategy_solving_in_imperfect-information_games_via_pre-trained_embedd.md)
+- [Large Language Models are Demonstration Pre-Selectors for Themselves](../../ICML2025/llm_pretraining/large_language_models_are_demonstration_pre-selectors_for_themselves.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](../../ACL2025/llm_pretraining/pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](../../ACL2025/llm_pretraining/towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+
+<!-- RELATED:END -->

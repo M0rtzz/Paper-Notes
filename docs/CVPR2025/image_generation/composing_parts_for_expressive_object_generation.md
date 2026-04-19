@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定位评估+生成评估+用户研究+消融+跨域泛化，较全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示丰富
 - 价值: ⭐⭐⭐⭐ 为创意设计提供了前所未有的部件级控制能力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InterAct: Advancing Large-Scale Versatile 3D Human-Object Interaction Generation](interact_advancing_large-scale_versatile_3d_human-object_interaction_generation.md)
+- [ExpPortrait: Expressive Portrait Generation via Personalized Representation](../../CVPR2026/image_generation/expportrait_expressive_portrait_generation_via_personalized_representation.md)
+- [BootPlace: Bootstrapped Object Placement with Detection Transformers](bootplace_bootstrapped_object_placement_with_detection_transformers.md)
+- [MetaShadow: Object-Centered Shadow Detection, Removal, and Synthesis](metashadow_object-centered_shadow_detection_removal_and_synthesis.md)
+- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
+
+<!-- RELATED:END -->

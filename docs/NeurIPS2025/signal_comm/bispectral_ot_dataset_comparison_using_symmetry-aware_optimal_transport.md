@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅在 MNIST 类数据集上，缺少大规模/自然图像验证
 - 写作质量: ⭐⭐⭐⭐ 数学背景清晰，但实验部分较简短
 - 价值: ⭐⭐⭐⭐ 提出了有前景的新方向，但实际影响力待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
+- [Masked Symbol Modeling for Demodulation of Oversampled Baseband Communication Signals](masked_symbol_modeling_for_demodulation_of_oversampled_baseband_communication_si.md)
+- [The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning](the_surprising_effectiveness_of_negative_reinforcement_in_llm_reasoning.md)
+- [Memory-Integrated Reconfigurable Adapters: A Unified Framework for Settings with Multiple Tasks](memory-integrated_reconfigurable_adapters_a_unified_framework_for_settings_with_.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+
+<!-- RELATED:END -->

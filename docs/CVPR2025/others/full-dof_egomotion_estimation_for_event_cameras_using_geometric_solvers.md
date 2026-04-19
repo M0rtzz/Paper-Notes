@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论严谨但实验规模偏小，缺少大规模定量对比
 - 写作质量: ⭐⭐⭐⭐ 几何推导清晰，理论框架完整
 - 价值: ⭐⭐⭐⭐ 对事件相机SLAM和自主导航有基础性贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Order-One Rolling Shutter Cameras](order-one_rolling_shutter_cameras.md)
+- [Spike Imaging Velocimetry: Dense Motion Estimation of Fluids Using Spike Cameras](../../AAAI2026/others/spike_imaging_velocimetry_dense_motion_estimation_of_fluids_using_spike_cameras.md)
+- [A2Z-10M+: Geometric Deep Learning with A-to-Z BRep Annotations for AI-Assisted CAD Modeling and Reverse Engineering](a2z-10m_geometric_deep_learning_with_a-to-z_brep_annotations_for_ai-assisted_cad.md)
+- [OrthoLoC: UAV 6-DoF Localization and Calibration Using Orthographic Geodata](../../NeurIPS2025/others/ortholoc_uav_6-dof_localization_and_calibration_using_orthographic_geodata.md)
+- [Event-based Mosaicing Bundle Adjustment](../../ECCV2024/others/event-based_mosaicing_bundle_adjustment.md)
+
+<!-- RELATED:END -->

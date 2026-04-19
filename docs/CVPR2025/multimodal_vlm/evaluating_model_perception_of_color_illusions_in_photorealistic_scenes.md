@@ -114,3 +114,15 @@ tags: ["color-illusion", "visual-perception", "VLM-evaluation", "dataset", "cogn
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多种 VLM、分析多个影响因素（模型大小、图像结构、提示方式、语言差异），极为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、图表丰富、分析深入
 - 价值: ⭐⭐⭐⭐ 为理解 VLM 的感知特性提供了重要工具和洞察，在安全关键领域（医学、自动驾驶）有警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Multimodal Large Language Models on Core Music Perception Tasks](../../NeurIPS2025/multimodal_vlm/evaluating_multimodal_large_language_models_on_core_music_perception_tasks.md)
+- [Bring Reason to Vision: Understanding Perception and Reasoning through Model Merging](../../ICML2025/multimodal_vlm/bring_reason_to_vision_understanding_perception_and_reasoning_through_model_merg.md)
+- [FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges](../../NeurIPS2025/multimodal_vlm/finegrain_evaluating_failure_modes_of_text-to-image_models_with_vision_language_.md)
+- [Revisiting Model Stitching in the Foundation Model Era](revisiting_model_stitching_in_the_foundation_model_era.md)
+- [Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)
+
+<!-- RELATED:END -->

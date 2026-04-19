@@ -352,3 +352,15 @@ $$\bar{\mathbf{v}} = \lfloor \text{clip}(\frac{\mathbf{v} - \beta}{s}, 0, 2^b - 
 - 实验充分度: ⭐⭐⭐⭐⭐ — 双数据集、多baseline、跨方法消融、量化策略消融均覆盖
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机论述充分
 - 价值: ⭐⭐⭐⭐ — 作为通用增强技术有实用价值，但与SOTA编解码器的差距限制了应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting](../../ECCV2024/3d_vision/gaussianimage_1000_fps_image_representation_and_compression_by_2d_gaussian_splat.md)
+- [SmartSplat: Feature-Smart Gaussians for Scalable Compression of Ultra-High-Resolution Images](smartsplat_feature-smart_gaussians_for_scalable_compression_of_ultra-high-resolu.md)
+- [Split-Layer: Enhancing Implicit Neural Representation by Maximizing the Dimensionality of Feature Space](split-layer_enhancing_implicit_neural_representation_by_maximizing_the_dimension.md)
+- [SGI: Structured 2D Gaussians for Efficient and Compact Large Image Representation](../../CVPR2026/3d_vision/sgi_structured_2d_gaussians_for_efficient_and_compact_large_image_representation.md)
+- [Point-SRA: Self-Representation Alignment for 3D Representation Learning](point-sra_self-representation_alignment_for_3d_representation_learning.md)
+
+<!-- RELATED:END -->

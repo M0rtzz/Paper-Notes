@@ -163,3 +163,15 @@ $$\max_{p \in \Delta_V} (1-\alpha) \sum_i p_i \pi_{KDE}^{target}(x_i|c) - KL(p \
 ## 评分 ⭐⭐⭐⭐
 
 方法优雅且有理论保证，黑盒公平性分析是重要贡献，无需训练即可实现有竞争力的分子优化。但在完整PMO排行中仅排第2，且未做多目标优化和多CLM验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Sample Augmented Test-Time Adaptation for Personalized Intraoperative Hypotension Prediction](cross-sample_augmented_test-time_adaptation_for_personalized_intraoperative_hypo.md)
+- [MIRAGE: Scaling Test-Time Inference with Parallel Graph-Retrieval-Augmented Reasoning Chains](mirage_scaling_test-time_inference_with_parallel_graph-retrieval-augmented_reaso.md)
+- [Progressive Test Time Energy Adaptation for Medical Image Segmentation](../../ICCV2025/medical_imaging/progressive_test_time_energy_adaptation_for_medical_image_segmentation.md)
+- [Adaptive Test-Time Training for Predicting Need for Invasive Mechanical Ventilation in Multi-Center Cohorts](../../ICLR2026/medical_imaging/adaptive_test-time_training_for_predicting_need_for_invasive_mechanical_ventilat.md)
+- [SPEGC: Continual Test-Time Adaptation via Semantic-Prompt-Enhanced Graph Clustering for Medical Image Segmentation](../../CVPR2026/medical_imaging/spegc_continual_test-time_adaptation_via_semantic-prompt-enhanced_graph_clusteri.md)
+
+<!-- RELATED:END -->

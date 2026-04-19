@@ -134,3 +134,15 @@ RM 提升到与 GPT-4o 相当甚至在部分维度超越！
 - 实验充分度: ⭐⭐⭐⭐⭐ PM 和 RM 双向评估，多个强 baseline 对比，消融完整
 - 写作质量: ⭐⭐⭐⭐⭐ EM 框架推导清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了 RLHF 中的核心问题（分布偏移），效果显著且不需额外标注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective](../../ICML2025/llm_alignment/can_rlhf_be_more_efficient_with_imperfect_reward_models_a_policy_coverage_perspe.md)
+- [Cheems: A Practical Guidance for Building and Evaluating Chinese Reward Models from Scratch](cheems_chinese_reward_models.md)
+- [SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](synthesizeme_persona_prompts.md)
+- [AMoPO: Adaptive Multi-objective Preference Optimization without Reward Models and Reference Models](amopo_adaptive_multi-objective_preference_optimization_without_reward_models_and.md)
+- [Towards Reward Fairness in RLHF: From a Resource Allocation Perspective](reward_fairness_rlhf.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ $$I^g = G(f^s + z^d_{\text{FDM}}, \tilde{f^s_\pi})$$
 - **实验充分度**: ⭐⭐⭐⭐ 视频驱动和音频驱动双场景验证，消融分析直观
 - **写作质量**: ⭐⭐⭐⭐ 问题分析过程条理清晰，Fig.3的变量替换实验特别有说服力
 - **价值**: ⭐⭐⭐⭐ 实时高质量的说话人头生成对虚拟数字人等商业应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A High-Quality Robust Diffusion Framework for Corrupted Dataset](../../ECCV2024/others/a_highquality_robust_diffusion_framework_for_corrupted_datas.md)
+- [HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images](../../ECCV2024/others/hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu.md)
+- [Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training](failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per.md)
+- [Unveiling Dual Quality in Product Reviews: An NLP-Based Approach](../../ACL2025/others/unveiling_dual_quality_in_product_reviews_an_nlp-based_approach.md)
+- [High-Fidelity 3D Textured Shapes Generation by Sparse Encoding and Adversarial Decoding](../../ECCV2024/others/high-fidelity_3d_textured_shapes_generation_by_sparse_encoding_and_adversarial_d.md)
+
+<!-- RELATED:END -->

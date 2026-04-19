@@ -185,3 +185,15 @@ SymmFlow仅用25步即超越Diffusion Classifier在CIFAR-10上的表现，而后
 - 实验充分度: ⭐⭐⭐⭐ （生成和分割实验充分，但分类验证偏弱）
 - 写作质量: ⭐⭐⭐⭐⭐ （逻辑清晰，玩具实验辅助理解，图表精美）
 - 价值: ⭐⭐⭐⭐ （统一建模的方向有前景，但分割精度仍需提升）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EditAR: Unified Conditional Generation with Autoregressive Models](../../CVPR2025/segmentation/editar_unified_conditional_generation_with_autoregressive_models.md)
+- [JoDiffusion: Jointly Diffusing Image with Pixel-Level Annotations for Semantic Segmentation Promotion](jodiffusion_jointly_diffusing_image_with_pixel-level_annotations_for_semantic_se.md)
+- [Segment and Matte Anything in a Unified Model (SAMA)](segment_and_matte_anything_in_a_unified_model.md)
+- [Breaking the Stealth-Potency Trade-off in Clean-Image Backdoors with Generative Trigger Optimization](breaking_the_stealth-potency_trade-off_in_clean-image_backdoors_with_generative_.md)
+- [Text-guided Controllable Diffusion for Realistic Camouflage Images Generation](text-guided_controllable_diffusion_for_realistic_camouflage_images_generation.md)
+
+<!-- RELATED:END -->

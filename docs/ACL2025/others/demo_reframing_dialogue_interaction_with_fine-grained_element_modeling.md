@@ -154,3 +154,15 @@ DEMO框架包含三层结构：
 - **实验充分度**: 8/10 — 10个LLM评估、域外迁移、灾难性遗忘检测覆盖全面，但缺少元素组合的消融
 - **写作质量**: 8/10 — 框架清晰、图表丰富，理论基础扎实（语用学理论支撑）
 - **价值**: 8/10 — 为对话系统评估和建模提供了新范式，benchmark和agent均有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Fine-Grained Distinct Element Estimation](../../ICML2025/others/on_fine-grained_distinct_element_estimation.md)
+- [A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior](a_spatio-temporal_point_process_for_fine-grained_modeling_of_reading_behavior.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+
+<!-- RELATED:END -->

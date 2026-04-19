@@ -158,3 +158,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{hard}} + \alpha \cdot \mathcal{L}_{\text{KD}}
 - 实验充分度: ⭐⭐⭐⭐ — 6 数据集 × 2 模型族 × 6 种 k 值 × 3 基线 × 消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 直觉-理论-实验三位一体，配图出色
 - 实用价值: ⭐⭐⭐⭐ — 对少样本 LLM 部署有直接意义，但 CFE 生成成本需考虑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KTCF: Actionable Recourse in Knowledge Tracing via Counterfactual Explanations for Education](../../AAAI2026/causal_inference/ktcf_actionable_recourse_in_knowledge_tracing_via_counterfactual_explanations_fo.md)
+- [Root Cause Analysis of Outliers with Missing Structural Knowledge](root_cause_analysis_of_outliers_with_missing_structural_knowledge.md)
+- [Performative Validity of Recourse Explanations](performative_validity_of_recourse_explanations.md)
+- [On the Eligibility of LLMs for Counterfactual Reasoning: A Decompositional Study](../../ICLR2026/causal_inference/on_the_eligibility_of_llms_for_counterfactual_reasoning_a_decompositional_study.md)
+- [Towards Fine-Grained Interpretability: Counterfactual Explanations for Misclassification](../../CVPR2025/causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
+
+<!-- RELATED:END -->

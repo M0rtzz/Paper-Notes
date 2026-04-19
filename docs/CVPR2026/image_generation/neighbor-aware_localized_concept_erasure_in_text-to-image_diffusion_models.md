@@ -133,3 +133,15 @@ Stage 逐步添加的效果（从论文 Figure 9 提取）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖细粒度/名人/敏感内容/艺术风格四大场景，多概念扩展，消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题引入清晰，但三阶段描述偏重符号，实际算法流程可以更直观
 - 价值: ⭐⭐⭐⭐ 对 T2I 模型的安全部署有直接意义，特别是细粒度概念管控场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Erasure or Erosion? Evaluating Compositional Degradation in Unlearned Text-To-Image Diffusion Models](erasure_or_erosion_evaluating_compositional_degradation_in_unlearned_text-to-ima.md)
+- [Prototype-Guided Concept Erasure in Diffusion Models](prototype-guided_concept_erasure_in_diffusion_models.md)
+- [Localized Concept Erasure in Text-to-Image Diffusion Models via High-Level Representation Misdirection](../../ICLR2026/image_generation/localized_concept_erasure_in_text-to-image_diffusion_models_via_high-level_repre.md)
+- [Mass Concept Erasure in Diffusion Models with Concept Hierarchy](../../AAAI2026/image_generation/mass_concept_erasure_in_diffusion_models_with_concept_hierarchy.md)
+- [SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](../../ICLR2026/image_generation/speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
+
+<!-- RELATED:END -->

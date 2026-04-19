@@ -114,3 +114,15 @@ tags:
 - **技术深度**: ⭐⭐⭐⭐ — 物理直觉与深度学习结合，频域分析有理论深度
 - **实验充分性**: ⭐⭐⭐ — 缓存信息有限，需参考原文
 - **写作质量**: ⭐⭐⭐⭐ — 物理类比直观，摘要清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [World4Drive: End-to-End Autonomous Driving via Intention-aware Physical Latent World Model](world4drive_end-to-end_autonomous_driving_via_intention-aware_physical_latent_wo.md)
+- [SeqGrowGraph: Learning Lane Topology as a Chain of Graph Expansions](seqgrowgraph_learning_lane_topology_as_a_chain_of_graph_expansions.md)
+- [RESCUE: Crowd Evacuation Simulation via Controlling SDM-United Characters](rescue_crowd_evacuation_simulation_via_controlling_sdm-united_characters.md)
+- [Recover to Predict: Progressive Retrospective Learning for Variable-Length Trajectory Prediction](../../CVPR2026/autonomous_driving/recover_to_predict_progressive_retrospective_learning_for_variable-length_trajec.md)
+- [Saliency-Aware Quantized Imitation Learning for Efficient Robotic Control](saliency-aware_quantized_imitation_learning_for_efficient_robotic_control.md)
+
+<!-- RELATED:END -->

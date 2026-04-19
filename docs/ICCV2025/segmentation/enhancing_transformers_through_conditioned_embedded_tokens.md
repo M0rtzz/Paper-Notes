@@ -162,3 +162,15 @@ Transformer 的核心是自注意力机制，它通过 $\mathbf{A}(X) = \text{so
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 5 种 CV 模型、2 种语言模型、1 种长序列模型、4 个任务，极为全面
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，实验组织有序
 - **价值**: ⭐⭐⭐⭐ — 作为 drop-in 改进有很高的实用价值，但 SVD 开销可能限制大模型应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What If: Understanding Motion Through Sparse Interactions](what_if_understanding_motion_through_sparse_interactions.md)
+- [HiMTok: Learning Hierarchical Mask Tokens for Image Segmentation with Large Multimodal Model](himtok_learning_hierarchical_mask_tokens_for_image_segmentation_with_large_multi.md)
+- [LeGrad: An Explainability Method for Vision Transformers via Feature Formation Sensitivity](legrad_an_explainability_method_for_vision_transformers_via_feature_formation_se.md)
+- [UniGlyph: Unified Segmentation-Conditioned Diffusion for Precise Visual Text Synthesis](uniglyph_unified_segmentation-conditioned_diffusion_for_precise_visual_text_synt.md)
+- [Know "No" Better: A Data-Driven Approach for Enhancing Negation Awareness in CLIP](know_no_better_a_data-driven_approach_for_enhancing_negation_awareness_in_clip.md)
+
+<!-- RELATED:END -->

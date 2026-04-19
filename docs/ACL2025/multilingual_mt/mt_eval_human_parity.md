@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 跨年份跨语言，有统计显著性分析，但测试集覆盖和规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 讨论深入、论证严谨，对社区有前瞻性启示
 - 价值: ⭐⭐⭐⭐ 触及 MT 评估的根本问题，对领域发展方向有重要影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Evaluation Metrics for Grammatical Error Correction: Why Use a Different Evaluation Process than Human?](rethinking_evaluation_metrics_for_grammatical_error_correction_why_use_a_differe.md)
+- [M-MAD: Multidimensional Multi-Agent Debate for Advanced Machine Translation Evaluation](m-mad_multidimensional_multi-agent_debate_for_advanced_machine_translation_evalu.md)
+- [AskQE: Question Answering as Automatic Evaluation for Machine Translation](askqe_question_answering_as_automatic_evaluation_for_machine_translation.md)
+- [Machine Translation Models are Zero-Shot Detectors of Translation Direction](machine_translation_models_are_zero-shot_detectors_of_translation_direction.md)
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+
+<!-- RELATED:END -->

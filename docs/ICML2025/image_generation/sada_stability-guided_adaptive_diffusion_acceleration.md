@@ -163,3 +163,15 @@ $$
 - 实验充分度: ⭐⭐⭐⭐ — 三个主流模型×两种求解器×多步数消融+跨模态验证，较为全面
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，符号体系清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ — 实用的即插即用加速方案，1.8-2×加速+高保真度，对工业部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Morse: Dual-Sampling for Lossless Acceleration of Diffusion Models](morse_dual-sampling_for_lossless_acceleration_of_diffusion_models.md)
+- [Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration](../../CVPR2026/image_generation/adaptive_spectral_feature_forecasting_for_diffusion_sampling_acceleration.md)
+- [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](../../CVPR2026/image_generation/tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
+- [Multidimensional Adaptive Coefficient for Inference Trajectory Optimization in Flow and Diffusion](multidimensional_adaptive_coefficient_for_inference_trajectory_optimization_in_f.md)
+- [TC-Padé: Trajectory-Consistent Padé Approximation for Diffusion Acceleration](../../CVPR2026/image_generation/tc-padé_trajectory-consistent_padé_approximation_for_diffusion_acceleration.md)
+
+<!-- RELATED:END -->

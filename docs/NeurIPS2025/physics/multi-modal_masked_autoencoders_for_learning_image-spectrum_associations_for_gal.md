@@ -125,3 +125,15 @@ AdamW优化器（weight decay 0.01, lr 0.0001），梯度裁剪。数据集70/15
 - 实验充分度: ⭐⭐⭐ 数据集可观但基线对比不足，光谱重建缺定量指标
 - 写作质量: ⭐⭐⭐⭐ 天文背景清晰，结果分析诚实讨论了局限
 - 价值: ⭐⭐⭐⭐ 数据集贡献显著，为天文基础模型铺路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Discovery of High-Redshift Galaxy Populations with Variational Autoencoders](unsupervised_discovery_of_high-redshift_galaxy_populations_with_variational_auto.md)
+- [From Simulations to Surveys: Domain Adaptation for Galaxy Observations](from_simulations_to_surveys_domain_adaptation_for_galaxy_observations.md)
+- [Neural Deprojection of Galaxy Stellar Mass Profiles](neural_deprojection_of_galaxy_stellar_mass_profiles.md)
+- [Transfer Learning Beyond the Standard Model](transfer_learning_beyond_the_standard_model.md)
+- [Galaxy Walker: Geometry-aware VLMs For Galaxy-scale Understanding](../../CVPR2025/physics/galaxy_walker_geometry-aware_vlms_for_galaxy-scale_understanding.md)
+
+<!-- RELATED:END -->

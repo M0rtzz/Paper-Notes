@@ -121,3 +121,15 @@ Un-EVIMO 由两个核心模块组成：
 - **实验充分度**: ⭐⭐⭐⭐ 涵盖多场景定量评估、消融实验、速度对比、失败案例分析，但仅在 EVIMO 一个数据集评估
 - **写作质量**: ⭐⭐⭐⭐ 数学推导完整清晰，从运动场方程到 RANSAC 到 Otsu 阈值化的叙述逻辑通顺
 - **实用价值**: ⭐⭐⭐⭐ 实时推理 + 无需标注训练，对事件相机实际应用（自动驾驶、无人机避障）有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ColorMAE: Exploring Data-Independent Masking Strategies in Masked AutoEncoders](colormae_exploring_data-independent_masking_strategies_in_masked_autoencoders.md)
+- [Unsupervised Moving Object Segmentation with Atmospheric Turbulence](unsupervised_moving_object_segmentation_with_atmospheric_turbulence.md)
+- [ProMerge: Prompt and Merge for Unsupervised Instance Segmentation](promerge_prompt_and_merge_for_unsupervised_instance_segmentation.md)
+- [Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation](../../ICCV2025/segmentation/skeleton_motion_words_for_unsupervised_skeleton-based_temporal_action_segmentati.md)
+- [ActionVOS: Actions as Prompts for Video Object Segmentation](actionvos_actions_as_prompts_for_video_object_segmentation.md)
+
+<!-- RELATED:END -->

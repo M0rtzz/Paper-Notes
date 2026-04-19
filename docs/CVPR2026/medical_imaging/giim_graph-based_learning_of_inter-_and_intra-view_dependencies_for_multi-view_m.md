@@ -113,3 +113,15 @@ tags:
 ## 补充说明
 
 本文最大的实践价值在于：(1) 图结构天然适配一个患者多个病变的真实临床场景，无需固定输入大小；(2) 缺失视图处理策略直接解决 CT/MRI 协议不完整的现实问题；(3) 跨模态验证（CT/乳腺X线/MRI）证明框架的通用性。但当前的两阶段训练（先冻结骨干再训图网络）可能限制了端到端优化的潜力，联合训练方案值得探索。此外，缺失视图实验中 Constant 方法的有效性是一个值得深入研究的现象。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding](medgrpo_multi-task_reinforcement_learning_for_heterogeneous_medical_video_unders.md)
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+
+<!-- RELATED:END -->

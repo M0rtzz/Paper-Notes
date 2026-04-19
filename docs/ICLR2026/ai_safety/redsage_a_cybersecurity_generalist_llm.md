@@ -148,3 +148,15 @@ RedSage-Bench MCQ评测（0-shot，准确率%）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三类基准（自建+外部网络安全+通用）、多阶段消融、开放问答质量评估、大模型扩展验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，表格和图表丰富，pipeline描述完整
 - 价值: ⭐⭐⭐⭐⭐ 全栈开源对网络安全AI社区推动巨大，数据pipeline方法论可迁移至其他专业领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Static Benchmarks to Dynamic Protocol: Agent-Centric Text Anomaly Detection for Evaluating LLM Reasoning](from_static_benchmarks_to_dynamic_protocol_agent-centric_text_anomaly_detection_.md)
+- [Democratizing LLM Efficiency: From Hyperscale Optimizations to Universal Deployability](../../AAAI2026/ai_safety/democratizing_llm_efficiency_from_hyperscale_optimizations_to_universal_deployab.md)
+- [An LLM-Based Simulation Framework for Embodied Conversational Agents in Psychological Counseling](../../AAAI2026/ai_safety/an_llm-based_simulation_framework_for_embodied_conversationa.md)
+- [Principles2Plan: LLM-Guided System for Operationalising Ethical Principles into Plans](../../AAAI2026/ai_safety/principles2plan_llm-guided_system_for_operationalising_ethical_principles_into_p.md)
+- [Cascade: Token-Sharded Private LLM Inference](../../ICML2025/ai_safety/cascade_token-sharded_private_llm_inference.md)
+
+<!-- RELATED:END -->

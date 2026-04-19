@@ -79,3 +79,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨
 - 价值: ⭐⭐⭐⭐ 长期理论价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Predicting the Performance of Black-Box LLMs through Follow-Up Queries](../../NeurIPS2025/robotics/predicting_the_performance_of_black-box_llms_through_follow-up_queries.md)
+- [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](../../NeurIPS2025/robotics/mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
+- [To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance](../../AAAI2026/robotics/to_align_or_not_to_align_strategic_multimodal_representation_alignment_for_optim.md)
+- [Towards Reinforcement Learning from Neural Feedback: Mapping fNIRS Signals to Agent Performance](../../AAAI2026/robotics/towards_reinforcement_learning_from_neural_feedback_mapping_.md)
+- [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](../../AAAI2026/robotics/adaptive_theory_of_mind_for_llm-based_multi-agent_coordination.md)
+
+<!-- RELATED:END -->

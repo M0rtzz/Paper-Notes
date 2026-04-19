@@ -138,3 +138,15 @@ MILP 在不同 $(m,k)$ 参数下的最优值：
 - **实验充分性**: ⭐⭐⭐⭐ — 受限于计算资源但在可及范围内充分，定理证明弥补了实验的局限
 - **实用价值**: ⭐⭐⭐ — 主要是理论贡献，但对民主选举制度设计和 AI 公平性有潜在指导意义
 - **写作质量**: ⭐⭐⭐⭐⭐ — 极其清晰的数学写作，运行示例贯穿全文，理论-实验-理论的递进结构优雅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Voting or Consensus? Decision-Making in Multi-Agent Debate](../../ACL2025/others/voting_or_consensus_decision-making_in_multi-agent_debate.md)
+- [Automated Reproducibility Has a Problem Statement Problem](automated_reproducibility_has_a_problem_statement_problem.md)
+- [Boosting Adversarial Transferability via Ensemble Non-Attention](boosting_adversarial_transferability_via_ensemble_non-attention.md)
+- [Parameterized Approximation Algorithms for TSP on Non-Metric Graphs](parameterized_approximation_algorithms_for_tsp_on_non-metric_graphs.md)
+- [Structural Approach to Guiding a Present-Biased Agent](structural_approach_to_guiding_a_present-biased_agent.md)
+
+<!-- RELATED:END -->

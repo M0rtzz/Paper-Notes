@@ -116,3 +116,15 @@ EffiVLM-Bench 评估两类训练免加速方法：(1) Token 压缩 — 包括 to
 - 实验充分度: ⭐⭐⭐⭐⭐ 17 个 benchmark × 3 个模型 × 9 个压缩方法 × 多种预算，极其全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，观察总结有条理
 - 价值: ⭐⭐⭐⭐ 对 LVLM 部署优化有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents](agent_rewardbench.md)
+- [VLM2-Bench: A Closer Look at How Well VLMs Implicitly Link Explicit Matching Visual Cues](vlm2-bench_a_closer_look_at_how_well_vlms_implicitly_link_explicit_matching_visu.md)
+- [VF-Eval: Evaluating Multimodal LLMs for Generating Feedback on AIGC Videos](vf_eval_aigc_video_feedback.md)
+- [Vision-Language Models Struggle to Align Entities across Modalities](vision-language_models_struggle_to_align_entities_across_modalities.md)
+- [Burn After Reading: Do Multimodal Large Language Models Truly Capture Order of Events in Image Sequences?](burn_after_reading_do_multimodal_large_language_models_truly_capture_order_of_ev.md)
+
+<!-- RELATED:END -->

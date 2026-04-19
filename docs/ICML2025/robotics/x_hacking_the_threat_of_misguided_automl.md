@@ -116,3 +116,15 @@ Rashomon集是指在相同数据上达到近似最优预测性能的所有模型
 - 实验充分度: ⭐⭐⭐⭐☆（4.0/5）— 多数据集验证但深度学习场景缺失
 - 写作质量: ⭐⭐⭐⭐☆（4.0/5）
 - 价值: ⭐⭐⭐⭐⭐（5.0/5）— 对AI安全和监管有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Machine Learning from Explanations](machine_learning_from_explanations.md)
+- [PoisonBench: Assessing Large Language Model Vulnerability to Data Poisoning](poisonbench_assessing_large_language_model_vulnerability_to_data_poisoning.md)
+- [Learning to Stop: Deep Learning for Mean Field Optimal Stopping](learning_to_stop_deep_learning_for_mean_field_optimal_stopping.md)
+- [Geometric Contact Flows: Contactomorphisms for Dynamics and Control](geometric_contact_flows_contactomorphisms_for_dynamics_and_control.md)
+- [Synthesizing Images on Perceptual Boundaries of ANNs for Uncovering and Manipulating Human Perceptual Variability](synthesizing_images_on_perceptual_boundaries_of_anns_for_uncovering_and_manipula.md)
+
+<!-- RELATED:END -->

@@ -106,3 +106,15 @@ ELogitNorm 是一个替代标准交叉熵的训练目标函数。模型架构不
 - 实验充分度: ⭐⭐⭐⭐⭐ OpenOOD框架、4个ID数据集、6种post-hoc方法、3次重复、校准+精度全面评估
 - 写作质量: ⭐⭐⭐⭐ 理论分析严谨，图示清晰，但部分公式重复略显冗长
 - 价值: ⭐⭐⭐⭐ 对 OOD 检测社区有实际价值，无超参数设计降低了使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient-Regularized Out-of-Distribution Detection](../../ECCV2024/llm_evaluation/gradient-regularized_out-of-distribution_detection.md)
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](../../AAAI2026/llm_evaluation/graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [Out of Sight, Out of Mind? Evaluating State Evolution in Video World Models](out_of_sight_out_of_mind_evaluating_state_evolutio.md)
+- [DisCoPatch: Taming Adversarially-driven Batch Statistics for Improved Out-of-Distribution Detection](../../ICCV2025/llm_evaluation/discopatch_taming_adversarially-driven_batch_statistics_for_improved_out-of-dist.md)
+- [Optimal Transport-Induced Samples against Out-of-Distribution Overconfidence](../../ICLR2026/llm_evaluation/optimal_transport-induced_samples_against_out-of-distribution_overconfidence.md)
+
+<!-- RELATED:END -->

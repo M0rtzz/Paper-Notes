@@ -129,3 +129,15 @@ Geo-Sign 提出将骨架特征投影到 Poincaré 球模型的双曲空间中，
 - 实验充分度: ⭐⭐⭐⭐ 消融充分证明了双曲空间的贡献，但数据集有限
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，图示直觉，但双曲几何基础部分较密集
 - 价值: ⭐⭐⭐⭐ 对手语翻译社区有直接价值，双曲正则化的思路可迁移到其他层次化动作理解任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Angular Gradient Sign Method: Uncovering Vulnerabilities in Hyperbolic Networks](../../AAAI2026/ai_safety/angular_gradient_sign_method_uncovering_vulnerabilities_in_h.md)
+- [FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation](faircontrast_enhancing_fairness_through_contrastive_learning_and_customized_augm.md)
+- [Incentivizing Time-Aware Fairness in Data Sharing](incentivizing_time-aware_fairness_in_data_sharing.md)
+- [MARS: A Malignity-Aware Backdoor Defense in Federated Learning](mars_a_malignity-aware_backdoor_defense_in_federated_learning.md)
+- [Self-Refining Language Model Anonymizers via Adversarial Distillation](self-refining_language_model_anonymizers_via_adversarial_distillation.md)
+
+<!-- RELATED:END -->

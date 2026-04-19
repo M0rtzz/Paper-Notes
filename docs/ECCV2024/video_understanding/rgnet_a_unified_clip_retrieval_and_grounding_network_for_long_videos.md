@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两阶段分析、oracle 实验、消融、定性分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导严密，图清晰，实验分析深入
 - 价值: ⭐⭐⭐⭐ 长视频时序定位的重要进展，Ego4D R1@0.3 提升 46%
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
+- [Goldfish: Vision-Language Understanding of Arbitrarily Long Videos](goldfish_vision-language_understanding_of_arbitrarily_long_videos.md)
+- [SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging](safnet_selective_alignment_fusion_network_for_efficient_hdr_imaging.md)
+- [DeCafNet: Delegate and Conquer for Efficient Temporal Grounding in Long Videos](../../CVPR2025/video_understanding/decafnet_delegate_and_conquer_for_efficient_temporal_grounding_in_long_videos.md)
+- [Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)
+
+<!-- RELATED:END -->

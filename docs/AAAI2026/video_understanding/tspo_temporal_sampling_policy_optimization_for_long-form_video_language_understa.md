@@ -124,3 +124,15 @@ TSPO框架由三部分组成：（1）事件感知时序智能体（Temporal Age
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个基准、跨3个MLLM迁移验证、完整消融（数据/奖励/SFT对比/效率分析）
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，但GRPO推导可以更简洁
 - 价值: ⭐⭐⭐⭐⭐ 高度实用——轻量采样器即插即用，对长视频理解有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics](../../ICCV2025/video_understanding/hermes_temporal-coherent_long-form_understanding_with_episodes_and_semantics.md)
+- [VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding](../../CVPR2026/video_understanding/videoarm_agentic_reasoning_over_hierarchical_memory_for_long-form_video_understa.md)
+- [VideoMiner: Iteratively Grounding Key Frames of Hour-Long Videos via Tree-based Group Relative Policy Optimization](../../ICCV2025/video_understanding/videominer_iteratively_grounding_key_frames_of_hour-long_videos_via_tree-based_g.md)
+- [DIvide, then Ground: Adapting Frame Selection to Query Types for Long-Form Video Understanding](../../CVPR2026/video_understanding/divide_then_ground_adapting_frame_selection_to_query_types_for_long-form_video_u.md)
+- [APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval](apvr_hour-level_long_video_understanding_with_adaptive_pivot.md)
+
+<!-- RELATED:END -->

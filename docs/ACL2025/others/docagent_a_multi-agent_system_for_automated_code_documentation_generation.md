@@ -159,3 +159,15 @@ DocAgent 分两阶段：Navigator 模块确定依赖感知的处理顺序，Mult
 - **实验充分度**: 8/10 — 三维评估 + 消融验证充分，但数据规模（366 组件）偏小
 - **写作质量**: 8/10 — 结构清晰，评估框架描述详尽
 - **价值**: 8/10 — 代码文档生成是高价值应用场景，框架有实际落地潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](beyond_frameworks_multi_agent_collaboration.md)
+
+<!-- RELATED:END -->

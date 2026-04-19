@@ -142,3 +142,15 @@ GPT-4V 和人类评估（10分制）：
 - 实验充分度: ⭐⭐⭐⭐ 自动+人类评估充分，消融全面，但缺少更多基线
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，图示丰富
 - 价值: ⭐⭐⭐⭐ 商业化前景广，但实际游戏体验还需大幅提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PanoLlama: Generating Endless and Coherent Panoramas with Next-Token-Prediction LLMs](panollama_generating_endless_and_coherent_panoramas_with_next-token-prediction_l.md)
+- [Long-Context State-Space Video World Models](long-context_state-space_video_world_models.md)
+- [Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](../../NeurIPS2025/image_generation/next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
+- [Generative Audio Language Modeling with Continuous-Valued Tokens and Masked Next-Token Prediction](../../ICML2025/image_generation/generative_audio_language_modeling_with_continuous-valued_tokens_and_masked_next.md)
+- [NTPP: Generative Speech Language Modeling for Dual-Channel Spoken Dialogue via Next-Token-Pair Prediction](../../ICML2025/image_generation/ntpp_generative_speech_language_modeling_for_dual-channel_spoken_dialogue_via_ne.md)
+
+<!-- RELATED:END -->

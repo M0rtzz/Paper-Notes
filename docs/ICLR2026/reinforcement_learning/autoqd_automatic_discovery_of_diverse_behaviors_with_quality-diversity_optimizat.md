@@ -162,3 +162,15 @@ $$\Pr\left[\left|\|\phi_1 - \phi_2\|_2 - \text{MMD}(\rho_1, \rho_2)\right| \geqs
 - **DIAYN** (Eysenbach et al., 2019): 最大化技能-状态互信息发现多样技能
 - **SMERL** (Kumar et al., 2020): 在 DIAYN 基础上加入任务奖励
 - **DvD-ES** (Parker-Holder et al., 2020): 用策略在随机状态上的动作刻画行为差异
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [SUSD: Structured Unsupervised Skill Discovery through State Factorization](susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
+- [Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination](../../NeurIPS2025/reinforcement_learning/inner_speech_as_behavior_guides_steerable_imitation_of_diverse_behaviors_for_hum.md)
+- [AutoTool: Automatic Scaling of Tool-Use Capabilities in RL via Decoupled Entropy Constraints](autotool_automatic_scaling_of_tool-use_capabilities_in_rl_via_decoupled_entropy_.md)
+- [Whatever Remains Must Be True: Filtering Drives Reasoning in LLMs, Shaping Diversity](whatever_remains_must_be_true_filtering_drives_reasoning_in_llms_shaping_diversi.md)
+
+<!-- RELATED:END -->

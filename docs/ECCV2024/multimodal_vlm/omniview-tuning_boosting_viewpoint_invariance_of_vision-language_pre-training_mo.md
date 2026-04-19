@@ -141,3 +141,15 @@ OVT包含两大贡献：(1) 构建大规模多视角图文对数据集MVCap；(2
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个VLP变体、12+基准数据集、多种下游任务、详细消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，从数据到方法的叙事逻辑通顺
 - 价值: ⭐⭐⭐⭐ 揭示了VLP视角脆弱性并提供了可复现的解决方案，MVCap数据集有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MM1: Methods, Analysis & Insights from Multimodal LLM Pre-training](mm1_methods_analysis_and_insights_from_multimodal_llm_pre-training.md)
+- [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](../../CVPR2025/multimodal_vlm/post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
+- [AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization](addressclip_empowering_vision-language_models_for_city-wide_image_address_locali.md)
+- [Skip Tuning: Pre-trained Vision-Language Models are Effective and Efficient Adapters Themselves](../../CVPR2025/multimodal_vlm/skip_tuning_pre-trained_vision-language_models_are_effective_and_efficient_adapt.md)
+- [One Perturbation is Enough: On Generating Universal Adversarial Perturbations against Vision-Language Pre-training Models](../../ICCV2025/multimodal_vlm/one_perturbation_is_enough_on_generating_universal_adversarial_perturbations_aga.md)
+
+<!-- RELATED:END -->

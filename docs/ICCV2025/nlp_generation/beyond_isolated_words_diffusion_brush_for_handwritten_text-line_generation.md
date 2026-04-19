@@ -135,3 +135,15 @@ $$\mathcal{L}_\mathcal{G} = \mathcal{L}_{diff} + \mathcal{L}_{style} + \lambda \
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FS-DFM: Fast and Accurate Long Text Generation with Few-Step Diffusion Language Model](../../ICLR2026/nlp_generation/fs-dfm_fast_and_accurate_long_text_generation_with_few-step_diffusion_language_m.md)
+- [ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
+- [Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
+- [Writing Like the Best: Exemplar-Based Expository Text Generation](../../ACL2025/nlp_generation/writing_like_best_exemplar.md)
+- [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](../../ACL2025/nlp_generation/dehumanizing_machines_anthropomorphic.md)
+
+<!-- RELATED:END -->

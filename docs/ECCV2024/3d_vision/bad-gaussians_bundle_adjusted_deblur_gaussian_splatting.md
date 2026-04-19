@@ -135,3 +135,15 @@ BAD-Gaussians 的绝对轨迹误差（ATE）在大多数场景上优于 COLMAP-b
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实+MBA-VO 三类数据集，消融研究完整，位姿精度评估齐全
 - 写作质量: ⭐⭐⭐⭐ — 公式推导清晰，pipeline 图直观，实验表格详尽
 - 价值: ⭐⭐⭐⭐ — 解决了 3D-GS 处理运动模糊的关键问题，实时渲染使其具有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Analytic-Splatting: Anti-Aliased 3D Gaussian Splatting via Analytic Integration](analytic-splatting_anti-aliased_3d_gaussian_splatting_via_analytic_integration.md)
+- [TrackNeRF: Bundle Adjusting NeRF from Sparse and Noisy Views via Feature Tracks](tracknerf_bundle_adjusting_nerf_from_sparse_and_noisy_views_via_feature_tracks.md)
+- [SGAD-SLAM: Splatting Gaussians at Adjusted Depth for Better Radiance Fields in RGBD SLAM](../../CVPR2026/3d_vision/sgad-slam_splatting_gaussians_at_adjusted_depth_for_better_radiance_fields_in_rg.md)
+- [Click-Gaussian: Interactive Segmentation to Any 3D Gaussians](click-gaussian_interactive_segmentation_to_any_3d_gaussians.md)
+- [WaSt-3D: Wasserstein-2 Distance for Scene-to-Scene Stylization on 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)
+
+<!-- RELATED:END -->

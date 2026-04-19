@@ -167,3 +167,15 @@ Moose 的泛化规划分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 8 个经典域 + 4 个数值域，满足性/最优规划双场景，合成/实例化/解质量三维度评估
 - 写作质量: ⭐⭐⭐⭐ 理论部分严谨，算法伪代码清晰，但篇幅较长需要耐心阅读
 - 价值: ⭐⭐⭐⭐ 在 ESHO 域上大幅推进了 SOTA，解决了通用规划器难以规模化的实际问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lightweight Optimal-Transport Harmonization on Edge Devices](lightweight_optimal-transport_harmonization_on_edge_devices.md)
+- [ACPBench Hard: Unrestrained Reasoning about Action, Change, and Planning](../../ICLR2026/model_compression/acpbench_hard_unrestrained_reasoning_about_action_change_and_planning.md)
+- [Planning in 8 Tokens: A Compact Discrete Tokenizer for Latent World Model](../../CVPR2026/model_compression/planning_in_8_tokens_a_compact_discrete_tokenizer_for_latent_world_model.md)
+- [Compute-Optimal Quantization-Aware Training](../../ICLR2026/model_compression/compute-optimal_quantization-aware_training.md)
+- [Dataset Distillation as Pushforward Optimal Quantization](../../ICLR2026/model_compression/dataset_distillation_as_pushforward_optimal_quantization.md)
+
+<!-- RELATED:END -->

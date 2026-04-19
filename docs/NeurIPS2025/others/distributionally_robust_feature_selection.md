@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据覆盖回归和分类，但缺少大规模高维实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，推导层层递进，从动机到方法到实验逻辑完整
 - 价值: ⭐⭐⭐⭐ 问题本身有很强的实际意义（医疗问卷、传感器部署），方法简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
+- [Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation](../../ICLR2026/others/distributionally_robust_classification_for_multi-source_unsupervised_domain_adap.md)
+- [Robust Sampling for Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)
+- [A Unified Framework for Variable Selection in Model-Based Clustering with Missing Not at Random](a_unified_framework_for_variable_selection_in_modelbased_clu.md)
+- [One Sample is Enough to Make Conformal Prediction Robust](one_sample_is_enough_to_make_conformal_prediction_robust.md)
+
+<!-- RELATED:END -->

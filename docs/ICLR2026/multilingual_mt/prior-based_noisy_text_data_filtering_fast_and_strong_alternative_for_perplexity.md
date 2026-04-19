@@ -114,3 +114,15 @@ PPL 过滤的做法是：先训练一个小型参考模型（137M），然后对
 - 实验充分度: ⭐⭐⭐⭐⭐ 20个基准+符号语言+多语言+大规模验证+效率对比非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 语言学动机→方法推导→实验验证逻辑链紧凑优雅
 - 价值: ⭐⭐⭐⭐⭐ 1000×加速+更好性能，对LLM预训练数据管线有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STELLAR: Scene Text Editor for Low-Resource Languages and Real-World Data](../../AAAI2026/multilingual_mt/stellar_scene_text_editor_for_low-resource_languages_and_real-world_data.md)
+- [SEA-Vision: A Multilingual Benchmark for Document and Scene Text Understanding in Southeast Asia](../../CVPR2026/multilingual_mt/sea-vision_a_multilingual_benchmark_for_comprehensive_document_and_scene_text_un.md)
+- [Adaptive Originality Filtering: Rejection-Based Prompting and RiddleScore for Culturally Grounded Multilingual Riddle Generation](../../NeurIPS2025/multilingual_mt/adaptive_originality_filtering_rejection_based_prompting_and_riddlescore_for_cul.md)
+- [MTVQA: Benchmarking Multilingual Text-Centric Visual Question Answering](../../ACL2025/multilingual_mt/mtvqa_benchmarking_multilingual_text-centric_visual_question_answering.md)
+- [MMTIT-Bench: A Multilingual and Multi-Scenario Benchmark with Cognition-Perception-Reasoning Guided Text-Image Machine Translation](../../CVPR2026/multilingual_mt/mmtit-bench_a_multilingual_and_multi-scenario_benchmark_with_cognition-perceptio.md)
+
+<!-- RELATED:END -->

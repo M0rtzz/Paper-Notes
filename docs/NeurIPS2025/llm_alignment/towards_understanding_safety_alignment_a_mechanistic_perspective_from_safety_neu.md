@@ -139,3 +139,15 @@ $\mathcal{C} \approx 1$ 表示这些神经元完全解释了安全能力；$\mat
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 个模型 × 4 个红队基准 × 多个通用基准，含基线对比、消融、稳定性验证、alignment tax 分析、应用展示
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，逻辑连贯，公式与直觉解释平衡良好
 - **价值**: ⭐⭐⭐⭐ — 对理解安全对齐机制有重要贡献，alignment tax 解释具有启发性，防护应用展示了实践前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Safety Alignment is Divergence Estimation in Disguise](llm_safety_alignment_is_divergence_estimation_in_disguise.md)
+- [Safety Alignment Can Be Not Superficial With Explicit Safety Signals](../../ICML2025/llm_alignment/safety_alignment_can_be_not_superficial_with_explicit_safety_signals.md)
+- [LSSF: Safety Alignment via Low-Rank Safety Subspace Fusion](../../ACL2025/llm_alignment/lssf_safety_subspace.md)
+- [SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning](safevla_towards_safety_alignment_of_vision-language-action_model_via_constrained.md)
+- [Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](../../ICLR2026/llm_alignment/mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+
+<!-- RELATED:END -->

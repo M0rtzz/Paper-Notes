@@ -141,3 +141,15 @@ $$\mathcal{L} = \sum_{k=1}^K l_\text{act}(n_k) - \sum_{i=1}^N \log s_{i, y_i}$$
 - 技术深度：⭐⭐⭐⭐☆ — Gumbel-Softmax + 词汇表映射 + 伪标签机制设计精巧
 - 实验完整度：⭐⭐⭐⭐⭐ — 三个任务 × 四个数据集 × 用户研究 × 消融实验
 - 写作质量：⭐⭐⭐⭐⭐ — 逻辑清晰，图表丰富，附录详尽
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diff-ICMH: Harmonizing Machine and Human Vision in Image Compression with Generative Prior](diff-icmh_harmonizing_machine_and_human_vision_in_image_compression_with_generat.md)
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+- [Rethinking the Embodied Gap in Vision-and-Language Navigation: A Holistic Study of Physical and Visual Disparities](../../ICCV2025/image_generation/rethinking_the_embodied_gap_in_vision-and-language_navigation_a_holistic_study_o.md)
+- [Joint Diffusion Models in Continual Learning](../../ICCV2025/image_generation/joint_diffusion_models_in_continual_learning.md)
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](../../ICCV2025/image_generation/loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+
+<!-- RELATED:END -->

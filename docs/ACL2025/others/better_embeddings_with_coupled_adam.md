@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 小规模到大规模（2.6B/210B）完整覆盖，有多种嵌入质量指标
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验呈现清晰，论证逻辑完整
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 训练实践有直接影响——2 行代码改善嵌入质量，贡献突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
+- [Towards Better Evaluation for Generated Patent Claims](patclaimeval_patent_evaluation.md)
+- [Partial Colexifications Improve Concept Embeddings](partial_colexifications_improve_concept_embeddings.md)
+- [Byte Latent Transformer: Patches Scale Better Than Tokens](byte_latent_transformer.md)
+- [The Knowledge Microscope: Features as Better Analytical Lenses than Neurons](the_knowledge_microscope_features_as_better_analytical_lenses_than_neurons.md)
+
+<!-- RELATED:END -->

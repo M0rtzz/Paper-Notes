@@ -146,3 +146,15 @@ $$\rho(M_t, M^*) = \frac{\langle \tilde{M}_t, \tilde{M}^* \rangle}{\|\tilde{M}_t
 - 实验充分度: ⭐⭐⭐⭐ — 四种运算 × 两类模型 × 多种度量，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，图示精美，理论与实验交织得当
 - 价值: ⭐⭐⭐⭐ — 为理解涌现/grokking 提供了重要的去耦合证据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Grokking at the Edge of Linear Separability](grokking_at_the_edge_of_linear_separability.md)
+- [Natural Gradient VI: Guarantees for Non-Conjugate Models](../../NeurIPS2025/optimization/natural_gradient_vi_guarantees_for_non-conjugate_models.md)
+- [Provable In-Context Vector Arithmetic via Retrieving Task Concepts](provable_in-context_vector_arithmetic_via_retrieving_task_concepts.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](../../NeurIPS2025/optimization/emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Probing Neural Combinatorial Optimization Models](../../NeurIPS2025/optimization/probing_neural_combinatorial_optimization_models.md)
+
+<!-- RELATED:END -->

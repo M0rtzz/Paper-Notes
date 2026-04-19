@@ -143,3 +143,15 @@ TEA 的总 FLOPs 为 $3ND^2 + 2NDk^2 + 2Nw^2D + 2NN_dD$，当超参数 $w=15, k=
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 SR/去模糊/去噪三大任务 + 完整消融 + 收敛/泛化分析
 - **写作质量**: ⭐⭐⭐⭐ — 理论部分清晰，但公式密集，某些符号定义较分散
 - **价值**: ⭐⭐⭐⭐⭐ — 为修复 Transformer 设计提供了新的理论视角和实用方案，具有广泛的参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration](devil_is_in_the_uniformity_exploring_diverse_learners_within_transformer_for_ima.md)
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](../../ECCV2024/image_restoration/seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [Metric Convolutions: A Unifying Theory to Adaptive Image Convolutions](metric_convolutions_a_unifying_theory_to_adaptive_image_convolutions.md)
+- [Learning Pixel-adaptive Multi-layer Perceptrons for Real-time Image Enhancement](learning_pixel-adaptive_multi-layer_perceptrons_for_real-time_image_enhancement.md)
+- [Efficient Cascaded Multiscale Adaptive Network for Image Restoration](../../ECCV2024/image_restoration/efficient_cascaded_multiscale_adaptive_network_for_image_restoration.md)
+
+<!-- RELATED:END -->

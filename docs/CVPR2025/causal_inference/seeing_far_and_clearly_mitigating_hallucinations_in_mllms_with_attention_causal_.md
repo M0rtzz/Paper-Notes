@@ -54,3 +54,15 @@ tags:
 - 注意力模式分析增加了解码延迟
 - 幻觉类型的判断可能不完全准确
 - 可以与训练阶段的幻觉缓解方法结合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition](antidote_a_unified_framework_for_mitigating_lvlm_hallucinations_in_counterfactua.md)
+- [Action-Guided Attention for Video Action Anticipation](../../ICLR2026/causal_inference/action-guided_attention_for_video_action_anticipation.md)
+- [Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning](joint_scheduling_of_causal_prompts_and_tasks_for_multi-task_learning.md)
+- [Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual](image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)
+- [Flattery, Fluff, and Fog: Diagnosing and Mitigating Idiosyncratic Biases in Preference Models](../../ICLR2026/causal_inference/flattery_fluff_and_fog_diagnosing_and_mitigating_idiosyncratic_biases_in_prefere.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ FairFAL 在标准 FedAvg 框架上增加三个协同组件，在每轮 FAL 的 q
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、11个基线、详尽消融（模型选择/原型质量/κ/δ/不确定性度量/FL框架/客户端数）
 - 写作质量: ⭐⭐⭐⭐⭐ Observation-driven 结构清晰，统计分析严谨，每个设计选择都有实验支撑
 - 价值: ⭐⭐⭐⭐ 对 FAL 社区有直接指导价值，核心洞察（类平衡 > 不确定性/多样性）具有普遍意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FecalFed: Privacy-Preserving Poultry Disease Detection via Federated Learning](fecalfed_privacy-preserving_poultry_disease_detection_via_federated_learning.md)
+- [FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation](fedafd_multimodal_federated_learning_via_adversarial_fusion_and_distillation.md)
+- [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](domain-skewed_federated_learning_with_feature_decoupling_and_calibration.md)
+- [FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)
+- [ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)
+
+<!-- RELATED:END -->

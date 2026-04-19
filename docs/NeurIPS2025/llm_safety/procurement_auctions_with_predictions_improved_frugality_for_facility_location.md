@@ -149,3 +149,15 @@ $$o'_\ell(S) = \begin{cases} \frac{2}{\epsilon} \cdot o_\ell, & \text{if } S = \
 - **实验充分性**: 3/5 — 纯理论工作，无实证实验，但理论结果完整（紧界+上下界匹配）
 - **实用价值**: 3/5 — 理论贡献为主，实际部署需要额外工程化
 - **写作质量**: 4/5 — 结构清晰，证明层层递进，符号一致
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing](a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)
+- [TRUST -- Transformer-Driven U-Net for Sparse Target Recovery](trust_--_transformer-driven_u-net_for_sparse_target_recovery.md)
+- [A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation](a_reliable_cryptographic_framework_for_empirical_machine_unl.md)
+- [Buffer Layers for Test-Time Adaptation](buffer_layers_for_test-time_adaptation.md)
+- [SIMU: Selective Influence Machine Unlearning](simu_selective_influence_machine_unlearning.md)
+
+<!-- RELATED:END -->

@@ -163,3 +163,15 @@ $$\bar{t}_i^s = \mathbb{E}[\tau_s \mid \tau_s \in [a_{i-1}^s, a_i^s]] = \frac{\i
 - 实验充分度: ⭐⭐⭐ — 场景有说服力但仅为低维仿真
 - 写作质量: ⭐⭐⭐⭐ — 数学严谨、结构清晰
 - 价值: ⭐⭐⭐⭐ — 对资源受限下的主动感知有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unifying Continuous and Discrete Text Diffusion with Non-simultaneous Diffusion Processes](../../ACL2025/others/neodiff_unified_text_diffusion.md)
+- [Discrete Neural Algorithmic Reasoning](discrete_neural_algorithmic_reasoning.md)
+- [Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games](continuous-time_analysis_of_heavy_ball_momentum_in_min-max_games.md)
+- [Optimal Auction Design in the Joint Advertising](optimal_auction_design_in_the_joint_advertising.md)
+- [Continuous Thought Machines](../../NeurIPS2025/others/continuous_thought_machines.md)
+
+<!-- RELATED:END -->

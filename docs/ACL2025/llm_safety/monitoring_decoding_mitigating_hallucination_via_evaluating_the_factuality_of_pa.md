@@ -140,3 +140,15 @@ MD 是一个 **无需训练** 的推理时框架，不涉及额外训练：
 - **实验充分度**: ⭐⭐⭐⭐ — 3 个模型、4 个数据集、效率分析、消融实验、案例研究，较为全面
 - **写作质量**: ⭐⭐⭐⭐ — 动机阐述清晰（尤其是 Figure 1 的对比），方法描述层次分明
 - **价值**: ⭐⭐⭐⭐ — 作为推理时幻觉缓解方案实用性强，但需要额外大模型是部署障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Odysseus Navigates the Sirens' Song: Dynamic Focus Decoding for Factual and Diverse Open-Ended Text Generation](odysseus_dynamic_focus_decoding.md)
+- [ChartCap: Mitigating Hallucination of Dense Chart Captioning](../../ICCV2025/llm_safety/chartcap_mitigating_hallucination_of_dense_chart_captioning.md)
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](intent_hallucination_eval.md)
+- [ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)
+- [Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)
+
+<!-- RELATED:END -->

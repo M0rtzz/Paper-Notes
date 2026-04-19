@@ -200,3 +200,15 @@ $$\mathcal{L}_{\text{pretrain}} = \lambda_1 \mathcal{L}_{\text{pred}} + \lambda_
 - **实验充分度**: ⭐⭐⭐⭐ — 虚拟/真实双评估、消融完整、恶劣环境测试亮眼
 - **写作质量**: ⭐⭐⭐⭐ — 框架图清晰，各模块动机明确，补充材料详尽
 - **实用价值**: ⭐⭐⭐⭐ — 隐私保护和恶劣环境下的语义运动理解有实际需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PointLLM: Empowering Large Language Models to Understand Point Clouds](../../ECCV2024/3d_vision/pointllm_empowering_large_language_models_to_understand_point_clouds.md)
+- [Point Cloud Quantization through Multimodal Prompting for 3D Understanding](point_cloud_quantization_through_multimodal_prompting_for_3d_understanding.md)
+- [PressTrack-HMR: Pressure-Based Top-Down Multi-Person Global Human Mesh Recovery](presstrack-hmr_pressure-based_top-down_multi-person_global_human_mesh_recovery.md)
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Empowering Large Language Models with 3D Situation Awareness](../../CVPR2025/3d_vision/empowering_large_language_models_with_3d_situation_awareness.md)
+
+<!-- RELATED:END -->

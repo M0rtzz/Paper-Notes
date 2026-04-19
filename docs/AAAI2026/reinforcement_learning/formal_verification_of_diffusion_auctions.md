@@ -158,3 +158,15 @@ $$M, a \models \langle\![\mathsf{C}]\!\rangle \varphi \iff \exists \overline{\be
 - 实验充分度: ⭐⭐ — 纯理论工作，无实验验证，仅有运行示例
 - 写作质量: ⭐⭐⭐⭐ — 形式化定义严谨，但符号密度极高，非专业读者门槛高
 - 价值: ⭐⭐⭐⭐ — 开辟新方向，但实际影响取决于后续实现与应用验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CHDP: Cooperative Hybrid Diffusion Policies for RL in Parametric Environments](chdp_cooperative_hybrid_diffusion_policies_for_reinforcement_learning_in_paramet.md)
+- [GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion](../../CVPR2026/reinforcement_learning/graspldp_towards_generalizable_grasping_policy_via_latent_diffusion.md)
+- [Kimina Lean Server: A High-Performance Lean Server for Large-Scale Verification](../../NeurIPS2025/reinforcement_learning/kimina_lean_server_a_high-performance_lean_server_for_large-scale_verification.md)
+- [Where to Start Alignment? Diffusion Large Language Model May Demand a Distinct Position](where_to_start_alignment_diffusion_large_language_model_may_demand_a_distinct_po.md)
+- [ReVISE: Learning to Refine at Test-Time via Intrinsic Self-Verification](../../ICML2025/reinforcement_learning/revise_learning_to_refine_at_test-time_via_intrinsic_self-verification.md)
+
+<!-- RELATED:END -->

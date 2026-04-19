@@ -170,3 +170,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ — 数据分析详尽，但自动对齐基线较简单，缺乏神经方法的探索
 - **写作质量**: ⭐⭐⭐⭐ — 数据描述丰富，示例恰当，标注流程透明
 - **价值**: ⭐⭐⭐⭐ — 对传译研究和教育具有直接应用价值，工具和数据的开放发布增加了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QG-SMS: Enhancing Test Item Analysis via Student Modeling and Simulation](qg-sms_enhancing_test_item_analysis_via_student_modeling_and_simulation.md)
+- [Towards Comprehensive Argument Analysis in Education: Dataset, Tasks, and Method](towards_comprehensive_argument_analysis_in_education_dataset_tasks_and_method.md)
+- [On Support Samples of Next Word Prediction](on_support_samples_of_next_word_prediction.md)
+- [Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
+- [Subword Models Struggle with Word Learning, but Surprisal Hides It](subword_models_struggle_with_word_learning_but_surprisal_hides_it.md)
+
+<!-- RELATED:END -->

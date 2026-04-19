@@ -153,3 +153,15 @@ MASS在DomainBed四个视觉域泛化数据集上均优于DynMoE，在VLCS上取
 - 实验充分度: ⭐⭐⭐ — 合成实验设计精巧，但真实任务规模偏小，缺乏大模型验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，方法与直觉解释到位，图示对比直观
 - 价值: ⭐⭐⭐⭐ — 解决MoE中专家数量选择这一实际痛点，但需要更大规模实验支撑其价值主张
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](../../ICCV2025/object_detection/dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
+- [Perceive, Act and Correct: Confidence Is Not Enough for Hyperspectral Classification](perceive_act_and_correct_confidence_is_not_enough_for_hyperspectral_classificati.md)
+- [Shape-of-You: Fused Gromov-Wasserstein Optimal Transport for Semantic Correspondence in-the-Wild](../../CVPR2026/object_detection/shape-of-you_fused_gromov-wasserstein_optimal_transport_for_semantic_corresponde.md)
+- [SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation](semanticvla_semantic-aligned_sparsification_and_enhancement_for_efficient_roboti.md)
+- [Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces](beyond_fact_retrieval_episodic_memory_for_rag_with_generative_semantic_workspace.md)
+
+<!-- RELATED:END -->

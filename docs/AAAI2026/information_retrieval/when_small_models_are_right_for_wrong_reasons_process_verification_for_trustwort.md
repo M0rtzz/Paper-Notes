@@ -177,3 +177,15 @@ $$FL(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
 - 实验充分度: ⭐⭐⭐⭐ — 10,734 条轨迹、多模型多任务、详细统计分析；但 oracle RAG 限制了结论的实用性
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、分析深入、结论可操作
 - 价值: ⭐⭐⭐⭐ — 对小模型部署策略有直接指导意义，蒸馏验证器实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Retrieval Augmented Language Models Know When They Don't Know?](do_retrieval_augmented_language_models_know_when_they_dont_know.md)
+- [FutureMind: Equipping Small Language Models with Strategic Thinking-Pattern Priors via Adaptive Knowledge Distillation](../../ICLR2026/information_retrieval/futuremind_equipping_small_language_models_with_strategic_thinking-pattern_prior.md)
+- [SeCon-RAG: A Two-Stage Semantic Filtering and Conflict-Free Framework for Trustworthy RAG](../../NeurIPS2025/information_retrieval/secon-rag_a_two-stage_semantic_filtering_and_conflict-free_framework_for_trustwo.md)
+- [Positional Bias in Multimodal Embedding Models: Do They Favor the Beginning, the Middle, or the End?](positional_bias_in_multimodal_embedding_models_do_they_favor_the_beginning_the_m.md)
+- [OAD-Promoter: Enhancing Zero-shot VQA using Large Language Models with Object Attribute Description](oad-promoter_enhancing_zero-shot_vqa_using_large_language_models_with_object_att.md)
+
+<!-- RELATED:END -->

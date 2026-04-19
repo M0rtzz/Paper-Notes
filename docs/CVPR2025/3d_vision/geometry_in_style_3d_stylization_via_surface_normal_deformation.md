@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定性结果丰富多样，定量指标（面积比）虽有效但较简单
 - 写作质量: ⭐⭐⭐⭐⭐ 论文写作清晰流畅，数学推导严谨且可读性强
 - 价值: ⭐⭐⭐⭐ 对3D风格化领域有实际价值，dARAP层可迁移到其他几何任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4Deform: Neural Surface Deformation for Robust Shape Interpolation](4deform_neural_surface_deformation_for_robust_shape_interpolation.md)
+- [Tune-Your-Style: Intensity-Tunable 3D Style Transfer with Gaussian Splatting](../../ICCV2025/3d_vision/tune-your-style_intensity-tunable_3d_style_transfer_with_gaussian_splatting.md)
+- [Morpheus: Text-Driven 3D Gaussian Splat Shape and Color Stylization](morpheus_text-driven_3d_gaussian_splat_shape_and_color_stylization.md)
+- [Feature-Preserving Mesh Decimation for Normal Integration](feature-preserving_mesh_decimation_for_normal_integration.md)
+- [GauSTAR: Gaussian Surface Tracking and Reconstruction](gaustar_gaussian_surface_tracking_and_reconstruction.md)
+
+<!-- RELATED:END -->

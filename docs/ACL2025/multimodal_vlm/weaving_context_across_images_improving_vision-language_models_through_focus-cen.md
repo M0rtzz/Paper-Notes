@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个基准、2种架构、5个研究问题、人工质量评估，非常充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述系统化，公式形式化清晰，但部分符号较冗余
 - 价值: ⭐⭐⭐⭐ 高质量的 150K 数据集和有效的推理范式，对多图 VLM 研究有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision-Language Models Struggle to Align Entities across Modalities](vision-language_models_struggle_to_align_entities_across_modalities.md)
+- [Symmetrical Visual Contrastive Optimization: Aligning Vision-Language Models with Minimal Contrastive Images](symmetrical_visual_contrastive_optimization_aligning_visionlanguage.md)
+- [Jailbreak Large Vision-Language Models Through Multi-Modal Linkage](jailbreak_large_vision-language_models_through_multi-modal_linkage.md)
+- [Performance Gap in Entity Knowledge Extraction Across Modalities in Vision Language Models](performance_gap_in_entity_knowledge_extraction_across_modalities_in_vision_langu.md)
+- [Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback](improving_medical_large_vision-language_models_with_abnormal-aware_feedback.md)
+
+<!-- RELATED:END -->

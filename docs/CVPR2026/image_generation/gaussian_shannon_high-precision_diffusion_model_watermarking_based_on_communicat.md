@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个SD版本×七种扰动×多种消融，覆盖非常全面，高级攻击实验也做了
 - 写作质量: ⭐⭐⭐⭐ 通信理论的类比解释清晰，图4的错误可视化很直观
 - 价值: ⭐⭐⭐⭐⭐ 比特精确恢复对版权保护的实际部署至关重要，填补了重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusionbased_image_man.md)
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
+- [TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking](trace_structure-aware_character_encoding_for_robust_and_generalizable_document_w.md)
+- [Gaussian Mixture Flow Matching Models](../../ICML2025/image_generation/gaussian_mixture_flow_matching_models.md)
+
+<!-- RELATED:END -->

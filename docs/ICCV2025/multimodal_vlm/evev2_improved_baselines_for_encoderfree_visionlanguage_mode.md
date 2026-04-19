@@ -101,3 +101,15 @@ EVEv2.0基于Qwen2.5-7B LLM，用简单的双层卷积做patch embedding（strid
 - 实验充分度: ⭐⭐⭐⭐⭐ 13个benchmark、4种架构变体（v1.0/1.2/1.5/2.0）、数据源/标注引擎/训练策略逐项消融
 - 写作质量: ⭐⭐⭐⭐⭐ 系统性研究的写作标杆，Figure 2的权重变化量化分析和Figure 5的scaling对比极具说服力
 - 价值: ⭐⭐⭐⭐⭐ Highlight当之无愧，为encoder-free VLM方向确立了清晰的技术路线图
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Florence-VL: Enhancing Vision-Language Models with Generative Vision Encoder and Depth-Breadth Fusion](../../CVPR2025/multimodal_vlm/florence-vl_enhancing_vision-language_models_with_generative_vision_encoder_and_.md)
+- [Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension](scaling_inferencetime_search_with_vision_value_model_for_imp.md)
+- [Training-Free Personalization via Retrieval and Reasoning on Fingerprints](training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
+- [Exploiting Vision Language Model for Training-Free 3D Point Cloud OOD Detection](exploiting_vision_language_model_for_training-free_3d_point_cloud_ood_detection_.md)
+- [CapeLLM: Support-Free Category-Agnostic Pose Estimation with Multimodal Large Language Models](capellm_support-free_category-agnostic_pose_estimation_with_multimodal_large_lan.md)
+
+<!-- RELATED:END -->

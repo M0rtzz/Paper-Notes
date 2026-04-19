@@ -140,3 +140,15 @@ RAG 实验（Qwen2.5-VL-72B）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 评估了 21 个模型（闭源+开源），含 CoT、RAG、错误分析等多维度实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据构建流程描述详尽，统计分析完整
 - 价值: ⭐⭐⭐⭐ 填补了科学文献多模态验证基准的空白，错误分析为未来改进指明方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMSciBench: Benchmarking Language Models on Chinese Multimodal Scientific Problems](mmscibench_benchmarking_language_models_on_chinese_multimodal_scientific_problem.md)
+- [Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](unsolvable_problem_detection.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+- [Evaluating Multimodal Language Models as Visual Assistants for Visually Impaired Users](evaluating_multimodal_language_models_as_visual_assistants_for_visually_impaired.md)
+
+<!-- RELATED:END -->

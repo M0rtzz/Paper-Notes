@@ -192,3 +192,15 @@ $$C(p) = F_{color}(p) + F_{gradient}(p) \times F_{ratio}(p)$$
 | 实用价值 | 8 | 97.8% 成功率+5s 运行时间，大规模场景适用 |
 | 写作质量 | 7 | 整体清晰，部分公式排版略显拥挤 |
 | **总分** | **8.0** | 全景拼接领域的扎实工作，范式创新+强实验 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VGGT-Det: Mining VGGT Internal Priors for Sensor-Geometry-Free Multi-View Indoor 3D Object Detection](vggt-det_mining_vggt_internal_priors_for_sensor-geometry-free_multi-view_indoor_.md)
+- [SwiftTailor: Efficient 3D Garment Generation with Geometry Image Representation](swifttailor_efficient_3d_garment_generation_with_geometry_image_representation.md)
+- [GAP: Action-Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation](action-geometry_prediction_with_3d_geometric_prior_for_bimanual_manipulation.md)
+- [Random Wins All: Rethinking Grouping Strategies for Vision Tokens](random_wins_all_rethinking_grouping_strategies_for_vision_tokens.md)
+- [Rethinking Pose Refinement in 3D Gaussian Splatting under Pose Prior and Geometric Uncertainty](rethinking_pose_refinement_in_3d_gaussian_splatting_under_pose_prior_and_geometr.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集验证，消融实验详尽
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，动机推导自然
 - 价值: ⭐⭐⭐⭐ 为3D跟踪提供了有效的跨模态学习范式，实时性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OneTrack: Demystifying the Conflict Between Detection and Tracking in End-to-End 3D Trackers](onetrack_demystifying_the_conflict_between_detection_and_tracking_in_end-to-end_.md)
+- [On the Utility of 3D Hand Poses for Action Recognition](on_the_utility_of_3d_hand_poses_for_action_recognition.md)
+- [CrossGLG: LLM Guides One-Shot Skeleton-Based 3D Action Recognition in a Cross-Level Manner](crossglg_llm_guides_one-shot_skeleton-based_3d_action_recognition_in_a_cross-lev.md)
+- [An Empirical Study of Autoregressive Pre-training from Videos](../../ICCV2025/video_understanding/an_empirical_study_of_autoregressive_pre-training_from_videos.md)
+- [DINO-Tracker: Taming DINO for Self-Supervised Point Tracking in a Single Video](dino-tracker_taming_dino_for_self-supervised_point_tracking_in_a_single_video.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ DAWN 在几乎所有物品类别上成功率最高，且错误抓取率极低。
 - 实验充分度: ⭐⭐⭐⭐⭐ CALVIN + MetaWorld + 真实单臂 + 真实双臂，消融完整
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 为机器人学习提供了一个简洁有效的结构化中间表示方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition](pixel-level_scene_understanding_in_one_token_visual_states_need_what-is-where_co.md)
+- [CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning](como_learning_continuous_latent_motion_from_internet_videos_for_scalable_robot_l.md)
+- [Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](../../ICLR2026/robotics/evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
+- [Chain of World: World Model Thinking in Latent Motion (CoWVLA)](chain_of_world_world_model_thinking_in_latent_motion.md)
+- [ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation](forcevla2_unleashing_hybrid_force-position_control_with_force_awareness_for_cont.md)
+
+<!-- RELATED:END -->

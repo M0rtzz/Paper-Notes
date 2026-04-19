@@ -120,3 +120,15 @@ Adam显著提高了核心特征相关性(+0.36)，降低了虚假特征相关性
 - 实验充分度: ⭐⭐⭐⭐ 合成+6个真实数据集，全面验证理论
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，理论-实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 对理解Adam的优势提供了深刻洞察，有直接的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Implicit Bias of Structured State Space Models Can Be Poisoned With Clean Labels](the_implicit_bias_of_structured_state_space_models_can_be_poisoned_with_clean_la.md)
+- [Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data](implicit_bias_of_spectral_descent_and_muon_on_multiclass_separable_data.md)
+- [A Unified Stability Analysis of SAM vs SGD: Role of Data Coherence and Emergence of Simplicity Bias](a_unified_stability_analysis_of_sam_vs_sgd_role_of_data_cohe.md)
+- [In Search of Adam's Secret Sauce](in_search_of_adams_secret_sauce.md)
+- [Small Batch Size Training for Language Models: When Vanilla SGD Works, and Why Gradient Accumulation Is Wasteful](small_batch_size_training_for_language_models_when_vanilla_sgd_works_and_why_gra.md)
+
+<!-- RELATED:END -->

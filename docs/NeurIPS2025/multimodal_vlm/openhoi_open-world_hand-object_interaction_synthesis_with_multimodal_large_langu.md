@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性评估充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 开放世界HOI是重要应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World](../../ACL2025/multimodal_vlm/craftext_benchmark_advancing_instruction_following_in_complex_multimodal_open-en.md)
+- [Img-Diff: Contrastive Data Synthesis for Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/img-diff_contrastive_data_synthesis_for_multimodal_large_language_models.md)
+- [Adapting Vision-Language Models for Evaluating World Models](adapting_visionlanguage_models_for_evaluating_world_models.md)
+- [MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models](mm-opera_benchmarking_open-ended_association_reasoning_for_large_vision-language.md)
+- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

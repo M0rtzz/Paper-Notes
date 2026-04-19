@@ -218,3 +218,15 @@ AVATAR vs GRPO on Qwen2.5-Omni: OmniBench +3.7, Video-Holmes +1.9, 同时只需*
 - 实验充分度: ⭐⭐⭐⭐ 多基准、多基础模型、统计检验、消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分析清晰，三个限制→三个解决方案的对应关系明确
 - 价值: ⭐⭐⭐⭐ 对MLLM RL训练的通用性改进，方法可广泛应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
+- [See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles](see_think_act_teaching_multimodal_agents_to_effectively_interact_with_gui_by_ide.md)
+- [Training High-Level Schedulers with Execution-Feedback Reinforcement Learning for Long-Horizon GUI Automation](training_high-level_schedulers_with_execution-feedback_reinforcement_learning_fo.md)
+- [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](../../ICLR2026/human_understanding/rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
+
+<!-- RELATED:END -->

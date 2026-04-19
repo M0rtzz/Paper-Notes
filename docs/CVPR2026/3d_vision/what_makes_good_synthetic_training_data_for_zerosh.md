@@ -163,3 +163,15 @@ tags:
 | 实用价值 | 9 | 开源生成代码 + 参数指南，社区可直接使用或定制，WMGStereo-150k 本身就是高价值数据集 |
 | 写作质量 | 8 | 结构清晰，Tab.1 的控制变量实验设计教科书级别，图表丰富 |
 | **总分** | **8.0** | 数据驱动的系统研究，实验设计严谨，对 stereo 数据生成社区有长期指导价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zero-shot_stereo_matching.md)
+- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [PIP-Stereo: Progressive Iterations Pruner for Iterative Optimization based Stereo Matching](pip-stereo_progressive_iterations_pruner_for_iterative_optimization_based_stereo.md)
+- [PromptStereo: Zero-Shot Stereo Matching via Structure and Motion Prompts](promptstereo_zero-shot_stereo_matching_via_structure_and_motion_prompts.md)
+- [EventHub: Data Factory for Generalizable Event-Based Stereo Networks without Active Sensors](eventhub_data_factory_for_generalizable_event-based_stereo_networks_without_acti.md)
+
+<!-- RELATED:END -->

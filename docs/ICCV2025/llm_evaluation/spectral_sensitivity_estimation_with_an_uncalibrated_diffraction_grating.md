@@ -129,3 +129,15 @@ tags:
 - 实验充分度：★★★★☆（合成+真实实验，多台相机验证，但比较方法有限）
 - 实用价值：★★★★★（设备成本低、操作简单、精度高）
 - 写作质量：★★★★★（数学推导严谨，实验设置透明，物理模型阐述清晰）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spectral Attention Steering for Prompt Highlighting](../../ICLR2026/llm_evaluation/spectral_attention_steering_for_prompt_highlighting.md)
+- [Access Denied Inc: The First Benchmark Environment for Sensitivity Awareness](../../ACL2025/llm_evaluation/access_denied_inc_the_first_benchmark_environment_for_sensitivity_awareness.md)
+- [Feedforward Few-shot Species Range Estimation](../../ICML2025/llm_evaluation/feedforward_few-shot_species_range_estimation.md)
+- [Dense Match Summarization for Faster Two-view Estimation](../../CVPR2025/llm_evaluation/dense_match_summarization_for_faster_two-view_estimation.md)
+- [RGB-to-Polarization Estimation: A New Task and Benchmark Study](../../NeurIPS2025/llm_evaluation/rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ AgentTTS 由三个核心组件构成：**Agent**（基于 LLM 的搜索器，负
 ⭐⭐⭐⭐ (4/5)
 
 问题定义新颖且实际意义大（多阶段 TTS 是真实需求），三个洞察有泛化价值，Agent 框架设计合理。实验覆盖 4 种任务 6 个数据集，消融和鲁棒性分析充分，可解释性是亮点。局限在于搜索本身的计算开销较大，且仅处理线性流水线结构的多阶段任务。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](../../ACL2025/llm_agent/metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [Agentic Plan Caching: Test-Time Memory for Fast and Cost-Efficient LLM Agents](agentic_plan_caching_test-time_memory_for_fast_and_cost-efficient_llm_agents.md)
+- [TrajAgent: An LLM-Agent Framework for Trajectory Modeling via Large-and-Small Model Collaboration](trajagent_an_llm-agent_framework_for_trajectory_modeling_via_large-and-small_mod.md)
+- [Are Large Language Models Sensitive to the Motives Behind Communication?](are_large_language_models_sensitive_to_the_motives_behind_communication.md)
+
+<!-- RELATED:END -->

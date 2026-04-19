@@ -151,3 +151,15 @@ Dual-Arch 在参数减少 **87%** 的极端情况下仍可超越原始基线（D
 - 实验充分度: ⭐⭐⭐⭐ — 5种方法×4个基准×消融+效率分析，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，从观察→问题→方案→验证贯通
 - 价值: ⭐⭐⭐⭐ — 即插即用框架有实用价值，但泛化到现代架构待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Null-Space Filtering for Data-Free Continual Model Merging: Preserving Stability, Promoting Plasticity](../../ICLR2026/model_compression/null-space_filtering_for_data-free_continual_model_merging_preserving_stability_.md)
+- [Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [When Worse is Better: Navigating the Compression-Generation Trade-off in Visual Tokenization](../../NeurIPS2025/model_compression/when_worse_is_better_navigating_the_compression-generation_tradeoff_in_visual_to.md)
+- [TreeLoRA: Efficient Continual Learning via Layer-Wise LoRAs Guided by a Hierarchical Gradient-Similarity Tree](treelora_efficient_continual_learning_via_layer-wise_loras_guided_by_a_hierarchi.md)
+- [REP: Resource-Efficient Prompting for Rehearsal-Free Continual Learning](../../NeurIPS2025/model_compression/rep_resource-efficient_prompting_for_rehearsal-free_continual_learning.md)
+
+<!-- RELATED:END -->

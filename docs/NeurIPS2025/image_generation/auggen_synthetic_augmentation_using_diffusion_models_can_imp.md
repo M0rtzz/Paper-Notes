@@ -112,3 +112,15 @@ WebFace160K 上，AugGen 在 IJB-B/C 的严格阈值下超过更大网络（IR10
 ## 评分
 
 ⭐⭐⭐⭐ — 思路简洁实用（自包含+无外部依赖），实验在8个FR基准上充分验证。概念虽简单但有效，是合成数据增强的范式转变。主要局限是应用范围暂限于人脸识别。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Diffusion that can Insert and Delete](graph_diffusion_that_can_insert_and_delete.md)
+- [Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
+- [Synthetic Perception: Can Generated Images Unlock Latent Visual Prior for Text-Centric Reasoning?](../../ICML2025/image_generation/synthetic_perception_can_generated_images_unlock_latent_visual_prior_for_text-ce.md)
+- [UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation](utilgen_utility-centric_generative_data_augmentation_with_dual-level_task_adapta.md)
+- [Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](../../CVPR2025/image_generation/everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
+
+<!-- RELATED:END -->

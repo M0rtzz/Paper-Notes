@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论预测与实验高度一致，但缺少大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论动机清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 对理解 LLM 涌现现象有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
+- [Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention](../../ACL2025/llm_efficiency/native_sparse_attention.md)
+- [Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access](hardware-aligned_hierarchical_sparse_attention_for_efficient_long-term_memory_ac.md)
+- [Efficient Many-Shot In-Context Learning with Dynamic Block-Sparse Attention](../../ACL2025/llm_efficiency/efficient_many-shot_in-context_learning_with_dynamic_block-sparse_attention.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+
+<!-- RELATED:END -->

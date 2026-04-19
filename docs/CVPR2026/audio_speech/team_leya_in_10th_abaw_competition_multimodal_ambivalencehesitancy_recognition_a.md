@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 详尽的消融覆盖所有模态组合，多种编码器和融合策略对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验设置描述细致，可复现性高
 - 价值: ⭐⭐⭐ 竞赛解决方案，方法论贡献有一定局限性，但实验发现有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solution for 10th Competition on Ambivalence/Hesitancy (AH) Video Recognition Challenge using Divergence-Based Multimodal Fusion](solution_for_10th_competition_on_ambivalencehesitancy_ah_video_recognition_chall.md)
+- [BROTHER: Behavioral Recognition Optimized Through Heterogeneous Ensemble Regularization for Ambivalence and Hesitancy](brother_behavioral_recognition_optimized_through_heterogeneous_ensemble_regulari.md)
+- [Tri-Subspaces Disentanglement for Multimodal Sentiment Analysis](tri-subspaces_disentanglement_for_multimodal_sentiment_analysis.md)
+- [UniM: A Unified Any-to-Any Interleaved Multimodal Benchmark](unim_a_unified_any-to-any_interleaved_multimodal_benchmark.md)
+- [UNICBench: UNIfied Counting Benchmark for MLLM](unicbench_unified_counting_benchmark_for_mllm.md)
+
+<!-- RELATED:END -->

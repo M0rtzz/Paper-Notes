@@ -118,3 +118,15 @@ tags:
 - 质量分类器在400张hold-out图像上达91%准确率
 - CVT数据集包含社交媒体图像，检索正确标准为125km内+时间匹配
 - 在CVT上TIGeR的R@1为14.55%，低于GT-Loc的16.45%，因为CVT不包含重复摄像头场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modal Aphasia: Can Unified Multimodal Models Describe Images From Memory?](../../ICLR2026/multimodal_vlm/modal_aphasia_can_unified_multimodal_models_describe_images_from_memory.md)
+- [HIVE: Query, Hypothesize, Verify — An LLM Framework for Multimodal Reasoning-Intensive Retrieval](hive_query_hypothesize_verify_an_llm_framework_for_multimodal_reasoning-intensiv.md)
+- [URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding](../../AAAI2026/multimodal_vlm/urag_unified_retrieval_and_generation_in_multimodal_llms_for.md)
+- [Scaling Test-Time Robustness of Vision-Language Models via Self-Critical Inference Framework](scaling_test-time_robustness_of_vision-language_models_via_self-critical_inferen.md)
+- [GEM: Empowering MLLM for Grounded ECG Understanding with Time Series and Images](../../NeurIPS2025/multimodal_vlm/gem_empowering_mllm_for_grounded_ecg_understanding_with_time_series_and_images.md)
+
+<!-- RELATED:END -->

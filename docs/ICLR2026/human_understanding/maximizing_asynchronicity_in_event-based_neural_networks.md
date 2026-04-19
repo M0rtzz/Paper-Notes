@@ -144,3 +144,15 @@ $$\arg\max_{\theta, \Theta'} \mathbb{E}_i \prod_{k=1}^{K'} \textbf{Pr}(\mathcal{
 | 技术深度 | ⭐⭐⭐⭐ | 架构设计有理有据，消融实验充分，从类比到架构调整的逻辑链条完整 |
 | 实验充分度 | ⭐⭐⭐⭐ | 覆盖识别+检测+消融+timing分析，但缺乏更多数据集和更多下游任务的验证 |
 | 工程价值 | ⭐⭐⭐⭐⭐ | A2S范式首次攻克检测任务，PWE支持任意分辨率，代码已开源，对事件相机实时应用有直接价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks](time_is_all_it_takes_spike-retiming_attacks_on_event-driven_spiking_neural_netwo.md)
+- [Rapid Training of Hamiltonian Graph Networks using Random Features](rapid_training_of_hamiltonian_graph_networks_using_random_features.md)
+- [Stable Spike: Dual Consistency Optimization via Bitwise AND Operations for Spiking Neural Networks](../../CVPR2026/human_understanding/stable_spike_dual_consistency_optimization_via_bitwise_and_operations_for_spikin.md)
+- [DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
+- [Distilling and Adapting: A Topology-Aware Framework for Zero-Shot Interaction Prediction in Multiplex Biological Networks](distilling_and_adapting_a_topology-aware_framework_for_zero-shot_interaction_pre.md)
+
+<!-- RELATED:END -->

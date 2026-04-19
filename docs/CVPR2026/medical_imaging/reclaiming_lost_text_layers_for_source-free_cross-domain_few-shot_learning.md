@@ -139,3 +139,15 @@ $$L_{comb} = L_{ce} + \beta \cdot L_{VtT}, \quad \beta = 7$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4+10 个数据集、3 种骨干、多种基线、完整消融
 - 写作质量: ⭐⭐⭐⭐ — 分析链路清晰（发现→归因→解决），图表设计直观
 - 价值: ⭐⭐⭐⭐ — 对 VLM 跨域迁移的层级信息利用提供新思路，插件式设计实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mind the Discriminability Trap in Source-Free Cross-domain Few-shot Learning](mind_the_discriminability_trap_in_source-free_cross-domain_few-shot_learning.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multi-modal_learning_for_single_source_domain_general.md)
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+
+<!-- RELATED:END -->

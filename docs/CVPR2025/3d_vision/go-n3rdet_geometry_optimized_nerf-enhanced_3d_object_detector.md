@@ -118,3 +118,15 @@ ScanNet mAP@0.25，基于R50：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、详细消融、与多种方法对比、per-class分析完整
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，模块图示直观，方法描述严谨
 - 价值: ⭐⭐⭐⭐ 在NeRF-based 3D检测方向建立新SOTA，同时保持训练效率优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations](flow-nerf_joint_learning_of_geometry_poses_and_dense_flow_within_unified_neural_.md)
+- [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](../../NeurIPS2025/3d_vision/on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [LookCloser: Frequency-aware Radiance Field for Tiny-Detail Scene (FA-NeRF)](lookcloser_frequency-aware_radiance_field_for_tiny-detail_scene.md)
+- [3DEgo: 3D Editing on the Go!](../../ECCV2024/3d_vision/3dego_3d_editing_on_the_go.md)
+- [DAGSM: Disentangled Avatar Generation with GS-enhanced Mesh](dagsm_disentangled_avatar_generation_with_gs-enhanced_mesh.md)
+
+<!-- RELATED:END -->

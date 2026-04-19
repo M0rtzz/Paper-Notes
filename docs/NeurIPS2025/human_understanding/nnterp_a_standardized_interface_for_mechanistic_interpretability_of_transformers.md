@@ -131,3 +131,15 @@ nnterp 是推理/分析工具，不涉及训练。内置的可解释性方法包
 - 实验充分度: ⭐⭐⭐ 覆盖 21 个架构族的兼容性验证有说服力，但缺少实际可解释性实验的案例研究
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，设计决策的动机交代充分，代码示例有帮助
 - 价值: ⭐⭐⭐⭐ 对机制化可解释性研究社区有直接实用价值，降低了跨架构分析的门槛，自动验证机制有长期影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
+- [BubbleFormer: Forecasting Boiling with Transformers](bubbleformer_forecasting_boiling_with_transformers.md)
+- [Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps](vision_transformers_for_cosmological_fields_application_to_weak_lensing_mass_map.md)
+- [Emergent World Beliefs: Exploring Transformers in Stochastic Games](emergent_world_beliefs_exploring_transformers_in_stochastic_games.md)
+- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+
+<!-- RELATED:END -->

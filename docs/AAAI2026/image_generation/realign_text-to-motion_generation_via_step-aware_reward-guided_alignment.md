@@ -205,3 +205,15 @@ $$\mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\bar{\mathbf{x}}_{t-1} + \sq
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两个数据集、五个基线验证、详细消融、检索任务验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ — 即插即用方案实用性极强，改善幅度显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation](../../CVPR2026/image_generation/bimotion_b-spline_motion_for_text-guided_dynamic_3d_character_generation.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](../../ECCV2024/image_generation/local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [MACS: Multi-source Audio-to-Image Generation with Contextual Significance and Semantic Alignment](macs_multi-source_audio-to-image_generation_with_contextual_significance_and_sem.md)
+- [Step-Aware Residual-Guided Diffusion for EEG Spatial Super-Resolution](../../ICLR2026/image_generation/step-aware_residual-guided_diffusion_for_eeg_spatial_super-resolution.md)
+- [Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
+
+<!-- RELATED:END -->

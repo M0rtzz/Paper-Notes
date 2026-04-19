@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个数据集、2D+3D、详细消融、阈值敏感性、类别级分析
 - 写作质量: ⭐⭐⭐⭐ 图表清晰，与现有方法的对比框架画得很好
 - 价值: ⭐⭐⭐⭐ 方法简洁有效，对半监督医学分割有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](../../CVPR2025/medical_imaging/semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation](../../AAAI2026/medical_imaging/bidirectional_channel-selective_semantic_interaction_for_semi-supervised_medical.md)
+- [I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)
+- [VQ-Seg: Vector-Quantized Token Perturbation for Semi-Supervised Medical Image Segmentation](../../NeurIPS2025/medical_imaging/vq-seg_vector-quantized_token_perturbation_for_semi-supervised_medical_image_seg.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](../../CVPR2026/medical_imaging/semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+
+<!-- RELATED:END -->

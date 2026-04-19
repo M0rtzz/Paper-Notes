@@ -158,3 +158,15 @@ Mol-LLaMA 由四个组件组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 定性定量分析全面，消融详尽（数据类型、编码器、构象鲁棒性）
 - 写作质量: ⭐⭐⭐⭐ Case study 精彩，表格丰富
 - 价值: ⭐⭐⭐⭐ 面向实际分子分析的通用助手，超越 GPT-4o 有应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FGBench: A Dataset and Benchmark for Molecular Property Reasoning at Functional Group-Level in Large Language Models](fgbench_a_dataset_and_benchmark_for_molecular_property_reasoning_at_functional_g.md)
+- [EDBench: Large-Scale Electron Density Data for Molecular Modeling](edbench_large-scale_electron_density_data_for_molecular_modeling.md)
+- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+- [Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
+
+<!-- RELATED:END -->

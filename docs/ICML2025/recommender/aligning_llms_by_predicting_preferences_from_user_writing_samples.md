@@ -116,3 +116,15 @@ LLM预训练的写作风格是通用的，不匹配用户个人偏好。
 - 实验充分度: 4.5/5 — 4个LLM+新基准+详细消融
 - 写作质量: 4.0/5
 - 价值: 4.5/5 — LLM个性化是重要方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LOTUS: A Leaderboard for Detailed Image Captioning from Quality to Societal Bias and User Preferences](../../ACL2025/recommender/lotus_a_leaderboard_for_detailed_image_captioning_from_quality_to_societal_bias_.md)
+- [Search Arena: Analyzing Search-Augmented LLMs](../../ICLR2026/recommender/search_arena_analyzing_search-augmented_llms.md)
+- [FineVQ: Fine-Grained User Generated Content Video Quality Assessment](../../CVPR2025/recommender/finevq_fine-grained_user_generated_content_video_quality_assessment.md)
+- [VisionArena: 230k Real World User-VLM Conversations with Preference Labels](../../CVPR2025/recommender/visionarena_230k_real_world_user-vlm_conversations_with_preference_labels.md)
+- [CroPS: Improving Dense Retrieval with Cross-Perspective Positive Samples in Short-Video Search](../../AAAI2026/recommender/crops_improving_dense_retrieval_with_cross-perspective_positive_samples_in_short.md)
+
+<!-- RELATED:END -->

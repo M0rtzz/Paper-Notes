@@ -124,3 +124,15 @@ SparK在80%剪枝下Avg=31.16 vs ThinK的16.97，差距巨大！
 - 实验充分度: ⭐⭐⭐⭐ 多个benchmark、多种基线、多模型、详细消融和可视化分析
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，观察-动机-方法的逻辑链清晰
 - 价值: ⭐⭐⭐⭐⭐ 高度实用——training-free、plug-and-play、与现有方法正交互补，直接可用于长上下文LLM推理加速
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GateRA: Token-Aware Modulation for Parameter-Efficient Fine-Tuning](gatera_token-aware_modulation_for_parameter-efficient_fine-tuning.md)
+- [Tokenizing Single-Channel EEG with Time-Frequency Motif Learning](../../ICLR2026/interpretability/tokenizing_single-channel_eeg_with_time-frequency_motif_learning.md)
+- [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
+- [Universal Properties of Activation Sparsity in Modern Large Language Models](../../ICLR2026/interpretability/universal_properties_of_activation_sparsity_in_modern_large_language_models.md)
+- [DR.Experts: Differential Refinement of Distortion-Aware Experts for Blind Image Quality Assessment](drexperts_differential_refinement_of_distortion-aware_experts_for_blind_image_qu.md)
+
+<!-- RELATED:END -->

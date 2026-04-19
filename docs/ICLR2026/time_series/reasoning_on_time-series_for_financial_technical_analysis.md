@@ -209,3 +209,15 @@ VTA 在 Sharpe Ratio 上大幅领先（1.7190 vs 次优 1.5230），证明在真
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 个数据集、14+ 基线、消融实验、专家评估、投资组合验证、跨域泛化分析，非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机充分，图表丰富
 - **实用价值**: ⭐⭐⭐⭐ — 可解释的金融预测对从业者有直接价值，Sharpe Ratio 验证了实际投资潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
+- [EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements](edinet-bench_evaluating_llms_on_complex_financial_tasks_using_japanese_financial.md)
+- [FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](../../AAAI2026/time_series/freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)
+- [Language in the Flow of Time: Time-Series-Paired Texts Weaved into a Unified Temporal Narrative](language_in_the_flow_of_time_time-series-paired_texts_weaved_into_a_unified_temp.md)
+
+<!-- RELATED:END -->

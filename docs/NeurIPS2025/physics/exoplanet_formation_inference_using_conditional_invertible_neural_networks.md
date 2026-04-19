@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成数据完整，但未在真实观测数据上验证
 - 写作质量: ⭐⭐⭐⭐ 物理动机清晰，方法-物理联系紧密
 - 价值: ⭐⭐⭐⭐ 为系外行星人口统计学提供了实用的推断工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compact Matrix Quantum Group Equivariant Neural Networks](../../ICML2025/physics/compact_matrix_quantum_group_equivariant_neural_networks.md)
+- [Simulation-Based Inference for Neutrino Interaction Model Parameter Tuning](simulation-based_inference_for_neutrino_interaction_model_parameter_tuning.md)
+- [ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
+- [ResQ: A Novel Framework to Implement Residual Neural Networks on Analog Rydberg Atom Quantum Computers](../../ICCV2025/physics/resq_a_novel_framework_to_implement_residual_neural_networks_on_analog_rydberg_a.md)
+- [Neural Deprojection of Galaxy Stellar Mass Profiles](neural_deprojection_of_galaxy_stellar_mass_profiles.md)
+
+<!-- RELATED:END -->

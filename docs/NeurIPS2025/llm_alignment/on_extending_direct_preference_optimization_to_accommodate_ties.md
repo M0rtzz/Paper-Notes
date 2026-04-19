@@ -123,3 +123,15 @@ $\mathcal{L}(\pi_\theta; \pi_{ref}) = -\mathbb{E}_{t=0}[\log p_\theta(y_w \succ 
 - 实验充分度: ⭐⭐⭐⭐ 三个任务+数学推理，有理论分析支撑，但缺乏大模型实验
 - 写作质量: ⭐⭐⭐⭐⭐ 论文写得清晰流畅，动机、理论、实验环环相扣
 - 价值: ⭐⭐⭐⭐ 高度实用的改进，几乎零成本采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KL Penalty Control via Perturbation for Direct Preference Optimization](kl_penalty_control_via_perturbation_for_direct_preference_optimization.md)
+- [Robust LLM Alignment via Distributionally Robust Direct Preference Optimization](robust_llm_alignment_via_distributionally_robust_direct_preference_optimization.md)
+- [Rethinking Direct Preference Optimization in Diffusion Models](rethinking_direct_preference_optimization_in_diffusion_models.md)
+- [DP²O-SR: Direct Perceptual Preference Optimization for Real-World Image Super-Resolution](dp2o-sr_direct_perceptual_preference_optimization_for_real-world_image_super-res.md)
+- [TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization](../../ICML2025/llm_alignment/tgdpo_harnessing_token-level_reward_guidance_for_enhancing_direct_preference_opt.md)
+
+<!-- RELATED:END -->

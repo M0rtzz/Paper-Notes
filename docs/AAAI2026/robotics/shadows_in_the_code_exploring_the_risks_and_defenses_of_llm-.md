@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3框架×12行为×7配置+跨模型+消融，体系完整但数据规模偏小
 - 写作质量: ⭐⭐⭐⭐ 威胁模型定义清晰，发现总结精炼，但部分实验细节需要看附录
 - 价值: ⭐⭐⭐⭐⭐ 对多Agent开发系统的安全警示意义重大，攻防范式为后续研究提供了框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](adaptive_theory_of_mind_for_llm-based_multi-agent_coordination.md)
+- [A Computable Game-Theoretic Framework for Multi-Agent Theory of Mind](a_computable_game-theoretic_framework_for_multi-agent_theory_of_mind.md)
+- [SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation](spatialactor_exploring_disentangled_spatial_representations_for_robust_robotic_m.md)
+- [Unintended Misalignment from Agentic Fine-Tuning: Risks and Mitigation](unintended_misalignment_from_agentic_fine-tuning_risks_and_m.md)
+- [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+
+<!-- RELATED:END -->

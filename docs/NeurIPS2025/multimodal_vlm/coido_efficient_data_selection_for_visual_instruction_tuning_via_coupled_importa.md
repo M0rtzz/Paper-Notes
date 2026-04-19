@@ -136,3 +136,15 @@ $$p(y_{ik} | x_{ik}, \theta, \sigma_I, w_{ik}) = \text{Softmax}\left(\frac{w_{ik
 - ⭐ 实验充分度: 4/5 — 消融详尽，多种评分器和优化策略对比，但模型规模有限
 - ⭐ 写作质量: 4/5 — 公式推导清晰，框架图直观
 - ⭐ 价值: 4/5 — 为大规模 MLLM 指令微调提供了高效实用的数据选择工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Instruction Bottleneck Tuning](visual_instruction_bottleneck_tuning.md)
+- [Learning to Instruct for Visual Instruction Tuning](learning_to_instruct_for_visual_instruction_tuning.md)
+- [Mastering Collaborative Multi-modal Data Selection: A Focus on Informativeness, Uniqueness, and Representativeness](../../ICCV2025/multimodal_vlm/mastering_collaborative_multi-modal_data_selection_a_focus_on_informativeness_un.md)
+- [Mixing Importance with Diversity: Joint Optimization for KV Cache Compression in Large Vision-Language Models](../../ICLR2026/multimodal_vlm/mixing_importance_with_diversity_joint_optimization_for_kv_cache_compression_in_.md)
+- [From Holistic to Localized: Local Enhanced Adapters for Efficient Visual Instruction Fine-Tuning](../../ICCV2025/multimodal_vlm/from_holistic_to_localized_local_enhanced_adapters_for_efficient_visual_instruct.md)
+
+<!-- RELATED:END -->

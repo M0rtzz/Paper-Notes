@@ -183,3 +183,15 @@ $$\Phi_t^F = \text{Concat}(\Phi_t^1, \Phi_t^2, \widetilde{\Phi}_{t-1 \to t}^1, \
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 4 个子任务，对比 7-10 个方法，消融实验设计合理，空间+时序指标全面，2K 和低分辨率双版本测试。
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，图表丰富，数据构建过程描述详细。
 - **价值**: ⭐⭐⭐⭐⭐ — VF-Bench 作为首个视频融合基准具有很高的领域价值，为后续视频融合研究奠定了坚实基础，有望推动该方向的系统性发展。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research](cgbench_benchmarking_language_model_scientific_reasoning_for_clinical_genetics_r.md)
+- [MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks](medagentboard_benchmarking_multi-agent_collaboration_with_conventional_methods_f.md)
+- [Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](../../ICLR2026/medical_imaging/human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
+- [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](../../ICML2025/medical_imaging/scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
+
+<!-- RELATED:END -->

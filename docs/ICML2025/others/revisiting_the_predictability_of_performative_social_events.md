@@ -138,3 +138,15 @@ $$\mathbb{E}_{\mathcal{D}(f)} (p-y)^2 \geq \max_{h \in \mathcal{H}} \mathbb{E}_{
 - 实验充分度: ⭐⭐⭐ （纯理论工作，构造性反例清晰但无实证）
 - 写作质量: ⭐⭐⭐⭐⭐ （历史脉络清晰，技术呈现优雅，动机阐述出色）
 - 价值: ⭐⭐⭐⭐⭐ （对社会预测的基础理论做出实质贡献，"准确≠有用"的洞察深远）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Agnostic Boosting](../../NeurIPS2025/others/revisiting_agnostic_boosting.md)
+- [Revisiting Instance-Optimal Cluster Recovery in the Labeled Stochastic Block Model](revisiting_instance-optimal_cluster_recovery_in_the_labeled_stochastic_block_mod.md)
+- [Temporal Reasoning for Timeline Summarisation in Social Media](../../ACL2025/others/temporal_reasoning_for_timeline_summarisation_in_social_media.md)
+- [Explicit and Implicit Data Augmentation for Social Event Detection](../../ACL2025/others/explicit_and_implicit_data_augmentation_for_social_event_detection.md)
+- [Graphically Speaking: Unmasking Abuse in Social Media with Conversation Insights](../../ACL2025/others/graphically_speaking_unmasking_abuse_in_social_media_with_conversation_insights.md)
+
+<!-- RELATED:END -->

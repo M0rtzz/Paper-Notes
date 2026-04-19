@@ -160,3 +160,15 @@ Steered 文本与微调数据集的语义相似度显著高于：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 33 个 organisms × 7 模型 × 多种 agent 配置，极其全面
 - **实用价值**: ⭐⭐⭐⭐ — 对 AI 安全研究有直接指导意义
 - **总体推荐**: ⭐⭐⭐⭐⭐ — 优秀的 AI 安全+可解释性交叉工作，发现深刻且实验扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
+- [GAVEL: Towards Rule-Based Safety through Activation Monitoring](gavel_towards_rule-based_safety_through_activation_monitoring.md)
+- [Universal Properties of Activation Sparsity in Modern Large Language Models](universal_properties_of_activation_sparsity_in_modern_large_language_models.md)
+- [FaCT: Faithful Concept Traces for Explaining Neural Network Decisions](../../NeurIPS2025/interpretability/fact_faithful_concept_traces_for_explaining_neural_network_decisions.md)
+- [CE-FAM: Concept-Based Explanation via Fusion of Activation Maps](../../ICCV2025/interpretability/ce-fam_concept-based_explanation_via_fusion_of_activation_maps.md)
+
+<!-- RELATED:END -->

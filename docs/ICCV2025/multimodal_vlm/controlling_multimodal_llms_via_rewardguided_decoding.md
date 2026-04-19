@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ CHAIR+AMBER两个benchmark，3个MLLM，大量消融（数据配比、backbone、检测器、阈值），精度-召回-计算三角权衡分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，问题定义精准，消融设计合理
 - 价值: ⭐⭐⭐⭐ 提供了一种灵活的推理时MLLM行为控制方法，对社区有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CaptionSmiths: Flexibly Controlling Language Pattern in Image Captioning](captionsmiths_flexibly_controlling_language_pattern_in_image_captioning.md)
+- [G2D: Boosting Multimodal Learning with Gradient-Guided Distillation](g2d_boosting_multimodal_learning_with_gradient-guided_distillation.md)
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Multimodal LLMs as Customized Reward Models for Text-to-Image Generation](multimodal_llms_as_customized_reward_models_for_text-to-image_generation.md)
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+
+<!-- RELATED:END -->

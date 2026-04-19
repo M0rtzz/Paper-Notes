@@ -171,3 +171,15 @@ $$L(W) = \sum_{t=1}^3 \mathbb{E}_{z_{1:t+1}}\left[-\log \mathcal{S}_\beta(F_W(z_
 - 实验充分度: ⭐⭐⭐⭐ 合成实验充分，预训练模型验证有说服力，但自然语言实验规模较小
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，从假说到验证的逻辑链清晰优美
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 可解释性和幻觉理解有深远影响，可能启发新的幻觉缓解技术
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Trilemma of Truth in Large Language Models](the_trilemma_of_truth_in_large_language_models.md)
+- [Minimizing False-Positive Attributions in Explanations of Non-Linear Models](minimizing_false-positive_attributions_in_explanations_of_non-linear_models.md)
+- [Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models](bigram_subnetworks_mapping_to_next_tokens_in_transformer_language_models.md)
+- [Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
+- [Better Estimation of the Kullback-Leibler Divergence Between Language Models](better_estimation_of_the_kullback--leibler_divergence_between_language_models.md)
+
+<!-- RELATED:END -->

@@ -174,3 +174,15 @@ $$\mathcal{L}_{\text{reader}} = -\sum_{t=1}^{T} \log p(\mathbf{q}_t \mid \mathbf
 - **实用价值** ⭐⭐⭐⭐⭐：检索速度提升 2~3 数量级同时保持 SOTA 性能，工业应用价值大
 - **写作质量** ⭐⭐⭐⭐：逻辑清晰、方法描述详尽
 - **局限**: 仅验证了适应性预测一个下游任务；小规模 Reader 可能限制上限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting End-to-End Learning with Slide-level Supervision in Computational Pathology](../../NeurIPS2025/medical_imaging/revisiting_end-to-end_learning_with_slide-level_supervision_in_computational_pat.md)
+- [UniSite: The First Cross-Structure Dataset and Learning Framework for End-to-End Ligand Binding Site Detection](../../NeurIPS2025/medical_imaging/unisite_the_first_cross-structure_dataset_and_learning_framework_for_end-to-end_.md)
+- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](../../NeurIPS2025/medical_imaging/steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
+- [Steering Protein Language Models](steering_protein_language_models.md)
+- [GraphFLA: Augmenting Biological Fitness Prediction Benchmarks with Landscape Features](../../NeurIPS2025/medical_imaging/augmenting_biological_fitness_prediction_benchmarks_with_landscapes_features_fro.md)
+
+<!-- RELATED:END -->

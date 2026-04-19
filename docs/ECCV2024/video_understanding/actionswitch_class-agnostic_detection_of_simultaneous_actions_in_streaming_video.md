@@ -107,3 +107,15 @@ $$\mathcal{L} = CE(p_t, y_t) + \alpha \cdot \mathcal{L}_c(p_t, s_{t-1})$$
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 4 个数据集（THUMOS14/FineAction/Epic-Kitchens/MultiTHUMOS），消融充分，但缺少端到端实验
 - 写作质量: ⭐⭐⭐⭐⭐ 写作逻辑清晰，图示直观，问题-方案-实验的推进非常流畅
 - 价值: ⭐⭐⭐⭐ 为 On-TAL 建立了强 baseline，class-agnostic 范式对开放世界应用有启示，不过 On-TAL 本身是比较小众的方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Classification Matters: Improving Video Action Detection with Class-Specific Attention](classification_matters_improving_video_action_detection_with_class-specific_atte.md)
+- [Towards Model-Agnostic Dataset Condensation by Heterogeneous Models](towards_model-agnostic_dataset_condensation_by_heterogeneous_models.md)
+- [AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
+- [Bayesian Evidential Deep Learning for Online Action Detection](bayesian_evidential_deep_learning_for_online_action_detection.md)
+- [Occluded Gait Recognition with Mixture of Experts: An Action Detection Perspective](occluded_gait_recognition_with_mixture_of_experts_an_action_detection_perspectiv.md)
+
+<!-- RELATED:END -->

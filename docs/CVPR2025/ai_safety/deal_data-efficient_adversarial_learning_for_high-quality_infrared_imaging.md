@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三种退化+复合退化+下游检测
 - 写作质量: ⭐⭐⭐⭐ 问题motivated清晰
 - 价值: ⭐⭐⭐⭐ 对红外成像社区有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fair Representation Learning with Controllable High Confidence Guarantees via Adversarial Inference](../../NeurIPS2025/ai_safety/fair_representation_learning_with_controllable_high_confidence_guarantees_via_ad.md)
+- [Data-free Universal Adversarial Perturbation with Pseudo-Semantic Prior](data-free_universal_adversarial_perturbation_with_pseudo-semantic_prior.md)
+- [Federated In-Context Learning: Iterative Refinement for Improved Answer Quality](../../ICML2025/ai_safety/federated_in-context_learning_iterative_refinement_for_improved_answer_quality.md)
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](../../NeurIPS2025/ai_safety/fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ $$\inf_{N: \mathbb{P}_\infty(N<\infty)\leq\alpha} \sup_{\eta, \mathbb{P}, \mathb
 - 实验充分度: ⭐⭐⭐⭐ 合成数据和 MNIST 的比较充分，但缺少更多真实世界时间序列实验
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，Algorithm 1 和 Example 1 的说明非常直观，理论表述精确
 - 价值: ⭐⭐⭐⭐⭐ 同时解决两个核心实际问题且有最优性保证，对在线检测领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Law of Data Reconstruction for Random Features (and Beyond)](../../ICLR2026/llm_pretraining/a_law_of_data_reconstruction_for_random_features_and_beyond.md)
+- [Imagine How To Change: Explicit Procedure Modeling for Change Captioning](../../ICLR2026/llm_pretraining/imagine_how_to_change_explicit_procedure_modeling_for_change_captioning.md)
+- [Watch and Learn: Learning to Use Computers from Online Videos](../../CVPR2026/llm_pretraining/watch_and_learn_learning_to_use_computers_from_online_videos.md)
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale](language_model_behavioral_phases_are_consistent_across_archi.md)
+
+<!-- RELATED:END -->

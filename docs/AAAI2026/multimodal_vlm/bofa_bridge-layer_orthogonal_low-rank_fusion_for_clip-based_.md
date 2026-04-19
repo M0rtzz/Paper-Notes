@@ -165,3 +165,15 @@ BOFA的核心创新在于**将适应限制在已有层而非引入新模块**，
 - **写作清晰度**: 9/10 — 结构清晰，从问题分析到方法设计的逻辑链条流畅
 - **实用价值**: 7/10 — 零额外参数设计有实际吸引力，但仅限CLIP架构，层次推理有额外开销
 - **综合**: 8/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Branch, or Layer? Zeroth-Order Optimization for Continual Learning of Vision-Language Models](branch_or_layer_zeroth-order_optimization_for_continual_lear.md)
+- [Harnessing Textual Semantic Priors for Knowledge Transfer and Refinement in CLIP-Driven Continual Learning](harnessing_textual_semantic_priors_for_knowledge_transfer_and_refinement_in_clip.md)
+- [Sparsity Outperforms Low-Rank Projections in Few-Shot Adaptation](../../ICCV2025/multimodal_vlm/sparsity_outperforms_low-rank_projections_in_few-shot_adaptation.md)
+- [Improving Personalized Search with Regularized Low-Rank Parameter Updates](../../CVPR2025/multimodal_vlm/improving_personalized_search_with_regularized_low-rank_parameter_updates.md)
+- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](../../ICLR2026/multimodal_vlm/enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+
+<!-- RELATED:END -->

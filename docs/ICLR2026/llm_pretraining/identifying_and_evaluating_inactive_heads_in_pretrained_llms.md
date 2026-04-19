@@ -114,3 +114,15 @@ AHON (LN) 在 8/14 模型排名第1，13/14 模型排名前3。
 - 实验充分度: ⭐⭐⭐⭐⭐ 14模型 × 3家族 × 12函数 × 多阈值，覆盖预训练/微调/规模变化
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富，实验设计严谨
 - 价值: ⭐⭐⭐⭐ 为理解LLM注意力冗余提供了可靠的方法论基础，可直接指导推理优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Morphological Alignment of Tokenizers in 70 Languages](../../ICML2025/llm_pretraining/evaluating_morphological_alignment_of_tokenizers_in_70_languages.md)
+- [ScanTalk: 3D Talking Heads from Unregistered Scans](../../ECCV2024/llm_pretraining/scantalk_3d_talking_heads_from_unregistered_scans.md)
+- [Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?](../../NeurIPS2025/llm_pretraining/does_object_binding_naturally_emerge_in_large_pretrained_vision_transformers.md)
+- [Uncovering Pretraining Code in LLMs: A Syntax-Aware Attribution Approach](../../AAAI2026/llm_pretraining/uncovering_pretraining_code_in_llms_a_syntax-aware_attribution_approach.md)
+- [Second Language (Arabic) Acquisition of LLMs via Progressive Vocabulary Expansion](../../ACL2025/llm_pretraining/second_language_arabic_acquisition_of_llms_via_progressive_vocabulary_expansion.md)
+
+<!-- RELATED:END -->

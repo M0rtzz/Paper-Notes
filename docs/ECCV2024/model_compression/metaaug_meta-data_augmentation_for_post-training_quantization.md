@@ -178,3 +178,15 @@ MetaAug 不仅测试准确率最高，训练-测试差距最小（23.42 vs PD-Qu
 - **实验充分度**: ⭐⭐⭐⭐ 多架构、多比特宽度的消融和对比实验全面，过拟合分析直观
 - **写作质量**: ⭐⭐⭐⭐ 公式推导清晰，动机阐述充分
 - **价值**: ⭐⭐⭐⭐ 为 PTQ 研究提供了新范式，与现有方法正交可组合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PQ-SAM: Post-training Quantization for Segment Anything Model](pq-sam_post-training_quantization_for_segment_anything_model.md)
+- [Post Training Quantization for Efficient Dataset Condensation](../../AAAI2026/model_compression/post_training_quantization_for_efficient_dataset_condensation.md)
+- [BoA: Attention-aware Post-training Quantization without Backpropagation](../../ICML2025/model_compression/boa_attention-aware_post-training_quantization_without_backpropagation.md)
+- [Quantization Error Propagation: Revisiting Layer-Wise Post-Training Quantization](../../NeurIPS2025/model_compression/quantization_error_propagation_revisiting_layer-wise_post-training_quantization.md)
+- [ATLAS: Autoformalizing Theorems through Lifting, Augmentation, and Synthesis of Data](../../NeurIPS2025/model_compression/atlas_autoformalizing_theorems_through_lifting_augmentation_and_synthesis_of_dat.md)
+
+<!-- RELATED:END -->

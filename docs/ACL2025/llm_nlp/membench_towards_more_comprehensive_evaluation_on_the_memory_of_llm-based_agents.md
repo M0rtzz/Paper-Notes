@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 7种记忆机制的全面对比+容量/效率分析，但基础模型单一
 - 写作质量: ⭐⭐⭐⭐ 框架清晰、图表丰富，数据构建管线描述详细
 - 价值: ⭐⭐⭐⭐ 对 Agent 记忆设计有直接指导意义——简单检索的胜出是有价值的发现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TReMu: Towards Neuro-Symbolic Temporal Reasoning for LLM-Agents with Memory in Multi-Session Dialogues](tremu_towards_neuro-symbolic_temporal_reasoning_for_llm-agents_with_memory_in_mu.md)
+- [Embracing Imperfection: Simulating Students with Diverse Cognitive Levels Using LLM-based Agents](simulating_diverse_students.md)
+- [Language Models, Graph Searching, and Supervision Adulteration: When More Supervision is Less and How to Make More More](lm_graph_search_supervision.md)
+- [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
+- [ConsistencyChecker: Tree-based Evaluation of LLM Generalization Capabilities](consistencychecker_tree_evaluation.md)
+
+<!-- RELATED:END -->

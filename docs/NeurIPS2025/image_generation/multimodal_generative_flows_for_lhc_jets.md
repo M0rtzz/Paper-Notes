@@ -128,3 +128,15 @@ $$\mathcal{L}_{\text{MMF}} = \mathbb{E}\left[\frac{\|u_t^\theta - u_t\|^2}{2(\si
 - 实验充分度: ⭐⭐⭐ — CMS真实数据验证可信，但仅与一个baseline对比，缺少消融实验
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰完整，补充材料详尽
 - 价值: ⭐⭐⭐⭐ — 为科学AI中的混合模态生成提供了通用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Normalizing Flows are Capable Generative Models](../../ICML2025/image_generation/normalizing_flows_are_capable_generative_models.md)
+- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [Amortized Sampling with Transferable Normalizing Flows](amortized_sampling_with_transferable_normalizing_flows.md)
+- [Show-o2: Improved Native Unified Multimodal Models](show-o2_improved_native_unified_multimodal_models.md)
+- [FALCON: Few-step Accurate Likelihoods for Continuous Flows](falcon_few-step_accurate_likelihoods_for_continuous_flows.md)
+
+<!-- RELATED:END -->

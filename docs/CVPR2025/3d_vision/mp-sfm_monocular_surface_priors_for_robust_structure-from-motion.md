@@ -149,3 +149,15 @@ $$C_{int} = \sum_{i,u,v} [\rho_{prior}(\|D_i^* - D_i\|^2_{\Sigma_{D_i}}) + \rho_
 - **实验**: ⭐⭐⭐⭐⭐ — 多数据集、多匹配方法、详尽消融，结果有说服力
 - **写作**: ⭐⭐⭐⭐⭐ — 问题定义清晰，公式推导严谨
 - **实用性**: ⭐⭐⭐⭐⭐ — 代码开源，直接降低 SfM 使用门槛，对游戏/AR/机器人等领域有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Light3R-SfM: Towards Feed-forward Structure-from-Motion](light3r-sfm_towards_feed-forward_structure-from-motion.md)
+- [Dense-SfM: Structure from Motion with Dense Consistent Matching](dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
+- [MegaSaM: Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos](megasam_accurate_fast_and_robust_structure_and_motion_from_casual_dynamic_videos.md)
+- [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
+- [Multi-view Reconstruction via SfM-guided Monocular Depth Estimation](multi-view_reconstruction_via_sfm-guided_monocular_depth_estimation.md)
+
+<!-- RELATED:END -->

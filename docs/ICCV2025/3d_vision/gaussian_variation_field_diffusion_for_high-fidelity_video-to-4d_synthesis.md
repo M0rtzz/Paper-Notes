@@ -158,3 +158,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 定量对比全面、消融清晰，但测试集仅100个物体
 - **写作质量**: ⭐⭐⭐⭐ 框架描述清晰，技术细节完整，消融实验设计合理
 - **价值**: ⭐⭐⭐⭐⭐ 4D生成的实用解决方案，4.5秒生成时间具有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SegmentDreamer: Towards High-Fidelity Text-to-3D Synthesis with Segmented Consistency Trajectory Distillation](segmentdreamer_towards_high-fidelity_text-to-3d_synthesis_with_segmented_consist.md)
+- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
+- [Not All Frame Features Are Equal: Video-to-4D Generation via Decoupling Dynamic-Static Features](not_all_frame_features_are_equal_video-to-4d_generation_via_decoupling_dynamic-s.md)
+- [GazeGaussian: High-Fidelity Gaze Redirection with 3D Gaussian Splatting](gazegaussian_high-fidelity_gaze_redirection_with_3d_gaussian_splatting.md)
+- [PolarAnything: Diffusion-based Polarimetric Image Synthesis](polaranything_diffusion-based_polarimetric_image_synthesis.md)
+
+<!-- RELATED:END -->

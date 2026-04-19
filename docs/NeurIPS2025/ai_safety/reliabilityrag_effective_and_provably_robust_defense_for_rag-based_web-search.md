@@ -136,3 +136,15 @@ ReliabilityRAG 的完整流程分三阶段：
 - 实验充分度: ⭐⭐⭐⭐ 三个 LLM × 多个 QA 数据集 + 长文本生成 + 多攻击位置
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义严谨，理论证明完整，实验解读清晰
 - 价值: ⭐⭐⭐⭐⭐ 对 RAG 安全部署有重大实际意义，特别是搜索引擎场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
+- [A Set of Generalized Components to Achieve Effective Poison-only Clean-label Backdoor Attacks with Collaborative Sample Selection and Triggers](a_set_of_generalized_components_to_achieve_effective_poison-only_clean-label_bac.md)
+- [Retraining with Predicted Hard Labels Provably Increases Model Accuracy](../../ICML2025/ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)
+- [MARS: A Malignity-Aware Backdoor Defense in Federated Learning](mars_a_malignity-aware_backdoor_defense_in_federated_learning.md)
+- [On Differential Privacy for Adaptively Solving Search Problems via Sketching](../../ICML2025/ai_safety/on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)
+
+<!-- RELATED:END -->

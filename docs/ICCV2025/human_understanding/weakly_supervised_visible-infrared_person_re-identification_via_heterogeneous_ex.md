@@ -159,3 +159,15 @@ $$\mathcal{L}_{phase2} = \mathcal{L}_{id}^{exp} + \mathcal{L}_{id}^{stro} + \mat
 - 实验充分度: ⭐⭐⭐⭐ 消融完整，与全监督/半监督/无监督多范式对比全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义和方法描述清晰，公式推导严谨
 - 价值: ⭐⭐⭐⭐ 在实际部署中显著降低标注成本的同时保持有竞争力的性能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One-Shot Knowledge Transfer for Scalable Person Re-Identification](one-shot_knowledge_transfer_for_scalable_person_re-identification.md)
+- [Multi-Memory Matching for Unsupervised Visible-Infrared Person Re-Identification](../../ECCV2024/human_understanding/multi-memory_matching_for_unsupervised_visible-infrared_person_re-identification.md)
+- [OpenAnimals: Revisiting Person Re-Identification for Animals Towards Better Generalization](openanimals_revisiting_person_re-identification_for_animals_towards_better_gener.md)
+- [Modality-Aware Bias Mitigation and Invariance Learning for Unsupervised Visible-Infrared Person Re-Identification](../../AAAI2026/human_understanding/modality-aware_bias_mitigation_and_invariance_learning_for_unsupervised_visible-.md)
+- [LLaVA-ReID: Selective Multi-Image Questioner for Interactive Person Re-Identification](../../ICML2025/human_understanding/llava-reid_selective_multi-image_questioner_for_interactive_person_re-identifica.md)
+
+<!-- RELATED:END -->

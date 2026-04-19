@@ -143,3 +143,15 @@ Annealing Flow 的核心流程：
 - 实验充分度: ⭐⭐⭐⭐ 合成+物理分布，高维验证，完整消融
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，图示清晰
 - 价值: ⭐⭐⭐⭐⭐ 高维多模态采样的重要突破，对统计物理和贝叶斯推理有广泛应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities](../../NeurIPS2025/image_generation/progressive_inference-time_annealing_of_diffusion_models_for_sampling_from_boltz.md)
+- [Physics-Constrained Flow Matching: Sampling Generative Models with Hard Constraints](../../NeurIPS2025/image_generation/physics-constrained_flow_matching_sampling_generative_models_with_hard_constrain.md)
+- [BinauralFlow: A Causal and Streamable Approach for High-Quality Binaural Speech Synthesis with Flow Matching Models](binauralflow_a_causal_and_streamable_approach_for_high-quality_binaural_speech_s.md)
+- [Multi-Aspect Cross-modal Quantization for Generative Recommendation](../../AAAI2026/image_generation/multi-aspect_cross-modal_quantization_for_generative_recommendation.md)
+- [TCP-Diffusion: A Multi-modal Diffusion Model for Global Tropical Cyclone Precipitation Forecasting with Change Awareness](tcp-diffusion_a_multi-modal_diffusion_model_for_global_tropical_cyclone_precipit.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ HaWoR 首次实现了从第一人称视频重建世界坐标系下的3D手部运
 - 实验充分度: ⭐⭐⭐⭐⭐ 多维度消融（手部/SLAM/补全），与多种baseline比较
 - 写作质量: ⭐⭐⭐⭐ 问题分解清晰，实验组织系统
 - 价值: ⭐⭐⭐⭐⭐ 解锁第一人称手部全局运动理解，对AR/VR和行为分析极有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos](layered_motion_fusion_lifting_motion_segmentation_to_3d_in_egocentric_videos.md)
+- [Estimating Body and Hand Motion in an Ego-sensed World](estimating_body_and_hand_motion_in_an_ego-sensed_world.md)
+- [HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos](hot3d_hand_and_object_tracking_in_3d_from_egocentric_multi-view_videos.md)
+- [DuoMo: Dual Motion Diffusion for World-Space Human Reconstruction](../../CVPR2026/3d_vision/duomo_dual_motion_diffusion_for_world-space_human_reconstruction.md)
+- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+
+<!-- RELATED:END -->

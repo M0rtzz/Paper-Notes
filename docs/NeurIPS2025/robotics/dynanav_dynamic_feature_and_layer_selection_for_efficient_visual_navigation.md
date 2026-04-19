@@ -155,3 +155,15 @@ NoMaD 精度略高于 DynaNav（约 0.2%），但 FLOPs 是 DynaNav 的约 4 倍
 - 实验充分度: 8/10（四个真实数据集 + CARLA 仿真 + 详细消融，但缺少更多仿真场景和真实机器人部署）
 - 写作质量: 7/10（结构清晰，但部分公式较多，early exit 策略的描述可更直观）
 - 价值: 8/10（对边缘部署的导航模型有直接实用价值，开创了导航模型效率优化的新方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Manipulating Feature Visualizations with Gradient Slingshots](manipulating_feature_visualizations_with_gradient_slingshots.md)
+- [FORCE: Transferable Visual Jailbreaking Attacks via Feature Over-Reliance CorrEction](../../CVPR2026/robotics/force_transferable_visual_jailbreaking_attacks_via_feature_over-reliance_correct.md)
+- [LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
+- [EfficientNav: Towards On-Device Object-Goal Navigation with Navigation Map Caching and Retrieval](efficientnav_towards_on-device_object-goal_navigation_with_navigation_map_cachin.md)
+- [Talk2Event: Grounded Understanding of Dynamic Scenes from Event Cameras](talk2event_grounded_understanding_of_dynamic_scenes_from_event_cameras.md)
+
+<!-- RELATED:END -->

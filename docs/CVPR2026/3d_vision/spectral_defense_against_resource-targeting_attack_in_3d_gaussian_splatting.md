@@ -146,3 +146,15 @@ $$\min_{\mathcal{G}} \Big(\mathcal{L}(\dot{\mathcal{V}}^p, \mathcal{V}^p) + \lam
 - 实验充分度: ⭐⭐⭐⭐⭐ — 38 场景 3 数据集，多基线对比、消融全面、黑盒/干净泛化
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，频域推导严谨，图表信息量大
 - 价值: ⭐⭐⭐⭐ — 填补安全防御空白，兼具效率优化实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastGS: Training 3D Gaussian Splatting in 100 Seconds](fastgs_training_3d_gaussian_splatting_in_100_seconds.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [Rethinking Pose Refinement in 3D Gaussian Splatting under Pose Prior and Geometric Uncertainty](rethinking_pose_refinement_in_3d_gaussian_splatting_under_pose_prior_and_geometr.md)
+- [Speeding Up the Learning of 3D Gaussians with Much Shorter Gaussian Lists](speeding_up_the_learning_of_3d_gaussians_with_much_shorter_gaussian_lists.md)
+- [Where, What, Why: Toward Explainable 3D-GS Watermarking](where_what_why_toward_explainable_3d-gs_watermarking.md)
+
+<!-- RELATED:END -->

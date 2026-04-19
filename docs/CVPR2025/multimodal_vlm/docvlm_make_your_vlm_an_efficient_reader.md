@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个 VLM 基线、7 个 benchmark、详尽的压缩率/训练阶段消融
 - 写作质量: ⭐⭐⭐⭐ 方法讲解清楚，实验组织合理，但部分表格重复信息较多
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 文档理解有即时的工程应用价值，模块化设计特别实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning](critic-v_vlm_critics_help_catch_vlm_errors_in_multimodal_reasoning.md)
+- [HAWAII: Hierarchical Visual Knowledge Transfer for Efficient VLM](../../NeurIPS2025/multimodal_vlm/hawaii_hierarchical_visual_knowledge_transfer_for_efficient_vision-language_mode.md)
+- [SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](../../ICCV2025/multimodal_vlm/sparsevila_decoupling_visual_sparsity_for_efficient_vlm_infe.md)
+- [PatientVLM Meets DocVLM: Pre-Consultation Dialogue Between Vision-Language Models for Efficient Diagnosis](../../AAAI2026/multimodal_vlm/patientvlm_meets_docvlm_pre-consultation_dialogue_between_vision-language_models.md)
+- [FastVLM: Efficient Vision Encoding for Vision Language Models](fastvlm_efficient_vision_encoding_for_vision_language_models.md)
+
+<!-- RELATED:END -->

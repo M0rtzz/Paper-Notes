@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 九种基线对比+五项消融+多图像扩展+视觉对比，极其充分
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，方法描述清晰
 - 价值: ⭐⭐⭐⭐ 在AI安全、版权保护和隐蔽通信领域有应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RestoreGrad: Signal Restoration Using Conditional Denoising Diffusion Models with Jointly Learned Prior](../../ICML2025/image_generation/restoregrad_signal_restoration_using_conditional_denoising_diffusion_models_with.md)
+- [Energy Loss Functions for Physical Systems](../../NeurIPS2025/image_generation/energy_loss_functions_for_physical_systems.md)
+- [Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework](taming_score-based_denoisers_in_admm_a_convergent_plug-and-play_framework.md)
+- [Group Editing: Edit Multiple Images in One Go](../../CVPR2026/image_generation/group_editing_edit_multiple_images_in_one_go.md)
+- [GlyphMastero: A Glyph Encoder for High-Fidelity Scene Text Editing](glyphmastero_a_glyph_encoder_for_high-fidelity_scene_text_editing.md)
+
+<!-- RELATED:END -->

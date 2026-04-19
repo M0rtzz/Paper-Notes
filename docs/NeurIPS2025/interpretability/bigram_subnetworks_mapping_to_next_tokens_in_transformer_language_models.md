@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个模型、多检查点、消融、剪枝overlap、残差流分析，非常细致
 - 写作质量: ⭐⭐⭐⭐⭐ 层层递进、图表丰富、论点清晰
 - 价值: ⭐⭐⭐⭐ 为机制可解释性提供了"最小电路"的基础，启发后续电路叠加研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
+- [The Trilemma of Truth in Large Language Models](the_trilemma_of_truth_in_large_language_models.md)
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+- [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
+- [Noise Stability of Transformer Models](../../ICLR2026/interpretability/noise_stability_of_transformer_models.md)
+
+<!-- RELATED:END -->

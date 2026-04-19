@@ -129,3 +129,15 @@ tags:
 | 写作质量 | ⭐⭐⭐⭐⭐ |
 | 实用价值 | ⭐⭐⭐⭐⭐ |
 | 综合评价 | 8.8/10 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Alleviating Distribution Shift in Synthetic Data for Machine Translation Quality Estimation](alleviating_distribution_shift_in_synthetic_data_for_machine_translation_quality.md)
+- [Machine Translation Models are Zero-Shot Detectors of Translation Direction](machine_translation_models_are_zero-shot_detectors_of_translation_direction.md)
+- [Exploring In-context Example Generation for Machine Translation](exploring_in-context_example_generation_for_machine_translation.md)
+- [AskQE: Question Answering as Automatic Evaluation for Machine Translation](askqe_question_answering_as_automatic_evaluation_for_machine_translation.md)
+- [Exploring In-Image Machine Translation with Real-World Background](exploring_in-image_machine_translation_with_real-world_background.md)
+
+<!-- RELATED:END -->

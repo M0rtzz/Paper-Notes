@@ -152,3 +152,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计合理、几何约束损失新颖实用、在匹配和位姿任务上均 SOTA；解耦训练策略简单有效。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improve Representation for Imbalanced Regression through Geometric Constraints](improve_representation_for_imbalanced_regression_through_geometric_constraints.md)
+- [Combinative Matching for Geometric Shape Assembly](../../ICCV2025/human_understanding/combinative_matching_for_geometric_shape_assembly.md)
+- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
+- [Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
+- [Learning Phase Distortion with Selective State Space Models for Video Turbulence Mitigation](learning_phase_distortion_with_selective_state_space_models_for_video_turbulence.md)
+
+<!-- RELATED:END -->

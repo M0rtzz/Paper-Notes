@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个模型变体、10 次采样、30 个类别细粒度分析、6 个基准测试、充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 分析→洞察→方法→验证的逻辑链非常完整，图表丰富且信息量大
 - 价值: ⭐⭐⭐⭐⭐ Training-free 方法在多个基准上一致提升，对 LVLM 推理范式有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Token Pruning is Worse than Random: Understanding Visual Token Information in VLLMs](when_token_pruning_is_worse_than_random_understanding_visual_token_information_i.md)
+- [Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention](tell_model_where_to_look_mitigating_hallucinations_in_mllms_by_vision-guided_att.md)
+- [When One Modality Sabotages the Others: A Diagnostic Lens on Multimodal Reasoning](../../NeurIPS2025/multimodal_vlm/when_one_modality_sabotages_the_others_a_diagnostic_lens_on_multimodal_reasoning.md)
+- [When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations](../../NeurIPS2025/multimodal_vlm/when_semantics_mislead_vision_mitigating_large_multimodal_models_hallucinations_.md)
+- [Uncertainty-guided Compositional Alignment with Part-to-Whole Semantic Representativeness in Hyperbolic Vision-Language Models](uncertainty-guided_compositional_alignment_with_part-to-whole_semantic_represent.md)
+
+<!-- RELATED:END -->

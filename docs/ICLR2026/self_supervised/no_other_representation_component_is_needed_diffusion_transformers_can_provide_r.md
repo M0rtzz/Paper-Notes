@@ -145,3 +145,15 @@ SRA 在高分辨率和文本到图像场景同样有效，512×512 上 IS 和 sF
 - 实验充分度: ⭐⭐⭐⭐ 在 DiT/SiT 的 B/L/XL 三个尺寸、256/512 两个分辨率上全面验证，消融详尽；但缺乏大规模 T2I/T2V 实验
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导自然流畅，经验分析→方法设计→实验验证的逻辑链条清晰完整，图表质量高
 - 价值: ⭐⭐⭐⭐ 为扩散模型训练提供了简洁、零外部依赖的加速方案，尤其对缺乏强预训练编码器的领域（视频/3D）极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](../../CVPR2026/self_supervised/diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+- [Vision Transformers Need More Than Registers](../../CVPR2026/self_supervised/vision_transformers_need_more_than_registers.md)
+- [Transformers without Normalization](../../CVPR2025/self_supervised/transformers_without_normalization.md)
+- [Representation Learning for Spatiotemporal Physical Systems](../../CVPR2026/self_supervised/representation_learning_for_spatiotemporal_physica.md)
+- [Fly-CL: A Fly-Inspired Framework for Enhancing Efficient Decorrelation and Reduced Training Time in Pre-trained Model-based Continual Representation Learning](fly-cl_a_fly-inspired_framework_for_enhancing_efficient_decorrelation_and_reduce.md)
+
+<!-- RELATED:END -->

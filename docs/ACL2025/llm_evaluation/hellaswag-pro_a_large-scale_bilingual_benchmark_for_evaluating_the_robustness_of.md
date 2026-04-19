@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 41 个模型、9 种提示策略、7 种变体、双语、全面消融——业界罕见的评估规模
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据翔实，图表丰富
 - 价值: ⭐⭐⭐⭐ 为常识推理评估提供了新范式，否定变换 9.01% 的发现值得广泛关注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Com2: A Causal-Guided Benchmark for Exploring Complex Commonsense Reasoning in Large Language Models](com2_causal_commonsense.md)
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory](papersplease_a_benchmark_for_evaluating_motivational_values_of_large_language_mo.md)
+- [GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning](guessarena_guess_who_i_am_a.md)
+- [EvoWiki: Evaluating LLMs on Evolving Knowledge](evowiki_evaluating_llms_on_evolving_knowledge.md)
+
+<!-- RELATED:END -->

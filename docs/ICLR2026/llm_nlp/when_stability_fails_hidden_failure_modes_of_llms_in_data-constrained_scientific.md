@@ -134,3 +134,15 @@ Gemini 的 Jaccard 仅为 0.08，意味着两个语义几乎相同的 prompt 产
 - **实验充分度**: 6/10 — 评估维度设计精巧，但数据集和任务范围受限
 - **写作质量**: 7/10 — 结构清晰，但部分内容稍显冗余
 - **实用价值**: 8/10 — 对所有在科学流程中使用 LLM 的研究者都有即时参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trapped by simplicity: When Transformers fail to learn from noisy features](trapped_by_simplicity_when_transformers_fail_to_learn_from_noisy_features.md)
+- [Control Illusion: The Failure of Instruction Hierarchies in Large Language Models](../../AAAI2026/llm_nlp/control_illusion_the_failure_of_instruction_hierarchies_in_large_language_models.md)
+- [Circuit Stability Characterizes Language Model Generalization](../../ACL2025/llm_nlp/circuit_stability_characterizes_language_model_generalization.md)
+- [Mitigate Position Bias in LLMs via Scaling a Single Hidden States Channel](../../ACL2025/llm_nlp/mitigate_position_bias_in_large_language_models_via_scaling_a_single_dimension.md)
+- [GUIDE: Guided Updates for In-context Decision Evolution in LLM-Driven Spacecraft Operations](../../CVPR2026/llm_nlp/guide_guided_updates_for_in-context_decision_evolution_in_llm-driven_spacecraft_.md)
+
+<!-- RELATED:END -->

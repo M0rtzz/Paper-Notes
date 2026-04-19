@@ -127,3 +127,15 @@ $$\mathcal{L}_{\text{DPO}}(\theta) = -\mathbb{E}_{(x_w, x_l)} \left[ \log \sigma
 - 实验充分度: ⭐⭐⭐ — 4 个 case study 结构清晰，但参与者规模和数据量偏小
 - 写作质量: ⭐⭐⭐⭐ — 方法论描述详尽，社区参与过程透明
 - 价值: ⭐⭐⭐⭐ — 为公平性/多元对齐提供了可复用的数据集和方法论范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taming Diffusion for Dataset Distillation with High Representativeness (D³HR)](taming_diffusion_for_dataset_distillation_with_high_representativeness.md)
+- [Diffuse Everything: Multimodal Diffusion Models on Arbitrary State Spaces](diffuse_everything_multimodal_diffusion_models_on_arbitrary_state_spaces.md)
+- [BioVITA: Biological Dataset, Model, and Benchmark for Visual-Textual-Acoustic Alignment](../../CVPR2026/image_generation/biovita_biological_dataset_model_and_benchmark_for_visual-textual-acoustic_align.md)
+- [Guided Diffusion Sampling on Function Spaces with Applications to PDEs](../../NeurIPS2025/image_generation/guided_diffusion_sampling_on_function_spaces_with_applications_to_pdes.md)
+- [Theoretical Guarantees on the Best-of-n Alignment Policy](theoretical_guarantees_on_the_best-of-n_alignment_policy.md)
+
+<!-- RELATED:END -->

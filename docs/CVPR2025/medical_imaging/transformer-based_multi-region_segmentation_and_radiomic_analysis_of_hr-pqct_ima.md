@@ -113,3 +113,15 @@ SegFormer 在腓骨松质骨 IoU 达 89.6%，比 U-Net 提升 20.43%。所有区
 - 实验充分度: 4/5 — 分割+放射组学+分类+患者级全面分析，多分类器对比充分，统计检验完备
 - 写作质量: 4/5 — 论文结构清晰，方法描述详尽，图表高质量，可复现性强
 - 价值: 4/5 — 软组织优于骨指标的发现具有重要临床意义，数据集将公开促进后续研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ $$\mathcal{L} = \mathcal{L}_{traj} + \mathcal{L}_{score} + \mathcal{L}_{traj}^{i
 - **实验充分度**: ⭐⭐⭐⭐ 在两个标准数据集上验证，消融实验充分，效率对比详细
 - **写作质量**: ⭐⭐⭐⭐ 论文结构清晰，动机和方法阐述明确
 - **价值**: ⭐⭐⭐⭐ 高效+高精度的运动预测方法具有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Foresight in Motion: Reinforcing Trajectory Prediction with Reward Heuristics](foresight_in_motion_reinforcing_trajectory_prediction_with_reward_heuristics.md)
+- [Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution](../../NeurIPS2025/autonomous_driving/future-aware_end-to-end_driving_bidirectional_modeling_of_trajectory_planning_an.md)
+- [INSTINCT: Instance-Level Interaction Architecture for Query-Based Collaborative Perception](instinct_instance-level_interaction_architecture_for_query-based_collaborative_p.md)
+- [UniOcc: A Unified Benchmark for Occupancy Forecasting and Prediction in Autonomous Driving](uniocc_a_unified_benchmark_for_occupancy_forecasting_and_prediction_in_autonomou.md)
+- [SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting](frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个模型×5个安全基准+多个通用基准，非常全面
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，理论分析加分
 - 价值: ⭐⭐⭐⭐ 实用性强的推理时防御方案，易于部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment](semantic-aware_wasserstein_policy_regularization_for_large_language_model_alignm.md)
+- [A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models](a2d_any-order_any-step_safety_alignment_for_diffusion_language_models.md)
+- [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](../../ACL2025/llm_alignment/sea_lowresource_safety_alignment_for_multimodal.md)
+- [Towards Understanding Valuable Preference Data for Large Language Model Alignment](towards_understanding_valuable_preference_data_for_large_language_model_alignmen.md)
+- [Superficial Safety Alignment Hypothesis](superficial_safety_alignment_hypothesis.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ PulseFormer以眼部追踪视频（连续帧差分标准化）和IMU数据为输
 - 实验充分度: ⭐⭐⭐⭐ 数据集+方法+下游任务全链条验证，消融分析详细
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、贡献明确、实验设计严谨
 - 价值: ⭐⭐⭐⭐ 开创新任务+开源数据集+下游任务验证，对自中心视觉社区有重要影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Simultaneous Motion And Noise Estimation with Event Cameras](simultaneous_motion_and_noise_estimation_with_event_cameras.md)
+- [egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](../../NeurIPS2025/video_understanding/egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
+- [In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting](../../NeurIPS2025/video_understanding/in_the_eye_of_mllm_benchmarking_egocentric_video_intent_understanding_with_gaze-.md)
+- [Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+
+<!-- RELATED:END -->

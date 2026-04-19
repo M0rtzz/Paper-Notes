@@ -131,3 +131,15 @@ MMLU通用能力（无损）：
 - 实验充分度: ⭐⭐⭐⭐ 两个benchmark、两个模型、五个baseline、子空间大小分析、反向干预实验，全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，可视化验证充分，从假设到验证到应用的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 实用价值高（零训练成本部署），学术价值高（语义子空间假设的验证），对LLM安全领域有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Out of Control -- Why Alignment Needs Formal Control Theory (and an Alignment Control Stack)](../../NeurIPS2025/interpretability/out_of_control_--_why_alignment_needs_formal_control_theory_and_an_alignment_con.md)
+- [Adaptive Evidential Learning for Temporal-Semantic Robustness in Moment Retrieval](adaptive_evidential_learning_for_temporal-semantic_robustnes.md)
+- [Finding the Translation Switch: Discovering and Exploiting the Task-Initiation Features in LLMs](finding_the_translation_switch_discovering_and_exploiting_the_task-initiation_fe.md)
+- [Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](../../ICLR2026/interpretability/decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](../../CVPR2026/interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+
+<!-- RELATED:END -->

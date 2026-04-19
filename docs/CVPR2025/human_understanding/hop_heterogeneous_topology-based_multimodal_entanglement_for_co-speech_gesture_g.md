@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、用户研究、多维消融和泛化实验较完整，但缺少与 EMAGE 等最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ 概念表述清晰，拓扑纠缠的动机推导合理，图表直观
 - 价值: ⭐⭐⭐⭐ 对手势生成领域有实际贡献，音频桥梁和重编程思想可迁移性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](../../ICCV2025/human_understanding/semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
+- [SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](../../ICCV2025/human_understanding/semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)
+- [GestureHYDRA: Semantic Co-speech Gesture Synthesis via Hybrid Modality Diffusion Transformer and Cascaded-Synchronized Retrieval-Augmented Generation](../../ICCV2025/human_understanding/gesturehydra_semantic_co-speech_gesture_synthesis_via_hybrid_modality_diffusion_.md)
+- [I See What You Mean: Co-Speech Gestures for Reference Resolution in Multimodal Dialogue](../../ACL2025/human_understanding/i_see_what_you_mean_co-speech_gestures_for_reference_resolution_in_multimodal_di.md)
+- [Understanding Co-speech Gestures in-the-wild](../../ICCV2025/human_understanding/understanding_co-speech_gestures_in-the-wild.md)
+
+<!-- RELATED:END -->

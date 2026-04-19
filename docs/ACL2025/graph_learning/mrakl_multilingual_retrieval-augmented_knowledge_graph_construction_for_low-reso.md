@@ -150,3 +150,15 @@ mRAKL 由两个核心组件构成：
 - **实验充分度**: ⭐⭐⭐⭐ (多种检索器对比、跨语言设置、消融实验、定性分析全面)
 - **写作质量**: ⭐⭐⭐⭐ (问题动机清晰，实验设置条理分明)
 - **价值**: ⭐⭐⭐⭐ (为低资源语言 KG 构建提供了实用基线和数据集贡献)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimGRAG: Leveraging Similar Subgraphs for Knowledge Graphs Driven Retrieval-Augmented Generation](simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](kg_rag_recommendation.md)
+- [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](../../NeurIPS2025/graph_learning/gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
+- [Neural Graph Matching Improves Retrieval Augmented Generation in Molecular Machine Learning](../../ICML2025/graph_learning/neural_graph_matching_improves_retrieval_augmented_generation_in_molecular_machi.md)
+- [ReMindRAG: Low-Cost LLM-Guided Knowledge Graph Traversal for Efficient RAG](../../NeurIPS2025/graph_learning/remindrag_low-cost_llm-guided_knowledge_graph_traversal_for_efficient_rag.md)
+
+<!-- RELATED:END -->

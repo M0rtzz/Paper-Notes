@@ -118,3 +118,15 @@ tags:
 - **vs BBQ (Parrish et al., 2021)**：BBQ 的消歧义/歧义双条件设计思路可与本文的 Plausibility 任务结合
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs](../../ICML2025/ai_safety/is_your_model_fairly_certain_uncertainty-aware_fairness_evaluation_for_llms.md)
+- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](tug_of_war_fairness_privacy.md)
+- [Argumentative Debates for Transparent Bias Detection](../../AAAI2026/ai_safety/argumentative_debates_for_transparent_bias_detection_technic.md)
+- [Towards Fairness Assessment of Dutch Hate Speech Detection](towards_fairness_assessment_of_dutch_hate_speech_detection.md)
+
+<!-- RELATED:END -->

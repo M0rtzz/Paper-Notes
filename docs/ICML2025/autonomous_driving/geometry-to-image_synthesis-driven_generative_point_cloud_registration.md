@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖深度相机和 LiDAR 两种场景，多基线集成验证，消融全面
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法阐述详尽，理论分析增强说服力
 - 价值: ⭐⭐⭐⭐ 即插即用框架实用性强，LiDAR 全景生成开辟新方向，但推理速度是实际部署障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IGASA: Integrated Geometry-Aware and Skip-Attention Modules for Enhanced Point Cloud Registration](../../CVPR2026/autonomous_driving/igasa_integrated_geometryaware_and_skipattention_m.md)
+- [MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion](../../ICCV2025/autonomous_driving/mgsfm_multi-camera_geometry_driven_global_structure-from-motion.md)
+- [SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis](../../ICCV2025/autonomous_driving/leveraging_bev_paradigm_for_ground-to-aerial_image_synthesis.md)
+- [InfoCons: Identifying Interpretable Critical Concepts in Point Clouds via Information Theory](infocons_identifying_interpretable_critical_concepts_in_point_clouds_via_informa.md)
+- [Don't be so Negative! Score-based Generative Modeling with Oracle-assisted Guidance](dont_be_so_negative_score-based_generative_modeling_with_oracle-assisted_guidanc.md)
+
+<!-- RELATED:END -->

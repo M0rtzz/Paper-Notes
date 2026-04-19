@@ -179,3 +179,15 @@ R18→R34 增加 11.5M 参数准确率反而下降（更难收敛）。本文仅
 - **实验**: ⭐⭐⭐⭐⭐ 6 数据集 17 对比方法 + 消融 + 策略对比 + 容量控制 + 缺失鲁棒性 + t-SNE 可视化
 - **写作**: ⭐⭐⭐⭐ toy experiment 直觉清晰，问题→方法→理论逻辑链完整
 - **影响力**: ⭐⭐⭐⭐ 为多模态不平衡提供了新的理论框架和实用方法，CREMAD 上 20% 绝对提升令人瞩目
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness](mmperspective_do_mllms_understand_perspective_a_comprehensive_benchmark_for_pers.md)
+- [MIDAS: Misalignment-based Data Augmentation Strategy for Imbalanced Multimodal Learning](midas_misalignment-based_data_augmentation_strategy_for_imbalanced_multimodal_le.md)
+- [NaViL: Rethinking Scaling Properties of Native Multimodal Large Language Models under Data Constraints](navil_rethinking_scaling_properties_of_native_multimodal_large_language_models_u.md)
+- [When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations](when_semantics_mislead_vision_mitigating_large_multimodal_models_hallucinations_.md)
+- [Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models](seeing_is_believing_mitigating_ocr_hallucinations_in_multimodal_large_language_m.md)
+
+<!-- RELATED:END -->

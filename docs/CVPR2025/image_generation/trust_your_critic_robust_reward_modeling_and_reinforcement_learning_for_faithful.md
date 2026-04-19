@@ -159,3 +159,15 @@ $$R_{\text{QMA}} = \text{InsFollowing} \cdot (0.4 + 0.6 \cdot \text{Quality})$$
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，从问题到方案的逻辑链完整
 - **实用性**: ⭐⭐⭐⭐⭐ — FIRM-Edit-8B/Gen-8B 可直接作为 RL 训练的 critic 使用，代码和模型开源
 - **综合推荐**: ⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual-ERM: Reward Modeling for Visual Equivalence](visual-erm_reward_modeling_for_visual_equivalence.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](../../NeurIPS2025/image_generation/towards_robust_zero-shot_reinforcement_learning.md)
+- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](../../CVPR2026/image_generation/enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
+- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusion-based_image_manipulation_and_the_failure_mod.md)
+- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+
+<!-- RELATED:END -->

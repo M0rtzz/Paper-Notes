@@ -139,3 +139,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 7 个模型基线（VTON + 通用编辑）、4 个递进分析问题、定量+定性+人工评估
 - **写作质量**: ⭐⭐⭐⭐ 数据构建过程描述详尽，问题驱动的实验分析逻辑清晰
 - **价值**: ⭐⭐⭐⭐⭐ 数据+代码开源，填补重要空白，对 VTON 方向有持续推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On](promo_promptable_virtual_tryon_efficient.md)
+- [HiFi-Inpaint: Towards High-Fidelity Reference-Based Inpainting for Generating Detail-Preserving Human-Product Images](hifi-inpaint_towards_high-fidelity_reference-based_inpainting_for_generating_det.md)
+- [CognitionCapturerPro: Towards High-Fidelity Visual Decoding from EEG/MEG via Multi-modal Information and Asymmetric Alignment](cognitioncapturerpro_towards_high-fidelity_visual_decoding_from_eegmeg_via_multi.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+
+<!-- RELATED:END -->

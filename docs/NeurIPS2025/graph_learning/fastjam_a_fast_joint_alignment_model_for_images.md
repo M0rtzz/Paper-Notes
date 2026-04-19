@@ -142,3 +142,15 @@ FastJAM 在对齐质量上持平或优于所有现有方法，同时比最快的
 - 实验充分度: ⭐⭐⭐⭐ 多基准对比 + 消融 + 跨数据集泛化验证，定量和定性结果充分
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，与现有方法的对比直观，运行时间表格一目了然
 - 价值: ⭐⭐⭐⭐ 96× 加速具有实用突破性意义，使联合对齐在实际流水线中可行
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
+- [Heterogeneous Swarms: Jointly Optimizing Model Roles and Weights for Multi-LLM Systems](heterogeneous_swarms_jointly_optimizing_model_roles_and_weights_for_multi-llm_sy.md)
+- [Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors](../../ACL2025/graph_learning/fast-and-frugal_text-graph_transformers_are_effective_link_predictors.md)
+- [Hypergraph Vision Transformers: Images are More than Nodes, More than Edges](../../CVPR2025/graph_learning/hypergraph_vision_transformers_images_are_more_than_nodes_more_than_edges.md)
+- [Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](../../ACL2025/graph_learning/beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
+
+<!-- RELATED:END -->

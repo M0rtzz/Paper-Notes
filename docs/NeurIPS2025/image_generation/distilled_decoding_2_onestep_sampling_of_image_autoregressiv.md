@@ -139,3 +139,15 @@ DD2在所有config下1步FID优于DD1的2步结果。
 - 实验充分度: ⭐⭐⭐⭐ 两种AR模型（VAR+LlamaGen）、多种size、完整的消融和对比
 - 写作质量: ⭐⭐⭐⭐ 动机和理论推导清晰，但第3节公式密度较高
 - 价值: ⭐⭐⭐⭐⭐ 对AR图像生成加速具有里程碑意义，可能改变AR vs Diffusion的速度对比格局
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Collaborative Decoding Makes Visual Auto-Regressive Modeling Efficient](../../CVPR2025/image_generation/collaborative_decoding_makes_visual_auto-regressive_modeling_efficient.md)
+- [Ψ-Sampler: Initial Particle Sampling for SMC-Based Inference-Time Reward Alignment in Score Models](psi-sampler_initial_particle_sampling_for_smc-based_inference-time_reward_alignm.md)
+- [HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation](../../CVPR2025/image_generation/hmar_efficient_hierarchical_masked_auto-regressive_image_generation.md)
+- [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](../../ICCV2025/image_generation/sana-sprint_one-step_diffusion_with_continuous-time_consistency_distillation.md)
+- [WaDi: Weight Direction-aware Distillation for One-step Image Synthesis](../../CVPR2026/image_generation/wadi_weight_direction-aware_distillation_for_one-step_image_synthesis.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ SEA-RAFT 继承了 RAFT 的迭代精炼框架：特征编码器提取特征 → 
 - **实验充分度**: ⭐⭐⭐⭐⭐ 在 Spring/Sintel/KITTI 上全面评估，消融实验涵盖损失/初始化/预训练/架构所有维度
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，方法动机阐述充分，数学推导简洁
 - **实用价值**: ⭐⭐⭐⭐⭐ 开源代码，2.3×-24× 加速，1080p@21fps 具有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LayeredFlow: A Real-World Benchmark for Non-Lambertian Multi-Layer Optical Flow](layeredflow_a_real-world_benchmark_for_non-lambertian_multi-layer_optical_flow.md)
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](../../ICCV2025/video_understanding/memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](../../ICCV2025/video_understanding/prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)
+- [BAT: Learning Event-based Optical Flow with Bidirectional Adaptive Temporal Correlation](../../AAAI2026/video_understanding/bat_learning_event-based_optical_flow_with_bidirectional_adaptive_temporal_corre.md)
+- [Flow4Agent: Long-form Video Understanding via Motion Prior from Optical Flow](../../ICCV2025/video_understanding/flow4agent_long-form_video_understanding_via_motion_prior_from_optical_flow.md)
+
+<!-- RELATED:END -->

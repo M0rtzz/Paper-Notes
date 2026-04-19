@@ -145,3 +145,15 @@ SPM 将 ANN 中的矩阵乘法（MAC，4.6 pJ）转换为稀疏累加（AC，0.9
 ## 评分
 
 ⭐⭐⭐⭐ — 首创性强且实验充分，在 SNN 领域实现了跨越式进步，但实际应用场景和更大规模验证有待加强。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance](egocentric_action-aware_inertial_localization_in_point_clouds_with_vision-langua.md)
+- [ResGS: Residual Densification of 3D Gaussian for Efficient Detail Recovery](resgs_residual_densification_of_3d_gaussian_for_efficient_detail_recovery.md)
+- [Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis](self-ensembling_gaussian_splatting_for_few-shot_novel_view_synthesis.md)
+- [Easy3D: A Simple Yet Effective Method for 3D Interactive Segmentation](easy3d_a_simple_yet_effective_method_for_3d_interactive_segmentation.md)
+- [StrandHead: Text to Hair-Disentangled 3D Head Avatars Using Human-Centric Priors](strandhead_text_to_hair-disentangled_3d_head_avatars_using_human-centric_priors.md)
+
+<!-- RELATED:END -->

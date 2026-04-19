@@ -124,3 +124,15 @@ AdaSDE 作为即插即用模块，提升了所有测试的基础求解器。
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+多求解器组合+消融全面，但缺少隐空间模型实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析清晰严谨，ODE vs SDE 的误差分析非常有启发性
 - 价值: ⭐⭐⭐⭐⭐ 5 NFE SOTA + 即插即用 + 极轻量优化，实际价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Compressed Sensing with Diffusion-Based Posterior Sampling](../../ECCV2024/model_compression/adaptive_compressed_sensing_with_diffusionbased_posterior_sa.md)
+- [Tighter CMI-Based Generalization Bounds via Stochastic Projection and Quantization](tighter_cmi-based_generalization_bounds_via_stochastic_projection_and_quantizati.md)
+- [One-Step Diffusion-Based Image Compression with Semantic Distillation](one-step_diffusion-based_image_compression_with_semantic_distillation.md)
+- [FALQON: Accelerating LoRA Fine-tuning with Low-Bit Floating-Point Arithmetic](falqon_accelerating_lora_fine-tuning_with_low-bit_floating-point_arithmetic.md)
+- [Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning](twilight_adaptive_attention_sparsity_with_hierarchical_top-p_pruning.md)
+
+<!-- RELATED:END -->

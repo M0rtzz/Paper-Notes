@@ -174,3 +174,15 @@ $$\min_{\mathbb{Q}_0, \mathbb{Q}_1} \sum_{c \in \{0,1\}} \left( W_2^2(\mathbb{Q}
 | 写作质量 | 4 | 问题定义清晰，方法动机充分 |
 | 实用性 | 3 | 限于二分类表格数据，应用场景有限 |
 | **综合** | **3.5** | 方法优雅但实验规模和场景泛化需加强 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Visual Leap in CLIP Compositionality Reasoning through Generation of Counterfactual Sets](../../ICCV2025/causal_inference/a_visual_leap_in_clip_compositionality_reasoning_through_gen.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+- [Dynamic Causal Discovery in Alzheimer's Disease through Latent Pseudotime Modelling](../../NeurIPS2025/causal_inference/dynamic_causal_discovery_in_alzheimers_disease_through_latent_pseudotime_modelli.md)
+- [Exogenous Isomorphism for Counterfactual Identifiability](exogenous_isomorphism_for_counterfactual_identifiability.md)
+- [Validating Interpretability in siRNA Efficacy Prediction: A Perturbation-Based, Dataset-Aware Protocol](../../ICLR2026/causal_inference/validating_interpretability_in_sirna_efficacy_prediction_a_perturbation-based_da.md)
+
+<!-- RELATED:END -->

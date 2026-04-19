@@ -232,3 +232,15 @@ $\lambda_1 = \lambda_2 = 1$，两个任务等权重。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖单行/多行/复杂/大规模四类数据集，消融彻底，还验证了在三种 RNN 基线上的可扩展性
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，算法伪代码和图示有助于理解，动机阐述充分
 - **价值**: ⭐⭐⭐⭐ — 显著推进了 HMER 的 SOTA，且 PF 作为即插即用模块具有良好的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PDE-Transformer: Efficient and Versatile Transformers for Physics Simulations](../../ICML2025/self_supervised/pde-transformer_efficient_and_versatile_transformers_for_physics_simulations.md)
+- [MetaWriter: Personalized Handwritten Text Recognition Using Meta-Learned Prompt Tuning](../../CVPR2025/self_supervised/metawriter_personalized_handwritten_text_recognition_using_meta-learned_prompt_t.md)
+- [Update Your Transformer to the Latest Release: Re-Basin of Task Vectors](../../ICML2025/self_supervised/update_your_transformer_to_the_latest_release_re-basin_of_task_vectors.md)
+- [MAP: Unleashing Hybrid Mamba-Transformer Vision Backbone's Potential with Masked Autoregressive Pretraining](../../CVPR2025/self_supervised/map_unleashing_hybrid_mamba-transformer_vision_backbones_potential_with_masked_a.md)
+- [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ Yggdrasil 基于 PyTorch 2.0 和 TorchInductor 编译器，核心抽象是 Token
 - 实验充分度: ⭐⭐⭐⭐ 多硬件、多模型、详细的优化分解，但只测了 Llama-2 系列偏少
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，图表设计好，逻辑链完整
 - 价值: ⭐⭐⭐⭐ 推测解码系统优化的重要工作，3.98× 加速实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DISC: Dynamic Decomposition Improves LLM Inference Scaling](disc_dynamic_decomposition_improves_llm_inference_scaling.md)
+- [Tetris: Optimal Draft Token Selection for Batch Speculative Decoding](../../ACL2025/llm_efficiency/tetris_optimal_draft_token_selection_for_batch_speculative_decoding.md)
+- [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
+- [Approximately Aligned Decoding](approximately_aligned_decoding.md)
+- [OmniDraft: A Cross-Vocabulary Online Adaptive Drafter for On-Device Speculative Decoding](omnidraft_a_cross-vocabulary_online_adaptive_drafter_for_on-device_speculative_d.md)
+
+<!-- RELATED:END -->

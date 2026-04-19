@@ -138,3 +138,15 @@ LayerIF 在所有三种剪枝方法上都取得最优，平均提升 0.90%。
 - 实验充分度: ⭐⭐⭐⭐ 两个下游任务、两个模型、多种剪枝方法、消融+对比齐全，但仅7B规模
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，pipeline 图直观，但部分公式较冗长
 - 价值: ⭐⭐⭐⭐ 为 MoE 专家分配和剪枝提供了新的数据驱动视角，实用性明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [Correlation Dimension of Auto-Regressive Large Language Models](correlation_dimension_of_auto-regressive_large_language_models.md)
+- [Restoring Pruned Large Language Models via Lost Component Compensation](restoring_pruned_large_language_models_via_lost_component_compensation.md)
+- [The Structure of Relation Decoding Linear Operators in Large Language Models](the_structure_of_relation_decoding_linear_operators_in_large_language_models.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+
+<!-- RELATED:END -->

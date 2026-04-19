@@ -135,3 +135,15 @@ AVSBench S4 (零样本)：mIoU 62.89 (+3.13), F-Score 71.47 (+2.44)
 - **实验充分度**: ⭐⭐⭐⭐ 5个数据集+开放集+零样本+扩展基准+充分消融，覆盖全面
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，实验完整，but 方法部分可更精炼
 - **价值**: ⭐⭐⭐⭐ 验证了提示学习在音频-视觉领域的有效性，为CLIP-based方法提供了通用改进思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Love Me, Love My Label: Rethinking the Role of Labels in Prompt Retrieval for Visual In-Context Learning](love_me_love_my_label_rethinking_the_role_of_labels_in_prompt_retrieval_for_visu.md)
+- [Dynamic Derivation and Elimination: Audio Visual Segmentation with Enhanced Audio Semantics](../../CVPR2025/segmentation/dynamic_derivation_and_elimination_audio_visual_segmentation_with_enhanced_audio.md)
+- [GeoSURGE: Geo-localization using Semantic Fusion with Hierarchy of Geographic Embeddings](geosurge_geo-localization_using_semantic_fusion_with_hierarchy_of_geographic_emb.md)
+- [CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](../../ECCV2024/segmentation/cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
+- [Audio-Visual Instance Segmentation](../../CVPR2025/segmentation/audio-visual_instance_segmentation.md)
+
+<!-- RELATED:END -->

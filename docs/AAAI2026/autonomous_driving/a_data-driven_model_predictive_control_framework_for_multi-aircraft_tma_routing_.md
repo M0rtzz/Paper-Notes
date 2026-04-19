@@ -131,3 +131,15 @@ tags:
 - **实验充分度** ⭐⭐⭐⭐⭐：真实 ADS-B 数据、计算复杂度分析、滚动时域对比、Monte Carlo 鲁棒性验证，极为全面
 - **写作质量** ⭐⭐⭐⭐：数学建模清晰严谨
 - **价值** ⭐⭐⭐⭐：对实际空管决策支持有直接应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Dual Uncertainty Optimization: Boosting Monocular 3D Object Detection under Test-Time Shifts](../../ICCV2025/autonomous_driving/adaptive_dual_uncertainty_optimization_boosting_monocular_3d.md)
+- [Task Prototype-Based Knowledge Retrieval for Multi-Task Learning from Partially Annotated Data](task_prototype-based_knowledge_retrieval_for_multi-task_lear.md)
+- [TimeBill: Time-Budgeted Inference for Large Language Models](timebill_time-budgeted_inference_for_large_language_models.md)
+- [Walking Further: Semantic-aware Multimodal Gait Recognition Under Long-Range Conditions](walking_further_semantic-aware_multimodal_gait_recognition_under_long-range_cond.md)
+- [Drive As You Like: Strategy-Level Motion Planning Based on A Multi-Head Diffusion Model](drive_as_you_like_strategy-level_motion_planning_based_on_a_multi-head_diffusion.md)
+
+<!-- RELATED:END -->

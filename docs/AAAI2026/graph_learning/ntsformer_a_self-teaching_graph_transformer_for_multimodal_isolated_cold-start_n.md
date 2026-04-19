@@ -203,3 +203,15 @@ Transformer层数影响（All设置准确率%）：
 - **实验充分度**: ⭐⭐⭐⭐ — 三数据集+全面消融+效率分析，但数据集规模偏小
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机层层递进，从GNN失效→MLP-学生容量瓶颈→自教学GT
 - **实用价值**: ⭐⭐⭐⭐⭐ — 开源、训练效率高、方法通用、一次性预计算可扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoToRec: Sparse-Regularized Multimodal Tokenization for Cold-Start Recommendation](motorec_sparse-regularized_multimodal_tokenization_for_cold-start_recommendation.md)
+- [Posterior Label Smoothing for Node Classification](posterior_label_smoothing_for_node_classification.md)
+- [GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
+- [Self-Adaptive Graph Mixture of Models](self-adaptive_graph_mixture_of_models.md)
+- [MyGram: Modality-aware Graph Transformer with Global Distribution for Multi-modal Entity Alignment](mygram_modality-aware_graph_transformer_with_global_distribution_for_multi-modal.md)
+
+<!-- RELATED:END -->

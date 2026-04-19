@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 以理论为主，实验仅验证理论预测的合成数据 + 小规模 CIFAR
 - 写作质量: ⭐⭐⭐⭐ 理论陈述清晰，动力学直觉解释到位
 - 价值: ⭐⭐⭐⭐ 对超对齐/W2S 理论社区有重要意义，实践启示值得探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Weak-to-Strong Generalization under Distribution Shifts](weak-to-strong_generalization_under_distribution_shifts.md)
+- [Unveiling m-Sharpness Through the Structure of Stochastic Gradient Noise](unveiling_m-sharpness_through_the_structure_of_stochastic_gradient_noise.md)
+- [Improving the Straight-Through Estimator with Zeroth-Order Information](improving_the_straight-through_estimator_with_zeroth-order_information.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [Exact and Linear Convergence for Federated Learning under Arbitrary Client Participation is Attainable](exact_and_linear_convergence_for_federated_learning_under_arbitrary_client_parti.md)
+
+<!-- RELATED:END -->

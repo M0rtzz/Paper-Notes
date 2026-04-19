@@ -99,3 +99,15 @@ $$w_{k+1} = \arg\max_{\bar{w}} \left[\mathbb{E}_{s,M\sim\bar{w}} A(M|s) - C \cdo
 - 实验充分度: ⭐⭐⭐⭐ — SMAC/MA-MuJoCo/MPE 三大基准全覆盖，消融详尽
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论推导严谨但符号较多
 - 价值: ⭐⭐⭐⭐ — 对 MARL 策略表达和协调探索问题提供新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Behaviour Policy Optimization: Provably Lower Variance Return Estimates for Off-Policy Reinforcement Learning](behaviour_policy_optimization_provably_lower_variance_return_estimates_for_off-p.md)
+- [DiffOP: Reinforcement Learning of Optimization-Based Control Policies via Implicit Policy Gradients](diffop_reinforcement_learning_of_optimization-based_control_policies_via_implici.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+- [Thinker: Training LLMs in Hierarchical Thinking for Deep Search via Multi-Turn Interaction](thinker_training_llms_in_hierarchical_thinking_for_deep_search_via_multi-turn_in.md)
+- [MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization](mars_multi-agent_adaptive_reasoning_with_socratic_guidance_f.md)
+
+<!-- RELATED:END -->

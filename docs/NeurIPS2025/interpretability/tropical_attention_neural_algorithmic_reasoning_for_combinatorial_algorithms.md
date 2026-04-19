@@ -111,3 +111,15 @@ Tropical Transformer的流程：(1) 通过热带化映射 $\Phi$ 将输入从欧
 - 实验充分度: ⭐⭐⭐⭐ 11个组合任务+3种OOD+效率对比，但缺乏大规模验证
 - 写作质量: ⭐⭐⭐⭐ 理论严谨但数学门槛较高
 - 价值: ⭐⭐⭐⭐⭐ 为推理模型提供了全新的数学视角，有深远影响潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cognitive Mirrors: Exploring the Diverse Functional Roles of Attention Heads in LLM Reasoning](cognitive_mirrors_exploring_the_diverse_functional_roles_of_attention_heads_in_l.md)
+- [Why Is Attention Sparse in Particle Transformer?](why_is_attention_sparse_in_particle_transformer.md)
+- [Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas](../../ICML2025/interpretability/why_is_spatial_reasoning_hard_for_vlms_an_attention_mechanism_perspective_on_foc.md)
+- [Causal Head Gating: A Framework for Interpreting Roles of Attention Heads in Transformers](causal_head_gating_a_framework_for_interpreting_roles_of_attention_heads_in_tran.md)
+- [FaCT: Faithful Concept Traces for Explaining Neural Network Decisions](fact_faithful_concept_traces_for_explaining_neural_network_decisions.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ $\alpha$ 参数消融：
 - 实验充分度: ⭐⭐⭐⭐ 新 benchmark+多基线对比+消融，但缺乏视频层面深入评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 对视觉叙事生成领域有实际推动，benchmark 和框架可被后续工作采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Widget2Code: From Visual Widgets to UI Code via Multimodal LLMs](widget2code_from_visual_widgets_to_ui_code_via_multimodal_llms.md)
+- [Multimodal LLMs as Customized Reward Models for Text-to-Image Generation](../../ICCV2025/multimodal_vlm/multimodal_llms_as_customized_reward_models_for_text-to-image_generation.md)
+- [UniGame: Turning a Unified Multimodal Model Into Its Own Adversary](unigame_turning_a_unified_multimodal_model_into_its_own_adversary.md)
+- [TimeLens: Rethinking Video Temporal Grounding with Multimodal LLMs](timelens_rethinking_video_temporal_grounding_with_multimodal_llms.md)
+- [URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding](../../AAAI2026/multimodal_vlm/urag_unified_retrieval_and_generation_in_multimodal_llms_for.md)
+
+<!-- RELATED:END -->

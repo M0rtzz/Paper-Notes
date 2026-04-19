@@ -139,3 +139,15 @@ GRPO 和 RLOO 表现相当，REINFORCE++ 因为批级奖励归一化方差更大
 - **实验充分度**: ⭐⭐⭐⭐ 三个基准评估 + 消融 + 种子鲁棒性 + 人类一致性验证
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，动机阐述充分
 - **价值**: ⭐⭐⭐⭐ 为机器人领域引入了有效的 RL 推理训练范式，具有较强的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Router-R1: Teaching LLMs Multi-Round Routing and Aggregation via Reinforcement Learning](router-r1_teaching_llms_multi-round_routing_and_aggregation_via_reinforcement_le.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+- [SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution](swe-rl_advancing_llm_reasoning_via_reinforcement_learning_on_open_software_evolu.md)
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+- [Opinion: Towards Unified Expressive Policy Optimization for Robust Robot Learning](opinion_towards_unified_expressive_policy_optimization_for_robust_robot_learning.md)
+
+<!-- RELATED:END -->

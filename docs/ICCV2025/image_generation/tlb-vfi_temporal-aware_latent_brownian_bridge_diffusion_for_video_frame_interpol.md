@@ -155,3 +155,15 @@ $$\hat{I}_n = M \odot \text{warp}(I_0) + (1-M) \odot \text{warp}(I_1) + \Delta$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 多数据集、多指标（LPIPS/FloLPIPS/FID）、运行时间、训练成本对比、定性分析等非常全面
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，动机逻辑链完整，图表丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 在保持 SOTA 质量的同时大幅降低训练和推理成本，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](../../CVPR2025/image_generation/eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+- [Hierarchical Flow Diffusion for Efficient Frame Interpolation](../../CVPR2025/image_generation/hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)
+- [Video Motion Graphs](video_motion_graphs.md)
+- [MaskControl: Spatio-Temporal Control for Masked Motion Synthesis](maskcontrol_spatio-temporal_control_for_masked_motion_synthesis.md)
+- [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+
+<!-- RELATED:END -->

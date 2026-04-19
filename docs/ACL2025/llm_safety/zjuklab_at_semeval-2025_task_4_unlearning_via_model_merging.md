@@ -134,3 +134,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 在线比赛验证 + 本地详细分析 + 多维度消融 + 合并方法对比
 - **写作质量**: ⭐⭐⭐⭐ 分析深入透彻，尤其是 Sec. 5-6 的分析和反思
 - **价值**: ⭐⭐⭐⭐ 对机器遗忘领域的方法论和评估都有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NegMerge: Sign-Consensual Weight Merging for Machine Unlearning](../../ICML2025/llm_safety/negmerge_sign-consensual_weight_merging_for_machine_unlearning.md)
+- [BECAME: BayEsian Continual Learning with Adaptive Model MErging](../../ICML2025/llm_safety/became_bayesian_continual_learning_with_adaptive_model_merging.md)
+- [CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP](cliperase_efficient_unlearning_of_visual-textual_associations_in_clip.md)
+- [ArgHiTZ at ArchEHR-QA 2025: A Two-Step Divide and Conquer Approach to Patient Question Answering for Top Factuality](arghitz_at_archehr-qa_2025_a_two-step_divide_and_conquer_approach_to_patient_que.md)
+- [SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)
+
+<!-- RELATED:END -->

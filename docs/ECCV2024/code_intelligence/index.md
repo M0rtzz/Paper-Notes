@@ -10,6 +10,6 @@ description: >-
 
 **🎞️ ECCV2024** · **1** 篇论文解读
 
-**[Dreamstruct Understanding Slides And User Interfaces Via Synthetic Data Generati](dreamstruct_understanding_slides_and_user_interfaces_via_synthetic_data_generati.md)**
+**[DreamStruct: Understanding Slides and User Interfaces via Synthetic Data Generation](dreamstruct_understanding_slides_and_user_interfaces_via_synthetic_data_generati.md)**
 
 :   提出利用代码生成合成结构化视觉数据（幻灯片和UI），用于训练理解模型，减少人工标注需求。

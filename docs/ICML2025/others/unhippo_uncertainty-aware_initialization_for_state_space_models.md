@@ -122,3 +122,15 @@ Pipeline：
 - 实验充分度: ⭐⭐⭐⭐ 多种噪声级别和任务验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，从控制论视角切入自然
 - 价值: ⭐⭐⭐⭐⭐ 基础性改进，所有基于 HiPPO 的 SSM 都可受益
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep Continuous-Time State-Space Models for Marked Event Sequences](../../NeurIPS2025/others/deep_continuous-time_state-space_models_for_marked_event_sequences.md)
+- [Rethinking Aleatoric and Epistemic Uncertainty](rethinking_aleatoric_and_epistemic_uncertainty.md)
+- [Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
+- [Agent-SAMA: State-Aware Mobile Assistant](../../AAAI2026/others/agent-sama_state-aware_mobile_assistant.md)
+- [Nonparametric Modern Hopfield Models](nonparametric_modern_hopfield_models.md)
+
+<!-- RELATED:END -->

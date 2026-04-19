@@ -159,3 +159,15 @@ $$\mathbf{n}_j^{(t+1)} = \sigma\left(\sum_{i=1}^M \frac{w_{ij}}{\sqrt{d_i d_j}} 
 - **实验充分度**: ⭐⭐⭐⭐ 两个3D数据集+两个2D数据集，有消融和可视化分析
 - **写作质量**: ⭐⭐⭐⭐ 因果分析部分写得清晰，但部分符号使用可更统一
 - **价值**: ⭐⭐⭐⭐ 为NCD提供了因果学习的新范式，对3D开放世界感知有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-level Adaptive Self-Labeling for Novel Class Discovery in Point Cloud Segmentation](../../ECCV2024/3d_vision/dual-level_adaptive_self-labeling_for_novel_class_discovery_in_point_cloud_segme.md)
+- [P-SLCR: Unsupervised Point Cloud Semantic Segmentation via Prototypes Structure Learning and Consistent Reasoning](../../CVPR2025/3d_vision/p-slcr_unsupervised_point_cloud_semantic_segmentation_via_prototypes_structure_l.md)
+- [Rectified Point Flow: Generic Point Cloud Pose Estimation](rectified_point_flow_generic_point_cloud_pose_estimation.md)
+- [Concerto: Joint 2D-3D Self-Supervised Learning Emerges Spatial Representations](concerto_joint_2d-3d_self-supervised_learning_emerges_spatial_representations.md)
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](../../CVPR2025/3d_vision/jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
+
+<!-- RELATED:END -->

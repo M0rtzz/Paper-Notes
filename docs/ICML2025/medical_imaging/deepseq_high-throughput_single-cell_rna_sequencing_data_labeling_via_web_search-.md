@@ -190,3 +190,15 @@ $$\text{原始数据} \xrightarrow{\text{过滤}} \text{清洗后数据} \xright
 - 实验充分度: ⭐⭐ 单数据集验证，缺乏与专用工具对比，消融实验有限
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，系统架构描述详细，图表丰富
 - 价值: ⭐⭐⭐ 展示了 LLM 在生物数据标注中的可行性，但实际影响力受限于准确率上限和缺乏广泛验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
+- [MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](../../ACL2025/medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_with_large_language.md)
+- [Foundation Models for Clinical Records at Health System Scale](foundation_models_for_clinical_records_at_health_system_scale.md)
+- [PolyConf: Unlocking Polymer Conformation Generation through Hierarchical Generative Models](polyconf_unlocking_polymer_conformation_generation_through_hierarchical_generati.md)
+- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](../../NeurIPS2025/medical_imaging/steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
+
+<!-- RELATED:END -->

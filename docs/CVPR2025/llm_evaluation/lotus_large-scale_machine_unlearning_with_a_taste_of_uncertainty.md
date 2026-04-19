@@ -84,3 +84,15 @@ ViT 仅需 3 epoch，ResNet18 10 epoch。$\alpha=2$。
 - 实验充分度: ⭐⭐⭐⭐⭐ 大规模ImageNet+8基线+RF-JSD
 - 写作质量: ⭐⭐⭐⭐ 信息论动机清晰
 - 价值: ⭐⭐⭐⭐ 首个可扩展到 ImageNet 的遗忘方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sync from the Sea: Retrieving Alignable Videos from Large-Scale Datasets](../../ECCV2024/llm_evaluation/sync_from_the_sea_retrieving_alignable_videos_from_large-scale_datasets.md)
+- [HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning](../../ACL2025/llm_evaluation/hellaswag-pro_a_large-scale_bilingual_benchmark_for_evaluating_the_robustness_of.md)
+- [Revisiting the Past: Data Unlearning with Model State History](../../ICLR2026/llm_evaluation/revisiting_the_past_data_unlearning_with_model_state_history.md)
+- [Asymmetric Duos: Sidekicks Improve Uncertainty](../../NeurIPS2025/llm_evaluation/asymmetric_duos_sidekicks_improve_uncertainty.md)
+- [Put CASH on Bandits: A Max K-Armed Problem for Automated Machine Learning](../../NeurIPS2025/llm_evaluation/put_cash_on_bandits_a_max_k-armed_problem_for_automated_machine_learning.md)
+
+<!-- RELATED:END -->

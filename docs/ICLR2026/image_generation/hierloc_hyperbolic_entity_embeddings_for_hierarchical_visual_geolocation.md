@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ OSV5M全面评估+多个外部基准验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述详细，数学推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 几何感知层次嵌入对其他层次结构任务有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion](hierarchical_entity-centric_reinforcement_learning_with_factored_subgoal_diffusi.md)
+- [Hyperbolic Hierarchical Alignment Reasoning Network for Text-3D Retrieval](../../AAAI2026/image_generation/hyperbolic_hierarchical_alignment_reasoning_network_for_text-3d_retrieval.md)
+- [HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation](../../ICCV2025/image_generation/hypdae_hyperbolic_diffusion_autoencoders_for_hierarchical_few-shot_image_generat.md)
+- [A Hidden Semantic Bottleneck in Conditional Embeddings of Diffusion Transformers](a_hidden_semantic_bottleneck_in_conditional_embeddings_of_diffusion_transformers.md)
+- [No Caption, No Problem: Caption-Free Membership Inference via Model-Fitted Embeddings](no_caption_no_problem_caption-free_membership_inference_via_model-fitted_embeddi.md)
+
+<!-- RELATED:END -->

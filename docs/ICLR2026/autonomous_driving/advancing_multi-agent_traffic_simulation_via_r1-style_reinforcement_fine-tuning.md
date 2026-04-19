@@ -127,3 +127,15 @@ WOSAC 2025 排行榜（测试集）：
 - 实验充分度: ⭐⭐⭐⭐⭐ WOSAC 排行榜第一，详细消融包括优化方法对比、超参数敏感性
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，与 LLM 训练范式的类比恰当，实验分析充分
 - 价值: ⭐⭐⭐⭐ 为交通仿真模型的 RL 后训练提供了实用的模板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WorldRFT: Latent World Model Planning with Reinforcement Fine-Tuning for Autonomous Driving](../../AAAI2026/autonomous_driving/worldrft_latent_world_model_planning_with_reinforcement_fine-tuning_for_autonomo.md)
+- [Improving Agent Behaviors with RL Fine-tuning for Autonomous Driving](../../ECCV2024/autonomous_driving/improving_agent_behaviors_with_rl_fine-tuning_for_autonomous_driving.md)
+- [AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning](../../NeurIPS2025/autonomous_driving/autovla_a_vision-language-action_model_for_end-to-end_autonomous_driving_with_ad.md)
+- [Closed-Loop Supervised Fine-Tuning of Tokenized Traffic Models](../../CVPR2025/autonomous_driving/closed-loop_supervised_fine-tuning_of_tokenized_traffic_models.md)
+- [BayesG: Bayesian Ego-Graph Inference for Networked Multi-Agent Reinforcement Learning](../../NeurIPS2025/autonomous_driving/bayesian_ego-graph_inference_for_networked_multi-agent_reinforcement_learning.md)
+
+<!-- RELATED:END -->

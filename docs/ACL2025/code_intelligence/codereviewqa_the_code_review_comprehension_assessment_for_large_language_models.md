@@ -189,3 +189,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 72 个模型完全人工验证多难度变体
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰形式化完整
 - 价值: ⭐⭐⭐⭐⭐ — 为代码理解评估提供了新基准和新方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+- [Personality-Guided Code Generation Using Large Language Models](personality_guided_code_gen.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [GALLa: Graph Aligned Large Language Models for Improved Source Code Understanding](galla_graph_aligned_large_language_models.md)
+- [Tree-of-Evolution: Tree-Structured Instruction Evolution for Code Generation in Large Language Models](tree_of_evolution_code_gen.md)
+
+<!-- RELATED:END -->

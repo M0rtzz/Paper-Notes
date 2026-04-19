@@ -154,3 +154,15 @@ $$\tilde{a} = a(T) = \text{ODESolve}(v(\cdot), a, [0, T])$$
 ⭐⭐⭐⭐
 
 **推荐理由**：将激活操纵从"经验技巧"提升为"理论框架"，ODE+障碍函数的统一视角不仅解释了现有方法，还自然地导出了更优的ODESteer方法。理论与实验的结合紧密，对推理时对齐研究具有重要指导意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Instruction Following of LLMs via Activation Steering with Dynamic Rejection](enhancing_instruction_following_of_llms_via_activation_steering_with_dynamic_rej.md)
+- [On Entropy Control in LLM-RL Algorithms](on_entropy_control_in_llm-rl_algorithms.md)
+- [Capability-Based Scaling Trends for LLM-Based Red-Teaming](capability-based_scaling_trends_for_llm-based_red-teaming.md)
+- [One Token, Two Fates: A Unified Framework via Vision Token Manipulation Against MLLMs Hallucination](../../CVPR2025/robotics/one_token_two_fates_a_unified_framework_via_vision_token_manipulation_against_ml.md)
+- [RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots](robocasa365_a_large-scale_simulation_framework_for_training_and_benchmarking_gen.md)
+
+<!-- RELATED:END -->

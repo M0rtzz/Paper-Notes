@@ -130,3 +130,15 @@ ACPBench Hard 将规划能力分解为动作级、状态级、计划级三个层
 - 实验充分度: ⭐⭐⭐⭐⭐ 15 模型 × 8 任务 + 表示消融 + 复杂度分析 + 逐域分析
 - 写作质量: ⭐⭐⭐⭐ 任务定义与验证算法清晰，观察分析细致
 - 价值: ⭐⭐⭐⭐⭐ LLM 规划推理能力诊断的标杆测试平台
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ExPO: Unlocking Hard Reasoning with Self-Explanation-Guided Reinforcement Learning](../../NeurIPS2025/model_compression/expo_unlocking_hard_reasoning_with_self-explanation-guided_reinforcement_learnin.md)
+- [Efficient Reasoning with Balanced Thinking](efficient_reasoning_with_balanced_thinking.md)
+- [A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](../../CVPR2026/model_compression/quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models](beyondbench_contamination-resistant_evaluation_of_reasoning_in_language_models.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ DiTFastAttnV2是一个训练后压缩框架，包含三个组件：Head-wise Arr
 - **实验充分度**: ⭐⭐⭐⭐ 多指标、多阈值、消融详尽，但仅两个模型略显不足
 - **写作质量**: ⭐⭐⭐⭐ 分析深入透彻，图示清晰，算法伪代码完整
 - **价值**: ⭐⭐⭐⭐⭐ 解决了MMDiT推理加速的实际痛点，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Head Pursuit: Probing Attention Specialization in Multimodal Transformers](../../NeurIPS2025/image_generation/head_pursuit_probing_attention_specialization_in_multimodal.md)
+- [M2SFormer: Multi-Spectral and Multi-Scale Attention with Edge-Aware Difficulty Guidance for Image Forgery Localization](m2sformer_multi-spectral_and_multi-scale_attention_with_edge-aware_difficulty_gu.md)
+- [EDiT: Efficient Diffusion Transformers with Linear Compressed Attention](edit_efficient_diffusion_transformers_with_linear_compressed_attention.md)
+- [UniCombine: Unified Multi-Conditional Combination with Diffusion Transformer](unicombine_unified_multi-conditional_combination_with_diffusion_transformer.md)
+- [Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](bridging_the_skeleton-text_modality_gap_diffusion-powered_modality_alignment_for.md)
+
+<!-- RELATED:END -->

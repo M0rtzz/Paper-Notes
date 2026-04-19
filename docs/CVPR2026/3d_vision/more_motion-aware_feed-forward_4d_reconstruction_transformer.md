@@ -135,3 +135,15 @@ MoRe 基于强静态重建骨干（VGGT 架构），从单目视频帧序列 $\{
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个基准、10+对比方法、全注意力+流式两种模式、完整消融
 - 写作质量: ⭐⭐⭐⭐ 注意力图可视化动机清晰，公式推导严谨，实验组织有条理
 - 价值: ⭐⭐⭐⭐ 为4D重建提供了实用的前馈解决方案，注意力强制策略具有广泛迁移潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4.md)
+- [MoVieS: Motion-Aware 4D Dynamic View Synthesis in One Second](movies_motion-aware_4d_dynamic_view_synthesis_in_one_second.md)
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+- [PhysGM: Large Physical Gaussian Model for Feed-Forward 4D Synthesis](physgm_large_physical_gaussian_4d_synthesis.md)
+
+<!-- RELATED:END -->

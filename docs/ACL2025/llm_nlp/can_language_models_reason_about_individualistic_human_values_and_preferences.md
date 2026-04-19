@@ -158,3 +158,15 @@ IndieValueReasoner 较零样本 Llama-3.1-8B 提升 **46.6%**，较最优 GPT-4o
 - 实验充分度: ⭐⭐⭐⭐ — 10 个前沿 LM 零样本评估 + 系统消融训练实验 + 跨区域分析，但缺少下游应用验证
 - 写作质量: ⭐⭐⭐⭐ — 动机论述充分，公式严谨，但符号体系略重，部分内容可更简洁
 - 价值: ⭐⭐⭐⭐ — 对个性化AI和公平性评估有启发意义，数据集可复用性强，但距离实际应用仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can LLMs Help Uncover Insights about LLMs? A Large-Scale, Evolving Literature Analysis of Frontier LLMs](can_llms_help_uncover_insights_about_llms_a_large-scale_evolving_literature_anal.md)
+- [Aligning Large Language Models with Implicit Preferences from User-Generated Content](pugc_align_implicit_pref_ugc.md)
+- [Revisiting Common Assumptions about Arabic Dialects in NLP](arabic_dialects_assumptions_revisited.md)
+- [Can Language Models Replace Programmers for Coding? RepoCod Says 'Not Yet'](can_language_models_replace_programmers_for_coding_repocod_says_not_yet.md)
+- [LLM Meets Scene Graph: Can Large Language Models Understand and Generate Scene Graphs?](llm_meets_scene_graph_can_large_language_models_understand_and_generate_scene_gr.md)
+
+<!-- RELATED:END -->

@@ -145,3 +145,15 @@ $$\mathcal{L}_{dc} = \frac{1}{MN} \sum_{m,n} |\hat{S}_{m,n} - \hat{S}'_{m,n}|$$
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖关键帧和连续帧两种任务、多种比较方法、消融实验和失败分析
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，DINO特征可视化直观有说服力
 - **价值**: ⭐⭐⭐⭐⭐ 对实际动画制作工作流有直接帮助，开源代码增强了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DIVE: Taming DINO for Subject-Driven Video Editing](dive_taming_dino_for_subject-driven_video_editing.md)
+- [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](../../CVPR2026/video_generation/rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
+- [DreamRelation: Relation-Centric Video Customization](dreamrelation_relation-centric_video_customization.md)
+- [DualReal: Adaptive Joint Training for Lossless Identity-Motion Fusion in Video Customization](dualreal_adaptive_joint_training_for_lossless_identity-motion_fusion_in_video_cu.md)
+- [SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization](sweettok_semantic-aware_spatial-temporal_tokenizer_for_compact_video_discretizat.md)
+
+<!-- RELATED:END -->

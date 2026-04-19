@@ -198,3 +198,15 @@ $$\mathcal{L} = \mathbb{E}_{z,S,\epsilon,t}[\|w \odot (\epsilon - \epsilon_\thet
 - **实验充分度**: ⭐⭐⭐⭐ — 两个数据集、完整消融，但缺少人工评估
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机和方法阐述极为清晰，图表设计精美
 - **价值**: ⭐⭐⭐⭐ — 对具身智能的数据生成有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation](../../CVPR2026/video_generation/u-mind_a_unified_framework_for_real-time_multimodal_interaction_with_audiovisual.md)
+- [Motion Prompting: Controlling Video Generation with Motion Trajectories](../../CVPR2025/video_generation/motion_prompting_controlling_video_generation_with_motion_trajectories.md)
+- [DreamRelation: Relation-Centric Video Customization](../../ICCV2025/video_generation/dreamrelation_relation-centric_video_customization.md)
+- [Chain of Event-Centric Causal Thought for Physically Plausible Video Generation](../../CVPR2026/video_generation/chain_of_event-centric_causal_thought_for_physically_plausible_video_generation.md)
+- [HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation](../../CVPR2025/video_generation/hoigen-1m_a_large-scale_dataset_for_human-object_interaction_video_generation.md)
+
+<!-- RELATED:END -->

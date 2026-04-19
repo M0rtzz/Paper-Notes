@@ -130,3 +130,15 @@ GeoRCG 提出两阶段分子生成框架——先生成低维的几何表示(inf
 - 实验充分度: ⭐⭐⭐⭐⭐ QM9+GEOM-DRUG，多属性条件，步数消融
 - 写作质量: ⭐⭐⭐⭐ 清晰，理论+实验平衡好
 - 价值: ⭐⭐⭐⭐⭐ 50% 提升 + Spotlight = 高影响力工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+- [Unified All-Atom Molecule Generation with Neural Fields](../../NeurIPS2025/medical_imaging/unified_all-atom_molecule_generation_with_neural_fields.md)
+- [Geometric Generative Modeling with Noise-Conditioned Graph Networks](geometric_generative_modeling_with_noise-conditioned_graph_networks.md)
+- [Manipulating 3D Molecules in a Fixed-Dimensional E(3)-Equivariant Latent Space](../../NeurIPS2025/medical_imaging/manipulating_3d_molecules_in_a_fixed-dimensional_e3-equivariant_latent_space.md)
+- [Empower Structure-Based Molecule Optimization with Gradient Guided Bayesian Flow Networks](empower_structure-based_molecule_optimization_with_gradient_guided_bayesian_flow.md)
+
+<!-- RELATED:END -->

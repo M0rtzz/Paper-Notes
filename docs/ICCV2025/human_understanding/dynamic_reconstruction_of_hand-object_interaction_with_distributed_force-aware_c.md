@@ -159,3 +159,15 @@ ViTaM-D 包含两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐ — DexYCB 和 HOT 双数据集验证，消融实验设计合理
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，pipeline 描述完整，图示质量高
 - **价值**: ⭐⭐⭐⭐ — HOT 数据集和 DF-Field 表示对手物交互社区有长期价值，但触觉设备门槛限制了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contact-Aware Refinement of Human Pose Pseudo-Ground Truth via Bioimpedance Sensing](contact-aware_refinement_of_human_pose_pseudo-ground_truth_via_bioimpedance_sens.md)
+- [Learning Dense Hand Contact Estimation from Imbalanced Data](../../NeurIPS2025/human_understanding/learning_dense_hand_contact_estimation_from_imbalanced_data.md)
+- [SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
+- [Align Your Rhythm: Generating Highly Aligned Dance Poses with Gating-Enhanced Rhythm-Aware Feature Representation](align_your_rhythm_generating_highly_aligned_dance_poses_with_gating-enhanced_rhy.md)
+- [NBAvatar: Neural Billboards Avatars with Realistic Hand-Face Interaction](../../CVPR2025/human_understanding/nbavatar_neural_billboards_avatars_with_realistic_hand-face_interaction.md)
+
+<!-- RELATED:END -->

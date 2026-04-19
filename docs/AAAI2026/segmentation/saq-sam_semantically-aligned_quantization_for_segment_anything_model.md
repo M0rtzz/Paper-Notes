@@ -180,3 +180,15 @@ $$T_i^k = \text{Neck}\left(\left(\prod_{i=0}^k \text{Stage}^k\right)(E_i)\right)
 - 实验充分度: ⭐⭐⭐⭐⭐ （三个任务、三种模型尺寸、多种检测器、完整消融和超参分析）
 - 写作质量: ⭐⭐⭐⭐⭐ （问题动机阐述清晰，现象-分析-解决方案的逻辑线完整流畅）
 - 价值: ⭐⭐⭐⭐⭐ （4-bit SAM-B 从不可用到可用的飞跃，对 SAM 部署有直接实用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Segment and Matte Anything in a Unified Model (SAMA)](segment_and_matte_anything_in_a_unified_model.md)
+- [SAM-DAQ: Segment Anything Model with Depth-guided Adaptive Queries for RGB-D Video Salient Object Detection](sam-daq_segment_anything_model_with_depth-guided_adaptive_queries_for_rgb-d_vide.md)
+- [Segment Anything Across Shots: A Method and Benchmark](segment_anything_across_shots_a_method_and_benchmark.md)
+- [E-SAM: Training-Free Segment Every Entity Model](../../ICCV2025/segmentation/e-sam_training-free_segment_every_entity_model.md)
+- [VP-SAM: Taming Segment Anything Model for Video Polyp Segmentation via Disentanglement and Spatio-Temporal Side Network](../../ECCV2024/segmentation/vp-sam_taming_segment_anything_model_for_video_polyp_segmentation_via_disentangl.md)
+
+<!-- RELATED:END -->

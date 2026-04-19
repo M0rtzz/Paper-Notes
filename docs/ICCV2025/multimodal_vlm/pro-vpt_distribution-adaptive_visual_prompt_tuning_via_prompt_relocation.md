@@ -141,3 +141,15 @@ FGVC 基准：PRO-VPT 达到 91.7% 均值准确率，较 VPT 提升 2.0pp。
 - 实验充分度: ⭐⭐⭐⭐⭐ （VTAB-1k 全部 19 个数据集 + FGVC + 详尽消融）
 - 写作质量: ⭐⭐⭐⭐⭐ （问题驱动，层层递进，分析严谨）
 - 价值: ⭐⭐⭐⭐ （对 VPT 领域有实质推进，但绝对提升幅度有限）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention to the Burstiness in Visual Prompt Tuning!](attention_to_the_burstiness_in_visual_prompt_tuning.md)
+- [Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection](adaptive_prompt_learning_via_gaussian_outlier_synthesis_for_out-of-distribution_.md)
+- [FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
+- [Revisit Visual Prompt Tuning: The Expressiveness of Prompt Experts](../../ICLR2026/multimodal_vlm/revisit_visual_prompt_tuning_the_expressiveness_of_prompt_experts.md)
+- [CVPT: Cross Visual Prompt Tuning](cvpt_cross_visual_prompt_tuning.md)
+
+<!-- RELATED:END -->

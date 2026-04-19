@@ -128,3 +128,15 @@ RULEBREAKERS 是一个包含 25,600 个实例的评估数据集，由 12,800 个
 | 实验完整度 | ⭐⭐⭐⭐ | 7 个模型 × 10 种表述变体，配对+置信度+归因三层分析 |
 | 写作质量 | ⭐⭐⭐⭐⭐ | 问题动机阐述清晰，数据集构造透明 |
 | 实用性 | ⭐⭐⭐⭐ | 数据集开源，对逻辑增强方法的警示具有实际指导价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](../../ICLR2026/human_understanding/rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation](merge-friendly_post-training_quantization_for_multi-target_domain_adaptation.md)
+- [RayPose: Ray Bundling Diffusion for Template Views in Unseen 6D Object Pose Estimation](../../ICCV2025/human_understanding/raypose_ray_bundling_diffusion_for_template_views_in_unseen_6d_object_pose_estim.md)
+- [SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](../../ICCV2025/human_understanding/semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)
+
+<!-- RELATED:END -->

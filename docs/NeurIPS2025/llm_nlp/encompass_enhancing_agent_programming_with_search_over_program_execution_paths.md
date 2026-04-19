@@ -114,3 +114,15 @@ EnCompass 是一个 Python 框架，实现 PAN 编程模型。程序员用 `@enc
 - 实验充分度: ⭐⭐⭐ 案例研究有说服力但规模较小
 - 写作质量: ⭐⭐⭐⭐⭐ 概念清晰，代码示例丰富，易于理解
 - 价值: ⭐⭐⭐⭐ 对 agent 开发实践有直接影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are Language Models Efficient Reasoners? A Perspective from Logic Programming](are_language_models_efficient_reasoners_a_perspective_from_logic_programming.md)
+- [Planning-Driven Programming: A Large Language Model Programming Workflow](../../ACL2025/llm_nlp/planning-driven_programming_a_large_language_model_programming_workflow.md)
+- [Large Language Models Miss the Multi-Agent Mark](large_language_models_miss_the_multi-agent_mark.md)
+- [AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play](acesearcher_bootstrapping_reasoning_and_search_for_llms_via_reinforced_self-play.md)
+- [Enhancing the Rule Learning Ability of Large Language Model Agent through Induction, Deduction, and Abduction](../../ACL2025/llm_nlp/idea_enhancing_the_rule_learning_ability_of_large_language_model_agent_through_i.md)
+
+<!-- RELATED:END -->

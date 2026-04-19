@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 类似物搜索 + 属性优化 + 2D/3D 目标，全面覆盖分子设计任务，消融详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 方法描述清晰精确，形式化定义严谨，代码开源
 - 价值: ⭐⭐⭐⭐ 为分子设计提供了实用的可合成搜索工具，开源代码可直接使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EgoNight: Towards Egocentric Vision Understanding at Night with a Challenging Benchmark](egonight_towards_egocentric_vision_understanding_at_night_with_a_challenging_ben.md)
+- [SceneTransporter: Optimal Transport-Guided Compositional Latent Diffusion for Single-Image Structured 3D Scene Generation](scenetransporter_optimal_transport-guided_compositional_latent_diffusion_for_sin.md)
+- [Color3D: Controllable and Consistent 3D Colorization with Personalized Colorizer](color3d_controllable_and_consistent_3d_colorization_with_personalized_colorizer.md)
+- [PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting](pd2gs_part-level_decoupling_and_continuous_deformation_of_articulated_objects_vi.md)
+- [SurfSplat: Conquering Feedforward 2D Gaussian Splatting with Surface Continuity Priors](surfsplat_conquering_feedforward_2d_gaussian_splatting_with_surface_continuity_p.md)
+
+<!-- RELATED:END -->

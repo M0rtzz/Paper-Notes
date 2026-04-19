@@ -163,3 +163,15 @@ $$p_t = \mathcal{G}(p_{t-1}, p_t^*)$$
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计优雅（树 + 残差 + 困惑度），实验全面且消融充分。两个核心组件的贡献明确。主要不足在于对强模型（GPT-4o）的依赖和有限的分析深度。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient and Accurate Prompt Optimization: the Benefit of Memory in Exemplar-Guided Reflection](erm_prompt_optimization_memory.md)
+- [Dynamic Parallel Tree Search for Efficient LLM Reasoning](dynamic_parallel_tree_search_for_efficient_llm_reasoning.md)
+- [Efficient Universal Goal Hijacking with Semantics-guided Prompt Organization](goal_hijacking_attack.md)
+- [A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)
+- [GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization](gapo_preferential_prompt.md)
+
+<!-- RELATED:END -->

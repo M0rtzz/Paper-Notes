@@ -128,3 +128,15 @@ BlazeBVD 分为三个阶段，核心思想是利用 STE 在光照直方图空间
 - 实验充分度: 4/5（合成/真实/生成视频全覆盖，用户研究完善，消融实验充分）
 - 写作质量: 4/5（结构清晰，动机阐述有说服力）
 - 价值: 4/5（10× 加速 + 首次解决局部曝光问题，实用价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SIGMark: Scalable In-Generation Watermark with Blind Extraction for Video Diffusion](../../ICLR2026/video_generation/sigmark_scalable_in-generation_watermark_with_blind_extraction_for_video_diffusi.md)
+- [DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing](dreammotion_space-time_self-similar_score_distillation_for_zero-shot_video_editi.md)
+- [MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](../../AAAI2026/video_generation/mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
+- [Aligning Moments in Time using Video Queries](../../ICCV2025/video_generation/aligning_moments_in_time_using_video_queries.md)
+- [TTOM: Test-Time Optimization and Memorization for Compositional Video Generation](../../ICLR2026/video_generation/ttom_test-time_optimization_and_memorization_for_compositional_video_generation.md)
+
+<!-- RELATED:END -->

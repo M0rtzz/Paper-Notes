@@ -147,3 +147,15 @@ ReAG 包含四个主要阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个标准基准、多种检索器、详细消融、oracle上界）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，消融全面，图表直观）
 - 价值: ⭐⭐⭐⭐⭐ （为知识增强VQA提供了完整且高效的解决方案）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering](../../NeurIPS2025/reinforcement_learning/knowledge-based_visual_question_answer_with_multimodal_processing_retrieval_and_.md)
+- [TAdaRAG: Task Adaptive Retrieval-Augmented Generation via On-the-Fly Knowledge Graph Construction](../../AAAI2026/reinforcement_learning/tadarag_task_adaptive_retrieval-augmented_generation_via_on-the-fly_knowledge_gr.md)
+- [AnyDoc: Enhancing Document Generation via Large-Scale HTML/CSS Data Synthesis and Height-Aware Reinforcement Optimization](anydoc_enhancing_document_generation_via_large-scale_htmlcss_data_synthesis_and_.md)
+- [BRIDGE: Multimodal-to-Text Retrieval via Reinforcement-Learned Query Alignment](bridge_multimodal-to-text_retrieval_via_reinforcement-learned_query_alignment.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+
+<!-- RELATED:END -->

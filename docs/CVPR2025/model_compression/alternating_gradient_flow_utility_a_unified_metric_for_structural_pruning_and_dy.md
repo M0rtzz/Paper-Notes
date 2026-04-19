@@ -149,3 +149,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (CIFAR-100/ImageNet-100/ImageNet-1K多尺度验证，CNN+ViT跨架构)
 - 写作质量: ⭐⭐⭐⭐ (逻辑清晰，从发现问题到设计方案层层递进)
 - 价值: ⭐⭐⭐⭐ (解耦范式对模型压缩和动态推理均有参考价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression](../../ICML2025/model_compression/fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](../../ICCV2025/model_compression/variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+- [LD-MoLE: Learnable Dynamic Routing for Mixture of LoRA Experts](../../ICLR2026/model_compression/ld-mole_learnable_dynamic_routing_for_mixture_of_lora_experts.md)
+- [QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks](../../NeurIPS2025/model_compression/quadenhancer_leveraging_quadratic_transformations_to_enhance_deep_neural_network.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
+
+<!-- RELATED:END -->

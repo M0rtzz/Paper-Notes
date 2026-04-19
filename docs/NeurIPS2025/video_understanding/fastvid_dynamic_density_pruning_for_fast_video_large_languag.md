@@ -122,3 +122,15 @@ $$\delta_i = \min_{j: \rho_j > \rho_i} d(v_i, v_j)$$
 - 技术深度：★★★★☆ — DySeg + STPrune 设计精巧，消融充分
 - 实验完整度：★★★★★ — 4个模型 × 4个 benchmark × 多压缩率，极其全面
 - 写作质量：★★★★☆ — 结构清晰但略冗长
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting](in_the_eye_of_mllm_benchmarking_egocentric_video_intent_understanding_with_gaze-.md)
+- [Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](enhancing_temporal_understanding_in_videollms_through_stacke.md)
+- [Seeing Beyond the Scene: Analyzing and Mitigating Background Bias in Action Recognition](seeing_beyond_the_scene_analyzing_and_mitigating_background_bias_in_action_recog.md)
+- [SAMA: Towards Multi-Turn Referential Grounded Video Chat with Large Language Models](sama_towards_multi-turn_referential_grounded_video_chat_with_large_language_mode.md)
+- [Steering When Necessary: Flexible Steering Large Language Models with Backtracking](steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)
+
+<!-- RELATED:END -->

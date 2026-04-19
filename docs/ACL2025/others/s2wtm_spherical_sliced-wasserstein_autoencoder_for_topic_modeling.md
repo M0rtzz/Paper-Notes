@@ -156,3 +156,15 @@ S2WTM 在全部 7 个数据集上的 NPMI 均为最高，大幅领先。
 - **实验充分度**: ⭐⭐⭐⭐ — 7 个数据集、12+ 种基线、4 类指标（连贯性、多样性、下游任务、LLM 评估），覆盖面广
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导严谨清晰，从 Wasserstein → SW → SSW 的层层引入便于理解
 - **价值**: ⭐⭐⭐ — 主题建模领域的扎实工作，但该领域本身关注度在下降，实际影响力可能有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+- [Persistent Homology of Topic Networks for the Prediction of Reader Curiosity](persistent_homology_of_topic_networks_for_the_prediction_of_reader_curiosity.md)
+- [Improving Language and Modality Transfer in Translation by Character-level Modeling](improving_language_and_modality_transfer_in.md)
+- [DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling](demo_reframing_dialogue_interaction_with_fine-grained_element_modeling.md)
+- [ProxAnn: Use-Oriented Evaluations of Topic Models and Document Clustering](proxann_topic_model_eval.md)
+
+<!-- RELATED:END -->

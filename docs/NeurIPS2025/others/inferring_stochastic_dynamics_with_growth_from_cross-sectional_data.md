@@ -122,3 +122,15 @@ Theorem 2.3 证明在连续时间极限下，此损失对OU过程有唯一最小
 ## 评分
 
 ⭐⭐⭐⭐ — 理论扎实，方法简洁有效，首次系统解决了含增长的随机动力学推断问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modeling Cell Dynamics and Interactions with Unbalanced Mean Field Schrödinger Bridge](modeling_cell_dynamics_and_interactions_with_unbalanced_mean_field_schrödinger_b.md)
+- [Normalization in Attention Dynamics](normalization_in_attention_dynamics.md)
+- [Coresets for Clustering Under Stochastic Noise](coresets_for_clustering_under_stochastic_noise.md)
+- [Learning Dynamics of RNNs in Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)
+- [LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics](../../ICLR2026/others/latent_particle_world_models_self-supervised_object-centric_stochastic_dynamics_.md)
+
+<!-- RELATED:END -->

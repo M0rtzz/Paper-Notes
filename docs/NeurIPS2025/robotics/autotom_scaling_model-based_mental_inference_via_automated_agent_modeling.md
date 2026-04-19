@@ -112,3 +112,15 @@ AutoToM无需训练参数——完全基于LLM的上下文推理（in-context in
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个benchmark+认知实验+embodied任务+多LLM后端+消融+统计可靠性检验
 - 写作质量: ⭐⭐⭐⭐⭐ 统一形式化清晰，图表优秀，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 对社会智能AI和人机交互有深远影响，框架通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SITCOM: Scaling Inference-Time COMpute for VLAs](sitcom_scaling_inference-time_compute_for_vlas.md)
+- [LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
+- [Can Agents Fix Agent Issues?](can_agents_fix_agent_issues.md)
+- [Causal Inference Under Threshold Manipulation: Bayesian Mixture Modeling and Heterogeneous Treatment Effects](../../AAAI2026/robotics/causal_inference_under_threshold_manipulation_bayesian_mixtu.md)
+- [MIP against Agent: Malicious Image Patches Hijacking Multimodal OS Agents](mip_against_agent_malicious_image_patches_hijacking_multimod.md)
+
+<!-- RELATED:END -->

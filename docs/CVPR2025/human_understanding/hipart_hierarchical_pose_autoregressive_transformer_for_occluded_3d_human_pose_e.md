@@ -148,3 +148,15 @@ Human3.6M（MPJPE↓，单帧方法）：
 - **实验充分性** ⭐⭐⭐⭐：Human3.6M、3DPW、3DPW-Occ 多基准验证，与多帧方法的对比和互补实验有说服力
 - **清晰度** ⭐⭐⭐⭐：整体流程清晰，但 Stage 1/2 的细节较多，需要反复阅读
 - **实用价值** ⭐⭐⭐⭐：单帧 SOTA + 低复杂度 + 可与时序方法正交组合，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](../../NeurIPS2025/human_understanding/raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
+- [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
+- [CoordAR: One-Reference 6D Pose Estimation of Novel Objects via Autoregressive Coordinate Map Generation](../../AAAI2026/human_understanding/coordar_one-reference_6d_pose_estimation_of_novel_objects_via_autoregressive_coo.md)
+- [One2Any: One-Reference 6D Pose Estimation for Any Object](one2any_one-reference_6d_pose_estimation_for_any_object.md)
+
+<!-- RELATED:END -->

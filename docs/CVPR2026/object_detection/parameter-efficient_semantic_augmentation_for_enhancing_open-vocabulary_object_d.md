@@ -137,3 +137,15 @@ ArTaxOr 数据集各组件贡献：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个垂直域+OV-COCO+OV-COCO+扩展评测，消融非常充分，可视化丰富
 - 写作质量: ⭐⭐⭐⭐ 技术描述详细清楚，图示直观，动机论证有力
 - 价值: ⭐⭐⭐⭐ 解决了OVOD中领域适配vs泛化的实际问题，H值作为综合指标的评估方式也有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](abra_teleporting_fine-tuned_knowledge_across_domains_for_open-vocabulary_object_.md)
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [DitHub: A Modular Framework for Incremental Open-Vocabulary Object Detection](../../NeurIPS2025/object_detection/dithub_a_modular_framework_for_incremental_openvocabulary_ob.md)
+- [VK-Det: Visual Knowledge Guided Prototype Learning for Open-Vocabulary Aerial Object Detection](../../AAAI2026/object_detection/vk-det_visual_knowledge_guided_prototype_learning_for_open-vocabulary_aerial_obj.md)
+
+<!-- RELATED:END -->

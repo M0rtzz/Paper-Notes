@@ -110,3 +110,15 @@ DiffusionGS是一个单阶段3D扩散模型。输入一张干净条件视图和N
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖物体生成(ABO/GSO)和场景重建(RealEstate10K)，有用户研究、定量对比、消融实验、视觉分析、多样性分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 整体清晰，pipeline图直观，公式推导完整，但场景-物体混合训练的细节较分散
 - 价值: ⭐⭐⭐⭐ 在单视图3D生成/重建领域达到新SOTA，速度快且支持场景+物体统一处理，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision](a_lesson_in_splats_teacherguided_diffusion_for_3d_gaussian_s.md)
+- [Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis](gaussian_variation_field_diffusion_for_high-fidelity_video-to-4d_synthesis.md)
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+- [HouseTour: A Virtual Real Estate A(I)gent](housetour_a_virtual_real_estate_aigent.md)
+- [CATSplat: Context-Aware Transformer with Spatial Guidance for Generalizable 3D Gaussian Splatting from A Single-View Image](catsplat_contextaware_transformer_with_spatial_guidance_for.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ tags:
 3. 探索与强化学习、在线学习结合的可能性，实现动态适应
 4. 开发自动化评估和优化工具，降低方法的使用门槛
 5. 考虑与 LLM alignment 研究的交叉，探索安全性和性能的协同优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bayesian Attention Mechanism: A Probabilistic Framework for Positional Encoding and Context Length Extrapolation](../../ICLR2026/information_retrieval/bayesian_attention_mechanism_a_probabilistic_framework_for_positional_encoding_a.md)
+- [Hypothetical Documents or Knowledge Leakage? Rethinking LLM-based Query Expansion](../../ACL2025/information_retrieval/hypothetical_documents_or_knowledge_leakage_rethinking_llm-based_query_expansion.md)
+- [Positional Bias in Multimodal Embedding Models: Do They Favor the Beginning, the Middle, or the End?](../../AAAI2026/information_retrieval/positional_bias_in_multimodal_embedding_models_do_they_favor_the_beginning_the_m.md)
+- [Expert Evaluation of LLM World Models: A High-Tc Superconductivity Case Study](expert_evaluation_of_llm_world_models_a_high-t_c_superconductivity_case_study.md)
+- [Enhancing Lexicon-Based Text Embeddings with Large Language Models](../../ACL2025/information_retrieval/enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+
+<!-- RELATED:END -->

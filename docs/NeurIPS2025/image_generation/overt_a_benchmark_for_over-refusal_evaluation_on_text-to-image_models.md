@@ -122,3 +122,15 @@ OVERT-unsafe 上的安全响应率（%）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5个模型×9个类别，多指标评估，包含缓解策略探索  
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义清晰，实验分析深入，讨论全面  
 - **价值**: ⭐⭐⭐⭐⭐ 对 T2I 安全对齐研究具有重要推动作用，数据集可直接用于评估和改进模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning](../../ICCV2025/image_generation/holistic_unlearning_benchmark_a_multi-faceted_evaluation_for_text-to-image_diffu.md)
+- [Fast Data Attribution for Text-to-Image Models](fast_data_attribution_for_text-to-image_models.md)
+- [Hallucination as an Upper Bound: A New Perspective on Text-to-Image Evaluation](hallucination_as_an_upper_bound_a_new_perspective_on_text-to-image_evaluation.md)
+- [T2I-RiskyPrompt: A Benchmark for Safety Evaluation, Attack, and Defense on Text-to-Image Model](../../AAAI2026/image_generation/t2i-riskyprompt_a_benchmark_for_safety_evaluation_attack_and_defense_on_text-to-.md)
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+
+<!-- RELATED:END -->

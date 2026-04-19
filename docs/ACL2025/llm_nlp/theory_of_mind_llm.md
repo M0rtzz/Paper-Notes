@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 系统梳理了各方法但缺乏统一实验对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，表格对比直观，未来方向有价值
 - 价值: ⭐⭐⭐⭐ 对 ToM 研究者是很好的入门和参考资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knockout LLM Assessment: Using Large Language Models for Evaluations through Iterative Pairwise Comparisons](knockout_llm_assessment_using_large_language_models_for_evaluations_through_iter.md)
+- [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
+- [A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive](theory_of_llm_sampling.md)
+- [Mind the Belief Gap: Group Identity in the World of LLMs](mind_the_belief_gap_group_identity_in_the_world_of_llms.md)
+- [Representations of Fact, Fiction and Forecast in Large Language Models: Epistemics and Attitudes](representations_of_fact_fiction_and_forecast_in_large_language_models_epistemics.md)
+
+<!-- RELATED:END -->

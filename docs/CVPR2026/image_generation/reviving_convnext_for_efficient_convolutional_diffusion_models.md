@@ -177,3 +177,15 @@ FCDM-XL可在4块RTX 4090（消费级GPU）上完成256×256 ImageNet训练，ba
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个scale × 多个训练步数、256/512双分辨率、详细消融和特征可视化、FLOPs/吞吐量/FID全面评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Figure 4的DiCo vs FCDM对比非常直观，与DiCo的三点差异分析透彻
 - 价值: ⭐⭐⭐⭐ 4块4090训练XL模型对资源受限场景极具吸引力；两参数缩放法则有实际工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](ditic_aligned_diffusion_transformer_for_efficient.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+- [Efficient Fine-Tuning and Concept Suppression for Pruned Diffusion Models](../../CVPR2025/image_generation/efficient_fine-tuning_and_concept_suppression_for_pruned_diffusion_models.md)
+- [DogFit: Domain-guided Fine-tuning for Efficient Transfer Learning of Diffusion Models](../../AAAI2026/image_generation/dogfit_domain-guided_fine-tuning_for_efficient_transfer_learning_of_diffusion_mo.md)
+- [GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](../../ICLR2026/image_generation/glass_flows_reward_alignment_diffusion.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 1000人调查+6482条真实prompts，多维度分析，统计检验充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分，但部分分析较浅
 - 价值: ⭐⭐⭐⭐ 对AI公平性研究有重要启示，提出了实际可操作的改进方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
+- [I0T: Embedding Standardization Method Towards Zero Modality Gap](i0t_embedding_standardization_method_towards_zero_modality_gap.md)
+- [FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)
+
+<!-- RELATED:END -->

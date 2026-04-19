@@ -233,3 +233,15 @@ $$A_{enhanced}^{(h)} = A_{std}^{(h)} + \alpha^{(h)} \cdot A_{stripe}^{(h)}$$
 | 写作质量 | 7.5 | 可视化和分析清晰 |
 | 实用价值 | 8.5 | 推理无额外开销，即插即用，实用性极强 |
 | **综合** | **8.0** | 观察驱动的原创性工作，推理免费设计的实用价值极高 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](../../ACL2025/llm_nlp/nudging_inference_time_alignment.md)
+- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](../../CVPR2025/llm_nlp/rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
+- [MHA2MLA: Towards Economical Inference by Enabling DeepSeek's Multi-Head Latent Attention in Any Transformer-based LLMs](../../ACL2025/llm_nlp/mha2mla_deepseek_latent_attention.md)
+- [Computation Mechanism Behind LLM Position Generalization](../../ACL2025/llm_nlp/computation_mechanism_behind_llm_position_generalization.md)
+- [LASER: Attention with Exponential Transformation](../../ICML2025/llm_nlp/laser_attention_with_exponential_transformation.md)
+
+<!-- RELATED:END -->

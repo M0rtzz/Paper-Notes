@@ -167,3 +167,15 @@ POUGH由三个组件构成：
 | 写作质量 | 7 | 结构清晰但数学符号较密集 |
 | 实际影响 | 8 | 暴露LLM安全对齐的重要漏洞 |
 | **总分** | **7.8** | 高效的通用攻击方法，对LLM安全研究有重要价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient and Accurate Prompt Optimization: the Benefit of Memory in Exemplar-Guided Reflection](erm_prompt_optimization_memory.md)
+- [RiOT: Efficient Prompt Refinement with Residual Optimization Tree](riot_efficient_prompt_refinement_with_residual_optimization_tree.md)
+- [OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
+- [Is It JUST Semantics? A Case Study of Discourse Particle Understanding in LLMs](is_it_just_semantics_a_case_study_of_discourse_particle_understanding_in_llms.md)
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](nudging_inference_time_alignment.md)
+
+<!-- RELATED:END -->

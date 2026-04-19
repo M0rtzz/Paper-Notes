@@ -144,3 +144,15 @@ GeoSplatting 的流程：标量场 $\boldsymbol{\zeta}$ → FlexiCubes 提取三
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集覆盖漫反射/高光/真实场景，消融全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 图示清晰，motivation阐述深入，技术细节完整
 - **价值**: ⭐⭐⭐⭐⭐ 14分钟SOTA逆渲染具有高实用价值，混合表示思路有广泛启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](../../CVPR2025/3d_vision/iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
+- [Flash Cache: Reducing Bias in Radiance Cache Based Inverse Rendering](../../ECCV2024/3d_vision/flash_cache_reducing_bias_in_radiance_cache_based_inverse_rendering.md)
+- [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
+- [StealthAttack: Robust 3D Gaussian Splatting Poisoning via Density-Guided Illusions](stealthattack_robust_3d_gaussian_splatting_poisoning_via_density-guided_illusion.md)
+- [G2SF: Geometry-Guided Score Fusion for Multimodal Industrial Anomaly Detection](g2sf_geometry-guided_score_fusion_for_multimodal_industrial_anomaly_detection.md)
+
+<!-- RELATED:END -->

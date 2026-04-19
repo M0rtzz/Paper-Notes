@@ -137,3 +137,15 @@ $$L_{\text{tv}} = \sum_{i,j} \|\bm{u}_{i+1,j} - \bm{u}_{i,j}\|_2^2 + \|\bm{u}_{i
 - **实验充分度**: ⭐⭐⭐⭐ — 用户研究设计严谨，但缺少定量指标对比
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机清晰，方法阐述详尽
 - **实用价值**: ⭐⭐⭐⭐ — 在虚拟现实和游戏领域有直接应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VFusion3D: Learning Scalable 3D Generative Models from Video Diffusion Models](vfusion3d_learning_scalable_3d_generative_models_from_video_diffusion_models.md)
+- [PhysCtrl: Generative Physics for Controllable and Physics-Grounded Video Generation](../../NeurIPS2025/video_generation/physctrl_generative_physics_for_controllable_and_physicsgrou.md)
+- [SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion](sv3d_novel_multi-view_synthesis_and_3d_generation_from_a_single_image_using_late.md)
+- [Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](../../AAAI2026/video_generation/mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)
+- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](../../ICCV2025/video_generation/free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+
+<!-- RELATED:END -->

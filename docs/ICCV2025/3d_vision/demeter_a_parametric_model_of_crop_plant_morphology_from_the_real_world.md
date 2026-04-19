@@ -143,3 +143,15 @@ Demeter 在大豆上 CD 最优（0.0016），存储远小于 NKSR（3.375 KB vs 
 ## 评分
 
 ⭐⭐⭐⭐ — 开创性工作，首次将数据驱动参数化建模从人体/动物领域扩展到植物，设计精巧且有实际农业应用价值。数据集贡献突出，但适用物种范围仍有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)](unleashing_vecset_diffusion_model_for_fast_shape_generation.md)
+- [JointDiT: Enhancing RGB-Depth Joint Modeling with Diffusion Transformers](jointdit_enhancing_rgb-depth_joint_modeling_with_diffusion_transformers.md)
+- [InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes](instascene_towards_complete_3d_instance_decomposition_and_reconstruction_from_cl.md)
+
+<!-- RELATED:END -->

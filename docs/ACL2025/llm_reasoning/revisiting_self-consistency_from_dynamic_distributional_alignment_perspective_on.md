@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 10个模型×2个数据集×多种采样数，覆盖面广，但只有数学推理任务
 - 写作质量: ⭐⭐⭐⭐ 理论分析清晰，Findings→Insights 的推导链条逻辑通顺
 - 价值: ⭐⭐⭐⭐ 即插即用的 SC 改进，对任何使用 SC 的系统都适用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ranked Voting based Self-Consistency of Large Language Models](ranked_voting_based_self-consistency_of_large_language_models.md)
+- [Dynamic and Generalizable Process Reward Modeling (DG-PRM)](dgprm_dynamic_process_reward.md)
+- [Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering](test_time_scaling_selective_qa.md)
+- [Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory](rethinking_the_role_of_prompting_strategies_in_llm_test-time_scaling_a_perspecti.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models via a Multi-Paradigm Perspective](chain_of_reasoning_unified_math.md)
+
+<!-- RELATED:END -->

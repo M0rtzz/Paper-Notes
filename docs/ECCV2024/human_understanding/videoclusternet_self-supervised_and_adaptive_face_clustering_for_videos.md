@@ -167,3 +167,15 @@ VideoClusterNet 分为三个阶段：
 - **实验充分度**: ⭐⭐⭐⭐ BBT/BVS/MovieFaceCluster 三大数据集 + 微调/聚类/基模型三方面消融
 - **写作质量**: ⭐⭐⭐⭐ 方法动机清晰，算法伪代码完整
 - **实用价值**: ⭐⭐⭐ 无开源代码、需逐视频微调限制了实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization](pose-aware_self-supervised_learning_with_viewpoint_trajectory_regularization.md)
+- [Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)
+- [AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition](adadistill_adaptive_knowledge_distillation_for_deep_face_rec.md)
+- [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](../../ICCV2025/human_understanding/bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
+- [Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)
+
+<!-- RELATED:END -->

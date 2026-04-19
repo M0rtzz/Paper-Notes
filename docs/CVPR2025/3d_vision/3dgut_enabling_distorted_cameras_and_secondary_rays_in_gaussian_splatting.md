@@ -110,3 +110,15 @@ $$\mathbf{h}_{RS}(oldsymbol{x}, t) = \pi(oldsymbol{T}(t) \cdot oldsymbol{x})$
 ## 总结与展望
 
 3DGUT 通过引入 Unscented Transform 替代传统的 EWA splatting 中的仿射近似，提供了一个统一且优雅的框架来处理畸变相机模型和二次光线效果。这一方法的核心优势在于**不需要对投影函数做任何线性化假设**，只需要投影函数本身是可微的即可。虽然计算开销略有增加（约1.3×），但获得的灵活性和精度提升使其在实际应用中具有显著价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DGEER: 3D Gaussian Rendering Made Exact and Efficient for Generic Cameras](../../ICLR2026/3d_vision/3dgeer_3d_gaussian_rendering_made_exact_and_efficient_for_generic_cameras.md)
+- [DirectFisheye-GS: Enabling Native Fisheye Input in Gaussian Splatting with Cross-View Joint Optimization](../../CVPR2026/3d_vision/directfisheye-gs_enabling_native_fisheye_input_in_gaussian_splatting_with_cross-.md)
+- [HyperGS: Hyperspectral 3D Gaussian Splatting](hypergs_hyperspectral_3d_gaussian_splatting.md)
+- [GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting](guardsplat_efficient_and_robust_watermarking_for_3d_gaussian_splatting.md)
+- [IM360: Large-scale Indoor Mapping with 360 Cameras](../../ICCV2025/3d_vision/im360_large-scale_indoor_mapping_with_360_cameras.md)
+
+<!-- RELATED:END -->

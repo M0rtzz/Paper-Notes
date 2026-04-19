@@ -118,3 +118,15 @@ AoTD 分四步：(1) 评估并选择各子任务最佳视觉模型；(2) 用 LLM
 - 实验充分度: ⭐⭐⭐⭐ 多个 VideoQA 基准、多模型迁移测试、CoT 质量评估、效率对比都有
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，子任务评估/过滤机制描述详细
 - 价值: ⭐⭐⭐⭐ 方法通用、成本低、效果一致，对 Video-LLM 社区有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
+- [M-LLM Based Video Frame Selection for Efficient Video Understanding](m-llm_based_video_frame_selection_for_efficient_video_understanding.md)
+- [A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](../../CVPR2026/video_understanding/a_multi-agent_perception-action_alliance_for_efficient_long_video_reasoning.md)
+- [A4VL: A Multi-Agent Perception-Action Alliance for Efficient Long Video Reasoning](../../CVPR2026/video_understanding/a4vl_multiagent_long_video_reasoning.md)
+- [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](../../AAAI2026/video_understanding/distillation_dynamics_towards_understanding_feature-based_di.md)
+
+<!-- RELATED:END -->

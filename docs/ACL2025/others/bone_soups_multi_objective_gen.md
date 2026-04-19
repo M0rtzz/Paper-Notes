@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个任务（Long Form QA/Helpful Assistant/Reddit Summary）八个奖励模型两个基础模型，消融充分，但缺少人工评估
 - 写作质量: ⭐⭐⭐⭐ 动机用 Example 1 具体说明 Rewarded Soup 的次优性很有说服力，Figure 3 的oracle对比直观
 - 价值: ⭐⭐⭐⭐ 对模型合并领域有实质性贡献——"煲汤先选料"的思想通用且可迁移到视觉、多模态等其他领域的模型合并
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Weight Weaving: Parameter Pooling for Data-Free Model Merging](../../NeurIPS2025/others/weight_weaving_parameter_pooling_for_data-free_model_merging.md)
+- [Literature Meets Data: A Synergistic Approach to Hypothesis Generation](literature_meets_data_hypothesis.md)
+- [Controllable Financial Market Generation with Diffusion Guided Meta Agent](../../AAAI2026/others/controllable_financial_market_generation_with_diffusion_guided_meta_agent.md)
+- [CoachMe: Decoding Sport Elements with a Reference-Based Coaching Instruction Generation Model](coachme_sport_instruction.md)
+- [Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
+
+<!-- RELATED:END -->

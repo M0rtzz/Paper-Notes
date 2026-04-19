@@ -134,3 +134,15 @@ $$\min_{\mathcal{V},\mathcal{T}} \mathcal{L}_{\text{attack}} = \mathcal{L}_{\tex
 - 实验充分度: ⭐⭐⭐⭐ — 3个模型+物理实验+丰富消融，但黑盒迁移和大规模物理验证欠缺
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，方法阐述详尽，图表辅助说明到位
 - 价值: ⭐⭐⭐⭐ — 对BEV感知安全性有重要警示意义，暴露了模型对环境先验的依赖
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReScene4D: Temporally Consistent Semantic Instance Segmentation of Evolving Indoor 3D Scenes](rescene4d_temporally_consistent_semantic_instance_segmentation_of_evolving_indoo.md)
+- [RESBev: Making BEV Perception More Robust](resbev_making_bev_perception_more_robust.md)
+- [Counting Stacked Objects](../../ICCV2025/autonomous_driving/counting_stacked_objects.md)
+- [Learning Mutual View Information Graph for Adaptive Adversarial Collaborative Perception](learning_mutual_view_information_graph_for_adaptive_adversarial_collaborative_pe.md)
+- [ST4VLA: Spatially Guided Training for Vision-Language-Action Models](../../ICLR2026/autonomous_driving/st4vla_spatially_guided_training_for_vision-language-action_models.md)
+
+<!-- RELATED:END -->

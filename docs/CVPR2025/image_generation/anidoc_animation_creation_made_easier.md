@@ -121,3 +121,15 @@ $$I_{bin} = egin{cases} 1, & I_{gray} > 	au + \epsilon \ 0, & 	ext{otherwise} \
 ## 总结与展望
 
 AniDoc 通过结合显式对应关系引导、针对性数据增强和稀疏参考训练，显著提升了动画线稿着色的质量和实用性。FID 从75.91降至54.33，证明了对应关系引导的关键作用。该系统可直接集成到现有动画制作流水线中，大幅降低上色环节的人工成本。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+- [Fractals made Practical: Denoising Diffusion as Partitioned Iterated Function Systems](fractals_made_practical_denoising_diffusion_as_partitioned_iterated_function_sys.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [Free-viewpoint Human Animation with Pose-correlated Reference Selection](free-viewpoint_human_animation_with_pose-correlated_reference_selection.md)
+- [Aligning Text to Image in Diffusion Models is Easier Than You Think](../../NeurIPS2025/image_generation/aligning_text_to_image_in_diffusion_models_is_easier_than_you_think.md)
+
+<!-- RELATED:END -->

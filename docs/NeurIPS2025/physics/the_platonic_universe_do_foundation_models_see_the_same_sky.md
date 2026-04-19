@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 6种架构×4种模态覆盖广，但数据量有限
 - 写作质量: ⭐⭐⭐⭐⭐ 叙述优美，从柏拉图洞穴寓言到天文观测的类比精彩
 - 价值: ⭐⭐⭐⭐ 对天文基础模型社区的策略方向有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finetuning Stellar Spectra Foundation Models with LoRA](../../ICML2025/physics/finetuning_stellar_spectra_foundation_models_with_lora.md)
+- [FAIR Universe HiggsML Uncertainty Dataset and Competition](fair_universe_higgsml_uncertainty_dataset_and_competition.md)
+- [Transfer Learning Beyond the Standard Model](transfer_learning_beyond_the_standard_model.md)
+- [FEAT: Free Energy Estimators with Adaptive Transport](feat_free_energy_estimators_with_adaptive_transport.md)
+- [Knowledge is Overrated: A Zero-Knowledge ML and Cryptographic Hashing-Based Framework for Verifiable, Low Latency Inference at the LHC](knowledge_is_overrated_a_zero-knowledge_machine_learning_and_cryptographic_hashi.md)
+
+<!-- RELATED:END -->

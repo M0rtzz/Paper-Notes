@@ -89,3 +89,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 模拟+真实/鲁棒性/消融/微调全覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析深入，实验设计精心
 - 价值: ⭐⭐⭐⭐⭐ 显著推进了体化预训练的前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning](memo_training_memory-efficient_embodied_agents_with_reinforcement_learning.md)
+- [EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data](egobridge_domain_adaptation_for_generalizable_imitation_from_egocentric_human_da.md)
+- [Towards Provable Emergence of In-Context Reinforcement Learning](towards_provable_emergence_of_in-context_reinforcement_learning.md)
+- [Octopus: Embodied Vision-Language Programmer from Environmental Feedback](../../ECCV2024/reinforcement_learning/octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
+- [Self-Improving Embodied Foundation Models](self-improving_embodied_foundation_models.md)
+
+<!-- RELATED:END -->

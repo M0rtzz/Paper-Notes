@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ LOSO评估、两个数据集、详细消融、崩塌可视化证据
 - 写作质量: ⭐⭐⭐⭐ 框架介绍清晰，讨论部分对泛化场景的分析有深度
 - 价值: ⭐⭐⭐ Workshop论文，实验规模偏小，但核心设计原则有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning](../../NeurIPS2025/human_understanding/k-decore_facilitating_knowledge_transfer_in_continual_structured_knowledge_reaso.md)
+- [One-Shot Knowledge Transfer for Scalable Person Re-Identification](../../ICCV2025/human_understanding/one-shot_knowledge_transfer_for_scalable_person_re-identification.md)
+- [ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning](../../CVPR2025/human_understanding/maniptrans_efficient_dexterous_bimanual_manipulation_transfer_via_residual_learn.md)
+- [Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](graph2eval_multimodal_task_generation_agents.md)
+- [Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment](../../AAAI2026/human_understanding/dexterous_manipulation_transfer_via_progressive_kinematic-dynamic_alignment.md)
+
+<!-- RELATED:END -->

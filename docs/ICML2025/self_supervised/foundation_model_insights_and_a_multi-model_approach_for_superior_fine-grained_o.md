@@ -185,3 +185,15 @@ RAM-APL 在所有数据集的所有采样率下均优于所有基线方法。
 | 写作质量 | 8/10 | 结构清晰，观察→动机→方法的故事线连贯 |
 | 实用价值 | 7/10 | 方法简单易实现，但适用场景限于细粒度分类 |
 | **综合** | **7.5/10** | 扎实的实证工作，方法简洁有效，实验充分 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Bayesian Model Selection Criterion for Selecting Pretraining Checkpoints](a_bayesian_model_selection_criterion_for_selecting_pretraining_checkpoints.md)
+- [Griffin: Towards a Graph-Centric Relational Database Foundation Model](griffin_towards_a_graph-centric_relational_database_foundation_model.md)
+- [Uncertainty-Guided Model Selection for Tabular Foundation Models in Biomolecule Efficacy Prediction](../../NeurIPS2025/self_supervised/uncertainty-guided_model_selection_for_tabular_foundation_models_in_biomolecule_.md)
+- [What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models](what_has_a_foundation_model_found_using_inductive_bias_to_probe_for_world_models.md)
+- [MOMO: Mars Orbital Model — Foundation Model for Mars Orbital Applications](../../CVPR2026/self_supervised/momo_mars_orbital_model_foundation_model_for_mars_orbital_applications.md)
+
+<!-- RELATED:END -->

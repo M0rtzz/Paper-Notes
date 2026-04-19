@@ -122,3 +122,15 @@ Unseen 设定下优势更明显：Full-view AUC 0.774 vs PointRefer 0.755，MAE 
 ## 评分
 
 ⭐⭐⭐⭐ — 任务定义新颖且数据集构建扎实，技术方案合理但创新度中等（主要是模块组合），多视角和 unseen 设定的完整性值得认可。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding](great_geometry-intention_collaborative_inference_for_open-vocabulary_3d_object_a.md)
+- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
+- [Empowering Large Language Models with 3D Situation Awareness](empowering_large_language_models_with_3d_situation_awareness.md)
+- [IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments](iaao_interactive_affordance_learning_for_articulated_objects_in_3d_environments.md)
+- [GEAL: Generalizable 3D Affordance Learning with Cross-Modal Consistency](geal_generalizable_3d_affordance_learning_with_cross-modal_consistency.md)
+
+<!-- RELATED:END -->

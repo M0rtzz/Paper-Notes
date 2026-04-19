@@ -10,39 +10,39 @@ description: >-
 
 **📹 ICCV2025** · **20** 篇论文解读
 
-**[3Dsrbench A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)**
+**[3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)**
 
 :   提出首个全面的3D空间推理基准3DSRBench，包含2,772个人工标注的VQA对（12种问题类型），通过平衡数据分布和新型FlipEval策略实现鲁棒评估，揭示SOTA LMM（包括GPT-4o、Gemini）在3D空间推理上远落后于人类水平（≈52% vs 95.7%），且在非常规视角下性能显著退化。
 
-**[A Conditional Probability Framework For Compositional Zero-Shot Learning](a_conditional_probability_framework_for_compositional_zero-shot_learning.md)**
+**[A Conditional Probability Framework for Compositional Zero-shot Learning](a_conditional_probability_framework_for_compositional_zero-shot_learning.md)**
 
 :   本文提出条件概率框架CPF，将组合零样本学习中的组合似然分解为物体似然和条件属性似然，通过文本增强的物体学习和物体引导的属性学习模块显式建模属性-物体的语义约束和上下文依赖，在UT-Zappos50K上AUC提升17.9%，在MIT-States上Unseen Accuracy提升5.5%。
 
-**[A Conditional Probability Framework For Compositional Zerosh](a_conditional_probability_framework_for_compositional_zerosh.md)**
+**[A Conditional Probability Framework for Compositional Zero-shot Learning](a_conditional_probability_framework_for_compositional_zerosh.md)**
 
 :   提出条件概率框架（CPF），将组合识别概率分解为对象似然 p(o|x) 和属性条件似然 p(a|o,x) 两部分，通过文本增强对象学习和对象引导属性学习两个模块显式建模属性-对象依赖关系，在三个 CZSL 基准上全面超越 SOTA。
 
-**[A Real-World Display Inverse Rendering Dataset](a_real-world_display_inverse_rendering_dataset.md)**
+**[A Real-world Display Inverse Rendering Dataset](a_real-world_display_inverse_rendering_dataset.md)**
 
 :   本文构建了首个基于LCD显示器-相机系统的真实世界逆渲染数据集，包含16个不同材质物体在OLAT照明模式下的立体偏振图像及高精度几何真值，并提出了一个简单有效的显示器逆渲染基线方法，超越了现有逆渲染方法。
 
-**[A Realworld Display Inverse Rendering Dataset](a_realworld_display_inverse_rendering_dataset.md)**
+**[A Real-world Display Inverse Rendering Dataset](a_realworld_display_inverse_rendering_dataset.md)**
 
 :   构建了首个基于LCD显示器-相机系统的真实世界逆渲染数据集，包含16个物体的OLAT（逐像素点亮）采集图像、偏振信息和GT几何，并提出简单有效的基线方法（基于Cook-Torrance BRDF的可微渲染优化），在150秒内超越现有逆渲染方法。
 
-**[Batclip Bimodal Online Test-Time Adaptation For Clip](batclip_bimodal_online_test-time_adaptation_for_clip.md)**
+**[BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](batclip_bimodal_online_test-time_adaptation_for_clip.md)**
 
 :   提出BATCLIP，一种针对CLIP的双模态在线测试时自适应（TTA）方法，通过同时适应视觉编码器和文本编码器的LayerNorm参数，引入投影匹配损失和类间可分性损失来增强图文特征对齐和类别区分度，在CIFAR-10C/100C/ImageNet-C上达到SOTA效果。
 
-**[Discopatch Taming Adversarially-Driven Batch Statistics For Improved Out-Of-Dist](discopatch_taming_adversarially-driven_batch_statistics_for_improved_out-of-dist.md)**
+**[DisCoPatch: Taming Adversarially-driven Batch Statistics for Improved Out-of-Distribution Detection](discopatch_taming_adversarially-driven_batch_statistics_for_improved_out-of-dist.md)**
 
 :   提出DisCoPatch框架，利用对抗性VAE中BatchNorm对批统计量的内在偏向性来区分ID和OOD样本，通过推理时将同一图像的多个patch组成batch来保证分布一致性，在协变量偏移OOD检测（ImageNet-1K(-C) 95.5% AUROC）和近分布OOD检测（95.0% AUROC）上达到SOTA，模型仅25MB且延迟低一个数量级。
 
-**[Dista-Net Dynamic Closely-Spaced Infrared Small Target Unmixing](dista-net_dynamic_closely-spaced_infrared_small_target_unmixing.md)**
+**[DISTA-Net: Dynamic Closely-Spaced Infrared Small Target Unmixing](dista-net_dynamic_closely-spaced_infrared_small_target_unmixing.md)**
 
 :   DISTA-Net提出动态深度展开网络，将ISTA稀疏重建中的非线性变换和阈值参数从静态改为根据输入自适应生成，实现密集红外小目标的首个深度学习解混方法，并建立了包含数据集、评估指标和工具包的首个开源生态。
 
-**[Forcennet Foreground-Centric Network For Document Image Rectification](forcennet_foreground-centric_network_for_document_image_rectification.md)**
+**[ForCenNet: Foreground-Centric Network for Document Image Rectification](forcennet_foreground-centric_network_for_document_image_rectification.md)**
 
 :   提出以前景为中心的文档矫正网络ForCenNet，通过前景标签生成、掩码引导Transformer解码器和曲率一致性损失三大创新，仅需无畸变图像即可高效训练，在DocUNet、DIR300、WarpDoc、DocReal四个基准上达到SOTA。
 
@@ -50,42 +50,42 @@ description: >-
 
 :   提出一种利用条件图像生成模型（FLUX + ControlNet）合成动物 3D 姿态和形状训练数据的可扩展流水线，生成百万级 GenZoo 数据集，仅用合成数据训练即在真实世界基准上达到 SOTA。
 
-**[Hiero Understanding The Hierarchy Of Human Behavior Enhances Reasoning On Egocen](hiero_understanding_the_hierarchy_of_human_behavior_enhances_reasoning_on_egocen.md)**
+**[HiERO: Understanding the Hierarchy of Human Behavior Enhances Reasoning on Egocentric Videos](hiero_understanding_the_hierarchy_of_human_behavior_enhances_reasoning_on_egocen.md)**
 
 :   提出 HiERO，一种弱监督的层次化图架构，通过对齐视频片段与叙述文本来学习功能性活动线索的层次结构，使视频片段特征编码多尺度的行为依赖关系，在程序学习任务的零样本评估中大幅超越全监督方法（EgoProceL 上 F1 提升 +12.5%），在视频-文本对齐基准上也达到了 SOTA。
 
-**[Imbalance In Balance Online Concept Balancing In Generation Models](imbalance_in_balance_online_concept_balancing_in_generation_models.md)**
+**[Imbalance in Balance: Online Concept Balancing in Generation Models](imbalance_in_balance_online_concept_balancing_in_generation_models.md)**
 
 :   通过精心设计的因果实验揭示了数据分布（而非模型规模或数据量）是扩散模型概念组合能力的决定性因素，并提出 IMBA Loss——一种在线的、概念级别的均衡损失函数，通过条件与无条件分布差异（IMBA 距离）自适应调整 token 级损失权重，只需几行代码修改即可显著提升模型的多概念生成能力。
 
-**[Intersyn Interleaved Learning For Dynamic Motion Synthesis In The Wild](intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)**
+**[InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)**
 
 :   提出 InterSyn 框架，通过交错学习策略（Interleaved Learning）将单人与多人动作在统一序列中联合建模，配合相对协调精修（REC）模块，生成更自然、更协调的人体交互动作，在 InterHuman 测试集上 FID 较 FreeMotion 降低 6.1%，R Precision Top-1 提升 2.8%。
 
-**[Odp-Bench Benchmarking Out-Of-Distribution Performance Prediction](odp-bench_benchmarking_out-of-distribution_performance_prediction.md)**
+**[ODP-Bench: Benchmarking Out-of-Distribution Performance Prediction](odp-bench_benchmarking_out-of-distribution_performance_prediction.md)**
 
 :   构建了首个全面的OOD性能预测基准ODP-Bench，涵盖29个OOD数据集、10种预测算法和1,444个预训练模型，揭示现有算法在合成corruption上表现较好但在自然分布偏移上普遍失效的关键发现。
 
-**[Omnidiff A Comprehensive Benchmark For Fine-Grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)**
+**[OmniDiff: A Comprehensive Benchmark for Fine-grained Image Difference Captioning](omnidiff_a_comprehensive_benchmark_for_fine-grained_image_difference_captioning.md)**
 
 :   提出包含324个多样场景（真实+3D合成）的细粒度图像差异描述数据集 OmniDiff，并设计即插即用的多尺度差异感知（MDP）模块嵌入 MLLM 构建 M3Diff 模型，在 OmniDiff 及多个公开基准上取得 SOTA。
 
-**[On The Robustness Tradeoff In Fine-Tuning](on_the_robustness_tradeoff_in_fine-tuning.md)**
+**[On the Robustness Tradeoff in Fine-Tuning](on_the_robustness_tradeoff_in_fine-tuning.md)**
 
 :   首次系统研究微调过程中对抗鲁棒性与准确率的权衡关系，在231个模型、7种微调策略和6个数据集上揭示：(1)微调初期鲁棒性先升后降；(2)不同PEFT策略和任务复杂度导致不同的Pareto前沿；(3)OOD鲁棒性不存在类似权衡而是紧跟准确率变化。
 
-**[Shadowhack Hacking Shadows Via Luminance-Color Divide And Conquer](shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md)**
+**[ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer](shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md)**
 
 :   提出ShadowHack框架，将阴影去除分解为亮度恢复和颜色修复两个子任务，通过带有纠偏外展注意力的LRNet恢复亮度和纹理，再用跨注意力驱动的CRNet重建准确颜色，在ISTD+和SRD数据集上取得SOTA。
 
-**[Spectral Sensitivity Estimation With An Uncalibrated Diffraction Grating](spectral_sensitivity_estimation_with_an_uncalibrated_diffraction_grating.md)**
+**[Spectral Sensitivity Estimation with an Uncalibrated Diffraction Grating](spectral_sensitivity_estimation_with_an_uncalibrated_diffraction_grating.md)**
 
 :   提出一种使用未标定衍射光栅片估计相机光谱灵敏度的实用方法，通过联合估计光谱灵敏度和光栅效率，仅需一次已知光谱光源拍摄即可获得准确的闭式解，性能显著优于传统色卡方法且设备成本不到5美元。
 
-**[Supercharging Floorplan Localization With Semantic Rays](supercharging_floorplan_localization_with_semantic_rays.md)**
+**[Supercharging Floorplan Localization with Semantic Rays](supercharging_floorplan_localization_with_semantic_rays.md)**
 
 :   提出一种语义感知的平面图定位框架，将语义光线预测与深度光线融合为结构-语义概率体，配合由粗到细策略，在两个标准数据集上实现了2-3倍的性能提升。
 
-**[Svtrv2 Ctc Beats Encoder-Decoder Models In Scene Text Recognition](svtrv2_ctc_beats_encoder-decoder_models_in_scene_text_recognition.md)**
+**[SVTRv2: CTC Beats Encoder-Decoder Models in Scene Text Recognition](svtrv2_ctc_beats_encoder-decoder_models_in_scene_text_recognition.md)**
 
 :   提出 SVTRv2，通过多尺寸resize策略（MSR）、特征重排模块（FRM）和语义引导模块（SGM）三大设计，让 CTC 模型首次在多场景基准上全面超越编码器-解码器方法，同时保持推理速度优势。

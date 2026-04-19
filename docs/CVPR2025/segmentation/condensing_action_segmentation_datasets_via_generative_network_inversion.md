@@ -119,3 +119,15 @@ $$z^* = \arg\min_{z} \| D(z, a, c) - x \|^2$$
 ## 总结与展望
 
 本文首次将数据集蒸馏技术应用于时序动作分割任务，通过TCA生成模型和网络反演实现了极致的数据压缩。在Breakfast和50Salads数据集上分别实现了636倍和约1150倍的压缩比，同时保留了可观的分割性能。该方法为数据高效的视频理解研究开辟了新方向，未来可以扩展到其他时序任务和更大规模的数据集。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation](../../ICML2025/segmentation/actionpiece_contextually_tokenizing_action_sequences_for_generative_recommendati.md)
+- [Generative Video Propagation](generative_video_propagation.md)
+- [Golden Cudgel Network for Real-Time Semantic Segmentation](golden_cudgel_network_for_real-time_semantic_segmentation.md)
+- [RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)
+- [Joint Self-Supervised Video Alignment and Action Segmentation](../../ICCV2025/segmentation/joint_self-supervised_video_alignment_and_action_segmentation.md)
+
+<!-- RELATED:END -->

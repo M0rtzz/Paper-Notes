@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、全面消融、骨干对比，但事件数据为模拟生成
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰（响应时间公式化），架构图直观，评估指标完善
 - 价值: ⭐⭐⭐⭐⭐ 将响应时间提升到全新量级，高度实用导向，对自动驾驶安全有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RTMap: Real-Time Recursive Mapping with Change Detection and Localization](../../ICCV2025/autonomous_driving/rtmap_real-time_recursive_mapping_with_change_detection_and_localization.md)
+- [Hybrid Quantum-Classical Multi-Agent Pathfinding](hybrid_quantum-classical_multi-agent_pathfinding.md)
+- [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](../../NeurIPS2025/autonomous_driving/chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
+- [Spatio-Temporal Graphs Beyond Grids: Benchmark for Maritime Anomaly Detection](../../NeurIPS2025/autonomous_driving/spatio-temporal_graphs_beyond_grids_benchmark_for_maritime_anomaly_detection.md)
+- [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](../../NeurIPS2025/autonomous_driving/self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
+
+<!-- RELATED:END -->

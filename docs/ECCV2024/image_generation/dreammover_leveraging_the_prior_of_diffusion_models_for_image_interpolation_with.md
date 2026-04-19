@@ -168,3 +168,15 @@ $$Q = Q^\delta, \quad K = (K^0 \oplus K^1), \quad V = (V^0 \oplus V^1)$$
 - 实验充分度：⭐⭐⭐⭐ — 自建基准 + 多方法对比 + 用户研究
 - 实用价值：⭐⭐⭐⭐ — 短视频制作场景有直接应用价值
 - 总体推荐：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](../../CVPR2025/image_generation/eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+- [COIN: Control-Inpainting Diffusion Prior for Human and Camera Motion Estimation](coin_control-inpainting_diffusion_prior_for_human_and_camera_motion_estimation.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Diffusion-based Image-to-Image Translation by Noise Correction via Prompt Interpolation](diffusion-based_image-to-image_translation_by_noise_correction_via_prompt_interp.md)
+- [M2D2M: Multi-Motion Generation from Text with Discrete Diffusion Models](m2d2m_multi-motion_generation_from_text_with_discrete_diffusion_models.md)
+
+<!-- RELATED:END -->

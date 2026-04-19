@@ -131,3 +131,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 研究规模大（1,400+ 检查点）、实验设计严谨（Parc 并行训练消除混淆变量）、核心发现具有重要理论意义（行为阶段跨架构一致）。统一了 n-gram 过拟合和语义相似度两条研究线索。主要局限是观察性研究缺乏因果机制解释，且非 Transformer 架构的测试规模有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nemotron-CLIMB: CLustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training](nemotron-climb_clustering-based_iterative_data_mixture_bootstrapping_for_languag.md)
+- [Memory Mosaics at Scale](memory_mosaics_at_scale.md)
+- [Through the River: Understanding the Benefit of Schedule-Free Methods for Language Model Training](through_the_river_understanding_the_benefit_of_schedule-free_methods_for_languag.md)
+- [How Does Sequence Modeling Architecture Influence Base Capabilities of Pre-trained Language Models?](how_does_sequence_modeling_architecture_influence_base_capabilities_of_pre-train.md)
+- [Metadata Conditioning Accelerates Language Model Pre-training](../../ICML2025/llm_pretraining/metadata_conditioning_accelerates_language_model_pre-training.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 
 ## 补充说明
 - 模型编辑的“双刃剑”效应对所有参数修改类的编辑方法都成立，建议在 Agent 部署前进行行为安全审计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAKE: Steering Activations for Knowledge Editing](../../ACL2025/knowledge_editing/sake_steering_activations_for_knowledge_editing.md)
+- [Multiplicative Orthogonal Sequential Editing for Language Models (MOSE)](multiplicative_orthogonal_sequential_editing_for_language_models.md)
+- [DocMEdit: Towards Document-Level Model Editing](../../ACL2025/knowledge_editing/docmedit_towards_document-level_model_editing.md)
+- [Energy-Regularized Sequential Model Editing on Hyperspheres](../../ICLR2026/knowledge_editing/energy-regularized_sequential_model_editing_on_hyperspheres.md)
+- [Fine-tuning Done Right in Model Editing](../../ICLR2026/knowledge_editing/fine-tuning_done_right_in_model_editing.md)
+
+<!-- RELATED:END -->

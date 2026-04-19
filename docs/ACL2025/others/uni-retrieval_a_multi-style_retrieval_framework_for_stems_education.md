@@ -135,3 +135,15 @@ SER 数据集上的检索性能:
 - 实验充分度: ⭐⭐⭐ 主实验覆盖面广但缺少一些重要的消融（Prompt Bank 大小、top-n 的影响等）
 - 写作质量: ⭐⭐⭐ 整体清晰但有些地方描述不够精炼，部分公式符号不一致
 - 价值: ⭐⭐⭐⭐ 新数据集+新任务定义对教育AI和多风格检索都有推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
+- [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+- [Multi-Facet Blending for Faceted Query-by-Example Retrieval](multi-facet_blending_for_faceted_query-by-example_retrieval.md)
+- [HASH-RAG: Bridging Deep Hashing with Retriever for Efficient, Fine Retrieval and Augmented Generation](hash-rag_bridging_deep_hashing_with_retriever_for_efficient_fine_retrieval_and_a.md)
+
+<!-- RELATED:END -->

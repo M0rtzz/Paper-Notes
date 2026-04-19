@@ -168,3 +168,15 @@ $$\mathcal{L}_H = \mathbb{E}_d [D_1(\boldsymbol{r}(d), \boldsymbol{r}^*(d)) + \a
 - **实验充分性** ⭐⭐⭐⭐⭐：5 个数据集 × 3 个骨干模型 × 混合训练 + OOD + Best-of-N + RLHF 的全面评估
 - **理论深度** ⭐⭐⭐：直觉性解释有说服力但缺乏严格证明
 - **实用价值** ⭐⭐⭐⭐：改进简单、即插即用，对奖励模型训练实践有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Robustness of Reward Models for Language Model Alignment](../../ICML2025/llm_alignment/on_the_robustness_of_reward_models_for_language_model_alignment.md)
+- [Chasing the Tail: Effective Rubric-based Reward Modeling for Large Language Model Post-Training](../../ICLR2026/llm_alignment/chasing_the_tail_effective_rubric-based_reward_modeling_for_large_language_model.md)
+- [MPO: Multilingual Safety Alignment via Reward Gap Optimization](mpo_multilingual_safety_alignment.md)
+- [Diffusion Model as a Noise-Aware Latent Reward Model for Step-Level Preference Optimization](../../NeurIPS2025/llm_alignment/diffusion_model_as_a_noiseaware_latent_reward_model_for_step.md)
+- [GVPO: Group Variance Policy Optimization for Large Language Model Post-Training](../../NeurIPS2025/llm_alignment/gvpo_group_variance_policy_optimization_for_large_language_model_post-training.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 tokenizer 评估、多数据集、多规模模型、消融实验、解码效率分析，较为全面
 - 写作质量: ⭐⭐⭐⭐ 从 SLA 类比切入叙述流畅，方法动机清晰；图表丰富
 - 价值: ⭐⭐⭐⭐ 对阿拉伯语及其他低资源语言的 LLM 适配有直接参考价值，完整开源增加了社区影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Vocabulary Size Improves Large Language Models](large_vocabulary_size_improves_large_language_models.md)
+- [TokAlign: Efficient Vocabulary Adaptation via Token Alignment](tokalign_vocab_adaptation.md)
+- [FR-Spec: Accelerating Large-Vocabulary Language Models via Frequency-Ranked Speculative Sampling](fr_spec_speculative_sampling.md)
+- [Lossless Vocabulary Reduction for Auto-Regressive Language Models](../../ICLR2026/llm_pretraining/lossless_vocabulary_reduction_for_auto-regressive_language_models.md)
+- [Synthesizing Post-Training Data for LLMs through Multi-Agent Simulation](synthesizing_post-training_data_for_llms_through_multi-agent_simulation.md)
+
+<!-- RELATED:END -->

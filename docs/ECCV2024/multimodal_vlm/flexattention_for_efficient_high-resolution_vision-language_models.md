@@ -172,3 +172,15 @@ FlexAttention的TFLOPs比LLaVA-HD降低约31%，比LLaVA-XAttn降低约37%。实
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了高分辨率/通用/领域专用多类基准，消融实验充分（选择策略、分辨率、物体大小），但缺少更大模型和更多架构的验证
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，动机阐述流畅，图示直观，但相关工作部分对CogAgent的对比实验设置说明可以更清楚
 - 价值: ⭐⭐⭐⭐ 在高分辨率VLM这个实际痛点上提出了有效的效率-性能trade-off方案，40%计算量降低+性能提升是实用的工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-shot Object Counting with Good Exemplars (VA-Count)](zero-shot_object_counting_with_good_exemplars.md)
+- [Merlin: Empowering Multimodal LLMs with Foresight Minds](merlin_empowering_multimodal_llms_with_foresight_minds.md)
+- [A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)
+- [UniCode: Learning a Unified Codebook for Multimodal Large Language Models](unicode_learning_a_unified_codebook_for_multimodal_large_language_models.md)
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+
+<!-- RELATED:END -->

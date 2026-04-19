@@ -146,3 +146,15 @@ Model Swarms **无需任何梯度更新或监督训练**。它完全依赖效用
 - 实验充分度: ⭐⭐⭐⭐⭐ （4 类适配目标、9+8+3+16 个评估设置、12+2 个基线、丰富的消融分析）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，类比精准，分析深入）
 - 价值: ⭐⭐⭐⭐ （低数据无训练适配 LLM 的实用价值高，但计算成本和初始专家选择是落地瓶颈）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ask a Strong LLM Judge when Your Reward Model is Uncertain](../../NeurIPS2025/llm_alignment/ask_a_strong_llm_judge_when_your_reward_model_is_uncertain.md)
+- [Upcycling Instruction Tuning from Dense to Mixture-of-Experts via Parameter Merging](../../ACL2025/llm_alignment/upcycling_instruction_tuning_from_dense_to_mixture-of-experts_via_parameter_merg.md)
+- [On the Robustness of Reward Models for Language Model Alignment](on_the_robustness_of_reward_models_for_language_model_alignment.md)
+- [AlphaPO: Reward Shape Matters for LLM Alignment](alphapo_reward_shape_matters_for_llm_alignment.md)
+- [Improving LLM Safety Alignment with Dual-Objective Optimization](improving_llm_safety_alignment_with_dual-objective_optimization.md)
+
+<!-- RELATED:END -->

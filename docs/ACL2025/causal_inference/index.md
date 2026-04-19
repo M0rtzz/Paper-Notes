@@ -10,30 +10,30 @@ description: >-
 
 **💬 ACL2025** · **7** 篇论文解读
 
-**[Causal Graph Based Event Reasoning Using Semantic Relation Experts](causal_graph_based_event_reasoning_using_semantic_relation_experts.md)**
+**[Causal Graph based Event Reasoning using Semantic Relation Experts](causal_graph_based_event_reasoning_using_semantic_relation_experts.md)**
 
 :   提出基于四类语义关系专家（时间、篇章、条件、常识）多轮协作讨论的因果事件图生成框架，在零样本设置下于事件预测、事件预报等多个下游任务上取得与微调模型竞争的结果，并提供可解释的因果事件链。
 
-**[Causalrag Integrating Causal Graphs Into Retrieval-Augmented Generation](causalrag_integrating_causal_graphs_into_retrieval-augmented_generation.md)**
+**[CausalRAG: Integrating Causal Graphs into Retrieval-Augmented Generation](causalrag_integrating_causal_graphs_into_retrieval-augmented_generation.md)**
 
 :   提出 CausalRAG，将因果图集成到 RAG 的检索过程中——从文档构建文本图并识别因果关系，在查询时通过因果路径发现和因果摘要生成来检索上下文，在文档问答中显著提升上下文精度（92.86%）和检索召回率。
 
-**[Fitcf A Framework For Automatic Feature Importance-Guided Counterfactual Example](fitcf_a_framework_for_automatic_feature_importance-guided_counterfactual_example.md)**
+**[FitCF: A Framework for Automatic Feature Importance-guided Counterfactual Example Generation](fitcf_a_framework_for_automatic_feature_importance-guided_counterfactual_example.md)**
 
 :   提出 FitCF 框架，利用 BERT 特征归因方法（LIME/IG/SHAP等）提取重要词来引导 LLM 在 zero-shot 下生成反事实样本（ZeroCF），再经标签翻转验证筛选后作为 few-shot 示例，在新闻分类和情感分析任务上一致性超越 Polyjuice、BAE、FIZLE 三种基线。
 
-**[Iris An Iterative And Integrated Framework](iris_an_iterative_and_integrated_framework.md)**
+**[IRIS: An Iterative and Integrated Framework for Verifiable Causal Discovery](iris_an_iterative_and_integrated_framework.md)**
 
 :   提出 IRIS 框架——仅需一组初始变量名作为输入，即可自动检索文档、提取变量值构建结构化数据、通过混合因果发现（GES 统计算法 + LLM 因果关系验证）构建因果图，并通过缺失变量提议组件迭代扩展变量集合，放松了传统方法的无环和因果充分性假设，在 Cancer、Diabetes、Obesity、ADNI、Insurance 等 6 个数据集上 F1 全面超越 0-shot/CoT/RAG 基线。
 
-**[Leveraging Variation Theory In Counterfactual Data Augmentation For Optimized Ac](leveraging_variation_theory_in_counterfactual_data_augmentation_for_optimized_ac.md)**
+**[Leveraging Variation Theory in Counterfactual Data Augmentation for Optimized Active Learning](leveraging_variation_theory_in_counterfactual_data_augmentation_for_optimized_ac.md)**
 
 :   本文将变异理论(Variation Theory)引入反事实数据增强(CDA)框架，通过保留神经符号模式的方式使用LLM生成反事实样本，并结合三级过滤流水线筛选高质量数据，用于优化主动学习中的少样本文本分类，在多个数据集上取得显著F1提升。
 
-**[Llm Causal Discovery Reliability](llm_causal_discovery_reliability.md)**
+**[On the Reliability of Large Language Models for Causal Discovery](llm_causal_discovery_reliability.md)**
 
 :   利用开源 LLM（OLMo、BLOOM）可访问的预训练语料库，实证验证了"因果鹦鹉"假说——LLM 识别因果关系的能力与预训练数据中该关系的出现频率高度相关（Spearman r=0.9），且错误因果关系的存在和上下文变化都会显著影响预测可靠性。
 
-**[Reasoning Is All You Need For Video Generalization A Counterfactual Benchmark Wi](reasoning_is_all_you_need_for_video_generalization_a_counterfactual_benchmark_wi.md)**
+**[Reasoning is All You Need for Video Generalization: A Counterfactual Benchmark with Sub-question Evaluation](reasoning_is_all_you_need_for_video_generalization_a_counterfactual_benchmark_wi.md)**
 
 :   提出 COVER（COunterfactual VidEo Reasoning），一个多维度视频反事实推理 benchmark，将评估任务按抽象-具体和感知-认知两个维度分为四象限共 13 类任务，并通过将复杂问题分解为子问题（必要条件）来揭示——子问题准确率与反事实推理能力强相关，提升推理能力是改善视频理解鲁棒性的关键。

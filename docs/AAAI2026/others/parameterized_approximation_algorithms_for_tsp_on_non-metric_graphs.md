@@ -138,3 +138,15 @@ tags:
 - **实用性**: ⭐⭐⭐ — 理论贡献突出，但缺乏实验验证
 - **表达清晰度**: ⭐⭐⭐⭐ — 结构清晰，符号定义明确
 - **综合评分**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finding Diverse Solutions Parameterized by Cliquewidth](finding_diverse_solutions_parameterized_by_cliquewidth.md)
+- [Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](../../NeurIPS2025/others/improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)
+- [Scalable Random Wavelet Features: Efficient Non-Stationary Kernel Approximation with Convergence Guarantees](../../ICLR2026/others/scalable_random_wavelet_features_efficient_non-stationary_kernel_approximation_w.md)
+- [Improved Differentially Private Algorithms for Rank Aggregation](improved_differentially_private_algorithms_for_rank_aggregation.md)
+- [Boosting Adversarial Transferability via Ensemble Non-Attention](boosting_adversarial_transferability_via_ensemble_non-attention.md)
+
+<!-- RELATED:END -->

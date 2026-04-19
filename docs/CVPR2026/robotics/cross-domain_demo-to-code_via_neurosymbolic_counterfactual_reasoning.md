@@ -140,3 +140,15 @@ NeSyCR（Neurosymbolic Counterfactual Reasoning）将跨域适应建模为反事
 - 实验充分度: ⭐⭐⭐⭐⭐ — 440 场景系统化实验 + 真实机器人验证 + 细粒度控制变量分析
 - 写作质量: ⭐⭐⭐⭐ — 形式化清晰，符号表述严谨，案例讲解直观
 - 价值: ⭐⭐⭐⭐ — 为跨域机器人编程提供了可验证的适应框架，方向重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeSyPr: Neurosymbolic Proceduralization For Efficient Embodied Reasoning](../../NeurIPS2025/robotics/nesypr_neurosymbolic_proceduralization_for_efficient_embodied_reasoning.md)
+- [One Demo Is All It Takes: Planning Domain Derivation with LLMs from A Single Demonstration](../../ICLR2026/robotics/one_demo_is_all_it_takes_planning_domain_derivation_with_llms_from_a_single_demo.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning](fast-thinkact_efficient_vision-language-action_reasoning_via_verbalizable_latent.md)
+- [MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent](mergevla_crossskill_model_merging_toward_a_general.md)
+
+<!-- RELATED:END -->

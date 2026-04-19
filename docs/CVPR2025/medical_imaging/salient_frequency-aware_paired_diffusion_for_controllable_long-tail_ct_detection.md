@@ -117,3 +117,15 @@ tags:
 
 <!-- 实验硬件：NVIDIA H100，训练使用 AdamW + cosine lr decay + EMA -->
 <!-- 所有正样本每 epoch 全部包含，负样本平衡采样 -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](../../AAAI2026/medical_imaging/guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
+- [Toward Long-Tailed Online Anomaly Detection through Class-Agnostic Concepts](../../ICCV2025/medical_imaging/toward_long-tailed_online_anomaly_detection_through_class-agnostic_concepts.md)
+- [Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images](../../ICML2025/medical_imaging/context_matters_query-aware_dynamic_long_sequence_modeling_of_gigapixel_images.md)
+- [AA-CLIP: Enhancing Zero-Shot Anomaly Detection via Anomaly-Aware CLIP](aa-clip_enhancing_zero-shot_anomaly_detection_via_anomaly-aware_clip.md)
+- [FDP: A Frequency-Decomposition Preprocessing Pipeline for Unsupervised Anomaly Detection in Brain MRI](../../AAAI2026/medical_imaging/fdp_a_frequency-decomposition_preprocessing_pipeline_for_unsupervised_anomaly_de.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ Auto-GAS 的整体流程分为两个阶段：(1) **代理发现阶段**——构
 - 实验充分度: ⭐⭐⭐ 多任务多数据集评估，消融实验较完整，但缺少更多定量对比
 - 写作质量: ⭐⭐⭐ 整体清晰，代理搜索空间的描述较抽象
 - 价值: ⭐⭐⭐⭐ 110 倍加速的免训练 GAS 有显著实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search](../../ICLR2026/others/enhancing_generative_auto_bidding.md)
+- [AttnZero: Efficient Attention Discovery for Vision Transformers](attnzero_efficient_attention_discovery_for_vision_transformers.md)
+- [Loss Functions for Predictor-based Neural Architecture Search](../../ICCV2025/others/loss_functions_for_predictor-based_neural_architecture_search.md)
+- [FreeAugment: Data Augmentation Search Across All Degrees of Freedom](freeaugment_data_augmentation_search_across_all_degrees_of_freedom.md)
+- [Free-Viewpoint Video of Outdoor Sports Using a Flying Camera](free-viewpoint_video_of_outdoor_sports_using_a_flying_camera.md)
+
+<!-- RELATED:END -->

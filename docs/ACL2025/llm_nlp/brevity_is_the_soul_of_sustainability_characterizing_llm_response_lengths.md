@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12 模型 × 5 数据集 × 6+ 策略，多维度分析（长度/质量/能耗/信息类别）
 - 写作质量: ⭐⭐⭐⭐ 标题巧妙，"经济舱 vs 商务舱"类比生动，论述系统
 - 价值: ⭐⭐⭐⭐ 对绿色 AI 实践有直接指导意义，6 类信息框架可被后续研究复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive](theory_of_llm_sampling.md)
+- [Characterizing the Expressivity of Fixed-Precision Transformer Language Models](../../NeurIPS2025/llm_nlp/characterizing_the_expressivity_of_fixed-precision_transformer_language_models.md)
+- [B-score: Detecting biases in large language models using response history](../../ICML2025/llm_nlp/b-score_detecting_biases_in_large_language_models_using_response_history.md)
+- [Improving Sustainability of Adversarial Examples in Class-Incremental Learning](../../AAAI2026/llm_nlp/improving_sustainability_of_adversarial_examples_in_class-incremental_learning.md)
+- [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](llm_braces_straightening.md)
+
+<!-- RELATED:END -->

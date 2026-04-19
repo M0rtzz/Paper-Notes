@@ -248,3 +248,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 双分辨率+多指标+丰富消融
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事流畅，逐步引导理解每个组件必要性
 - 价值: ⭐⭐⭐⭐⭐ 10-35×加速，首次实现实用化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DUO-VSR: Dual-Stream Distillation for One-Step Video Super-Resolution](duo-vsr_dual-stream_distillation_for_one-step_video_super-resolution.md)
+- [ChordEdit: One-Step Low-Energy Transport for Image Editing](chordedit_one-step_low-energy_transport_for_image_editing.md)
+- [WaDi: Weight Direction-aware Distillation for One-step Image Synthesis](wadi_weight_direction-aware_distillation_for_one-step_image_synthesis.md)
+- [Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
+- [Language-Free Generative Editing from One Visual Example](language-free_generative_editing_from_one_visual_example.md)
+
+<!-- RELATED:END -->

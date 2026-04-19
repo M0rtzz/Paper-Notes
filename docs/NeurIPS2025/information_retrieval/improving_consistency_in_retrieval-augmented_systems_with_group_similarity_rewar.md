@@ -167,3 +167,15 @@ TriviaQA 上 Con-RAG 端到端一致性从 53.0→87.3（词汇），77.8→91.3
 - **实用性**: ⭐⭐⭐⭐ — 对高风险 RAG 部署有直接价值，松弛近似保证可扩展性
 - **写作质量**: ⭐⭐⭐⭐ — 框架图清晰，理论和实验对应良好
 - **总体评价**: ⭐⭐⭐⭐ — 填补了 RAG 一致性优化的空白，方法设计和实验都很扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Logical Consistency is Vital: Neural-Symbolic Information Retrieval for Negative-Constraint Queries](../../ACL2025/information_retrieval/logical_consistency_is_vital_neural-symbolic_information_retrieval_for_negative-.md)
+- [DocoPilot: Improving Multimodal Models for Document-Level Understanding](../../CVPR2025/information_retrieval/docopilot_improving_multimodal_models_for_document-level_understanding.md)
+- [Investigating Language Preference of Multilingual RAG Systems](../../ACL2025/information_retrieval/investigating_language_preference_of_multilingual_rag_systems.md)
+- [Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval](../../CVPR2026/information_retrieval/beyond_global_similarity_towards_fine-grained_multi-condition_multimodal_retriev.md)
+- [Chain-of-Retrieval Augmented Generation (CoRAG)](chain-of-retrieval_augmented_generation.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ NeuSymEA-D 在 ZH-EN 上 Hit@1 比最强基线 LightEA 提升 **7.6%**。
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 Full/Condensed 数据集、低资源、大规模 KG、可解释性分析、收敛性分析
 - **写作质量**: ⭐⭐⭐⭐ — 公式推导清晰，实验设计合理
 - **价值**: ⭐⭐⭐⭐ — 对实体对齐领域有实际推动，低资源可用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [Brain-like Variational Inference](brain-like_variational_inference.md)
+- [Least Squares Variational Inference](least_squares_variational_inference.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 覆盖了多种架构，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 框架阐述清晰，层次分明
 - 价值: ⭐⭐⭐⭐ 为语音 LLM 评估提供了新范式，Leaderboard 已上线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](audio_dialogue_benchmark.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [Towards Reliable Large Audio Language Model](towards_reliable_large_audio_language_model.md)
+- [Does Your Voice Assistant Remember? Analyzing Conversational Context Recall and Utilization in Voice Interaction Models](does_your_voice_assistant_remember_analyzing_conversational_context_recall_and_u.md)
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+
+<!-- RELATED:END -->

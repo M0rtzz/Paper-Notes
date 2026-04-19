@@ -148,3 +148,15 @@ InstanceNav 和 CoIN-Bench 基准结果：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个互补基准，全面消融，定性分析充实
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，插图直观，motivation 论证有力
 - 价值: ⭐⭐⭐⭐ 对 embodied AI 的实例导航有重要贡献，但应用场景相对垂直
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deformation-based In-Context Learning for Point Cloud Understanding](deformation-based_in-context_learning_for_point_cloud_understanding.md)
+- [Masking Matters: Unlocking the Spatial Reasoning Capabilities of LLMs for 3D Scene-Language Understanding](masking_matters_unlocking_the_spatial_reasoning_capabilities_of_llms_for_3d_scen.md)
+- [Mamba Learns in Context: Structure-Aware Domain Generalization for Multi-Task Point Cloud Understanding](mamba_learns_in_context_structure-aware_domain_generalization_for_multi-task_poi.md)
+- [tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction](tttlrm_test-time_training_for_long_context_and_autoregressive_3d_reconstruction.md)
+- [pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning](../../ICLR2026/3d_vision/pyspatial_generating_3d_visual_programs_for_zero-shot_spatial_reasoning.md)
+
+<!-- RELATED:END -->

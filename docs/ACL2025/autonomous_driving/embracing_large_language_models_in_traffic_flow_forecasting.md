@@ -128,3 +128,15 @@ LEAF 由两部分组成：(1) 双分支预测器——graph branch 捕获 pair-w
 - 实验充分度: ⭐⭐⭐ 仅 3 个 PEMS 数据集，10% 训练数据设置较特殊
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，可视化分析有说服力
 - 价值: ⭐⭐⭐⭐ 为时空预测中利用 LLM 提供了实用范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling Multi-modal Large Language Models for Autonomous Driving](../../CVPR2025/autonomous_driving/distilling_multi-modal_large_language_models_for_autonomous_driving.md)
+- [Generalising Traffic Forecasting to Regions without Traffic Observations](../../AAAI2026/autonomous_driving/generalising_traffic_forecasting_to_regions_without_traffic_observations.md)
+- [TimeBill: Time-Budgeted Inference for Large Language Models](../../AAAI2026/autonomous_driving/timebill_time-budgeted_inference_for_large_language_models.md)
+- [Navigation Instruction Generation with BEV Perception and Large Language Models](../../ECCV2024/autonomous_driving/navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
+- [Meta Dynamic Graph for Traffic Flow Prediction](../../AAAI2026/autonomous_driving/meta_dynamic_graph_for_traffic_flow_prediction.md)
+
+<!-- RELATED:END -->

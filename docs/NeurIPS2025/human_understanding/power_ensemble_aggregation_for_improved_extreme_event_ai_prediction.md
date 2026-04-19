@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐☆ — 多分位数、多时效对比充分，但缺少更强基线模型验证
 - 写作质量: ⭐⭐⭐⭐☆ — 短小精悍，重点突出
 - 价值: ⭐⭐⭐⭐☆ — 方法简单通用，对极端事件预测有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search](tensorrl-qas_reinforcement_learning_with_tensor_networks_for_improved_quantum_ar.md)
+- [Conformal Prediction for Zero-Shot Models](../../CVPR2025/human_understanding/conformal_prediction_for_zero-shot_models.md)
+- [AAAR-1.0: Assessing AI's Potential to Assist Research](../../ICML2025/human_understanding/aaar-10_assessing_ais_potential_to_assist_research.md)
+- [Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models](../../CVPR2025/human_understanding/two_is_better_than_one_efficient_ensemble_defense_for_robust_and_compact_models.md)
+- [Maximizing Asynchronicity in Event-based Neural Networks](../../ICLR2026/human_understanding/maximizing_asynchronicity_in_event-based_neural_networks.md)
+
+<!-- RELATED:END -->

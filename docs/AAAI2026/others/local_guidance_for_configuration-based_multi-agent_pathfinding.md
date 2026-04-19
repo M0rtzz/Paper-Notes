@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多地图、多规模、丰富的消融和设计验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表直观
 - 价值: ⭐⭐⭐⭐ 推动了实时 MAPF 的 Pareto 前沿
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Symbolic Planning and Multi-Agent Path Finding in Extremely Dense Environments with Unassigned Agents](symbolic_planning_and_multi-agent_path_finding_in_extremely_dense_environments_w.md)
+- [Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](area-optimal_control_strategies_for_heterogeneous_multi-agen.md)
+- [Multi-Hop Question Generation via Dual-Perspective Keyword Guidance](../../ACL2025/others/multi-hop_question_generation_via_dual-perspective_keyword_guidance.md)
+- [An Epistemic Perspective on Agent Awareness](an_epistemic_perspective_on_agent_awareness.md)
+- [Approximation Algorithm for Constrained k-Center Clustering: A Local Search Approach](approximation_algorithm_for_constrained_k-center_clustering_.md)
+
+<!-- RELATED:END -->

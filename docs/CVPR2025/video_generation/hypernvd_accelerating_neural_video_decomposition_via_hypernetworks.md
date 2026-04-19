@@ -98,3 +98,15 @@ HyperNVD 包含三个组件：(1) **VideoMAE 编码器**——预训练的视频
 - 实用性：⭐⭐⭐⭐（30分钟加速+性能提升对视频编辑工作流有直接价值）
 - 技术深度：⭐⭐⭐（方法思路直接，技术实现相对标准）
 - 表达清晰度：⭐⭐⭐⭐⭐（结构清晰，图示充分，实验分析全面）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
+- [Generative Neural Video Compression via Video Diffusion Prior](../../CVPR2026/video_generation/generative_neural_video_compression_via_video_diffusion_prior.md)
+- [Q2E: Query-to-Event Decomposition for Zero-Shot Multilingual Text-to-Video Retrieval](../../ACL2025/video_generation/q2e_query-to-event_decomposition_for_zero-shot_multilingual_text-to-video_retrie.md)
+- [DisCa: Accelerating Video Diffusion Transformers with Distillation-Compatible Learnable Feature Caching](../../CVPR2026/video_generation/disca_accelerating_video_diffusion_transformers_wi.md)
+- [HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation](hoigen-1m_a_large-scale_dataset_for_human-object_interaction_video_generation.md)
+
+<!-- RELATED:END -->

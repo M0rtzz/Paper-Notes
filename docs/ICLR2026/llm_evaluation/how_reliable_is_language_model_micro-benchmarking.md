@@ -150,3 +150,15 @@ MDAD 越低越好：MDAD = 2 意味着该 micro-benchmark 能可靠区分完整 
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 个 benchmark、6 种方法、7 种规模、7 种 source model 数量、50 次试验平均，覆盖全面且附录详尽
 - **写作质量**: ⭐⭐⭐⭐⭐ — Figure 1 的"总览图"设计精巧，agreement 曲线到 MDAD 的可视化解释非常清晰，整体叙事逻辑严密
 - **价值**: ⭐⭐⭐⭐ — 提供了高度可操作的实践指导（≥250 例用随机采样即可），但结论的"否定性"特质使其对方法开发者的启发大于对普通用户的直接帮助
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-LLM Adaptive Conformal Inference for Reliable LLM Responses](multi-llm_adaptive_conformal_inference_for_reliable_llm_responses.md)
+- [Lost in Benchmarks? Rethinking Large Language Model Benchmarking with Item Response Theory](../../AAAI2026/llm_evaluation/lost_in_benchmarks_rethinking_large_language_model_benchmarking_with_item_respon.md)
+- [Communicating Activations Between Language Model Agents](../../ICML2025/llm_evaluation/communicating_activations_between_language_model_agents.md)
+- [Bayesian Evaluation of Large Language Model Behavior](../../NeurIPS2025/llm_evaluation/bayesian_evaluation_of_large_language_model_behavior.md)
+- [Language Model Probabilities are Not Calibrated in Numeric Contexts](../../ACL2025/llm_evaluation/language_model_probabilities_are_not_calibrated_in_numeric_contexts.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (四象限全覆盖，但仅两种基准模型)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构优美，分类法阐述透彻)
 - 价值: ⭐⭐⭐⭐ (开创钣金弯曲DFM基准，但领域较窄)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A2Z-10M+: Geometric Deep Learning with A-to-Z BRep Annotations for AI-Assisted CAD Modeling and Reverse Engineering](a2z-10m_geometric_deep_learning_with_a-to-z_brep_annotations_for_ai-assisted_cad.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
+- [What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution](what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_.md)
+- [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+- [WildCap: Facial Albedo Capture in the Wild via Hybrid Inverse Rendering](wildcap_facial_albedo_capture_in_the_wild_via_hybrid_inverse_rendering.md)
+
+<!-- RELATED:END -->

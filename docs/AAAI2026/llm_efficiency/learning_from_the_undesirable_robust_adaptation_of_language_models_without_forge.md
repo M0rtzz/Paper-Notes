@@ -139,3 +139,15 @@ $$\ell_{\text{LfU}}(\theta, \theta_{\text{aux}}) = \ell_{\text{SFT}}(\theta) + \
 - **SAM（Sharpness-Aware Minimization）**：在全参数上做梯度上升寻找平坦损失面，LfU 则仅对辅助组件上升且工作在表示层面。
 - **一致性正则化**：源自半监督学习(FixMatch/MixMatch)，LfU 将其从"输入扰动后预测一致"推广到"参数扰动后表征一致"。
 - **DPO/RLHF**：对齐阶段的方法，LfU 在 SFT 阶段即可增强泛化，二者可叠加使用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Utility-Preserving Text Anonymization Based on Large Language Models](../../ACL2025/llm_efficiency/robust_utility-preserving_text_anonymization_based_on_large_language_models.md)
+- [Expert Divergence Learning for MoE-based Language Models](../../ICLR2026/llm_efficiency/expert_divergence_learning_for_moe-based_language_models.md)
+- [Harnessing the Unseen: The Hidden Influence of Intrinsic Knowledge in Long-Context Language Models](harnessing_the_unseen_the_hidden_influence_of_intrinsic_knowledge_in_long-contex.md)
+- [Attention Retention for Continual Learning with Vision Transformers](attention_retention_for_continual_learning_with_vision_transformers.md)
+- [Steering Language Models with Weight Arithmetic](../../ICLR2026/llm_efficiency/steering_language_models_with_weight_arithmetic.md)
+
+<!-- RELATED:END -->

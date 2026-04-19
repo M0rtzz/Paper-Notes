@@ -146,3 +146,15 @@ $$\mathcal{L}^{\text{overall}} = \omega \mathcal{L}_{\text{LPG}} + \mathcal{L}_{
 - **实验充分度**: ⭐⭐⭐⭐⭐ 跨数据集+跨操控双重评估，含详细消融、GradCAM、t-SNE 可视化
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，但公式符号较多需要仔细对应
 - **价值**: ⭐⭐⭐⭐⭐ 跨域检测性能提升显著（DFDC +5.8%），对实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection](../../CVPR2026/image_generation/tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa.md)
+- [FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies](../../NeurIPS2025/image_generation/ferretnet_efficient_synthetic_image_detection_via_local_pixel_dependencies.md)
+- [Accelerating Diffusion Sampling via Exploiting Local Transition Coherence](accelerating_diffusion_sampling_via_exploiting_local_transition_coherence.md)
+- [MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching](../../CVPR2026/image_generation/mpdit_multi-patch_global-to-local_transformer_architecture_for_efficient_flow_ma.md)
+- [Video Motion Graphs](video_motion_graphs.md)
+
+<!-- RELATED:END -->

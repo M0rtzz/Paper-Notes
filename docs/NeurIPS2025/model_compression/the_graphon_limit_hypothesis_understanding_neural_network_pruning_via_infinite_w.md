@@ -123,3 +123,15 @@ $$\Theta(x, x') = \sum_{l=1}^{L} \int_0^1 \left( \dot{\Sigma}^{(l)} \int_{[0,1]^
 - 实验充分度: ⭐⭐⭐ 仅MLP+MNIST，缺乏现代架构和大规模验证；核心假说未严格证明
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，从假说到推导到验证逻辑清晰，但公式密度高
 - 价值: ⭐⭐⭐⭐ 为稀疏网络理论开辟了新的分析范式，长期影响可能远超当前实验验证的范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Creation of Narrow AI: Hierarchy and Nonlocality of Neural Network Skills](on_the_creation_of_narrow_ai_hierarchy_and_nonlocality_of_neural_network_skills.md)
+- [ReplaceMe: Network Simplification via Depth Pruning and Transformer Block Linearization](replaceme_network_simplification_via_depth_pruning_and_transformer_block_lineari.md)
+- [Adaptive Width Neural Networks](../../ICLR2026/model_compression/adaptive_width_neural_networks.md)
+- [PPG-Distill: Efficient Photoplethysmography Signals Analysis via Foundation Model Distillation](ppg-distill_efficient_photoplethysmography_signals_analysis_via_foundation_model.md)
+- [Understanding Differential Transformer Unchains Pretrained Self-Attentions](understanding_differential_transformer_unchains_pretrained_self-attentions.md)
+
+<!-- RELATED:END -->

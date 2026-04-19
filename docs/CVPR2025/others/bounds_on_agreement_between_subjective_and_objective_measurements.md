@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (22个真实主观测试验证，覆盖多领域)
 - 写作质量: ⭐⭐⭐⭐⭐ (数学推导简洁清晰，逻辑递进，易于跟随)
 - 价值: ⭐⭐⭐⭐ (为质量评估领域提供理论基准，实用意义强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Focal Split: Untethered Snapshot Depth from Differential Defocus](focal_split_untethered_snapshot_depth_from_differential_defocus.md)
+- [Order-One Rolling Shutter Cameras](order-one_rolling_shutter_cameras.md)
+- [Locally Orderless Images for Optimization in Differentiable Rendering](locally_orderless_images_for_optimization_in_differentiable_rendering.md)
+- [LATTE-MV: Learning to Anticipate Table Tennis Hits from Monocular Videos](latte-mv_learning_to_anticipate_table_tennis_hits_from_monocular_videos.md)
+- [Joint Out-of-Distribution Filtering and Data Discovery Active Learning](joint_out-of-distribution_filtering_and_data_discovery_active_learning.md)
+
+<!-- RELATED:END -->

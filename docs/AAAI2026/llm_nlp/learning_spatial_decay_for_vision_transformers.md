@@ -121,3 +121,15 @@ ImageNet-1K 上标准训练，300 epochs，AdamW 优化器。结合 RoPE 和 Loc
 ## 补充说明
 - 空间衰减的可学习性所带来的灞性偏置可以推广到视频理解中的时序衰减、跨模态注意力中的模态间衰减等
 - 与 Mamba 的状态空间模型对比有意义——两者都在引入位置感知的偏置，但路干不同
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision Transformers are Circulant Attention Learners](vision_transformers_are_circulant_attention_learners.md)
+- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](../../CVPR2025/llm_nlp/sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
+- [Weight Decay may matter more than μP for Learning Rate Transfer in Practice](../../ICLR2026/llm_nlp/weight_decay_may_matter_more_than_mup_for_learning_rate_transfer_in_practice.md)
+- [Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
+- [Improving Sustainability of Adversarial Examples in Class-Incremental Learning](improving_sustainability_of_adversarial_examples_in_class-incremental_learning.md)
+
+<!-- RELATED:END -->

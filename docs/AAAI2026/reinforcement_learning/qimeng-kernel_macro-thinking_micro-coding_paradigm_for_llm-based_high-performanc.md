@@ -172,3 +172,15 @@ Macro Thinking消融（验证策略学习和动作空间的必要性）：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖3个硬件平台、13个LLM、2个广泛使用的基准，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，但表格过多导致可读性略降
 - 价值: ⭐⭐⭐⭐⭐ — 实际应用价值极高，首次让LLM生成的内核超越专家优化代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Estimation of Kernel Surrogate Models for Task Attribution](../../ICLR2026/reinforcement_learning/efficient_estimation_of_kernel_surrogate_models_for_task_attribution.md)
+- [Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC](../../ICML2025/reinforcement_learning/beyond_the_rainbow_high_performance_deep_reinforcement_learning_on_a_desktop_pc.md)
+- [TAdaRAG: Task Adaptive Retrieval-Augmented Generation via On-the-Fly Knowledge Graph Construction](tadarag_task_adaptive_retrieval-augmented_generation_via_on-the-fly_knowledge_gr.md)
+- [Kimina Lean Server: A High-Performance Lean Server for Large-Scale Verification](../../NeurIPS2025/reinforcement_learning/kimina_lean_server_a_high-performance_lean_server_for_large-scale_verification.md)
+- [TowerMind: A Tower Defence Game Learning Environment and Benchmark for LLM as Agents](towermind_a_tower_defence_game_learning_environment_and_benchmark_for_llm_as_age.md)
+
+<!-- RELATED:END -->

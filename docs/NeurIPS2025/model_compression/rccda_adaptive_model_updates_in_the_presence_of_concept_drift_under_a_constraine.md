@@ -122,3 +122,15 @@ tags:
 - ⭐⭐⭐⭐ 理论深度：收敛分析 + 稳定性分析双重保证，推导严谨
 - ⭐⭐⭐ 实验充分度：4 数据集 × 4 漂移模式，但均为模拟漂移，缺少真实在线系统验证
 - ⭐⭐⭐⭐ 实用价值：轻量级、易实现、资源可控，适合边缘 ML 部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Granular Study of Safety Pretraining under Model Abliteration](a_granular_study_of_safety_pretraining_under_model_abliteration.md)
+- [KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments](keydiff_key_similarity-based_kv_cache_eviction_for_long-context_llm_inference_in.md)
+- [REP: Resource-Efficient Prompting for Rehearsal-Free Continual Learning](rep_resource-efficient_prompting_for_rehearsal-free_continual_learning.md)
+- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+- [FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?](fira_can_we_achieve_full-rank_training_of_llms_under_low-rank_constraint.md)
+
+<!-- RELATED:END -->

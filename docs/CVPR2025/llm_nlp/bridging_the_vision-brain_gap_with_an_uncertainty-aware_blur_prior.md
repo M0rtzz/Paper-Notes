@@ -60,3 +60,15 @@ tags:
 - fMRI 信号的时空分辨率本身有限，不确定性估计的精度受约束
 - 模糊先验假设大脑的信息损失主要表现为高频模糊，但实际退化模式可能更复杂
 - 在不同受试者之间的泛化性有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Building Vision Models upon Heat Conduction](building_vision_models_upon_heat_conduction.md)
+- [PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models](../../ACL2025/llm_nlp/plugin_finetuning_bridge.md)
+- [From Assumptions to Actions: Turning LLM Reasoning into Uncertainty-Aware Planning](../../ICLR2026/llm_nlp/from_assumptions_to_actions_turning_llm_reasoning_into_uncertainty-aware_plannin.md)
+- [Team Anotheroption at SemEval-2025 Task 8: Bridging the Gap Between Open-Source and Proprietary LLMs in Table QA](../../ACL2025/llm_nlp/team_anotheroption_at_semeval-2025_task_8_bridging_the_gap_between_open-source_a.md)
+- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
+
+<!-- RELATED:END -->

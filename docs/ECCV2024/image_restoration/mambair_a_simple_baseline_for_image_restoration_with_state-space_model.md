@@ -147,3 +147,15 @@ RSSB 设计消融（Set5/Set14/Urban100 PSNR）：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 SR、去噪等多个任务，消融实验全面，但缺少真实世界场景
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，问题定义准确，实验安排合理
 - 价值: ⭐⭐⭐⭐⭐ 作为 baseline 工作为后续 Mamba+修复研究奠定基础，影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MFmamba: A Multi-function Network for Panchromatic Image Resolution Restoration Based on State-Space Model](../../AAAI2026/image_restoration/mfmamba_a_multi-function_network_for_panchromatic_image_resolution_restoration_b.md)
+- [Efficient Visual State Space Model for Image Deblurring](../../CVPR2025/image_restoration/efficient_visual_state_space_model_for_image_deblurring.md)
+- [PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining](../../ICCV2025/image_restoration/pre-mamba_a_4d_state_space_model_for_ultra-high-frequent_event_camera_deraining.md)
+- [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](../../ICCV2025/image_restoration/eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
+- [MambaIRv2: Attentive State Space Restoration](../../CVPR2025/image_restoration/mambairv2_attentive_state_space_restoration.md)
+
+<!-- RELATED:END -->

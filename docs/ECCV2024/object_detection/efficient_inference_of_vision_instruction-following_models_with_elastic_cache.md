@@ -156,3 +156,15 @@ Budget=0.5 时 Elastic Cache 相比 H2O 改善 PPL 4.34、ROUGE 0.089。
 | 实验充分度 | ⭐⭐⭐⭐ |
 | 工程实用性 | ⭐⭐⭐⭐⭐ |
 | 写作质量 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](../../NeurIPS2025/object_detection/xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
+- [LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction](lami-detr_open-vocabulary_detection_with_language_model_instruction.md)
+- [Implicit Concept Removal of Diffusion Models](implicit_concept_removal_of_diffusion_models.md)
+- [Can OOD Object Detectors Learn from Foundation Models?](can_ood_object_detectors_learn_from_foundation_models.md)
+- [Weak-to-Strong Compositional Learning from Generative Models for Language-based Object Detection](weak-to-strong_compositional_learning_from_generative_models_for_language-based_.md)
+
+<!-- RELATED:END -->

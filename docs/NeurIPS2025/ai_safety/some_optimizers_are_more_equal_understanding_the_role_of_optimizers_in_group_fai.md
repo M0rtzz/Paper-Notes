@@ -131,3 +131,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集、多个敏感属性、统计检验、消融实验、与公平性方法互补实验
 - **写作质量**: ⭐⭐⭐⭐ 从简单例子出发逐步建立理论，pedagogical风格好
 - **价值**: ⭐⭐⭐⭐⭐ 对从业者的直接指导——只需换优化器即可改善公平性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning](fedfact_a_provable_framework_for_controllable_group-fairness_calibration_in_fede.md)
+- [Enabling Differentially Private Federated Learning for Speech Recognition: Benchmarks, Adaptive Optimizers and Gradient Clipping](enabling_differentially_private_federated_learning_for_speech_recognition_benchm.md)
+- [Bridging Symmetry and Robustness: On the Role of Equivariance in Enhancing Adversarial Robustness](bridging_symmetry_and_robustness_on_the_role_of_equivariance_in_enhancing_advers.md)
+- [Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs](../../ACL2025/ai_safety/fairness_difference_awareness.md)
+- [Understanding Challenges to the Interpretation of Disaggregated Evaluations of AI](understanding_challenges_to_the_interpretation_of_disaggregated_evaluations_of_a.md)
+
+<!-- RELATED:END -->

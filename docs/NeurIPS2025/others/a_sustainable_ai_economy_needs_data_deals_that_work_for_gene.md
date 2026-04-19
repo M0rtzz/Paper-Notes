@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Position Paper无传统实验，但实证分析有一定深度
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从诊断到方案的论证链完整
 - 价值: ⭐⭐⭐⭐ 对AI数据经济的可持续性发出重要预警
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
+- [Democratic AI is Possible. The Democracy Levels Framework Shows How It Might Work](../../ICML2025/others/democratic_ai_is_possible_the_democracy_levels_framework_shows_how_it_might_work.md)
+- [Scalable Equilibrium Sampling with Sequential Boltzmann Generators](../../ICML2025/others/scalable_equilibrium_sampling_with_sequential_boltzmann_generators.md)
+- [Adaptive Data Analysis for Growing Data](adaptive_data_analysis_for_growing_data.md)
+- [Emergency Response Measures for Catastrophic AI Risk](emergency_response_measures_for_catastrophic_ai_risk.md)
+
+<!-- RELATED:END -->

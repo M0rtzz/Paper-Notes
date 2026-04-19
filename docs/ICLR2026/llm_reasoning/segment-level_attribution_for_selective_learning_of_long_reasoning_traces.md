@@ -111,3 +111,15 @@ $$L_{\text{Selective-SFT}}(\theta) = -\frac{1}{\sum_t I(o_t)}\sum_{t=1}^{T}I(o_t
 - 实验充分度: ⭐⭐⭐⭐ (多模型+ID/OOD+消融充分)
 - 写作质量: ⭐⭐⭐⭐ (分析细致，可视化好)
 - 价值: ⭐⭐⭐⭐ (对长推理链训练有直接工程价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Segment Policy Optimization: Effective Segment-Level Credit Assignment in RL for Large Language Models](../../NeurIPS2025/llm_reasoning/segment_policy_optimization_effective_segment-level_credit_assignment_in_rl_for_.md)
+- [Is In-Context Learning Learning?](is_in-context_learning_learning.md)
+- [Reasoning or Retrieval? A Study of Answer Attribution on Large Reasoning Models](reasoning_or_retrieval_a_study_of_answer_attribution_on_large_reasoning_models.md)
+- [The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs](the_illusion_of_diminishing_returns_measuring_long_horizon_execution_in_llms.md)
+- [Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
+
+<!-- RELATED:END -->

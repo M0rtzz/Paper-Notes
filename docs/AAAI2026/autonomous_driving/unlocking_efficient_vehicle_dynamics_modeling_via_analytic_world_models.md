@@ -210,3 +210,15 @@ $$\min_\phi \| \text{Sim}(\mathbf{s}_t + f_\phi^I(\mathbf{s}_t, \mathbf{a}_t), \
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖面广，包含定性和定量评估，但多智能体评估缺失
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，Table 1的对比极具说服力
 - 价值: ⭐⭐⭐⭐ — 为可微分模拟器的应用开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+- [Towards Foundational LiDAR World Models with Efficient Latent Flow Matching](../../NeurIPS2025/autonomous_driving/towards_foundational_lidar_world_models_with_efficient_latent_flow_matching.md)
+- [Efficient Equivariant Transformer for Self-Driving Agent Modeling](../../CVPR2026/autonomous_driving/efficient_equivariant_transformer_for_self-driving_agent_modeling.md)
+- [U4D: Uncertainty-Aware 4D World Modeling from LiDAR Sequences](../../CVPR2026/autonomous_driving/u4d_uncertainty-aware_4d_world_modeling_from_lidar_sequences.md)
+- [LiNeXt: Revisiting LiDAR Completion with Efficient Non-Diffusion Architectures](linext_revisiting_lidar_completion_with_efficient_non-diffusion_architectures.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ Waymo上PSNR提升1.87dB，Dyn-PSNR提升2.66dB；nuPlan上PSNR提升3.04dB，LP
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个大规模benchmark、完整消融、与多种SOTA的定量定性对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、公式推导完整、图示直观
 - 价值: ⭐⭐⭐⭐ 解决了实际中标注精度限制重建质量的痛点，对自动驾驶仿真有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curv.md)
+- [Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction](curve-aware_gaussian_splatting_for_3d_parametric_curve_reconstruction.md)
+- [Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](../../NeurIPS2025/3d_vision/dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [DeGauss: Dynamic-Static Decomposition with Gaussian Splatting for Distractor-free 3D Reconstruction](degauss_dynamic-static_decomposition_with_gaussian_splatting_for_distractor-free.md)
+
+<!-- RELATED:END -->

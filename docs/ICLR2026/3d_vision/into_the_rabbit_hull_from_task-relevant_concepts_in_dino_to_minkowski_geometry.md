@@ -132,3 +132,15 @@ $$\mathcal{X} = \bigoplus_{i=1}^{m} \mathcal{P}_i, \quad \mathcal{P}_i = \text{c
 - 实验充分度: ⭐⭐⭐⭐ (大规模分析详尽，但 MRH 实证仍为初步证据)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，理论推导严谨，图表精美)
 - 价值: ⭐⭐⭐⭐⭐ (对可解释性领域有深远影响)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mamba Learns in Context: Structure-Aware Domain Generalization for Multi-Task Point Cloud Understanding](../../CVPR2026/3d_vision/mamba_learns_in_context_structure-aware_domain_generalization_for_multi-task_poi.md)
+- [Joint Shadow Generation and Relighting via Light-Geometry Interaction Maps](joint_shadow_generation_and_relighting_via_light-geometry_interaction_maps.md)
+- [Quantized Visual Geometry Grounded Transformer](quantized_visual_geometry_grounded_transformer.md)
+- [GGPT: Geometry-Grounded Point Transformer](../../CVPR2026/3d_vision/ggpt_geometry_grounded_point_transformer.md)
+- [TOSC: Task-Oriented Shape Completion for Open-World Dexterous Grasp Generation from Partial Point Clouds](../../AAAI2026/3d_vision/tosc_task-oriented_shape_completion_for_open-world_dexterous_grasp_generation_fr.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ DynaCode 构建分为四步：(1) 收集代码问题并按圈复杂度分类（C
 - **实验充分度**: ⭐⭐⭐⭐ — 12 模型、4 Unit × 4 Level、数据污染验证、错误分析
 - **写作质量**: ⭐⭐⭐⭐ — 公式清晰，图示丰富
 - **价值**: ⭐⭐⭐⭐⭐ — 解决数据污染+复杂度评估两大痛点，实用性极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TeXpert: A Multi-Level Benchmark for Evaluating LaTeX Code Generation by LLMs](texpert_a_multi-level_benchmark_for_evaluating_latex_code_generation_by_llms.md)
+- [FEA-Bench: A Benchmark for Evaluating Repository-Level Code Generation for Feature Implementation](feabench_repo_code_gen.md)
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+- [Personality-Guided Code Generation Using Large Language Models](personality_guided_code_gen.md)
+- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+
+<!-- RELATED:END -->

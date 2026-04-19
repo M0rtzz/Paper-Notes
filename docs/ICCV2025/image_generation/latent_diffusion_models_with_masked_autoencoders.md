@@ -159,3 +159,15 @@ VMAE 在参数量、计算量和训练时间上均大幅领先，且因为推理
 - 实验充分度：⭐⭐⭐⭐⭐ — 自编码器属性分析 + 生成对比 + 重建对比 + 消融 + 效率全面覆盖
 - 实用价值：⭐⭐⭐⭐ — 可直接替代 SD-VAE 用于 LDM 训练，且效率大幅提升
 - 写作质量：⭐⭐⭐⭐⭐ — 分析深入系统，雷达图等可视化效果出色
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniCast: A Masked Latent Diffusion Model for Weather Forecasting Across Time Scales](../../NeurIPS2025/image_generation/omnicast_a_masked_latent_diffusion_model_for_weather_forecasting_across_time_sca.md)
+- [LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching](lazymar_accelerating_masked_autoregressive_models_via_feature_caching.md)
+- [Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders](../../NeurIPS2025/image_generation/learning_interpretable_features_in_audio_latent_spaces_via_sparse_autoencoders.md)
+- [HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation](hypdae_hyperbolic_diffusion_autoencoders_for_hierarchical_few-shot_image_generat.md)
+- [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+
+<!-- RELATED:END -->

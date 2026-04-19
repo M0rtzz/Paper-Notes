@@ -143,3 +143,15 @@ FECO 在 MMVP 上 F1 超 BSTRO 11.3%，超 DECO 16.8%。在关节级足部接触
 - 实验充分度: ⭐⭐⭐⭐ — 10 个数据集训练、详尽消融（五组）、多方法&多粒度对比，但测试场景偏受控
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，图表配合良好
 - 价值: ⭐⭐⭐⭐ — 开辟密集足部接触估计新方向，数据集和代码开源，对运动捕捉/VR/机器人步态有应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Magic Insert: Style-Aware Drag-and-Drop](../../ICCV2025/others/magic_insert_style-aware_drag-and-drop.md)
+- [Spike Imaging Velocimetry: Dense Motion Estimation of Fluids Using Spike Cameras](../../AAAI2026/others/spike_imaging_velocimetry_dense_motion_estimation_of_fluids_using_spike_cameras.md)
+- [NaiLIA: Multimodal Nail Design Retrieval Based on Dense Intent Descriptions and Palette Queries](nailia_multimodal_nail_design_retrieval_based_on_dense_intent_descriptions_and_p.md)
+- [Uncertainty Estimation by Flexible Evidential Deep Learning](../../NeurIPS2025/others/uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+- [RoToR: Towards More Reliable Responses for Order-Invariant Inputs](../../ACL2025/others/rotor_towards_more_reliable_responses_for_order-invariant_inputs.md)
+
+<!-- RELATED:END -->

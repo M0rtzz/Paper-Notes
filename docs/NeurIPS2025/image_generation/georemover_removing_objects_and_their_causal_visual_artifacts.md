@@ -176,3 +176,15 @@ GeoRemover 的核心优势在于融合了两类方法的长处：在几何域享
 - 实验充分度: 8/10 — 三个基准、多指标、完善的消融实验和失败案例分析
 - 写作质量: 8/10 — 动机阐述清晰，方法逻辑链完整，图例直观
 - 价值: 8/10 — 为目标移除提供了新范式，几何解耦思路对其他编辑任务有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeCaFlow: A Deconfounding Causal Generative Model](decaflow_a_deconfounding_causal_generative_model.md)
+- [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [How to Move Your Dragon: Text-to-Motion Synthesis for Large-Vocabulary Objects](../../ICML2025/image_generation/how_to_move_your_dragon_text-to-motion_synthesis_for_large-vocabulary_objects.md)
+- [Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery](score-informed_neural_operator_for_enhancing_ordering-based_causal_discovery.md)
+
+<!-- RELATED:END -->

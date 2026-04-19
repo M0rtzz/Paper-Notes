@@ -155,3 +155,15 @@ Wan 14B (720p) 上 LinVideo 达 **1.71×** 加速（1127s vs 1931s），结合 D
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两种模型规模、两个 benchmark、详尽消融（目标数/选择策略/损失函数/正则/训练效率）
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机-方法-实验逻辑链完整
 - 价值: ⭐⭐⭐⭐ — 提供了实用的视频生成加速方案，将线性注意力以后训练方式引入视频扩散模型是有意义的方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+- [DisCa: Accelerating Video Diffusion Transformers with Distillation-Compatible Learnable Feature Caching](disca_accelerating_video_diffusion_transformers_with_distillation-compatible_lea.md)
+- [UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation](unitalking_a_unified_audio-video_framework_for_talking_portrait_generation.md)
+
+<!-- RELATED:END -->

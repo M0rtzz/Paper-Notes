@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ LIBERO/MimicGen 双基准 + 消融 + 泛化 + 实机，但实机偏简单
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，三类范式对比有说服力
 - 价值: ⭐⭐⭐⭐ 0.6B 超越 7B+ 有强实践意义，软标签对比学习可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2025/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [HiF-VLA: Hindsight, Insight and Foresight through Motion Representation for Vision-Language-Action Models](hif-vla_hindsight_insight_and_foresight_through_motion_representation_for_vision.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_active_perception_manipulation_vla_roboti.md)
+
+<!-- RELATED:END -->

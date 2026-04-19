@@ -102,3 +102,15 @@ AniMer在多个动物姿态估计基准上进行了评估：
 ## 总结与展望
 
 AniMer通过引入家族感知的设计理念，有效解决了动物姿态和形状估计中的物种多样性挑战。该方法展示了利用生物学分类知识来指导计算机视觉模型设计的潜力。未来可以考虑扩展到更多动物类别，以及结合视频序列进行时序一致的动物运动估计。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Generative Video Models Help Pose Estimation?](can_generative_video_models_help_pose_estimation.md)
+- [LaVin-DiT: Large Vision Diffusion Transformer](lavin-dit_large_vision_diffusion_transformer.md)
+- [Harnessing Text-to-Image Diffusion Models for Category-Agnostic Pose Estimation](../../ECCV2024/image_generation/harnessing_text-to-image_diffusion_models_for_category-agnostic_pose_estimation.md)
+- [Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control](../../ICLR2026/image_generation/follow-your-shape_shape-aware_image_editing_via_trajectory-guided_region_control.md)
+- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](dit-ic_aligned_diffusion_transformer_for_efficient_image_compression.md)
+
+<!-- RELATED:END -->

@@ -201,3 +201,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 综述全面但无新实验
 - 写作质量: ⭐⭐⭐⭐⭐ 结构优秀，论证有力，学术性强
 - 价值: ⭐⭐⭐⭐ 为新兴交叉领域提供了重要路线图
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeltaFlow: An Efficient Multi-frame Scene Flow Estimation Method](../../NeurIPS2025/model_compression/deltaflow_an_efficient_multi-frame_scene_flow_estimation_method.md)
+- [Steer LLM Latents for Hallucination Detection](steer_llm_latents_for_hallucination_detection.md)
+- [SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images](../../ECCV2024/model_compression/spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)
+- [Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation](sketch_to_adapt_fine-tunable_sketches_for_efficient_llm_adaptation.md)
+- [FlatQuant: Flatness Matters for LLM Quantization](flatquant_flatness_matters_for_llm_quantization.md)
+
+<!-- RELATED:END -->

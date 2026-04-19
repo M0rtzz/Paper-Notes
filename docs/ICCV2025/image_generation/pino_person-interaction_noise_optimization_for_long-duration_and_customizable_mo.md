@@ -156,3 +156,15 @@ PINO的输入包含两部分：（1）有序的参与者列表，指定每组两
 - **实验充分度**: ⭐⭐⭐⭐ 涵盖两人/多人/扩展/消融，物理指标全面
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，伪代码和可视化丰富
 - **价值**: ⭐⭐⭐⭐ 对动画、游戏等应用具有直接价值，framework设计优雅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Straighten Viscous Rectified Flow via Noise Optimization](straighten_viscous_rectified_flow_via_noise_optimization.md)
+- [InfiniDreamer: Arbitrarily Long Human Motion Generation via Segment Score Distillation](infinidreamer_arbitrarily_long_human_motion_generation_via_segment_score_distill.md)
+- [A Unified Framework for Motion Reasoning and Generation in Human Interaction](a_unified_framework_for_motion_reasoning_and_generation_in_human_interaction.md)
+- [Video Motion Graphs](video_motion_graphs.md)
+- [ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion](scorehoi_physically_plausible_reconstruction_of_human-object_interaction_via_sco.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ tags:
 - ⭐⭐⭐⭐ 实验充分度：19+ 个 LLM、人类基线、行为分析、表征分析、神经元分析
 - ⭐⭐⭐ 可扩展性：手工构建成本高（每棵树约 12 小时/$40），反社会场景仅 20 棵树
 - ⭐⭐⭐⭐ 实用价值：为理解和改进 LLM 社会行为提供了全面的评测工具和深入洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ExpliCa: Evaluating Explicit Causal Reasoning in Large Language Models](explica_evaluating_explicit_causal_reasoning_in_large_language_models.md)
+- [Evaluating Language Models as Synthetic Data Generators](evaluating_lms_synthetic_data_gen.md)
+- [MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments](mirage_exploring_how_large_language_models_perform_in_complex_social_interactive.md)
+- [SCoP: Evaluating the Comprehension Process of Large Language Models from a Cognitive View](scop_evaluating_the_comprehension_process_of_large_language_models_from_a_cognit.md)
+- [Evaluating Implicit Bias in Large Language Models by Attacking from a Psychometric Perspective](evaluating_implicit_bias_in_large_language_models_by_attacking_from_a_psychometr.md)
+
+<!-- RELATED:END -->

@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论验证详实，多频任务扩展有说服力，但任务复杂度受限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导优雅，图表精美，物理直觉清晰
 - 价值: ⭐⭐⭐⭐ 对理解闭环学习和生物学习有深远意义，但直接应用价值有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dolphin: Moving Towards Closed-loop Auto-research through Thinking, Practice, and Feedback](../../ACL2025/others/dolphin_moving_towards_closed-loop_auto-research_through_thinking_practice_and_f.md)
+- [Normalization in Attention Dynamics](normalization_in_attention_dynamics.md)
+- [RNNs Perform Task Computations by Dynamically Warping Neural Representations](rnns_perform_task_computations_by_dynamically_warping_neural_representations.md)
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+- [FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)
+
+<!-- RELATED:END -->

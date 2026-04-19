@@ -132,3 +132,15 @@ $$L_{soft} = \sum_{i=1}^{N} D_{KL}(P(i), \hat{y_i})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个骨干，两个数据集，两种评估方式，深度分析充分
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示直观，但部分符号较多
 - 价值: ⭐⭐⭐⭐ 方法简洁有效，易于在实际CRS中应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MATCHA: Toward Safe and Human-Aligned Game Conversational Recommendation via Multi-Agent Decomposition](../../ICML2025/recommender/toward_safe_and_human-aligned_game_conversational_recommendation_via_multi-agent.md)
+- [VisionArena: 230k Real World User-VLM Conversations with Preference Labels](../../CVPR2025/recommender/visionarena_230k_real_world_user-vlm_conversations_with_preference_labels.md)
+- [RecLM: Recommendation Instruction Tuning](reclm_recommendation_instruction_tuning.md)
+- [VisualLens: Personalization through Task-Agnostic Visual History](../../NeurIPS2025/recommender/visuallens_personalization_through_task-agnostic_visual_history.md)
+- [CoVE: Compressed Vocabulary Expansion Makes Better LLM-based Recommender Systems](cove_compressed_vocabulary_expansion_makes_better_llm-based_recommender_systems.md)
+
+<!-- RELATED:END -->

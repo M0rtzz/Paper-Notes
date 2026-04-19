@@ -133,3 +133,15 @@ $$\mathcal{M}_\ell^*(N) = \{\theta \mid \theta_x = \frac{1}{k}\sum_{i^* \in N}(\
 - 技术深度：⭐⭐⭐⭐⭐ — 理论基础扎实，数学推导严谨
 - 实验完整性：⭐⭐⭐⭐ — 多模态覆盖，但缺乏大规模验证
 - 实用价值：⭐⭐⭐ — 通用性强但在主流视觉任务上优势有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Verifier-Constrained Flow Expansion for Discovery Beyond the Data](verifier-constrained_flow_expansion_for_discovery_beyond_the_data.md)
+- [Non-Asymptotic Analysis of Data Augmentation for Precision Matrix Estimation](../../NeurIPS2025/image_generation/non-asymptotic_analysis_of_data_augmentation_for_precision_matrix_estimation.md)
+- [Graph Distance as Surprise: Free Energy Minimization in Knowledge Graph Reasoning](../../NeurIPS2025/image_generation/graph_distance_as_surprise_free_energy_minimization_in_knowledge_graph_reasoning.md)
+- [UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation](../../NeurIPS2025/image_generation/utilgen_utility-centric_generative_data_augmentation_with_dual-level_task_adapta.md)
+- [RNE: plug-and-play diffusion inference-time control and energy-based training](rne_plug-and-play_diffusion_inference-time_control_and_energy-based_training.md)
+
+<!-- RELATED:END -->

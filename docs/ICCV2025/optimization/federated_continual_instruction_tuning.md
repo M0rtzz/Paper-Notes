@@ -180,3 +180,15 @@ Softmax 归一化最优；直接拼接引入过多无关信息性能骤降。
 - **实用性**: ⭐⭐⭐⭐ — 面向真实分布式训练场景，代码和数据已开源
 - **实验质量**: ⭐⭐⭐⭐⭐ — 4 设置 × 3 异构度全矩阵实验，消融充分，可视化清晰
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义严谨，场景建模贴近现实，方法描述系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Butterfly Effect: Neural Network Training Trajectories Are Highly Sensitive to Initial Conditions](../../ICML2025/optimization/the_butterfly_effect_neural_network_training_trajectories_are_highly_sensitive_t.md)
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](../../ICML2025/optimization/sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [Widening the Network Mitigates the Impact of Data Heterogeneity on FedAvg](../../ICML2025/optimization/widening_the_network_mitigates_the_impact_of_data_heterogeneity_on_fedavg.md)
+- [Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data](federated_prompt-tuning_with_heterogeneous_and_incomplete_multimodal_client_data.md)
+- [PROFIT: A Specialized Optimizer for Deep Fine Tuning](../../NeurIPS2025/optimization/profit_a_specialized_optimizer_for_deep_fine_tuning.md)
+
+<!-- RELATED:END -->

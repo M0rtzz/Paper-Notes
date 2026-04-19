@@ -172,3 +172,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （三个 Case Study 设计完整，数据规模大，但 ToM 标注质量和生成评估方式有提升空间）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，案例丰富，从分析到风险警示的逻辑链条连贯）
 - 价值: ⭐⭐⭐⭐ （对 AI 伦理和社交媒体治理有重要警示价值，数据集的公开发布也有社区贡献）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unintended Misalignment from Agentic Fine-Tuning: Risks and Mitigation](unintended_misalignment_from_agentic_fine-tuning_risks_and_m.md)
+- [Token Taxes: Mitigating AGI's Economic Risks](../../ICLR2026/robotics/token_taxes_mitigating_agis_economic_risks.md)
+- [Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems](shadows_in_the_code_exploring_the_risks_and_defenses_of_llm-.md)
+- [D2E: Scaling Vision-Action Pretraining on Desktop Data for Transfer to Embodied AI](../../ICLR2026/robotics/d2e_scaling_vision-action_pretraining_on_desktop_data_for_transfer_to_embodied_a.md)
+- [Grounding Generative Planners in Verifiable Logic: A Hybrid Architecture for Trustworthy Embodied AI](../../ICLR2026/robotics/grounding_generative_planners_in_verifiable_logic_a_hybrid_architecture_for_trus.md)
+
+<!-- RELATED:END -->

@@ -172,3 +172,15 @@ $$\Phi(\alpha) = \int_{-\infty}^{\infty} (z-\alpha) \cdot p(z) dz = 0$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9个检测器 × 2个benchmark + 鲁棒性 + 消融，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 从现象到理论到方法到实验的逻辑清晰流畅
 - 价值: ⭐⭐⭐⭐⭐ — 即插即用、零训练成本，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Semantic Features: Pixel-Level Mapping for Generalized AI-Generated Image Detection](beyond_semantic_features_pixel-level_mapping_for_generalized_ai-generated_image_.md)
+- [Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable](../../NeurIPS2025/object_detection/dual_data_alignment_makes_ai-generated_image_detector_easier_generalizable.md)
+- [A Bias-Free Training Paradigm for More General AI-generated Image Detection](../../CVPR2025/object_detection/a_bias-free_training_paradigm_for_more_general_ai-generated_image_detection.md)
+- [Few-Shot Learner Generalizes Across AI-Generated Image Detection](../../ICML2025/object_detection/few-shot_learner_generalizes_across_ai-generated_image_detection.md)
+- [A Theoretical Analysis of Detecting Large Model-Generated Time Series](a_theoretical_analysis_of_detecting_large_model-generated_time_series.md)
+
+<!-- RELATED:END -->

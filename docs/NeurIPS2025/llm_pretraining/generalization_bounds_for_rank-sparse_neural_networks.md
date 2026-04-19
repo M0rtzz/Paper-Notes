@@ -146,3 +146,15 @@ $$\mathcal{B}_{S_p}(R) = \{A : \|A\|_{S_p} \leq R\}$$
 - **实用性**: ⭐⭐⭐ — 纯理论工作，但对低秩压缩有指导意义
 - **清晰度**: ⭐⭐⭐⭐ — 理论结果表述清晰，连续插值的直觉很好
 - **综合评分**: 8/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Block-Sample MAC-Bayes Generalization Bounds](../../ICLR2026/llm_pretraining/block-sample_mac-bayes_generalization_bounds.md)
+- [Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via Grokking](flatness_is_necessary_neural_collapse_is_not_rethinking_generalization_via_grokk.md)
+- [Alternating Gradient Flows: A Theory of Feature Learning in Two-layer Neural Networks](alternating_gradient_flows_a_theory_of_feature_learning_in_two-layer_neural_netw.md)
+- [Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
+- [Breaking the Frozen Subspace: Importance Sampling for Low-Rank Optimization in LLM Pretraining](breaking_the_frozen_subspace_importance_sampling_for_low-rank_optimization_in_ll.md)
+
+<!-- RELATED:END -->

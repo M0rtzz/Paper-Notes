@@ -132,3 +132,15 @@ $$\mathcal{L}_m(y, \mathbf{z}) = -\log \frac{e^{z_y}}{e^{z_y} + \sum_{c \neq y} 
 - 实验充分度: ⭐⭐⭐⭐ — 6 数据集 × 3 范式，消融完整，但缺少大规模验证
 - 写作质量: ⭐⭐⭐⭐ — 动机图示清晰、公式推导完整，整体可读性好
 - 价值: ⭐⭐⭐⭐ — VLM 伪标签不平衡是实际痛点，方法可迁移到其他 VLM 微调场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoCoA-Mix: Confusion-and-Confidence-Aware Mixture Model for Context Optimization](cocoa-mix_confusion-and-confidence-aware_mixture_model_for_context_optimization.md)
+- [Unified Vision-Language Modeling via Concept Space Alignment](../../ICLR2026/multimodal_vlm/unified_vision-language_modeling_via_concept_space_alignment.md)
+- [CAPT: Confusion-Aware Prompt Tuning for Reducing Vision-Language Misalignment](../../CVPR2026/multimodal_vlm/capt_confusion-aware_prompt_tuning_for_reducing_vision-language_misalignment.md)
+- [Kernel-based Unsupervised Embedding Alignment for Enhanced Visual Representation in Vision-language Models](kernel-based_unsupervised_embedding_alignment_for_enhanced_visual_representation.md)
+- [Aligning by Misaligning: Boundary-aware Curriculum Learning for Multimodal Alignment](../../NeurIPS2025/multimodal_vlm/aligning_by_misaligning_boundaryaware_curriculum_learning_fo.md)
+
+<!-- RELATED:END -->

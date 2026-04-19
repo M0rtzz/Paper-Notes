@@ -111,3 +111,15 @@ JOOD 是推理时攻击，不涉及训练。攻击参数包括：辅助样本数
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多场景、丰富消融实验，包含防御对抗测试
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表信息量大
 - 价值: ⭐⭐⭐⭐ 对 AI 安全研究有重要警示意义，但属攻击端工作缺乏防御方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](../../ACL2025/multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Distraction is All You Need for Multimodal Large Language Model Jailbreaking](distraction_is_all_you_need_for_multimodal_large_language_model_jailbreaking.md)
+- [Revisiting Logit Distributions for Reliable Out-of-Distribution Detection](../../NeurIPS2025/multimodal_vlm/revisiting_logit_distributions_for_reliable_out-of-distribution_detection.md)
+- [Jailbreaking Multimodal Large Language Models via Shuffle Inconsistency](../../ICCV2025/multimodal_vlm/jailbreaking_multimodal_large_language_models_via_shuffle_inconsistency.md)
+- [LAION-C: An Out-of-Distribution Benchmark for Web-Scale Vision Models](../../ICML2025/multimodal_vlm/laion-c_an_out-of-distribution_benchmark_for_web-scale_vision_models.md)
+
+<!-- RELATED:END -->

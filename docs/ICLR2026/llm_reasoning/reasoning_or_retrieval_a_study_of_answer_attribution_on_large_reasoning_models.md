@@ -138,3 +138,15 @@ Farl 相对基线模型：R-PSR 降低 47.8%，T-PSR 降低 38.5%，训练域准
 - **实验完整度**: ⭐⭐⭐⭐⭐ — 从行为实验到机制分析到因果干预，层层递进
 - **写作质量**: ⭐⭐⭐⭐⭐ — 研究问题驱动，结构清晰，可视化出色
 - **综合评分**: ⭐⭐⭐⭐⭐ — 揭示了 LRM 的关键机制性问题，对后续研究有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Segment-Level Attribution for Selective Learning of Long Reasoning Traces](segment-level_attribution_for_selective_learning_of_long_reasoning_traces.md)
+- [No Answer Needed: Predicting LLM Answer Accuracy from Question-Only Linear Probes](no_answer_needed_predicting_llm_answer_accuracy_from_question-only_linear_probes.md)
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+- [RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
+- [Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
+
+<!-- RELATED:END -->

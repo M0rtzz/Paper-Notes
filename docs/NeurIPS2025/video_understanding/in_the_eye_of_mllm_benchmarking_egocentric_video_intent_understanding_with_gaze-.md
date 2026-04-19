@@ -124,3 +124,15 @@ LoRA 微调跨数据集迁移效果（Qwen2.5-VL-7B）：
 | 技术深度 | ⭐⭐⭐ | 三种提示策略设计合理但技术门槛不高，LoRA 微调实验较为标准 |
 | 实验完整度 | ⭐⭐⭐⭐ | 7个模型 × 3种策略 × 多场景/活动维度的全面评测，含微调、自估注视等深入分析 |
 | 实用价值 | ⭐⭐⭐⭐ | 对 AR 眼镜、第一人称 AI 助手等场景有直接指导意义，"少量数据+LoRA"路径具有可操作性 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](enhancing_temporal_understanding_in_videollms_through_stacke.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Seeing Beyond the Scene: Analyzing and Mitigating Background Bias in Action Recognition](seeing_beyond_the_scene_analyzing_and_mitigating_background_bias_in_action_recog.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](../../CVPR2026/video_understanding/streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [MLVU: Benchmarking Multi-task Long Video Understanding](../../CVPR2025/video_understanding/mlvu_benchmarking_multi-task_long_video_understanding.md)
+
+<!-- RELATED:END -->

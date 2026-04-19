@@ -158,3 +158,15 @@ N=2时效果最佳且计算量仅为原来的27.6%。
 - **实验充分度**: ⭐⭐⭐⭐ 三个长视频benchmark全面评测，消融详细，但仅限单一基础模型
 - **写作质量**: ⭐⭐⭐⭐ 框架图清晰，注意力模式可视化有说服力
 - **价值**: ⭐⭐⭐⭐⭐ 实用价值极高，任何Video-MLLM都可即时获益，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions](../../NeurIPS2025/video_understanding/neural_stochastic_flows_solver-free_modelling_and_inference_for_sde_solutions.md)
+- [AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)
+- [EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception](egoadapt_adaptive_multisensory_distillation_and_policy_learning_for_efficient_eg.md)
+- [Reasoning over Video: Evaluating How MLLMs Extract, Integrate, and Reconstruct Spatiotemporal Evidence](../../CVPR2025/video_understanding/reasoning_over_video_evaluating_how_mllms_extract_integrate_and_reconstruct_spat.md)
+- [Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](../../ACL2025/video_understanding/sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ OA=物体排列推理, RC=区域上下文推理, SS=场景状态推理
 - **实用性**: ★★★★☆ — 适用于VR/游戏/电影中的虚拟场景填充
 - **实验**: ★★★☆☆ — 提出新基准但规模较小，缺乏与已有方法的直接对比
 - **写作**: ★★★★☆ — 框架清晰，示例丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
+- [TriDi: Trilateral Diffusion of 3D Humans, Objects, and Interactions](tridi_trilateral_diffusion_of_3d_humans_objects_and_interactions.md)
+- [ETCH: Generalizing Body Fitting to Clothed Humans via Equivariant Tightness](etch_generalizing_body_fitting_to_clothed_humans_via_equivariant_tightness.md)
+- [3D Test-time Adaptation via Graph Spectral Driven Point Shift](3d_test-time_adaptation_via_graph_spectral_driven_point_shift.md)
+- [Event-based Tiny Object Detection: A Benchmark Dataset and Baseline](event-based_tiny_object_detection_a_benchmark_dataset_and_baseline.md)
+
+<!-- RELATED:END -->

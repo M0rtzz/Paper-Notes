@@ -120,3 +120,15 @@ REL-SF4PASS 包含两个核心组件：(1) REL 深度表示模块，将原始深
 - 实验充分度: ⭐⭐⭐ (单一数据集，但鲁棒性分析详尽)
 - 写作质量: ⭐⭐⭐⭐ (数学推导清晰，物理意义解释充分)
 - 价值: ⭐⭐⭐⭐ (全景分割领域的实用贡献，可直接替换 HHA)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
+- [Unified Spherical Frontend: Learning Rotation-Equivariant Representations of Spherical Images from Any Camera](unified_spherical_frontend_learning_rotation-equivariant_representations_of_sphe.md)
+- [GeoSURGE: Geo-localization using Semantic Fusion with Hierarchy of Geographic Embeddings](geosurge_geo-localization_using_semantic_fusion_with_hierarchy_of_geographic_emb.md)
+- [Masked Representation Modeling for Domain-Adaptive Segmentation](masked_representation_modeling_for_domain-adaptive_segmentation.md)
+- [OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation](../../ICCV2025/segmentation/omnisam_omnidirectional_segment_anything_model_for_uda_in_panoramic_semantic_seg.md)
+
+<!-- RELATED:END -->

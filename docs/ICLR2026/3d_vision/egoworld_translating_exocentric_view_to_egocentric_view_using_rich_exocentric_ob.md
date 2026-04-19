@@ -155,3 +155,15 @@ EgoWorld 是一个两阶段管线。**阶段一 (Exocentric View Observation $\P
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、四种 unseen 场景、六项指标、充分的消融（模态、骨干、姿态表示、噪声鲁棒性）、real-world 定性评估，实验设计非常完善
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图表丰富；论文结构完整，动机阐述合理
 - 价值: ⭐⭐⭐⭐ AR/VR、机器人和教学视频领域有直接应用价值；单张图像输入 + 单卡训练的低门槛使其易于部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Look and Tell: A Dataset for Multimodal Grounding Across Egocentric and Exocentric Views](../../NeurIPS2025/3d_vision/look_and_tell_a_dataset_for_multimodal_grounding_across_egocentric_and_exocentri.md)
+- [EgoNight: Towards Egocentric Vision Understanding at Night with a Challenging Benchmark](egonight_towards_egocentric_vision_understanding_at_night_with_a_challenging_ben.md)
+- [Sharp Monocular View Synthesis in Less Than a Second](sharp_monocular_view_synthesis_in_less_than_a_second.md)
+- [Stylos: Multi-View 3D Stylization with Single-Forward Gaussian Splatting](stylos_multi-view_3d_stylization_with_single-forward_gaussian_splatting.md)
+- [Peering into the Unknown: Active View Selection with Neural Uncertainty Maps for 3D Reconstruction](peering_into_the_unknown_active_view_selection_with_neural_uncertainty_maps_for_.md)
+
+<!-- RELATED:END -->

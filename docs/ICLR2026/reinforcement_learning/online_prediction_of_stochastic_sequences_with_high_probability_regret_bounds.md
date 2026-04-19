@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 纯理论工作，无实验验证，但定理本身即为"实验"
 - 写作质量: ⭐⭐⭐⭐ — 理论论文的清晰表述需要高水平技巧
 - 价值: ⭐⭐⭐⭐ — 填补了理论空白，上下界匹配具有数学上的完美性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Regret Bounds for GP-UCB in Bayesian Optimization](../../NeurIPS2025/reinforcement_learning/improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+- [Bandit and Delayed Feedback in Online Structured Prediction](../../NeurIPS2025/reinforcement_learning/bandit_and_delayed_feedback_in_online_structured_prediction.md)
+- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [Regret-Guided Search Control for Efficient Learning in AlphaZero](regret-guided_search_control_for_efficient_learning_in_alphazero.md)
+- [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
+
+<!-- RELATED:END -->

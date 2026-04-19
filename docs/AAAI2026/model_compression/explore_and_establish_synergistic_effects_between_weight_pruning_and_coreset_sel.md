@@ -157,3 +157,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \sum_{(\mathbf{
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖CIFAR-10/100、TinyImageNet、ImageNet-1K，多架构多设定，消融全面
 - 写作质量: ⭐⭐⭐⭐ — 从经典ML到深度学习的叙事线清晰，多项式实验提供了直观理解
 - 价值: ⭐⭐⭐⭐ — 揭示了训练效率优化中被忽视的联合优化方向，实用性强但缺乏大模型验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Don't Start Over: A Cost-Effective Framework for Migrating Personalized Prompts Between LLMs](dont_start_over_a_cost-effective_framework_for_migrating_personalized_prompts_be.md)
+- [Share Your Attention: Transformer Weight Sharing via Matrix-Based Dictionary Learning](share_your_attention_transformer_weight_sharing_via_matrix-based_dictionary_lear.md)
+- [Mitigating Selection Bias with Node Pruning and Auxiliary Options](../../ACL2025/model_compression/selection_bias_node_pruning.md)
+- [Revisiting Weight Regularization for Low-Rank Continual Learning](../../ICLR2026/model_compression/revisiting_weight_regularization_for_low-rank_continual_learning.md)
+- [SafeSieve: From Heuristics to Experience in Progressive Pruning for LLM-based Multi-Agent Communication](safesieve_from_heuristics_to_experience_in_progressive_pruning_for_llm-based_mul.md)
+
+<!-- RELATED:END -->

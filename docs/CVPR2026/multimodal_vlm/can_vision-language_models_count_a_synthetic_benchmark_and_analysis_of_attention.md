@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型、多维度、多层次的系统评估非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，认知科学类比贴切
 - 价值: ⭐⭐⭐⭐ 为理解 VLM 计数失败提供了重要诊断工具和机制解释
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+- [VL-RouterBench: A Benchmark for Vision-Language Model Routing](vl-routerbench_a_benchmark_for_vision-language_model_routing.md)
+- [SpatiaLQA: A Benchmark for Evaluating Spatial Logical Reasoning in Vision-Language Models](spatialqa_a_benchmark_for_evaluating_spatial_logical_reasoning_in_vision-languag.md)
+- [Can Vision–Language Models Assess Graphic Design Aesthetics? A Benchmark, Evaluation, and Dataset Perspective](../../ICLR2026/multimodal_vlm/can_vision_language_models_assess_graphic_design_aesthetics_a_benchmark_evaluati.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+
+<!-- RELATED:END -->

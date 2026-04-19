@@ -134,3 +134,15 @@ BiasJailbreak不涉及模型训练，核心评估指标为：
 ⭐⭐⭐⭐
 
 发现了一个重要且此前被忽视的安全漏洞——安全对齐引入的伦理偏见可被反向利用。实验跨越多个主流模型且结论一致。BiasDefense虽简单但实用。不足在于攻击模板较简单、防御鲁棒性验证不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Align to Structure: Aligning Large Language Models with Structural Information](align_to_structure_aligning_large_language_models_with_struc.md)
+- [Exploring the Effects of Alignment on Numerical Bias in Large Language Models](exploring_the_effects_of_alignment_on_numerical_bias_in_large_language_models.md)
+- [Jailbreak-Zero: A Path to Pareto Optimal Red Teaming for Large Language Models](../../NeurIPS2025/llm_alignment/jailbreak-zero_a_path_to_pareto_optimal_red_teaming_for_large_language_models.md)
+- [QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language](../../ACL2025/llm_alignment/queryattack_jailbreaking_aligned_large_language_models_using_structured_non-natu.md)
+- [EASE: Practical and Efficient Safety Alignment for Small Language Models](ease_practical_and_efficient_safety_alignment_for_small_language_models.md)
+
+<!-- RELATED:END -->

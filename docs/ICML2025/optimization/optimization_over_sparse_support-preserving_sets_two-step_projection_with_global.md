@@ -118,3 +118,15 @@ tags:
 - 硬约束直接控制稀疏度k，无需调参
 - ℓ1正则化的稀疏度受正则化系数间接控制，无法精确指定
 - 在需要精确稀疏度的场景（如组合优化、传感器选择）中，硬约束更合适
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [ECPv2: Fast, Efficient, and Scalable Global Optimization of Lipschitz Functions](../../AAAI2026/optimization/ecpv2_fast_efficient_and_scalable_global_optimization_of_lipschitz_functions.md)
+- [Online Two-Stage Submodular Maximization](../../NeurIPS2025/optimization/online_two-stage_submodular_maximization.md)
+- [Optimality and NP-Hardness of Transformers in Learning Markovian Dynamical Functions](../../NeurIPS2025/optimization/optimality_and_np-hardness_of_transformers_in_learning_markovian_dynamical_funct.md)
+
+<!-- RELATED:END -->

@@ -189,3 +189,15 @@ MMSciBench 在中文科学基准中独特地结合了多模态评估、三级知
 - 实验充分度: ⭐⭐⭐⭐⭐ — 9 个模型、多维度分析（学科/题型/模态/知识点/CoT/错误类型），非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，表格和图表丰富，分析角度多样
 - 实用价值: ⭐⭐⭐⭐ — 为中文科学推理评估提供了高质量基准，三级分类体系便于精细诊断
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+- [SciVer: Evaluating Foundation Models for Multimodal Scientific Claim Verification](sciver_evaluating_foundation_models_for_multimodal_scientific_claim_verification.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [PunchBench: Benchmarking MLLMs in Multimodal Punchline Comprehension](punchbench_mllm_punchline.md)
+
+<!-- RELATED:END -->

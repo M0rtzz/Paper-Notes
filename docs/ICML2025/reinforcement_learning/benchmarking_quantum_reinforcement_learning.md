@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 100 seeds × 多配置，前所未有
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，统计严谨
 - 价值: ⭐⭐⭐⭐ 为 QRL 研究设立标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](../../ICLR2026/reinforcement_learning/verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
+- [Near-Optimal Quantum Algorithms for Computing (Coarse) Correlated Equilibria of General-Sum Games](../../NeurIPS2025/reinforcement_learning/near-optimal_quantum_algorithms_for_computing_coarse_correlated_equilibria_of_ge.md)
+- [ParaS2S: Benchmarking and Aligning Spoken Language Models for Paralinguistic-Aware Speech-to-Speech Interaction](../../ICLR2026/reinforcement_learning/paras2s_benchmarking_and_aligning_spoken_language_models_for_paralinguistic-awar.md)
+- [DCcluster-Opt: Benchmarking Dynamic Multi-Objective Optimization for Geo-Distributed Data Center Workloads](../../NeurIPS2025/reinforcement_learning/dccluster-opt_benchmarking_dynamic_multi-objective_optimization_for_geo-distribu.md)
+- [Sliding Puzzles Gym: A Scalable Benchmark for State Representation in Visual Reinforcement Learning](sliding_puzzles_gym_a_scalable_benchmark_for_state_representation_in_visual_rein.md)
+
+<!-- RELATED:END -->

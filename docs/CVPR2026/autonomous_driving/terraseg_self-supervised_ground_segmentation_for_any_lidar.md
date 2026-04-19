@@ -129,3 +129,15 @@ PseudoLabeler 各组件消融（nuScenes）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个主流 benchmark 全面验证，消融实验详尽，基线对比完整
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，三个核心组件的关系描述明确
 - **价值**: ⭐⭐⭐⭐⭐ — 实用价值极高，直接解决了自动驾驶中地面分割的标注困难和传感器泛化问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images](bev-sld_self-supervised_scene_landmark_detection_for_global_localization_with_li.md)
+- [Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation](../../CVPR2025/autonomous_driving/exploring_scene_affinity_for_semi-supervised_lidar_semantic_segmentation.md)
+- [Le MuMo JEPA: Multi-Modal Self-Supervised Representation Learning with Learnable Fusion Tokens](le_mumo_jepa_multi-modal_self-supervised_representation_learning_with_learnable_.md)
+- [HorizonForge: Driving Scene Editing with Any Trajectories and Any Vehicles](horizonforge_driving_scene_editing_with_any_trajectories_and_any_vehicles.md)
+- [ItTakesTwo: Leveraging Peer Representations for Semi-supervised LiDAR Semantic Segmentation](../../ECCV2024/autonomous_driving/ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se.md)
+
+<!-- RELATED:END -->

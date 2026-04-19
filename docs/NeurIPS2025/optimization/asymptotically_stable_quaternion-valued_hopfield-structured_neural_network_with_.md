@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐ 实验规模太小（4 神经元），缺乏与基线的定量对比，机器人应用仅为原型
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，但行文偏冗长
 - 价值: ⭐⭐⭐ 理论基础扎实，但实际应用价值需更大规模实验验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression](../../CVPR2025/optimization/automatic_joint_structured_pruning_and_quantization_for_efficient_neural_network.md)
+- [The Implicit Bias of Structured State Space Models Can Be Poisoned With Clean Labels](the_implicit_bias_of_structured_state_space_models_can_be_poisoned_with_clean_la.md)
+- [Learning to Insert for Constructive Neural Vehicle Routing Solver](learning_to_insert_for_constructive_neural_vehicle_routing_solver.md)
+- [The Butterfly Effect: Neural Network Training Trajectories Are Highly Sensitive to Initial Conditions](../../ICML2025/optimization/the_butterfly_effect_neural_network_training_trajectories_are_highly_sensitive_t.md)
+- [Neural Thermodynamics: Entropic Forces in Deep and Universal Representation Learning](neural_thermodynamics_entropic_forces_in_deep_and_universal_representation_learn.md)
+
+<!-- RELATED:END -->

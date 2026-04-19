@@ -119,3 +119,15 @@ WorldMM 是inference-time框架，不需要额外训练。记忆构建使用 GPT
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个基准（从小时到周级别）、丰富的消融实验、记忆利用分析、效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，概念图直观，但符号稍多
 - 价值: ⭐⭐⭐⭐⭐ 为长视频理解和 AI agent 记忆管理提供了有效的框架范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoAgent: A Memory-augmented Multimodal Agent for Video Understanding](../../ECCV2024/llm_agent/videoagent_a_memory-augmented_multimodal_agent_for_video_understanding.md)
+- [Think, Then Verify: A Hypothesis-Verification Multi-Agent Framework for Long Video Understanding](think_then_verify_a_hypothesis-verification_multi-agent_framework_for_long_video.md)
+- [MC-Search: Evaluating and Enhancing Multimodal Agentic Search with Structured Long Reasoning Chains](../../ICLR2026/llm_agent/mc-search_evaluating_and_enhancing_multimodal_agentic_search_with_structured_lon.md)
+- [CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare](carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)
+- [LLandMark: A Multi-Agent Framework for Landmark-Aware Multimodal Interactive Video Retrieval](../../AAAI2026/llm_agent/llandmark_a_multi-agent_framework_for_landmark-aware_multimodal_interactive_vide.md)
+
+<!-- RELATED:END -->

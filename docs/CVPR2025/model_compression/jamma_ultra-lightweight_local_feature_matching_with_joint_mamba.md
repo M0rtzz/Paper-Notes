@@ -119,3 +119,15 @@ JamMa提出了基于Joint Mamba的超轻量级半密集特征匹配器，通过J
 - 实验充分度: ⭐⭐⭐⭐ 位姿估计+单应矩阵估计+详细消融，缺少更多下游任务评估
 - 写作质量: ⭐⭐⭐⭐⭐ 图示直观清晰（尤其是感受野可视化），逻辑层层递进
 - 价值: ⭐⭐⭐⭐⭐ 开创了Mamba用于视觉匹配的新方向，超轻量且性能出色的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MobileMamba: Lightweight Multi-Receptive Visual Mamba Network](mobilemamba_lightweight_multi-receptive_visual_mamba_network.md)
+- [Joker: Joint Optimization Framework for Lightweight Kernel Machines](../../ICML2025/model_compression/joker_joint_optimization_framework_for_lightweight_kernel_machines.md)
+- [Mamba-Adaptor: State Space Model Adaptor for Visual Recognition](mamba-adaptor_state_space_model_adaptor_for_visual_recognition.md)
+- [SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images](../../ECCV2024/model_compression/spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)
+- [ECVC: Exploiting Non-Local Correlations in Multiple Frames for Contextual Video Compression](ecvc_exploiting_non-local_correlations_in_multiple_frames_for_contextual_video_c.md)
+
+<!-- RELATED:END -->

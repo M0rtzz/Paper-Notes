@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 44年纵向分析覆盖全面但缺少与其他媒体的对比
 - 写作质量: ⭐⭐⭐⭐ 研究动机、方法论选择的讨论充分且有深度
 - 价值: ⭐⭐⭐⭐ 大规模公开德语语料库本身就是重要资源贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GG-BBQ: German Gender Bias Benchmark for Question Answering](gg-bbq_german_gender_bias_benchmark_for_question_answering.md)
+- [Translate With Care: Addressing Gender Bias, Neutrality, and Reasoning in Large Language Model Translations](translate_with_care_addressing_gender_bias_neutrality_and_reasoning_in_large_lan.md)
+- [Auto-Search and Refinement: An Automated Framework for Gender Bias Mitigation in LLMs](../../NeurIPS2025/social_computing/auto-search_and_refinement_an_automated_framework_for_gender_bias_mitigation_in_.md)
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
+
+<!-- RELATED:END -->

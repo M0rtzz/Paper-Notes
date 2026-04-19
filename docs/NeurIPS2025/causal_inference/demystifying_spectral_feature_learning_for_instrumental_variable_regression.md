@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成实验精确验证理论预测，dSprites 诊断工具实用
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，叙述清晰，巧妙的命名增强可记忆性
 - 价值: ⭐⭐⭐⭐ 为因果推断中的特征选择提供了理论指导，诊断工具有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FitCF: A Framework for Automatic Feature Importance-guided Counterfactual Example Generation](../../ACL2025/causal_inference/fitcf_a_framework_for_automatic_feature_importance-guided_counterfactual_example.md)
+- [Latent Variable Causal Discovery under Selection Bias](../../ICML2025/causal_inference/latent_variable_causal_discovery_under_selection_bias.md)
+- [Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)
+- [Characterization and Learning of Causal Graphs from Hard Interventions](characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [A Principle of Targeted Intervention for Multi-Agent Reinforcement Learning](a_principle_of_targeted_intervention_for_multi-agent_reinforcement_learning.md)
+
+<!-- RELATED:END -->

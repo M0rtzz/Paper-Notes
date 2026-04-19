@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯愿景论文，无任何实验或原型验证
 - 写作质量: ⭐⭐⭐⭐ 论述逻辑清晰，Table 1的对比有效，研究挑战描述精准
 - 价值: ⭐⭐⭐ 方向性价值高但距离实际落地较远，对无线AIx和NeSy社区有启发但缺乏可操作指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](../../ACL2025/graph_learning/beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
+- [Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees](../../ICML2025/graph_learning/towards_graph_foundation_models_learning_generalities_across_graphs_via_task-tre.md)
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](../../ICML2025/graph_learning/graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+- [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
+- [Positional Encoding meets Persistent Homology on Graphs](../../ICML2025/graph_learning/positional_encoding_meets_persistent_homology_on_graphs.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9种系统×105问题×3种评估方法，945次人工评审工作量扎实
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，成本分析等实用信息丰富，局限性讨论诚恳
 - 价值: ⭐⭐⭐⭐ 对天文AI社区直接有用，校准LLMaaJ的策略可迁移到其他科学领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open Source Planning & Control System with Language Agents for Autonomous Scientific Discovery](open_source_planning_control_system_with_language_agents_for_autonomous_scientif.md)
+- [NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](../../ICLR2026/llm_agent/newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
+- [Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](aguvis_unified_pure_vision_agents_for_autonomous_gui_interaction.md)
+- [SR-Scientist: Scientific Equation Discovery With Agentic AI](../../ICLR2026/llm_agent/sr-scientist_scientific_equation_discovery_with_agentic_ai.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](../../ACL2025/llm_agent/multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+
+<!-- RELATED:END -->

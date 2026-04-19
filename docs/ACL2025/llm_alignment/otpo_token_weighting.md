@@ -134,3 +134,15 @@ OTPO 利用无平衡最优传输（UOT）在 chosen/rejected 回复的 token 表
 - 实验充分度: ⭐⭐⭐⭐ 效果显著，消融充分
 - 写作质量: ⭐⭐⭐⭐ 理论推导与实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 统一框架 + 强效果 + 即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
+- [T-REG: Preference Optimization with Token-Level Reward Regularization](t-reg_preference_optimization_with_token-level_reward_regularization.md)
+- [TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization](../../ICML2025/llm_alignment/tgdpo_harnessing_token-level_reward_guidance_for_enhancing_direct_preference_opt.md)
+- [SafeDPO: A Simple Approach to Direct Preference Optimization with Enhanced Safety](../../ICLR2026/llm_alignment/safedpo_preference_optimization_safety.md)
+- [ConfPO: Exploiting Policy Model Confidence for Critical Token Selection in Preference Optimization](../../ICML2025/llm_alignment/confpo_exploiting_policy_model_confidence_for_critical_token_selection_in_prefer.md)
+
+<!-- RELATED:END -->

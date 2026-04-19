@@ -132,3 +132,15 @@ SceneTransporter 在三个几何保真度指标上均取得最优（ULIP=0.1466,
 ### 评分
 
 ⭐⭐⭐⭐⭐ — 理论深度与实践效果俱佳的工作。从诊断到方案的完整链路、最优传输与扩散模型的精巧结合、以及训练-free 的即插即用设计，使其成为结构化 3D 生成领域的标杆性方法。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One2Scene: Geometric Consistent Explorable 3D Scene Generation from a Single Image](one2scene_geometric_consistent_explorable_3d_scene_generation_from_a_single_imag.md)
+- [Pano3DComposer: Feed-Forward Compositional 3D Scene Generation from Single Panoramic Image](../../CVPR2026/3d_vision/pano3dcomposer_feed-forward_compositional_3d_scene_generation_from_single_panora.md)
+- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](../../ICCV2025/3d_vision/sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
+- [Compress3D: a Compressed Latent Space for 3D Generation from a Single Image](../../ECCV2024/3d_vision/compress3d_a_compressed_latent_space_for_3d_generation_from_a_single_image.md)
+- [Stroke3D: Lifting 2D Strokes into Rigged 3D Model via Latent Diffusion Models](stroke3d_lifting_2d_strokes_into_rigged_3d_model_via_latent_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -129,3 +129,15 @@ K-Rectify通过三步实现无参数的局部信息交换：
 ## 评分
 
 ⭐⭐⭐⭐ — 研究动机清晰（局部特征→结构化矩阵），设计简洁有效（Point Monarch = Monarch + K-Rectify），实验扎实（5个backbone×多任务），97.5%在ScanObjectNN上极有竞争力；学术新颖度和简洁度均佳。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation](../../NeurIPS2025/3d_vision/on_geometry-enhanced_parameter-efficient_fine-tuning_for_3d_scene_segmentation.md)
+- [Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
+- [SpatialSplat: Efficient Semantic 3D from Sparse Unposed Images](../../ICCV2025/3d_vision/spatialsplat_efficient_semantic_3d_from_sparse_unposed_images.md)
+- [FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning](fsfm_a_generalizable_face_security_foundation_model_via_self-supervised_facial_r.md)
+- [Point-SRA: Self-Representation Alignment for 3D Representation Learning](../../AAAI2026/3d_vision/point-sra_self-representation_alignment_for_3d_representation_learning.md)
+
+<!-- RELATED:END -->

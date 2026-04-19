@@ -145,3 +145,15 @@ $$L_{point}(\theta) = \frac{1}{2}\sum_{k=1}^{K}\sum_{i=0}^{1}(e_k^i - p_k^i - \D
 | 实验充分性 | 3.5 | 消融实验充分，但缺少真实机器人实验 |
 | 写作质量 | 4 | 结构清晰，动机阐述明确 |
 | 实用价值 | 3.5 | 对多手型机器人系统有较大参考价值，但实用落地需sim-to-real验证 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Physics-Based Full-Body Human Reaching and Grasping from Brief Walking References](../../CVPR2025/human_understanding/learning_physics-based_full-body_human_reaching_and_grasping_from_brief_walking_.md)
+- [GraspXL: Generating Grasping Motions for Diverse Objects at Scale](graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
+- [One-stage Prompt-based Continual Learning](one-stage_prompt-based_continual_learning.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [UPose3D: Uncertainty-Aware 3D Human Pose Estimation with Cross-View and Temporal Cues](upose3d_uncertainty-aware_3d_human_pose_estimation_with_cross-view_and_temporal_.md)
+
+<!-- RELATED:END -->

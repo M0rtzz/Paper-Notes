@@ -151,3 +151,15 @@ $$\mathcal{L}_{\text{FDBM}}^{\text{paired}}(\theta) = \int_0^1 \mathbb{E}_{\math
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：概念新颖（首次将 fBM 引入扩散桥），理论扎实（耦合保持证明），实验全面（合成+蛋白质+图像），蛋白质任务上的提升有意义。非配对设置的不稳定性是明确的局限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Posterior Sampling by Combining Diffusion Models with Annealed Langevin Dynamics](posterior_sampling_by_combining_diffusion_models_with_annealed_langevin_dynamics.md)
+- [Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
+- [Semantic and Visual Crop-Guided Diffusion Models for Heterogeneous Tissue Synthesis in Histopathology](semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)
+- [FAPEX: Fractional Amplitude-Phase Expressor for Robust Cross-Subject Seizure Prediction](fapex_fractional_amplitude-phase_expressor_for_robust_cross-subject_seizure_pred.md)
+- [Atomic Diffusion Models for Small Molecule Structure Elucidation from NMR Spectra](atomic_diffusion_models_for_small_molecule_structure_elucidation_from_nmr_spectr.md)
+
+<!-- RELATED:END -->

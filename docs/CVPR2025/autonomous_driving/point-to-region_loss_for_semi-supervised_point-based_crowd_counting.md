@@ -84,3 +84,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 数据集+计算效率对比
 - 写作质量: ⭐⭐⭐⭐⭐ 因果链条清晰
 - 价值: ⭐⭐⭐⭐ 解决了半监督计数的根本性缺陷
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation](exploring_scene_affinity_for_semi-supervised_lidar_semantic_segmentation.md)
+- [SFPNet: Sparse Focal Point Network for Semantic Segmentation on General LiDAR Point Clouds](../../ECCV2024/autonomous_driving/sfpnet_sparse_focal_point_network_for_semantic_segmentation_on_general_lidar_poi.md)
+- [Counting Stacked Objects](../../ICCV2025/autonomous_driving/counting_stacked_objects.md)
+- [Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration](../../ICML2025/autonomous_driving/geometry-to-image_synthesis-driven_generative_point_cloud_registration.md)
+- [InfoCons: Identifying Interpretable Critical Concepts in Point Clouds via Information Theory](../../ICML2025/autonomous_driving/infocons_identifying_interpretable_critical_concepts_in_point_clouds_via_informa.md)
+
+<!-- RELATED:END -->

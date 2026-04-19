@@ -118,3 +118,15 @@ tags:
 ⭐⭐⭐ (3/5)
 
 实验设计系统全面，但技术深度有限，主要是经验性评估。发现有价值（开源模型默认不安全、无单一防御万能），但缺乏理论分析和更强的防御方案提出。对智能体安全社区是有用的参考。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
+- [Scaling Equitable Reflection Assessment in Education via Large Language Models and Role-Based Feedback Agents](scaling_equitable_reflection_assessment_in_education_via_large_language_models_a.md)
+- [Red-Teaming LLM Multi-Agent Systems via Communication Attacks](../../ACL2025/llm_nlp/red-teaming_llm_multi-agent_systems_via_communication_attacks.md)
+- [Meta-RL Induces Exploration in Language Agents](../../ICLR2026/llm_nlp/meta-rl_induces_exploration_in_language_agents.md)
+- [Build Agent Advocates, Not Platform Agents](../../ICML2025/llm_nlp/build_agent_advocates_not_platform_agents.md)
+
+<!-- RELATED:END -->

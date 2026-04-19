@@ -127,3 +127,15 @@ A-ToM智能体维护一组不同ToM阶数的假设智能体 $\{\pi_j^{(k)}\}_{k 
 - **实验充分度**: ⭐⭐⭐⭐ 4类任务覆盖面广，含非LLM伙伴和边界条件分析，但仅限2智能体
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题建模严谨，递归定义清晰，案例分析直观
 - **价值**: ⭐⭐⭐⭐ 对LLM多智能体系统设计有重要启示，但实际部署场景的ToM阶数假设需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Computable Game-Theoretic Framework for Multi-Agent Theory of Mind](a_computable_game-theoretic_framework_for_multi-agent_theory_of_mind.md)
+- [Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems](shadows_in_the_code_exploring_the_risks_and_defenses_of_llm-.md)
+- [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+- [MindPower: Enabling Theory-of-Mind Reasoning in VLM-based Embodied Agents](../../CVPR2026/robotics/mindpower_enabling_theoryofmind_reasoning_in_vlmba.md)
+- [MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning](../../NeurIPS2025/robotics/mindforge_empowering_embodied_agents_with_theory_of_mind_for_lifelong_cultural_l.md)
+
+<!-- RELATED:END -->

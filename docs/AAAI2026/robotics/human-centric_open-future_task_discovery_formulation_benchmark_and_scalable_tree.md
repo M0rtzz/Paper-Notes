@@ -192,3 +192,15 @@ $$y \in Q_I^{hc} \iff y \in Q \land \mathcal{L}(A'_z, z) < \mathcal{L}(A_z, z)$$
 - 实验充分度: ⭐⭐⭐⭐ — 多基线对比+消融+人类评估+搜索策略分析+跨 LMM 集成
 - 写作质量: ⭐⭐⭐⭐ — 问题动机阐述精彩，形式化清晰
 - 价值: ⭐⭐⭐⭐⭐ — 为具身 AI 的预见性辅助开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?](../../ICLR2026/robotics/rei-bench_can_embodied_agents_understand_vague_human_instructions_in_task_planni.md)
+- [MMTU: A Massive Multi-Task Table Understanding and Reasoning Benchmark](../../NeurIPS2025/robotics/mmtu_a_massive_multi-task_table_understanding_and_reasoning_benchmark.md)
+- [UrbanNav: Learning Language-Guided Urban Navigation from Web-Scale Human Trajectories](urbannav_learning_language-guided_urban_navigation_from_web-scale_human_trajecto.md)
+- [Human Cognitive Biases in Explanation-based Interaction: The Case of Within and Between Session Order Effect](human_cognitive_biases_in_explanation-based_interaction_the_case_of_within_and_b.md)
+- [Affordance-Guided Coarse-to-Fine Exploration for Base Placement in Open-Vocabulary Mobile Manipulation](affordance-guided_coarse-to-fine_exploration_for_base_placem.md)
+
+<!-- RELATED:END -->

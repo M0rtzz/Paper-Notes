@@ -122,3 +122,15 @@ $$U \mapsto \{(I_1: U_1), (I_2: U_2), \ldots, (I_n: U_n)\}$$
 - 技术深度: ⭐⭐⭐ (方法直觉简洁，理论分析较少)
 - 实验充分度: ⭐⭐⭐⭐ (详细的消融和不同意图数分析)
 - 实用性: ⭐⭐⭐⭐ (对话系统中的实际问题，框架可扩展)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Entity Identification in Language Models](on_entity_identification_in_language_models.md)
+- [Logical Forms Complement Probability in Understanding Language Model (and Human) Performance](logical_forms_complement_probability_in_understanding_language_model_and_human_p.md)
+- [Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues](enhancing_spoken_discourse_modeling_in_language_models_using_gestural_cues.md)
+- [Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning](character_level_understanding.md)
+- [MExGen: Multi-Level Explanations for Generative Language Models](mexgen_multi_level_explanations.md)
+
+<!-- RELATED:END -->

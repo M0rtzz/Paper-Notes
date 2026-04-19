@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个模型×3 种分析方法（PCA/RSA/CMA）×多种干预实验，证据极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ Yoshua Bengio 参与，写作极为清晰，图表精美，逻辑链条完整
 - 价值: ⭐⭐⭐⭐⭐ 对理解 VLM 失败模式和未来架构设计有直接启发，连接 AI 和认知科学
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Circuit Tracing in Vision-Language Models: Understanding the Internal Mechanisms of Multimodal Thinking](../../CVPR2026/multimodal_vlm/circuit_tracing_in_vision-language_models_understanding_the_internal_mechanisms_.md)
+- [WeaveTime: Stream from Earlier Frames into Emergent Memory in VideoLLMs](../../CVPR2026/multimodal_vlm/weavetime_stream_from_earlier_frames_into_emergent_memory_in_videollms.md)
+- [RedundancyLens: Revealing and Exploiting Visual Token Processing Redundancy for Efficient Decoder-Only MLLMs](../../ACL2025/multimodal_vlm/redundancylens_revealing_and_exploiting_visual_token_processing_redundancy_for_e.md)
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+- [AdaptVision: Efficient Vision-Language Models via Adaptive Visual Acquisition](../../CVPR2026/multimodal_vlm/adaptvision_efficient_vision-language_models_via_adaptive_visual_acquisition.md)
+
+<!-- RELATED:END -->

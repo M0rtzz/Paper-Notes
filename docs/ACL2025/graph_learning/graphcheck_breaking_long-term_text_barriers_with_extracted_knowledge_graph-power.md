@@ -161,3 +161,15 @@ $$y = \text{LLM}(\tilde{\mathbf{h}}_g^C, \tilde{\mathbf{h}}_g^D, \mathbf{h}_t)$$
 ⭐⭐⭐⭐（4/5）
 
 方法思路清晰——用 KG 捕获长文本中的多跳关系，用 GNN 编码后作为 soft prompt 注入 LLM。单次推理核查是实际部署的重要优势。跨域泛化能力（通用→医学）令人印象深刻。不足在于对 KG 提取质量的强依赖和长声明场景的局限性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors](fast-and-frugal_text-graph_transformers_are_effective_link_predictors.md)
+- [On Measuring Long-Range Interactions in Graph Neural Networks](../../ICML2025/graph_learning/on_measuring_long-range_interactions_in_graph_neural_networks.md)
+- [Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](../../NeurIPS2025/graph_learning/unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)
+- [Can Graph Neural Networks Learn Language with Extremely Weak Text Supervision?](can_graph_neural_networks_learn_language.md)
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](../../NeurIPS2025/graph_learning/sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+
+<!-- RELATED:END -->

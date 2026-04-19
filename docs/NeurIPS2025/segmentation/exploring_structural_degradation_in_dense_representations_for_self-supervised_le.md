@@ -157,3 +157,15 @@ $$\mathcal{L} = \mathcal{L}_{original} - \beta \cdot \text{DSE}$$
 - 实验完整度：⭐⭐⭐⭐⭐ — 16 种方法 × 4 数据集的系统性验证
 - 实用性：⭐⭐⭐⭐⭐ — 几乎零成本的模型选择策略
 - 写作质量：⭐⭐⭐⭐⭐ — 从现象到理论到方法的逻辑链条非常清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-supervised Synthetic Pretraining for Inference of Stellar Mass Embedded in Dense Gas](self-supervised_synthetic_pretraining_for_inference_of_stellar_mass_embedded_in_.md)
+- [Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation](../../CVPR2025/segmentation/exploring_clips_dense_knowledge_for_weakly_supervised_semantic_segmentation.md)
+- [Joint Self-Supervised Video Alignment and Action Segmentation](../../ICCV2025/segmentation/joint_self-supervised_video_alignment_and_action_segmentation.md)
+- [Towards Unsupervised Domain Bridging via Image Degradation in Semantic Segmentation](towards_unsupervised_domain_bridging_via_image_degradation_in_semantic_segmentat.md)
+- [Vision Transformers with Self-Distilled Registers](vision_transformers_with_self-distilled_registers.md)
+
+<!-- RELATED:END -->

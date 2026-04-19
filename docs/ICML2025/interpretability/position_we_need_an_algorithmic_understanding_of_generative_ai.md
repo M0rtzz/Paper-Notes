@@ -136,3 +136,15 @@ AlgEval 主张结合以下方法：
 ## 评分
 
 ⭐⭐⭐ — 作为立场论文提出了重要的研究方向和系统性框架，案例研究提供了具体示例。但实质性技术贡献有限，许多研究方向停留在展望层面。核心洞察（LLM 不用经典搜索）虽有趣但并不意外。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)
+- [Position-aware Automatic Circuit Discovery](../../ACL2025/interpretability/position-aware_automatic_circuit_discovery.md)
+- [OrdShap: Feature Position Importance for Sequential Black-Box Models](../../NeurIPS2025/interpretability/ordshap_feature_position_importance_for_sequential_black-box_models.md)
+- [Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework](../../ACL2025/interpretability/towards_explainable_temporal_reasoning_in_large_language_models_a_structure-awar.md)
+- [Tropical Attention: Neural Algorithmic Reasoning for Combinatorial Algorithms](../../NeurIPS2025/interpretability/tropical_attention_neural_algorithmic_reasoning_for_combinatorial_algorithms.md)
+
+<!-- RELATED:END -->

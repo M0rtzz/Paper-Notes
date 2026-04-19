@@ -154,3 +154,15 @@ tags:
 - **实用性**：5/5 - 直接指导 T2I 评估中的指标选择
 - **实验充分度**：4/5 - 12 种指标 x 8 类别全面比较，但数据源单一
 - **写作质量**：4/5 - 结构清晰，表格丰富，结论明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flex-Judge: Text-Only Reasoning Unleashes Zero-Shot Multimodal Evaluators](flex-judge_text-only_reasoning_unleashes_zero-shot_multimodal_evaluators.md)
+- [Erasure or Erosion? Evaluating Compositional Degradation in Unlearned Text-To-Image Diffusion Models](../../CVPR2026/image_generation/erasure_or_erosion_evaluating_compositional_degradation_in_unlearned_text-to-ima.md)
+- [A Unified Agentic Framework for Evaluating Conditional Image Generation](../../ACL2025/image_generation/a_unified_agentic_framework_for_evaluating_conditional_image_generation.md)
+- [Scaling Can Lead to Compositional Generalization](scaling_can_lead_to_compositional_generalization.md)
+- [Text to Sketch Generation with Multi-Styles](text_to_sketch_generation_with_multi-styles.md)
+
+<!-- RELATED:END -->

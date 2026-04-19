@@ -112,3 +112,15 @@ VAE 训练使用三平面重建的 $\mathcal{L}_1$ loss + 渲染图像的 $\math
 - 实验充分度: ⭐⭐⭐⭐ 定量定性对比充分，消融验证各组件，但缺少用户研究和更多域的测试
 - 写作质量: ⭐⭐⭐⭐ 整体流程清晰，图表丰富，数据流水线描述详细
 - 价值: ⭐⭐⭐⭐ 首次实现开放域 4D 头像生成，但训练成本高限制了实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MGAudio: Model-Guided Dual-Role Alignment for High-Fidelity Open-Domain Video-to-Audio Generation](../../NeurIPS2025/image_generation/model-guided_dual-role_alignment_for_high-fidelity_open-domain_video-to-audio_ge.md)
+- [DoraCycle: Domain-Oriented Adaptation of Unified Generative Model in Multimodal Cycles](doracycle_domain-oriented_adaptation_of_unified_generative_model_in_multimodal_c.md)
+- [Everything to the Synthetic: Diffusion-driven Test-time Adaptation via Synthetic-Domain Alignment](everything_to_the_synthetic_diffusion-driven_test-time_adaptation_via_synthetic-.md)
+- [Knowledge Distillation Detection for Open-weights Models](../../NeurIPS2025/image_generation/knowledge_distillation_detection_for_open-weights_models.md)
+- [LlavaGuard: An Open VLM-based Framework for Safeguarding Vision Datasets and Models](../../ICML2025/image_generation/llavaguard_an_open_vlm-based_framework_for_safeguarding_vision_datasets_and_mode.md)
+
+<!-- RELATED:END -->

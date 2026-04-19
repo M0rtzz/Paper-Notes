@@ -149,3 +149,15 @@ $$\mathcal{L}(\theta) = -\frac{1}{M}\sum_{i=1}^{M}\sum_{j=1}^{|t_i|}\log P_\thet
 - **实验充分度**: ⭐⭐⭐⭐ — 15+ 模型的全面对比、pointwise/pairwise 双模式评估、用户研究，但数据集规模偏小
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富，问题动机阐述充分
 - **价值**: ⭐⭐⭐⭐ — 开源且填补了推理质量评估的空白，对可解释 deepfake 检测有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-shot HOI Detection with MLLM-based Detector-agnostic Interaction Recognition](../../ICLR2026/object_detection/zero-shot_hoi_detection_with_mllm-based_detector-agnostic_interaction_recognitio.md)
+- [Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](../../NeurIPS2025/object_detection/any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
+- [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](show_dont_tell_detecting_novel_objects_by_watching.md)
+- [Bridging Pixels and Words: Mask-Aware Local Semantic Fusion for Multimodal Media Verification](bridging_pixels_and_words_mask-aware_local_semantic_fusion_for_multimodal_media_.md)
+- [Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated](../../AAAI2026/object_detection/your_ai-generated_image_detector_can_secretly_achieve_sota_accuracy_if_calibrate.md)
+
+<!-- RELATED:END -->

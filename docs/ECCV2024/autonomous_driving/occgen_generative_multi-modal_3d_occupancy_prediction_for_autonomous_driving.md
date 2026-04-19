@@ -141,3 +141,15 @@ SemanticKITTI 验证集结果：
 - 实验充分度: ⭐⭐⭐⭐ 两个benchmark + 详细消融，但缺少与更多最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，方法描述详尽，公式推导完整
 - 价值: ⭐⭐⭐⭐ 为占用预测提供了生成式新思路，不确定性估计和灵活推理有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniM2AE: Multi-modal Masked Autoencoders with Unified 3D Representation for 3D Perception in Autonomous Driving](unim2ae_multi-modal_masked_autoencoders_with_unified_3d_representation_for_3d_pe.md)
+- [OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving](occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving.md)
+- [Fully Sparse 3D Occupancy Prediction](fully_sparse_3d_occupancy_prediction.md)
+- [GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
+- [GaussianFormer: Scene as Gaussians for Vision-Based 3D Semantic Occupancy Prediction](gaussianformer_scene_as_gaussians_for_vision-based_3d_semantic_occupancy_predict.md)
+
+<!-- RELATED:END -->

@@ -168,3 +168,15 @@ RAGuard 数据集构建分三个阶段：
 - 实验充分度: ⭐⭐⭐⭐ — 8 个模型、5 种设置、人类对比，覆盖全面；人类研究规模偏小扣分
 - 写作质量: ⭐⭐⭐⭐ — 术语统一工作扎实，分类体系清晰，论述有说服力
 - 价值: ⭐⭐⭐⭐⭐ — 直击 RAG 系统的核心弱点，数据集公开可用，对推动鲁棒 RAG 研究具有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EZSR: Event-based Zero-Shot Recognition](../../CVPR2025/information_retrieval/ezsr_event-based_zero-shot_recognition.md)
+- [OCR Hinders RAG: Evaluating the Cascading Impact of OCR on Retrieval-Augmented Generation](../../ICCV2025/information_retrieval/ocr_hinders_rag_evaluating_the_cascading_impact_of_ocr_on_retrieval-augmented_ge.md)
+- [RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering](rag-igbench_innovative_evaluation_for_rag-based_interleaved_generation_in_open-d.md)
+- [Explaining CLIP Zero-shot Predictions Through Concepts](../../CVPR2026/information_retrieval/explaining_clip_zero-shot_predictions_through_concepts.md)
+- [BTZSC: A Benchmark for Zero-Shot Text Classification Across Cross-Encoders, Embedding Models, Rerankers and LLMs](../../ICLR2026/information_retrieval/btzsc_a_benchmark_for_zero-shot_text_classification_across_cross-encoders_embedd.md)
+
+<!-- RELATED:END -->

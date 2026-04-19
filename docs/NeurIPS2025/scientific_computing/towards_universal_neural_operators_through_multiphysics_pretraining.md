@@ -154,3 +154,15 @@ $$\text{NMAE}(\theta) = \frac{1}{|\mathcal{D}^{\text{test}}|} \sum_{(\mathbf{a},
 | 综合评分 | ⭐⭐⭐ |
 
 **总评：** 工作思路清晰、实验设计合理，adapter-based 预训练微调范式在 PDE 迁移学习中验证有效。但整体贡献更偏"工程验证"而非"方法创新"——核心思想（adapter 解耦 + 共享 backbone）是 NLP 领域已成熟的范式在科学计算中的直接应用，新颖性有限。实验规模偏小，距离论文标题中"Universal"的愿景还有一定距离。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [Hamiltonian Neural PDE Solvers through Functional Approximation](hamiltonian_neural_pde_solvers_through_functional_approximation.md)
+- [Universal Neural Optimal Transport](../../ICML2025/scientific_computing/universal_neural_optimal_transport.md)
+- [Maximal Update Parametrization and Zero-Shot Hyperparameter Transfer for Fourier Neural Operators](../../ICML2025/scientific_computing/maximal_update_parametrization_and_zero-shot_hyperparameter_transfer_for_fourier.md)
+- [EddyFormer: Accelerated Neural Simulations of Three-Dimensional Turbulence at Scale](eddyformer_accelerated_neural_simulations_of_three-dimensional_turbulence_at_sca.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ $$\{\theta^{(k),*}\}, \psi^*, \lambda^* = \arg\max \sum_{k=1}^{K} \left[ \log P(
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6个数据集（含2个真实世界）、10个SOTA基线、四类偏移×8个严重度、可扩展性实验、完整消融——极其全面
 - **写作质量**: ⭐⭐⭐⭐ 问题定义严谨，PGM建模清晰，理论-实践对应好；理由：问题背景-动机-方法-实验的逻辑链条完整流畅
 - **实用价值**: ⭐⭐⭐⭐ 零先验+测试时适配+FedAvg级开销，对联邦学习真实部署有直接价值；理由：解决了CFL落地的核心障碍（不需要知道聚类数和偏移类型）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing](../../ICCV2025/ai_safety/client2vec_improving_federated_learning_by_distribution_shifts_aware_client_inde.md)
+- [DictPFL: Efficient and Private Federated Learning on Encrypted Gradients](dictpfl_efficient_and_private_federated_learning_on_encrypted_gradients.md)
+- [Cost Efficient Fairness Audit Under Partial Feedback](cost_efficient_fairness_audit_under_partial_feedback.md)
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](../../CVPR2025/ai_safety/a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+- [FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models](fedrw_efficient_privacy-preserving_data_reweighting_for_enhancing_federated_lear.md)
+
+<!-- RELATED:END -->

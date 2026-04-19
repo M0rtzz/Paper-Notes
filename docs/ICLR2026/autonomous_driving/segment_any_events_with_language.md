@@ -171,3 +171,15 @@ $$\mathcal{L}_{distill} = \sum_{l \in \{s,i,p\}} \frac{1}{K_l}(1 - \cos(\hat{M}_
 - **实验充分度**: ⭐⭐⭐⭐ — 4 个基准、11 种基线对比、3 组消融实验，可视化分析到位
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，问题定义严谨，动机阐述充分
 - **价值**: ⭐⭐⭐⭐ — 为事件视觉的开放世界理解开辟了新方向，框架高效实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HorizonForge: Driving Scene Editing with Any Trajectories and Any Vehicles](../../CVPR2026/autonomous_driving/horizonforge_driving_scene_editing_with_any_trajectories_and_any_vehicles.md)
+- [SAM4D: Segment Anything in Camera and LiDAR Streams](../../ICCV2025/autonomous_driving/sam4d_segment_anything_in_camera_and_lidar_streams.md)
+- [ST4VLA: Spatially Guided Training for Vision-Language-Action Models](st4vla_spatially_guided_training_for_vision-language-action_models.md)
+- [TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR](../../CVPR2026/autonomous_driving/terraseg_self-supervised_ground_segmentation_for_any_lidar.md)
+- [Towards Predicting Any Human Trajectory in Context](../../NeurIPS2025/autonomous_driving/towards_predicting_any_human_trajectory_in_context.md)
+
+<!-- RELATED:END -->

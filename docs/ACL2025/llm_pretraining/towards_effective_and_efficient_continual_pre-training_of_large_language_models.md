@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 代理实验+主实验的体系极为详尽，合成数据质量/比例/课程的控制变量实验很有价值
 - 写作质量: ⭐⭐⭐⭐ 技术报告风格，条理清晰，实验描述详尽，但创新叙事偏弱
 - 价值: ⭐⭐⭐⭐ 提供了可复现的CPT最佳实践指南，对实际应用有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
+- [Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation](emergent_abilities_continued_pt.md)
+- [Velocitune: A Velocity-based Dynamic Domain Reweighting Method for Continual Pre-training](velocitune_a_velocity-based_dynamic_domain_reweighting_method_for_continual_pre-.md)
+- [Large Vocabulary Size Improves Large Language Models](large_vocabulary_size_improves_large_language_models.md)
+- [How Do LLMs Acquire New Knowledge? A Knowledge Circuits Perspective on Continual Pre-Training](how_do_llms_acquire_new_knowledge_a_knowledge_circuits_perspective_on_continual_.md)
+
+<!-- RELATED:END -->

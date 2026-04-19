@@ -149,3 +149,15 @@ LLaDA-Instruct 在 $B_0=64$+Cache 设置下取得最大提升：从 75.4% 到 80
 - 实验充分度: ⭐⭐⭐⭐ 三个模型×四个基准×多种块大小的全面评估，消融充分，但缺少更大模型和非英语评估
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰（两种错误的量化分析），从观察到方法的推导逻辑流畅，图表设计精良
 - 价值: ⭐⭐⭐⭐ 即插即用无训练的特性使其实用性强，但绝对收益有限（大多数场景 1-3%），在 dLLM 领域快速发展的当下时效性存疑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Skip to the Good Part: Representation Structure & Inference-Time Layer Skipping in Diffusion vs. Autoregressive LLMs](skip_to_the_good_part_representation_structure_inference-time_layer_skipping_in_.md)
+- [Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes](beyond_scattered_acceptance_fast_and_coherent_inference_for_dlms_via_longest_sta.md)
+- [DiffusionBlocks: Block-wise Neural Network Training via Diffusion Interpretation](diffusionblocks_block-wise_neural_network_training_via_diffusion_interpretation.md)
+- [Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution](trust_but_verify_adaptive_conditioning_for_reference-based_diffusion_super-resol.md)
+- [Sharpness-Aware Machine Unlearning](sharpness-aware_machine_unlearning.md)
+
+<!-- RELATED:END -->

@@ -236,3 +236,15 @@ ACCA与低频一致性损失的有效性验证（基于Restormer，LOL-v2）：
 - **技术深度**: 7/10 — 理论分析清晰，但主要贡献在范式层面而非模型架构创新
 - **实验充分性**: 9/10 — 6种基线×5个数据集的全面验证，消融实验详尽
 - **应用价值**: 9/10 — 即插即用特性使得实际应用门槛极低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Shedding More Light on Robust Classifiers under the lens of Energy-based Models](shedding_more_light_on_robust_classifiers_under_the_lens_of_energy-based_models.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](lazy_diffusion_transformer_for_interactive_image_editing.md)
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [ReNoise: Real Image Inversion Through Iterative Noising](renoise_real_image_inversion_through_iterative_noising.md)
+
+<!-- RELATED:END -->

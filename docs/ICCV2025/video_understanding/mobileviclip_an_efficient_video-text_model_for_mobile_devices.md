@@ -114,3 +114,15 @@ MobileViCLIP-Small在MSR-VTT上与InternVideo2-L14性能相当，但移动端延
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多任务、延迟分析、消融实验非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，延迟分析部分有深度
 - 价值: ⭐⭐⭐⭐ 首个可在移动端部署的视频-文本基础模型，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMamba: State Space Model for Efficient Video Understanding](../../ECCV2024/video_understanding/videomamba_state_space_model_for_efficient_video_understanding.md)
+- [General Compression Framework for Efficient Transformer Object Tracking](general_compression_framework_for_efficient_transformer_object_tracking.md)
+- [ResidualViT for Efficient Temporally Dense Video Encoding](residualvit_for_efficient_temporally_dense_video_encoding.md)
+- [EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception](egoadapt_adaptive_multisensory_distillation_and_policy_learning_for_efficient_eg.md)
+- [DeSPITE: Exploring Contrastive Deep Skeleton-PointCloud-IMU-Text Embeddings for Action Recognition](despite_exploring_contrastive_deep_skeleton-pointcloud-imu-text_embeddings_for_a.md)
+
+<!-- RELATED:END -->

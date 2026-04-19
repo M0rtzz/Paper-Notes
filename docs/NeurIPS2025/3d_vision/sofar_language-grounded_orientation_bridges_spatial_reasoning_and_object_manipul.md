@@ -157,3 +157,15 @@ SoFar 总体 43.9%，较次优方法提升超过 **18%**（相对增幅），在
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖仿真(Open6DOR V1/V2, SimplerEnv)+真实世界(60任务100+物体)+VQA(SpatialBench)，多基线对比，消融完整
 - 写作质量: ⭐⭐⭐⭐ — 概念清晰，图示丰富，系统描述完整；但内容量大导致部分细节压缩
 - 价值: ⭐⭐⭐⭐⭐ — 为6-DoF机器人操作提供了新的表示范式，数据集和基准有望推动后续研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Orientation Matters: Making 3D Generative Models Orientation-Aligned](orientation_matters_making_3d_generative_models_orientation-aligned.md)
+- [Scalable Object Relation Encoding for Better 3D Spatial Reasoning in Large Language Models](../../CVPR2026/3d_vision/scalable_object_relation_encoding_for_better_3d_spatial_reasoning_in_large_langu.md)
+- [Concerto: Joint 2D-3D Self-Supervised Learning Emerges Spatial Representations](concerto_joint_2d-3d_self-supervised_learning_emerges_spatial_representations.md)
+- [Orientation-anchored Hyper-Gaussian for 4D Reconstruction from Casual Videos](orientation-anchored_hyper-gaussian_for_4d_reconstruction_from_casual_videos.md)
+- [Masking Matters: Unlocking the Spatial Reasoning Capabilities of LLMs for 3D Scene-Language Understanding](../../CVPR2026/3d_vision/masking_matters_unlocking_the_spatial_reasoning_capabilities_of_llms_for_3d_scen.md)
+
+<!-- RELATED:END -->

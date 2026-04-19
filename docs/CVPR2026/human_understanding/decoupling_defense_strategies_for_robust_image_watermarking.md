@@ -134,3 +134,15 @@ AdvMark 采用两阶段解耦设计：Stage 1 EAT 专注对抗鲁棒性，通过
 - 实验充分度: ⭐⭐⭐⭐⭐ 9 种方法 ×10 种攻击的大规模对比极为充分，消融细致
 - 写作质量: ⭐⭐⭐⭐ 问题分析透彻，"扩展边界 vs 移入安全区域"的对比叙事清晰
 - 价值: ⭐⭐⭐⭐ 即插即用的通用框架，对水印防御实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RecoverMark: Robust Watermarking for Localization and Recovery of Manipulated Faces](recovermark_robust_watermarking_for_localization_and_recovery_of_manipulated_fac.md)
+- [Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models](../../CVPR2025/human_understanding/two_is_better_than_one_efficient_ensemble_defense_for_robust_and_compact_models.md)
+- [DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation](decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_.md)
+- [Bilevel Layer-Positioning LoRA for Real Image Dehazing](bilevel_layer-positioning_lora_for_real_image_dehazing.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](reference-free_image_quality_assessment_for_virtual_try-on_via_human_feedback.md)
+
+<!-- RELATED:END -->

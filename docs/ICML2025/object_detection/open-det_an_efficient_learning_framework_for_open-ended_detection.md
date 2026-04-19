@@ -157,3 +157,15 @@ Open-Det 包含四个协作组件：**(1) Object Detector (ODR)** 负责生成 b
 - 实验充分度: ⭐⭐⭐⭐ 在 LVIS、COCO、Objects365 上验证，消融实验详尽，但缺少推理速度对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题分析到位，公式推导完整，图表丰富
 - 价值: ⭐⭐⭐⭐ 对资源受限场景下的 OED 有显著实用价值，但 OED 本身还是较新的方向，影响面待观察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VK-Det: Visual Knowledge Guided Prototype Learning for Open-Vocabulary Aerial Object Detection](../../AAAI2026/object_detection/vk-det_visual_knowledge_guided_prototype_learning_for_open-vocabulary_aerial_obj.md)
+- [DitHub: A Modular Framework for Incremental Open-Vocabulary Object Detection](../../NeurIPS2025/object_detection/dithub_a_modular_framework_for_incremental_openvocabulary_ob.md)
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](../../CVPR2026/object_detection/parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+- [BlueGlass: A Framework for Composite AI Safety](blueglass_a_framework_for_composite_ai_safety.md)
+- [OpenRSD: Towards Open-prompts for Object Detection in Remote Sensing Images](../../ICCV2025/object_detection/openrsd_towards_open-prompts_for_object_detection_in_remote_sensing_images.md)
+
+<!-- RELATED:END -->

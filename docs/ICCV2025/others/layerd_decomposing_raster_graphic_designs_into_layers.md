@@ -152,3 +152,15 @@ LayerD 将分解任务公式化为**迭代的顶层抠图 + 背景补全**过程
 - **实验充分度**: ⭐⭐⭐⭐ 多 baseline 对比、消融、定性分析充分，但仅一个数据集
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义清晰，方法描述详细，图示丰富直观
 - **价值**: ⭐⭐⭐⭐ 对创意工作流有实际应用价值，评估协议对社区有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Low-Rank Interconnected Adaptation across Layers](../../ACL2025/others/low-rank_interconnected_adaptation_across_layers.md)
+- [Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](../../ICML2025/others/enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)
+- [EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration](edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati.md)
+- [I Am Big, You Are Little; I Am Right, You Are Wrong](i_am_big_you_are_little_i_am_right_you_are_wrong.md)
+- [Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery](generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f.md)
+
+<!-- RELATED:END -->

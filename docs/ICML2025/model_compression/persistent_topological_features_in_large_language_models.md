@@ -166,3 +166,15 @@ LLM 的内部表征本质上是一组随层动态演化的点云——每个 pro
 - 实验充分度: ⭐⭐⭐⭐ — 在多个模型和数据集上验证了描述子的一致性，但剪枝实验的对比深度可以加强
 - 写作质量: ⭐⭐⭐⭐ — 将复杂的拓扑数学框架讲解得较为清晰，数学严谨性与可读性平衡较好
 - 价值: ⭐⭐⭐⭐ — 拓扑视角为LLM理解和压缩开辟了新方向，四阶段发现具有启发性，但实际应用价值仍需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Language-Specific Features in Large Language Models via Sparse Autoencoders](../../ACL2025/model_compression/language_specific_features.md)
+- [Weak-to-Strong Jailbreaking on Large Language Models](weak-to-strong_jailbreaking_on_large_language_models.md)
+- [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
+- [From Language Models over Tokens to Language Models over Characters](from_language_models_over_tokens_to_language_models_over_characters.md)
+- [Instruction-Following Pruning for Large Language Models](instruction-following_pruning_for_large_language_models.md)
+
+<!-- RELATED:END -->

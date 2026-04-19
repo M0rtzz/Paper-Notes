@@ -171,3 +171,15 @@ $$r_t = -\mathbf{w}_t^\top \mathbf{f}_t, \quad \mathbf{f}_t = \begin{pmatrix} D_
 - 实验充分度: ⭐⭐⭐⭐⭐ — 四种编解码器、六个数据集、两种GOP设置、完整消融，评估全面
 - 写作质量: ⭐⭐⭐⭐ — 问题建模严谨，从理论推导到实验验证逻辑清晰
 - 价值: ⭐⭐⭐⭐ — 为NVC提供了实用的速率控制解决方案，计算开销极低适合实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RADIO: Rate-Distortion Optimization for Large Language Model Compression](../../ICML2025/model_compression/radio_rate-distortion_optimization_for_large_language_model_compression.md)
+- [Cross-Domain Lossy Compression via Rate- and Classification-Constrained Optimal Transport](../../ICLR2026/model_compression/cross_domain_lossy_compression_optimal_transport.md)
+- [HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression](hcf_hierarchical_cascade_framework_for_distributed_multi-stage_image_compression.md)
+- [DynaQuant: Dynamic Mixed-Precision Quantization for Learned Image Compression](dynaquant_dynamic_mixed-precision_quantization_for_learned_i.md)
+- [CAMERA: Multi-Matrix Joint Compression for MoE Models via Micro-Expert Redundancy Analysis](camera_multi-matrix_joint_compression_for_moe_models_via_mic.md)
+
+<!-- RELATED:END -->

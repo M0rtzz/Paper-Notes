@@ -133,3 +133,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — Few-shot mask 适配的思路实用性强，实验设计扎实，但推理速度和 1-shot 性能是短板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Personalized Scanpath Prediction](few-shot_personalized_scanpath_prediction.md)
+- [Unified All-Atom Molecule Generation with Neural Fields](../../NeurIPS2025/medical_imaging/unified_all-atom_molecule_generation_with_neural_fields.md)
+- [MoEdit: On Learning Quantity Perception for Multi-Object Image Editing](moedit_on_learning_quantity_perception_for_multi-object_image_editing.md)
+- [NePhi: Neural Deformation Fields for Approximately Diffeomorphic Medical Image Registration](../../ECCV2024/medical_imaging/textttnephi_neural_deformation_fields_for_approximately_diff.md)
+- [Dual Distillation for Few-Shot Anomaly Detection](../../ICLR2026/medical_imaging/dual_distillation_for_few-shot_anomaly_detection.md)
+
+<!-- RELATED:END -->

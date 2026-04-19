@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个模型、2个数据集、多种baseline、4种监控策略对比、详细消融，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 分析→发现→方法设计的叙事逻辑极为清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ 对可信AI和LRM可靠性有实质价值，方法简单实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-to-Scene with Large Reasoning Models](text-to-scene_with_large_reasoning_models.md)
+- [The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
+- [Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](../../ICLR2026/llm_reasoning/towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
+- [When Shallow Wins: Silent Failures and the Depth-Accuracy Paradox in Latent Reasoning](../../ICLR2026/llm_reasoning/when_shallow_wins_silent_failures_and_the_depth-accuracy_paradox_in_latent_reaso.md)
+- [BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models](badthink_triggered_overthinking_attacks_on_chain-of-thought_reasoning_in_large_l.md)
+
+<!-- RELATED:END -->

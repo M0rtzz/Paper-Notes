@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论 + ResNet/ViT 实证覆盖全面，但缺少替代方案的对比和更多真实场景验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论证从简单到复杂层层递进，数学严谨且直觉明确，图表设计清晰
 - 价值: ⭐⭐⭐⭐⭐ 对机器遗忘领域具有深远警示意义，有望改变后续方法的设计思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [All You Need is One: Capsule Prompt Tuning with a Single Vector](all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
+- [ReCon: Region-Controllable Data Augmentation with Rectification and Alignment for Object Detection](recon_region-controllable_data_augmentation_with_rectification_and_alignment_for.md)
+- [FlexEvent: Towards Flexible Event-Frame Object Detection at Varying Operational Frequencies](flexevent_towards_flexible_event-frame_object_detection_at_varying_operational_f.md)
+- [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
+- [Robust Hallucination Detection in LLMs via Adaptive Token Selection](robust_hallucination_detection_in_llms_via_adaptive_token_selection.md)
+
+<!-- RELATED:END -->

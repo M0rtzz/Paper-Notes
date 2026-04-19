@@ -167,3 +167,15 @@ $$\mathcal{L}_{sup} = \sum_{d \in \mathcal{D}} \mathcal{L}_d + \|\hat{Y} - Y\|^2
 - 实验: ⭐⭐⭐⭐ — 三个数据集全面超越10个基线，消融充分
 - 写作: ⭐⭐⭐⭐ — 结构清晰，图示信息量大
 - 实用性: ⭐⭐⭐⭐ — 提供代码，流程可复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NutriScreener: Retrieval-Augmented Multi-Pose Graph Attention Network for Malnourishment Screening](nutriscreener_retrieval-augmented_multi-pose_graph_attention_network_for_malnour.md)
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](../../CVPR2026/medical_imaging/cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [CD-DPE: Dual-Prompt Expert Network Based on Convolutional Dictionary Feature Decoupling for Multi-Contrast MRI Super-Resolution](cd-dpe_dual-prompt_expert_network_based_on_convolutional_dictionary_feature_deco.md)
+- [SpaCRD: Multimodal Deep Fusion of Histology and Spatial Transcriptomics for Cancer Region Detection](spacrd_multimodal_deep_fusion_of_histology_and_spatial_transcriptomics_for_cance.md)
+- [HiFusion: Hierarchical Intra-Spot Alignment and Regional Context Fusion for Spatial Gene Expression Prediction from Histopathology](hifusion_hierarchical_intra-spot_alignment_and_regional_context_fusion_for_spati.md)
+
+<!-- RELATED:END -->

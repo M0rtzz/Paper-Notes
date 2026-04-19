@@ -136,3 +136,15 @@ $$f_{j,k+1} = f_{j,k} + \frac{\alpha}{N} \sum_{i=1}^N \left[ w_{e,y_i} - \mathbb
 - 实验充分度: ⭐⭐⭐⭐ — 合成数据 + ImageNet + 语言生成三个层次，GPT-4o 自动评分有说服力，但语言实验规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨清晰，从简单到复杂逐步展开，但符号较多需要仔细跟读
 - 价值: ⭐⭐⭐⭐ — 对理解 Transformer ICL 机制有重要理论贡献，FF 层的实验发现有实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](../../NeurIPS2025/optimization/generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+- [Provable In-Context Vector Arithmetic via Retrieving Task Concepts](provable_in-context_vector_arithmetic_via_retrieving_task_concepts.md)
+- [Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees](understanding_the_statistical_accuracy-communication_trade-off_in_personalized_f.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ Mono2Stereo 测试集上的对比（Table 3）:
 ## 评分
 
 ⭐⭐⭐⭐ — 三位一体贡献（数据集 + 指标 + 模型）扎实完整，SIoU 指标有望成为领域标准，双条件设计和 EC 损失解决了真实矛盾。扣 1 星因为仅覆盖图像不含视频，且训练分辨率偏低。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation](a_comprehensive_study_of_decoder-only_llms_for_text-to-image_generation.md)
+- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
+- [OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models](../../NeurIPS2025/image_generation/overt_a_benchmark_for_over-refusal_evaluation_on_text-to-image_models.md)
+- [R-VC: Rhythm Controllable and Efficient Zero-Shot Voice Conversion via Shortcut Flow Matching](../../ACL2025/image_generation/rvc_rhythm_voice_conversion.md)
+- [Rethinking the Embodied Gap in Vision-and-Language Navigation: A Holistic Study of Physical and Visual Disparities](../../ICCV2025/image_generation/rethinking_the_embodied_gap_in_vision-and-language_navigation_a_holistic_study_o.md)
+
+<!-- RELATED:END -->

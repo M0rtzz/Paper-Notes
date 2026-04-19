@@ -133,3 +133,15 @@ Token 回收（TR）在不同压缩率下的效果（LLaVA 7B）：
 方法设计完整且实用——免训练、即插即用、跨模型通用、图像和视频都适用。在保持高精度的同时实现了显著的效率提升。实验充分（3个VLM架构、8个图像基准+4个视频基准），消融分析细致。稍显不足的是理论创新有限（各组件如矩阵秩、DPC聚类都是已有技术的组合），且超参数分析不够充分。
 
 具体来说，SparseVLM 的实际部署价值很高：67% 的 KV Cache 内存节省（302.4MB→100.8MB）对于边缘设备推理意义重大。视频任务上 90.5% 剪枝率下仍保持 95% 准确率的表现也令人印象深刻。未来可探索的方向包括：与 KV Cache 压缩方法结合、针对多图多轮对话场景的优化、以及将文本引导思想扩展到音频-文本等其他模态组合。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](../../ICCV2025/multimodal_vlm/sparsevila_decoupling_visual_sparsity_for_efficient_vlm_infe.md)
+- [Feather the Throttle: Revisiting Visual Token Pruning for Vision-Language Model Acceleration](../../ICCV2025/multimodal_vlm/feather_the_throttle_revisiting_visual_token_pruning_for_vision-language_model_a.md)
+- [CoreMatching: A Co-adaptive Sparse Inference Framework with Token and Neuron Pruning for Comprehensive Acceleration of Vision-Language Models](corematching_a_co-adaptive_sparse_inference_framework_with_token_and_neuron_prun.md)
+- [MMTok: Multimodal Coverage Maximization for Efficient Inference of VLMs](../../ICLR2026/multimodal_vlm/mmtok_multimodal_coverage_maximization_for_efficient_inference_of_vlms.md)
+- [Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension](../../ICCV2025/multimodal_vlm/scaling_inferencetime_search_with_vision_value_model_for_imp.md)
+
+<!-- RELATED:END -->

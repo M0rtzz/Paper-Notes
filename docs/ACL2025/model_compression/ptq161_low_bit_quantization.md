@@ -108,3 +108,15 @@ $$\arg\min_{\alpha_s^*, \alpha_r^*} \big(\mathbb{E}(\mathcal{F}(X,W), \mathcal{F
 | 实验充分性 | 5 |
 | 写作质量 | 4 |
 | 总评 | 4.5 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [Quantization Error Propagation: Revisiting Layer-Wise Post-Training Quantization](../../NeurIPS2025/model_compression/quantization_error_propagation_revisiting_layer-wise_post-training_quantization.md)
+- [Outlier-Safe Pre-Training for Robust 4-Bit Quantization of Large Language Models](outlier-safe_pre-training_for_robust_4-bit_quantization_of_large_language_models.md)
+- [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
+- [ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization](../../NeurIPS2025/model_compression/paretoq_improving_scaling_laws_in_extremely_low-bit_llm_quantization.md)
+
+<!-- RELATED:END -->

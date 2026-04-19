@@ -124,3 +124,15 @@ ObjectClear 基于 SDXL-Inpainting 构建。输入为 $\langle z_t, I_{in}, M_o,
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个测试集（含自建Wild集）、完整消融、公平对比（两种掩码设置）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数据集构建流程描述详尽
 - 价值: ⭐⭐⭐⭐ 数据集 OBER 和精准效果移除对实际应用价值大，但需要高分辨率版本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-WIPER: Training-Free Object and Associated Effect Removal in Videos](object-wiper_training-free_object_and_associated_effect_removal_in_videos.md)
+- [EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing](effecterase_joint_video_object_removal_and_insertion_for_high-quality_effect_era.md)
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [Learning Latent Transmission and Glare Maps for Lens Veiling Glare Removal](learning_latent_transmission_and_glare_maps_for_lens_veiling_glare_removal.md)
+- [ViHOI: Human-Object Interaction Synthesis with Visual Priors](vihoi_human-object_interaction_synthesis_with_visual_priors.md)
+
+<!-- RELATED:END -->

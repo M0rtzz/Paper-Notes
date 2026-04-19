@@ -134,3 +134,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 跨域零样本+跨模态+逐器官分析+提示敏感性测试覆盖全面，但数据规模较小（30个训练体积）
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，实验分析深入，失败案例（食管）也坦诚讨论
 - **价值**: ⭐⭐⭐⭐ — 提供了将2D VLM实际应用于3D医学影像的实用方案，跨模态结果有重要启示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STAMP: Spatial-Temporal Adapter with Multi-Head Pooling](../../NeurIPS2025/medical_imaging/stamp_spatial-temporal_adapter_with_multi-head_pooling.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study](are_generalpurpose_vision_models_all_we_need_for_2.md)
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+- [MedKCO: Medical Vision-Language Pretraining via Knowledge-Driven Cognitive Orchestration](medkco_medical_vision-language_pretraining_via_knowledge-driven_cognitive_orches.md)
+
+<!-- RELATED:END -->

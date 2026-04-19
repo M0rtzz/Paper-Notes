@@ -136,3 +136,15 @@ Sharpness-Aware Minimization (SAM) 通过最小化邻域内最坏情况损失来
 - 实验充分度: ⭐⭐⭐⭐ — 合成实验与MNIST/CNN验证，但缺乏大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导严谨，图示清晰，有限时间 vs 无穷时间的对比引人深思
 - 价值: ⭐⭐⭐⭐ — 对 SAM 的理论理解有重要推进，但实际应用指导有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tilted Sharpness-Aware Minimization](../../ICML2025/optimization/tilted_sharpness-aware_minimization.md)
+- [Saddle-to-Saddle Dynamics Explains A Simplicity Bias Across Neural Network Architectures](saddle-to-saddle_dynamics_explains_a_simplicity_bias_across_neural_network_archi.md)
+- [The Rich and the Simple: On the Implicit Bias of Adam and SGD](../../NeurIPS2025/optimization/the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)
+- [Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data](../../NeurIPS2025/optimization/implicit_bias_of_spectral_descent_and_muon_on_multiclass_separable_data.md)
+- [Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More](../../ICML2025/optimization/understanding_sharpness_dynamics_in_nn_training_with_a_minimalist_example_the_ef.md)
+
+<!-- RELATED:END -->

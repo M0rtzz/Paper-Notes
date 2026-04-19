@@ -174,3 +174,15 @@ tags:
 2. **几何接地的必要性被量化**: 论文对"仿真几何质量如何影响下游导航策略"给出了罕见的定量分析——RL 训练在不可靠环境中不仅无效还会恶化模型，这个结论对整个 sim-to-real 社区有重要参考价值
 3. **与 NeRF/3DGS 场景理解的连接**: Wanderland 的多传感器数据天然适合评估最新的 feed-forward 3D 重建模型（DUSt3R、VGGT 等），作为 GT 基准的价值可能超越导航仿真本身
 4. **动态场景扩展**: 当前静态假设是重要限制。结合 4D Gaussian Splatting 或视频生成模型注入动态代理可能是下一步方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins](motionanymesh_physicsgrounded_articulation_for_sim.md)
+- [OnlineHMR: Video-based Online World-Grounded Human Mesh Recovery](onlinehmr_video-based_online_world-grounded_human_mesh_recovery.md)
+- [OpenVO: Open-World Visual Odometry with Temporal Dynamics Awareness](openvo_open-world_visual_odometry_with_temporal_dynamics_awareness.md)
+- [FluidGaussian: Propagating Simulation-Based Uncertainty Toward Functionally-Intelligent 3D Reconstruction](fluidgaussian_propagating_simulation-based_uncertainty_toward_functionally-intel.md)
+- [TesserAct: Learning 4D Embodied World Models](../../ICCV2025/3d_vision/learning_4d_embodied_world_models.md)
+
+<!-- RELATED:END -->

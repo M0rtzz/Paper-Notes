@@ -97,3 +97,15 @@ Camera-Q（2.25-bit平均）在Deepseek-MoE-16B上均分56.56 vs GPTQ 53.45 vs M
 - 实验充分度: ⭐⭐⭐⭐⭐ 3+2个MoE模型、20-60%剪枝率、9个zero-shot任务、量化实验、丰富的消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，motivation清晰，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 对MoE压缩有重大实用价值，方法简洁高效可落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](../../ICLR2026/model_compression/sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
+- [Steering MoE LLMs via Expert (De)Activation](../../ICLR2026/model_compression/steering_moe_llms_via_expert_deactivation.md)
+- [EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models](../../ACL2025/model_compression/eac_moe_expert_aware_compression.md)
+- [HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression](hcf_hierarchical_cascade_framework_for_distributed_multi-stage_image_compression.md)
+- [Share Your Attention: Transformer Weight Sharing via Matrix-Based Dictionary Learning](share_your_attention_transformer_weight_sharing_via_matrix-based_dictionary_lear.md)
+
+<!-- RELATED:END -->

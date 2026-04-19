@@ -132,3 +132,15 @@ TriRun GPU 推理加速（对比 PyTorch FP16 基线）：
 - 实验充分度: ⭐⭐⭐⭐ 涵盖 Scaling Law 拟合、多基准评测、CPU/GPU 推理加速、多硬件平台验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Scaling Law 推导严谨，打包方案的理论分析完整
 - 价值: ⭐⭐⭐⭐⭐ 全栈贡献（缩放定律+模型+推理内核+开源），对极低位宽模型的研究和部署有系统性推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Efficient Matrix Multiplication Algorithm for Accelerating Inference in Binary and Ternary Neural Networks](../../ICML2025/model_compression/an_efficient_matrix_multiplication_algorithm_for_accelerating_inference_in_binar.md)
+- [ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization](../../NeurIPS2025/model_compression/paretoq_improving_scaling_laws_in_extremely_low-bit_llm_quantization.md)
+- [Towards the Law of Capacity Gap in Distilling Language Models](law_of_capacity_gap_distilling_language_models.md)
+- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+
+<!-- RELATED:END -->

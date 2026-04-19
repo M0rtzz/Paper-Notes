@@ -135,3 +135,15 @@ SGDD 在 XOR 任务上 PSNR 提升 **8.36 dB**。
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖合成数据、DNA、图像、音乐四大场景，基线全面
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰、理论推导完整，但符号较多
 - **价值**: ⭐⭐⭐⭐⭐ 为离散扩散后验采样提供了统一且高效的解决方案，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems](../../ICCV2025/image_generation/flowdps_flow-driven_posterior_sampling_for_inverse_problems.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [Information-Theoretic Discrete Diffusion](information-theoretic_discrete_diffusion.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [LD-RPS: Zero-Shot Unified Image Restoration via Latent Diffusion Recurrent Posterior Sampling](../../ICCV2025/image_generation/ld-rps_zero-shot_unified_image_restoration_via_latent_diffusion_recurrent_poster.md)
+
+<!-- RELATED:END -->

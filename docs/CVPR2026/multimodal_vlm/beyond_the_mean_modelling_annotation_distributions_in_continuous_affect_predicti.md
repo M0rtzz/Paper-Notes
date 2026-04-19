@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅两个数据集，模型规模小（两层ANN），需更大规模验证
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，实验设计规范
 - 价值: ⭐⭐⭐⭐ 为情感计算社区提供了实用的分布感知建模框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Document Parsing via Parallel Token Prediction](efficient_document_parsing_via_parallel_token_prediction.md)
+- [EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards](evolmm_self_evolving_lmm_continuous_rewards.md)
+- [Think360: Evaluating the Width-centric Reasoning Capability of MLLMs Beyond Depth](think_360_evaluating_the_width-centric_reasoning_capability_of_mllms_beyond_dept.md)
+- [Beyond Recognition: Evaluating Visual Perspective Taking in Vision Language Models](beyond_recognition_evaluating_visual_perspective_taking_in_vision_language_model.md)
+- [Beyond Static Artifacts: A Forensic Benchmark for Video Deepfake Reasoning in Vision Language Models](beyond_static_artifacts_a_forensic_benchmark_for_video_deepfake_reasoning_in_vis.md)
+
+<!-- RELATED:END -->

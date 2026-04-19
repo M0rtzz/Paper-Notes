@@ -126,3 +126,15 @@ NFF框架三步走：(1) 构建动态交互图，物体为节点，接触/吸引
 - 实验充分度: ⭐⭐⭐⭐ 3个基准（I-PHYRE/N-body/PHYRE）+ 预测/规划多设置 + 详尽消融 + 力场可视化
 - 写作质量: ⭐⭐⭐⭐⭐ 物理直觉和方法设计完美结合，图示清晰（尤其图2的连续vs离散对比），motivation有力
 - 价值: ⭐⭐⭐⭐ 对物理推理、认知AI和few-shot learning有基础贡献，力场表示可能启发更广泛的物理世界模型研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](../../ICCV2025/others/is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
+- [DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](../../CVPR2026/others/dirpa_addressing_prior_shift_in_imbalanced_few-shot_crop-type_classification.md)
+- [Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
+- [Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](../../ICCV2025/others/doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)
+- [Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
+
+<!-- RELATED:END -->

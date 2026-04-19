@@ -151,3 +151,15 @@ PASS提出路径选择性事件聚合与扫描（PEAS）模块和多面选择引
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个公开数据集+3个自建数据集，频率泛化实验详尽，消融全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，图表丰富，但部分公式符号略有混淆
 - 价值: ⭐⭐⭐⭐ 为事件相机识别提供了高效的长时序建模方案，频率泛化特性实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMamba: Spatio-Temporal Selective State Space Model](../../ECCV2024/video_understanding/videomamba_spatio-temporal_selective_state_space_model.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](../../CVPR2025/video_understanding/mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](../../ECCV2024/video_understanding/videomamba_state_space_model_for_efficient_video_understanding.md)
+- [GeoDynamics: A Geometric State-Space Neural Network for Understanding Brain Dynamics on Riemannian Manifolds](geodynamics_a_geometric_state-space_neural_network_for_understanding_brain_dynam.md)
+- [Mamba-3: Improved Sequence Modeling using State Space Principles](../../ICLR2026/video_understanding/mamba-3_improved_sequence_modeling_using_state_space_principles.md)
+
+<!-- RELATED:END -->

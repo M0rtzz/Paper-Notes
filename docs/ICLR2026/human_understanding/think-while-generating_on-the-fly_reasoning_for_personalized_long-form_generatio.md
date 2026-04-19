@@ -130,3 +130,15 @@ FlyThinker 在所有任务上均超越基线，BLEU 相比 SFT 提升约10%。
 - **实验充分度**: ⭐⭐⭐⭐ 三个任务 + 效率分析 + 位置敏感评估 + 消融，但缺人工评估
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机清晰，三种范式对比直观，公式简洁
 - **价值**: ⭐⭐⭐⭐ 对个性化生成和推理增强方法都有启发，但应用范围待扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations](autofigure_generating_and_refining_publication-ready_scientific_illustrations.md)
+- [P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
+- [AMemGym: Interactive Memory Benchmarking for Assistants in Long-Horizon Conversations](amemgym_interactive_memory_benchmarking_for_assistants_in_long-horizon_conversat.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Inverse Virtual Try-On: Generating Multi-Category Product-Style Images from Clothed Individuals](inverse_virtual_try-on_generating_multi-category_product-style_images_from_cloth.md)
+
+<!-- RELATED:END -->

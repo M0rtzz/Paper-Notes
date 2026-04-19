@@ -119,3 +119,15 @@ QME 包含三个阶段的 pipeline：(1) 各模态预训练骨干网络提取特
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、多种基线方法、多指标评估、消融分析全面
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，图表设计合理
 - 价值: ⭐⭐⭐⭐ 对实际部署的多模态生物特征系统有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DynFaceRestore: Balancing Fidelity and Quality in Diffusion-Guided Blind Face Restoration](dynfacerestore_balancing_fidelity_and_quality_in_diffusion-guided_blind_face_res.md)
+- [CarGait: Cross-Attention based Re-ranking for Gait Recognition](cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
+- [Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
+- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
+- [GENMO: A GENeralist Model for Human MOtion](genmo_a_generalist_model_for_human_motion.md)
+
+<!-- RELATED:END -->

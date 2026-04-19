@@ -133,3 +133,15 @@ UrbanIng-V2X 的数据集构建涵盖五个核心环节：(1) 大规模多模态
 - 实验充分度: ⭐⭐⭐ 覆盖多种融合策略但仅限 LiDAR-only，多模态融合和更多检测方法的评估缺失
 - 写作质量: ⭐⭐⭐⭐ 数据集构建细节详尽，同步方案工程描述清晰，统计分析全面
 - 价值: ⭐⭐⭐⭐ 14 mAP 泛化差距对协同感知社区有重要警示意义，SIS 评估策略值得推广为标准实践
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [V2X-Radar: A Multi-Modal Dataset with 4D Radar for Cooperative Perception](v2x-radar_a_multi-modal_dataset_with_4d_radar_for_cooperative_perception.md)
+- [H-V2X: A Large Scale Highway Dataset for BEV Perception](../../ECCV2024/autonomous_driving/h-v2x_a_large_scale_highway_dataset_for_bev_perception.md)
+- [CoopTrack: Exploring End-to-End Learning for Efficient Cooperative Sequential Perception](../../ICCV2025/autonomous_driving/cooptrack_exploring_end-to-end_learning_for_efficient_cooperative_sequential_per.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+- [L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery](l2rsi_cross-view_lidar-based_place_recognition_for_large-scale_urban_scenes_via_.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ (仅两个 2D 案例，Workshop paper 篇幅所限)
 - 写作质量: ⭐⭐⭐⭐ (物理和方法阐述清晰，动机和定位准确)
 - 价值: ⭐⭐⭐⭐ (为湍流模型 UQ 提供实用且易落地的改进路线)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scientific Knowledge-Guided Machine Learning for Vessel Power Prediction: A Comparative Study](../../AAAI2026/scientific_computing/scientific_knowledge-guided_machine_learning_for_vessel_power_prediction_a_compa.md)
+- [F-Adapter: Frequency-Adaptive Parameter-Efficient Fine-Tuning in Scientific Machine Learning](f-adapter_frequency-adaptive_parameter-efficient_fine-tuning_in_scientific_machi.md)
+- [Neural Emulator Superiority: When Machine Learning for PDEs Surpasses its Training Data](neural_emulator_superiority_when_machine_learning_for_pdes_surpasses_its_trainin.md)
+- [GyroSwin: 5D Surrogates for Gyrokinetic Plasma Turbulence Simulations](gyroswin_5d_surrogates_for_gyrokinetic_plasma_turbulence_simulations.md)
+- [Learning-guided Kansa Collocation for Forward and Inverse PDE Problems](../../ICLR2026/scientific_computing/learning-guided_kansa_collocation_for_forward_and_inverse_pde_problems.md)
+
+<!-- RELATED:END -->

@@ -202,3 +202,15 @@ $$F_{i+1} = \text{FeedbackAgent}(J, E_{i+1})$$
 - 实验充分度: ⭐⭐⭐ （覆盖了多个候选模型和反馈配置，但仅在合成数据上评估，缺乏真实数据验证）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，表格和图示丰富，法律领域背景介绍充分）
 - 价值: ⭐⭐⭐ （对印度法律AI有特定价值，但泛化性有限；合成数据集本身的质量决定了上限）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
+- [Multi-View Encoders for Performance Prediction in LLM-Based Agentic Workflows](../../ICLR2026/model_compression/multi-view_encoders_for_performance_prediction_in_llm-based_agentic_workflows.md)
+- [StolenLoRA: Exploring LoRA Extraction Attacks via Synthetic Data](../../ICCV2025/model_compression/stolenlora_exploring_lora_extraction_attacks_via_synthetic_data.md)
+- [Beyond Sharpness: A Flatness Decomposition Framework for Efficient Continual Learning](beyond_sharpness_a_flatness_decomposition_framework_for_efficient_continual_lear.md)
+- [HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression](hcf_hierarchical_cascade_framework_for_distributed_multi-stage_image_compression.md)
+
+<!-- RELATED:END -->

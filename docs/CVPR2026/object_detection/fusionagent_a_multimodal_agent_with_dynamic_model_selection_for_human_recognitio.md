@@ -134,3 +134,15 @@ FNIR 从 64.3% 降至 50.0%（-14.3%），开放集搜索性能大幅提升。
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多个基线、全面消融、跨域评估、统计分析、可视化案例
 - 写作质量: ⭐⭐⭐⭐ 问题建模清晰，框架完整，但部分公式可以更简洁
 - 价值: ⭐⭐⭐⭐ agent + tool use 的范式对多模型融合领域有启发性，可扩展到其他需要模型选择的场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
+- [PHAC: Promptable Human Amodal Completion](phac_promptable_human_amodal_completion.md)
+- [A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](../../ECCV2024/object_detection/a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)
+- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](show_dont_tell_detecting_novel_objects_by_watching.md)
+
+<!-- RELATED:END -->

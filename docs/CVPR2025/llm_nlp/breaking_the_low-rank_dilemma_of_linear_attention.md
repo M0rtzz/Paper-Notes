@@ -161,3 +161,15 @@ RALA 不仅弥补了线性注意力与 Softmax 的差距，还超越了 Softmax 
 - 实验充分度: ⭐⭐⭐⭐⭐ 分类/检测/分割三大任务全覆盖，消融详尽，公平对比充分
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但部分数学符号密集
 - 价值: ⭐⭐⭐⭐⭐ 首次证明线性注意力可超越Softmax，对高效Transformer研究有里程碑意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GORP: Continual Gradient Low-Rank Projection Fine-Tuning for LLMs](../../ACL2025/llm_nlp/gorp_continual_gradient_projection.md)
+- [Spiking Transformer with Spatial-Temporal Attention](spiking_transformer_with_spatial-temporal_attention.md)
+- [Robust Message Embedding via Attention Flow-Based Steganography](robust_message_embedding_via_attention_flow-based_steganography.md)
+- [Linear Transformers Implicitly Discover Unified Numerical Algorithms](../../NeurIPS2025/llm_nlp/linear_transformers_implicitly_discover_unified_numerical_algorithms.md)
+- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
+
+<!-- RELATED:END -->

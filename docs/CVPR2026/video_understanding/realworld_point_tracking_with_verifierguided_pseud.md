@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个真实世界+2个合成基准，教师组合/数据量/非学习baseline/Oracle对比全面
 - 写作质量: ⭐⭐⭐⭐⭐ Oracle gap分析极有说服力，方法描述清晰，Fig.1/2/3示意图优秀
 - 价值: ⭐⭐⭐⭐⭐ Verifier思路通用性强，数据效率高，对点跟踪和更广泛的自训练/伪标签领域有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking](videoseek_long-horizon_video_agent_with_tool-guided_seeking.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT](rethinking_twostage_referringbytracking_in_referri.md)
+- [Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning](reconstruction-guided_slot_curriculum_addressing_object_over-fragmentation_in_vi.md)
+- [Color When It Counts: Grayscale-Guided Online Triggering for Always-On Streaming Video Sensing](color_when_it_counts_grayscale-guided_online_triggering_for_always-on_streaming_.md)
+
+<!-- RELATED:END -->

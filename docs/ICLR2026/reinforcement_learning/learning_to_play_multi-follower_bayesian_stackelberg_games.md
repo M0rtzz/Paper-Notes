@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作，附录有简单模拟验证但无大规模实验；不过理论结果（上下界几乎匹配）本身已具有强说服力
 - 写作质量: ⭐⭐⭐⭐ 从单追随者逐步推进到多追随者的叙述逻辑清晰，关键技术思路解释充分
 - 价值: ⭐⭐⭐⭐ 对博弈论与在线学习交叉领域有重要理论贡献，几何分割方法具有可迁移性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nearly-Optimal Bandit Learning in Stackelberg Games with Side Information](nearly-optimal_bandit_learning_in_stackelberg_games_with_side_information.md)
+- [SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
+- [Learning in Stackelberg Mean Field Games: A Non-Asymptotic Analysis](../../NeurIPS2025/reinforcement_learning/learning_in_stackelberg_mean_field_games_a_non-asymptotic_analysis.md)
+- [Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+
+<!-- RELATED:END -->

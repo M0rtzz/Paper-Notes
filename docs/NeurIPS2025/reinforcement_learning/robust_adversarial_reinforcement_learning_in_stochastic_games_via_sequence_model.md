@@ -120,3 +120,15 @@ $$\mathcal{L}_{\text{DT}}(\theta) = -\mathbb{E}[\log \pi_\theta(a_t | \tau_{0:t-
 - **实验充分度**: ⭐⭐⭐ 仅合成博弈实验，缺乏大规模或现实场景验证
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，动机充分，方法部分数学推导清楚
 - **价值**: ⭐⭐⭐⭐ 为DT在多智能体随机环境中的应用提供了理论基础和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Near-optimal, Scalable and Parallelizable Framework for Stochastic Bandits Robust to Adversarial Corruptions and Beyond](a_nearoptimal_scalable_and_parallelizable_framework_for_stoc.md)
+- [Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](../../ICLR2026/reinforcement_learning/robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
+- [Incremental Sequence Classification with Temporal Consistency](incremental_sequence_classification_with_temporal_consistency.md)
+- [Confounding Robust Deep Reinforcement Learning: A Causal Approach](confounding_robust_deep_reinforcement_learning_a_causal_approach.md)
+- [Sample-Efficient Tabular Self-Play for Offline Robust Reinforcement Learning](sample-efficient_tabular_self-play_for_offline_robust_reinforcement_learning.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ ResAlign在标准卸载目标上增加一个韧性项：$\theta^* = \arg\min_\th
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多微调方法、多配置、多模型、数据污染、组件分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、理论推导严谨、实验展示系统化
 - 价值: ⭐⭐⭐⭐⭐ 对AI安全领域有重大实用价值，解决了卸载方法的关键脆弱性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DEFT: Decompositional Efficient Fine-Tuning for Text-to-Image Models](deft_decompositional_efficient_finetuning_for_texttoimage_mo.md)
+- [Efficient Fine-Tuning and Concept Suppression for Pruned Diffusion Models](../../CVPR2025/image_generation/efficient_fine-tuning_and_concept_suppression_for_pruned_diffusion_models.md)
+- [Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models](../../ICML2025/image_generation/zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)
+- [Large-Scale Training Data Attribution for Music Generative Models via Unlearning](large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
+- [Meta-Unlearning on Diffusion Models: Preventing Relearning Unlearned Concepts](../../ICCV2025/image_generation/meta-unlearning_on_diffusion_models_preventing_relearning_unlearned_concepts.md)
+
+<!-- RELATED:END -->

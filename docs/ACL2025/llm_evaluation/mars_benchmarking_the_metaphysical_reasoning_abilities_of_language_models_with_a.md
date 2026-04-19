@@ -123,3 +123,15 @@ tags:
 - ⭐ 实验充分度: 5/5 — 20+ 模型、多种设置（zero-shot/fine-tuned/API/RAG/COT）、知识迁移分析、组件级分析、错误分析
 - ⭐ 写作质量: 4/5 — 结构清晰，定义严谨，但"metaphysical"一词与哲学传统含义差异较大，可能引起混淆
 - ⭐ 综合价值: 4/5 — 揭示了 LLM 在抽象推理上的关键弱点，但缺少提出实用增强方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+- [McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
+- [MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark](mmlu-cf_a_contamination-free_multi-task_language_understanding_benchmark.md)
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](codemenv_benchmarking_large_language_models_on_code_migration.md)
+- [AD-LLM: Benchmarking Large Language Models for Anomaly Detection](ad-llm_benchmarking_large_language_models_for_anomaly_detection.md)
+
+<!-- RELATED:END -->

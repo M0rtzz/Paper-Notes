@@ -118,3 +118,15 @@ SpHOR 采用两阶段解耦训练：
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖细粒度 SSB 和传统 CNN-32 两大 benchmark，消融充分
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，动机清晰，图表直观
 - 价值: ⭐⭐⭐⭐ — 为 OSR 的特征学习提供了理论基础和实践方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpHOR: A Representation Learning Perspective on Open-set Recognition](sphor_a_representation_learning_perspective_on_ope.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physica.md)
+- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](boss_a_best-of-strategies_selector_as_an_oracle_for_deep_active_learning.md)
+- [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
+- [DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
+
+<!-- RELATED:END -->

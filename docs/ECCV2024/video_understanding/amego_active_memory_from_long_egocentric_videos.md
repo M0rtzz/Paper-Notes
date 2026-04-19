@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 新 benchmark + 多 baseline 对比 + 视频长度分析 + 定性分析
 - 写作质量: ⭐⭐⭐⭐⭐ 方法图清晰，pipeline 描述详细，动机阐述有说服力
 - 价值: ⭐⭐⭐⭐ 对长视频理解和可穿戴设备（AR/VR、机器人）有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spherical World-Locking for Audio-Visual Localization in Egocentric Videos](spherical_world-locking_for_audio-visual_localization_in_egocentric_videos.md)
+- [Goldfish: Vision-Language Understanding of Arbitrarily Long Videos](goldfish_vision-language_understanding_of_arbitrarily_long_videos.md)
+- [RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos](rgnet_a_unified_clip_retrieval_and_grounding_network_for_long_videos.md)
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](../../ICCV2025/video_understanding/fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+- [Elysium: Exploring Object-level Perception in Videos via MLLM](elysium_exploring_object-level_perception_in_videos_via_mllm.md)
+
+<!-- RELATED:END -->

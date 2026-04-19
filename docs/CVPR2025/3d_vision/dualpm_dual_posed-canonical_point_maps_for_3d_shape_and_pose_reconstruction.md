@@ -119,3 +119,15 @@ $$\mathcal{L}_P = \frac{1}{|M|}\sum_{\boldsymbol{u} \in M} c_P(\boldsymbol{u})\|
 ⭐⭐⭐⭐⭐
 
 概念上极具优雅性，将复杂问题归约为简洁的表示预测。定量结果大幅超越所有 SOTA（PCK +20pp, Chamfer 减半）。数据效率惊人。对偶点图的数学直觉和工程实现都非常出色。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction](../../ICCV2025/3d_vision/dynamic_point_maps_a_versatile_representation_for_dynamic_3d_reconstruction.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [Rectified Point Flow: Generic Point Cloud Pose Estimation](../../NeurIPS2025/3d_vision/rectified_point_flow_generic_point_cloud_pose_estimation.md)
+- [Shape of Motion: 4D Reconstruction from a Single Video](../../ICCV2025/3d_vision/shape_of_motion_4d_reconstruction_from_a_single_video.md)
+- [Dual Exposure Stereo for Extended Dynamic Range 3D Imaging](dual_exposure_stereo_for_extended_dynamic_range_3d_imaging.md)
+
+<!-- RELATED:END -->

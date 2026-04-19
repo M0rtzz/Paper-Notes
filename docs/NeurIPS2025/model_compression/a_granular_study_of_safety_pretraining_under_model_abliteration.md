@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 多 judge/多模型/人类验证做得好，但 prompt 集偏小、模型规模单一
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验协议描述详细，图表信息量大
 - 价值: ⭐⭐⭐⭐ 为开源模型安全提供了实用指导——组合式数据安全策略优于单一策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RCCDA: Adaptive Model Updates in the Presence of Concept Drift under a Constrained Resource Budget](rccda_adaptive_model_updates_in_the_presence_of_concept_drift_under_a_constraine.md)
+- [Q-resafe: Assessing Safety Risks and Quantization-aware Safety Patching for Quantized Large Language Models](../../ICML2025/model_compression/q-resafe_assessing_safety_risks_and_quantization-aware_safety_patching_for_quant.md)
+- [DataDecide: How to Predict Best Pretraining Data with Small Experiments](../../ICML2025/model_compression/datadecide_how_to_predict_best_pretraining_data_with_small_experiments.md)
+- [FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?](fira_can_we_achieve_full-rank_training_of_llms_under_low-rank_constraint.md)
+- [Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku](../../ACL2025/model_compression/explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo.md)
+
+<!-- RELATED:END -->

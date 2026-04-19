@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖图像重建/去噪/超分/修复/3D/NeRF 六类任务，且有计算效率和网络规模消融
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，从分析到设计到验证逻辑链完整
 - 价值: ⭐⭐⭐⭐ 为 INR 激活函数设计提供了可推广的频谱分析框架，复调制方案可即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bias for Action: Video Implicit Neural Representations with Bias Modulation](../../CVPR2025/image_generation/bias_for_action_video_implicit_neural_representations_with_bias_modulation.md)
+- [Event-T2M: Event-level Conditioning for Complex Text-to-Motion Synthesis](event-t2m_event-level_conditioning_for_complex_text-to-motion_synthesis.md)
+- [NeuralOS: Towards Simulating Operating Systems via Neural Generative Models](neuralos_towards_simulating_operating_systems_via_neural_generative_models.md)
+- [Verification of the Implicit World Model in a Generative Model via Adversarial Sequences](verification_of_the_implicit_world_model_in_a_generative_model_via_adversarial_s.md)
+- [TAVAE: A VAE with Adaptable Priors Explains Contextual Modulation in the Visual Cortex](tavae_a_vae_with_adaptable_priors_explains_contextual_modulation_in_the_visual_c.md)
+
+<!-- RELATED:END -->

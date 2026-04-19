@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融实验详尽，11种方法对比，但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述到位，图示直观
 - 价值: ⭐⭐⭐⭐ 展示了2D基础模型→3D分割的可行路径，对口腔数字化有实际意义，范式可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RS2-SAM2: Customized SAM2 for Referring Remote Sensing Image Segmentation](rs2-sam2_customized_sam2_for_referring_remote_sensing_image_segmentation.md)
+- [Efficient-SAM2: Accelerating SAM2 with Object-Aware Visual Encoding and Memory Retrieval](../../ICLR2026/segmentation/efficient-sam2_accelerating_sam2_with_object-aware_visual_encoding_and_memory_re.md)
+- [EAGLE: Episodic Appearance- and Geometry-Aware Memory for Unified 2D-3D Visual Query Localization](eagle_episodic_appearance-_and_geometry-aware_memory_for_unified_2d-3d_visual_qu.md)
+- [GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation](../../CVPR2026/segmentation/geoguide_hierarchical_geometric_guidance_for_open-vocabulary_3d_semantic_segment.md)
+- [SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation](../../NeurIPS2025/segmentation/sansa_unleashing_the_hidden_semantics_in_sam2_for_few-shot_segmentation.md)
+
+<!-- RELATED:END -->

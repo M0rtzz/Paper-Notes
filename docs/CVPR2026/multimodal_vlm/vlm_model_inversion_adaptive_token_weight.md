@@ -129,3 +129,15 @@ VLM 是否和单模态 DNN 一样容易受到模型反转攻击？如何针对 V
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 种 VLM、3 个数据集、5 种评估指标（含大规模人类评估）、公开模型攻击验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题描述准确，但补充材料内容过多可精简
 - 价值: ⭐⭐⭐⭐⭐ 对 VLM 部署的隐私安全警示意义极高，开拓了新的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [What Do Visual Tokens Really Encode? Uncovering Sparsity and Redundancy in Multimodal Large Language Models](what_do_visual_tokens_really_encode_uncovering_sparsity_and_redundancy_in_multim.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [Adaptive Vision-Language Model Routing for Computer Use Agents](adaptive_visionlanguage_model_routing_for_computer.md)
+- [Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](quant_experts_token-aware_adaptive_error_reconstruction_with_mixture_of_experts_.md)
+
+<!-- RELATED:END -->

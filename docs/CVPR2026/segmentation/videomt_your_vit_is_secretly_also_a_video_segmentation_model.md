@@ -139,3 +139,15 @@ $$\mathbf{Q}_t^{\mathcal{F}} = \text{Linear}(\mathbf{Q}_{t-1}^{\mathcal{S}}) + \
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 个基准、3 个任务、详尽消融、预训练/模型规模分析，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，假设-验证-结论的叙事结构，图表设计优秀
 - 价值: ⭐⭐⭐⭐ — 10× 加速的实际意义巨大，为实时视频分割部署提供了可行方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRACE: Your Diffusion Model is Secretly an Instance Edge Detector](../../ICLR2026/segmentation/trace_your_diffusion_model_is_secretly_an_instance_edge_detector.md)
+- [A Mixed Diet Makes DINO An Omnivorous Vision Encoder](a_mixed_diet_makes_dino_an_omnivorous_vision_encoder.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)
+- [MatAnyone 2: Scaling Video Matting via a Learned Quality Evaluator](matanyone_2_scaling_video_matting_via_a_learned_quality_evaluator.md)
+- [Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](prompt-driven_lightweight_foundation_model_for_instance_segmentation-based_fault.md)
+
+<!-- RELATED:END -->

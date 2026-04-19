@@ -190,3 +190,15 @@ $$n_{min} = \begin{cases} \lceil \frac{R^2 \ln(1/\delta)}{2(\Delta G)^2} \rceil 
 - 实验充分度: ⭐⭐⭐⭐⭐（完整消融 + 统计检验 + Pareto 分析）
 - 写作质量: ⭐⭐⭐⭐（伪代码清晰，符号一致）
 - 价值: ⭐⭐⭐⭐（对边缘计算和流式学习社区有直接实用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Decision Trees to Boolean Logic: A Fast and Unified SHAP Algorithm](from_decision_trees_to_boolean_logic_a_fast_and_unified_shap_algorithm.md)
+- [Extreme Value Monte Carlo Tree Search for Classical Planning](extreme_value_monte_carlo_tree_search_for_classical_planning.md)
+- [Intermediate N-Gramming: Deterministic and Fast N-Grams For Large N and Large Datasets](intermediate_n-gramming_deterministic_and_fast_n-grams_for_large_n_and_large_dat.md)
+- [From Sequential to Recursive: Enhancing Decision-Focused Learning with Bidirectional Feedback](from_sequential_to_recursive_enhancing_decision-focused_learning_with_bidirectio.md)
+- [On the Edge of Core (Non-)Emptiness: An Automated Reasoning Approach to Approval-Based Multi-Winner Voting](on_the_edge_of_core_non-emptiness_an_automated_reasoning_approach_to_approval-ba.md)
+
+<!-- RELATED:END -->

@@ -161,3 +161,15 @@ MCmark 在无偏水印中 TPR@FPR=0.1% 提升超 14%（98.38% vs 81.79%），且
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖多种攻击（token替换、GPT改写、回译、DIPPER），多个模型和数据集，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，实验组织有条理，符号系统有时需反复对照
 - 价值: ⭐⭐⭐⭐ 对 LLM 水印的实用化有重要推动，$l=20$ 的实践指导清晰，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [De-mark: Watermark Removal in Large Language Models](../../ICML2025/ai_safety/de-mark_watermark_removal_in_large_language_models.md)
+- [MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)
+- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](from_tradeoff_to_synergy_a_versatile.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ SAE 方向比直接用原始文本嵌入分别提升 0.212 QS 和 0.196 IS。
 - 实验充分度: ⭐⭐⭐⭐ 覆盖单属性/多属性/零样本/多模型/多主体/风格等场景，消融完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，框架描述详细，但部分技术细节散布在附录中
 - 价值: ⭐⭐⭐⭐ 提供了一种更高效、更灵活的属性控制范式，有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+- [APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping](apple_attribute-preserving_pseudo-labeling_for_diffusion-based_face_swapping.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Image Generation as a Visual Planner for Robotic Manipulation](image_generation_as_a_visual_planner_for_robotic_manipulation.md)
+- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusion-based_image_manipulation_and_the_failure_mod.md)
+
+<!-- RELATED:END -->

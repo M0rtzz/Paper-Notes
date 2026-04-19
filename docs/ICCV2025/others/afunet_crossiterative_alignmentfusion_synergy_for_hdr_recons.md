@@ -101,3 +101,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集+消融+范式分析+阶段数分析，较充分
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，从MAP到展开的过程完整可追踪
 - 对我的价值: ⭐⭐⭐ 展开思想有参考价值，但HDR重建非核心关注方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaptiveAE: An Adaptive Exposure Strategy for HDR Capturing in Dynamic Scenes](adaptiveae_an_adaptive_exposure_strategy_for_hdr_capturing_i.md)
+- [Towards Style Alignment in Cross-Cultural Translation](../../ACL2025/others/towards_style_alignment_in_cross-cultural_translation.md)
+- [Intrinsic Single-Image HDR Reconstruction](../../ECCV2024/others/intrinsic_single-image_hdr_reconstruction.md)
+- [CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding](../../AAAI2026/others/cat-net_a_cross-attention_tone_network_for_cross-subject_eeg-emg_fusion_tone_dec.md)
+- [despite exploring contrastive deep skeletonpointcloudimutext](despite_exploring_contrastive_deep_skeletonpointcloudimutext.md)
+
+<!-- RELATED:END -->

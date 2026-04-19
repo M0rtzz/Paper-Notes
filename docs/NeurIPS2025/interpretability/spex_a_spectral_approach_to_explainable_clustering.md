@@ -128,3 +128,15 @@ $$\Psi_G(S_{j,\tau}(X)) \leq \sqrt{\frac{\mathbb{E}_{adj}\|x-y\|_2^2}{\mathbb{E}
 - 技术深度：⭐⭐⭐⭐⭐ （理论贡献+算法设计+统一分析）
 - 实验充分性：⭐⭐⭐⭐ （8个数据集，多种基线）
 - 写作质量：⭐⭐⭐⭐⭐ （逻辑清晰，理论直觉与严格证明平衡好）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Algorithm for Explainable k-medians Clustering under lp Norm](dynamic_algorithm_for_explainable_k-medians_clustering_under_lp_norm.md)
+- [Additive Models Explained: A Computational Complexity Approach](additive_models_explained_a_computational_complexity_approach.md)
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [A Reasoning-Based Approach to Cryptic Crossword Clue Solving](../../ICML2025/interpretability/a_reasoning-based_approach_to_cryptic_crossword_clue_solving.md)
+- [Rethinking Explainable Machine Learning as Applied Statistics](../../ICML2025/interpretability/rethinking_explainable_machine_learning_as_applied_statistics.md)
+
+<!-- RELATED:END -->

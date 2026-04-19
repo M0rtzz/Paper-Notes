@@ -130,3 +130,15 @@ tags:
 - **实验充分度** ⭐⭐：测试规模极小（31张），缺乏准确性指标对比
 - **写作质量** ⭐⭐：结构松散，重复段落较多，部分引用不规范
 - **价值** ⭐⭐⭐：对 AI 临床部署的工程实践有参考意义，但学术贡献有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI](automated_detection_of_malignant_lesions_in_the_ovary_using_deep_learning_models.md)
+- [Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset](instruction-guided_lesion_segmentation_for_chest_x-rays_with_automatically_gener.md)
+- [Association of Radiologic PPFE Change with Mortality in Lung Cancer Screening Cohorts](association_of_radiologic_ppfe_change_with_mortali.md)
+- [The Invisible Gorilla Effect in Out-of-distribution Detection](the_invisible_gorilla_effect_in_out-of-distribution_detection.md)
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversionbased_reconstructionfree_anomaly_de.md)
+
+<!-- RELATED:END -->

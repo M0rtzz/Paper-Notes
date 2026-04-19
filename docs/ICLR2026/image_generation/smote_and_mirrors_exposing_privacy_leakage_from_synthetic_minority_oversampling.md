@@ -128,3 +128,15 @@ SMOTE（Synthetic Minority Over-sampling Technique）是处理类不平衡和生
 - **实用性**: ⭐⭐⭐⭐⭐ — 对真实部署场景有直接影响
 - **实验**: ⭐⭐⭐⭐ — 8个数据集，多种攻击对比
 - **写作**: ⭐⭐⭐⭐⭐ — 问题动机清晰，理论分析严谨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)
+- [Privacy Amplification Through Synthetic Data: Insights from Linear Regression](../../ICML2025/image_generation/privacy_amplification_through_synthetic_data_insights_from_linear_regression.md)
+- [Minority-Focused Text-to-Image Generation via Prompt Optimization](../../CVPR2025/image_generation/minority-focused_text-to-image_generation_via_prompt_optimization.md)
+- [Copyright Infringement Detection in Text-to-Image Diffusion Models via Differential Privacy](../../AAAI2026/image_generation/copyright_infringement_detection_in_text-to-image_diffusion_models_via_different.md)
+- [Addressing Text Embedding Leakage in Diffusion-Based Image Editing](../../ICCV2025/image_generation/addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)
+
+<!-- RELATED:END -->

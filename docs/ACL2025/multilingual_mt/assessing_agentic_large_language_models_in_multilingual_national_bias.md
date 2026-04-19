@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3模型×3任务×6语言×多条件，分析极其全面
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，可视化（violin plots）效果好
 - 对我的价值: ⭐⭐⭐ 对理解LLM公平性和多语言对齐有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Delving into Multilingual Ethical Bias: The MSQAD with Statistical Hypothesis Tests for Large Language Models](msqad_multilingual_ethical_bias.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models](just_go_parallel_improving_the_multilingual_capabilities_of_large_language_model.md)
+- [Marco-Bench-MIF: On Multilingual Instruction-Following Capability of Large Language Models](marco_bench_multilingual_if.md)
+
+<!-- RELATED:END -->

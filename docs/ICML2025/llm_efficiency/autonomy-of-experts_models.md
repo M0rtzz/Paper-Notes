@@ -156,3 +156,15 @@ AoE 修改了 MoE 层的工作流程：
 - 实验充分度: ⭐⭐⭐⭐ 消融非常详细（8个研究问题），但模型规模限于4B，缺少超大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、实验通过层层设问推进、toy实验直观、图表精美
 - 价值: ⭐⭐⭐⭐⭐ 提出了 MoE 架构的重要改进方向，代码开源，对后续 MoE 研究有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of Lookup Experts](mixture_of_lookup_experts.md)
+- [Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)](addressing_imbalanced_domain-incremental_learning_through_dual-balance_collabora.md)
+- [On the Expressive Power of Mixture-of-Experts for Structured Complex Tasks](../../NeurIPS2025/llm_efficiency/on_the_expressive_power_of_mixture-of-experts_for_structured_complex_tasks.md)
+- [UMoE: Unifying Attention and FFN with Shared Experts](../../NeurIPS2025/llm_efficiency/umoe_unifying_attention_and_ffn_with_shared_experts.md)
+- [Scaling Inference-Efficient Language Models](scaling_inference-efficient_language_models.md)
+
+<!-- RELATED:END -->

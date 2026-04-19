@@ -168,3 +168,15 @@ $$\mathcal{L}_G = \alpha_1 \mathcal{L}^{\text{APA}} + \mathcal{L}^{\text{SL}} + 
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 7 个模型 × 3 种位宽，全面的消融（模块、分布类型、超参数、深度加权），可视化充分
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机阐述清晰，t-SNE/余弦相似度等量化证据有说服力，方法描述详细
 - **价值**: ⭐⭐⭐⭐ — 对数据隐私受限场景下的 ViT 部署有重要实践意义，特别是低位量化场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data-free Universal Adversarial Perturbation with Pseudo-Semantic Prior](../../CVPR2025/ai_safety/data-free_universal_adversarial_perturbation_with_pseudo-semantic_prior.md)
+- [Split Adaptation for Pre-trained Vision Transformers](../../CVPR2025/ai_safety/split_adaptation_for_pre-trained_vision_transformers.md)
+- [Model Inversion with Layer-Specific Modeling and Alignment for Data-Free Continual Learning](../../NeurIPS2025/ai_safety/model_inversion_with_layer-specific_modeling_and_alignment_for_data-free_continu.md)
+- [Staining and Locking Computer Vision Models without Retraining](staining_and_locking_computer_vision_models_without_retraining.md)
+- [Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation](controllable_feature_whitening_for_hyperparameter-free_bias_mitigation.md)
+
+<!-- RELATED:END -->

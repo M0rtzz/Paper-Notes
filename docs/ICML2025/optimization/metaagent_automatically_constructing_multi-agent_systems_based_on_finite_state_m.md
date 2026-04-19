@@ -175,3 +175,15 @@ MetaAgent 不依赖传统的损失函数或梯度训练。其"优化"是通过 L
 - **实验充分性**: ★★★★☆ — 覆盖多类任务，有消融实验，但缺少 LLM backbone 对比
 - **实用价值**: ★★★★☆ — 降低了多智能体系统的构建门槛，有开源代码
 - **写作质量**: ★★★★☆ — 问题定义清晰，动机充分，表述清楚
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parametrized Multi-Agent Routing via Deep Attention Models](../../AAAI2026/optimization/parametrized_multi-agent_routing_via_deep_attention_models.md)
+- [Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives](../../NeurIPS2025/optimization/effective_policy_learning_for_multi-agent_online_coordination_beyond_submodular_.md)
+- [A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization](a_near-optimal_single-loop_stochastic_algorithm_for_convex_finite-sum_coupled_co.md)
+- [Learning at the Speed of Physics: Equilibrium Propagation on Oscillator Ising Machines](../../NeurIPS2025/optimization/learning_at_the_speed_of_physics_equilibrium_propagation_on_oscillator_ising_mac.md)
+- [In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention](in-context_linear_regression_demystified_training_dynamics_and_mechanistic_inter.md)
+
+<!-- RELATED:END -->

@@ -162,3 +162,15 @@ $$\min_{f \in \mathcal{F}} \max_{f' \in \widetilde{\mathcal{F}}_0} \mathbb{E}[\e
 - ⭐ 实验充分度: 4/5 — 18 数据集 + 多方法对比 + Lipschitz 常数消融，较全面
 - ⭐ 写作质量: 4/5 — 理论推导层次清晰，直觉图示有效
 - ⭐ 综合价值: 4/5 — 填补了区间回归理论空白，方法实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Wasserstein Transfer Learning](wasserstein_transfer_learning.md)
+- [Learning Parameterized Skills from Demonstrations](learning_parameterized_skills_from_demonstrations.md)
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+
+<!-- RELATED:END -->

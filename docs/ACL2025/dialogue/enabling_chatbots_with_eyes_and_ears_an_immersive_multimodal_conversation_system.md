@@ -132,3 +132,15 @@ tags:
 - ⭐⭐⭐⭐ 实验充分度：人工+机器+跨数据集多维评估，含消融和定量分析
 - ⭐⭐⭐⭐ 实用价值：为构建更自然的多模态对话系统提供了数据集和建模范式
 - ⭐⭐⭐⭐ 写作质量：结构清晰，案例丰富，数据集对比表格信息量大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evolutionary Multimodal Reasoning via Hierarchical Semantic Representation for Intent Recognition](../../CVPR2026/dialogue/evolutionary_multimodal_reasoning_via_hierarchical_semantic_representation_for_i.md)
+- [BI-MDRG: Bridging Image History in Multimodal Dialogue Response Generation](../../ECCV2024/dialogue/bi-mdrg_bridging_image_history_in_multimodal_dialogue_response_generation.md)
+- [Dialogue Systems for Emotional Support via Value Reinforcement](dialogue_systems_for_emotional_support_via_value_reinforcement.md)
+- [UniConv: Unifying Retrieval and Response Generation for Large Language Models in Conversations](uniconv_retrieval_response_gen.md)
+- [Wizard of Shopping: Target-Oriented E-commerce Dialogue Generation with Decision Tree Branching](wizard_of_shopping_target-oriented_e-commerce_dialogue_generation_with_decision_.md)
+
+<!-- RELATED:END -->

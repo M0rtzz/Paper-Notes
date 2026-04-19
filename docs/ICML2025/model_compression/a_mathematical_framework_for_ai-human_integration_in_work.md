@@ -163,3 +163,15 @@ $$s_{j1} = \lambda_j \cdot s_j, \quad s_{j2} = 1 - (1-\lambda_j) \cdot s_j$$
 - 实验充分度: ⭐⭐⭐⭐ 理论+O*NET+BBL 多角度验证，但缺少真实部署实验
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，图示丰富，但公式密度较高
 - 价值: ⭐⭐⭐⭐ 为 AI-人类协作提供了理论基础，但实践落地路径尚不清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HeurekaBench: A Benchmarking Framework for AI Co-scientist](../../ICLR2026/model_compression/heurekabench_a_benchmarking_framework_for_ai_co-scientist.md)
+- [Hierarchical Pedagogical Oversight: A Multi-Agent Adversarial Framework for Reliable AI Tutoring](../../AAAI2026/model_compression/hierarchical_pedagogical_oversight_a_multi-agent_adversarial_framework_for_relia.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](../../NeurIPS2025/model_compression/gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [KTAE: A Model-Free Algorithm to Key-Tokens Advantage Estimation in Mathematical Reasoning](../../NeurIPS2025/model_compression/ktae_a_model-free_algorithm_to_key-tokens_advantage_estimation_in_mathematical_r.md)
+- [AI-Generated Video Detection via Perceptual Straightening](../../NeurIPS2025/model_compression/ai-generated_video_detection_via_perceptual_straightening.md)
+
+<!-- RELATED:END -->

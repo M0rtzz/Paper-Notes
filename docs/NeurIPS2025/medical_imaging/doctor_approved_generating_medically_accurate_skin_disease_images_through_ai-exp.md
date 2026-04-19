@@ -130,3 +130,15 @@ MAGIC 流水线包括四个阶段：(1) 对 Stable Diffusion 进行预微调（T
 - 实验充分度: ⭐⭐⭐⭐ 多骨干网络、多基线、消融充分，FID/专家评估/分类三方面验证，但数据集和疾病类型有限
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，动机充分，但公式符号较多需仔细阅读
 - 价值: ⭐⭐⭐⭐⭐ 在数据稀缺的医学影像领域提供了可扩展的 AI-专家协作方案，少样本场景 +13.89% 的提升非常实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Feedback Efficient Active Target Discovery in Partially Observable Environments](online_feedback_efficient_active_target_discovery_in_partially_observable_enviro.md)
+- [PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions](patientsim_a_persona-driven_simulator_for_realistic_doctor-patient_interactions.md)
+- [Generating Multi-Table Time Series EHR from Latent Space with Minimal Preprocessing](generating_multi-table_time_series_ehr_from_latent_space_with_minimal_preprocess.md)
+- [DermaCon-IN: A Multi-concept Annotated Dermatological Image Dataset of Indian Skin Disorders](dermacon-in_a_multi-concept_annotated_dermatological_image_dataset_of_indian_ski.md)
+- [Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
+
+<!-- RELATED:END -->

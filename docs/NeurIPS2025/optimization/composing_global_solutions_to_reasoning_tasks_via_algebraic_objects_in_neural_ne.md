@@ -122,3 +122,15 @@ CoGS 的核心思想是：不直接求解高度非线性的全局优化问题，
 - **实验充分度**: ⭐⭐⭐⭐ — 多种 $d$ 值、多种权重衰减、95%匹配率验证充分，但规模和架构覆盖有限
 - **写作质量**: ⭐⭐⭐⭐ — 数学严谨，图表清晰，但代数符号密集对非专业读者门槛较高
 - **价值**: ⭐⭐⭐⭐⭐ — 为理解神经网络推理机制提供了全新的代数理论工具，可能开启新的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DynaAct: Large Language Model Reasoning with Dynamic Action Spaces](dynaact_large_language_model_reasoning_with_dynamic_action_spaces.md)
+- [A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](a_theoretical_study_on_bridging_internal_probability_and_sel.md)
+- [Verbalized Algorithms: Zero-shot Classical Algorithmic Reasoning for Correctness and Runtime Guarantees](verbalized_algorithms.md)
+- [OrthoGrad Improves Neural Calibration](orthograd_improves_neural_calibration.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+
+<!-- RELATED:END -->

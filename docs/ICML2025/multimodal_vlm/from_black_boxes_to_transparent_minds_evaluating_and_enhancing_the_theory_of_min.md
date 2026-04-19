@@ -161,3 +161,15 @@ $$T_{l+1} = T_l + \sum_{h=1}^{H} \left(Attn_l^h(P_l^h T_l) + \alpha \sigma_l^h \
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video-Only ToM: Enhancing Theory of Mind in Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/video-only_tom_enhancing_theory_of_mind_in_multimodal_large_language_models.md)
+- [Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner](overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning_a_scalab.md)
+- [ERL-VLM: Enhancing Rating-Based RL to Leverage Feedback from Large VLMs](enhancing_rating-based_reinforcement_learning_to_effectively_leverage_feedback_f.md)
+- [SlimLLM: Accurate Structured Pruning for Large Language Models](slimllm_accurate_structured_pruning_for_large_language_models.md)
+- [Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)
+
+<!-- RELATED:END -->

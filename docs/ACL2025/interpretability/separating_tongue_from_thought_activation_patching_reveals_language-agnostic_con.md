@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个模型验证泛化性，探索+验证+消歧+生成实验逐步递进
 - 写作质量: ⭐⭐⭐⭐ 概念定义清晰，实验逻辑严密，Figure设计直观
 - 价值: ⭐⭐⭐⭐⭐ 对多语言LLM的内部机制提供了深刻洞察，对跨语言迁移和偏见研究有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Granular Concept Circuits: Toward a Fine-Grained Circuit Discovery for Concept Representations](../../ICCV2025/interpretability/granular_concept_circuits_toward_a_fine-grained_circuit_discovery_for_concept_re.md)
+- [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](../../NeurIPS2025/interpretability/toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
+- [CE-FAM: Concept-Based Explanation via Fusion of Activation Maps](../../ICCV2025/interpretability/ce-fam_concept-based_explanation_via_fusion_of_activation_maps.md)
+- [Simulating Society Requires Simulating Thought](../../NeurIPS2025/interpretability/simulating_society_requires_simulating_thought.md)
+- [Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](../../AAAI2026/interpretability/concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
+
+<!-- RELATED:END -->

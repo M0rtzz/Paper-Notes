@@ -227,3 +227,15 @@ VSD loss + consistency loss混合，后接latent reward fine-tuning。
 - 实验充分度: ⭐⭐⭐⭐ VBench全面评估，人类评估验证，10秒长视频测试
 - 写作质量: ⭐⭐⭐⭐ 方法清晰
 - 价值: ⭐⭐⭐⭐ 视频扩散模型加速的重要进展，接近实时视频生成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
+- [VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [Identity-Preserving Image-to-Video Generation via Reward-Guided Optimization](../../CVPR2026/video_generation/identity-preserving_image-to-video_generation_via_reward-guided_optimization.md)
+- [Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)
+- [Diffusion Adversarial Post-Training for One-Step Video Generation](../../ICML2025/video_generation/diffusion_adversarial_post-training_for_one-step_video_generation.md)
+
+<!-- RELATED:END -->

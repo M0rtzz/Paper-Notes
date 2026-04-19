@@ -116,3 +116,15 @@ tags:
 - 技术深度：★★★★★ 类型感知初始化（PCA/RANSAC）+SDF轨迹优化设计精细，物理直觉强
 - 实验完整性：★★★★★ 三类数据源（PartNet-Mobility/Objaverse/生成资产）+Real2Sim2Real验证
 - 实用价值：★★★★★ 直接输出URDF，87%物理可执行性，具身AI/机器人仿真落地价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysHead: Simulation-Ready Gaussian Head Avatars](physhead_simulation-ready_gaussian_head_avatars.md)
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [ReWeaver: Towards Simulation-Ready and Topology-Accurate Garment Reconstruction](reweaver_towards_simulation-ready_and_topology-accurate_garment_reconstruction.md)
+- [Wanderland: Geometrically Grounded Simulation for Open-World Embodied AI](wanderland_geometrically_grounded_simulation_for_open-world_embodied_ai.md)
+- [ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
+
+<!-- RELATED:END -->

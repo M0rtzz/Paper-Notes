@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定性定量+消融+多应用展示完整；但缺乏大规模定量评估
 - 写作质量: ⭐⭐⭐⭐ 问题motivation清晰，概念差距的分析深入直观
 - 价值: ⭐⭐⭐⭐⭐ 打通了text-to-3D生成到物体级编辑的链路，应用前景广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+- [GVGEN: Text-to-3D Generation with Volumetric Representation](gvgen_text-to-3d_generation_with_volumetric_representation.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)
+
+<!-- RELATED:END -->

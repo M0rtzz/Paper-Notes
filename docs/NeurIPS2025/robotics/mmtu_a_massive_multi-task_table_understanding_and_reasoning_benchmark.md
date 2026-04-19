@@ -121,3 +121,15 @@ MMTU 并非提出新模型，而是一个精心策划的基准测试。它的设
 - 实验充分度: ⭐⭐⭐⭐⭐ (大量模型对比+多维分析)
 - 写作质量: ⭐⭐⭐⭐⭐ (组织清晰，图表丰富，数据详实)
 - 价值: ⭐⭐⭐⭐⭐ (填补关键空白，对领域发展有长期推动意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Talk2Event: Grounded Understanding of Dynamic Scenes from Event Cameras](talk2event_grounded_understanding_of_dynamic_scenes_from_event_cameras.md)
+- [MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning](mesatask_towards_task-driven_tabletop_scene_generation_via_3d_spatial_reasoning.md)
+- [mmWalk: Towards Multi-modal Multi-view Walking Assistance](mmwalk_towards_multi-modal_multi-view_walking_assistance.md)
+- [Understanding Prompt Tuning and In-Context Learning via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
+- [ENC-Bench: A Benchmark for Evaluating MLLMs in Electronic Navigational Chart Understanding](../../CVPR2026/robotics/enc-bench_a_benchmark_for_evaluating_multimodal_large_language_models_in_electro.md)
+
+<!-- RELATED:END -->

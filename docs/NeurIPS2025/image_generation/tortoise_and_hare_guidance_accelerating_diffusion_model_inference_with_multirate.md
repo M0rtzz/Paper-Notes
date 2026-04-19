@@ -164,3 +164,15 @@ THG 是**完全免训练**的方法：
 - **实验充分性**: ⭐⭐⭐⭐ — 多模型、多指标、充分消融
 - **实际影响**: ⭐⭐⭐⭐⭐ — 免训练、即插即用，直接降低推理成本
 - **写作质量**: ⭐⭐⭐⭐ — 清晰生动，命名巧妙
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpecDiff: Accelerating Diffusion Model Inference with Self-Speculation](../../AAAI2026/image_generation/specdiff_accelerating_diffusion_model_inference_with_self-speculation.md)
+- [Accelerating Parallel Diffusion Model Serving with Residual Compression](accelerating_parallel_diffusion_model_serving_with_residual_compression.md)
+- [Entropy Rectifying Guidance for Diffusion and Flow Models](entropy_rectifying_guidance_for_diffusion_and_flow_models.md)
+- [Enhancing Diffusion Model Guidance through Calibration and Regularization](enhancing_diffusion_model_guidance_through_calibration_and_regularization.md)
+- [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -168,3 +168,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三大benchmark、11个任务、全面消融+视觉扩展
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法阐述流畅，理论分析完整
 - 价值: ⭐⭐⭐⭐ 对长视野稀疏奖励任务有显著提升，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits](variance-aware_feel-good_thompson_sampling_for_contextual_bandits.md)
+- [VideoRFT: Incentivizing Video Reasoning Capability in MLLMs via Reinforced Fine-Tuning](videorft_incentivizing_video_reasoning_capability_in_mllms_via_reinforced_fine-t.md)
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+- [Reward-Aware Proto-Representations in Reinforcement Learning](reward-aware_proto-representations_in_reinforcement_learning.md)
+- [Thompson Sampling in Function Spaces via Neural Operators](thompson_sampling_in_function_spaces_via_neural_operators.md)
+
+<!-- RELATED:END -->

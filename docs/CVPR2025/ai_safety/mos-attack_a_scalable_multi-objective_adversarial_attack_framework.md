@@ -128,3 +128,15 @@ MOS-8在CIFAR-10上平均排名1.33（最优），使用5个样本即达到APGD-
 ## 评分
 
 ⭐⭐⭐⭐ — 从多目标优化理论出发设计对抗攻击框架，数学形式优雅，工程实现简洁（基于APGD改动极小），在17个模型上系统性验证了有效性。协同模式挖掘提供了超越"工具开发"的科学价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Infighting in the Dark: Multi-Label Backdoor Attack in Federated Learning](infighting_in_the_dark_multi-label_backdoor_attack_in_federated_learning.md)
+- [Adversarial Paraphrasing: A Universal Attack for Humanizing AI-Generated Text](../../NeurIPS2025/ai_safety/adversarial_paraphrasing_a_universal_attack_for_humanizing_ai-generated_text.md)
+- [Understanding Model Ensemble in Transferable Adversarial Attack](../../ICML2025/ai_safety/understanding_model_ensemble_in_transferable_adversarial_attack.md)
+- [Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](../../CVPR2026/ai_safety/multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
+- [INACTIVE: Invisible Backdoor Attack against Self-supervised Learning](invisible_backdoor_attack_against_self-supervised_learning.md)
+
+<!-- RELATED:END -->

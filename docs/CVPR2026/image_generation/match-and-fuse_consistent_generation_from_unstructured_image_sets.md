@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 定量+用户研究+VLM评估+新指标+消融+扩展应用
 - 写作质量: ⭐⭐⭐⭐⭐ 图精美公式优雅问题定义清晰
 - 实用价值: ⭐⭐⭐⭐ 产品广告/角色设计/故事板等创意工作流
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cycle-Consistent Tuning for Layered Image Decomposition](cycle-consistent_tuning_for_layered_image_decomposition.md)
+- [MatchDiffusion: Training-free Generation of Match-Cuts](../../ICCV2025/image_generation/matchdiffusion_training-free_generation_of_match-cuts.md)
+- [AlignVAR: Towards Globally Consistent Visual Autoregression for Image Super-Resolution](alignvar_towards_globally_consistent_visual_autoregression_for_image_super-resol.md)
+- [Consistent Text-to-Image Generation via Scene De-Contextualization](../../ICLR2026/image_generation/consistent_text-to-image_generation_via_scene_de-contextualization.md)
+- [Infinite-Story: A Training-Free Consistent Text-to-Image Generation](../../AAAI2026/image_generation/infinite-story_a_training-free_consistent_text-to-image_gene.md)
+
+<!-- RELATED:END -->

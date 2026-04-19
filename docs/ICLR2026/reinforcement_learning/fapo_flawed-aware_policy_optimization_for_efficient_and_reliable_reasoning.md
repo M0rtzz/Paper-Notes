@@ -122,3 +122,15 @@ $\lambda = 1$ 的选择来自 majority-guided 策略，使转移点恰好在 $\r
 - 实验充分度: ⭐⭐⭐⭐⭐ — 全 checkpoint 评估、多维度消融、人工验证、reward hacking 分析
 - 写作质量: ⭐⭐⭐⭐ — 行文流畅，动机-分析-方法-实验环环相扣
 - 价值: ⭐⭐⭐⭐ — 对 RLVR 训练质量提升有实际意义，GenRM 方案可直接集成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thinking on the Fly: Test-Time Reasoning Enhancement via Latent Thought Policy Optimization](thinking_on_the_fly_test-time_reasoning_enhancement_via_latent_thought_policy_op.md)
+- [STELAR-Vision: Self-Topology-Aware Efficient Learning for Aligned Reasoning in Vision](../../AAAI2026/reinforcement_learning/stelar-vision_self-topology-aware_efficient_learning_for_aligned_reasoning_in_vi.md)
+- [Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning](controllable_exploration_in_hybrid-policy_rlvr_for_multi-modal_reasoning.md)
+- [WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning](../../AAAI2026/reinforcement_learning/well_begun_half_done_reinforcement_learning_with_prefix_optimization_for_llm_rea.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ $$\mathcal{L} = \lambda_{\text{pos}} w_d \mathcal{L}_{\text{mse}}(\mathbf{P}_r, 
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面，数据规模实验有说服力，但基准单一且 ALS 私有数据不可复现
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，动机论述充分，与前作对比到位
 - 价值: ⭐⭐⭐⭐ — 对 AR/VR 人体姿态估计有直接工程价值，0.8ms 延迟和边缘部署友好设计很实际
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [E-3DPSM: A State Machine for Event-Based Egocentric 3D Human Pose Estimation](e-3dpsm_a_state_machine_for_event-based_egocentric_3d_human_pose_estimation.md)
+- [MANIKIN: Biomechanically Accurate Neural Inverse Kinematics for Human Motion Estimation](../../ECCV2024/human_understanding/manikin_biomechanically_accurate_neural_inverse_kinematics_for_human_motion_esti.md)
+- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](molingo_motion-language_alignment_for_text-to-motion_generation.md)
+- [UniDex: A Robot Foundation Suite for Universal Dexterous Hand Control from Egocentric Human Videos](unidex_a_robot_foundation_suite_for_universal_dexterous_hand_control_from_egocen.md)
+- [mmPred: Radar-based Human Motion Prediction in the Dark](../../AAAI2026/human_understanding/mmpred_radar-based_human_motion_prediction_in_the_dark.md)
+
+<!-- RELATED:END -->

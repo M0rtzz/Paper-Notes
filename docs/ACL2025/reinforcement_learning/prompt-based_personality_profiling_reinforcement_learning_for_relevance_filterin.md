@@ -103,3 +103,15 @@ RL-Profiler由两个组件构成：
 - **实验充分度**: ⭐⭐⭐ — 消融和对比较充分，但数据集单一且标签偏斜严重影响了结果说服力
 - **写作质量**: ⭐⭐⭐⭐ — 方法描述清晰，实验分析有条理
 - **价值**: ⭐⭐⭐ — 方法有实用价值，但受限于数据质量，实际提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Prompt Tuning Decision Transformers with Structured and Scalable Bandits](../../NeurIPS2025/reinforcement_learning/prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)
+- [Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering](../../NeurIPS2025/reinforcement_learning/knowledge-based_visual_question_answer_with_multimodal_processing_retrieval_and_.md)
+- [Learning to Generate Structured Output with Schema Reinforcement Learning](learning_to_generate_structured_output_with_schema_reinforcement_learning.md)
+- [MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization](../../AAAI2026/reinforcement_learning/mars_multi-agent_adaptive_reasoning_with_socratic_guidance_f.md)
+- [Whatever Remains Must Be True: Filtering Drives Reasoning in LLMs, Shaping Diversity](../../ICLR2026/reinforcement_learning/whatever_remains_must_be_true_filtering_drives_reasoning_in_llms_shaping_diversi.md)
+
+<!-- RELATED:END -->

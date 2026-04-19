@@ -143,3 +143,15 @@ CALVIN ABC→D 基准：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 消融极其全面，MSE/S-PCFC 分析深入，跨架构验证充分
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，实验分析有深度，但部分表述略显冗余
 - **价值**: ⭐⭐⭐⭐⭐ 为从互联网视频扩展机器人学习提供了实用且原理清晰的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](../../ICCV2025/robotics/moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
+- [Chain of World: World Model Thinking in Latent Motion (CoWVLA)](chain_of_world_world_model_thinking_in_latent_motion.md)
+- [DAWN: Pixel Motion Diffusion is What We Need for Robot Control](dawn_pixel_motion_diffusion_robot_control.md)
+- [AtomicVLA: Unlocking the Potential of Atomic Skill Learning in Robots](atomicvla_unlocking_the_potential_of_atomic_skill.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+
+<!-- RELATED:END -->

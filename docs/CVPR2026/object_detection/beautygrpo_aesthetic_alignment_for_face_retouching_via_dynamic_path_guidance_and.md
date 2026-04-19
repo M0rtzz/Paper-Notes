@@ -148,3 +148,15 @@ BeautyGRPO 由三大组件构成：(1) 细粒度偏好数据集 FRPref-10K；(2)
 - 实验充分度: ⭐⭐⭐⭐ — 定量+定性+用户研究+多消融+跨骨干验证，指标覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机论证充分，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 首个将 RL 偏好对齐系统性引入人脸修图的工作，开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification](specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat.md)
+- [FG-CLIP: Fine-Grained Visual and Textual Alignment](../../ICML2025/object_detection/fg-clip_fine-grained_visual_and_textual_alignment.md)
+- [Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](../../ICCV2025/object_detection/dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
+- [FALCON: False-Negative Aware Learning of Contrastive Negatives in Vision-Language Alignment](falcon_false-negative_aware_learning_of_contrastive_negatives_in_vision-language.md)
+- [Procedural Mistake Detection via Action Effect Modeling](../../ICLR2026/object_detection/procedural_mistake_detection_via_action_effect_modeling.md)
+
+<!-- RELATED:END -->

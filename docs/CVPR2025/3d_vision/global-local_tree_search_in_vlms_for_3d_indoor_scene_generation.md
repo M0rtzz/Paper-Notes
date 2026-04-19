@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 定量评估仅CLIP分数和用户研究，缺少大规模自动化指标
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机阐述充分，图示直观
 - 价值: ⭐⭐⭐⭐ 展示了VLM在3D场景规划中的潜力，emoji网格思路有较好的可迁移性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [LocalDyGS: Multi-view Global Dynamic Scene Modeling via Adaptive Local Implicit Feature Decoupling](../../ICCV2025/3d_vision/localdygs_multi-view_global_dynamic_scene_modeling_via_adaptive_local_implicit_f.md)
+- [IRIS: Inverse Rendering of Indoor Scenes from Low Dynamic Range Images](iris_inverse_rendering_of_indoor_scenes_from_low_dynamic_range_images.md)
+- [Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling](../../ICCV2025/3d_vision/diorama_unleashing_zero-shot_single-view_3d_indoor_scene_modeling.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+
+<!-- RELATED:END -->

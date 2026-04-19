@@ -91,3 +91,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多指标评估、用户研究、消融完整，跨模型泛化验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，上下文偏差的可视化分析直观有说服力
 - 价值: ⭐⭐⭐⭐ 推理速度的大幅提升使一致性 T2I 达到实用水平，对视觉故事应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Consistent Text-to-Image Generation via Scene De-Contextualization](../../ICLR2026/image_generation/consistent_text-to-image_generation_via_scene_de-contextualization.md)
+- [EchoGen: Cycle-Consistent Learning for Unified Layout-Image Generation and Understanding](echogen_cycle-consistent_learning_for_unified_layout-image_generation_and_unders.md)
+- [AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](aedr_training-free_ai-generated_image_attribution_via_autoen.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](../../CVPR2026/image_generation/pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Enhancing Multimodal Misinformation Detection by Replaying the Whole Story from Image Modality Perspective](enhancing_multimodal_misinformation_detection_by_replaying_the_whole_story_from_.md)
+
+<!-- RELATED:END -->

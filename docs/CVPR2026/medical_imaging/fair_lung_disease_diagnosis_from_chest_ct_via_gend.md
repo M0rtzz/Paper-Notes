@@ -138,3 +138,15 @@ tags:
 - **实验充分度** ⭐⭐⭐：消融为定性描述，仅单一挑战赛数据集
 - **写作质量** ⭐⭐⭐⭐：方法描述清晰系统，公式完整，流程图直观
 - **价值** ⭐⭐⭐：为医学 AI 公平性提供端到端方案模板，但受限于挑战赛报告深度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](mil-pf_multiple_instance_learning_on_precomputed_features_for_mammography_classi.md)
+- [Every Error has Its Magnitude: Asymmetric Mistake Severity Training for Multiclass Multiple Instance Learning](every_error_has_its_magnitude_asymmetric_mistake_severity_training_for_multiclas.md)
+- [EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease](emad_evidence-centric_grounded_multimodal_diagnosis_for_alzheimers_disease.md)
+- [Robust Multi-Source Covid-19 Detection in CT Images](robust_multi-source_covid-19_detection_in_ct_images.md)
+- [Association of Radiologic PPFE Change with Mortality in Lung Cancer Screening Cohorts](association_of_radiologic_ppfe_change_with_mortality_in_lung_cancer_screening_co.md)
+
+<!-- RELATED:END -->

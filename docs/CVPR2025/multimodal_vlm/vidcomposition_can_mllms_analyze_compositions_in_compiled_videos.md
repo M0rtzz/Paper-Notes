@@ -98,3 +98,15 @@ VidComposition是一个人工标注的高质量基准，包含982个编辑合成
 - 实验充分度: ⭐⭐⭐⭐⭐ 33个模型的全面评测+影响因素分析+难度分级，分析极其充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分类体系设计合理，但部分子任务定义可更精确
 - 价值: ⭐⭐⭐⭐⭐ 为视频理解研究提供了全新方向，直接揭示了当前模型的核心短板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can MLLMs Understand the Deep Implication Behind Chinese Images?](../../ACL2025/multimodal_vlm/can_mllms_understand_the_deep_implication_behind_chinese_images.md)
+- [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
+- [Unveiling the Ignorance of MLLMs: Seeing Clearly, Answering Incorrectly](unveiling_the_ignorance_of_mllms_seeing_clearly_answering_incorrectly.md)
+- [Visual Chronicles: Using Multimodal LLMs to Analyze Massive Collections of Images](../../ICCV2025/multimodal_vlm/visual_chronicles_using_multimodal_llms_to_analyze_massive_collections_of_images.md)
+- [VF-Eval: Evaluating Multimodal LLMs for Generating Feedback on AIGC Videos](../../ACL2025/multimodal_vlm/vf_eval_aigc_video_feedback.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ SGD $\le 0.05$ 的召回率（%）：
 - 实验充分度: 7/10 — 模拟器、真实硬件、基准数据集三方面验证较全面，但受硬件限制规模极小
 - 写作质量: 8/10 — 问题定义清晰，理论推导严谨，量子-经典方法对比合理
 - 价值: 6/10 — 目前实际应用价值有限，但作为量子计算在视觉中的探索具有前瞻意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantum Doubly Stochastic Transformers](../../NeurIPS2025/physics/quantum_doubly_stochastic_transformers.md)
+- [Data Verification is the Future of Quantum Computing Copilots](../../AAAI2026/physics/data_verification_is_the_future_of_quantum_computing_copilots.md)
+- [Sublinear Time Quantum Algorithm for Attention Approximation](../../ICLR2026/physics/sublinear_time_quantum_algorithm_for_attention_approximation.md)
+- [Feedback-driven Recurrent Quantum Neural Network Universality](../../ICLR2026/physics/feedback-driven_recurrent_quantum_neural_network_universality.md)
+- [Compact Matrix Quantum Group Equivariant Neural Networks](../../ICML2025/physics/compact_matrix_quantum_group_equivariant_neural_networks.md)
+
+<!-- RELATED:END -->

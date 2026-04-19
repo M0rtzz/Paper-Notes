@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 大规模用户研究(42人1134评)是亮点，自动指标和消融也充分
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，层分析可视化直观
 - 价值: ⭐⭐⭐⭐ 对所有使用多条件生成的工作都有即时价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trade-offs in Image Generation: How Do Different Dimensions Interact?](../../ICCV2025/image_generation/trade-offs_in_image_generation_how_do_different_dimensions_interact.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](improving_editability_in_image_generation_with_layer-wise_memory.md)
+- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
+- [Controllable Human Image Generation with Personalized Multi-Garments](controllable_human_image_generation_with_personalized_multi-garments.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+
+<!-- RELATED:END -->

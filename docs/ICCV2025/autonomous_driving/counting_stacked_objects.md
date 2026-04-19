@@ -140,3 +140,15 @@ $$\mathcal{N} = \frac{\gamma \cdot \mathcal{V}}{v}$$
 - **实验充分度**: ⭐⭐⭐⭐ 合成+真实数据集完整，人类基线有说服力，消融实验充分；但真实场景只有45个
 - **写作质量**: ⭐⭐⭐⭐⭐ 逻辑清晰流畅，从直觉到公式再到实现讲述得像故事一样
 - **对我的价值**: ⭐⭐⭐ 问题分解思路和合成数据管线设计有启发，但具体任务与当前研究方向交叉有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Referring Expression Comprehension for Small Objects](referring_expression_comprehension_for_small_objects.md)
+- [Plant Taxonomy Meets Plant Counting: A Fine-Grained, Taxonomic Dataset for Counting Hundreds of Plant Species](../../CVPR2026/autonomous_driving/plant_taxonomy_meets_plant_counting_a_fine-grained_taxonomic_dataset_for_countin.md)
+- [Point-to-Region Loss for Semi-Supervised Point-Based Crowd Counting](../../CVPR2025/autonomous_driving/point-to-region_loss_for_semi-supervised_point-based_crowd_counting.md)
+- [Learning to Detect Objects from Multi-Agent LiDAR Scans without Manual Labels](../../CVPR2025/autonomous_driving/learning_to_detect_objects_from_multi-agent_lidar_scans_without_manual_labels.md)
+- [SABER: Spatially Consistent 3D Universal Adversarial Objects for BEV Detectors](../../CVPR2026/autonomous_driving/saber_spatially_consistent_3d_universal_adversarial_objects_for_bev_detectors.md)
+
+<!-- RELATED:END -->

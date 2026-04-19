@@ -173,3 +173,15 @@ SR-KI在40K规模下比Dense Retrieval高9.19个点、比BM25高43.94个点。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 100到40K的多尺度评估、跨模型验证、多基线对比、消融全面
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，实验设计合理，但检索层发现的理论解释较浅
 - 价值: ⭐⭐⭐⭐ — 为大规模知识注入提供了高效实用的方案，但仅覆盖中文和简单QA场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Inference-Time Scaling for Continuous Space Reasoning](towards_inference-time_scaling_for_continuous_space_reasoning.md)
+- [ComRAG: Retrieval-Augmented Generation with Dynamic Vector Stores for Real-time Community Question Answering in Industry](../../ACL2025/information_retrieval/comrag_retrieval-augmented_generation_with_dynamic_vector_stores_for_real-time_c.md)
+- [LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning](llms_for_game_theory_entropy-guided_in-context_learning_and_adaptive_cot_reasoni.md)
+- [Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs](does_less_hallucination_mean_less_creativity_an_empirical_investigation_in_llms.md)
+- [Summaries as Centroids for Interpretable and Scalable Text Clustering](../../ICLR2026/information_retrieval/summaries_as_centroids_for_interpretable_and_scalable_text_clustering.md)
+
+<!-- RELATED:END -->

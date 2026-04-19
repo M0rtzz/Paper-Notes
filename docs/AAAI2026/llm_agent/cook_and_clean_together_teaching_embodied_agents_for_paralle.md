@@ -84,3 +84,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 大规模数据集+多baseline对比+完整消融，任务覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 问题动机从串行到并行的痛点切入清晰，图例丰富展示了调度效果
 - 价值: ⭐⭐⭐⭐ 填补了具身AI任务调度效率优化的空白，调度token的思路可推广到其他需要资源分配的Agent场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Tool Decathlon: Benchmarking Language Agents for Diverse, Realistic, and Long-Horizon Task Execution](../../ICLR2026/llm_agent/the_tool_decathlon_benchmarking_language_agents_for_diverse_realistic_and_long-h.md)
+- [AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](../../ICLR2026/llm_agent/agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
+- [HAMLET: A Hierarchical and Adaptive Multi-Agent Framework for Live Embodied Theatre](../../ICLR2026/llm_agent/hamlet_a_hierarchical_and_adaptive_multi-agent_framework_for_live_embodied_theat.md)
+- [Hogwild! Inference: Parallel LLM Generation via Concurrent Attention](../../NeurIPS2025/llm_agent/hogwild_inference_parallel_llm_generation_via_concurrent_attention.md)
+- [TANGO: Training-free Embodied AI Agents for Open-world Tasks](../../CVPR2025/llm_agent/tango_training-free_embodied_ai_agents_for_open-world_tasks.md)
+
+<!-- RELATED:END -->

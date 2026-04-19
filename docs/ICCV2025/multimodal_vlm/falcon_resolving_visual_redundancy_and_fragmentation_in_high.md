@@ -141,3 +141,15 @@ ReAtten 在所有指标上最优，且有效减少幻觉（POPE 87.3）。
 ## 评分
 
 ⭐⭐⭐⭐ 方法简洁有效，9× 压缩率下超越 GPT-4o 级商用模型令人印象深刻，设计动机清晰且有充分消融支撑，是高分辨率 MLLM 的优秀工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Teaching Vision-Language Models to Ask: Resolving Ambiguity in Visual Questions](../../ACL2025/multimodal_vlm/teaching_vlm_ask_ambiguity.md)
+- [Visual-Oriented Fine-Grained Knowledge Editing for MultiModal Large Language Models](visual-oriented_fine-grained_knowledge_editing_for_multimodal_large_language_mod.md)
+- [Global Compression Commander: Plug-and-Play Inference Acceleration for High-Resolution Large Vision-Language Models](../../AAAI2026/multimodal_vlm/global_compression_commander_plug-and-play_inference_acceler.md)
+- [BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models](basic_boosting_visual_alignment_with_intrinsic_refined_embeddings_in_multimodal_.md)
+- [ShortV: Efficient Multimodal Large Language Models by Freezing Visual Tokens in Ineffective Layers](shortv_efficient_multimodal_large_language_models_by_freezin.md)
+
+<!-- RELATED:END -->

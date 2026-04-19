@@ -125,3 +125,15 @@ LLM推理成本已大幅降低至每百万输入tokens约$0.15-$2.50，远低于
 - 实验充分度：⭐⭐☆☆☆ — 立场/综述论文，无实验验证
 - 写作质量：⭐⭐⭐⭐☆ — 结构清晰，论证充分
 - 价值：⭐⭐⭐⭐☆ — 为LLM辅助定性研究评估指明了方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tracing Pharmacological Knowledge in Large Language Models](../../ICLR2026/medical_imaging/tracing_pharmacological_knowledge_in_large_language_models.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](../../AAAI2026/medical_imaging/small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [Protein as a Second Language for LLMs](../../ICLR2026/medical_imaging/protein_as_a_second_language_for_llms.md)
+- [Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity](scaling_laws_and_pathologies_of_single-layer_pinns_network_width_and_pde_nonline.md)
+- [Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis](scalable_diffusion_transformer_for_conditional_4d_fmri_synthesis.md)
+
+<!-- RELATED:END -->

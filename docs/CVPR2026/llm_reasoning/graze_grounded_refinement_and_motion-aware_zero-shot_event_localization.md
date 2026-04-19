@@ -219,3 +219,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 738支真实视频、详细消融、多粒度精度评估
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，管线每步的设计理由充分
 - 价值: ⭐⭐⭐⭐ 对运动生物力学和基础模型组合的零样本应用有实际贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos](../../ICLR2026/llm_reasoning/cot-rvs_zero-shot_chain-of-thought_reasoning_segmentation_for_videos.md)
+- [Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval](../../CVPR2025/llm_reasoning/reason-before-retrieve_one-stage_reflective_chain-of-thoughts_for_training-free_.md)
+- [SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes](../../ICLR2026/llm_reasoning/scenecot_eliciting_grounded_chain-of-thought_reasoning_in_3d_scenes.md)
+- [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](../../CVPR2025/llm_reasoning/argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
+- [LIMOPro: Reasoning Refinement for Efficient and Effective Test-time Scaling](../../NeurIPS2025/llm_reasoning/limopro_reasoning_refinement_for_efficient_and_effective_test-time_scaling.md)
+
+<!-- RELATED:END -->

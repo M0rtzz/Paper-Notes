@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成数据+真实数据+用户研究，消融实验非常详细，包括表示对比和数据量影响
 - 写作质量: ⭐⭐⭐⭐ 方法阐述清晰，图示丰富且有解释力
 - 价值: ⭐⭐⭐⭐ 为脉冲相机在低光场景的实用化提供了重要技术支撑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement](unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)
+- [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+- [Efficient Diffusion as Low Light Enhancer (ReDDiT)](../../CVPR2025/image_restoration/efficient_diffusion_as_low_light_enhancer.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [CWNet: Causal Wavelet Network for Low-Light Image Enhancement](../../ICCV2025/image_restoration/cwnet_causal_wavelet_network_for_low-light_image_enhancement.md)
+
+<!-- RELATED:END -->

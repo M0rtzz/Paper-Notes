@@ -117,3 +117,15 @@ tags:
 - 与同期发表的其他顶会工作相比，本文在问题定义和方法设计的系统性上展现了较高水平的研究素养
 - 在实际部署场景中，还需综合考虑计算效率、实时性要求、数据隐私保护以及系统可扩展性等工程因素
 - 方法的核心思想具有一定的可迁移性——类似的设计范式可能在相关但不同的任务和数据模态上发挥作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/human_understanding/in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](../../ECCV2024/human_understanding/videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
+- [Radar-APLANC: Unsupervised Radar-based Heartbeat Sensing via Augmented Pseudo-Label and Noise Contrast](radar-aplanc_unsupervised_radar-based_heartbeat_sensing_via_augmented_pseudo-lab.md)
+- [AHAN: Asymmetric Hierarchical Attention Network for Identical Twin Face Verification](ahan_asymmetric_hierarchical_attention_network_for_identical.md)
+- [Remember Me: Bridging the Long-Range Gap in LVLMs with Three-Step Inference-Only Decay Resilience Strategies](remember_me_bridging_the_long-range_gap_in_lvlms_with_three-step_inference-only_.md)
+
+<!-- RELATED:END -->

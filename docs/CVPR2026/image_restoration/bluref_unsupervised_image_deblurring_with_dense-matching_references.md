@@ -140,3 +140,15 @@ BluRef 在 GoPro 上达到 31.94 dB（vs 有监督 33.32 dB），在 RB2V 上 Re
 - 实验充分度: ⭐⭐⭐⭐ — 涵盖合成/真实数据集、多骨干网络、多策略消融、与有监督上界和组合方法的全面对比
 - 写作质量: ⭐⭐⭐⭐ — 行文结构清晰，问题动机阐述充分，图表信息量大
 - 价值: ⭐⭐⭐⭐ — 极大降低去模糊训练数据门槛，伪配对数据复用机制扩展了实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAD-Avatar: Motion-Aware Animatable Gaussian Avatars Deblurring](motionaware_animatable_gaussian_avatars_deblurring.md)
+- [DenoiSplit: A Method for Joint Microscopy Image Splitting and Unsupervised Denoising](../../ECCV2024/image_restoration/denoisplit_a_method_for_joint_microscopy_image_splitting_and_unsupervised_denois.md)
+- [Efficient Concertormer for Image Deblurring and Beyond](../../ICCV2025/image_restoration/efficient_concertormer_for_image_deblurring_and_beyond.md)
+- [Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution](../../ECCV2024/image_restoration/pairwise_distance_distillation_for_unsupervised_real-world_image_super-resolutio.md)
+- [Blind Noisy Image Deblurring Using Residual Guidance Strategy](../../ICCV2025/image_restoration/blind_noisy_image_deblurring_using_residual_guidance_strateg.md)
+
+<!-- RELATED:END -->

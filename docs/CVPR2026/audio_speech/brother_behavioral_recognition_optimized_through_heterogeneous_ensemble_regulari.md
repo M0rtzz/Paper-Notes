@@ -135,3 +135,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 15 种模态组合 × 3 种分类器的系统消融 + 5 组 λ 值对比，分析全面
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰、方法描述条理分明、实验分析到位
 - **价值**: ⭐⭐⭐ — 竞赛性质的工作，方法可复现且集成策略有参考价值，但通用性仍需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Team LEYA in 10th ABAW Competition: Multimodal Ambivalence/Hesitancy Recognition Approach](team_leya_in_10th_abaw_competition_multimodal_ambivalencehesitancy_recognition_a.md)
+- [Solution for 10th Competition on Ambivalence/Hesitancy (AH) Video Recognition Challenge using Divergence-Based Multimodal Fusion](solution_for_10th_competition_on_ambivalencehesitancy_ah_video_recognition_chall.md)
+- [Teaching Physical Awareness to LLMs through Sounds](../../ICML2025/audio_speech/teaching_physical_awareness_to_llms_through_sounds.md)
+- [Omni-MMSI: Toward Identity-Attributed Social Interaction Understanding](omni-mmsi_toward_identity-attributed_social_interaction_understanding.md)
+- [Semantic Audio-Visual Navigation in Continuous Environments](semantic_audio-visual_navigation_in_continuous_environments.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (real-world验证+多维度消融)
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐ (对sim-to-real领域有实际推进)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EmbodiedSplat: Personalized Real-to-Sim-to-Real Navigation with Gaussian Splats from a Mobile Device](../../ICCV2025/3d_vision/embodiedsplat_personalized_real-to-sim-to-real_navigation_with_gaussian_splats_f.md)
+- [FastGHA: Generalized Few-Shot 3D Gaussian Head Avatars with Real-Time Animation](fastgha_generalized_few-shot_3d_gaussian_head_avatars_with_real-time_animation.md)
+- [GIQ: Benchmarking 3D Geometric Reasoning of Vision Foundation Models with Simulated and Real Polyhedra](giq_benchmarking_3d_geometric_reasoning_of_vision_foundation_models_with_simulat.md)
+- [AnthroTAP: Learning Point Tracking with Real-World Motion](../../CVPR2026/3d_vision/anthrotap_learning_point_tracking_with_real-world_motion.md)
+- [Real-Time 3D Object Detection with Inference-Aligned Learning](../../AAAI2026/3d_vision/real-time_3d_object_detection_with_inference-aligned_learning.md)
+
+<!-- RELATED:END -->

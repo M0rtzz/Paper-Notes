@@ -169,3 +169,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多维度评估充分
 - 写作质量: ⭐⭐⭐⭐ 理论分析清晰
 - 价值: ⭐⭐⭐⭐ 对 3DGS 安全部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D-HGS: 3D Half-Gaussian Splatting](3d-hgs_3d_half-gaussian_splatting.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [Mitigating Ambiguities in 3D Classification with Gaussian Splatting](mitigating_ambiguities_in_3d_classification_with_gaussian_splatting.md)
+- [DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds](dashgaussian_optimizing_3d_gaussian_splatting_in_200_seconds.md)
+- [FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting](fruitninja_3d_object_interior_texture_generation_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

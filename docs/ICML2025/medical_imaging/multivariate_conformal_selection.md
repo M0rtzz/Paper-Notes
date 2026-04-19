@@ -115,3 +115,15 @@ $$V^\theta(\bm{x}, \bm{y}) = M \cdot \mathbb{1}\{\bm{y} \notin R^c \cup \partial
 - 实验充分度: ⭐⭐⭐⭐ — 模拟+真实数据全面验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论和算法描述极为清晰
 - 价值: ⭐⭐⭐⭐ — 为多标准选择问题提供了严格的统计保证框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reliable Algorithm Selection for Machine Learning-Guided Design](reliable_algorithm_selection_for_machine_learning-guided_design.md)
+- [Multivariate Gaussian Representation Learning for Medical Action Evaluation](../../AAAI2026/medical_imaging/multivariate_gaussian_representation_learning_for_medical_action_evaluation.md)
+- [Enhancing Statistical Validity and Power in Hybrid Controlled Trials: A Randomization Inference Approach with Conformal Selective Borrowing](enhancing_statistical_validity_and_power_in_hybrid_controlled_trials_a_randomiza.md)
+- [COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](../../ICLR2026/medical_imaging/compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
+- [ConfHit: Conformal Generative Design with Oracle Free Guarantees](../../ICLR2026/medical_imaging/confhit_conformal_generative_design_with_oracle_free_guarantees.md)
+
+<!-- RELATED:END -->

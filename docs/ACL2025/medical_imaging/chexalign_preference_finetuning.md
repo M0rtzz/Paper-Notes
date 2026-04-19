@@ -132,3 +132,15 @@ CheXbert F1 分数（MIMIC-CXR 测试集，Avg. F1）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种DAA、2种Judge、2个模型、多个数据集、CheXbert/GREEN/BERTScore多指标、对齐税分析、定性评估，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、实验设置详尽、图表设计优秀
 - 价值: ⭐⭐⭐⭐ 为医学VLM对齐提供了实用且可复现的管线，LC-GREEN和长度利用的分析对社区有普遍参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
+- [Fine-Tuning Diffusion Models via Intermediate Distribution Shaping](../../ICLR2026/medical_imaging/fine-tuning_diffusion_models_via_intermediate_distribution_shaping.md)
+- [RadZero: Similarity-Based Cross-Attention for Explainable Vision-Language Alignment in Chest X-ray](../../NeurIPS2025/medical_imaging/radzero_similarity-based_cross-attention_for_explainable_vision-language_alignme.md)
+- [Thompson Sampling via Fine-Tuning of LLMs](../../ICLR2026/medical_imaging/thompson_sampling_via_fine-tuning_of_llms.md)
+- [GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis](../../ICCV2025/medical_imaging/gemex_a_large-scale_groundable_and_explainable_medical_vqa_benchmark_for_chest_x.md)
+
+<!-- RELATED:END -->

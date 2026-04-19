@@ -140,3 +140,15 @@ OmniHuman 基于 MMDiT 架构的 text-to-video 预训练模型，通过三阶段
 - **实验充分度**: ⭐⭐⭐⭐ 多数据集多任务对比、完整消融验证两个原则、丰富视觉展示
 - **写作质量**: ⭐⭐⭐⭐ 动机阐述充分，框架描述清晰
 - **价值**: ⭐⭐⭐⭐⭐ 为人体动画扩展提供了范式性方法，工业价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-identity Human Image Animation with Structural Video Diffusion](multi-identity_human_image_animation_with_structural_video_diffusion.md)
+- [STiV: Scalable Text and Image Conditioned Video Generation](stiv_scalable_text_and_image_conditioned_video_generation.md)
+- [VACE: All-in-One Video Creation and Editing](vace_all-in-one_video_creation_and_editing.md)
+- [X-Dancer: Expressive Music to Human Dance Video Generation](x-dancer_expressive_music_to_human_dance_video_generation.md)
+- [Scaling RL to Long Videos](../../NeurIPS2025/video_generation/scaling_rl_to_long_videos.md)
+
+<!-- RELATED:END -->

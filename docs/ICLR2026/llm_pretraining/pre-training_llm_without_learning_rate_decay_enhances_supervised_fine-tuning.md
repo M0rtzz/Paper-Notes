@@ -166,3 +166,15 @@ Over-training + 中间训练（2T + 500B tokens）时 WSO 优势更大：SFT Tas
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖 2 种规模 × 4 种调度器 × 3 种训练设置 × 过训练，极其全面
 - **实用价值**: ⭐⭐⭐⭐⭐ — 直接可用的实践建议，对 LLM 训练和模型发布策略有指导意义
 - **总评**: ⭐⭐⭐⭐☆ — 实验扎实、结论反直觉且实用，是预训练策略研究的重要工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DipLLM: Fine-Tuning LLM for Strategic Decision-Making in Diplomacy](../../ICML2025/llm_pretraining/dipllm_fine-tuning_llm_for_strategic_decision-making_in_diplomacy.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+- [Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](../../NeurIPS2025/llm_pretraining/power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [Common Corpus: The Largest Collection of Ethical Data for LLM Pre-Training](common_corpus_ethical_data_for_llm_pretraining.md)
+- [A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
+
+<!-- RELATED:END -->

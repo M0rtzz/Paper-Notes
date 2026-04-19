@@ -121,3 +121,15 @@ CIARD包含固定的clean teacher + 持续更新的robust teacher + push loss机
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+多攻击+消融，但学生架构多样性不足
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，Figure 1的框架对比图直观
 - 价值: ⭐⭐⭐⭐ 同时提升精度和鲁棒性对实际部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Heterogeneous Adversarial Play in Interactive Environments](../../NeurIPS2025/model_compression/heterogeneous_adversarial_play_in_interactive_environments.md)
+- [Knowledge Distillation with Refined Logits](knowledge_distillation_with_refined_logits.md)
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](../../ACL2025/model_compression/rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [A Good Teacher Adapts Their Knowledge for Distillation](a_good_teacher_adapts_their_knowledge_for_distillation.md)
+- [Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation](perspective-aware_teaching_adapting_knowledge_for_heterogeneous_distillation.md)
+
+<!-- RELATED:END -->

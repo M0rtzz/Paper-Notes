@@ -149,3 +149,15 @@ $$I(\bm{z}_i^n; \{\bm{z}_i^m\}_{m \neq n}) \geq (N-1)\log(B) - \mathbb{E}\mathca
 - **实验充分度**: ⭐⭐⭐⭐ CV+NLP多模态+多种异构设定+丰富消融实验；缺少更大规模(>12用户)验证
 - **写作质量**: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，符号统一，从motivation到方法到实验逻辑连贯
 - **实用价值**: ⭐⭐⭐⭐ 对异构FL有原理性贡献；通信开销指数增长是实际部署的瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](../../CVPR2026/ai_safety/fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)
+- [Active Membership Inference Test (aMINT): Enhancing Model Auditability with Multi-Task Learning](../../ICCV2025/ai_safety/active_membership_inference_test_amint_enhancing_model_audit.md)
+- [Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
+- [CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation](../../AAAI2026/ai_safety/core-fed_bridging_collaborative_and_representation_fairness_via_federated_embedd.md)
+- [Traceable Black-box Watermarks for Federated Learning](traceable_black-box_watermarks_for_federated_learning.md)
+
+<!-- RELATED:END -->

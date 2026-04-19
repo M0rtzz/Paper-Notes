@@ -159,3 +159,15 @@ LMM 基于 Transformer-based Diffusion Model（扩散模型），整体流程分
 - **实验充分度**: ⭐⭐⭐⭐⭐ 10 个任务、9 个 benchmark，消融实验详尽，scaling 分析完整
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，motivtaion-solution 对应关系明确
 - **价值**: ⭐⭐⭐⭐ 对动作生成社区有重要的基础设施价值，MotionVerse 数据集本身就是重大贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)
+- [Motion Mamba: Efficient and Long Sequence Motion Generation](motion_mamba_efficient_and_long_sequence_motion_generation.md)
+- [HUMOS: Human Motion Model Conditioned on Body Shape](humos_human_motion_model_conditioned_on_body_shape.md)
+- [GENMO: A GENeralist Model for Human MOtion](../../ICCV2025/human_understanding/genmo_a_generalist_model_for_human_motion.md)
+- [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](../../ICCV2025/human_understanding/genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+
+<!-- RELATED:END -->

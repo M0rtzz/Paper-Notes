@@ -103,3 +103,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{cls} + \alpha \frac{\mathcal{L}_{usability}
 - 实验充分度: ⭐⭐⭐⭐ — 双语数据集、14 个基线、详细消融和参数分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机论证充分，图示直观
 - 价值: ⭐⭐⭐⭐ — 提供了从资源充足到资源受限的完整假新闻检测解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](../../ACL2025/social_computing/llm_label_propagation.md)
+- [Detection of Human and Machine-Authored Fake News in Urdu](../../ACL2025/social_computing/detection_of_human_and_machine-authored_fake_news_in_urdu.md)
+- [Reasoning About the Unsaid: Misinformation Detection with Omission-Aware Graph Inference](reasoning_about_the_unsaid_misinformation_detection_with_omission-aware_graph_in.md)
+- [Beyond Detection: Exploring Evidence-based Multi-Agent Debate for Misinformation Intervention and Persuasion](beyond_detection_exploring_evidence-based_multi-agent_debate_for_misinformation_.md)
+- [T2Agent: A Tool-augmented Multimodal Misinformation Detection Agent with Monte Carlo Tree Search](t2agent_a_tool-augmented_multimodal_misinformation_detection_agent_with_monte_ca.md)
+
+<!-- RELATED:END -->

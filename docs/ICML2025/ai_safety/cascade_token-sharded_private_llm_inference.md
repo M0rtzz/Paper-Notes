@@ -121,3 +121,15 @@ Cascade 将推理计算分配给两类节点：
 - 实验充分度: ⭐⭐⭐⭐ 效率和安全性分析充分
 - 写作质量: ⭐⭐⭐⭐ 攻击分析清晰，安全阈值有理论根据
 - 价值: ⭐⭐⭐⭐⭐ 使隐私LLM推理首次在大模型上实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MPCache: MPC-Friendly KV Cache Eviction for Efficient Private LLM Inference](../../NeurIPS2025/ai_safety/mpcache_mpc-friendly_kv_cache_eviction_for_efficient_private_llm_inference.md)
+- [An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs](an_attack_to_break_permutation-based_private_third-party_inference_schemes_for_l.md)
+- [An Efficient Private GPT Never Autoregressively Decodes](an_efficient_private_gpt_never_autoregressively_decodes.md)
+- [WaterMod: Modular Token-Rank Partitioning for Probability-Balanced LLM Watermarking](../../AAAI2026/ai_safety/watermod_modular_token-rank_partitioning_for_probability-balanced_llm_watermarki.md)
+- [Private Model Personalization Revisited](private_model_personalization_revisited.md)
+
+<!-- RELATED:END -->

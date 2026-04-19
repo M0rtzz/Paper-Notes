@@ -120,3 +120,15 @@ LLaMA 3 8B + LoRA（$\alpha=32$, rank=16），AdamW lr=2e-4，5 epochs，仅约 
 3. 探索与强化学习、在线学习结合的可能性，实现动态适应
 4. 开发自动化评估和优化工具，降低方法的使用门槛
 5. 考虑与 LLM alignment 研究的交叉，探索安全性和性能的协同优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+- [Pre-training LLM without Learning Rate Decay Enhances Supervised Fine-Tuning](../../ICLR2026/llm_pretraining/pre-training_llm_without_learning_rate_decay_enhances_supervised_fine-tuning.md)
+- [Tokenized Bandit for LLM Decoding and Alignment](tokenized_bandit_for_llm_decoding_and_alignment.md)
+- [Quantifying Task-Relevant Representational Similarity Using Decision Variable Correlation](../../NeurIPS2025/llm_pretraining/quantifying_task-relevant_representational_similarity_using_decision_variable_co.md)
+- [LLM Data Selection and Utilization via Dynamic Bi-level Optimization](llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
+
+<!-- RELATED:END -->

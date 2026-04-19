@@ -115,3 +115,15 @@ INSTINCT 的流程分为五步：
 - **实验充分度**: ⭐⭐⭐⭐ 三个数据集（含真实+仿真）、完整消融、姿态噪声鲁棒性测试
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图示直观
 - **价值**: ⭐⭐⭐⭐ 在真实数据集上大幅超越 SOTA，带宽降低显著，工程价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving](../../NeurIPS2025/autonomous_driving/sqs_enhancing_sparse_perception_models_via_query-based_splatting_in_autonomous_d.md)
+- [SiMO: Single-Modality-Operable Multimodal Collaborative Perception](../../ICLR2026/autonomous_driving/simo_single-modality-operable_multimodal_collaborative_perceptio.md)
+- [Future-Aware Interaction Network For Motion Forecasting](future-aware_interaction_network_for_motion_forecasting.md)
+- [CoLC: Communication-Efficient Collaborative Perception with LiDAR Completion](../../CVPR2026/autonomous_driving/colc_communication-efficient_collaborative_perception_with_lidar_completion.md)
+- [MCAM: Multimodal Causal Analysis Model for Ego-Vehicle-Level Driving Video Understanding](mcam_multimodal_causal_analysis_model_for_ego-vehicle-level_driving_video_unders.md)
+
+<!-- RELATED:END -->

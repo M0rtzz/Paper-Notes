@@ -115,3 +115,15 @@ ESC-Net 在所有基准上均取得 SOTA，A-847 上比 CAT-Seg 提升 2.1，PC-
 - 实验充分度: ⭐⭐⭐⭐⭐ 六个基准数据集、两种 VLM 规模、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 为如何高效利用基础模型组合提供了实用参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation](mask-adapter_the_devil_is_in_the_masks_for_open-vocabulary_segmentation.md)
+- [DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation](dpseg_dual-prompt_cost_volume_learning_for_open-vocabulary_semantic_segmentation.md)
+- [Training-Free Class Purification for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/training-free_class_purification_for_open-vocabulary_semantic_segmentation.md)
+- [CorrCLIP: Reconstructing Patch Correlations in CLIP for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/corrclip_reconstructing_patch_correlations_in_clip_for_openv.md)
+- [DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)
+
+<!-- RELATED:END -->

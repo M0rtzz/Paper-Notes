@@ -114,3 +114,15 @@ PressureFormer 的损失：$\mathcal{L}_{\mathcal{PF}} = w_1 \mathcal{L}_c + w_2
 - 实验充分度: ⭐⭐⭐⭐ 多种基线模型 + 跨视角泛化实验 + 联合估计模型，覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ 数据集描述详尽，采集细节透明，方法可复现性强
 - 价值: ⭐⭐⭐⭐⭐ 填补了第一人称压力数据集的空白，对 AR/VR 手部交互和机器人操作研究有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
+- [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
+- [GigaHands: A Massive Annotated Dataset of Bimanual Hand Activities](gigahands_a_massive_annotated_dataset_of_bimanual_hand_activities.md)
+- [GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation](gce-pose_global_context_enhancement_for_category-level_object_pose_estimation.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 600+ 模型对的大规模评测，含闭源前沿模型
 - 写作质量: ⭐⭐⭐⭐ 结果清晰，图表信息密度高
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 安全评估有直接的工程指导意义和政策启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UrbanVerse: Scaling Urban Simulation by Watching City-Tour Videos](urbanverse_scaling_urban_simulation_by_watching_city-tour_videos.md)
+- [On Entropy Control in LLM-RL Algorithms](on_entropy_control_in_llm-rl_algorithms.md)
+- [D2E: Scaling Vision-Action Pretraining on Desktop Data for Transfer to Embodied AI](d2e_scaling_vision-action_pretraining_on_desktop_data_for_transfer_to_embodied_a.md)
+- [ODESteer: A Unified ODE-Based Steering Framework for LLM Alignment](odesteer_a_unified_ode-based_steering_framework_for_llm_alignment.md)
+- [SITCOM: Scaling Inference-Time COMpute for VLAs](../../NeurIPS2025/robotics/sitcom_scaling_inference-time_compute_for_vlas.md)
+
+<!-- RELATED:END -->

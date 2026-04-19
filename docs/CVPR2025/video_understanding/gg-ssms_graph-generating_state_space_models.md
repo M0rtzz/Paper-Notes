@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 11 个数据集覆盖视觉/时间序列等多领域，充分验证通用性
 - 写作质量: ⭐⭐⭐⭐ 整体清晰，数学推导严谨，但部分细节可更紧凑
 - 价值: ⭐⭐⭐⭐ 为 Visual SSM 提供了新范式，但实际视频理解场景的验证仍需加强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [The Expressive Limits of Diagonal SSMs for State-Tracking](../../ICLR2026/video_understanding/the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)
+- [Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](../../NeurIPS2025/video_understanding/structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
+- [PASS: Path-Selective State Space Model for Event-Based Recognition](../../NeurIPS2025/video_understanding/pass_path-selective_state_space_model_for_event-based_recognition.md)
+- [MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models](../../AAAI2026/video_understanding/state-space_hierarchical_compression_with_gated_attention_an.md)
+
+<!-- RELATED:END -->

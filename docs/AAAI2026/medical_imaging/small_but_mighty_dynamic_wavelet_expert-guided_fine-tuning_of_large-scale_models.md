@@ -166,3 +166,15 @@ WEFT 在 ORSSD 上 mIoU 超过次优方法 2.70%，EORSSD 上超过 2.88%。MAE 
 - 实验极其充分：21 种 SOTA 对比 + 7 个跨场景数据集 + 详细消融
 - 参数效率和性能的双赢令人印象深刻
 - 扣分点：小波专家设计的理论分析不够深入，跨骨干泛化未验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thompson Sampling via Fine-Tuning of LLMs](../../ICLR2026/medical_imaging/thompson_sampling_via_fine-tuning_of_llms.md)
+- [Tracing Pharmacological Knowledge in Large Language Models](../../ICLR2026/medical_imaging/tracing_pharmacological_knowledge_in_large_language_models.md)
+- [FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
+- [GEM: Generative Entropy-Guided Preference Modeling for Few-shot Alignment of LLMs](gem_generative_entropy-guided_preference_modeling_for_few-shot_alignment_of_llms.md)
+- [GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
+
+<!-- RELATED:END -->

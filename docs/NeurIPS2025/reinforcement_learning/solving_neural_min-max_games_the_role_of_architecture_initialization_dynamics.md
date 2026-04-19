@@ -131,3 +131,15 @@ $$\phi^{(t)} = \phi^{(t-1)} + \eta_\phi \nabla_\phi \mathcal{L}(\theta^{(t)}, \p
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献重要且新颖——首次为神经网络参数化的min-max博弈提供量化收敛保证。技术上将过参数化理论从最小化推广到博弈论意义深远。局限性在于仅限浅层网络和缺乏实验验证，$\Omega(n^3)$ 的宽度要求较强。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics](solving_continuous_mean_field_games_deep_reinforcement_learning_for_non-stationa.md)
+- [Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
+- [Solving Zero-Sum Convex Markov Games](../../ICML2025/reinforcement_learning/solving_zero-sum_convex_markov_games.md)
+- [Decoder-Hybrid-Decoder Architecture for Efficient Reasoning with Long Generation](decoderhybriddecoder_architecture_for_efficient_reasoning_wi.md)
+- [Thompson Sampling in Function Spaces via Neural Operators](thompson_sampling_in_function_spaces_via_neural_operators.md)
+
+<!-- RELATED:END -->

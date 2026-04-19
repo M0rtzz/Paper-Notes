@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4模型×5语言×3错误类型+MORPHEUS+三层互证，极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 研究问题清晰，分析结构严谨，三层分析环环相扣
 - 价值: ⭐⭐⭐⭐ 对理解 NMT 鲁棒性机制有重要贡献，方法论可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+- [IMPARA-GED: Grammatical Error Detection is Boosting Reference-free Grammatical Error Quality Estimator](impara-ged_grammatical_error_detection_is_boosting_reference-free_grammatical_er.md)
+- [gec-metrics: A Unified Library for Grammatical Error Correction Evaluation](gec-metrics_a_unified_library_for_grammatical_error_correction_evaluation.md)
+- [Enhancing Text Editing for Grammatical Error Correction: Arabic as a Case Study](enhancing_text_editing_for_grammatical_error_correction_arabic_as_a_case_study.md)
+- [Tell, Don't Show: Leveraging Language Models' Abstractive Retellings to Model Literary Themes](tell_dont_show_leveraging_language_models_abstractive_retellings_to_model_litera.md)
+
+<!-- RELATED:END -->

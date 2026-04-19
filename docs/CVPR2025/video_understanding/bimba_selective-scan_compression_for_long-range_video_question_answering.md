@@ -116,3 +116,15 @@ Bimba的核心优势在于效率：
 ## 总结与展望
 
 Bimba将Mamba的选择性扫描机制引入长视频理解领域，提供了一种高效的长视频token压缩方案。线性复杂度使其能够扩展到更长的视频输入，而选择性机制确保了关键信息的保留。未来工作可以探索将该方法扩展到视频生成任务，以及与更先进的视觉编码器结合。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EgoTextVQA: Towards Egocentric Scene-Text Aware Video Question Answering](egotextvqa_towards_egocentric_scene-text_aware_video_question_answering.md)
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](../../CVPR2026/video_understanding/question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](../../ICLR2026/video_understanding/air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
+- [Tool-Augmented Spatiotemporal Reasoning for Streamlining Video Question Answering Task](../../NeurIPS2025/video_understanding/toolaugmented_spatiotemporal_reasoning_for_streamlining_vide.md)
+- [EgoPointVQA: Gesture-Based Egocentric Video Question Answering](../../CVPR2026/video_understanding/egopointvqa_gesture_based_egocentric_video_qa.md)
+
+<!-- RELATED:END -->

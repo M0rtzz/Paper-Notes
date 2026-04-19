@@ -240,3 +240,15 @@ Schema归纳为无监督，图核匹配不需目标特定标注。
 - 实验充分度: ⭐⭐⭐⭐ 三个基准数据集上达到SOTA，低资源场景也有验证
 - 写作质量: ⭐⭐⭐⭐ 从认知科学到NLP方法的动机推导清晰
 - 价值: ⭐⭐⭐⭐ 低资源零样本立场检测的实用方法，schema的跨目标迁移性有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Reasoning Framework for Holistic Zero-Shot Video Anomaly Analysis](../../NeurIPS2025/interpretability/a_unified_reasoning_framework_for_holistic_zeroshot_video_an.md)
+- [SubspaceAD: Training-Free Few-Shot Anomaly Detection via Subspace Modeling](../../CVPR2026/interpretability/subspacead_training-free_few-shot_anomaly_detection_via_subspace_modeling.md)
+- [SVIP: Semantically Contextualized Visual Patches for Zero-Shot Learning](../../ICCV2025/interpretability/svip_semantically_contextualized_visual_patches_for_zero-shot_learning.md)
+- [Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](../../NeurIPS2025/interpretability/auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
+- [Cognitive Mirrors: Exploring the Diverse Functional Roles of Attention Heads in LLM Reasoning](../../NeurIPS2025/interpretability/cognitive_mirrors_exploring_the_diverse_functional_roles_of_attention_heads_in_l.md)
+
+<!-- RELATED:END -->

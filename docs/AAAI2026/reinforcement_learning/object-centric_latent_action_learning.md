@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （8个任务，多维度分析，但仅限模拟环境）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，图表直观，slot 选择分析深入）
 - 价值: ⭐⭐⭐⭐ （为从真实世界视频中学习具身策略提供了重要的鲁棒性改进思路）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-Centric World Models for Causality-Aware Reinforcement Learning](object-centric_world_models_for_causality-aware_reinforcement_learning.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+- [Efficient Multiagent Planning via Shared Action Suggestions](efficient_multiagent_planning_via_shared_action_suggestions.md)
+- [Provably Efficient Multi-Objective Bandit Algorithms under Preference-Centric Customization](provably_efficient_multi-objective_bandit_algorithms_under_preference-centric_cu.md)
+- [Partial Action Replacement: Tackling Distribution Shift in Offline MARL](partial_action_replacement_tackling_distribution_shift_in_offline_marl.md)
+
+<!-- RELATED:END -->

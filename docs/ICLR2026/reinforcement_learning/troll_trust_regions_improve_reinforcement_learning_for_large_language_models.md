@@ -181,3 +181,15 @@ $$\mathcal{L}_{TROLL}(\theta) = \mathbb{E}\left[\sum_t A_t \cdot \log \tilde{\pi
 - 实验充分度: ⭐⭐⭐⭐ （多模型、多任务、多优势估计方法的系统验证）
 - 写作质量: ⭐⭐⭐⭐ （动机清晰，与PPO的对比到位）
 - 价值: ⭐⭐⭐⭐⭐ （直接替代PPO-clip，影响面极广）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AWM: Accurate Weight-Matrix Fingerprint for Large Language Models](awm_accurate_weight-matrix_fingerprint_for_large_language_models.md)
+- [VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models](verifybench_benchmarking_reference-based_reward_systems_for_large_language_model.md)
+- [Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
+- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [GraphOmni: A Comprehensive and Extensible Benchmark Framework for Large Language Models on Graph-theoretic Tasks](graphomni_a_comprehensive_and_extensible_benchmark_framework_for_large_language_.md)
+
+<!-- RELATED:END -->

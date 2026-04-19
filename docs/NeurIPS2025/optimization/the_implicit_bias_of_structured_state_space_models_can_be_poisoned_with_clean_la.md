@@ -143,3 +143,15 @@ tags:
 - **实验充分性**: ⭐⭐⭐⭐ — 线性和非线性模型均有验证
 - **实际影响**: ⭐⭐⭐⭐ — 对 SSM 安全部署有重要警示
 - **写作质量**: ⭐⭐⭐⭐ — 理论与实验组织清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Rich and the Simple: On the Implicit Bias of Adam and SGD](the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)
+- [Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data](implicit_bias_of_spectral_descent_and_muon_on_multiclass_separable_data.md)
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](../../ICML2025/optimization/how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+- [Asymptotically Stable Quaternionic Hopfield Structured Neural Network with Supervised Projection-based Manifold Learning](asymptotically_stable_quaternion-valued_hopfield-structured_neural_network_with_.md)
+- [Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)
+
+<!-- RELATED:END -->

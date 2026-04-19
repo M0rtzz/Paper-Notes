@@ -227,3 +227,15 @@ SAM4D 在 SAM2 的基础上扩展到多模态领域，主要包含：
 - **实验充分度**: ⭐⭐⭐⭐ — 多种评估设置，消融充分，但 LiDAR 分割基线对比不够
 - **写作质量**: ⭐⭐⭐⭐ — 三大贡献（任务、模型、数据）结构清晰
 - **价值**: ⭐⭐⭐⭐⭐ — 对多模态数据标注效率有巨大潜在影响，是 SAM 系列在自动驾驶方向的重要延伸
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detect Anything 3D in the Wild](detect_anything_3d_in_the_wild.md)
+- [SEAL: Segment Any Events with Language](../../ICLR2026/autonomous_driving/segment_any_events_with_language.md)
+- [Cubify Anything: Scaling Indoor 3D Object Detection](../../CVPR2025/autonomous_driving/cubify_anything_scaling_indoor_3d_object_detection.md)
+- [MapDistill: Boosting Efficient Camera-based HD Map Construction via Camera-LiDAR Fusion Model Distillation](../../ECCV2024/autonomous_driving/mapdistill_boosting_efficient_camera-based_hd_map_construction_via_camera-lidar_.md)
+- [MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion](mgsfm_multi-camera_geometry_driven_global_structure-from-motion.md)
+
+<!-- RELATED:END -->

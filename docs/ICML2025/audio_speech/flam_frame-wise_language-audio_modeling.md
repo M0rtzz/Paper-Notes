@@ -144,3 +144,15 @@ FLAM 在检索任务上与 FLAM-Global 性能接近（AudioCaps T2A R@1: 32.1 vs
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖开放/封闭 SED、检索、零样本分类多个维度，消融实验完整
 - 写作质量: ⭐⭐⭐⭐ — 理论推导严谨，符号体系一致，图示直观
 - 价值: ⭐⭐⭐⭐ — 开放词汇帧级音频定位是实用且重要的方向，方法可推广至更广泛的音频理解任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Speech Language Modeling via Energy Distance in Continuous Latent Space](../../NeurIPS2025/audio_speech/efficient_speech_language_modeling_via_energy_distance_in_continuous_latent_spac.md)
+- [FlexiCodec: A Dynamic Neural Audio Codec for Low Frame Rates](../../ICLR2026/audio_speech/flexicodec_a_dynamic_neural_audio_codec_for_low_frame_rates.md)
+- [Towards Reliable Large Audio Language Model](../../ACL2025/audio_speech/towards_reliable_large_audio_language_model.md)
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](../../ACL2025/audio_speech/audio_dialogue_benchmark.md)
+- [Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models](../../ACL2025/audio_speech/who_can_withstand_chat-audio_attacks_an_evaluation_benchmark_for_large_audio-lan.md)
+
+<!-- RELATED:END -->

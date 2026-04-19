@@ -121,3 +121,15 @@ AdaRHD 是首个无需预知问题参数（强凸常数、Lipschitz 界、流形
 - 实验充分度: ⭐⭐⭐ 两个实验（矩阵对齐+AFEW），规模较小但鲁棒性验证充分
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，复杂度分析完整
 - 价值: ⭐⭐⭐⭐ 使黎曼双层优化在实践中更可用——消除了参数调节的主要障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finite-Time Analysis of Stochastic Nonconvex Nonsmooth Optimization on the Riemannian Manifolds](finite-time_analysis_of_stochastic_nonconvex_nonsmooth_optimization_on_the_riema.md)
+- [Problem-Parameter-Free Decentralized Bilevel Optimization](problem-parameter-free_decentralized_bilevel_optimization.md)
+- [A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+- [Set Smoothness Unlocks Clarke Hyper-stationarity in Bilevel Optimization](set_smoothness_unlocks_clarke_hyper-stationarity_in_bilevel_optimization.md)
+
+<!-- RELATED:END -->

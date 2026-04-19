@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ （作为研讨会论文实验有限，缺少任务级别的性能基准）
 - 写作质量: ⭐⭐⭐⭐ （数学推导清晰严谨）
 - 价值: ⭐⭐⭐⭐ （为计算神经科学和元学习社区提供了有价值的方法论）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-Learning Neural Mechanisms rather than Bayesian Priors](../../ACL2025/others/meta-learning_neural_mechanisms_rather_than_bayesian_priors.md)
+- [Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](../../ICCV2025/others/is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
+- [Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
+- [Lost in Time? A Meta-Learning Framework for Time-Shift-Tolerant Physiological Signal Transformation](../../AAAI2026/others/lost_in_time_a_meta-learning_framework_for_time-shift-tolerant_physiological_sig.md)
+- [HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation](hypergraphrag_retrieval-augmented_generation_via_hypergraph-structured_knowledge.md)
+
+<!-- RELATED:END -->

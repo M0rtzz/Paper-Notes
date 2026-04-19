@@ -140,3 +140,15 @@ MLLM做自动评估的思路可推广到图像生成/编辑质量评估、文本
 - 实验充分度: ⭐⭐⭐⭐ 覆盖14+方法和6种模态组合，比较全面；但缺human correlation
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，维度体系论述有理有据
 - 价值: ⭐⭐⭐⭐ 对脑解码领域的评估标准化有重要推动作用，Attribute短板发现有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging](../../CVPR2026/segmentation/comparative_evaluation_of_traditional_methods_and_deep_learning_for_brain_glioma.md)
+- [Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging. Review Paper](../../CVPR2026/segmentation/comparative_evaluation_of_traditional_methods_and.md)
+- [EAGLE: Episodic Appearance- and Geometry-Aware Memory for Unified 2D-3D Visual Query Localization](eagle_episodic_appearance-_and_geometry-aware_memory_for_unified_2d-3d_visual_qu.md)
+- [LWGANet: Addressing Spatial and Channel Redundancy in Remote Sensing Visual Tasks with Light-Weight Grouped Attention](lwganet_addressing_spatial_and_channel_redundancy_in_remote_sensing_visual_tasks.md)
+- [RSVG-ZeroOV: Exploring a Training-Free Framework for Zero-Shot Open-Vocabulary Visual Grounding in Remote Sensing Images](rsvg-zeroov_exploring_a_training-free_framework_for_zero-shot_open-vocabulary_vi.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ （规模有限但验证充分）
 - 写作质量: ⭐⭐⭐⭐ （数学推导清晰）
 - 价值: ⭐⭐⭐⭐ （为激活函数设计开辟新方向，有开源代码支持）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
+- [One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning](one-prompt_strikes_back_sparse_mixture_of_experts_for_prompt-based_continual_lea.md)
+- [DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
+- [Token-level Data Selection for Safe LLM Fine-tuning](token-level_data_selection_for_safe_llm_fine-tuning.md)
+- [When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework](when_does_divide_and_conquer_work_for_long_context_llm_a_noise_decomposition_fra.md)
+
+<!-- RELATED:END -->

@@ -173,3 +173,15 @@ $$\phi_r: S_{t_1} + E[t+1-t_1], F_{t_2} + E[t+1-t_2] \rightarrow Q_{t+1}$$
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实数据集 + 下游任务 + 详尽消融 + 动力学验证矩阵
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，motivation 实验有说服力
 - 价值: ⭐⭐⭐⭐⭐ — 在视频 OCL 领域推动了显著进展，思路可推广到其他循环架构
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning](../../CVPR2026/video_understanding/reconstruction-guided_slot_curriculum_addressing_object_over-fragmentation_in_vi.md)
+- [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](distillation_dynamics_towards_understanding_feature-based_di.md)
+- [VideoNSA: Native Sparse Attention Scales Video Understanding](../../ICLR2026/video_understanding/videonsa_native_sparse_attention_scales_video_understanding.md)
+- [Online Time Series Prediction Using Feature Adjustment](../../ICLR2026/video_understanding/online_time_series_prediction_using_feature_adjustment.md)
+- [Attend Before Attention: Efficient and Scalable Video Understanding via Autoregressive Gazing](../../CVPR2026/video_understanding/attend_before_attention_efficient_and_scalable_video_understanding_via_autoregre.md)
+
+<!-- RELATED:END -->

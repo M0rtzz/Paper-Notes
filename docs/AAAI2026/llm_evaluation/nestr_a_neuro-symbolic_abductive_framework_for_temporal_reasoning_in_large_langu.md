@@ -127,3 +127,15 @@ NeSTR 是纯 prompting 策略，完全不需要训练或微调。所有实验在
 - 实验充分度: ⭐⭐⭐⭐ 四个基准、多个模型规模、详细消融和符号格式对比，但缺少推理开销分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰、方法描述系统化、公式规范，整体结构良好
 - 价值: ⭐⭐⭐⭐ 零样本即 SOTA 有很强的实用性，符号约束推理空间的范式有较好的可迁移性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ConInstruct: Evaluating Large Language Models on Conflict Detection and Resolution in Instructions](coninstruct_evaluating_large_language_models_on_conflict_detection_and_resolutio.md)
+- [Prompt and Parameter Co-Optimization for Large Language Models](../../ICLR2026/llm_evaluation/prompt_and_parameter_co-optimization_for_large_language_models.md)
+- [Com2: A Causal-Guided Benchmark for Exploring Complex Commonsense Reasoning in Large Language Models](../../ACL2025/llm_evaluation/com2_causal_commonsense.md)
+- [Correlated Errors in Large Language Models](../../ICML2025/llm_evaluation/correlated_errors_in_large_language_models.md)
+- [In-Context Learning of Temporal Point Processes with Foundation Inference Models](../../ICLR2026/llm_evaluation/in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
+
+<!-- RELATED:END -->

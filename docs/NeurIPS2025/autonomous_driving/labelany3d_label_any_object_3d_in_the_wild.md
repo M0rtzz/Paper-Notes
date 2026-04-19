@@ -174,3 +174,15 @@ $$\mathcal{L} = \sqrt{2} \exp(-\mu) \mathcal{L}_{3D} + \mu$$
 - 实验充分度: ⭐⭐⭐⭐ — COCO3D 基准 + 标注质量 + 下游检测 + 充分消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，流水线步骤详细
 - 价值: ⭐⭐⭐⭐⭐ — 填补了野外3D标注和评估的空白，极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OpenBox: Annotate Any Bounding Boxes in 3D](openbox_annotate_any_bounding_boxes_in_3d.md)
+- [Detect Anything 3D in the Wild](../../ICCV2025/autonomous_driving/detect_anything_3d_in_the_wild.md)
+- [Towards Predicting Any Human Trajectory in Context](towards_predicting_any_human_trajectory_in_context.md)
+- [Difficulty-Aware Label-Guided Denoising for Monocular 3D Object Detection](../../AAAI2026/autonomous_driving/difficulty-aware_label-guided_denoising_for_monocular_3d_object_detection.md)
+- [MonoSOWA: Scalable Monocular 3D Object Detector Without Human Annotations](../../ICCV2025/autonomous_driving/monosowa_scalable_monocular_3d_object_detector_without_human_annotations.md)
+
+<!-- RELATED:END -->

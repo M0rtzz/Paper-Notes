@@ -117,3 +117,15 @@ ChartMimic细粒度子分数（满分各不同）：
 - 实验充分度: ⭐⭐⭐⭐ 三个基准+细粒度分析+消融+数据质量评估
 - 写作质量: ⭐⭐⭐⭐ 问题定义清楚，方法描述系统
 - 价值: ⭐⭐⭐⭐ 对图表理解和代码生成交叉领域有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](code_guided_text_rich_image.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [Judging the Judges: Can Large Vision-Language Models Fairly Evaluate Chart Comprehension and Reasoning?](judging_the_judges_can_large_vision-language_models_fairly_evaluate_chart_compre.md)
+- [MathCoder-VL: Bridging Vision and Code for Enhanced Multimodal Mathematical Reasoning](mathcoder-vl_bridging_vision_and_code_for_enhanced_multimodal_mathematical_reaso.md)
+- [MEIT: Multimodal Electrocardiogram Instruction Tuning on Large Language Models for Report Generation](meit_multimodal_electrocardiogram_instruction_tuning_on_large_language_models_fo.md)
+
+<!-- RELATED:END -->

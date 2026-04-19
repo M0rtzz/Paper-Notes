@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融充分（每个组件逐步加入），两个任务验证，但数据集有限
 - 写作质量: ⭐⭐⭐⭐ 方法论述清晰，脑科学动机论证有说服力，但公式较多可能影响可读性
 - 价值: ⭐⭐⭐⭐ ISR的固定大小表征和ALG的细粒度对齐对VLN领域有方法论贡献，但提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse Imagination for Efficient Visual World Model Planning](../../ICLR2026/robotics/sparse_imagination_for_efficient_visual_world_model_planning.md)
+- [ProFocus: Proactive Perception and Focused Reasoning in Vision-and-Language Navigation](../../CVPR2026/robotics/profocus_proactive_perception_and_focused_reasoning_in_vision-and-language_navig.md)
+- [Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](../../CVPR2026/robotics/adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)
+- [From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors](../../ICLR2026/robotics/from_spatial_to_actions_grounding_vision-language-action_model_in_spatial_founda.md)
+- [UrbanNav: Learning Language-Guided Urban Navigation from Web-Scale Human Trajectories](urbannav_learning_language-guided_urban_navigation_from_web-scale_human_trajecto.md)
+
+<!-- RELATED:END -->

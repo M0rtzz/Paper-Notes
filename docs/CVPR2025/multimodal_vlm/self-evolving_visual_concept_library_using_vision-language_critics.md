@@ -130,3 +130,15 @@ Escher 采用**交替最大化策略**（Alternating Maximization），在两个
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个数据集、3 种范式（零/少/微调）、backbone 消融、概念数量消融非常全面
 - 写作质量: ⭐⭐⭐⭐ 贝叶斯公式化清晰，算法描述完整，但符号有时过于复杂
 - 价值: ⭐⭐⭐⭐ CUB +20% 证明概念选择是实际瓶颈，框架可直接用于提升现有 CBM 系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning](critic-v_vlm_critics_help_catch_vlm_errors_in_multimodal_reasoning.md)
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](../../ICLR2026/multimodal_vlm/self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+- [BadVision: Stealthy Backdoor Attack in Self-Supervised Learning Vision Encoders for Large Vision Language Models](stealthy_backdoor_attack_in_self-supervised_learning_vision_encoders_for_large_v.md)
+- [EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards](../../CVPR2026/multimodal_vlm/evolmm_self_evolving_lmm_continuous_rewards.md)
+- [Self-Supervised Spatial Correspondence Across Modalities](self-supervised_spatial_correspondence_across_modalities.md)
+
+<!-- RELATED:END -->

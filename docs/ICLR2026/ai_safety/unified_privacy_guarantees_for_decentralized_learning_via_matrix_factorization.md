@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验偏理论验证，缺少大规模深度学习场景
 - 写作质量: ⭐⭐⭐⭐ 符号体系复杂但定义清晰，层层递进
 - 价值: ⭐⭐⭐⭐ 为 DP-DL 领域提供了理论基础设施，有长期影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Back to Square Roots: An Optimal Bound on the Matrix Factorization Error for Multi-Epoch Differentially Private SGD](back_to_square_roots_an_optimal_bound_on_the_matrix_factorization_error_for_mult.md)
+- [Learning to Collaborate: An Orchestrated-Decentralized Framework for Peer-to-Peer Collaborative Learning](../../AAAI2026/ai_safety/learning_to_collaborate_an_orchestrated-decentralized_framework_for_peer-to-peer.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](../../NeurIPS2025/ai_safety/mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
+- [Learnability and Privacy Vulnerability are Entangled in a Few Critical Weights](learnability_and_privacy_vulnerability_are_entangled_in_a_few_critical_weights.md)
+
+<!-- RELATED:END -->

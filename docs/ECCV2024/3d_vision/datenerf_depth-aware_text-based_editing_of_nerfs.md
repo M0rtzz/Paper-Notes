@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 24个编辑场景定量+多种消融+收敛速度分析+扩展实验
 - 写作质量: ⭐⭐⭐⭐⭐ 图示清晰，N=0/5/20的对比分析层层递进，motivation表述精准
 - 价值: ⭐⭐⭐⭐ 实用性强，20分钟即可完成编辑，为后续3D编辑方法提供了重要参考范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+- [3DEgo: 3D Editing on the Go!](3dego_3d_editing_on_the_go.md)
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [Protecting NeRFs' Copyright via Plug-And-Play Watermarking Base Model](protecting_nerfsapos_copyright_via_plug-and-play_watermarking_base_model.md)
+
+<!-- RELATED:END -->

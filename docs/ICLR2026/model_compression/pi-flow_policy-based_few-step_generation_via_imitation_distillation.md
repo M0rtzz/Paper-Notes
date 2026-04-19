@@ -184,3 +184,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — ImageNet + FLUX + Qwen-Image 覆盖了多种场景，消融实验充分
 - 写作质量: ⭐⭐⭐⭐ — 概念清晰，命名直观（π-Flow, policy, imitation distillation）
 - 价值: ⭐⭐⭐⭐⭐ — 解决了大模型蒸馏中质量-多样性权衡这一核心痛点，对生成模型加速有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
+- [Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
+- [One-Step Diffusion-Based Image Compression with Semantic Distillation](../../NeurIPS2025/model_compression/one-step_diffusion-based_image_compression_with_semantic_distillation.md)
+- [LightMem: Lightweight and Efficient Memory-Augmented Generation](lightmem_lightweight_and_efficient_memory-augmented_generation.md)
+- [PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
+
+<!-- RELATED:END -->

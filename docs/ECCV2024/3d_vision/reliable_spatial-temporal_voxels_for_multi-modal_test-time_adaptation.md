@@ -126,3 +126,15 @@ Latte 的 pipeline：(1) 对每个模态（2D/3D），使用 student-teacher 架
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个基准、多种基线、详尽消融（组件有效性、聚合机制、参数敏感性、定性分析）
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法描述严谨，数学公式完整
 - 价值: ⭐⭐⭐⭐ 对自动驾驶在线适应有直接实用价值，在挑战性场景下优势突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CloudFixer: Test-Time Adaptation for 3D Point Clouds via Diffusion-Guided Geometric Transformation](cloudfixer_test-time_adaptation_for_3d_point_clouds_via_diffusion-guided_geometr.md)
+- [3D Test-time Adaptation via Graph Spectral Driven Point Shift](../../ICCV2025/3d_vision/3d_test-time_adaptation_via_graph_spectral_driven_point_shift.md)
+- [PointMAC: Meta-Learned Adaptation for Robust Test-Time Point Cloud Completion](../../NeurIPS2025/3d_vision/pointmac_meta-learned_adaptation_for_robust_test-time_point_cloud_completion.md)
+- [Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](../../AAAI2026/3d_vision/multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+
+<!-- RELATED:END -->

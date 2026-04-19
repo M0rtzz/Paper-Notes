@@ -141,3 +141,15 @@ CAD 重建质量对比（$D_c$: Chamfer Distance $\times 10^{-2}$, $D_h$: Hausdo
 - 实验充分度: ⭐⭐⭐⭐ ABC-NEF 上对比充分，但缺少真实场景验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，pipeline 图直观
 - 价值: ⭐⭐⭐⭐⭐ 为 CAD 逆向工程开辟了从图像出发的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [cadrille: Multi-modal CAD Reconstruction with Reinforcement Learning](../../ICLR2026/3d_vision/cadrille_multi-modal_cad_reconstruction_with_reinforcement_learning.md)
+- [CADDreamer: CAD Object Generation from Single-view Images](../../CVPR2025/3d_vision/caddreamer_cad_object_generation_from_single-view_images.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_human-scene_reconstruction_from_multi-person_multi-view_video_in_a_sing.md)
+- [MV-RoMa: From Pairwise Matching into Multi-View Track Reconstruction](mv-roma_from_pairwise_matching_into_multi-view_track_reconstruction.md)
+- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](../../ECCV2024/3d_vision/mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
+
+<!-- RELATED:END -->

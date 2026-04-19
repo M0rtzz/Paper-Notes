@@ -133,3 +133,15 @@ Position paper，指出LMA（语言模型代理）若被平台公司控制将成
 - 实验充分度: ⭐⭐ Position paper无实验，论证主要基于推理和政策分析
 - 写作质量: ⭐⭐⭐⭐⭐ 结构完整，论证严密，三类反驳充分且诚实
 - 价值: ⭐⭐⭐⭐ 对AI agent领域的发展方向和政策制定有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AXIS: Efficient Human-Agent-Computer Interaction with API-First LLM-Based Agents](../../ACL2025/llm_nlp/axis_efficient_human-agent-computer_interaction_with_api-first_llm-based_agents.md)
+- [Culture is Not Trivia: Sociocultural Theory for Cultural NLP](../../ACL2025/llm_nlp/culture_is_not_trivia_sociocultural_theory_for_cultural_nlp.md)
+- [MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents](../../ACL2025/llm_nlp/membench_towards_more_comprehensive_evaluation_on_the_memory_of_llm-based_agents.md)
+- [Embracing Imperfection: Simulating Students with Diverse Cognitive Levels Using LLM-based Agents](../../ACL2025/llm_nlp/simulating_diverse_students.md)
+- [Large Language Models Miss the Multi-Agent Mark](../../NeurIPS2025/llm_nlp/large_language_models_miss_the_multi-agent_mark.md)
+
+<!-- RELATED:END -->

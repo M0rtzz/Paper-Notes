@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三维定性分析+定量指标的组合评估方法很充分，但缺少与其他生成模型的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析系统化，图表质量好，极端事件 vs 空间变异性的权衡论述有深度
 - 价值: ⭐⭐⭐ 对气候降尺度社区有实用参考价值，损失函数选择的实证指南可直接采用；但方法层面创新有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Online Emulation for Accelerating Complex Physical Simulations](adaptive_online_emulation_for_accelerating_complex_physical_simulations.md)
+- [ControlFusion: A Controllable Image Fusion Framework with Language-Vision Degradation Prompts](controlfusion_a_controllable_image_fusion_framework_with_language-vision_degrada.md)
+- [Reasoning With a Star: A Heliophysics Dataset and Benchmark for Agentic Scientific Reasoning](reasoning_with_a_star_a_heliophysics_dataset_and_benchmark_for_agentic_scientifi.md)
+- [Predicting Public Health Impacts of Electricity Usage](predicting_public_health_impacts_of_electricity_usage.md)
+- [MdaIF: Robust One-Stop Multi-Degradation-Aware Image Fusion with Language-Driven Semantics](../../AAAI2026/earth_science/mdaif_robust_one-stop_multi-degradation-aware_image_fusion_with_language-driven_.md)
+
+<!-- RELATED:END -->

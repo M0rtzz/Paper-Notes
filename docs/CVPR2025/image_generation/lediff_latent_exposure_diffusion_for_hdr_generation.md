@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 定量+用户研究+消融+多应用场景展示
 - 写作质量: ⭐⭐⭐⭐⭐ 图表精美，逻辑严谨，观察→方法→实验的推导链非常清晰
 - 价值: ⭐⭐⭐⭐ 为扩散模型赋予HDR能力，实际应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model](enhancing_dance-to-music_generation_via_negative_conditioning_latent_diffusion_m.md)
+- [GLASS: Guided Latent Slot Diffusion for Object-Centric Learning](glass_guided_latent_slot_diffusion_for_object-centric_learning.md)
+- [LaTexBlend: Scaling Multi-concept Customized Generation with Latent Textual Blending](latexblend_scaling_multi-concept_customized_generation_with_latent_textual_blend.md)
+- [Latent Space Imaging](latent_space_imaging.md)
+- [EvoTok: A Unified Image Tokenizer via Residual Latent Evolution for Visual Understanding and Generation](evotok_a_unified_image_tokenizer_via_residual_latent_evolution_for_visual_unders.md)
+
+<!-- RELATED:END -->

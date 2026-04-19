@@ -181,3 +181,15 @@ RL 奖励函数设计为多目标优化：
 | 实验充分度 | 4 | 集中式/分散式/蒸馏/LLM多方比较 |
 | 实用性 | 5 | 直接面向工业部署的基准环境 |
 | 写作质量 | 3 | 系统级论文，细节较多 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
+- [Enhancing Demand-Oriented Regionalization with Agentic AI and Local Heterogeneous Data for Adaptation Planning](enhancing_demand-oriented_regionalization_with_agentic_ai_and_local_heterogeneou.md)
+- [What AI Speaks for Your Community: Polling AI Agents for Public Opinion on Data Center Projects](what_ai_speaks_for_your_community_polling_ai_agents_for_public_opinion_on_data_c.md)
+- [Ground-Compose-Reinforce: Grounding Language in Agentic Behaviours using Limited Data](ground-compose-reinforce_grounding_language_in_agentic_behaviours_using_limited_.md)
+- [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
+
+<!-- RELATED:END -->

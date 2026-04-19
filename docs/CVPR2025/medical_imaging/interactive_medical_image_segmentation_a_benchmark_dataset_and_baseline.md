@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多角度评估（模态、解剖结构、交互策略、点击位置、框偏移），外部数据集验证全面
 - 写作质量: ⭐⭐⭐⭐ 数据集构建流程清晰，但部分内容可以更简洁
 - 价值: ⭐⭐⭐⭐⭐ 3.61 亿 mask 的基准数据集将成为医学影像基础模型的重要资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interactive Medical Image Analysis with Concept-based Similarity Reasoning](interactive_medical_image_analysis_with_concept-based_similarity_reasoning.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [AfriMed-QA: A Pan-African, Multi-Specialty, Medical Question-Answering Benchmark Dataset](../../ACL2025/medical_imaging/afrimed_qa_pan_african.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+
+<!-- RELATED:END -->

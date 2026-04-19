@@ -128,3 +128,15 @@ Hernandez et al. (2023) 发现 Transformer 语言模型中的关系知识（如"
 - 实验充分度: ⭐⭐⭐⭐ 三个模型、多个数据集、充分的消融和泛化实验
 - 写作质量: ⭐⭐⭐⭐ 概念清晰，渐进式呈现，图表有效但部分过于密集
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 知识结构的理解有重要推动，兼具可解释性和压缩价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TableLoRA: Low-rank Adaptation on Table Structure Understanding for Large Language Models](../../ACL2025/model_compression/table_lora_structure_understanding.md)
+- [Hyperbolic Fine-Tuning for Large Language Models](hyperbolic_fine-tuning_for_large_language_models.md)
+- [Correlation Dimension of Auto-Regressive Large Language Models](correlation_dimension_of_auto-regressive_large_language_models.md)
+- [Restoring Pruned Large Language Models via Lost Component Compensation](restoring_pruned_large_language_models_via_lost_component_compensation.md)
+- [Infrequent Exploration in Linear Bandits](infrequent_exploration_in_linear_bandits.md)
+
+<!-- RELATED:END -->

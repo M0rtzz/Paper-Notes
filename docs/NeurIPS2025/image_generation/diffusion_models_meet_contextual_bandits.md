@@ -174,3 +174,15 @@ LinTS/dTS 累积 regret 比值随 $K$ 从 10 增到 $5 \times 10^4$ 而单调增
 | 实验充分性 | ★★★★☆ | 合成+真实数据，多维度消融，但大规模场景有限 |
 | 实用价值 | ★★★★☆ | 推荐系统、广告等大动作空间场景有直接应用 |
 | 写作质量 | ★★★★☆ | 结构清晰，公式推导详尽，但篇幅较长 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contextual Thompson Sampling via Generation of Missing Data](contextual_thompson_sampling_via_generation_of_missing_data.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [When Are Concepts Erased From Diffusion Models?](when_are_concepts_erased_from_diffusion_models.md)
+- [Token Perturbation Guidance for Diffusion Models](token_perturbation_guidance_for_diffusion_models.md)
+- [Composition and Alignment of Diffusion Models using Constrained Learning](composition_and_alignment_of_diffusion_models_using_constrai.md)
+
+<!-- RELATED:END -->

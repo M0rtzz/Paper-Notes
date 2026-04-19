@@ -144,3 +144,15 @@ ResNet-50 不同训练方案对比：
 - **实验**: ⭐⭐⭐⭐⭐ — 极其全面，覆盖 5 种架构、多个数据集、多种训练模式、下游迁移、子群分析、特征熵分析
 - **写作**: ⭐⭐⭐⭐ — 动机清晰，与先前工作的对比详尽，可视化丰富
 - **价值**: ⭐⭐⭐⭐ — 提供了可直接使用的 128 万多标签标注，对社区有持久价值，下游迁移提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization](../../NeurIPS2025/model_compression/find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)
+- [S2R-HDR: A Large-Scale Rendered Dataset for HDR Fusion](../../ICLR2026/model_compression/s2r-hdr_a_large-scale_rendered_dataset_for_hdr_fusion.md)
+- [Markovian Scale Prediction: A New Era of Visual Autoregressive Generation](markovian_scale_prediction_a_new_era_of_visual_autoregressive_generation.md)
+- [BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](../../ICLR2026/model_compression/biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
+
+<!-- RELATED:END -->

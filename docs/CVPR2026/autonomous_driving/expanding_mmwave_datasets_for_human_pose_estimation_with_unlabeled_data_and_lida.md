@@ -147,3 +147,15 @@ $$L = L^{\text{lab}} + \lambda^{\text{con}} L^{\text{con}}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖两个 mmWave 和两个 LiDAR 数据集，消融全面，多种骨干验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，物理直觉表达到位
 - 价值: ⭐⭐⭐⭐ 解决了 mmWave HPE 领域的数据瓶颈问题，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Balanced Multi-Modal Learning in 3D Human Pose Estimation](towards_balanced_multi_modal_learning_in_3d_human_pose_estimation.md)
+- [InCaRPose: In-Cabin Relative Camera Pose Estimation Model and Dataset](incarpose_in-cabin_relative_camera_pose_estimation_model_and_dataset.md)
+- [PTC-Depth: Pose-Refined Monocular Depth Estimation with Temporal Consistency](ptc-depth_pose-refined_monocular_depth_estimation_with_temporal_consistency.md)
+- [Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](spectral-geometric_neural_fields_for_pose-free_lidar_view_synthesis.md)
+- [SG-NLF: Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](sgnlf_spectralgeometric_neural_fields_for_posefre.md)
+
+<!-- RELATED:END -->

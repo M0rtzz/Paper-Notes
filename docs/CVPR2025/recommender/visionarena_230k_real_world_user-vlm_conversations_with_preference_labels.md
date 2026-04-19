@@ -52,3 +52,15 @@ tags:
 ## 局限与展望
 - 众包用户群体可能存在人口统计偏差
 - 英文对话为主，多语言覆盖不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wide-Horizon Thinking and Simulation-Based Evaluation for Real-World LLM Planning with Multifaceted Constraints](../../NeurIPS2025/recommender/wide-horizon_thinking_and_simulation-based_evaluation_for_real-world_llm_plannin.md)
+- [FineVQ: Fine-Grained User Generated Content Video Quality Assessment](finevq_fine-grained_user_generated_content_video_quality_assessment.md)
+- [Beyond Single Labels: Improving Conversational Recommendation through LLM-Powered Data Augmentation](../../ACL2025/recommender/beyond_single_labels_improving_conversational_recommendation_through_llm-powered.md)
+- [Aligning LLMs by Predicting Preferences from User Writing Samples](../../ICML2025/recommender/aligning_llms_by_predicting_preferences_from_user_writing_samples.md)
+- [PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model](../../ICML2025/recommender/parm_multi-objective_test-time_alignment_via_preference-aware_autoregressive_rew.md)
+
+<!-- RELATED:END -->

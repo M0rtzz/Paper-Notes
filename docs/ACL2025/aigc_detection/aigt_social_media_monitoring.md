@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 240万帖子+12LLM+3平台+纵向追踪+多维分析
 - 写作质量: ⭐⭐⭐⭐ 数据展示清晰，发现有冲击力
 - 价值: ⭐⭐⭐⭐⭐ 对AI治理和内容监管有重要政策意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiSocial: Multilingual Benchmark of Machine-Generated Text Detection of Social-Media Texts](multisocial_mgt_detection.md)
+- [Who Writes What: Unveiling the Impact of Author Roles on AI-generated Text Detection](who_writes_what_ai_detection.md)
+- [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](chatgpt_user_ai_text_detection.md)
+- [Iron Sharpens Iron: Defending Against Attacks in Machine-Generated Text Detection with Adversarial Training](greater_adversarial_mgt_detection.md)
+- [HACo-Det: A Study Towards Fine-Grained Machine-Generated Text Detection under Human-AI Coauthoring](haco-det_a_study_towards_fine-grained_machine-generated_text_detection_under_hum.md)
+
+<!-- RELATED:END -->

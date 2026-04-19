@@ -122,3 +122,15 @@ DPCache (K=13) 在3.54×加速下 ImageReward **超越全步基线** +0.028！
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，形式化严谨，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 无训练、通用、性能优异，实用价值极高
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
+- [TC-Padé: Trajectory-Consistent Padé Approximation for Diffusion Acceleration](tc-padé_trajectory-consistent_padé_approximation_for_diffusion_acceleration.md)
+- [Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models](flash-unified_a_training-free_and_task-aware_acceleration_framework_for_native_u.md)
+- [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
+- [LESA: Learnable Stage-Aware Predictors for Diffusion Model Acceleration](lesa_learnable_stage-aware_predictors_for_diffusion_model_acceleration.md)
+
+<!-- RELATED:END -->

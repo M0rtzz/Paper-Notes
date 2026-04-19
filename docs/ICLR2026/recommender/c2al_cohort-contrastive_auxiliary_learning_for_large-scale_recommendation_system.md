@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ Meta 6 个生产模型、数十亿数据点的工业级验证，权重可视化分析充分支持理论预测
 - 写作质量: ⭐⭐⭐⭐ 从问题发现→机制分析→方法设计→实证验证的叙事线清晰，数学推导简洁通透
 - 价值: ⭐⭐⭐⭐ 对大规模推荐系统有直接工程价值，机制分析对理解 FM attention 有学术价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning](../../AAAI2026/recommender/travellama_a_multimodal_travel_assistant_with_large-scale_dataset_and_structured.md)
+- [ASAP: An Agentic Solution to Auto-Optimize Performance of Large-Scale LLM Training](../../NeurIPS2025/recommender/asap_an_agentic_solution_to_auto-optimize_performance_of_large-scale_llm_trainin.md)
+- [From Evaluation to Defense: Advancing Safety in Video Large Language Models](from_evaluation_to_defense_advancing_safety_in_video_large_language_models.md)
+- [Rejuvenating Cross-Entropy Loss in Knowledge Distillation for Recommender Systems](rejuvenating_cross-entropy_loss_in_knowledge_distillation_for_recommender_system.md)
+- [Token-Efficient Item Representation via Images for LLM Recommender Systems](token-efficient_item_representation_via_images_for_llm_recommender_systems.md)
+
+<!-- RELATED:END -->

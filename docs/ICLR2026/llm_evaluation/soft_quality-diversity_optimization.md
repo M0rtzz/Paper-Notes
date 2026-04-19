@@ -137,3 +137,15 @@ for t = 1 to T:
 - 理论深度: ⭐⭐⭐⭐ — 单调性、次模性、极限等价性、下界推导
 - 实验充分性: ⭐⭐⭐⭐ — 三个基准域、多维度可扩展性、消融分析
 - 实用价值: ⭐⭐⭐⭐ — 高维 QD 的可行方案，但限于可微目标
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Best of Both Worlds: Bridging Quality and Diversity in Data Selection with Bipartite Graph](../../ICML2025/llm_evaluation/the_best_of_both_worlds_bridging_quality_and_diversity_in_data_selection_with_bi.md)
+- [Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
+- [Breaking the Correlation Plateau: On the Optimization and Capacity Limits of Attention-Based Regressors](breaking_the_correlation_plateau_on_the_optimization_and_capacity_limits_of_atte.md)
+- [Beyond Cosine Similarity: Magnitude-Aware CLIP for No-Reference Image Quality Assessment](../../AAAI2026/llm_evaluation/beyond_cosine_similarity_magnitude-aware_clip_for_no-reference_image_quality_ass.md)
+- [IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness](../../ICML2025/llm_evaluation/promoting_ensemble_diversity_with_interactive_bayesian_distributional_robustness.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 提出了新 benchmark，对比充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰
 - 价值: ⭐⭐⭐⭐ 对 3D 生成领域有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive](../../ACL2025/llm_nlp/theory_of_llm_sampling.md)
+- [AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer](../../ICLR2026/llm_nlp/assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)
+- [Building Vision Models upon Heat Conduction](building_vision_models_upon_heat_conduction.md)
+- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
+- [Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention](exposure-slot_exposure-centric_representations_learning_with_slot-in-slot_attent.md)
+
+<!-- RELATED:END -->

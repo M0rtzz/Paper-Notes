@@ -112,3 +112,15 @@ IterResearch 将深度研究建模为MDP $\langle\mathcal{S},\mathcal{D},\mathca
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个benchmark、交互扩展、跨范式迁移、零训练提示多维度验证
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，方法形式化严谨
 - 价值: ⭐⭐⭐⭐⭐ 直接推进了深度研究Agent的SOTA，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Long-tailed Dataset Distillation: A Uni-Level Framework with Unbiased Recovery and Relabeling](../../AAAI2026/model_compression/rethinking_long-tailed_dataset_distillation_a_uni-level_framework_with_unbiased_.md)
+- [Rethinking Continual Learning with Progressive Neural Collapse](rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [A universal compression theory for lottery ticket hypothesis and neural scaling laws](a_universal_compression_theory_for_lottery_ticket_hypothesis_and_neural_scaling_.md)
+- [Taming Momentum: Rethinking Optimizer States Through Low-Rank Approximation](taming_momentum_rethinking_optimizer_states_through_low-rank_approximation.md)
+- [Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models](scaling_reasoning_hop_exposes_weaknesses_demystifying_and_improving_hop_generali.md)
+
+<!-- RELATED:END -->

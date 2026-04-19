@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 综述类论文，无自有实验，但分类对比表格详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、图表丰富，9 页浓缩版仍保持了良好的可读性
 - 价值: ⭐⭐⭐⭐ OS Agent 领域首个系统综述，对入门和选题有很高参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents](os-kairos_adaptive_interaction_for_mllm-powered_gui_agents.md)
+- [Caution for the Environment: Multimodal LLM Agents are Susceptible to Environmental Distractions](caution_environment_gui_agent_distractions.md)
+- [Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents](explorer_scaling_exploration-driven_web_trajectory_synthesis_for_multimodal_web_.md)
+- [GUICourse: From General Vision Language Model to Versatile GUI Agent](guicourse_from_general_vision_language_model_to_versatile_gui_agent.md)
+- [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](meco_metacognition_tool_use.md)
+
+<!-- RELATED:END -->

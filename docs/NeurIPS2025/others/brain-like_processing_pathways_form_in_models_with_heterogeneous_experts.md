@@ -134,3 +134,15 @@ $$L = L_{fix} + \sum_{i}^{\mathcal{T}} \left( L_{response,i} + \frac{\alpha \cdo
 - **实验充分度**: ⭐⭐⭐⭐ — 三个判据体系完整，消融实验详尽，与大脑数据的对比有说服力
 - **写作质量**: ⭐⭐⭐⭐⭐ — 叙事逻辑清晰，从"基线不形成通路"→"逐步加偏置"→"与大脑对比"的递进结构非常优雅
 - **价值**: ⭐⭐⭐⭐ — 对计算神经科学有直接贡献，对大规模 MoE 设计有启发意义，但需进一步验证可扩展性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contextual Dynamic Pricing with Heterogeneous Buyers](contextual_dynamic_pricing_with_heterogeneous_buyers.md)
+- [LoGU: Long-form Generation with Uncertainty Expressions](../../ACL2025/others/logu_longform_gen_uncertainty.md)
+- [Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](../../ECCV2024/others/brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)
+- [Beyond Position: the emergence of wavelet-like properties in Transformers](../../ACL2025/others/beyond_position_the_emergence_of_wavelet-like_properties_in_transformers.md)
+- [EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks](evobrain_dynamic_multi-channel_eeg_graph_modeling_for_time-evolving_brain_networ.md)
+
+<!-- RELATED:END -->

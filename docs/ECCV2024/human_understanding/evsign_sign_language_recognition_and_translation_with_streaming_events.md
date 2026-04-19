@@ -180,3 +180,15 @@ tags:
 - 技术深度: ⭐⭐⭐⭐ — 稀疏骨干+GATA模块的设计环环相扣
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实数据、SLR+SLT双任务、效率对比详尽
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，图表直观，但SLT实验细节略显不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Simple Baseline for Spoken Language to Sign Language Translation with 3D Avatars](a_simple_baseline_for_spoken_language_to_sign_language_trans.md)
+- [SignAvatars: A Large-scale 3D Sign Language Holistic Motion Dataset and Benchmark](signavatars_a_large-scale_3d_sign_language_holistic_motion_dataset_and_benchmark.md)
+- [Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)
+- [Cut Out the Middleman: Revisiting Pose-Based Gait Recognition](cut_out_the_middleman_revisiting_pose-based_gait_recognition.md)
+- [AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition](adadistill_adaptive_knowledge_distillation_for_deep_face_rec.md)
+
+<!-- RELATED:END -->

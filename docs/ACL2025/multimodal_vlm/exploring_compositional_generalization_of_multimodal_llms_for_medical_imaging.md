@@ -135,3 +135,15 @@ tags:
 - **实验充分性**：⭐⭐⭐⭐ 53个子集、多组对照实验，验证全面
 - **写作质量**：⭐⭐⭐⭐ 逻辑清晰，实验设计层层递进
 - **实用性**：⭐⭐⭐ 洞察有价值但临床应用路径不清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Insight Over Sight: Exploring the Vision-Knowledge Conflicts in Multimodal LLMs](conflictvis_vision_knowledge_conflict.md)
+- [MM-Spatial: Exploring 3D Spatial Understanding in Multimodal LLMs](../../ICCV2025/multimodal_vlm/mm-spatial_exploring_3d_spatial_understanding_in_multimodal_llms.md)
+- [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](../../NeurIPS2025/multimodal_vlm/better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
+- [Are They the Same? Exploring Visual Correspondence Shortcomings of Multimodal LLMs](../../ICCV2025/multimodal_vlm/are_they_the_same_exploring_visual_correspondence_shortcomings_of_multimodal_llm.md)
+- [Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](exploring_how_generative_mllms_perceive_more.md)
+
+<!-- RELATED:END -->

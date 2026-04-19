@@ -121,3 +121,15 @@ tags:
 
 ⭐⭐⭐⭐ (4/5)
 方法设计巧妙，分层过程自然合理，人工评估结果统计显著性极强。应用场景相对小众但方法论有广泛启发性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting](../../ICCV2025/object_detection/sketchsplat_3d_edge_reconstruction_via_differentiable_multi-view_sketch_splattin.md)
+- [SimROD: A Simple Baseline for Raw Object Detection with Global and Local Enhancements](simrod_a_simple_baseline_for_raw_object_detection_with_global_and_local_enhancem.md)
+- [CTPD: Cross Tokenizer Preference Distillation](ctpd_cross_tokenizer_preference_distillation.md)
+- [PASE: Leveraging the Phonological Prior of WavLM for Low-Hallucination Generative Speech Enhancement](pase_leveraging_the_phonological_prior_of_wavlm_for_low-hallucination_generative.md)
+- [Temporal Object-Aware Vision Transformer for Few-Shot Video Object Detection](temporal_object-aware_vision_transformer_for_few-shot_video_object_detection.md)
+
+<!-- RELATED:END -->

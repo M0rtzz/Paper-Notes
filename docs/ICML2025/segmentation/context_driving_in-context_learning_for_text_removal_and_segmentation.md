@@ -189,3 +189,15 @@ $$\tilde{\mathbf{F}}_2 = [\phi(\tilde{\mathbf{F}}_{O_i}, \tilde{\mathbf{F}}_j), 
 | 写作质量 | ⭐⭐⭐⭐ | 叙事清晰，从基线特征出发逐步引出改进 |
 | 实用价值 | ⭐⭐⭐⭐ | 代码开源，端到端多任务，额外开销仅+2% FLOPs |
 | 总评 | ⭐⭐⭐⭐ | 扎实的工作，将V-ICL成功拓展到OCR领域并取得显著SOTA |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CAVIS: Context-Aware Video Instance Segmentation](../../ICCV2025/segmentation/cavis_context-aware_video_instance_segmentation.md)
+- [INSID3: Training-Free In-Context Segmentation with DINOv3](../../CVPR2026/segmentation/insid3_training-free_in-context_segmentation_with_dinov3.md)
+- [Love Me, Love My Label: Rethinking the Role of Labels in Prompt Retrieval for Visual In-Context Learning](../../CVPR2026/segmentation/love_me_love_my_label_rethinking_the_role_of_labels_in_prompt_retrieval_for_visu.md)
+- [SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation](../../ICCV2025/segmentation/score_scene_context_matters_in_open-vocabulary_remote_sensing_instance_segmentat.md)
+- [VINCIE: Unlocking In-context Image Editing from Video](../../ICLR2026/segmentation/vincie_unlocking_in-context_image_editing_from_video.md)
+
+<!-- RELATED:END -->

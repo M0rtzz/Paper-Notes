@@ -264,3 +264,15 @@ Majority Vote (8 samples)：Praxis-VLM-7B在VIVA 84.36, PCA-Bench 61.83, EgoNorm
 - 实验充分度: ⭐⭐⭐⭐ 3个benchmark+多种baseline+diverse sampling+错误分析，但模型规模和任务覆盖可更广
 - 写作质量: ⭐⭐⭐⭐⭐ 从preliminary finding到方法设计的叙事逻辑极佳，"Language is the dress of thought"引用贴合
 - 对我的价值: ⭐⭐⭐⭐⭐ VLM agent决策+数据高效RL是核心方向，文本迁移范式可直接复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AntiGrounding: Lifting Robotic Actions into VLM Representation Space for Decision Making](antigrounding_lifting_robotic_actions_into_vlm_representatio.md)
+- [Unified Reinforcement and Imitation Learning for Vision-Language Models](unified_reinforcement_and_imitation_learning_for_vision-language_models.md)
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+- [VT-FSL: Bridging Vision and Text with LLMs for Few-Shot Learning](vt-fsl_bridging_vision_and_text_with_llms_for_few-shot_learning.md)
+- [To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning](think_or_not_think_a_study_of_explicit_thinking_in_rule-based_visual_reinforceme.md)
+
+<!-- RELATED:END -->

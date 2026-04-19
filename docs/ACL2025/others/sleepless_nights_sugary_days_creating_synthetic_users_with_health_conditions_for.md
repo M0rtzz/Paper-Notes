@@ -150,3 +150,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 双场景验证、自动+专家评估、对比实验设计完善
 - **写作质量**: ⭐⭐⭐⭐ 框架描述清晰，背景综述全面
 - **价值**: ⭐⭐⭐⭐ 为健康AI领域的Agent评估提供了实用方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
+- [Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility](meaning_beyond_truth_conditions_evaluating_discourse_level_understanding_via_ana.md)
+- [Substance over Style: Evaluating Proactive Conversational Coaching Agents](proactive_conversational_coaching.md)
+- [CoachMe: Decoding Sport Elements with a Reference-Based Coaching Instruction Generation Model](coachme_sport_instruction.md)
+- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+
+<!-- RELATED:END -->

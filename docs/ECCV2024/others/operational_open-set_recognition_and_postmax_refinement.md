@@ -114,3 +114,15 @@ PostMax 是纯后处理方法，不涉及任何额外训练或损失函数。它
 
 ## 补充说明
 本文作者 Terrance Boult 是开放集识别领域的奠基人之一，PostMax 方法继承了他之前在 OpenMax 工作中的极值理论思路，但更加简洁轻量，体现了方法的成熟演化。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation](bidirectional_uncertainty-based_active_learning_for_open-set_annotation.md)
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](../../CVPR2025/others/open_set_label_shift_with_test_time_out-of-distribution_reference.md)
+- [Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](../../CVPR2025/others/distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
+- [Spatio-Temporal Proximity-Aware Dual-Path Model for Panoramic Activity Recognition](spatio-temporal_proximity-aware_dual-path_model_for_panoramic_activity_recogniti.md)
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](../../ICML2025/others/hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+
+<!-- RELATED:END -->

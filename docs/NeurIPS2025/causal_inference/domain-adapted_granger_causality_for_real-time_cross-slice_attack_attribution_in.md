@@ -128,3 +128,15 @@ Domain-Adapted Granger Causality 框架接收 N 个切片的安全遥测流 {x_t
 - 实验充分度: ⭐⭐⭐⭐ 1100场景、多基线对比、消融分析、敏感性分析、工业案例研究，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，算法伪代码完整，理论证明规范，图表丰富
 - 价值: ⭐⭐⭐⭐ 提供了6G网络安全归因的实用框架，理论保证+实时性能使其具有部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revealing Multimodal Causality with Large Language Models](revealing_multimodal_causality_with_large_language_models.md)
+- [Causality-Induced Positional Encoding for Transformer-Based Representation Learning of Non-Sequential Features](causality-induced_positional_encoding_for_transformer-based_representation_learn.md)
+- [GST-UNet: A Neural Framework for Spatiotemporal Causal Inference with Time-Varying Confounding](gst-unet_a_neural_framework_for_spatiotemporal_causal_inference_with_time-varyin.md)
+- [Integrating Markov Blanket Discovery into Causal Representation Learning for Domain Generalization](../../ECCV2024/causal_inference/integrating_markov_blanket_discovery_into_causal_representation_learning_for_dom.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](../../ICML2025/causal_inference/learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+
+<!-- RELATED:END -->

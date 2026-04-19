@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ COCO和VOC验证、详细消融、可视化分析充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法动机阐述充分
 - 价值: ⭐⭐⭐⭐ 弱监督全景分割的重要进展，可学习距离的思路有广泛迁移价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Simple Latent Diffusion Approach for Panoptic Segmentation and Mask Inpainting](a_simple_latent_diffusion_approach_for_panoptic_segmentation_and_mask_inpainting.md)
+- [UniFS: Universal Few-Shot Instance Perception with Point Representations](unifs_universal_few-shot_instance_perception_with_point_representations.md)
+- [Learning Camouflaged Object Detection from Noisy Pseudo Label](learning_camouflaged_object_detection_from_noisy_pseudo_label.md)
+- [LASS3D: Language-Assisted Semi-Supervised 3D Semantic Segmentation with Progressive Unreliable Data Exploitation](lass3d_language-assisted_semi-supervised_3d_semantic_segmentation_with_progressi.md)
+- [Learning from the Web: Language Drives Weakly-Supervised Incremental Learning for Semantic Segmentation](learning_from_the_web_language_drives_weakly-supervised_incremental_learning_for.md)
+
+<!-- RELATED:END -->

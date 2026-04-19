@@ -145,3 +145,15 @@ IBBI（Image–Brain BI-directional）框架利用交叉注意力矩阵 $A^{(\el
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、完整消融、IBBI 定性定量分析，但低层指标讨论可更深入
 - 写作质量: ⭐⭐⭐⭐ 方法和可解释性框架描述清晰，图示精良
 - 价值: ⭐⭐⭐⭐ 为神经科学解码研究提供了新的可解释性工具，高层语义重建 SOTA 水平
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding](../../NeurIPS2025/medical_imaging/more-brain_routed_mixture_of_experts_for_interpretable_and_generalizable_cross-s.md)
+- [Augmenting Representations with Scientific Papers](augmenting_representations_with_scientific_papers.md)
+- [Neuro-Symbolic Decoding of Neural Activity](neuro-symbolic_decoding_of_neural_activity.md)
+- [Zebra: Towards Zero-Shot Cross-Subject Generalization for Universal Brain Visual Decoding](../../NeurIPS2025/medical_imaging/zebra_towards_zero-shot_cross-subject_generalization_for_universal_brain_visual_.md)
+- [Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI](../../ICCV2025/medical_imaging/beyond_brain_decoding_visualsemantic_reconstructions_to_ment.md)
+
+<!-- RELATED:END -->

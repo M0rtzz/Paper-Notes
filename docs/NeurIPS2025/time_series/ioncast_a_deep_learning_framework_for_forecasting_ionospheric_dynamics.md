@@ -133,3 +133,15 @@ IonCast GNN 在 6 小时预测内全面优于 IRI 和 LSTM。
 - 实验充分度: ⭐⭐⭐⭐ 消融实验详细，多级别风暴评估，但受限于 workshop 篇幅
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，物理背景交代充分
 - 价值: ⭐⭐⭐⭐ 对空间天气预测社区有直接实用价值，开源代码和数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Selective Learning for Deep Time Series Forecasting](selective_learning_for_deep_time_series_forecasting.md)
+- [SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)
+- [Towards Generalizable PDE Dynamics Forecasting via Physics-Guided Invariant Learning](../../ICLR2026/time_series/towards_generalizable_pde_dynamics_forecasting_via_physics-guided_invariant_lear.md)
+- [TimePerceiver: An Encoder-Decoder Framework for Generalized Time-Series Forecasting](timeperceiver_an_encoder-decoder_framework_for_generalized_time-series_forecasti.md)
+- [AERO: A Redirection-Based Optimization Framework Inspired by Judo for Robust Probabilistic Forecasting](aero_a_redirection-based_optimization_framework_inspired_by_judo_for_robust_prob.md)
+
+<!-- RELATED:END -->

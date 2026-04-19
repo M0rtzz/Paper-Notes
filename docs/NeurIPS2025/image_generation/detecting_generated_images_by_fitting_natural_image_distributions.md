@@ -124,3 +124,15 @@ $$\mathcal{L} = \underbrace{-\mathbb{E}_{v \sim \mathcal{D}_n} \log p(v) + \math
 - 技术深度：⭐⭐⭐⭐⭐ — 正交性原则 + NF 挤出 + 免训练实现三位一体
 - 实验完整度：⭐⭐⭐⭐⭐ — 9 种生成模型 + Sora + 多个基准全面覆盖
 - 写作质量：⭐⭐⭐⭐☆ — 理论推导清晰，但符号较多需仔细阅读
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers](../../ICCV2025/image_generation/lay-your-scene_natural_scene_layout_generation_with_diffusion_transformers.md)
+- [Diff-ICMH: Harmonizing Machine and Human Vision in Image Compression with Generative Prior](diff-icmh_harmonizing_machine_and_human_vision_in_image_compression_with_generat.md)
+- [FlowTok: Flowing Seamlessly Across Text and Image Tokens](../../ICCV2025/image_generation/flowtok_flowing_seamlessly_across_text_and_image_tokens.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](../../ICCV2025/image_generation/timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+- [DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models](dexter_diffusion-guided_explanations_with_textual_reasoning_for_vision_models.md)
+
+<!-- RELATED:END -->

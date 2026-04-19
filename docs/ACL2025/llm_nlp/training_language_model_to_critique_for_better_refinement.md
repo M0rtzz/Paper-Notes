@@ -124,3 +124,15 @@ tags:
 - 实验充分性: ⭐⭐⭐⭐⭐ (5 任务 + CU/RQS/Accuracy/RewardBench + 人工评估)
 - 实用价值: ⭐⭐⭐⭐ (可直接用于训练开源 critic 模型)
 - 总体推荐: ⭐⭐⭐⭐ (critique-refinement 方向的扎实推进)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongDPO: Unlock Better Long-form Generation Abilities for LLMs via Critique-augmented Stepwise Information](longdpo_unlock_better_long-form_generation_abilities_for_llms_via_critique-augme.md)
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
+- [OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens](olmotrace_tracing_language_model_outputs_back_to_trillions_of_training_tokens.md)
+- [A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](a_survey_on_efficient_large_language.md)
+- [RiOT: Efficient Prompt Refinement with Residual Optimization Tree](riot_efficient_prompt_refinement_with_residual_optimization_tree.md)
+
+<!-- RELATED:END -->

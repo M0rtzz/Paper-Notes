@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 大规模数据集 + 多维话语分析 + 人类验证 + 消融实验，非常扎实
 - 写作质量: ⭐⭐⭐⭐ — 从问题分析到环境设计的叙事清晰，Algorithm 1 简洁
 - 价值: ⭐⭐⭐⭐ — 数据集和博弈环境均有长期复用价值，为训练策略性对话代理提供了基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mind the Belief Gap: Group Identity in the World of LLMs](mind_the_belief_gap_group_identity_in_the_world_of_llms.md)
+- [AutoGUI: Scaling GUI Grounding with Automatic Functionality Annotations from LLMs](autogui_scaling_gui_grounding_with_automatic.md)
+- [Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs](palm_a_culturally_inclusive_and_linguistically_diverse_dataset_for_arabic_llms.md)
+- [Growing Through Experience: Scaling Episodic Grounding in Language Models](episodic_grounding_experience.md)
+- [A Modular Dataset to Demonstrate LLM Abstraction Capability](a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ ImitSAT 在几乎所有变量范围上取得最低 MRPP，且 1% 胜率 $W_{1\%}
 - 实验充分度: ⭐⭐⭐⭐ 多种 SAT 家族、消融、墙钟时间评估全面，但变量规模受限
 - 写作质量: ⭐⭐⭐⭐ 动机到方法的推导连贯清晰，KeyTrace 的可视化直观
 - 价值: ⭐⭐⭐⭐ 为学习增强 SAT 求解开辟了新方向，但实际工业应用仍需突破规模瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
+- [On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
+- [Action-Constrained Imitation Learning](../../ICML2025/reinforcement_learning/action-constrained_imitation_learning.md)
+- [Quantifying Generalisation in Imitation Learning](../../NeurIPS2025/reinforcement_learning/quantifying_generalisation_in_imitation_learning.md)
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+
+<!-- RELATED:END -->

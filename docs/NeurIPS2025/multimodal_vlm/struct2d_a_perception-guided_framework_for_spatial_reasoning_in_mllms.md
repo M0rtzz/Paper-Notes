@@ -130,3 +130,15 @@ $$\mathbf{T}^{\text{out}} = \mathcal{F}(\text{Struct2D}(\phi_{\text{percept}}(\m
 - 实验充分度: ⭐⭐⭐⭐⭐ 零样本分析+SFT+多个基准+详细消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，分析深入
 - 价值: ⭐⭐⭐⭐ 为3D空间推理提供了实用且低成本的替代方案，数据集和代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
+- [MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness](mmperspective_do_mllms_understand_perspective_a_comprehensive_benchmark_for_pers.md)
+- [SpatialThinker: Reinforcing 3D Reasoning in Multimodal LLMs via Spatial Rewards](spatialthinker_reinforcing_3d_reasoning_in_multimodal_llms_via_spatial_rewards.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics](roborefer_towards_spatial_referring_with_reasoning_in_vision-language_models_for.md)
+
+<!-- RELATED:END -->

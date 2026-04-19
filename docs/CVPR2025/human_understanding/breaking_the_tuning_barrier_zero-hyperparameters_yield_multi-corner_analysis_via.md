@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 超参数敏感性分析、跨corner消融、特征选择消融都很充分
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰（Model Capacity Barrier vs Tuning Barrier），理论推导严谨
 - 价值: ⭐⭐⭐⭐ 对EDA工业界有直接价值，零调参是真正的落地优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Conformal Prediction for Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)
+- [PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation](posebh_prototypical_multi-dataset_training_beyond_human_pose_estimation.md)
+- [Removing Reflections from RAW Photos](removing_reflections_from_raw_photos.md)
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [ShowMak3r: Compositional TV Show Reconstruction](showmak3r_compositional_tv_show_reconstruction.md)
+
+<!-- RELATED:END -->

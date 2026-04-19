@@ -162,3 +162,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个奖励模型 + 3 个 LLM 评估器 × 5 种偏差 + 人类评估 + 训练数据分析 + CDA 修复，但缺少下游 RLHF 端到端实验
 - 写作质量: ⭐⭐⭐⭐⭐ 标题生动（Flattery, Fluff, and Fog），问题定义清晰，Table 1 的偏差分类非常直观，实验层层递进（诊断→溯源→修复）
 - 价值: ⭐⭐⭐⭐⭐ 对 RLHF 和 LLM-as-a-Judge 领域有直接实践价值；CDA 方法简单可落地；偏差放大效应的发现对理解对齐失败机制有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition](../../CVPR2025/causal_inference/antidote_a_unified_framework_for_mitigating_lvlm_hallucinations_in_counterfactua.md)
+- [Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding](../../CVPR2025/causal_inference/seeing_far_and_clearly_mitigating_hallucinations_in_mllms_with_attention_causal_.md)
+- [Distributional Equivalence in Linear Non-Gaussian Latent-Variable Cyclic Causal Models](distributional_equivalence_in_linear_non-gaussian_latent-variable_cyclic_causal_.md)
+- [RATE: Causal Explainability of Reward Models with Imperfect Counterfactuals](../../ICML2025/causal_inference/rate_causal_explainability_of_reward_models_with_imperfect_counterfactuals.md)
+- [Hallucinate Less by Thinking More: Aspect-Based Causal Abstention for Large Language Models](../../AAAI2026/causal_inference/hallucinate_less_by_thinking_more_aspect-based_causal_absten.md)
+
+<!-- RELATED:END -->

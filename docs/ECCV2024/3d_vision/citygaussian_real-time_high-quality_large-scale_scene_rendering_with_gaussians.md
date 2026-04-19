@@ -167,3 +167,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （5 个不同规模场景、完整消融、多角度 FPS 分析、street view 泛化验证）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，图表丰富，动机阐述充分）
 - 价值: ⭐⭐⭐⭐ （首次实现城市级 3DGS 实时渲染，工程与学术价值兼具）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting](versatilegaussian_real-time_neural_rendering_for_versatile_tasks_using_gaussian_.md)
+- [LODGE: Level-of-Detail Large-Scale Gaussian Splatting with Efficient Rendering](../../NeurIPS2025/3d_vision/lodge_level-of-detail_large-scale_gaussian_splatting_with_efficient_rendering.md)
+- [MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views](../../CVPR2025/3d_vision/matcha_gaussians_atlas_of_charts_for_high-quality_geometry_and_photorealism_from.md)
+- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
+- [Momentum-GS: Momentum Gaussian Self-Distillation for High-Quality Large Scene Reconstruction](../../ICCV2025/3d_vision/momentum-gs_momentum_gaussian_self-distillation_for_high-quality_large_scene_rec.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三数据集多指标多基线+消融+用户研究+延迟分析+分辨率泛化
 - 写作质量: ⭐⭐⭐⭐ 每个设计都有消融支撑，图示直观，结构清晰
 - 价值: ⭐⭐⭐⭐⭐ 单步低延迟低显存的SOTA感知压缩，具备真实部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching](mpdit_multi-patch_global-to-local_transformer_architecture_for_efficient_flow_ma.md)
+- [Guiding a Diffusion Transformer with the Internal Dynamics of Itself](guiding_a_diffusion_transformer_with_the_internal_dynamics_of_itself.md)
+- [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
+- [EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation](egoflow_gradient-guided_flow_matching_for_egocentric_6dof_object_motion_generati.md)
+- [EdgeDiT: Hardware-Aware Diffusion Transformers for Efficient On-Device Image Generation](edgedit_hardware-aware_diffusion_transformers_for_efficient_on-device_image_gene.md)
+
+<!-- RELATED:END -->

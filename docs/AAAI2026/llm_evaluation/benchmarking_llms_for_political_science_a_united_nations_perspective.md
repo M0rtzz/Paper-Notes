@@ -119,3 +119,15 @@ Task 1 候选数量增加时的影响（共同提案方判断）：
 - 实验充分度: ⭐⭐⭐⭐ 多模型对比、多任务评估，但缺少更多 SOTA 模型和人工评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、任务定义形式化，数据构建过程描述详尽
 - 价值: ⭐⭐⭐⭐ 为 AI+政治科学交叉研究提供重要基础设施，30 年数据横跨多个国际格局变化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DARE-bench: Evaluating Modeling and Instruction Fidelity of LLMs in Data Science](../../ICLR2026/llm_evaluation/dare-bench_evaluating_modeling_and_instruction_fidelity_of_llms_in_data_science.md)
+- [Benchmarking Overton Pluralism in LLMs](../../ICLR2026/llm_evaluation/benchmarking_overton_pluralism_in_llms.md)
+- [Perspective from a Broader Context: Can Room Style Knowledge Help Visual Floorplan Localization?](perspective_from_a_broader_context_can_room_style_knowledge_help_visual_floorpla.md)
+- [Where Norms and References Collide: Evaluating LLMs on Normative Reasoning](where_norms_and_references_collide_evaluating_llms_on_normative_reasoning.md)
+- [CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](../../ICLR2026/llm_evaluation/counselbench_llm_mental_health_qa.md)
+
+<!-- RELATED:END -->

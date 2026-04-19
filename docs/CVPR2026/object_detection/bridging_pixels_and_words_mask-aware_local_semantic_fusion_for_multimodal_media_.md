@@ -125,3 +125,15 @@ $$\mathcal{L} = \mathcal{L}_{bcls} + \alpha \mathcal{L}_{mcls} + \beta \mathcal{
 - 实验充分度: ⭐⭐⭐⭐⭐ DGM4 + 假新闻检测双任务验证，两种 Parser，全面消融
 - 写作质量: ⭐⭐⭐⭐ 认知科学类比生动，但公式密度较高
 - 价值: ⭐⭐⭐⭐ 对多模态虚假信息检测有实际推进，框架思路有通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Small Target Detection Based on Mask-Enhanced Attention Fusion of Visible and Infrared Remote Sensing Images](small_target_detection_based_on_mask-enhanced_attention_fusion_of_visible_and_in.md)
+- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [CompAgent: An Agentic Framework for Visual Compliance Verification](compagent_an_agentic_framework_for_visual_compliance_verification.md)
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_texttoimage_diffusion_v.md)
+- [CineSRD: Leveraging Visual, Acoustic, and Linguistic Cues for Open-World Visual Media Speaker Diarization](cinesrd_leveraging_visual_acoustic_and_linguistic_cues_for_open-world_visual_med.md)
+
+<!-- RELATED:END -->

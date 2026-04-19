@@ -132,3 +132,15 @@ MVPortrait包含两阶段：**Text2FLAME**阶段，从参考图像用DECA提取F
 ## 评分
 
 ⭐⭐⭐⭐ — 提出了首个文本驱动多视角肖像动画框架，FLAME作为统一桥梁的设计思路优雅且实用，解耦运动/表情的消融实验充分。但FLAME的表达能力上限和推理速度限制了实际应用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FG-Portrait: 3D Flow Guided Editable Portrait Animation](../../CVPR2026/image_generation/fg-portrait_3d_flow_guided_editable_portrait_animation.md)
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](../../ECCV2024/image_generation/livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+
+<!-- RELATED:END -->

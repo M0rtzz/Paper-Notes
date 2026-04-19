@@ -148,3 +148,15 @@ $$L^{\text{HD}}_{PSV}(\theta) = \mathbb{E}_t \left[ \text{HD} \left[ \pi_{\theta
 - 实验充分度: ⭐⭐⭐⭐ — PMO、GuacaMol、对接、消融均覆盖，但靶点单一
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式完整，图表丰富
 - 价值: ⭐⭐⭐⭐ — 灾难性遗忘是 RL 分子生成的真实痛点，方案实用且可扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Off-policy Reinforcement Learning in Biological Sequence Design](improved_off-policy_reinforcement_learning_in_biological_sequence_design.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](../../NeurIPS2025/medical_imaging/pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
+- [GFlowNets for Learning Better Drug-Drug Interaction Representations](../../NeurIPS2025/medical_imaging/gflownets_for_learning_better_drug-drug_interaction_representations.md)
+- [GenMol: A Drug Discovery Generalist with Discrete Diffusion](genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+
+<!-- RELATED:END -->

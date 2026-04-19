@@ -211,3 +211,15 @@ EMD 是一个即插即用的模块，包含两个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 四种基线方法、两个数据集、自监督+监督两种设置、新轨迹合成评估
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，图表丰富，可视化效果有说服力
 - **价值**: ⭐⭐⭐⭐ — 即插即用设计实用性极强，为街景重建提供了运动建模的标准组件
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAMap: Distance-aware MapNet for High Quality HD Map Construction](damap_distance-aware_mapnet_for_high_quality_hd_map_construction.md)
+- [GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting](gs-livm_real-time_photo-realistic_lidar-inertial-visual_mapping_with_gaussian_sp.md)
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+- [6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting](6dope-gs_online_6d_object_pose_estimation_using_gaussian_splatting.md)
+- [GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting](gs-occ3d_scaling_vision-only_occupancy_reconstruction_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

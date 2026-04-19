@@ -122,3 +122,15 @@ Captioning 提升最大（最高 17.6%），因为描述任务最需要视觉理
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种模型架构+16个基准+消融+Visual Contribution 量化分析+注意力可视化
 - 写作质量: ⭐⭐⭐⭐ 简洁有力，动机清晰，VC 指标的引入为视觉利用度量化提供了新工具
 - 价值: ⭐⭐⭐⭐⭐ 零成本即可获得的 VLM 训练改进，可直接叠加到所有 VIT 框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Instruction Bottleneck Tuning](visual_instruction_bottleneck_tuning.md)
+- [CoIDO: Efficient Data Selection for Visual Instruction Tuning via Coupled Importance-Diversity Optimization](coido_efficient_data_selection_for_visual_instruction_tuning_via_coupled_importa.md)
+- [Parrot: Multilingual Visual Instruction Tuning](../../ICML2025/multimodal_vlm/parrot_multilingual_visual_instruction_tuning.md)
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](../../ICCV2025/multimodal_vlm/metamorph_multimodal_understanding_and_generation_via_instru.md)
+- [SMoLoRA: Exploring and Defying Dual Catastrophic Forgetting in Continual Visual Instruction Tuning](../../ICCV2025/multimodal_vlm/smolora_exploring_and_defying_dual_catastrophic_forgetting_in_continual_visual_i.md)
+
+<!-- RELATED:END -->

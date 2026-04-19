@@ -143,3 +143,15 @@ LiveMamba 是一个轻量级流式多模态 LLM，由视觉编码器和语言模
 - ⭐ 实验充分度: 4/5 — 零样本、微调、消融、轮次制多角度评估，但仅限单一领域
 - ⭐ 写作质量: 4/5 — 问题定义清晰，实验组织有条理
 - ⭐ 价值: 4/5 — 开辟了流式交互指导的新研究方向，基准具有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-free Online Video Step Grounding](training-free_online_video_step_grounding.md)
+- [m&m's: A Benchmark to Evaluate Tool-Use for Multi-step Multi-modal Tasks](../../ECCV2024/multimodal_vlm/m_ampmaposs_a_benchmark_to_evaluate_tool-use_for_multi-step_multi-modal_tasks.md)
+- [Unveiling Chain of Step Reasoning for Vision-Language Models with Fine-grained Rewards](unveiling_chain_of_step_reasoning_for_visionlanguage_models.md)
+- [LLaVA-CoT: Let Vision Language Models Reason Step-by-Step](../../ICCV2025/multimodal_vlm/llavacot_let_vision_language_models_reason_stepbystep.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+
+<!-- RELATED:END -->

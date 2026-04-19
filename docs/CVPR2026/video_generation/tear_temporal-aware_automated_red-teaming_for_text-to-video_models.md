@@ -150,3 +150,15 @@ TEAR 包含三个组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 T2V 模型（含 3 个商业）、4 个 baseline、6 类有害内容、多维度分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰、方法层次分明、实验全面
 - 价值: ⭐⭐⭐⭐⭐ 对 T2V 安全领域有奠基性贡献，直接推动商业模型安全改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Target-Aware Video Diffusion Models](../../ICLR2026/video_generation/target-aware_video_diffusion_models.md)
+- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](../../ICCV2025/video_generation/efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+- [SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization](../../ICCV2025/video_generation/sweettok_semantic-aware_spatial-temporal_tokenizer_for_compact_video_discretizat.md)
+- [VideoCoF: Unified Video Editing with Temporal Reasoner](videocof_unified_video_editing_with_temporal_reasoner.md)
+- [Compressed-Domain-Aware Online Video Super-Resolution](compressed-domain-aware_online_video_super-resolution.md)
+
+<!-- RELATED:END -->

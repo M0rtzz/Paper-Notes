@@ -144,3 +144,15 @@ PARROT 的数据构建流程：从 38 个开源数据库基准和真实业务场
 ⭐⭐⭐⭐ (4/5)
 
 选题精准（SQL-to-SQL 是被严重忽视但实际意义重大的方向），数据规模和系统覆盖面印象深刻（22 种生产级数据库、28K+ 翻译对），双维度评估设计合理。揭示了一个令人警醒的差距：最强 LLM 在 SQL 方言翻译上远不及人类。公开排行榜的设计有助于持续推动该领域进步。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Evaluating LLM Alignment by Evaluating LLMs as Judges](on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+- [SwiLTra-Bench: The Swiss Legal Translation Benchmark](../../ACL2025/llm_evaluation/swiltra-bench_the_swiss_legal_translation_benchmark.md)
+- [MCTS-SQL: Light-Weight LLMs can Master the Text-to-SQL through Monte Carlo Tree Search](../../AAAI2026/llm_evaluation/mcts-sql_light-weight_llms_can_master_the_text-to-sql_through_monte_carlo_tree_s.md)
+- [EvoWiki: Evaluating LLMs on Evolving Knowledge](../../ACL2025/llm_evaluation/evowiki_evaluating_llms_on_evolving_knowledge.md)
+- [LTD-Bench: Evaluating Large Language Models by Letting Them Draw](ltd-bench_evaluating_large_language_models_by_letting_them_draw.md)
+
+<!-- RELATED:END -->

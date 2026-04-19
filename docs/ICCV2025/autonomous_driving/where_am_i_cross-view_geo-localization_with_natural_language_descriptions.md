@@ -173,3 +173,15 @@ OCR辅助精确捕获街景文字→GPT减少幻觉→OSM检索提升33.9%。
 - 实验完整度：⭐⭐⭐⭐（多城市、多数据源、多消融，但缺少与其他文本定位方法的对比）
 - 实用价值：⭐⭐⭐⭐⭐（紧急定位、行人导航等场景需求明确）
 - 总体推荐：⭐⭐⭐⭐（新任务+新数据集的完整工作，有望开辟新研究方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CVFusion: Cross-View Fusion of 4D Radar and Camera for 3D Object Detection](cvfusion_cross-view_fusion_of_4d_radar_and_camera_for_3d_object_detection.md)
+- [Where, What, Why: Towards Explainable Driver Attention Prediction](where_what_why_towards_explainable_driver_attention_prediction.md)
+- [VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](../../CVPR2025/autonomous_driving/vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)
+- [RTMap: Real-Time Recursive Mapping with Change Detection and Localization](rtmap_real-time_recursive_mapping_with_change_detection_and_localization.md)
+- [IGL-Nav: Incremental 3D Gaussian Localization for Image-goal Navigation](igl-nav_incremental_3d_gaussian_localization_for_image-goal_navigation.md)
+
+<!-- RELATED:END -->

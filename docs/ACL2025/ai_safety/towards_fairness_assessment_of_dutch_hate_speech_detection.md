@@ -170,3 +170,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 四种方法对比充分，包含性能和多维公平性评估，但缺消融实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，案例分析详实，定性和定量评估结合得当
 - 价值: ⭐⭐⭐ — 发布了首个荷兰语反事实数据集，但技术贡献有限，主要是已有方法的应用和对比
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](../../ICLR2026/ai_safety/bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
+- [SpeechFake: A Large-Scale Multilingual Speech Deepfake Dataset Incorporating Cutting-Edge Generation Methods](speechfake_a_largescale_multilingual_speech_deepfake.md)
+- [Gender Inclusivity Fairness Index (GIFI): A Multilevel Framework](gifi_gender_fairness.md)
+- [Improving Fairness of Large Language Models in Multi-document Summarization](improving_fairness_of_large_language_models_in_multi-document_summarization.md)
+- [Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs](fairness_difference_awareness.md)
+
+<!-- RELATED:END -->

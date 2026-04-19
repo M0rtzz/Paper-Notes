@@ -115,3 +115,15 @@ Cubify Anything在多个室内3D检测基准上进行了评估：
 ## 总结与展望
 
 Cubify Anything通过长方体表示和可扩展的训练策略，推动了室内3D物体检测的规模化发展。多数据集联合训练和伪标注生成策略有效提升了模型的泛化能力和类别覆盖范围。未来可以探索更精细的物体表示（如实例分割与重建），以及结合语言模型实现开放词汇的3D物体检测。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Approaching Outside: Scaling Unsupervised 3D Object Detection from 2D Scene](../../ECCV2024/autonomous_driving/approaching_outside_scaling_unsupervised_3d_object_detection_from_2d_scene.md)
+- [Detect Anything 3D in the Wild](../../ICCV2025/autonomous_driving/detect_anything_3d_in_the_wild.md)
+- [PAP: A Prediction-as-Perception Framework for 3D Object Detection](a_prediction-as-perception_framework_for_3d_object_detection.md)
+- [EV-3DOD: Pushing the Temporal Boundaries of 3D Object Detection with Event Cameras](ev-3dod_pushing_the_temporal_boundaries_of_3d_object_detection_with_event_camera.md)
+- [EVT: Efficient View Transformation for Multi-Modal 3D Object Detection](../../ICCV2025/autonomous_driving/evt_efficient_view_transformation_for_multi-modal_3d_object_detection.md)
+
+<!-- RELATED:END -->

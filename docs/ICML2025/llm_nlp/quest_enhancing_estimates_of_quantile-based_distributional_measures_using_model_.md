@@ -186,3 +186,15 @@ QuEst 是纯推断框架，不涉及模型训练，其核心"优化"在于：
 | 实验充分性 | 4 | 多场景覆盖全面，但缺少极端小样本分析 |
 | 写作质量 | 4 | 结构清晰，符号一致，但公式密集 |
 | **总分** | **4.3** | 扎实的理论工作，弥补 PPI 的重要空白 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation](la_rosa_enhancing_llm_efficiency_via_layerwise_rotated_sparse_activation.md)
+- [Q♯: Provably Optimal Distributional RL for LLM Post-Training](../../NeurIPS2025/llm_nlp/qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
+- [LLM Braces: Straightening Out LLM Predictions with Relevant Sub-Updates](../../ACL2025/llm_nlp/llm_braces_straightening.md)
+- [Enhancing the Rule Learning Ability of Large Language Model Agent through Induction, Deduction, and Abduction](../../ACL2025/llm_nlp/idea_enhancing_the_rule_learning_ability_of_large_language_model_agent_through_i.md)
+- [Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings](towards_universal_offline_black-box_optimization_via_learning_language_model_emb.md)
+
+<!-- RELATED:END -->

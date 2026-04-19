@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论为主，4个数据集实验验证基本结论
 - 写作质量: ⭐⭐⭐⭐⭐ 定义精确，例子直观（贷款/阈值/矩形），证明结构清晰
 - 价值: ⭐⭐⭐⭐ 为策略性ML和学习理论开辟新的基础研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Agnostic PAC Learning in the Small Error Regime](../../NeurIPS2025/others/on_agnostic_pac_learning_in_the_small_error_regime.md)
+- [Learning-Augmented Hierarchical Clustering](learning-augmented_hierarchical_clustering.md)
+- [Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
+- [AutoAL: Automated Active Learning with Differentiable Query Strategy Search](autoal_automated_active_learning_with_differentiable_query_strategy_search.md)
+- [SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
+
+<!-- RELATED:END -->

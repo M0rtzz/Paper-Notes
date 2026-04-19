@@ -146,3 +146,15 @@ NeRF Synthetic数据集（8个输入视图）：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多个3D/4D数据集，消融清晰
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清楚
 - 价值: ⭐⭐⭐⭐ 通用的正则化策略，对稀疏3DGS社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SC4D: Sparse-Controlled Video-to-4D Generation and Motion Transfer](sc4d_sparse-controlled_video-to-4d_generation_and_motion_transfer.md)
+- [CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization](cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization.md)
+- [GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation](grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)
+- [SGS-SLAM: Semantic Gaussian Splatting for Neural Dense SLAM](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)
+- [Surface Reconstruction from 3D Gaussian Splatting via Local Structural Hints](surface_reconstruction_from_3d_gaussian_splatting_via_local_structural_hints.md)
+
+<!-- RELATED:END -->

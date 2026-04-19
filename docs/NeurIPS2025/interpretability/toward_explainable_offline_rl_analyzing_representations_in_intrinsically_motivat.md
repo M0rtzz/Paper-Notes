@@ -126,3 +126,15 @@ Medium-Replay数据集：
 - **实验充分度**: ⭐⭐⭐ 环境和数据集有限，性能提升幅度小
 - **写作质量**: ⭐⭐⭐⭐ 分析框架清晰，生物类比有启发性
 - **价值**: ⭐⭐⭐⭐ 为理解辅助损失函数的表示层面影响提供了分析工具和见解
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Do Transformers Learn Implicit Reasoning?](how_do_transformers_learn_implicit_reasoning.md)
+- [Prompt-CAM: Making Vision Transformers Interpretable for Fine-Grained Analysis](../../CVPR2025/interpretability/prompt-cam_making_vision_transformers_interpretable_for_fine-grained_analysis.md)
+- [Empowering Decision Trees via Shape Function Branching](empowering_decision_trees_via_shape_function_branching.md)
+- [From Flat to Hierarchical: Extracting Sparse Representations with Matching Pursuit](from_flat_to_hierarchical_extracting_sparse_representations_with_matching_pursui.md)
+- [Cognitive Mirrors: Exploring the Diverse Functional Roles of Attention Heads in LLM Reasoning](cognitive_mirrors_exploring_the_diverse_functional_roles_of_attention_heads_in_l.md)
+
+<!-- RELATED:END -->

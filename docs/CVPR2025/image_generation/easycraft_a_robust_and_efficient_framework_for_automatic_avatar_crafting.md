@@ -121,3 +121,15 @@ $$\mathcal{L} = \alpha\|\delta_s - \hat{\delta}_s\|_1 + \gamma\|\delta_a \cdot \
 ## 评分：⭐⭐⭐⭐
 
 解决的问题实际（游戏行业刚需），方法简洁有效且可扩展到新引擎，实验在两个商业游戏上验证了实用性。扣一星因为身份相似度不是最优，且仅限面部定制，未涉及更完整的角色创建流程。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChatGen: Automatic Text-to-Image Generation From FreeStyle Chatting](chatgen_automatic_text-to-image_generation_from_freestyle_chatting.md)
+- [From Elements to Design: A Layered Approach for Automatic Graphic Design Composition](from_elements_to_design_a_layered_approach_for_automatic_graphic_design_composit.md)
+- [TeRA: Rethinking Text-guided Realistic 3D Avatar Generation](../../ICCV2025/image_generation/tera_rethinking_text-guided_realistic_3d_avatar_generation.md)
+- [FaceCraft4D: Animated 3D Facial Avatar Generation from a Single Image](../../ICCV2025/image_generation/facecraft4d_animated_3d_facial_avatar_generation_from_a_single_image.md)
+- [D-GEN: Automatic Distractor Generation and Evaluation for Reliable Assessment of Generative Models](../../ACL2025/image_generation/d-gen_automatic_distractor_generation_and_evaluation_for_reliable_assessment_of_.md)
+
+<!-- RELATED:END -->

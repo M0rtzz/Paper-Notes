@@ -153,3 +153,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ (井字棋场景过于简单，缺少更复杂环境验证)
 - 写作质量: ⭐⭐⭐⭐ (形式化清晰，实验设计系统)
 - 价值: ⭐⭐⭐ (核心思想好但应用范围有限，扩展性有待证明)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAEmoLLM: Retrieval Augmented LLMs for Cross-Domain Misinformation Detection Using In-Context Learning Based on Emotional Information](../../ACL2025/information_retrieval/raemollm_retrieval_augmented_llms_for_cross-domain_misinformation_detection_usin.md)
+- [RefTool: Reference-Guided Tool Creation for Knowledge-Intensive Reasoning](../../ICLR2026/information_retrieval/reftool_reference-guided_tool_creation_for_knowledge-intensive_reasoning.md)
+- [REAP: Enhancing RAG with Recursive Evaluation and Adaptive Planning for Multi-Hop Question Answering](reap_enhancing_rag_with_recursive_evaluation_and_adaptive_planning_for_multi-hop.md)
+- [SR-KI: Scalable and Real-Time Knowledge Integration into LLMs via Supervised Attention](sr-ki_scalable_and_real-time_knowledge_integration_into_llms_via_supervised_atte.md)
+- [Towards Inference-Time Scaling for Continuous Space Reasoning](towards_inference-time_scaling_for_continuous_space_reasoning.md)
+
+<!-- RELATED:END -->

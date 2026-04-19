@@ -156,3 +156,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集/多基线/多backbone/多schedule，消融非常详细
 - 写作质量: ⭐⭐⭐⭐ 问题动机分析出色，方法描述清晰
 - 价值: ⭐⭐⭐⭐ 即插即用设计实用性强，尤其HLS+DAFL零推理开销的特性很有工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMD: Explicit Motion Modeling for High-Quality Street Gaussian Splatting](emd_explicit_motion_modeling_for_high-quality_street_gaussian_splatting.md)
+- [SafeMap: Robust HD Map Construction from Incomplete Observations](../../ICML2025/autonomous_driving/safemap_robust_hd_map_construction_from_incomplete_observations.md)
+- [SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction](../../NeurIPS2025/autonomous_driving/sdtagnet_leveraging_text-annotated_navigation_maps_for_online_hd_map_constructio.md)
+- [Stream Query Denoising for Vectorized HD-Map Construction](../../ECCV2024/autonomous_driving/stream_query_denoising_for_vectorized_hd-map_construction.md)
+- [MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction](../../CVPR2025/autonomous_driving/mapgclr_geospatial_contrastive_learning_of_representations_for_online_vectorized.md)
+
+<!-- RELATED:END -->

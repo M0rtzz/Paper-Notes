@@ -126,3 +126,15 @@ Agentic Reasoning 提出了一个将 Web 搜索、代码执行和知识图谱记
 - 实验充分度: ⭐⭐⭐⭐⭐ HLE+GPQA+GAIA+深度研究任务，消融实验详细
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，案例研究生动
 - 价值: ⭐⭐⭐⭐⭐ 开源方案接近 OpenAI Deep Research 水平，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MC-Search: Evaluating and Enhancing Multimodal Agentic Search with Structured Long Reasoning Chains](../../ICLR2026/llm_agent/mc-search_evaluating_and_enhancing_multimodal_agentic_search_with_structured_lon.md)
+- [Visual Agentic AI for Spatial Reasoning with a Dynamic API](../../CVPR2025/llm_agent/visual_agentic_ai_for_spatial_reasoning_with_a_dynamic_api.md)
+- [Table-Critic: A Multi-Agent Framework for Collaborative Criticism and Refinement in Table Reasoning](table_critic_multi_agent.md)
+- [Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)
+- [Agentic Knowledgeable Self-Awareness](agentic_knowledgeable_self-awareness.md)
+
+<!-- RELATED:END -->

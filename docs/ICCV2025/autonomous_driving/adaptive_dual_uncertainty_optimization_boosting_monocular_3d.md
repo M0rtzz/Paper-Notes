@@ -150,3 +150,15 @@ nuScenes跨场景适应（MonoFlex为base）：
 - 实验充分度: ⭐⭐⭐⭐ — KITTI-C和nuScenes覆盖全面，但仅测试两个base model
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，动机-方法-实验逻辑连贯
 - 价值: ⭐⭐⭐⭐ — TTA for 3D detection是重要但研究不足的方向，DUO提供了坚实baseline
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detect Anything 3D in the Wild](detect_anything_3d_in_the_wild.md)
+- [MonoSOWA: Scalable Monocular 3D Object Detector Without Human Annotations](monosowa_scalable_monocular_3d_object_detector_without_human_annotations.md)
+- [MAESTRO: Task-Relevant Optimization via Adaptive Feature Enhancement and Suppression for Multi-task 3D Perception](maestro_task-relevant_optimization_via_adaptive_feature_enhancement_and_suppress.md)
+- [EVT: Efficient View Transformation for Multi-Modal 3D Object Detection](evt_efficient_view_transformation_for_multi-modal_3d_object_detection.md)
+- [DuET: Dual Incremental Object Detection via Exemplar-Free Task Arithmetic](duet_dual_incremental_object_detection_via_exemplar-free_task_arithmetic.md)
+
+<!-- RELATED:END -->

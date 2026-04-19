@@ -153,3 +153,15 @@ $$\dot{\hat{z}} = A\hat{z} + By + \bar{\varphi}(\hat{z}, u; \xi)$$
 - 不同于 Niazi et al. (2025) 仅处理自治 KKL，本文通过超网络实现了非自治扩展
 - 不同于 Meta-RL 方法（如 MAML）需要在线梯度更新，HyperKKL 纯前向推理即可适应
 - 不同于静态变换方法，Dynamic HyperKKL 显式建模时变 PDE 的时间偏导项
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Universal Neural Operators through Multiphysics Pretraining](../../NeurIPS2025/scientific_computing/towards_universal_neural_operators_through_multiphysics_pretraining.md)
+- [Hamiltonian Neural PDE Solvers through Functional Approximation](../../NeurIPS2025/scientific_computing/hamiltonian_neural_pde_solvers_through_functional_approximation.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [Deep Learning for Subspace Regression](deep_learning_for_subspace_regression.md)
+- [Empirical Stability Analysis of Kolmogorov-Arnold Networks in Hard-Constrained Recurrent Physics-Informed Discovery](empirical_stability_analysis_of_kolmogorov-arnold_networks_in_hard-constrained_r.md)
+
+<!-- RELATED:END -->

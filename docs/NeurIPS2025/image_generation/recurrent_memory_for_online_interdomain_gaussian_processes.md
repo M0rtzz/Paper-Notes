@@ -135,3 +135,15 @@ OHSGPR 比 OSGPR 快 **300-450倍**，因为不需要优化诱导点位置。
 - **实验充分度**: ⭐⭐⭐⭐ 涵盖时间序列、持续学习、GP-VAE 三类任务，基线完整
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清楚，图示直观，但跨域 GP 背景知识要求较高
 - **价值**: ⭐⭐⭐⭐ 解决了在线 GP 的核心痛点（灾难性遗忘），具有较好的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flow Matching Neural Processes](flow_matching_neural_processes.md)
+- [Gaussian Mixture Flow Matching Models](../../ICML2025/image_generation/gaussian_mixture_flow_matching_models.md)
+- [Modern Methods in Associative Memory](../../ICML2025/image_generation/modern_methods_in_associative_memory.md)
+- [Quantum Algorithms for Finite-horizon Markov Decision Processes](../../ICML2025/image_generation/quantum_algorithms_for_finite-horizon_markov_decision_processes.md)
+- [Improving Editability in Image Generation with Layer-wise Memory](../../CVPR2025/image_generation/improving_editability_in_image_generation_with_layer-wise_memory.md)
+
+<!-- RELATED:END -->

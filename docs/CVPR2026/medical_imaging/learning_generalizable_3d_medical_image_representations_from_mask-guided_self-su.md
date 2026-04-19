@@ -159,3 +159,15 @@ MASS 包含两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖 4 模态 12+ 数据集、分割+分类两大任务线、从 20 scans 到 5K volumes 的规模实验、多维消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机-方法-实验逻辑链完整，"不变性→语义涌现"的解释优雅且有说服力
 - 价值: ⭐⭐⭐⭐⭐ — 为 3D 医学图像基础模型提供了无标注可扩展的新路径，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An OpenMind for 3D Medical Vision Self-supervised Learning](../../ICCV2025/medical_imaging/an_openmind_for_3d_medical_vision_selfsupervised_learning.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](addressing_data_scarcity_in_3d_trauma_detection_through_self-supervised_and_semi.md)
+- [Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation](../../NeurIPS2025/medical_imaging/self-supervised_learning_of_echocardiographic_video_representations_via_online_c.md)
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+
+<!-- RELATED:END -->

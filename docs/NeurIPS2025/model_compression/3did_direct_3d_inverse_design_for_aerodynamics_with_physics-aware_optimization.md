@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 主实验+两个消融+定性分析+CFD 验证，比较全面；但只在一个数据集/任务上验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机-方法-实验逻辑链顺畅
 - 价值: ⭐⭐⭐⭐ 对 3D 工程逆向设计领域有实际意义，物理-几何联合编码的思路有普适性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Kernel Design for Bayesian Optimization Is a Piece of CAKE with LLMs](adaptive_kernel_design_for_bayesian_optimization_is_a_piece_of_cake_with_llms.md)
+- [GeoFusion-CAD: Structure-Aware Diffusion with Geometric State Space for Parametric 3D Design](../../CVPR2026/model_compression/geofusion-cad_structure-aware_diffusion_with_geometric_state_space_for_parametri.md)
+- [Direct Behavior Optimization: Unlocking the Potential of Lightweight LLMs](../../ACL2025/model_compression/direct_behavior_optimization_unlocking_the_potential_of_lightweight_llms.md)
+- [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [Beyond Random: Automatic Inner-Loop Optimization in Dataset Distillation](beyond_random_automatic_inner-loop_optimization_in_dataset_distillation.md)
+
+<!-- RELATED:END -->

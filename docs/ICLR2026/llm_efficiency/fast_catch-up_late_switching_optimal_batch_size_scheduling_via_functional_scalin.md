@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 理论推导+线性回归+多架构多规模 LLM 预训练，极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，可视化直观，理论到实践的叙事流畅
 - 价值: ⭐⭐⭐⭐⭐ 为 LLM 预训练的 BSS 设计提供了理论基础，具有直接的工业应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [xLSTM Scaling Laws: Competitive Performance with Linear Time-Complexity](xlstm_scaling_laws_competitive_performance_with_linear_time-complexity.md)
+- [Critical Batch Size Revisited: A Simple Empirical Approach to Large-Batch Language Model Training](../../NeurIPS2025/llm_efficiency/critical_batch_size_revisited_a_simple_empirical_approach_to_large-batch_languag.md)
+- [Tetris: Optimal Draft Token Selection for Batch Speculative Decoding](../../ACL2025/llm_efficiency/tetris_optimal_draft_token_selection_for_batch_speculative_decoding.md)
+- [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
+- [Scaling Inference-Efficient Language Models](../../ICML2025/llm_efficiency/scaling_inference-efficient_language_models.md)
+
+<!-- RELATED:END -->

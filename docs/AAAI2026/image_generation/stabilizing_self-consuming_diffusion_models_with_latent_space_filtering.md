@@ -158,3 +158,15 @@ $$\xi(\theta) \leq \frac{1}{2\sigma^2(\sigma^2+1)} \varsigma(r\sin^2\theta)$$
 - 实验充分度: ⭐⭐⭐ — 三个数据集+多基线对比，但分辨率低、缺乏大规模实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，理论与实验结合紧密，图表丰富直观
 - 价值: ⭐⭐⭐⭐ — 高度实用且问题重要（合成数据时代的核心挑战），方法简洁高效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hessian Geometry of Latent Space in Generative Models](../../ICML2025/image_generation/hessian_geometry_of_latent_space_in_generative_models.md)
+- [Latent Space Imaging](../../CVPR2025/image_generation/latent_space_imaging.md)
+- [What's in a Latent? Leveraging Diffusion Latent Space for Domain Generalization](../../ICCV2025/image_generation/whats_in_a_latent_leveraging_diffusion_latent_space_for_domain_generalization.md)
+- [Self-NPO: Data-Free Diffusion Model Enhancement via Truncated Diffusion Fine-Tuning](self-npo_data-free_diffusion_model_enhancement_via_truncated_diffusion_fine-tuni.md)
+- [DiP: Taming Diffusion Models in Pixel Space](../../CVPR2026/image_generation/dip_taming_diffusion_models_in_pixel_space.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{bbo
 - 实验充分度: ⭐⭐⭐⭐⭐ M-OWODB + S-OWODB 双 benchmark，4 个 task 全面评估
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，PCA 可视化有说服力
 - 价值: ⭐⭐⭐⭐⭐ 未知召回从 ~50% 提升到 ~65%，在 OWOD 方向取得里程碑式进步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EW-DETR: Evolving World Object Detection via Incremental Low-Rank DEtection TRansformer](ewdetr_evolving_world_object_detection.md)
+- [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](show_dont_tell_detecting_novel_objects_by_watching.md)
+- [CineSRD: Leveraging Visual, Acoustic, and Linguistic Cues for Open-World Visual Media Speaker Diarization](cinesrd_leveraging_visual_acoustic_and_linguistic_cues_for_open-world_visual_med.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+
+<!-- RELATED:END -->

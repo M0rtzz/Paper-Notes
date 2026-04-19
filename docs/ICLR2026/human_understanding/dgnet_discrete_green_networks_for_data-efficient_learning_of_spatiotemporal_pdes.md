@@ -161,3 +161,15 @@ $$\mathbf{L} = \mathbf{L}_{\text{physics}} + \mathbf{L}_{\text{neural}}$$
 - **实验说服力**: ★★★★★ — 覆盖三类PDE系统、多baseline、消融完备
 - **实用价值**: ★★★★☆ — 有开源代码，在科学计算领域直接可用
 - **表达清晰度**: ★★★★☆ — 推导清晰、图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
+- [Maximizing Asynchronicity in Event-based Neural Networks](maximizing_asynchronicity_in_event-based_neural_networks.md)
+- [Scaling Generalist Data-Analytic Agents](scaling_generalist_data-analytic_agents.md)
+- [Rapid Training of Hamiltonian Graph Networks using Random Features](rapid_training_of_hamiltonian_graph_networks_using_random_features.md)
+- [Bayesian Influence Functions for Hessian-Free Data Attribution](bayesian_influence_functions_for_hessian-free_data_attribution.md)
+
+<!-- RELATED:END -->

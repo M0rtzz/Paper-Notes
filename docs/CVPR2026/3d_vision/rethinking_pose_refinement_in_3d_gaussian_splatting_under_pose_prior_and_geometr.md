@@ -126,3 +126,15 @@ UGS-Loc 包含两个核心模块：（1）蒙特卡洛精化（Monte Carlo Refin
 - 实验充分度: ⭐⭐⭐⭐ 三个基准、多种先验、详细消融，但缺少更多 3DGS 变体测试
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，动机阐述充分，公式推导完整
 - 价值: ⭐⭐⭐⭐ 即插即用的推理时方案，实用性强，对 3DGS 定位社区有直接推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [E2EGS: Event-to-Edge Gaussian Splatting for Pose-Free 3D Reconstruction](e2egs_event-to-edge_gaussian_splatting_for_pose-free_3d_reconstruction.md)
+- [No Pose at All: Self-Supervised Pose-Free 3D Gaussian Splatting from Sparse Views](../../ICCV2025/3d_vision/no_pose_at_all_self-supervised_pose-free_3d_gaussian_splatting_from_sparse_views.md)
+- [GAP: Action-Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation](action-geometry_prediction_with_3d_geometric_prior_for_bimanual_manipulation.md)
+- [SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting](sr3r_rethinking_super-resolution_3d_reconstruction_with_feed-forward_gaussian_sp.md)
+
+<!-- RELATED:END -->

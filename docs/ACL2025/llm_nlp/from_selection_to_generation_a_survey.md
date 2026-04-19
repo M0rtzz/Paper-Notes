@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐ 综述论文无原创实验，各方法的比较依赖引用文献，缺少统一 benchmark 下的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分类法直观，表格和图示设计合理；覆盖面广但部分方法描述偏简略
 - 价值: ⭐⭐⭐⭐ 对 LLM-based AL 领域研究者是优秀的入门索引和方法定位工具，分类法可直接指导新方法设计和定位
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
+- [OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+- [LLM as a Broken Telephone: Iterative Generation Distorts Information](llm_broken_telephone.md)
+- [Training-free LLM Merging for Multi-task Learning](training-free_llm_merging_for_multi-task_learning.md)
+
+<!-- RELATED:END -->

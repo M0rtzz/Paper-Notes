@@ -143,3 +143,15 @@ Vary 的流程分为两个阶段：**视觉词汇表的生成**和**视觉词汇
 - 实验充分度: ⭐⭐⭐⭐ 涵盖文档 OCR、下游 VQA、通用 benchmark 等多维度评测，但缺少更多细粒度任务的验证
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，方法阐述自然流畅，类比恰当
 - 价值: ⭐⭐⭐⭐⭐ 提供了一种通用的视觉词汇表扩展范式，对后续 LVLM 研究具有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+- [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+- [NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models](navgpt-2_unleashing_navigational_reasoning_capability_for_large_vision-language_.md)
+- [Robust Calibration of Large Vision-Language Adapters](robust_calibration_of_large_vision-language_adapters.md)
+- [SQ-LLaVA: Self-Questioning for Large Vision-Language Assistant](sq-llava_self-questioning_for_large_vision-language_assistant.md)
+
+<!-- RELATED:END -->

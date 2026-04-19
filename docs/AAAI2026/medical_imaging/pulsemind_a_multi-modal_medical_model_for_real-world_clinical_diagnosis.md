@@ -158,3 +158,15 @@ PulseMind 包含三个核心组件（见图2）：
 - **技术深度**: ⭐⭐⭐ — 各个组件（数据/评估/训练）都有合理设计，但单个模块的技术创新有限
 - **实用性**: ⭐⭐⭐⭐⭐ — 直接面向真实临床场景，系统性方案具有很高的落地价值
 - **清晰度**: ⭐⭐⭐⭐ — 系统架构清晰，实验对比全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Experience with Single Domain Generalization in Real World Medical Imaging Deployments](experience_with_single_domain_generalization_in_real_world_medical_imaging_deplo.md)
+- [MedEyes: Learning Dynamic Visual Focus for Medical Progressive Diagnosis](medeyes_learning_dynamic_visual_focus_for_medical_progressive_diagnosis.md)
+- [RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis](../../NeurIPS2025/medical_imaging/rad_towards_trustworthy_retrieval-augmented_multi-modal_clinical_diagnosis.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](../../NeurIPS2025/medical_imaging/mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)
+
+<!-- RELATED:END -->

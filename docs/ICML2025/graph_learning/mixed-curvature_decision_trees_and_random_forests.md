@@ -171,3 +171,15 @@ $$\text{IG}(d, \theta) = H(Y) - \sum_{s \in \{L, R\}} \frac{|S_s|}{|S|} H(Y_s)$$
 - **实用性**: ★★★★★ — 代码完善、API 友好、任务覆盖广、无需调参
 - **实验充分度**: ★★★★★ — 57 个数据集 + 13 个基线 + 3 种任务类型
 - **论文质量**: ★★★★☆ — 30 页完整论文，数学推导清晰，消融全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WILTing Trees: Interpreting the Distance Between MPNN Embeddings](wilting_trees_interpreting_the_distance_between_mpnn_embeddings.md)
+- [Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees](towards_graph_foundation_models_learning_generalities_across_graphs_via_task-tre.md)
+- [TINED: GNNs-to-MLPs by Teacher Injection and Dirichlet Energy Distillation](tined_gnns-to-mlps_by_teacher_injection_and_dirichlet_energy_distillation.md)
+- [From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)
+- [Is Complex Query Answering Really Complex?](is_complex_query_answering_really_complex.md)
+
+<!-- RELATED:END -->

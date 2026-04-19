@@ -202,3 +202,15 @@ tags:
 ## 评分 ⭐⭐⭐⭐⭐
 
 研究动机清晰（发现并解决 MLLM 对齐退化）、数据工程极为系统、实验全面且有力（32B 超 72B），提供了完整的数据集 + 基准 + 代码。是多模态对齐方向的标杆工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Redundancy Principles for MLLMs Benchmarks](redundancy_principles_for_mllms_benchmarks.md)
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ Ego4D 帧 → 注视点预测（GLC 模型）→ 中央视觉裁剪 → MoCoV3 +
 - 实验充分度: ⭐⭐⭐⭐ 多维度分析（分类、细粒度、实例、场景、共现）
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，实验设计有针对性
 - 价值: ⭐⭐⭐⭐ 对理解人类视觉学习有科学贡献，对嵌入式 AI 有实践启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contrastive Representations for Temporal Reasoning](../../NeurIPS2025/self_supervised/contrastive_representations_for_temporal_reasoning.md)
+- [SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](../../NeurIPS2025/self_supervised/seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
+- [Vision Transformers Need More Than Registers](../../CVPR2026/self_supervised/vit_need_more_than_registers.md)
+- [Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization](../../NeurIPS2025/self_supervised/minimal_semantic_sufficiency_meets_unsupervised_domain_generalization.md)
+- [LoftUp: Learning a Coordinate-Based Feature Upsampler for Vision Foundation Models](../../ICCV2025/self_supervised/loftup_learning_a_coordinatebased_feature_upsampler_for_visi.md)
+
+<!-- RELATED:END -->

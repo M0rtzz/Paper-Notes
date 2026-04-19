@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 以理论为主，合成实验充分验证了关键性质但未涉及真实应用
 - 写作质量: ⭐⭐⭐⭐⭐ 定理-引理-推论层次清晰，图示直观，技术与直觉兼备
 - 价值: ⭐⭐⭐⭐⭐ 解决了OT映射估计理论的根本性覆盖范围问题，对统计学习和应用OT社区有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)
+- [Optimizing Illuminant Estimation in Dual-Exposure HDR Imaging](../../ECCV2024/signal_comm/optimizing_illuminant_estimation_in_dual-exposure_hdr_imaging.md)
+- [The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning](the_surprising_effectiveness_of_negative_reinforcement_in_llm_reasoning.md)
+- [Masked Symbol Modeling for Demodulation of Oversampled Baseband Communication Signals](masked_symbol_modeling_for_demodulation_of_oversampled_baseband_communication_si.md)
+- [Angular Steering: Behavior Control via Rotation in Activation Space](angular_steering_behavior_control_via_rotation_in_activation_space.md)
+
+<!-- RELATED:END -->

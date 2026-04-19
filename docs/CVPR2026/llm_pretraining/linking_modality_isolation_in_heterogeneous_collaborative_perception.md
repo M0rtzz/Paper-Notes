@@ -139,3 +139,15 @@ $$L = L_{\text{det}}(\hat{\mathcal{O}}_i, \mathcal{O}_i^0) + L_{\text{pyramid}} 
 - 实验充分度: ⭐⭐⭐⭐ — 仿真+真实数据集，多场景消融全面；但模态种类受限
 - 写作质量: ⭐⭐⭐⭐ — 问题定义清晰，方法阐述系统；部分符号重复定义
 - 价值: ⭐⭐⭐⭐⭐ — 解决实际部署痛点（隐私、效率、可扩展性），工程意义显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
+- [CHAMMI-75: Pre-training multi-channel models with heterogeneous microscopy images](../../ICLR2026/llm_pretraining/chammi-75_pre-training_multi-channel_models_with_heterogeneous_microscopy_images.md)
+- [An Effective Incorporating Heterogeneous Knowledge Curriculum Learning for Sequence Labeling](../../ACL2025/llm_pretraining/dual_stage_curriculum_learning_sequence_labeling.md)
+- [FlowMotion: Training-Free Flow Guidance for Video Motion Transfer](flowmotion_training-free_flow_guidance_for_video_motion_transfer.md)
+- [Watch and Learn: Learning to Use Computers from Online Videos](watch_and_learn_learning_to_use_computers_from_online_videos.md)
+
+<!-- RELATED:END -->

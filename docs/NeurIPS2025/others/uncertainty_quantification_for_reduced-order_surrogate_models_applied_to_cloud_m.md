@@ -263,3 +263,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 方法通用性强、实用价值高，组件级UQ分析提供了独特洞察，云微物理应用场景切合实际需求。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: There Is No Free Bayesian Uncertainty Quantification](position_there_is_no_free_bayesian_uncertainty_quantification.md)
+- [SMRS: Advocating a Unified Reporting Standard for Surrogate Models in the Artificial Intelligence Era](smrs_advocating_a_unified_reporting_standard_for_surrogate_models_in_the_artific.md)
+- [Adjusted Count Quantification Learning on Graphs](adjusted_count_quantification_learning_on_graphs.md)
+- [Uncertainty Estimation by Flexible Evidential Deep Learning](uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](../../ICML2025/others/unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ $$\|\boldsymbol{V}^\top \boldsymbol{a}_i - \boldsymbol{d}_i\|_2 \leq \frac{b_i -
 - 实验充分度：⭐⭐ — 仅玩具示例
 - 实用价值：⭐⭐⭐⭐ — 对 ARO 实践者有直接指导意义
 - 总体推荐：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation](../../ICML2025/others/sassha_sharpness-aware_adaptive_second-order_optimization_with_stable_hessian_ap.md)
+- [Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)
+- [How to Mitigate Overfitting in Weak-to-Strong Generalization?](../../ACL2025/others/how_to_mitigate_overfitting_in_weak-to-strong_generalization.md)
+- [Distributionally Robust Feature Selection](distributionally_robust_feature_selection.md)
+- [Adaptive Data Analysis for Growing Data](adaptive_data_analysis_for_growing_data.md)
+
+<!-- RELATED:END -->

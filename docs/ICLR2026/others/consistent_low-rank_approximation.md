@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论为主，实验验证基本但不充分
 - 写作质量: ⭐⭐⭐⭐⭐ 技术概览清晰，直觉解释到位，anti-Hadamard 分析深入
 - 价值: ⭐⭐⭐⭐ 开辟了一致性在线算法的新方向，对特征工程有实用启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoLA: Collaborative Low-Rank Adaptation](../../ACL2025/others/cola_collaborative_low-rank_adaptation.md)
+- [Low-Rank Interconnected Adaptation across Layers](../../ACL2025/others/low-rank_interconnected_adaptation_across_layers.md)
+- [The Persistence of Neural Collapse Despite Low-Rank Bias](../../NeurIPS2025/others/the_persistence_of_neural_collapse_despite_low-rank_bias.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
+- [MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](../../ACL2025/others/more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
+
+<!-- RELATED:END -->

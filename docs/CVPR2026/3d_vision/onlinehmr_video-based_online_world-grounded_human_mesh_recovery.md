@@ -241,3 +241,15 @@ $$\mathbf{S}(i,f) = \left|\sum_{k=0}^{L-1} \mathbf{y}(k) w(k-i) e^{-j2\pi fk/N_w
 - 实验充分度: ⭐⭐⭐⭐ 标准 benchmark + 野外视频 + 效率分析 + 消融充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰（四准则），系统设计条理分明，动机-方案映射明确
 - 价值: ⭐⭐⭐⭐ 对 AR/VR、机器人感知-动作回路等实时应用有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Global-to-Pixel Regression for Human Mesh Recovery](../../ECCV2024/3d_vision/global-to-pixel_regression_for_human_mesh_recovery.md)
+- [VLM-Guided Group Preference Alignment for Diffusion-based Human Mesh Recovery](vlm-guided_group_preference_alignment_for_diffusion-based_human_mesh_recovery.md)
+- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](../../CVPR2025/3d_vision/heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
+- [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](../../CVPR2025/3d_vision/mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
+- [Wanderland: Geometrically Grounded Simulation for Open-World Embodied AI](wanderland_geometrically_grounded_simulation_for_open-world_embodied_ai.md)
+
+<!-- RELATED:END -->

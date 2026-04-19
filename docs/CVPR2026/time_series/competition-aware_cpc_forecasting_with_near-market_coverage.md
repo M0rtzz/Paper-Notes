@@ -212,3 +212,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐☆ 覆盖传统模型、TSFM、STGNN、多 horizon 和 competitive frontier 分析，实验面较完整，但跨行业泛化仍不足。
 - 写作质量: ⭐⭐⭐⭐ 动机、问题 framing 和实验结论都比较清晰，读完后能明确知道作者想证明什么。
 - 价值: ⭐⭐⭐⭐☆ 对广告投放这种高业务价值场景很实用，也给更一般的工业预测任务提供了“用代理恢复隐变量结构”的方法论启发。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STCast: Adaptive Boundary Alignment for Global and Regional Weather Forecasting](stcast_adaptive_boundary_alignment_for_global_and_regional_weather_forecasting.md)
+- [A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens](a_frame_is_worth_one_token_efficient_generative_world_modeling_with_delta_tokens.md)
+- [PFGNet: A Fully Convolutional Frequency-Guided Peripheral Gating Network for Efficient Spatiotemporal Predictive Learning](pfgnet_a_fully_convolutional_frequency-guided_peripheral_gating_network_for_effi.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](../../ICLR2026/time_series/adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+- [ReCast: Reliability-aware Codebook Assisted Lightweight Time Series Forecasting](../../AAAI2026/time_series/recast_reliability-aware_codebook_assisted_lightweight_time_series_forecasting.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ AndroidControl 结果：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4个数据集，10+基线对比，充分的消融和敏感性分析
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机分析深入，pilot experiments 令人信服
 - **价值**: ⭐⭐⭐⭐ — 为 GUI Agent 提供了计算友好的训练方案，"不用预训练数据"的卖点很有实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GUI-Xplore: Empowering Generalizable GUI Agents with One Exploration](../../CVPR2025/llm_agent/gui-xplore_empowering_generalizable_gui_agents_with_one_exploration.md)
+- [GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](../../ACL2025/llm_agent/gui_explorer_autonomous.md)
+- [History-Aware Reasoning for GUI Agents](../../AAAI2026/llm_agent/history-aware_reasoning_for_gui_agents.md)
+- [HATS: Hardness-Aware Trajectory Synthesis for GUI Agents](../../CVPR2026/llm_agent/hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)
+- [ContextAgent: Context-Aware Proactive LLM Agents with Open-World Sensory Perceptions](../../NeurIPS2025/llm_agent/contextagent_context-aware_proactive_llm_agents_with_open-world_sensory_percepti.md)
+
+<!-- RELATED:END -->

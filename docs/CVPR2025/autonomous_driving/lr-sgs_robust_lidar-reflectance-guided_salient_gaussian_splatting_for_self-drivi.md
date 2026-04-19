@@ -129,3 +129,15 @@ $\mathcal{L} = \mathcal{L}_{rgb} + \mathcal{L}_{lidar} + \mathcal{L}_{joint}$。
 - 实验充分度: ⭐⭐⭐⭐ 24 个序列跨 4 类场景+详细消融+场景编辑演示
 - 写作质量: ⭐⭐⭐⭐ 技术细节完整，图表丰富，论文结构清晰
 - 价值: ⭐⭐⭐⭐ 对挑战性驾驶场景（复杂光照、高速）的重建质量有显著提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EVolSplat: Efficient Volume-based Gaussian Splatting for Urban View Synthesis](evolsplat_efficient_volume-based_gaussian_splatting_for_urban_view_synthesis.md)
+- [LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation](lidar-rt_gaussian-based_ray_tracing_for_dynamic_lidar_re-simulation.md)
+- [FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes](freesim_toward_free-viewpoint_camera_simulation_in_driving_scenes.md)
+- [Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation](exploring_scene_affinity_for_semi-supervised_lidar_semantic_segmentation.md)
+- [UniScene: Unified Occupancy-centric Driving Scene Generation](uniscene_unified_occupancy-centric_driving_scene_generation.md)
+
+<!-- RELATED:END -->

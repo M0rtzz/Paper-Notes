@@ -98,3 +98,15 @@ HOIGen-1M 的构建包含三个核心部分：(1) 视频筛选管线——从 80
 - 实用性：⭐⭐⭐⭐⭐（直接可用于提升 T2V 模型的 HOI 生成能力）
 - 技术深度：⭐⭐⭐（数据集论文以工程为主，方法创新适中）
 - 表达清晰度：⭐⭐⭐⭐（结构清晰，分析全面）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation](../../ICCV2025/video_generation/dh-facevid-1k_a_large-scale_high-quality_dataset_for_face_video_generation.md)
+- [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](../../ICCV2025/video_generation/tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
+- [Multi-identity Human Image Animation with Structural Video Diffusion](../../ICCV2025/video_generation/multi-identity_human_image_animation_with_structural_video_diffusion.md)
+- [Mask2IV: Interaction-Centric Video Generation via Mask Trajectories](../../AAAI2026/video_generation/mask2iv_interaction-centric_video_generation_via_mask_trajectories.md)
+- [IDOL: Instant Photorealistic 3D Human Creation from a Single Image](idol_instant_photorealistic_3d_human_creation_from_a_single_image.md)
+
+<!-- RELATED:END -->

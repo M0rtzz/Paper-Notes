@@ -144,3 +144,15 @@ Sharpness（Hessian 最大特征值）在 EoS 阶段振荡在 $2/\eta$ 附近，
 - ⭐ 实验充分度: 2/5 — 主要依赖理论和低维 toy 示例，实验不够丰富
 - ⭐ 写作质量: 4/5 — 理论叙述清晰，阶段式证明结构好
 - ⭐ 综合价值: 4/5 — 核心优化理论贡献突出，但适用范围有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benefits of Early Stopping in Gradient Descent for Overparameterized Logistic Regression](../../ICML2025/optimization/benefits_of_early_stopping_in_gradient_descent_for_overparameterized_logistic_re.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+- [Do Neural Networks Need Gradient Descent to Generalize? A Theoretical Study](do_neural_networks_need_gradient_descent_to_generalize_a_theoretical_study.md)
+
+<!-- RELATED:END -->

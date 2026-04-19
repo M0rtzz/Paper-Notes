@@ -152,3 +152,15 @@ SADCA 在所有 4 个源模型的跨模型迁移中均显著超越 SOTA（SA-AET
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 种 VLP 模型、2 类任务、多个 LVLM（含 GPT-5）、跨模型+跨任务、消融齐全
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法与现有工作的对比图直观，算法伪代码完整
 - **价值**: ⭐⭐⭐⭐ — 揭示了 VLP 模型的跨模态攻击薄弱点，为对抗鲁棒性研究提供了更强的攻击基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transferable Hypergraph Attack via Injecting Nodes into Pivotal Hyperedges](../../AAAI2026/ai_safety/transferable_hypergraph_attack_via_injecting_nodes_into_pivotal_hyperedges.md)
+- [V-Attack: Targeting Disentangled Value Features for Controllable Adversarial Attacks on LVLMs](v-attack_targeting_disentangled_value_features_for_controllable_adversarial_atta.md)
+- [Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers](../../ICCV2025/ai_safety/semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf.md)
+- [Understanding Model Ensemble in Transferable Adversarial Attack](../../ICML2025/ai_safety/understanding_model_ensemble_in_transferable_adversarial_attack.md)
+- [Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ vs 其他选择策略：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型/多任务/多策略对比+压缩兼容性+鲁棒性分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，但部分公式可以更简洁
 - 价值: ⭐⭐⭐⭐ 对协同感知实际部署有显著推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Peering into the Unknown: Active View Selection with Neural Uncertainty Maps for 3D Reconstruction](peering_into_the_unknown_active_view_selection_with_neural_uncertainty_maps_for_.md)
+- [Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation](../../AAAI2026/3d_vision/domain_generalized_stereo_matching_with_uncertainty-guided_data_augmentation.md)
+- [CA-I2P: Channel-Adaptive Registration Network with Global Optimal Selection](../../ICCV2025/3d_vision/ca-i2p_channel-adaptive_registration_network_with_global_optimal_selection.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](../../CVPR2026/3d_vision/varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+- [Griffin: Aerial-Ground Cooperative Detection and Tracking Dataset and Benchmark](../../AAAI2026/3d_vision/griffin_aerial-ground_cooperative_detection_and_tracking_dataset_and_benchmark.md)
+
+<!-- RELATED:END -->

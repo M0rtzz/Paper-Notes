@@ -162,3 +162,15 @@ SimGRAG 分三步：
 - **实验充分度**: ⭐⭐⭐⭐⭐ (6个数据集、多种基线对比、消融实验、效率分析、错误分析齐全)
 - **写作质量**: ⭐⭐⭐⭐⭐ (问题定义清晰，图示直观，算法伪代码完整)
 - **价值**: ⭐⭐⭐⭐⭐ (即插即用、可扩展到千万级 KG、无需训练，实用性极强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](kg_rag_recommendation.md)
+- [mRAKL: Multilingual Retrieval-Augmented Knowledge Graph Construction for Low-Resourced Languages](mrakl_multilingual_retrieval-augmented_knowledge_graph_construction_for_low-reso.md)
+- [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](../../NeurIPS2025/graph_learning/gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
+- [Neural Graph Matching Improves Retrieval Augmented Generation in Molecular Machine Learning](../../ICML2025/graph_learning/neural_graph_matching_improves_retrieval_augmented_generation_in_molecular_machi.md)
+- [RAS: Retrieval-And-Structuring for Knowledge-Intensive LLM Generation](../../ICLR2026/graph_learning/ras_retrieval-and-structuring_for_knowledge-intensive_llm_generation.md)
+
+<!-- RELATED:END -->

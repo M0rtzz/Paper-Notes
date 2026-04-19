@@ -131,3 +131,15 @@ DEVIANT骨干同样有效：ΔH=+0.76m时AP3D_70从6.25升至26.24。
 - 实验充分度: ⭐⭐⭐⭐ （消融充实但仅限仿真数据）
 - 写作质量: ⭐⭐⭐⭐⭐ （逻辑链条清晰，定理证明严谨）
 - 价值: ⭐⭐⭐⭐ （揭示重要被忽视问题，方案可直接集成到现有检测器）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boost 3D Reconstruction using Diffusion-based Monocular Camera Calibration](boost_3d_reconstruction_using_diffusionbased_monocular_camer.md)
+- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+- [TimeFormer: Capturing Temporal Relationships of Deformable 3D Gaussians for Robust Reconstruction](timeformer_capturing_temporal_relationships_of_deformable_3d_gaussians_for_robus.md)
+- [StealthAttack: Robust 3D Gaussian Splatting Poisoning via Density-Guided Illusions](stealthattack_robust_3d_gaussian_splatting_poisoning_via_density-guided_illusion.md)
+
+<!-- RELATED:END -->

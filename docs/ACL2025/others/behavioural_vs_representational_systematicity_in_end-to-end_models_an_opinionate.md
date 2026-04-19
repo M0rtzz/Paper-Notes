@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯综述无实验，但分析覆盖面广
 - 写作质量: ⭐⭐⭐⭐⭐ 论点清晰有力，逻辑链严密，概念界定精确
 - 价值: ⭐⭐⭐⭐ 对组合性泛化研究和 LLM 评估方法论有重要理论启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Personalized Generation In Large Model Era: A Survey](personalized_generation_in_large_model_era_a_survey.md)
+- [Revisiting Weak-to-Strong Generalization: Reverse KL vs. Forward KL](revisiting_weak-to-strong_generalization_in_theory_and_practice_reverse_kl_vs_fo.md)
+- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [Training the Untrainable: Introducing Inductive Bias via Representational Alignment](../../NeurIPS2025/others/training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)
+- [Advancing Sequential Numerical Prediction in Autoregressive Models](advancing_sequential_numerical_prediction_in_autoregressive_models.md)
+
+<!-- RELATED:END -->

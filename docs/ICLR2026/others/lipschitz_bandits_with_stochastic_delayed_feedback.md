@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论完整（上界+匹配下界），实验验证充分但场景偏合成
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，两种算法层次分明，定理陈述简洁优美
 - 价值: ⭐⭐⭐⭐ 对 bandit 理论有扎实的基础贡献，填补了重要的理论空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Combinatorial Semi-bandits with Graph Feedback](../../ICML2025/others/adversarial_combinatorial_semi-bandits_with_graph_feedback.md)
+- [On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
+- [LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
+- [LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics](latent_particle_world_models_self-supervised_object-centric_stochastic_dynamics_.md)
+- [Online Linear Regression with Paid Stochastic Features](../../AAAI2026/others/online_linear_regression_with_paid_stochastic_features.md)
+
+<!-- RELATED:END -->

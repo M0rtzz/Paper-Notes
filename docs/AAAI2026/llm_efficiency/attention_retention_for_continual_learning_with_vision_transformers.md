@@ -121,3 +121,15 @@ tags:
 - 该工作的方法论和实验设计对相关领域有参考价值
 - 后续工作可在更多场景和更大规模上验证方法的泛化性和可扩展性
 - 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/llm_efficiency/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [Judge Q: Trainable Queries for Optimized Information Retention in KV Cache Eviction](judge_q_trainable_queries_for_optimized_information_retention_in_kv_cache_evicti.md)
+- [KAC: Kolmogorov-Arnold Classifier for Continual Learning](../../CVPR2025/llm_efficiency/kac_kolmogorov-arnold_classifier_for_continual_learning.md)
+- [One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning](../../ICLR2026/llm_efficiency/one-prompt_strikes_back_sparse_mixture_of_experts_for_prompt-based_continual_lea.md)
+- [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](../../NeurIPS2025/llm_efficiency/zeros_zero-sum_linear_attention_for_efficient_transformers.md)
+
+<!-- RELATED:END -->

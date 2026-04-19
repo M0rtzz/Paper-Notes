@@ -118,3 +118,15 @@ ETTh1 上：窗口 96、预测 720 时 MSE 0.391（TimeMixer++ 0.467），提升
 - 实验充分度: ⭐⭐⭐⭐ 8 个数据集、多种预测长度、完整消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，motif 概念用图例解释得好
 - 价值: ⭐⭐⭐⭐⭐ 为长期时序预测提供了新思路，motif 库+MoE 的框架有很强的通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](../../ICML2025/time_series/timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+- [iTimER: Reconstruction Error-Guided Irregularly Sampled Time Series Representation Learning](beyond_observations_reconstruction_error-guided_irregularly_sampled_time_series_.md)
+- [FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [Towards Non-Stationary Time Series Forecasting with Temporal Stabilization and Frequency Differencing](towards_non-stationary_time_series_forecasting_with_temporal_stabilization_and_f.md)
+- [Contextual and Seasonal LSTMs for Time Series Anomaly Detection](../../ICLR2026/time_series/contextual_and_seasonal_lstms_for_time_series_anomaly_detection.md)
+
+<!-- RELATED:END -->

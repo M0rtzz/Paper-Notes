@@ -125,3 +125,15 @@ CDL-RL 总损失：$\mathcal{L} = \frac{1}{2\lambda_{CP}^2}\mathcal{L}_{CP} + \f
 - 实验充分度: ⭐⭐⭐ 仅两个小数据集，规模有限，但消融、低置信度分析和超参敏感性分析较完整
 - 写作质量: ⭐⭐⭐⭐ 两个 Challenge 引出对应方案的结构清晰，方法推导细致
 - 价值: ⭐⭐⭐ UKG 补全是细分方向，但置信度分布学习的思路有更广泛的迁移潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Geometric Imbalance in Semi-Supervised Node Classification](geometric_imbalance_in_semi-supervised_node_classification.md)
+- [Extending Complex Logical Queries on Uncertain Knowledge Graphs](../../ACL2025/graph_learning/extending_complex_logical_queries_uncertain_knowledge_graphs.md)
+- [Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](../../ACL2025/graph_learning/beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Inductive Transfer Learning for Graph-Based Recommenders](inductive_transfer_learning_for_graph-based_recommenders.md)
+
+<!-- RELATED:END -->

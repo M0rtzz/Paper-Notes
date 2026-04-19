@@ -131,3 +131,15 @@ ATE在Sintel上从之前最好的0.089(LEAP-VO)降至0.034，降幅超过60%。R
 - 实验充分度: ⭐⭐⭐⭐⭐ 在3个数据集上做位姿评估+3个数据集做深度评估，消融实验覆盖运动表示、网络架构、深度优化、深度先验等多个维度，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，motivation到方法到实验的逻辑链条完整，图示直观（特别是Figure 4的运动解耦示意图）
 - 价值: ⭐⭐⭐⭐⭐ 作为ICCV Oral实至名归，核心贡献是将传统BA扩展到动态场景的统一框架，方法简洁有效，在位姿估计上取得压倒性优势，对SLAM和3D重建领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction](event-boosted_deformable_3d_gaussians_for_dynamic_scene_reconstruction.md)
+- [BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curve_gaussian_splatting.md)
+- [BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting](beziergs_dynamic_urban_scene_reconstruction_with_bezier_curv.md)
+- [DeGauss: Dynamic-Static Decomposition with Gaussian Splatting for Distractor-free 3D Reconstruction](degauss_dynamic-static_decomposition_with_gaussian_splatting_for_distractor-free.md)
+- [LocalDyGS: Multi-view Global Dynamic Scene Modeling via Adaptive Local Implicit Feature Decoupling](localdygs_multi-view_global_dynamic_scene_modeling_via_adaptive_local_implicit_f.md)
+
+<!-- RELATED:END -->

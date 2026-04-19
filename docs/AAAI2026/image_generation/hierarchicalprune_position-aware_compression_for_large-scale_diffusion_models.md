@@ -158,3 +158,15 @@ SGDistill 对每个块的参数更新按其敏感度的倒数 $\frac{1}{\Delta P
 - 实验充分度: ⭐⭐⭐⭐⭐ 定量+定性+85人用户研究+多GPU延迟测试+完整消融，非常充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机论证扎实，实验叙述详尽
 - 价值: ⭐⭐⭐⭐⭐ 首次实现 8B+ 扩散模型的有效压缩，从 15.8GB 到 3.24GB，对实际部署意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compositional amortized inference for large-scale hierarchical Bayesian models](../../ICLR2026/image_generation/compositional_amortized_inference_for_large-scale_hierarchical_bayesian_models.md)
+- [HACK: Head-Aware KV Cache Compression for Efficient Visual Autoregressive Modeling](head-aware_kv_cache_compression_for_efficient_visual_autoreg.md)
+- [DiffA: Large Language Diffusion Models Can Listen and Understand](diffa_large_language_diffusion_models_can_listen_and_understand.md)
+- [Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency](../../ICLR2026/image_generation/large_scale_diffusion_distillation_via_score-regularized_continuous-time_consist.md)
+- [Large-Scale Training Data Attribution for Music Generative Models via Unlearning](../../NeurIPS2025/image_generation/large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
+
+<!-- RELATED:END -->

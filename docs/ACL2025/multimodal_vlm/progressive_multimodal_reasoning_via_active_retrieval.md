@@ -133,3 +133,15 @@ AR-MCTS由两大核心组件构成：
 - 实验充分度: ⭐⭐⭐⭐ 三个benchmark、多种MLLM骨干、详细的消融和分析，但缺少计算开销对比
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，理论建模规范，但符号较多可能增加阅读难度
 - 价值: ⭐⭐⭐⭐ 提供了一个通用的多模态推理增强框架，对推理验证和检索增强社区都有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PhysVLM-AVR: Active Visual Reasoning for Multimodal Large Language Models in Physical Environments](../../NeurIPS2025/multimodal_vlm/physvlm-avr_active_visual_reasoning_for_multimodal_large_language_models_in_phys.md)
+- [Training-Free Personalization via Retrieval and Reasoning on Fingerprints](../../ICCV2025/multimodal_vlm/training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
+- [MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval](megapairs_massive_data_synthesis_for_universal_multimodal_retrieval.md)
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](trimllm_layer_dropping.md)
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+
+<!-- RELATED:END -->

@@ -155,3 +155,15 @@ PLM-3B + HoneyBee 在 MathVerse 上超越同参数量 SOTA **7.8%**，PLM-1B + H
 - 实验充分度: ⭐⭐⭐⭐⭐ — 10 个评测集、三种模型规模、大量消融实验，控制变量设计优秀
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，洞察提炼到位，32 页内容详实
 - 价值: ⭐⭐⭐⭐⭐ — 数据方法论贡献突出，250 万开源数据集实用性强，对 VLM 推理研究有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [Recurrent Reasoning with Vision-Language Models for Estimating Long-Horizon Embodied Task Progress](recurrent_reasoning_with_vision-language_models_for_estimating_long-horizon_embo.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [A3: Towards Advertising Aesthetic Assessment](a3_towards_advertising_aesthetic_assessment.md)
+- [EgoMind: Activating Spatial Cognition through Linguistic Reasoning in MLLMs](egomind_activating_spatial_cognition_through_linguistic_reasoning_in_mllms.md)
+
+<!-- RELATED:END -->

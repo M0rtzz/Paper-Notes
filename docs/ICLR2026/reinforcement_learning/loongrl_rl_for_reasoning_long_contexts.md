@@ -133,3 +133,15 @@ LoongRL 的 pipeline：(1) 从现有多跳 QA 数据集出发 → (2) 通过 Key
 - 实验充分度: ⭐⭐⭐⭐⭐ 对比全面（含 o3-mini、R1），消融充分（KeyChain、验证器、训练策略），还有 128K 泛化和 NIAH 测试
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，方法描述流畅，图表直观，附录详尽含训练轨迹对比
 - 价值: ⭐⭐⭐⭐⭐ 为长上下文 LLM 推理提供了高效且可复现的方案，KeyChain 数据构造可被广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Echo: Towards Advanced Audio Comprehension via Audio-Interleaved Reasoning](echo_towards_advanced_audio_comprehension_via_audio-interleaved_reasoning.md)
+- [LongWriter-Zero: Mastering Ultra-Long Text Generation via Reinforcement Learning](longwriter-zero_mastering_ultra-long_text_generation_via_reinforcement_learning.md)
+- [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+- [Intention-Guided Cognitive Reasoning for Egocentric Long-Term Action Anticipation](../../AAAI2026/reinforcement_learning/intention-guided_cognitive_reasoning_for_egocentric_long-term_action_anticipatio.md)
+- [Strict Subgoal Execution: Reliable Long-Horizon Planning in Hierarchical Reinforcement Learning](strict_subgoal_execution_reliable_long-horizon_planning_in_hierarchical_reinforc.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ $$\text{MHA}(\mathbf{X}) = \sum_{h=1}^{R} \mathbf{w}_O^{(h)} \otimes \text{SHA}(
 - 实验充分度: ⭐⭐⭐ — 效率提升显著但规模偏小，缺少大模型验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，架构描述详尽
 - 价值: ⭐⭐⭐⭐ — 若能在大规模验证，将是 Transformer 架构改进的重要方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Value Residual Learning](../../ACL2025/others/value_residual_learning.md)
+- [Softmax is not Enough (for Sharp Size Generalisation)](softmax_is_not_enough_for_sharp_size_generalisation.md)
+- [RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation](../../ACL2025/others/rmoa_optimizing_mixture-of-agents_through_diversity_maximization_and_residual_co.md)
+- [HyTIP: Hybrid Temporal Information Propagation for Masked Conditional Residual Video Coding](../../ICCV2025/others/hytip_hybrid_temporal_information_propagation_for_masked_conditional_residual_vi.md)
+- [DSP: Dynamic Sequence Parallelism for Multi-Dimensional Transformers](dsp_dynamic_sequence_parallelism_for_multi-dimensional_transformers.md)
+
+<!-- RELATED:END -->

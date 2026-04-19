@@ -141,3 +141,15 @@ BlinkTrack 包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ （多数据集 + 遮挡 + 消融 + 运行时分析 + 长期稳定性）
 - 写作质量: ⭐⭐⭐⭐ （方法描述详尽，补充材料完整）
 - 价值: ⭐⭐⭐⭐ （事件相机跟踪方向的实用进展，>80 FPS 达到实际部署要求）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Localizing Events in Videos with Multimodal Queries](../../CVPR2025/video_understanding/localizing_events_in_videos_with_multimodal_queries.md)
+- [Towards Efficient General Feature Prediction in Masked Skeleton Modeling](towards_efficient_general_feature_prediction_in_masked_skeleton_modeling.md)
+- [Exploring the Feature Extraction and Relation Modeling For Light-Weight Transformer Tracking](../../ECCV2024/video_understanding/exploring_the_feature_extraction_and_relation_modeling_for_light-weight_transfor.md)
+- [Online Dense Point Tracking with Streaming Memory](online_dense_point_tracking_with_streaming_memory.md)
+- [Online Time Series Prediction Using Feature Adjustment](../../ICLR2026/video_understanding/online_time_series_prediction_using_feature_adjustment.md)
+
+<!-- RELATED:END -->

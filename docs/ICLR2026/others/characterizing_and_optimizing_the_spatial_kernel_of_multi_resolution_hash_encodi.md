@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 2D+3D NeRF+SDF 全面验证，PSF 理论与实验精确匹配，但 3D 改进有限
 - 写作质量: ⭐⭐⭐⭐⭐ 从物理直觉出发的分析层层递进，数学推导严谨且有实验对应
 - 价值: ⭐⭐⭐⭐⭐ 为神经场社区建立了基于物理原理的分析方法论，PSF 超参数指导有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
+- [K²IE: Kernel Method-based Kernel Intensity Estimators for Inhomogeneous Poisson Processes](../../ICML2025/others/k2ie_kernel_method-based_kernel_intensity_estimators_for_inhomogeneous_poisson_p.md)
+- [Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
+- [Structure-Aware Encodings of Argumentation Properties for Clique-width](../../AAAI2026/others/structure-aware_encodings_of_argumentation_properties_for_clique-width.md)
+- [Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
+
+<!-- RELATED:END -->

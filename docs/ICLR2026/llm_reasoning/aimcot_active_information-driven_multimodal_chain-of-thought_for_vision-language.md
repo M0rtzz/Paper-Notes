@@ -117,3 +117,15 @@ AIMCoT 是免训练的即插即用框架，包含三个协同模块：CAG 先生
 - 实验充分度: ⭐⭐⭐⭐ 三个 benchmark、两个 backbone、详细消融
 - 写作质量: ⭐⭐⭐⭐ 动机分析细致，理论基础扎实
 - 价值: ⭐⭐⭐⭐ 免训练框架，实用性好，但在更强模型上提升有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Chain-of-Thought Driven Adversarial Scenario Extrapolation for Robust Language Models](../../AAAI2026/llm_reasoning/chain-of-thought_driven_adversarial_scenario_extrapolation_for_robust_language_m.md)
+- [TumorChain: Interleaved Multimodal Chain-of-Thought Reasoning for Traceable Clinical Tumor Analysis](tumorchain_interleaved_multimodal_chain-of-thought_reasoning_for_traceable_clini.md)
+- [Efficient Test-Time Scaling for Small Vision-Language Models](efficient_test-time_scaling_for_small_vision-language_models.md)
+- [Improve Vision Language Model Chain-of-thought Reasoning](../../ACL2025/llm_reasoning/improve_vlm_cot_reasoning.md)
+- [Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision](uni-cot_towards_unified_chain-of-thought_reasoning_across_text_and_vision.md)
+
+<!-- RELATED:END -->

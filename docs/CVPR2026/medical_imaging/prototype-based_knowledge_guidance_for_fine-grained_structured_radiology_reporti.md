@@ -128,3 +128,15 @@ $$v = \alpha^\top P \in \mathbb{R}^d, \quad u = \alpha^\top A \in \mathbb{R}^{|Y
 - 实验充分度: ⭐⭐⭐⭐ 完整的消融（融合策略/随机化/提取 LLM 对比）+ 覆盖率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机-方法-实验的逻辑链条完整
 - 价值: ⭐⭐⭐⭐ 对结构化医学报告生成的长尾问题提出了通用性强的解决思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [Residual SODAP: Residual Self-Organizing Domain-Adaptive Prompting with Structural Knowledge Preservation for Continual Learning](residual_sodap_residual_self-organizing_domain-adaptive_prompting_with_structura.md)
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+- [Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset](instruction-guided_lesion_segmentation_for_chest_x-rays_with_automatically_gener.md)
+- [Cell-Type Prototype-Informed Neural Network for Gene Expression Estimation from Pathology Images](cell-type_prototype-informed_neural_network_for_gene_expression_estimation_from_.md)
+
+<!-- RELATED:END -->

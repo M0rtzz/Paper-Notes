@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型多语言测试，但部分分析受 API 成本限制
 - 写作质量: ⭐⭐⭐⭐ 攻击方法设计清楚，但心理学原理与攻击的映射可以更直观
 - 价值: ⭐⭐⭐⭐⭐ 为 LLM 安全评估提供了系统化的理论指导框架，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Large Language Models with Implicit Preferences from User-Generated Content](pugc_align_implicit_pref_ugc.md)
+- [Perspective Transition of Large Language Models for Solving Subjective Tasks](perspective_transition_of_large_language_models_for_solving_subjective_tasks.md)
+- [Understanding the Repeat Curse in Large Language Models from a Feature Perspective](understanding_the_repeat_curse_in_large_language_models_from_a_feature_perspecti.md)
+- [SocialEval: Evaluating Social Intelligence of Large Language Models](socialeval_evaluating_social_intelligence_of_large_language_models.md)
+- [Attention Speaks Volumes: Localizing and Mitigating Bias in Language Models](attention_speaks_volumes_localizing_and_mitigating_bias_in_language_models.md)
+
+<!-- RELATED:END -->

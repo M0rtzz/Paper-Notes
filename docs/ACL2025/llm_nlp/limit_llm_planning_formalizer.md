@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4域×3自然度×11模型×2范式+控制实验+详细错误分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义精确，方法论清晰，发现呈现有层次
 - 价值: ⭐⭐⭐⭐⭐ 对 Neuro-Symbolic AI 和 LLM 规划能力有根本性认识贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
+- [Planning-Driven Programming: A Large Language Model Programming Workflow](planning-driven_programming_a_large_language_model_programming_workflow.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies](../../NeurIPS2025/llm_nlp/symphony_synergistic_multi-agent_planning_with_heterogeneous_language_model_asse.md)
+
+<!-- RELATED:END -->

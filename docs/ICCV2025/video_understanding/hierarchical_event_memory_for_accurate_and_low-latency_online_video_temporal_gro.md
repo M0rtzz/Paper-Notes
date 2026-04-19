@@ -140,3 +140,15 @@ TACoS数据集上各组件的消融：
 - **实验充分度**: ⭐⭐⭐⭐ 三大数据集+多种基线+消融实验+精度-延迟曲线+速度对比
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，方法描述系统，图示直观
 - **价值**: ⭐⭐⭐⭐⭐ 对OnVTG这个新任务提供了系统性解决方案，性能大幅超越前人
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
+- [Online Dense Point Tracking with Streaming Memory](online_dense_point_tracking_with_streaming_memory.md)
+- [OVG-HQ: Online Video Grounding with Hybrid-modal Queries](ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)
+- [VTimeCoT: Thinking by Drawing for Video Temporal Grounding and Reasoning](vtimecot_thinking_by_drawing_for_video_temporal_grounding_and_reasoning.md)
+- [TimeExpert: An Expert-Guided Video LLM for Video Temporal Grounding](timeexpert_an_expert-guided_video_llm_for_video_temporal_grounding.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 作为理论论文实验已足够验证理论预测，但只有合成任务，且非 CoT baseline 略显粗糙
 - 写作质量: ⭐⭐⭐⭐ 论文清晰严谨，符号规范，但有 reviewer 指出图表可读性不佳
 - 价值: ⭐⭐⭐⭐ 深化了对 CoT 推理本质的理论理解，"注意力集中↔长度泛化"的洞见对实践有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlabeled Data Can Provably Enhance In-Context Learning of Transformers](unlabeled_data_can_provably_enhance_in-context_learning_of_transformers.md)
+- [Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision](large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u.md)
+- [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](../../ACL2025/llm_reasoning/cot-valve_length-compressible_chain-of-thought_tuning.md)
+- [I-RAVEN-X: Benchmarking Generalization and Robustness of Analogical and Mathematical Reasoning in Large Language and Reasoning Models](i-raven-x_benchmarking_generalization_and_robustness_of_analogical_and_mathemati.md)
+- [Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
+
+<!-- RELATED:END -->

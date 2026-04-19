@@ -200,3 +200,15 @@ $$\mathcal{F}_t = \left(\frac{1}{J}\sum_{i=1}^J\|rela(\hat{p}_t^i) - rela(p_t^i)
 - **实验**：⭐⭐⭐⭐⭐ — 3个公开数据集+206个高难度野外视频，消融全面，与SOTA对比充分
 - **写作**：⭐⭐⭐⭐ — 问题动机清晰，两个挑战→两个模块一一对应
 - **综合**：8.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TopoTTA: Topology-Enhanced Test-Time Adaptation for Tubular Structure Segmentation](topotta_topology-enhanced_test-time_adaptation_for_tubular_structure_segmentatio.md)
+- [MOVE: Motion-Guided Few-Shot Video Object Segmentation](move_motion-guided_few-shot_video_object_segmentation.md)
+- [Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](correspondence_as_video_testtime_adaption_on_sam2_for_refere.md)
+- [What If: Understanding Motion Through Sparse Interactions](what_if_understanding_motion_through_sparse_interactions.md)
+- [Temporal Rate Reduction Clustering for Human Motion Segmentation](temporal_rate_reduction_clustering_for_human_motion_segmentation.md)
+
+<!-- RELATED:END -->

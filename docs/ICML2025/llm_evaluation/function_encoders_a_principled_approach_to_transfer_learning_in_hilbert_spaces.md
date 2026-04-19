@@ -124,3 +124,15 @@ $$L = \frac{1}{n} \sum_{\ell=1}^{n} \|f_{S_\ell} - \sum_{j=1}^{k} c_j^\ell g_j\|
 - 实验充分度: ⭐⭐⭐⭐ — 4 个不同领域基准、消融分析充分，但缺少更大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 框架清晰，图表直观，理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐ — 为迁移学习提供新的几何理解视角，LS-based FE 实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking Transfer Learning for Open-World Few-Shot Recognition](../../NeurIPS2025/llm_evaluation/unlocking_transfer_learning_for_open-world_few-shot_recognition.md)
+- [A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning](../../NeurIPS2025/llm_evaluation/a_highdimensional_statistical_method_for_optimizing_transfer.md)
+- [Improving Generalization with Flat Hilbert Bayesian Inference](improving_generalization_with_flat_hilbert_bayesian_inference.md)
+- [Learning Safe Strategies for Value Maximizing Buyers in Uniform Price Auctions](learning_safe_strategies_for_value_maximizing_buyers_in_uniform_price_auctions.md)
+- [Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](../../ICLR2026/llm_evaluation/improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
+
+<!-- RELATED:END -->

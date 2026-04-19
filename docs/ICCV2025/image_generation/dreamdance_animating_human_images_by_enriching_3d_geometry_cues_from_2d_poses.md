@@ -172,3 +172,15 @@ $$\mathbf{f_i} = \text{GeoAttn}(F_p(\mathbf{p_i}), F_d(\mathbf{d_i}), F_n(\mathb
 - 技术深度: ⭐⭐⭐⭐ — 几何注意力、多域 CFG、鲁棒条件化等设计完整
 - 实验充分度: ⭐⭐⭐⭐ — 双数据集验证+完善的消融，定性结果丰富
 - 实用价值: ⭐⭐⭐⭐⭐ — 摆脱 SMPL 依赖使用门槛大幅降低，数据集将公开
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Modeling of Shape-Dependent Self-Contact Human Poses](generative_modeling_of_shape-dependent_self-contact_human_poses.md)
+- [Move-in-2D: 2D-Conditioned Human Motion Generation](../../CVPR2025/image_generation/move-in-2d_2d-conditioned_human_motion_generation.md)
+- [Lifting Motion to the 3D World via 2D Diffusion](../../CVPR2025/image_generation/lifting_motion_to_the_3d_world_via_2d_diffusion.md)
+- [Direct Reward Fine-Tuning on Poses for Single Image to 3D Human in the Wild](../../ICLR2026/image_generation/direct_reward_fine-tuning_on_poses_for_single_image_to_3d_human_in_the_wild.md)
+- [DPoser-X: Diffusion Model as Robust 3D Whole-Body Human Pose Prior](dposer-x_diffusion_model_as_robust_3d_whole-body_human_pose_prior.md)
+
+<!-- RELATED:END -->

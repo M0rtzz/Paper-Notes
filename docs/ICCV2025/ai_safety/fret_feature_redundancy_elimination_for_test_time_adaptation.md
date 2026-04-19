@@ -142,3 +142,15 @@ FRET框架分为两个层次：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多架构（ResNet-18/50/ViT）、多数据集（PACS/OfficeHome/CIFAR-C）、详尽消融
 - 写作质量: ⭐⭐⭐⭐ 动机可视化直观，方法描述清晰，但公式排版较密集
 - 价值: ⭐⭐⭐⭐ 提供了实用的TTA新方法和对特征冗余的新理解，对后续研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation](controllable_feature_whitening_for_hyperparameter-free_bias_mitigation.md)
+- [A Framework for Double-Blind Federated Adaptation of Foundation Models](a_framework_for_doubleblind_federated_adaptation_of_foundati.md)
+- [Inoculation Prompting: Eliciting Traits from LLMs during Training Can Suppress Them at Test-Time](../../ICLR2026/ai_safety/inoculation_prompting_eliciting_traits_from_llms_during_training_can_suppress_th.md)
+- [Active Membership Inference Test (aMINT): Enhancing Model Auditability with Multi-Task Learning](active_membership_inference_test_amint_enhancing_model_auditability_with_multi-t.md)
+- [Incentivizing Time-Aware Fairness in Data Sharing](../../NeurIPS2025/ai_safety/incentivizing_time-aware_fairness_in_data_sharing.md)
+
+<!-- RELATED:END -->

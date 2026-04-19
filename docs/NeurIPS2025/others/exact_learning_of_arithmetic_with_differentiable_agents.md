@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅算术任务，但在该范围内结果惊艳
 - 写作质量: ⭐⭐⭐⭐ 形式化框架清晰，与先前工作的对比到位
 - 价值: ⭐⭐⭐⭐ 对精确算法学习的理论和实践均有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scalable GPU-Accelerated Euler Characteristic Curves: Optimization and Differentiable Learning for PyTorch](scalable_gpu-accelerated_euler_characteristic_curves_optimization_and_differenti.md)
+- [AutoAL: Automated Active Learning with Differentiable Query Strategy Search](../../ICML2025/others/autoal_automated_active_learning_with_differentiable_query_strategy_search.md)
+- [A Differentiable Model of Supply-Chain Shocks](a_differentiable_model_of_supply-chain_shocks.md)
+- [Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks](../../ACL2025/others/principled_generalization_arithmetic.md)
+- [Locally Orderless Images for Optimization in Differentiable Rendering](../../CVPR2025/others/locally_orderless_images_for_optimization_in_differentiable_rendering.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ TinyChemVL采用经典的ViT-MLP-LLM架构，以InternVL2.5-4B为骨干，使用
 - 实验充分度: ⭐⭐⭐⭐⭐ （覆盖了分子识别、性质预测、图像生成、反应识别/预测五大任务，效率分析完整）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，动机充分，但部分数学符号排版可改进）
 - 价值: ⭐⭐⭐⭐ （对化学AI领域有实际推动作用，小模型高效方案有部署价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Filter, Correlate, Compress: Training-Free Token Reduction for MLLM Acceleration](filter_correlate_compress_training-free_token_reduction_for_.md)
+- [Rethinking Visual Token Reduction in LVLMs under Cross-Modal Misalignment](rethinking_visual_token_reduction_in_lvlms_under_cross-modal_misalignment.md)
+- [LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](../../ICCV2025/multimodal_vlm/llava-prumerge_adaptive_token_reduction_for_efficient_large_multimodal_models.md)
+- [DUET-VLM: Dual Stage Unified Efficient Token Reduction for VLM Training and Inference](../../CVPR2026/multimodal_vlm/duet_vlm_dual_stage_token_reduction.md)
+- [AdaptVision: Efficient Vision-Language Models via Adaptive Visual Acquisition](../../CVPR2026/multimodal_vlm/adaptvision_efficient_vision-language_models_via_adaptive_visual_acquisition.md)
+
+<!-- RELATED:END -->

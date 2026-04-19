@@ -189,3 +189,15 @@ $$\max_Q \mathcal{J}^\star(Q) = \mathbb{E}_{\rho^\star}[\phi((\mathcal{F}_p^\sta
 - **实验充分度**: ⭐⭐⭐⭐ — 三个模型家族+多消融，但任务类型单一
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论推导严谨，motivation清晰，IL/IRL背景介绍到位
 - **价值**: ⭐⭐⭐⭐ — 为LLM蒸馏提供了新的理论框架和实践方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal-Difference Variational Continual Learning](../../NeurIPS2025/reinforcement_learning/temporal-difference_variational_continual_learning.md)
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](../../ICLR2026/reinforcement_learning/model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+- [Reasoning with Exploration: An Entropy Perspective](reasoning_with_exploration_an_entropy_perspective.md)
+- [The Sample Complexity of Online Reinforcement Learning: A Multi-Model Perspective](../../ICLR2026/reinforcement_learning/the_sample_complexity_of_online_reinforcement_learning_a_multi-model_perspective.md)
+- [Do It for HER: First-Order Temporal Logic Reward Specification in Reinforcement Learning](do_it_for_her_first-order_temporal_logic_reward_specification_in_reinforcement_l.md)
+
+<!-- RELATED:END -->

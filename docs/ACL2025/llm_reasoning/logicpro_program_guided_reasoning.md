@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个模型(7B-72B)、10个基准、多个基线对比
 - 写作质量: ⭐⭐⭐⭐ 流水线描述清晰，质量控制模块完整
 - 价值: ⭐⭐⭐⭐⭐ 提供了一种可扩展、高质量的逻辑推理数据合成方法，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ClozeMath: Improving Mathematical Reasoning in Language Models by Learning to Fill Equations](clozemath_improving_mathematical_reasoning_in_language_models_by_learning_to_fil.md)
+- [Enhancing Retrieval Systems with Inference-Time Logical Reasoning](enhancing_retrieval_systems_with_inference-time_logical_reasoning.md)
+- [Aristotle: Mastering Logical Reasoning with A Logic-Complete Decompose-Search-Resolve Framework](aristotle_logical_reasoning.md)
+- [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
+- [FineReason: Evaluating and Improving LLMs' Deliberate Reasoning through Reflective Puzzle Solving](finereason_evaluating_and_improving_llms_deliberate_reasoning_through_reflective.md)
+
+<!-- RELATED:END -->

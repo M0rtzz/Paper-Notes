@@ -122,3 +122,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ 对比方法较少
 - **写作质量**: ⭐⭐⭐ 整体清晰
 - **价值**: ⭐⭐⭐⭐ 美学增强实际需求强烈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GLASS: Guided Latent Slot Diffusion for Object-Centric Learning](glass_guided_latent_slot_diffusion_for_object-centric_learning.md)
+- [Erasing Undesirable Influence in Diffusion Models (EraseDiff)](erasing_undesirable_influence_in_diffusion_models.md)
+- [Hiding Images in Diffusion Models by Editing Learned Score Functions](hiding_images_in_diffusion_models_by_editing_learned_score_functions.md)
+- [GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration](gendeg_diffusion-based_degradation_synthesis_for_generalizable_all-in-one_image_.md)
+- [Enhancing Vision-Language Compositional Understanding with Multimodal Synthetic Data (SPARCL)](enhancing_vision-language_compositional_understanding_with_multimodal_synthetic_.md)
+
+<!-- RELATED:END -->

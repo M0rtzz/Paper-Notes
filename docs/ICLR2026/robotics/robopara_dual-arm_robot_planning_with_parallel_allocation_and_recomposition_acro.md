@@ -109,3 +109,15 @@ RoboPARA 采用两阶段架构：第一阶段通过 LLM + RAG 生成任务依赖
 - 实验充分度: ⭐⭐⭐⭐ 丰富的 baseline 对比和多场景评测
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述充分
 - 价值: ⭐⭐⭐⭐ 对多臂/多机器人任务调度有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences](evaluating_vlms_spatial_reasoning_over_robot_motion_a_step_towards_robot_plannin.md)
+- [ExoPredicator: Learning Abstract Models of Dynamic Worlds for Robot Planning](exopredicator_learning_abstract_models_of_dynamic_worlds_for_robot_planning.md)
+- [SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
+- [TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
+- [REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?](rei-bench_can_embodied_agents_understand_vague_human_instructions_in_task_planni.md)
+
+<!-- RELATED:END -->

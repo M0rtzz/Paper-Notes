@@ -131,3 +131,15 @@ LLM 后训练（SFT、DPO、蒸馏）是解锁模型能力的关键步骤。Open
 - 实验充分度: ⭐⭐⭐⭐⭐ 50+ 模型 × 9 基准 × 多消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析深入
 - 价值: ⭐⭐⭐⭐⭐ 对开源 LLM 后训练社区有重大实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BoA: Attention-aware Post-training Quantization without Backpropagation](boa_attention-aware_post-training_quantization_without_backpropagation.md)
+- [StolenLoRA: Exploring LoRA Extraction Attacks via Synthetic Data](../../ICCV2025/model_compression/stolenlora_exploring_lora_extraction_attacks_via_synthetic_data.md)
+- [MetaAug: Meta-Data Augmentation for Post-Training Quantization](../../ECCV2024/model_compression/metaaug_meta-data_augmentation_for_post-training_quantization.md)
+- [FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)
+- [Predictive Data Selection: The Data That Predicts Is the Data That Teaches](predictive_data_selection_the_data_that_predicts_is_the_data_that_teaches.md)
+
+<!-- RELATED:END -->

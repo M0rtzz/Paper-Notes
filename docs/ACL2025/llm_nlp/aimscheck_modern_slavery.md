@@ -128,3 +128,15 @@ AIMSCheck 由三个层级串联而成：
 ⭐⭐⭐
 
 > 在社会影响力层面有明确的现实意义——将合规审查从纯人工扩展到 AI 辅助规模化处理。三层分解设计务实且具良好工程价值。但核心技术创新有限：句子分类用的是标准微调/提示方法，SHAP 解释和 BART-MNLI 零样本检测都是现有工具的直接应用，证据追踪的时态关键词方法过于简单。跨司法管辖泛化的验证结论有价值，但三个英语系国家的法律本身高度相似，对更广泛的泛化能力说服力不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs](input_dependent_soft_prompting.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](plangenllms_planning_survey.md)
+- [Position on LLM-Assisted Peer Review: Addressing Reviewer Gap through Mentoring and Feedback](../../AAAI2026/llm_nlp/position_on_llm-assisted_peer_review_addressing_reviewer_gap_through_mentoring_a.md)
+- [Analyzing LLMs' Knowledge Boundary Cognition Across Languages Through the Lens of Internal Representations](knowledge_boundary_crosslingual.md)
+- [LLMs instead of Human Judges? A Large Scale Empirical Study across 20 NLP Evaluation Tasks](llm_vs_human_judges_study.md)
+
+<!-- RELATED:END -->

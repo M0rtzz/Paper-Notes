@@ -243,4 +243,14 @@ $$\mathcal{L} = \mathcal{L}_{gcd} + \lambda \sum_{l=1}^{L-1}\mathcal{L}_{ce}^l$$
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化有说服力，动机阐述到位
 - 价值: ⭐⭐⭐⭐ 揭示了GCD中的一个重要盲点，AF作为即插即用模块有实用价值，但对简单场景效果有限
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [MOS: Modeling Object-Scene Associations in Generalized Category Discovery](../../CVPR2025/others/mos_modeling_object-scene_associations_in_generalized_category_discovery.md)
+- [Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery](generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f.md)
+- [The Hidden Attention of Mamba Models](../../ACL2025/others/the_hidden_attention_of_mamba_models.md)
+- [Membership Inference Attacks with False Discovery Rate Control](membership_inference_attacks_with_false_discovery_rate_control.md)
+- [AttnZero: Efficient Attention Discovery for Vision Transformers](../../ECCV2024/others/attnzero_efficient_attention_discovery_for_vision_transformers.md)
+
+<!-- RELATED:END -->

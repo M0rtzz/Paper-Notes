@@ -161,3 +161,15 @@ ActiveGAMER 的 pipeline 可概括为一个循环：
 - 实验充分度: ⭐⭐⭐⭐ Replica+MP3D 双数据集、几何+渲染双指标、详细消融和运行时分析
 - 写作质量: ⭐⭐⭐⭐ 系统描述清晰，算法流程完整，但部分章节偏冗长
 - 价值: ⭐⭐⭐⭐ 对主动重建领域有重要推动，验证了 3DGS 作为主动视觉基础的可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAGICIAN: Efficient Long-Term Planning with Imagined Gaussians for Active Mapping](../../CVPR2026/3d_vision/magician_efficient_long-term_planning_with_imagined_gaussians_for_active_mapping.md)
+- [ERUPT: Efficient Rendering with Unposed Patch Transformer](erupt_efficient_rendering_with_unposed_patch_transformer.md)
+- [3DGEER: 3D Gaussian Rendering Made Exact and Efficient for Generic Cameras](../../ICLR2026/3d_vision/3dgeer_3d_gaussian_rendering_made_exact_and_efficient_for_generic_cameras.md)
+- [GaussianUDF: Inferring Unsigned Distance Functions through 3D Gaussian Splatting](gaussianudf_inferring_unsigned_distance_functions_through_3d_gaussian_splatting.md)
+- [VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
+
+<!-- RELATED:END -->

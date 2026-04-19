@@ -109,3 +109,15 @@ Sapiens 采用 pretrain-then-finetune 范式：
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个任务、多个数据集、完整的缩放实验，极为扎实
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、表述精简，表格图示信息密度高
 - 价值: ⭐⭐⭐⭐⭐ 提供了实用的人体视觉基础模型家族，对社区有重要推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VGGT-DP: Generalizable Robot Control via Vision Foundation Models](../../AAAI2026/3d_vision/vggt-dp_generalizable_robot_control_via_vision_foundation_models.md)
+- [When Do We Not Need Larger Vision Models?](when_do_we_not_need_larger_vision_models.md)
+- [Parameter-Free Fine-tuning via Redundancy Elimination for Vision Foundation Models](../../AAAI2026/3d_vision/parameter-free_fine-tuning_via_redundancy_elimination_for_vision_foundation_mode.md)
+- [AVA-Bench: Atomic Visual Ability Benchmark for Vision Foundation Models](../../CVPR2026/3d_vision/ava_bench_atomic_visual_ability_vfm.md)
+- [Transferable 3D Adversarial Shape Completion using Diffusion Models](transferable_3d_adversarial_shape_completion_using_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ UrbanDiT 是唯一在所有五个维度上都满足的模型。与 CSDI（第二
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5 个城市多领域数据集、5 种任务、few-shot/zero-shot、消融、可扩展性实验全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，方法阐述完整
 - 价值: ⭐⭐⭐⭐ — 为城市时空基础模型树立了新 benchmark，开源代码和数据集有利于后续研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Transformers for Imputation: Statistical Efficiency and Uncertainty Quantification](diffusion_transformers_for_imputation_statistical_efficiency_and_uncertainty_qua.md)
+- [Relational Feature Caching for Accelerating Diffusion Transformers](../../ICLR2026/time_series/relational_feature_caching_for_accelerating_diffusion_transformers.md)
+- [SEMPO: Lightweight Foundation Models for Time Series Forecasting](sempo_lightweight_foundation_models_for_time_series_forecasting.md)
+- [How Foundational are Foundation Models for Time Series Forecasting?](how_foundational_are_foundation_models_for_time_series_forecasting.md)
+- [In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)
+
+<!-- RELATED:END -->

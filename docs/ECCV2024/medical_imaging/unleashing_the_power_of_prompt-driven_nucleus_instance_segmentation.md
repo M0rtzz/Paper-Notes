@@ -170,3 +170,15 @@ CPM-17 上 AJI 超前最优 +1.9，PQ 超前最优 +2.8。
 - 实验充分度: ⭐⭐⭐⭐ 三个 benchmark 全面对比，消融完整，效率分析到位
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述条理分明，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 范式创新，无需后处理的核分割方案对实际部署有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)
+- [iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection](../../ICML2025/medical_imaging/idpa_instance_decoupled_prompt_attention_for_incremental_medical_object_detectio.md)
+- [The Four Color Theorem for Cell Instance Segmentation](../../ICML2025/medical_imaging/the_four_color_theorem_for_cell_instance_segmentation.md)
+- [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](../../CVPR2025/medical_imaging/evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
+- [I-MedSAM: Implicit Medical Image Segmentation with Segment Anything](i-medsam_implicit_medical_image_segmentation_with_segment_anything.md)
+
+<!-- RELATED:END -->

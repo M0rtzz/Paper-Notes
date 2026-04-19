@@ -203,3 +203,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 四种模型、两种熵增方式、多个控制实验，设计严谨
 - 写作质量: ⭐⭐⭐⭐ — 形式化清晰，图表配合好，但部分符号较重
 - 价值: ⭐⭐⭐⭐ — 为组合泛化研究提供了可量化的理论框架和新 baseline
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Systematic Study of Compositional Syntactic Transformer Language Models](a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
+- [Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability](compositional_generalization_instruction.md)
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_code_empowered_tool_learning.md)
+- [Circuit Stability Characterizes Language Model Generalization](circuit_stability_characterizes_language_model_generalization.md)
+- [Does Time Have Its Place? Temporal Heads Where Language Models Recall Time-specific Information](does_time_have_its_place_temporal_heads_where_language_models_recall_time-specif.md)
+
+<!-- RELATED:END -->

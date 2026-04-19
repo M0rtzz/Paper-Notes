@@ -121,3 +121,15 @@ $$\mathcal{L} = \lambda_{\text{CE}} \cdot \mathcal{L}_{\text{CE}}(\tilde{y}, y) 
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集 + 完整消融 + 线性探测 + 收敛分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，概念区分精准
 - 价值: ⭐⭐⭐⭐ 对显微/病理图像分析的多尺度处理有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiCogEval: Evaluating LLMs Across Multi-Cognitive Levels](../../ICML2025/medical_imaging/evaluating_llms_across_multi-cognitive_levels_from_medical_knowledge_mastery_to_.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+- [VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)
+- [Supercharging Graph Transformers with Advective Diffusion](../../ICML2025/medical_imaging/supercharging_graph_transformers_with_advective_diffusion.md)
+- [MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding](medgrpo_multi-task_reinforcement_learning_for_heterogeneous_medical_video_unders.md)
+
+<!-- RELATED:END -->

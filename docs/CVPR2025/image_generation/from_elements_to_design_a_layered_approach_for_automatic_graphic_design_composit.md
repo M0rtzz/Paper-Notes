@@ -115,3 +115,15 @@ LaDeCo 包含两个阶段：(1) **Layer Planning（层规划）**：使用 GPT-4
 - 实验充分度: ⭐⭐⭐⭐ 主任务+子任务+消融+应用展示全面，LLaVA-OV 自动评估+几何指标多维度评价
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，可视化效果好（层渲染图直观展示方法优势）
 - 价值: ⭐⭐⭐⭐ 首个高质量的端到端设计合成方法，对设计自动化有实际推动意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Layered Graphic Design Generation with a Top-Down Approach](../../ICCV2025/image_generation/rethinking_layered_graphic_design_generation_with_a_top-down_approach.md)
+- [ChatGen: Automatic Text-to-Image Generation From FreeStyle Chatting](chatgen_automatic_text-to-image_generation_from_freestyle_chatting.md)
+- [PSDesigner: Automated Graphic Design with a Human-Like Creative Workflow](../../CVPR2026/image_generation/psdesigner_automated_graphic_design_with_a_human-like_creative_workflow.md)
+- [Diffusion-Based Electromagnetic Inverse Design of Scattering Structured Media](../../NeurIPS2025/image_generation/diffusion-based_electromagnetic_inverse_design_of_scattering_structured_media.md)
+- [ETTA: Elucidating the Design Space of Text-to-Audio Models](../../ICML2025/image_generation/etta_elucidating_the_design_space_of_text-to-audio_models.md)
+
+<!-- RELATED:END -->

@@ -96,3 +96,15 @@ L2V-CoT 包含两步：(1) 从 LLM（DeepSeek-R1-Distill-Qwen-32B）提取低通
 - 实验充分度: ⭐⭐⭐⭐ 4 个 VLM × 5 个 benchmark，消融完整，多尺度 LLM 验证
 - 写作质量: ⭐⭐⭐⭐ 经验分析→方法设计的逻辑清晰，频域可视化有很强的说服力
 - 价值: ⭐⭐⭐⭐ 提供了一种通用的跨架构推理迁移方案，对 VLM 推理增强有实际意义，频域分析框架可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ARCHE: A Novel Task to Evaluate LLMs on Latent Reasoning Chain Extraction](arche_a_novel_task_to_evaluate_llms_on_latent_reasoning_chai.md)
+- [CMMCoT: Enhancing Complex Multi-Image Comprehension via Multi-Modal Chain-of-Thought and Memory Augmentation](cmmcot_enhancing_complex_multi-image_comprehension_via_multi.md)
+- [Latent Chain-of-Thought for Visual Reasoning](../../NeurIPS2025/llm_reasoning/latent_chain-of-thought_for_visual_reasoning.md)
+- [Interleaved-Modal Chain-of-Thought](../../CVPR2025/llm_reasoning/interleaved-modal_chain-of-thought.md)
+- [Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](../../CVPR2026/llm_reasoning/rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)
+
+<!-- RELATED:END -->

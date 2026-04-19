@@ -158,3 +158,15 @@ OracleAD在F1上的优势：PSM +19.95%pt，SMD +10.87%pt，SWaT +0.9%pt。VUS-P
 - 实验充分度: ⭐⭐⭐⭐ — 12个基线、7种指标、3个数据集，消融实验和可视化分析全面；但缺少更大规模和更多domain的验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰，异常定义严谨，方法推导完整，评估讨论深入
 - 价值: ⭐⭐⭐⭐ — 为MTSAD提供了兼具简洁性和可解释性的新范式，实验结果显著优于主流方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ScatterAD: Temporal-Topological Scattering Mechanism for Time Series Anomaly Detection](scatterad_temporal-topological_scattering_mechanism_for_time_series_anomaly_dete.md)
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](../../ICML2025/time_series/causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+- [Channel Matters: Estimating Channel Influence for Multivariate Time Series](channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
+- [Contextual and Seasonal LSTMs for Time Series Anomaly Detection](../../ICLR2026/time_series/contextual_and_seasonal_lstms_for_time_series_anomaly_detection.md)
+- [KAN-AD: Time Series Anomaly Detection with Kolmogorov-Arnold Networks](../../ICML2025/time_series/kan-ad_time_series_anomaly_detection_with_kolmogorov-arnold_networks.md)
+
+<!-- RELATED:END -->

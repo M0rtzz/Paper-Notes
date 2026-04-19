@@ -146,3 +146,15 @@ $$\frac{d\mathbf{x}(t)}{dt} = v_\theta^{(1)}(t, \mathbf{x}(t), f_{\text{partial}
 - **实验充分度**: ⭐⭐⭐⭐ 多维度评估全面，但训练数据偏差明显
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，三阶段描述条理分明
 - **价值**: ⭐⭐⭐⭐ 开辟新范式，但距临床应用仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling](energy_matching_unifying_flow_matching_and_energy-based_models_for_generative_mo.md)
+- [Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry](riemannian_flow_matching_for_brain_connectivity_matrices_via_pullback_geometry.md)
+- [Multimodal 3D Genome Pre-training](multimodal_3d_genome_pre-training.md)
+- [3D-RAD: A Comprehensive 3D Radiology Med-VQA Dataset with Multi-Temporal Analysis and Diverse Diagnostic Tasks](3drad_a_comprehensive_3d_radiology_medvqa_dataset_with_multi.md)
+- [Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number](prior-guided_flow_matching_for_target-aware_molecule_design_with_learnable_atom_.md)
+
+<!-- RELATED:END -->

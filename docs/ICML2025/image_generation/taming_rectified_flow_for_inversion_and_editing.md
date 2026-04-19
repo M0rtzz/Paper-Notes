@@ -146,3 +146,15 @@ RF-Solver 在 FLUX 和 OpenSora 上均大幅超越 vanilla Euler 采样器，PSN
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖了生成、反演、编辑三个任务，图像和视频两种模态，多个基础模型（FLUX、OpenSora），消融也做得比较完整
 - 写作质量: ⭐⭐⭐⭐⭐ 从误差分析到方法推导逻辑清晰流畅，图表设计直观有说服力
 - 价值: ⭐⭐⭐⭐ 作为 training-free 方法实用性强，即插即用兼容主流模型，对 RF 模型的编辑能力具有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Free Lunch for Stabilizing Rectified Flow Inversion](../../ICLR2026/image_generation/free_lunch_for_stabilizing_rectified_flow_inversion.md)
+- [FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](../../ICCV2025/image_generation/flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
+- [ReFlex: Text-Guided Editing of Real Images in Rectified Flow via Mid-Step Feature Extraction and Attention Adaptation](../../ICCV2025/image_generation/reflex_text-guided_editing_of_real_images_in_rectified_flow_via_mid-step_feature.md)
+- [Balanced Conic Rectified Flow](../../NeurIPS2025/image_generation/balanced_conic_rectified_flow.md)
+- [Efficient Rectified Flow for Image Fusion](../../NeurIPS2025/image_generation/efficient_rectified_flow_for_image_fusion.md)
+
+<!-- RELATED:END -->

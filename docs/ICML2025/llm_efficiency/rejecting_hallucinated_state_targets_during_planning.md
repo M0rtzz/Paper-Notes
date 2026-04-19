@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4组实验（2环境×2方法）覆盖全面，每组20个seed run，CI充分
 - 写作质量: ⭐⭐⭐⭐ 分类体系清晰，命名系统一致，图表信息丰富
 - 价值: ⭐⭐⭐⭐ 识别了目标导向RL中被忽视的重要失效模式，提出了实用的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RefreshKV: Updating Small KV Cache During Long-form Generation](../../ACL2025/llm_efficiency/refreshkv_updating_small_kv_cache_during_long-form_generation.md)
+- [Position: Theory of Mind Benchmarks are Broken for Large Language Models](position_theory_of_mind_benchmarks_are_broken_for_large_language_models.md)
+- [Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)](addressing_imbalanced_domain-incremental_learning_through_dual-balance_collabora.md)
+- [EasyInv: Toward Fast and Better DDIM Inversion](easyinv_toward_fast_and_better_ddim_inversion.md)
+- [MoH: Multi-Head Attention as Mixture-of-Head Attention](moh_multi-head_attention_as_mixture-of-head_attention.md)
+
+<!-- RELATED:END -->

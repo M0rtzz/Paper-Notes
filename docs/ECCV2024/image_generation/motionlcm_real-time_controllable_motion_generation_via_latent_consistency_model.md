@@ -123,3 +123,15 @@ $$\Theta^a, \Theta^b = \arg\min_{\Theta^a, \Theta^b} (\mathcal{L}_{recon} + \lam
 ## 评分
 
 ⭐⭐⭐⭐⭐ (5/5) — 将运动生成推进到实时级别，一致性蒸馏+ControlNet 的双阶段设计简洁高效，运动空间显式监督解决了潜在空间控制的核心难题，对实际应用意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [SMooDi: Stylized Motion Diffusion Model](smoodi_stylized_motion_diffusion_model.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+
+<!-- RELATED:END -->

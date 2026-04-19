@@ -183,3 +183,15 @@ HP 优化后的 SD3.5-Turbo 在美学分数上甚至超越了更大的 SD3.5-Lar
 - 技术深度: ⭐⭐⭐⭐ — ICT/HP Score 设计巧妙但整体方法不算复杂
 - 实验充分度: ⭐⭐⭐⭐⭐ — 偏好预测+GenEval+美学+人工评估+迁移实验全覆盖
 - 实用价值: ⭐⭐⭐⭐⭐ — 直接解决 RLHF 优化高端扩散模型时的核心痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences](cycle_consistency_as_reward_learning_image-text_alignment_without_human_preferen.md)
+- [CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models](compass_enhancing_spatial_understanding_in_text-to-image_diffusion_models.md)
+- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](../../CVPR2026/image_generation/enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
+- [Semantic Watermarking Reinvented: Enhancing Robustness and Generation Quality with Fourier Integrity](semantic_watermarking_reinvented_enhancing_robustness_and_generation_quality_wit.md)
+- [UltraHR-100K: Enhancing UHR Image Synthesis with A Large-Scale High-Quality Dataset](../../NeurIPS2025/image_generation/ultrahr-100k_enhancing_uhr_image_synthesis_with_a_large-scale_high-quality_datas.md)
+
+<!-- RELATED:END -->

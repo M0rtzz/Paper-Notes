@@ -178,3 +178,15 @@ Mine-JEPA 遵循三阶段流水线：
 - **实验充分度**: ⭐⭐⭐⭐ — 消融全面系统，涵盖初始化/增强/数据/方法四个维度
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，结论明确，讨论深入
 - **实用价值**: ⭐⭐⭐⭐ — 为数据稀缺海洋视觉任务提供了实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoChemAD: Benchmarking Unsupervised Geochemical Anomaly Detection for Mineral Exploration](geochemad_benchmarking_unsupervised_geochemical_an.md)
+- [DOS: Distilling Observable Softmaps of Zipfian Prototypes for Self-Supervised Point Representation](../../AAAI2026/model_compression/dos_distilling_observable_softmaps_of_zipfian_prototypes_for_self-supervised_poi.md)
+- [In-Context Learning for Pure Exploration](../../ICLR2026/model_compression/in-context_learning_for_pure_exploration.md)
+- [CHEEM: Continual Learning by Reuse, New, Adapt and Skip -- A Hierarchical Exploration-Exploitation Approach](cheem_continual_learning_by_reuse_new_adapt_and_skip_--_a_hierarchical_explorati.md)
+- [VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models](../../NeurIPS2025/model_compression/vessa_video-based_object-centric_self-supervised_adaptation_for_visual_foundatio.md)
+
+<!-- RELATED:END -->

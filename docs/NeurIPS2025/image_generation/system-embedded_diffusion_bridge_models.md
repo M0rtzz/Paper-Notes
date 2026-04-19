@@ -118,3 +118,15 @@ SDB构建了一个从伪逆重建（pseudoinverse reconstruction, PR）到干净
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个逆问题、三个变体、系统失配分析，统一框架下公平比较
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨清晰，动机明确，理论与实验相互印证
 - 价值: ⭐⭐⭐⭐ 对逆问题领域贡献突出，但应用范围受限于线性系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge](towards_general_modality_translation_with_contrastive_and_predictive_latent_diff.md)
+- [Aligning Compound AI Systems via System-level DPO](aligning_compound_ai_systems_via_system-level_dpo.md)
+- [Dynamic Diffusion Schrödinger Bridge in Astrophysical Observational Inversions](dynamic_diffusion_schrödinger_bridge_in_astrophysical_observational_inversions.md)
+- [Coupling Generative Modeling and an Autoencoder with the Causal Bridge](coupling_generative_modeling_and_an_autoencoder_with_the_causal_bridge.md)
+- [Schrödinger Bridge Matching for Tree-Structured Costs and Entropic Wasserstein Barycentres](schrödinger_bridge_matching_for_tree-structured_costs_and_entropic_wasserstein_b.md)
+
+<!-- RELATED:END -->

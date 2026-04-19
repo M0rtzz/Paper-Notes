@@ -121,3 +121,15 @@ tags: ["avatar reconstruction", "skinning", "feed-forward", "animation", "CVPR20
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集评估 + 在手机照片上的零样本泛化 + 详尽消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式完整，图表质量高
 - 价值: ⭐⭐⭐⭐⭐ 在速度和质量上同时取得突破，对虚拟人产业有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
+- [NBAvatar: Neural Billboards Avatars with Realistic Hand-Face Interaction](nbavatar_neural_billboards_avatars_with_realistic_hand-face_interaction.md)
+- [Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](../../ICCV2025/human_understanding/avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
+- [ShowMak3r: Compositional TV Show Reconstruction](showmak3r_compositional_tv_show_reconstruction.md)
+- [Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/human_understanding/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
+
+<!-- RELATED:END -->

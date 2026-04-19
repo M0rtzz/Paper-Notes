@@ -129,3 +129,15 @@ VTAB-1k 基准（19 个数据集，3 组，ViT-B/16 部分结果）：
 - 实验充分度: ⭐⭐⭐⭐ FGVC + VTAB-1k 24 个数据集，3 种 PEFT 框架，但缺少密集预测实验
 - 写作质量: ⭐⭐⭐ 理论分析部分稍显冗长，符号标注可更简洁
 - 价值: ⭐⭐⭐⭐ 提供了 PEFT 方法的通用增强策略，理论与实践价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EA-ViT: Efficient Adaptation for Elastic Vision Transformer](ea-vit_efficient_adaptation_for_elastic_vision_transformer.md)
+- [Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning](integrating_task-specific_and_universal_adapters_for_pre-trained_model-based_cla.md)
+- [Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers](../../AAAI2026/model_compression/compensating_distribution_drifts_in_class-incremental_learning_of_pre-trained_vi.md)
+- [PrefixGPT: Prefix Adder Optimization by a Generative Pre-trained Transformer](../../AAAI2026/model_compression/prefixgpt_prefix_adder_optimization_by_a_generative_pre-trained_transformer.md)
+- [BHViT: Binarized Hybrid Vision Transformer](../../CVPR2025/model_compression/bhvit_binarized_hybrid_vision_transformer.md)
+
+<!-- RELATED:END -->

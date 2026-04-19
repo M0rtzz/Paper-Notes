@@ -382,3 +382,15 @@ Camera和GoPro数据上PSNR大幅领先(+2.9和+1.7 dB)。
 - **实验充分度**: ⭐⭐⭐⭐ — 多种相机类型验证，渲染和几何双重评估
 - **写作质量**: ⭐⭐⭐⭐ — 两阶段结构清晰，但部分细节需看补充材料
 - **实用价值**: ⭐⭐⭐⭐⭐ — 对远程通信和体育转播等实时应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Splat and Distill: Augmenting Teachers with Feed-Forward 3D Reconstruction for 3D-Aware Distillation](../../ICLR2026/3d_vision/splat_and_distill_augmenting_teachers_with_feed-forward_3d_reconstruction_for_3d.md)
+- [VGG-T3: Offline Feed-Forward 3D Reconstruction at Scale](../../CVPR2026/3d_vision/vgg-t3_offline_feed-forward_3d_reconstruction_at_scale.md)
+- [OceanSplat: Object-aware Gaussian Splatting with Trinocular View Consistency for Underwater Scene Reconstruction](oceansplat_object-aware_gaussian_splatting_with_trinocular_view_consistency_for_.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](../../CVPR2026/3d_vision/more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting](../../CVPR2026/3d_vision/sr3r_rethinking_super-resolution_3d_reconstruction_with_feed-forward_gaussian_sp.md)
+
+<!-- RELATED:END -->

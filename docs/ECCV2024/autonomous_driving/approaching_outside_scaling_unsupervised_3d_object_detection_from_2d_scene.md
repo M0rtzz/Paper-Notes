@@ -164,3 +164,15 @@ $$\Theta_t = \lambda \cdot \Theta_{t-1} + (1 - \lambda) \cdot \theta_t \quad (T_
 - 实验充分度: ⭐⭐⭐⭐ — 在 nuScenes 和 Lyft 上验证，消融实验覆盖各组件和超参数
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表直观，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 远距离检测超越有监督方法，证明了无监督 LiDAR-Camera 融合的潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimPB: A Single Model for 2D and 3D Object Detection from Multiple Cameras](simpb_a_single_model_for_2d_and_3d_object_detection_from_multiple_cameras.md)
+- [Cubify Anything: Scaling Indoor 3D Object Detection](../../CVPR2025/autonomous_driving/cubify_anything_scaling_indoor_3d_object_detection.md)
+- [OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection](open_object-wise_position_embedding_for_multi-view_3d_object_detection.md)
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+- [Weakly Supervised 3D Object Detection via Multi-Level Visual Guidance](weakly_supervised_3d_object_detection_via_multi-level_visual_guidance.md)
+
+<!-- RELATED:END -->

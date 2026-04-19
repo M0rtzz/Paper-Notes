@@ -158,3 +158,15 @@ Video Motion Graphs 是一个四阶段系统：
 - 实验充分度: ⭐⭐⭐⭐⭐ 包含客观指标、82人用户研究、多任务评估、详细消融
 - 写作质量: ⭐⭐⭐⭐ 系统描述清晰，但整体 pipeline 较复杂
 - 价值: ⭐⭐⭐⭐ 实用性强，支持实时生成和关键帧编辑，有工业应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video](bitrate-controlled_diffusion_for_disentangling_motion_and_content_in_video.md)
+- [REDUCIO! Generating 1K Video within 16 Seconds using Extremely Compressed Motion Latents](reducio_generating_1k_video_within_16_seconds_using_extremely_compressed_motion_.md)
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](../../CVPR2025/image_generation/eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+- [InfiniDreamer: Arbitrarily Long Human Motion Generation via Segment Score Distillation](infinidreamer_arbitrarily_long_human_motion_generation_via_segment_score_distill.md)
+- [TLB-VFI: Temporal-Aware Latent Brownian Bridge Diffusion for Video Frame Interpolation](tlb-vfi_temporal-aware_latent_brownian_bridge_diffusion_for_video_frame_interpol.md)
+
+<!-- RELATED:END -->

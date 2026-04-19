@@ -136,3 +136,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{adv}} + \lambda_{\text{distill}} \cdot \mathc
 - 实验充分度: ⭐⭐⭐⭐⭐ — 跨模型/域/任务全面评估，消融充分，含净化防御/零样本测试
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐ — 即插即用、一致提升，对对抗鲁棒性研究有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Transferable Targeted Attacks with Feature Tuning Mixup](../../CVPR2025/others/improving_transferable_targeted_attacks_with_feature_tuning_mixup.md)
+- [CaDrift: A Time-dependent Causal Generator of Drifting Data Streams](cadrift_a_time-dependent_causal_generator_of_drifting_data_streams.md)
+- [Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)
+- [SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding](seed_towards_more_accurate_semantic_evaluation_for_visual_brain_decoding.md)
+- [Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search](enhancing_generative_auto_bidding.md)
+
+<!-- RELATED:END -->

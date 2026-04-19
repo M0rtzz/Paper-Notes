@@ -121,3 +121,15 @@ ParetoHqD 分两阶段：Stage 1 从原始数据集的 Pareto 前沿选取匹配
 - 实验充分度: ⭐⭐⭐⭐ 双目标和三目标、5个基线对比、崩溃分析、效率对比都有
 - 写作质量: ⭐⭐⭐⭐ 图示清晰（Fig 2 展示线性标量化问题很直观）
 - 价值: ⭐⭐⭐⭐ 为个性化 LLM 对齐提供了高效且理论合理的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](../../ACL2025/llm_nlp/gapo_multi_objective_alignment.md)
+- [Diversity-oriented Data Augmentation with Large Language Models](../../ACL2025/llm_nlp/diversity_data_augmentation.md)
+- [ProFuser: Progressive Fusion of Large Language Models](profuser_progressive_fusion_of_large_language_models.md)
+- [DeAL: Decoding-time Alignment for Large Language Models](../../ACL2025/llm_nlp/deal_decoding_time_alignment.md)
+- [From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment](../../ACL2025/llm_nlp/from_neurons_to_semantics_evaluating_cross-linguistic_alignment_capabilities_of_.md)
+
+<!-- RELATED:END -->

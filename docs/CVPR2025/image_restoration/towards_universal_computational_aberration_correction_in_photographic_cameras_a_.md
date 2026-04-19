@@ -127,3 +127,15 @@ tags:
 - **写作质量**: ⭐⭐⭐⭐ — 分析深入，结论清晰
 - **实用性**: ⭐⭐⭐⭐ — 对计算摄影、手机摄影等领域有直接指导价值
 - **综合推荐**: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Universal Computational Aberration Correction in Photographic Cameras: A Comprehensive Benchmark Analysis](../../CVPR2026/image_restoration/towards_universal_computational_aberration_correction_in_photographic_cameras_a_.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [A Flag Decomposition for Hierarchical Datasets](a_flag_decomposition_for_hierarchical_datasets.md)
+- [Classic Video Denoising in a Machine Learning World: Robust, Fast, and Controllable](classic_video_denoising_in_a_machine_learning_world_robust_fast_and_controllable.md)
+- [Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)
+
+<!-- RELATED:END -->

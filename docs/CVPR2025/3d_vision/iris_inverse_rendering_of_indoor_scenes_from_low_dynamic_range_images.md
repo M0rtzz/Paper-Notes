@@ -117,3 +117,15 @@ IRIS的定性评估主要通过可视化对比：
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实场景评估，重光照和物体插入demo说服力强，但真实场景缺定量指标
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，成像管线的建模逻辑严密，图示质量高
 - 价值: ⭐⭐⭐⭐ 实用价值高，真正让逆渲染从实验室走向消费级设备
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering](../../ICCV2025/3d_vision/geosplatting_towards_geometry_guided_gaussian_splatting_for_physically-based_inv.md)
+- [Flash Cache: Reducing Bias in Radiance Cache Based Inverse Rendering](../../ECCV2024/3d_vision/flash_cache_reducing_bias_in_radiance_cache_based_inverse_rendering.md)
+- [Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range](event_fields_capturing_light_fields_at_high_speed_resolution_and_dynamic_range.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [MOVIS: Enhancing Multi-Object Novel View Synthesis for Indoor Scenes](movis_enhancing_multi-object_novel_view_synthesis_for_indoor_scenes.md)
+
+<!-- RELATED:END -->

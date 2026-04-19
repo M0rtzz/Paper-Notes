@@ -179,3 +179,15 @@ $$\mathbf{x}_{\text{ref}} = R_\phi(P_\theta(\mathbf{x}_{\text{adv}}), \mathbf{\L
 - **实验充分度**: ⭐⭐⭐⭐⭐ 涵盖 6 种 VC 方法、3 种保护方法、5 种净化基线，包含消融、自适应保护、主观评估，非常全面
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，威胁模型定义严谨，可视化分析到位
 - **价值**: ⭐⭐⭐⭐ 对 AI 安全社区有重要警示意义，但从防御角度的建设性贡献有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Inception Backdoor Attacks against Reinforcement Learning](adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [Theoretically Unmasking Inference Attacks Against LDP-Protected Clients in Federated Vision Models](theoretically_unmasking_inference_attacks_against_ldp-protected_clients_in_feder.md)
+- [De-mark: Watermark Removal in Large Language Models](de-mark_watermark_removal_in_large_language_models.md)
+- [Do Not Mimic My Voice: Speaker Identity Unlearning for Zero-Shot Text-to-Speech](do_not_mimic_my_voice_speaker_identity_unlearning_for_zero-shot_text-to-speech.md)
+- [Rethinking the Bias of Foundation Model under Long-tailed Distribution](rethinking_the_bias_of_foundation_model_under_long-tailed_distribution.md)
+
+<!-- RELATED:END -->

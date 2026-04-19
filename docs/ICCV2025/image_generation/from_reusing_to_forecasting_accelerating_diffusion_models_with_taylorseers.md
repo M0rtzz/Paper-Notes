@@ -152,3 +152,15 @@ $$E_m(k) \leq \frac{M_{m+1}}{(m+1)!}|k|^{m+1} + \sum_{i=1}^{m}\frac{C_i}{i! \cdo
 - **实验完整性**: ⭐⭐⭐⭐⭐ — 覆盖图像（FLUX、DiT）和视频（HunyuanVideo），多种加速比、多种基线
 - **实用性**: ⭐⭐⭐⭐⭐ — 免训练、即插即用，5× 加速近乎无损
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，图表直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Accelerating Diffusion Sampling via Exploiting Local Transition Coherence](accelerating_diffusion_sampling_via_exploiting_local_transition_coherence.md)
+- [LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching](lazymar_accelerating_masked_autoregressive_models_via_feature_caching.md)
+- [SpecDiff: Accelerating Diffusion Model Inference with Self-Speculation](../../AAAI2026/image_generation/specdiff_accelerating_diffusion_model_inference_with_self-speculation.md)
+- [Elucidated Rolling Diffusion Models for Probabilistic Forecasting of Complex Dynamics](../../NeurIPS2025/image_generation/elucidated_rolling_diffusion_models_for_probabilistic_forecasting_of_complex_dyn.md)
+- [SeaCache: Spectral-Evolution-Aware Cache for Accelerating Diffusion Models](../../CVPR2026/image_generation/seacache_spectral-evolution-aware_cache_for_accelerating_diffusion_models.md)
+
+<!-- RELATED:END -->

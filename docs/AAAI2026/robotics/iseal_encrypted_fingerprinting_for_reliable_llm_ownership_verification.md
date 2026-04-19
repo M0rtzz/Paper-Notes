@@ -144,3 +144,15 @@ iSeal 在所有模型上微调后均保持 100% FSR，与 IF 持平，远超 WLM
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个模型、10+种攻击、多数据集、完整消融与敏感性分析
 - 写作质量: ⭐⭐⭐⭐ 威胁模型和安全证明叙述清晰，表格/图表组织良好
 - 价值: ⭐⭐⭐⭐ 对LLM知识产权诉讼场景有较强实用价值，开源代码促进复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](adaptive_theory_of_mind_for_llm-based_multi-agent_coordination.md)
+- [Let's Think in Two Steps: Mitigating Agreement Bias in MLLMs with Self-Grounded Verification](../../ICLR2026/robotics/lets_think_in_two_steps_mitigating_agreement_bias_in_mllms_with_self-grounded_ve.md)
+- [Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems](shadows_in_the_code_exploring_the_risks_and_defenses_of_llm-.md)
+- [LaF-GRPO: In-Situ Navigation Instruction Generation for the Visually Impaired via GRPO with LLM-as-Follower Reward](laf-grpo_in-situ_navigation_instruction_generation_for_the_visually_impaired_via.md)
+- [On Entropy Control in LLM-RL Algorithms](../../ICLR2026/robotics/on_entropy_control_in_llm-rl_algorithms.md)
+
+<!-- RELATED:END -->

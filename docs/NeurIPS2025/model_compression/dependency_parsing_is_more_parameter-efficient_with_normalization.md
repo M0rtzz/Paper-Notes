@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个 NLP 数据集 + 6 种语言 + 3 个非语言数据集、大量消融、5 种随机种子 + 统计检验
 - 写作质量: ⭐⭐⭐⭐ 理论和实验论证逻辑严密，从 Result 1 → Claim 1 → 实验验证的推导链清晰
 - 价值: ⭐⭐⭐⭐ 实际改进简单易用但影响广泛，对所有使用 biaffine scoring 的工作都有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Less is More but Where: Dynamic Token Compression via LLM-Guided Keyframe Prior](less_is_more_but_where_dynamic_token_compression_via_llm-guided_keyframe_prior.md)
+- [HyperLoRA: Parameter-Efficient Adaptive Generation for Portrait Synthesis](../../CVPR2025/model_compression/hyperlora_parameter-efficient_adaptive_generation_for_portrait_synthesis.md)
+- [MoRAgent: Parameter Efficient Agent Tuning with Mixture-of-Roles](../../ICML2025/model_compression/moragent_parameter_efficient_agent_tuning_with_mixture-of-roles.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Faster Parameter-Efficient Tuning with Token Redundancy Reduction (FPET)](../../CVPR2025/model_compression/faster_parameter-efficient_tuning_with_token_redundancy_reduction.md)
+
+<!-- RELATED:END -->

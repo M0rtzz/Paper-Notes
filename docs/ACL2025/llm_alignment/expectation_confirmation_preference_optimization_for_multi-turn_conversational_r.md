@@ -164,3 +164,15 @@ ECPO 分为四步流水线：
 - 实验充分度: ⭐⭐⭐⭐ 3 数据集 + 消融 + 人工评估 + 超参分析 + 重写质量分析，覆盖全面；但仅在一个 backbone (Llama-3.1-8B) 上验证
 - 写作质量: ⭐⭐⭐⭐ 框架设计清晰，图示直观，ECT 理论引入自然；问题定义和动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 首个面向 CRA 的偏好优化方法，ECPO 范式对多轮对话系统优化有广泛启发，AILO 用户模拟器也有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M2S: Multi-turn to Single-turn jailbreak in Red Teaming for LLMs](m2s_multiturn_to_singleturn_jailbreak_in.md)
+- [Debate, Reflect, and Distill: Multi-Agent Feedback with Tree-Structured Preference Optimization for Efficient Language Model Enhancement](debate_reflect_and_distill_multi-agent_feedback_with_tree-structured_preference_.md)
+- [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
+- [Red Queen: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking](red_queen_safeguarding_large_language_models_against_concealed_multi-turn_jailbr.md)
+- [M³HF: Multi-agent Reinforcement Learning from Multi-phase Human Feedback of Mixed Quality](../../ICML2025/llm_alignment/m3hf_multi-agent_reinforcement_learning_from_multi-phase_human_feedback_of_mixed.md)
+
+<!-- RELATED:END -->

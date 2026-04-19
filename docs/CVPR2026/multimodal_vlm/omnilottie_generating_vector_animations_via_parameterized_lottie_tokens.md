@@ -126,3 +126,15 @@ OmniLottie 包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 人类评估 + 自动指标 + 消融，但缺少动画时序质量评估
 - 写作质量: ⭐⭐⭐⭐ 问题引入清晰，tokenizer 设计可视化做得好
 - 价值: ⭐⭐⭐⭐⭐ 数据集+方法+应用价值三重贡献，对矢量动画生成领域有开创意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StarVector: Generating Scalable Vector Graphics Code from Images and Text](../../CVPR2025/multimodal_vlm/starvector_generating_scalable_vector_graphics_code_from_images_and_text.md)
+- [VecGlypher: Unified Vector Glyph Generation with Language Models](vecglypher_unified_vector_glyph_generation_with_language_models.md)
+- [Cubic Discrete Diffusion: Discrete Visual Generation on High-Dimensional Representation Tokens](cubic_discrete_diffusion_discrete_visual_generation_on_high-dimensional_represen.md)
+- [What Do Visual Tokens Really Encode? Uncovering Sparsity and Redundancy in Multimodal Large Language Models](what_do_visual_tokens_really_encode_uncovering_sparsity_and_redundancy_in_multim.md)
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+
+<!-- RELATED:END -->

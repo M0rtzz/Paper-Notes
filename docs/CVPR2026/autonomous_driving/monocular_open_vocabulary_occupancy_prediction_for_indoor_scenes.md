@@ -161,3 +161,15 @@ $$L_{\text{total}} = \lambda_{\text{focal}} L_{\text{focal}} + \lambda_{\text{lo
 - 实验充分度: ⭐⭐⭐ 在 Occ-ScanNet 上做了全面消融，但仅一个数据集
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，从 GaussianFormer2→Bernoulli→Poisson 层层递进
 - 价值: ⭐⭐⭐⭐ 首次在大规模室内场景实现实用的开放词汇占用预测，推动具身智能落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_openvocabulary_occupancy_predi.md)
+- [Monocular Occupancy Prediction for Scalable Indoor Scenes](../../ECCV2024/autonomous_driving/monocular_occupancy_prediction_for_scalable_indoor_scenes.md)
+- [Open-Vocabulary Domain Generalization in Urban-Scene Segmentation](open-vocabulary_domain_generalization_in_urban-scene_segmentation.md)
+- [ReScene4D: Temporally Consistent Semantic Instance Segmentation of Evolving Indoor 3D Scenes](rescene4d_temporally_consistent_semantic_instance_segmentation_of_evolving_indoo.md)
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction.md)
+
+<!-- RELATED:END -->

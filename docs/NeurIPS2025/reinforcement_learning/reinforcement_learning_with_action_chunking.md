@@ -140,3 +140,15 @@ Q-chunking 通过将动作空间从单步动作 $a_t$ 扩展为动作序列 $\ma
 - ⭐ 创新性: 8/10 — 将动作分块引入TD学习的思路自然且有效
 - ⭐ 实用性: 8/10 — 对机器人操作等实际任务直接相关
 - ⭐ 写作质量: 8/10 — 36页,实验详尽,分析深入
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BEAST: Efficient Tokenization of B-Splines Encoded Action Sequences for Imitation Learning](beast_efficient_tokenization_of_b-splines_encoded_action_sequences_for_imitation.md)
+- [Action-Constrained Imitation Learning](../../ICML2025/reinforcement_learning/action-constrained_imitation_learning.md)
+- [Learning Human-Like RL Agents through Trajectory Optimization with Action Quantization](learning_human-like_rl_agents_through_trajectory_optimization_with_action_quanti.md)
+- [Act to See, See to Act: Diffusion-Driven Perception-Action Interplay for Adaptive Policies](act_to_see_see_to_act_diffusion-driven_perception-action_interplay_for_adaptive_.md)
+- [Risk-Averse Total-Reward Reinforcement Learning](risk-averse_total-reward_reinforcement_learning.md)
+
+<!-- RELATED:END -->

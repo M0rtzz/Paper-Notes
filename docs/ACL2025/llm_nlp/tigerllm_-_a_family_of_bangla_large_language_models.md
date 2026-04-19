@@ -181,3 +181,15 @@ TigerLLM 的开发包含三个核心贡献：
 - **实用性**：⭐⭐⭐⭐⭐ — 为2.37亿孟加拉语使用者提供了首个高质量开源 LLM
 - **实验充分性**：⭐⭐⭐ — 覆盖6项基准但缺少消融和深度分析
 - **写作质量**：⭐⭐⭐⭐ — 问题动机清晰，数据工程流程描述详细
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AfroBench: How Good are Large Language Models on African Languages?](afrobench_how_good_are_large_language_models_on_african_languages.md)
+- [Large Language Models in Bioinformatics: A Survey](large_language_models_in_bioinformatics_a_survey.md)
+- [Large Language Models are Good Relational Learners](large_language_models_are_good_relational_learners.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [Conformity in Large Language Models](conformity_in_large_language_models.md)
+
+<!-- RELATED:END -->

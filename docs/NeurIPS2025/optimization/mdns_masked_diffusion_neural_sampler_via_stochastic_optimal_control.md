@@ -166,3 +166,15 @@ $J=1, h=0.1, \beta_{\text{high}}=0.28$，状态空间 $|\mathcal{X}_0| = 2^{16} 
 - 实验充分度: ⭐⭐⭐⭐ — Ising/Potts 多温度多尺度实验详尽，消融研究全面，但缺乏物理模型之外的应用验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导严谨，从 SOC 到 masked diffusion 的连接清晰自然，算法伪代码完整
 - 价值: ⭐⭐⭐⭐⭐ — 为离散空间采样提供了强大且可扩展的新范式，在超高维问题上展现出突破性性能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Estimation of Stochastic Optimal Transport Maps](estimation_of_stochastic_optimal_transport_maps.md)
+- [Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks](understanding_the_generalization_of_stochastic_gradient_adam_in_learning_neural_.md)
+- [Memory-Augmented Potential Field Theory: A Framework for Adaptive Control in Non-Convex Domains](memory-augmented_potential_field_theory_a_framework_for_adaptive_control_in_non-.md)
+- [Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport](bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport.md)
+- [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+
+<!-- RELATED:END -->

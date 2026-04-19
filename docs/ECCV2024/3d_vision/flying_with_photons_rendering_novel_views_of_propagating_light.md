@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 仿真+实拍全面验证，多种光传输效果演示，但实拍场景数量有限
 - 写作质量: ⭐⭐⭐⭐⭐ 写作极为清晰，物理模型推导严谨，可视化设计出色（peak-time visualization）
 - 价值: ⭐⭐⭐⭐ 开创了超快成像×神经渲染的新方向，学术价值高，但短期应用场景较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GAURA: Generalizable Approach for Unified Restoration and Rendering of Arbitrary Views](gaura_generalizable_approach_for_unified_restoration_and_rendering_of_arbitrary_.md)
+- [MaRINeR: Enhancing Novel Views by Matching Rendered Images with Nearby References](mariner_enhancing_novel_views_by_matching_rendered_images_with_nearby_references.md)
+- [TrackNeRF: Bundle Adjusting NeRF from Sparse and Noisy Views via Feature Tracks](tracknerf_bundle_adjusting_nerf_from_sparse_and_noisy_views_via_feature_tracks.md)
+- [Thermal3D-GS: Physics-induced 3D Gaussians for Thermal Infrared Novel-view Synthesis](thermal3d-gs_physics-induced_3d_gaussians_for_thermal_infrared_novel-view_synthe.md)
+- [From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy](../../NeurIPS2025/3d_vision/from_pixels_to_views_learning_angular-aware_and_physics-consistent_representatio.md)
+
+<!-- RELATED:END -->

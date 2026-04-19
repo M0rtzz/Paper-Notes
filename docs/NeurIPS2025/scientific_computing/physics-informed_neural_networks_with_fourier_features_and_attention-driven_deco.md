@@ -154,3 +154,15 @@ S-Pformer 在全部 4 个 benchmark 上 rMAE/rMSE 均优于 Pformer，且 Navier
 - 实验充分度: ⭐⭐⭐ — 4 个 benchmark + 频谱分析 + 消融 + 超参优化，较充分但规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，消融设计合理
 - 价值: ⭐⭐⭐ — 对 PINN 社区有实用参考价值，但应用范围和影响力有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](../../ICML2025/scientific_computing/differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [Neuro-Spectral Architectures for Causal Physics-Informed Networks](neuro-spectral_architectures_for_causal_physics-informed_networks.md)
+- [Astral: Training Physics-Informed Neural Networks with Error Majorants](../../ICLR2026/scientific_computing/astral_training_physics-informed_neural_networks_with_error_majorants.md)
+- [Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data](multi-trajectory_physics-informed_neural_networks_for_hjb_equations_with_hard-ze.md)
+- [Maximal Update Parametrization and Zero-Shot Hyperparameter Transfer for Fourier Neural Operators](../../ICML2025/scientific_computing/maximal_update_parametrization_and_zero-shot_hyperparameter_transfer_for_fourier.md)
+
+<!-- RELATED:END -->

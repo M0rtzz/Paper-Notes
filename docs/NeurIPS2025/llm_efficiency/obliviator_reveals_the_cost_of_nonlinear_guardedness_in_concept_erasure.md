@@ -138,3 +138,15 @@ Obliviator是一个**后处理、迭代式**的概念擦除方法，分两步交
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个PLM × 3个数据集 × 4种设置 × trade-off曲线 × 公平性 × 偏斜分析，极为全面
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，但符号较多，初读有一定门槛
 - 价值: ⭐⭐⭐⭐⭐ 首次实现非线性完全概念擦除，trade-off分析框架为后续工作提供了重要基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering](../../ICML2025/llm_efficiency/costfilter-ad_enhancing_anomaly_detection_through_matching_cost_filtering.md)
+- [Language Guided Concept Bottleneck Models for Interpretable Continual Learning](../../CVPR2025/llm_efficiency/language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [Learning Like Humans: Analogical Concept Learning for Generalized Category Discovery](../../CVPR2026/llm_efficiency/learning_like_humans_analogical_concept_learning_for_generalized_category_discov.md)
+- [Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents](../../ICLR2026/llm_efficiency/did_you_check_the_right_pocket_cost-sensitive_store_routing_for_memory-augmented.md)
+- [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
+
+<!-- RELATED:END -->

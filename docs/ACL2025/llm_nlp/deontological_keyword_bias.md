@@ -163,3 +163,15 @@ tags:
 | 写作质量 | 8 | 概念定义清晰，结构规范 |
 | 实际影响 | 8 | 对AI安全和对齐研究有直接指导意义 |
 | **总分** | **8.0** | 揭示重要偏见现象的高质量实证研究 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attention Speaks Volumes: Localizing and Mitigating Bias in Language Models](attention_speaks_volumes_localizing_and_mitigating_bias_in_language_models.md)
+- [Detecting Referring Expressions in Visually Grounded Dialogue with Autoregressive Language Models](detecting_referring_expressions_in_visually_grounded_dialogue_with_autoregressiv.md)
+- [The Impact of Token Granularity on the Predictive Power of Language Model Surprisal](token_granularity_impact.md)
+- [Bias in Language Models: Beyond Trick Tests and Towards RUTEd Evaluation](bias_in_language_models_beyond_trick_tests_ruted_evaluation.md)
+- [Evaluating Implicit Bias in Large Language Models by Attacking from a Psychometric Perspective](evaluating_implicit_bias_in_large_language_models_by_attacking_from_a_psychometr.md)
+
+<!-- RELATED:END -->

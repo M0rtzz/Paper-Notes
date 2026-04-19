@@ -174,3 +174,15 @@ $$\arg\min \; \gamma_1 \mathcal{L}_{smooth} + \gamma_2 \mathcal{L}_{Huber} + \ga
 - 实验充分度: ⭐⭐⭐⭐ — 仿真+真实实验+标定/非标定对比+消融；但真实场景有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 物理推导严谨清晰，从成像模型到约束推导到优化一气呵成
 - 价值: ⭐⭐⭐⭐ — 打开热成像的新分析维度，对计算热成像/非接触测温/热 NLOS 等领域有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Reason Over Time: Timeline Self-Reflection for Temporal Reasoning](../../ACL2025/others/tiser_timeline_self_reflection_temporal.md)
+- [Neural Collapse in Test-Time Adaptation](neural_collapse_in_test-time_adaptation.md)
+- [Thermal Polarimetric Multi-view Stereo](../../ICCV2025/others/thermal_polarimetric_multi-view_stereo.md)
+- [Depth-Synergized Mamba Meets Memory Experts for All-Day Image Reflection Separation](../../AAAI2026/others/depth-synergized_mamba_meets_memory_experts_for_all-day_image_reflection_separat.md)
+- [Action2Sound: Ambient-Aware Generation of Action Sounds from Egocentric Videos](../../ECCV2024/others/action2sound_ambientaware_generation_of_action_sounds_from_e.md)
+
+<!-- RELATED:END -->

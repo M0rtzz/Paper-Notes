@@ -150,3 +150,15 @@ $$\mathbf{h}_\theta = \mathbf{W}_O \text{LN}(\mathbf{h}_{\theta,0}(\mathbf{T})) 
 - 实验充分度: ⭐⭐⭐ 合成实验与理论一致，但缺乏真实 LLM 验证
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，从实证观察出发建模，proof sketch 条理分明
 - 价值: ⭐⭐⭐⭐ 对 ICL 机制理解有重要推进，连接了 task vector、QA 训练、BMA 等多个视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Understanding Attention-Based In-Context Learning for Categorical Data](on_understanding_attention-based_in-context_learning_for_categorical_data.md)
+- [Provable and Practical In-Context Policy Optimization for Self-Improvement](../../ICLR2026/optimization/provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [Training Dynamics of In-Context Learning in Linear Attention](training_dynamics_of_in-context_learning_in_linear_attention.md)
+- [Can Transformers Learn Full Bayesian Inference In Context?](can_transformers_learn_full_bayesian_inference_in_context.md)
+- [Emergence in Non-Neural Models: Grokking Modular Arithmetic via Average Gradient Outer Product](emergence_in_non-neural_models_grokking_modular_arithmetic_via_average_gradient_.md)
+
+<!-- RELATED:END -->

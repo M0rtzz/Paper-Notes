@@ -163,3 +163,15 @@ V2XPnP 在所有协作模式的 EPA 指标上都是最佳（VC +3.5, IC +2.7, V2
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 11 个基线模型、4 种协作模式、详尽消融和鲁棒性测试
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，"传什么、何时传、怎么融"的分析框架有条理
 - **价值**: ⭐⭐⭐⭐⭐ — 数据集填补了真实世界 V2X 时序数据的关键空白，框架和 benchmark 对社区价值巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
+- [StRap: Spatio-Temporal Pattern Retrieval for Out-of-Distribution Generalization](../../NeurIPS2025/time_series/strap_spatio-temporal_pattern_retrieval_for_out-of-distribution_generalization.md)
+- [Learning with Calibration: Exploring Test-Time Computing of Spatio-Temporal Forecasting](../../NeurIPS2025/time_series/learning_with_calibration_exploring_test-time_computing_of_spatio-temporal_forec.md)
+- [Coherent Multi-Agent Trajectory Forecasting in Team Sports with CausalTraj](../../AAAI2026/time_series/coherent_multi-agent_trajectory_forecasting_in_team_sports_with_causaltraj.md)
+- [Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting](../../ICML2025/time_series/breaking_silos_adaptive_model_fusion_unlocks_better_time_series_forecasting.md)
+
+<!-- RELATED:END -->

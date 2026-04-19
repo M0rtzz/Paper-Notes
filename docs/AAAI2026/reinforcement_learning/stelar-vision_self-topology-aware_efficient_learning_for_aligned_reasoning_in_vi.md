@@ -183,3 +183,15 @@ STELAR-Vision-Short† 减少 18.1% 输出长度，仍超基座模型 +2.5%。
 - **实验充分度**: ⭐⭐⭐⭐ — 7 个数据集（含 5 个 OOD）、多基线对比、消融完整，但仅在 7B 模型上实验
 - **写作质量**: ⭐⭐⭐⭐ — 分析系统、图表丰富，但篇幅较长（扩展版）
 - **价值**: ⭐⭐⭐⭐⭐ — 以小搏大的思路极具实用价值，TopoAug 管线可直接复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
+- [Open Vision Reasoner: Transferring Linguistic Cognitive Behavior for Visual Reasoning](../../NeurIPS2025/reinforcement_learning/open_vision_reasoner_transferring_linguistic_cognitive_behavior_for_visual_reaso.md)
+- [BAMAS: Structuring Budget-Aware Multi-Agent Systems](bamas_structuring_budget-aware_multi-agent_systems.md)
+- [Where and What Matters: Sensitivity-Aware Task Vectors for Many-Shot Multimodal In-Context Learning](where_and_what_matters_sensitivity-aware_task_vectors_for_many-shot_multimodal_i.md)
+- [Octopus: Embodied Vision-Language Programmer from Environmental Feedback](../../ECCV2024/reinforcement_learning/octopus_embodied_vision-language_programmer_from_environmental_feedback.md)
+
+<!-- RELATED:END -->

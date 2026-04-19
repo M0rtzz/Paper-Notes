@@ -134,3 +134,15 @@ $$\mathbf{P}_i^{\text{cam}} = d_{sc,i} \cdot K^{-1} \begin{bmatrix} u_i \\ v_i \
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖实例分割、语义分割、参考分割、QA、稠密描述等多任务，零样本泛化验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，实验设计公正，统一超参数设置立意端正
 - 价值: ⭐⭐⭐⭐⭐ 开源的大规模3D数据集将直接推动空间智能领域发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning 3D Object Spatial Relationships from Pre-trained 2D Diffusion Models](learning_3d_object_spatial_relationships_from_pre-trained_2d_diffusion_models.md)
+- [DAViD: Data-efficient and Accurate Vision Models from Synthetic Data](david_data-efficient_and_accurate_vision_models_from_synthetic_data.md)
+- [TRIM: Scalable 3D Gaussian Diffusion Inference with Temporal and Spatial Trimming](../../NeurIPS2025/3d_vision/trim_scalable_3d_gaussian_diffusion_inference_with_temporal_and_spatial_trimming.md)
+- [Lifting Unlabeled Internet-level Data for 3D Scene Understanding](../../CVPR2026/3d_vision/lifting_unlabeled_internet-level_data_for_3d_scene_understanding.md)
+- [Trace3D: Consistent Segmentation Lifting via Gaussian Instance Tracing](trace3d_consistent_segmentation_lifting_via_gaussian_instance_tracing.md)
+
+<!-- RELATED:END -->

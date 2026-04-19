@@ -120,3 +120,15 @@ Sophia的注意力FLOPs仅为InternVL2的**1/8.5**，为LongVU的**1/33**。
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个benchmark、详细效率分析、消融完整
 - 写作质量: ⭐⭐⭐⭐ 理论和实践结合好，效率对比图示清晰直观
 - 对我的价值: ⭐⭐⭐⭐⭐ 解决长视频理解的核心效率瓶颈，工程和学术价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video-XL: Extra-Long Vision Language Model for Hour-Scale Video Understanding](../../CVPR2025/multimodal_vlm/video-xl_extra-long_vision_language_model_for_hour-scale_video_understanding.md)
+- [ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos](../../CVPR2025/multimodal_vlm/revisionllm_recursive_vision-language_model_for_temporal_grounding_in_hour-long_.md)
+- [MSJoE: Jointly Evolving MLLM and Sampler for Efficient Long-Form Video Understanding](../../CVPR2026/multimodal_vlm/msjoe_jointly_evolving_mllm_and_sampler_for_efficient_long-form_video_understand.md)
+- [ReMoRa: Multimodal Large Language Model based on Refined Motion Representation for Long-Video Understanding](../../CVPR2026/multimodal_vlm/remora_multimodal_large_language_model_based_on_refined_motion_representation_fo.md)
+- [MadaKV: Adaptive Modality-Perception KV Cache Eviction for Efficient Multimodal Long-Context Inference](madakv_adaptive_modality-perception_kv_cache_eviction_for_efficient_multimodal_l.md)
+
+<!-- RELATED:END -->

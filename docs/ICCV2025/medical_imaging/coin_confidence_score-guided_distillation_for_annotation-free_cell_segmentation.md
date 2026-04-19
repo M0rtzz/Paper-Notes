@@ -110,3 +110,15 @@ COIN使SSA的AJI从0.259提升至0.580（+124%），且超越了所有需要点/
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个数据集、多种基线对比、完善的消融和可视化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，Fig.1-6的图示设计出色
 - 价值: ⭐⭐⭐⭐⭐ 无标注方法超越弱监督方法，对病理AI实际价值巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Four Color Theorem for Cell Instance Segmentation](../../ICML2025/medical_imaging/the_four_color_theorem_for_cell_instance_segmentation.md)
+- [Alleviating Textual Reliance in Medical Language-guided Segmentation via Prototype-driven Semantic Approximation](alleviating_textual_reliance_in_medical_language-guided_segmentation_via_prototy.md)
+- [DISCO: Densely-overlapping Cell Instance Segmentation via Adjacency-aware Collaborative Coloring](../../ICLR2026/medical_imaging/disco_densely-overlapping_cell_instance_segmentation_via_adjacency-aware_collabo.md)
+- [Integrating Biological Knowledge for Robust Microscopy Image Profiling on De Novo Cell Lines](integrating_biological_knowledge_for_robust_microscopy_image_profiling_on_de_nov.md)
+- [EWC-Guided Diffusion Replay for Exemplar-Free Continual Learning in Medical Imaging](../../NeurIPS2025/medical_imaging/ewc-guided_diffusion_replay_for_exemplar-free_continual_learning_in_medical_imag.md)
+
+<!-- RELATED:END -->

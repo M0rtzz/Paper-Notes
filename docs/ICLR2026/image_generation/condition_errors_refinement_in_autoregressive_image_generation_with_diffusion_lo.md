@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 主实验充分但缺少推理速度、训练成本、T2I 等实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨清晰，但符号较多，阅读门槛高
 - 价值: ⭐⭐⭐⭐ 对自回归图像生成的理论理解有贡献，OT 精炼方法实用且可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Prediction to Perfection: Introducing Refinement to Autoregressive Image Generation](from_prediction_to_perfection_introducing_refinement_to_autoregressive_image_gen.md)
+- [Autoregressive Image Generation with Randomized Parallel Decoding](autoregressive_image_generation_with_randomized_parallel_decoding.md)
+- [Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation](locality-aware_parallel_decoding_for_efficient_autoregressive_image_generation.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [Bridging Degradation Discrimination and Generation for Universal Image Restoration](bridging_degradation_discrimination_and_generation_for_universal_image_restorati.md)
+
+<!-- RELATED:END -->

@@ -149,3 +149,15 @@ $$dx_t = \left(v_t + \frac{\sigma_t^2}{2t}(x_t + (1-t)v_t)\right)dt + \sigma_t\,
 ⭐⭐⭐⭐
 
 这篇论文对 VTR 领域的关键痛点（OCR 评估器的结构盲区）进行了深入分析和有效解决。从"OCR 和 MLLM 在 TSAP 上 F1 ≈ 0"这一发现出发，构建数据集→训练识别器→设计复合奖励→RL 优化的完整链路非常流畅。笔画编辑合成引擎的设计体现了对中文字符特性的深入理解。在已经高度优化的 Qwen-Image 上仍能取得 +8.7% 语义+4% 结构提升，充分说明方法的实用价值。不足之处在于标注成本较高且推理开销较大，但作为一项填补评估空白的工作，贡献突出。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AMO Sampler: Enhancing Text Rendering with Overshooting](../../CVPR2025/image_generation/amo_sampler_enhancing_text_rendering_with_overshooting.md)
+- [Learning to Generate via Understanding: Understanding-Driven Intrinsic Rewarding for Unified Multimodal Models](learning_to_generate_via_understanding_understanding-driven_intrinsic_rewarding_.md)
+- [RenderFlow: Single-Step Neural Rendering via Flow Matching](renderflow_single-step_neural_rendering_via_flow_matching.md)
+- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
+- [Spatial-SSRL: Enhancing Spatial Understanding via Self-Supervised Reinforcement Learning](spatial-ssrl_enhancing_spatial_understanding_via_self-supervised_reinforcement_l.md)
+
+<!-- RELATED:END -->

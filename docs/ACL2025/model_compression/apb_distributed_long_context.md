@@ -144,3 +144,15 @@ APB 平均分超过 FullAttn 3.46 分，在 R.KV 任务上大幅领先（81.8 vs
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个模型、两个 benchmark、速度和精度双维度评估、消融完整
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，framework 图示直观，算法伪代码完整
 - 价值: ⭐⭐⭐⭐⭐ 长上下文推理加速是核心需求，9.2x 加速且无性能损失有很强实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](moqae_mixed_precision_kv_cache.md)
+- [ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference](../../NeurIPS2025/model_compression/chunkkv_semanticpreserving_kv_cache_compression_for_efficien.md)
+- [RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](../../ICML2025/model_compression/rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments](../../NeurIPS2025/model_compression/keydiff_key_similarity-based_kv_cache_eviction_for_long-context_llm_inference_in.md)
+- [ParallelComp: Parallel Long-Context Compressor for Length Extrapolation](../../ICML2025/model_compression/parallelcomp_parallel_long-context_compressor_for_length_extrapolation.md)
+
+<!-- RELATED:END -->

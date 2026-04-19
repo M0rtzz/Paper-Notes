@@ -188,3 +188,15 @@ $$\bar{R} = [M \times K + R \times (K_f - K)] / L$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 三个 VLM 基准（图像+视频），六项消融，速度对比详尽
 - **写作质量**: ⭐⭐⭐⭐⭐ — 先导实验→动机→方法→实验的叙事逻辑极其清晰
 - **价值**: ⭐⭐⭐⭐⭐ — 首次揭示 decoding 加速对 VLM 部署的重要性，提供了简洁有效的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves](ideator_jailbreaking_and_benchmarking_large_visionlanguage_m.md)
+- [MultiVerse: A Multi-Turn Conversation Benchmark for Evaluating Large Vision and Language Models](multiverse_a_multi-turn_conversation_benchmark_for_evaluating_large_vision_and_l.md)
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+- [Improving Large Vision and Language Models by Learning from a Panel of Peers](improving_large_vision_and_language_models_by_learning_from_a_panel_of_peers.md)
+- [Jailbreaking Multimodal Large Language Models via Shuffle Inconsistency](jailbreaking_multimodal_large_language_models_via_shuffle_inconsistency.md)
+
+<!-- RELATED:END -->

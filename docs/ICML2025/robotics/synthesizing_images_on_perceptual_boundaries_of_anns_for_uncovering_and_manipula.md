@@ -172,3 +172,15 @@ $$\mathcal{L}_{surr} = \mathcal{L} + \max((1 - f_{surr}(x))^2, 0.5)$$
 | 实验充分性 | ⭐⭐⭐⭐⭐ | 246 被试，116K trials，涵盖 5 种分类器和两个数据域 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，但部分细节需参考附录 |
 | 影响力 | ⭐⭐⭐⭐ | 为 AI-人类对齐和个性化感知研究提供新工具 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](../../ICLR2026/robotics/memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
+- [Manipulating Feature Visualizations with Gradient Slingshots](../../NeurIPS2025/robotics/manipulating_feature_visualizations_with_gradient_slingshots.md)
+- [Visual Planning: Let's Think Only with Images](../../ICLR2026/robotics/visual_planning_lets_think_only_with_images.md)
+- [Knolling Bot: Teaching Robots the Human Notion of Tidiness](../../NeurIPS2025/robotics/knolling_bot_teaching_robots_the_human_notion_of_tidiness.md)
+- [Efficient Robotic Policy Learning via Latent Space Backward Planning](efficient_robotic_policy_learning_via_latent_space_backward_planning.md)
+
+<!-- RELATED:END -->

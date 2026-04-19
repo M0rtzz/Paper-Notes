@@ -125,3 +125,15 @@ GPT-2架构（86M参数），12层，768维，12头。6个数据集（随机500K
 - 实验充分度: ⭐⭐⭐⭐⭐ 24个模型、5种攻击、6个数据集的大规模系统评估
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化定义清晰，实验设计严谨
 - 价值: ⭐⭐⭐⭐ 对AI安全和可解释性有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GGBall: Graph Generative Model on Poincaré Ball](ggball_graph_generative_model_on_poincaré_ball.md)
+- [Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network](../../NeurIPS2025/image_generation/denoising_weak_lensing_mass_maps_with_diffusion_model_and_generative_adversarial.md)
+- [Latent Diffusion Model without Variational Autoencoder](latent_diffusion_model_without_variational_autoencoder.md)
+- [Efficient Adversarial Attacks on High-dimensional Offline Bandits](efficient_adversarial_attacks_on_high-dimensional_offline_bandits.md)
+- [Sample-Efficient Evidence Estimation of Score-Based Priors for Model Selection](sample-efficient_evidence_estimation_of_score_based_priors_for_model_selection.md)
+
+<!-- RELATED:END -->

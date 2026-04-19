@@ -97,3 +97,15 @@ GLYPH-SR基于预训练LDM（Juggernaut-XL），在其上添加Text-SR融合Cont
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集两个尺度全面比较
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，动机充分
 - 价值: ⭐⭐⭐⭐ 对场景文本SR有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GlyphMastero: A Glyph Encoder for High-Fidelity Scene Text Editing](../../CVPR2025/image_generation/glyphmastero_a_glyph_encoder_for_high-fidelity_scene_text_editing.md)
+- [LVTINO: LAtent Video consisTency INverse sOlver for High Definition Video Restoration](lvtino_latent_video_consistency_inverse_solver_for_high_definition_video_restora.md)
+- [RepLDM: Reprogramming Pretrained Latent Diffusion Models for High-Quality, High-Efficiency, High-Resolution Image Generation](../../NeurIPS2025/image_generation/repldm_reprogramming_pretrained_latent_diffusion_models_for_high-quality_high-ef.md)
+- [Step-Aware Residual-Guided Diffusion for EEG Spatial Super-Resolution](step-aware_residual-guided_diffusion_for_eeg_spatial_super-resolution.md)
+- [EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling](editscore_unlocking_online_rl_for_image_editing_via_high-fidelity_reward_modelin.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ $$\mathcal{L}_{\text{distil}} = \sum_{i=1}^{N} \mathcal{L}_{cos}(f_i(x), t_i(x))
 ## 评分：⭐⭐⭐⭐
 
 问题定义清晰且重要，实验设计系统全面（投影器、数据共享、多任务评估），ViT-Base 超 ViT-Large 的结果令人印象深刻。扣一星因为语义分割性能与 SOTA 有差距，且缺少更多教师的扩展实验。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LUCAS: Layered Universal Codec Avatars](lucas_layered_universal_codec_avatars.md)
+- [Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](../../NeurIPS2025/3d_vision/multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
+- [InteractVLM: 3D Interaction Reasoning from 2D Foundational Models](interactvlm_3d_interaction_reasoning_from_2d_foundational_models.md)
+- [Universal Beta Splatting](../../ICLR2026/3d_vision/universal_beta_splatting.md)
+- [Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description](../../ICCV2025/3d_vision/articulate3d_holistic_understanding_of_3d_scenes_as_universa.md)
+
+<!-- RELATED:END -->

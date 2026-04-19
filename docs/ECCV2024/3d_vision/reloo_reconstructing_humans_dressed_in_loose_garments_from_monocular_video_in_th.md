@@ -119,3 +119,15 @@ tags:
 - 创新性：★★★★☆ 虚拟骨骼变形模块和分层隐式表示设计巧妙
 - 实用性：★★★★☆ 从单目视频重建宽松服装人体，应用前景广
 - 实验质量：★★★★★ 提出新数据集MonoLoose，实验对比全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)
+- [Dynamic Neural Radiance Field from Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)
+- [Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting](../../ICCV2025/3d_vision/vivid4d_improving_4d_reconstruction_from_monocular_video_by_video_inpainting.md)
+- [RPBG: Towards Robust Neural Point-based Graphics in the Wild](rpbg_towards_robust_neural_point-based_graphics_in_the_wild.md)
+- [Generative Camera Dolly: Extreme Monocular Dynamic Novel View Synthesis](generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)
+
+<!-- RELATED:END -->

@@ -170,3 +170,15 @@ SingaKids 正是在这一背景下提出，旨在通过图像描述任务（pict
 - **实验充分度**: ⭐⭐⭐ (各模块有定量评估，但用户研究规模较小)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰，系统描述详尽)
 - **价值**: ⭐⭐⭐⭐ (面向真实教育场景，具有较高的应用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model](centurio_multilingual_vlm.md)
+- [Parrot: Multilingual Visual Instruction Tuning](../../ICML2025/multimodal_vlm/parrot_multilingual_visual_instruction_tuning.md)
+- [DALR: Dual-level Alignment Learning for Multimodal Sentence Representation Learning](dalr_dual-level_alignment_learning_for_multimodal_sentence_representation_learni.md)
+- [Speaking Beyond Language: A Large-Scale Multimodal Dataset for Learning Nonverbal Cues from Video-Grounded Dialogues](speaking_beyond_language.md)
+- [Multimodal Negative Learning](../../NeurIPS2025/multimodal_vlm/multimodal_negative_learning.md)
+
+<!-- RELATED:END -->

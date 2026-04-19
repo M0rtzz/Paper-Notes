@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验在真实 LLM 上验证但规模较小，主要靠理论驱动
 - 写作质量: ⭐⭐⭐⭐ 理论严谨，但符号和定义较多，对非经济学背景读者门槛高
 - 价值: ⭐⭐⭐⭐ 开辟了 LLM 经济学的重要方向，随着微调即服务的普及将越来越重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Data Efficiency for LLM Reinforcement Fine-tuning Through Difficulty-targeted Online Data Selection and Rollout Replay](improving_data_efficiency_for_llm_reinforcement_fine-tuning_through_difficulty-t.md)
+- [Attack via Overfitting: 10-shot Benign Fine-tuning to Jailbreak LLMs](attack_via_overfitting_10-shot_benign_fine-tuning_to_jailbreak_llms.md)
+- [DeepVideo-R1: Video Reinforcement Fine-Tuning via Difficulty-aware Regressive GRPO](deepvideor1_video_reinforcement_finetuning_via_difficultyawa.md)
+- [Ask a Strong LLM Judge when Your Reward Model is Uncertain](ask_a_strong_llm_judge_when_your_reward_model_is_uncertain.md)
+- [SafePTR: Token-Level Jailbreak Defense in Multimodal LLMs via Prune-then-Restore Mechanism](safeptr_token-level_jailbreak_defense_in_multimodal_llms_via_prune-then-restore_.md)
+
+<!-- RELATED:END -->

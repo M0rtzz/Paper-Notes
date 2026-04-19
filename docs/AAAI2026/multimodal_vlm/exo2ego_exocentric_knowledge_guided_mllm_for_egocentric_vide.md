@@ -200,3 +200,15 @@ $$\mathcal{L}_{\text{CCL}}(F, G) = \mathbb{E}_x[\|G(F(x)) - x\|_1] + \mathbb{E}_
 - (-) 核心方法(cycle consistency + KL)虽有效但非全新，更多是成熟技术的组合应用
 - (-) 在推理类任务(EgoSchema)上与闭源模型差距仍大
 - (-) LLM 和视觉编码器选择较保守，未充分探索 scaling 效果
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MSJoE: Jointly Evolving MLLM and Sampler for Efficient Long-Form Video Understanding](../../CVPR2026/multimodal_vlm/msjoe_jointly_evolving_mllm_and_sampler_for_efficient_long-form_video_understand.md)
+- [anyECG-chat: A Generalist ECG-MLLM for Flexible ECG Input and Multi-Task Understanding](anyecg-chat_a_generalist_ecg-mllm_for_flexible_ecg_input_and.md)
+- [HeadHunt-VAD: Hunting Robust Anomaly-Sensitive Heads in MLLM for Tuning-Free Video Anomaly Detection](headhunt-vad_hunting_robust_anomaly-sensitive_heads_in_mllm_.md)
+- [RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video](../../NeurIPS2025/multimodal_vlm/rtv-bench_benchmarking_mllm_continuous_perception_understanding_and_reasoning_th.md)
+- [TabFlash: Efficient Table Understanding with Progressive Question Conditioning and Token Focusing](tabflash_efficient_table_understanding_with_progressive_question_conditioning_an.md)
+
+<!-- RELATED:END -->

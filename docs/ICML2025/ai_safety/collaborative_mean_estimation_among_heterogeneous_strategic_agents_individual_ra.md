@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ (纯理论工作，以插图说明为主，无大规模实验)
 - 写作质量: ⭐⭐⭐⭐ (问题动机清晰，形式化严谨，Figure 1 直观有效)
 - 价值: ⭐⭐⭐⭐ (为异构协作学习的机制设计建立了坚实基础)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TuCo: Measuring the Contribution of Fine-Tuning to Individual Responses of LLMs](tuco_measuring_the_contribution_of_fine-tuning_to_individual_responses_of_llms.md)
+- [Co-LoRA: Collaborative Model Personalization on Heterogeneous Multi-Modal Clients](../../ICLR2026/ai_safety/co-lora_collaborative_model_personalization_on_heterogeneous_multi-modal_clients.md)
+- [Optimal Adjustment Sets for Nonparametric Estimation of Weighted Controlled Direct Effect](../../NeurIPS2025/ai_safety/optimal_adjustment_sets_for_nonparametric_estimation_of_weighted_controlled_dire.md)
+- [Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs](is_your_model_fairly_certain_uncertainty-aware_fairness_evaluation_for_llms.md)
+- [Probabilistic Reasoning with LLMs for K-Anonymity Estimation](../../NeurIPS2025/ai_safety/probabilistic_reasoning_with_llms_for_k-anonymity_estimation.md)
+
+<!-- RELATED:END -->

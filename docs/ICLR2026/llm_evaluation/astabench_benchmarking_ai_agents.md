@@ -127,3 +127,15 @@ AstaBench 由三大支柱构成：(1) 覆盖科学研究全生命周期的 2400+
 - 实验充分度: ⭐⭐⭐⭐⭐ 57 Agent / 22 类 / 11 子基准 / 2400+ 问题，规模前所未有
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰、5 大缺陷的梳理逻辑性强、贡献陈述有条理
 - 价值: ⭐⭐⭐⭐⭐ 为 AI-for-Science Agent 研究建立了标准化评估基础设施，影响力已开始显现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ComfyBench: Benchmarking LLM-based Agents in ComfyUI for Autonomously Designing Collaborative AI Systems](../../CVPR2025/llm_evaluation/comfybench_benchmarking_llm-based_agents_in_comfyui_for_autonomously_designing_c.md)
+- [AnesSuite: A Comprehensive Benchmark and Dataset Suite for Anesthesiology Reasoning](anessuite_a_comprehensive_benchmark_and_dataset_suite_for_anesthesiology_reasoni.md)
+- [AbGen: Evaluating Large Language Models in Ablation Study Design and Evaluation for Scientific Research](../../ACL2025/llm_evaluation/abgen_evaluating_large_language_models_in.md)
+- [AndroidLab: Training and Systematic Benchmarking of Android Autonomous Agents](../../ACL2025/llm_evaluation/androidlab_autonomous_agent.md)
+- [UIS-Digger: Towards Comprehensive Research Agent Systems for Real-world Unindexed Information Seeking](uis-digger_towards_comprehensive_research_agent_systems_for_real-world_unindexed.md)
+
+<!-- RELATED:END -->

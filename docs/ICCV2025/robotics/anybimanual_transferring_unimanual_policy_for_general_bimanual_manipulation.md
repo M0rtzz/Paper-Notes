@@ -136,3 +136,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{BC} + \lambda_{skill}\mathcal{L}_{skill} + 
 - 实验充分度: ⭐⭐⭐⭐⭐ 12仿真+9真实任务，多基线对比，消融完整，可视化丰富
 - 写作质量: ⭐⭐⭐⭐ 问题动机明确，方法描述系统化
 - 价值: ⭐⭐⭐⭐⭐ 高度实用的即插即用方案，对机器人操控研究有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation](../../CVPR2025/robotics/momanipvla_transferring_vision-language-action_models_for_general_mobile_manipul.md)
+- [iManip: Skill-Incremental Learning for Robotic Manipulation](imanip_skill-incremental_learning_for_robotic_manipulation.md)
+- [Lift3D Foundation Policy: Lifting 2D Large-Scale Pretrained Models for Robust 3D Robotic Manipulation](../../CVPR2025/robotics/lift3d_policy_lifting_2d_foundation_models_for_robust_3d_robotic_manipulation.md)
+- [Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
+- [Adaptive Articulated Object Manipulation On The Fly with Foundation Model Reasoning and Part Grounding](adaptive_articulated_object_manipulation_on_the_fly_with_foundation_model_reason.md)
+
+<!-- RELATED:END -->

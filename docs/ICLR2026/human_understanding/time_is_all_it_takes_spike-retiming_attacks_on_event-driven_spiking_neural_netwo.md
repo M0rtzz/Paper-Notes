@@ -151,3 +151,15 @@ PIL贡献最大（二值$\mathcal{B}_1$: 98.5%→84.3%），预算惩罚$\mathca
 | 写作质量 | ⭐⭐⭐⭐ |
 
 **总体推荐**: ⭐⭐⭐⭐⭐ — 开创性工作，首次系统化SNN时序鲁棒性评估，威胁模型形式化严格、实验全面（3数据集×4模型×3范数×2网格），PIL优化框架兼顾离散可行性和梯度优化，揭示了事件驱动SNN的根本性时序脆弱性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Maximizing Asynchronicity in Event-based Neural Networks](maximizing_asynchronicity_in_event-based_neural_networks.md)
+- [Stable Spike: Dual Consistency Optimization via Bitwise AND Operations for Spiking Neural Networks](../../CVPR2026/human_understanding/stable_spike_dual_consistency_optimization_via_bitwise_and_operations_for_spikin.md)
+- [Biologically Plausible Online Hebbian Meta-Learning: Two-Timescale Local Rules for Spiking Neural Brain Interfaces](biologically_plausible_online_hebbian_meta-learning_two-timescale_local_rules_fo.md)
+- [Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment](../../ICML2025/human_understanding/efficient_logit-based_knowledge_distillation_of_deep_spiking_neural_networks_for.md)
+- [ParaRevSNN: A Parallel Reversible Spiking Neural Network for Efficient Training and Inference](../../AAAI2026/human_understanding/pararevsnn_a_parallel_reversible_spiking_neural_network_for_efficient_training_a.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ WalkGPT 在非专门设计的 RES 任务上仍超越 LISA 和 PixelLM 3–4%。
 - 实验充分度: ⭐⭐⭐⭐（多维度评估 + 消融充分，但数据集规模和跨域实验有限）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，公式规范，图表丰富）
 - 价值: ⭐⭐⭐⭐（填补重要空白，社会意义大，但实用性受分割精度制约）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Depth and Language for Open-Vocabulary Domain-Generalized Semantic Segmentation](../../NeurIPS2025/autonomous_driving/leveraging_depth_and_language_for_open-vocabulary_domain-generalized_semantic_se.md)
+- [NoRD: A Data-Efficient Vision-Language-Action Model that Drives without Reasoning](nord_a_data-efficient_vision-language-action_model_that_drives_without_reasoning.md)
+- [Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)
+- [Resonance: Learning to Predict Social-Aware Pedestrian Trajectories as Co-Vibrations](../../ICCV2025/autonomous_driving/resonance_learning_to_predict_social-aware_pedestrian_trajectories_as_co-vibrati.md)
+- [ST4VLA: Spatially Guided Training for Vision-Language-Action Models](../../ICLR2026/autonomous_driving/st4vla_spatially_guided_training_for_vision-language-action_models.md)
+
+<!-- RELATED:END -->

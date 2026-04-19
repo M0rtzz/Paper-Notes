@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ SYMSOL-I/II + T-Less + ModelNet10，详细消融，低数据实验
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，pipeline 清晰，但符号较重
 - 价值: ⭐⭐⭐⭐ 对机器人抓取等需要处理对称性的应用很有价值，低数据优势实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation](lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose.md)
+- [HUMOS: Human Motion Model Conditioned on Body Shape](humos_human_motion_model_conditioned_on_body_shape.md)
+- [Event-based Head Pose Estimation: Benchmark and Method](event-based_head_pose_estimation_benchmark_and_method.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+
+<!-- RELATED:END -->

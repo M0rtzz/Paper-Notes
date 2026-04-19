@@ -170,3 +170,15 @@ HFDQ 阶段消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集全面评估 + 用户研究 + 风格可控性 + 细致消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融设计合理，可视化直观
 - 价值: ⭐⭐⭐⭐ 风格可控舞蹈生成的系统化解决方案，实时性好，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition](mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)
+- [Beat-It: Beat-Synchronized Multi-Condition 3D Dance Generation](../../ECCV2024/audio_speech/beat-it_beat-synchronized_multi-condition_3d_dance_generation.md)
+- [Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization](unifying_symbolic_music_arrangement_track-aware_reconstruction_and_structured_to.md)
+- [LeVo: High-Quality Song Generation with Multi-Preference Alignment](levo_high-quality_song_generation_with_multi-preference_alignment.md)
+- [MemoryTalker: Personalized Speech-Driven 3D Facial Animation via Audio-Guided Stylization](../../ICCV2025/audio_speech/memorytalker_personalized_speech-driven_3d_facial_animation_via_audio-guided_sty.md)
+
+<!-- RELATED:END -->

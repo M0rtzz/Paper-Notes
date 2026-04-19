@@ -111,3 +111,15 @@ EVOS不仅更快（1.85×），质量还更好（PSNR +0.71dB）。
 - 实验充分度: ⭐⭐⭐⭐ 多基线对比、消融充分，但3D任务验证有限
 - 写作质量: ⭐⭐⭐⭐ 进化算法的类比清晰，方法动机明确
 - 价值: ⭐⭐⭐⭐ 对INR训练加速有实质贡献，稀疏训练反而提升质量的发现有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+- [Evolutionary Prediction Games](../../NeurIPS2025/others/evolutionary_prediction_games.md)
+- [SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics](../../ICML2025/others/suica_learning_super-high_dimensional_sparse_implicit_neural_representations_for.md)
+- [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](../../NeurIPS2025/others/sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
+
+<!-- RELATED:END -->

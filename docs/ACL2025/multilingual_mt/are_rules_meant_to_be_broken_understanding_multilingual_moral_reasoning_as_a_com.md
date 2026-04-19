@@ -138,3 +138,15 @@ UniMoral的构建和评估流程：
 - 实验充分度: ⭐⭐⭐⭐ 21页论文,6种语言×4个任务×3个模型，规模较大
 - 写作质量: ⭐⭐⭐⭐ 跨学科论文（NLP+心理学+伦理学）写作清晰，10个图8个表
 - 价值: ⭐⭐⭐⭐ 对AI伦理和多文化NLP研究有重要推动作用，数据集有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
+- [EXECUTE: A Multilingual Benchmark for LLM Token Understanding](execute_a_multilingual_benchmark_for_llm_token_understanding.md)
+- [M3FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset](m3finmeeting_a_multilingual_multi-sector_and_multi-task_financial_meeting_unders.md)
+- [The Hidden Space of Safety: Understanding Preference-Tuned LLMs in Multilingual Contexts](the_hidden_space_of_safety_understanding_preference-tuned_llms_in_multilingual_c.md)
+- [mOSCAR: A Large-scale Multilingual and Multimodal Document-level Corpus](moscar_a_large-scale_multilingual_and_multimodal_document-level_corpus.md)
+
+<!-- RELATED:END -->

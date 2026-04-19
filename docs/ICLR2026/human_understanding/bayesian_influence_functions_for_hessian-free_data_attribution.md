@@ -128,3 +128,15 @@ tags:
 - **理论深度**: ★★★★☆ — BIF 与经典 IF 的渐近等价性证明严谨，但采样收敛性和超参选择缺少理论保证。
 - **实验充分性**: ★★★★☆ — 覆盖视觉（CIFAR-10, ImageNet）和语言（Pythia 系列）模型，含定性和定量评估，但重训练实验规模较小。
 - **表达清晰度**: ★★★★★ — 从 IF 到 BIF 的推导层次清晰，Figure 1-2 的可视化直观有力，方法与基线的对比表格（Table 1）信息量大。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling Generalist Data-Analytic Agents](scaling_generalist_data-analytic_agents.md)
+- [Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
+- [DiffVax: Optimization-Free Image Immunization Against Diffusion-Based Editing](diffvax_optimization-free_image_immunization_against_diffusion-based_editing.md)
+- [STRIDE: Subset-Free Functional Decomposition for XAI in Tabular Settings](stride_subset-free_functional_decomposition_for_xai_in_tabular_settings.md)
+- [DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
+
+<!-- RELATED:END -->

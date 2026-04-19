@@ -190,3 +190,15 @@ PhyScensis 在所有指标上显著领先：
 - 实验充分度: ⭐⭐⭐⭐ (定量+定性+用户研究+机器人实验+消融，覆盖全面)
 - 写作质量: ⭐⭐⭐⭐ (方法描述清晰，图表精美，实验分析到位)
 - 价值: ⭐⭐⭐⭐ (对机器人仿真数据生成和 embodied AI 有直接价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond ReAct: A Planner-Centric Framework for Complex Tool-Augmented LLM Reasoning](../../AAAI2026/llm_agent/beyond_react_a_planner-centric_framework_for_complex_tool-au.md)
+- [Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization](exploratory_memory-augmented_llm_agent_via_hybrid_on-_and_off-policy_optimizatio.md)
+- [Physics-Informed Autonomous LLM Agents for Explainable Power Electronics Modulation Design](../../AAAI2026/llm_agent/physics-informed_autonomous_llm_agents_for_explainable_power_electronics_modulat.md)
+- [FeatureBench: Benchmarking Agentic Coding for Complex Feature Development](featurebench_benchmarking_agentic_coding_for_complex_feature_development.md)
+- [ChatInject: Abusing Chat Templates for Prompt Injection in LLM Agents](chatinject_abusing_chat_templates_for_prompt_injection_in_llm_agents.md)
+
+<!-- RELATED:END -->

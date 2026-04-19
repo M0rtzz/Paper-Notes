@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐ （纯理论，无实验验证）
 - 写作质量: ⭐⭐⭐⭐⭐ （证明严谨，结构清晰）
 - 价值: ⭐⭐⭐⭐ （缩小了上下界差距，首次研究footrule DP问题）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Missing Mass for Differentially Private Domain Discovery](../../ICLR2026/others/missing_mass_for_differentially_private_domain_discovery.md)
+- [Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](../../NeurIPS2025/others/improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)
+- [Private Frequency Estimation via Residue Number Systems](private_frequency_estimation_via_residue_number_systems.md)
+- [LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval](leanrag_knowledge-graph-based_generation_with_semantic_aggregation_and_hierarchi.md)
+- [Parameterized Approximation Algorithms for TSP on Non-Metric Graphs](parameterized_approximation_algorithms_for_tsp_on_non-metric_graphs.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ Foresight 将去噪过程分为两个阶段：**Warmup Phase** 和 **Reuse Phase
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个视频模型 + 1 个图像模型 × 3 个 benchmark × 多配置 × 消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 清晰系统，收敛性分析加分
 - 价值: ⭐⭐⭐⭐ 即插即用、训练无关的加速方案，工程价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Free-Lunch Long Video Generation via Layer-Adaptive O.O.D Correction](../../CVPR2026/video_generation/free-lunch_long_video_generation_via_layer-adaptive_ood_correction.md)
+- [Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](../../ICCV2025/video_generation/dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
+- [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](../../ICCV2025/video_generation/motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
+- [MimicMotion: High-Quality Human Motion Video Generation with Confidence-aware Pose Guidance](../../ICML2025/video_generation/mimicmotion_high-quality_human_motion_video_generation_with_confidence-aware_pos.md)
+- [DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation](../../ICCV2025/video_generation/dh-facevid-1k_a_large-scale_high-quality_dataset_for_face_video_generation.md)
+
+<!-- RELATED:END -->

@@ -192,3 +192,15 @@ $$\mathbf{r}_v = f_g\Big([\mathbf{h}_v, \{f_a([\mathbf{h}_a, \mathbf{h}_v, \math
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，图表丰富 |
 | 实用价值 | ⭐⭐⭐ | 仿真质量尚有差距，但方向有前景 |
 | 总评 | ⭐⭐⭐⭐ | 高水平系统工作，开辟了科研社区仿真新范式 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiERO: Understanding the Hierarchy of Human Behavior Enhances Reasoning on Egocentric Videos](../../ICCV2025/llm_evaluation/hiero_understanding_the_hierarchy_of_human_behavior_enhances_reasoning_on_egocen.md)
+- [ChatBench: From Static Benchmarks to Human-AI Evaluation](../../ACL2025/llm_evaluation/chatbench_from_static_benchmarks_to_human-ai_evaluation.md)
+- [AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite](../../ICLR2026/llm_evaluation/astabench_benchmarking_ai_agents.md)
+- [AbGen: Evaluating Large Language Models in Ablation Study Design and Evaluation for Scientific Research](../../ACL2025/llm_evaluation/abgen_evaluating_large_language_models_in.md)
+- [Navigating Rifts in Human-LLM Grounding: Study and Benchmark](../../ACL2025/llm_evaluation/navigating_rifts_in_human-llm_grounding_study_and_benchmark.md)
+
+<!-- RELATED:END -->

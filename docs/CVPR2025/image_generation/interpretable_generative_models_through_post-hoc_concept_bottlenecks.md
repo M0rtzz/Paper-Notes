@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖多种生成模型(GAN/DDPM/StyleGAN2)+多数据集+用户研究，非常全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，对比表格信息量大
 - 价值: ⭐⭐⭐⭐ 为生成模型的可解释性提供了实用的低成本方案，有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpretable and Steerable Concept Bottleneck Sparse Autoencoders](../../CVPR2026/image_generation/interpretable_and_steerable_concept_bottleneck_sparse_autoencoders.md)
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](../../NeurIPS2025/image_generation/emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+- [Concept-TRAK: Understanding how diffusion models learn concepts through concept-level attribution](../../ICLR2026/image_generation/concept-trak_understanding_how_diffusion_models_learn_concepts_through_concept-l.md)
+- [Concept Replacer: Replacing Sensitive Concepts in Diffusion Models via Precision Localization](concept_replacer_replacing_sensitive_concepts_in_diffusion_models_via_precision_.md)
+- [EmoEdit: Evoking Emotions through Image Manipulation](emoedit_evoking_emotions_through_image_manipulation.md)
+
+<!-- RELATED:END -->

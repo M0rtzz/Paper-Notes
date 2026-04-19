@@ -132,3 +132,15 @@ CrossDiff 各组件在 HumanML3D 上的影响：
 - 实用性：⭐⭐⭐⭐ — 支持野外2D数据训练
 - 表现力：⭐⭐⭐ — 传统指标不占优，细粒度指标领先
 - 综合评分：7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M2D2M: Multi-Motion Generation from Text with Discrete Diffusion Models](m2d2m_multi-motion_generation_from_text_with_discrete_diffusion_models.md)
+- [Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation](local_action-guided_motion_diffusion_model_for_text-to-motion_generation.md)
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+
+<!-- RELATED:END -->

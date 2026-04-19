@@ -139,3 +139,15 @@ tags:
 - **实验质量**: ★★★★☆ — VQ-VAE 消融详实，MARS 评估较初步但证明概念可行性
 - **实用价值**: ★★★★★ — 数据集和代码开源，为非语言沟通研究提供基础设施
 - **写作质量**: ★★★★☆ — 流水线描述清晰，但公式密度较高可能影响可读性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AkaCE: A Multimodal Multi-party Dataset for Emotion Recognition in Movie Dialogues](akan_cinematic_emotions_ace_a_multimodal_multi-party_dataset_for_emotion_recogni.md)
+- [Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach](multimodal_coreference_resolution_for_chinese_social_media_dialogues_dataset_and.md)
+- [Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation](filter-and-refine_a_mllm_based_cascade_system_for_industrial-scale_video_content.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+- [Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search](mcts_video_captioning_eval.md)
+
+<!-- RELATED:END -->

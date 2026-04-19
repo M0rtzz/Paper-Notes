@@ -129,3 +129,15 @@ SlideTailor 采用模仿人类制作幻灯片流程的三阶段 Agent 框架：
 - **实验充分度** ⭐⭐⭐⭐：定量+消融+人评齐全，但案例数相对有限
 - **写作质量** ⭐⭐⭐⭐⭐：问题动机清晰，系统设计层层递进
 - **价值** ⭐⭐⭐⭐：为个性化幻灯片生成开辟新方向，数据集和评估体系对后续研究有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoPP: Towards Automated Product Poster Generation and Optimization](autopp_towards_automated_product_poster_generation_and_optimization.md)
+- [Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling](semi-supervised_synthetic_data_generation_with_fine-grained_relevance_control_fo.md)
+- [NeurIPS Should Lead Scientific Consensus on AI Policy](../../NeurIPS2025/recommender/neurips_should_lead_scientific_consensus_on_ai_policy.md)
+- [ProPerSim: Developing Proactive and Personalized AI Assistants through User-Assistant Simulation](../../ICLR2026/recommender/propersim_developing_proactive_and_personalized_ai_assistants_through_user-assis.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+
+<!-- RELATED:END -->

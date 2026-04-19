@@ -124,3 +124,15 @@ $$\mathcal{J}_{GRPO}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\min\lef
 - 实验充分度: ⭐⭐⭐⭐ GenEval/GenEval++/DPG-Bench + 理解基准 + 弱基座消融
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰动机充分
 - 实用价值: ⭐⭐⭐⭐ 开源 RL 框架 + 无需额外数据标注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](../../NeurIPS2025/image_generation/coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
+- [Spatial-SSRL: Enhancing Spatial Understanding via Self-Supervised Reinforcement Learning](spatial-ssrl_enhancing_spatial_understanding_via_self-supervised_reinforcement_l.md)
+- [MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [PosterIQ: A Design Perspective Benchmark for Poster Understanding and Generation](posteriq_a_design_perspective_benchmark_for_poster_understanding_and_generation.md)
+
+<!-- RELATED:END -->

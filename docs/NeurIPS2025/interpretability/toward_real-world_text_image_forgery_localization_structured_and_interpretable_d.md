@@ -119,3 +119,15 @@ $$I^s = \text{Generator}(I^o | \{a_k, t_k, \phi_k\}_{k=1}^K)$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4种评估协议，7种基线方法，5个真实数据集，实验设计系统全面
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，从问题定义到方法推导层层递进
 - **价值**: ⭐⭐⭐⭐ 对文档安全和数字取证领域有直接应用价值，数据集将公开
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CHiQPM: Calibrated Hierarchical Interpretable Image Classification](chiqpm_calibrated_hierarchical_interpretable_image_classification.md)
+- [EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations](../../ACL2025/interpretability/expert_an_explainable_image_captioning_evaluation_metric_with_structured_explana.md)
+- [Why Does It Look There? Structured Explanations for Image Classification](../../CVPR2025/interpretability/why_does_it_look_there_structured_explanations_for_image_classification.md)
+- [AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
+- [Interpretable Image Classification via Non-parametric Part Prototype Learning](../../CVPR2025/interpretability/interpretable_image_classification_via_non-parametric_part_prototype_learning.md)
+
+<!-- RELATED:END -->

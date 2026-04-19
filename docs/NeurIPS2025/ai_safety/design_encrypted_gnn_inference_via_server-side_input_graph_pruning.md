@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 五个数据集、多种 baseline、完整消融和灵敏度分析
 - 写作质量: ⭐⭐⭐ 符号体系完整但偏重，主文论述有些冗长
 - 价值: ⭐⭐⭐⭐ 实用性强，为 FHE GNN 推理效率优化开辟了输入端优化方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DictPFL: Efficient and Private Federated Learning on Encrypted Gradients](dictpfl_efficient_and_private_federated_learning_on_encrypted_gradients.md)
+- [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
+- [Enhancing Graph Classification Robustness with Singular Pooling](enhancing_graph_classification_robustness_with_singular_pooling.md)
+- [Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
+- [Systematizing LLM Persona Design: A Four-Quadrant Technical Taxonomy for AI Companions](systematizing_llm_persona_design_a_four-quadrant_technical_taxonomy_for_ai_compa.md)
+
+<!-- RELATED:END -->

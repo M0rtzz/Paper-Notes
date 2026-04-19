@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 概念验证为主，缺乏大规模实证
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑严密，写作优美
 - 价值: ⭐⭐⭐⭐⭐ 对 Agent 研究方向有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
+- [Reflective Translation: Improving Low-Resource Machine Translation via Structured Self-Reflection](../../NeurIPS2025/human_understanding/reflective_translation_improving_low-resource_machine_translation_via_structured.md)
+- [Improving Model Alignment through Collective Intelligence of Open-Source LLMs](improving_model_alignment_through_collective_intelligence_of_open-source_llms.md)
+- [TopInG: Topologically Interpretable Graph Learning via Persistent Rationale Filtration](toping_topologically_interpretable_graph_learning_via_persistent_rationale_filtr.md)
+- [Provably Improving Generalization of Few-Shot Models with Synthetic Data](provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
+
+<!-- RELATED:END -->

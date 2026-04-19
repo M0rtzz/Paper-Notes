@@ -136,3 +136,15 @@ Large 模型（1.1B dense → 3.6B MoE）：UMoE PPL 15.95 vs FFN-MoE 16.09 vs M
 - 实验充分度: ⭐⭐⭐⭐ 多尺度对比、消融、专家分析、零样本评估都有，但缺少 7B+ 级别验证
 - 写作质量: ⭐⭐⭐⭐⭐ 从重构到统一的论证链非常清晰，伪代码和图示直观
 - 价值: ⭐⭐⭐⭐ 对 MoE 架构设计有重要影响——未来可能不再需要分别设计 Attention-MoE 和 FFN-MoE
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of Lookup Experts](../../ICML2025/llm_efficiency/mixture_of_lookup_experts.md)
+- [On the Expressive Power of Mixture-of-Experts for Structured Complex Tasks](on_the_expressive_power_of_mixture-of-experts_for_structured_complex_tasks.md)
+- [Autonomy-of-Experts Models (AoE)](../../ICML2025/llm_efficiency/autonomy-of-experts_models.md)
+- [Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
+- [Linear Attention for Efficient Bidirectional Sequence Modeling](linear_attention_for_efficient_bidirectional_sequence_modeling.md)
+
+<!-- RELATED:END -->

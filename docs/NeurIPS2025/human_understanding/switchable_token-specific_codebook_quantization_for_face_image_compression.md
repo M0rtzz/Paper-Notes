@@ -143,3 +143,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐☆ — 多基线多配置对比完整，但仅限人脸领域
 - 写作质量: ⭐⭐⭐⭐☆ — 方法描述详尽，符号一致
 - 价值: ⭐⭐⭐⭐☆ — 即插即用特性带来良好实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs](recurrent_attention-based_token_selection_for_efficient_streaming_video-llms.md)
+- [Towards Unified Representation of Invariant-Specific Features in Missing Modality Face Anti-Spoofing](../../ECCV2024/human_understanding/towards_unified_representation_of_invariant-specific_features_in_missing_modalit.md)
+- [FACE: A General Framework for Mapping Collaborative Filtering Embeddings into LLM Tokens](face_a_general_framework_for_mapping_collaborative_filtering_embeddings_into_llm.md)
+- [Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants](face-human-bench_a_comprehensive_benchmark_of_face_and_human_understanding_for_m.md)
+- [Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
+
+<!-- RELATED:END -->

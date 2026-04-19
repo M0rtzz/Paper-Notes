@@ -162,3 +162,15 @@ Ref-Adv 在表达式长度、词汇多样性、否定推理比例上全面超越
 - 实验充分度: ⭐⭐⭐⭐⭐ 13 个模型、三种消融测试、多 IoU 阈值、干扰物分组分析、CoT 对比、规模缩放实验，覆盖极其全面
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，消融测试设计巧妙，但论文结构偏长，部分分析可更精炼
 - 价值: ⭐⭐⭐⭐ 对 MLLM 社区有重要参考价值，揭示了 RefCOCO 饱和分数的虚假繁荣，推动更真实的评估标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CodeDance: A Dynamic Tool-integrated MLLM for Executable Visual Reasoning](../../CVPR2026/multimodal_vlm/codedance_a_dynamic_tool-integrated_mllm_for_executable_visual_reasoning.md)
+- [DOGR: Towards Versatile Visual Document Grounding and Referring](../../ICCV2025/multimodal_vlm/dogr_towards_versatile_visual_document_grounding_and_referring.md)
+- [Downscaling Intelligence: Exploring Perception and Reasoning Bottlenecks in Small VLMs](../../CVPR2026/multimodal_vlm/downscaling_intelligence_exploring_perception_and_reasoning_bottlenecks_in_small.md)
+- [Insight-V: Exploring Long-Chain Visual Reasoning with Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/insight-v_exploring_long-chain_visual_reasoning_with_multimodal_large_language_m.md)
+- [Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs](through_the_lens_of_contrast_self-improving_visual_reasoning_in_vlms.md)
+
+<!-- RELATED:END -->

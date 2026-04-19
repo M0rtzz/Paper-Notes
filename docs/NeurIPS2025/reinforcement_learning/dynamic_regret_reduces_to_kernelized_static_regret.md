@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论论文，缺乏实验验证
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，结构清晰，直觉解释到位
 - 价值: ⭐⭐⭐⭐ 建立了动态遗憾与核方法的深层联系，统一了多种损失类型下的最优 bound
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Dynamic Regret of Following the Regularized Leader: Optimism with History Pruning](../../ICML2025/reinforcement_learning/on_the_dynamic_regret_of_following_the_regularized_leader_optimism_with_history_.md)
+- [Simultaneous Swap Regret Minimization via KL-Calibration](simultaneous_swap_regret_minimization_via_kl-calibration.md)
+- [Improved Regret Bounds for GP-UCB in Bayesian Optimization](improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+- [Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [Non-stationary Online Learning for Curved Losses: Improved Dynamic Regret via Mixability](../../ICML2025/reinforcement_learning/non-stationary_online_learning_for_curved_losses_improved_dynamic_regret_via_mix.md)
+
+<!-- RELATED:END -->

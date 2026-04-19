@@ -150,3 +150,15 @@ GScream 在所有指标上匹配或超越基线方法，且训练速度是 SPIn-
 - **实验充分度**: ⭐⭐⭐⭐ — 两个数据集 + 多个基线对比 + 详细消融 + 额外实验（不同深度/修复模型）
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，动机阐述充分，图示直观
 - **价值**: ⭐⭐⭐⭐ — 高效的 3D 物体移除方案，显著优于 NeRF 基方法且更快
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussCtrl: Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)
+- [SlotLifter: Slot-guided Feature Lifting for Learning Object-centric Radiance Fields](slotlifter_slot-guided_feature_lifting_for_learning_object-centric_radiance_fiel.md)
+- [RoGUENeRF: A Robust Geometry-Consistent Universal Enhancer for NeRF](roguenerf_a_robust_geometry-consistent_universal_enhancer_for_nerf.md)
+- [Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing](texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)
+- [Learning 3D-Aware GANs from Unposed Images with Template Feature Field](learning_3d-aware_gans_from_unposed_images_with_template_feature_field.md)
+
+<!-- RELATED:END -->

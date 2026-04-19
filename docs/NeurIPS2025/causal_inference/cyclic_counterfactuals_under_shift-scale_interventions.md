@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐ 仅有一个2变量玩具模型，缺乏实际应用验证
 - 写作质量: ⭐⭐⭐⭐ 定理证明清晰严谨，但符号较重
 - 价值: ⭐⭐⭐ 填补了循环因果模型中软干预反事实推理的理论空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Characterization and Learning of Causal Graphs from Hard Interventions](characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [Bi-Level Decision-Focused Causal Learning for Large-Scale Marketing Optimization](bi-level_decision-focused_causal_learning_for_large-scale_marketing_optimization.md)
+- [Causal Abstraction Inference under Lossy Representations](../../ICML2025/causal_inference/causal_abstraction_inference_under_lossy_representations.md)
+- [RATE: Causal Explainability of Reward Models with Imperfect Counterfactuals](../../ICML2025/causal_inference/rate_causal_explainability_of_reward_models_with_imperfect_counterfactuals.md)
+- [Latent Variable Causal Discovery under Selection Bias](../../ICML2025/causal_inference/latent_variable_causal_discovery_under_selection_bias.md)
+
+<!-- RELATED:END -->

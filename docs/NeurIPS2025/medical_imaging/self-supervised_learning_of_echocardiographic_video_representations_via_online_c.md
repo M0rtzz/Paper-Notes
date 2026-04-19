@@ -129,3 +129,15 @@ DISCOVR 是一个双分支自监督框架：视频分支通过掩码自蒸馏捕
 - **实验充分度**: ⭐⭐⭐⭐⭐ 六个数据集、四种任务、跨人群评估，消融完整，开源代码
 - **写作质量**: ⭐⭐⭐⭐ 问题动机阐述清晰，可视化丰富（特别是Fig.1和Fig.3的对比）
 - **价值**: ⭐⭐⭐⭐⭐ 为超声心动图分析提供了强大的通用预训练方案，临床应用前景广阔
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+- [Towards Self-Supervised Foundation Models for Critical Care Time Series](towards_self-supervised_foundation_models_for_critical_care_time_series.md)
+- [An OpenMind for 3D Medical Vision Self-supervised Learning](../../ICCV2025/medical_imaging/an_openmind_for_3d_medical_vision_selfsupervised_learning.md)
+- [scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data](../../ICML2025/medical_imaging/scssl-bench_benchmarking_self-supervised_learning_for_single-cell_data.md)
+
+<!-- RELATED:END -->

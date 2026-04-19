@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐ 无实验，纯综述——缺少统一基准上的定量对比是最大遗憾
 - 写作质量: ⭐⭐⭐⭐ 分类清晰、层次分明，Fig.1 的树状分类图直观实用，覆盖 80+ 方法但不觉得杂乱
 - 价值: ⭐⭐⭐⭐ 对 Prompt 工程从业者有实用参考价值，五维坐标系是快速定位新工作的有效工具，GitHub awesome list 本身也有社区价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RiOT: Efficient Prompt Refinement with Residual Optimization Tree](riot_efficient_prompt_refinement_with_residual_optimization_tree.md)
+- [Efficient and Accurate Prompt Optimization: the Benefit of Memory in Exemplar-Guided Reflection](erm_prompt_optimization_memory.md)
+- [System Prompt Optimization with Meta-Learning](../../NeurIPS2025/llm_nlp/system_prompt_optimization_with_meta-learning.md)
+- [GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization](gapo_preferential_prompt.md)
+- [PRESTO: Preimage-Informed Instruction Optimization for Prompting Black-Box LLMs](../../NeurIPS2025/llm_nlp/presto_preimage-informed_instruction_optimization_for_prompting_black-box_llms.md)
+
+<!-- RELATED:END -->

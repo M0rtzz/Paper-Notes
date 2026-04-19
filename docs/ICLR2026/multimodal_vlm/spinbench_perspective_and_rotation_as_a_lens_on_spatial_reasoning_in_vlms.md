@@ -164,3 +164,15 @@ SpinBench 围绕**视角转换（perspective taking）**这一核心挑战设计
 - 实验充分度: ⭐⭐⭐⭐⭐ （37 个模型、人类对照、一致性分析、缩放规律、相关性分析，非常全面）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，分析深入，展示方式专业）
 - 价值: ⭐⭐⭐⭐ （对 VLM 空间推理的系统诊断具有重要指导意义，尤其对具身 AI 方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs](through_the_lens_of_contrast_self-improving_visual_reasoning_in_vlms.md)
+- [Spatial CAPTCHA: Generatively Benchmarking Spatial Reasoning for Human-Machine Differentiation](spatial_captcha_generatively_benchmarking_spatial_reasoning_for_human-machine_di.md)
+- [SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning](../../NeurIPS2025/multimodal_vlm/ssr_enhancing_depth_perception_in_vision-language_models_via_rationale-guided_sp.md)
+- [OmniSpatial: Towards Comprehensive Spatial Reasoning Benchmark for Vision Language Models](omnispatial_towards_comprehensive_spatial_reasoning_benchmark_for_vision_languag.md)
+- [SpatiaLab: Can Vision-Language Models Perform Spatial Reasoning in the Wild?](spatialab_can_vision-language_models_perform_spatial_reasoning_in_the_wild.md)
+
+<!-- RELATED:END -->

@@ -144,3 +144,15 @@ DINR 在所有稀疏度下均取得最高 PSNR。32 视图下比 DD3IP 高 0.52 
 - **实验充分度**: ⭐⭐ 仅 2 层体积、无系统消融、无运行时间、无下游任务评估
 - **写作质量**: ⭐⭐⭐ 方法推导清晰完整，但篇幅偏短，ROI 分析是亮点
 - **实用价值**: ⭐⭐⭐ 对中子 CT 稀疏重建有直接应用价值，但通用性和规模化验证不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron CT Data](../../CVPR2025/3d_vision/regularizing_inr_with_diffusion_prior_self-supervised_3d_reconstruction_of_neutr.md)
+- [DuoMo: Dual Motion Diffusion for World-Space Human Reconstruction](duomo_dual_motion_diffusion_for_world-space_human_reconstruction.md)
+- [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
+- [PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis](pr-iqa_partial-reference_image_quality_assessment_for_diffusion-based_novel_view.md)
+- [M3DLayout: A Multi-Source Dataset of 3D Indoor Layouts and Structured Descriptions for 3D Generation](m3dlayout_a_multi-source_dataset_of_3d_indoor_layouts_and_structured_description.md)
+
+<!-- RELATED:END -->

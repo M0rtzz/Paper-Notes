@@ -142,3 +142,15 @@ E-LDA 非并行 Python 实现仅需 2-3 秒，约等于高度优化的 MALLET Ja
 - 实验充分度: ⭐⭐⭐⭐ — 多基线多指标对比充分，但数据集偏少且规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、理论严谨、结构完整
 - 价值: ⭐⭐⭐⭐⭐ — 对社会科学中的文本分析和因果推断具有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Black-box to Causal-box: Towards Building More Interpretable Models](../../NeurIPS2025/causal_inference/from_black-box_to_causal-box_towards_building_more_interpretable_models.md)
+- [RATE: Causal Explainability of Reward Models with Imperfect Counterfactuals](rate_causal_explainability_of_reward_models_with_imperfect_counterfactuals.md)
+- [Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)
+- [GST-UNet: A Neural Framework for Spatiotemporal Causal Inference with Time-Varying Confounding](../../NeurIPS2025/causal_inference/gst-unet_a_neural_framework_for_spatiotemporal_causal_inference_with_time-varyin.md)
+- [MPF: Aligning and Debiasing Language Models post Deployment via Multi Perspective Fusion](mpf_aligning_and_debiasing_language_models_post_deployment_via_multi_perspective.md)
+
+<!-- RELATED:END -->

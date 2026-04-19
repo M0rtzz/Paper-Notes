@@ -99,3 +99,15 @@ MLLM中视觉token数量远超文本token，且自然视觉信号固有冗余度
 - 实验充分度: ⭐⭐⭐⭐⭐ 5种MLLM+图像/视频+6档压缩率+极其详尽的消融
 - 写作质量: ⭐⭐⭐⭐⭐ 三阶段命名直观，分析深入，可视化出色
 - 价值: ⭐⭐⭐⭐⭐ training-free+即插即用+跨架构泛化，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DUET-VLM: Dual Stage Unified Efficient Token Reduction for VLM Training and Inference](../../CVPR2026/multimodal_vlm/duet_vlm_dual_stage_token_reduction.md)
+- [TinyChemVL: Advancing Chemical Vision-Language Models via Efficient Visual Token Reduction and Complex Reaction Tasks](tinychemvl_advancing_chemical_vision-language_models_via_efficient_visual_token_.md)
+- [Rethinking Visual Token Reduction in LVLMs under Cross-Modal Misalignment](rethinking_visual_token_reduction_in_lvlms_under_cross-modal_misalignment.md)
+- [Generate, Analyze, and Refine: Training-Free Sound Source Localization via MLLM Meta-Reasoning](../../CVPR2026/multimodal_vlm/generate_analyze_and_refine_training-free_sound_source_localization_via_mllm_met.md)
+- [TOFA: Training-Free One-Shot Federated Adaptation for Vision-Language Models](tofa_training-free_one-shot_federated_adaptation_for_vision-language_models.md)
+
+<!-- RELATED:END -->

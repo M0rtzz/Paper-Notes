@@ -148,3 +148,15 @@ SoMe 由三部分组成：(1) 8 项社交媒体任务定义，(2) 基于 MCP 协
 - 实验充分度: ⭐⭐⭐⭐ 13 个模型、8 项任务的全面评测，含工具幻觉等深入分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析深入，图表丰富
 - 价值: ⭐⭐⭐⭐ 对社交媒体智能体研究有重要推动作用，揭示了推理vs代理能力的关键差异
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](../../ICLR2026/llm_agent/fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
+- [SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](../../ICLR2026/llm_agent/simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
+- [A Benchmark for Deep Information Synthesis (DeepSynth)](../../ICLR2026/llm_agent/a_benchmark_for_deep_information_synthesis.md)
+- [The Tool Decathlon: Benchmarking Language Agents for Diverse, Realistic, and Long-Horizon Task Execution](../../ICLR2026/llm_agent/the_tool_decathlon_benchmarking_language_agents_for_diverse_realistic_and_long-h.md)
+- [ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents](../../ICLR2026/llm_agent/st-webagentbench_a_benchmark_for_evaluating_safety_and_trustworthiness_in_web_ag.md)
+
+<!-- RELATED:END -->

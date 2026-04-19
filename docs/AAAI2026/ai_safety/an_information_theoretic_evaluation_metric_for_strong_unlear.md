@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个数据集 × 3 种架构 × 14 种遗忘方法 × 多种场景，消融全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从"暴露问题→提出度量→验证→提出方法"层层递进
 - 价值: ⭐⭐⭐⭐ IDI 有望成为遗忘领域的标准评估工具之一，填补白盒指标空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](../../NeurIPS2025/ai_safety/bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference](infodecom_decomposing_information_for_defending_against_privacy_leakage_in_split.md)
+- [Beyond Superficial Forgetting: Thorough Unlearning through Knowledge Density Estimation and Block Re-insertion](beyond_superficial_forgetting_thorough_unlearning_through_knowledge_density_esti.md)
+- [PULSE: Practical Evaluation Scenarios for Large Multimodal Model Unlearning](../../NeurIPS2025/ai_safety/pulse_practical_evaluation_scenarios_for_large_multimodal_model_unlearning.md)
+- [Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning](../../ICLR2026/ai_safety/erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning.md)
+
+<!-- RELATED:END -->

@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 脉冲质量、fluence 精度、Xmax 重建偏差/分辨率的全面评估
 - 写作质量: ⭐⭐⭐⭐ — 简洁清晰，物理动机说明到位
 - 价值: ⭐⭐⭐⭐ — 将模拟时间从数周降至毫秒，对实验物理有巨大实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FSNet: Feasibility-Seeking Neural Network for Constrained Optimization with Guarantees](fsnet_feasibility-seeking_neural_network_for_constrained_optimization_with_guara.md)
+- [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
+- [Out of the Shadows: Exploring a Latent Space for Neural Network Verification](../../ICLR2026/others/out_of_the_shadows_exploring_a_latent_space_for_neural_network_verification.md)
+- [Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action](variational_regularized_unbalanced_optimal_transport_single_network_least_action.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+
+<!-- RELATED:END -->

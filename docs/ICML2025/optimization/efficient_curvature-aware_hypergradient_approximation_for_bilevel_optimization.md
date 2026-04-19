@@ -141,3 +141,15 @@ $$\min_{0 \leq k \leq K-1} \|\nabla\Phi(x^k)\|^2 \leq O(\kappa^3 / K)$$
 - 实验充分度: ⭐⭐⭐⭐ — 涵盖合成、超参数优化、数据清洗及多种扩展，基线全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、理论严谨、表格对比一目了然
 - 价值: ⭐⭐⭐⭐ — 为双层优化提供了更高效的超梯度估计方法，理论和实践均有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tilted Sharpness-Aware Minimization](tilted_sharpness-aware_minimization.md)
+- [ScaleBiO: Scalable Bilevel Optimization for LLM Data Reweighting](../../ACL2025/optimization/scalebio_bilevel_data_reweighting.md)
+- [Learning Theory for Kernel Bilevel Optimization](../../NeurIPS2025/optimization/learning_theory_for_kernel_bilevel_optimization.md)
+- [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
+- [Problem-Parameter-Free Decentralized Bilevel Optimization](../../NeurIPS2025/optimization/problem-parameter-free_decentralized_bilevel_optimization.md)
+
+<!-- RELATED:END -->

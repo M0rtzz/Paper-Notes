@@ -128,3 +128,15 @@ $$L_{\Omega_T}(\boldsymbol{\theta}, y) = \min_{\boldsymbol{\pi}\in\Delta^N}\Omeg
 - **理论深度**: 10/10 — 凸分析工具运用精湛
 - **实用性**: 5/10 — 纯理论，缺乏实证
 - **清晰度**: 8/10 — 数学密集但逻辑连贯
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Non-stationary Online Learning for Curved Losses: Improved Dynamic Regret via Mixability](../../ICML2025/reinforcement_learning/non-stationary_online_learning_for_curved_losses_improved_dynamic_regret_via_mix.md)
+- [Improved Regret Bounds for GP-UCB in Bayesian Optimization](improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+- [Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update](generalized_linear_bandits_almost_optimal_regret_with_one-pass_update.md)
+- [Improved Regret and Contextual Linear Extension for Pandora's Box and Prophet Inequality](improved_regret_and_contextual_linear_extension_for_pandoras_box_and_prophet_ine.md)
+- [Dynamic Regret Reduces to Kernelized Static Regret](dynamic_regret_reduces_to_kernelized_static_regret.md)
+
+<!-- RELATED:END -->

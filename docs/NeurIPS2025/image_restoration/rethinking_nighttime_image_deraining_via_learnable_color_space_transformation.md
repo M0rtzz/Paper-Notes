@@ -279,3 +279,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+消融+真实图像+t-SNE分析
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ 夜间去雨的实用解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining](../../ICCV2025/image_restoration/pre-mamba_a_4d_state_space_model_for_ultra-high-frequent_event_camera_deraining.md)
+- [Rethinking Circuit Completeness in Language Models: AND, OR, and ADDER Gates](rethinking_circuit_completeness_in_language_models_and_or_and_adder_gates.md)
+- [Improving Diffusion-based Inverse Algorithms under Few-Step Constraint via Learnable Linear Extrapolation](improving_diffusion-based_inverse_algorithms_under_few-step_constraint_via_learn.md)
+- [Clear Nights Ahead: Towards Multi-Weather Nighttime Image Restoration](../../AAAI2026/image_restoration/clear_nights_ahead_towards_multi-weather_nighttime_image_res.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
+
+<!-- RELATED:END -->

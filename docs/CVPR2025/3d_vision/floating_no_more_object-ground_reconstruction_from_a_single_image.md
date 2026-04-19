@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多维度评估（深度、点云、阴影、反射），消融详尽，但缺乏大规模真实世界定量评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，推导严谨，图表质量高
 - 价值: ⭐⭐⭐⭐ 对3D编辑应用（阴影/反射/姿态操控）有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [AerialMegaDepth: Learning Aerial-Ground Reconstruction and View Synthesis](aerialmegadepth_learning_aerial-ground_reconstruction_and_view_synthesis.md)
+- [GenVDM: Generating Vector Displacement Maps From a Single Image](genvdm_generating_vector_displacement_maps_from_a_single_image.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ CureAgent 提出 Executor-Analyst 协作框架，将精确工具调用（TxAgent
 - 实验充分度: ⭐⭐⭐⭐ 丰富的消融、多模型对比、scaling 分析，但仅在 CURE-Bench 一个 benchmark
 - 写作质量: ⭐⭐⭐⭐ 错误分析驱动的动机链清晰，图表设计专业，定量分析详尽
 - 价值: ⭐⭐⭐⭐ 无训练架构工程在临床 AI 中具有高实用价值，scaling 发现对社区有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](fairgrpo_fair_reinforcement_learning_for_equitable_clinical_reasoning.md)
+- [CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research](cgbench_benchmarking_language_model_scientific_reasoning_for_clinical_genetics_r.md)
+- [QoQ-Med: Building Multimodal Clinical Foundation Models with Domain-Aware GRPO Training](qoq-med_building_multimodal_clinical_foundation_models_with_domain-aware_grpo_tr.md)
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](../../CVPR2025/medical_imaging/a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)
+- [CARE: Towards Clinical Accountability in Multi-Modal Medical Reasoning with an Evidence-Grounded Agentic Framework](../../ICLR2026/medical_imaging/care_towards_clinical_accountability_in_multi-modal_medical_reasoning_with_an_ev.md)
+
+<!-- RELATED:END -->

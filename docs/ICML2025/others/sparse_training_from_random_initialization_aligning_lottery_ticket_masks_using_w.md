@@ -79,3 +79,15 @@ Permuted方案功能多样性显著高于LTH，集成性能反而更好。
 
 ## 评分
 ⭐⭐⭐⭐ 从对称性视角解释LTH限制，洞察力强，实验充分展示了掩码对齐的有效性和多样性优势。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](../../NeurIPS2025/others/sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
+- [Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)
+- [Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+- [Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)
+
+<!-- RELATED:END -->

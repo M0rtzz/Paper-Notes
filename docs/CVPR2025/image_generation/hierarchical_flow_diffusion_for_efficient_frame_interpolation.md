@@ -278,3 +278,15 @@ DAVIS + Vimeo-90k：
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计简洁有效，动机清晰，实验全面且令人信服。将扩散从潜空间转移到光流空间是关键洞察，速度和质量的双重提升有实际应用价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation](eden_enhanced_diffusion_for_high-quality_large-motion_video_frame_interpolation.md)
+- [TLB-VFI: Temporal-Aware Latent Brownian Bridge Diffusion for Video Frame Interpolation](../../ICCV2025/image_generation/tlb-vfi_temporal-aware_latent_brownian_bridge_diffusion_for_video_frame_interpol.md)
+- [HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation](hmar_efficient_hierarchical_masked_auto-regressive_image_generation.md)
+- [Efficient Rectified Flow for Image Fusion](../../NeurIPS2025/image_generation/efficient_rectified_flow_for_image_fusion.md)
+- [Efficient Fine-Tuning and Concept Suppression for Pruned Diffusion Models](efficient_fine-tuning_and_concept_suppression_for_pruned_diffusion_models.md)
+
+<!-- RELATED:END -->

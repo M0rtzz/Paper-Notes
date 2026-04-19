@@ -122,3 +122,15 @@ $$W_q = \mathcal{C}[A] \circ \text{sign}(L_s)$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ 五类任务、多种架构、消融充分、硬件验证
 - **写作质量**: ⭐⭐⭐⭐ 动机分析清晰，图表丰富
 - **价值**: ⭐⭐⭐⭐ 对边缘部署有实际意义，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Task Vector Quantization for Memory-Efficient Model Merging](task_vector_quantization_for_memory-efficient_model_merging.md)
+- [VQ-SGen: A Vector Quantized Stroke Representation for Creative Sketch Generation](vq-sgen_a_vector_quantized_stroke_representation_for_creative_sketch_generation.md)
+- [SIGN: Schema-Induced Games for Naming](../../AAAI2026/model_compression/sign_schema-induced_games_for_naming.md)
+- [Direct Behavior Optimization: Unlocking the Potential of Lightweight LLMs](../../ACL2025/model_compression/direct_behavior_optimization_unlocking_the_potential_of_lightweight_llms.md)
+- [KBVQ-MoE: KLT-guided SVD with Bias-Corrected Vector Quantization for MoE Large Language Models](../../ICLR2026/model_compression/kbvq-moe_klt-guided_svd_with_bias-corrected_vector_quantization_for_moe_large_la.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ Coreset 选择旨在找到训练数据的小规模代表性子集来加速训练
 - 实验充分度: ⭐⭐⭐⭐⭐ 6+ 数据集、4+ 架构、多噪声级别、时间/内存效率分析、后验选择消融
 - 写作质量: ⭐⭐⭐⭐ 动机阐述生动（损失曲面可视化），理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强——简单、高效、鲁棒，几乎无额外开销即可提升 coreset 质量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distribution Learning Meets Graph Structure Sampling](distribution_learning_meets_graph_structure_sampling.md)
+- [Diffusion Sampling Correction via Approximately 10 Parameters](../../ICML2025/human_understanding/diffusion_sampling_correction_via_approximately_10_parameters.md)
+- [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](../../ICLR2026/human_understanding/rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
+
+<!-- RELATED:END -->

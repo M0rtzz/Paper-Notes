@@ -159,3 +159,15 @@ ScEdit 包含三个核心要素：
 - **实验充分度**: ⭐⭐⭐⭐ — 三个模型、六种编辑方法、token+文本双层评估、人工+自动评估、指标相关性分析，覆盖面全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机阐述清晰，评估体系设计逻辑严密，案例图示直观
 - **价值**: ⭐⭐⭐⭐ — 对知识编辑领域的评估范式提出了重要的补充，揭示了现有方法在实际场景中的差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAKE: Steering Activations for Knowledge Editing](sake_steering_activations_for_knowledge_editing.md)
+- [Revealing the Deceptiveness of Knowledge Editing: A Mechanistic Analysis of Superficial Editing](revealing_the_deceptiveness_of_knowledge_editing_a_mechanistic_analysis_of_super.md)
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [CompKe: Complex Question Answering under Knowledge Editing](compke_complex_question_answering_under_knowledge_editing.md)
+- [Efficient Knowledge Editing via Minimal Precomputation](efficient_knowledge_editing.md)
+
+<!-- RELATED:END -->

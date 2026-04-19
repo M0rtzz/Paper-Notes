@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论为主 + 线性模拟验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，直觉丰富
 - 价值: ⭐⭐⭐⭐ 桥接 DA 和因果推断两个大领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do-PFN: In-Context Learning for Causal Effect Estimation](do-pfn_in-context_learning_for_causal_effect_estimation.md)
+- [Leveraging Variation Theory in Counterfactual Data Augmentation for Optimized Active Learning](../../ACL2025/causal_inference/leveraging_variation_theory_in_counterfactual_data_augmentation_for_optimized_ac.md)
+- [Root Cause Analysis of Outliers with Missing Structural Knowledge](root_cause_analysis_of_outliers_with_missing_structural_knowledge.md)
+- [It's Hard to Be Normal: The Impact of Noise on Structure-agnostic Estimation](its_hard_to_be_normal_the_impact_of_noise_on_structure-agnostic_estimation.md)
+- [Differentiable Structure Learning and Causal Discovery for General Binary Data](differentiable_structure_learning_and_causal_discovery_for_general_binary_data.md)
+
+<!-- RELATED:END -->

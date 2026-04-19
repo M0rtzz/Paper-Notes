@@ -118,3 +118,15 @@ ResNet-18, IPC=50 (每类50张)：
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个数据集、3种架构、多IPC设置、跨架构泛化
 - 写作质量: ⭐⭐⭐⭐ 理论定义清晰，定理证明完整
 - 价值: ⭐⭐⭐⭐ 为数据集蒸馏提供了有理论基础的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understanding Dataset Distillation via Spectral Filtering](understanding_dataset_distillation_via_spectral_filtering.md)
+- [Enhancing Dataset Distillation via Non-Critical Region Refinement](../../CVPR2025/model_compression/enhancing_dataset_distillation_via_non-critical_region_refinement.md)
+- [Rectified Decoupled Dataset Distillation: A Closer Look for Fair and Comprehensive Evaluation](rectified_decoupled_dataset_distillation_a_closer_look_for_fair_and_comprehensiv.md)
+- [Dataset Distillation as Pushforward Optimal Quantization](dataset_distillation_as_pushforward_optimal_quantization.md)
+- [Hyperbolic Dataset Distillation](../../NeurIPS2025/model_compression/hyperbolic_dataset_distillation.md)
+
+<!-- RELATED:END -->

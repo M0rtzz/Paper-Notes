@@ -144,3 +144,15 @@ Predictor 训练采用 MSE + GAN 的两阶段策略：
 - 实验充分度: ⭐⭐⭐⭐⭐ 在 HunyuanVideo 上全面对比 6 种方法，消融清晰，显存/延迟分析完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、动机强，符号偏多但推导完整
 - 价值: ⭐⭐⭐⭐⭐ 11.8× 近无损加速对视频生成实际部署价值极大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+- [CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video](cubecomposer_spatio-temporal_autoregressive_4k_360_video_generation_from_perspec.md)
+- [FastLightGen: Fast and Light Video Generation with Fewer Steps and Parameters](fastlightgen_fast_and_light_video_generation_with_fewer_steps_and_parameters.md)
+- [LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation](linvideo_linear_attention_video_generation.md)
+
+<!-- RELATED:END -->

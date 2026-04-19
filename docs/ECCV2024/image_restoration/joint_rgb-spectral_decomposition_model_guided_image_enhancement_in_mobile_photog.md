@@ -200,3 +200,15 @@ $$\Phi(x,y) = \sum_{i=1}^{N} w_i \Phi_i(x,y)$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融极其详尽（逐先验、通道数、空间分辨率、材质类别数），比较方法丰富
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，物理模型与方法设计的对应关系阐述到位
 - **价值**: ⭐⭐⭐⭐ — 为移动光谱传感器的摄影应用提供了新方向，数据集有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)
+- [DenoiSplit: A Method for Joint Microscopy Image Splitting and Unsupervised Denoising](denoisplit_a_method_for_joint_microscopy_image_splitting_and_unsupervised_denois.md)
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [Learning Exhaustive Correlation for Spectral Super-Resolution: Where Spatial-Spectral Attention Meets Linear Dependence](learning_exhaustive_correlation_for_spectral_super-resolution_where_spatial-spec.md)
+- [Lightweight and Fast Real-time Image Enhancement via Decomposition of the Spatial-aware Lookup Tables](../../ICCV2025/image_restoration/lightweight_and_fast_real-time_image_enhancement_via_decomposition_of_the_spatia.md)
+
+<!-- RELATED:END -->

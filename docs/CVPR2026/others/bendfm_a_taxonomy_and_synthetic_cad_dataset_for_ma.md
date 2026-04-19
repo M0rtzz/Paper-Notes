@@ -144,3 +144,15 @@ tags:
 - **实验充分度** ⭐⭐⭐：两种架构有代表性，但缺更多方法对比和跨配置实验
 - **写作质量** ⭐⭐⭐⭐⭐：结构清晰，叙事逻辑完整，分类法阐述精准
 - **价值** ⭐⭐⭐⭐：为制造 AI 社区提供急需的基础设施（分类法+数据集+基准）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_largescale_multimodal_dataset_for_cad.md)
+- [DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)
+- [HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
+- [SHREC: A Spectral Embedding-Based Approach for Ab-Initio Reconstruction of Helical Molecules](shrec_a_spectral_embeddingbased_approach_for_abini.md)
+- [Novel Anomaly Detection Scenarios and Evaluation Metrics to Address the Ambiguity in the Definition of Normal Samples](novel_anomaly_detection_scenarios_and_evaluation_metrics_to_address_the_ambiguit.md)
+
+<!-- RELATED:END -->

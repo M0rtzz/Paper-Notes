@@ -107,4 +107,14 @@ SDANet 凭借 DWT 高频分量引导在原始视频上也超越 ResNet3D 近 10%
 - 写作质量: ⭐⭐⭐⭐ — 动机论述清晰，方法图示直观，问题定义精准
 - 价值: ⭐⭐⭐⭐ — 为隐私保护视频分析提供全新方向，应用前景广阔
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [Referring Atomic Video Action Recognition](../../ECCV2024/video_understanding/referring_atomic_video_action_recognition.md)
+- [Lifelong Domain Adaptive 3D Human Pose Estimation](lifelong_domain_adaptive_3d_human_pose_estimation.md)
+- [H-MoRe: Learning Human-centric Motion Representation for Action Analysis](../../CVPR2025/video_understanding/h-more_learning_human-centric_motion_representation_for_action_analysis.md)
+- [Balancing Multimodal Domain Generalization via Gradient Modulation and Projection](balancing_multimodal_domain_generalization_via_gradient_modulation_and_projectio.md)
+- [Task-Specific Distance Correlation Matching for Few-Shot Action Recognition](task-specific_distance_correlation_matching_for_few-shot_action_recognition.md)
+
+<!-- RELATED:END -->

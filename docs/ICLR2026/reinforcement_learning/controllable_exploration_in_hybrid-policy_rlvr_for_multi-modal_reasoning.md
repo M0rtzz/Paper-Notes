@@ -112,3 +112,15 @@ CalibRL 将专家数据重新定义为分布校准基线（而非严格模仿目
 - 实验充分度: ⭐⭐⭐⭐ 消融充分但任务范围偏窄（主要是几何推理）
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，理论动机清晰
 - 价值: ⭐⭐⭐⭐ 解决 RLVR 熵崩溃的实用方案，对混合策略训练有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploration vs Exploitation: Rethinking RLVR through Clipping, Entropy, and Spurious Reward](exploration_vs_exploitation_rethinking_rlvr_through_clipping_entropy_and_spuriou.md)
+- [MergeMix: A Unified Augmentation Paradigm for Visual and Multi-Modal Understanding](mergemix_a_unified_augmentation_paradigm_for_visual_and_multi-modal_understandin.md)
+- [Reasoning with Exploration: An Entropy Perspective](../../AAAI2026/reinforcement_learning/reasoning_with_exploration_an_entropy_perspective.md)
+- [Learning from Synthetic Data Improves Multi-hop Reasoning](learning_from_synthetic_data_improves_multi-hop_reasoning.md)
+- [How Far Can Unsupervised RLVR Scale LLM Training?](how_far_can_unsupervised_rlvr_scale_llm_training.md)
+
+<!-- RELATED:END -->

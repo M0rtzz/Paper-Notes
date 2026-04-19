@@ -142,3 +142,15 @@ Pipeline 分三个阶段：
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Escaping Plato's Cave: Towards the Alignment of 3D and Text Latent Spaces](../../CVPR2025/self_supervised/escaping_platos_cave_towards_the_alignment_of_3d_and_text_latent_spaces.md)
+- [LaS-Comp: Zero-shot 3D Completion with Latent-Spatial Consistency](../../CVPR2026/self_supervised/las-comp_zero-shot_3d_completion_with_latent-spatial_consistency.md)
+- [TALO: Pushing 3D Vision Foundation Models Towards Globally Consistent Online Reconstruction](../../CVPR2026/self_supervised/talo_pushing_3d_vision_foundation_models_towards_globally_consistent_online_reco.md)
+- [Know Thyself by Knowing Others: Learning Neuron Identity from Population Context](../../NeurIPS2025/self_supervised/know_thyself_by_knowing_others_learning_neuron_identity_from_population_context.md)
+- [Scaling Language-Free Visual Representation Learning](scaling_languagefree_visual_representation_learning.md)
+
+<!-- RELATED:END -->

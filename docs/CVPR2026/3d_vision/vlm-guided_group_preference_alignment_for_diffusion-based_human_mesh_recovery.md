@@ -201,3 +201,15 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{m} \sim \mathcal{G}_{\text{HMR}}, t,
 - 实验充分度: ⭐⭐⭐⭐ — 多基准对比+详细消融+定性分析+评判代理独立评估
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 无3D标注微调的能力对实际应用有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OnlineHMR: Video-based Online World-Grounded Human Mesh Recovery](onlinehmr_video-based_online_world-grounded_human_mesh_recovery.md)
+- [DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
+- [Global-to-Pixel Regression for Human Mesh Recovery](../../ECCV2024/3d_vision/global-to-pixel_regression_for_human_mesh_recovery.md)
+- [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](../../CVPR2025/3d_vision/mega_masked_generative_autoencoder_for_human_mesh_recovery.md)
+- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](../../CVPR2025/3d_vision/heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
+
+<!-- RELATED:END -->

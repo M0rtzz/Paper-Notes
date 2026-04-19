@@ -181,3 +181,15 @@ SHREC 流程分四个阶段：
 ## 评分
 
 ⭐⭐⭐⭐ 理论严谨且优美的工作，将谱方法应用于冷冻电镜螺旋重建并消除了对先验对称参数的依赖，在两个数据集上达到接近已发布水平的分辨率，但第三个数据集的分辨率差距和螺旋参数估计的非全自动化是明显不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_widefield_and_highdynamic_range.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [Integration of Deep Generative Anomaly Detection Algorithm in High-Speed Industrial Line](integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
+
+<!-- RELATED:END -->

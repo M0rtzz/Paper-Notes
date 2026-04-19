@@ -120,3 +120,15 @@ ContextAgent 在 Qwen2.5-7B 上达到 0.894 Acc-P、0.645 F1、0.459 Acc-Args，
 - 价值: ⭐⭐⭐⭐ 开创了"感知增强主动Agent"的新方向，benchmark会推动后续研究，但实际应用距离尚远
 
 ## 实验关键数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TANGO: Training-free Embodied AI Agents for Open-world Tasks](../../CVPR2025/llm_agent/tango_training-free_embodied_ai_agents_for_open-world_tasks.md)
+- [FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](../../ICLR2026/llm_agent/fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
+- [Less is More: Empowering GUI Agent with Context-Aware Simplification](../../ICCV2025/llm_agent/less_is_more_empowering_gui_agent_with_context-aware_simplification.md)
+- [AgentMisalignment: Measuring the Propensity for Misaligned Behaviour in LLM-Based Agents](agentmisalignment_measuring_the_propensity_for_misaligned_behaviour_in_llm-based.md)
+- [Beyond Numeric Rewards: In-Context Dueling Bandits with LLM Agents](../../ACL2025/llm_agent/beyond_numeric_rewards_in-context_dueling_bandits_with_llm_agents.md)
+
+<!-- RELATED:END -->

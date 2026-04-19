@@ -148,3 +148,15 @@ $$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\left[ \log \sigma\left( -\beta T w(t) \
 ## 评分 ⭐⭐⭐⭐
 
 一篇思路清晰、方法优雅的工作。DRO 作为不需要成对偏好数据的扩散模型对齐新目标，具有较强的通用性。自改进管线和纯合成数据方案展示了强大的实用价值。实验全面，物理3D打印验证令人信服。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianProperty: Integrating Physical Properties to 3D Gaussians with LMMs](gaussianproperty_integrating_physical_properties_to_3d_gaussians_with_lmms.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+- [CutS3D: Cutting Semantics in 3D for 2D Unsupervised Instance Segmentation](cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+
+<!-- RELATED:END -->

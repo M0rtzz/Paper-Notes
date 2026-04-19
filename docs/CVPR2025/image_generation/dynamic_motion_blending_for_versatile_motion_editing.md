@@ -116,3 +116,15 @@ $$\tilde{\epsilon}_\theta = (1+w)\epsilon_\theta(\mathcal{M}_t, t, \mathcal{C}) 
 ## 评分：⭐⭐⭐⭐
 
 MotionCutMix 增强策略新颖实用，问题定义完整（三种编辑场景），配套 STANCE 数据集有价值。扣一星因为手部表示粗糙、推理效率待优化，且消融实验中运动协调器的增益相对有限。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [DynaVid: Learning to Generate Highly Dynamic Videos using Synthetic Motion Data](../../CVPR2026/image_generation/dynavid_learning_to_generate_highly_dynamic_videos_using_synthetic_motion_data.md)
+- [BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation](../../CVPR2026/image_generation/bimotion_b-spline_motion_for_text-guided_dynamic_3d_character_generation.md)
+- [Video Motion Graphs](../../ICCV2025/image_generation/video_motion_graphs.md)
+- [Lifting Motion to the 3D World via 2D Diffusion](lifting_motion_to_the_3d_world_via_2d_diffusion.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ JRDB和Café数据集，静态+动态评估，消融充分
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，实验分析详细
 - 价值: ⭐⭐⭐⭐ 动态群组检测新任务有实际应用价值，VLM应用思路有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [Dynamic Multimodal Prototype Learning in Vision-Language Models](dynamic_multimodal_prototype_learning_in_vision-language_models.md)
+- [CLIPSym: Delving into Symmetry Detection with CLIP](clipsym_delving_into_symmetry_detection_with_clip.md)
+- [DynamicGTR: Leveraging Graph Topology Representation Preferences to Boost VLM Capabilities on Graph QAs](../../CVPR2026/multimodal_vlm/dynamicgtr_leveraging_graph_topology_representation_preferences_to_boost_vlm_cap.md)
+- [Enrich and Detect: Video Temporal Grounding with Multimodal LLMs](enrich_and_detect_video_temporal_grounding_with_multimodal_llms.md)
+
+<!-- RELATED:END -->

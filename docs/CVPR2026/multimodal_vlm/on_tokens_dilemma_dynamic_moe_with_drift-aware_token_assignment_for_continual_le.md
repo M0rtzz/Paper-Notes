@@ -140,3 +140,15 @@ CoIN 基准（8个 VQA 任务序列学习）上的对比：
 - 实验充分度: ⭐⭐⭐⭐ 消融全面且逐步叠加验证了每个组件，超参分析充分，但仅在一个 benchmark 上
 - 写作质量: ⭐⭐⭐⭐⭐ 分析驱动的论文结构非常清晰，受控实验的设计和可视化都很优秀
 - 价值: ⭐⭐⭐⭐⭐ 对 MoE 持续学习有深刻的机理洞察，方法简洁有效且泛化性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Token Reweighting for Robust Vision-Language Models](dynamic_token_reweighting_for_robust_vision-language_models.md)
+- [DTR: Dynamic Token Reweighting for Robust Vision-Language Models](dynamic_token_reweighting_for_robust_visionlanguag.md)
+- [Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](quant_experts_token-aware_adaptive_error_reconstruction_with_mixture_of_experts_.md)
+- [V2Drop: Variation-aware Vision Token Dropping for Faster Large Vision-Language Models](v2drop_variation_aware_token_dropping.md)
+- [MoE-GRPO: Optimizing Mixture-of-Experts via Reinforcement Learning in Vision-Language Models](moe-grpo_optimizing_mixture-of-experts_via_reinforcement_learning_in_vision-lang.md)
+
+<!-- RELATED:END -->

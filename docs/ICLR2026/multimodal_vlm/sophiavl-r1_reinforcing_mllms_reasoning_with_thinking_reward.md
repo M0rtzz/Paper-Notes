@@ -151,3 +151,15 @@ VisualPRM采用步级过程奖励模型→SophiaVL-R1采用整体级思维奖励
 - **实验充分度**: ⭐⭐⭐⭐ 7个基准+详细消融+训练曲线+VLRewardBench验证TRM，缺少不同基座模型的实验。
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义→分析→解决方案的逻辑链清晰完整，公式推导简洁优雅。
 - **价值与影响**: ⭐⭐⭐⭐⭐ 为MLLM推理RL训练中的过程监督提供了一条实用且有效的路径，Trust-GRPO的可信度估计思路有广泛适用性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [Sparsity Forcing: Reinforcing Token Sparsity of MLLMs](sparsity_forcing_reinforcing_token_sparsity_of_mllms.md)
+- [Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
+- [Reasoning-Driven Multimodal LLM for Domain Generalization](reasoning-driven_multimodal_llm_for_domain_generalization.md)
+- [Shuffle-R1: Efficient RL Framework for Multimodal Large Language Models via Data-centric Dynamic Shuffle](shuffle-r1_efficient_rl_framework_for_multimodal_large_language_models_via_data-.md)
+
+<!-- RELATED:END -->

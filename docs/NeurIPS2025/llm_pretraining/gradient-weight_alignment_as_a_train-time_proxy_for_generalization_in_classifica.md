@@ -168,3 +168,15 @@ ViT/B-16 从 ImageNet-21k fine-tune 的结果：GWA 在 ImageNet Val (84.15)、V
 - **实验充分度**: ⭐⭐⭐⭐ 多架构（ViT/ConvNeXt）、多数据集（CIFAR/ImageNet/iNat18/Places365）、多场景（noise/corruption/fine-tuning）
 - **写作质量**: ⭐⭐⭐⭐ 理论动机清晰，公式推导严谨，实验组织有序，图表设计直观
 - **实用价值**: ⭐⭐⭐⭐ 对训练流程有直接实用价值，尤其适合 data-scarce 和 noise-prone 场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Flow from Generative Pretext Tasks for Neural Architecture Encoding](learning_to_flow_from_generative_pretext_tasks_for_neural_architecture_encoding.md)
+- [Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via Grokking](flatness_is_necessary_neural_collapse_is_not_rethinking_generalization_via_grokk.md)
+- [Generalization Bounds for Rank-sparse Neural Networks](generalization_bounds_for_rank-sparse_neural_networks.md)
+- [Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [Final-Model-Only Data Attribution with a Unifying View of Gradient-Based Methods](final-model-only_data_attribution_with_a_unifying_view_of_gradient-based_methods.md)
+
+<!-- RELATED:END -->

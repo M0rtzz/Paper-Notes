@@ -200,3 +200,15 @@ CountBench +19.2%, PixmoCount +53.0% vs Qwen2.5-VL-7B基线。
 - 实验充分度: ⭐⭐⭐⭐ 计数/搜索/图表多基准+涌现分析
 - 写作质量: ⭐⭐⭐⭐ 涌现行为的案例展示直观
 - 价值: ⭐⭐⭐⭐⭐ 对VLM工具使用和推理范式有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Intuition to Investigation: A Tool-Augmented Reasoning MLLM Framework for Generalizable Face Anti-Spoofing](from_intuition_to_investigation_a_tool-augmented_reasoning_mllm_framework_for_ge.md)
+- [Proof-of-Perception: Certified Tool-Using Multimodal Reasoning with Compositional Conformal Guarantees](pop_proof_of_perception_conformal_reasoning.md)
+- [Generate, Analyze, and Refine: Training-Free Sound Source Localization via MLLM Meta-Reasoning](generate_analyze_and_refine_training-free_sound_source_localization_via_mllm_met.md)
+- [MSJoE: Jointly Evolving MLLM and Sampler for Efficient Long-Form Video Understanding](msjoe_jointly_evolving_mllm_and_sampler_for_efficient_long-form_video_understand.md)
+- [Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients](fine-grained_post-training_quantization_for_large_vision_language_models_with_qu.md)
+
+<!-- RELATED:END -->

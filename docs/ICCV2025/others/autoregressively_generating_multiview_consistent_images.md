@@ -145,3 +145,15 @@ $$\mathcal{L}_{ar} = -\frac{1}{T}\sum_{t=1}^{T}\log p(q_t|q_{<t})$$
 - 实验充分度: ⭐⭐⭐ 消融实验设计合理，但评估集仅30个物体，缺少大规模评估和与更多最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰（三个Issue的提出与逐一解决），结构合理；部分公式表述略显冗余
 - 价值: ⭐⭐⭐⭐ 为多视角生成提供了AR范式的新baseline，统一多模态条件框架有实际意义，对后续AR-based 3D生成有较好的启示作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Φ-GAN: Physics-Inspired GAN for Generating SAR Images Under Limited Data](ph-gan_physics-inspired_gan_for_generating_sar_images_under_limited_data.md)
+- [Recover Biological Structure from Sparse-View Diffraction Images with Neural Volumetric Prior](recover_biological_structure_from_sparse-view_diffraction_images_with_neural_vol.md)
+- [Thermal Polarimetric Multi-view Stereo](thermal_polarimetric_multi-view_stereo.md)
+- [CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images](../../CVPR2025/others/cadcrafter_generating_computer-aided_design_models_from_unconstrained_images.md)
+- [HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images](../../ECCV2024/others/hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu.md)
+
+<!-- RELATED:END -->

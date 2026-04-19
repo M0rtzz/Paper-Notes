@@ -130,3 +130,15 @@ $$\text{PSF}(H, \lambda) = |\mathcal{F}(A(\mathbf{p}) \exp(i \frac{2\pi W(H, \la
 - 实验充分度: ⭐⭐⭐⭐ 仿真+真实拍摄+消融+多去模糊算法
 - 写作质量: ⭐⭐⭐⭐⭐ 物理推导清晰严谨
 - 价值: ⭐⭐⭐⭐ 对量产设备图像质量提升有实用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Blur-Robust Detection via Feature Restoration: An End-to-End Framework for Prior-Guided Infrared UAV Target Detection](../../AAAI2026/image_restoration/blur-robust_detection_via_feature_restoration_an_end-to-end_framework_for_prior-.md)
+- [UniPhys: Unified Planner and Controller with Diffusion for Flexible Physics-Based Character Control](../../ICCV2025/image_restoration/uniphys_unified_planner_and_controller_with_diffusion_for_flexible_physics-based.md)
+- [Consistent Time-of-Flight Depth Denoising via Graph-Informed Geometric Attention](../../ICCV2025/image_restoration/consistent_time-of-flight_depth_denoising_via_graph-informed_geometric_attention.md)
+- [Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise](generalized_recorrupted-to-recorrupted_self-supervised_learning_beyond_gaussian_.md)
+- [Classic Video Denoising in a Machine Learning World: Robust, Fast, and Controllable](classic_video_denoising_in_a_machine_learning_world_robust_fast_and_controllable.md)
+
+<!-- RELATED:END -->

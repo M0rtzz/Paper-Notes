@@ -173,3 +173,15 @@ $$\mathcal{L} = \lambda(t) \cdot (\lambda_1 \mathcal{L}_{pixel} + \lambda_2 \mat
 - 实验充分度: ⭐⭐⭐⭐ — 三个数据集+详细消融，但缺少与最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，公式完整
 - 价值: ⭐⭐⭐⭐ — 在遥感高光谱超分领域具有实用价值，编码器设计可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realism Control One-step Diffusion for Real-World Image Super-Resolution](realism_control_one-step_diffusion_for_real-world_image_super-resolution.md)
+- [DCDM: Diffusion-Conditioned-Diffusion Model for Scene Text Image Super-Resolution](../../ECCV2024/image_generation/dcdm_diffusion-conditioned-diffusion_model_for_scene_text_image_super-resolution.md)
+- [Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](../../ECCV2024/image_generation/omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+- [Continuous Degradation Modeling via Latent Flow Matching for Real-World Super-Resolution](continuous_degradation_modeling_via_latent_flow_matching_for_real-world_super-re.md)
+
+<!-- RELATED:END -->

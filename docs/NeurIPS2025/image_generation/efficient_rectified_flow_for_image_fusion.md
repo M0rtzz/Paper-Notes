@@ -130,3 +130,15 @@ $$\mathcal{L}_{fusion} = \lambda_{int}\mathcal{L}_{int} + \lambda_{SSIM}\mathcal
 - 实验充分度: ⭐⭐⭐⭐ — 三类融合任务全面评估，多基准数据集，充分的消融实验
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，公式推导详尽，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 速度提升两个数量级，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Balanced Conic Rectified Flow](balanced_conic_rectified_flow.md)
+- [GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer](guideflow3d_optimization-guided_rectified_flow_for_appearance_transfer.md)
+- [CaReFlow: Cyclic Adaptive Rectified Flow for Multimodal Fusion](../../CVPR2026/image_generation/careflow_cyclic_adaptive_rectified_flow_for_multimodal_fusion.md)
+- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [Taming Rectified Flow for Inversion and Editing](../../ICML2025/image_generation/taming_rectified_flow_for_inversion_and_editing.md)
+
+<!-- RELATED:END -->

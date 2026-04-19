@@ -139,3 +139,15 @@ $$R_R^\ell(\boldsymbol{g}) = \sum_{1 \leq j < k \leq q}\left((1-\pi_j)\mathbb{E}
 - **实验**: ⭐⭐⭐⭐ — 在多个数据集和指标上全面超越 SOTA，但数据集规模偏小
 - **写作**: ⭐⭐⭐⭐ — 理论推导严谨完整，结构清晰
 - **价值**: ⭐⭐⭐⭐ — 为弱监督 MLC 提供了坚实的理论基础和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
+- [Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](../../AAAI2026/optimization/cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)
+- [On the Learning Dynamics of Two-Layer Linear Networks with Label Noise SGD](../../AAAI2026/optimization/on_the_learning_dynamics_of_two-layer_linear_networks_with_label_noise_sgd.md)
+- [Cooperative Pseudo Labeling for Unsupervised Federated Classification](../../ICCV2025/optimization/cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)
+- [Neural Networks Learn Generic Multi-Index Models Near Information-Theoretic Limit](neural_networks_learn_generic_multi-index_models_near_information-theoretic_limi.md)
+
+<!-- RELATED:END -->

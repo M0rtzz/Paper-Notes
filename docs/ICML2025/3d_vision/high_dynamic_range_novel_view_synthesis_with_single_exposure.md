@@ -197,3 +197,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{ldr}} + \alpha \mathcal{L}_{\text{hdr}} + \be
 | 实用性 | 4.5 | 即插即用元算法，大幅降低数据采集要求 |
 | 写作质量 | 4.0 | 结构清晰，动机阐述充分 |
 | **总分** | **4.2** | 问题定义有价值，方法设计优雅，实验有说服力 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeHDR: Single-Exposure HDR Novel View Synthesis via 3D Gaussian Bracketing](../../ICCV2025/3d_vision/sehdr_single-exposure_hdr_novel_view_synthesis_via_3d_gaussian_bracketing.md)
+- [Dynamic Novel View Synthesis in High Dynamic Range](../../ICLR2026/3d_vision/dynamic_novel_view_synthesis_in_high_dynamic_range.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](../../CVPR2026/3d_vision/instanthdr_singleforward_gaussian_splatting_for_hi.md)
+- [NerfBaselines: Consistent and Reproducible Evaluation of Novel View Synthesis Methods](../../NeurIPS2025/3d_vision/nerfbaselines_consistent_and_reproducible_evaluation_of_novel_view_synthesis_met.md)
+- [Learning Neural Exposure Fields for View Synthesis](../../NeurIPS2025/3d_vision/learning_neural_exposure_fields_for_view_synthesis.md)
+
+<!-- RELATED:END -->

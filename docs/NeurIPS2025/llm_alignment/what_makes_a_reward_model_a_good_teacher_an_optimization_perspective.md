@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 模型规模达8B，数据集标准，理论预测和实验吻合度高
 - 写作质量: ⭐⭐⭐⭐⭐ 理论陈述清晰优雅，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 改变了奖励模型评估范式，对RLHF实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ask a Strong LLM Judge when Your Reward Model is Uncertain](ask_a_strong_llm_judge_when_your_reward_model_is_uncertain.md)
+- [Diffusion Model as a Noise-Aware Latent Reward Model for Step-Level Preference Optimization](diffusion_model_as_a_noiseaware_latent_reward_model_for_step.md)
+- [Reward Generalization in RLHF: A Topological Perspective](../../ACL2025/llm_alignment/reward_generalization_in_rlhf_a_topological_perspective.md)
+- [Towards Reward Fairness in RLHF: From a Resource Allocation Perspective](../../ACL2025/llm_alignment/reward_fairness_rlhf.md)
+- [Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis](limited_preference_data_learning_better_reward_model_with_latent_space_synthesis.md)
+
+<!-- RELATED:END -->

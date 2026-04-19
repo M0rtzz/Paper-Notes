@@ -112,3 +112,15 @@ AV QA 提升最显著（+12.41 vs DG-SCT）
 - 实验充分度: ⭐⭐⭐⭐ 两个 benchmark，多种基线对比，含效率分析
 - 写作质量: ⭐⭐⭐ 方法描述清楚但消融不够深入
 - 价值: ⭐⭐⭐ 领域较窄（音乐 AVQA），但稀疏化思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](../../ICLR2026/audio_speech/query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)
+- [Ethics Statements in AI Music Papers: The Effective and the Ineffective](../../NeurIPS2025/audio_speech/ethics_statements_in_ai_music_papers_the_effective_and_the_ineffective.md)
+- [End-to-end Contrastive Language-Speech Pretraining Model For Long-form Spoken Question Answering](../../AAAI2026/audio_speech/end-to-end_contrastive_language-speech_pretraining_model_for_long-form_spoken_qu.md)
+- [CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages](clamp_3_universal_music_information_retrieval_across_unaligned_modalities_and_un.md)
+- [MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens](mms-llama_efficient_llm-based_audio-visual_speech_recognition_with_minimal_multi.md)
+
+<!-- RELATED:END -->

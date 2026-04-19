@@ -178,3 +178,15 @@ tags:
 - **实验充分性**：⭐⭐⭐⭐⭐ 五大任务覆盖全面，12 模型横向对比
 - **写作质量**：⭐⭐⭐⭐ 结构清晰，从需求到评估逻辑通顺
 - **实用性**：⭐⭐⭐⭐⭐ 直接指导下一代视觉辅助技术的开发方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search](mcts_video_captioning_eval.md)
+- [Visual Intention Grounding for Egocentric Assistants](../../ICCV2025/multimodal_vlm/visual_intention_grounding_for_egocentric_assistants.md)
+- [Aligning VLM Assistants with Personalized Situated Cognition](aligning_vlm_assistants_with_personalized_situated.md)
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+- [Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](unsolvable_problem_detection.md)
+
+<!-- RELATED:END -->

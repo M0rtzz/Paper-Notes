@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{disp}} + \lambda_1 \mathcal{L}
 - 技术深度：⭐⭐⭐⭐ — 变秩LoRA+变核Adapter+决策网络设计完整
 - 实验完整性：⭐⭐⭐⭐⭐ — 多基准、多VFM、多消融、效率对比全面
 - 实用价值：⭐⭐⭐⭐ — 代码开源，效率优势明显，适合实际部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RobuSTereo: Robust Zero-Shot Stereo Matching under Adverse Weather](robustereo_robust_zero-shot_stereo_matching_under_adverse_weather.md)
+- [BANet: Bilateral Aggregation Network for Mobile Stereo Matching](banet_bilateral_aggregation_network_for_mobile_stereo_matchi.md)
+- [Stereo Any Video: Temporally Consistent Stereo Matching](stereo_any_video_temporally_consistent_stereo_matching.md)
+- [DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](../../CVPR2025/3d_vision/defom-stereo_depth_foundation_model_based_stereo_matching.md)
+- [MaskHand: Generative Masked Modeling for Robust Hand Mesh Reconstruction in the Wild](maskhand_generative_masked_modeling_for_robust_hand_mesh_reconstruction_in_the_w.md)
+
+<!-- RELATED:END -->

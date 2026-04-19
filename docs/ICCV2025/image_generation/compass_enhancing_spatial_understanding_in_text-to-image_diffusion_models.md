@@ -122,3 +122,15 @@ CoMPaSS包含两个互补组件：SCOP数据引擎（提供高质量空间训练
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个模型、4个基准、详细消融、数据效率、计算效率全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰，从问题分析到解决方案一气呵成
 - 价值: ⭐⭐⭐⭐ 对T2I空间理解问题提出了系统性解决方案，具有较高的实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Spatial Understanding in Image Generation via Reward Modeling](../../CVPR2026/image_generation/enhancing_spatial_understanding_in_image_generation_via_reward_modeling.md)
+- [Spatial-SSRL: Enhancing Spatial Understanding via Self-Supervised Reinforcement Learning](../../CVPR2026/image_generation/spatial-ssrl_enhancing_spatial_understanding_via_self-supervised_reinforcement_l.md)
+- [Enhancing Reward Models for High-quality Image Generation: Beyond Text-Image Alignment](enhancing_reward_models_for_high-quality_image_generation_beyond_text-image_alig.md)
+- [Understanding Flatness in Generative Models: Its Role and Benefits](understanding_flatness_in_generative_models_its_role_and_benefits.md)
+- [Addressing Text Embedding Leakage in Diffusion-Based Image Editing](addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)
+
+<!-- RELATED:END -->

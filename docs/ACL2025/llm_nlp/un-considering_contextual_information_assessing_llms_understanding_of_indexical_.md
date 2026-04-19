@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 4模型×4指示词×4条件覆盖合理，但缺少开源模型和改进实验
 - 写作质量: ⭐⭐⭐⭐ 语言学背景清晰，2×2设计逻辑严密，结果讨论到位
 - 价值: ⭐⭐⭐⭐ 揭示LLM语用推理的深层缺陷：依赖统计关联而非语法规则
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation](skillverse_tree_eval.md)
+- [Understanding the Dark Side of LLMs' Intrinsic Self-Correction](understanding_the_dark_side_of_llms_intrinsic_self-correction.md)
+- [LongDPO: Unlock Better Long-form Generation Abilities for LLMs via Critique-augmented Stepwise Information](longdpo_unlock_better_long-form_generation_abilities_for_llms_via_critique-augme.md)
+- [Is It JUST Semantics? A Case Study of Discourse Particle Understanding in LLMs](is_it_just_semantics_a_case_study_of_discourse_particle_understanding_in_llms.md)
+- [Multi-Prompting Decoder Helps Better Language Understanding](multi-prompting_decoder_helps_better_language_understanding.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ $$\Delta\theta^- = \mu \Delta\theta^- + (1-\mu)\Delta\theta$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ 在Flux 12B和SD3.5 8B两个大模型上验证，消融全面（EMA策略、混合比例、少样本），效率指标详实
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，从shortcut models到SCFM的演进逻辑流畅，但部分推导密度较高
 - **价值**: ⭐⭐⭐⭐⭐ 实用价值极高，1 A100-Day蒸馏12B模型的效率和少样本能力对社区有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](../../ICCV2025/image_generation/flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
+- [Flow Matching Neural Processes](flow_matching_neural_processes.md)
+- [Gaussian Mixture Flow Matching Models](../../ICML2025/image_generation/gaussian_mixture_flow_matching_models.md)
+- [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
+- [Curly Flow Matching for Learning Non-gradient Field Dynamics](curly_flow_matching_for_learning_non-gradient_field_dynamics.md)
+
+<!-- RELATED:END -->

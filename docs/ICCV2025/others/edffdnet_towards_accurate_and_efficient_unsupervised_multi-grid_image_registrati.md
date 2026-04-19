@@ -186,3 +186,15 @@ UDIS-D 数据集 warp 精度对比：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融覆盖变形模型/聚合器/相关策略三个维度 + 跨数据集评估 + 计算效率对比 + 与传统方法速度对比
 - **写作质量**: ⭐⭐⭐⭐ — 公式推导清晰，设计动机明确，对比分析充分
 - **价值**: ⭐⭐⭐⭐ — 在图像配准领域实现了精度和效率的双重提升，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
+- [Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation](../../ICLR2026/others/distributionally_robust_classification_for_multi-source_unsupervised_domain_adap.md)
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
+- [Completing Missing Annotation: Multi-Agent Debate for Accurate and Scalable Relevance Assessment](../../ICLR2026/others/completing_missing_annotation_multi-agent_debate_for_accurate_and_scalable_relev.md)
+- [GETReason: Enhancing Image Context Extraction through Hierarchical Multi-Agent Reasoning](../../ACL2025/others/getreason_enhancing_image_context_extraction_through_hierarchical_multi-agent_re.md)
+
+<!-- RELATED:END -->

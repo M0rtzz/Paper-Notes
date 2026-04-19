@@ -122,3 +122,15 @@ ATLAS 包含三个核心组件：(1) 时间尊重的有向会话图构建；(2) 
 - 实验充分度: ⭐⭐⭐ 大规模真实数据验证有说服力，但缺与其他图方法对比，消融细节不足
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，公式化严谨，图构建和标签传播的描述精确
 - 价值: ⭐⭐⭐⭐ 工业级 GNN 部署案例具有很高的实践参考价值，50%+ 摩擦降低是显著的业务影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WSGG: Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2026/graph_learning/wsgg_spatiotemporal_world_scene_graph.md)
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](../../ICML2025/graph_learning/toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+- [TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)
+- [Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)
+- [GraphFaaS: Serverless GNN Inference for Burst-Resilient, Real-Time Intrusion Detection](graphfaas_serverless_gnn_inference_for_burst-resilient_real-time_intrusion_detec.md)
+
+<!-- RELATED:END -->

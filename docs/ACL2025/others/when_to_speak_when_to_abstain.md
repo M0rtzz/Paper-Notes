@@ -94,3 +94,15 @@ CDA 在所有场景下均超越现有 CCD 方法（Zhao et al., Shi et al.等）
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 场景精心控制 + 4 LLM + RAG 验证
 - 写作质量: ⭐⭐⭐⭐ 测试台设计严谨，公式推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 免训练提升 LLM 可靠性，对部署极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Building Better: Avoiding Pitfalls in Developing Language Resources when Data is Scarce](building_better_avoiding_pitfalls_in_developing_language_resources_when_data_is_.md)
+- [EpiCoDe: Boosting Model Performance Beyond Training with Extrapolation and Contrastive Decoding](epicode_boosting_model_performance_beyond_training_with_extrapolation_and_contra.md)
+- [Do not Abstain! Identify and Solve the Uncertainty](do_not_abstain_identify_and_solve_the_uncertainty.md)
+- [Decoding Reading Goals from Eye Movements](decoding_reading_goals_from_eye_movements.md)
+- [Align When They Want, Complement When They Need! Human-Centered Ensembles for Adaptive Human-AI Collaboration](../../AAAI2026/others/align_when_they_want_complement_when_they_need_human-centere.md)
+
+<!-- RELATED:END -->

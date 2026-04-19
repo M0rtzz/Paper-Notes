@@ -129,3 +129,15 @@ Joda 包含三个阶段：
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义有实际价值，方法简洁优雅（0 额外模型、0 额外数据），实验覆盖全面（18 配置 3 指标）。在实际部署场景（自动驾驶、机器人感知）中有直接应用价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open Set Label Shift with Test Time Out-of-Distribution Reference](open_set_label_shift_with_test_time_out-of-distribution_reference.md)
+- [H2ST: Hierarchical Two-Sample Tests for Continual Out-of-Distribution Detection](h2st_hierarchical_two-sample_tests_for_continual_out-of-distribution_detection.md)
+- [Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
+- [Redundancy-Aware Test-Time Graph Out-of-Distribution Detection](../../NeurIPS2025/others/redundancy-aware_test-time_graph_out-of-distribution_detection.md)
+- [Harnessing Feature Resonance under Arbitrary Target Alignment for Out-of-Distribution Node Detection](../../NeurIPS2025/others/harnessing_feature_resonance_under_arbitrary_target_alignment_for_out-of-distrib.md)
+
+<!-- RELATED:END -->

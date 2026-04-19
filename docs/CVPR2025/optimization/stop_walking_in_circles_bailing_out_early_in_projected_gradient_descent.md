@@ -123,3 +123,15 @@ PGD_CD vs Auto-PGD 对比（500 次迭代）：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多模型、与 Auto-PGD 对比充分，但缺少 L2 范数实验
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰、论证严谨，图表说服力强
 - 价值: ⭐⭐⭐⭐ 对对抗鲁棒性社区有直接实用价值，可即插即用替代标准 PGD
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benefits of Early Stopping in Gradient Descent for Overparameterized Logistic Regression](../../ICML2025/optimization/benefits_of_early_stopping_in_gradient_descent_for_overparameterized_logistic_re.md)
+- [Leveraging Perturbation Robustness to Enhance Out-of-Distribution Detection](leveraging_perturbation_robustness_to_enhance_out-of-distribution_detection.md)
+- [Quantum Optimization via Gradient-Based Hamiltonian Descent](../../ICML2025/optimization/quantum_optimization_via_gradient-based_hamiltonian_descent.md)
+- [Learning Provably Improves the Convergence of Gradient Descent](../../NeurIPS2025/optimization/learning_provably_improves_the_convergence_of_gradient_descent.md)
+- [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](../../NeurIPS2025/optimization/optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+
+<!-- RELATED:END -->

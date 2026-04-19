@@ -165,3 +165,15 @@ $$\tilde{a}^{(0)}, \tilde{a}^{(1)}, \ldots = \text{MotionPlanner}(\text{PDDLLM}(
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 9 个环境 / 1200+ 任务 / 6 个基线 / 3 个物理平台 / 消融实验 / 域质量评估 / Token 分析
 - **写作质量**: ⭐⭐⭐⭐ — 框架图示清晰直观，各组件的动机和设计逻辑阐述到位，但偶有符号记法不统一
 - **实用价值**: ⭐⭐⭐⭐⭐ — 显著降低机器人长距离任务规划的门槛，LoCA 解决了 TAMP 最大的工程痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning](../../CVPR2026/robotics/cross-domain_demo-to-code_via_neurosymbolic_counterfactual_reasoning.md)
+- [What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering](whats_the_plan_metrics_for_implicit_planning_in_llms_and_their_application_to_rh.md)
+- [All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation](all-day_multi-scenes_lifelong_vision-and-language_navigation_with_tucker_adaptat.md)
+- [Tracing and Reversing Edits in LLMs](tracing_and_reversing_edits_in_llms.md)
+- [TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
+
+<!-- RELATED:END -->

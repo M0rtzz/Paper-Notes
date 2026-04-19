@@ -129,3 +129,15 @@ $$\sum_{\tau=t+1}^{T} \alpha_\tau \leq \alpha - \sum_{\tau=0}^{t} \beta_\tau$$
 - **vs RF-CP (Stamouli et al. 2024)**: 提出归一化非一致性分数，代价与 Fb-CP-ARA 相当但引入混整数变量，计算时间高一个数量级
 - **vs CC (Lekeufack et al. 2024)**: 通过代价权重调控碰撞率，未充分利用标定集，代价高 184%
 - 反馈式 CP 的范式可迁移到所有带序列概率约束的在线优化（机器人编队、无人机路径规划等）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Temperature Scaling and Conformal Prediction of Deep Classifiers](../../ICML2025/llm_evaluation/on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)
+- [Conformal Prediction Adaptive to Unknown Subpopulation Shifts](../../ICLR2026/llm_evaluation/conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
+- [Semi-Supervised Conformal Prediction With Unlabeled Nonconformity Score](../../CVPR2026/llm_evaluation/semi-supervised_conformal_prediction_with_unlabeled_nonconformity_score.md)
+- [Asymmetric Duos: Sidekicks Improve Uncertainty](asymmetric_duos_sidekicks_improve_uncertainty.md)
+- [A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](../../ACL2025/llm_evaluation/a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)
+
+<!-- RELATED:END -->

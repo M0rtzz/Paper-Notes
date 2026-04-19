@@ -141,3 +141,15 @@ TestNUC 包含两个步骤：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 4 个 LLM × 8 个数据集 × 多种集成方式 × 丰富消融
 - **写作质量**: ⭐⭐⭐⭐ — 前期分析（纯度、多数投票准确率）为方法奠定了坚实的动机基础
 - **价值**: ⭐⭐⭐⭐ — 简单有效的推理增强方法，实际意义显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HelpSteer3: Human-Annotated Feedback and Edit Data to Empower Inference-Time Scaling](helpsteer3_human-annotated_feedback_and_edit_data_to_empower_inference-time_scal.md)
+- [SPACE: SPike-Aware Consistency Enhancement for Test-Time Adaptation in Spiking Neural Networks](../../NeurIPS2025/others/space_spike-aware_consistency_enhancement_for_test-time_adaptation_in_spiking_ne.md)
+- [QG-SMS: Enhancing Test Item Analysis via Student Modeling and Simulation](qg-sms_enhancing_test_item_analysis_via_student_modeling_and_simulation.md)
+- [GETReason: Enhancing Image Context Extraction through Hierarchical Multi-Agent Reasoning](getreason_enhancing_image_context_extraction_through_hierarchical_multi-agent_re.md)
+- [Zero-Shot Conversational Stance Detection: Dataset and Approaches](zero-shot_conversational_stance_detection_dataset_and_approaches.md)
+
+<!-- RELATED:END -->

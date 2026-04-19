@@ -132,3 +132,15 @@ LLM可以被指示使用JSON Schema等结构化格式来提升推理和协作效
 - 实验充分度: ⭐⭐⭐ — 任务较简单，规模较小，但跨模型验证充分
 - 写作质量: ⭐⭐⭐⭐ — 简洁清晰，实验设计合理
 - 价值: ⭐⭐⭐⭐ — 为多智能体LLM系统设计提供了可操作的洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SSVQ: Unleashing the Potential of Vector Quantization with Sign-Splitting](../../ICCV2025/model_compression/ssvq_unleashing_the_potential_of_vector_quantization_with_sign-splitting.md)
+- [Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing](towards_test-time_efficient_visual_place_recognition_via_asymmetric_query_proces.md)
+- [PrefixGPT: Prefix Adder Optimization by a Generative Pre-trained Transformer](prefixgpt_prefix_adder_optimization_by_a_generative_pre-trained_transformer.md)
+- [SkipCat: Rank-Maximized Low-Rank Compression of Large Language Models via Shared Projection and Block Skipping](skipcat_rank-maximized_low-rank_compression_of_large_language_models_via_shared_.md)
+- [Sharp Eyes and Memory for VideoLLMs: Information-Aware Visual Token Pruning for Efficient and Reliable VideoLLM Reasoning](sharp_eyes_and_memory_for_videollms_information-aware_visual_token_pruning_for_e.md)
+
+<!-- RELATED:END -->

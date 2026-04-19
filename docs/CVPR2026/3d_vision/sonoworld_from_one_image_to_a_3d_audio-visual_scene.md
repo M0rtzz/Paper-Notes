@@ -131,3 +131,15 @@ DOA误差降低47%，CC提升239%以上，语义指标提升117%以上。
 - **实验充分度**: ⭐⭐⭐⭐ 自建数据集+全面指标+用户研究+扩展应用，但评估场景数量有限（6个真实场景）
 - **写作质量**: ⭐⭐⭐⭐⭐ 问题定义清晰，方法描述完整，公式推导严谨
 - **价值**: ⭐⭐⭐⭐⭐ 为VR/AR和具身智能开辟了多感官场景生成的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pano3DComposer: Feed-Forward Compositional 3D Scene Generation from Single Panoramic Image](pano3dcomposer_feed-forward_compositional_3d_scene_generation_from_single_panora.md)
+- [Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation](ada3drift_adaptive_training-time_drifting_for_one-step_3d_visuomotor_robotic_man.md)
+- [AffordMatcher: Affordance Learning in 3D Scenes from Visual Signifiers](affordmatcher_affordance_learning_in_3d_scenes_from_visual_signifiers.md)
+- [Text–Image Conditioned 3D Generation](text-image_conditioned_3d_generation.md)
+- [MoVieS: Motion-Aware 4D Dynamic View Synthesis in One Second](movies_motion-aware_4d_dynamic_view_synthesis_in_one_second.md)
+
+<!-- RELATED:END -->

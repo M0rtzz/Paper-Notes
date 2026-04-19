@@ -155,3 +155,15 @@ InfGen+SDXL在FID和速度上均大幅领先，生成2K图像仅需~7秒，比Ul
 ## 评分 ⭐⭐⭐⭐
 
 思路清晰，方法简洁高效。即插即用的设计理念和10倍速度提升使其具有很强的实用价值。隐式神经位置编码设计巧妙。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ScaleDiff: Higher-Resolution Image Synthesis via Efficient and Model-Agnostic Diffusion](../../NeurIPS2025/image_generation/scalediff_higher-resolution_image_synthesis_via_efficient_and_model-agnostic_dif.md)
+- [LIFT: Latent Implicit Functions for Task- and Data-Agnostic Encoding](lift_latent_implicit_functions_for_task-_and_data-agnostic_encoding.md)
+- [PatchScaler: An Efficient Patch-Independent Diffusion Model for Image Super-Resolution](patchscaler_an_efficient_patch-independent_diffusion_model_for_image_super-resol.md)
+- [DiffuMatch: Category-Agnostic Spectral Diffusion Priors for Robust Non-rigid Shape Matching](diffumatch_category-agnostic_spectral_diffusion_priors_for_robust_non-rigid_shap.md)
+- [Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation](efficient_input-level_backdoor_defense_on_text-to-image_synthesis_via_neuron_act.md)
+
+<!-- RELATED:END -->

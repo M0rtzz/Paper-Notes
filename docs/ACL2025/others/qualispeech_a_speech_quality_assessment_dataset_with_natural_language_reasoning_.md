@@ -168,3 +168,15 @@ QualiSpeech 训练集包含 **10,558** 个样本，来源均衡分布：
 ## 评分
 
 ⭐⭐⭐⭐ — 数据集设计全面且创新，填补了重要空白。实验系统地验证了听觉 LLM 在低级语音特征理解上的能力和不足。不足在于微调模型的推理能力受限于较弱的 backbone，且单标注者的数据质量仍有提升空间。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPOT: Bridging Natural Language and Geospatial Search for Investigative Journalists](spot_bridging_natural_language_and_geospatial_search_for_investigative_journalis.md)
+- [ChildMandarin: A Comprehensive Mandarin Speech Dataset for Young Children Aged 3-5](childmandarin_a_comprehensive_mandarin_speech_dataset_for_young_children_aged_3-.md)
+- [STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond](stricta_structured_reasoning_in_critical_text_assessment_for_peer_review_and_bey.md)
+- [Autalic: A Dataset for Anti-Autistic Ableist Language In Context](autalic_a_dataset_for_anti-autistic_ableist_language_in_context.md)
+- [HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images](../../ECCV2024/others/hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu.md)
+
+<!-- RELATED:END -->

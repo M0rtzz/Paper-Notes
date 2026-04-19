@@ -146,3 +146,15 @@ SldprtNet 的构建流水线分为四个阶段：**(1)** 从 GrabCAD、McMaster-
 - **实验充分度**: ⭐⭐⭐ — 多模态 vs 单模态 baseline 对比有效验证了核心观点，但缺少与现有方法的广泛对比和深入消融实验
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰、动机充分、数据集设计原则系统化；但部分实验分析不够深入
 - **价值**: ⭐⭐⭐⭐ — 242K 规模的多模态 CAD 数据集及配套工具对 Text-to-CAD 社区有较高的实用价值，但实际开源落地时其 SolidWorks 依赖可能限制采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NaiLIA: Multimodal Nail Design Retrieval Based on Dense Intent Descriptions and Palette Queries](nailia_multimodal_nail_design_retrieval_based_on_dense_intent_descriptions_and_p.md)
+- [BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)
+- [A2Z-10M+: Geometric Deep Learning with A-to-Z BRep Annotations for AI-Assisted CAD Modeling and Reverse Engineering](a2z-10m_geometric_deep_learning_with_a-to-z_brep_annotations_for_ai-assisted_cad.md)
+- [Next-Scale Autoregressive Models for Text-to-Motion Generation](next-scale_autoregressive_models_for_text-to-motion_generation.md)
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+
+<!-- RELATED:END -->

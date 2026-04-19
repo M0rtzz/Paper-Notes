@@ -152,3 +152,15 @@ MS-Bart 在 NPLIB1 上相似度指标全面领先：MCES 改善 19.16%，Tanimot
 - 实验充分度: ⭐⭐⭐⭐ — 两个基准、多种消融、Gold FP 分析有说服力
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，NLP→化学的范式迁移阐述得当
 - 价值: ⭐⭐⭐⭐ — 为质谱结构解析提供了可扩展的预训练范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement](latent_harmony_synergistic_unified_uhd_image_restoration_via_latent_space_regula.md)
+- [UniPhys: Unified Planner and Controller with Diffusion for Flexible Physics-Based Character Control](../../ICCV2025/image_restoration/uniphys_unified_planner_and_controller_with_diffusion_for_flexible_physics-based.md)
+- [TTT-MIM: Test-Time Training with Masked Image Modeling for Denoising Distribution Shifts](../../ECCV2024/image_restoration/ttt-mim_test-time_training_with_masked_image_modeling_for_denoising_distribution.md)
+- [Skip to the Good Part: Representation Structure & Inference-Time Layer Skipping in Diffusion vs. Autoregressive LLMs](../../ICLR2026/image_restoration/skip_to_the_good_part_representation_structure_inference-time_layer_skipping_in_.md)
+- [Zero-Reference Joint Low-Light Enhancement and Deblurring via Visual Autoregressive Modeling with VLM-Derived Modulation](../../AAAI2026/image_restoration/zero-reference_joint_low-light_enhancement_and_deblurring_via_visual_autoregress.md)
+
+<!-- RELATED:END -->

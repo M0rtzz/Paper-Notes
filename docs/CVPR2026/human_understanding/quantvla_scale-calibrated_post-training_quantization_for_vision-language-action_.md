@@ -151,3 +151,15 @@ $$\beta(l) = \text{clip}(\beta_{\text{raw}}(l), \beta_{\min}, \beta_{\max})$$
 - ⭐⭐⭐⭐ 实用性：免训练、零推理开销、70% 内存节省，对机器人部署极具价值
 - ⭐⭐⭐ 实验充分度：两个模型、多个精度和配置的消融较完整，但缺乏真实机器人验证
 - ⭐⭐⭐⭐ 写作质量：理论分析严谨，从敏感性分析到方法设计逻辑链完整清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation](../../ICML2025/human_understanding/merge-friendly_post-training_quantization_for_multi-target_domain_adaptation.md)
+- [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
+- [Unleashing Vision-Language Semantics for Deepfake Video Detection](unleashing_vision-language_semantics_for_deepfake_video_detection.md)
+- [10 Open Challenges Steering the Future of Vision-Language-Action Models](../../AAAI2026/human_understanding/10_open_challenges_steering_the_future_of_vision-language-ac.md)
+- [SteelDefectX: A Coarse-to-Fine Vision-Language Dataset and Benchmark for Generalizable Steel Surface Defect Detection](steeldefectx_a_coarse-to-fine_vision-language_dataset_and_benchmark_for_generali.md)
+
+<!-- RELATED:END -->

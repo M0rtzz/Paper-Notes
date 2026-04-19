@@ -166,3 +166,15 @@ $$C(x_{\text{test}}) = \{p \in [0,1] \mid S(p, y'_{\text{test}}) \leq \hat{q}\}$
 - 实验充分度: ⭐⭐⭐ (数据规模太小，仅117样本；但护士调查增加了实用性验证)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，动机阐述充分)
 - 价值: ⭐⭐⭐⭐ (在智能健康监测中引入不确定性量化的临床价值明确)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](../../ACL2025/others/adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
+- [From Decision Trees to Boolean Logic: A Fast and Unified SHAP Algorithm](from_decision_trees_to_boolean_logic_a_fast_and_unified_shap_algorithm.md)
+- [From Sequential to Recursive: Enhancing Decision-Focused Learning with Bidirectional Feedback](from_sequential_to_recursive_enhancing_decision-focused_learning_with_bidirectio.md)
+- [UnHiPPO: Uncertainty-Aware Initialization for State Space Models](../../ICML2025/others/unhippo_uncertainty-aware_initialization_for_state_space_models.md)
+- [Agent-SAMA: State-Aware Mobile Assistant](agent-sama_state-aware_mobile_assistant.md)
+
+<!-- RELATED:END -->

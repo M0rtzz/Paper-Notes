@@ -160,3 +160,15 @@ AFL参数：$\lambda_b = 0.025$，$s = 0.05$。
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集+全面消融+与多种历史方法对比+定性注意力分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，PREGO场景的引入很好地突出了历史上下文的价值
 - 价值: ⭐⭐⭐⭐ 开拓OnTAL+历史上下文的研究方向，尤其对自我中心视觉社区有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [Stepwise Multi-grained Boundary Detector for Point-Supervised Temporal Action Localization](stepwise_multi-grained_boundary_detector_for_point-supervised_temporal_action_lo.md)
+- [AugDETR: Improving Multi-scale Learning for Detection Transformer](augdetr_improving_multi-scale_learning_for_detection_transformer.md)
+- [BAM-DETR: Boundary-Aligned Moment Detection Transformer for Temporal Sentence Grounding in Videos](bam-detr_boundary-aligned_moment_detection_transformer_for_temporal_sentence_gro.md)
+- [Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance](tracking_meets_lora_faster_training_larger_model_stronger_performance.md)
+
+<!-- RELATED:END -->

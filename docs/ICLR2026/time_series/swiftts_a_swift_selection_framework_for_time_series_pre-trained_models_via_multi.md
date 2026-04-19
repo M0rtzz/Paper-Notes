@@ -158,3 +158,15 @@ $$\boldsymbol{w} = \text{softmax}(\text{Router}(H; \theta_s)), \quad \hat{\bolds
 ⭐⭐⭐⭐ (4/5)
 
 综合评价：首个TS预训练模型选择框架，双编码器+patch交叉注意力+horizon专家+元学习的组合设计完备，14数据集×8模型的广泛实验充分——但模型池规模较小且不完全零成本，虽然技术设计扎实但突破性创新在方法论层面而非理论层面。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TSPulse: Tiny Pre-Trained Models with Disentangled Representations for Rapid Time Series](tspulse_tiny_pre-trained_models_with_disentangled_representations_for_rapid_time.md)
+- [Rating Quality of Diverse Time Series Data by Meta-learning from LLM Judgment](rating_quality_of_diverse_time_series_data_by_meta-learning_from_llm_judgment.md)
+- [Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
+- [Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework](towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo.md)
+- [Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
+
+<!-- RELATED:END -->

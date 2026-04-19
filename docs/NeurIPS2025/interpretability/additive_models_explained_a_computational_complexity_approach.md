@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作无实验，但理论覆盖极其完整
 - 写作质量: ⭐⭐⭐⭐ 结果表格清晰，关键洞察的文字总结易于理解
 - 价值: ⭐⭐⭐⭐ 对 XAI 理论研究有重要影响，对 GAM 实践选型有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpEx: A Spectral Approach to Explainable Clustering](spex_a_spectral_approach_to_explainable_clustering.md)
+- [Provably Explaining Neural Additive Models](../../ICLR2026/interpretability/provably_explaining_neural_additive_models.md)
+- [Inference-Time Decomposition of Activations (ITDA): A Scalable Approach to Interpreting Large Language Models](../../ICML2025/interpretability/inference-time_decomposition_of_activations_itda_a_scalable_approach_to_interpre.md)
+- [OrdShap: Feature Position Importance for Sequential Black-Box Models](ordshap_feature_position_importance_for_sequential_black-box_models.md)
+- [An Analysis of Concept Bottleneck Models: Measuring, Understanding, and Mitigating the Impact of Noisy Annotations](an_analysis_of_concept_bottleneck_models_measuring_understanding_and_mitigating_.md)
+
+<!-- RELATED:END -->

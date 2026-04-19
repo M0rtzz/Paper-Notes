@@ -128,3 +128,15 @@ tags:
 - **CogEnesis**：让本地模型生成高级描述发给远端，但描述无法传达复杂推理逻辑。
 - **Program-of-Thought (PoT)**：用代码增强推理的范式，本文将其改造为跨域代码复用的隐私保护工具。
 - **模型级联(Model Cascading)**：按难度路由查询到远端，本方法可嵌入级联框架中，对路由到远端的困难样本做隐私保护。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token-level Data Selection for Safe LLM Fine-tuning](../../ICLR2026/llm_efficiency/token-level_data_selection_for_safe_llm_fine-tuning.md)
+- [Addressing Imbalanced Domain-Incremental Learning through Dual-Balance Collaborative Experts (DCE)](../../ICML2025/llm_efficiency/addressing_imbalanced_domain-incremental_learning_through_dual-balance_collabora.md)
+- [ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation](../../CVPR2026/llm_efficiency/ace-merging_data-free_model_merging_with_adaptive_covariance_estimation.md)
+- [Curvature Enhanced Data Augmentation for Regression](../../ICML2025/llm_efficiency/curvature_enhanced_data_augmentation_for_regression.md)
+- [Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling](../../ICLR2026/llm_efficiency/semantic_parallelism_redefining_efficient_moe_inference_via_model-data_co-schedu.md)
+
+<!-- RELATED:END -->

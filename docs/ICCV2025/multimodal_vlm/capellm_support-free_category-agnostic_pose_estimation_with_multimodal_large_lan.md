@@ -127,3 +127,15 @@ CapeLLM由三个核心组件构成：（1）DINOv2视觉编码器提取图像特
 - **实验充分度**: ⭐⭐⭐⭐⭐ 消融极其详尽（训练策略、描述类型、分辨率、解码策略等）
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，实验设计系统性强
 - **价值**: ⭐⭐⭐⭐ 证明了MLLM在精细视觉定位任务中的可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoComPose: Automatic Generation of Pose Transition Descriptions for Composed Pose Retrieval Using Multimodal LLMs](autocompose_automatic_generation_of_pose_transition_descriptions_for_composed_po.md)
+- [Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval](bidirectional_likelihood_estimation_with_multi-modal_large_language_models_for_t.md)
+- [Visual-Oriented Fine-Grained Knowledge Editing for MultiModal Large Language Models](visual-oriented_fine-grained_knowledge_editing_for_multimodal_large_language_mod.md)
+- [BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models](basic_boosting_visual_alignment_with_intrinsic_refined_embeddings_in_multimodal_.md)
+- [Jailbreaking Multimodal Large Language Models via Shuffle Inconsistency](jailbreaking_multimodal_large_language_models_via_shuffle_inconsistency.md)
+
+<!-- RELATED:END -->

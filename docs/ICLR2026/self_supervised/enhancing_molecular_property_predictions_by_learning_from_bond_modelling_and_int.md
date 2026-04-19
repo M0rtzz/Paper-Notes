@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖4个主流基准，全面SOTA
 - 写作质量: ⭐⭐⭐⭐ 理论分析扎实，示例直观
 - 价值: ⭐⭐⭐⭐ 对分子表征学习有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fly-CL: A Fly-Inspired Framework for Enhancing Efficient Decorrelation and Reduced Training Time in Pre-trained Model-based Continual Representation Learning](fly-cl_a_fly-inspired_framework_for_enhancing_efficient_decorrelation_and_reduce.md)
+- [TRIDENT: Tri-Modal Molecular Representation Learning with Taxonomic Annotations and Structural Relationships](../../NeurIPS2025/self_supervised/trident_tri-modal_molecular_representation_learning_with_taxonomic_annotations_a.md)
+- [Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models](../../NeurIPS2025/self_supervised/mitra_mixed_synthetic_priors_for_enhancing_tabular_foundation_models.md)
+- [Neighbour-Driven Gaussian Process Variational Autoencoders for Scalable Structured Latent Modelling](../../ICML2025/self_supervised/neighbour-driven_gaussian_process_variational_autoencoders_for_scalable_structur.md)
+- [Beyond Sensor Data: Foundation Models of Behavioral Data from Wearables Improve Health Predictions](../../ICML2025/self_supervised/beyond_sensor_data_foundation_models_of_behavioral_data_from_wearables_improve_h.md)
+
+<!-- RELATED:END -->

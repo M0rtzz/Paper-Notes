@@ -82,3 +82,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 数据集，顺序敏感性分析
 - 写作质量: ⭐⭐⭐⭐ 理论清晰
 - 价值: ⭐⭐⭐⭐⭐ 有望成为 CIL 的新默认框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CATFormer: When Continual Learning Meets Spiking Transformers With Dynamic Thresholds](../../AAAI2026/llm_safety/catformer_when_continual_learning_meets_spiking_transformers_with_dynamic_thresh.md)
+- [Adversarial Robust Memory-Based Continual Learner](../../ICCV2025/llm_safety/adversarial_robust_memory-based_continual_learner.md)
+- [TRUST -- Transformer-Driven U-Net for Sparse Target Recovery](../../NeurIPS2025/llm_safety/trust_--_transformer-driven_u-net_for_sparse_target_recovery.md)
+- [Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](../../ACL2025/llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)
+- [Forgetting Through Transforming: Enabling Federated Unlearning via Class-Aware Representation Transformation](../../ICCV2025/llm_safety/forgetting_through_transforming_enabling_federated_unlearning_via_class-aware_re.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ $$\max F(\phi) = \sum_{\boldsymbol{\theta}} \pi_{\boldsymbol{\theta}} \sigma_{\b
 - 技术深度：⭐⭐⭐⭐ — 严谨的博弈论分析，完整的均衡条件推导
 - 实验完整性：⭐⭐⭐ — 合成和真实数据验证但规模有限
 - 实用价值：⭐⭐⭐⭐ — 对 AI 治理和市场设计有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GameFactory: Creating New Games with Generative Interactive Videos](../../ICCV2025/image_generation/gamefactory_creating_new_games_with_generative_interactive_videos.md)
+- [Beyond Confidence: The Rhythms of Reasoning in Generative Models](beyond_confidence_the_rhythms_of_reasoning_in_generative_models.md)
+- [NeuralOS: Towards Simulating Operating Systems via Neural Generative Models](neuralos_towards_simulating_operating_systems_via_neural_generative_models.md)
+- [DoFlow: Flow-based Generative Models for Interventional and Counterfactual Forecasting](doflow_flow-based_generative_models_for_interventional_and_counterfactual_foreca.md)
+- [QVGen: Pushing the Limit of Quantized Video Generative Models](qvgen_pushing_the_limit_of_quantized_video_generative_models.md)
+
+<!-- RELATED:END -->

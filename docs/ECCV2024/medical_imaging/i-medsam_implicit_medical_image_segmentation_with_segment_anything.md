@@ -215,3 +215,15 @@ $$L_{seg}(o_i, \hat{o}_i) = 0.5 \cdot L_{ce}(o_i, \hat{o}_i) + 0.5 \cdot L_{dc}(
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 涵盖多任务、跨分辨率、跨域、边界质量、少标注等多维度评估，消融彻底
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述详尽，图表设计良好
 - **价值**: ⭐⭐⭐⭐ — 为医学图像分割提供了参数高效且鲁棒的新方案，1.6M 参数的实用性很强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation](alternate_diverse_teaching_for_semi-supervised_medical_image_segmentation.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](../../CVPR2026/medical_imaging/biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [NOIR: Neural Operator Mapping for Implicit Representations](../../CVPR2025/medical_imaging/noir_neural_operator_mapping_for_implicit_representations.md)
+- [Adaptive Correspondence Scoring for Unsupervised Medical Image Registration](adaptive_correspondence_scoring_for_unsupervised_medical_ima.md)
+- [FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation](../../AAAI2026/medical_imaging/funkan_functional_kolmogorov-arnold_network_for_medical_image_enhancement_and_se.md)
+
+<!-- RELATED:END -->

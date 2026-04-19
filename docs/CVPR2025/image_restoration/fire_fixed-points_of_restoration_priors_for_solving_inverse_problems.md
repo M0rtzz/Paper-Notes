@@ -125,3 +125,15 @@ FiRe-HQS 使用 SCUNet + SwinIR×2 + Restormer 三模型集成，在大部分场
 - 实验充分度: ⭐⭐⭐⭐ 多种逆问题和先验的组合验证全面，但可增加更多高分辨率实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，图示直观，动机-方法-实验的逻辑链条紧密
 - 价值: ⭐⭐⭐⭐⭐ 为图像逆问题中利用预训练恢复模型提供了新范式，影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Variational Garrote for Sparse Inverse Problems](variational_garrote_for_sparse_inverse_problems.md)
+- [Learning Cocoercive Conservative Denoisers via Helmholtz Decomposition for Poisson Inverse Problems](../../NeurIPS2025/image_restoration/learning_cocoercive_conservative_denoisers_via_helmholtz_decomposition_for_poiss.md)
+- [Complexity Experts are Task-Discriminative Learners for Any Image Restoration](complexity_experts_are_task-discriminative_learners_for_any_image_restoration.md)
+- [MoE-DiffIR: Task-customized Diffusion Priors for Universal Compressed Image Restoration](../../ECCV2024/image_restoration/moe-diffir_task-customized_diffusion_priors_for_universal_compressed_image_resto.md)
+- [Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration](../../CVPR2026/image_restoration/beyond_ground-truth_leveraging_image_quality_priors_for_real-world_image_restora.md)
+
+<!-- RELATED:END -->

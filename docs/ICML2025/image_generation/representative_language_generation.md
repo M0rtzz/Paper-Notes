@@ -118,3 +118,15 @@ $$\|\mathcal{G}(x_{1:t})|_{\mathcal{A}} - \overline{x_{1:t}}|_{\mathcal{A}}\|_{\
 - 实验充分度: ⭐⭐ — 纯理论工作无实验，但定理证明严谨完整
 - 写作质量: ⭐⭐⭐⭐ — 形式化严谨，结构清晰，但对非理论读者门槛较高
 - 价值: ⭐⭐⭐⭐ — 为公平生成提供了坚实的理论基础，揭示了公平性与可计算性的本质矛盾
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Form Speech Generation with Spoken Language Models](long-form_speech_generation_with_spoken_language_models.md)
+- [Language-Guided Image Tokenization for Generation](../../CVPR2025/image_generation/language-guided_image_tokenization_for_generation.md)
+- [Visual Language Models as Zero-Shot Deepfake Detectors](visual_language_models_as_zero-shot_deepfake_detectors.md)
+- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
+- [NTPP: Generative Speech Language Modeling for Dual-Channel Spoken Dialogue via Next-Token-Pair Prediction](ntpp_generative_speech_language_modeling_for_dual-channel_spoken_dialogue_via_ne.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ tags:
 - **实验充分性**: 8/10 — 4个数据集7个LLM，分析深入且统计检验充分
 - **写作质量**: 9/10 — 论述逻辑严密，例子直观，结构清晰
 - **应用价值**: 9/10 — 对RAG系统鲁棒性提升有直接且实际的价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Ambiguity to Accuracy: The Transformative Effect of Coreference Resolution on RAG Systems](from_ambiguity_to_accuracy_the_transformative_effect_of_coreference_resolution_o.md)
+- [Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA](mitigating_lost-in-retrieval_problems_in_retrieval_augmented_multi-hop_question_.md)
+- [Typed-RAG: Type-Aware Decomposition of Non-Factoid Questions for Retrieval-Augmented Generation](typed-rag_type-aware_decomposition_of_non-factoid_questions_for_retrieval-augmen.md)
+- [Pandora's Box or Aladdin's Lamp: A Comprehensive Analysis Revealing the Role of RAG Noise in Large Language Models](pandora_box_rag_noise.md)
+- [Understanding Synthetic Context Extension via Retrieval Heads](../../ICML2025/information_retrieval/understanding_synthetic_context_extension_via_retrieval_heads.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ StarVector 由三部分组成：(1) 图像编码器（CLIP ViT）将输入图像
 - 实验充分度: ⭐⭐⭐⭐⭐ 10个数据集3个任务，含人类评估，消融清晰，还提出了完整的benchmark（SVG-Bench）
 - 写作质量: ⭐⭐⭐⭐ 框架清楚，MSE局限性的论证令人信服，但部分表格数据过于密集
 - 价值: ⭐⭐⭐⭐⭐ SVG-Stack数据集+SVG-Bench+DinoScore指标，对整个SVG生成领域的基础设施贡献巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](../../CVPR2026/multimodal_vlm/reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+- [OmniLottie: Generating Vector Animations via Parameterized Lottie Tokens](../../CVPR2026/multimodal_vlm/omnilottie_generating_vector_animations_via_parameterized_lottie_tokens.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/cosyn_code_guided_synthetic_data.md)
+- [Recognition-Synergistic Scene Text Editing](recognition-synergistic_scene_text_editing.md)
+- [Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](../../ACL2025/multimodal_vlm/code_guided_text_rich_image.md)
+
+<!-- RELATED:END -->

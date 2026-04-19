@@ -167,3 +167,15 @@ MSS 在所有隐私预算下均大幅快于 PGR，加速比从 11× 到 448×。
 | 实验充分性 | 4 | 四个维度全面对比，但仅合成数据 |
 | 实用价值 | 4 | 部署简单、无代数约束，适合工业级联邦系统 |
 | 写作质量 | 5 | 结构清晰，表1的四维对比一目了然 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Differentially Private Algorithms for Rank Aggregation](improved_differentially_private_algorithms_for_rank_aggregation.md)
+- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
+- [Reward Redistribution via Gaussian Process Likelihood Estimation](reward_redistribution_via_gaussian_process_likelihood_estimation.md)
+- [Designing Incident Reporting Systems for Harms from General-Purpose AI](designing_incident_reporting_systems_for_harms_from_general-purpose_ai.md)
+- [Private Evolution Converges](../../NeurIPS2025/others/private_evolution_converges.md)
+
+<!-- RELATED:END -->

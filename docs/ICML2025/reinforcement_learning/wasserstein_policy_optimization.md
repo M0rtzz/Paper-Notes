@@ -123,3 +123,15 @@ $$\max_\pi \mathbb{E}\left[\sum_t \gamma^t \left(\mathbb{E}_{\mathbf{a}\sim\pi}[
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 Control Suite + 高维扩展 + 核聚变真实任务，但缺少非高斯策略实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰严谨，直觉图示（Fig 1-3）极佳
 - 价值: ⭐⭐⭐⭐ — 为高维连续控制提供了新的算法选择，高维扩展性结果尤为亮眼
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Extreme Value Policy Optimization for Safe Reinforcement Learning](extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](../../NeurIPS2025/reinforcement_learning/sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [Behaviour Policy Optimization: Provably Lower Variance Return Estimates for Off-Policy Reinforcement Learning](../../AAAI2026/reinforcement_learning/behaviour_policy_optimization_provably_lower_variance_return_estimates_for_off-p.md)
+- [Latent Wasserstein Adversarial Imitation Learning](../../ICLR2026/reinforcement_learning/latent_wasserstein_adversarial_imitation_learning.md)
+- [Opinion: Towards Unified Expressive Policy Optimization for Robust Robot Learning](../../NeurIPS2025/reinforcement_learning/opinion_towards_unified_expressive_policy_optimization_for_robust_robot_learning.md)
+
+<!-- RELATED:END -->

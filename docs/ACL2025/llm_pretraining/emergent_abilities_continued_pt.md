@@ -131,3 +131,15 @@ $$\theta_t = \begin{cases} \theta'_t & \text{if } t \leq 0 \lor t \bmod \eta \ne
 - **有效性**: ⭐⭐⭐⭐ — 四维度证据链完整，跨语言跨模型验证充分，课程学习/EMA 方案有效
 - **实用性**: ⭐⭐⭐⭐ — 课程学习仅需 10% 步英文即可，EMA 完全无需英文，对低资源语言 CPT 具有直接指导价值
 - **表达**: ⭐⭐⭐⭐⭐ — 图表设计精良，从现象到机理到解决方案的叙事逻辑极为清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [Large Vocabulary Size Improves Large Language Models](large_vocabulary_size_improves_large_language_models.md)
+- [DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
+- [The Curse of Depth in Large Language Models](../../NeurIPS2025/llm_pretraining/the_curse_of_depth_in_large_language_models.md)
+- [Scalable Fingerprinting of Large Language Models](../../NeurIPS2025/llm_pretraining/scalable_fingerprinting_of_large_language_models.md)
+
+<!-- RELATED:END -->

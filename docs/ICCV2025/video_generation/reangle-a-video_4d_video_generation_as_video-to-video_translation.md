@@ -134,3 +134,15 @@ $$\mathbb{E}[\|\boldsymbol{\epsilon} \odot \mathbf{m}_{\text{down}}^{1:N} - \eps
 | 实验充分性 | 4 |
 | 写作质量 | 4 |
 | **综合** | **4.5** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Geometry-aware 4D Video Generation for Robot Manipulation](../../ICLR2026/video_generation/geometry-aware_4d_video_generation_for_robot_manipulation.md)
+- [4Real-Video: Learning Generalizable Photo-Realistic 4D Video Diffusion](../../CVPR2025/video_generation/4real-video_learning_generalizable_photo-realistic_4d_video_diffusion.md)
+- [X-Dancer: Expressive Music to Human Dance Video Generation](x-dancer_expressive_music_to_human_dance_video_generation.md)
+- [MotionAgent: Fine-grained Controllable Video Generation via Motion Field Agent](motionagent_fine-grained_controllable_video_generation_via_motion_field_agent.md)
+- [3D4D: An Interactive Editable 4D World Model via 3D Video Generation](../../AAAI2026/video_generation/3d4d_an_interactive_editable_4d_world_model_via_3d_video_generation.md)
+
+<!-- RELATED:END -->

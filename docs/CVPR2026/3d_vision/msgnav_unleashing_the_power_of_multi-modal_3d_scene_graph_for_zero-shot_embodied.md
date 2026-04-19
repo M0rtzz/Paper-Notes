@@ -216,3 +216,15 @@ MSGNav超越训练方法MTU3D +4.8% SR、+1.9% SPL，且无需任何训练。
 | 写作质量 | 4 | 问题定义清晰，图表直观，逻辑流畅 |
 | 实用性 | 3.5 | 推理效率仍受限于多个大模型的在线调用 |
 | **综合** | **4.0** | 扎实的系统性工作，M3DSG设计巧妙且效果显著 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation](scope_scene-contextualized_incremental_few-shot_3d_segmentation.md)
+- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [PromptStereo: Zero-Shot Stereo Matching via Structure and Motion Prompts](promptstereo_zero-shot_stereo_matching_via_structure_and_motion_prompts.md)
+- [ExtrinSplat: Decoupling Geometry and Semantics for Open-Vocabulary Understanding in 3D Gaussian Splatting](extrinsplat_decoupling_geometry_and_semantics_for_open-vocabulary_understanding_.md)
+- [Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection](back_to_point_exploring_point-language_models_for_zero-shot_3d_anomaly_detection.md)
+
+<!-- RELATED:END -->

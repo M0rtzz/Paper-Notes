@@ -151,3 +151,15 @@ Fig. 14 展示了预测的时间步图：复杂纹理区域被分配更大时间
 - **技术深度**: ★★★★★ — DFRM 解耦设计 + 混合调度器 + 分块推理，工程细节扎实
 - **实验质量**: ★★★★★ — 4 个数据集 × 2 个缩放因子 × 6 个指标 + 多维消融
 - **写作质量**: ★★★★☆ — 结构清晰，图示信息量大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model](freemorph_tuning-free_generalized_image_morphing_with_diffusion_model.md)
+- [EmotiCrafter: Text-to-Emotional-Image Generation based on Valence-Arousal Model](emoticrafter_text-to-emotional-image_generation_based_on_valence-arousal_model.md)
+- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
+- [LiT: Delving into a Simple Linear Diffusion Transformer for Image Generation](lit_delving_into_a_simple_linear_diffusion_transformer_for_image_generation.md)
+- [TRCE: Towards Reliable Malicious Concept Erasure in Text-to-Image Diffusion Models](trce_towards_reliable_malicious_concept_erasure_in_text-to-image_diffusion_model.md)
+
+<!-- RELATED:END -->

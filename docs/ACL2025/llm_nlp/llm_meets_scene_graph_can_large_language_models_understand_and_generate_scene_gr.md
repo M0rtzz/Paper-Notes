@@ -142,3 +142,15 @@ TSG Bench 包含三个层次：
 **关键词**: 场景图, LLM评估, 结构化推理, benchmark, 多模态理解
 
 ## 一句话总结
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AAD-LLM: Neural Attention-Driven Auditory Scene Understanding](aad-llm_neural_attention-driven_auditory_scene_understanding.md)
+- [Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
+- [ChronoSense: Exploring Temporal Understanding in Large Language Models with Time Intervals of Events](chronosense_exploring_temporal_understanding_in_large_language_models_with_time_.md)
+- [Can Graph Descriptive Order Affect Solving Graph Problems with LLMs?](graph_descriptive_order_llm.md)
+- [Can Language Models Replace Programmers for Coding? RepoCod Says 'Not Yet'](can_language_models_replace_programmers_for_coding_repocod_says_not_yet.md)
+
+<!-- RELATED:END -->

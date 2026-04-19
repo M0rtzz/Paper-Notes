@@ -128,3 +128,15 @@ $$R_{\text{SOLACE}}(z_0^{(i)}, c) = \frac{1}{\sum_{t\in\mathcal{T}} w(t)} \sum_{
 - 实验充分度: ⭐⭐⭐⭐ 多基准(GenEval/OCR/6个偏好指标)+用户研究+消融+多模型(SD3.5-M/L)+互补实验
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法推导严谨，消融实验系统
 - 对我的价值: ⭐⭐⭐ 图像生成非核心方向，但"内在信号后训练"的范式值得关注
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
+- [Self-Corrected Image Generation with Explainable Latent Rewards](self-corrected_image_generation_with_explainable_latent_rewards.md)
+- [Resolving the Identity Crisis in Text-to-Image Generation](resolving_the_identity_crisis_in_text-to-image_generation.md)
+- [Erasure or Erosion? Evaluating Compositional Degradation in Unlearned Text-To-Image Diffusion Models](erasure_or_erosion_evaluating_compositional_degradation_in_unlearned_text-to-ima.md)
+- [LumiCtrl: Learning Illuminant Prompts for Lighting Control in Personalized Text-to-Image Models](lumictrl_learning_illuminant_prompts_for_lighting_control_in_personalized_text-t.md)
+
+<!-- RELATED:END -->

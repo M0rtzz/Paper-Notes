@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个LLM + 人工验证(κ=0.86-0.97) + 3种微调方法 + 1000条thesis实验
 - 写作质量: ⭐⭐⭐⭐ 研究设计清晰，实验流程系统，结果展示直观
 - 价值: ⭐⭐⭐⭐ 对AI安全、内容审核和LLM对齐有直接指导价值，ORPO的有效性对安全训练特别有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [String Seed of Thought: Prompting LLMs for Distribution-Faithful and Diverse Generation](string_seed_of_thought_prompting_llms_for_distribution-faithful_and_diverse_gene.md)
+- [What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering](whats_the_plan_metrics_for_implicit_planning_in_llms_and_their_application_to_rh.md)
+- [When would Vision-Proprioception Policies Fail in Robotic Manipulation?](when_would_vision-proprioception_policies_fail_in_robotic_manipulation.md)
+- [Tracing and Reversing Edits in LLMs](tracing_and_reversing_edits_in_llms.md)
+- [Unintended Misalignment from Agentic Fine-Tuning: Risks and Mitigation](../../AAAI2026/robotics/unintended_misalignment_from_agentic_fine-tuning_risks_and_m.md)
+
+<!-- RELATED:END -->

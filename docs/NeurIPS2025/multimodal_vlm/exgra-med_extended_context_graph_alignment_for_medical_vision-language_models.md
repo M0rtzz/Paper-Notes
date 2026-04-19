@@ -146,3 +146,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{AR} + \alpha \cdot \mathcal{L}(\hat{V}_s, V
 - 实验充分度: ⭐⭐⭐⭐（10%/40%/100%逐级验证，消融全面，与多种SOTA对比）
 - 写作质量: ⭐⭐⭐⭐（方法描述详尽，数学符号规范，但部分章节略冗长）
 - 价值: ⭐⭐⭐⭐⭐（数据效率提升对医学AI落地意义重大）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context Informs Pragmatic Interpretation in Vision-Language Models](context_informs_pragmatic_interpretation_in_vision-language_models.md)
+- [MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly](mmlongbench_benchmarking_longcontext_visionlanguage_models_e.md)
+- [HoPE: Hybrid of Position Embedding for Long Context Vision-Language Models](hope_hybrid_of_position_embedding_for_long_context_visionlan.md)
+- [VILA-M3: Enhancing Vision-Language Models with Medical Expert Knowledge](../../CVPR2025/multimodal_vlm/vila-m3_enhancing_vision-language_models_with_medical_expert_knowledge.md)
+- [Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging](better_tokens_for_better_3d_advancing_vision-language_modeling_in_3d_medical_ima.md)
+
+<!-- RELATED:END -->

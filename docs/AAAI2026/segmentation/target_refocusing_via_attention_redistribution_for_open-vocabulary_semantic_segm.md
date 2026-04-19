@@ -193,3 +193,15 @@ RF-CLIP推理速度是ProxyCLIP的2倍，mIoU高出5.7%。
 - 实验充分度: ⭐⭐⭐⭐⭐ （8个基准，详尽消融，效率分析，多种对照实验）
 - 写作质量: ⭐⭐⭐⭐⭐ （逻辑清晰，从现象发现到方法设计层层递进，图表丰富）
 - 价值: ⭐⭐⭐⭐⭐ （免训练达SOTA，揭示CLIP内部机制的新洞察）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfoCLIP: Bridging Vision-Language Pretraining and Open-Vocabulary Semantic Segmentation via Information-Theoretic Alignment Transfer](infoclip_bridging_vision-language_pretraining_and_open-vocab.md)
+- [Effective SAM Combination for Open-Vocabulary Semantic Segmentation](../../CVPR2025/segmentation/effective_sam_combination_for_open-vocabulary_semantic_segmentation.md)
+- [PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/pearl_geometry_aligns_semantics_for_training-free_open-vocabulary_semantic_segme.md)
+- [Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation](../../CVPR2026/segmentation/direct_segmentation_without_logits_optimization_for_training-free_open-vocabular.md)
+- [Training-Free Class Purification for Open-Vocabulary Semantic Segmentation](../../ICCV2025/segmentation/training-free_class_purification_for_open-vocabulary_semantic_segmentation.md)
+
+<!-- RELATED:END -->

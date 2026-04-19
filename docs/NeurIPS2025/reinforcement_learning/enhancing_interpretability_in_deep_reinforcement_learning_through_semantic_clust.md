@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Procgen 上三个游戏的分析+人类评估=基本充分，但缺乏连续控制和复杂多主体场景
 - 写作质量: ⭐⭐⭐⭐ 图表丰富，可视化出色，方法说明清晰
 - 价值: ⭐⭐⭐⭐ 揭示 DRL 内在语义组织的分析工具，对可解释 RL 和分层 RL 都有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Confounding Robust Deep Reinforcement Learning: A Causal Approach](confounding_robust_deep_reinforcement_learning_a_causal_approach.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Mind the GAP! The Challenges of Scale in Pixel-based Deep Reinforcement Learning](mind_the_gap_the_challenges_of_scale_in_pixel-based_deep_reinforcement_learning.md)
+- [Learning Human-Like RL Agents through Trajectory Optimization with Action Quantization](learning_human-like_rl_agents_through_trajectory_optimization_with_action_quanti.md)
+- [STAIR: Addressing Stage Misalignment through Temporal-Aligned Preference Reinforcement Learning](stair_addressing_stage_misalignment_through_temporal-aligned_preference_reinforc.md)
+
+<!-- RELATED:END -->

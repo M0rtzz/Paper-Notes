@@ -151,3 +151,15 @@ UALNet 在所有三个指标上均超越次优的 Transformer 方法，并且计
 - 实验充分度: ⭐⭐⭐⭐ — 具备完整的消融实验和效率对比，但数据集地理多样性有限
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法推导严谨，从物理建模到算法设计逻辑连贯
 - 价值: ⭐⭐⭐⭐ — 解决了全球高光谱覆盖的实际需求，在遥感社区具有较高应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Exhaustive Correlation for Spectral Super-Resolution: Where Spatial-Spectral Attention Meets Linear Dependence](../../ECCV2024/image_restoration/learning_exhaustive_correlation_for_spectral_super-resolution_where_spatial-spec.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+- [Bridging the Perception Gap in Image Super-Resolution Evaluation](bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
+
+<!-- RELATED:END -->

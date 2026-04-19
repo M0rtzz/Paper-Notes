@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三类时间编码×两种格式+四种训练范式+RLVR配方探索，极其彻底
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，每个发现都有充分实验支撑，Fig.2(a)排名反转可视化极有说服力
 - 价值: ⭐⭐⭐⭐⭐ 基准修复和最佳实践对VTG社区极其有用，TimeLens-Bench将成新标准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GroundVTS: Visual Token Sampling in Multimodal Large Language Models for Video Temporal Grounding](groundvts_visual_token_sampling_in_multimodal_large_language_models_for_video_te.md)
+- [Enrich and Detect: Video Temporal Grounding with Multimodal LLMs](../../ICCV2025/multimodal_vlm/enrich_and_detect_video_temporal_grounding_with_multimodal_llms.md)
+- [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
+- [Rethinking MLLM Itself as a Segmenter with a Single Segmentation Token](rethinking_mllm_itself_as_a_segmenter_with_a_single_segmentation_token.md)
+- [Customized Visual Storytelling with Unified Multimodal LLMs](customized_visual_storytelling_with_unified_multimodal_llms.md)
+
+<!-- RELATED:END -->

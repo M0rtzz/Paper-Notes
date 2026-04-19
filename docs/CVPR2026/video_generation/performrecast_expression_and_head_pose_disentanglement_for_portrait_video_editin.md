@@ -126,3 +126,15 @@ Enhancement 模式下 PerformRecast 同样全面领先（PSNR 30.27, FVD 90.2）
 - 实验充分度: ⭐⭐⭐⭐⭐ 自建 MetaHuman benchmark、与多种方法对比、完整消融、多任务评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述到位，但部分公式符号可以更精简
 - 价值: ⭐⭐⭐⭐ 对影视后期制作有直接实用价值，解耦表情编辑是刚需
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation](unitalking_a_unified_audio-video_framework_for_talking_portrait_generation.md)
+- [PAM: A Pose-Appearance-Motion Engine for Sim-to-Real HOI Video Generation](pam_a_pose-appearance-motion_engine_for_sim-to-real_hoi_video_generation.md)
+- [VideoCoF: Unified Video Editing with Temporal Reasoner](videocof_unified_video_editing_with_temporal_reasoner.md)
+- [NOVA: Sparse Control, Dense Synthesis for Pair-Free Video Editing](nova_sparse_control_dense_synthesis_for_pair-free_video_editing.md)
+- [AutoCut: End-to-end Advertisement Video Editing Based on Multimodal Discretization and Controllable Generation](autocut_end-to-end_advertisement_video_editing_based_on_multimodal_discretizatio.md)
+
+<!-- RELATED:END -->

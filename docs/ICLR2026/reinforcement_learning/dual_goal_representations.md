@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 20 个任务、3 种下游算法、详细消融，但噪声测试过于简单、缺真机实验
 - 写作质量: ⭐⭐⭐⭐ 理论与实践的衔接清晰，但多位审稿人反映 Section 4 的实现细节初版不够清楚
 - 价值: ⭐⭐⭐⭐ 可插拔模块对 GCRL 社区有直接实用价值，理论分析也为未来研究提供了指导框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](../../NeurIPS2025/reinforcement_learning/learning_from_demonstrations_via_capability-aware_goal_sampling.md)
+- [DVLA-RL: Dual-Level Vision-Language Alignment with Reinforcement Learning Gating for Few-Shot Learning](dvla-rl_dual-level_vision-language_alignment_with_reinforcement_learning_gating_.md)
+- [Reward-Aware Proto-Representations in Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/reward-aware_proto-representations_in_reinforcement_learning.md)
+- [Shift Before You Learn: Enabling Low-Rank Representations in Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/shift_before_you_learn_enabling_low-rank_representations_in_reinforcement_learni.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ GPT-4o 作为 judge，评对齐度和连贯性。对齐分 <30 为"失对齐"，
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 开创性工作，识别了 LLM 对齐中全新的安全隐患。三重对照组设计、10 seed 统计、多维度评估体系极其严谨。后门实验将威胁模型提升到新高度。将深刻影响 AI 安全领域对窄领域微调和数据投毒的风险评估。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Editing LLMs Inject Harm?](../../AAAI2026/ai_safety/can_editing_llms_inject_harm.md)
+- [Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data](../../NeurIPS2025/ai_safety/virus_infection_attack_on_llms_your_poisoning_can_spread_via_synthetic_data.md)
+- [Inoculation Prompting: Eliciting Traits from LLMs during Training Can Suppress Them at Test-Time](../../ICLR2026/ai_safety/inoculation_prompting_eliciting_traits_from_llms_during_training_can_suppress_th.md)
+- [Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs](is_your_model_fairly_certain_uncertainty-aware_fairness_evaluation_for_llms.md)
+- [An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs](an_attack_to_break_permutation-based_private_third-party_inference_schemes_for_l.md)
+
+<!-- RELATED:END -->

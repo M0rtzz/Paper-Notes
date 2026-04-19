@@ -129,3 +129,15 @@ Facial-R1 采用三阶段渐进式训练：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 8 个基准、多任务评估、消融实验完整
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，动机和方法衔接自然
 - 价值: ⭐⭐⭐⭐ — FEA-20K 数据集和低成本训练范式有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeuroGaze-Distill: Brain-informed Distillation and Depression-Inspired Geometric Priors for Robust Facial Emotion Recognition](../../ICLR2026/human_understanding/neurogaze-distill_brain-informed_distillation_and_depression-inspired_geometric_.md)
+- [Generalizable Facial Expression Recognition](../../ECCV2024/human_understanding/generalizable_facial_expression_recognition.md)
+- [Facial Affective Behavior Analysis with Instruction Tuning](../../ECCV2024/human_understanding/facial_affective_behavior_analysis_with_instruction_tuning.md)
+- [From Imitation to Discrimination: Toward A Generalized Curriculum Advantage Mechanism Enhancing Cross-Domain Reasoning Tasks](from_imitation_to_discrimination_toward_a_generalized_curriculum_advantage_mecha.md)
+- [Yes FLoReNce, I Will Do Better Next Time! Agentic Feedback Reasoning for Humorous Meme Detection](yes_florence_i_will_do_better_next_time_agentic_feedback_reasoning_for_humorous_.md)
+
+<!-- RELATED:END -->

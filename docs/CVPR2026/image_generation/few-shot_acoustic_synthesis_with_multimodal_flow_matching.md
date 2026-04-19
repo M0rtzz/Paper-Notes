@@ -140,3 +140,15 @@ FLAC 是一个条件潜在生成模型，包含三个核心模块：
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个数据集、多基线对比、详尽消融、不确定性分析、主观听觉测试、跨模态检索验证）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰、图表丰富，物理直觉解释充分，部分符号较密集）
 - 价值: ⭐⭐⭐⭐ （为少样本声学合成开辟新方向，实用数据效率极高，但领域相对小众）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
+- [Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
+- [EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation](egoflow_gradient-guided_flow_matching_for_egocentric_6dof_object_motion_generati.md)
+- [Rejection Sampling IMLE: Designing Priors for Better Few-Shot Image Synthesis](../../ECCV2024/image_generation/rejection_sampling_imle_designing_priors_for_better_few-shot_image_synthesis.md)
+- [VeCoR — Velocity Contrastive Regularization for Flow Matching](vecor_--_velocity_contrastive_regularization_for_flow_matching.md)
+
+<!-- RELATED:END -->

@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop paper 规模，仅一个下游任务，仅模拟数据
 - 写作质量: ⭐⭐⭐⭐ 物理背景和 ML 方法描述平衡，可解释性分析清晰
 - 价值: ⭐⭐⭐⭐ 为高能核物理的 AI 基础模型方向奠基，方法论可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
+- [Transfer Learning Beyond the Standard Model](transfer_learning_beyond_the_standard_model.md)
+- [Toward Complete Merger Identification at Cosmic Noon with Deep Learning](toward_complete_merger_identification_at_cosmic_noon_with_deep_learning.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+- [Rethink the Role of Deep Learning towards Large-scale Quantum Systems](../../ICML2025/physics/rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)
+
+<!-- RELATED:END -->

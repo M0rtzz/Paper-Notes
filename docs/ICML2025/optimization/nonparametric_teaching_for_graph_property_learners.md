@@ -134,3 +134,15 @@ GraNT 时间减半且 MAE 降低两个数量级。
 - 实验充分度: ⭐⭐⭐⭐ (六个数据集四种任务，但节点级缺真实 benchmark)
 - 写作质量: ⭐⭐⭐⭐ (理论推导完整，动机清晰，符号稍重)
 - 价值: ⭐⭐⭐⭐ (30%–47% 加速 + 理论框架，对图学习训练效率有启发)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nonparametric Teaching of Attention Learners](../../ICLR2026/optimization/nonparametric_teaching_of_attention_learners.md)
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [GCAL: Adapting Graph Models to Evolving Domain Shifts](gcal_adapting_graph_models_to_evolving_domain_shifts.md)
+- [The Panaceas for Improving Low-Rank Decomposition in Communication-Efficient Federated Learning](the_panaceas_for_improving_low-rank_decomposition_in_communication-efficient_fed.md)
+- [Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees](understanding_the_statistical_accuracy-communication_trade-off_in_personalized_f.md)
+
+<!-- RELATED:END -->

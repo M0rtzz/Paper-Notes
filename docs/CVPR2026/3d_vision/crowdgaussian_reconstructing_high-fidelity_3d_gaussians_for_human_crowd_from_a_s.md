@@ -154,3 +154,15 @@ CrowdRefiner 的 SCL 策略和几何条件输入消融：
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性覆盖充分，遮挡率梯度实验有说服力，但缺少更大规模的真实世界基准
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，pipeline 图表直观
 - 价值: ⭐⭐⭐⭐ 填补了多人 3D 重建的空白，对 VR/远程会议等应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_single-forward_gaussian_splatting_for_high_dynamic_range_3d_reconstru.md)
+- [HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars](hypergaussians_high-dimensional_gaussian_splatting_for_high-fidelity_animatable_.md)
+- [TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification](topomesh_high-fidelity_mesh_autoencoding_via_topological_unification.md)
+- [Catalyst4D: High-Fidelity 3D-to-4D Scene Editing via Dynamic Propagation](catalyst4d_high-fidelity_3d-to-4d_scene_editing_via_dynamic_propagation.md)
+
+<!-- RELATED:END -->

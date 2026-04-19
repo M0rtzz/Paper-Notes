@@ -142,3 +142,15 @@ $$u = \texttt{sk-Perlin}(JC, \mathcal{H}, size)$$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3种方法×4个数据集的全面评估+丰富的消融和替代策略对比
 - 写作质量: ⭐⭐⭐⭐ — 逻辑链清晰：问题定义→属性分析→方法设计→实验验证，层层递进
 - 价值: ⭐⭐⭐⭐ — 即插即用的正则化工具，对稀疏IMU领域有实际价值，但理论深度可进一步加强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MagShield: Towards Better Robustness in Sparse Inertial Motion Capture Under Magnetic Disturbances](../../ICCV2025/human_understanding/magshield_towards_better_robustness_in_sparse_inertial_motion_capture_under_magn.md)
+- [mmPred: Radar-based Human Motion Prediction in the Dark](mmpred_radar-based_human_motion_prediction_in_the_dark.md)
+- [FineXtrol: Controllable Motion Generation via Fine-Grained Text](finextrol_controllable_motion_generation_via_fine-grained_text.md)
+- [SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control](soscontrol_enhancing_human_motion_generation_through_saliency-aware_symbolic_ori.md)
+- [MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation](../../CVPR2026/human_understanding/molingo_motion-language_alignment_for_text-to-motion_generation.md)
+
+<!-- RELATED:END -->

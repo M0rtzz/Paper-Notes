@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖四个子任务+人类验证+消融，但空间归因对比还可更深入
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，图示优秀，逻辑递进流畅
 - 价值: ⭐⭐⭐⭐ 为第一人称 AI 助手的错误反馈提供了完整方法论，数据引擎思路可广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](../../ICCV2025/video_understanding/fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+- [UFVideo: Towards Unified Fine-Grained Video Cooperative Understanding with Large Language Models](ufvideo_towards_unified_fine-grained_video_cooperative_understanding_with_large_.md)
+- [Frame2Freq: Spectral Adapters for Fine-Grained Video Understanding](frame2freq_spectral_adapters_for_fine-grained_video_understanding.md)
+- [StreamGaze: Gaze-Guided Temporal Reasoning and Proactive Understanding in Streaming Videos](streamgaze_gaze-guided_temporal_reasoning_and_proactive_understanding_in_streami.md)
+- [LensWalk: Agentic Video Understanding by Planning How You See in Videos](lenswalk_agentic_video_understanding_by_planning_how_you_see_in_videos.md)
+
+<!-- RELATED:END -->

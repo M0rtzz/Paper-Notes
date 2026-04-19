@@ -141,3 +141,15 @@ ML模型在实际部署中需要具备各种不变性质（旋转、尺寸、亮
 - 实验充分度: ⭐⭐⭐⭐ 多方法对比、消融分析、自动化验证、人类标注一致性评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，问题动机阐述到位
 - 价值: ⭐⭐⭐ 适用场景较窄（模型不变性测试），但在该领域确有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding](musevl_modeling_unified_vlm_through_semantic_discrete_encodi.md)
+- [OracleFusion: Assisting the Decipherment of Oracle Bone Script with Structurally Constrained Semantic Typography](oraclefusion_assisting_the_decipherment_of_oracle_bone_script_with_structurally_.md)
+- [Omniview-Tuning: Boosting Viewpoint Invariance of Vision-Language Pre-training Models](../../ECCV2024/multimodal_vlm/omniview-tuning_boosting_viewpoint_invariance_of_vision-language_pre-training_mo.md)
+- [Vision Graph Prompting via Semantic Low-Rank Decomposition](../../ICML2025/multimodal_vlm/vision_graph_prompting_via_semantic_low-rank_decomposition.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](../../CVPR2025/multimodal_vlm/continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+
+<!-- RELATED:END -->

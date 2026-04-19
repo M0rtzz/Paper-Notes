@@ -145,3 +145,15 @@ IGASA 采用三阶段流水线：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4 个数据集 + 详尽消融 (模块/子模块/损失/效率) + 定性可视化
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，但部分符号冗余、Related Work 篇幅偏长
 - 价值: ⭐⭐⭐⭐ — 室内外均 SOTA，KITTI 100% RR，实用价值高；但 3DLoMatch FMR 非最优
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation](vird_view-invariant_representation_through_dual-axis_transformation_for_cross-vi.md)
+- [Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration](../../ICML2025/autonomous_driving/geometry-to-image_synthesis-driven_generative_point_cloud_registration.md)
+- [Points-to-3D: Structure-Aware 3D Generation with Point Cloud Priors](points-to-3d_structure-aware_3d_generation_with_point_cloud_priors.md)
+- [DriverGaze360: OmniDirectional Driver Attention with Object-Level Guidance](drivergaze360_omnidirectional_driver_attention_with_object-level_guidance.md)
+- [WalkGPT: Grounded Vision-Language Conversation with Depth-Aware Segmentation for Pedestrian Navigation](walkgpt_grounded_vision-language_conversation_with_depth-aware_segmentation_for_.md)
+
+<!-- RELATED:END -->

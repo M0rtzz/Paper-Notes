@@ -130,3 +130,15 @@ rdFFT 基于 Cooley-Tukey 算法，在递归分解的每个阶段保持共轭对
 - 实验充分度: ⭐⭐⭐⭐ 内存效率验证全面，但下游任务覆盖有限
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，图示清晰易懂
 - 价值: ⭐⭐⭐⭐ 若合并入 PyTorch 将有广泛影响，但当前适用场景较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMLoC: Emulator-based Memory-efficient Fine-tuning with LoRA Correction](emloc_emulator-based_memory-efficient_fine-tuning_with_lora_correction.md)
+- [Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era](towards_implicit_aggregation_robust_image_representation_for_place_recognition_i.md)
+- [MSQ: Memory-Efficient Bit Sparsification Quantization](../../ICCV2025/model_compression/msq_memory-efficient_bit_sparsification_quantization.md)
+- [Task Vector Quantization for Memory-Efficient Model Merging](../../ICCV2025/model_compression/task_vector_quantization_for_memory-efficient_model_merging.md)
+- [MKA: Memory-Keyed Attention for Efficient Long-Context Reasoning](../../ICML2025/model_compression/mka_memory-keyed_attention_for_efficient_long-context_reasoning.md)
+
+<!-- RELATED:END -->

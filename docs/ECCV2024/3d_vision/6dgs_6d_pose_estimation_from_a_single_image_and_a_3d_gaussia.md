@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 两个数据集、多个消融实验覆盖较好, 但缺少与非NVS方法的对比, 也未验证大规模/户外场景
 - 写作质量: ⭐⭐⭐⭐ 数学推导完整清晰, 图示直观, 流程描述易懂
 - 价值: ⭐⭐⭐⭐ 首个利用3DGS进行闭式位姿估计的工作, 实时性能对落地有意义, 但适用范围有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Omni6D: Large-Vocabulary 3D Object Dataset for Category-Level 6D Object Pose Estimation](omni6d_large-vocabulary_3d_object_dataset_for_category-level_6d_object_pose_esti.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model](crm_single_image_to_3d_textured_mesh_with_convolutional_reconstruction_model.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+- [GeoWizard: Unleashing the Diffusion Priors for 3D Geometry Estimation from a Single Image](geowizard_unleashing_the_diffusion_priors_for_3d_geometry_estimation_from_a_sing.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ E²PA的总损失函数由三部分组成：任务损失（如分割任务的交
 - 实验充分度: ⭐⭐⭐ 三个数据集验证，有消融实验，但具体数值在ECVA页面有限
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐ 对多模态医学图像融合有实际价值，提供了新的理论框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LUMINA: A Multi-Vendor Mammography Benchmark with Energy Harmonization Protocol](../../CVPR2026/medical_imaging/lumina_a_multi-vendor_mammography_benchmark_with_energy_harmonization_protocol.md)
+- [Domesticating SAM for Breast Ultrasound Image Segmentation via Spatial-Frequency Fusion and Uncertainty Correction](domesticating_sam_for_breast_ultrasound_image_segmentation_via_spatial-frequency.md)
+- [Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling](../../NeurIPS2025/medical_imaging/energy_matching_unifying_flow_matching_and_energy-based_models_for_generative_mo.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](../../CVPR2026/medical_imaging/federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [GTP-4o: Modality-Prompted Heterogeneous Graph Learning for Omni-Modal Biomedical Representation](gtp-4o_modality-prompted_heterogeneous_graph_learning_for_omni-modal_biomedical_.md)
+
+<!-- RELATED:END -->

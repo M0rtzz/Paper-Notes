@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 基准和模型覆盖有限，但控制变量设计严谨
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，故事讲述流畅
 - 价值: ⭐⭐⭐⭐ — 对理解视频微调机制有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BehaviorVLM: Unified Finetuning-Free Behavioral Understanding with Vision-Language Reasoning](../../CVPR2025/video_understanding/behaviorvlm_unified_finetuning-free_behavioral_understanding_with_vision-languag.md)
+- [Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](../../AAAI2026/video_understanding/listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
+- [VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding](vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)
+- [When Thinking Drifts: Evidential Grounding for Robust Video Reasoning](when_thinking_drifts_evidential_grounding_for_robust_video_reasoning.md)
+- [The Ouroboros of Benchmarking: Reasoning Evaluation in an Era of Saturation](the_ouroboros_of_benchmarking_reasoning_evaluation_in_an_era_of_saturation.md)
+
+<!-- RELATED:END -->

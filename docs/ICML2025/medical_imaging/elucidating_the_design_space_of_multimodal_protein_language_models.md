@@ -136,3 +136,15 @@ DPLM-2.1将PDB测试集上的折叠RMSD从5.52大幅降至2.36，降幅达57%，
 - 实验充分度: ⭐⭐⭐⭐ — 消融实验完整、折叠性能提升显著，但缺少更多下游任务评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题分析深入清晰，从瓶颈诊断到方案设计逻辑链条完整
 - 价值: ⭐⭐⭐⭐ — 为多模态蛋白质语言模型提供了系统性改进蓝图，650M超3B的结果有很强的实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models](../../CVPR2026/medical_imaging/eda_arbitrary_noise_diffusion_design_space.md)
+- [Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models (EDA)](../../CVPR2026/medical_imaging/elucidating_the_design_space_of_arbitrary-noise-based_diffusion_models.md)
+- [Steering Protein Language Models](steering_protein_language_models.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
+
+<!-- RELATED:END -->

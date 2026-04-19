@@ -168,3 +168,15 @@ SoPE 作为连接器级别的位置编码模块，以即插即用的方式替换
 - **写作质量**: ⭐⭐⭐⭐ — 动机分析深入，数学推导清晰，可视化有说服力
 - **价值**: ⭐⭐⭐⭐ — drop-in replacement 实用性强，对 3D LVLM 社区有直接参考价值
 - **价值**: ⭐⭐⭐⭐ — drop-in replacement 实用性强，对 3D LVLM 社区有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PE3R: Perception-Efficient 3D Reconstruction](pe3r_perception-efficient_3d_reconstruction.md)
+- [RoCo-Sim: Enhancing Roadside Collaborative Perception through Foreground Simulation](../../ICCV2025/3d_vision/roco-sim_enhancing_roadside_collaborative_perception_through_foreground_simulati.md)
+- [SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection](span_spatial-projection_alignment_for_monocular_3d_object_detection.md)
+- [DMAligner: Enhancing Image Alignment via Diffusion Model Based View Synthesis](dmaligner_enhancing_image_alignment_via_diffusion_model_based_view_synthesis.md)
+- [Efficient Hybrid SE(3)-Equivariant Visuomotor Flow Policy via Spherical Harmonics](efficient_hybrid_se3-equivariant_visuomotor_flow_policy_via_spherical_harmonics_.md)
+
+<!-- RELATED:END -->

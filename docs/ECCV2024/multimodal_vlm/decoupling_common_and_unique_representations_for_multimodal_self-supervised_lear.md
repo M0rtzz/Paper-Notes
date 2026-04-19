@@ -190,3 +190,15 @@ $$\mathcal{L} = \mathcal{L}_{com} + \mathcal{L}_{uni} + \mathcal{L}_{M1} + \math
 - ⭐⭐⭐⭐⭐ **实验充分度**：三类多模态场景 + 多标签/多架构/模态缺失/消融/可解释性，覆盖非常全面
 - ⭐⭐⭐⭐ **写作质量**：结构清晰，可视化丰富（t-SNE、GradCAM、光谱显著性、可变形点），易于理解
 - ⭐⭐⭐⭐ **实用价值**：方法简洁易复现，对遥感/RGBD 社区有直接应用价值；但对齐NLP/语言-图像等主流多模态场景的验证缺失
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Supervised Spatial Correspondence Across Modalities](../../CVPR2025/multimodal_vlm/self-supervised_spatial_correspondence_across_modalities.md)
+- [Learning Optimal Multimodal Information Bottleneck Representations](../../ICML2025/multimodal_vlm/learning_optimal_multimodal_information_bottleneck_representations.md)
+- [BadVision: Stealthy Backdoor Attack in Self-Supervised Learning Vision Encoders for Large Vision Language Models](../../CVPR2025/multimodal_vlm/stealthy_backdoor_attack_in_self-supervised_learning_vision_encoders_for_large_v.md)
+- [Learning Shared Representations from Unpaired Data](../../NeurIPS2025/multimodal_vlm/learning_shared_representations_from_unpaired_data.md)
+- [TRivia: Self-supervised Fine-tuning of Vision-Language Models for Table Recognition](../../CVPR2026/multimodal_vlm/trivia_self-supervised_fine-tuning_of_vision-language_models_for_table_recogniti.md)
+
+<!-- RELATED:END -->

@@ -170,3 +170,15 @@ DiVE的零样本平均比ARF高出**8.1个百分点**，几乎恢复到预训练
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个数据集（ImageNet/iWildCam/FMoW）、多架构（ViT-B/16、ViT-L/14）、详细的消融研究、RSA分析、统计显著性检验、参考数据集消融、weight ensemble实验，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，动机阐述透彻，从发现问题（RSA分析）到解决方案到验证假设形成了完整的故事线
 - 价值: ⭐⭐⭐⭐ 在CLIP鲁棒微调这个重要问题上取得了显著进步，尤其是零样本性能的巨大提升具有很强的实用价值，但计算开销和缺乏代码发布限制了实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRivia: Self-supervised Fine-tuning of Vision-Language Models for Table Recognition](../../CVPR2026/multimodal_vlm/trivia_self-supervised_fine-tuning_of_vision-language_models_for_table_recogniti.md)
+- [HeadHunt-VAD: Hunting Robust Anomaly-Sensitive Heads in MLLM for Tuning-Free Video Anomaly Detection](headhunt-vad_hunting_robust_anomaly-sensitive_heads_in_mllm_.md)
+- [FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models](../../CVPR2026/multimodal_vlm/fairllava_fairness-aware_parameter-efficient_fine-tuning_for_large_vision-langua.md)
+- [AGFT: Alignment-Guided Fine-Tuning for Zero-Shot Adversarial Robustness of Vision-Language Models](../../CVPR2026/multimodal_vlm/agft_alignment-guided_fine-tuning_for_zero-shot_adversarial_robustness_of_vision.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

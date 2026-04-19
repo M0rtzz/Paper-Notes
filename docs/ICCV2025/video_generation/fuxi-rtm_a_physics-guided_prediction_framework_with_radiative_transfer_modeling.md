@@ -142,3 +142,15 @@ $\lambda = 10^{-3}$ 平衡物理约束与直接预报
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5 年测试集、3320 组合评估、详尽消融和物理守恒验证
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，物理背景和技术细节解释充分
 - **价值**: ⭐⭐⭐⭐⭐ 为下一代物理一致的天气预报系统铺平道路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction](aid_adapting_image2video_diffusion_models_for_instruction-guided_video_predictio.md)
+- [Phantom: Physics-Infused Video Generation via Joint Modeling of Visual and Latent Physical Dynamics](../../CVPR2026/video_generation/phantom_physics-infused_video_generation_via_joint_modeling_of_visual_and_latent.md)
+- [OCK: Unsupervised Dynamic Video Prediction with Object-Centric Kinematics](ock_unsupervised_dynamic_video_prediction_with_object-centric_kinematics.md)
+- [MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation](motionshot_adaptive_motion_transfer_across_arbitrary_objects_for_text-to-video_g.md)
+- [VSRM: A Robust Mamba-Based Framework for Video Super-Resolution](vsrm_a_robust_mamba-based_framework_for_video_super-resolution.md)
+
+<!-- RELATED:END -->

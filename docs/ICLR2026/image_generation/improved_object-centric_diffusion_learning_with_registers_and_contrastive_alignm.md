@@ -121,3 +121,15 @@ $$\mathcal{L}(\phi, \boldsymbol{\theta}) = \mathcal{L}_{\mathrm{dm}}(\phi, \bold
 - 实验充分度: ⭐⭐⭐⭐⭐ 合成+真实数据集，物体发现+属性预测+组合生成+消融，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，实验展示完善，图表信息量大
 - 价值: ⭐⭐⭐⭐ 对 OCL 社区有实质贡献，方法简洁高效且易于在现有框架上复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GLASS: Guided Latent Slot Diffusion for Object-Centric Learning](../../CVPR2025/image_generation/glass_guided_latent_slot_diffusion_for_object-centric_learning.md)
+- [Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion](hierarchical_entity-centric_reinforcement_learning_with_factored_subgoal_diffusi.md)
+- [Diffusion Alignment as Variational Expectation-Maximization](diffusion_alignment_as_variational_expectation-maximization.md)
+- [GenFlowRL: Shaping Rewards with Generative Object-Centric Flow in Visual Reinforcement Learning](../../ICCV2025/image_generation/genflowrl_shaping_rewards_with_generative_object-centric_flow_in_visual_reinforc.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+
+<!-- RELATED:END -->

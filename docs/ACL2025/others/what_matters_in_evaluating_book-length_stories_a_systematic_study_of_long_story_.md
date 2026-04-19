@@ -149,3 +149,15 @@ $$-\log P(r_{i \leq m}, R, S' | X_{\text{Instruct, Metadata, Sum, Excerpts}}, a_
 - 实验充分度: ⭐⭐⭐⭐⭐ 600本书的大规模数据集，3种评估策略×6个模型的全面比较，含消融实验
 - 写作质量: ⭐⭐⭐⭐ 组织清晰，图表丰富，但部分分析可更深入
 - 价值: ⭐⭐⭐⭐ 为长篇故事评估奠定了基础，NovelCritique模型有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+- [Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility](meaning_beyond_truth_conditions_evaluating_discourse_level_understanding_via_ana.md)
+- [Completing A Systematic Review in Hours instead of Months with Interactive AI Agents](completing_a_systematic_review_in_hours.md)
+- [Anything Goes? A Crosslinguistic Study of (Im)possible Language Learning in LMs](anything_goes_a_crosslinguistic_study_of_impossible_language_learning_in_lms.md)
+- [Length-Induced Embedding Collapse in PLM-based Models](length-induced_embedding_collapse_in_plm-based_models.md)
+
+<!-- RELATED:END -->

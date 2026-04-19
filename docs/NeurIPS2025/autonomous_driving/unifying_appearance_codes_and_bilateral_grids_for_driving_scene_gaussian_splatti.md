@@ -121,3 +121,15 @@ Waymo 上 CD 改善 **28.2%**（1.378→0.989）
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个驾驶数据集 + 困难场景分析 + 充分消融
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰
 - 价值: ⭐⭐⭐⭐ 解决了驾驶场景 3DGS 的关键工程问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction](../../CVPR2025/autonomous_driving/lr-sgs_robust_lidar-reflectance-guided_salient_gaussian_splatting_for_self-drivi.md)
+- [AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](../../ICCV2025/autonomous_driving/ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](../../ICCV2025/autonomous_driving/splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+- [SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving](sqs_enhancing_sparse_perception_models_via_query-based_splatting_in_autonomous_d.md)
+
+<!-- RELATED:END -->

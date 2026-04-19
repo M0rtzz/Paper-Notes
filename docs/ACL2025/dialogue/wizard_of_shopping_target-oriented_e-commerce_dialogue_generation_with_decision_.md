@@ -146,3 +146,15 @@ TRACER 分三步生成对话：(1) 顾客偏好采样——从商品目录中采
 - 实验充分度: ⭐⭐⭐⭐ 人类评估+下游任务验证+错误分析+与MG-ShopDial对比，较为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，算法伪代码和示例图直观，但部分章节略冗长
 - 价值: ⭐⭐⭐⭐ 发布了首个大规模目标导向电商对话数据集，对 CPS 领域有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Know Your Mistakes: Towards Preventing Overreliance on Task-Oriented Conversational AI Through Accountability Modeling](know_your_mistakes_towards_preventing_overreliance_on_task-oriented_conversation.md)
+- [When Harry Meets Superman: The Role of The Interlocutor in Persona-Based Dialogue Generation](when_harry_meets_superman_the_role_of_the_interlocutor_in_persona-based_dialogue.md)
+- [Exploring Persona Sentiment Sensitivity in Personalized Dialogue Generation](persona_sentiment_dialogue.md)
+- [Dialogue Systems for Emotional Support via Value Reinforcement](dialogue_systems_for_emotional_support_via_value_reinforcement.md)
+- [BI-MDRG: Bridging Image History in Multimodal Dialogue Response Generation](../../ECCV2024/dialogue/bi-mdrg_bridging_image_history_in_multimodal_dialogue_response_generation.md)
+
+<!-- RELATED:END -->

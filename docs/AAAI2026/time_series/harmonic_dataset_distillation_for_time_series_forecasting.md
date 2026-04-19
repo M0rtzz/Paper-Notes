@@ -183,3 +183,15 @@ $$\underset{\mathcal{F_S}}{\text{argmin}} \; \mathcal{L}_{\text{grad}} + \lambda
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3种骨干 × 6个数据集 + 跨架构评估 + 大规模实验 + 基础模型微调
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题定义清晰，理论推导严谨，实验设计系统性强
 - 价值: ⭐⭐⭐⭐⭐ — 解决了TSF数据集蒸馏的两个根本性问题，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [Time-IMM: A Dataset and Benchmark for Irregular Multimodal Multivariate Time Series](../../NeurIPS2025/time_series/time-imm_a_dataset_and_benchmark_for_irregular_multimodal_multivariate_time_seri.md)
+- [DeepBooTS: Dual-Stream Residual Boosting for Drift-Resilient Time-Series Forecasting](deepboots_dual-stream_residual_boosting_for_drift-resilient_time-series_forecast.md)
+- [HN-MVTS: HyperNetwork-based Multivariate Time Series Forecasting](hn-mvts_hypernetwork-based_multivariate_time_series_forecasting.md)
+- [Finding Time Series Anomalies using Granular-ball Vector Data Description](finding_time_series_anomalies_using_granular-ball_vector_data_description.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ tags:
 - 两个真实数据集：CDC 糖尿病健康指标 + 共享单车使用预测
 - FRA 缓存的 Frontier 检查复杂度随联盟大小线性增长而非指数增长
 - 价值: ⭐⭐⭐⭐ 为因果可解释 AI 提供了实用工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Abstraction Inference under Lossy Representations](../../ICML2025/causal_inference/causal_abstraction_inference_under_lossy_representations.md)
+- [Do-PFN: In-Context Learning for Causal Effect Estimation](do-pfn_in-context_learning_for_causal_effect_estimation.md)
+- [Performative Validity of Recourse Explanations](performative_validity_of_recourse_explanations.md)
+- [GST-UNet: A Neural Framework for Spatiotemporal Causal Inference with Time-Varying Confounding](gst-unet_a_neural_framework_for_spatiotemporal_causal_inference_with_time-varyin.md)
+- [It's Hard to Be Normal: The Impact of Noise on Structure-agnostic Estimation](its_hard_to_be_normal_the_impact_of_noise_on_structure-agnostic_estimation.md)
+
+<!-- RELATED:END -->

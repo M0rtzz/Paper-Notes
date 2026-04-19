@@ -134,3 +134,15 @@ $$\min_{\theta} \int_0^1 \mathbb{E}_{X_1 \sim p_{\text{data}}} \left[\|v_t(X_t; 
 - 实验充分度: ⭐⭐⭐⭐ 合成实验有 ground truth 验证理论，真实数据实验展示实用性
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，但前置知识要求较高，可读性略受限
 - 价值: ⭐⭐⭐⭐⭐ 为深度因果推断提供了急需的理论基础，影响范围广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Relation between Rectified Flows and Optimal Transport](on_the_relation_between_rectified_flows_and_optimal_transport.md)
+- [COT-FM: Cluster-wise Optimal Transport Flow Matching](../../CVPR2026/image_generation/cot-fm_cluster-wise_optimal_transport_flow_matching.md)
+- [V-CECE: Visual Counterfactual Explanations via Conceptual Edits](v-cece_visual_counterfactual_explanations_via_conceptual_edits.md)
+- [On Optimal Steering to Achieve Exact Fairness](on_optimal_steering_to_achieve_exact_fairness.md)
+- [LeapFactual: Reliable Visual Counterfactual Explanation Using Conditional Flow Matching](leapfactual_reliable_visual_counterfactual_explanation_using_conditional_flow_ma.md)
+
+<!-- RELATED:END -->

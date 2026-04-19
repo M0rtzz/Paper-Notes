@@ -153,3 +153,15 @@ $$y_c = h_c(g_c(x_1, \dots, x_N, y_1, \dots, y_{c-1}))$$
 - **实验充分性** ⭐⭐⭐⭐：覆盖词汇大小、链长度、父节点数、DAG/MLP 消融、NLP 连接等多维度消融
 - **理论洞察** ⭐⭐⭐⭐：相变、嵌入对齐、注意力-DAG 对应等发现具有理论价值
 - **实用性** ⭐⭐⭐：合成框架对实际 NLP 任务的直接指导有限，但提供了分析工具和设计启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is In-Context Learning Learning?](../../ICLR2026/llm_reasoning/is_in-context_learning_learning.md)
+- [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](cot-valve_length-compressible_chain-of-thought_tuning.md)
+- [Unlabeled Data Can Provably Enhance In-Context Learning of Transformers](../../NeurIPS2025/llm_reasoning/unlabeled_data_can_provably_enhance_in-context_learning_of_transformers.md)
+- [CoT-UQ: Improving Response-wise Uncertainty Quantification in LLMs with Chain-of-Thought](cot-uq_improving_response-wise_uncertainty_quantification_in_llms_with_chain-of-.md)
+- [Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions](improving_chain-of-thought_reasoning_via_quasi-symbolic_abstractions.md)
+
+<!-- RELATED:END -->

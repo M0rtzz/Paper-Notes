@@ -119,3 +119,15 @@ tags:
 - 总评: data-centric AI方向的实用性强工作，“质量远重于数量”的结论具有重要指导意义
 - 复现性: 代码、数据、模型全部开源，社区可直接使用
 - 延伸性: 可探索与其他质量维度（如安全性、事实性）的融合
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
+- [Optimizing Pre-Training Data Mixtures with Mixtures of Data Expert Models](optimizing_pre-training_data_mixtures_with_mixtures_of_data_expert_models.md)
+- [Velocitune: A Velocity-based Dynamic Domain Reweighting Method for Continual Pre-training](velocitune_a_velocity-based_dynamic_domain_reweighting_method_for_continual_pre-.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+
+<!-- RELATED:END -->

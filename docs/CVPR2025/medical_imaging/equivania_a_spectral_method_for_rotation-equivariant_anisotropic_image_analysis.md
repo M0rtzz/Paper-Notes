@@ -113,3 +113,15 @@ EquivAnIA 分三步进行各向异性分析：
 - 实验充分度: ⭐⭐⭐ (合成+真实图像验证充分，统计实验设计良好，但缺乏大规模应用验证)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，数学严谨，图表质量高)
 - 价值: ⭐⭐⭐ (在特定应用场景如 CT 配准和纤维分析中有实用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transformer-Based Multi-Region Segmentation and Radiomic Analysis of HR-pQCT Imaging for Osteoporosis Classification](transformer-based_multi-region_segmentation_and_radiomic_analysis_of_hr-pqct_ima.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)
+- [Nyxus: A Next Generation Image Feature Extraction Library for the Big Data and AI Era](nyxus_a_next_generation_image_feature_extraction_library_for_the_big_data_and_ai.md)
+- [Boltzmann Attention Sampling for Image Analysis with Small Objects](boltzmann_attention_sampling_for_image_analysis_with_small_objects.md)
+
+<!-- RELATED:END -->

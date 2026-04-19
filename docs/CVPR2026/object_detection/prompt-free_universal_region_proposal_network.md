@@ -132,3 +132,15 @@ PF-RPN 在 CD-FSOD 上比 Grounding DINO 提升 +7.8/+11.8/+13.5 AR，在 ODinW1
 - 实验充分度: ⭐⭐⭐⭐⭐ 19个跨域数据集+完整消融+多backbone+集成实验+效率对比，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，每个模块的动机和设计阐述到位，可视化辅助理解
 - 价值: ⭐⭐⭐⭐ 解决了 OVD 实际部署的关键痛点，数据效率高、推理高效，实用性很强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_texttoimage_diffusion_v.md)
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+- [PET-DINO: Unifying Visual Cues into Grounding DINO with Prompt-Enriched Training](pet-dino_unifying_visual_cues_into_grounding_dino_with_prompt-enriched_training.md)
+- [Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection](beyond_prompt_degradation_prototype-guided_dual-pool_prompting_for_incremental_o.md)
+- [Adaptive Auxiliary Prompt Blending for Target-Faithful Diffusion Generation](adaptive_auxiliary_prompt_blending_for_target-faithful_diffusion_generation.md)
+
+<!-- RELATED:END -->

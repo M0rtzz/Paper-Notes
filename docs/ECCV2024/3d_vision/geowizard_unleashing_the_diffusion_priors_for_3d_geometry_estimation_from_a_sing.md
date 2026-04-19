@@ -127,3 +127,15 @@ GeoWizard基于Stable Diffusion V2微调。输入图像 $x$ 首先通过原始SD
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个深度+5个法线零样本基准+3D重建+新视角合成+详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富
 - 价值: ⭐⭐⭐⭐⭐ 几何估计基础模型，对3D重建等下游任务有广泛影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model](6dgs_6d_pose_estimation_from_a_single_image_and_a_3d_gaussia.md)
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors](dreamdissector_learning_disentangled_text-to-3d_generation_from_2d_diffusion_pri.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+
+<!-- RELATED:END -->

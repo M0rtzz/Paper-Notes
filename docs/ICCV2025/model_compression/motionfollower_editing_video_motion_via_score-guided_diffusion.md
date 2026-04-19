@@ -172,3 +172,15 @@ $$\nabla_{z_t^e} \log q(F_t^e, F_t^r | z_t^e) = \frac{d\mathcal{L}_{fg}}{dz_t^e}
 - 实验充分度: ⭐⭐⭐⭐⭐ — 定量/定性/消融/人类评估/长视频/相机运动全覆盖
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 80%显存节省有重要实用价值，轻量化设计思路可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context Guided Transformer Entropy Modeling for Video Compression](context_guided_transformer_entropy_modeling_for_video_compression.md)
+- [F²HDR: Two-Stage HDR Video Reconstruction via Flow Adapter and Physical Motion Modeling](../../CVPR2026/model_compression/textf2texthdr_two-stage_hdr_video_reconstruction_via_flow_adapter_and_physical_m.md)
+- [Adaptive Stochastic Coefficients for Accelerating Diffusion Sampling](../../NeurIPS2025/model_compression/adaptive_stochastic_coefficients_for_accelerating_diffusion_sampling.md)
+- [Generalized Interpolating Discrete Diffusion](../../ICML2025/model_compression/generalized_interpolating_discrete_diffusion.md)
+- [Gain-MLP: Improving HDR Gain Map Encoding via a Lightweight MLP](gain-mlp_improving_hdr_gain_map_encoding_via_a_lightweight_mlp.md)
+
+<!-- RELATED:END -->

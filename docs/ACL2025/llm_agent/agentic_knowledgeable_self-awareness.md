@@ -137,3 +137,15 @@ KnowSelf 的 pipeline 分为三个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 多个基线对比和消融，但仅两个任务场景略显不足
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，概念类比直观，但公式较少
 - 价值: ⭐⭐⭐⭐ 提出了有实用价值的轻量级知识调控范式，开源代码和数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Taught Agentic Long-Context Understanding](self_taught_agentic_long_ctx.md)
+- [Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement](gödel_agent_a_self-referential_agent_framework_for_recursive_self-improvement.md)
+- [SMART: Self-Aware Agent for Tool Overuse Mitigation](smart_self-aware_agent_for_tool_overuse_mitigation.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](agentic_reasoning_tools.md)
+- [Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](../../ICLR2026/llm_agent/agentic_context_engineering_evolving_contexts_for_self-improving_language_models.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ OpenCLIP-ViT-H/14 结果：
 - 技术深度：⭐⭐⭐⭐ (高效攻击算法设计精巧)
 - 实验充分性：⭐⭐⭐⭐⭐ (分类/检索/生成/反演多任务)
 - 实用价值：⭐⭐⭐⭐⭐ (模型已开源，直接可用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T2SMark: Balancing Robustness and Diversity in Noise-as-Watermark for Diffusion Models](t2smark_balancing_robustness_and_diversity_in_noise-as-watermark_for_diffusion_m.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](../../ECCV2024/image_generation/lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [Your Text Encoder Can Be An Object-Level Watermarking Controller](../../ICCV2025/image_generation/your_text_encoder_can_be_an_object-level_watermarking_controller.md)
+- [GlyphMastero: A Glyph Encoder for High-Fidelity Scene Text Editing](../../CVPR2025/image_generation/glyphmastero_a_glyph_encoder_for_high-fidelity_scene_text_editing.md)
+
+<!-- RELATED:END -->

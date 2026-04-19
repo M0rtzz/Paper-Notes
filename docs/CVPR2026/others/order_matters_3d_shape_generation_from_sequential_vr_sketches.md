@@ -144,3 +144,15 @@ VRSketch2Shape 在所有设置下大幅领先：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 两个数据集、多个基线、详尽消融（设计选择+草图格式+DDIM步数）、零样本/少样本/部分草图/无吸附/自由手绘/未见类别全面评估
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图文并茂，方法描述严谨，合成管线和编码器设计讲解透彻
 - 价值: ⭐⭐⭐⭐ — 为 VR 草图驱动的 3D 设计提供了完整的数据+模型+管线解决方案，数据集和代码开源，可推动该领域发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synchronous Diffusion for Unsupervised Smooth Non-Rigid 3D Shape Matching](../../ECCV2024/others/synchronous_diffusion_for_unsupervised_smooth_non-rigid_3d_shape_matching.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_largescale_multimodal_dataset_for_cad.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [Higher-Order Responsibility](../../AAAI2026/others/higher-order_responsibility.md)
+- [Next-Scale Autoregressive Models for Text-to-Motion Generation](next-scale_autoregressive_models_for_text-to-motion_generation.md)
+
+<!-- RELATED:END -->

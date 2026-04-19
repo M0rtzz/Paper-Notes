@@ -111,3 +111,15 @@
 | 写作质量 | 8 | 结构清晰，图表丰富，对比全面 |
 | 实用价值 | 7 | 360° IQA 需求日增，但推理开销和超参数量可能限制部署 |
 | **总分** | **7.6** | **将主动感知引入 360° 质量评估的优秀工作，端到端 RL 范式有启发意义** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DynaQuant: Dynamic Mixed-Precision Quantization for Learned Image Compression](../../AAAI2026/model_compression/dynaquant_dynamic_mixed-precision_quantization_for_learned_i.md)
+- [Learned Image Compression with Dictionary-based Entropy Model](../../CVPR2025/model_compression/learned_image_compression_with_dictionary-based_entropy_model.md)
+- [Charm: The Missing Piece in ViT Fine-Tuning for Image Aesthetic Assessment](../../CVPR2025/model_compression/charm_the_missing_piece_in_vit_fine-tuning_for_image_aesthetic_assessment.md)
+- [Learned Image Compression with Hierarchical Progressive Context Modeling](../../ICCV2025/model_compression/learned_image_compression_with_hierarchical_progressive_context_modeling.md)
+- [LALIC: Linear Attention Modeling for Learned Image Compression](../../CVPR2025/model_compression/linear_attention_modeling_for_learned_image_compression.md)
+
+<!-- RELATED:END -->

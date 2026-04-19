@@ -176,3 +176,15 @@ $$\mu_t = m \cdot \mu_{t-1} + (1-m) \cdot \sigma\left(\kappa \cdot \frac{\mathca
 - 实验充分度: ⭐⭐⭐⭐⭐（4 数据集 × 5 攻击类型 × 10 基线 × 多维度消融+泛化实验）
 - 写作质量: ⭐⭐⭐⭐（框架复杂但阐述有条理，公式推导清晰）
 - 价值: ⭐⭐⭐⭐⭐（填补 SFL 安全防御的重要空白）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation](../../CVPR2026/ai_safety/fedafd_multimodal_federated_learning_via_adversarial_fusion_and_distillation.md)
+- [Self-Refining Language Model Anonymizers via Adversarial Distillation](../../NeurIPS2025/ai_safety/self-refining_language_model_anonymizers_via_adversarial_distillation.md)
+- [CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation](core-fed_bridging_collaborative_and_representation_fairness_via_federated_embedd.md)
+- [FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA](fedalt_federated_fine-tuning_through_adaptive_local_training_with_rest-of-world_.md)
+- [InfoDecom: Decomposing Information for Defending Against Privacy Leakage in Split Inference](infodecom_decomposing_information_for_defending_against_privacy_leakage_in_split.md)
+
+<!-- RELATED:END -->

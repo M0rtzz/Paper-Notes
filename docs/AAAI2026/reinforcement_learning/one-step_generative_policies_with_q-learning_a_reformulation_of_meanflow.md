@@ -91,3 +91,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 73个任务，offline+online，非常全面
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，动机链完整
 - 价值: ⭐⭐⭐⭐⭐ 解决了flow policy + Q-learning的核心困难，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Offline Reinforcement Learning with Generative Trajectory Policies](../../ICLR2026/reinforcement_learning/offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+- [ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation](manilong-shot_interaction-aware_one-shot_imitation_learning_for_long-horizon_man.md)
+- [CHDP: Cooperative Hybrid Diffusion Policies for RL in Parametric Environments](chdp_cooperative_hybrid_diffusion_policies_for_reinforcement_learning_in_paramet.md)
+- [CORE: Constraint-Aware One-Step Reinforcement Learning for Simulation-Guided Neural Network Accelerator Design](../../NeurIPS2025/reinforcement_learning/core_constraint-aware_one-step_reinforcement_learning_for_simulation-guided_neur.md)
+
+<!-- RELATED:END -->

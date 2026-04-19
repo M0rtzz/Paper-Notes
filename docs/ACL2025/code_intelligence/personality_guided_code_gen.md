@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个 LLM、4 个数据集、5 个 RQ、16 种固定 MBTI 对比、双人格框架对比，极为全面
 - 写作质量: ⭐⭐⭐⭐ RQ 驱动的实证研究范式清晰，每个 RQ 都有明确结论
 - 价值: ⭐⭐⭐ 实用性一般（不同场景效果不稳定），但"多样性是关键"的发现有启发价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation](codeif_benchmarking_the_instruction-following_capabilities_of_large_language_mod.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+- [GALLa: Graph Aligned Large Language Models for Improved Source Code Understanding](galla_graph_aligned_large_language_models.md)
+- [Tree-of-Evolution: Tree-Structured Instruction Evolution for Code Generation in Large Language Models](tree_of_evolution_code_gen.md)
+
+<!-- RELATED:END -->

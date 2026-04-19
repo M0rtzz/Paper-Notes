@@ -120,3 +120,15 @@ MSRS 数据集（IVIF 任务）部分指标：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖四种融合任务，对比方法众多，消融完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰但模块较多，略显复杂
 - 价值: ⭐⭐⭐⭐ 通用图像融合方向的有效推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPA: Achieving Consensus in LLM Alignment via Self-Priority Optimization](spa_achieving_consensus_in_llm_alignment_via_self-priority_optimization.md)
+- [Vascular Anatomy-aware Self-supervised Pre-training for X-ray Angiogram Analysis](vascular_anatomy-aware_self-supervised_pre-training_for_x-ray_angiogram_analysis.md)
+- [Virtual Multiplex Staining for Histological Images Using a Marker-wise Conditioned Diffusion Model](virtual_multiplex_staining_for_histological_images_using_a_marker-wise_condition.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](../../CVPR2026/medical_imaging/decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [ProPL: Universal Semi-Supervised Ultrasound Image Segmentation via Prompt-Guided Pseudo-Labeling](propl_universal_semi-supervised_ultrasound_image_segmentation_via_prompt-guided_.md)
+
+<!-- RELATED:END -->

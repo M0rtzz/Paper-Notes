@@ -117,3 +117,15 @@ POST 分为在线阶段和离线阶段：
 - 实验充分度: ⭐⭐⭐⭐ 多模型对、多网络条件、消融完整
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 实用的安全推理加速方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Breaking the n^{1.5} Additive Error Barrier for Private and Efficient Graph Sparsification](breaking_the_n15_additive_error_barrier_for_private_and_efficient_graph_sparsifi.md)
+- [DictPFL: Efficient and Private Federated Learning on Encrypted Gradients](../../NeurIPS2025/ai_safety/dictpfl_efficient_and_private_federated_learning_on_encrypted_gradients.md)
+- [MPCache: MPC-Friendly KV Cache Eviction for Efficient Private LLM Inference](../../NeurIPS2025/ai_safety/mpcache_mpc-friendly_kv_cache_eviction_for_efficient_private_llm_inference.md)
+- [Cascade: Token-Sharded Private LLM Inference](cascade_token-sharded_private_llm_inference.md)
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](../../NeurIPS2025/ai_safety/differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+
+<!-- RELATED:END -->

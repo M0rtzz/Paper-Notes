@@ -152,3 +152,15 @@ DefenderBench 由三大模块组成：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 17+ 个模型、5 类任务、多种增强策略，对比充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，任务描述详细
 - 价值: ⭐⭐⭐⭐ 对 LLM 安全能力评估有重要参考价值，开源工具包实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](../../ACL2025/llm_agent/multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [Gaia2: Benchmarking LLM Agents on Dynamic and Asynchronous Environments](../../ICLR2026/llm_agent/gaia2_benchmarking_llm_agents_on_dynamic_and_asynchronous_environments.md)
+- [The Lighthouse of Language: Enhancing LLM Agents via Critique-Guided Improvement](the_lighthouse_of_language_enhancing_llm_agents_via_critique-guided_improvement.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [MLRC-Bench: Can Language Agents Solve Machine Learning Research Challenges?](mlrc-bench_can_language_agents_solve_machine_learning_research_challenges.md)
+
+<!-- RELATED:END -->

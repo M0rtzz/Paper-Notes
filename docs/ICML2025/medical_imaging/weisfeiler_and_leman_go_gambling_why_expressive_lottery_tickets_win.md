@@ -141,3 +141,15 @@ $$\mathbf{h}_v^{(k)} = \text{MLP}^{(k)}\left(\mathbf{h}_v^{(k-1)} + \sum_{u \in 
 - 实验充分度: ⭐⭐⭐ — 13,500+ 次实验规模大，但仅两种架构，缺少实用算法对比
 - 写作质量: ⭐⭐⭐ — 理论严谨但符号密集，实验部分描述仓促（审稿人一致反馈）
 - 价值: ⭐⭐⭐⭐ — 为 GNN 剪枝提供重要理论基础，药物安全领域有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Random Search Neural Networks for Efficient and Expressive Graph Learning](../../NeurIPS2025/medical_imaging/random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
+- [Why Masking Diffusion Works: Condition on the Jump Schedule for Improved Discrete Diffusion](../../NeurIPS2025/medical_imaging/why_masking_diffusion_works_condition_on_the_jump_schedule_for_improved_discrete.md)
+- [X-WIN: Building Chest Radiograph World Model via Predictive Sensing](../../CVPR2026/medical_imaging/x-win_building_chest_radiograph_world_model_via_predictive_sensing.md)
+- [SPACE: Your Genomic Profile Predictor is a Powerful DNA Foundation Model](space_your_genomic_profile_predictor_is_a_powerful_dna_foundation_model.md)
+- [GenMol: A Drug Discovery Generalist with Discrete Diffusion](genmol_a_drug_discovery_generalist_with_discrete_diffusion.md)
+
+<!-- RELATED:END -->

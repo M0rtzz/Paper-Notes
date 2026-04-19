@@ -142,3 +142,15 @@ MoDES 在 88% 激进跳过率下比最强基线 MC-MoE 高出 10.67 个百分点
 - 实验充分度: ⭐⭐⭐⭐⭐ — 3 个模型系列 × 13 基准 × 多跳过率，消融完整
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机→方法→实验逻辑通顺
 - 价值: ⭐⭐⭐⭐ — 对 MoE MLLM 部署有直接实用价值，方法简洁高效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](quant_experts_token-aware_adaptive_error_reconstruction_with_mixture_of_experts_.md)
+- [MoE-GRPO: Optimizing Mixture-of-Experts via Reinforcement Learning in Vision-Language Models](moe-grpo_optimizing_mixture-of-experts_via_reinforcement_learning_in_vision-lang.md)
+- [Uncertainty-Aware Knowledge Distillation for Multimodal Large Language Models](uncertainty-aware_knowledge_distillation_for_multimodal_large_language_models.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+- [Scaling the Long Video Understanding of Multimodal Large Language Models via Visual Memory Mechanism](scaling_the_long_video_understanding_of_multimodal_large_language_models_via_vis.md)
+
+<!-- RELATED:END -->

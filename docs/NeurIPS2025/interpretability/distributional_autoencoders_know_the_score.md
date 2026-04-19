@@ -128,3 +128,15 @@ DPA 由确定性编码器 $e: \mathbb{R}^p \to \mathbb{R}^k$ 和随机解码器 
 - 实验充分度: ⭐⭐⭐⭐ 理论验证充分但限于低维合成数据，缺少真实高维数据实验
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，图表直观，结构清晰
 - 价值: ⭐⭐⭐⭐ 理论贡献显著，对理解自编码器几何有深远意义，但实际应用场景仍需探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Base Models Know How to Reason, Thinking Models Learn When](base_models_know_how_to_reason_thinking_models_learn_when.md)
+- [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)
+- [Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [Do Sparse Autoencoders Generalize? A Case Study of Answerability](../../ICML2025/interpretability/do_sparse_autoencoders_generalize_a_case_study_of_answerability.md)
+- [Beyond Hallucinations: A Composite Score for Measuring Reliability in Open-Source Large Language Models](../../AAAI2026/interpretability/beyond_hallucinations_a_composite_score_for_measuring_reliability_in_open-source.md)
+
+<!-- RELATED:END -->

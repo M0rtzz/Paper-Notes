@@ -135,3 +135,15 @@ AGD20K 和 HICO-IIF 数据集上的性能对比：
 - 实验充分度: ⭐⭐⭐⭐ 在标准 benchmark 上全面超越 SOTA，消融充分，但缺少更多真实机器人应用场景的验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清楚，图示丰富，但公式较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐ 为弱监督可供性理解提供了更稳健的学习范式，对机器人交互感知有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Weakly-Supervised Learning of Dense Functional Correspondences](weakly-supervised_learning_of_dense_functional_correspondences.md)
+- [COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation](cosmo_combination_of_selective_memorization_for_low-cost_vision-and-language_nav.md)
+- [PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments](../../CVPR2025/robotics/panoaffordancenet_towards_holistic_affordance_grounding_in_360_indoor_environmen.md)
+- [Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)
+- [From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations](../../AAAI2026/robotics/from_passive_perception_to_active_memory_a_weakly_supervised_image_manipulation_.md)
+
+<!-- RELATED:END -->

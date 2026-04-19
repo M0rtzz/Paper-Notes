@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种PRM、多种LLM、多个benchmark，但可以更多样化
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，理论和实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ PRM校准是推理时缩放的关键瓶颈，本文的解决方案简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamPRM: Domain-Reweighted Process Reward Model for Multimodal Reasoning](dreamprm_domain-reweighted_process_reward_model_for_multimodal_reasoning.md)
+- [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
+- [Stop Summation: Min-Form Credit Assignment Is All Process Reward Model Needs for Reasoning](stop_summation_minform_credit_assignment_is_all_process_rewa.md)
+- [Dynamic and Generalizable Process Reward Modeling (DG-PRM)](../../ACL2025/llm_reasoning/dgprm_dynamic_process_reward.md)
+- [Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision](large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u.md)
+
+<!-- RELATED:END -->

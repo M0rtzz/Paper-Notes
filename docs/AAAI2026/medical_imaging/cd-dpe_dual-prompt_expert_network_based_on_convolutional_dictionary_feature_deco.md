@@ -180,3 +180,15 @@ CD-DPE 在未见数据集上 PSNR 提升 4.8%，SSIM 提升 11.6%，泛化能力
 - **实验充分度**: ★★★★★ — 两个数据集、详细消融、泛化性验证、特征可视化
 - **写作质量**: ★★★★☆ — 数学推导严谨，但公式较多读起来偏重
 - **实用性**: ★★★★☆ — 推理速度快（0.061s），有代码开源，泛化性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PINGS-X: Physics-Informed Normalized Gaussian Splatting with Axes Alignment for Efficient Super-Resolution of 4D Flow MRI](pings-x_physics-informed_normalized_gaussian_splatting_with_axes_alignment_for_e.md)
+- [Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics](dual-path_knowledge-augmented_contrastive_alignment_network_for_spatially_resolv.md)
+- [DeepGB-TB: A Risk-Balanced Cross-Attention Gradient-Boosted Convolutional Network for Rapid, Interpretable Tuberculosis Screening](deepgb-tb_a_risk-balanced_cross-attention_gradient-boosted_convolutional_network.md)
+- [MRI Contrast Enhancement Kinetics World Model](../../CVPR2026/medical_imaging/mri_contrast_enhancement_kinetics_world_model.md)
+- [NutriScreener: Retrieval-Augmented Multi-Pose Graph Attention Network for Malnourishment Screening](nutriscreener_retrieval-augmented_multi-pose_graph_attention_network_for_malnour.md)
+
+<!-- RELATED:END -->

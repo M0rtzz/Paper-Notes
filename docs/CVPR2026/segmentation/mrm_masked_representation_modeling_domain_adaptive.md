@@ -253,3 +253,15 @@ MIC+MRM达到77.5 mIoU，超越当时所有SOTA方法（QuadMix 76.1、GANDA 74.
 - 实验充分度: ⭐⭐⭐⭐⭐ 四种基线×两个基准、详尽消融、多架构泛化验证、理论分析，非常完整
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，motivation和设计选择的逻辑链非常连贯
 - 价值: ⭐⭐⭐⭐ 作为即插即用模块，对UDA分割社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
+- [CA-LoRA: Concept-Aware LoRA for Domain-Aligned Segmentation Dataset Generation](ca-lora_concept-aware_lora_for_domain-aligned_segmentation_dataset_generation.md)
+- [CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearthsar_a_sarcentric_and_billionscale_geospa.md)
+- [SARMAE: Masked Autoencoder for SAR Representation Learning](sarmae_masked_autoencoder_for_sar_representation_learning.md)
+- [Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](generalizable_knowledge_distillation_from_vision_foundation_models_for_semantic_.md)
+
+<!-- RELATED:END -->

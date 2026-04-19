@@ -125,3 +125,15 @@ OrdShap 是事后解释方法，不涉及模型训练。最小二乘近似的优
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、定量+定性评估、合成验证，但缺少大型 LLM 上的评估
 - 写作质量: ⭐⭐⭐⭐⭐ 博弈论定义清晰，玩具示例非常直观
 - 价值: ⭐⭐⭐⭐ 对医疗时序数据分析有直接价值，方法论可推广到所有序列模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
+- [Position-aware Automatic Circuit Discovery](../../ACL2025/interpretability/position-aware_automatic_circuit_discovery.md)
+- [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)
+- [TangledFeatures: Robust Feature Selection in Highly Correlated Spaces](tangledfeatures_robust_feature_selection_in_highly_correlated_spaces.md)
+- [Temporal Sparse Autoencoders: Leveraging the Sequential Nature of Language for Interpretability](../../ICLR2026/interpretability/temporal_sparse_autoencoders_leveraging_the_sequential_nature_of_language_for_in.md)
+
+<!-- RELATED:END -->

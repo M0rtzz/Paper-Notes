@@ -113,3 +113,15 @@ MathVista 排行榜: o4-mini + DreamPRM 达到 **85.2%** (top-1)，超越 VL-Ret
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个 benchmark、多种 baseline 对比、消融实验、域权重分析、跨模型泛化、排行榜验证，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，但部分记号较密集
 - 价值: ⭐⭐⭐⭐ 实际效果强，MathVista top-1，方法可直接应用于其他 PRM 训练场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unlocking Multimodal Mathematical Reasoning via Process Reward Model](unlocking_multimodal_mathematical_reasoning_via_process_reward_model.md)
+- [Stop Summation: Min-Form Credit Assignment Is All Process Reward Model Needs for Reasoning](stop_summation_minform_credit_assignment_is_all_process_rewa.md)
+- [Know What You Don't Know: Uncertainty Calibration of Process Reward Models](know_what_you_dont_know_uncertainty_calibration_of_process_reward_models.md)
+- [ReasonFlux-PRM: Trajectory-Aware PRMs for Long Chain-of-Thought Reasoning in LLMs](reasonfluxprm_trajectoryaware_prms_for_long_chainofthought_r.md)
+- [Rethinking Optimal Verification Granularity for Compute-Efficient Test-Time Scaling](rethinking_optimal_verification_granularity_for_compute-efficient_test-time_scal.md)
+
+<!-- RELATED:END -->

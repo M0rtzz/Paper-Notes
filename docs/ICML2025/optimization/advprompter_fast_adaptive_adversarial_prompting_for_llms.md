@@ -164,3 +164,15 @@ AdvBench 攻击成功率（开源目标 LLM）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 开源/闭源目标、AdvBench/HarmBench、对抗训练、充分消融
 - 写作质量: ⭐⭐⭐⭐ 清晰直观
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全研究有基础工具价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Kernel Learning with Adversarial Features: Numerical Efficiency and Adaptive Regularization](../../NeurIPS2025/optimization/kernel_learning_with_adversarial_features_numerical_efficiency_and_adaptive_regu.md)
+- [Autoformulation of Mathematical Optimization Models Using LLMs](autoformulation_of_mathematical_optimization_models_using_llms.md)
+- [Efficient Adaptive Federated Optimization](../../NeurIPS2025/optimization/efficient_adaptive_federated_optimization.md)
+- [Beyond Õ(√T) Constraint Violation for Online Convex Optimization with Adversarial Constraints](../../NeurIPS2025/optimization/beyond_tildeosqrtt_constraint_violation_for_online_convex_optimization_with_adve.md)
+- [Adversarial Data Augmentation for Single Domain Generalization via Lyapunov Exponents](../../ICCV2025/optimization/adversarial_data_augmentation_for_single_domain_generalization_via_lyapunov_expo.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ LLM 配置消融（语义推理）：
 - **实验充分度**: ⭐⭐⭐⭐ 新建基准覆盖三类推理+三级难度，多数据集评估，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ 论述清晰，形式化完整，系统设计描述到位
 - **价值**: ⭐⭐⭐⭐⭐ 对具身AI和视频理解领域有重要推动作用，设计思想可广泛借鉴
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VEGGIE: Instructional Editing and Reasoning Video Concepts with Grounded Generation](veggie_instructional_editing_and_reasoning_video_concepts_with_grounded_generati.md)
+- [Correspondence as Video: Test-Time Adaption on SAM2 for Reference Segmentation in the Wild](correspondence_as_video_testtime_adaption_on_sam2_for_refere.md)
+- [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
+- [Online Generic Event Boundary Detection](online_generic_event_boundary_detection.md)
+- [TopoTTA: Topology-Enhanced Test-Time Adaptation for Tubular Structure Segmentation](topotta_topology-enhanced_test-time_adaptation_for_tubular_structure_segmentatio.md)
+
+<!-- RELATED:END -->

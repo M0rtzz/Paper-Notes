@@ -192,3 +192,15 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}^{\text{base}} + (1-\alpha) \cdot \mathc
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6+1 个数据集、3 个骨干模型、统计检验、人工评估、商业部署验证
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰（三个案例图），方法层次分明
 - **价值**: ⭐⭐⭐⭐⭐ — 在多跳推理（+18.71）和长文本摘要（+9.01）上提升巨大，已商业部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReAG: Reasoning-Augmented Generation for Knowledge-based Visual Question Answering](../../CVPR2026/reinforcement_learning/reag_reasoning-augmented_generation_for_knowledge-based_visual_question_answerin.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering](../../NeurIPS2025/reinforcement_learning/knowledge-based_visual_question_answer_with_multimodal_processing_retrieval_and_.md)
+- [Think, Speak, Decide: Language-Augmented Multi-Agent Reinforcement Learning for Economic Decision-Making](think_speak_decide_language-augmented_multi-agent_reinforcement_learning_for_eco.md)
+- [InfiGUI-G1: Advancing GUI Grounding with Adaptive Exploration Policy Optimization](infigui-g1_advancing_gui_grounding_with_adaptive_exploration_policy_optimization.md)
+
+<!-- RELATED:END -->

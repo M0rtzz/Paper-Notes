@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 个数据集 × 3 个 KGE 模型 × 5 个 baseline + 消融
 - 写作质量: ⭐⭐⭐⭐⭐ 定义严谨，Algorithm 1 清晰，理论→实验衔接自然
 - 价值: ⭐⭐⭐⭐ 对 KG 不确定性量化有重要推进，医学等高风险应用有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Croppable Knowledge Graph Embedding](croppable_knowledge_graph_embedding.md)
+- [WILTing Trees: Interpreting the Distance Between MPNN Embeddings](../../ICML2025/graph_learning/wilting_trees_interpreting_the_distance_between_mpnn_embeddings.md)
+- [Structurally Human, Semantically Biased: Detecting LLM-Generated References with Embeddings and GNNs](../../ICLR2026/graph_learning/structurally_human_semantically_biased_detecting_llm-generated_references_with_e.md)
+- [Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](kg_rag_recommendation.md)
+
+<!-- RELATED:END -->

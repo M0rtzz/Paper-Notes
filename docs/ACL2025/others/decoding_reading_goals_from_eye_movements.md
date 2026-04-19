@@ -170,3 +170,15 @@ $$h: (E_S^P, P) \rightarrow \{\text{Information Seeking}, \text{Ordinary Reading
 | 综合评分 | ⭐⭐⭐⭐ |
 
 > 新任务定义清晰，实验极为全面（12 模型 × 3 泛化设置 × 10 折），混合效应误差分析方法有创新性。数据集虽来自已有资源但利用充分。主要不足在于二分类粒度较粗，且仅限英语新闻体裁。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior](a_spatio-temporal_point_process_for_fine-grained_modeling_of_reading_behavior.md)
+- [Consultant Decoding: Yet Another Synergistic Mechanism](consultant_decoding_yet_another_synergistic_mechanism.md)
+
+<!-- RELATED:END -->

@@ -188,3 +188,15 @@ $$\sigma_{X_L} = \begin{cases} x_1 & \text{概率 } P(x_1 \mid X_L \in \{x_1,x_2
 | 写作质量 | ⭐⭐⭐⭐ | 数学符号密集但示例清晰，有系统性 |
 | 实用价值 | ⭐⭐⭐⭐ | 对偶定理直接可用，投影采样有实践价值 |
 | **综合** | **⭐⭐⭐⭐☆** | 因果抽象理论的重要推进，实验可进一步加强 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Practical do-Shapley Explanations with Estimand-Agnostic Causal Inference](../../NeurIPS2025/causal_inference/practical_do-shapley_explanations_with_estimand-agnostic_causal_inference.md)
+- [Latent Variable Causal Discovery under Selection Bias](latent_variable_causal_discovery_under_selection_bias.md)
+- [Cyclic Counterfactuals under Shift–Scale Interventions](../../NeurIPS2025/causal_inference/cyclic_counterfactuals_under_shift-scale_interventions.md)
+- [GST-UNet: A Neural Framework for Spatiotemporal Causal Inference with Time-Varying Confounding](../../NeurIPS2025/causal_inference/gst-unet_a_neural_framework_for_spatiotemporal_causal_inference_with_time-varyin.md)
+- [Learning Robust Intervention Representations with Delta Embeddings](../../ICLR2026/causal_inference/learning_robust_intervention_representations_with_delta_embeddings.md)
+
+<!-- RELATED:END -->

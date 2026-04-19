@@ -151,3 +151,15 @@ TIPA 系统包含两个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ — CSC 任务实验充分，但其他字符级任务覆盖较少
 - 写作质量: ⭐⭐⭐⭐ — 方法描述清晰，新评估指标定义明确
 - 价值: ⭐⭐⭐⭐ — 揭示了重要的字符级理解问题，对中文 NLP 尤为实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Analyzing LLMs' Knowledge Boundary Cognition Across Languages Through the Lens of Internal Representations](knowledge_boundary_crosslingual.md)
+- [Enhancing the Rule Learning Ability of Large Language Model Agent through Induction, Deduction, and Abduction](idea_enhancing_the_rule_learning_ability_of_large_language_model_agent_through_i.md)
+- [ECLM: Entity Level Language Model for Spoken Language Understanding with Chain of Intent](eclm_entity_level_language_model_spoken_language_understanding.md)
+- [CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis](cot-based_synthesizer_enhancing_llm_performance_through_answer_synthesis.md)
+- [MathFusion: Enhancing Mathematical Problem-solving of LLM through Instruction Fusion](mathfusion_instruction_fusion.md)
+
+<!-- RELATED:END -->

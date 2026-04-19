@@ -175,3 +175,15 @@ $$\hat{f}(x, \hat{\epsilon}) = w \cdot f(x, \epsilon) + (1-w) \cdot x$$
 - **实验**: ⭐⭐⭐⭐ — 两个数据集、四种攻击类型、复合攻击，消融充分
 - **写作**: ⭐⭐⭐⭐ — 数学推导严谨，理论与实践结合良好
 - **价值**: ⭐⭐⭐⭐ — 解决了实际场景中非加性攻击防御的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Generation for Image Classification](../../ECCV2024/others/active_generation_for_image_classification.md)
+- [Boosting Adversarial Transferability via Ensemble Non-Attention](../../AAAI2026/others/boosting_adversarial_transferability_via_ensemble_non-attention.md)
+- [IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization](iap_invisible_adversarial_patch_attack_through_perceptibility-aware_localization.md)
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
+- [EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration](edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati.md)
+
+<!-- RELATED:END -->

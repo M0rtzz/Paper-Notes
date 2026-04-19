@@ -114,3 +114,15 @@ $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}(1 - \hat{\kappa}_i)\sum_{l=1}^{L} y_i
 - 实验充分度: ⭐⭐⭐⭐ — 两个大规模公开数据集、多个baseline、消融实验完整
 - 写作质量: ⭐⭐⭐⭐ — 逻辑清晰，理论推导严谨
 - 价值: ⭐⭐⭐⭐ — 为高风险治疗推荐提供安全保障的思路有重要临床价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images](context_matters_query-aware_dynamic_long_sequence_modeling_of_gigapixel_images.md)
+- [I2MoE: Interpretable Multimodal Interaction-aware Mixture-of-Experts](i2moe_interpretable_multimodal_interaction-aware_mixture-of-experts.md)
+- [Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens](../../NeurIPS2025/medical_imaging/brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int.md)
+- [Inference-Time Dynamic Modality Selection for Incomplete Multimodal Classification](../../ICLR2026/medical_imaging/inference-time_dynamic_modality_selection_for_incomplete_multimodal_classificati.md)
+- [Apo2Mol: 3D Molecule Generation via Dynamic Pocket-Aware Diffusion Models](../../AAAI2026/medical_imaging/apo2mol_3d_molecule_generation_via_dynamic_pocket-aware_diff.md)
+
+<!-- RELATED:END -->

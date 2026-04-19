@@ -149,3 +149,15 @@ SSD 多边数远低于 SDI，总体 SHD 降低 38%。
 - 实验充分度: ⭐⭐⭐⭐ (理论验证 + 合成数据 + 2D-Minecraft，但缺少更多真实场景)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，craftsman 例子贯穿始终易于理解)
 - 价值: ⭐⭐⭐⭐ (为因果 HRL 建立了理论基础，定向策略有实际加速效果)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Reinforcement Learning with Uncertainty-Guided Diffusional Subgoals](hierarchical_reinforcement_learning_with_uncertainty-guided_diffusional_subgoals.md)
+- [Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning](graph-assisted_stitching_for_offline_hierarchical_reinforcement_learning.md)
+- [Confounding Robust Deep Reinforcement Learning: A Causal Approach](../../NeurIPS2025/reinforcement_learning/confounding_robust_deep_reinforcement_learning_a_causal_approach.md)
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+- [Divide and Conquer: Grounding LLMs as Efficient Decision-Making Agents via Offline Hierarchical Reinforcement Learning](divide_and_conquer_grounding_llms_as_efficient_decision-making_agents_via_offlin.md)
+
+<!-- RELATED:END -->

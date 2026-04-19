@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 个模型、6 种约束、多种配置、简单/丰富上下文、社会层级实验
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰、指标设计巧妙、可视化信息量大
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 安全和部署有直接且重要的影响，发现具有普遍性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProFuser: Progressive Fusion of Large Language Models](profuser_progressive_fusion_of_large_language_models.md)
+- [Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability](../../ACL2025/llm_nlp/compositional_generalization_instruction.md)
+- [Identifying and Analyzing Performance-Critical Tokens in Large Language Models](identifying_and_analyzing_performance-critical_tokens_in_large_language_models.md)
+- [LoKI: Low-damage Knowledge Implanting of Large Language Models](loki_low-damage_knowledge_implanting_of_large_language_models.md)
+- [Scaling Equitable Reflection Assessment in Education via Large Language Models and Role-Based Feedback Agents](scaling_equitable_reflection_assessment_in_education_via_large_language_models_a.md)
+
+<!-- RELATED:END -->

@@ -113,3 +113,15 @@ $$\langle x_{1:d} \rangle_{\mathcal{H},n} := \bigcap_{h \in \mathcal{H}(x_{1:d};
 - 理论深度: ⭐⭐⭐⭐⭐ — 均匀噪声依赖可生成性给出完整刻画（充要条件+样本复杂度），证明技术扎实
 - 写作质量: ⭐⭐⭐⭐ — 层次清晰，定义-定理-证明结构严谨，但符号较重
 - 价值: ⭐⭐⭐⭐ — 推进了生成理论基础，但开放问题的存在表明工作尚未完全闭环
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Joint Asymmetric Loss for Learning with Noisy Labels](../../ICCV2025/others/joint_asymmetric_loss_for_learning_with_noisy_labels.md)
+- [ANO: Faster is Better in Noisy Landscapes](../../ICLR2026/others/ano_faster_is_better_in_noisy_landscape.md)
+- [Predicting Through Generation: Why Generation Is Better for Prediction](../../ACL2025/others/predicting_through_generation_why_generation_is_better_for_prediction.md)
+- [Foster Adaptivity and Balance in Learning with Noisy Labels](../../ECCV2024/others/foster_adaptivity_and_balance_in_learning_with_noisy_labels.md)
+- [The Noisy Path from Source to Citation: Measuring How Scholars Engage with Past Research](../../ACL2025/others/the_noisy_path_from_source_to_citation_measuring_how_scholars_engage_with_past_r.md)
+
+<!-- RELATED:END -->

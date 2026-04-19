@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 在 STS benchmark 上验证充分，但未超越专用模型，应用场景有限
 - 写作质量: ⭐⭐⭐⭐⭐ 概念清晰、推导严谨、可视化令人印象深刻
 - 价值: ⭐⭐⭐⭐ 为评估扩散模型语义空间开辟新方向，更多是概念贡献而非 SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffSim: Taming Diffusion Models for Evaluating Visual Similarity](../../ICCV2025/image_generation/diffsim_taming_diffusion_models_for_evaluating_visual_similarity.md)
+- [Does Semantic Noise Initialization Transfer from Images to Videos? A Paired Diagnostic Study](does_semantic_noise_initialization_transfer_from_images_to_videos_a_paired_diagn.md)
+- [A Hidden Semantic Bottleneck in Conditional Embeddings of Diffusion Transformers](a_hidden_semantic_bottleneck_in_conditional_embeddings_of_diffusion_transformers.md)
+- [SeMoBridge: Semantic Modality Bridge for Efficient Few-Shot Adaptation of CLIP](semobridge_semantic_modality_bridge_for_efficient_few-shot_adaptation_of_clip.md)
+- [Disentangling to Re-couple: Resolving the Similarity-Controllability Paradox in Subject-Driven Text-to-Image Generation](../../CVPR2026/image_generation/disentangling_to_re-couple_resolving_the_similarity-controllability_paradox_in_s.md)
+
+<!-- RELATED:END -->

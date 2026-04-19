@@ -132,3 +132,15 @@ Retention（相对自身干净性能保留比例）：
 - 实验充分度: ⭐⭐⭐⭐ 7 个数据集、4 种评估条件、5 个种子、4 个基线，较为系统
 - 写作质量: ⭐⭐⭐⭐ 清晰谨慎，结论措辞恰当，不过度声称
 - 价值: ⭐⭐⭐ Workshop 级别工作，确认了已有发现可延伸到鲁棒性维度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniFM: Toward Modality-Robust and Task-Agnostic Federated Learning for Heterogeneous Medical Imaging](omnifm_toward_modality-robust_and_task-agnostic_federated_learning_for_heterogen.md)
+- [RadEdit: Stress-Testing Biomedical Vision Models via Diffusion Image Editing](../../ECCV2024/medical_imaging/radedit_stress-testing_biomedical_vision_models_via_diffusion_image_editing.md)
+- [MultiModalPFN: Extending Prior-Data Fitted Networks for Multimodal Tabular Learning](multimodalpfn_extending_prior-data_fitted_networks_for_multimodal_tabular_learni.md)
+- [DeNAS-ViT: Data Efficient NAS-Optimized Vision Transformer for Ultrasound Image Segmentation](../../AAAI2026/medical_imaging/denas-vit_data_efficient_nas-optimized_vision_transformer_for_ultrasound_image_s.md)
+- [Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data](towards_efficient_medical_reasoning_with_minimal_fine-tuning_data.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ $$\mathcal{L}_{\text{LineCNet}} = \|\Phi_{bg} - \Phi^{gt}_{bg}\|_2^2 + \lambda_3
 - 实验充分度: 7/10 — 消融充分，但缺少用户研究和更多真实场景测试
 - 写作质量: 7/10 — 结构清晰，动机阐述合理
 - 价值: 7/10 — 在广角人像矫正这个实际应用场景中有较好的落地价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Sampling Correction via Approximately 10 Parameters](../../ICML2025/human_understanding/diffusion_sampling_correction_via_approximately_10_parameters.md)
+- [Generative Social Choice: The Next Generation](../../ICML2025/human_understanding/generative_social_choice_the_next_generation.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [The Geometry of Reasoning: Flowing Logics in Representation Space](../../ICLR2026/human_understanding/the_geometry_of_reasoning_flowing_logics_in_representation_space.md)
+- [Self-Correction Distillation for Structured Data Question Answering](../../AAAI2026/human_understanding/self-correction_distillation_for_structured_data_question_answering.md)
+
+<!-- RELATED:END -->

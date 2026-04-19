@@ -133,3 +133,15 @@ SV 完全免训练（training-free），不需要对任何模型进行微调。D
 - 价值: ⭐⭐⭐⭐ 免训练框架实用性强，对信息密集型 VQA 的提升显著且稳定，推理路径综合的思路有广泛适用性
 
 <!-- END -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Downscaling Intelligence: Exploring Perception and Reasoning Bottlenecks in Small VLMs](../../CVPR2026/multimodal_vlm/downscaling_intelligence_exploring_perception_and_reasoning_bottlenecks_in_small.md)
+- [Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs](through_the_lens_of_contrast_self-improving_visual_reasoning_in_vlms.md)
+- [HIVE: Query, Hypothesize, Verify — An LLM Framework for Multimodal Reasoning-Intensive Retrieval](../../CVPR2026/multimodal_vlm/hive_query_hypothesize_verify_an_llm_framework_for_multimodal_reasoning-intensiv.md)
+- [LiveWeb-IE: A Benchmark For Online Web Information Extraction](liveweb-ie_a_benchmark_for_online_web_information_extraction.md)
+- [Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks](ref-adv_exploring_mllm_visual_reasoning_in_referring_expression_tasks.md)
+
+<!-- RELATED:END -->

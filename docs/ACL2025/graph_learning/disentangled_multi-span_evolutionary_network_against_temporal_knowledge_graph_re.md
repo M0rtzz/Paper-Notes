@@ -140,3 +140,15 @@ DiMNet 在四个数据集上的 MRR 分别超越现有最优方法 **8.4%、22.7
 - **实验** ⭐⭐⭐⭐⭐：基线覆盖全面，消融设计合理，参数分析充分
 - **写作** ⭐⭐⭐⭐：结构清晰，实验展示规范
 - **影响力** ⭐⭐⭐：TKG 推理是 KG 领域的重要子方向，但受众相对有限；Findings 级别
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](../../AAAI2026/graph_learning/s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](../../ICML2025/graph_learning/graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+- [GKGNet: Group K-Nearest Neighbor Based Graph Convolutional Network for Multi-Label Image Recognition](../../ECCV2024/graph_learning/gkgnet_group_k-nearest_neighbor_based_graph_convolutional_network_for_multi-labe.md)
+- [FiDeLiS: Faithful Reasoning in Large Language Model for Knowledge Graph Question Answering](fidelis_faithful_reasoning_in_large_language_model_for_knowledge_graph_question_.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 16个模型×3个数据集，多种基线对比，方向分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 论述逻辑清晰，假设-批判-方案的结构很好
 - 价值: ⭐⭐⭐⭐ 对理解LLM内部知识表征有重要贡献，但实际应用还需更多验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+- [Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
+- [Probabilistic Token Alignment for Large Language Model Fusion](probabilistic_token_alignment_for_large_language_model_fusion.md)
+- [Encoding and Understanding Astrophysical Information in Large Language Model-Generated Summaries](encoding_and_understanding_astrophysical_information_in_large_language_model-gen.md)
+- [Mechanistic Interpretability of Emotion Inference in Large Language Models](../../ACL2025/interpretability/mechanistic_interpretability_of_emotion_inference_in_large_language_models.md)
+
+<!-- RELATED:END -->

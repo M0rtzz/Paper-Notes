@@ -125,3 +125,15 @@ Index Concat方法在总体上表现最佳，而Recurrent在高层数(Layer 5, 7
 - 技术深度: ⭐⭐⭐ (基线方法相对简单)
 - 实验充分度: ⭐⭐⭐⭐ (多个SOTA方法对比+基线)
 - 实用价值: ⭐⭐⭐⭐⭐ (透明物体理解是关键问题)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bootstrap3D: Improving Multi-view Diffusion Model with Synthetic Data](bootstrap3d_improving_multi-view_diffusion_model_with_synthetic_data.md)
+- [DAViD: Data-efficient and Accurate Vision Models from Synthetic Data](david_data-efficient_and_accurate_vision_models_from_synthetic_data.md)
+- [Amodal Depth Anything: Amodal Depth Estimation in the Wild](amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
+- [FlashDepth: Real-time Streaming Video Depth Estimation at 2K Resolution](flashdepth_real-time_streaming_video_depth_estimation_at_2k_resolution.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+
+<!-- RELATED:END -->

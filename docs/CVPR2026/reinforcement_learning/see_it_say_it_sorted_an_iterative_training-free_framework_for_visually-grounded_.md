@@ -113,3 +113,15 @@ ECRD在冻结的LVLM外层包一个轻量级监督框架：每步解码时，（
 - 实验充分度: ⭐⭐⭐⭐ 6个backbone×多个benchmark，跨模型泛化验证充分
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，与VDGD的对比清晰
 - 价值: ⭐⭐⭐⭐ 免训练即插即用对实际部署价值大，多个开源模型均可受益
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Divide, Harmonize, Then Conquer It: Shooting Multi-Commodity Flow Problems with Multimodal Language Models](../../ICLR2026/reinforcement_learning/divide_harmonize_then_conquer_it_shooting_multi-commodity_flow_problems_with_mul.md)
+- [Do It for HER: First-Order Temporal Logic Reward Specification in Reinforcement Learning](../../AAAI2026/reinforcement_learning/do_it_for_her_first-order_temporal_logic_reward_specification_in_reinforcement_l.md)
+- [Diving into Self-Evolving Training for Multimodal Reasoning](../../ICML2025/reinforcement_learning/diving_into_self-evolving_training_for_multimodal_reasoning.md)
+- [Anticipatory Planning for Multimodal AI Agents](anticipatory_planning_for_multimodal_ai_agents.md)
+- [BRIDGE: Multimodal-to-Text Retrieval via Reinforcement-Learned Query Alignment](bridge_multimodal-to-text_retrieval_via_reinforcement-learned_query_alignment.md)
+
+<!-- RELATED:END -->

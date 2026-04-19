@@ -143,3 +143,15 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{	ext{local}} + \lambda_2 \mathcal{L}_{	ex
 ## 总结
 
 CheXWorld将JEPA框架创造性地应用于胸片表征学习，通过三重任务建模了胸片世界的不同方面。在分类、分割和少样本学习上全面超越了现有方法，特别是在低数据场景下表现突出。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Prototypes to General Distributions: An Efficient Curriculum for Masked Image Modeling](from_prototypes_to_general_distributions_an_efficient_curriculum_for_masked_imag.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
+- [AdaWorld: Learning Adaptable World Models with Latent Actions](../../ICML2025/self_supervised/adaworld_learning_adaptable_world_models_with_latent_actions.md)
+- [Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval](text-phase_synergy_network_with_dual_priors_for_unsupervised_cross-domain_image_.md)
+- [Implicit Modeling for Transferability Estimation of Vision Foundation Models](../../NeurIPS2025/self_supervised/implicit_modeling_for_transferability_estimation_of_vision_foundation_models.md)
+
+<!-- RELATED:END -->

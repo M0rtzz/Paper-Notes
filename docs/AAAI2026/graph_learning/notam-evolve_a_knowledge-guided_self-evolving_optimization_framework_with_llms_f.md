@@ -203,3 +203,15 @@ NOTAM-Evolve 相比基础模型提升 **30.4%**（0.458 → 0.762），AVG接近
 - **实验充分度**: ⭐⭐⭐⭐ — 新数据集+完整消融+迭代分析+案例+复杂度分析
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题定义清晰，Deep vs Shallow Parsing的框架很好
 - **实用价值**: ⭐⭐⭐⭐⭐ — 航空安全领域真实需求，7B可部署方案，开源数据集
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Assessing LLMs for Serendipity Discovery in Knowledge Graphs: A Case for Drug Repurposing](assessing_llms_for_serendipity_discovery_in_knowledge_graphs_a_case_for_drug_rep.md)
+- [Sheaf Graph Neural Networks via PAC-Bayes Spectral Optimization](sheaf_graph_neural_networks_via_pac-bayes_spectral_optimization.md)
+- [Self-Adaptive Graph Mixture of Models](self-adaptive_graph_mixture_of_models.md)
+- [Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity](connectivity-guided_sparsification_of_2-fwl_gnns_preserving_full_expressivity_wi.md)
+- [Explore-on-Graph: Incentivizing Autonomous Exploration of LLMs on Knowledge Graphs](../../ICLR2026/graph_learning/explore-on-graph_incentivizing_autonomous_exploration_of_large_language_models_o.md)
+
+<!-- RELATED:END -->

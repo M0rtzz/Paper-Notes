@@ -138,3 +138,15 @@ HoH 基准由两个核心组件构成：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 实验设计全面，从检索到生成到时间感知力层层递进，分析深入
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，例子直观，Table 1 的对比表很有价值
 - **价值**: ⭐⭐⭐⭐⭐ — 提供了社区急需的基准和工具，发现具有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation](memerag_a_multilingual_end-to-end_meta-evaluation_benchmark_for_retrieval_augmen.md)
+- [OCR Hinders RAG: Evaluating the Cascading Impact of OCR on Retrieval-Augmented Generation](../../ICCV2025/information_retrieval/ocr_hinders_rag_evaluating_the_cascading_impact_of_ocr_on_retrieval-augmented_ge.md)
+- [CoIR: A Comprehensive Benchmark for Code Information Retrieval Models](coir_a_comprehensive_benchmark_for_code_information_retrieval_models.md)
+- [AIR-Bench: Automated Heterogeneous Information Retrieval Benchmark](air-bench_automated_heterogeneous_information_retrieval_benchmark.md)
+- [ComRAG: Retrieval-Augmented Generation with Dynamic Vector Stores for Real-time Community Question Answering in Industry](comrag_retrieval-augmented_generation_with_dynamic_vector_stores_for_real-time_c.md)
+
+<!-- RELATED:END -->

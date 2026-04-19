@@ -142,3 +142,15 @@ MapEval 将地图推理任务划分为 5 大类别：
 - **实用性**: ⭐⭐⭐⭐ — 直接服务于导航、旅行规划等高频应用场景的评估
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 评估了 30 个模型，包含多维度消融分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，实验详实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Foundation Models: Disentangling Physics from Instrument Properties](causal_foundation_models_disentangling_physics_from_instrument_properties.md)
+- [Consistency-based Abductive Reasoning over Perceptual Errors of Multiple Pre-trained Models in Novel Environments](../../AAAI2026/remote_sensing/consistency-based_abductive_reasoning_over_perceptual_errors_of_multiple_pre-tra.md)
+- [Towards a Unified Copernicus Foundation Model for Earth Vision](../../ICCV2025/remote_sensing/towards_a_unified_copernicus_foundation_model_for_earth_vision.md)
+- [Scaling Image Geo-Localization to Continent Level](../../NeurIPS2025/remote_sensing/scaling_image_geo-localization_to_continent_level.md)
+- [Think and Answer ME: Benchmarking and Exploring Multi-Entity Reasoning Grounding in Remote Sensing](../../CVPR2025/remote_sensing/think_and_answer_me_benchmarking_and_exploring_multi-entity_reasoning_grounding_.md)
+
+<!-- RELATED:END -->

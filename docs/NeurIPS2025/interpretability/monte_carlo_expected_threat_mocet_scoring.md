@@ -147,3 +147,15 @@ Dolphin 模型在标准基准上性能略有下降，表面上安全性似乎提
 - ⭐⭐⭐ **方法深度**：概率建模相对简单，k-NN 估计的准确性有待更严格验证
 
 **总评**: ⭐⭐⭐⭐ (3.5/5) — 在 AI 安全的风险量化领域提出了有价值的框架，可解释性和政策对齐是亮点。但实验规模有限、假设较强，需要更大规模的验证才能充分证明其有效性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+- [Saying the Unsaid: Revealing the Hidden Language of Multimodal Systems Through Telephone Games](saying_the_unsaid_revealing_the_hidden_language_of_multimodal_systems_through_te.md)
+- [FastDINOv2: Frequency Based Curriculum Learning Improves Robustness and Training Speed](fastdinov2_frequency_based_curriculum_learning_improves_robustness_and_training_.md)
+- [Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT](beyond_token_probes_hallucination_detection_via_activation_tensors_with_act-vit.md)
+- [Fantastic Features and Where to Find Them: A Probing Method to Combine Features from Multiple Foundation Models](fantastic_features_and_where_to_find_them_a_probing_method_to_combine_features_f.md)
+
+<!-- RELATED:END -->

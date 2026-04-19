@@ -128,3 +128,15 @@ W2SG 设置：弱模型 $F_w$ 提供 soft label 监督强模型 $F_{sw} = f \cir
 - 实验充分度: ⭐⭐⭐⭐ GPT-2/Pythia/Qwen2.5 三系列 + 噪声消融 + 正则化消融
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰(KD vs W2SG 对比)、理论实验结合紧密
 - 价值: ⭐⭐⭐⭐ 对 superalignment 实践有直接指导，但场景限于分类任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How to Mitigate Overfitting in Weak-to-Strong Generalization?](how_to_mitigate_overfitting_in_weak-to-strong_generalization.md)
+- [Synergistic Weak-Strong Collaboration by Aligning Preferences](synergistic_weak-strong_collaboration_by_aligning_preferences.md)
+- [Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding](well_begun_is_half_done_low-resource_preference_alignment_by_weak-to-strong_deco.md)
+- [Behavioural vs. Representational Systematicity in End-to-End Models: An Opinionated Survey](behavioural_vs_representational_systematicity_in_end-to-end_models_an_opinionate.md)
+- [Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph](why_are_positional_encodings_nonessential_for_deep_autoregressive_transformers_r.md)
+
+<!-- RELATED:END -->

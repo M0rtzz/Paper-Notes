@@ -152,3 +152,15 @@ People 类别 FID 甚至从 58.91 降至 58.84（边加速边提升），Landsca
 - **技术深度**: ⭐⭐⭐⭐⭐ — 理论分析 + 工程实现（FAE）均扎实
 - **实验充分度**: ⭐⭐⭐⭐ — 多基准多指标，消融详尽
 - **实用价值**: ⭐⭐⭐⭐⭐ — 3.4× 加速无损质量，直接可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
+- [Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs](supervised_metric_regularization_through_alternating_optimization_for_multi-regi.md)
+- [RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling](rulereasoner_reinforced_rule-based_reasoning_via_domain-aware_dynamic_sampling.md)
+- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](../../ICCV2025/human_understanding/semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+
+<!-- RELATED:END -->

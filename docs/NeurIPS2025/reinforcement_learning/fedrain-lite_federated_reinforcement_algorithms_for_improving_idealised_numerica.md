@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三层递进环境+三种算法+三种聚合策略+10 seeds，系统且严谨
 - 写作质量: ⭐⭐⭐⭐ 物理背景交代充分、实验可视化清晰，附录详尽
 - 价值: ⭐⭐⭐⭐ 为 RL 在气候科学中的实际落地铺路，方向意义大于当前技术贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Improving Embodied Foundation Models](self-improving_embodied_foundation_models.md)
+- [Scalable Policy-Based RL Algorithms for POMDPs](scalable_policy-based_rl_algorithms_for_pomdps.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Improving Planning and MBRL with Temporally-Extended Actions](improving_planning_and_mbrl_with_temporally-extended_actions.md)
+- [Parameter-Free Algorithms for the Stochastically Extended Adversarial Model](parameter-free_algorithms_for_the_stochastically_extended_adversarial_model.md)
+
+<!-- RELATED:END -->

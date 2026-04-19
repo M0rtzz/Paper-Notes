@@ -188,3 +188,15 @@ OmniFlatten 在 turn-taking 上全面超越 Moshi：
 ## 评分
 
 ⭐⭐⭐⭐ — 方法简洁优雅（不改架构、渐进训练、flatten 统一），turn-taking 延迟指标出色；但基础模型太小导致对话质量不够好，合成数据也限制了真实场景的覆盖度，是一项有价值的探索性工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distilling an End-to-End Voice Assistant Without Instruction Training Data](distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
+- [DNCASR: End-to-End Training for Speaker-Attributed ASR](dncasr_end-to-end_training_for_speaker-attributed_asr.md)
+- [End-to-end Contrastive Language-Speech Pretraining Model For Long-form Spoken Question Answering](../../AAAI2026/audio_speech/end-to-end_contrastive_language-speech_pretraining_model_for_long-form_spoken_qu.md)
+- [E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis](../../NeurIPS2025/audio_speech/e2e-vguard_adversarial_prevention_for_production_llm-based_end-to-end_speech_syn.md)
+- [Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots](aae_voice_chatbot.md)
+
+<!-- RELATED:END -->

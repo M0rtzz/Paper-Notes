@@ -151,3 +151,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ — 标注分析深入但样本量小，LLM评估仅为zero-shot
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论与实证结合紧密，案例分析生动，跨学科视角丰富
 - **价值**: ⭐⭐⭐⭐ — 对对话理解和LLM评估领域都有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AceCoder: Acing Coder RL via Automated Test-Case Synthesis](acecoder_acing_coder_rl_via_automated.md)
+- [Anything Goes? A Crosslinguistic Study of (Im)possible Language Learning in LMs](anything_goes_a_crosslinguistic_study_of_impossible_language_learning_in_lms.md)
+- [Rank, Chunk, and Expand: Lineage-Oriented Reasoning for Taxonomy Expansion](rank_chunk_and_expand_lineage-oriented_reasoning_for_taxonomy_expansion.md)
+- [SoRFT: Issue Resolving with Subtask-oriented Reinforced Fine-Tuning](sorft_issue_resolving_with_subtask-oriented_reinforced_fine-tuning.md)
+- [Making FETCH! Happen: Finding Emergent Dog Whistles Through Common Habitats](making_fetch_happen_finding_emergent_dog_whistles_through_common_habitats.md)
+
+<!-- RELATED:END -->

@@ -137,3 +137,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 理由：覆盖 GPQA、MMLU-Pro、MATH-500 三个数据集和 Llama3.1、Qwen2.5、GPT-4o、QwQ-32B 四个模型，且通过参数估计-子集验证方法精巧地桥接理论与实验；但每类别仅 100 题的 MMLU-Pro 子集略显不足
 - **写作质量**: ⭐⭐⭐⭐⭐ 理由：定理陈述简洁优雅，假设条件清晰明了，理论与实验的桥接分析逻辑严密。全文结构层次分明：问题动机→算法设计→理论保证→实验验证→局限讨论，堪称理论型论文的范本
 - **实用价值**: ⭐⭐⭐⭐ 理由：算法即插即用且实现简单（已开源），对高可靠性场景有直接应用价值；但计算开销和未知参数问题在大规模部署时仍需解决
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Thinking-Optimal Scaling of Test-Time Compute for LLM Reasoning](towards_thinking-optimal_scaling_of_test-time_compute_for_llm_reasoning.md)
+- [Rethinking Optimal Verification Granularity for Compute-Efficient Test-Time Scaling](rethinking_optimal_verification_granularity_for_compute-efficient_test-time_scal.md)
+- [Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
+- [Sampling-Efficient Test-Time Scaling: Self-Estimating the Best-of-N Sampling in Early Decoding](sampling-efficient_test-time_scaling_self-estimating_the_best-of-n_sampling_in_e.md)
+- [Atom of Thoughts for Markov LLM Test-Time Scaling](atom_of_thoughts_for_markov_llm_testtime_scaling.md)
+
+<!-- RELATED:END -->

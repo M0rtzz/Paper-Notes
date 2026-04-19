@@ -191,3 +191,15 @@ JAX 加速效果：
 - 实验充分度: ⭐⭐⭐⭐ — 5 种病原体验证 + 丰富消融，但缺乏 wet lab 验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 框架清晰，图示精美，可解释性分析到位
 - 价值: ⭐⭐⭐⭐ — 概念验证阶段，但思路对未来抗病毒/抗癌治疗有深远启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fine-Tuning Diffusion Models via Intermediate Distribution Shaping](../../ICLR2026/medical_imaging/fine-tuning_diffusion_models_via_intermediate_distribution_shaping.md)
+- [AFD-INSTRUCTION: A Comprehensive Antibody Instruction Dataset with Functional Annotations for LLM-Based Understanding and Design](../../ICLR2026/medical_imaging/afd-instruction_a_comprehensive_antibody_instruction_dataset_with_functional_ann.md)
+- [CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
+- [MedXpertQA: Benchmarking Expert-Level Medical Reasoning and Understanding](medxpertqa_benchmarking_expert-level_medical_reasoning_and_understanding.md)
+- [ComRecGC: Global Graph Counterfactual Explainer through Common Recourse](comrecgc_global_graph_counterfactual_explainer_through_common_recourse.md)
+
+<!-- RELATED:END -->

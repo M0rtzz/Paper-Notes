@@ -192,3 +192,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{fm}} + \mathcal{L}_{\text{RnC}}$$
 - **实验**: ⭐⭐⭐⭐⭐ — 覆盖跨类别/非等距/近等距三大设定共六个基准，消融完整，并展示了共分割和野外物体的泛化
 - **写作**: ⭐⭐⭐⭐ — 方法阐述清晰，图示丰富，但部分细节（如 MLLM 提示模板）放在附录
 - **价值**: ⭐⭐⭐⭐⭐ — 开创了通用 3D 形状匹配的新范式，对图形学、机器人、3D 理解等领域有广泛影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation](geoguide_hierarchical_geometric_guidance_for_open-vocabulary_3d_semantic_segment.md)
+- [Active Coarse-to-Fine Segmentation of Moveable Parts from Real Images](../../ECCV2024/segmentation/active_coarsetofine_segmentation_of_moveable_parts_from_real.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+- [GiT: Towards Generalist Vision Transformer through Universal Language Interface](../../ECCV2024/segmentation/git_towards_generalist_vision_transformer_through_universal_language_interface.md)
+- [A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction](from_2d_alignment_to_3d_plausibility_unifying_hete.md)
+
+<!-- RELATED:END -->

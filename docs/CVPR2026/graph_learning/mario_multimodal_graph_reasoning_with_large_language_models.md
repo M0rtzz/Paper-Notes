@@ -120,4 +120,14 @@ Stage 1 用对比损失训练编码器，Stage 2 用性能加权的 LM 损失 + 
 
 GVLM + MAPR 双重创新，四数据集 × 两任务 × 三模态设置实验全面覆盖，零样本迁移验证泛化力，是多模态图 + LLM 推理方向的重要开拓性工作。
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](../../ICML2025/graph_learning/graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+- [Table as a Modality for Large Language Models](../../NeurIPS2025/graph_learning/table_as_a_modality_for_large_language_models.md)
+- [FiDeLiS: Faithful Reasoning in Large Language Model for Knowledge Graph Question Answering](../../ACL2025/graph_learning/fidelis_faithful_reasoning_in_large_language_model_for_knowledge_graph_question_.md)
+- [From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](../../ICML2025/graph_learning/from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)
+- [Graph-to-Frame RAG: Visual-Space Knowledge Fusion for Training-Free and Auditable Video Reasoning](graph-to-frame_rag_visual-space_knowledge_fusion_for_training-free_and_auditable.md)
+
+<!-- RELATED:END -->

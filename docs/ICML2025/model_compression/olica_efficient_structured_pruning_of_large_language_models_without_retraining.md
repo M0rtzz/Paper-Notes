@@ -177,3 +177,15 @@ Olica 的核心启发：**在参数空间做正交分解，可以绕开数据依
 - 实验充分度: ⭐⭐⭐⭐ — 多模型多稀疏率，消融完整，但缺少非 LLaMA 模型和量化联合实验
 - 写作质量: ⭐⭐⭐⭐ — 行文清晰，公式推导完整，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ — 实用性极强，3GB 显存 + 7 分钟的超低门槛使其成为资源受限场景的首选方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruction-Following Pruning for Large Language Models](instruction-following_pruning_for_large_language_models.md)
+- [Elastic ViTs from Pretrained Models without Retraining](../../NeurIPS2025/model_compression/elastic_vits_from_pretrained_models_without_retraining.md)
+- [BlockPruner: Fine-grained Pruning for Large Language Models](../../ACL2025/model_compression/blockpruner_fine-grained_pruning_for_large_language_models.md)
+- [DLP: Dynamic Layerwise Pruning in Large Language Models](dlp_dynamic_layerwise_pruning_in_large_language_models.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](../../ACL2025/model_compression/wanda_pruning_large_language_models_via_regional_gradients.md)
+
+<!-- RELATED:END -->

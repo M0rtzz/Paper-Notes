@@ -125,3 +125,15 @@ KDR-Agent 分两个阶段运行：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个领域10个数据集、3个LLM backbone、消融、规模分析、错误分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题-解决方案的对应关系讲得很好
 - 价值: ⭐⭐⭐⭐ 低资源NER的实用方案，但推理成本限制了实际应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLandMark: A Multi-Agent Framework for Landmark-Aware Multimodal Interactive Video Retrieval](llandmark_a_multi-agent_framework_for_landmark-aware_multimodal_interactive_vide.md)
+- [COACH: Collaborative Agents for Contextual Highlighting -- A Multi-Agent Framework for Sports Video Analysis](coach_collaborative_agents_for_contextual_highlighting_--_a_multi-agent_framewor.md)
+- [ARCANE: A Multi-Agent Framework for Interpretable and Configurable Alignment](arcane_a_multi-agent_framework_for_interpretable_and_configurable_alignment.md)
+- [FinRpt: Dataset, Evaluation System and LLM-based Multi-agent Framework for Equity Research Report Generation](finrpt_dataset_evaluation_system_and_llm-based_multi-agent_framework_for_equity_.md)
+- [LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models](liecraft_a_multi-agent_framework_for_evaluating_deceptive_capabilities_in_langua.md)
+
+<!-- RELATED:END -->

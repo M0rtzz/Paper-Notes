@@ -179,3 +179,15 @@ $$\|\text{Res}(\text{AttnNet}(\bm{X}))\|_{1,\infty} \leq \max_{m=0}^{L} (r(1-\al
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 NLP（GPT-2、LLaMA）和 CV（ViT），消融详尽，但缺乏大规模验证
 - 写作质量: ⭐⭐⭐⭐ 推导严谨，理论与实验结合紧密，但部分符号密集
 - 价值: ⭐⭐⭐⭐ 提供了 Hopfield-Transformer 关联的新深度，rank collapse 缓解具有实际意义，但需大模型验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigate Position Bias in LLMs via Scaling a Single Hidden States Channel](../../ACL2025/llm_nlp/mitigate_position_bias_in_large_language_models_via_scaling_a_single_dimension.md)
+- [Spectral Conditioning of Attention Improves Transformer Performance](spectral_conditioning_of_attention_improves_transformer_performance.md)
+- [Characterizing the Expressivity of Fixed-Precision Transformer Language Models](characterizing_the_expressivity_of_fixed-precision_transformer_language_models.md)
+- [Unifying Attention Heads and Task Vectors via Hidden State Geometry in In-Context Learning](unifying_attention_heads_and_task_vectors_via_hidden_state_geometry_in_in-contex.md)
+- [PlanGenLLMs: A Modern Survey of LLM Planning Capabilities](../../ACL2025/llm_nlp/plangenllms_planning_survey.md)
+
+<!-- RELATED:END -->

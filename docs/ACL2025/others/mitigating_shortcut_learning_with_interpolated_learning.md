@@ -125,3 +125,15 @@ $$J_{\text{ERM}}(\theta) = \frac{1}{n} \sum_{i=1}^{n} \ell(f_{\text{cls}}(z_i), 
 | 实验充分度 | 9 |
 | 写作质量 | 8 |
 | 总分 | 8 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+- [Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
+- [Value Residual Learning](value_residual_learning.md)
+- [Mitigating Confounding in Speech-Based Dementia Detection through Weight Masking](mitigating_confounding_in_speech-based_dementia_detection_through_weight_masking.md)
+- [On Agnostic PAC Learning in the Small Error Regime](../../NeurIPS2025/others/on_agnostic_pac_learning_in_the_small_error_regime.md)
+
+<!-- RELATED:END -->

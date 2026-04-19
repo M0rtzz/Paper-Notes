@@ -324,3 +324,15 @@ MuMo 在 LD50 任务上取得了 **27% 的显著提升**（0.615 → 0.782），
 - **表达质量**: 4/5 — 论文结构清晰，动机阐述充分
 - **实用性**: 4/5 — 开源代码，直接可用于药物发现
 - **综合评分**: 4/5
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+- [Aligning by Misaligning: Boundary-aware Curriculum Learning for Multimodal Alignment](aligning_by_misaligning_boundaryaware_curriculum_learning_fo.md)
+- [MIRe: Enhancing Multimodal Queries Representation via Fusion-Free Modality Interaction](../../ACL2025/multimodal_vlm/mire_enhancing_multimodal_queries_representation_via_fusion-free_modality_intera.md)
+- [Multimodal Negative Learning](multimodal_negative_learning.md)
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+
+<!-- RELATED:END -->

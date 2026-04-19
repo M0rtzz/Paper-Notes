@@ -124,3 +124,15 @@ Bootstrapping 在 MPCNN 中占 ~70% 时间，在 CryptoFace 中仅占 ~10%。卷
 ## 评分
 
 ⭐⭐⭐⭐ — 系统工程和密码学架构设计出色，首次实现端到端加密 FR 有开创意义。7 倍加速和分辨率无关性是强有力的贡献，但实际部署仍受限于 FHE 固有的高延迟
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](../../ICML2025/human_understanding/sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)
+- [Generalizable End-to-End Tool-Use RL with Synthetic CodeGym](../../ICLR2026/human_understanding/generalizable_end-to-end_tool-use_rl_with_synthetic_codegym.md)
+- [MatchED: Crisp Edge Detection Using End-to-End, Matching-based Supervision](../../CVPR2026/human_understanding/matched_crisp_edge_detection_using_end-to-end_matching-based_supervision.md)
+- [UniLS: End-to-End Audio-Driven Avatars for Unified Listening and Speaking](../../CVPR2026/human_understanding/unils_end-to-end_audio-driven_avatars_for_unified_listening_and_speaking.md)
+- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](../../ICCV2025/human_understanding/lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
+
+<!-- RELATED:END -->

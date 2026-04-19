@@ -172,3 +172,15 @@ Split-Layer 在 6 种 INR 骨干、4 个任务上进行了全面评估。
 - **实验充分度**: ⭐⭐⭐⭐ — 4 个任务 × 6 个骨干的全面评估，但缺乏计算效率的定量对比
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论推导清晰，图示直观
 - **价值**: ⭐⭐⭐⭐ — 即插即用的通用 INR 增强模块，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SL2A-INR: Single-Layer Learnable Activation for Implicit Neural Representation](../../ICCV2025/3d_vision/sl2a-inr_single-layer_learnable_activation_for_implicit_neural_representation.md)
+- [GaussianImage++: Boosted Image Representation and Compression with 2D Gaussian Splatting](gaussianimage_boosted_image_representation_and_compression_with_2d_gaussian_spla.md)
+- [Point-SRA: Self-Representation Alignment for 3D Representation Learning](point-sra_self-representation_alignment_for_3d_representation_learning.md)
+- [NTK-Guided Implicit Neural Teaching](../../CVPR2026/3d_vision/ntk-guided_implicit_neural_teaching.md)
+- [Enhancing Generalization of Depth Estimation Foundation Model via Weakly-Supervised Adaptation with Regularization](enhancing_generalization_of_depth_estimation_foundation_model_via_weakly-supervi.md)
+
+<!-- RELATED:END -->

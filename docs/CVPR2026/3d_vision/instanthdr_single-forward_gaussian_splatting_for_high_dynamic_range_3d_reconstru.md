@@ -121,3 +121,15 @@ $$\tilde{\boldsymbol{t}}_v^A = \text{softmax}\left(\frac{QK^\top}{\sqrt{d}}\righ
 - 实验充分度: ⭐⭐⭐⭐ 多设置(4/8/18-view, zero-shot/后优化, LDR/HDR)全面对比+消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，pipeline图直观，公式符号一致
 - 价值: ⭐⭐⭐⭐⭐ 将HDR 3D重建从分钟级压缩到秒级，实用价值极高，数据集有广泛复用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+- [Off The Grid: Detection of Primitives for Feed-Forward 3D Gaussian Splatting](off_the_grid_detection_of_primitives_for_feed-forward_3d_gaussian_splatting.md)
+- [CrowdGaussian: Reconstructing High-Fidelity 3D Gaussians for Human Crowd from a Single Image](crowdgaussian_reconstructing_high-fidelity_3d_gaussians_for_human_crowd_from_a_s.md)
+- [AeroDGS: Physically Consistent Dynamic Gaussian Splatting for Single-Sequence Aerial 4D Reconstruction](aerodgs_physically_consistent_dynamic_gaussian_splatting_for_single-sequence_aer.md)
+- [SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting](sr3r_rethinking_super-resolution_3d_reconstruction_with_feed-forward_gaussian_sp.md)
+
+<!-- RELATED:END -->

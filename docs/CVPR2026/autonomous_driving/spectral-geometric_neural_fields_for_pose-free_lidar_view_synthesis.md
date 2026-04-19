@@ -132,3 +132,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ 两个数据集 × 两种频率设置，全面对比了有位姿/无位姿方法，消融实验清晰
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数学推导完整，但部分公式密集度较高
 - **价值**: ⭐⭐⭐⭐⭐ 无位姿 LiDAR 视图合成的重要进展，在低频场景下显著超越 SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SG-NLF: Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis](sgnlf_spectralgeometric_neural_fields_for_posefre.md)
+- [Learning Geometric and Photometric Features from Panoramic LiDAR Scans for Outdoor Place Categorization](learning_geometric_and_photometric_features_from_panoramic_lidar_scans_for_outdo.md)
+- [LiREC-Net: A Target-Free and Learning-Based Network for LiDAR, RGB, and Event Calibration](lirec-net_a_target-free_and_learning-based_network_for_lidar_rgb_and_event_calib.md)
+- [EMDUL: Expanding mmWave Datasets for Human Pose Estimation with Unlabeled Data and LiDAR Datasets](expanding_mmwave_datasets_for_human_pose_estimation_with_unlabeled_data_and_lida.md)
+- [Learning to Drive is a Free Gift: Large-Scale Label-Free Autonomy Pretraining from Unposed In-The-Wild Videos](learning_to_drive_is_a_free_gift_large-scale_label-free_autonomy_pretraining_fro.md)
+
+<!-- RELATED:END -->

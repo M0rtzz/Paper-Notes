@@ -129,3 +129,15 @@ TeamLoRA在每个线性层上添加一个非对称的LoRA旁路。输入 $x$ 首
 - 实验充分度: ⭐⭐⭐⭐ CME benchmark全面，多模型多模态验证，效率分析详细，但缺少更多下游任务的单独评估
 - 写作质量: ⭐⭐⭐⭐ 表述清晰，图表丰富，但博弈论部分的形式化稍显冗长
 - 价值: ⭐⭐⭐⭐ 对PEFT多任务学习场景的实际应用价值高，方案可直接集成到现有训练框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DenseLoRA: Dense Low-Rank Adaptation of Large Language Models](denselora_dense_low-rank_adaptation_of_large_language_models.md)
+- [BeamLoRA: Beam-Constraint Low-Rank Adaptation](beamlora_beam_constraint_lora.md)
+- [TableLoRA: Low-rank Adaptation on Table Structure Understanding for Large Language Models](table_lora_structure_understanding.md)
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](../../NeurIPS2025/model_compression/gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](../../NeurIPS2025/model_compression/reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+
+<!-- RELATED:END -->

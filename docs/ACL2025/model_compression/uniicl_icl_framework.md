@@ -158,3 +158,15 @@ UniICL 的核心优势在于"统一性"和"轻量性"：用最少的额外参数
 - 实验充分度: ⭐⭐⭐⭐ 多任务多骨干验证 + 效率分析 + 消融完整，但缺少更大规模模型和人工评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示丰富，方法描述准确，但 Related Work 稍显拥挤
 - 对我的价值: ⭐⭐⭐ 提供了 ICL 效率优化的实用思路，Demonstration Bank 缓存机制和 PPL gain 挖掘策略可借鉴
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LoRA Fine-Tuning Without GPUs: A CPU-Efficient Meta-Generation Framework for LLMs](../../ICML2025/model_compression/lora_fine-tuning_without_gpus_a_cpu-efficient_meta-generation_framework_for_llms.md)
+- [UniQuanF: Unifying Uniform and Binary-coding Quantization for Accurate Compression of Large Language Models](uniquanf_unified_quantization.md)
+- [Sample Efficient Demonstration Selection for In-Context Learning](../../ICML2025/model_compression/sample_efficient_demonstration_selection_for_in-context_learning.md)
+- [HyperLoRA: Parameter-Efficient Adaptive Generation for Portrait Synthesis](../../CVPR2025/model_compression/hyperlora_parameter-efficient_adaptive_generation_for_portrait_synthesis.md)
+- [OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference](../../ICML2025/model_compression/orthorank_token_selection_via_sink_token_orthogonality_for_efficient_llm_inferen.md)
+
+<!-- RELATED:END -->

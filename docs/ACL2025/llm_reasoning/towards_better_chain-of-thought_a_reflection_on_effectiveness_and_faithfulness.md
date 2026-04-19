@@ -148,3 +148,15 @@ QUIRE 在 Gemma2-9B 上同样有效，ProntoQA FBS 从 60.5 提升至 69.5。
 - **实验充分度**: ⭐⭐⭐⭐ — 9 个数据集、4 个模型、大量附录补充实验
 - **写作质量**: ⭐⭐⭐⭐ — 分析到方法的逻辑链清晰
 - **价值**: ⭐⭐⭐⭐⭐ — 对理解 CoT 本质有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning](../../NeurIPS2025/llm_reasoning/the_surprising_effectiveness_of_negative_reinforcement_in_llm_reasoning.md)
+- [Reasoning Models Better Express Their Confidence](../../NeurIPS2025/llm_reasoning/reasoning_models_better_express_their_confidence.md)
+- [CoT-Valve: Length-Compressible Chain-of-Thought Tuning](cot-valve_length-compressible_chain-of-thought_tuning.md)
+- [Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning](unveiling_the_key_factors_for_distilling_chain-of-thought_reasoning.md)
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](drt_deep_reasoning_translation_via_long_chain-of-thought.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ $$\mathcal{L} = \frac{1}{\sigma_t^2} \|\hat{x}_{0,c_{\text{start}}} - (\hat{x}_{
 - 实验充分度: ⭐⭐⭐⭐⭐ — 定量+用户研究+消融，说服力强
 - 写作质量: ⭐⭐⭐⭐ — 公式推导完整，图示清晰，问题动机阐述好
 - 价值: ⭐⭐⭐⭐ — 对生成式帧插值领域有直接推进，且无训练的实用性高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency](large_scale_diffusion_distillation_via_score-regularized_continuous-time_consist.md)
+- [Inference-Time Diffusion Model Distillation](../../ICCV2025/image_generation/inference-time_diffusion_model_distillation.md)
+- [Conditionally Whitened Generative Models for Probabilistic Time Series Forecasting](conditionally_whitened_generative_models_for_probabilistic_time_series_forecasti.md)
+- [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](../../ICCV2025/image_generation/sana-sprint_one-step_diffusion_with_continuous-time_consistency_distillation.md)
+- [Loopholing Discrete Diffusion: Deterministic Bypass of the Sampling Wall](loopholing_discrete_diffusion_deterministic_bypass_of_the_sampling_wall.md)
+
+<!-- RELATED:END -->

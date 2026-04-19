@@ -145,3 +145,15 @@ DL4ND 是一个噪声检测模块，可以与任意 DG 方法（ERM、ERM++、SA
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义实用且重要，方法简洁有效，实验充分覆盖多种噪声类型和数据集，对 DG+LNL 交叉领域的推进有重要意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gradient-Guided Annealing for Domain Generalization](../../CVPR2025/llm_evaluation/gradient-guided_annealing_for_domain_generalization.md)
+- [Set-Valued Predictions for Robust Domain Generalization](../../ICML2025/llm_evaluation/set_valued_predictions_for_robust_domain_generalization.md)
+- [FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching](../../ICML2025/llm_evaluation/fedtail_federated_long-tailed_domain_generalization_with_sharpness-guided_gradie.md)
+- [Optimal Transport-Induced Samples against Out-of-Distribution Overconfidence](optimal_transport-induced_samples_against_out-of-distribution_overconfidence.md)
+- [Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_with_the_hu.md)
+
+<!-- RELATED:END -->

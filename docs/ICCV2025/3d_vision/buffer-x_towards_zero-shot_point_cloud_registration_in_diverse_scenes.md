@@ -128,3 +128,15 @@ FPS vs 学习型检测器：FPS 不仅在域外更鲁棒，在训练域（3DMatc
 - **实验充分度**: ⭐⭐⭐⭐⭐ 11 个数据集的全面评估，消融实验详尽
 - **写作质量**: ⭐⭐⭐⭐ 问题分析清晰，图表丰富，但部分公式冗长
 - **价值**: ⭐⭐⭐⭐⭐ 真正解决实用痛点（零样本泛化），benchmark 贡献持久
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TurboReg: TurboClique for Robust and Efficient Point Cloud Registration](turboreg_turboclique_for_robust_and_efficient_point_cloud_registration.md)
+- [RobuSTereo: Robust Zero-Shot Stereo Matching under Adverse Weather](robustereo_robust_zero-shot_stereo_matching_under_adverse_weather.md)
+- [Towards More Diverse and Challenging Pre-training for Point Cloud Learning: Self-Supervised Cross Reconstruction with Decoupled Views](towards_more_diverse_and_challenging_pre-training_for_point_cloud_learning_self-.md)
+- [Zero-Shot Inexact CAD Model Alignment from a Single Image](zero-shot_inexact_cad_model_alignment_from_a_single_image.md)
+- [MonoMobility: Zero-Shot 3D Mobility Analysis from Monocular Videos](monomobility_zero-shot_3d_mobility_analysis_from_monocular_videos.md)
+
+<!-- RELATED:END -->

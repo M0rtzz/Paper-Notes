@@ -176,3 +176,15 @@ $$\mathcal{L} = 1 - \frac{2 \times \sum \tilde{Y}_{ijk} \odot Y_{ijk}}{\sum \til
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集（364.6K 样本）、多基线、全面消融、2D 回投验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，视觉科学背景融入自然
 - 价值: ⭐⭐⭐⭐ 对 AR/VR 和辅助技术有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniEgoMotion: A Unified Model for Egocentric Motion Reconstruction, Forecasting, and Generation](../../ICCV2025/3d_vision/uniegomotion_a_unified_model_for_egocentric_motion_reconstruction_forecasting_an.md)
+- [Benchmarking Egocentric Visual-Inertial SLAM at City Scale](../../ICCV2025/3d_vision/benchmarking_egocentric_visualinertial_slam_at_city_scale.md)
+- [GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding](../../CVPR2025/3d_vision/ga3ce_unconstrained_3d_gaze_estimation_with_gaze-aware_3d_context_encoding.md)
+- [IndEgo: A Dataset of Industrial Scenarios and Collaborative Work for Egocentric Assistants](indego_a_dataset_of_industrial_scenarios_and_collaborative_work_for_egocentric_a.md)
+- [Mesh Interpolation Graph Network for Dynamic and Spatially Irregular Global Weather Forecasting](mesh_interpolation_graph_network_for_dynamic_and_spatially_irregular_global_weat.md)
+
+<!-- RELATED:END -->

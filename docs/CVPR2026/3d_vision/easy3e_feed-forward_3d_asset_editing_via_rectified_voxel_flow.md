@@ -135,3 +135,15 @@ Easy3E 在所有指标上全面领先：FID 比次优 TRELLIS 降低 43.7%，LPI
 - 实验充分度: ⭐⭐⭐⭐ 定量指标 + 用户研究 + 消融实验齐全，但缺乏推理速度对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导详尽，图示直观
 - 价值: ⭐⭐⭐⭐ 前馈式 3D 编辑是刚需场景，本文给出了目前最强的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [VGG-T3: Offline Feed-Forward 3D Reconstruction at Scale](vgg-t3_offline_feed-forward_3d_reconstruction_at_scale.md)
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+
+<!-- RELATED:END -->

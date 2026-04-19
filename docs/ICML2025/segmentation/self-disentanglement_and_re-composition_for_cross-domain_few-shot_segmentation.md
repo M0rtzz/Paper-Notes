@@ -182,3 +182,15 @@ $$L = L_{BCE} + \lambda L_{orth}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验极为全面——模块消融、距离度量比较、rank分析、正交权重敏感性、比较策略对比、互信息验证、CKA域相似性、AFW可视化、计算效率对比、理论分析
 - 写作质量: ⭐⭐⭐⭐ 论文逻辑从问题发现→数学分析→CKA验证→方法设计的推进自然流畅，但公式排版略显密集
 - 价值: ⭐⭐⭐⭐ 在CD-FSS取得新SOTA且方法轻量高效；ViT结构解耦视角具有可推广性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adapter Naturally Serves as Decoupler for Cross-Domain Few-Shot Semantic Segmentation](adapter_naturally_serves_as_decoupler_for_cross-domain_few-shot_semantic_segment.md)
+- [Dual-Agent Optimization framework for Cross-Domain Few-Shot Segmentation](../../CVPR2025/segmentation/dual-agent_optimization_framework_for_cross-domain_few-shot_segmentation.md)
+- [Bridging Granularity Gaps: Hierarchical Semantic Learning for Cross-Domain Few-Shot Segmentation](../../AAAI2026/segmentation/bridging_granularity_gaps_hierarchical_semantic_learning_for_cross-domain_few-sh.md)
+- [Object-level Correlation for Few-Shot Segmentation](../../ICCV2025/segmentation/object-level_correlation_for_few-shot_segmentation.md)
+- [Balanced Learning for Domain Adaptive Semantic Segmentation](balanced_learning_for_domain_adaptive_semantic_segmentation.md)
+
+<!-- RELATED:END -->

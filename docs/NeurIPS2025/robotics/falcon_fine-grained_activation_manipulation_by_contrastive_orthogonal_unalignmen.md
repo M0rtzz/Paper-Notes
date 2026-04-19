@@ -119,3 +119,15 @@ $$\nabla\mathcal{L}_\mathcal{F}^{\text{proj}} = \nabla\mathcal{L}_\mathcal{F} - 
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三大基准、三种模型、多项消融与对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
 - 综合价值: ⭐⭐⭐⭐ — LLM 遗忘领域的扎实进步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PoisonBench: Assessing Large Language Model Vulnerability to Data Poisoning](../../ICML2025/robotics/poisonbench_assessing_large_language_model_vulnerability_to_data_poisoning.md)
+- [VITRIX-CLIPIN: Enhancing Fine-Grained Visual Understanding in CLIP via Instruction Editing Data and Long Captions](vitrix-clipin_enhancing_fine-grained_visual_understanding_in_clip_via_instructio.md)
+- [RoboCerebra: A Large-scale Benchmark for Long-horizon Robotic Manipulation Evaluation](robocerebra_a_large-scale_benchmark_for_long-horizon_robotic_manipulation_evalua.md)
+- [CHEER-Ekman: Fine-grained Embodied Emotion Classification](../../ACL2025/robotics/cheer-ekman_fine-grained_embodied_emotion_classification.md)
+- [Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction](../../CVPR2025/robotics/phoenix_a_motion-based_self-reflection_framework_for_fine-grained_robotic_action.md)
+
+<!-- RELATED:END -->

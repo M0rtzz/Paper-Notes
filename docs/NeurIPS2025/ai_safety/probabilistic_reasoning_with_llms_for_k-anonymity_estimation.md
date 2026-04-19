@@ -117,3 +117,15 @@ Branch（Bayesian network Reasoning for k-ANonymity using Conditional Hierarchie
 - 实验充分度: ⭐⭐⭐⭐ 多模型对比、消融分析、普查验证全面，但数据集较小
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，图示直观，错误分析深入
 - 价值: ⭐⭐⭐⭐ 兼具学术价值（LLM概率推理新基准）和实用价值（用户隐私保护工具）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Contextual Integrity in LLMs via Reasoning and Reinforcement Learning](contextual_integrity_in_llms_via_reasoning_and_reinforcement_learning.md)
+- [Understanding and Improving Adversarial Robustness of Neural Probabilistic Circuits](understanding_and_improving_adversarial_robustness_of_neural_probabilistic_circu.md)
+- [Optimal Adjustment Sets for Nonparametric Estimation of Weighted Controlled Direct Effect](optimal_adjustment_sets_for_nonparametric_estimation_of_weighted_controlled_dire.md)
+- [LLM Strategic Reasoning: Agentic Study through Behavioral Game Theory](llm_strategic_reasoning_agentic_study_through_behavioral_gam.md)
+- [Evaluating the Promise and Pitfalls of LLMs in Hiring Decisions](evaluating_the_promise_and_pitfalls_of_llms_in_hiring_decisions.md)
+
+<!-- RELATED:END -->

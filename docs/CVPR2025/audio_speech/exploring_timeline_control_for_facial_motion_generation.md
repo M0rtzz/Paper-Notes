@@ -128,3 +128,15 @@ TAS(Timeline Alignment Score)评估时间线对齐精度，SND评估运动自然
 - 实验充分度: ⭐⭐⭐⭐ 消融详尽，用户研究完善，但缺乏与其他方法的定量对比
 - 写作质量: ⭐⭐⭐⭐ 整体清晰，但标注和生成两部分的衔接可以更紧凑
 - 价值: ⭐⭐⭐⭐ 面部动作精细控制的需求真实且重要，方法有实际应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots](../../ACL2025/audio_speech/aae_voice_chatbot.md)
+- [MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls](video-guided_foley_sound_generation_with_multimodal_controls.md)
+- [MemoryTalker: Personalized Speech-Driven 3D Facial Animation via Audio-Guided Stylization](../../ICCV2025/audio_speech/memorytalker_personalized_speech-driven_3d_facial_animation_via_audio-guided_sty.md)
+- [Echoes of Humanity: Exploring the Perceived Humanness of AI Music](../../NeurIPS2025/audio_speech/echoes_of_humanity_exploring_the_perceived_humanness_of_ai_music.md)
+- [DistinctAD: Distinctive Audio Description Generation in Contexts](distinctad_distinctive_audio_description_generation_in_contexts.md)
+
+<!-- RELATED:END -->

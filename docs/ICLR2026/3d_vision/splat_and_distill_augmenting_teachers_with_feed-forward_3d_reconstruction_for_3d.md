@@ -145,3 +145,15 @@ $$\min_{\theta_s} \mathcal{L}_{distill}(\text{head}(\mathbf{F}_s^{tgt}), \text{s
 ## 评分
 
 ⭐⭐⭐⭐ — 方法新颖清晰，实验全面扎实，在 3D-aware VFM 方向上是一个重要贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Splat-SAP: Feed-Forward Gaussian Splatting for Human-Centered Scene with Scale-Aware Point Map Reconstruction](../../AAAI2026/3d_vision/splat-sap_feed-forward_gaussian_splatting_for_human-centered_scene_with_scale-aw.md)
+- [Splat Feature Solver](splat_feature_solver.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](../../CVPR2026/3d_vision/more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [Speed3R: Sparse Feed-forward 3D Reconstruction Models](../../CVPR2026/3d_vision/speed3r_sparse_feed-forward_3d_reconstruction_models.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](../../CVPR2026/3d_vision/panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 441条数据+系统消融+定性分析，但规模有限
 - 写作质量: ⭐⭐⭐⭐ 形式化清晰，示例直观，图示力强
 - 价值: ⭐⭐⭐⭐ 对AI管线自动化有直接工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](../../NeurIPS2025/llm_agent/rd-agent-quant_a_multi-agent_framework_for_data-centric_factors_and_model_joint_.md)
+- [Select, Read, and Write: A Multi-Agent Framework of Full-Text-based Related Work Generation](select_read_and_write_a_multi-agent_framework_of_full-text-based_related_work_ge.md)
+- [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
+- [GUICourse: From General Vision Language Model to Versatile GUI Agent](guicourse_from_general_vision_language_model_to_versatile_gui_agent.md)
+- [Leveraging Dual Process Theory in Language Agent Framework for Real-time Simultaneous Human-AI Collaboration](dpt_agent_dual_process.md)
+
+<!-- RELATED:END -->

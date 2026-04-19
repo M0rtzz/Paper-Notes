@@ -111,3 +111,15 @@ DynAMO 在离线模型优化 (MBO) 中将设计多样性建模为分布匹配问
 - 实验充分度: ⭐⭐⭐⭐ 多领域验证 + 多基线组合 + 消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，52页详尽
 - 价值: ⭐⭐⭐⭐ 对科学发现场景中的 MBO 有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Score Matching with Missing Data](score_matching_with_missing_data.md)
+- [Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
+- [Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures](randomized_dimensionality_reduction_for_euclidean_maximization_and_diversity_mea.md)
+- [Evaluating the Evaluation of Diversity in Commonsense Generation](../../ACL2025/others/evaluating_the_evaluation_of_diversity_in_commonsense_generation.md)
+- [Fully Dynamic Euclidean Bi-Chromatic Matching in Sublinear Update Time](fully_dynamic_euclidean_bi-chromatic_matching_in_sublinear_update_time.md)
+
+<!-- RELATED:END -->

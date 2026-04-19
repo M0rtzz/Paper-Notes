@@ -147,3 +147,15 @@ SEAL 8B 模型在第一次迭代就超越了所有基线的隐私保护水平，
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多模型规模、多评判、人工评估、延迟分析面面俱到
 - 写作质量: ⭐⭐⭐⭐ 结构完整，算法框图清晰
 - 价值: ⭐⭐⭐⭐⭐ 解决了LLM隐私保护中的核心实用问题，开源代码和数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text](agentstealth_reinforcing_large_language_model_for_anonymizing_user-generated_tex.md)
+- [Efficient Verified Machine Unlearning for Distillation](efficient_verified_machine_unlearning_for_distillation.md)
+- [HealSplit: Towards Self-Healing through Adversarial Distillation in Split Federated Learning](../../AAAI2026/ai_safety/healsplit_towards_self-healing_through_adversarial_distillation_in_split_federat.md)
+- [Taught Well, Learned Ill: Towards Distillation-Conditional Backdoor Attack](taught_well_learned_ill_towards_distillation-conditional_backdoor_attack.md)
+- [Model Inversion with Layer-Specific Modeling and Alignment for Data-Free Continual Learning](model_inversion_with_layer-specific_modeling_and_alignment_for_data-free_continu.md)
+
+<!-- RELATED:END -->

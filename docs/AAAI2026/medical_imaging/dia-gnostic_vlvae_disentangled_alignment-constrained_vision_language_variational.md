@@ -119,3 +119,15 @@ $\mathcal{L}_{total} = \mathcal{L}_{CE} + \mathcal{L}_{ELBO} + \lambda_1 \mathca
 - 实验充分度: ⭐⭐⭐⭐ 两个标准数据集+消融+缺失模态实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，架构图清晰，逻辑流畅
 - 价值: ⭐⭐⭐⭐ 对缺失模态下的多模态医学报告生成有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Vision and Language for Robust Context-Aware Surgical Point Tracking: The VL-SurgPT Dataset and Benchmark](bridging_vision_and_language_for_robust_context-aware_surgical_point_tracking_th.md)
+- [Variational Autoencoder with Normalizing Flow for X-ray Spectral Fitting](../../NeurIPS2025/medical_imaging/variational_autoencoder_with_normalizing_flow_for_x-ray_spectral_fitting.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](../../CVPR2026/medical_imaging/prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+- [Constrained Best Arm Identification with Tests for Feasibility](constrained_best_arm_identification_with_tests_for_feasibility.md)
+- [Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment](unleashing_the_potential_of_large_language_models_for_text-to-image_generation_t.md)
+
+<!-- RELATED:END -->

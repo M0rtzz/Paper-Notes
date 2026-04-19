@@ -173,3 +173,15 @@ UEC泛化性最强，跨数据集PSNR提升3.1dB（vs ECM-MSEC）。
 - **实验充分度**: ⭐⭐⭐⭐ — 多数据集评估+泛化性分析+边缘检测下游任务+效率对比
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，恢复监督与单调性原则表述精炼
 - **价值**: ⭐⭐⭐⭐ — 以极小参数量实现竞争性能，具有实际部署价值，辐射校正视角具有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimizing Illuminant Estimation in Dual-Exposure HDR Imaging](optimizing_illuminant_estimation_in_dual-exposure_hdr_imaging.md)
+- [Defect Spectrum: A Granular Look of Large-Scale Defect Datasets with Rich Semantics](defect_spectrum_a_granular_look_of_large-scale_defect_datasets_with_rich_semanti.md)
+- [RAW-Adapter: Adapting Pre-trained Visual Model to Camera RAW Images](raw-adapter_adapting_pre-trained_visual_model_to_camera_raw_images.md)
+- [PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation](pyra_parallel_yielding_re-activation_for_training-inference_efficient_task_adapt.md)
+- [QueryCDR: Query-based Controllable Distortion Rectification Network for Fisheye Images](querycdr_query-based_controllable_distortion_rectification_network_for_fisheye_i.md)
+
+<!-- RELATED:END -->

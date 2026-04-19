@@ -120,3 +120,15 @@ $$\mathcal{L}_{DM} = \sum_{j=0}^{1} \gamma^j (\mathcal{L}_a^j + \alpha_1 \mathca
 - 实验充分度: ⭐⭐⭐⭐ 四任务全面对比、多策略消融和提示消融
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，框架图清晰
 - 价值: ⭐⭐⭐⭐ 对智能手机图像处理有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TransMamba: A Sequence-Level Hybrid Transformer-Mamba Language Model](transmamba_a_sequence-level_hybrid_transformer-mamba_language_model.md)
+- [Soft Filtering: Guiding Zero-Shot Composed Image Retrieval with Prescriptive and Proscriptive Prompts](soft_filtering_guiding_zero-shot_composed_image_retrieval_with_prescriptive_and_.md)
+- [PromptIQA: Boosting the Performance and Generalization for No-Reference Image Quality Assessment via Prompts](../../ECCV2024/llm_nlp/promptiqa_boosting_the_performance_and_generalization_for_no-reference_image_qua.md)
+- [Do Not Merge My Model! Safeguarding Open-Source LLMs Against Unauthorized Model Merging](do_not_merge_my_model_safeguarding_open-source_llms_against_unauthorized_model_m.md)
+- [An Invariant Latent Space Perspective on Language Model Inversion](an_invariant_latent_space_perspective_on_language_model_inve.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ CrossVid的核心差异在于：不仅覆盖多视角（同一场景不同视角
 - 作为纯基准工作，没有提供任何解决方案（即使是简单的baseline改进也没有尝试）
 - 视频来源集中在少数领域，多视角任务仅限无人机场景
 - CCQA开放题的评估方法（GPT-4.1 judge）缺乏可靠性验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VP-Bench: A Comprehensive Benchmark for Visual Prompting in Multimodal Large Language Models](vp-bench_a_comprehensive_benchmark_for_visual_prompting_in_m.md)
+- [OmniSpatial: Towards Comprehensive Spatial Reasoning Benchmark for Vision Language Models](../../ICLR2026/multimodal_vlm/omnispatial_towards_comprehensive_spatial_reasoning_benchmark_for_vision_languag.md)
+- [Cross-Modal Unlearning via Influential Neuron Path Editing in Multimodal Large Language Models](cross-modal_unlearning_via_influential_neuron_path_editing_i.md)
+- [SpatiaLQA: A Benchmark for Evaluating Spatial Logical Reasoning in Vision-Language Models](../../CVPR2026/multimodal_vlm/spatialqa_a_benchmark_for_evaluating_spatial_logical_reasoning_in_vision-languag.md)
+- [EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models](../../ACL2025/multimodal_vlm/effivlm_bench_vlm_acceleration.md)
+
+<!-- RELATED:END -->

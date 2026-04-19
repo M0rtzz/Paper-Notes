@@ -130,3 +130,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 定量指标全面，感知评估扎实，下游应用展示丰富
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，采集流程描述详尽，图表直观
 - **价值**: ⭐⭐⭐⭐⭐ 填补多物体精细手部HOI数据空白，对动作生成、机器人和具身AI有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](../../CVPR2026/human_understanding/teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)
+- [MDD: A Dataset for Text-and-Music Conditioned Duet Dance Generation](mdd_a_dataset_for_text-and-music_conditioned_duet_dance_generation.md)
+- [SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
+- [GUIOdyssey: A Comprehensive Dataset for Cross-App GUI Navigation on Mobile Devices](guiodyssey_a_comprehensive_dataset_for_cross-app_gui_navigation_on_mobile_device.md)
+- [UDC-VIT: A Real-World Video Dataset for Under-Display Cameras](udc-vit_a_real-world_video_dataset_for_under-display_cameras.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ HNS（Hamiltonian Neural Solver）的工作流程：
 - 实验充分度: ⭐⭐⭐⭐ — 从 toy 到 2D SWE 逐步验证，但缺少 3D 实验和更大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，从离散到连续的叙事线非常流畅
 - 价值: ⭐⭐⭐⭐ — 为 physics-informed ML 提供了新范式，但实际应用场景受限于 Hamiltonian 系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections](enforcing_governing_equation_constraints_in_neural_pde_solvers_via_training-free.md)
+- [INC: An Indirect Neural Corrector for Auto-Regressive Hybrid PDE Solvers](inc_an_indirect_neural_corrector_for_auto-regressive_hybrid_pde_solvers.md)
+- [Towards Universal Neural Operators through Multiphysics Pretraining](towards_universal_neural_operators_through_multiphysics_pretraining.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](../../ICLR2026/scientific_computing/one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
+
+<!-- RELATED:END -->

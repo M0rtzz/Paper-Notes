@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 跨多个模型家族验证，但缓存有限无法详细评估定量结果
 - 写作质量: ⭐⭐⭐⭐ 理论框架阐述清晰，概念层次分明
 - 价值: ⭐⭐⭐⭐⭐ 对理解 LLM 推理机制有深远意义，提供了新的概念工具和方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception](anytouch_2_general_optical_tactile_representation_learning_for_dynamic_tactile_p.md)
+- [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](../../ICCV2025/human_understanding/wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
+
+<!-- RELATED:END -->

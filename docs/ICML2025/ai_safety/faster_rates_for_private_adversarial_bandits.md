@@ -152,3 +152,15 @@ tags:
 - 实验充分度: ⭐⭐ — 纯理论无实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 条理清晰，结果形式优美
 - 价值: ⭐⭐⭐⭐⭐ — 在私有在线学习理论中具有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](../../NeurIPS2025/ai_safety/differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+- [Private Model Personalization Revisited](private_model_personalization_revisited.md)
+- [Improving the Variance of Differentially Private Randomized Experiments through Clustering](improving_the_variance_of_differentially_private_randomized_experiments_through_.md)
+- [Clients Collaborate: Flexible Differentially Private Federated Learning with Guaranteed Improvement of Utility-Privacy Trade-off](clients_collaborate_flexible_differentially_private_federated_learning_with_guar.md)
+- [Cascade: Token-Sharded Private LLM Inference](cascade_token-sharded_private_llm_inference.md)
+
+<!-- RELATED:END -->

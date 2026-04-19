@@ -146,3 +146,15 @@ $$u_{i,j} = f_{i,j}(p_i, d_j) + \left\|\frac{\mathbf{g}_{i,j}(\mathbf{x}_t(a_{i,
 - **实验**：⭐⭐⭐ — 医学数据集太小（100例），电信数据集也较标准，缺乏大规模验证
 - **写作**：⭐⭐⭐⭐ — 问题定义清晰，算法描述完整
 - **实用性**：⭐⭐⭐⭐ — 在LLM proliferation时代有明确的应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FDP: A Frequency-Decomposition Preprocessing Pipeline for Unsupervised Anomaly Detection in Brain MRI](fdp_a_frequency-decomposition_preprocessing_pipeline_for_unsupervised_anomaly_de.md)
+- [SPA: Achieving Consensus in LLM Alignment via Self-Priority Optimization](spa_achieving_consensus_in_llm_alignment_via_self-priority_optimization.md)
+- [Multivariate Conformal Selection](../../ICML2025/medical_imaging/multivariate_conformal_selection.md)
+- [Intervention Efficiency and Perturbation Validation Framework: Capacity-Aware and Robust Clinical Model Selection under the Rashomon Effect](intervention_efficiency_and_perturbation_validation_framework_capacity-aware_and.md)
+- [Unsupervised Motion-Compensated Decomposition for Cardiac MRI Reconstruction via Neural Representation](unsupervised_motion-compensated_decomposition_for_cardiac_mri_reconstruction_via.md)
+
+<!-- RELATED:END -->

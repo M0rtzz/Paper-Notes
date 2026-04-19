@@ -146,3 +146,15 @@ $$\mathcal{L} = \begin{cases} \mathcal{L}_{photo}(\mathcal{G}^c), & \text{NVS预
 - 实验充分度: ⭐⭐⭐⭐⭐ 定量+用户研究+跨数据集泛化+消融全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 图示精美，方法阐述清晰，与现有工作对比充分
 - 价值: ⭐⭐⭐⭐ 亚秒级3D风格化具有很强的实用价值，可直接用于交互式应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instant Video Models: Universal Adapters for Stabilizing Image-Based Networks](instant_video_models_universal_adapters_for_stabilizing_image-based_networks.md)
+- [A3GS: Arbitrary Artistic Style into Arbitrary 3D Gaussian Splatting](../../ICCV2025/3d_vision/a3gs_arbitrary_artistic_style_into_arbitrary_3d_gaussian_spl.md)
+- [D$^2$USt3R: Enhancing 3D Reconstruction for Dynamic Scenes](d2ust3r_enhancing_3d_reconstruction_for_dynamic_scenes.md)
+- [InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes](../../ICCV2025/3d_vision/instascene_towards_complete_3d_instance_decomposition_and_reconstruction_from_cl.md)
+- [EAG3R: Event-Augmented 3D Geometry Estimation for Dynamic and Extreme-Lighting Scenes](eag3r_event-augmented_3d_geometry_estimation_for_dynamic_and_extreme-lighting_sc.md)
+
+<!-- RELATED:END -->

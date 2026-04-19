@@ -141,3 +141,15 @@ Frozen LLM 设置下 TaMo 平均提升 **42.65%**；在 StructQA 和 WikiSQL 上
 - 实验充分度: ⭐⭐⭐⭐ — 5 个数据集 + 多种训练设置 + 消融 + 可视化
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，StructQA 的诊断实验很有说服力
 - 价值: ⭐⭐⭐⭐⭐ — 对 LLM 表格推理有实质性推进，即插即用设计实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Bundling with Large Language Models for Zero-Shot Inference on Text-Attributed Graphs](dynamic_bundling_with_large_language_models_for_zero-shot_inference_on_text-attr.md)
+- [From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](../../ICML2025/graph_learning/from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)
+- [Mario: Multimodal Graph Reasoning with Large Language Models](../../CVPR2026/graph_learning/mario_multimodal_graph_reasoning_with_large_language_models.md)
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](../../ICML2025/graph_learning/graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+- [Ontology-Guided Reverse Thinking Makes Large Language Models Stronger on Knowledge Graph Question Answering](../../ACL2025/graph_learning/ontology-guided_reverse_thinking_makes_large_language_models_stronger_on_knowled.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ PoC 实验：在 Mistral-7B 第 15 层激活 (4096 维) 上训练稀疏自编码
 - 实验充分度: ⭐⭐ 仅有极小规模的 PoC 实验，未实现完整架构
 - 写作质量: ⭐⭐⭐⭐ 神经科学和 AI 的综述部分写得清晰，跨学科叙述到位
 - 价值: ⭐⭐⭐ 提供了有意义的设计思路，但缺乏实际验证限制了直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Modal Logical Neural Networks for Financial AI](modal_logical_neural_networks_for_financial_ai.md)
+- [Geometric Priors for Generalizable World Models via Vector Symbolic Architecture](../../NeurIPS2025/interpretability/geometric_priors_for_generalizable_world_models_via_vector_symbolic_architecture.md)
+- [Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
+- [AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](../../NeurIPS2025/interpretability/agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
+- [SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior](../../ICML2025/interpretability/safetyanalyst_interpretable_transparent_and_steerable_safety_moderation_for_ai_b.md)
+
+<!-- RELATED:END -->

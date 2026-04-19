@@ -122,3 +122,15 @@ TryonNet: $\mathcal{L}_{\text{TryonNet}} = \mathcal{L}_{\text{Diff}} + \lambda_1
 - **实验充分度**: ⭐⭐⭐⭐ 3 数据集、多基线对比、消融完整，但缺少实际移动端延迟数据
 - **写作质量**: ⭐⭐⭐⭐ 架构图清晰，损失推导完备
 - **价值**: ⭐⭐⭐⭐⭐ 直接对接产业需求（电商、隐私），首次证明高质量 VTON 的移动端可行性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RefTon: Reference Person Shot Assist Virtual Try-on](refton_reference_person_shot_assist_virtual_try-on.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](referencefree_image_quality_assessment_for_virtual.md)
+- [4DSurf: High-Fidelity Dynamic Scene Surface Reconstruction](textit4dsurf_high-fidelity_dynamic_scene_surface_reconstruction.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [IDperturb: Enhancing Variation in Synthetic Face Generation via Angular Perturbations](idperturb_enhancing_variation_in_synthetic_face_generation_via_angular_perturbat.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ COSMOS 采用学生-教师自蒸馏框架。学生模型和教师模型共享相
 - 实验充分度: ⭐⭐⭐⭐⭐ 检索、分类、分割三大类任务 + 视觉感知和组合理解评估 + 充分消融
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，图表丰富，方法阐述明确
 - 价值: ⭐⭐⭐⭐ 在数据高效的 VLM 预训练方向提供了有价值的范式，特别是文本裁剪策略值得推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SiLC: Improving Vision Language Pretraining with Self-Distillation](../../ECCV2024/segmentation/silc_improving_vision_language_pretraining_with_self-distillation.md)
+- [DreamLIP: Language-Image Pre-training with Long Captions](../../ECCV2024/segmentation/dreamlip_language-image_pre-training_with_long_captions.md)
+- [A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders](multi-modal_contrastive_masked_autoencoders_a_two-stage_progressive_pre-training.md)
+- [DFormerv2: Geometry Self-Attention for RGBD Semantic Segmentation](dformerv2_geometry_self-attention_for_rgbd_semantic_segmentation.md)
+- [Vision Transformers with Self-Distilled Registers](../../NeurIPS2025/segmentation/vision_transformers_with_self-distilled_registers.md)
+
+<!-- RELATED:END -->

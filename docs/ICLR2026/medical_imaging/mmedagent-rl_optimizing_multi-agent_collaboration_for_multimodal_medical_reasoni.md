@@ -127,3 +127,15 @@ $$\mathcal{J}_{C\text{-}MARL}(\theta) = \mathbb{E}[\mathcal{J}_{GRPO}(\theta) + 
 ⭐⭐⭐⭐⭐ (5/5)
 
 方法设计优雅，C-MARL 的熵调节策略既有直觉合理性又有理论支撑。实验全面且说服力强，7B 模型超越 GPT-4o 的结果令人印象深刻。课程学习与 RL 的结合为多智能体协作提供了新范式。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resp-Agent: An Agent-Based System for Multimodal Respiratory Sound Generation and Disease Diagnosis](resp-agent_an_agent-based_system_for_multimodal_respiratory_sound_generation_and.md)
+- [MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks](../../NeurIPS2025/medical_imaging/medagentboard_benchmarking_multi-agent_collaboration_with_conventional_methods_f.md)
+- [CARE: Towards Clinical Accountability in Multi-Modal Medical Reasoning with an Evidence-Grounded Agentic Framework](care_towards_clinical_accountability_in_multi-modal_medical_reasoning_with_an_ev.md)
+- [UltrasoundAgents: Hierarchical Multi-Agent Evidence-Chain Reasoning for Breast Ultrasound Diagnosis](../../CVPR2025/medical_imaging/ultrasoundagents_hierarchical_multi-agent_evidence-chain_reasoning_for_breast_ul.md)
+- [LungNoduleAgent: A Collaborative Multi-Agent System for Precision Diagnosis of Lung Nodules](../../AAAI2026/medical_imaging/lungnoduleagent_a_collaborative_multi-agent_system_for_precision_diagnosis_of_lu.md)
+
+<!-- RELATED:END -->

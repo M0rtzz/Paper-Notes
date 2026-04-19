@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 以分析为主，缺乏利用几何改进下游的实验
 - 写作质量: ⭐⭐⭐⭐⭐ 数据驱动观察→理论解释→应用的叙述流畅
 - 价值: ⭐⭐⭐⭐ 深化了对CLIP表示空间的理解，conformity概念有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Whitened CLIP as a Likelihood Surrogate of Images and Captions](whitened_clip_as_a_likelihood_surrogate_of_images_and_captions.md)
+- [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+- [Predict Training Data Quality via Its Geometry in Metric Space](../../NeurIPS2025/llm_pretraining/predict_training_data_quality_via_its_geometry_in_metric_space.md)
+- [Towards Robust Influence Functions with Flat Validation Minima](towards_robust_influence_functions_with_flat_validation_minima.md)
+- [Benign Overfitting in Token Selection of Attention Mechanism](benign_overfitting_in_token_selection_of_attention_mechanism.md)
+
+<!-- RELATED:END -->

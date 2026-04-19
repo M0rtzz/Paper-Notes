@@ -119,3 +119,15 @@ PSSD 数据集 Problem 1（稳态湍流）平均 EPE↓：
 - 实验充分度: ⭐⭐⭐⭐ 三种场景覆盖全面但缺少真实实验
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，模块描述详细
 - 价值: ⭐⭐⭐⭐ 开辟神经形态相机在流体测量的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPACE: SPike-Aware Consistency Enhancement for Test-Time Adaptation in Spiking Neural Networks](../../NeurIPS2025/others/space_spike-aware_consistency_enhancement_for_test-time_adaptation_in_spiking_ne.md)
+- [MeshA*: Efficient Path Planning With Motion Primitives](mesha_efficient_path_planning_with_motion_primitives.md)
+- [Full-DoF Egomotion Estimation for Event Cameras Using Geometric Solvers](../../CVPR2025/others/full-dof_egomotion_estimation_for_event_cameras_using_geometric_solvers.md)
+- [How Wide and How Deep? Mitigating Over-Squashing of GNNs via Channel Capacity Constrained Estimation](how_wide_and_how_deep_mitigating_over-squashing_of_gnns_via_channel_capacity_con.md)
+- [Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](../../CVPR2026/others/shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)
+
+<!-- RELATED:END -->

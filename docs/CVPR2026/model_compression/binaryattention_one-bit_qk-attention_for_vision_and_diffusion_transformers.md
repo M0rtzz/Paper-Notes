@@ -144,3 +144,15 @@ BinaryAttention 由三个核心组件组成：(1) **Scaled Binary Representation
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖分类/检测/分割/生成四大任务，消融详尽，kernel 和端到端效率均有评估
 - **写作质量**: ⭐⭐⭐⭐ — 理论推导清晰，实验组织有条理，偏置项的动机解释直观
 - **价值**: ⭐⭐⭐⭐ — 实际加速显著且即插即用，与现有量化/加速方法正交互补，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers](ppcl_pluggable_pruning_dit_distillation.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](hiap_a_multi-granular_stochastic_auto-pruning_framework_for_vision_transformers.md)
+- [On the Robustness of Diffusion-Based Image Compression to Bit-Flip Errors](on_the_robustness_of_diffusion-based_image_compression_to_bit-flip_errors.md)
+- [QuEPT: Quantized Elastic Precision Transformers with One-Shot Calibration for Multi-Bit Switching](../../AAAI2026/model_compression/quept_quantized_elastic_precision_transformers_with_one-shot_calibration_for_mul.md)
+- [Stronger Normalization-Free Transformers](stronger_normalization-free_transformers.md)
+
+<!-- RELATED:END -->

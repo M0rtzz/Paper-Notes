@@ -163,3 +163,15 @@ ReSpect 在多轮部署中迭代运行：
 - 实验充分度: ⭐⭐⭐⭐⭐ 6轮真实人机部署、7种系统变体、多维度评估、严格控制实验
 - 写作质量: ⭐⭐⭐⭐ 论文组织清晰，技术细节完整，实验结果可视化效果好
 - 价值: ⭐⭐⭐⭐⭐ 揭示了一个被忽视但普遍存在的学习信号，对交互式AI系统的持续改进具有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
+- [The AI Gap: How Socioeconomic Status Affects Language Technology Interactions](the_ai_gap_how_socioeconomic_status_affects_language_technology_interactions.md)
+- [Sleepless Nights, Sugary Days: Creating Synthetic Users with Health Conditions for Realistic Coaching Agent Interactions](sleepless_nights_sugary_days_creating_synthetic_users_with_health_conditions_for.md)
+- [Value Residual Learning](value_residual_learning.md)
+
+<!-- RELATED:END -->

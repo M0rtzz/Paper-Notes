@@ -145,3 +145,15 @@ SFT在Qwen2.5-Coder-7B上全面退化，DFT仍持续提升。
 - 实验充分度: ⭐⭐⭐⭐⭐ 5模型×5数学基准+代码+多模态+离线RL+消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导与实践完美结合，故事线清晰连贯
 - 价值: ⭐⭐⭐⭐⭐ 对LLM SFT训练实践有直接重大影响，极低实施门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Sample Complexity of Online Reinforcement Learning: A Multi-Model Perspective](the_sample_complexity_of_online_reinforcement_learning_a_multi-model_perspective.md)
+- [MVR: Multi-view Video Reward Shaping for Reinforcement Learning](mvr_multi-view_video_reward_shaping_for_reinforcement_learning.md)
+- [How LLMs Learn to Reason: A Complex Network Perspective](how_llms_learn_to_reason_a_complex_network_perspective.md)
+- [ARM-FM: Automated Reward Machines via Foundation Models for Compositional Reinforcement Learning](arm-fm_automated_reward_machines_via_foundation_models_for_compositional_reinfor.md)
+- [Visual Grounding for Object-Level Generalization in Reinforcement Learning](../../ECCV2024/reinforcement_learning/visual_grounding_for_object-level_generalization_in_reinforcement_learning.md)
+
+<!-- RELATED:END -->

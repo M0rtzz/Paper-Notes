@@ -121,3 +121,15 @@ $$\frac{\sigma}{2}\|\boldsymbol{\zeta} - \boldsymbol{\zeta}^\star\|^2 \leq \Phi(
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实+GPU+BnB多维度验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学严谨、结构清晰、动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 为大规模稀疏优化的最优性认证提供了实用且有理论保证的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Transformers for Generalizable First-Order Logical Entailment](../../ACL2025/others/enhancing_fol_entailment.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](../../CVPR2025/others/rooftop_wind_field_reconstruction_using_sparse_sensors_from_deterministic_to_gen.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](../../CVPR2025/others/zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [Position: Solve Layerwise Linear Models First to Understand Neural Dynamical Phenomena](position_solve_layerwise_linear_models_first_to_understand_neural_dynamical_phen.md)
+- [Tractable Weighted First-Order Model Counting with Bounded Treewidth Binary Evidence](../../AAAI2026/others/tractable_weighted_first-order_model_counting_with_bounded_treewidth_binary_evid.md)
+
+<!-- RELATED:END -->

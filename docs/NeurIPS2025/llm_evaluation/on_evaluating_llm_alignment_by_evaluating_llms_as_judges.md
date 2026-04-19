@@ -154,3 +154,15 @@ Arena-Hard 上 GE-consistency 显著高于 AlpacaEval，可能因为 Arena-Hard 
 - 实验充分度: ⭐⭐⭐⭐⭐ 23 个 LLM、多指令集、多预言机、详尽消融，实验设计严谨且全面
 - 写作质量: ⭐⭐⭐⭐⭐ 概念定义清晰、论证逻辑缜密、图表信息丰富，可读性极佳
 - 价值: ⭐⭐⭐⭐ 为 LLM 评估社区提供了实用工具和理论洞察，但对抗攻击的脆弱性限制了实际应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation](parrot_a_benchmark_for_evaluating_llms_in_cross-system_sql_translation.md)
+- [JuStRank: Benchmarking LLM Judges for System Ranking](../../ACL2025/llm_evaluation/justrank_llm_judge_system_ranking.md)
+- [EvoWiki: Evaluating LLMs on Evolving Knowledge](../../ACL2025/llm_evaluation/evowiki_evaluating_llms_on_evolving_knowledge.md)
+- [Where Are We? Evaluating LLM Performance on African Languages](../../ACL2025/llm_evaluation/where_are_we_evaluating_llm_performance_on_african_languages.md)
+- [Leveraging Robust Optimization for LLM Alignment under Distribution Shifts](leveraging_robust_optimization_for_llm_alignment_under_distribution_shifts.md)
+
+<!-- RELATED:END -->

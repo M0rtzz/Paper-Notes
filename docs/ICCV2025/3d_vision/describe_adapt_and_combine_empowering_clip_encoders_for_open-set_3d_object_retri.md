@@ -153,3 +153,15 @@ AB-LoRA 效果（OS-MN40-core, ViT-B/32）:
 - 技术深度: ⭐⭐⭐ (方法简洁易懂)
 - 实验充分度: ⭐⭐⭐⭐⭐ (4个数据集、12个对比方法、充分消融)
 - 实用价值: ⭐⭐⭐⭐ (仅需图像输入，部署简单)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Gaussian Map with Open-Set Semantic Grouping for Vision-Language Navigation](3d_gaussian_map_with_openset_semantic_grouping_for_visionlan.md)
+- [CLIP-GS: Unifying Vision-Language Representation with 3D Gaussian Splatting](clip-gs_unifying_vision-language_representation_with_3d_gaussian_splatting.md)
+- [LLaVA-3D: A Simple yet Effective Pathway to Empowering LMMs with 3D Capabilities](llava-3d_a_simple_yet_effective_pathway_to_empowering_lmms_with_3d_capabilities.md)
+- [CORE-3D: Context-aware Open-vocabulary Retrieval by Embeddings in 3D](../../ICLR2026/3d_vision/core-3d_context-aware_open-vocabulary_retrieval_by_embeddings_in_3d.md)
+- [Open-World 3D Scene Graph Generation for Retrieval-Augmented Reasoning](../../AAAI2026/3d_vision/open-world_3d_scene_graph_generation_for_retrieval-augmented_reasoning.md)
+
+<!-- RELATED:END -->

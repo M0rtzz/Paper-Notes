@@ -118,3 +118,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个基准+消融+新任务泛化+偏差分析+多样性量化+CoT分析，实验极其充分
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，insights丰富，NutritionQA案例很有说服力
 - 价值: ⭐⭐⭐⭐⭐ 既有通用框架又有实际可用的400K数据集，对文本丰富图像理解领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+- [ChartCoder: Advancing Multimodal Large Language Model for Chart-to-Code Generation](chartcoder_chart_to_code.md)
+- [SpaRE: Enhancing Spatial Reasoning in Vision-Language Models with Synthetic Data](spare_enhancing_spatial_reasoning_in_vision-language_models_with_synthetic_data.md)
+- [Enhance Multimodal Consistency and Coherence for Text-Image Plan Generation](enhance_multimodal_consistency_and_coherence_for_text-image_plan_generation.md)
+- [ViGiL3D: A Linguistically Diverse Dataset for 3D Visual Grounding](vigil3d_a_linguistically_diverse_dataset_for_3d_visual_grounding.md)
+
+<!-- RELATED:END -->

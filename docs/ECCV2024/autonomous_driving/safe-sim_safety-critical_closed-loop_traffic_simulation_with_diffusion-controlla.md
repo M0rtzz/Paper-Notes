@@ -151,3 +151,15 @@ $$J(\tau) = \rho \underbrace{(J_{\text{coll}} + J_v + J_{\text{ttc}})}_{J_{\text
 - 实验充分度: ⭐⭐⭐⭐ 在两个数据集、五种 planner 上验证，消融实验充分
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述系统，图表辅助理解效果好
 - 价值: ⭐⭐⭐⭐⭐ 对自动驾驶安全评估有重要实际价值，框架可直接用于系统性测试
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeuroNCAP: Photorealistic Closed-Loop Safety Testing for Autonomous Driving](neuroncap_photorealistic_closed-loop_safety_testing_for_autonomous_driving.md)
+- [Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation](optimizing_diffusion_models_for_joint_trajectory_prediction_and_controllable_gen.md)
+- [DrivingSphere: Building a High-fidelity 4D World for Closed-loop Simulation](../../CVPR2025/autonomous_driving/drivingsphere_building_a_high-fidelity_4d_world_for_closed-loop_simulation.md)
+- [RoofDiffusion: Constructing Roofs from Severely Corrupted Point Data via Diffusion](roofdiffusion_constructing_roofs_from_severely_corrupted_point_data_via_diffusio.md)
+- [MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection](monowad_weather-adaptive_diffusion_model_for_robust_monocular_3d_object_detectio.md)
+
+<!-- RELATED:END -->

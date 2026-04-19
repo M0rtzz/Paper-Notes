@@ -167,3 +167,15 @@ $$\text{PPL} = \exp\left(-\frac{1}{N}\sum_{i=1}^{N} \log P(w_i | w_{<i})\right)$
 | 写作质量 | 3 | 结构清晰但有冗余（审稿人指出重复描述 EvalTok） |
 | 实用价值 | 4 | 数据集发布 + 即插即用方法组合，可直接用于印度语言系统 |
 | 总评 | 3.2 | 实用导向的 workshop 工作，解决真实问题但深度有限 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VEGGIE: Instructional Editing and Reasoning Video Concepts with Grounded Generation](../../ICCV2025/segmentation/veggie_instructional_editing_and_reasoning_video_concepts_with_grounded_generati.md)
+- [LangHOPS: Language Grounded Hierarchical Open-Vocabulary Part Segmentation](../../NeurIPS2025/segmentation/langhops_language_grounded_hierarchical_open-vocabulary_part_segmentation.md)
+- [RegionReasoner: Region-Grounded Multi-Round Visual Reasoning](../../ICLR2026/segmentation/regionreasoner_region-grounded_multi-round_visual_reasoning.md)
+- [SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs](../../CVPR2025/segmentation/sparrow_learning_spatial_precision_and_temporal_referential_consistency_in_pixel.md)
+- [ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation](actionpiece_contextually_tokenizing_action_sequences_for_generative_recommendati.md)
+
+<!-- RELATED:END -->

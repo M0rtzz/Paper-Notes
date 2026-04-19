@@ -131,3 +131,15 @@ HalfCheetah 上增大潜在维度一致性地提升性能恢复率（5D→16D）
 - 实验充分度: ⭐⭐⭐⭐ 4 个环境、多种策略大小和潜在维度、与 4 种 SOTA 比较，10 次随机种子；但缺少更复杂环境（如 Atari）的验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰、图示直观、数学符号规范；但部分内容重复
 - 价值: ⭐⭐⭐⭐⭐ 提供了一种全新的 RL 效率提升范式，行为流形的概念有广泛的研究延伸空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unsupervised Conformal Inference: Bootstrapping and Alignment to Control LLM Uncertainty](unsupervised_conformal_inference_bootstrapping_and_alignment_to_control_llm_unce.md)
+- [Diffusion Fine-Tuning via Reparameterized Policy Gradient of the Soft Q-Function](diffusion_fine-tuning_via_reparameterized_policy_gradient_of_the_soft_q-function.md)
+- [WebRPG: Automatic Web Rendering Parameters Generation for Visual Presentation](../../ECCV2024/image_generation/webrpg_automatic_web_rendering_parameters_generation_for_visual_presentation.md)
+- [PCPO: Proportionate Credit Policy Optimization for Aligning Image Generation Models](pcpo_proportionate_credit_policy_optimization_for_aligning_image_generation_mode.md)
+- [Translate Policy to Language: Flow Matching Generated Rewards for LLM Explanations](translate_policy_to_language_flow_matching_generated_rewards_for_llm_explanation.md)
+
+<!-- RELATED:END -->

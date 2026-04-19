@@ -112,3 +112,15 @@ tags: ["knowledge distillation", "VLM", "mixture of experts", "visual encoder", 
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖LLaVA/LLaVA-NeXT/多规模(1.7B~13B)、8个benchmark、详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，消融设计合理
 - 价值: ⭐⭐⭐⭐ 实用性强，即插即用提升VLM；教师扩展性好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncertainty-Aware Knowledge Distillation for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/uncertainty-aware_knowledge_distillation_for_multimodal_large_language_models.md)
+- [HAWAII: Hierarchical Visual Knowledge Transfer for Efficient VLM](../../NeurIPS2025/multimodal_vlm/hawaii_hierarchical_visual_knowledge_transfer_for_efficient_vision-language_mode.md)
+- [Towards Understanding How Knowledge Evolves in Large Vision-Language Models](towards_understanding_how_knowledge_evolves_in_large_vision-language_models.md)
+- [VILA-M3: Enhancing Vision-Language Models with Medical Expert Knowledge](vila-m3_enhancing_vision-language_models_with_medical_expert_knowledge.md)
+- [BadVision: Stealthy Backdoor Attack in Self-Supervised Learning Vision Encoders for Large Vision Language Models](stealthy_backdoor_attack_in_self-supervised_learning_vision_encoders_for_large_v.md)
+
+<!-- RELATED:END -->

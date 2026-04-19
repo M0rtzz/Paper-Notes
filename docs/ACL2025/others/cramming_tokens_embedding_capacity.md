@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型、多数据源、多指标，但缺少更大scale
 - 写作质量: ⭐⭐⭐⭐⭐ 信息论框架严谨，指标定义清晰，可视化出色
 - 价值: ⭐⭐⭐⭐⭐ 为整个上下文压缩领域重新定义了追求目标，指明了巨大的优化空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
+- [Byte Latent Transformer: Patches Scale Better Than Tokens](byte_latent_transformer.md)
+- [A Single Architecture for Representing Invariance Under Any Space Group](../../ICLR2026/others/a_single_architecture_for_representing_invariance_under_any_space_group.md)
+- [Out of the Shadows: Exploring a Latent Space for Neural Network Verification](../../ICLR2026/others/out_of_the_shadows_exploring_a_latent_space_for_neural_network_verification.md)
+- [HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ ShowUI 基于 Qwen2-VL-2B 构建。输入为用户查询 + 动作空间说明（
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 Web/Mobile/Desktop/Online 四类环境，消融充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题驱动的实验分析很好
 - 价值: ⭐⭐⭐⭐ 开源轻量级 GUI agent，实用性强，效率优化思路可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QUAR-VLA: Vision-Language-Action Model for Quadruped Robots](../../ECCV2024/human_understanding/quar-vla_vision-language-action_model_for_quadruped_robots.md)
+- [MDP: Multidimensional Vision Model Pruning with Latency Constraint](mdp_multidimensional_vision_model_pruning_with_latency_constraint.md)
+- [When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](../../CVPR2026/human_understanding/when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)
+- [Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration](collaborative_tree_search_for_enhancing_embodied_multi-agent_collaboration.md)
+- [10 Open Challenges Steering the Future of Vision-Language-Action Models](../../AAAI2026/human_understanding/10_open_challenges_steering_the_future_of_vision-language-ac.md)
+
+<!-- RELATED:END -->

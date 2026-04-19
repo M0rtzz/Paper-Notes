@@ -204,3 +204,15 @@ $$d_{\text{safe}} = \max\left(\tau \cdot \frac{L_s + B_s + L_t + B_t}{2 \times 1
 - 实验充分度: ⭐⭐⭐ — 消融完整但场景偏少，仅3个实例且局限于单一海域
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式规范，图表丰富
 - 价值: ⭐⭐⭐⭐ — 面向实际的海事减排和安全问题，具有明确的应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
+- [Learning Progress Driven Multi-Agent Curriculum](../../ICML2025/reinforcement_learning/learning_progress_driven_multi-agent_curriculum.md)
+- [NavQ: Learning a Q-Model for Foresighted Vision-and-Language Navigation](../../ICCV2025/reinforcement_learning/navq_learning_a_q-model_for_foresighted_vision-and-language_navigation.md)
+- [CityWalker: Learning Embodied Urban Navigation from Web-Scale Videos](../../CVPR2025/reinforcement_learning/citywalker_learning_embodied_urban_navigation_from_web-scale_videos.md)
+- [Speculative Sampling with Reinforcement Learning](speculative_sampling_with_reinforcement_learning.md)
+
+<!-- RELATED:END -->

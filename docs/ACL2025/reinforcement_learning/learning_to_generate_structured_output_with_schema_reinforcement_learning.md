@@ -148,3 +148,15 @@ ToS 贡献最大（+13.74%），细粒度验证器也有显著提升（+4.44%）
 - 实验充分度: ⭐⭐⭐⭐ — 多模型、多任务对比全面，消融实验清晰，但缺少更强闭源模型和更多 RL 方法对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，问题动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ — JSON 结构化生成是 LLM 应用中的核心问题，基准和方法具有很高的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Generate Unit Test via Adversarial Reinforcement Learning](../../ICLR2026/reinforcement_learning/learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](../../NeurIPS2025/reinforcement_learning/structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [Prompt-based Personality Profiling: Reinforcement Learning for Relevance Filtering](prompt-based_personality_profiling_reinforcement_learning_for_relevance_filterin.md)
+- [Robust Offline Reinforcement Learning with Linearly Structured f-Divergence Regularization](../../ICML2025/reinforcement_learning/robust_offline_reinforcement_learning_with_linearly_structured_f-divergence_regu.md)
+- [Learning to Focus: Prioritizing Informative Histories with Structured Attention Mechanisms in Partially Observable Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/learning_to_focus_prioritizing_informative_histories_with_structured_attention_m.md)
+
+<!-- RELATED:END -->

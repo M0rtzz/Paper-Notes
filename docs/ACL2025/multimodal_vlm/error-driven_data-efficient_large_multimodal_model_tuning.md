@@ -139,3 +139,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个任务、3种数据规模、多种学生/教师组合、详细消融和定位方法对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观，但部分公式可精简
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高，为 LMM 的任务适配提供了一种高效且通用的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AVG-LLaVA: An Efficient Large Multimodal Model with Adaptive Visual Granularity](avg-llava_an_efficient_large_multimodal_model_with_adaptive_visual_granularity.md)
+- [HiDe-LLaVA: Hierarchical Decoupling for Continual Instruction Tuning of Multimodal Large Language Model](hidellava_hierarchical_decoupling_for_continual_instruction.md)
+- [Harnessing PDF Data for Improving Japanese Large Multimodal Models](harnessing_pdf_data_for_improving_japanese_large_multimodal_models.md)
+- [CoIDO: Efficient Data Selection for Visual Instruction Tuning via Coupled Importance-Diversity Optimization](../../NeurIPS2025/multimodal_vlm/coido_efficient_data_selection_for_visual_instruction_tuning_via_coupled_importa.md)
+- [ACT as Human: Multimodal Large Language Model Data Annotation with Critical Thinking](../../NeurIPS2025/multimodal_vlm/act_as_human_multimodal_large_language_model_data_annotation.md)
+
+<!-- RELATED:END -->

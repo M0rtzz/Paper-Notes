@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ - 消融实验审慎但缺少与baseline的全面对比
 - 写作质量: ⭐⭐⭐⭐ - 方法描述清晰，prompt设计有据可查
 - 价值: ⭐⭐⭐⭐ - 为少样本主动学习场景提供实用数据增强方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation](../../NeurIPS2025/causal_inference/an_analysis_of_causal_effect_estimation_using_outcome_invariant_data_augmentatio.md)
+- [Differentiable Structure Learning and Causal Discovery for General Binary Data](../../NeurIPS2025/causal_inference/differentiable_structure_learning_and_causal_discovery_for_general_binary_data.md)
+- [Estimating Causal Effects in Gaussian Linear SCMs with Finite Data](../../ICML2025/causal_inference/estimating_causal_effects_in_gaussian_linear_scms_with_finite_data.md)
+- [FitCF: A Framework for Automatic Feature Importance-guided Counterfactual Example Generation](fitcf_a_framework_for_automatic_feature_importance-guided_counterfactual_example.md)
+- [Reasoning is All You Need for Video Generalization: A Counterfactual Benchmark with Sub-question Evaluation](reasoning_is_all_you_need_for_video_generalization_a_counterfactual_benchmark_wi.md)
+
+<!-- RELATED:END -->

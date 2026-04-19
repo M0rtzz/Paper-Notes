@@ -137,3 +137,15 @@ SUSD 的潜在技能嵌入包含最丰富的因子信息。
 - **技术深度**: ⭐⭐⭐⭐ — 理论推导扎实（Lemma 4.1），优化框架完整
 - **实验充分性**: ⭐⭐⭐⭐ — 多环境评估，消融和定性分析丰富
 - **实用价值**: ⭐⭐⭐ — 依赖状态分解假设，适用场景有限但效果突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Periodic Skill Discovery](../../NeurIPS2025/reinforcement_learning/periodic_skill_discovery.md)
+- [Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
+- [AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_automatic_discovery_of_diverse_behaviors_with_quality-diversity_optimizat.md)
+- [How Far Can Unsupervised RLVR Scale LLM Training?](how_far_can_unsupervised_rlvr_scale_llm_training.md)
+- [Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+
+<!-- RELATED:END -->

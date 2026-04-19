@@ -187,3 +187,15 @@ $$\mathcal{L}_{proto} = \mathbb{E}_{(f(p), u)} P(f_{roi}(p_i), u)$$
 - 实验充分度: ⭐⭐⭐⭐ — 两个数据集，多种消融，可视化分析完整
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，模块化设计便于理解
 - 价值: ⭐⭐⭐⭐⭐ — 在航空 OVAD 领域具有重要的实用价值，无需额外监督即超越 SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](../../CVPR2026/object_detection/abra_teleporting_finetuned_knowledge_across_domain.md)
+- [Open-Det: An Efficient Learning Framework for Open-Ended Detection](../../ICML2025/object_detection/open-det_an_efficient_learning_framework_for_open-ended_detection.md)
+- [Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection](../../CVPR2026/object_detection/beyond_prompt_degradation_prototype-guided_dual-pool_prompting_for_incremental_o.md)
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](../../CVPR2026/object_detection/parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](../../CVPR2026/object_detection/noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+
+<!-- RELATED:END -->

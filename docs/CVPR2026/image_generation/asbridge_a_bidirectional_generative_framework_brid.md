@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 模拟验证充分但缺乏真实数据
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，天体物理背景扎实
 - 实用价值: ⭐⭐⭐⭐ LSST/Euclid 数据可用后有直接应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+- [Probing and Bridging Geometry–Interaction Cues for Affordance Reasoning in Vision Foundation Models](probing_and_bridging_geometry-interaction_cues_for_affordance_reasoning_in_visio.md)
+- [Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework](taming_score-based_denoisers_in_admm_a_convergent_plug-and-play_framework.md)
+- [SegQuant: A Semantics-Aware and Generalizable Quantization Framework for Diffusion Models](segquant_diffusion_model_quantization.md)
+
+<!-- RELATED:END -->

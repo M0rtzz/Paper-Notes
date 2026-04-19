@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 大量基线对比、消融实验、跨数据集验证、用户研究俱全
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，数据集描述详尽
 - 价值: ⭐⭐⭐⭐ 对移动端 AWB 系统有直接工程价值，数据集贡献重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auto-DAS: Automated Proxy Discovery for Training-free Distillation-aware Architecture Search](../../ECCV2024/model_compression/auto-das_automated_proxy_discovery_for_training-free_distillation-aware_architec.md)
+- [ViT-Linearizer: Distilling Quadratic Knowledge into Linear-Time Vision Models](vit-linearizer_distilling_quadratic_knowledge_into_linear-time_vision_models.md)
+- [Scheduling Weight Transitions for Quantization-Aware Training](scheduling_weight_transitions_for_quantization-aware_training.md)
+- [Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation](perspective-aware_teaching_adapting_knowledge_for_heterogeneous_distillation.md)
+- [Correlation Dimension of Auto-Regressive Large Language Models](../../NeurIPS2025/model_compression/correlation_dimension_of_auto-regressive_large_language_models.md)
+
+<!-- RELATED:END -->

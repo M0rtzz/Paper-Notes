@@ -141,3 +141,15 @@ RICE-NET 基于 3D ResNet-18（MONAI 框架），输入为多通道 3D 体积，
 - 实验充分度: ⭐⭐⭐ 消融系统全面，但数据量极小（12例测试）
 - 写作质量: ⭐⭐⭐⭐ 临床动机清晰，实验设计干净
 - 价值: ⭐⭐⭐⭐ 临床意义大，证明了放疗剂量图在 RICE 鉴别中的关键作用，为更大规模研究铺路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration](reinforcing_the_weakest_links_modernizing_siena_with_targeted_deep_learning_inte.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusionbased_feature_denoising_and_using_nnmf_fo.md)
+- [GLEAM: A Multimodal Imaging Dataset and HAMM for Glaucoma Classification](gleam_a_multimodal_imaging_dataset_and_hamm_for_gl.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI](automated_detection_of_malignant_lesions_in_the_ov.md)
+
+<!-- RELATED:END -->

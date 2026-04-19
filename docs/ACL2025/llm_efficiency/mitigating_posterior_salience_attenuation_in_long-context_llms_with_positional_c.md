@@ -162,3 +162,15 @@ PCD在真实长文本任务上平均提升0.89，在中文多领域QA上提升4.
 - **实用性**：⭐⭐⭐⭐⭐ — 无需训练、即插即用，对长上下文场景有直接价值
 - **实验充分性**：⭐⭐⭐⭐ — 多任务多基准验证，消融充分，但仅在Llama-3系列上验证
 - **写作质量**：⭐⭐⭐⭐ — 方法阐述清晰，频谱分析部分较硬核但有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training](adaptive_grouped_pe_context_window.md)
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](ladm_long_context_data.md)
+- [What Really Matters in Many-Shot Attacks? An Empirical Study of Long-Context Vulnerabilities in LLMs](many_shot_attacks_long_context.md)
+- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [CLaSp: In-Context Layer Skip for Self-Speculative Decoding](clasp_self_speculative_decoding.md)
+
+<!-- RELATED:END -->

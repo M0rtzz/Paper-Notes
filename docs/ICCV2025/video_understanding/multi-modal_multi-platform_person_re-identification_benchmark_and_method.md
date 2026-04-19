@@ -152,3 +152,15 @@ $$\mathcal{L}_{\text{Uni-Prompt}} = \mathcal{L}_{mi2t} + \mathcal{L}_{mt2i} + \m
 - **实验充分度**: ⭐⭐⭐⭐ 12 种实验设置 + 详细消融 + 10 次重复取平均，设计严谨
 - **写作质量**: ⭐⭐⭐⭐ 数据集描述详尽，方法叙述清晰
 - **价值**: ⭐⭐⭐⭐⭐ 数据集和基准对行人重识别社区有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUVR: A Multi-Modal Untrimmed Video Retrieval Benchmark with Multi-Level Visual Correspondence](../../NeurIPS2025/video_understanding/muvr_a_multi-modal_untrimmed_video_retrieval_benchmark_with_multi-level_visual_c.md)
+- [AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)
+- [4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding](4dbench_benchmarking_multimodal_large_language_models_for_4d.md)
+- [DynImg: Key Frames with Visual Prompts are Good Representation for Multi-Modal Video Understanding](dynimg_key_frames_with_visual_prompts_are_good_representation_for_multi-modal_vi.md)
+- [Q-Frame: Query-aware Frame Selection and Multi-Resolution Adaptation for Video-LLMs](q-frame_query-aware_frame_selection_and_multi-resolution_adaptation_for_video-ll.md)
+
+<!-- RELATED:END -->

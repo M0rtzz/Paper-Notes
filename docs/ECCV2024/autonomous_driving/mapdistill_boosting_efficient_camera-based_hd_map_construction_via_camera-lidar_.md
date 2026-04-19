@@ -192,3 +192,15 @@ $$\mathcal{L} = \mathcal{L}_{map} + \lambda_1 \mathcal{L}_{relation} + \lambda_2
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 极其详尽的消融：三路损失、关系类型、特征层级、BEV变换组合、超参分析
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，问题分析到位，与 3D 检测 KD 的差异阐述准确
 - **价值**: ⭐⭐⭐⭐ — +7.7 mAP 或 4.5 倍加速的实际意义大，可作为 KD-based HD map 构建的 strong baseline
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stream Query Denoising for Vectorized HD-Map Construction](stream_query_denoising_for_vectorized_hd-map_construction.md)
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+- [MapTracker: Tracking with Strided Memory Fusion for Consistent Vector HD Mapping](maptracker_tracking_with_strided_memory_fusion_for_consistent_vector_hd_mapping.md)
+- [SafeMap: Robust HD Map Construction from Incomplete Observations](../../ICML2025/autonomous_driving/safemap_robust_hd_map_construction_from_incomplete_observations.md)
+- [Hierarchical Temporal Context Learning for Camera-based Semantic Scene Completion](hierarchical_temporal_context_learning_for_camera-based_semantic_scene_completio.md)
+
+<!-- RELATED:END -->

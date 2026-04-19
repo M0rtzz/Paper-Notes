@@ -158,3 +158,15 @@ GERNE vs Resampling 的方差分析表明：GERNE 通过可控的损失方差帮
 - 实验充分度：⭐⭐⭐⭐⭐ 6 个基准全面验证
 - 实用价值：⭐⭐⭐⭐ 简单有效，易于集成
 - 总体推荐：⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning from Neighbors: Category Extrapolation for Long-Tail Learning](../../CVPR2025/social_computing/learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)
+- [Learning from Synthetic Data via Provenance-Based Input Gradient Guidance](../../CVPR2026/social_computing/learning_from_synthetic_data_via_provenance-based_input_gradient_guidance.md)
+- [Learning Survival Distributions with the Asymmetric Laplace Distribution](../../ICML2025/social_computing/learning_survival_distributions_with_the_asymmetric_laplace_distribution.md)
+- [GraphKeeper: Graph Domain-Incremental Learning via Knowledge Disentanglement and Preservation](../../NeurIPS2025/social_computing/graphkeeper_graph_domain-incremental_learning_via_knowledge_disentanglement_and_.md)
+- [PropVG: End-to-End Proposal-Driven Visual Grounding with Multi-Granularity Discrimination](propvg_end-to-end_proposal-driven_visual_grounding_with_multi-granularity_discri.md)
+
+<!-- RELATED:END -->

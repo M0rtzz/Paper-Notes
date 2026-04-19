@@ -163,3 +163,15 @@ Stealix 的输入是每类仅 1 张真实种子图像 + 黑盒受害模型的查
 - 实验充分度: ⭐⭐⭐⭐ 多数据集验证、消融分析、PC 指标统计验证完整
 - 写作质量: ⭐⭐⭐⭐ 威胁模型定义严谨，方法描述逻辑清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 揭示了预训练生成模型在模型窃取中被低估的风险，对 AI 安全防御有实际警示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emergence and Evolution of Interpretable Concepts in Diffusion Models](../../NeurIPS2025/image_generation/emergence_and_evolution_of_interpretable_concepts_in_diffusi.md)
+- [Exploring Multimodal Diffusion Transformers for Enhanced Prompt-based Image Editing](../../ICCV2025/image_generation/exploring_multimodal_diffusion_transformers_for_enhanced_prompt-based_image_edit.md)
+- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
+- [PAK-UCB Contextual Bandit: An Online Learning Approach to Prompt-Aware Selection of Generative Models and LLMs](pak-ucb_contextual_bandit_an_online_learning_approach_to_prompt-aware_selection_.md)
+- [Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition](broadband_ground_motion_synthesis_by_diffusion_model_with_minimal_condition.md)
+
+<!-- RELATED:END -->

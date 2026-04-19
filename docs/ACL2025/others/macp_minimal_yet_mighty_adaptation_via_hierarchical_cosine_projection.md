@@ -144,3 +144,15 @@ MaCP 使用与下游任务对应的标准损失函数（交叉熵等），核心
 - 实验充分度: ⭐⭐⭐⭐⭐ 六大任务类型、多种模型规模、详细消融，实验覆盖极其全面
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，算法伪代码完整，但部分数学符号可以更精简
 - 价值: ⭐⭐⭐⭐ 对资源受限场景下的模型微调有实际意义，但能否在工业级大模型上验证仍需观察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)
+- [Consultant Decoding: Yet Another Synergistic Mechanism](consultant_decoding_yet_another_synergistic_mechanism.md)
+- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+- [SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL](share_text_to_sql_correction.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+
+<!-- RELATED:END -->

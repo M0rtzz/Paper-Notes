@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 消融实验有但定量对比可以更丰富，缺少与更多最新方法的对比
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述易懂
 - 价值: ⭐⭐⭐⭐ 新任务和数据集有长期研究价值，但方法本身改进空间较大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
+- [WebRPG: Automatic Web Rendering Parameters Generation for Visual Presentation](webrpg_automatic_web_rendering_parameters_generation_for_visual_presentation.md)
+- [DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models](../../NeurIPS2025/image_generation/dexter_diffusion-guided_explanations_with_textual_reasoning_for_vision_models.md)
+- [LEGO: Learning EGOcentric Action Frame Generation via Visual Instruction Tuning](lego_learning_egocentric_action_frame_generation_via_visual_instruction_tuning.md)
+
+<!-- RELATED:END -->

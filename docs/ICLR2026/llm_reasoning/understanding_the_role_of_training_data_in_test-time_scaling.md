@@ -162,3 +162,15 @@ $$\min_{\{\pi_\ell\}} \left\| I - \Sigma^{-1} \sum_{\ell} \Lambda_\ell \pi_\ell 
 - 实验充分度: ⭐⭐⭐⭐ LSA/GPT-2 合成实验充分验证理论，Qwen 真实基准实验为亮点，但真实任务覆盖面可更广
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨清晰，直觉解释到位，从单任务到多任务层层递进
 - 价值: ⭐⭐⭐⭐⭐ 对理解和改进 test-time scaling 有重要指导意义，任务选择策略可直接用于 RL reasoning 训练
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory](../../ACL2025/llm_reasoning/rethinking_the_role_of_prompting_strategies_in_llm_test-time_scaling_a_perspecti.md)
+- [Plan and Budget: Effective and Efficient Test-Time Scaling on Reasoning LLMs](plan_and_budget_effective_and_efficient_test-time_scaling_on_reasoning_large_lan.md)
+- [ATTS: Asynchronous Test-Time Scaling via Conformal Prediction](atts_asynchronous_test-time_scaling_via_conformal_prediction.md)
+- [Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
+- [Efficient Test-Time Scaling for Small Vision-Language Models](efficient_test-time_scaling_for_small_vision-language_models.md)
+
+<!-- RELATED:END -->

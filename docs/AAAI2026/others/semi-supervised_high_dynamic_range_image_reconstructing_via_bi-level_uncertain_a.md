@@ -121,3 +121,15 @@ $\mathcal{L} = \mathcal{L}_s^r + \lambda_v \mathcal{L}_s^v + \mathcal{L}_s^k + \
 - 实验充分度: ⭐⭐⭐⭐ 两个标准数据集验证充分，但标注比例消融不足
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，pipeline 图示直观
 - 价值: ⭐⭐⭐⭐ 极大降低 HDR 数据标注需求，有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](../../CVPR2026/others/polishing_the_sky_widefield_and_highdynamic_range.md)
+- [I2E: Real-Time Image-to-Event Conversion for High-Performance Spiking Neural Networks](i2e_real-time_image-to-event_conversion_for_high-performance_spiking_neural_netw.md)
+- [Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](area-optimal_control_strategies_for_heterogeneous_multi-agen.md)
+- [CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data](cellstream_dynamical_optimal_transport_informed_embeddings_for_reconstructing_ce.md)
+- [Prediction-Powered Semi-Supervised Learning with Online Power Tuning](../../NeurIPS2025/others/prediction-powered_semi-supervised_learning_with_online_power_tuning.md)
+
+<!-- RELATED:END -->

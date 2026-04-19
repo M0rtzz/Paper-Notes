@@ -211,3 +211,15 @@ T2Agent 的计算成本更高，但在更便宜的模型上能超越更贵模型
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖两个基准和多个骨干模型，含详细消融
 - 写作质量: ⭐⭐⭐⭐ — 框架描述清晰，但部分细节需查阅附录
 - 价值: ⭐⭐⭐⭐⭐ — 面向真实场景的训练无关检测方案，高度实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Detection: Exploring Evidence-based Multi-Agent Debate for Misinformation Intervention and Persuasion](beyond_detection_exploring_evidence-based_multi-agent_debate_for_misinformation_.md)
+- [Reasoning About the Unsaid: Misinformation Detection with Omission-Aware Graph Inference](reasoning_about_the_unsaid_misinformation_detection_with_omission-aware_graph_in.md)
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](../../ACL2025/social_computing/biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection](../../ACL2025/social_computing/llm_label_propagation.md)
+- [Exploring Multimodal Challenges in Toxic Chinese Detection: Taxonomy, Benchmark, and Findings](../../ACL2025/social_computing/exploring_multimodal_challenges_in_toxic_chinese_detection_taxonomy_benchmark_an.md)
+
+<!-- RELATED:END -->

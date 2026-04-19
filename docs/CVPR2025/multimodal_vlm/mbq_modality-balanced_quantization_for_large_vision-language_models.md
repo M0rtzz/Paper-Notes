@@ -166,3 +166,15 @@ $$\min_{\mathbf{E}} \left[\overline{|\mathbf{g}_v|} \cdot \|WX_v - Q(W*E)Q(E^{-1
 ⭐⭐⭐⭐⭐ (5/5)
 
 **理由**：核心观察（模态敏感度差异）深刻且有实验支撑，方法简洁优雅（仅加梯度权重），理论推导完整，实验覆盖广泛（多模型、多位宽、多benchmark），附带实际CUDA加速kernel——是罕见的简单但深刻的工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/masquant_modality-aware_smoothing_quantization_for_multimodal_large_language_mod.md)
+- [Quantization without Tears](quantization_without_tears.md)
+- [Post-pre-training for Modality Alignment in Vision-Language Foundation Models](post-pre-training_for_modality_alignment_in_vision-language_foundation_models.md)
+- [LayoutVLM: Differentiable Optimization of 3D Layout via Vision-Language Models](layoutvlm_differentiable_optimization_of_3d_layout_via_vision-language_models.md)
+- [HalLoc: Token-Level Localization of Hallucinations for Vision Language Models](halloc_token-level_localization_of_hallucinations_for_vision_language_models.md)
+
+<!-- RELATED:END -->

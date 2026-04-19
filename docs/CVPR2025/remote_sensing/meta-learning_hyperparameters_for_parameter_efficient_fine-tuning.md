@@ -140,3 +140,15 @@ LoRA + MetaPEFT在平均精度上提升1.13%达到83.97%，尾部类别平均提
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、3种迁移场景、5种PEFT方法的全面对比，超参数消融极其详细
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，Fig. 1的热力图非常直观地揭示了非单调组合效应
 - 价值: ⭐⭐⭐⭐ 对PEFT超参数调优具有实际指导意义，实验发现对社区有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ExPLoRA: Parameter-Efficient Extended Pre-Training to Adapt Vision Transformers under Domain Shifts](../../ICML2025/remote_sensing/explora_parameter-efficient_extended_pre-training_to_adapt_vision_transformers_u.md)
+- [Task-free Adaptive Meta Black-box Optimization](../../ICLR2026/remote_sensing/task-free_adaptive_meta_black-box_optimization.md)
+- [Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](../../ECCV2024/remote_sensing/adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
+- [DiSciPLE: Learning Interpretable Programs for Scientific Visual Discovery](disciple_learning_interpretable_programs_for_scientific_visual_discovery.md)
+- [RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](../../ICCV2025/remote_sensing/rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
+
+<!-- RELATED:END -->

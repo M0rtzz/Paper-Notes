@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 思路清晰但数据量极小（685样本+109测试），外部验证有限
 - 写作质量: ⭐⭐⭐⭐ 论证逻辑严密，核心主张-理论-实验的结构完整，但部分claim偏强
 - 价值: ⭐⭐⭐⭐ 提出了Agent架构的一个重要缺失组件——认知控制层，即使当前验证规模有限，方向很有前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents](did_you_check_the_right_pocket_cost-sensitive_store_routing_for_memory-augmented.md)
+- [Tensor Product Attention Is All You Need](../../NeurIPS2025/llm_efficiency/tensor_product_attention_is_all_you_need.md)
+- [DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
+- [CLaSp: In-Context Layer Skip for Self-Speculative Decoding](../../ACL2025/llm_efficiency/clasp_self_speculative_decoding.md)
+- [Efficient Training-Free Online Routing for High-Volume Multi-LLM Serving](../../NeurIPS2025/llm_efficiency/efficient_training-free_online_routing_for_high-volume_multi-llm_serving.md)
+
+<!-- RELATED:END -->

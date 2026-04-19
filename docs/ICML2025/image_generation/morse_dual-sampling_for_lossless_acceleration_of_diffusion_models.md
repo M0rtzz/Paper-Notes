@@ -165,3 +165,15 @@ Morse 可叠加在 Consistency Distillation 之上，进一步加速已经加速
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多模型、多采样器、多数据集的广泛验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，Dash/Dot 的类比有趣
 - 价值: ⭐⭐⭐⭐ — 实用性强，与现有方法互补
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models](../../NeurIPS2025/image_generation/breaking_ars_sampling_bottleneck_provable_acceleration_via_d.md)
+- [SADA: Stability-guided Adaptive Diffusion Acceleration](sada_stability-guided_adaptive_diffusion_acceleration.md)
+- [Importance Sampling for Nonlinear Models](importance_sampling_for_nonlinear_models.md)
+- [GaussMarker: Robust Dual-Domain Watermark for Diffusion Models](gaussmarker_robust_dual-domain_watermark_for_diffusion_models.md)
+- [Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration](../../CVPR2026/image_generation/adaptive_spectral_feature_forecasting_for_diffusion_sampling_acceleration.md)
+
+<!-- RELATED:END -->

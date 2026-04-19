@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个 LIBERO 数据集、多基线对比、详细消融（模态、参考、比例、缓冲区大小）
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融分析系统化，IFA 的图示直观
 - 价值: ⭐⭐⭐⭐⭐ AUC +10-17 点、NBT 下降 65% 的提升巨大，方法简洁可复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Camera Choice: An Empirical Study on Fisheye Camera Properties in Robotic Manipulation](rethinking_camera_choice_an_empirical_study_on_fisheye_camera_properties_in_robo.md)
+- [GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion](graspldp_towards_generalizable_grasping_policy_via_latent_diffusion.md)
+- [MSRL: Scaling Generative Multimodal Reward Modeling via Multi-Stage Reinforcement Learning](msrl_scaling_generative_multimodal_reward_modeling_via_multi-stage_reinforcement.md)
+- [Anticipatory Planning for Multimodal AI Agents](anticipatory_planning_for_multimodal_ai_agents.md)
+- [BRIDGE: Multimodal-to-Text Retrieval via Reinforcement-Learned Query Alignment](bridge_multimodal-to-text_retrieval_via_reinforcement-learned_query_alignment.md)
+
+<!-- RELATED:END -->

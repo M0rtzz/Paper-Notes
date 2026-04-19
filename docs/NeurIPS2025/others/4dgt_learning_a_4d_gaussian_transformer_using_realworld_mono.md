@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 在多个真实世界数据集上验证，与多个baseline对比，有消融实验；但HTML版本不可用，具体定量结果未能完整获取
 - 写作质量: ⭐⭐⭐⭐ Spotlight论文，来自Meta RL Research & 浙大，代码开源，项目页面完整，系统性好
 - 价值: ⭐⭐⭐⭐⭐ 动态场景前馈重建是高价值方向，从小时级降到秒级的实用性跨越意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Capacity Matters: A Proof-of-Concept for Transformer Memorization on Real-World Data](../../ACL2025/others/capacity_matters_a_proof-of-concept_for_transformer_memorization_on_real-world_d.md)
+- [LATTE-MV: Learning to Anticipate Table Tennis Hits from Monocular Videos](../../CVPR2025/others/latte-mv_learning_to_anticipate_table_tennis_hits_from_monocular_videos.md)
+- [OrbitZoo: Real Orbital Systems Challenges for Reinforcement Learning](orbitzoo_real_orbital_systems_challenges_for_reinforcement_learning.md)
+- [Suitability Filter: A Statistical Framework for Classifier Evaluation in Real-World Settings](../../ICML2025/others/suitability_filter_a_statistical_framework_for_classifier_evaluation_in_real-wor.md)
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](../../CVPR2026/others/simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+
+<!-- RELATED:END -->

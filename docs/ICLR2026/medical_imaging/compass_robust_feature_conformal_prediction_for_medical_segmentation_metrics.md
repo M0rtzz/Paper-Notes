@@ -131,3 +131,15 @@ COMPASS 不修改分割模型的训练。面积度量通过对 logits 应用 sof
 - **实验**: ⭐⭐⭐⭐⭐ — 4 数据集 × 3 α 水平 × 6 基线 × 100 随机划分，标准+分布偏移+消融，极为充分
 - **实用性**: ⭐⭐⭐⭐⭐ — 代码开源、即插即用、对临床度量不确定性量化有直接价值
 - **写作**: ⭐⭐⭐⭐ — 理论与实验结构清晰，图示直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](../../ICML2025/medical_imaging/deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](../../AAAI2026/medical_imaging/small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [The Four Color Theorem for Cell Instance Segmentation](../../ICML2025/medical_imaging/the_four_color_theorem_for_cell_instance_segmentation.md)
+- [Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+
+<!-- RELATED:END -->

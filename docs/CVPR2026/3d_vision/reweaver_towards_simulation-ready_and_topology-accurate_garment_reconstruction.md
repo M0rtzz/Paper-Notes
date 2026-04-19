@@ -222,3 +222,15 @@ ReWeaver 在6项指标中5项显著优于多视图增强的 AIpparel（AIpparel-
 - 实验充分度: ⭐⭐⭐ — 合成数据上验证全面但缺少真实图像评估，基线仅对比了一个方法
 - 写作质量: ⭐⭐⭐⭐ — 术语定义清晰，2D/3D双空间描述到位，框架图易懂
 - 价值: ⭐⭐⭐⭐ — 直接输出可仿真资产，对数字人/虚拟试穿/机器人操作领域有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins](motionanymesh_physics-grounded_articulation_for_simulation-ready_digital_twins.md)
+- [PhysHead: Simulation-Ready Gaussian Head Avatars](physhead_simulation-ready_gaussian_head_avatars.md)
+- [SwiftTailor: Efficient 3D Garment Generation with Geometry Image Representation](swifttailor_efficient_3d_garment_generation_with_geometry_image_representation.md)
+- [Pb4U-GNet: Resolution-Adaptive Garment Simulation via Propagation-before-Update Graph Network](../../AAAI2026/3d_vision/pb4u-gnet_resolution-adaptive_garment_simulation_via_propagation-before-update_g.md)
+- [TagSplat: Topology-Aware Gaussian Splatting for Dynamic Mesh Modeling and Tracking](tagsplat_topology-aware_gaussian_splatting_for_dynamic_mesh_modeling_and_trackin.md)
+
+<!-- RELATED:END -->

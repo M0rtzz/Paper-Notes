@@ -161,3 +161,15 @@ tags:
 - **分析深度** ⭐⭐⭐⭐：话题分析 + 网络分析 + 时间序列分析三个维度全面刻画播客生态
 - **方法论** ⭐⭐⭐：数据处理管线扎实（Whisper+pyannote+RoBERTa），但各环节方法相对标准
 - **社会科学意义** ⭐⭐⭐⭐：为传播学、信息扩散、社区研究开辟了新的大规模分析可能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Research Borderlands: Analysing Writing Across Research Cultures](research_borderlands_analysing_writing_across_research_cultures.md)
+- [CoAM: Corpus of All-Type Multiword Expressions](coam_corpus_of_all-type_multiword_expressions.md)
+- [Graph-Structured Trajectory Extraction from Travelogues](graph-structured_trajectory_extraction_from_travelogues.md)
+- [笔记5：ReSearch - 学习通过搜索推理](../../NeurIPS2025/others/research_learning_to_reason_with_search_for_llms_via_reinforcement_learning.md)
+- [DRS: Deep Question Reformulation With Structured Output](drs_deep_question_reformulation_with_structured_output.md)
+
+<!-- RELATED:END -->

@@ -154,3 +154,15 @@ $$[\psi(x, w)]_+^{2\theta} \leq \mu \|\nabla_x \psi(x, w) [\psi(x, w)]_+\|, \qua
 - **实验充分度**: ⭐⭐⭐ 实验规模偏小（单隐层网络），仅展示收敛曲线的定性结果，缺乏定量精度对比
 - **写作质量**: ⭐⭐⭐⭐ 数学推导严谨，符号一致，但高度理论化的内容可读性一般
 - **价值**: ⭐⭐⭐⭐ 为鲁棒优化和安全约束学习提供了理论工具，但实际适用性有待进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [FSNet: Feasibility-Seeking Neural Network for Constrained Optimization with Guarantees](fsnet_feasibility-seeking_neural_network_for_constrained_optimization_with_guara.md)
+- [Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games](../../ICML2025/others/continuous-time_analysis_of_heavy_ball_momentum_in_min-max_games.md)
+- [Optimized Learned Count-Min Sketch](optimized_learned_count-min_sketch.md)
+- [Prediction-Powered Semi-Supervised Learning with Online Power Tuning](prediction-powered_semi-supervised_learning_with_online_power_tuning.md)
+
+<!-- RELATED:END -->

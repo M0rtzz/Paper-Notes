@@ -162,3 +162,15 @@ $$\mathcal{L} = \mathbb{E}_{t, y_0, \epsilon}\left[\|\epsilon - \epsilon_\theta(
 | 实验充分性 | ★★★☆☆ | 验证了可行性，但规模小、对比有限 |
 | 实用价值 | ★★★★☆ | 电磁逆设计的实际需求明确，加速显著 |
 | 写作质量 | ★★★★☆ | 简洁明了，问题定义清晰，图表规范 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What We Don't C: Manifold Disentanglement for Structured Discovery](what_we_dont_c_manifold_disentanglement_for_structured_discovery.md)
+- [RIDER: 3D RNA Inverse Design with Reinforcement Learning-Guided Diffusion](../../ICLR2026/image_generation/rider_3d_rna_inverse_design_with_reinforcement_learning-guided_diffusion.md)
+- [A Gradient Flow Approach to Solving Inverse Problems with Latent Diffusion Models](a_gradient_flow_approach_to_solving_inverse_problems_with_latent_diffusion_model.md)
+- [Where and How to Perturb: On the Design of Perturbation Guidance in Diffusion and Flow Models](where_and_how_to_perturb_on_the_design_of_perturbation_guidance_in_diffusion_and.md)
+- [NPN: Non-Linear Projections of the Null-Space for Imaging Inverse Problems](npn_non-linear_projections_of_the_null-space_for_imaging_inverse_problems.md)
+
+<!-- RELATED:END -->

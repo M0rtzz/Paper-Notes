@@ -123,3 +123,15 @@ $$h^* = \arg\min_h \left[2n\hat{\text{Var}}(h) - h\log(n)\right]$$
 - 实验充分度: ⭐⭐⭐ — 验证了理论但环境复杂度有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 从 bandit 例子逐步构建直觉，结构清晰
 - 价值: ⭐⭐⭐⭐ — 对 OPE 实践有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unifying View of Coverage in Linear Off-Policy Evaluation](../../ICLR2026/reinforcement_learning/a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
+- [Wasserstein Policy Optimization](wasserstein_policy_optimization.md)
+- [Bootstrap Off-policy with World Model](../../NeurIPS2025/reinforcement_learning/boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [Bootstrap Off-policy with World Model (BOOM)](../../NeurIPS2025/reinforcement_learning/bootstrap_off-policy_with_world_model.md)
+- [Extreme Value Policy Optimization for Safe Reinforcement Learning](extreme_value_policy_optimization_for_safe_reinforcement_learning.md)
+
+<!-- RELATED:END -->

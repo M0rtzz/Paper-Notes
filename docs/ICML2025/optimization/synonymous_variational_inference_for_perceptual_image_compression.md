@@ -156,3 +156,15 @@ $$\mathcal{L}_{\mathcal{X}}^{(l)} = \mathbb{E}\left[-\lambda_r^{(l)} \log p_{\ha
 - 实验充分度: ⭐⭐⭐ — 单模型多码率有说服力，但与 SOTA 的差距未完全缩小，GAN 微调不够深入
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰严谨，但符号体系复杂（同义集/语义变量/偏语义KL）增加阅读负担
 - 价值: ⭐⭐⭐⭐ — 为感知压缩提供了统一理论视角，渐进式单模型思路实用，但实际性能尚需工程打磨
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Unbiased Implicit Variational Inference](revisiting_unbiased_implicit_variational_inference.md)
+- [Least Squares Variational Inference](../../NeurIPS2025/optimization/least_squares_variational_inference.md)
+- [Brain-like Variational Inference](../../NeurIPS2025/optimization/brain-like_variational_inference.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](../../NeurIPS2025/optimization/viking_deep_variational_inference_with_stochastic_projections.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](../../NeurIPS2025/optimization/neuro-symbolic_entity_alignment_via_variational_inference.md)
+
+<!-- RELATED:END -->

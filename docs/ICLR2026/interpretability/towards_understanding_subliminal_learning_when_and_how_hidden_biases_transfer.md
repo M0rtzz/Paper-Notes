@@ -147,3 +147,15 @@ $$\text{Finding 4 \& 5: 潜意识学习是脆弱的}$$
 - 实验充分性：⭐⭐⭐⭐⭐ — 多模型、多偏好、多设置的全面验证
 - 实用价值：⭐⭐⭐⭐ — 为蒸馏安全提供了简单有效的防御思路
 - 写作质量：⭐⭐⭐⭐⭐ — 结构清晰，逐步推进，结论明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Machine Learning Gets Personal: Evaluating Prediction and Explanation](when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
+- [How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
+- [Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
+- [Base Models Know How to Reason, Thinking Models Learn When](../../NeurIPS2025/interpretability/base_models_know_how_to_reason_thinking_models_learn_when.md)
+- [When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
+
+<!-- RELATED:END -->

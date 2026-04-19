@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 渐进消融+3数据集+效率分析非常透彻
 - 写作质量: ⭐⭐⭐⭐⭐ 渐进式展示从判别到高效生成的路径，极其清晰
 - 价值: ⭐⭐⭐⭐⭐ 为自动驾驶等场景提供了实用的多假设预测方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I²-World: Intra-Inter Tokenization for Efficient Dynamic 4D Scene Forecasting](../../ICCV2025/time_series/i2-world_intra-inter_tokenization_for_efficient_dynamic_4d_scene_forecasting.md)
+- [T1: One-to-One Channel-Head Binding for Multivariate Time-Series Imputation](../../ICLR2026/time_series/t1_one-to-one_channel-head_binding_for_multivariate_time-series_imputation.md)
+- [PFGNet: A Fully Convolutional Frequency-Guided Peripheral Gating Network for Efficient Spatiotemporal Predictive Learning](pfgnet_a_fully_convolutional_frequency-guided_peripheral_gating_network_for_effi.md)
+- [Parallelization of Non-linear State-Space Models: Scaling Up Liquid-Resistance Liquid-Capacitance Networks for Efficient Sequence Modeling](../../NeurIPS2025/time_series/parallelization_of_non-linear_state-space_models_scaling_up_liquid-resistance_li.md)
+- [GAICo: A Deployed and Extensible Framework for Evaluating Diverse and Multimodal Generative AI Outputs](../../AAAI2026/time_series/gaico_a_deployed_and_extensible_framework_for_evaluating_diverse_and_multimodal_.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ CrafText 基于 Craftax（一个类 Minecraft 的开放世界 RL 环境）构建
 - 实验充分度: ⭐⭐⭐ 基线方法有限（仅4种），缺少 VLM-based 方法和更多 RL 算法的对比
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，对比表完整，但部分环境描述可更精炼
 - 价值: ⭐⭐⭐⭐ 填补了动态环境+复杂语言指令跟随基准的空白，对 RL+NLP 社区有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MM-IFEngine: Towards Multimodal Instruction Following](../../ICCV2025/multimodal_vlm/mm-ifengine_towards_multimodal_instruction_following.md)
+- [OpenING: A Comprehensive Benchmark for Judging Open-ended Interleaved Image-Text Generation](../../CVPR2025/multimodal_vlm/opening_a_comprehensive_benchmark_for_judging_open-ended_interleaved_image-text_.md)
+- [REAL-MM-RAG: A Real-World Multi-Modal Retrieval Benchmark](real-mm-rag_a_real-world_multi-modal_retrieval_benchmark.md)
+- [Agent-RewardBench: Towards a Unified Benchmark for Reward Modeling across Perception, Planning, and Safety in Real-World Multimodal Agents](agent_rewardbench.md)
+- [OpenHOI: Open-World Hand-Object Interaction Synthesis with Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/openhoi_open-world_hand-object_interaction_synthesis_with_multimodal_large_langu.md)
+
+<!-- RELATED:END -->

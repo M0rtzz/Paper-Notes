@@ -159,3 +159,15 @@ pipeline包含两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖4个深度网络、5+个数据集、3类挑战条件（夜间/雨天/非朗伯），跨数据集泛化实验设计周到
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，实验对比公平详尽
 - 价值: ⭐⭐⭐⭐⭐ 提供了一种通用、可扩展的方案来增强已有模型的分布外鲁棒性，对自动驾驶和机器人领域有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [SEDiff: Structure Extraction for Domain Adaptive Depth Estimation via Denoising Diffusion Models](sediff_structure_extraction_for_domain_adaptive_depth_estimation_via_denoising_d.md)
+- [MVDD: Multi-View Depth Diffusion Models](mvdd_multi-view_depth_diffusion_models.md)
+- [High-Precision Self-Supervised Monocular Depth Estimation with Rich-Resource Prior](high-precision_self-supervised_monocular_depth_estimation_with_rich-resource_pri.md)
+- [Camera Height Doesn't Change: Unsupervised Training for Metric Monocular Road-Scene Depth Estimation](camera_height_doesnapost_change_unsupervised_training_for_metric_monocular_road-.md)
+
+<!-- RELATED:END -->

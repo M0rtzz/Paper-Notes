@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 数据集、多模型、多温度、含消融和 draft time 分析
 - 写作质量: ⭐⭐⭐⭐ 定理→方法→实验逻辑清晰
 - 价值: ⭐⭐⭐⭐ 对推测解码社区有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VocabTrim: Vocabulary Pruning for Efficient Speculative Decoding in LLMs](vocabtrim_vocabulary_pruning_for_efficient_speculative_decoding_in_llms.md)
+- [Reject Only Critical Tokens: Pivot-Aware Speculative Decoding](../../NeurIPS2025/model_compression/reject_only_critical_tokens_pivot-aware_speculative_decoding.md)
+- [Traversal Verification for Speculative Tree Decoding](../../NeurIPS2025/model_compression/traversal_verification_for_speculative_tree_decoding.md)
+- [Speculative Decoding in Decentralized LLM Inference: Turning Communication Latency into Computation Throughput](speculative_decoding_in_decentralized_llm_inference_turning_communication_latenc.md)
+- [Steering Pretrained Drafters during Speculative Decoding](../../AAAI2026/model_compression/steering_pretrained_drafters_during_speculative_decoding.md)
+
+<!-- RELATED:END -->

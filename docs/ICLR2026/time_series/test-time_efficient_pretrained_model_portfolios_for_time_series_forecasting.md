@@ -178,3 +178,15 @@ Bias 在所有规模上都远大于 variance → 传统集成的 variance reduct
 ⭐⭐⭐⭐
 
 Chroma 提供了一个优雅而实用的替代方案来对抗时序基础模型的"越大越好"范式。核心贡献不在于方法的复杂性，而在于 bias-variance 分析带来的洞察——预训练模型的误差由 bias 主导，因此需要通过专家化而非随机集成来改善。4M 参数匹配 200M+ 模型的结果证明了"多个小专家 > 一个大通用"的策略在时序领域的有效性。后训练 10× 加速和测试时 10× 节省的计算效率使其在实际部署中极具吸引力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)
+- [Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
+- [LightGTS: A Lightweight General Time Series Forecasting Model](../../ICML2025/time_series/lightgts_a_lightweight_general_time_series_forecasting_model.md)
+- [Learning with Calibration: Exploring Test-Time Computing of Spatio-Temporal Forecasting](../../NeurIPS2025/time_series/learning_with_calibration_exploring_test-time_computing_of_spatio-temporal_forec.md)
+- [ResCP: Reservoir Conformal Prediction for Time Series Forecasting](rescp_reservoir_conformal_prediction_for_time_series_forecasting.md)
+
+<!-- RELATED:END -->

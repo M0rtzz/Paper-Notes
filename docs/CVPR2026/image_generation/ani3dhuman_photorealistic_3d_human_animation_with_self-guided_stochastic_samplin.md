@@ -152,3 +152,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{L1}} + \lambda_1 \mathcal{L}_{\text{LPIPS}} +
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 种采样方法对比 + 5 组消融 + 用户研究 + 5 个定量指标，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题动机-方法-实验逻辑完整，图示直观
 - 价值: ⭐⭐⭐⭐ — 为 OOD 条件下的扩散修复提供了通用范式，非刚体人体动画显著推进 SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FG-Portrait: 3D Flow Guided Editable Portrait Animation](fg-portrait_3d_flow_guided_editable_portrait_animation.md)
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_textguided_multihuman_3d_moti.md)
+- [Stochastic Self-Guidance for Training-Free Enhancement of Diffusion Models](../../ICLR2026/image_generation/stochastic_self-guidance_for_training-free_enhancement_of_diffusion_models.md)
+- [BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation](bimotion_b-spline_motion_for_text-guided_dynamic_3d_character_generation.md)
+- [Vinedresser3D: Agentic Text-guided 3D Editing](vinedresser3d_agentic_text-guided_3d_editing.md)
+
+<!-- RELATED:END -->

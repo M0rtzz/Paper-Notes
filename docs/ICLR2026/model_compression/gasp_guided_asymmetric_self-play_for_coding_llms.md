@@ -121,3 +121,15 @@ LiveCodeBench v5 (Qwen2.5-Coder-7B)：
 - 实验充分度: ⭐⭐⭐⭐ 与多个baseline比较，goalpost进展分析有说服力
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，算法描述详细
 - 价值: ⭐⭐⭐⭐⭐ 对自博弈训练范式有重要推进，突破了无引导自博弈的天花板
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ALTER: Asymmetric LoRA for Token-Entropy-Guided Unlearning of LLMs](../../AAAI2026/model_compression/alter_asymmetric_lora_for_token-entropy-guided_unlearning_of.md)
+- [SeeDNorm: Self-Rescaled Dynamic Normalization](seednorm_self-rescaled_dynamic_normalization.md)
+- [Reference-Guided Machine Unlearning](reference-guided_machine_unlearning.md)
+- [Draft-based Approximate Inference for LLMs](draft-based_approximate_inference_for_llms.md)
+- [AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution](amid_knowledge_distillation_for_llms_with_α-mixture_assistant_distribution.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ MultiGen 基于预训练的文本到图像扩散模型（如 Stable Diffusion）
 - 实验充分度: ⭐⭐⭐ 定性结果丰富，但定量对比受限于缺少同类方法的直接对比
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法流程描述清楚
 - 价值: ⭐⭐⭐⭐ 开拓了新的问题设定，增广token 设计有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+- [FreeCompose: Generic Zero-Shot Image Composition with Diffusion Prior](freecompose_generic_zero-shot_image_composition_with_diffusion_prior.md)
+- [MotionChain: Conversational Motion Controllers via Multimodal Prompts](motionchain_conversational_motion_controllers_via_multimodal_prompts.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability](../../ICCV2025/image_generation/dynamicid_zero-shot_multi-id_image_personalization_with_flexible_facial_editabil.md)
+
+<!-- RELATED:END -->

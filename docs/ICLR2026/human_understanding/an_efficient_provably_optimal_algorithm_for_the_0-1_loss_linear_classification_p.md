@@ -101,3 +101,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 数据集较小且低维
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨
 - 价值: ⭐⭐⭐⭐ 在可解释AI和高风险决策场景中有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](../../CVPR2026/human_understanding/subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)
+- [REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation](../../AAAI2026/human_understanding/reina_regularized_entropy_information-based_loss_for_efficient_simultaneous_spee.md)
+- [DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
+- [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
+- [Spectral Subsurface Scattering for Material Classification](../../ECCV2024/human_understanding/spectral_subsurface_scattering_for_material_classification.md)
+
+<!-- RELATED:END -->

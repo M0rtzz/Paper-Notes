@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集验证了理论性质，但缺少大规模和实际应用场景实验
 - 写作质量: ⭐⭐⭐⭐⭐ 數学严谨，命题定义清晰，论证逻辑通顺
 - 价值: ⭐⭐⭐⭐ 在数据共享和协作ML领域有重要理论意义，但距离实际部署仍有距离
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+- [Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs](../../ICML2025/ai_safety/is_your_model_fairly_certain_uncertainty-aware_fairness_evaluation_for_llms.md)
+- [Fairness under Competition](fairness_under_competition.md)
+- [FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation](faircontrast_enhancing_fairness_through_contrastive_learning_and_customized_augm.md)
+- [MARS: A Malignity-Aware Backdoor Defense in Federated Learning](mars_a_malignity-aware_backdoor_defense_in_federated_learning.md)
+
+<!-- RELATED:END -->

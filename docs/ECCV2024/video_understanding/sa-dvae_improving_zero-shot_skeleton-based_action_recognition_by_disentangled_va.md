@@ -142,3 +142,15 @@ SA-DVAE 首次将特征解耦引入骨架零样本动作识别，通过双头 VA
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、ZSL/GZSL 两种协议、固定/随机划分，且有详细消融
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，架构图直观，t-SNE 可视化极具说服力
 - 价值: ⭐⭐⭐⭐ 解耦思路具有通用性，可迁移到其他跨模态零样本学习任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CrossGLG: LLM Guides One-Shot Skeleton-Based 3D Action Recognition in a Cross-Level Manner](crossglg_llm_guides_one-shot_skeleton-based_3d_action_recognition_in_a_cross-lev.md)
+- [SkeletonContext: Skeleton-side Context Prompt Learning for Zero-Shot Skeleton-based Action Recognition](../../CVPR2026/video_understanding/skeletoncontext_skeleton-side_context_prompt_learning_for_zero-shot_skeleton-bas.md)
+- [Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning](efficient_few-shot_action_recognition_via_multi-level_post-reasoning.md)
+- [FinePseudo: Improving Pseudo-Labelling through Temporal-Alignability for Semi-Supervised Fine-Grained Action Recognition](finepseudo_improving_pseudo-labelling_through_temporal-alignablity_for_semi-supe.md)
+- [Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)
+
+<!-- RELATED:END -->

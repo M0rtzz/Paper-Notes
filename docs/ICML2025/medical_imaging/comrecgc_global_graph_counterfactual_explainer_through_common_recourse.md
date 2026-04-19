@@ -223,3 +223,15 @@ ComRecGC 在四个数据集上覆盖率分别超越 GCFExplainer **+21.5%、+31.
 - 实验充分度: ⭐⭐⭐⭐ - 4 个数据集、多种 GNN 架构、完整消融；但缺少大规模图数据
 - 写作质量: ⭐⭐⭐⭐ - 逻辑清晰，理论与实验结合好；符号较多需适应
 - 价值: ⭐⭐⭐⭐ - 对分子设计等领域有直接应用价值，但物理可行性是实际落地的障碍
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis](../../CVPR2025/medical_imaging/latent_drifting_in_diffusion_models_for_counterfactual_medical_image_synthesis.md)
+- [Supercharging Graph Transformers with Advective Diffusion](supercharging_graph_transformers_with_advective_diffusion.md)
+- [PolyConf: Unlocking Polymer Conformation Generation through Hierarchical Generative Models](polyconf_unlocking_polymer_conformation_generation_through_hierarchical_generati.md)
+- [Geometric Generative Modeling with Noise-Conditioned Graph Networks](geometric_generative_modeling_with_noise-conditioned_graph_networks.md)
+- [Towards Multiscale Graph-based Protein Learning with Geometric Secondary Structural Motifs](../../NeurIPS2025/medical_imaging/towards_multiscale_graph-based_protein_learning_with_geometric_secondary_structu.md)
+
+<!-- RELATED:END -->

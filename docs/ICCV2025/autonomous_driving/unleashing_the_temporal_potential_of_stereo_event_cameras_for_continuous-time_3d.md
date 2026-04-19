@@ -144,3 +144,15 @@ $$\mathcal{L} = \mathcal{L}_{depth}^{init} + \mathcal{L}_{depth}^{refine} + \mat
 - 实验充分度: ⭐⭐⭐⭐ 消融详细，运动尺度实验设计巧妙，但仅单数据集
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法图直观，实验分析到位
 - 价值: ⭐⭐⭐⭐⭐ 展示了事件相机在自动驾驶中的变革性潜力，开码促进后续研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EV-3DOD: Pushing the Temporal Boundaries of 3D Object Detection with Event Cameras](../../CVPR2025/autonomous_driving/ev-3dod_pushing_the_temporal_boundaries_of_3d_object_detection_with_event_camera.md)
+- [LiDAR-Event Stereo Fusion with Hallucinations](../../ECCV2024/autonomous_driving/lidar-event_stereo_fusion_with_hallucinations.md)
+- [TrafficLoc: Localizing Traffic Surveillance Cameras in 3D Scenes](trafficloc_localizing_traffic_surveillance_cameras_in_3d_scenes.md)
+- [MAESTRO: Task-Relevant Optimization via Adaptive Feature Enhancement and Suppression for Multi-task 3D Perception](maestro_task-relevant_optimization_via_adaptive_feature_enhancement_and_suppress.md)
+- [Towards Open-World Generation of Stereo Images and Unsupervised Matching](towards_open-world_generation_of_stereo_images_and_unsupervised_matching.md)
+
+<!-- RELATED:END -->

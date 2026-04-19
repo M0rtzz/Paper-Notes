@@ -168,3 +168,15 @@ PUN 的核心优势在于计算效率：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6 个数据集覆盖合成/真实/跨类别/跨骨干/跨光照/跨距离，消融涵盖所有关键设计
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、图表制作精良，但部分段落重复论述稍多
 - 实用价值: ⭐⭐⭐⭐⭐ — 400× 加速和极低显存需求使得 AVS 在资源受限场景（机器人、移动端）中真正可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Surface-Based Visibility-Guided Uncertainty for Continuous Active 3D Neural Reconstruction](../../AAAI2026/3d_vision/surface-based_visibility-guided_uncertainty_for_continuous_active_3d_neural_reco.md)
+- [COOPERTRIM: Adaptive Data Selection for Uncertainty-Aware Cooperative Perception](coopertrim_adaptive_data_selection_for_uncertainty-aware_cooperative_perception.md)
+- [Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator](text-to-3d_by_stitching_a_multi-view_reconstruction_network_to_a_video_generator.md)
+- [CloDS: Visual-Only Unsupervised Cloth Dynamics Learning in Unknown Conditions](clods_visual-only_unsupervised_cloth_dynamics_learning_in_unknown_conditions.md)
+- [Uncertainty Matters in Dynamic Gaussian Splatting for Monocular 4D Reconstruction](uncertainty_matters_in_dynamic_gaussian_splatting_for_monocular_4d_reconstructio.md)
+
+<!-- RELATED:END -->

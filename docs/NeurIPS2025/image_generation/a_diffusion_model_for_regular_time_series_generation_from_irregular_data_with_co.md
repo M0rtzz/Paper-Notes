@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个数据集、3 种缺失率、3 种长度、12 个评估任务，非常全面
 - 写作质量: ⭐⭐⭐⭐ 动机通过 toy experiment 讲得清楚，方法描述清晰
 - 价值: ⭐⭐⭐⭐ 实用价值高，判别分数改善 70% + 训练加速 85%，直接可用于医疗/金融时序生成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TIDMAD: Time Series Dataset for Discovering Dark Matter with AI Denoising](tidmad_time_series_dataset_for_discovering_dark_matter_with_ai_denoising.md)
+- [A Data-Driven Prism: Multi-View Source Separation with Diffusion Model Priors](a_data-driven_prism_multi-view_source_separation_with_diffusion_model_priors.md)
+- [SimDiff: Simpler Yet Better Diffusion Model for Time Series Point Forecasting](../../AAAI2026/image_generation/simdiff_simpler_yet_better_diffusion_model_for_time_series_point_forecasting.md)
+- [CaMiT: A Time-Aware Car Model Dataset for Classification and Generation](camit_a_time-aware_car_model_dataset_for_classification_and_generation.md)
+- [BRIDGE: Bootstrapping Text to Control Time-Series Generation via Multi-Agent Iterative Optimization and Diffusion Modeling](../../ICML2025/image_generation/bridge_bootstrapping_text_to_control_time-series_generation_via_multi-agent_iter.md)
+
+<!-- RELATED:END -->

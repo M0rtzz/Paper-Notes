@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 5 模型×11 数据集覆盖广，但分析手段单一、缺乏统计检验
 - 写作质量: ⭐⭐⭐⭐ 简洁清晰，逻辑连贯
 - 价值: ⭐⭐⭐⭐ 为不确定性检测方向提供了重要的负面证据，避免社区走弯路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Perturbation-based Explanations by Understanding the Role of Uncertainty Calibration](../../NeurIPS2025/interpretability/improving_perturbation-based_explanations_by_understanding_the_role_of_uncertain.md)
+- [Born a Transformer – Always a Transformer? On the Effect of Pretraining on Architectural Abilities](../../NeurIPS2025/interpretability/born_a_transformer_--_always_a_transformer_on_the_effect_of_pretraining_on_archi.md)
+- [Layer by layer, module by module: Choose both for optimal OOD probing of ViT](../../ICLR2026/interpretability/layer_by_layer_module_by_module_choose_both_for_optimal_ood_probing_of_vit.md)
+- [Using Certifying Constraint Solvers for Generating Step-wise Explanations](../../AAAI2026/interpretability/using_certifying_constraint_solvers_for_generating_step-wise_explanations.md)
+- [Pixel2Phys: Distilling Governing Laws from Visual Dynamics](../../CVPR2026/interpretability/pixel2phys_distilling_governing_laws_from_visual_dynamics.md)
+
+<!-- RELATED:END -->

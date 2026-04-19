@@ -126,3 +126,15 @@ LVTINO 在感知指标（LPIPS、FVD）上显著优于逐帧方法，特别是 F
 - 实验充分度: ⭐⭐⭐ 覆盖了多种退化类型，但缓存只有摘要信息，具体数值对比有限；缺少与最新视频修复方法（非扩散基）的全面对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、方法描述流畅；30 页 16 图的篇幅信息量充足
 - 价值: ⭐⭐⭐⭐ 对视频修复领域有直接的实用价值，VCM+逆求解的组合开辟了新的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Image Diffusion Preview with Consistency Solver](../../CVPR2026/image_generation/image_diffusion_preview_with_consistency_solver.md)
+- [Dual-Solver: A Generalized ODE Solver for Diffusion Models with Dual Prediction](dual-solver_a_generalized_ode_solver_for_diffusion_models_with_dual_prediction.md)
+- [Eliminating VAE for Fast and High-Resolution Generative Detail Restoration](eliminating_vae_for_fast_and_high-resolution_generative_detail_restoration.md)
+- [EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing](../../CVPR2026/image_generation/effecterase_joint_video_object_removal_and_insertion_for_high-quality_effect_era.md)
+- [GLYPH-SR: Can We Achieve Both High-Quality Image Super-Resolution and High-Fidelity Text Recovery via VLM-Guided Latent Diffusion Model?](glyph-sr_can_we_achieve_both_high-quality_image_super-resolution_and_high-fideli.md)
+
+<!-- RELATED:END -->

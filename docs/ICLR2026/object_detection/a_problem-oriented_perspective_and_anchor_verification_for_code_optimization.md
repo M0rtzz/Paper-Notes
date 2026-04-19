@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多维分析（结构/语义/人工）、多模型对比、消融实验详尽
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 为 LLM 代码优化提供了有效的数据构建和验证方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context Tokens are Anchors: Understanding the Repetition Curse in dMLLMs from an Information Flow Perspective](context_tokens_are_anchors_understanding_the_repetition_curse_in_dmllms_from_an_.md)
+- [SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection](spwood_sparse_partial_weakly-supervised_oriented_object_detection.md)
+- [Diverse Text-to-Image Generation via Contrastive Noise Optimization](diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
+- [CompAgent: An Agentic Framework for Visual Compliance Verification](../../CVPR2026/object_detection/compagent_an_agentic_framework_for_visual_compliance_verification.md)
+- [Thinking in Latents: Adaptive Anchor Refinement for Implicit Reasoning in LLMs](thinking_in_latents_adaptive_anchor_refinement_for_implicit_reasoning_in_llms.md)
+
+<!-- RELATED:END -->

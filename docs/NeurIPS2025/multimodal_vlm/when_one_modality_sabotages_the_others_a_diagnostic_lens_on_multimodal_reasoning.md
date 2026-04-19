@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ （三个数据集+两个backbone，但仅限情感识别领域）
 - 写作质量: ⭐⭐⭐⭐ （概念定义清晰，形式化严谨）
 - 价值: ⭐⭐⭐⭐ （为多模态系统可信度审计提供了实用工具）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations](when_semantics_mislead_vision_mitigating_large_multimodal_models_hallucinations_.md)
+- [ESPIRE: A Diagnostic Benchmark for Embodied Spatial Reasoning of Vision-Language Models](../../CVPR2025/multimodal_vlm/espire_a_diagnostic_benchmark_for_embodied_spatial_reasoning_of_vision-language_.md)
+- [The Role of Visual Modality in Multimodal Mathematical Reasoning: Challenges and Insights](../../ACL2025/multimodal_vlm/the_role_of_visual_modality_in_multimodal_mathematical_reasoning_challenges_and_.md)
+- [SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs](../../ICLR2026/multimodal_vlm/spinbench_perspective_and_rotation_as_a_lens_on_spatial_reasoning_in_vlms.md)
+- [When to Think and When to Look: Uncertainty-Guided Lookback](../../CVPR2026/multimodal_vlm/when_to_think_and_when_to_look_uncertainty-guided_lookback.md)
+
+<!-- RELATED:END -->

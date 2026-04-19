@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 160+ 仿真、多流体多几何、消融完整
 - 写作质量: ⭐⭐⭐⭐ 物理动机清晰，方法描述规范
 - 价值: ⭐⭐⭐⭐⭐ BubbleML 2.0 数据集 + BubbleFormer 对工程科学计算社区有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps](vision_transformers_for_cosmological_fields_application_to_weak_lensing_mass_map.md)
+- [Emergent World Beliefs: Exploring Transformers in Stochastic Games](emergent_world_beliefs_exploring_transformers_in_stochastic_games.md)
+- [nnterp: A Standardized Interface for Mechanistic Interpretability of Transformers](nnterp_a_standardized_interface_for_mechanistic_interpretability_of_transformers.md)
+- [Lay2Story: Extending Diffusion Transformers for Layout-Togglable Story Generation](../../ICCV2025/human_understanding/lay2story_extending_diffusion_transformers_for_layout-togglable_story_generation.md)
+- [MotionMap: Representing Multimodality in Human Pose Forecasting](../../CVPR2025/human_understanding/motionmap_representing_multimodality_in_human_pose_forecasting.md)
+
+<!-- RELATED:END -->

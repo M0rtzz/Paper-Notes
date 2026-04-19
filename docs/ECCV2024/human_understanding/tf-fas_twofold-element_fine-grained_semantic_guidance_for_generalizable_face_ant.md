@@ -118,3 +118,15 @@ TF-FAS基于CLIP视觉语言模型构建。输入为人脸图像，经过CLIP的
 - 实验充分度: ⭐⭐⭐⭐ 四个标准协议全面验证，消融实验详尽
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法描述逻辑通顺
 - 价值: ⭐⭐⭐⭐ 对VLM在安全关键任务中的应用有很好的指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Unified Representation of Invariant-Specific Features in Missing Modality Face Anti-Spoofing](towards_unified_representation_of_invariant-specific_features_in_missing_modalit.md)
+- [PA-FAS: Towards Interpretable and Generalizable Multimodal Face Anti-Spoofing via Path-Augmented Reinforcement Learning](../../AAAI2026/human_understanding/pa-fas_towards_interpretable_and_generalizable_multimodal_face_anti-spoofing_via.md)
+- [Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)
+- [DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](../../ICCV2025/human_understanding/dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)
+- [Improving Point-based Crowd Counting and Localization Based on Auxiliary Point Guidance](improving_point-based_crowd_counting_and_localization_based_on_auxiliary_point_g.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ StrandHead 在所有指标上取得最优，用户偏好率超过50%。
 - **技术深度**: ⭐⭐⭐⭐⭐ — 从渲染管线到统计先验，技术栈全面且深入
 - **实验充分度**: ⭐⭐⭐⭐ — 多维度对比和消融充分，但定量指标依赖VQA
 - **实用价值**: ⭐⭐⭐⭐ — 支持物理仿真和编辑，但计算成本待优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identity Preserving 3D Head Stylization with Multiview Score Distillation](identity_preserving_3d_head_stylization_with_multiview_score_distillation.md)
+- [Diving into the Fusion of Monocular Priors for Generalized Stereo Matching](diving_into_the_fusion_of_monocular_priors_for_generalized_stereo_matching.md)
+- [TeHOR: Text-Guided 3D Human and Object Reconstruction with Textures](../../CVPR2026/3d_vision/tehor_text-guided_3d_human_and_object_reconstruction_with_textures.md)
+- [RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors](ri3d_few-shot_gaussian_splatting_with_repair_and_inpainting_diffusion_priors.md)
+- [SplatTalk: 3D VQA with Gaussian Splatting](splattalk_3d_vqa_with_gaussian_splatting.md)
+
+<!-- RELATED:END -->

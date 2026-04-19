@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 30 场景人类评估 + 多基线对比 + 消融，但缺少自动化指标和更大规模定量评估
 - 写作质量: ⭐⭐⭐⭐⭐ 动机推导层层递进，方法-实验-消融逻辑完整，补充材料详尽含完整 prompt
 - 价值: ⭐⭐⭐⭐ 对 VLM 工具设计哲学有重要启发，"降低操作复杂度提升推理质量"的结论可广泛引用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Agentic AI for Spatial Reasoning with a Dynamic API](visual_agentic_ai_for_spatial_reasoning_with_a_dynamic_api.md)
+- [Sketchtopia: A Dataset and Foundational Agents for Benchmarking Asynchronous Multimodal Communication with Iconic Feedback](sketchtopia_a_dataset_and_foundational_agents_for_benchmarking_asynchronous_mult.md)
+- [TANGO: Training-free Embodied AI Agents for Open-world Tasks](tango_training-free_embodied_ai_agents_for_open-world_tasks.md)
+- [ATA: Adaptive Transformation Agent for Text-Guided Subject-Position Variable Background Inpainting](ata_adaptive_transformation_agent_for_text-guided_subject-position_variable_back.md)
+- [SpiritSight Agent: Advanced GUI Agent with One Look](spiritsight_agent_advanced_gui_agent_with_one_look.md)
+
+<!-- RELATED:END -->

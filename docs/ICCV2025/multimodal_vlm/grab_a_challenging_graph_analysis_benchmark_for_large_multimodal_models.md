@@ -165,3 +165,15 @@ GRAB 是评估基准，不涉及模型训练。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 20个模型、详细的类别分析和消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，图表丰富，论述严谨
 - 价值: ⭐⭐⭐⭐ — 对理解和推动 LMM 发展有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+- [FinMMR: Make Financial Numerical Reasoning More Multimodal, Comprehensive, and Challenging](finmmr_make_financial_numerical_reasoning_more_multimodal_comprehensive_and_chal.md)
+- [Mosaic of Modalities: A Comprehensive Benchmark for Multimodal Graph Learning](../../CVPR2025/multimodal_vlm/mosaic_of_modalities_a_comprehensive_benchmark_for_multimodal_graph_learning.md)
+- [LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](llava-prumerge_adaptive_token_reduction_for_efficient_large_multimodal_models.md)
+- [MultiVerse: A Multi-Turn Conversation Benchmark for Evaluating Large Vision and Language Models](multiverse_a_multi-turn_conversation_benchmark_for_evaluating_large_vision_and_l.md)
+
+<!-- RELATED:END -->

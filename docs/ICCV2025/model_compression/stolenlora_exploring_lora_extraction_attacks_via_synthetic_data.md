@@ -172,3 +172,15 @@ DSL 通过选择性查询和标签精炼迭代提升攻击效率：
 - 实验充分度: ⭐⭐⭐⭐ 5 个数据集 × 2 种场景 × 4 个对比方法 + 消融 + 硬标签 + 超参分析
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，IB/XB 场景划分合理，算法伪代码规范完整
 - 价值: ⭐⭐⭐⭐ 揭示了 PEFT 时代的新型安全威胁，对 LoRA 生态的安全实践有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WildChat-50m: A Deep Dive Into the Role of Synthetic Data in Post-Training](../../ICML2025/model_compression/wildchat-50m_a_deep_dive_into_the_role_of_synthetic_data_in_post-training.md)
+- [OuroMamba: A Data-Free Quantization Framework for Vision Mamba](ouromamba_a_data-free_quantization_framework_for_vision_mamba.md)
+- [Toward Efficient Inference Attacks: Shadow Model Sharing via Mixture-of-Experts](../../NeurIPS2025/model_compression/toward_efficient_inference_attacks_shadow_model_sharing_via_mixture-of-experts.md)
+- [Predictive Data Selection: The Data That Predicts Is the Data That Teaches](../../ICML2025/model_compression/predictive_data_selection_the_data_that_predicts_is_the_data_that_teaches.md)
+- [Partial Forward Blocking: A Novel Data Pruning Paradigm for Lossless Training Acceleration](partial_forward_blocking_a_novel_data_pruning_paradigm_for_lossless_training_acc.md)
+
+<!-- RELATED:END -->

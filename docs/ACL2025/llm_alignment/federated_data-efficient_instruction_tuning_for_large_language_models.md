@@ -171,3 +171,15 @@ $$\mathbb{G}^{II} = \text{HDBSCAN}(\{\mathbf{c}_1, \mathbf{c}_2, \ldots\})$$
 - 实验充分性: ⭐⭐⭐⭐⭐ (2 数据集 × 2 模型 × 多种 non-IID，消融完整，效率和隐私都有分析)
 - 实用价值: ⭐⭐⭐⭐ (端侧 FL 场景直接可用，FedHDS-Turbo 工程友好)
 - 总体推荐: ⭐⭐⭐⭐ (联邦指令微调方向的扎实工作，实验充分)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruction Tuning of Large Language Models for Tabular Data Generation—in One Day](../../ICML2025/llm_alignment/instruction_tuning_of_large_language_models_for_tabular_data_generation-in_one_d.md)
+- [Call for Rigor in Reporting Quality of Instruction Tuning Data](call_for_rigor_in_reporting_quality_of_instruction_tuning_data.md)
+- [Importance-Aware Data Selection for Efficient LLM Instruction Tuning](../../AAAI2026/llm_alignment/importance-aware_data_selection_for_efficient_llm_instruction_tuning.md)
+- [Rethinking Table Instruction Tuning](rethinking_table_instruction_tuning.md)
+- [T-SHIRT: Token-Selective Hierarchical Data Selection for Instruction Tuning](../../NeurIPS2025/llm_alignment/t-shirt_token-selective_hierarchical_data_selection_for_instruction_tuning.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ $$(J_t^T J_t + \mathbf{W}_{\text{gen}} + \mathbf{W}_{\text{vel}} + \mathbf{W}_{\
 - 实验充分度: ⭐⭐⭐⭐ DexYCB+OakInk+真实世界，消融完整；但跨手型泛化定量评估有限
 - 写作质量: ⭐⭐⭐⭐ 方法描述详细，物理优化公式推导清晰
 - 价值: ⭐⭐⭐⭐⭐ 解决了灵巧手操控领域的核心痛点，实际应用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unified Vision-Language Modeling via Concept Space Alignment](unified_vision-language_modeling_via_concept_space_alignment.md)
+- [Spatial-DISE: A Unified Benchmark for Evaluating Spatial Reasoning in Vision-Language Models](spatial-dise_a_unified_benchmark_for_evaluating_spatial_reasoning_in_vision-lang.md)
+- [Uni3DL: Unified Model for 3D and Language Understanding](../../ECCV2024/multimodal_vlm/uni3dl_a_unified_model_for_3d_vision-language_understanding.md)
+- [Enhanced Continual Learning of Vision-Language Models with Model Fusion](enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
+- [It's Time to Get It Right: Improving Analog Clock Reading and Clock-Hand Spatial Reasoning in Vision-Language Models](../../CVPR2026/multimodal_vlm/its_time_to_get_it_right_improving_analog_clock_reading_and_clock-hand_spatial_r.md)
+
+<!-- RELATED:END -->

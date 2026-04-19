@@ -125,3 +125,15 @@ S-CT 无需对抗训练即可显著提升鲁棒性。
 - ⭐ 实验充分度: 5/5 — 6 个模型 x 12 数据集 x 泛化/鲁棒性双重验证
 - ⭐ 写作质量: 4/5 — 数学推导详尽但部分符号较重
 - ⭐ 价值: 5/5 — 开辟了激活函数调节作为 PEFT 的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering Information Utility in Key-Value Memory for Language Model Post-Training](steering_information_utility_in_key-value_memory_for_language_model_post-trainin.md)
+- [scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery](scpilot_large_language_model_reasoning_toward_automated_single-cell_analysis_and.md)
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [GateRA: Token-Aware Modulation for Parameter-Efficient Fine-Tuning](../../AAAI2026/interpretability/gatera_token-aware_modulation_for_parameter-efficient_fine-tuning.md)
+- [CBMAS: Cognitive Behavioral Modeling via Activation Steering](cbmas_cognitive_behavioral_modeling_via_activation_steering.md)
+
+<!-- RELATED:END -->

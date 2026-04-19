@@ -122,3 +122,15 @@ $$\text{Fixed-precision Soft-Attn NoPE Transformer} = \text{PFO}^2[<] = \text{LT
 - 实验充分度: ⭐⭐⭐⭐ 精心设计的语言层次结构+长度泛化实验，理论预测与实验完美吻合
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰（Figure 1 路线图极好），数学严谨，对非专家也有可读性
 - 价值: ⭐⭐⭐⭐⭐ 为理解 Transformer 能力边界提供了最精确的理论基础之一
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spectral Conditioning of Attention Improves Transformer Performance](spectral_conditioning_of_attention_improves_transformer_performance.md)
+- [A Systematic Study of Compositional Syntactic Transformer Language Models](../../ACL2025/llm_nlp/a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
+- [On the Role of Hidden States of Modern Hopfield Network in Transformer](on_the_role_of_hidden_states_of_modern_hopfield_network_in_transformer.md)
+- [How Numerical Precision Affects Arithmetical Reasoning Capabilities of LLMs](../../ACL2025/llm_nlp/how_numerical_precision_affects_arithmetical_reasoning_capabilities_of_llms.md)
+- [Automated CAD Modeling Sequence Generation from Text Descriptions via Transformer-Based Large Language Models](../../ACL2025/llm_nlp/cadllm_cad_modeling_from_text.md)
+
+<!-- RELATED:END -->

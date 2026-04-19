@@ -123,3 +123,15 @@ PRSS 在推理阶段修改 CFG 方程，无需训练或微调。流程：(1) 用
 - 实验充分度: ⭐⭐⭐⭐ 多种检测信号+全局/局部记忆化+消融+定性案例，但测试集较小
 - 写作质量: ⭐⭐⭐⭐⭐ 分析深入，图示直观，逻辑推进层层递进
 - 价值: ⭐⭐⭐⭐ 对实际部署扩散模型的隐私保护有直接意义，方法简洁可部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_text-to-image_diffusion_via_region-aware_prompt_augme.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+- [DiffDoctor: Diagnosing Image Diffusion Models Before Treating](../../ICCV2025/object_detection/diffdoctor_diagnosing_image_diffusion_models_before_treating.md)
+- [Implicit Concept Removal of Diffusion Models](../../ECCV2024/object_detection/implicit_concept_removal_of_diffusion_models.md)
+- [Attention to Neural Plagiarism: Diffusion Models Can Plagiarize Your Copyrighted Images!](../../ICCV2025/object_detection/attention_to_neural_plagiarism_diffusion_models_can_plagiarize_your_copyrighted_.md)
+
+<!-- RELATED:END -->

@@ -187,3 +187,15 @@ $$\mathcal{L}_{\text{recon}} = \mathbb{E}\left[\frac{v_1^\top \hat{v_1}}{\|v_1\|
 - 实验充分度: ⭐⭐⭐⭐ — 真实数据、多种消融、时间OOD测试，但缺少其他犯罪类型
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，研究问题驱动，伦理讨论详尽
 - 价值: ⭐⭐⭐⭐ — 对执法领域有直接实际价值，方法论贡献一般
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees](shapbpt_image_feature_attributions_using_data-aware_binary_partition_trees.md)
+- [A Closer Look at Knowledge Distillation in Spiking Neural Network Training](a_closer_look_at_knowledge_distillation_in_spiking_neural_ne.md)
+- [FourierPET: Deep Fourier-based Unrolled Network for Low-count PET Reconstruction](fourierpet_deep_fourier-based_unrolled_network_for_low-count_pet_reconstruction.md)
+- [ElementaryNet: A Non-Strategic Neural Network for Predicting Human Behavior in Normal-Form Games](elementarynet_a_non-strategic_neural_network_for_predicting_human_behavior_in_no.md)
+- [Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
+
+<!-- RELATED:END -->

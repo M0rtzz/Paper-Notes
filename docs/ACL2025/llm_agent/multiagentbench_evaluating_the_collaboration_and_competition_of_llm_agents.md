@@ -188,3 +188,15 @@ MARBLE 由四个核心模块组成：
 - **洞察深度**：涌现行为分析和反直觉发现增加了学术贡献（+0.5）
 - **实用价值**：开源框架可供社区使用（+0.5）
 - **扣分**：评估依赖 LLM 判断的可靠性存疑、模型覆盖不够广、某些任务设计偏简单（-1）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use](os_agents_survey_mllm.md)
+- [AndroidGen: Building an Android Language Agent under Data Scarcity](androidgen_agent_data_scarcity.md)
+- [OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis](os_genesis_gui_agent_trajectory.md)
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [LegalAgentBench: Evaluating LLM Agents in Legal Domain](legalagentbench_evaluating_llm_agents_in_legal_domain.md)
+
+<!-- RELATED:END -->

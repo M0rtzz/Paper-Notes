@@ -151,3 +151,15 @@ PaRaMS 是一种**后处理**方法，不涉及重新训练。防御过程仅需
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨任务、跨架构、跨合并方法的全面验证，还分析了自适应攻击
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，威胁模型明确
 - 价值: ⭐⭐⭐⭐ 在开源模型安全领域具有重要实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation](efficient_input-level_backdoor_defense_on_text-to-image_synthesis_via_neuron_act.md)
+- [Omegance: A Single Parameter for Various Granularities in Diffusion-Based Synthesis](omegance_a_single_parameter_for_various_granularities_in_diffusion-based_synthes.md)
+- [Towards Robust Defense against Customization via Protective Perturbation Resistant to Diffusion-based Purification](towards_robust_defense_against_customization_via_protective_perturbation_resista.md)
+- [DCT-Shield: A Robust Frequency Domain Defense against Malicious Image Editing](dct-shield_a_robust_frequency_domain_defense_against_malicious_image_editing.md)
+- [Efficient Personalization of Quantized Diffusion Model without Backpropagation (ZOODiP)](../../CVPR2025/image_generation/efficient_personalization_of_quantized_diffusion_model_without_backpropagation.md)
+
+<!-- RELATED:END -->

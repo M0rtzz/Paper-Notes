@@ -150,3 +150,15 @@ GPU 加速幅度：acasxu 82.8%、safenlp 89.8%。
 - 实验充分度: ⭐⭐⭐⭐⭐ — VNN-COMP'24 全 8 基准 + 3 组消融实验，对比工具全面
 - 写作质量: ⭐⭐⭐⭐⭐ — "影子"隐喻贯穿全文，图示直观，数学推导清晰规范
 - 价值: ⭐⭐⭐⭐ — 为形式化验证社区提供了新方向，但对 ML 主流社区的直接影响有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](../../AAAI2026/others/learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
+- [HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
+- [Latent Equivariant Operators for Robust Object Recognition: Promises and Challenges](latent_equivariant_operators_for_robust_object_recognition_promises_and_challeng.md)
+- [Latent Fourier Transform](latent_fourier_transform.md)
+- [A Single Architecture for Representing Invariance Under Any Space Group](a_single_architecture_for_representing_invariance_under_any_space_group.md)
+
+<!-- RELATED:END -->

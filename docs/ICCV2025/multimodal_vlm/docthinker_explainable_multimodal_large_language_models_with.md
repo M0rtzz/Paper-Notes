@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ Visual CoT benchmark + TextREC + 消融全面，RL vs SFT对比清晰
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细
 - 价值: ⭐⭐⭐⭐ 证明了RL在文档理解中的潜力，4K数据超过438K SFT的结果令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models](aigi-holmes_towards_explainable_and_generalizable_ai-generated_image_detection_v.md)
+- [To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning](../../NeurIPS2025/multimodal_vlm/think_or_not_think_a_study_of_explicit_thinking_in_rule-based_visual_reinforceme.md)
+- [Unified Reinforcement and Imitation Learning for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/unified_reinforcement_and_imitation_learning_for_vision-language_models.md)
+- [EMO-R3: Reflective Reinforcement Learning for Emotional Reasoning in Multimodal Large Language Models](../../CVPR2026/multimodal_vlm/emo-r3_reflective_reinforcement_learning_for_emotional_reasoning_in_multimodal_l.md)
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](../../NeurIPS2025/multimodal_vlm/srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论工作实验偏少，但合成+CelebA已验证关键结论
 - 写作质量: ⭐⭐⭐⭐⭐ 定义-命题-定理的逻辑链非常清晰，例子直观易懂
 - 价值: ⭐⭐⭐⭐⭐ 为可解释AI建立了因果理论基础，指导实际模型设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](../../ICML2025/causal_inference/e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)
+- [Hallucinate Less by Thinking More: Aspect-Based Causal Abstention for Large Language Models](../../AAAI2026/causal_inference/hallucinate_less_by_thinking_more_aspect-based_causal_absten.md)
+- [Revealing Multimodal Causality with Large Language Models](revealing_multimodal_causality_with_large_language_models.md)
+- [Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)
+- [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+
+<!-- RELATED:END -->

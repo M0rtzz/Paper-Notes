@@ -144,3 +144,15 @@ CMCF 贡献最大的 PIR 提升（+10.7pp），GOS 贡献最大的 IR 提升（+
 - 实验充分度: ⭐⭐⭐⭐ 两个基准详细消融，引入了 PIR 新指标
 - 写作质量: ⭐⭐⭐ 技术描述尚可但部分符号使用不够统一
 - 价值: ⭐⭐⭐⭐ 对跨模态配准问题提出了有效的通道级解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LocalDyGS: Multi-view Global Dynamic Scene Modeling via Adaptive Local Implicit Feature Decoupling](localdygs_multi-view_global_dynamic_scene_modeling_via_adaptive_local_implicit_f.md)
+- [Hg-I2P: Bridging Modalities for Generalizable Image-to-Point-Cloud Registration via Heterogeneous Graphs](../../CVPR2026/3d_vision/hg-i2p_bridging_modalities_for_generalizable_image-to-point-cloud_registration_v.md)
+- [RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration](reggs_unposed_sparse_views_gaussian_splatting_with_3dgs_registration.md)
+- [COOPERTRIM: Adaptive Data Selection for Uncertainty-Aware Cooperative Perception](../../ICLR2026/3d_vision/coopertrim_adaptive_data_selection_for_uncertainty-aware_cooperative_perception.md)
+- [Mesh Interpolation Graph Network for Dynamic and Spatially Irregular Global Weather Forecasting](../../NeurIPS2025/3d_vision/mesh_interpolation_graph_network_for_dynamic_and_spatially_irregular_global_weat.md)
+
+<!-- RELATED:END -->

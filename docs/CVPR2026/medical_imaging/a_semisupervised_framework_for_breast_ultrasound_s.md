@@ -141,3 +141,15 @@ VLM 对比：MediClipV2 仅 28.74% Dice，UniversalSeg 30.68%，本文 72.72%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、三种标注比例、充分消融、跨模态泛化验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，流程图直观，消融逐步递进
 - 价值: ⭐⭐⭐⭐ 2.5% 标注超越全监督的实用价值高，范式可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Weakly Supervised Teacher-Student Framework with Progressive Pseudo-mask Refinement for Gland Segmentation](weakly_supervised_teacher-student_framework_with_progressive_pseudo-mask_refinem.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos](uncertainty-aware_concept_and_motion_segmentation_for_semi-supervised_angiograph.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 200M–8B 模型，跨文本/图像/数学推理，但大规模 LLM 评估偏少
 - 写作质量: ⭐⭐⭐⭐ 理论表述严谨，实验分析细致，但数学符号密集可能影响可读性
 - 价值: ⭐⭐⭐⭐⭐ 无训练即插即用的推理加速，对离散扩散模型的部署有直接影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [High-order Equivariant Flow Matching for Density Functional Theory Hamiltonian Prediction](high-order_equivariant_flow_matching_for_density_functional_theory_hamiltonian_p.md)
+- [Beyond Masked and Unmasked: Discrete Diffusion Models via Partial Masking](beyond_masked_and_unmasked_discrete_diffusion_models_via_par.md)
+- [Learnable Sampler Distillation for Discrete Diffusion Models](learnable_sampler_distillation_for_discrete_diffusion_models.md)
+- [Guided Diffusion Sampling on Function Spaces with Applications to PDEs](guided_diffusion_sampling_on_function_spaces_with_applications_to_pdes.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+
+<!-- RELATED:END -->

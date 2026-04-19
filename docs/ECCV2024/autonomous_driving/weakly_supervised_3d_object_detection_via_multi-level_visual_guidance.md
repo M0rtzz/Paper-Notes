@@ -129,3 +129,15 @@ VG-W3D 由两个分支构成：
 - **实验充分度**: ⭐⭐⭐⭐ — 消融实验全面，但仅在 KITTI 一个数据集上验证
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，三个 observation 的引入很自然
 - **价值**: ⭐⭐⭐⭐ — 为降低 3D 检测标注成本提供了实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection](open_object-wise_position_embedding_for_multi-view_3d_object_detection.md)
+- [CSOT: Cross-Scan Object Transfer for Semi-Supervised LiDAR Object Detection](csot_cross-scan_object_transfer_for_semi-supervised_lidar_object_detection.md)
+- [GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
+- [FSD-BEV: Foreground Self-Distillation for Multi-View 3D Object Detection](fsd-bev_foreground_self-distillation_for_multi-view_3d_object_detection.md)
+- [DriverGaze360: OmniDirectional Driver Attention with Object-Level Guidance](../../CVPR2026/autonomous_driving/drivergaze360_omnidirectional_driver_attention_with_object-level_guidance.md)
+
+<!-- RELATED:END -->

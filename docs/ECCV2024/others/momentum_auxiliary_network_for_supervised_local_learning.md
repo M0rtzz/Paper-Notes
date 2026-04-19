@@ -146,3 +146,15 @@ ImageNet 上的结果：
 - 实验充分度: ⭐⭐⭐⭐⭐（4个数据集、3种基线方法、多种网络架构、详尽消融和分析）
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐（ECCV Oral，对局部学习领域有重要推动）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HPFF: Hierarchical Locally Supervised Learning with Patch Feature Fusion](hpff_hierarchical_locally_supervised_learning_with_patch_feature_fusion.md)
+- [Depth-Supervised Fusion Network for Seamless-Free Image Stitching](../../NeurIPS2025/others/depth-supervised_fusion_network_for_seamless-free_image_stitching.md)
+- [Rebalancing Using Estimated Class Distribution for Imbalanced Semi-Supervised Learning under Class Distribution Mismatch](rebalancing_using_estimated_class_distribution_for_imbalanced_semi-supervised_le.md)
+- [Gaze Target Detection Based on Head-Local-Global Coordination](gaze_target_detection_based_on_head-local-global_coordination.md)
+- [Learning Network Dismantling Without Handcrafted Inputs](../../AAAI2026/others/learning_network_dismantling_without_handcrafted_inputs.md)
+
+<!-- RELATED:END -->

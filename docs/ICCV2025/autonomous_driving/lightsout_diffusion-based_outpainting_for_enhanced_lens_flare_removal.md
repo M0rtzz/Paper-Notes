@@ -150,3 +150,15 @@ $$\mathcal{L} = \frac{1}{2\sigma_1^2}\mathcal{L}_{\text{pos}} + \frac{1}{2\sigma
 - **实验充分度**: ⭐⭐⭐⭐ 多基线对比、多场景评估、详细消融、下游任务验证，实验较为全面
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，方法描述完整，图表直观
 - **价值**: ⭐⭐⭐⭐ 即插即用设计实用性强，对自动驾驶等场景有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+- [LangTraj: Diffusion Model and Dataset for Language-Conditioned Trajectory Simulation](langtraj_diffusion_model_and_dataset_for_language-conditioned_trajectory_simulat.md)
+- [Neurosymbolic Diffusion Models](../../NeurIPS2025/autonomous_driving/neurosymbolic_diffusion_models.md)
+- [Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction](../../AAAI2026/autonomous_driving/global-lens_transformers_adaptive_token_mixing_for_dynamic_link_prediction.md)
+- [Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model](generative_active_learning_for_long-tail_trajectory_prediction_via_controllable_.md)
+
+<!-- RELATED:END -->

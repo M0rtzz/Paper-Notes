@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{motion}} = \frac{\lambda_{\text{pt}}}{P}\sum_{i \in \Omega}
 | 实验 | ⭐⭐⭐⭐⭐ | 覆盖静态/动态 NVS、3D 点跟踪、零样本应用，消融设计精到（运动监督、NVS-运动协同、相机条件），公平比较（统一相机参数） |
 | 写作 | ⭐⭐⭐⭐ | 结构清晰，图表质量高，动机论述充分，消融可视化有效支撑设计选择 |
 | 价值 | ⭐⭐⭐⭐⭐ | 将 4D 动态重建从分钟级压缩到秒级同时保持竞争力，统一框架的实用性和零样本泛化为后续工作奠定强基础 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [MotionScale: Reconstructing Appearance, Geometry, and Motion of Dynamic Scenes with Scalable 4D Gaussian Splatting](motionscale_reconstructing_appearance_geometry_and_motion_of_dynamic_scenes_with.md)
+- [PhysGaia: A Physics-Aware Benchmark with Multi-Body Interactions for Dynamic Novel View Synthesis](physgaia_a_physics-aware_benchmark_with_multi-body_interactions_for_dynamic_nove.md)
+- [Sharp Monocular View Synthesis in Less Than a Second](../../ICLR2026/3d_vision/sharp_monocular_view_synthesis_in_less_than_a_second.md)
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4.md)
+
+<!-- RELATED:END -->

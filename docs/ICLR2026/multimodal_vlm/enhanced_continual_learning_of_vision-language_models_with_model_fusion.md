@@ -117,3 +117,15 @@ ConDU维护三个组件贯穿整个持续学习过程：统一模型、任务触
 - 实验充分度: ⭐⭐⭐⭐ MTIL基准覆盖三种设定，但仅在CLIP上验证
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，方法描述规范，数学符号统一
 - 价值: ⭐⭐⭐⭐⭐ 开辟新方向，框架通用性强，无需额外数据和蒸馏设计，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models](../../AAAI2026/multimodal_vlm/recad_reinforcement_learning_enhanced_parametric_cad_model_generation_with_visio.md)
+- [KeepLoRA: Continual Learning with Residual Gradient Adaptation](keeplora_continual_learning_with_residual_gradient_adaptation.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](../../CVPR2026/multimodal_vlm/continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [Branch, or Layer? Zeroth-Order Optimization for Continual Learning of Vision-Language Models](../../AAAI2026/multimodal_vlm/branch_or_layer_zeroth-order_optimization_for_continual_lear.md)
+- [Continual Multimodal Contrastive Learning](../../NeurIPS2025/multimodal_vlm/continual_multimodal_contrastive_learning.md)
+
+<!-- RELATED:END -->

@@ -189,3 +189,15 @@ $$\mathcal{L}_{cor} = \frac{1}{2}(1 - \rho(I^{hq}, I^{gt}))$$
 - 实验充分度: ⭐⭐⭐⭐ 三大任务全面对比 + 详细消融，但缺乏复杂度分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式完整，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 统一模型 SOTA + 通用性强的注意力机制，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Adverse Weather Removal via Spectral-based Spatial Grouping (SSGformer)](../../ICCV2025/image_restoration/robust_adverse_weather_removal_via_spectral-based_spatial_grouping.md)
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration](../../NeurIPS2025/image_restoration/modem_a_morton-order_degradation_estimation_mechanism_for_adverse_weather_image_.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [EDformer: Transformer-Based Event Denoising Across Varied Noise Levels](edformer_transformer-based_event_denoising_across_varied_noise_levels.md)
+
+<!-- RELATED:END -->

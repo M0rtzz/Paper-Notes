@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 有精度验证和 2D-3D 对比，但样本规模有限，缺少与其他 3D 方法的直接对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题动机表述明确，工程应用价值阐述充分
 - 价值: ⭐⭐⭐ — 对骨料工程领域有实际应用价值，但对 CV 社区的方法论贡献相对有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeuroSeg Meets DINOv3: Transferring 2D Self-Supervised Visual Priors to 3D Neuron Segmentation via DINOv3 Initialization](neuroseg_meets_dinov3_transferring_2d_self-supervised_visual_priors_to_3d_neuron.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+- [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](developing_foundation_models_for_universal_segment.md)
+- [Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](addressing_data_scarcity_in_3d_trauma_detection_th.md)
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversion-based_reconstruction-free_anomaly_detection_with_diffusion_model.md)
+
+<!-- RELATED:END -->

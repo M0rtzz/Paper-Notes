@@ -119,3 +119,15 @@ UniComp 是无需训练的即插即用方法。仅需 2 个超参数：帧组融
 - 实验充分度: ⭐⭐⭐⭐ 多模型多比例多基准，消融详细
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，动机引人入胜
 - 价值: ⭐⭐⭐⭐⭐ 即插即用加压缩超基线，实用学术价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Video Compression with One-Dimensional Latent Representation](generative_video_compression_with_one-dimensional_latent_representation.md)
+- [Taming Momentum: Rethinking Optimizer States Through Low-Rank Approximation](../../ICLR2026/model_compression/taming_momentum_rethinking_optimizer_states_through_low-rank_approximation.md)
+- [Rethinking Continual Learning with Progressive Neural Collapse](../../ICLR2026/model_compression/rethinking_continual_learning_with_progressive_neural_collapse.md)
+- [PriVi: Towards a General-Purpose Video Model for Primate Behavior in the Wild](privi_towards_a_general-purpose_video_model_for_primate_behavior_in_the_wild.md)
+- [Cut Less, Fold More: Model Compression through the Lens of Projection Geometry](../../ICLR2026/model_compression/cut_less_fold_more_model_compression_through_the_lens_of_projection_geometry.md)
+
+<!-- RELATED:END -->

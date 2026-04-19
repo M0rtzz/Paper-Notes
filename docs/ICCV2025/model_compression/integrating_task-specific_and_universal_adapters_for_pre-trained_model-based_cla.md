@@ -131,3 +131,15 @@ ViT-B/16-IN21K backbone, B0 Inc 设置。TUNA 在所有四个数据集上均为 
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4个数据集，多种 baseline，详细消融和分析
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，动机明确，实验展示完整
 - **价值**: ⭐⭐⭐⭐ 为 PTM-based CIL 提供了有效的 adapter 管理方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of Noise for Pre-Trained Model-Based Class-Incremental Learning](../../NeurIPS2025/model_compression/mixture_of_noise_for_pre-trained_model-based_class-incremental_learning.md)
+- [Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning](achieving_more_with_less_additive_prompt_tuning_for_rehearsal-free_class-increme.md)
+- [Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers](../../AAAI2026/model_compression/compensating_distribution_drifts_in_class-incremental_learning_of_pre-trained_vi.md)
+- [Efficient Adaptation of Pre-Trained Vision Transformer Underpinned by Approximation Theory](efficient_adaptation_of_pre-trained_vision_transformer_underpinned_by_approximat.md)
+- [Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning](../../CVPR2025/model_compression/adapter_merging_with_centroid_prototype_mapping_for_scalable_class-incremental_l.md)
+
+<!-- RELATED:END -->

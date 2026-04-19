@@ -134,3 +134,15 @@ red mini-ImageNet 上真实噪声实验：
 - 实验充分度: ⭐⭐⭐⭐⭐（合成+4个真实数据集，6种SOTA方法集成，详细消融）
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐（对噪声标签学习领域有实用贡献）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Sample Selection Against Label Noise by Cutting Mislabeled Easy Examples](../../NeurIPS2025/llm_evaluation/enhancing_sample_selection_against_label_noise_by_cutting_mislabeled_easy_exampl.md)
+- [Versatile Incremental Learning: Towards Class and Domain-Agnostic Incremental Learning](versatile_incremental_learning_towards_class_and_domain-agnostic_incremental_lea.md)
+- [Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](../../ICLR2026/llm_evaluation/noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
+- [DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning](../../AAAI2026/llm_evaluation/dicap_distribution-calibrated_pseudo-labeling_for_semi-supervised_multi-label_le.md)
+- [Image-Feature Weak-to-Strong Consistency: An Enhanced Paradigm for Semi-Supervised Learning](image-feature_weak-to-strong_consistency_an_enhanced_paradigm_for_semi-supervise.md)
+
+<!-- RELATED:END -->

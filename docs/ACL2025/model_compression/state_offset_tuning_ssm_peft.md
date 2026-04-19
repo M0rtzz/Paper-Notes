@@ -107,3 +107,15 @@ State-offset 用远少于 LoRA 的参数达到了更好的效果。
 - 实验充分度: ⭐⭐⭐⭐ 多种 SSM 模型和下游任务验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论分析优雅，公式推导清晰
 - 价值: ⭐⭐⭐⭐ SSM 的 PEFT 是新方向，State-offset 提供了简洁有效的起点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models](trans_peft_transferable.md)
+- [Quaff: Quantized Parameter-Efficient Fine-Tuning under Outlier Spatial Stability Hypothesis](quaff_quantized_peft.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [MambaIC: State Space Models for High-Performance Learned Image Compression](../../CVPR2025/model_compression/mambaic_state_space_models_for_high-performance_learned_image_compression.md)
+
+<!-- RELATED:END -->

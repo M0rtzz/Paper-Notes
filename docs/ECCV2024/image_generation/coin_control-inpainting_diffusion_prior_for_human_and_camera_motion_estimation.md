@@ -188,3 +188,15 @@ COIN与SLAHMR/PACE的核心区别：用扩散模型替代VAE先验，解决了VA
 - **改良SDS的通用范式**：COIN提出的控制-补绘策略（动态控制信号 + 软补绘 + 多步去噪）是对标准SDS的系统性改进，可推广到text-to-3D、视频生成等任何需要从扩散模型蒸馏先验的下游任务
 - **自演化优化策略**：将上一轮优化结果作为下一轮控制信号的设计思想，类似于EM算法或自举（bootstrapping），适用于初始估计不可靠的迭代优化场景
 - **跨模态一致性约束**：HSR损失利用场景几何与人体的深度遮挡关系来标定相机尺度，这种跨模态（运动 vs 场景）的一致性约束思想可以扩展到人-物交互、多人场景等更复杂的设定
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [DreamMover: Leveraging the Prior of Diffusion Models for Image Interpolation with Large Motion](dreammover_leveraging_the_prior_of_diffusion_models_for_image_interpolation_with.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [Learning Semantic Latent Directions for Accurate and Controllable Human Motion Prediction](learning_semantic_latent_directions_for_accurate_and_controllable_human_motion_p.md)
+- [Generating Human Interaction Motions in Scenes with Text Control](generating_human_interaction_motions_in_scenes_with_text_control.md)
+
+<!-- RELATED:END -->

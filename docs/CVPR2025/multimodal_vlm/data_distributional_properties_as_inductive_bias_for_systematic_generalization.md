@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 极其详尽的消融（多样性/突发性/干预/容量/数据量），NMI+平行性的机制分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链清晰：现象→操纵→机制解释，每步都有充分的实验支撑
 - 价值: ⭐⭐⭐⭐ 对理解 SG 有重要理论贡献，但合成数据到真实世界的迁移还需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NaViL: Rethinking Scaling Properties of Native Multimodal Large Language Models under Data Constraints](../../NeurIPS2025/multimodal_vlm/navil_rethinking_scaling_properties_of_native_multimodal_large_language_models_u.md)
+- [Identifying and Mitigating Position Bias of Multi-image Vision-Language Models](identifying_and_mitigating_position_bias_of_multi-image_vision-language_models.md)
+- [Single Domain Generalization for Few-Shot Counting via Universal Representation Matching](single_domain_generalization_for_few-shot_counting_via_universal_representation_.md)
+- [DASH: Detection and Assessment of Systematic Hallucinations of VLMs](../../ICCV2025/multimodal_vlm/dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)
+- [DOTA: DistributiOnal Test-time Adaptation of Vision-Language Models](../../NeurIPS2025/multimodal_vlm/dota_distributional_testtime_adaptation_of_visionlanguage_mo.md)
+
+<!-- RELATED:END -->

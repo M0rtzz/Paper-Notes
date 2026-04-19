@@ -123,3 +123,15 @@ $$\mathcal{L}_{\mathrm{UPO}} = \frac{1}{G}\sum_g \left(\frac{1}{L}\sum_n \min\le
 - 实验充分度: ⭐⭐⭐⭐ 4 个 benchmark 覆盖逻辑与数学推理，消融充分，但缺少开放文本生成评测
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验设计清晰，动机阐述有力
 - 价值: ⭐⭐⭐⭐ 为离散扩散模型推理提供了新范式，实际改进在结构化任务上显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compose Your Policies! Improving Diffusion-based or Flow-based Robot Policies via Test-time Distribution-level Composition](compose_your_policies_improving_diffusion-based_or_flow-based_robot_policies_via.md)
+- [Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [PADiff: Predictive and Adaptive Diffusion Policies for Ad Hoc Teamwork](../../AAAI2026/image_generation/padiff_predictive_and_adaptive_diffusion_policies_for_ad_hoc_teamwork.md)
+- [Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations](contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas.md)
+- [Failure Prediction at Runtime for Generative Robot Policies](../../NeurIPS2025/image_generation/failure_prediction_at_runtime_for_generative_robot_policies.md)
+
+<!-- RELATED:END -->

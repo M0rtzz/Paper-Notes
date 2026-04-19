@@ -136,3 +136,15 @@ MLLMs 无需训练，视觉编码器冻结，仅训练 SVM 分类超平面。所
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型×多规模×多任务类型的全面交叉对比，统计分析严谨
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，图表信息密度高，Fig.1 的双图设计一目了然
 - 价值: ⭐⭐⭐⭐ 对实际 AI 部署中的方法选择有直接指导意义，倡导的评估实践值得推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Toward a Vision-Language Foundation Model for Medical Data: Multimodal Dataset and Benchmarks for Vietnamese PET/CT Report Generation](toward_a_vision-language_foundation_model_for_medical_data_multimodal_dataset_an.md)
+- [EDBench: Large-Scale Electron Density Data for Molecular Modeling](edbench_large-scale_electron_density_data_for_molecular_modeling.md)
+- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
+- [Multiscale Guidance of Protein Structure Prediction with Heterogeneous Cryo-EM Data](multiscale_guidance_of_protein_structure_prediction_with_heterogeneous_cryo-em_d.md)
+- [Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum](ditch_the_denoiser_emergence_of_noise_robustness_in_self-supervised_learning_fro.md)
+
+<!-- RELATED:END -->

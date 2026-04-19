@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8种LLM、6个数据集、多种消融方式、15 seeds
 - 写作质量: ⭐⭐⭐⭐ 逻辑链清晰（分类→消融→发现→解释→特征分析）
 - 价值: ⭐⭐⭐⭐⭐ 对理解ICL机制和优化prompt engineering都有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ProFuser: Progressive Fusion of Large Language Models](profuser_progressive_fusion_of_large_language_models.md)
+- [When People are Floods: Analyzing Dehumanizing Metaphors in Immigration Discourse with Large Language Models](../../ACL2025/llm_nlp/dehumanizing_metaphors_immigration.md)
+- [LoKI: Low-damage Knowledge Implanting of Large Language Models](loki_low-damage_knowledge_implanting_of_large_language_models.md)
+- [Control Illusion: The Failure of Instruction Hierarchies in Large Language Models](control_illusion_the_failure_of_instruction_hierarchies_in_large_language_models.md)
+- [Regress, Don't Guess — A Regression-like Loss on Number Tokens for Language Models](../../ICML2025/llm_nlp/regress_dont_guess_--_a_regression-like_loss_on_number_tokens_for_language_model.md)
+
+<!-- RELATED:END -->

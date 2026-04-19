@@ -128,3 +128,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ 模拟数据充分但缺真实数据
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，理论严谨
 - **价值**: ⭐⭐⭐⭐ 对天文和跨模态翻译领域都有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamRelation: Bridging Customization and Relation Generation](dreamrelation_bridging_customization_and_relation_generation.md)
+- [DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation](diffsensei_bridging_multi-modal_llms_and_diffusion_models_for_customized_manga_g.md)
+- [coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](codrawagents_a_multi-agent_dialogue_framework_for_compositional_image_generation.md)
+- [V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)
+- [From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing](from_words_to_structured_visuals_a_benchmark_and_framework_for_text-to-diagram_g.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ $$(\mu_{t,k}, R_{t,k}, c_{t,k}) = (\mu_{0,k} R_{0 \to t,k}^\top + T_{0 \to t,k}^
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据集，7个Baseline，消融+鲁棒性分析完整
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，管线图直观，各模块动机与设计自洽
 - 价值: ⭐⭐⭐⭐ 高度实用的问题设定，对数字孪生、机器人等应用落地有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PCSTracker: Long-Term Scene Flow Estimation for Point Cloud Sequences](pcstracker_long-term_scene_flow_estimation_for_point_cloud_sequences.md)
+- [MAGICIAN: Efficient Long-Term Planning with Imagined Gaussians for Active Mapping](magician_efficient_long-term_planning_with_imagined_gaussians_for_active_mapping.md)
+- [DropAnSH-GS: Dropping Anchor and Spherical Harmonics for Sparse-view Gaussian Splatting](dropping_anchor_and_spherical_harmonics_for_sparse-view_gaussian_splatting.md)
+- [Changes in Real Time: Online Scene Change Detection with Multi-View Fusion](changes_in_real_time_online_scene_change_detection_with_multi-view_fusion.md)
+- [TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update](../../ICCV2025/3d_vision/2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)
+
+<!-- RELATED:END -->

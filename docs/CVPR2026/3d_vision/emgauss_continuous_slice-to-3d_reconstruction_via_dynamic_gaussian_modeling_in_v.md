@@ -165,3 +165,15 @@ $$\Delta\mu_i, \Delta S_i, \Delta o_i = \Phi_\theta(\mu_i, t)$$
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集多指标验证，含下游任务和消融，但跨模态实验缺乏
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 提供了通用的slice-to-3D重建框架，超越vEM领域
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Field-Based 3D Surface Reconstruction of Microstructures from Multi-Detector Signals in Scanning Electron Microscopy](neural_field-based_3d_surface_reconstruction_of_microstructures_from_multi-detec.md)
+- [InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction](instanthdr_singleforward_gaussian_splatting_for_hi.md)
+- [RetimeGS: Continuous-Time Reconstruction of 4D Gaussian Splatting](retimegs_continuous_time_4d_gaussian.md)
+- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
+- [TagSplat: Topology-Aware Gaussian Splatting for Dynamic Mesh Modeling and Tracking](tagsplat_topology-aware_gaussian_splatting_for_dynamic_mesh_modeling_and_trackin.md)
+
+<!-- RELATED:END -->

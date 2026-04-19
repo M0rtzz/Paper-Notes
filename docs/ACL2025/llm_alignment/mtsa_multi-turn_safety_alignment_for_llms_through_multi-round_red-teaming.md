@@ -155,3 +155,15 @@ $$\mathcal{L}_{adv} = -\log\sigma\left(\beta\log\frac{\pi_{t+1}^{adv}(q_w|s_h^{a
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6个LLM×多种攻击方法+防御/通用性/过度拒绝/鲁棒性全面评估
 - **写作质量**: ⭐⭐⭐ 内容丰富但部分符号和公式表述略显繁杂
 - **价值**: ⭐⭐⭐⭐⭐ 直击LLM多轮安全问题的实用框架，攻防双向提升的设计思路有很高的实践价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M2S: Multi-turn to Single-turn jailbreak in Red Teaming for LLMs](m2s_multiturn_to_singleturn_jailbreak_in.md)
+- [Red Queen: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking](red_queen_safeguarding_large_language_models_against_concealed_multi-turn_jailbr.md)
+- [PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference](pku-saferlhf_towards_multi-level_safety_alignment_for_llms_with_human_preference.md)
+- [JailbreakRadar: Comprehensive Assessment of Jailbreak Attacks Against LLMs](jailbreakradar_comprehensive_assessment_jailbreak_attacks.md)
+- [LLMs Caught in the Crossfire: Malware Requests and Jailbreak Challenges](llms_caught_in_the_crossfire_malware_requests_and_jailbreak_challenges.md)
+
+<!-- RELATED:END -->

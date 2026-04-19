@@ -133,3 +133,15 @@ DesignX 在几乎所有测试实例上排名第一，归一化平均比最佳 Me
 - 实验充分度: ⭐⭐⭐⭐⭐ 3200 合成测试 + 3 个真实场景 + 消融 + scaling law + 可解释性分析，极为全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富，但符号较多需反复查阅
 - 价值: ⭐⭐⭐⭐⭐ 对 MetaBBO 和自动算法设计领域有范式性推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)
+- [Knowledgeable Language Models as Black-Box Optimizers for Personalized Medicine](../../ICLR2026/medical_imaging/knowledgeable_language_models_as_black-box_optimizers_for_personalized_medicine.md)
+- [Steering Generative Models with Experimental Data for Protein Fitness Optimization](steering_generative_models_with_experimental_data_for_protein_fitness_optimizati.md)
+- [Flow Density Control: Generative Optimization Beyond Entropy-Regularized Fine-Tuning](flow_density_control_generative_optimization_beyond_entropy-regularized_fine-tun.md)
+- [Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex](meta-learning_an_in-context_transformer_model_of_human_higher_visual_cortex.md)
+
+<!-- RELATED:END -->

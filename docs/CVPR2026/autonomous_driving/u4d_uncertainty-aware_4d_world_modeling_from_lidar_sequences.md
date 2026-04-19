@@ -166,3 +166,15 @@ U4D 采用两阶段"先难后易"的生成范式：
 - 实验充分度: ⭐⭐⭐⭐ （双数据集、多指标、完整消融、下游任务验证）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，图表精美，动机阐述充分）
 - 价值: ⭐⭐⭐⭐ （不确定性+生成的范式对自动驾驶仿真数据增强有实际意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences](../../AAAI2026/autonomous_driving/lidarcrafter_dynamic_4d_world_modeling_from_lidar_sequences.md)
+- [FoSS: Modeling Long-Range Dependencies and Multimodal Uncertainty in Trajectory Prediction via Fourier–State Space Integration](foss_modeling_long_range_dependencies_and_multimodal_uncertainty_in_trajectory_p.md)
+- [Points-to-3D: Structure-Aware 3D Generation with Point Cloud Priors](points-to-3d_structure-aware_3d_generation_with_point_cloud_priors.md)
+- [F3DGS: Federated 3D Gaussian Splatting for Decentralized Multi-Agent World Modeling](f3dgs_federated_3d_gaussian_splatting_for_decentralized_multi-agent_world_modeli.md)
+- [Efficient Equivariant Transformer for Self-Driving Agent Modeling](efficient_equivariant_transformer_for_self-driving_agent_modeling.md)
+
+<!-- RELATED:END -->

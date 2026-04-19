@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多任务验证，工具选择准确率和对话质量评估充分
 - 写作质量: ⭐⭐⭐⭐ 清晰易懂，系统架构图直观
 - 价值: ⭐⭐⭐⭐ 对专业领域的 LLM 工具集成有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EZSR: Event-based Zero-Shot Recognition](ezsr_event-based_zero-shot_recognition.md)
+- [Towards Smart Point-and-Shoot Photography](towards_smart_point-and-shoot_photography.md)
+- [Preserving Clusters in Prompt Learning for Unsupervised Domain Adaptation](preserving_clusters_in_prompt_learning_for_unsupervised_domain_adaptation.md)
+- [GOAL: Global-Local Object Alignment Learning](goal_global-local_object_alignment_learning.md)
+- [NeighborRetr: Balancing Hub Centrality in Cross-Modal Retrieval](neighborretr_balancing_hub_centrality_in_cross-modal_retrieval.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{ort}} + \lambda_3\
 - 实验充分度: ⭐⭐⭐⭐ （两种增量协议+长序列+消融+动机验证实验全面）
 - 写作质量: ⭐⭐⭐⭐ （理论推导清晰，图表直观）
 - 价值: ⭐⭐⭐⭐ （持续学习人脸伪造检测是实际需求，方法有实用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Forensics Adapter: Adapting CLIP for Generalizable Face Forgery Detection](../../CVPR2025/human_understanding/forensics_adapter_adapting_clip_for_generalizable_face_forgery_detection.md)
+- [Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection](../../AAAI2026/human_understanding/fine-grained_dino_tuning_with_dual_supervision_for_face_forgery_detection.md)
+- [Mouse-Guided Gaze: Semi-Supervised Learning of Intention-Aware Representations for Reading Detection](mouse-guided_gaze_semi-supervised_learning_of_intention-aware_representations_fo.md)
+- [Bi-Level Optimization for Self-Supervised AI-Generated Face Detection](../../ICCV2025/human_understanding/bi-level_optimization_for_self-supervised_ai-generated_face_detection.md)
+- [Bilevel Layer-Positioning LoRA for Real Image Dehazing](../../CVPR2026/human_understanding/bilevel_lora_real_image_dehazing.md)
+
+<!-- RELATED:END -->

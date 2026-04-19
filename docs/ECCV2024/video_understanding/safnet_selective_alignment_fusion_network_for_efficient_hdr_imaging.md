@@ -125,3 +125,15 @@ SAFNet 包含三个子网络：金字塔编码器 E、由粗到精解码器 D、
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集 + 一个自建数据集 + 详尽消融 + 效率对比 + 泛化测试
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观，数据集贡献有价值
 - 价值: ⭐⭐⭐⭐⭐ 速度-精度权衡的新记录，对移动端 HDR 部署具有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoMamba: Spatio-Temporal Selective State Space Model](videomamba_spatio-temporal_selective_state_space_model.md)
+- [RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos](rgnet_a_unified_clip_retrieval_and_grounding_network_for_long_videos.md)
+- [PiTe: Pixel-Temporal Alignment for Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)
+- [SAVA-X: Ego-to-Exo Imitation Error Detection via Scene-Adaptive View Alignment and Bidirectional Cross View Fusion](../../CVPR2026/video_understanding/savax_egotoexo_imitation_error_detection_via_scene.md)
+- [SPAMming Labels: Efficient Annotations for the Trackers of Tomorrow](spamming_labels_efficient_annotations_for_the_trackers_of_tomorrow.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ $$\mathcal{L}_{fif} = \frac{1}{|V|}(\frac{|\chi^\top\mathbf{1}_{|V|}|}{\|\chi\|_
 - 技术深度: ⭐⭐⭐⭐ (四个精心设计的损失函数)
 - 实验充分度: ⭐⭐⭐⭐ (多数据集多任务验证)
 - 实用价值: ⭐⭐⭐⭐ (直接改善形状匹配质量)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models](representing_3d_shapes_with_64_latent_vectors_for_3d_diffusion_models.md)
+- [DMesh++: An Efficient Differentiable Mesh for Complex Shapes](dmesh_an_efficient_differentiable_mesh_for_complex_shapes.md)
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [Open-Vocabulary Octree-Graph for 3D Scene Understanding](open-vocabulary_octree-graph_for_3d_scene_understanding.md)
+- [HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
+
+<!-- RELATED:END -->

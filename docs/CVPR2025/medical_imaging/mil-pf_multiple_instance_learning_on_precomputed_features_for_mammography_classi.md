@@ -113,3 +113,15 @@ MIL-PF 流水线分为两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个大规模数据集、多编码器对比、详细消融、36 次运行统计
 - 写作质量: ⭐⭐⭐⭐ — 问题形式化清晰，方法推导连贯
 - 价值: ⭐⭐⭐⭐ — 为资源受限研究组提供了高效可行的乳腺 X 光 CAD 方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction](evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l.md)
+- [Do Multiple Instance Learning Models Transfer?](../../ICML2025/medical_imaging/do_multiple_instance_learning_models_transfer.md)
+- [UNIStainNet: Foundation-Model-Guided Virtual Staining of H&E to IHC](unistainnet_foundation-model-guided_virtual_staining_of_he_to_ihc.md)
+- [Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi.md)
+
+<!-- RELATED:END -->

@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 基于摘要，ImageNet 单数据集
 - 写作质量: ⭐⭐⭐ 基于摘要初评
 - 价值: ⭐⭐⭐⭐ 对 MoE 和模型压缩领域有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](../../ACL2025/llm_efficiency/gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)
+- [Advancing Expert Specialization for Better MoE](../../NeurIPS2025/llm_efficiency/advancing_expert_specialization_for_better_moe.md)
+- [Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning](low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc.md)
+- [Mixture of Lookup Experts](../../ICML2025/llm_efficiency/mixture_of_lookup_experts.md)
+- [MoH: Multi-Head Attention as Mixture-of-Head Attention](../../ICML2025/llm_efficiency/moh_multi-head_attention_as_mixture-of-head_attention.md)
+
+<!-- RELATED:END -->

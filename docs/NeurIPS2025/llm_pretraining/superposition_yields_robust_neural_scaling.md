@@ -163,3 +163,15 @@ $$L \propto 1/m \quad (\alpha_m = 1)$$
 - **写作质量**: ⭐⭐⭐⭐⭐ — 图文并茂，解释清晰，结构优秀
 - **实用价值**: ⭐⭐⭐⭐ — 对训练策略（权重衰减、架构选择）有直接指导意义
 - **综合**: ⭐⭐⭐⭐⭐ (9/10) — 将 AI 可解释性（叠加）与缩放定律两大主题优美地连接
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks](../../ICML2025/llm_pretraining/bayesian_neural_scaling_law_extrapolation_with_prior-data_fitted_networks.md)
+- [Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
+- [Generalization Bounds for Rank-sparse Neural Networks](generalization_bounds_for_rank-sparse_neural_networks.md)
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems](an_empirical_investigation_of_neural_odes_and_symbolic_regression_for_dynamical_.md)
+
+<!-- RELATED:END -->

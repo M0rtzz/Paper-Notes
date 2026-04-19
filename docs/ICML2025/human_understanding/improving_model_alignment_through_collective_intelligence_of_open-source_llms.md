@@ -125,3 +125,15 @@ Pipeline:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多个顶级基准测试，消融全面，自我提升验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，实验结果令人信服
 - 价值: ⭐⭐⭐⭐⭐ 对开源 LLM 生态发展有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [If Open Source Is to Win, It Must Go Public](if_open_source_is_to_win_it_must_go_public.md)
+- [Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](../../AAAI2026/human_understanding/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [Truly Self-Improving Agents Require Intrinsic Metacognitive Learning](truly_self-improving_agents_require_intrinsic_metacognitive_learning.md)
+- [RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning](rulebreakers_challenging_llms_at_the_crossroads_between_formal_logic_and_human-l.md)
+
+<!-- RELATED:END -->

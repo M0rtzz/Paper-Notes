@@ -206,3 +206,15 @@ SIC 在 9 项可解释性指标中 **8 项超越** ProtoPNet 和 B-cos，仅在 
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、三种 backbone、FunnyBirds 可解释性基准评估全面，但缺少与更多可解释方法（如 Concept Bottleneck Models）的直接对比
 - **写作质量**: ⭐⭐⭐⭐⭐ — 定位清晰（Tab 1 一目了然），解释示例丰富且有洞察力（如 Pascal VOC 的多标签分析）
 - **价值**: ⭐⭐⭐⭐ — 在医学等高风险领域的可解释分类上具有实际部署价值，理论保证增强了可信度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification](../../NeurIPS2025/medical_imaging/firegnn_neuro-symbolic_graph_neural_networks_with_trainable_fuzzy_rules_for_inte.md)
+- [IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising](idf_iterative_dynamic_filtering_networks_for_generalizable_image_denoising.md)
+- [Random Search Neural Networks for Efficient and Expressive Graph Learning](../../NeurIPS2025/medical_imaging/random_search_neural_networks_for_efficient_and_expressive_graph_learning.md)
+- [Interactive Medical Image Analysis with Concept-based Similarity Reasoning](../../CVPR2025/medical_imaging/interactive_medical_image_analysis_with_concept-based_similarity_reasoning.md)
+- [Unmasking Biases and Reliability Concerns in Convolutional Neural Networks Analysis of Cancer Pathology Images](../../CVPR2025/medical_imaging/unmasking_biases_and_reliability_concerns_in_convolutional_neural_networks_analy.md)
+
+<!-- RELATED:END -->

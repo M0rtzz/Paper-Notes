@@ -118,3 +118,15 @@ tags:
 - **实验充分度**: 8/10 — 20+ 模型评估，涵盖零样本/微调/API 三种范式，消融充分
 - **清晰度**: 8/10 — 任务定义清楚，数据构建流程图示化，逻辑连贯
 - **总分**: 7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark](mmlu-cf_a_contamination-free_multi-task_language_understanding_benchmark.md)
+- [McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
+- [SeedBench: A Multi-task Benchmark for Evaluating Large Language Models in Seed Science](seedbench_a_multi-task_benchmark_for_evaluating_large_language_models_in_seed_sc.md)
+- [TripTailor: A Real-World Benchmark for Personalized Travel Planning](triptailor_a_real-world_benchmark_for_personalized_travel_planning.md)
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+
+<!-- RELATED:END -->

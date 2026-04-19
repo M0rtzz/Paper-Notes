@@ -142,3 +142,15 @@ StEvo-Bench 是评测基准，不涉及模型训练。
 - 实验充分度: ⭐⭐⭐⭐ 覆盖 9 个模型（含 Veo 3、Sora 2 Pro 等顶级模型），验证器可靠性经人类对比验证
 - 写作质量: ⭐⭐⭐⭐⭐ 论述清晰，发现有层次，从现象到原因分析到启示层层深入
 - 价值: ⭐⭐⭐⭐⭐ 直指视频世界模型的核心缺陷，对后续架构设计和数据策略有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Out-of-Distribution Detection with Extended Logit Normalization](enhancing_out-of-distribution_detection_with_extended_logit_normalization.md)
+- [Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning](weakly_supervised_video_anomaly_detection_with_anomaly-connected_components_and_.md)
+- [Pioneering Perceptual Video Fluency Assessment: A Novel Task with Benchmark Dataset and Baseline](pioneering_perceptual_video_fluency_assessment_a_novel_task_with_benchmark_datas.md)
+- [HeSS: Head Sensitivity Score for Sparsity Redistribution in VGGT](hess_head_sensitivity_score_for_sparsity_redistribution_in_vggt.md)
+- [Hier-COS: Making Deep Features Hierarchy-aware via Composition of Orthogonal Subspaces](hier-cos_making_deep_features_hierarchy-aware_via_composition_of_orthogonal_subs.md)
+
+<!-- RELATED:END -->

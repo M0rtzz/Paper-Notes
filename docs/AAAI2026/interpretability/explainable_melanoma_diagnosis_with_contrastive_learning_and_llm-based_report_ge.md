@@ -126,3 +126,15 @@ CEFM 包含四个互联的 pipeline：
 - 实验充分度: ⭐⭐⭐ 分类和分割性能有数据，但消融主要是定性分析，缺乏可解释性的定量指标；专家评估样本太小
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，临床动机阐述充分，图表设计好
 - 价值: ⭐⭐⭐⭐ 为医学 AI 的可解释性提供了有意义的范式——用对比学习将模型特征与临床标准绑定
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hypothesis Generation via LLM-Automated Language Bias for ILP](hypothesis_generation_via_llm-automated_language_bias_for_ilp.md)
+- [Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](../../NeurIPS2025/interpretability/self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)
+- [LLM Probing with Contrastive Eigenproblems: Improving Understanding and Applicability of CCS](../../NeurIPS2025/interpretability/llm_probing_with_contrastive_eigenproblems_improving_understanding_and_applicabi.md)
+- [iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)
+- [Quiet Feature Learning in Algorithmic Tasks](quiet_feature_learning_in_algorithmic_tasks.md)
+
+<!-- RELATED:END -->

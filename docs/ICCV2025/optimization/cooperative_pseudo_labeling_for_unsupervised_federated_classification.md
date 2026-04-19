@@ -185,3 +185,15 @@ FedCoPL 平均精度 **72.49%**，比最佳基线高约 **10%**。特别是在 R
 - 技术深度：⭐⭐⭐⭐ — 全局分配策略和部分聚合协议设计合理
 - 实验充分度：⭐⭐⭐⭐⭐ — 6 个数据集、两种偏移类型、多种基线、全面消融
 - 实用性：⭐⭐⭐⭐ — 无需标签、通信高效、隐私保护，适合实际联邦场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Interpretable Queries for Explainable Image Classification with Information Pursuit](learning_interpretable_queries_for_explainable_image_classification_with_informa.md)
+- [Deep Taxonomic Networks for Unsupervised Hierarchical Prototype Discovery](../../NeurIPS2025/optimization/deep_taxonomic_networks_for_unsupervised_hierarchical_prototype_discovery.md)
+- [Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](../../ICML2025/optimization/sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
+- [Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data](federated_prompt-tuning_with_heterogeneous_and_incomplete_multimodal_client_data.md)
+- [Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification](../../NeurIPS2025/optimization/optimal_rates_for_generalization_of_gradient_descent_for_deep_relu_classificatio.md)
+
+<!-- RELATED:END -->

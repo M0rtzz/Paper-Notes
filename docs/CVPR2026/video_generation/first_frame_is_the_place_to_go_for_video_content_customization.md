@@ -124,3 +124,15 @@ FFGo 在所有维度上全面领先，81.2% 的用户选择 FFGo 的结果为最
 - 实验充分度: ⭐⭐⭐⭐ 包含用户研究和多个定性对比，但缺少自动化定量指标（CLIP-score 等）
 - 写作质量: ⭐⭐⭐⭐ 故事线流畅、观察有说服力，图示丰富
 - 价值: ⭐⭐⭐⭐⭐ 提供了一种极高效的视频定制方案，对预训练模型能力的理解也有广泛影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LoRA-Edit: Controllable First-Frame-Guided Video Editing via Mask-Aware LoRA Fine-Tuning](../../ICLR2026/video_generation/lora-edit_controllable_first-frame-guided_video_editing_via_mask-aware_lora_fine.md)
+- [Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models](../../ICLR2026/video_generation/frame_guidance_training-free_guidance_for_frame-level_control_in_video_diffusion.md)
+- [DreamRelation: Relation-Centric Video Customization](../../ICCV2025/video_generation/dreamrelation_relation-centric_video_customization.md)
+- [LongDiff: Training-Free Long Video Generation in One Go](../../CVPR2025/video_generation/longdiff_training-free_long_video_generation_in_one_go.md)
+- [Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation](rethinking_position_embedding_as_a_context_controller_for_multi-reference_and_mu.md)
+
+<!-- RELATED:END -->

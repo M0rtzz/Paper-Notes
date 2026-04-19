@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 20个视觉任务+6个NLI+VLM评估，11个基线，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机和方法推导清晰，实验展示全面
 - 价值: ⭐⭐⭐⭐⭐ 解决了模型合并在异构任务上的关键瓶颈，对LoRA生态有实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLIP-Free, Label-Free, Unsupervised Concept Bottleneck Models](clip-free_label_free_unsupervised_concept_bottleneck_models.md)
+- [DC-Merge: Improving Model Merging with Directional Consistency](dc-merge_improving_model_merging_with_directional_consistency.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [Understanding Task Transfer in Vision-Language Models](understanding_task_transfer_in_vision-language_models.md)
+- [Breaking the Compression Ceiling: Data-Free Pipeline for Ultra-Efficient Delta Compression](../../NeurIPS2025/multimodal_vlm/breaking_the_compression_ceiling_data-free_pipeline_for_ultra-efficient_delta_co.md)
+
+<!-- RELATED:END -->

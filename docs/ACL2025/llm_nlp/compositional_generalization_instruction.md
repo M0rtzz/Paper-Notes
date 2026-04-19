@@ -122,3 +122,15 @@ tags:
 - **技术深度**: ⭐⭐⭐ — 方法本身简洁（全排列+短语插入），技术贡献偏评测
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 36 个模型、6 模板、多维度指标，分析非常充分
 - **实用价值**: ⭐⭐⭐⭐ — 揭示了 LLM 的组合泛化瓶颈，对约束生成和指令微调研究有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
+- [Re-TASK: Revisiting LLM Tasks from Capability, Skill, and Knowledge Perspectives](re-task_revisiting_llm_tasks_from_capability_skill_and_knowledge_perspectives.md)
+- [Systematic Generalization in Language Models Scales with Information Entropy](systematic_generalization_in_language_models_scales_with_information_entropy.md)
+- [A Systematic Study of Compositional Syntactic Transformer Language Models](a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
+- [Enhancing the Rule Learning Ability of Large Language Model Agent through Induction, Deduction, and Abduction](idea_enhancing_the_rule_learning_ability_of_large_language_model_agent_through_i.md)
+
+<!-- RELATED:END -->

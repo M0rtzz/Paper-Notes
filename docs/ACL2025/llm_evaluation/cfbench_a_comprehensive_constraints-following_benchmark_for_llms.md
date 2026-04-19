@@ -182,3 +182,15 @@ CFBench 的构建包含三大阶段：约束系统构建 → 数据集组装 →
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富
 - **实用价值**: ⭐⭐⭐⭐ — 对约束遵循的改进方向有明确指导
 - **局限**: 数据集偏向中文场景，可能限制了对多语言研究的直接适用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following](structflowbench_a_structured_flow_benchmark_for_multi-turn_instruction_following.md)
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+- [PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning](physreason_a_comprehensive_benchmark_towards_physics-based_reasoning.md)
+- [SANSKRITI: A Comprehensive Benchmark for Evaluating Language Models' Knowledge of Indian Culture](sanskriti_a_comprehensive_benchmark_for_evaluating_language_models_knowledge_of_.md)
+- [KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding](kitab-bench_a_comprehensive_multi-domain_benchmark_for_arabic_ocr_and_document_u.md)
+
+<!-- RELATED:END -->

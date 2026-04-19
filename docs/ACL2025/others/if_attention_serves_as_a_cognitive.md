@@ -110,3 +110,15 @@ TG NAE 和 CLT 的贡献相互独立 (p<0.001)。
 - **实验充分度**: 7/10 — 多种消融分析和独立性检验，但语料库和语言覆盖较窄
 - **清晰度**: 8/10 — 认知科学概念解释清楚，图表辅助理解，论文组织逻辑清晰
 - **总分**: 7.5/10
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MindRef: Mimicking Human Memory for Hierarchical Reference Retrieval with Fine-Grained Location Awareness](mindref_mimicking_human_memory_hierarchical_reference_retrieval.md)
+- [Developmentally-plausible Working Memory Shapes a Critical Period for Language Acquisition](developmentally-plausible_working_memory_shapes_a_critical_period_for_language_a.md)
+- [EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+- [SHARE: Shared Memory-Aware Open-Domain Long-Term Dialogue Dataset Constructed from Movie Script](share_shared_memory-aware_open-domain_long-term_dialogue_dataset_constructed_fro.md)
+
+<!-- RELATED:END -->

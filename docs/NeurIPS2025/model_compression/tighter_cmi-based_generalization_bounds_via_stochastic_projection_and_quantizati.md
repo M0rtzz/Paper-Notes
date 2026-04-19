@@ -143,3 +143,15 @@ $$\text{gen}(\mu, \mathcal{A}) \leq \frac{8LR}{\sqrt{n}}$$
 ⭐⭐⭐⭐ (4/5)
 
 理论贡献重大，优雅地解决了 CMI 框架的"危机"，并深化了对记忆化的理解。但纯理论无实验，与实际算法设计的距离较远。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization Bounds via Meta-Learned Model Representations: PAC-Bayes and Sample Compression Hypernetworks](../../ICML2025/model_compression/generalization_bounds_via_meta-learned_model_representations_pac-bayes_and_sampl.md)
+- [Adaptive Stochastic Coefficients for Accelerating Diffusion Sampling](adaptive_stochastic_coefficients_for_accelerating_diffusion_sampling.md)
+- [GraSS: Scalable Data Attribution with Gradient Sparsification and Sparse Projection](grass_scalable_data_attribution_with_gradient_sparsification_and_sparse_projecti.md)
+- [Quantization Error Propagation: Revisiting Layer-Wise Post-Training Quantization](quantization_error_propagation_revisiting_layer-wise_post-training_quantization.md)
+- [Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](specialization_after_generalization_towards_understanding_test-time_training_in_.md)
+
+<!-- RELATED:END -->

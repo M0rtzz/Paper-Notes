@@ -150,3 +150,15 @@ CCFQA 包含两个正交维度：**基准构建**（诊断问题）和 **LLM-SQA
 ⭐⭐⭐⭐ (4/5)
 
 综合评价：首个跨语言跨模态事实性评估基准，填补重要空白。基准构建流程严谨（GPT翻译+人工校验+真人录音+ASR质检）、评估维度全面（4种任务×2种指标×8种语言）、LLM-SQA 的 5-shot 迁移方案简洁有效。主要遗憾是语言覆盖和语音场景多样性仍有限，且模型创新（英语桥接）偏增量。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From IDs to Semantics: A Generative Framework for Cross-Domain Recommendation with Adaptive Semantic Tokenization](from_ids_to_semantics_a_generative_framework_for_cross-domain_recommendation_wit.md)
+- [From Imitation to Discrimination: Toward A Generalized Curriculum Advantage Mechanism Enhancing Cross-Domain Reasoning Tasks](from_imitation_to_discrimination_toward_a_generalized_curriculum_advantage_mecha.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics](../../ICLR2026/human_understanding/cross-domain_policy_optimization_via_bellman_consistency_and_hybrid_critics.md)
+- [CarGait: Cross-Attention based Re-ranking for Gait Recognition](../../ICCV2025/human_understanding/cargait_cross-attention_based_re-ranking_for_gait_recognition.md)
+
+<!-- RELATED:END -->

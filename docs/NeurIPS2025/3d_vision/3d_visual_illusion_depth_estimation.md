@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 数据集构建完整、对比方法全面、消融实验详尽、还做了微调分析和下游任务（3D检测）可视化
 - 写作质量: ⭐⭐⭐⭐ 写作清晰，问题动机和互补性分析深入，但部分数据集构建细节（如平面拟合数学推导）占篇幅较多
 - 价值: ⭐⭐⭐⭐ 揭示了一个被忽视但重要的问题，数据集和benchmark对社区有长期价值；但VLM融合的高计算成本限制了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+- [Jasmine: Harnessing Diffusion Prior for Self-Supervised Depth Estimation](jasmine_harnessing_diffusion_prior_for_self-supervised_depth_estimation.md)
+- [Amodal Depth Anything: Amodal Depth Estimation in the Wild](../../ICCV2025/3d_vision/amodal_depth_anything_amodal_depth_estimation_in_the_wild.md)
+- [Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation](../../ICCV2025/3d_vision/depth_anyevent_a_cross-modal_distillation_paradigm_for_event-based_monocular_dep.md)
+- [Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses](../../CVPR2025/3d_vision/efficient_depth_estimation_for_unstable_stereo_camera_systems_on_ar_glasses.md)
+
+<!-- RELATED:END -->

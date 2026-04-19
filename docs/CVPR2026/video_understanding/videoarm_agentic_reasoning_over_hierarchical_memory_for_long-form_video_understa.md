@@ -130,3 +130,15 @@ Controller 使用 OpenAI o3 实现，遵循精简的 observe-think-act-memorize 
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 5 个基准（Video-MME/LongVideoBench/EgoSchema/MLVU/LVBench），消融非常详细
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，工具设计描述详尽，但部分内容稍有冗余
 - 价值: ⭐⭐⭐⭐ Token 效率的大幅提升有实际应用价值，但依赖高端 API 限制了可部署性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FluxMem: Adaptive Hierarchical Memory for Streaming Video Understanding](fluxmem_adaptive_hierarchical_memory_for_streaming_video_understanding.md)
+- [DIvide, then Ground: Adapting Frame Selection to Query Types for Long-Form Video Understanding](divide_then_ground_adapting_frame_selection_to_query_types_for_long-form_video_u.md)
+- [LensWalk: Agentic Video Understanding by Planning How You See in Videos](lenswalk_agentic_video_understanding_by_planning_how_you_see_in_videos.md)
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](../../AAAI2026/video_understanding/tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+
+<!-- RELATED:END -->

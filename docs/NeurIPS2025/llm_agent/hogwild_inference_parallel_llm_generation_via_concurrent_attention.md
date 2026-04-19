@@ -178,3 +178,15 @@ Token 级即时同步显著优于仅步骤级同步。
 - 实验充分度: ⭐⭐⭐⭐⭐ (多模型×多基准×消融×协作评分×性能基准，极其全面)
 - 写作质量: ⭐⭐⭐⭐ (主体清晰，但技术细节较密集)
 - 价值: ⭐⭐⭐⭐⭐ (开辟了推理时并行化的新方向，实用性强，开源代码)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cook and Clean Together: Teaching Embodied Agents for Parallel Task Execution](../../AAAI2026/llm_agent/cook_and_clean_together_teaching_embodied_agents_for_paralle.md)
+- [METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling](../../ACL2025/llm_agent/metal_a_multi-agent_framework_for_chart_generation_with_test-time_scaling.md)
+- [AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments](../../AAAI2026/llm_agent/agentsense_virtual_sensor_data_generation_using_llm_agents_i.md)
+- [A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
+- [Evaluating Retrieval-Augmented Generation Agents for Autonomous Scientific Discovery in Astrophysics](../../ICML2025/llm_agent/evaluating_retrieval-augmented_generation_agents_for_autonomous_scientific_disco.md)
+
+<!-- RELATED:END -->

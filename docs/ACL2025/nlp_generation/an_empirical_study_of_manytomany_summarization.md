@@ -120,3 +120,15 @@ tags:
 - 延伸性: 未来可探索factuality-aware instruction tuning来缓解幻觉问题
 - 开放问题: 如何设计不引入幻觉信号的M2MS训练数据？
 - 影响力: 为多语言摘要领域的LLM评测提供了标准化基准和方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Theme-Explanation Structure for Table Summarization Using Large Language Models](theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+- [Unveiling Attractor Cycles in Large Language Models: A Dynamical Systems View of Successive Paraphrasing](unveiling_attractor_cycles_in_large_language_models_a_dynamical_systems_view_of_.md)
+- [Enhancing Text Editing for Grammatical Error Correction: Arabic as a Case Study](enhancing_text_editing_for_grammatical_error_correction_arabic_as_a_case_study.md)
+- [Tell, Don't Show: Leveraging Language Models' Abstractive Retellings to Model Literary Themes](tell_dont_show_leveraging_language_models_abstractive_retellings_to_model_litera.md)
+- [Context-Aware Hierarchical Merging for Long Document Summarization](context-aware_hierarchical_merging_for_long_document_summarization.md)
+
+<!-- RELATED:END -->

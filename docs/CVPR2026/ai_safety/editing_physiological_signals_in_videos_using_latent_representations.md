@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个数据集、7种rPPG估计器验证、与PulseEdit的系统对比、消融齐全
 - 写作质量: ⭐⭐⭐⭐ 问题动机("看不见的隐私")清晰有力，rPPG两大特性(时间相干+视觉不可见)的图示直观
 - 价值: ⭐⭐⭐⭐ 对AI隐私保护和rPPG研究数据生成均有贡献，3D VAE兼容性有工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Editing LLMs Inject Harm?](../../AAAI2026/ai_safety/can_editing_llms_inject_harm.md)
+- [Any Target Can Be Offense: Adversarial Example Generation via Generalized Latent Infection](../../ECCV2024/ai_safety/any_target_can_be_offense_adversarial_example_generation_via_generalized_latent_.md)
+- [Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](../../ACL2025/ai_safety/private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)
+- [Rethinking VLMs for Image Forgery Detection and Localization](rethinking_vlms_for_image_forgery_detection_and_localization.md)
+- [All Vehicles Can Lie: Efficient Adversarial Defense in Fully Untrusted-Vehicle Collaborative Perception via Pseudo-Random Bayesian Inference](all_vehicles_can_lie_efficient_adversarial_defense_in_fully_untrusted-vehicle_co.md)
+
+<!-- RELATED:END -->

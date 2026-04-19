@@ -122,3 +122,15 @@ $\mathcal{L} = \lambda_1 \mathcal{L}_\tau + \lambda_2 \mathcal{L}_{\text{flow}} 
 - 实验充分度: ⭐⭐⭐⭐ NAVSIMv1/v2全面评估，消融充分，但缺少nuPlan等更复杂基准
 - 写作质量: ⭐⭐⭐⭐ 技术细节清晰，预备知识充分，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了flow-based规划的关键效率瓶颈，GMN和ARM设计可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling-Aware Data Selection for End-to-End Autonomous Driving Systems](scaling-aware_data_selection_for_end-to-end_autonomous_driving_systems.md)
+- [DriveSuprim: Towards Precise Trajectory Selection for End-to-End Planning](../../AAAI2026/autonomous_driving/drivesuprim_towards_precise_trajectory_selection_for_end-to-end_planning.md)
+- [CausalVAD: De-confounding End-to-End Autonomous Driving via Causal Intervention](causalvad_de-confounding_end-to-end_autonomous_driving_via_causal_intervention.md)
+- [FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](../../AAAI2026/autonomous_driving/fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
+- [DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving](../../AAAI2026/autonomous_driving/diffrefiner_coarse_to_fine_trajectory_planning_via_diffusion_refinement_with_sem.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ $$\mathcal{L} = \mathcal{L}_b(F'_{MTL}, \mathbf{x}+\delta, \mathbf{y}) + \lambda
 - 实验充分度: ⭐⭐⭐⭐⭐ 4数据集×3方法×5backbone×5策略的超大规模实验矩阵
 - 写作质量: ⭐⭐⭐⭐ baseline分析→动机→方法的逻辑链清晰，notation略重
 - 价值: ⭐⭐⭐⭐ 大模型数据爬取背景下MTL数据保护是真实需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Multi-head Contrastive Learning](../../ECCV2024/self_supervised/adaptive_multihead_contrastive_learning.md)
+- [Soft Task-Aware Routing of Experts for Equivariant Representation Learning](../../NeurIPS2025/self_supervised/soft_task-aware_routing_of_experts_for_equivariant_representation_learning.md)
+- [Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+- [STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking](../../NeurIPS2025/self_supervised/starformer_semi-supervised_task-informed_representation_learning_via_dynamic_att.md)
+- [SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction](../../ACL2025/self_supervised/shubert_self-supervised_sign_language_representation_learning_via_multi-stream_c.md)
+
+<!-- RELATED:END -->

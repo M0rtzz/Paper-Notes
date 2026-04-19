@@ -98,3 +98,15 @@ CogVideoX-2B：同样无损加速1.40×（41.35→29.64s），VBench持平。
 - 实验充分度: ⭐⭐⭐⭐⭐ 2个模型规模、VBench+VBench2.0、多种注意力核、全面消融、4步蒸馏组合
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰(ADM的score difference推导),motivation→observation→method→validation链条完整
 - 价值: ⭐⭐⭐⭐⭐ 视频生成的推理瓶颈是最大部署障碍,15-20×加速具有巨大产业价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+- [FastLightGen: Fast and Light Video Generation with Fewer Steps and Parameters](fastlightgen_fast_and_light_video_generation_with_fewer_steps_and_parameters.md)
+- [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
+- [Anti-I2V: Safeguarding your photos from malicious image-to-video generation](anti-i2v_safeguarding_your_photos_from_malicious_image-to-video_generation.md)
+
+<!-- RELATED:END -->

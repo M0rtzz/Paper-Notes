@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验规模较小，仅一个流体力学代码，缺少与完整流体力学模拟的量化指标对比
 - 写作质量: ⭐⭐⭐⭐ 物理背景介绍适当，方法推导严谨，但对非宇宙学读者门槛较高
 - 价值: ⭐⭐⭐⭐ 对宇宙学场级推断有重要价值，混合物理-神经的方法论对其他科学计算领域也有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BecomingLit: Relightable Gaussian Avatars with Hybrid Neural Shading](becominglit_relightable_gaussian_avatars_with_hybrid_neural_shading.md)
+- [PhysX-3D: Physical-Grounded 3D Asset Generation](physx-3d_physical-grounded_3d_asset_generation.md)
+- [Neural Green's Functions](neural_greens_functions.md)
+- [HyRF: Hybrid Radiance Fields for Memory-efficient and High-quality Novel View Synthesis](hyrf_hybrid_radiance_fields_for_memory-efficient_and_high-quality_novel_view_syn.md)
+- [GaussianProperty: Integrating Physical Properties to 3D Gaussians with LMMs](../../ICCV2025/3d_vision/gaussianproperty_integrating_physical_properties_to_3d_gaussians_with_lmms.md)
+
+<!-- RELATED:END -->

@@ -150,3 +150,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作无实验，但定量分析和数值示例较有说服力
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，数学严谨，但技术密度很高，可读性对非理论读者有挑战
 - 价值: ⭐⭐⭐⭐⭐ 为对齐研究奠定了信息论基础，"No-Free-Lunch"原理和 reward hacking 不可避免性定理对领域有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Align When They Want, Complement When They Need! Human-Centered Ensembles for Adaptive Human-AI Collaboration](align_when_they_want_complement_when_they_need_human-centere.md)
+- [Practical Principles for AI Cost and Compute Accounting](../../ICML2025/others/practical_principles_for_ai_cost_and_compute_accounting.md)
+- [CAE: Hierarchical Semantic Alignment for Image Clustering](hierarchical_semantic_alignment_for_image_clustering.md)
+- [The Hot Mess of AI: How Does Misalignment Scale With Model Intelligence and Task Complexity?](../../ICLR2026/others/the_hot_mess_of_ai_how_does_misalignment_scale_with_model_intelligence_and_task_.md)
+- [Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics](data_complexity_of_querying_description_logic_knowledge_bases_under_cost-based_s.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ Segment Anything (SA-23 基准, 1-click mIoU)：
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 PVS/SA/VOS 三类任务共 20+ 数据集，iPhone/A100 双平台延迟测试
 - 写作质量: ⭐⭐⭐⭐ 延迟分析图表清晰，方法动机逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 首个端侧实时 Track Anything 模型，对移动端 AR/MR 应用有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective](../../ICML2025/segmentation/infosam_fine-tuning_the_segment_anything_model_from_an_information-theoretic_per.md)
+- [SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model](../../AAAI2026/segmentation/saq-sam_semantically-aligned_quantization_for_segment_anything_model.md)
+- [OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation](../../ICCV2025/segmentation/omnisam_omnidirectional_segment_anything_model_for_uda_in_panoramic_semantic_seg.md)
+- [Segment and Matte Anything in a Unified Model (SAMA)](../../AAAI2026/segmentation/segment_and_matte_anything_in_a_unified_model.md)
+- [GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation](glus_global-local_reasoning_unified_into_a_single_large_language_model_for_video.md)
+
+<!-- RELATED:END -->

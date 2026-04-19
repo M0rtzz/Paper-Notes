@@ -147,3 +147,15 @@ FERPlus 验证集消融（8-way）：
 - **实验充分度**: ⭐⭐⭐ 消融充分但缺乏与 FER SOTA 方法的全面对比，数据规模有限
 - **写作质量**: ⭐⭐⭐⭐ 算法伪代码清晰，负责任研究声明详尽专业，但部分描述冗余
 - **价值**: ⭐⭐⭐ 框架理念有启发性，但实际 FER 性能提升有限；D-Geo 的实际收益需更多验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
+- [AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition](../../ECCV2024/human_understanding/adadistill_adaptive_knowledge_distillation_for_deep_face_rec.md)
+- [Generalizable Facial Expression Recognition](../../ECCV2024/human_understanding/generalizable_facial_expression_recognition.md)
+- [BAH Dataset for Ambivalence/Hesitancy Recognition in Videos for Digital Behaviour Analysis](bah_dataset_for_ambivalencehesitancy_recognition_in_videos_for_digital_behaviour.md)
+- [MolLangBench: A Comprehensive Benchmark for Language-Prompted Molecular Structure Recognition, Editing, and Generation](mollangbench_a_comprehensive_benchmark_for_language-prompted_molecular_structure.md)
+
+<!-- RELATED:END -->

@@ -175,3 +175,15 @@ SCS 与多种 RL 算法兼容：RLOO、GRPO、REINFORCE++、REINFORCE++-baseline
 - 技术深度：⭐⭐⭐⭐ — 理论推导完整，两个组件设计合理
 - 实验充分度：⭐⭐⭐⭐ — 4 个 RL 算法、3 个模型、6 个基准、多组消融
 - 实用价值：⭐⭐⭐⭐ — 即插即用，计算开销可忽略，适合多选题推理训练
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [First SFT, Second RL, Third UPT: Continual Improving Multi-Modal LLM Reasoning via Unsupervised Post-Training](first_sft_second_rl_third_upt_continual_improving_multi-modal_llm_reasoning_via_.md)
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+- [What Can RL Bring to VLA Generalization? An Empirical Study](what_can_rl_bring_to_vla_generalization_an_empirical_study.md)
+- [VReST: Enhancing Reasoning in Large Vision-Language Models through Tree Search and Self-Reward Mechanism](../../ACL2025/multimodal_vlm/vrest_tree_search_vlm_reasoning.md)
+- [ERL-VLM: Enhancing Rating-Based RL to Leverage Feedback from Large VLMs](../../ICML2025/multimodal_vlm/enhancing_rating-based_reinforcement_learning_to_effectively_leverage_feedback_f.md)
+
+<!-- RELATED:END -->

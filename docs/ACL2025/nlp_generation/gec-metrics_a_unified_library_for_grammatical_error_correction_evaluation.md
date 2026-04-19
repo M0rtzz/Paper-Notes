@@ -151,3 +151,15 @@ gec-metrics 系统包含两大类接口：
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖了 10 种指标 × 多个元评估数据集的全面对比
 - **写作质量**: ⭐⭐⭐⭐ — 问题描述透彻，代码示例清晰，可复现性强
 - **价值**: ⭐⭐⭐⭐⭐ — 作为基础设施级工具，对 GEC 社区有长远影响力，已被共享任务采用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Evaluation Metrics for Grammatical Error Correction: Why Use a Different Evaluation Process than Human?](rethinking_evaluation_metrics_for_grammatical_error_correction_why_use_a_differe.md)
+- [IMPARA-GED: Grammatical Error Detection is Boosting Reference-free Grammatical Error Quality Estimator](impara-ged_grammatical_error_detection_is_boosting_reference-free_grammatical_er.md)
+- [Enhancing Text Editing for Grammatical Error Correction: Arabic as a Case Study](enhancing_text_editing_for_grammatical_error_correction_arabic_as_a_case_study.md)
+- [A Representation Level Analysis of NMT Model Robustness to Grammatical Errors](a_representation_level_analysis_of_nmt_model_robustness_to_grammatical_errors.md)
+- [Towards Better Open-Ended Text Generation: A Multicriteria Evaluation Framework](towards_better_open-ended_text_generation_a_multicriteria_evaluation_framework.md)
+
+<!-- RELATED:END -->

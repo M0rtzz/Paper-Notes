@@ -223,3 +223,15 @@ BSR 在所有四种泛化场景下均表现出更好的鲁棒性，尤其在 Mut
 - 实验充分度: ★★★★★ — 两个模型家族、三种规模、四种场景、RLHF 端到端验证、RM-Bench 评估
 - 实用价值: ★★★★★ — BSR 实现极简、即插即用，对实际 RLHF pipeline 有直接帮助
 - 写作质量: ★★★★☆ — 结构清晰，但数学符号较多，部分推导可以更简洁
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HAF-RM: A Hybrid Alignment Framework for Reward Model Training](../../ACL2025/llm_alignment/haf-rm_a_hybrid_alignment_framework_for_reward_model_training.md)
+- [Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models](layer-wise_alignment_examining_safety_alignment_across_image_encoder_layers_in_v.md)
+- [AlphaPO: Reward Shape Matters for LLM Alignment](alphapo_reward_shape_matters_for_llm_alignment.md)
+- [SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning](../../NeurIPS2025/llm_alignment/safevla_towards_safety_alignment_of_vision-language-action_model_via_constrained.md)
+- [What Makes a Reward Model a Good Teacher? An Optimization Perspective](../../NeurIPS2025/llm_alignment/what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+
+<!-- RELATED:END -->

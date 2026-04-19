@@ -142,3 +142,15 @@ $$\pi_{\theta'}(a | s_h) = \frac{e^{\phi'(s_h, a)^\top \theta'}}{\sum_{i=1}^{\ka
 - ⭐ 实用性：2/5 — 负面理论结果对算法设计有指导意义但无直接应用
 - ⭐ 实验充分度：2/5 — 纯理论工作，以示例和证明替代实验
 - ⭐ 写作质量：4/5 — 定义和定理表述严谨，证明思路清晰，但符号较重
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+- [Partial Action Replacement: Tackling Distribution Shift in Offline MARL](../../AAAI2026/reinforcement_learning/partial_action_replacement_tackling_distribution_shift_in_offline_marl.md)
+- [Reinforcement Learning Teachers of Test Time Scaling](reinforcement_learning_teachers_of_test_time_scaling.md)
+- [Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics](robot-r1_reinforcement_learning_for_enhanced_embodied_reasoning_in_robotics.md)
+- [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
+
+<!-- RELATED:END -->

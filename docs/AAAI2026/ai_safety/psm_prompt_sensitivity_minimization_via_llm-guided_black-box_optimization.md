@@ -195,3 +195,15 @@ $$\text{fitness}(S) = L(P \oplus S) + \lambda \cdot \max(0, \tau - U(P \oplus S)
 - 实验充分度: ⭐⭐⭐⭐ — 3个模型×4个攻击套件×2个数据集，覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 公式推导清晰，motivation 铺垫充分
 - 价值: ⭐⭐⭐⭐⭐ — 高度实用，面向真实部署场景的即插即用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphTextack: A Realistic Black-Box Node Injection Attack on LLM-Enhanced GNNs](graphtextack_a_realistic_black-box_node_injection_attack_on_llm-enhanced_gnns.md)
+- [Traceable Black-box Watermarks for Federated Learning](../../ICLR2026/ai_safety/traceable_black-box_watermarks_for_federated_learning.md)
+- [Principles2Plan: LLM-Guided System for Operationalising Ethical Principles into Plans](principles2plan_llm-guided_system_for_operationalising_ethical_principles_into_p.md)
+- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
+- [Alternative Fairness and Accuracy Optimization in Criminal Justice](alternative_fairness_and_accuracy_optimization_in_criminal_j.md)
+
+<!-- RELATED:END -->

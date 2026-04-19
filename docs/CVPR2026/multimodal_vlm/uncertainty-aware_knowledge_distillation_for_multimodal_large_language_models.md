@@ -113,3 +113,15 @@ $\min_{\theta,\phi} \mathcal{L}_{CE}(\theta) + g_\phi(h(x))\ell(\theta) - \frac{
 - 实验充分度: ⭐⭐⭐⭐ 多种损失组合+两种粒度+6个基准
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰严谨
 - 价值: ⭐⭐⭐⭐ 自动损失平衡对大模型KD很实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Purify-then-Align: Towards Robust Human Sensing under Modality Missing with Knowledge Distillation from Noisy Multimodal Teacher](purify-then-align_towards_robust_human_sensing_under_modality_missing_with_knowl.md)
+- [FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models](../../AAAI2026/multimodal_vlm/ft-ncfm_an_influence-aware_data_distillation_framework_for_efficient_vla_models.md)
+- [MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models](masquant_modality-aware_smoothing_quantization_for_multimodal_large_language_mod.md)
+- [CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models](covft_context-aware_visual_fine-tuning_for_multimodal_large_language_models.md)
+- [Variation-Aware Vision Token Dropping for Faster Large Vision-Language Models](variation-aware_vision_token_dropping_for_faster_large_vision-language_models.md)
+
+<!-- RELATED:END -->

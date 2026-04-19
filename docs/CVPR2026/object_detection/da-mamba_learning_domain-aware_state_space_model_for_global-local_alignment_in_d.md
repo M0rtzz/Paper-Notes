@@ -139,3 +139,15 @@ $$\mathcal{L} = \mathcal{L}_{cls}^S + \mathcal{L}_{cls}^T + \lambda^I \mathcal{L
 - 实验充分度: ⭐⭐⭐⭐ — 四个基准、详细消融（模块/管道/提示/插入位置/计算开销），缺少两阶段检测器验证
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，方法描述完整，图表规范
 - 价值: ⭐⭐⭐⭐ — 为 DAOD 提供了高效全局建模新范式，计算效率与精度的平衡优秀，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Remedying Target-Domain Astigmatism for Cross-Domain Few-Shot Object Detection](remedying_target-domain_astigmatism_for_cross-domain_few-shot_object_detection.md)
+- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](../../CVPR2025/object_detection/large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
+- [Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection](learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection.md)
+- [Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection](foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob.md)
+- [SimROD: A Simple Baseline for Raw Object Detection with Global and Local Enhancements](../../AAAI2026/object_detection/simrod_a_simple_baseline_for_raw_object_detection_with_global_and_local_enhancem.md)
+
+<!-- RELATED:END -->

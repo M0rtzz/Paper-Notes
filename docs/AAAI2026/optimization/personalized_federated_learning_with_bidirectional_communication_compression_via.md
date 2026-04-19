@@ -138,3 +138,15 @@ pFed1BS 在所有数据集上实现最高或接近最高精度，同时通信成
 **综合评分：⭐⭐⭐⭐**（4/5）
 
 填补了通信压缩与个性化联邦学习之间的明确空白，理论扎实，但实验规模偏小且缺少与经典 PFL 方法的直接对比。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedPM: Federated Learning Using Second-order Optimization with Preconditioned Mixing of Local Parameters](fedpm_federated_learning_using_second-order_optimization_with_preconditioned_mix.md)
+- [Data Heterogeneity and Forgotten Labels in Split Federated Learning](data_heterogeneity_and_forgotten_labels_in_split_federated_learning.md)
+- [PEOAT: Personalization-Guided Evolutionary Question Assembly for One-Shot Adaptive Testing](peoat_personalization-guided_evolutionary_question_assembly_for_one-shot_adaptiv.md)
+- [SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data](smofi_step-wise_momentum_fusion_for_split_federated_learning_on_heterogeneous_da.md)
+- [Explore How to Inject Beneficial Noise in MLLMs](explore_how_to_inject_beneficial_noise_in_mllms.md)
+
+<!-- RELATED:END -->

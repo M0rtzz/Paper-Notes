@@ -164,3 +164,15 @@ tags:
 | 实用性 | ⭐⭐⭐ | 缓解策略简单但实际部署受限 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，心理学分析有说服力 |
 | 总评 | ⭐⭐⭐⭐ | 对LLM安全领域的重要贡献，揭示了价值对齐的隐含风险 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Belief: A Hard Problem for LLMs](zero-shot_belief_a_hard_problem_for_llms.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [Do Language Models Mirror Human Confidence? Exploring Psychological Insights to Address Overconfidence in LLMs](do_language_models_mirror_human_confidence_exploring_psychological_insights_to_a.md)
+- [LLMs instead of Human Judges? A Large Scale Empirical Study across 20 NLP Evaluation Tasks](llm_vs_human_judges_study.md)
+
+<!-- RELATED:END -->

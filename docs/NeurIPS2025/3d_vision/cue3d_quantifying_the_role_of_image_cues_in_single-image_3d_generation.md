@@ -137,3 +137,15 @@ Zeroverse无意义形状上的退化对比:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7模型×2数据集×6线索扰动×多维指标，实验规模和覆盖面极为全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、发现总结精炼、可视化出色、结论表达准确
 - 价值: ⭐⭐⭐⭐ 对3D生成社区理解模型行为和指导改进有重要实用意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](../../ICCV2025/3d_vision/ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+- [WonderPlay: Dynamic 3D Scene Generation from a Single Image and Actions](../../ICCV2025/3d_vision/wonderplay_dynamic_3d_scene_generation_from_a_single_image_and_actions.md)
+- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+- [MIDI: Multi-Instance Diffusion for Single Image to 3D Scene Generation](../../CVPR2025/3d_vision/midi_multi-instance_diffusion_for_single_image_to_3d_scene_generation.md)
+- [Disco4D: Disentangled 4D Human Generation and Animation from a Single Image](../../CVPR2025/3d_vision/disco4d_disentangled_4d_human_generation_and_animation_from_a_single_image.md)
+
+<!-- RELATED:END -->

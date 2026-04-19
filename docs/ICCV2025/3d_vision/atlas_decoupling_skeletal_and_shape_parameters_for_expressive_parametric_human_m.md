@@ -159,3 +159,15 @@ $$E(\beta^s, \beta^f, \beta^k, \theta) = E_{data} + E_{\theta_{body}} + E_{\thet
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多指标、多消融、单图管线全面评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 有潜力成为下一代标准人体模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AJAHR: Amputated Joint Aware 3D Human Mesh Recovery](ajahr_amputated_joint_aware_3d_human_mesh_recovery.md)
+- [Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision](fish2mesh_transformer_3d_human_mesh_recovery_from_egocentric_vision.md)
+- [NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement](neuraleaf_neural_parametric_leaf_models_with_shape_and_deformation_disentangleme.md)
+- [SceneMI: Motion In-betweening for Modeling Human-Scene Interactions](scenemi_motion_in-betweening_for_modeling_human-scene_interaction.md)
+- [Sequential Gaussian Avatars with Hierarchical Motion Context](sequential_gaussian_avatars_with_hierarchical_motion_context.md)
+
+<!-- RELATED:END -->

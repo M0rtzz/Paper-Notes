@@ -182,3 +182,15 @@ MLLM 的额外指标：精度 81.34%，召回率 89.87%
 - **实验充分度**: ⭐⭐⭐⭐ — 定量评估全面（变化检测 + 趋势发现 + 混合验证），但主要依赖单一 MLLM（Gemini）
 - **写作质量**: ⭐⭐⭐⭐⭐ — 故事讲述极其流畅，从动机到方法到应用一气呵成
 - **价值**: ⭐⭐⭐⭐⭐ — 开创了"MLLM + 系统工程 = 海量视觉数据挖掘"的新范式，具有广泛的应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Are They the Same? Exploring Visual Correspondence Shortcomings of Multimodal LLMs](are_they_the_same_exploring_visual_correspondence_shortcomings_of_multimodal_llm.md)
+- [Hints of Prompt: Enhancing Visual Representation for Multimodal LLMs in Autonomous Driving](hints_of_prompt_enhancing_visual_representation_for_multimodal_llms_in_autonomou.md)
+- [MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval](../../ACL2025/multimodal_vlm/megapairs_massive_data_synthesis_for_universal_multimodal_retrieval.md)
+- [Controlling Multimodal LLMs via Reward-guided Decoding](controlling_multimodal_llms_via_rewardguided_decoding.md)
+- [Analyzing Finetuning Representation Shift for Multimodal LLMs Steering](analyzing_finetuning_representation_shift_for_multimodal_llms_steering.md)
+
+<!-- RELATED:END -->

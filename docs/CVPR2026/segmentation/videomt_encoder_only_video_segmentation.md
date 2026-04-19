@@ -94,3 +94,15 @@ VidEoMT基于EoMT：将N个可学习查询注入到DINOv2 ViT的最后L2层与pa
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个基准（4 VIS + 1 VPS + 1 VSS）、渐进移除消融、多预训练/模型尺寸对比、替代方案对比
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑链极其清晰（假设→验证→设计→实验），从CAVIS到VidEoMT的渐进推演很精彩
 - 价值: ⭐⭐⭐⭐⭐ 160 FPS的视频分割对工业应用有巨大价值，证明了VFM时代"less is more"
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GKD: Generalizable Knowledge Distillation from Vision Foundation Models for Semantic Segmentation](gkd_generalizable_knowledge_distillation_vfm.md)
+- [RobotSeg: A Model and Dataset for Segmenting Robots in Image and Video](robotseg_a_model_and_dataset_for_segmenting_robots_in_image_and_video.md)
+- [SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation](spar_single-pass_any-resolution_vit_for_open-vocabulary_segmentation.md)
+- [RS-SSM: Refining Forgotten Specifics in State Space Model for Video Semantic Segmentation](rs-ssm_refining_forgotten_specifics_in_state_space_model_for_video_semantic_segm.md)
+- [A Mixed Diet Makes DINO An Omnivorous Vision Encoder](mixed_diet_dino_omnivorous_encoder.md)
+
+<!-- RELATED:END -->

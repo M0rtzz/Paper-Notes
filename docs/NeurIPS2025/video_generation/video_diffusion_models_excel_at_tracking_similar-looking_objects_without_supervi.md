@@ -137,3 +137,15 @@ TED (Temporal Enhanced Diffusion) 框架：(1) 从视频扩散模型提取运动
 - **实验充分度**: ⭐⭐⭐⭐⭐ 标准/相似/完全相同三种难度基准，噪声级别消融，模型消融全面
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机清晰，控制实验设计精妙，可视化有说服力
 - **价值**: ⭐⭐⭐⭐⭐ 既有深刻洞察又有实用价值，为生成模型的表示复用开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Temporally-Aware Features for Point Tracking](../../CVPR2025/video_generation/exploring_temporally-aware_features_for_point_tracking.md)
+- [InterDyn: Controllable Interactive Dynamics with Video Diffusion Models](../../CVPR2025/video_generation/interdyn_controllable_interactive_dynamics_with_video_diffusion_models.md)
+- [Target-Aware Video Diffusion Models](../../ICLR2026/video_generation/target-aware_video_diffusion_models.md)
+- [Articulated Kinematics Distillation from Video Diffusion Models](../../CVPR2025/video_generation/articulated_kinematics_distillation_from_video_diffusion_models.md)
+- [VMDT: Decoding the Trustworthiness of Video Foundation Models](vmdt_decoding_the_trustworthiness_of_video_foundation_models.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 数据集和基线较有限，室外场景缺少定量评估
 - 写作质量: ⭐⭐⭐⭐ 数学推导完整清晰，问题动机表述好
 - 价值: ⭐⭐⭐⭐ 不确定性感知的物理属性估计对机器人领域有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning](adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning.md)
+- [PhysGM: Large Physical Gaussian Model for Feed-Forward 4D Synthesis](physgm_large_physical_gaussian_model_for_feed-forward_4d_synthesis.md)
+- [GP-4DGS: Probabilistic 4D Gaussian Splatting from Monocular Video via Variational Gaussian Processes](gp-4dgs_probabilistic_4d_gaussian_splatting_from_monocular_video_via_variational.md)
+- [E2EGS: Event-to-Edge Gaussian Splatting for Pose-Free 3D Reconstruction](e2egs_event-to-edge_gaussian_splatting_for_pose-free_3d_reconstruction.md)
+- [OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting](onlinepg_online_open-vocabulary_panoptic_mapping_with_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

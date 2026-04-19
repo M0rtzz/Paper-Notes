@@ -146,3 +146,15 @@ FoR 在**推理步骤级别**建模（每步对应一个推理操作），而非
 - 实验充分度: ⭐⭐⭐⭐ (6个任务覆盖广泛，消融扎实，但仅单一基座模型)
 - 写作质量: ⭐⭐⭐⭐⭐ (流的类比直观易懂，公式推导清晰)
 - 价值: ⭐⭐⭐⭐⭐ (填补LLM多样化推理的重要空白，数据效率极高)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diving into Self-Evolving Training for Multimodal Reasoning](diving_into_self-evolving_training_for_multimodal_reasoning.md)
+- [The Challenge of Teaching Reasoning to LLMs Without RL or Distillation](the_challenge_of_teaching_reasoning_to_llms_without_rl_or_distillation.md)
+- [VinePPO: Refining Credit Assignment in RL Training of LLMs](vineppo_refining_credit_assignment_in_rl_training_of_llms.md)
+- [Reasoning Boosts Opinion Alignment in LLMs](../../ICLR2026/reinforcement_learning/reasoning_boosts_opinion_alignment_in_llms.md)
+- [AbstRaL: Augmenting LLMs' Reasoning by Reinforcing Abstract Thinking](../../ICLR2026/reinforcement_learning/abstral_augmenting_llms_reasoning_by_reinforcing_abstract_thinking.md)
+
+<!-- RELATED:END -->

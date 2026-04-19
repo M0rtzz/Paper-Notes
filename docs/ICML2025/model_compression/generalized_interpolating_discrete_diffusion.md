@@ -146,3 +146,15 @@ GIDD+ (p_u=0.0) 在 ARC/BoolQ/Hellaswag/PIQA 等 7 个基准的平均准确率 *
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面，既有似然又有生成质量，但规模受限
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰严谨，图表直观
 - 价值: ⭐⭐⭐⭐ — 自纠错是离散扩散的重要突破，框架灵活性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [500xCompressor: Generalized Prompt Compression for Large Language Models](../../ACL2025/model_compression/500xcompressor_generalized_prompt_compression_for_large_language_models.md)
+- [Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation](../../ICCV2025/model_compression/bridging_continuous_and_discrete_tokens_for_autoregressive_visual_generation.md)
+- [TokenBridge: Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation](../../ICCV2025/model_compression/bridging_continuous_and_discrete_tokens_for_autoregressive_v.md)
+- [Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations](../../ICCV2025/model_compression/generalized_tensor-based_parameter-efficient_fine-tuning_via_lie_group_transform.md)
+- [Adaptive Stochastic Coefficients for Accelerating Diffusion Sampling](../../NeurIPS2025/model_compression/adaptive_stochastic_coefficients_for_accelerating_diffusion_sampling.md)
+
+<!-- RELATED:END -->

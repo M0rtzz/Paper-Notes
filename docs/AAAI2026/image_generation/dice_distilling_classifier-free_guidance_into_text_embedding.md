@@ -118,3 +118,15 @@ $$\mathcal{L}(\phi) = \mathbb{E}_{t \sim \mathcal{U}(0,T),\, \mathbf{x}_t \sim \
 - 实验充分度: ⭐⭐⭐⭐⭐ 跨 SD1.5/SDXL/PixArt-α 全面验证
 - 写作质量: ⭐⭐⭐⭐⭐ Oral 级别，机制分析深入透彻
 - 价值: ⭐⭐⭐⭐⭐ 对所有使用 CFG 的扩散模型有即时实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Studying Classifier(-Free) Guidance From A Classifier-Centric Perspective](studying_classifier-free_guidance_from_a_classifier-centric_perspective.md)
+- [TeEFusion: Blending Text Embeddings to Distill Classifier-Free Guidance](../../ICCV2025/image_generation/teefusion_blending_text_embeddings_to_distill_classifier-free_guidance.md)
+- [CFG-Ctrl: Control-Based Classifier-Free Diffusion Guidance](../../CVPR2026/image_generation/cfg-ctrl_control-based_classifier-free_diffusion_guidance.md)
+- [Towards a Golden Classifier-Free Guidance Path via Foresight Fixed Point Iterations](../../NeurIPS2025/image_generation/towards_a_golden_classifier-free_guidance_path_via_foresight_fixed_point_iterati.md)
+- [DOS: Directional Object Separation in Text Embeddings for Multi-Object Image Generation](dos_directional_object_separation_in_text_embeddings_for_mul.md)
+
+<!-- RELATED:END -->

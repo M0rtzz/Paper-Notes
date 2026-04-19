@@ -172,3 +172,15 @@ Atlas平均比PASTA高0.10个EBS点。
 - **实验充分度**: ⭐⭐⭐⭐ 4个模型×3个数据集×多个偏见类别+多种基线对比+流畅性评估+定位验证
 - **写作质量**: ⭐⭐⭐⭐⭐ 定义清晰、方法阐述系统化、可视化图表丰富且说服力强
 - **价值**: ⭐⭐⭐⭐ 无需训练的推理时偏见缓解方法有较高实用价值，偏见定位的发现有理论启示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Implicit Bias in Large Language Models by Attacking from a Psychometric Perspective](evaluating_implicit_bias_in_large_language_models_by_attacking_from_a_psychometr.md)
+- [Deontological Keyword Bias: The Impact of Modal Expressions on Normative Judgments of Language Models](deontological_keyword_bias.md)
+- [Bias in Language Models: Beyond Trick Tests and Towards RUTEd Evaluation](bias_in_language_models_beyond_trick_tests_ruted_evaluation.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+- [Mitigate Position Bias in LLMs via Scaling a Single Hidden States Channel](mitigate_position_bias_in_large_language_models_via_scaling_a_single_dimension.md)
+
+<!-- RELATED:END -->

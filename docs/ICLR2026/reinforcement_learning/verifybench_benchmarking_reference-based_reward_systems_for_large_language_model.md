@@ -163,3 +163,15 @@ VerifyBench 是评测基准，不涉及训练。核心质量保证措施：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 20+ 个模型、4 种答案类型、两个难度级别，人工标注严格
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，benchmark 构建流程完整，数据统计详尽
 - **价值**: ⭐⭐⭐⭐ 对 LRM RL 训练中的奖励系统设计有直接指导意义，揭示了规则方法的不足和模型验证的改进空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ParaS2S: Benchmarking and Aligning Spoken Language Models for Paralinguistic-Aware Speech-to-Speech Interaction](paras2s_benchmarking_and_aligning_spoken_language_models_for_paralinguistic-awar.md)
+- [Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
+- [AWM: Accurate Weight-Matrix Fingerprint for Large Language Models](awm_accurate_weight-matrix_fingerprint_for_large_language_models.md)
+- [Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
+- [TROLL: Trust Regions improve Reinforcement Learning for Large Language Models](troll_trust_regions_improve_reinforcement_learning_for_large_language_models.md)
+
+<!-- RELATED:END -->

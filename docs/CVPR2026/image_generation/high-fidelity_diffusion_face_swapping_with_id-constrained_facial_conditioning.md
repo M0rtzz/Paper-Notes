@@ -138,3 +138,15 @@ FID 大幅领先（3.61 vs 次优 4.26），身份检索准确率远超所有方
 - 实验充分度: ⭐⭐⭐⭐ 6 个对比方法、定量+用户研究+充分的消融和可视化分析
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清楚，Fig.2/3 对条件冲突的可视化very直观
 - 价值: ⭐⭐⭐⭐ 多条件解耦和优先级训练的思想具有通用性，超越人脸替换单一任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping](apple_attribute-preserving_pseudo-labeling_for_diffusion-based_face_swapping.md)
+- [Realistic Face Reconstruction from Facial Embeddings via Diffusion Models](../../AAAI2026/image_generation/realistic_face_reconstruction_from_facial_embeddings_via_diffusion_models.md)
+- [CognitionCapturerPro: Towards High-Fidelity Visual Decoding from EEG/MEG via Multi-modal Information and Asymmetric Alignment](cognitioncapturerpro_towards_high-fidelity_visual_decoding_from_eegmeg_via_multi.md)
+- [ExpressEdit: Fast Editing of Stylized Facial Expressions with Diffusion Models in Photoshop](expressedit_fast_editing_of_stylized_facial_expressions_with_diffusion_models_in.md)
+
+<!-- RELATED:END -->

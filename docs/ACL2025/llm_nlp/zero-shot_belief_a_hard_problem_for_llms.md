@@ -292,3 +292,15 @@ mT5-XXL 微调 SOTA 为 64.4%，DeepSeek r1 Hybrid 达 63.6%，o3-mini 达 62.6%
 - ⭐⭐⭐ 实用性：揭示了 LLM 在信念理解上的不足，但嵌套信念性能过低难以直接应用
 - ⭐⭐⭐⭐ 实验充分度：7 个模型 × 2 种方法 × 跨语言验证，错误分析详尽
 - ⭐⭐⭐⭐ 写作清晰度：任务定义清晰，示例直观，结果呈现有条理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unintended Harms of Value-Aligned LLMs: Psychological and Empirical Insights](unintended_harms_of_value-aligned_llms_psychological_and_empirical_insights.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning](problem-solving_logic_guided_curriculum_in-context_learning_for_llms_complex_rea.md)
+- [Soft Filtering: Guiding Zero-Shot Composed Image Retrieval with Prescriptive and Proscriptive Prompts](../../AAAI2026/llm_nlp/soft_filtering_guiding_zero-shot_composed_image_retrieval_with_prescriptive_and_.md)
+
+<!-- RELATED:END -->

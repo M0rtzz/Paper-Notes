@@ -115,3 +115,15 @@ ms-HMR、轨迹预测器和脚部滑动优化器在AMASS、3DPW、Human3.6M和BE
 - 实验充分度: ⭐⭐⭐⭐ 自建benchmark评测全面，但真实在线视频的定性结果有限
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法流程完整，但pipeline较复杂
 - 价值: ⭐⭐⭐⭐⭐ 填补了重要空白，能直接扩展运动数据规模，对运动生成等下游任务有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamVideo-Omni: Omni-Motion Controlled Multi-Subject Video Customization with Latent Identity Reinforcement Learning](dreamvideo-omni_omni-motion_controlled_multi-subject_video_customization_with_la.md)
+- [Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints](../../AAAI2026/object_detection/mitigating_error_accumulation_in_co-speech_motion_generation_via_global_rotation.md)
+- [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](../../CVPR2026/object_detection/show_dont_tell_detecting_novel_objects_by_watching.md)
+- [Synchronization of Multiple Videos](../../ICCV2025/object_detection/synchronization_of_multiple_videos.md)
+- [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
+
+<!-- RELATED:END -->

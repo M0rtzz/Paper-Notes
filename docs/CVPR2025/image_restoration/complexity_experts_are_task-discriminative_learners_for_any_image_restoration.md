@@ -112,3 +112,15 @@ $\mathcal{L} = \mathcal{L}_{pixel} + \lambda \mathcal{L}_{aux}$，像素损失 +
 - 实验充分度: ⭐⭐⭐⭐ 多尺度模型+消融+效率分析，但退化类型可更多
 - 写作质量: ⭐⭐⭐⭐⭐ 动机→观察→方法→结果的逻辑链完美，弹簧力类比直观
 - 价值: ⭐⭐⭐⭐⭐ 对全合一修复和高效 MoE 设计都有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploiting Diffusion Prior for Task-driven Image Restoration](../../ICCV2025/image_restoration/exploiting_diffusion_prior_for_task-driven_image_restoration.md)
+- [Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration](../../ICCV2025/image_restoration/devil_is_in_the_uniformity_exploring_diverse_learners_within_transformer_for_ima.md)
+- [MoE-DiffIR: Task-customized Diffusion Priors for Universal Compressed Image Restoration](../../ECCV2024/image_restoration/moe-diffir_task-customized_diffusion_priors_for_universal_compressed_image_resto.md)
+- [MaIR: A Locality- and Continuity-Preserving Mamba for Image Restoration](mair_a_locality-_and_continuity-preserving_mamba_for_image_restoration.md)
+- [FiRe: Fixed-points of Restoration Priors for Solving Inverse Problems](fire_fixed-points_of_restoration_priors_for_solving_inverse_problems.md)
+
+<!-- RELATED:END -->

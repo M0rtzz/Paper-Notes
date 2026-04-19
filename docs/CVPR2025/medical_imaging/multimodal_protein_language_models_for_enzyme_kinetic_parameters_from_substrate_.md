@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 三端点、多骨干、OOD、消融、融合顺序均有详细实验
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，公式严谨，但部分符号较密
 - 价值: ⭐⭐⭐⭐ — 为酶动力学预测提供了通用的多模态 PLM 适配方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering Protein Language Models](../../ICML2025/medical_imaging/steering_protein_language_models.md)
+- [Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions](adaptation_of_weakly_supervised_localization_in_histopathology_by_debiasing_pred.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+- [Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ FlashBack 的 PPL 接近 prepending 上限（差距 <0.5），但推理速度提
 - 实验充分度: ⭐⭐⭐ 有 runtime 和 PPL 实验，但缺少下游任务评估
 - 写作质量: ⭐⭐⭐⭐ FLOPs 分析清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对 RALM 推理效率问题提供了实用解决方案，4倍加速有工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAEE: A Robust Retrieval-Augmented Early Exit Framework for Efficient Inference](../../ICLR2026/information_retrieval/raee_a_robust_retrieval-augmented_early_exit_framework_for_efficient_inference.md)
+- [RAPID: Long-Context Inference with Retrieval-Augmented Speculative Decoding](../../ICML2025/information_retrieval/rapid_long-context_inference_with_retrieval-augmented_speculative_decoding.md)
+- [Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)
+- [FaithfulRAG: Fact-Level Conflict Modeling for Context-Faithful Retrieval-Augmented Generation](faithfulrag_fact_level_conflict.md)
+- [RARE: Retrieval-Augmented Reasoning Enhancement for Large Language Models](rare_retrieval_augmented_reasoning.md)
+
+<!-- RELATED:END -->

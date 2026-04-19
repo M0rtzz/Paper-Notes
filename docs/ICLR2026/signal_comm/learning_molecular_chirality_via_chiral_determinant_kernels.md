@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (新基准+多任务验证，但缺大分子实验)
 - 写作质量: ⭐⭐⭐⭐ (数学推导严谨，化学动机清晰)
 - 价值: ⭐⭐⭐⭐ (对药物设计有实际意义，基准贡献持久)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Multimodal Learning via Disentangled Gradient Learning](../../ICCV2025/signal_comm/boosting_multimodal_learning_via_disentangled_gradient_learning.md)
+- [Frequency Switching Mechanism for Parameter-Efficient Multi-Task Learning](../../CVPR2026/signal_comm/frequency_switching_mechanism_for_parameter-ecient_multi-task_learning.md)
+- [Dual-Imbalance Continual Learning for Real-World Food Recognition](../../CVPR2026/signal_comm/dual-imbalance_continual_learning_for_real-world_food_recognition.md)
+- [Task Aware Modulation Using Representation Learning for Upscaling of Terrestrial Carbon Fluxes](../../AAAI2026/signal_comm/task_aware_modulation_using_representation_learning_for_upsaling_of_terrestrial_.md)
+- [Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning](../../NeurIPS2025/signal_comm/contrastive_consolidation_of_top-down_modulations_achieves_sparsely_supervised_c.md)
+
+<!-- RELATED:END -->

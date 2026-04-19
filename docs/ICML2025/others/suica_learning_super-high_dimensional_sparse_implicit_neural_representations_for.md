@@ -132,3 +132,15 @@ SUICA 的 pipeline 分为三个阶段：（1）预训练图自编码器（GAE）
 ## 评分
 
 ⭐⭐⭐⭐ 方法设计针对性强，从三个层面（GAE 维度压缩、INR 连续建模、Dice Loss 稀疏性保持）系统解决 ST 数据建模难题。实验全面覆盖 Stereo-seq、Visium、Slide-seqV2 多平台和空间填补、基因填补、去噪多任务，消融实验充分。ARI 超越 ground truth 的发现也很有趣。但三阶段训练略显复杂，与有组织学图像辅助的方法（Hist2ST、TRIPLEX）的对比缺失，可扩展性讨论不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](../../NeurIPS2025/others/transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)
+- [Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+- [EVOS: Efficient Implicit Neural Training via EVOlutionary Selector](../../CVPR2025/others/evos_efficient_implicit_neural_training_via_evolutionary_selector.md)
+- [On the Importance of Gaussianizing Representations](on_the_importance_of_gaussianizing_representations.md)
+- [RNNs Perform Task Computations by Dynamically Warping Neural Representations](../../NeurIPS2025/others/rnns_perform_task_computations_by_dynamically_warping_neural_representations.md)
+
+<!-- RELATED:END -->

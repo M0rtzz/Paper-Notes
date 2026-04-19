@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 36+5 任务 + 大量消融 + 两种规模模型
 - 写作质量: ⭐⭐⭐⭐ 清晰系统，基准构建过程透明
 - 价值: ⭐⭐⭐⭐⭐ 开辟视觉交互嵌入新方向 + 高质量基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal Multi-Domain Translation via Diffusion Routers](universal_multi-domain_translation_via_diffusion_routers.md)
+- [VSC: Visual Search Compositional Text-to-Image Diffusion Model](../../ICCV2025/segmentation/vsc_visual_search_compositional_text-to-image_diffusion_model.md)
+- [Live Interactive Training for Video Segmentation](../../CVPR2026/segmentation/live_interactive_training_for_video_segmentation.md)
+- [RegionReasoner: Region-Grounded Multi-Round Visual Reasoning](regionreasoner_region-grounded_multi-round_visual_reasoning.md)
+- [Efficient-SAM2: Accelerating SAM2 with Object-Aware Visual Encoding and Memory Retrieval](efficient-sam2_accelerating_sam2_with_object-aware_visual_encoding_and_memory_re.md)
+
+<!-- RELATED:END -->

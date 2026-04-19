@@ -94,3 +94,15 @@ V2Drop是training-free的即插即用方案。在LLM推理的prefilling阶段，
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型(LLaVA/Qwen2-VL)×多任务(图像/视频)×多对比×多消融，效率分析详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，理论和实验配合紧密，可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，training-free+兼容FlashAttention+开源，可直接部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Variation-Aware Vision Token Dropping for Faster Large Vision-Language Models](variation-aware_vision_token_dropping_for_faster_large_vision-language_models.md)
+- [On Token's Dilemma: Dynamic MoE with Drift-Aware Token Assignment for Continual Learning of Large Vision Language Models](on_tokens_dilemma_dynamic_moe_with_drift-aware_token_assignment_for_continual_le.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](quant_experts_token-aware_adaptive_error_reconstruction_with_mixture_of_experts_.md)
+- [Can Vision-Language Models Count? A Synthetic Benchmark and Analysis of Attention-Based Interventions](can_vision-language_models_count_a_synthetic_benchmark_and_analysis_of_attention.md)
+
+<!-- RELATED:END -->

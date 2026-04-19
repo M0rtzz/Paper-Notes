@@ -162,3 +162,15 @@ MMaDA 的训练流程包含三个阶段：
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖三类任务多个基准，消融充分，但缺乏与更大模型（如 13B/70B）的对比
 - **写作质量**: ⭐⭐⭐⭐ 方法阐述清晰系统，但论文结构较冗长
 - **价值**: ⭐⭐⭐⭐⭐ 为扩散模型作为通用基础模型开辟了新方向，UniGRPO 具有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reinforcing the Diffusion Chain of Lateral Thought with Diffusion Language Models](reinforcing_the_diffusion_chain_of_lateral_thought_with_diffusion_language_model.md)
+- [DiffA: Large Language Diffusion Models Can Listen and Understand](../../AAAI2026/image_generation/diffa_large_language_diffusion_models_can_listen_and_understand.md)
+- [Non-Markovian Discrete Diffusion with Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
+
+<!-- RELATED:END -->

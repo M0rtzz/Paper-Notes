@@ -150,3 +150,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、多种检索器、多种模型规模的交叉实验覆盖全面
 - **写作质量**: ⭐⭐⭐⭐ — Figure 1 清晰展示问题，方法描述简洁
 - **价值**: ⭐⭐⭐⭐ — 指出重要问题并提供有效解决方案，但规则库规模限制了影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Reason Over Time: Timeline Self-Reflection for Temporal Reasoning](tiser_timeline_self_reflection_temporal.md)
+- [Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
+- [Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning](micro_act_knowledge_conflict_reasoning.md)
+- [Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks](self-correction_is_more_than_refinement_a_learning_framework_for_visual_and_lang.md)
+- [Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education](uni-retrieval_a_multi-style_retrieval_framework_for_stems_education.md)
+
+<!-- RELATED:END -->

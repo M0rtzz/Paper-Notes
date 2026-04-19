@@ -152,3 +152,15 @@ IF-Guide 在隐性毒性上也优于 RAD，EMT 降低 2.2×、TP 降低 2.4×。
 - **实用性**: ⭐⭐⭐⭐ — 代理模型+增量计算使方法可用，但仍需较多计算资源
 - **写作质量**: ⭐⭐⭐⭐⭐ — 逻辑清晰，动机充分，实验层层递进
 - **总体评价**: ⭐⭐⭐⭐⭐ — 在 LLM 安全领域开辟了训练数据主动干预的新方向，实验全面深入
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?](position_paper_if_innovation_in_ai_systematically_violates_fundamental_rights_is.md)
+- [Classifier-guided CLIP Distillation for Unsupervised Multi-label Classification](../../CVPR2025/social_computing/classifier-guided_clip_distillation_for_unsupervised_multi-label_classification.md)
+- [Auto-Search and Refinement: An Automated Framework for Gender Bias Mitigation in LLMs](auto-search_and_refinement_an_automated_framework_for_gender_bias_mitigation_in_.md)
+- [FactGuard: Event-Centric and Commonsense-Guided Fake News Detection](../../AAAI2026/social_computing/factguard_event-centric_and_commonsense-guided_fake_news_detection.md)
+- [Exploring the Impact of Instruction-Tuning on LLMs' Susceptibility to Misinformation](../../ACL2025/social_computing/exploring_the_impact_of_instruction-tuning_on_llms_susceptibility_to_misinformat.md)
+
+<!-- RELATED:END -->

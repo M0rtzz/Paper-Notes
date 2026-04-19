@@ -131,3 +131,15 @@ WIMLE由三部分组成：(1) IMLE训练的随机世界模型集成；(2) 基于
 - 实验充分度: ⭐⭐⭐⭐⭐ 40个任务、4个benchmark suite、10个seed、详细消融、wall-clock对比
 - 写作质量: ⭐⭐⭐⭐ 清晰的动机-方法-理论-实验结构，算法伪代码规范
 - 价值: ⭐⭐⭐⭐⭐ 在MBRL领域的实质性突破，HumanoidBench 8/14的结果令人印象深刻
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
+- [From Observations to Events: Event-Aware World Model for Reinforcement Learning](from_observations_to_events_event-aware_world_model_for_reinforcement_learning.md)
+- [Regret-Guided Search Control for Efficient Learning in AlphaZero](regret-guided_search_control_for_efficient_learning_in_alphazero.md)
+- [One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
+- [Object-Centric World Models for Causality-Aware Reinforcement Learning](../../AAAI2026/reinforcement_learning/object-centric_world_models_for_causality-aware_reinforcement_learning.md)
+
+<!-- RELATED:END -->

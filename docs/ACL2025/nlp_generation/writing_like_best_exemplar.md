@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集（Wikipedia/RoleEE/USNews）+九种基线（含GPT-4/o1）+消融+人工评估+LLM评估，全面
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰（跨主题一致性 vs 跨主题变异性的平衡），图示直观，但方法描述因组件多略显冗长
 - 价值: ⭐⭐⭐⭐ 框架设计通用可迁移至批量内容生产场景（如电商产品描述、招生简章等模板化写作）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [Personalized Text Generation with Contrastive Activation Steering](personalized_text_generation_with_contrastive_activation_steering.md)
+- [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](dehumanizing_machines_anthropomorphic.md)
+- [CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation](cocolex_legal_text_gen.md)
+- [Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+
+<!-- RELATED:END -->

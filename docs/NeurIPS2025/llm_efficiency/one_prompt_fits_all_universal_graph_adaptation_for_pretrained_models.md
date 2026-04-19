@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 9个数据集×3个预训练模型，同域+跨域，消融充分
 - 写作质量: ⭐⭐⭐⭐ 动机实验→理论分析→方法设计的链条清晰
 - 价值: ⭐⭐⭐⭐ 为图提示学习提供了统一理论视角和实用方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning](../../ICLR2026/llm_efficiency/one-prompt_strikes_back_sparse_mixture_of_experts_for_prompt-based_continual_lea.md)
+- [Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
+- [A Unified Framework for Establishing the Universal Approximation of Transformer-Type Architectures](a_unified_framework_for_establishing_the_universal_approxima.md)
+- [SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator](../../ICML2025/llm_efficiency/sepllm_accelerate_large_language_models_by_compressing_one_segment_into_one_sepa.md)
+- [On the Entropy Calibration of Language Models](on_the_entropy_calibration_of_language_models.md)
+
+<!-- RELATED:END -->

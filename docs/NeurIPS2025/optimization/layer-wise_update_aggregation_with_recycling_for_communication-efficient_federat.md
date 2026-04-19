@@ -136,3 +136,15 @@ AG News 场景内存降低 78%，FEMNIST 降低 75%。
 - ⭐ 实验充分度: 4/5 — 四数据集 + 多基线 + 消融 + 内存分析，覆盖全面
 - ⭐ 写作质量: 4/5 — 结构清晰，理论实验结合恰当
 - ⭐ 综合价值: 4/5 — 方法实用性强，可直接集成现有 FL 系统
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAR-FL: A Communication Efficient Peer-to-Peer Federated Learning System](mar-fl_a_communication_efficient_peer-to-peer_federated_learning_system.md)
+- [The Panaceas for Improving Low-Rank Decomposition in Communication-Efficient Federated Learning](../../ICML2025/optimization/the_panaceas_for_improving_low-rank_decomposition_in_communication-efficient_fed.md)
+- [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
+- [Multiplayer Federated Learning: Reaching Equilibrium with Less Communication](multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)
+- [Efficient Adaptive Federated Optimization](efficient_adaptive_federated_optimization.md)
+
+<!-- RELATED:END -->

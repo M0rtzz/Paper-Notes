@@ -183,3 +183,15 @@ $$I_{\text{cond}}^t=\Pi(\mathbf{B}^{0 \to t} \cup \mathbf{B}^{t-1 \to t} \cup \{
 - 实验充分度: ⭐⭐⭐⭐⭐ 多维度评测（场景/物体/时序），详尽消融，还有角落案例生成展示
 - 写作质量: ⭐⭐⭐⭐ 系统性强，方法描述清晰，公式和图表配合良好
 - 价值: ⭐⭐⭐⭐ 对自动驾驶数据增强和仿真有直接应用价值，EvalSuite 可供社区复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [U4D: Uncertainty-Aware 4D World Modeling from LiDAR Sequences](../../CVPR2026/autonomous_driving/u4d_uncertainty-aware_4d_world_modeling_from_lidar_sequences.md)
+- [Understanding Dynamic Scenes in Egocentric 4D Point Clouds](understanding_dynamic_scenes_in_ego_centric_4d_point_clouds.md)
+- [Unlocking Efficient Vehicle Dynamics Modeling via Analytic World Models](unlocking_efficient_vehicle_dynamics_modeling_via_analytic_world_models.md)
+- [RadarMP: Motion Perception for 4D mmWave Radar in Autonomous Driving](radarmp_motion_perception_for_4d_mmwave_radar_in_autonomous_driving.md)
+- [Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction](global-lens_transformers_adaptive_token_mixing_for_dynamic_link_prediction.md)
+
+<!-- RELATED:END -->

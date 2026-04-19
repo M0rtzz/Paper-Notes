@@ -165,3 +165,15 @@ $$x^i = (\Gamma_{\text{gv}}^i, v_{\text{root}}^i, \theta^i, \beta^i, t_{\text{ro
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖估计（全局/局部）和生成（文本/音乐/插帧）多个任务，消融完整
 - 写作质量: ⭐⭐⭐⭐ 内容丰富但篇幅较长，部分架构细节可更简洁
 - 价值: ⭐⭐⭐⭐⭐ 对人体运动建模领域有显著推动，统一框架+双向互惠是有说服力的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+- [SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
+- [Large Motion Model for Unified Multi-Modal Motion Generation](../../ECCV2024/human_understanding/large_motion_model_for_unified_multi-modal_motion_generation.md)
+- [MOSPA: Human Motion Generation Driven by Spatial Audio](../../NeurIPS2025/human_understanding/mospa_human_motion_generation_driven_by_spatial_audio.md)
+- [KinMo: Kinematic-Aware Human Motion Understanding and Generation](kinmo_kinematic-aware_human_motion_understanding_and_generation.md)
+
+<!-- RELATED:END -->

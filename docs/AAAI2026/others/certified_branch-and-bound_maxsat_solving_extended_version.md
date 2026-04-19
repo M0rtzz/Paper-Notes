@@ -170,3 +170,15 @@ $$v_\eta \Rightarrow \sum_{i \geq k} v_i b_i \leq l \quad \text{且} \quad v_\et
 - 实验充分度: ⭐⭐⭐⭐ （在完整 MaxSAT 评测数据集上验证，量化了开销）
 - 写作质量: ⭐⭐⭐⭐⭐ （形式化严谨，算法伪代码清晰，示例helpful）
 - 价值: ⭐⭐⭐⭐⭐ （完成了 MaxSAT 认证的最后一块拼图，对安全关键应用意义重大）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Certified but Fooled! Breaking Certified Defences with Ghost Certificates](certified_but_fooled_breaking_certified_defences_with_ghost_certificates.md)
+- [Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables](faster_certified_symmetry_breaking_using_orders_with_auxiliary_variables.md)
+- [OR-R1: Automating Modeling and Solving of Operations Research Optimization Problems](or-r1_automating_modeling_and_solving_of_operations_research_optimization_proble.md)
+- [ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization](../../CVPR2026/others/enhancing_outofdistribution_detection_with_extende.md)
+- [LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](../../ICLR2026/others/lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
+
+<!-- RELATED:END -->

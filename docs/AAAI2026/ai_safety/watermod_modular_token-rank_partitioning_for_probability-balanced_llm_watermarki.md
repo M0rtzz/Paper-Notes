@@ -193,3 +193,15 @@ WaterMod 是**推理时水印**，无需额外训练。关键配置：
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖3个领域、多种基线，但模型规模和解码策略多样性不足
 - 写作质量: ⭐⭐⭐⭐⭐ — 极其清晰，算法伪代码完整，图示直观，附录详尽
 - 价值: ⭐⭐⭐⭐ — 提供了一个实用、简洁、统一的水印框架，对合规和溯源有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cascade: Token-Sharded Private LLM Inference](../../ICML2025/ai_safety/cascade_token-sharded_private_llm_inference.md)
+- [Robust Watermarking on Gradient Boosting Decision Trees](robust_watermarking_on_gradient_boosting_decision_trees.md)
+- [RegionMarker: A Region-Triggered Semantic Watermarking Framework for Embedding-as-a-Service](regionmarker_a_region-triggered_semantic_watermarking_framework_for_embedding-as.md)
+- [Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking](yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md)
+- [Democratizing LLM Efficiency: From Hyperscale Optimizations to Universal Deployability](democratizing_llm_efficiency_from_hyperscale_optimizations_to_universal_deployab.md)
+
+<!-- RELATED:END -->

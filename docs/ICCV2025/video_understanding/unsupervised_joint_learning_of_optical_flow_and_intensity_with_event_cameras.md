@@ -148,3 +148,15 @@ $$\mathcal{L}_{\text{total}} = \lambda_1 \mathcal{L}_{\text{PhE}} + \lambda_2 \m
 - **实验充分度**: ⭐⭐⭐⭐ 在多个数据集上全面评估了光流和亮度，消融充分
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，实验组织良好
 - **价值**: ⭐⭐⭐⭐ 为事件视觉社区提供了新的联合估计范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Simultaneous Motion And Noise Estimation with Event Cameras](simultaneous_motion_and_noise_estimation_with_event_cameras.md)
+- [EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation](../../CVPR2025/video_understanding/edcflow_exploring_temporally_dense_difference_maps_for_event-based_optical_flow_.md)
+- [FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases](flowseek_optical_flow_made_easier_with_depth_foundation_models_and_motion_bases.md)
+- [MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation](memfof_high-resolution_training_for_memory-efficient_multi-frame_optical_flow_es.md)
+- [PriOr-Flow: Enhancing Primitive Panoramic Optical Flow with Orthogonal View](prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)
+
+<!-- RELATED:END -->

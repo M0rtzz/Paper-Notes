@@ -131,3 +131,15 @@ SFT 阶段：$\mathcal{L}^{SFT} = w_i \cdot (\mathcal{L}_{LM} + \lambda_a \mathc
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 nuPlan/Waymo/nuScenes/CARLA 四大基准，开环+闭环，消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示丰富，对比范式图（Fig.2）一目了然
 - 价值: ⭐⭐⭐⭐ 为 VLA 在自动驾驶中的应用提供了实用统一框架，动作 token 化和自适应推理思路有广泛影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [RAW2Drive: Reinforcement Learning with Aligned World Models for End-to-End Autonomous Driving](raw2drive_reinforcement_learning_with_aligned_world_models_for_end-to-end_autono.md)
+- [DriveDPO: Policy Learning via Safety DPO For End-to-End Autonomous Driving](drivedpo_policy_learning_via_safety_dpo_for_end-to-end_autonomous_driving.md)
+- [SOLVE: Synergy of Language-Vision and End-to-End Networks for Autonomous Driving](../../CVPR2025/autonomous_driving/solve_synergy_of_language-vision_and_end-to-end_networks_for_autonomous_driving.md)
+- [DiffusionDrive: Truncated Diffusion Model for End-to-End Autonomous Driving](../../CVPR2025/autonomous_driving/diffusiondrive_truncated_diffusion_model_for_end-to-end_autonomous_driving.md)
+
+<!-- RELATED:END -->

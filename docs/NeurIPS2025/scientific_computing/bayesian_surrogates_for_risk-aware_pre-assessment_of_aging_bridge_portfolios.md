@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 有真实案例验证和校准分析，但消融实验不够系统化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，问题动机和实际价值阐述到位
 - 价值: ⭐⭐⭐⭐ 有明确的实际应用价值，单案例节省37万美元很有说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GyroSwin: 5D Surrogates for Gyrokinetic Plasma Turbulence Simulations](gyroswin_5d_surrogates_for_gyrokinetic_plasma_turbulence_simulations.md)
+- [NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training](../../CVPR2026/scientific_computing/nestor_a_nested_moe-based_neural_operator_for_large-scale_pde_pre-training.md)
+- [SAOT: An Enhanced Locality-Aware Spectral Transformer for Solving PDEs](../../AAAI2026/scientific_computing/saot_an_enhanced_locality-aware_spectral_transformer_for_solving_pdes.md)
+- [Knowledge-Guided Masked Autoencoder with Linear Spectral Mixing and Spectral-Angle-Aware Reconstruction](../../AAAI2026/scientific_computing/knowledge-guided_masked_autoencoder_with_linear_spectral_mixing_and_spectral-ang.md)
+- [EddyFormer: Accelerated Neural Simulations of Three-Dimensional Turbulence at Scale](eddyformer_accelerated_neural_simulations_of_three-dimensional_turbulence_at_sca.md)
+
+<!-- RELATED:END -->

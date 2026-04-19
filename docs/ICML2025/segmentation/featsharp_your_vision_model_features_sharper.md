@@ -168,3 +168,15 @@ FeatSharp 在小目标检测上提升尤为显著：RADIO 上 AP_Sm +6.0 pts，S
 | 实用性 | 4 | 极简模块设计，可即插即用，但仍需额外推理 |
 | 写作质量 | 4 | 结构清晰，图表丰富，动机阐述到位 |
 | 综合评分 | **4.3** | 扎实的工程+方法贡献，对视觉基础模型的高分辨率使用有重要参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRACE: Your Diffusion Model is Secretly an Instance Edge Detector](../../ICLR2026/segmentation/trace_your_diffusion_model_is_secretly_an_instance_edge_detector.md)
+- [VidEoMT: Your ViT is Secretly Also a Video Segmentation Model](../../CVPR2026/segmentation/videomt_encoder_only_video_segmentation.md)
+- [Know Your Attention Maps: Class-specific Token Masking for Weakly Supervised Semantic Segmentation](../../ICCV2025/segmentation/know_your_attention_maps_class-specific_token_masking_for_weakly_supervised_sema.md)
+- [SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)
+- [Vision Transformers with Self-Distilled Registers](../../NeurIPS2025/segmentation/vision_transformers_with_self-distilled_registers.md)
+
+<!-- RELATED:END -->

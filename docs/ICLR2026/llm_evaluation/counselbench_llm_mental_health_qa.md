@@ -143,3 +143,15 @@ CounselBench由两个互补组件组成：
 | 写作质量 | ⭐⭐⭐⭐⭐ | 临床维度定义严谨，实验流程清晰可复现 |
 | 实用价值 | ⭐⭐⭐⭐⭐ | 对LLM医疗部署的安全警示和评估方法学有持久影响 |
 | 综合 | ⭐⭐⭐⭐⭐ | ICLR 2026 Oral，基准质量和影响力匹配顶级认可 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Overton Pluralism in LLMs](benchmarking_overton_pluralism_in_llms.md)
+- [HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning](../../ACL2025/llm_evaluation/hellaswag-pro_a_large-scale_bilingual_benchmark_for_evaluating_the_robustness_of.md)
+- [Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_with_the_hu.md)
+- [Same Content, Different Representations: A Controlled Study for Table QA](same_content_different_representations_a_controlled_study_for_t.md)
+- [LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty](../../CVPR2025/llm_evaluation/lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty.md)
+
+<!-- RELATED:END -->

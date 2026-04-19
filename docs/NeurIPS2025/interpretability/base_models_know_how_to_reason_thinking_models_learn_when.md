@@ -115,3 +115,15 @@ GSM8K 和 MATH500 上的混合模型性能
 - 实验充分度: ⭐⭐⭐⭐ 3个基座+4个thinking模型交叉验证完整
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑严密，图表设计精美
 - 价值: ⭐⭐⭐⭐⭐ 改变对 thinking model 训练范式的理解
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Do Transformers Learn Implicit Reasoning?](how_do_transformers_learn_implicit_reasoning.md)
+- [Distributional Autoencoders Know the Score](distributional_autoencoders_know_the_score.md)
+- [When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](../../ICLR2026/interpretability/when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
+- [The Trilemma of Truth in Large Language Models](the_trilemma_of_truth_in_large_language_models.md)
+- [Emergence of Linear Truth Encodings in Language Models](emergence_of_linear_truth_encodings_in_language_models.md)
+
+<!-- RELATED:END -->

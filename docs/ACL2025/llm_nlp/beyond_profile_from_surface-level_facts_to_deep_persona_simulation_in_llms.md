@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅一位作家，评估指标部分依赖 GPT-4o 打分
 - 写作质量: ⭐⭐⭐⭐ 动机论述充分，方法描述清楚
 - 价值: ⭐⭐⭐⭐ 为深度角色模拟开辟了新方向，CharLoRA 可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMs + Persona-Plug = Personalized LLMs](llms_persona-plug_personalized_llms.md)
+- [Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model](beyond_dialogue_a_profile-dialogue_alignment_framework_towards_general_role-play.md)
+- [Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning](character_level_understanding.md)
+- [From Data to Knowledge: Evaluating How Efficiently Language Models Learn Facts](from_data_to_knowledge_evaluating_how_efficiently_language_models_learn_facts.md)
+- [Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning](veracity_bias_llm_hidden_beliefs.md)
+
+<!-- RELATED:END -->

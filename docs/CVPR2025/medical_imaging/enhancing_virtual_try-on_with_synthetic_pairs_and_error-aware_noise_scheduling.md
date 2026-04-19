@@ -116,3 +116,15 @@ EARSB使用MSE损失: $\mathcal{L}_{EARSB} = \mathbb{E}_{t \sim U(0,1)} \|\epsil
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+用户研究+消融+采样效率分析，较全面
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，流程描述通顺
 - 价值: ⭐⭐⭐⭐ 精炼框架通用性强，对虚拟试穿应用有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AA-CLIP: Enhancing Zero-Shot Anomaly Detection via Anomaly-Aware CLIP](aa-clip_enhancing_zero-shot_anomaly_detection_via_anomaly-aware_clip.md)
+- [Geometric Generative Modeling with Noise-Conditioned Graph Networks](../../ICML2025/medical_imaging/geometric_generative_modeling_with_noise-conditioned_graph_networks.md)
+- [RDFace: A Benchmark Dataset for Rare Disease Facial Image Analysis under Extreme Data Scarcity and Phenotype-Aware Synthetic Generation](../../CVPR2026/medical_imaging/rdface_a_benchmark_dataset_for_rare_disease_facial_image_analysis_under_extreme_.md)
+- [UNIStainNet: Foundation-Model-Guided Virtual Staining of H&E to IHC](unistainnet_foundation-model-guided_virtual_staining_of_he_to_ihc.md)
+- [Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](../../ACL2025/medical_imaging/radar_radiology_report_gen.md)
+
+<!-- RELATED:END -->

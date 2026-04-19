@@ -150,3 +150,15 @@ $$R = w_{\text{ans}} \cdot r_{\text{ans}} + w_{\text{loc}} \cdot r_{\text{loc}} 
 - 实验充分度: ⭐⭐⭐⭐ — 三个主流 benchmark + 超长视频案例 + 多维消融（数据量/奖励/工具规模/最大轮次）
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、方法描述完整、算法伪代码规范
 - 价值: ⭐⭐⭐⭐⭐ — 解决了长视频 Agent 最核心的效率痛点，开源可复现，对实际部署有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VideoAuto-R1: Video Auto Reasoning via Thinking Once, Answering Twice](videoauto-r1_video_auto_reasoning_via_thinking_once_answering_twice.md)
+- [Dual-Agent Reinforcement Learning for Adaptive and Cost-Aware Visual-Inertial Odometry](dual-agent_reinforcement_learning_for_adaptive_and_cost-aware_visual-inertial_od.md)
+- [Wavelet-based Frame Selection by Detecting Semantic Boundary for Long Video Understanding](wavelet-based_frame_selection_by_detecting_semantic_boundary_for_long_video_unde.md)
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [VirtueBench: Evaluating Trustworthiness under Uncertainty in Long Video Understanding](virtuebench_evaluating_trustworthiness_under_uncertainty_in_long_video_understan.md)
+
+<!-- RELATED:END -->

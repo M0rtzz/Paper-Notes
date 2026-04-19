@@ -148,3 +148,15 @@ NeRF On-the-go 数据集消融（以 PSNR 为指标）：
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个标准基准，详细消融，多基线对比）
 - 写作质量: ⭐⭐⭐⭐⭐ （动机分析清晰，Figure 2 的实验分析非常有说服力）
 - 价值: ⭐⭐⭐⭐ （为 wild 场景下的 3DGS 提供了简洁高效的解决方案）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt](3dgs-lm_faster_gaussian-splatting_optimization_with_levenberg-marquardt.md)
+- [EF-3DGS: Event-Aided Free-Trajectory 3D Gaussian Splatting](../../NeurIPS2025/3d_vision/ef-3dgs_event-aided_free-trajectory_3d_gaussian_splatting.md)
+- [ResGS: Residual Densification of 3D Gaussian for Efficient Detail Recovery](resgs_residual_densification_of_3d_gaussian_for_efficient_detail_recovery.md)
+- [HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting](../../CVPR2025/3d_vision/hybridgs_decoupling_transients_and_statics_with_2d_and_3d_gaussian_splatting.md)
+- [LocalDyGS: Multi-view Global Dynamic Scene Modeling via Adaptive Local Implicit Feature Decoupling](localdygs_multi-view_global_dynamic_scene_modeling_via_adaptive_local_implicit_f.md)
+
+<!-- RELATED:END -->

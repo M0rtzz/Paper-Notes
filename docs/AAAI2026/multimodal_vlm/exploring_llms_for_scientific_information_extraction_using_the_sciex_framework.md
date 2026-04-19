@@ -123,3 +123,15 @@ SciEx是纯prompt驱动的RAG框架，不涉及模型训练。使用GPT-4o和Gem
 - 实验充分度: ⭐⭐⭐⭐ (三个数据集、两个模型、详细错误分析，但缺乏与fine-tune方法的比较)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰、错误分析有价值)
 - 价值: ⭐⭐⭐⭐ (诚实地揭示了LLM在科学IE中的能力边界，有实践指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiveWeb-IE: A Benchmark For Online Web Information Extraction](../../ICLR2026/multimodal_vlm/liveweb-ie_a_benchmark_for_online_web_information_extraction.md)
+- [Relation-Rich Visual Document Generator for Visual Information Extraction](../../CVPR2025/multimodal_vlm/relation-rich_visual_document_generator_for_visual_information_extraction.md)
+- [SToLa: Self-Adaptive Touch-Language Framework with Tactile Commonsense Reasoning in Open-Ended Scenarios](stola_self-adaptive_touch-language_framework_with_tactile_commonsense_reasoning_.md)
+- [Table Understanding and (Multimodal) LLMs: A Cross-Domain Case Study on Scientific Tables](../../ACL2025/multimodal_vlm/table_understanding_and_multimodal_llms_a_cross-domain_case_study_on_scientific_.md)
+- [Information Theoretic Optimal Surveillance for Epidemic Prevalence in Networks](information_theoretic_optimal_surveillance_for_epidemic_prevalence_in_networks.md)
+
+<!-- RELATED:END -->

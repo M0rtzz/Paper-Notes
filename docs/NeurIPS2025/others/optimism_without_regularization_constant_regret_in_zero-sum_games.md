@@ -141,3 +141,15 @@ $$\Psi(y^{T+1}) \leq 8a_{\max}\left(1 + 2\frac{a_{\max}}{a_{\text{gap}}}\right)^
 - 实验充分度: ⭐⭐⭐ 实验主要是验证性的（T=10000），缺乏大规模或应用性实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导优美，直觉解释到位，表1的景观总结一目了然
 - 价值: ⭐⭐⭐⭐ 对在线学习和博弈论理论有重要推进，但限于2×2限制了即时应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)
+- [Evolutionary Prediction Games](evolutionary_prediction_games.md)
+- [Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [MAS-ZERO: Designing Multi-Agent Systems with Zero Supervision](maszero_designing_multiagent_systems_with_zero_supervision.md)
+- [Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](../../ACL2025/others/adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)
+
+<!-- RELATED:END -->

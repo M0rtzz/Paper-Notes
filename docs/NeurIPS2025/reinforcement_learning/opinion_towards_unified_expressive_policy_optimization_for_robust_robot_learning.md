@@ -159,3 +159,15 @@ $$\mathcal{L}(\hat{T}) = -\mathbb{E}_{(s,a,s')\sim\mathcal{D}\cup\mathcal{D}_{\t
 - **有效性**: ⭐⭐⭐⭐ — D4RL 上全面提升，但部分任务退化需要解释
 - **可复现性**: ⭐⭐⭐ — 未提供代码，部分实现细节不够完整
 - **影响力**: ⭐⭐⭐⭐ — 对 O2O-RL 和扩散策略社区有直接贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaBox-v2: A Unified Benchmark Platform for Meta-Black-Box Optimization](metabox-v2_a_unified_benchmark_platform_for_meta-black-box_optimization.md)
+- [Robust and Diverse Multi-Agent Learning via Rational Policy Gradient](robust_and_diverse_multi-agent_learning_via_rational_policy_gradient.md)
+- [Finite-Sample Analysis of Policy Evaluation for Robust Average Reward Reinforcement Learning](finite-sample_analysis_of_policy_evaluation_for_robust_average_reward_reinforcem.md)
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics](robot-r1_reinforcement_learning_for_enhanced_embodied_reasoning_in_robotics.md)
+
+<!-- RELATED:END -->

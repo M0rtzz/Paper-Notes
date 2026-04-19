@@ -153,3 +153,15 @@ $$\mathcal{L} = (\mathcal{L}_{de} + \mathcal{L}_{nv}) \cdot \mathbf{1}_{iter>ite
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖物体/场景生成+重建、多数据集、用户研究、详尽消融
 - **写作质量**: ⭐⭐⭐⭐ Pipeline图清晰，公式推导完整，但符号较多
 - **价值**: ⭐⭐⭐⭐⭐ 统一物体生成和场景重建的框架，6秒推理速度极具实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision](a_lesson_in_splats_teacherguided_diffusion_for_3d_gaussian_s.md)
+- [Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis](gaussian_variation_field_diffusion_for_high-fidelity_video-to-4d_synthesis.md)
+- [AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
+- [HouseTour: A Virtual Real Estate A(I)gent](housetour_a_virtual_real_estate_aigent.md)
+- [CATSplat: Context-Aware Transformer with Spatial Guidance for Generalizable 3D Gaussian Splatting from A Single-View Image](catsplat_contextaware_transformer_with_spatial_guidance_for.md)
+
+<!-- RELATED:END -->

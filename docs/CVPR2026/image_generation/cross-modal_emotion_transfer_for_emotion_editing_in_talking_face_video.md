@@ -123,3 +123,15 @@ C-MET 由三个部分组成：(a) 预训练编码器提取语音/视觉嵌入并
 - 实验充分度: ⭐⭐⭐⭐ 定量+定性+用户研究+消融完整，但扩展情感缺乏标准评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但符号略多
 - 价值: ⭐⭐⭐⭐⭐ 具有实际应用价值，解决了情感说话人脸生成的关键瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiFlowDubber: Discrete Flow Matching for Automated Video Dubbing via Cross-Modal Alignment and Synchronization](diflowdubber_discrete_flow_matching_for_automated_video_dubbing_via_cross-modal_.md)
+- [MOS: Mitigating Optical-SAR Modality Gap for Cross-Modal Ship Re-Identification](mos_mitigating_optical-sar_modality_gap_for_cross-modal_ship_re-identification.md)
+- [EmoDubber: Towards High Quality and Emotion Controllable Movie Dubbing](../../CVPR2025/image_generation/emodubber_towards_high_quality_and_emotion_controllable_movie_dubbing.md)
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [Multi-Aspect Cross-modal Quantization for Generative Recommendation](../../AAAI2026/image_generation/multi-aspect_cross-modal_quantization_for_generative_recommendation.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ RCE-KD 仅在 CE 基础上增加随机采样开销，训练效率最高。
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 数据集 × 3 backbone × 多 KD 设置 + 充分消融 + 效率对比 + 泛化验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，从问题→理论→方法→实验的逻辑链完整
 - 价值: ⭐⭐⭐⭐ 为推荐 KD 中 CE 的使用提供了理论指导和实践方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token-Efficient Item Representation via Images for LLM Recommender Systems](token-efficient_item_representation_via_images_for_llm_recommender_systems.md)
+- [CoVE: Compressed Vocabulary Expansion Makes Better LLM-based Recommender Systems](../../ACL2025/recommender/cove_compressed_vocabulary_expansion_makes_better_llm-based_recommender_systems.md)
+- [C2AL: Cohort-Contrastive Auxiliary Learning for Large-scale Recommendation Systems](c2al_cohort-contrastive_auxiliary_learning_for_large-scale_recommendation_system.md)
+- [CroPS: Improving Dense Retrieval with Cross-Perspective Positive Samples in Short-Video Search](../../AAAI2026/recommender/crops_improving_dense_retrieval_with_cross-perspective_positive_samples_in_short.md)
+- [Radial Neighborhood Smoothing Recommender System](../../NeurIPS2025/recommender/radial_neighborhood_smoothing_recommender_system.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,14 @@ RISE 在所有 MHQA 数据集上超越 GPT-3.5，比同模型 Naive RAG 提升 6
 - ⭐⭐⭐⭐ 实验充分度：3 个 MHQA + 3 个 SHQA 数据集，消融+迭代分析+三能力单独评估覆盖全面
 - ⭐⭐⭐ 写作质量：结构清晰但部分公式符号不一致，相关工作与方法的区分度可更强
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
+- [IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)
+- [Wanda++: Pruning Large Language Models via Regional Gradients](wanda_pruning_large_language_models_via_regional_gradients.md)
+- [TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering](tada_training-free_recipe_for_decoding_with_adaptive_kv_cache_compression_and_me.md)
+
+<!-- RELATED:END -->

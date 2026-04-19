@@ -124,3 +124,15 @@ $$\mathcal{L}(\boldsymbol{\pi}(\lambda)) = \mathcal{L}_c(\boldsymbol{\pi}(\lambd
 - 实验充分度: ⭐⭐⭐⭐ 三个任务覆盖闭合/开放/噪声控制，隐变量分析深入，但数据集规模和 LLM 多样性稍显不足。
 - 写作质量: ⭐⭐⭐⭐ 框架描述清晰，理论推导完整，示例丰富。
 - 价值: ⭐⭐⭐⭐ 为 LLM Agent 的不确定性校准提供了一个新的工具箱，"verbalized PGM"范式有推广潜力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structured Personalization: Modeling Constraints as Matroids for Data-Minimal LLM Agents](structured_personalization_modeling_constraints_as_matroids_for_data-minimal_llm.md)
+- [From Debate to Equilibrium: Belief-Driven Multi-Agent LLM Reasoning via Bayesian Nash Equilibrium](../../ICML2025/llm_agent/from_debate_to_equilibrium_belief-driven_multi-agent_llm_reasoning_via_bayesian_.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+- [History-Aware Reasoning for GUI Agents](history-aware_reasoning_for_gui_agents.md)
+- [Harnessing Uncertainty: Entropy-Modulated Policy Gradients for Long-Horizon LLM Agents](../../ICLR2026/llm_agent/harnessing_uncertainty_entropy-modulated_policy_gradients_for_long-horizon_llm_a.md)
+
+<!-- RELATED:END -->

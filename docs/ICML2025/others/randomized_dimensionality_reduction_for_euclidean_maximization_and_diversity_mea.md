@@ -121,3 +121,15 @@ $$t = O\!\left(\varepsilon^{-2}\,\lambda\,\log \frac{1}{\varepsilon}\right)$$
 - 实验充分度: ⭐⭐⭐ — 实验清晰验证理论，但规模偏小
 - 写作质量: ⭐⭐⭐⭐⭐ — 证明结构优雅，表格总结清晰，理论与实验配合良好
 - 价值: ⭐⭐⭐⭐ — 填补了最大化降维领域的重要空白，具有算法设计指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation](../../ACL2025/others/rmoa_optimizing_mixture-of-agents_through_diversity_maximization_and_residual_co.md)
+- [Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures](maximum_coverage_in_turnstile_streams_with_applications_to_fingerprinting_measur.md)
+- [Verbosity-Aware Rationale Reduction: Effective Reduction of Redundant Rationale](../../ACL2025/others/verbosity-aware_rationale_reduction_effective_reduction_of_redundant_rationale_v.md)
+- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+- [Diversity by Design: Leveraging Distribution Matching for Offline Model-Based Optimization](diversity_by_design_leveraging_distribution_matching_for_offline_model-based_opt.md)
+
+<!-- RELATED:END -->

@@ -152,3 +152,15 @@ DynaAvatar 在所有三个数据集上全面超越现有单图方法。在 4D-Dr
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集评测+跨域泛化+详细消融，定性对比直观有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述逻辑清晰，方法描述详尽，图表设计精良
 - 价值: ⭐⭐⭐⭐ 解决了单图Avatar的一个重要缺陷，数据重标注亦有独立价值，对后续3D人体重建研究有明确推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Motion-Aware Animatable Gaussian Avatars Deblurring](motion-aware_animatable_gaussian_avatars_deblurring.md)
+- [ProgressiveAvatars: Progressive Animatable 3D Gaussian Avatars](progressiveavatars_progressive_animatable_3d_gaussian_avatars.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](../../ECCV2024/3d_vision/zest_zero-shot_material_transfer_from_a_single_image.md)
+- [STAvatar: Soft Binding and Temporal Density Control for Monocular 3D Head Avatars Reconstruction](stavatar_soft_binding_and_temporal_density_control_for_monocular_3d_head_avatars.md)
+- [AniGS: Animatable Gaussian Avatar from a Single Image with Inconsistent Gaussian Reconstruction](../../CVPR2025/3d_vision/anigs_animatable_gaussian_avatar_from_a_single_image_with_inconsistent_gaussian_.md)
+
+<!-- RELATED:END -->

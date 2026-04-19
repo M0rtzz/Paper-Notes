@@ -143,3 +143,15 @@ MELLE 是一个 decoder-only 的自回归语言模型，输入是 BPE 文本 tok
 - 实验充分度: ⭐⭐⭐⭐⭐ 主客观评测全面，消融细致，reduction factor探索充分
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，方法描述详尽，实验分析到位
 - 价值: ⭐⭐⭐⭐ 对TTS领域有重要参考意义，但ACL会议中语音合成关注度相对有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Chain-Talker: Chain Understanding and Rendering for Empathetic Conversational Speech Synthesis](chain-talker_chain_understanding_and_rendering_for_empathetic_conversational_spe.md)
+- [Distilling an End-to-End Voice Assistant Without Instruction Training Data](distilling_an_end-to-end_voice_assistant_without_instruction_training_data.md)
+- [E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis](../../NeurIPS2025/audio_speech/e2e-vguard_adversarial_prevention_for_production_llm-based_end-to-end_speech_syn.md)
+- [Zero-Shot Text-to-Speech for Vietnamese](zero-shot_text-to-speech_for_vietnamese.md)
+- [TCSinger 2: Customizable Multilingual Zero-shot Singing Voice Synthesis](tcsinger_2_customizable_multilingual_zero-shot_singing_voice_synthesis.md)
+
+<!-- RELATED:END -->

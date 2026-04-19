@@ -151,3 +151,15 @@ MathSmith 包含三个核心阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ （5个基准，4个模型，short/long-CoT，数据/模型缩放实验，弱点聚焦）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，公式规范，但图表密度大）
 - 价值: ⭐⭐⭐⭐⭐ （解决了数学推理数据合成的关键瓶颈，对整个 LLM 推理社区有重大意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TextShield-R1: Reinforced Reasoning for Tampered Text Detection](textshield-r1_reinforced_reasoning_for_tampered_text_detection.md)
+- [Learning from Synthetic Data Improves Multi-hop Reasoning](../../ICLR2026/reinforcement_learning/learning_from_synthetic_data_improves_multi-hop_reasoning.md)
+- [Aligning Machiavellian Agents: Behavior Steering via Test-Time Policy Shaping](aligning_machiavellian_agents_behavior_steering_via_test-tim.md)
+- [BRITE: Bootstrapping Reinforced Thinking Process to Enhance Language Model Reasoning](../../ICML2025/reinforcement_learning/brite_bootstrapping_reinforced_thinking_process_to_enhance_language_model_reason.md)
+- [MMhops-R1: Multimodal Multi-hop Reasoning](mmhops-r1_multimodal_multi-hop_reasoning.md)
+
+<!-- RELATED:END -->

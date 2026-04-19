@@ -151,3 +151,15 @@ MIRA 包含三个核心模块：
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型对比、消融、大模型 API 对比、用户研究，但数据集较小
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，配图直观，问题定义明确
 - **价值**: ⭐⭐⭐⭐ — 华为落地场景驱动，7B 模型即可部署，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RecLM: Recommendation Instruction Tuning](reclm_recommendation_instruction_tuning.md)
+- [LCRON: Learning Cascade Ranking as One Network](../../ICML2025/recommender/learning_cascade_ranking_as_one_network.md)
+- [GRAM: Generative Recommendation via Semantic-aware Multi-granular Late Fusion](gram_generative_recommendation.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+- [Beyond Single Labels: Improving Conversational Recommendation through LLM-Powered Data Augmentation](beyond_single_labels_improving_conversational_recommendation_through_llm-powered.md)
+
+<!-- RELATED:END -->

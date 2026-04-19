@@ -112,3 +112,15 @@ SIMECO 比 AdaPoinTr+增广提升 10% CD-$\ell_1$ 和 8% F1
 - 实验充分度: ⭐⭐⭐⭐ PCN + KITTI + OmniObject3D，与多种基线的系统对比
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，方法推导严谨，图示直观
 - 价值: ⭐⭐⭐⭐ 对真实世界 3D 补全有实际意义，去偏评估协议可推动领域进步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Incomplete Multi-view Clustering via Hierarchical Semantic Alignment and Cooperative Completion](incomplete_multi-view_clustering_via_hierarchical_semantic_alignment_and_coopera.md)
+- [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](../../ICML2025/llm_evaluation/g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
+- [DcMatch: Unsupervised Multi-Shape Matching with Dual-Level Consistency](../../AAAI2026/llm_evaluation/dcmatch_unsupervised_multi-shape_matching_with_dual-level_consistency.md)
+- [CLIMB: Class-Imbalanced Learning Benchmark on Tabular Data](climb_class-imbalanced_learning_benchmark_on_tabular_data.md)
+- [Deep Cost Ray Fusion for Sparse Depth Video Completion](../../ECCV2024/llm_evaluation/deep_cost_ray_fusion_for_sparse_depth_video_completion.md)
+
+<!-- RELATED:END -->

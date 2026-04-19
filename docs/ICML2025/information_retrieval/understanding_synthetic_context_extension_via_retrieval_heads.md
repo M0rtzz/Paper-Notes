@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 数据逼真度光谱、3个任务、注意力剔除和激活修补的多层次验证非常充分
 - 写作质量: ⭐⭐⭐⭐ 研究问题清晰，实验逻辑递进，结论有分寸
 - 价值: ⭐⭐⭐⭐⭐ 为合成数据驱动的长上下文扩展提供了mechanistic understanding，具有很强的实用指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation](../../NeurIPS2025/information_retrieval/the_atlas_of_in-context_learning_how_attention_heads_shape_in-context_retrieval_.md)
+- [On Synthetic Data Strategies for Domain-Specific Generative Retrieval](../../ACL2025/information_retrieval/on_synthetic_data_strategies_for_domain-specific_generative_retrieval.md)
+- [RAPID: Long-Context Inference with Retrieval-Augmented Speculative Decoding](rapid_long-context_inference_with_retrieval-augmented_speculative_decoding.md)
+- [The Distracting Effect: Understanding Irrelevant Passages in RAG](../../ACL2025/information_retrieval/the_distracting_effect_understanding_irrelevant_passages_in_rag.md)
+- [DocoPilot: Improving Multimodal Models for Document-Level Understanding](../../CVPR2025/information_retrieval/docopilot_improving_multimodal_models_for_document-level_understanding.md)
+
+<!-- RELATED:END -->

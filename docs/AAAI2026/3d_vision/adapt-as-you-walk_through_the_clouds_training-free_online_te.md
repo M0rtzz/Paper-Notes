@@ -170,3 +170,15 @@ Uni-Adapter仅损失约6%吞吐量，Point-Cache损失75%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个损坏数据+3个干净数据+2个大规模数据集，3种3D VLFM，统计显著性检验，消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机阐述充分，公式推导完整
 - 价值: ⭐⭐⭐⭐ 3D VLFM的无训练TTA是实用且及时的课题，方法高效实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Free Fine-tuning via Redundancy Elimination for Vision Foundation Models](parameter-free_fine-tuning_via_redundancy_elimination_for_vision_foundation_mode.md)
+- [CloudFixer: Test-Time Adaptation for 3D Point Clouds via Diffusion-Guided Geometric Transformation](../../ECCV2024/3d_vision/cloudfixer_test-time_adaptation_for_3d_point_clouds_via_diffusion-guided_geometr.md)
+- [VGGT-DP: Generalizable Robot Control via Vision Foundation Models](vggt-dp_generalizable_robot_control_via_vision_foundation_models.md)
+- [3D Test-time Adaptation via Graph Spectral Driven Point Shift](../../ICCV2025/3d_vision/3d_testtime_adaptation_via_graph_spectral_driven_point_shift.md)
+- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数据集、3类攻击、8种pooling对比，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，动机→理论→方法→实验环环相扣
 - 价值: ⭐⭐⭐⭐ 提供了互补的防御视角和即插即用的方案，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
+- [Bridging Symmetry and Robustness: On the Role of Equivariance in Enhancing Adversarial Robustness](bridging_symmetry_and_robustness_on_the_role_of_equivariance_in_enhancing_advers.md)
+- [Enhancing CLIP Robustness via Cross-Modality Alignment](enhancing_clip_robustness_via_crossmodality_alignment.md)
+- [Improved Balanced Classification with Theoretically Grounded Loss Functions](improved_balanced_classification_with_theoretically_grounded_loss_functions.md)
+- [Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
+
+<!-- RELATED:END -->

@@ -152,3 +152,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐（多方法、多架构、多backbone、多数据集、多指标）
 - 写作质量: ⭐⭐⭐⭐☆（表述清晰、图表丰富）
 - 价值: ⭐⭐⭐⭐☆（即插即用的提升手段，对领域有启发性）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Pattern Detection via Template Matching and Regression](../../ICCV2025/object_detection/few-shot_pattern_detection_via_template_matching_and_regression.md)
+- [Adaptive Multi-task Learning for Few-Shot Object Detection](adaptive_multi-task_learning_for_few-shot_object_detection.md)
+- [MutDet: Mutually Optimizing Pre-training for Remote Sensing Object Detection](mutdet_mutually_optimizing_pre-training_for_remote_sensing_object_detection.md)
+- [Projecting Points to Axes: Oriented Object Detection via Point-Axis Representation](projecting_points_to_axes_oriented_object_detection_via_point-axis_representatio.md)
+- [Weak-to-Strong Compositional Learning from Generative Models for Language-based Object Detection](weak-to-strong_compositional_learning_from_generative_models_for_language-based_.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ IAPO（Inference-Aware Prompt Optimization）框架定义臂 $a = (p, N) \in \ma
 - 实验充分度: ⭐⭐⭐⭐ 6 个环境（含 2 合成 + 4 真实任务），200 次独立运行，统计显著性检验完善
 - 写作质量: ⭐⭐⭐⭐ 动机案例直观有力，理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐⭐ 对实际 LLM 部署中 prompt + 推理规模的联合选择有重要实用指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inference-Time Reward Hacking in Large Language Models](../../NeurIPS2025/recommender/inference-time_reward_hacking_in_large_language_models.md)
+- [From Evaluation to Defense: Advancing Safety in Video Large Language Models](../../ICLR2026/recommender/from_evaluation_to_defense_advancing_safety_in_video_large_language_models.md)
+- [Moral Change or Noise? On Problems of Aligning AI With Temporally Unstable Human Feedback](moral_change_or_noise_on_problems_of_aligning_ai_with_temporally_unstable_human_.md)
+- [GoalRank: Group-Relative Optimization for a Large Ranking Model](../../ICLR2026/recommender/goalrank_group-relative_optimization_for_a_large_ranking_model.md)
+- [KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+
+<!-- RELATED:END -->

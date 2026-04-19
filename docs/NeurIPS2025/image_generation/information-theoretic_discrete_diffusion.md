@@ -199,3 +199,15 @@ Time-free 估计的计算成本约为 $K$ 次前向推理（$K$ 为 MC 样本数
 - 实验充分度: ⭐⭐⭐⭐ — 合成验证 + 方差分析 + 模型审计覆盖全面，但缺少大规模定量评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学严谨、逻辑清晰，理论与实验衔接自然
 - 价值: ⭐⭐⭐⭐⭐ — 为离散扩散模型提供根本性理论基础，对训练、评估和下游应用均有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ItDPDM: Information-Theoretic Discrete Poisson Diffusion Model](itdpdm_information-theoretic_discrete_poisson_diffusion_model.md)
+- [Information Theoretic Learning for Diffusion Models with Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)
+- [Constrained Discrete Diffusion](constrained_discrete_diffusion.md)
+- [MMG: Mutual Information Estimation via the MMSE Gap in Diffusion](mmg_mutual_information_estimation_via_the_mmse_gap_in_diffusion.md)
+- [Split Gibbs Discrete Diffusion Posterior Sampling](split_gibbs_discrete_diffusion_posterior_sampling.md)
+
+<!-- RELATED:END -->

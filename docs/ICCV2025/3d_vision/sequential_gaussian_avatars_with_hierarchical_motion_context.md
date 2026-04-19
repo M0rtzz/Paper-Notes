@@ -162,3 +162,15 @@ I3D-Human数据集（Novel View，4个场景平均）：
 - 实验充分度: ⭐⭐⭐⭐⭐ DNA-Rendering/I3D-Human/ZJU-MoCap三个数据集，Novel View/Novel Pose全面评估
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，图示直观，公式推导完整
 - 价值: ⭐⭐⭐⭐ 为3DGS人体化身建模提供了有效的运动条件增强方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Motion-Aware Animatable Gaussian Avatars Deblurring](../../CVPR2026/3d_vision/motion-aware_animatable_gaussian_avatars_deblurring.md)
+- [CoMoGaussian: Continuous Motion-Aware Gaussian Splatting from Motion-Blurred Images](comogaussian_continuous_motionaware_gaussian_splatting_from.md)
+- [Hierarchical Material Recognition from Local Appearance](hierarchical_material_recognition_from_local_appearance.md)
+- [CATSplat: Context-Aware Transformer with Spatial Guidance for Generalizable 3D Gaussian Splatting from A Single-View Image](catsplat_contextaware_transformer_with_spatial_guidance_for.md)
+- [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
+
+<!-- RELATED:END -->

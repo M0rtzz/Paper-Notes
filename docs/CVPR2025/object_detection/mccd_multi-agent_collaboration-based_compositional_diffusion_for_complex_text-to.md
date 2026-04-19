@@ -82,3 +82,15 @@ MCCD包含两个核心模块：(1) 多智能体协作场景解析模块，将复
 - 高斯掩码依赖bounding box的准确性，对于非矩形或遮挡严重的布局可能不够精确
 - 主要解决静态场景的组合生成，对于描述动作、事件等动态语义的prompt支持有限
 - 性能上限受限于底层扩散模型的生成能力，对于模型本身不擅长的物体类型仍有局限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diverse Text-to-Image Generation via Contrastive Noise Optimization](../../ICLR2026/object_detection/diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
+- [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](mitigating_memorization_in_text-to-image_diffusion_via_region-aware_prompt_augme.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multi-subject_text-to-image_generation.md)
+- [DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
+
+<!-- RELATED:END -->

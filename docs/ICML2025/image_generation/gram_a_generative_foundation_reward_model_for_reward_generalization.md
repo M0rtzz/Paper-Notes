@@ -126,3 +126,15 @@ GRAM 提出用生成式（而非判别式）方法训练奖励模型——先通
 - 实验充分度: ⭐⭐⭐⭐ 多任务验证
 - 写作质量: ⭐⭐⭐⭐ 理论与实验结合好
 - 价值: ⭐⭐⭐⭐⭐ 为 RM 训练提供了新范式，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards a Mechanistic Explanation of Diffusion Model Generalization](towards_a_mechanistic_explanation_of_diffusion_model_generalization.md)
+- [Visual-ERM: Reward Modeling for Visual Equivalence](../../CVPR2025/image_generation/visual-erm_reward_modeling_for_visual_equivalence.md)
+- [Discriminative Policy Optimization for Token-Level Reward Models](discriminative_policy_optimization_for_token-level_reward_models.md)
+- [EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](../../ICLR2026/image_generation/editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+- [Diffusion-VLA: Generalizable and Interpretable Robot Foundation Model via Self-Generated Reasoning](diffusion-vla_generalizable_and_interpretable_robot_foundation_model_via_self-ge.md)
+
+<!-- RELATED:END -->

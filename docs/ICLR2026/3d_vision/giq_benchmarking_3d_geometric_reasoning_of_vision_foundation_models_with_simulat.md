@@ -155,3 +155,15 @@ GIQ 是一个系统基准测试工作，包含四个评估维度：
 - 技术深度：3/5 - 主要是评估工作，方法创新有限
 - 实验完整度：5/5 - 四维度评估、多模型对比、人类基线
 - 实用价值：4/5 - 为改进视觉模型的几何理解指明方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Free Fine-tuning via Redundancy Elimination for Vision Foundation Models](../../AAAI2026/3d_vision/parameter-free_fine-tuning_via_redundancy_elimination_for_vision_foundation_mode.md)
+- [AVA-Bench: Atomic Visual Ability Benchmark for Vision Foundation Models](../../CVPR2026/3d_vision/ava-bench_atomic_visual_ability_benchmark_for_vision_foundation_models.md)
+- [Sapiens: Foundation for Human Vision Models](../../ECCV2024/3d_vision/sapiens_foundation_for_human_vision_models.md)
+- [VGGT-DP: Generalizable Robot Control via Vision Foundation Models](../../AAAI2026/3d_vision/vggt-dp_generalizable_robot_control_via_vision_foundation_models.md)
+- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](../../AAAI2026/3d_vision/uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+
+<!-- RELATED:END -->

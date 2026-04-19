@@ -254,3 +254,15 @@ tags:
 ⭐⭐⭐⭐ (4/5)
 
 这篇立场论文视野宏大、论证严密，提出了一个对 AI 生态系统未来走向至关重要的议题。作为 ICML 的观点论文，它为社区提供了重要的思考框架，但需要更多后续工作来将愿景转化为可操作的方案。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Model Alignment through Collective Intelligence of Open-Source LLMs](improving_model_alignment_through_collective_intelligence_of_open-source_llms.md)
+- [Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study](../../AAAI2026/human_understanding/why_do_open-source_llms_struggle_with_data_analysis_a_systematic_empirical_study.md)
+- [Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go](../../NeurIPS2025/human_understanding/mixing_expert_knowledge_bring_human_thoughts_back_to_the_game_of_go.md)
+- [On Large Multimodal Models as Open-World Image Classifiers](../../ICCV2025/human_understanding/on_large_multimodal_models_as_open-world_image_classifiers.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+
+<!-- RELATED:END -->

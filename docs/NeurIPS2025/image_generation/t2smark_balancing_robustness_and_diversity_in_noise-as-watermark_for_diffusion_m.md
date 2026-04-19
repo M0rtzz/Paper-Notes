@@ -136,3 +136,15 @@ T2SMark 是 training-free 的水印方案，无需额外训练。关键超参数
 - **实验充分度**: ⭐⭐⭐⭐⭐ 覆盖 UNet 和 DiT 两种骨干、9 种攻击类型、多种超参消融，评估全面系统
 - **写作质量**: ⭐⭐⭐⭐ 方法阐述清晰，公式推导严谨，图表直观
 - **价值**: ⭐⭐⭐⭐ 为扩散模型水印提供了实用且理论合理的解决方案，但应用范围限于 NaW 范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussMarker: Robust Dual-Domain Watermark for Diffusion Models](../../ICML2025/image_generation/gaussmarker_robust_dual-domain_watermark_for_diffusion_models.md)
+- [Golden Noise for Diffusion Models: A Learning Framework](../../ICCV2025/image_generation/golden_noise_for_diffusion_models_a_learning_framework.md)
+- [Robustness in Both Domains: CLIP Needs a Robust Text Encoder](robustness_in_both_domains_clip_needs_a_robust_text_encoder.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [When Are Concepts Erased From Diffusion Models?](when_are_concepts_erased_from_diffusion_models.md)
+
+<!-- RELATED:END -->

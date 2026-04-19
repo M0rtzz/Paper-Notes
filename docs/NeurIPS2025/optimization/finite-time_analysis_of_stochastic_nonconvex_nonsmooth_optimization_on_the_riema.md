@@ -123,3 +123,15 @@ RO2NC 基于双层循环结构：外层 epoch $k=1,...,K$，内层迭代 $t=0,..
 - 实验充分度: ⭐⭐⭐ 仅球面稀疏PCA一个实验，验证充分性有限
 - 写作质量: ⭐⭐⭐⭐ 技术分析严谨，核心创新点(基准选择、曲率控制)阐述清晰
 - 价值: ⭐⭐⭐⭐⭐ 填补了黎曼非光滑优化理论的重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Adaptive Algorithm for Bilevel Optimization on Riemannian Manifolds](an_adaptive_algorithm_for_bilevel_optimization_on_riemannian_manifolds.md)
+- [Improved Sample Complexity for Private Nonsmooth Nonconvex Optimization](../../ICML2025/optimization/improved_sample_complexity_for_private_nonsmooth_nonconvex_optimization.md)
+- [Nonlinearly Preconditioned Gradient Methods: Momentum and Stochastic Analysis](nonlinearly_preconditioned_gradient_methods_momentum_and_stochastic_analysis.md)
+- [Isotropic Noise in Stochastic and Quantum Convex Optimization](isotropic_noise_in_stochastic_and_quantum_convex_optimization.md)
+- [Adaptive Algorithms with Sharp Convergence Rates for Stochastic Hierarchical Optimization](adaptive_algorithms_with_sharp_convergence_rates_for_stochas.md)
+
+<!-- RELATED:END -->

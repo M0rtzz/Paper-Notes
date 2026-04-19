@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 自驱动+跨驱动全面评估，消融清晰，定性对比说服力强
 - 写作质量: ⭐⭐⭐⭐ 表述清楚，管线图和公式化表述规范
 - 价值: ⭐⭐⭐⭐ 为高保真人像动画提供了更好的中间表征方案，具有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FG-Portrait: 3D Flow Guided Editable Portrait Animation](fg-portrait_3d_flow_guided_editable_portrait_animation.md)
+- [PSR: Scaling Multi-Subject Personalized Image Generation with Pairwise Subject-Consistency Rewards](psr_scaling_multi-subject_personalized_image_generation_with_pairwise_subject-co.md)
+- [Diversity over Uniformity: Rethinking Representation in Generated Image Detection](diversity_over_uniformity_rethinking_representation_in_generated_image_detection.md)
+- [Composing Parts for Expressive Object Generation](../../CVPR2025/image_generation/composing_parts_for_expressive_object_generation.md)
+- [Directional Textual Inversion for Personalized Text-to-Image Generation](../../ICLR2026/image_generation/directional_textual_inversion_for_personalized_text-to-image_generation.md)
+
+<!-- RELATED:END -->

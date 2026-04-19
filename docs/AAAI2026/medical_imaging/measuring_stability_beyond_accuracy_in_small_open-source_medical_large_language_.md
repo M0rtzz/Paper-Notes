@@ -159,3 +159,15 @@ tags:
 ## 评分 ⭐⭐⭐⭐
 
 首个系统性地从稳定性和可复现性角度评估小型医学LLM的工作，方法论贡献显著，尤其是"准确率稳定≠行为稳定"和"CUDA版本影响临床输出"两个发现具有重要的警示意义。但数据集小、绝对性能低限制了结论的普适性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Coarse-to-Fine Open-Set Graph Node Classification with Large Language Models](coarse-to-fine_open-set_graph_node_classification_with_large_language_models.md)
+- [Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment](unleashing_the_potential_of_large_language_models_for_text-to-image_generation_t.md)
+- [Tracing Pharmacological Knowledge in Large Language Models](../../ICLR2026/medical_imaging/tracing_pharmacological_knowledge_in_large_language_models.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [Do Large Language Models Think Like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI](do_large_language_models_think_like_the_brain_sentence-level_evidences_from_laye.md)
+
+<!-- RELATED:END -->

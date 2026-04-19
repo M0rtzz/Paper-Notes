@@ -116,3 +116,15 @@ Flora 分为**学习阶段**和**决策阶段**。学习阶段：对每个类别
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集多种分割协议，低样本实验有力，但缺少跨域评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，类比（地图导航）生动，公式推导完整
 - 价值: ⭐⭐⭐⭐ 在零样本骨架动作识别领域推进明显，流分类器的思路有较好的迁移潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-shot HOI Detection with MLLM-based Detector-agnostic Interaction Recognition](../../ICLR2026/object_detection/zero-shot_hoi_detection_with_mllm-based_detector-agnostic_interaction_recognitio.md)
+- [TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking](tiacam_text-anchored_invariant_feature_learning_with_auto-augmentation_for_camer.md)
+- [Evaluating Few-Shot Pill Recognition Under Visual Domain Shift](evaluating_few-shot_pill_recognition_under_visual_domain_shift.md)
+- [Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification](specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat.md)
+- [ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation](rehark_refined_hybrid_adaptive_rbf_kernels_for_robust_one-shot_vision-language_a.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ $$M_{t-1} = \text{Concat}(E_{t-1}, H_{t-1})$$
 - **实验**: ⭐⭐⭐⭐⭐ — 性能/效率/消融/缩放定律全覆盖，多分辨率验证，公开全系列模型权重
 - **写作**: ⭐⭐⭐⭐⭐ — 动机分析深刻（RFA/扰动实验），图表精美，逻辑流畅
 - **价值**: ⭐⭐⭐⭐⭐ — 同时提升性能和效率，83.8% 内存节省对高分辨率生成落地意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](../../ICLR2026/model_compression/ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
+- [Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation](../../ICCV2025/model_compression/bridging_continuous_and_discrete_tokens_for_autoregressive_visual_generation.md)
+- [TokenBridge: Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation](../../ICCV2025/model_compression/bridging_continuous_and_discrete_tokens_for_autoregressive_v.md)
+- [QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models](quantvla_scale-calibrated_post-training_quantization_for_vision-language-action_.md)
+- [ARCHE: Autoregressive Residual Compression with Hyperprior and Excitation](arche_autoregressive_residual_compression_with_hyperprior_and_excitation.md)
+
+<!-- RELATED:END -->

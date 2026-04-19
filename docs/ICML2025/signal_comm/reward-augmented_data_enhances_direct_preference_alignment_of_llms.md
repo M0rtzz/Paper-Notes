@@ -131,3 +131,15 @@ $$\min_{\pi} \mathbb{E}_{g, x \sim \mathcal{D}_N, y \sim \pi(\cdot|x,g)} \left[(
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5个基座模型×多个基准+丰富消融，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 动机阐述清晰，理论+实验结合好
 - 价值: ⭐⭐⭐⭐ — 即插即用的实用方法，对偏好学习社区有直接启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Preference Alignment via Directional Neighborhood Consensus](../../ICLR2026/signal_comm/robust_preference_alignment_via_directional_neighborhood_consensus.md)
+- [WirelessMathBench: A Mathematical Modeling Benchmark for LLMs in Wireless Communications](../../ACL2025/signal_comm/wirelessmathbench_a_mathematical_modeling_benchmark_for_llms_in_wireless_communi.md)
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](../../ICLR2026/signal_comm/multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [Eigenspectrum Analysis of Neural Networks without Aspect Ratio Bias](eigenspectrum_analysis_of_neural_networks_without_aspect_ratio_bias.md)
+- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
+
+<!-- RELATED:END -->

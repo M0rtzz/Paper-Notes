@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 8 个模型 × 4 种方法 × 3 种模式，评估全面；但缺少新方法的提出
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分析详细
 - 价值: ⭐⭐⭐⭐ 数据集和反直觉发现对社区有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+- [CodeAssistBench (CAB): Dataset & Benchmarking for Multi-turn Chat-Based Code Assistance](../../NeurIPS2025/llm_evaluation/codeassistbench_cab_dataset_benchmarking_for_multi-turn_chat-based_code_assistan.md)
+- [PlanetAlign: A Comprehensive Python Library for Benchmarking Network Alignment](../../ICLR2026/llm_evaluation/planetalign_a_comprehensive_python_library_for_benchmarking_network_alignment.md)
+- [RGB-to-Polarization Estimation: A New Task and Benchmark Study](../../NeurIPS2025/llm_evaluation/rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)
+- [JuStRank: Benchmarking LLM Judges for System Ranking](justrank_llm_judge_system_ranking.md)
+
+<!-- RELATED:END -->

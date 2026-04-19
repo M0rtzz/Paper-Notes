@@ -139,3 +139,15 @@ $$\mathcal{L}_{	ext{P2Set}} = -\log rac{\exp(	ext{sim}(h, c^+) / 	au)}{\exp(	ex
 ## 总结
 
 AutoSSVH提出了自监督视频哈希中帧选择的自动化方案，通过可微分采样将帧选择与哈希学习统一优化。36~50%的性能提升证明了"选对帧"比"处理所有帧"更重要，这一发现对视频理解领域具有普遍借鉴意义。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-supervised Video Copy Localization with Regional Token Representation](../../ECCV2024/self_supervised/self-supervised_video_copy_localization_with_regional_token_representation.md)
+- [TeFlow: Enabling Multi-frame Supervision for Self-Supervised Feed-forward Scene Flow Estimation](../../CVPR2026/self_supervised/teflow_enabling_multi-frame_supervision_for_self-supervised_feed-forward_scene_f.md)
+- [ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](../../ECCV2024/self_supervised/vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)
+- [Clustering Properties of Self-Supervised Learning](../../ICML2025/self_supervised/clustering_properties_of_self-supervised_learning.md)
+- [SMILE: Infusing Spatial and Motion Semantics in Masked Video Learning](smile_infusing_spatial_and_motion_semantics_in_masked_video_learning.md)
+
+<!-- RELATED:END -->

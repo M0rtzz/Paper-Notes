@@ -126,3 +126,15 @@ tags:
 - **Real-to-Sim-to-Real** 闭环验证：证明了方法在机器人领域的实用价值
 - **EA-Score 0.994**（接近完美）表明铰接推理极其准确
 - 从学术原型（场景重建）到实际应用（游戏/机器人）的完整链路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [See and Think: Embodied Agent in Virtual Environment](../../ECCV2024/robotics/see_and_think_embodied_agent_in_virtual_environment.md)
+- [3D-MVP: 3D Multiview Pretraining for Robotic Manipulation](3d-mvp_3d_multiview_pretraining_for_manipulation.md)
+- [Mitigating the Human-Robot Domain Discrepancy in Visual Pre-training for Robotic Manipulation](mitigating_the_human-robot_domain_discrepancy_in_visual_pre-training_for_robotic.md)
+- [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ INT4 量化后生成精度保持 94.4%，log-likelihood 完全不变；与自推
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个模型规模 × 2 种架构 × 生成+LL 双评估 × 完整消融 × 3 种正交技术组合 × 端到端延迟测试 × 门控可解释性分析，非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ 方法描述简洁清晰，实验组织层次分明，每个消融选择都有明确的对照和解释
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 高效推理有直接实用价值，后训练可加+与量化/剪枝可组合使其工程落地门槛很低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Thinking in Latents: Adaptive Anchor Refinement for Implicit Reasoning in LLMs](thinking_in_latents_adaptive_anchor_refinement_for_implicit_reasoning_in_llms.md)
+- [When Agents "Misremember" Collectively: Exploring the Mandela Effect in LLM-based Multi-Agent Systems](when_agents_misremember_collectively_exploring_the_mandela_effect_in_llm-based_m.md)
+- [YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information](../../ECCV2024/object_detection/yolov9_learning_what_you_want_to_learn_using_programmable_gradient_information.md)
+- [Robust Hallucination Detection in LLMs via Adaptive Token Selection](../../NeurIPS2025/object_detection/robust_hallucination_detection_in_llms_via_adaptive_token_selection.md)
+- [When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking](../../AAAI2026/object_detection/when_trackers_date_fish_a_benchmark_and_framework_for_underwater_multiple_fish_t.md)
+
+<!-- RELATED:END -->

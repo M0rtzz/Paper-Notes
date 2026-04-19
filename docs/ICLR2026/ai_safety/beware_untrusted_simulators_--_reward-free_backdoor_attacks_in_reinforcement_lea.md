@@ -112,3 +112,15 @@ Daze 作为模拟器 wrapper 实现。正常情况下，模拟器按原始转移
 - 实验充分度: ⭐⭐⭐⭐⭐ MuJoCo + Atari + 自定义环境 + 真实机器人，覆盖连续/离散域，对比 3 个 baseline
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，算法描述完整，但表格数据较多
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 RL 供应链中模拟器这一安全盲区，对自动驾驶/机器人领域的 RL 部署有重要警示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adversarial Inception Backdoor Attacks against Reinforcement Learning](../../ICML2025/ai_safety/adversarial_inception_backdoor_attacks_against_reinforcement_learning.md)
+- [BEAT: Visual Backdoor Attacks on VLM-based Embodied Agents via Contrastive Trigger Learning](beat_visual_backdoor_attacks_on_vlm-based_embodied_agents_via_contrastive_trigge.md)
+- [Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
+- [ICLShield: Exploring and Mitigating In-Context Learning Backdoor Attacks](../../ICML2025/ai_safety/iclshield_exploring_and_mitigating_in-context_learning_backdoor_attacks.md)
+- [Action-Free Offline-to-Online RL via Discretised State Policies](action-free_offline-to-online_rl_via_discretised_state_policies.md)
+
+<!-- RELATED:END -->

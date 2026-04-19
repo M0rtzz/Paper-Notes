@@ -119,3 +119,15 @@ IDES 的核心损失为逐步二次目标：$L_h(w) = \mathbb{E}_\mu[(w_h(s,a) -
 ## 评分
 
 ⭐⭐⭐⭐ 理论工作扎实，粗估计技术和 IDES 算法有独立贡献价值。局限在于表格 MDP 假设和缺乏实证。整体是离线多策略评估理论的重要推进。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search](../../ICLR2026/others/enhancing_generative_auto_bidding.md)
+- [Fixed-Confidence Multiple Change Point Identification under Bandit Feedback](fixed-confidence_multiple_change_point_identification_under_bandit_feedback.md)
+- [Entropy-UID: A Method for Optimizing Information Density](../../ACL2025/others/entropy-uid_a_method_for_optimizing_information_density.md)
+- [A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](../../ECCV2024/others/a_framework_for_efficient_model_evaluation_through_stratific.md)
+- [Suitability Filter: A Statistical Framework for Classifier Evaluation in Real-World Settings](suitability_filter_a_statistical_framework_for_classifier_evaluation_in_real-wor.md)
+
+<!-- RELATED:END -->

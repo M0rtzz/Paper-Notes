@@ -161,3 +161,15 @@ QRM 定义为带寄存器的有限状态机 $\mathcal{A} = (Q, q_0, \delta_q, \m
 - 实验充分度: ⭐⭐⭐⭐ — 12 个环境、3 种对比、详细的 fluent 定义
 - 写作质量: ⭐⭐⭐⭐⭐ — 形式化严谨，证明完整，附录极其详细
 - 价值: ⭐⭐⭐⭐ — 为 RL 奖励设计提供了一个有数学基础的自动化方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reward Redistribution via Gaussian Process Likelihood Estimation](reward_redistribution_via_gaussian_process_likelihood_estimation.md)
+- [A New Strategy for Verifying Reach-Avoid Specifications in Neural Feedback Systems](a_new_strategy_for_verifying_reach-avoid_specifications_in_neural_feedback_syste.md)
+- [Judging by the Rules: Compliance-Aligned Framework for Modern Slavery Statement Monitoring](judging_by_the_rules_compliance-aligned_framework_for_modern_slavery_statement_m.md)
+- [Towards Temporal Fusion Beyond the Field of View for Camera-based Semantic Scene Completion](towards_temporal_fusion_beyond_the_field_of_view_for_camera-based_semantic_scene.md)
+- [Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search](../../ICLR2026/others/enhancing_generative_auto_bidding.md)
+
+<!-- RELATED:END -->

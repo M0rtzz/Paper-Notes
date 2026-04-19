@@ -122,3 +122,15 @@ Langevin 动力学是 EBM（能量模型）和 SGM（分数匹配生成模型）
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖 SGM/EBM/推理任务，但仅测试低分辨率图像
 - **写作质量**: ⭐⭐⭐⭐ 理论推导与实验分析搭配合理，toy 实验的引导性强
 - **价值**: ⭐⭐⭐⭐ 对 Langevin 采样有显著改进，但适用范围限于LD采样器
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preconditioned Langevin Dynamics with Score-Based Generative Models for Infinite-Dimensional Linear Bayesian Inverse Problems](preconditioned_langevin_dynamics_with_score-based_generative_models_for_infinite.md)
+- [Cross-fluctuation Phase Transitions Reveal Sampling Dynamics in Diffusion Models](cross-fluctuation_phase_transitions_reveal_sampling_dynamics_in_diffusion_models.md)
+- [Physics-Constrained Flow Matching: Sampling Generative Models with Hard Constraints](physics-constrained_flow_matching_sampling_generative_models_with_hard_constrain.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [Elucidated Rolling Diffusion Models for Probabilistic Forecasting of Complex Dynamics](elucidated_rolling_diffusion_models_for_probabilistic_forecasting_of_complex_dyn.md)
+
+<!-- RELATED:END -->

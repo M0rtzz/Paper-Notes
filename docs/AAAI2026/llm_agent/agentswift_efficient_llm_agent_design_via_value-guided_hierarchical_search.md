@@ -145,3 +145,15 @@ Value model预测质量对比（Spearman相关系数）：
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个benchmark、多种baseline对比、详细消融、泛化分析、超参敏感性，非常完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，形式化定义完备，但部分细节（如组件池的具体实现）在附录中
 - 价值: ⭐⭐⭐⭐ 为自动化agent设计提供了一个系统性框架，实际应用中能帮助快速发现好的agent architecture
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning](../../ICLR2026/llm_agent/tooltree_efficient_llm_agent_tool_planning_via_dual-feedback_monte_carlo_tree_se.md)
+- [Physics-Informed Autonomous LLM Agents for Explainable Power Electronics Modulation Design](physics-informed_autonomous_llm_agents_for_explainable_power_electronics_modulat.md)
+- [EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation](ecoagent_an_efficient_device-cloud_collaborative_multi-agent.md)
+- [AutoTool: Efficient Tool Selection for Large Language Model Agents](autotool_efficient_tool_selection_for_large_language_model_a.md)
+- [Efficient Agent Training for Computer Use](../../ICLR2026/llm_agent/efficient_agent_training_for_computer_use.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ tags:
 - **实验**: 5/5 — 4 个模型 x 多声学条件 x 人类评估（转录 + ABX）x 详细的负面结果分析，实验设计全面严谨
 - **写作**: 5/5 — 结构清晰流畅，正面和负面结果都有充分讨论，威胁模型定义精确完整
 - **价值**: 4/5 — 为 DNS 模型安全敲响了真实的警钟，但防御方案仍停留在初步探索阶段，需要后续工作跟进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Translate Noise for Robust Image Denoising](../../CVPR2026/image_restoration/learning_to_translate_noise_for_robust_image_denoising.md)
+- [Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
+- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+- [DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising](../../ACL2025/image_restoration/diffusedef_adversarial_defense.md)
+- [Horizon Imagination: Efficient On-Policy Rollout in Diffusion World Models](horizon_imagination_efficient_on-policy_rollout_in_diffusion_world_models.md)
+
+<!-- RELATED:END -->

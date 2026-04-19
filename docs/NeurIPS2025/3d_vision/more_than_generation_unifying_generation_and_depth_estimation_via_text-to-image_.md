@@ -152,3 +152,15 @@ $$\mathcal{L}_{LDM} = \mathbb{E}_{\varepsilon(x), y, \epsilon \sim \mathcal{N}(0
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多个基准、多种对比（统一模型/LoRA/全参微调/判别式）、完整消融
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，实验呈现有条理
 - **价值**: ⭐⭐⭐⭐ 提供了一种低成本扩展预训练模型功能的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Visual Illusion Depth Estimation](3d_visual_illusion_depth_estimation.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](../../ECCV2024/3d_vision/unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [Jasmine: Harnessing Diffusion Prior for Self-Supervised Depth Estimation](jasmine_harnessing_diffusion_prior_for_self-supervised_depth_estimation.md)
+- [Cue3D: Quantifying the Role of Image Cues in Single-Image 3D Generation](cue3d_quantifying_the_role_of_image_cues_in_single-image_3d_generation.md)
+- [UMAMI: Unifying Masked Autoregressive Models and Deterministic Rendering for View Synthesis](umami_unifying_masked_autoregressive_models_and_deterministic_rendering_for_view.md)
+
+<!-- RELATED:END -->

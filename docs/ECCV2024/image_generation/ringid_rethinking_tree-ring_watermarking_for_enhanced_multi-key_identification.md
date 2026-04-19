@@ -123,3 +123,15 @@ RingID 基于 Tree-Ring 但做了系统性增强。整体流程：在 StableDiff
 - 实验充分度: ⭐⭐⭐⭐⭐ 验证+识别双任务评估，多种攻击，充分的消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，分析逻辑严密
 - 价值: ⭐⭐⭐⭐ 对扩散模型水印领域有重要推动，多密钥识别方向的开拓性工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M2D2M: Multi-Motion Generation from Text with Discrete Diffusion Models](m2d2m_multi-motion_generation_from_text_with_discrete_diffusion_models.md)
+- [Robust-Wide: Robust Watermarking against Instruction-driven Image Editing](robust-wide_robust_watermarking_against_instruction-driven_image_editing.md)
+- [Tree-Guided Diffusion Planner](../../NeurIPS2025/image_generation/tree-guided_diffusion_planner.md)
+- [OMG: Occlusion-friendly Personalized Multi-concept Generation in Diffusion Models](omg_occlusion-friendly_personalized_multi-concept_generation_in_diffusion_models.md)
+- [Nonparametric Identification of Latent Concepts](../../ICML2025/image_generation/nonparametric_identification_of_latent_concepts.md)
+
+<!-- RELATED:END -->

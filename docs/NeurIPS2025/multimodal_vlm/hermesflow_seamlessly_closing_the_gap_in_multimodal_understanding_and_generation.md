@@ -142,3 +142,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理解+生成多 benchmark 全面验证，消融清晰，但仅一个 backbone
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清楚，pipeline 图示直观，公式完整
 - 价值: ⭐⭐⭐⭐ 作为统一 MLLM 的 post-training 对齐框架具有通用性，可推广到下一代模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniTok: A Unified Tokenizer for Visual Generation and Understanding](unitok_a_unified_tokenizer_for_visual_generation_and_understanding.md)
+- [Closing the Modality Gap Aligns Group-Wise Semantics](../../ICLR2026/multimodal_vlm/closing_the_modality_gap_aligns_group-wise_semantics.md)
+- [Systematic Reward Gap Optimization for Mitigating VLM Hallucinations](systematic_reward_gap_optimization_for_mitigating_vlm_hallucinations.md)
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](../../ICCV2025/multimodal_vlm/metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)
+- [Harmonizing Visual Representations for Unified Multimodal Understanding and Generation](../../ICCV2025/multimodal_vlm/harmonizing_visual_representations_for_unified_multimodal_un.md)
+
+<!-- RELATED:END -->

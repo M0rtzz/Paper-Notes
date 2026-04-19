@@ -140,3 +140,15 @@ WideResNet Jacobian 矩阵（$3072 \times 100$）上的收敛：TwINEst++ 约在
 - 实验充分度: ⭐⭐⭐⭐ 合成实验+DNN分类+推荐系统三大场景覆盖，理论与实验互相验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨清晰，反例构造精巧，实验展示充分
 - 价值: ⭐⭐⭐⭐ 算法简洁实用，理论扎实，在 DNN 训练和推荐系统中有落地价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EFX and PO Allocation Exists for Two Types of Goods](efx_and_po_allocation_exists_for_two_types_of_goods.md)
+- [Beyond Match Maximization and Fairness: Retention-Optimized Two-Sided Matching](../../ICLR2026/ai_safety/beyond_match_maximization_and_fairness_retention-optimized_two-sided_matching.md)
+- [Beyond Superficial Forgetting: Thorough Unlearning through Knowledge Density Estimation and Block Re-insertion](beyond_superficial_forgetting_thorough_unlearning_through_knowledge_density_esti.md)
+- [PubSub-VFL: Towards Efficient Two-Party Split Learning in Heterogeneous Environments via Publisher/Subscriber Architecture](../../NeurIPS2025/ai_safety/pubsub-vfl_towards_efficient_two-party_split_learning_in_heterogeneous_environme.md)
+- [Unified Privacy Guarantees for Decentralized Learning via Matrix Factorization](../../ICLR2026/ai_safety/unified_privacy_guarantees_for_decentralized_learning_via_matrix_factorization.md)
+
+<!-- RELATED:END -->

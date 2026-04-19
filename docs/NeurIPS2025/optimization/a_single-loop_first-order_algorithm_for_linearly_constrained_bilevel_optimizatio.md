@@ -130,3 +130,15 @@ $$\min_{x, y' \in \mathcal{P}_y, v} \max_{z' \in \mathcal{P}_y, u} K(x, y', z', 
 - **实验充分度**: ⭐⭐⭐ — 实验覆盖 toy、SVM、交通网络三个场景并含敏感性分析，但规模偏小，缺少与 Kornowski et al. 2024 等更多方法的比较
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，理论推导严谨，Table 1 一目了然，但部分符号较密导致可读性下降
 - **价值**: ⭐⭐⭐⭐ — 为约束 BLO 提供了目前最简单高效的一阶算法，对分布式优化和约束学习有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Adaptive Algorithm for Bilevel Optimization on Riemannian Manifolds](an_adaptive_algorithm_for_bilevel_optimization_on_riemannian_manifolds.md)
+- [A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization](../../ICML2025/optimization/a_near-optimal_single-loop_stochastic_algorithm_for_convex_finite-sum_coupled_co.md)
+- [Problem-Parameter-Free Decentralized Bilevel Optimization](problem-parameter-free_decentralized_bilevel_optimization.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+- [Set Smoothness Unlocks Clarke Hyper-stationarity in Bilevel Optimization](set_smoothness_unlocks_clarke_hyper-stationarity_in_bilevel_optimization.md)
+
+<!-- RELATED:END -->

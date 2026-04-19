@@ -183,3 +183,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{BPR}} + \lambda_{cl} \mathcal{L}_{\text{CL}} 
 - **实验充分度**: ⭐⭐⭐⭐ — 三数据集+全面消融+可视化+效率分析，但数据集类型单一
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰，"语义迷雾"比喻直觉且准确
 - **实用价值**: ⭐⭐⭐⭐ — 训练效率可接受，但超参调优成本较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NTSFormer: A Self-Teaching Graph Transformer for Multimodal Isolated Cold-Start Node Classification](ntsformer_a_self-teaching_graph_transformer_for_multimodal_isolated_cold-start_n.md)
+- [GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
+- [RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA](rfkg-cot_relation-driven_adaptive_hop-count_selection_and_few-shot_path_guidance.md)
+- [Graph Tokenization for Bridging Graphs and Transformers](../../ICLR2026/graph_learning/graph_tokenization_for_bridging_graphs_and_transformers.md)
+- [Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity](connectivity-guided_sparsification_of_2-fwl_gnns_preserving_full_expressivity_wi.md)
+
+<!-- RELATED:END -->

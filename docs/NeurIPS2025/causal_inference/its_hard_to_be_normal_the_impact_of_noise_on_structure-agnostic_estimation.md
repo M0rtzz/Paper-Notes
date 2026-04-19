@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论驱动，合成实验充分但缺真实应用
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，直觉解释清晰
 - 价值: ⭐⭐⭐⭐⭐ 对因果推断基础理论有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Characterization and Learning of Causal Graphs from Hard Interventions](characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [Practical do-Shapley Explanations with Estimand-Agnostic Causal Inference](practical_do-shapley_explanations_with_estimand-agnostic_causal_inference.md)
+- [Do-PFN: In-Context Learning for Causal Effect Estimation](do-pfn_in-context_learning_for_causal_effect_estimation.md)
+- [An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation](an_analysis_of_causal_effect_estimation_using_outcome_invariant_data_augmentatio.md)
+- [Differentiable Structure Learning and Causal Discovery for General Binary Data](differentiable_structure_learning_and_causal_discovery_for_general_binary_data.md)
+
+<!-- RELATED:END -->

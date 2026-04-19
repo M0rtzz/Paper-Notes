@@ -156,3 +156,15 @@ Q2E 系统（图 2）包含四个核心模块：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 3 个数据集、2 个编码器、5 种语言、多种消融，极为详尽
 - **写作质量**: ⭐⭐⭐⭐ 框架清晰，图示直观，但部分公式排版略显拥挤
 - **价值**: ⭐⭐⭐⭐ 零样本方法在事件密集型视频检索上大幅提升，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer](../../CVPR2025/video_generation/conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)
+- [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](../../CVPR2025/video_generation/identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
+- [DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing](../../ECCV2024/video_generation/dreammotion_space-time_self-similar_score_distillation_for_zero-shot_video_editi.md)
+- [Quantifying and Narrowing the Unknown: Interactive Text-to-Video Retrieval via Uncertainty Minimization](../../ICCV2025/video_generation/quantifying_and_narrowing_the_unknown_interactive_text-to-video_retrieval_via_un.md)
+- [HyperNVD: Accelerating Neural Video Decomposition via Hypernetworks](../../CVPR2025/video_generation/hypernvd_accelerating_neural_video_decomposition_via_hypernetworks.md)
+
+<!-- RELATED:END -->

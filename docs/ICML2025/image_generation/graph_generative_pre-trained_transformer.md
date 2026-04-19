@@ -156,3 +156,15 @@ $$p(y|\mathbf{s}) = \text{Softmax}(\text{Dropout}(\text{Linear}(\mathbf{h})))$$
 - 实验充分度: ⭐⭐⭐⭐⭐ (7个生成数据集 + 8个预测数据集 + 缩放分析 + 目标导向生成)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，理论推导完整)
 - 价值: ⭐⭐⭐⭐ (统一了图生成的预训练-微调范式，实用性强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](../../ICCV2025/image_generation/flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
+- [Simple and Critical Iterative Denoising: A Recasting of Discrete Diffusion in Graph Generation](simple_and_critical_iterative_denoising_a_recasting_of_discrete_diffusion_in_gra.md)
+- [Shortcutting Pre-trained Flow Matching Diffusion Models is Almost Free Lunch](../../NeurIPS2025/image_generation/shortcutting_pre-trained_flow_matching_diffusion_models_is_almost_free_lunch.md)
+- [Revisiting Diffusion Models: From Generative Pre-training to One-Step Generation](revisiting_diffusion_models_from_generative_pre-training_to_one-step_generation.md)
+- [Normalizing Flows are Capable Generative Models](normalizing_flows_are_capable_generative_models.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 大量消融实验、跨语言/跨数据集泛化、实时部署验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，任务动机阐释充分
 - 实用价值: ⭐⭐⭐⭐⭐ 直接适用于智能眼镜产品，Meta内部项目背景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](../../ICCV2025/multimodal_vlm/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
+- [OmniGaze: Reward-inspired Generalizable Gaze Estimation in the Wild](omnigaze_reward-inspired_generalizable_gaze_estimation_in_the_wild.md)
+- [Recognition through Reasoning: Reinforcing Image Geo-localization with Large Vision-Language Models](recognition_through_reasoning_reinforcing_image_geo-localization_with_large_visi.md)
+- [Uni-MuMER: Unified Multi-Task Fine-Tuning of Vision-Language Model for Handwritten Mathematical Expression Recognition](uni-mumer_unified_multi-task_fine-tuning_of_vision-language_model_for_handwritte.md)
+- [Trust but Verify: Programmatic VLM Evaluation in the Wild](../../ICCV2025/multimodal_vlm/trust_but_verify_programmatic_vlm_evaluation_in_the_wild.md)
+
+<!-- RELATED:END -->

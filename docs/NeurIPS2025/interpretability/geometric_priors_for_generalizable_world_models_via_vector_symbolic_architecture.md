@@ -356,3 +356,15 @@ $$s^\star = \arg\max_{s \in \mathcal{S}} \operatorname{Re}\langle x, \Phi_s \ran
 - 实验充分度: ⭐⭐ (仅 10×10 GridWorld，baseline 偏弱)
 - 写作质量: ⭐⭐⭐⭐ (理论清晰，可视化直观)
 - 价值: ⭐⭐⭐ (idea 有潜力但验证不足)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Scaling Laws for Symbolic Regression](towards_scaling_laws_for_symbolic_regression.md)
+- [Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+- [ArgoTweak: Towards Self-Updating HD Maps through Structured Priors](../../ICCV2025/interpretability/argotweak_towards_self-updating_hd_maps_through_structured_priors.md)
+- [A Cortically Inspired Architecture for Modular Perceptual AI](../../ICLR2026/interpretability/a_cortically_inspired_architecture_for_modular_perceptual_ai.md)
+- [Toward Real-world Text Image Forgery Localization: Structured and Interpretable Data Synthesis](toward_real-world_text_image_forgery_localization_structured_and_interpretable_d.md)
+
+<!-- RELATED:END -->

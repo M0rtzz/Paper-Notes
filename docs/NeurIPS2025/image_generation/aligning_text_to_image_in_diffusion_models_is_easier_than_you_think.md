@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 跨模型（SD1.5/SDXL/SD3）、跨任务（生成/编辑），但缺少与更多对齐方法的对比
 - 写作质量: ⭐⭐⭐⭐ 理论动机清晰，实验组织合理
 - 价值: ⭐⭐⭐⭐ 低成本提升 T2I 对齐的实用方法，对社区有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation](understand_before_you_generate_self-guided_training_for_autoregressive_image_gen.md)
+- [Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
+- [Easier Painting Than Thinking: Can Text-to-Image Models Set the Stage, but Not Direct the Play?](../../ICLR2026/image_generation/easier_painting_than_thinking_can_text-to-image_models_set_the_stage_but_not_dir.md)
+- [Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
+- [Asynchronous Denoising Diffusion Models for Aligning Text-to-Image Generation](../../ICLR2026/image_generation/asynchronous_denoising_diffusion_models_for_aligning_text-to-image_generation.md)
+
+<!-- RELATED:END -->

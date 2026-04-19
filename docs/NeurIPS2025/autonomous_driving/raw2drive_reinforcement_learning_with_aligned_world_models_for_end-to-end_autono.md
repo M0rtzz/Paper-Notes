@@ -148,3 +148,15 @@ Bench2Drive 闭环评测：
 - 实验充分度: ⭐⭐⭐⭐ CARLA v2 + Bench2Drive 两个基准，充分消融
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法动机解释充分
 - 价值: ⭐⭐⭐⭐⭐ 证明 RL 在 E2E-AD 的可行性和优越性，对学术界和工业界都有重要参考
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DriveDPO: Policy Learning via Safety DPO For End-to-End Autonomous Driving](drivedpo_policy_learning_via_safety_dpo_for_end-to-end_autonomous_driving.md)
+- [AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning](autovla_a_vision-language-action_model_for_end-to-end_autonomous_driving_with_ad.md)
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution](future-aware_end-to-end_driving_bidirectional_modeling_of_trajectory_planning_an.md)
+- [World4Drive: End-to-End Autonomous Driving via Intention-aware Physical Latent World Model](../../ICCV2025/autonomous_driving/world4drive_end-to-end_autonomous_driving_via_intention-aware_physical_latent_wo.md)
+
+<!-- RELATED:END -->

@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型+多攻击对比+防御实验
 - 写作质量: ⭐⭐⭐⭐⭐ 理论基础扎实
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 安全研究有重大启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Why Not Act on What You Know? Unleashing Safety Potential of LLMs via Self-Aware Guard Enhancement](why_not_act_on_what_you_know_unleashing_safety_potential_of_llms_via_self-aware_.md)
+- [Enhancing Transformation from Natural Language to Signal Temporal Logic Using LLMs with Diverse External Knowledge](enhancing_transformation_from_natural_language_to_signal_temporal_logic_using_ll.md)
+- [Refuse Whenever You Feel Unsafe: Improving Safety in LLMs via Decoupled Refusal Training](derta_decoupled_refusal.md)
+- [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [Internal and External Impacts of Natural Language Processing Papers](internal_and_external_impacts_of_natural_language_processing_papers.md)
+
+<!-- RELATED:END -->

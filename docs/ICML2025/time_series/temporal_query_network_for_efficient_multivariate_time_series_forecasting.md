@@ -144,3 +144,15 @@ TQNet由三个组件组成：(1) TQ增强的单层多头注意力（TQ-MHA）捕
 - **实验充分度**: ⭐⭐⭐⭐⭐（12个数据集、完整消融、跨架构迁移、表示可视化、效率分析）
 - **写作质量**: ⭐⭐⭐⭐（结构清晰，图表丰富，消融逻辑完整）
 - **价值**: ⭐⭐⭐⭐⭐（SOTA性能+极简架构+DLinear级效率+可迁移性，综合价值极高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HyperIMTS: Hypergraph Neural Network for Irregular Multivariate Time Series Forecasting](hyperimts_hypergraph_neural_network_for_irregular_multivariate_time_series_forec.md)
+- [Simple and Efficient Heterogeneous Temporal Graph Neural Network](../../NeurIPS2025/time_series/simple_and_efficient_heterogeneous_temporal_graph_neural_network.md)
+- [TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state](timepro_efficient_multivariate_long-term_time_series_forecasting_with_variable-_.md)
+- [Winner-takes-all for Multivariate Probabilistic Time Series Forecasting](winner-takes-all_for_multivariate_probabilistic_time_series_forecasting.md)
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+
+<!-- RELATED:END -->

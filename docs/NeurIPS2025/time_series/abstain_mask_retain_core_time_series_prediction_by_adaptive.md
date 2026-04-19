@@ -117,3 +117,15 @@ AMRC由两个核心组件组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多架构、消融实验、可视化分析充分
 - 写作质量: ⭐⭐⭐⭐ 问题驱动的叙事结构清晰，从发现→分析→解决
 - 价值: ⭐⭐⭐⭐ 作为模型无关的plug-in框架有很好的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mask the Redundancy: Evolving Masking Representation Learning for Multivariate Time-Series Clustering](../../AAAI2026/time_series/mask_the_redundancy_evolving_masking_representation_learning_for_multivariate_ti.md)
+- [MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series](maestro_adaptive_sparse_attention_and_robust_learning_for_multimodal_dynamic_tim.md)
+- [Neural MJD: Neural Non-Stationary Merton Jump Diffusion for Time Series Prediction](neural_mjd_neural_non-stationary_merton_jump_diffusion_for_time_series_predictio.md)
+- [WaLRUS: Wavelets for Long-range Representation Using SSMs](walrus_wavelets_for_long-range_representation_using_ssms.md)
+- [Causal Masking on Spatial Data: An Information-Theoretic Case for Learning Spatial Datasets with Unimodal Language Models](causal_masking_on_spatial_data_an_information-theoretic_case_for_learning_spatia.md)
+
+<!-- RELATED:END -->

@@ -146,3 +146,15 @@ $$\bar{F} \leq \alpha \cdot D_{\text{KL}}(p_j \| \hat{p}_j) + \beta \sum_i F_i(\
 - 实验充分度: ⭐⭐⭐⭐ 9 个任务跨 3 个数据集、完整消融、5 种子平均、任务级分析全面
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，方法组件解耦明确，实验呈现规范
 - 价值: ⭐⭐⭐⭐ 隐私保护的持续学习在医学影像中具有明确的临床需求和实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DIsoN: Decentralized Isolation Networks for Out-of-Distribution Detection in Medical Imaging](dison_decentralized_isolation_networks_for_out-of-distribution_detection_in_medi.md)
+- [Learning with Preserving for Continual Multitask Learning](../../AAAI2026/medical_imaging/learning_with_preserving_for_continual_multitask_learning.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+- [Semantic and Visual Crop-Guided Diffusion Models for Heterogeneous Tissue Synthesis in Histopathology](semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)
+- [Residual SODAP: Residual Self-Organizing Domain-Adaptive Prompting with Structural Knowledge Preservation for Continual Learning](../../CVPR2025/medical_imaging/residual_sodap_residual_self-organizing_domain-adaptive_prompting_with_structura.md)
+
+<!-- RELATED:END -->

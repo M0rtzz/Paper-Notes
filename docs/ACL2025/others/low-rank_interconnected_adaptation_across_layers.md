@@ -146,3 +146,15 @@ Lily 在 Mamba 架构上也大幅超越 LoRA，验证了跨架构的通用性。
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 NLU/推理/生成/视觉多模态多架构，但图像生成缺定量评测
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法公式完整，图示直观（Fig.1 很好地解释了核心思想）
 - **价值**: ⭐⭐⭐⭐⭐ — 极致的参数效率和跨架构通用性使其有很高的实用价值，有望成为新一代 PEFT 基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
+- [CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)
+- [Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)
+- [MaCP: Minimal yet Mighty Adaptation via Hierarchical Cosine Projection](macp_minimal_yet_mighty_adaptation_via_hierarchical_cosine_projection.md)
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+
+<!-- RELATED:END -->

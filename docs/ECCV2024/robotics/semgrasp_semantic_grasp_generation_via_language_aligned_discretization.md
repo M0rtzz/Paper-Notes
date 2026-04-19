@@ -176,3 +176,15 @@ SemGrasp在语义一致性指标GPT-4评分上达到74.5分（满分100），显
 - **实验充分度**: ⭐⭐⭐⭐ — 包含重建、生成、消融和下游应用，评估指标全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机阐述自然，图表丰富
 - **价值**: ⭐⭐⭐⭐ — 首次将语言指令引入精细的人类抓取生成，开辟了语义抓取的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Economic Framework for 6-DoF Grasp Detection](an_economic_framework_for_6-dof_grasp_detection.md)
+- [Prioritized Semantic Learning for Zero-shot Instance Navigation](prioritized_semantic_learning_for_zero-shot_instance_navigation.md)
+- [EvolvingGrasp: Evolutionary Grasp Generation via Efficient Preference Alignment](../../ICCV2025/robotics/evolvinggrasp_evolutionary_grasp_generation_via_efficient_preference_alignment.md)
+- [DexVLG: Dexterous Vision-Language-Grasp Model at Scale](../../ICCV2025/robotics/dexvlg_dexterous_vision-language-grasp_model_at_scale.md)
+- [CogVLA: Cognition-Aligned Vision-Language-Action Model via Instruction-Driven Routing & Sparsification](../../NeurIPS2025/robotics/cogvla_cognition-aligned_vision-language-action_model_via_instruction-driven_rou.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ NAVSIM SOTA + Bench2Drive闭环 + 充分消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐⭐ 为端到端自动驾驶的安全偏好对齐开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model-Based Policy Adaptation for Closed-Loop End-to-End Autonomous Driving](model-based_policy_adaptation_for_closed-loop_end-to-end_autonomous_driving.md)
+- [RAW2Drive: Reinforcement Learning with Aligned World Models for End-to-End Autonomous Driving](raw2drive_reinforcement_learning_with_aligned_world_models_for_end-to-end_autono.md)
+- [AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning](autovla_a_vision-language-action_model_for_end-to-end_autonomous_driving_with_ad.md)
+- [Prioritizing Perception-Guided Self-Supervision: A New Paradigm for Causal Modeling in End-to-End Autonomous Driving](prioritizing_perception-guided_self-supervision_a_new_paradigm_for_causal_modeli.md)
+- [DiffusionDrive: Truncated Diffusion Model for End-to-End Autonomous Driving](../../CVPR2025/autonomous_driving/diffusiondrive_truncated_diffusion_model_for_end-to-end_autonomous_driving.md)
+
+<!-- RELATED:END -->

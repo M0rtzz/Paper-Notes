@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个标准数据集、多轮对比、消融和class-wise分析都很充分，但缺少大规模数据集验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富，公式推导完整，附录详尽
 - 价值: ⭐⭐⭐⭐ 对降低语义分割标注成本有实际意义，但适用场景受限于有基础模型生成伪标签的设定
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](../../NeurIPS2025/segmentation/towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
+- [Diffusion-Driven Two-Stage Active Learning for Low-Budget Semantic Segmentation](../../NeurIPS2025/segmentation/diffusion-driven_two-stage_active_learning_for_low-budget_semantic_segmentation.md)
+- [DeDelayed: Deleting Remote Inference Delay via On-Device Correction](../../CVPR2026/segmentation/dedelayed_deleting_remote_inference_delay_via_on-device_correction.md)
+- [Active Coarse-to-Fine Segmentation of Moveable Parts from Real Images](../../ECCV2024/segmentation/active_coarsetofine_segmentation_of_moveable_parts_from_real.md)
+- [SSR: Semantic and Spatial Rectification for CLIP-based Weakly Supervised Segmentation](ssr_semantic_and_spatial_rectification_for_clip-based_weakly_supervised_segmenta.md)
+
+<!-- RELATED:END -->

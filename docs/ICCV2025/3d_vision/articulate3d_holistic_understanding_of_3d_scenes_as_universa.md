@@ -148,3 +148,15 @@ USDNet较SoftGroup†提升7.3%，较Mask3D†提升5.7%（AP50+Origin+Axis）
 - 实验充分度: ⭐⭐⭐⭐ 多数据集评估、跨域泛化、消融实验、下游任务展示全面，但核心对比方法较少（仅SoftGroup和Mask3D两个baseline）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，USD格式的motivation论述充分，但部分细节（如连接图谱预测）放在补充材料中
 - 价值: ⭐⭐⭐⭐⭐ 作为基础设施性工作价值很高——标准化格式+真实场景+完整铰接标注+仿真支持，对具身AI社区贡献显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Open-Vocabulary Octree-Graph for 3D Scene Understanding](open-vocabulary_octree-graph_for_3d_scene_understanding.md)
+- [ExCap3D: Expressive 3D Scene Understanding via Object Captioning with Varying Detail](excap3d_expressive_3d_scene_understanding_via_object_captioning_with_varying_det.md)
+- [3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding](3dgraphllm_combining_semantic_graphs_and_large_language_models_for_3d_scene_unde.md)
+- [Monocular Semantic Scene Completion via Masked Recurrent Networks](monocular_semantic_scene_completion_via_masked_recurrent_networks.md)
+- [HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
+
+<!-- RELATED:END -->

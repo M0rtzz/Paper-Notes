@@ -133,3 +133,15 @@ MRet是一个动态学习排序（LTR）框架，运行流程如下：（1）离
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据，6种消融维度，有Oracle上界参照，但真实数据仅1000×1000规模
 - 写作质量: ⭐⭐⭐⭐ 动机论证充分，toy example（图2）和分布对比（图5b）直观有力，理论推导清晰
 - 价值: ⭐⭐⭐⭐ 对订阅制双边平台有直接应用价值，"优化终极目标"思路可广泛推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
+- [Breaking the Dyadic Barrier: Rethinking Fairness in Link Prediction Beyond Demographic Parity](../../AAAI2026/ai_safety/breaking_the_dyadic_barrier_rethinking_fairness_in_link_prediction_beyond_demogr.md)
+- [Faithful Bi-Directional Model Steering via Distribution Matching and Distributed Interchange Interventions](faithful_bi-directional_model_steering_via_distribution_matching_and_distributed.md)
+- [Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
+- [EFX and PO Allocation Exists for Two Types of Goods](../../AAAI2026/ai_safety/efx_and_po_allocation_exists_for_two_types_of_goods.md)
+
+<!-- RELATED:END -->

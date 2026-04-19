@@ -149,3 +149,15 @@ $$V_{\mathsf{M}}^* = \max_{\pi} \min_{b \in B} V_{\mathsf{M}_b}^{\pi}$$
 - ⭐⭐⭐ **实用性**：可扩展性是主要障碍，短期内难以用于大规模实际问题
 
 **总评**: ⭐⭐⭐⭐ (3.5/5) — 理论贡献扎实的规划领域工作，建立了 ME-POMDP 的完整理论框架。主要不足是可扩展性和实际应用验证。对鲁棒决策理论研究者有重要参考价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JailNewsBench: Multi-Lingual and Regional Benchmark for Fake News Generation under Jailbreak Attacks](../../ICLR2026/llm_alignment/jailnewsbench_multi-lingual_and_regional_benchmark_for_fake_news_generation_unde.md)
+- [Diffusion Model as a Noise-Aware Latent Reward Model for Step-Level Preference Optimization](diffusion_model_as_a_noiseaware_latent_reward_model_for_step.md)
+- [What Makes a Reward Model a Good Teacher? An Optimization Perspective](what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+- [LASeR: Learning to Adaptively Select Reward Models with Multi-Armed Bandits](laser_learning_to_adaptively_select_reward_models_with_multi-armed_bandits.md)
+- [Debate, Reflect, and Distill: Multi-Agent Feedback with Tree-Structured Preference Optimization for Efficient Language Model Enhancement](../../ACL2025/llm_alignment/debate_reflect_and_distill_multi-agent_feedback_with_tree-structured_preference_.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ $$\mathcal{L}_{\text{contrast}} = -\log \frac{\exp(\text{sim}(q, \hat{p}^+))}{\e
 - 实验充分度: ⭐⭐⭐⭐ ConTEB 上消融充分，但缺少传统 IR 基准和更大规模测试
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法图示直观，但部分内容稍显冗长
 - 价值: ⭐⭐⭐⭐⭐ 效率和效果兼顾，对需要跨段落推理的 RAG 部署场景有很高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
+- [EXIT: Context-Aware Extractive Compression for Enhancing Retrieval-Augmented Generation](../../ACL2025/information_retrieval/exit_context-aware_extractive_compression_for_enhancing_retrieval-augmented_gene.md)
+- [Attributing Response to Context: A Jensen-Shannon Divergence Driven Mechanistic Study of Context Attribution in Retrieval-Augmented Generation](attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)
+- [HUME: Measuring the Human-Model Performance Gap in Text Embedding Tasks](hume_measuring_the_human-model_performance_gap_in_text_embedding_tasks.md)
+- [Gumbel Reranking: Differentiable End-to-End Reranker Optimization](../../ACL2025/information_retrieval/gumbel_reranking.md)
+
+<!-- RELATED:END -->

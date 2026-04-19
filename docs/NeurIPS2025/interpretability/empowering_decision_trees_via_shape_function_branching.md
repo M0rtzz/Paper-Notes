@@ -158,3 +158,15 @@ $$\delta_{(d_1, d_2)} = \min(\mathcal{L}(\mathbf{D}_{d_1}), \mathcal{L}(\mathbf{
 - ⭐ 实验充分度: 8/10 — 26个数据集、多深度、多变体（SGT/S2GT/SGT$^K$）、与强基线全面比较
 - ⭐ 写作质量: 8/10 — 定义清晰、算法伪代码完整、可视化示例直观
 - ⭐ 价值: 8/10 — 对可解释AI在高风险领域的应用有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Leveraging Predictive Equivalence in Decision Trees](../../ICML2025/interpretability/leveraging_predictive_equivalence_in_decision_trees.md)
+- [Near-Optimal Decision Trees in a SPLIT Second](../../ICML2025/interpretability/near_optimal_decision_trees_in_a_split_second.md)
+- [How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis](toward_explainable_offline_rl_analyzing_representations_in_intrinsically_motivat.md)
+- [ValuePilot: A Two-Phase Framework for Value-Driven Decision-Making](valuepilot_a_two-phase_framework_for_value-driven_decision-making.md)
+- [ConceptScope: Characterizing Dataset Bias via Disentangled Visual Concepts](conceptscope_characterizing_dataset_bias_via_disentangled_visual_concepts.md)
+
+<!-- RELATED:END -->

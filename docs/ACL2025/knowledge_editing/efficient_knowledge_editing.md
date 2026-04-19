@@ -119,3 +119,15 @@ MEMIT 等方法的闭式解为 $\hat{W} = W_0 + (V_E - W_0 K_E) K_E^T (\lambda C
 - 实验充分度: ⭐⭐⭐⭐ 三个模型、两个编辑方法、多种 batch size，系统性强
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，动机明确，图表详实
 - 价值: ⭐⭐⭐⭐ 实用性强，直接解决了知识编辑的一个关键工程瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MEMOIR: Lifelong Model Editing with Minimal Overwrite and Informed Retention for LLMs](../../NeurIPS2025/knowledge_editing/memoir_lifelong_model_editing_with_minimal_overwrite_and_informed_retention_for_.md)
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [Towards a Principled Evaluation of Knowledge Editors](towards_a_principled_evaluation_of_knowledge_editors.md)
+- [ScEdit: Script-based Assessment of Knowledge Editing](scedit_script-based_assessment_of_knowledge_editing.md)
+- [SAKE: Steering Activations for Knowledge Editing](sake_steering_activations_for_knowledge_editing.md)
+
+<!-- RELATED:END -->

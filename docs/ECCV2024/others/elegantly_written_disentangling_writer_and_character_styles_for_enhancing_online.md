@@ -123,3 +123,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐ 定性和定量实验均有，但部分实验指标缺少明确数值
 - **写作质量**: ⭐⭐⭐ 方法描述清晰，动机和设计逻辑连贯
 - **价值**: ⭐⭐⭐ 应用场景虽然偏小众（在线手写美化），但技术方法有跨域推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ET: The Exceptional Trajectories - Text-to-Camera-Trajectory Generation with Character Awareness](et_the_exceptional_trajectories_text-to-camera-trajectory_generation_with_charac.md)
+- [Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [Enhancing Optimization Robustness in 1-bit Neural Networks through Stochastic Sign Descent](enhancing_optimization_robustness_in_1-bit_neural_networks_through_stochastic_si.md)
+- [ParaMETA: Towards Learning Disentangled Paralinguistic Speaking Styles Representations](../../AAAI2026/others/parameta_towards_learning_disentangled_paralinguistic_speaking_styles_representa.md)
+- [Computable Universal Online Learning](../../NeurIPS2025/others/computable_universal_online_learning.md)
+
+<!-- RELATED:END -->

@@ -103,3 +103,15 @@ NSD 使用静态或参数化 sheaf 结构但缺乏谱控制和泛化保证；Bod
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰但公式密度较高
 - 价值: ⭐⭐⭐⭐⭐ 为图学习提供了首个谱感知的泛化保证框架
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cooperative Sheaf Neural Networks](../../ICLR2026/graph_learning/cooperative_sheaf_neural_networks.md)
+- [Adaptive Riemannian Graph Neural Networks](adaptive_riemannian_graph_neural_networks.md)
+- [NOTAM-Evolve: A Knowledge-Guided Self-Evolving Optimization Framework with LLMs for NOTAM Interpretation](notam-evolve_a_knowledge-guided_self-evolving_optimization_framework_with_llms_f.md)
+- [Magnitude-Modulated Equivariant Adapter for Parameter-Efficient Fine-Tuning of Equivariant Graph Neural Networks](magnitude-modulated_equivariant_adapter_for_parameter-efficient_fine-tuning_of_e.md)
+- [Spiking Heterogeneous Graph Attention Networks](spiking_heterogeneous_graph_attention_networks.md)
+
+<!-- RELATED:END -->

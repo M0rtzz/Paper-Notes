@@ -143,3 +143,15 @@ In-context input 数量消融：1个示例最优（59.4 gIoU），2个和4个略
 - ⭐⭐⭐⭐ 实验充分度：ReasonSeg 主实验详实，消融全面覆盖各组件，指标提升显著
 - ⭐⭐⭐⭐ 写作质量：论文结构清晰，motivation 用 "找狗鼻子" 的例子很直观
 - ⭐⭐⭐⭐⭐ 价值：为推理分割提供了一种系统化的框架思路，in-context 规则迁移的思想有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VISA: Reasoning Video Object Segmentation via Large Language Models](visa_reasoning_video_object_segmentation_via_large_language_models.md)
+- [Pixel-Level Reasoning Segmentation via Multi-turn Conversations](../../ACL2025/segmentation/pixel-level_reasoning_segmentation_via_multi-turn_conversations.md)
+- [FineRS: Fine-grained Reasoning and Segmentation of Small Objects with Reinforcement Learning](../../NeurIPS2025/segmentation/finers_fine-grained_reasoning_and_segmentation_of_small_objects_with_reinforceme.md)
+- [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](../../ICCV2025/segmentation/towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
+- [InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning](../../ACL2025/segmentation/instructpart_task-oriented_part_segmentation_with_instruction_reasoning.md)
+
+<!-- RELATED:END -->

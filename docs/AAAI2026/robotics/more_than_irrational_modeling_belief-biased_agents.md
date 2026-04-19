@@ -120,3 +120,15 @@ CR模型行为合理性验证（T迷宫任务）：
 - 实验充分度: ⭐⭐⭐ 仅T迷宫一个环境，行为合理性和推断精度验证充分但缺乏大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，动机论证优雅
 - 价值: ⭐⭐⭐⭐ 对人机协作和自适应系统有方法论贡献，但实际验证受限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal Inference Under Threshold Manipulation: Bayesian Mixture Modeling and Heterogeneous Treatment Effects](causal_inference_under_threshold_manipulation_bayesian_mixtu.md)
+- [Cross Modal Fine-Grained Alignment via Granularity-Aware and Region-Uncertain Modeling](cross_modal_fine-grained_alignment_via_granularity-aware_and_region-uncertain_mo.md)
+- [AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling](../../NeurIPS2025/robotics/autotom_scaling_model-based_mental_inference_via_automated_agent_modeling.md)
+- [When Agents Persuade: Propaganda Generation and Mitigation in LLMs](../../ICLR2026/robotics/when_agents_persuade_propaganda_generation_and_mitigation_in_llms.md)
+- [Closed-loop Long-horizon Robotic Planning via Equilibrium Sequence Modeling](../../ICML2025/robotics/closed-loop_long-horizon_robotic_planning_via_equilibrium_sequence_modeling.md)
+
+<!-- RELATED:END -->

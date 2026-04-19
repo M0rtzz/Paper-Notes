@@ -135,3 +135,15 @@ NeoVerse 分为两个阶段：(1) **重建阶段**：基于 VGGT 构建前馈式
 - 实验充分度: ⭐⭐⭐⭐⭐ 静态/动态重建、生成质量、推理效率、消融实验全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，motivation 论述充分，符号系统一致
 - 价值: ⭐⭐⭐⭐⭐ 解决了 4D 世界模型训练的数据瓶颈问题，具有很强的实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeeU: Seeing the Unseen World via 4D Dynamics-aware Generation](seeu_seeing_the_unseen_world_via_4d_dynamics-aware_generation.md)
+- [3D4D: An Interactive Editable 4D World Model via 3D Video Generation](../../AAAI2026/video_generation/3d4d_an_interactive_editable_4d_world_model_via_3d_video_generation.md)
+- [ActivityForensics: A Comprehensive Benchmark for Localizing Manipulated Activity in Videos](activityforensics_a_comprehensive_benchmark_for_localizing_manipulated_activity_.md)
+- [The Devil is in the Details: Enhancing Video Virtual Try-On via Keyframe-Driven Details Injection](the_devil_is_in_the_details_enhancing_video_virtual_try-on_via_keyframe-driven_d.md)
+- [Disentangled World Models: Learning to Transfer Semantic Knowledge from Distracting Videos for Reinforcement Learning](../../ICCV2025/video_generation/disentangled_world_models_learning_to_transfer_semantic_knowledge_from_distracti.md)
+
+<!-- RELATED:END -->

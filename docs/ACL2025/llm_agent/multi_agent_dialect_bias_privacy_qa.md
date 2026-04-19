@@ -249,3 +249,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 三个 LLM、两个数据集、五种方言、消融分析齐全，但方言数据是合成的
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，实验详实，但方法部分 prompt 描述过于冗长
 - 价值: ⭐⭐⭐⭐ 公平性+隐私是重要交叉议题，框架可直接部署，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EMULATE: A Multi-Agent Framework for Determining the Veracity of Atomic Claims by Emulating Human Actions](emulate_a_multi-agent_framework_for_determining_the_veracity_of_atomic_claims_by.md)
+- [Unveiling Privacy Risks in LLM Agent Memory](mextra_agent_memory_privacy.md)
+- [Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents](explorer_scaling_exploration-driven_web_trajectory_synthesis_for_multimodal_web_.md)
+- [iAgent: LLM Agent as a Shield between User and Recommender Systems](iagent_llm_agent_as_a_shield_between_user_and_recommender_systems.md)
+- [Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+
+<!-- RELATED:END -->

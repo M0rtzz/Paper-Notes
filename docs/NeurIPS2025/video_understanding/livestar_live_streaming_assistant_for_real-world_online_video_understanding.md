@@ -140,3 +140,15 @@ SVeD 通过单次前向传播验证来确定最佳响应时机：
 - 实验充分度: 9/10 — 三个基准 + 五项任务 + 充分消融
 - 写作质量: 8/10 — 问题动机清晰，框架完整
 - 价值: 8/10 — 方法和数据集均有较高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity](lattice_boltzmann_model_for_learning_real-world_pixel_dynamicity.md)
+- [egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
+- [Online Dense Point Tracking with Streaming Memory](../../ICCV2025/video_understanding/online_dense_point_tracking_with_streaming_memory.md)
+- [LION-FS: Fast & Slow Video-Language Thinker as Online Video Assistant](../../CVPR2025/video_understanding/lion-fs_fast_slow_video-language_thinker_as_online_video_assistant.md)
+- [InfiniPot-V: Memory-Constrained KV Cache Compression for Streaming Video Understanding](infinipot-v_memory-constrained_kv_cache_compression_for_streaming_video_understa.md)
+
+<!-- RELATED:END -->

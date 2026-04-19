@@ -137,3 +137,15 @@ $\lambda_1, \lambda_2 \sim \text{Uniform}(0,1)$。可无限采样训练数据，
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个基准 × 多种效用函数 × 完整消融 × 真实数据集验证
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 对云端/限时 HPO 场景有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing](../../ICML2025/llm_evaluation/provably_cost-sensitive_adversarial_defense_via_randomized_smoothing.md)
+- [Hyperband-based Bayesian Optimization for Black-box Prompt Selection](../../ICML2025/llm_evaluation/hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
+- [Bayesian Evaluation of Large Language Model Behavior](bayesian_evaluation_of_large_language_model_behavior.md)
+- [HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
+- [Efficient Semantic Uncertainty Quantification in Language Models via Diversity-Steered Sampling](efficient_semantic_uncertainty_quantification_in_language_models_via_diversity-s.md)
+
+<!-- RELATED:END -->

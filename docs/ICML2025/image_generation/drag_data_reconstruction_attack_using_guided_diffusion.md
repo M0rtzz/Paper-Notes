@@ -167,3 +167,15 @@ DRAG++ 结合了学习方法和优化方法的优势：
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖多个基础模型和防御方法，消融较全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，图示直观
 - **价值**: ⭐⭐⭐⭐⭐ — 对 AI 安全社区有重要警示意义，揭示基础模型 SI 的隐私风险
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Reconstruction-Based Data Likelihood Estimation for Core-Set Selection](../../AAAI2026/image_generation/diffusion_reconstruction-based_data_likelihood_estimation_for_core-set_selection.md)
+- [ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion](../../ICCV2025/image_generation/scorehoi_physically_plausible_reconstruction_of_human-object_interaction_via_sco.md)
+- [GeneMAN: Generalizable Single-Image 3D Human Reconstruction from Multi-Source Human Data](../../NeurIPS2025/image_generation/geneman_generalizable_single-image_3d_human_reconstruction_from_multi-source_hum.md)
+- [DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)
+- [Origin Identification for Text-Guided Image-to-Image Diffusion Models](origin_identification_for_text-guided_image-to-image_diffusion_models.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ $$\mathcal{L}_{\text{AWAC}} = -\mathbb{E}_{(s,a) \sim \mathcal{D}} \left[ \frac{
 - 实验充分度: ⭐⭐⭐⭐ 两个基准环境 + 详细消融，但环境数量可以更多
 - 写作质量: ⭐⭐⭐⭐ 方法阐述清晰，动机论证充分
 - 价值: ⭐⭐⭐⭐ 为 LLM-as-Agent 提供了一个合理且有效的层次化 RL 框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transitive RL: Value Learning via Divide and Conquer](../../ICLR2026/reinforcement_learning/transitive_rl_value_learning_via_divide_and_conquer.md)
+- [Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning](graph-assisted_stitching_for_offline_hierarchical_reinforcement_learning.md)
+- [Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](../../NeurIPS2025/reinforcement_learning/structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+
+<!-- RELATED:END -->

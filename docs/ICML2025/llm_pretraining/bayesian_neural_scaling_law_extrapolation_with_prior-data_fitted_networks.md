@@ -184,3 +184,15 @@ NSL-PFN快约4-5个数量级！
 - 实验充分度: ⭐⭐⭐⭐⭐ (5/5) — 6个数据集，多种baseline，消融/效率/校准/active learning全面
 - 写作质量: ⭐⭐⭐⭐ (4/5) — 结构清晰，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ (5/5) — 实际价值高，解决scaling law预测中的根本痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: The Future of Bayesian Prediction Is Prior-Fitted](position_the_future_of_bayesian_prediction_is_prior-fitted.md)
+- [Does Data Scaling Lead to Visual Compositional Generalization?](does_data_scaling_lead_to_visual_compositional_generalization.md)
+- [Superposition Yields Robust Neural Scaling](../../NeurIPS2025/llm_pretraining/superposition_yields_robust_neural_scaling.md)
+- [Generalization Bounds for Rank-sparse Neural Networks](../../NeurIPS2025/llm_pretraining/generalization_bounds_for_rank-sparse_neural_networks.md)
+- [Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](../../NeurIPS2025/llm_pretraining/neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
+
+<!-- RELATED:END -->

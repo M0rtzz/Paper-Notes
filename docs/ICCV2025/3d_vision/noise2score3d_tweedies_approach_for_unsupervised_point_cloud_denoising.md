@@ -128,3 +128,15 @@ $$\sigma^* = \arg\min_\sigma TV_{PC}(\hat{x}(\sigma))$$
 - 技术深度: ⭐⭐⭐⭐⭐ (理论基础扎实,贝叶斯框架完整)
 - 实验充分度: ⭐⭐⭐⭐ (多噪声级别,跨数据集泛化)
 - 实用价值: ⭐⭐⭐⭐⭐ (无需干净数据,单步去噪,自动噪声估计)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](../../NeurIPS2025/3d_vision/u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
+- [P2P-Bridge: Diffusion Bridges for 3D Point Cloud Denoising](../../ECCV2024/3d_vision/p2p-bridge_diffusion_bridges_for_3d_point_cloud_denoising.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [UPP: Unified Point-Level Prompting for Robust Point Cloud Analysis](upp_unified_point-level_prompting_for_robust_point_cloud_analysis.md)
+- [TurboReg: TurboClique for Robust and Efficient Point Cloud Registration](turboreg_turboclique_for_robust_and_efficient_point_cloud_registration.md)
+
+<!-- RELATED:END -->

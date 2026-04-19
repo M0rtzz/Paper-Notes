@@ -132,3 +132,15 @@ RVCD 的核心差异在于引入了与原图无关的外部显式图像，使对
 - 实验充分度: ⭐⭐⭐⭐ (CHAIR/POPE/MME/LLaVA-Bench + 3 个 backbone + 详细消融)
 - 写作质量: ⭐⭐⭐⭐ (动机清晰，流程图直观，公式推导完整)
 - 价值: ⭐⭐⭐⭐ (即插即用方法，效果显著，但受限于 CHAIR 字典的泛化性)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)
+- [Visual Evidence Prompting Mitigates Hallucinations in Large Vision-Language Models](visual_evidence_prompting.md)
+- [Symmetrical Visual Contrastive Optimization: Aligning Vision-Language Models with Minimal Contrastive Images](symmetrical_visual_contrastive_optimization_aligning_visionlanguage.md)
+- [Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](../../CVPR2025/multimodal_vlm/octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)
+- [GLSim: Detecting Object Hallucinations in LVLMs via Global-Local Similarity](../../NeurIPS2025/multimodal_vlm/glsim_detecting_object_hallucinations_in_lvlms_via_globalloc.md)
+
+<!-- RELATED:END -->

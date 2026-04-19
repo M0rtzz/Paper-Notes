@@ -136,3 +136,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ — 纯理论工作，定理证明严谨完整，但缺少案例研究或仿真验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 工厂排污的系列例子从简单到复杂层层推进，让抽象概念变得直观
 - 价值: ⭐⭐⭐⭐ — 为 AI 伦理中的责任归属问题提供了严格的计算复杂度基础，但实际应用需要进一步的桥接工作
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STEM Faculty Perspectives on Generative AI in Higher Education](stem_faculty_perspectives_on_generative_ai_in_higher_education.md)
+- [Tractable Weighted First-Order Model Counting with Bounded Treewidth Binary Evidence](tractable_weighted_first-order_model_counting_with_bounded_treewidth_binary_evid.md)
+- [Order-One Rolling Shutter Cameras](../../CVPR2025/others/order-one_rolling_shutter_cameras.md)
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](../../CVPR2026/others/order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](../../CVPR2026/others/zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+
+<!-- RELATED:END -->

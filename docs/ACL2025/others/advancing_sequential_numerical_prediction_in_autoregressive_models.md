@@ -146,3 +146,15 @@ $$\mathcal{L} = \mathbf{W_{exp}} \cdot \text{EMD} + \alpha \cdot \mathcal{L}_{re
 - 实验充分度: ⭐⭐⭐⭐ 涵盖5个MLLM、5个LLM、4类任务，消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰（CE的两个局限很直观），方法描述条理分明
 - 价值: ⭐⭐⭐⭐ 即插即用的通用改进方案，对所有涉及数值输出的自回归任务均有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Next-Scale Autoregressive Models for Text-to-Motion Generation](../../CVPR2026/others/next-scale_autoregressive_models_for_text-to-motion_generation.md)
+- [Cautious Next Token Prediction](cautious_next_token_prediction.md)
+- [Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph](why_are_positional_encodings_nonessential_for_deep_autoregressive_transformers_r.md)
+- [On Support Samples of Next Word Prediction](on_support_samples_of_next_word_prediction.md)
+- [Re-identification of De-identified Documents with Autoregressive Infilling](reidentification_deidentified.md)
+
+<!-- RELATED:END -->

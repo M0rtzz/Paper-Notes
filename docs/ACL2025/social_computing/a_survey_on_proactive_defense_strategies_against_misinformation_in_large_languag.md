@@ -132,3 +132,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ 将 LLM 错误信息防御从被动检测重新定义为主动预防的"三支柱"框架很有创见，127 种技术的系统映射和 48 项基准的元分析提供了扎实的参考价值，权衡分析实事求是，但缺乏统一基准的定量对比验证且社会技术维度讨论不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How does Misinformation Affect Large Language Model Behaviors and Preferences?](how_does_misinformation_affect_large_language.md)
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [Explicit vs. Implicit: Investigating Social Bias in Large Language Models through Self-Reflection](explicit_vs_implicit_investigating_social_bias_in_large_language_models_through_.md)
+- [OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [Active Slice Discovery in Large Language Models](../../NeurIPS2025/social_computing/active_slice_discovery_in_large_language_models.md)
+
+<!-- RELATED:END -->

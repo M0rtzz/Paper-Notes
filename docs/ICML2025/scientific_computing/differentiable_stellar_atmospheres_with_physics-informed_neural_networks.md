@@ -123,3 +123,15 @@ Kurucz-a1 生成的大气模型与太阳观测光谱的一致性甚至优于 ATL
 **综合评分**：⭐⭐⭐⭐（4/5）
 
 本文在天体物理科学计算领域做出了重要贡献。将 PINN 应用于恒星大气建模不仅是技术上的创新，更解决了端到端可微恒星光谱学的关键瓶颈问题。Kurucz-a1 在物理一致性上甚至超越了其训练目标 ATLAS-12，充分展示了物理约束神经网络的潜力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding](../../NeurIPS2025/scientific_computing/physics-informed_neural_networks_with_fourier_features_and_attention-driven_deco.md)
+- [Causal-PIK: Causality-based Physical Reasoning with a Physics-Informed Kernel](causal-pik_causality-based_physical_reasoning_with_a_physics-informed_kernel.md)
+- [Neuro-Spectral Architectures for Causal Physics-Informed Networks](../../NeurIPS2025/scientific_computing/neuro-spectral_architectures_for_causal_physics-informed_networks.md)
+- [Astral: Training Physics-Informed Neural Networks with Error Majorants](../../ICLR2026/scientific_computing/astral_training_physics-informed_neural_networks_with_error_majorants.md)
+- [Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data](../../NeurIPS2025/scientific_computing/multi-trajectory_physics-informed_neural_networks_for_hjb_equations_with_hard-ze.md)
+
+<!-- RELATED:END -->

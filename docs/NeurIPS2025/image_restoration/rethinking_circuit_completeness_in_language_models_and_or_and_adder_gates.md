@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ IOI任务实验充分但模型和任务多样性可加强
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，理论推导和直觉解释并重
 - 价值: ⭐⭐⭐⭐⭐ 为电路发现领域的完整性问题提供了系统性解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization](mro_enhancing_reasoning_in_diffusion_language_models_via_multi-reward_optimizati.md)
+- [Activation Steering for Masked Diffusion Language Models](../../ICLR2026/image_restoration/activation_steering_for_masked_diffusion_language_models.md)
+- [Adaptive Discretization for Consistency Models](adaptive_discretization_for_consistency_models.md)
+- [Rethinking Nighttime Image Deraining via Learnable Color Space Transformation](rethinking_nighttime_image_deraining_via_learnable_color_space_transformation.md)
+- [Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](../../ICLR2026/image_restoration/toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
+
+<!-- RELATED:END -->

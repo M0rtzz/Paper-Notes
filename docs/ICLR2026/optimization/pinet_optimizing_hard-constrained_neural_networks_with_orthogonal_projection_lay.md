@@ -170,3 +170,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 从基准测试到实际应用（运动规划），从消融到超参数分析非常全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，附录详尽，口头报告级别的论文
 - 价值: ⭐⭐⭐⭐⭐ — 提供了GPU-ready的开源工具包，对PDE求解、机器人、调度等领域有广泛影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning](../../CVPR2026/optimization/scope_semantic_coreset_with_orthogonal_projection.md)
+- [Beyond the Mean: Fisher-Orthogonal Projection for Natural Gradient Descent in Large Batch Training](../../AAAI2026/optimization/beyond_the_mean_fisher-orthogonal_projection_for_natural_gradient_descent_in_lar.md)
+- [Neural Networks Learn Generic Multi-Index Models Near Information-Theoretic Limit](neural_networks_learn_generic_multi-index_models_near_information-theoretic_limi.md)
+- [Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks](directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two.md)
+- [Learning to Recall with Transformers Beyond Orthogonal Embeddings](learning_to_recall_with_transformers_beyond_orthogonal_embeddings.md)
+
+<!-- RELATED:END -->

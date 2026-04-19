@@ -184,3 +184,15 @@ $$\ell = \ell_{bits} + \lambda(\ell_{recon} + \ell_{pred})$$
 - 实验充分度: ⭐⭐⭐⭐⭐ （三个数据集全面评测 + 复杂度对比 + 可变码率 + 鲁棒性验证 + 消融）
 - 写作质量: ⭐⭐⭐⭐ （技术描述精确，公式推导完整）
 - 价值: ⭐⭐⭐⭐⭐ （直接对标工业标准 G-PCC，实用价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Deformation-based In-Context Learning for Point Cloud Understanding](../../CVPR2026/3d_vision/deformation-based_in-context_learning_for_point_cloud_understanding.md)
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [Point Cloud Quantization through Multimodal Prompting for 3D Understanding](point_cloud_quantization_through_multimodal_prompting_for_3d_understanding.md)
+
+<!-- RELATED:END -->

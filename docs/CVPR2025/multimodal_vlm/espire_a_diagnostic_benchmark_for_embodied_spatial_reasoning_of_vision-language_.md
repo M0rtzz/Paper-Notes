@@ -128,3 +128,15 @@ Espire 构建在 Isaac Sim 之上，提供桌面和书架两种场景，涵盖 p
 - **实验充分度**: ⭐⭐⭐⭐ 评估了多种前沿 VLM，分析维度丰富（空间维度、难度、反思等）
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，问题定义精准，图表设计合理
 - **价值**: ⭐⭐⭐⭐ 填补了具身空间推理评估的重要空白，诊断结果对社区有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics](robospatial_teaching_spatial_understanding_to_2d_and_3d_vision-language_models_f.md)
+- [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
+- [OmniSpatial: Towards Comprehensive Spatial Reasoning Benchmark for Vision Language Models](../../ICLR2026/multimodal_vlm/omnispatial_towards_comprehensive_spatial_reasoning_benchmark_for_vision_languag.md)
+- [Spatial Reasoning is Not a Free Lunch: A Controlled Study on LLaVA](spatial_reasoning_is_not_a_free_lunch_a_controlled_study_on_llava.md)
+- [RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics](../../NeurIPS2025/multimodal_vlm/roborefer_towards_spatial_referring_with_reasoning_in_vision-language_models_for.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ Stable Diffusion (COCO 512×512)：Base+2ndM FID从15.76降至13.84，Small+2ndM
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖U-Net和Transformer架构、5个数据集、多种剪枝方法、充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，motivation清晰，实验设计系统
 - 价值: ⭐⭐⭐⭐ 通用微调框架，但仅限模型剪枝场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Fine-Tuning and Concept Suppression for Pruned Diffusion Models](../../CVPR2025/image_generation/efficient_fine-tuning_and_concept_suppression_for_pruned_diffusion_models.md)
+- [HOG-Diff: Higher-Order Guided Diffusion for Graph Generation](../../ICLR2026/image_generation/hog-diff_higher-order_guided_diffusion_for_graph_generation.md)
+- [Reviving ConvNeXt for Efficient Convolutional Diffusion Models](reviving_convnext_for_efficient_convolutional_diffusion_models.md)
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+- [Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)
+
+<!-- RELATED:END -->

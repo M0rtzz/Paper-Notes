@@ -190,3 +190,15 @@ $$\mathcal{L} = \mathcal{L}_{sup} + \alpha \mathcal{L}_{KD}^Y + \beta \mathcal{L
 - **实验充分性**: ⭐⭐⭐⭐ — 多教师、多任务、效率分析、消融实验齐全
 - **实用价值**: ⭐⭐⭐⭐⭐ — 19倍内存压缩和7倍加速使边缘部署可行，有开源代码
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述详尽，实验呈现规范
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Token is Worth over 1,000 Tokens: Efficient Knowledge Distillation through Low-Rank Clone](a_token_is_worth_over_1000_tokens_efficient_knowledge_distillation_through_low-r.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+- [Toward Efficient Inference Attacks: Shadow Model Sharing via Mixture-of-Experts](toward_efficient_inference_attacks_shadow_model_sharing_via_mixture-of-experts.md)
+- [Revisiting Semi-Supervised Learning in the Era of Foundation Models](revisiting_semi-supervised_learning_in_the_era_of_foundation_models.md)
+- [Jet-Nemotron: Efficient Language Model with Post Neural Architecture Search](jet-nemotron_efficient_language_model_with_post_neural_architecture_search.md)
+
+<!-- RELATED:END -->

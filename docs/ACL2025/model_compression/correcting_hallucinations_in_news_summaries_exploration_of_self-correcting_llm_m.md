@@ -148,3 +148,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 极其全面的对比实验，多维度评估，包含人类评估
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，案例分析直观
 - **综合价值**: ⭐⭐⭐⭐ — 对选择自纠正方法和检索策略提供了实用指导，实证发现可直接指导系统设计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [Correcting False Alarms from Unseen: Adapting Graph Anomaly Detectors at Test Time](../../AAAI2026/model_compression/correcting_false_alarms_from_unseen_adapting_graph_anomaly_detectors_at_test_tim.md)
+- [Graph Counselor: Adaptive Graph Exploration via Multi-Agent Synergy to Enhance LLM Reasoning](graph_counselor_multiagent_graphrag.md)
+- [PTQ1.61: Push the Real Limit of Extremely Low-Bit Post-Training Quantization Methods for Large Language Models](ptq161_low_bit_quantization.md)
+- [Entropy-based Exploration Conduction for Multi-step Reasoning](entropy-based_exploration_conduction_for_multi-step_reasoning.md)
+
+<!-- RELATED:END -->

@@ -165,3 +165,15 @@ XLM-R large (560M) 在 XStoryCloze 上以 78.78 超越 Llama3.1 70B 的 68.32，
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4 个编码器模型、10+ 个解码器基线、4 个评估任务、多种消融
 - **写作质量**: ⭐⭐⭐⭐ 分析和消融设计深入，结论清晰
 - **价值**: ⭐⭐⭐⭐⭐ 为资源受限的多语言 NLU 提供了极为实用的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Lingual Generalization and Compression: From Language-Specific to Shared Neurons](cross_lingual_neurons_compression.md)
+- [Cross-Lingual Representation Alignment Through Contrastive Image-Caption Tuning](cross-lingual_representation_alignment_through_contrastive_image-caption_tuning.md)
+- [Language Fusion for Parameter-Efficient Cross-lingual Transfer (FLARE)](flare_crosslingual_lora.md)
+- [A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs](a_case_study_of_cross-lingual_zero-shot_generalization_for_classical_languages_i.md)
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+
+<!-- RELATED:END -->

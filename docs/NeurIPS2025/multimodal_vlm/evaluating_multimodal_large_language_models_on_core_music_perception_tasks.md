@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐（因子设计合理但数据规模偏小，模型覆盖不够广）
 - 写作质量: ⭐⭐⭐⭐（结构清晰，论证有力）
 - 价值: ⭐⭐⭐⭐（对音乐AI领域有重要警示价值，揭示感知瓶颈）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Evaluating Proactive Risk Awareness of Multimodal Language Models](towards_evaluating_proactive_risk_awareness_of_multimodal_language_models.md)
+- [Adapting Vision-Language Models for Evaluating World Models](adapting_visionlanguage_models_for_evaluating_world_models.md)
+- [Core Knowledge Deficits in Multi-Modal Language Models](../../ICML2025/multimodal_vlm/core_knowledge_deficits_in_multi-modal_language_models.md)
+- [VisNumBench: Evaluating Number Sense of Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/visnumbench_evaluating_number_sense_of_multimodal_large_language_models.md)
+- [AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models](../../ACL2025/multimodal_vlm/alignmmbench_evaluating_chinese_multimodal_alignment_in_large_vision-language_mo.md)
+
+<!-- RELATED:END -->

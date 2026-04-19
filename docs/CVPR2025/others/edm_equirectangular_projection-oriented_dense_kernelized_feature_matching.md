@@ -106,3 +106,15 @@ EDM在Matterport3D上超越最强透视方法DKM 26.72 AUC@5°点，在Stanford2
 - 实验充分度: ⭐⭐⭐ 基准数据集有限，缺少室外场景和消融分析
 - 写作质量: ⭐⭐⭐⭐ 球面几何的阐述清晰
 - 价值: ⭐⭐⭐⭐ 对全景视觉和室内3D重建有重要价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Feature Selection for Latent Factor Models](feature_selection_for_latent_factor_models.md)
+- [Improving Transferable Targeted Attacks with Feature Tuning Mixup](improving_transferable_targeted_attacks_with_feature_tuning_mixup.md)
+- [Score Matching with Missing Data](../../ICML2025/others/score_matching_with_missing_data.md)
+- [HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
+- [Distributionally Robust Feature Selection](../../NeurIPS2025/others/distributionally_robust_feature_selection.md)
+
+<!-- RELATED:END -->

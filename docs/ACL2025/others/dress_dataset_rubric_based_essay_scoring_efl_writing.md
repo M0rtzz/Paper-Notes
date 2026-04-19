@@ -140,3 +140,15 @@ DREsS数据集由三部分组成：
 - **技术深度**: ⭐⭐⭐ — 数据集驱动的工作，建模方法相对简单
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型、多策略对比充分，消融完整
 - **总体推荐**: ⭐⭐⭐⭐ — 重要的数据集贡献，CASE策略有启发性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rubrik's Cube: Testing a New Rubric for Evaluating Explanations on the CUBE Dataset](rubriks_cube_testing_a_new_rubric_for_evaluating_explanations_on_the_cube_datase.md)
+- [Research Borderlands: Analysing Writing Across Research Cultures](research_borderlands_analysing_writing_across_research_cultures.md)
+- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+- [TabXEval: Why this is a Bad Table? An eXhaustive Rubric for Table Evaluation](tabxeval_why_this_is_a_bad_table_an_exhaustive_rubric_for_table_evaluation.md)
+- [Enhancing Marker Scoring Accuracy through Ordinal Confidence Modelling in Educational Assessments](enhancing_marker_scoring_accuracy_through_ordinal_confidence_modelling_in_educat.md)
+
+<!-- RELATED:END -->

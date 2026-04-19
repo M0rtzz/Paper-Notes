@@ -138,3 +138,15 @@ $$\delta(p^*, \hat{p}_{\mathcal{M}}) = \frac{1}{2} \sum_{o \in \Omega} |p^*(o) -
 - **实验充分度**: 4/5 — 多模型、多缩放、注意力分析全面
 - **实用性**: 3/5 — 以理论洞察为主，对实际应用启发间接
 - **综合评分**: 4/5
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLMs Can Be Easily Confused by Instructional Distractions](llms_can_be_easily_confused_by_instructional_distractions.md)
+- [Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs](can_llms_interpret_and_leverage_structured_linguistic_representations_a_case_stu.md)
+- [LLMs Can Simulate Standardized Patients via Agent Coevolution](evopatient_standardized_patient.md)
+- [LLMs can Perform Multi-Dimensional Analytic Writing Assessments](llm_writing_assessment.md)
+- [Can Graph Descriptive Order Affect Solving Graph Problems with LLMs?](graph_descriptive_order_llm.md)
+
+<!-- RELATED:END -->

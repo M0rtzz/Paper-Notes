@@ -187,3 +187,15 @@ $$\mathcal{L}_{\text{geo}} = \gamma_{\text{rama}} \mathcal{L}_{\text{rama}} + \g
 - 实验充分度: ⭐⭐⭐⭐ 120案例benchmark+多消融+对比数值优化/多步扩散，但缺乏与更多AI方法的对比
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，动机论证充分
 - 价值: ⭐⭐⭐⭐⭐ 填补cryo-EM AI精修空白，对结构生物学社区直接重大影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CryoFastAR: Fast Cryo-EM Ab initio Reconstruction Made Easy](../../ICCV2025/medical_imaging/cryofastar_fast_cryo-em_ab_initio_reconstruction_made_easy.md)
+- [One Small Step with Fingerprints, One Giant Leap for De Novo Molecule Generation from Mass Spectra](../../NeurIPS2025/medical_imaging/one_small_step_with_fingerprints_one_giant_leap_for_de_novo_molecule_generation_.md)
+- [Multiscale Guidance of Protein Structure Prediction with Heterogeneous Cryo-EM Data](../../NeurIPS2025/medical_imaging/multiscale_guidance_of_protein_structure_prediction_with_heterogeneous_cryo-em_d.md)
+- [Fine-Tuning Diffusion Models via Intermediate Distribution Shaping](fine-tuning_diffusion_models_via_intermediate_distribution_shaping.md)
+- [DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction](dm4ct_benchmarking_diffusion_models_for_computed_tomography_reconstruction.md)
+
+<!-- RELATED:END -->

@@ -91,3 +91,15 @@ Smooth-L1损失，AdamW优化器，仅微调编码器权重。
 - 实验充分度: ⭐⭐⭐⭐⭐ 6任务×15破坏类型，消融充分
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰
 - 价值: ⭐⭐⭐⭐ 开辟VICL鲁棒性新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](tide_training_locally_interpretable_domain_generalization_models_enables_test-ti.md)
+- [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](../../ICML2025/llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)
+- [Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers](classifier-to-bias_toward_unsupervised_automatic_bias_detection_for_visual_class.md)
+- [Improving Autoregressive Visual Generation with Cluster-Oriented Token Prediction](improving_autoregressive_visual_generation_with_cluster-oriented_token_predictio.md)
+- [Lost in Translation, Found in Context: Sign Language Translation with Contextual Cues](lost_in_translation_found_in_context_sign_language_translation_with_contextual_c.md)
+
+<!-- RELATED:END -->

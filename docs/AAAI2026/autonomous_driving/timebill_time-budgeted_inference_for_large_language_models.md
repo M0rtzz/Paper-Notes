@@ -188,3 +188,15 @@ $$\alpha^* = \min\left(\alpha_{\max}, 1 - \frac{T - \hat{t}_{\text{prefill}}(x) 
 - 实验充分度: ⭐⭐⭐⭐ — 多种基线、多种策略、多种时间预算，较为充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导清晰，系统设计图详尽
 - 价值: ⭐⭐⭐⭐ — 对实时LLM部署有较强参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Embracing Large Language Models in Traffic Flow Forecasting](../../ACL2025/autonomous_driving/embracing_large_language_models_in_traffic_flow_forecasting.md)
+- [TawPipe: Topology-Aware Weight Pipeline Parallelism for Accelerating Long-Context Large Models Training](tawpipe_topology-aware_weight_pipeline_parallelism_for_accelerating_long-context.md)
+- [Distilling Multi-modal Large Language Models for Autonomous Driving](../../CVPR2025/autonomous_driving/distilling_multi-modal_large_language_models_for_autonomous_driving.md)
+- [Navigation Instruction Generation with BEV Perception and Large Language Models](../../ECCV2024/autonomous_driving/navigation_instruction_generation_with_bev_perception_and_large_language_models.md)
+- [ST4VLA: Spatially Guided Training for Vision-Language-Action Models](../../ICLR2026/autonomous_driving/st4vla_spatially_guided_training_for_vision-language-action_models.md)
+
+<!-- RELATED:END -->

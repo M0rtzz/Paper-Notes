@@ -161,3 +161,15 @@ $$L_{\text{total}} = \mathcal{L}_{\text{LM}} + \alpha \cdot L_{\text{cons}}^{\te
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5 个模型 × 6 种攻击 × 3 类任务 + 丰富消融 + 越狱实验 + 多种变体对比
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论-实验-消融结构完整，图表丰富直观
 - 价值: ⭐⭐⭐⭐ — 高度实用（100 样本 + 4 分钟），但 $\alpha$ 调参和自适应攻击鲁棒性仍需改进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Safety Constraints for Large Language Models](learning_safety_constraints_for_large_language_models.md)
+- [De-mark: Watermark Removal in Large Language Models](de-mark_watermark_removal_in_large_language_models.md)
+- [Ensemble Watermarks for Large Language Models](../../ACL2025/ai_safety/ensemble_watermarks_llm.md)
+- [Watch Out Your Album! On the Inadvertent Privacy Memorization in Multi-Modal Large Language Models](watch_out_your_album_on_the_inadvertent_privacy_memorization_in_multi-modal_larg.md)
+- [Activation Space Interventions Can Be Transferred Between Large Language Models](activation_space_interventions_can_be_transferred_between_large_language_models.md)
+
+<!-- RELATED:END -->

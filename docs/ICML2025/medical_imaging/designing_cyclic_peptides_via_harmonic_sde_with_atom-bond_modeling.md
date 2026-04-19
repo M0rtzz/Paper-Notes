@@ -150,3 +150,15 @@ AtomSDE 预训练后固定参数，再训练 ResRouter。
 - 实验充分度: ⭐⭐⭐⭐ — 与多个基准对比，并有 MD 案例验证；但缺乏湿实验
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，环肽分类图示直观，公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ — 对肽类药物发现具有显著推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](../../NeurIPS2025/medical_imaging/generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
+- [Geometric Generative Modeling with Noise-Conditioned Graph Networks](geometric_generative_modeling_with_noise-conditioned_graph_networks.md)
+- [Unified All-Atom Molecule Generation with Neural Fields](../../NeurIPS2025/medical_imaging/unified_all-atom_molecule_generation_with_neural_fields.md)
+- [UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
+- [ConfRover: Simultaneous Modeling of Protein Conformation and Dynamics via Autoregression](../../NeurIPS2025/medical_imaging/confrover_simultaneous_modeling_of_protein_conformation_and_dynamics_via_autoreg.md)
+
+<!-- RELATED:END -->

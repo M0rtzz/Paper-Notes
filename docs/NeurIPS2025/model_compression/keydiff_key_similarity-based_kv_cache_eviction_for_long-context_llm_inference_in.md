@@ -135,3 +135,15 @@ KeyDiff 因无需计算注意力矩阵，兼容 FlashAttention，延迟显著更
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多模型、多 benchmark、消融详尽、效率对比到位
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论和实验结合紧密，可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 对边缘部署和长上下文推理有直接应用价值，FlashAttention 兼容性是杀手锏
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference](chunkkv_semanticpreserving_kv_cache_compression_for_efficien.md)
+- [Homogeneous Keys, Heterogeneous Values: Exploiting Local KV Cache Asymmetry for Long-Context LLMs](homogeneous_keys_heterogeneous_values_exploiting_local_kv_cache_asymmetry_for_lo.md)
+- [MUSTAFAR: Promoting Unstructured Sparsity for KV Cache Pruning in LLM Inference](mustafar_promoting_unstructured_sparsity_for_kv_cache_pruning_in_llm_inference.md)
+- [RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](../../ICML2025/model_compression/rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [Inference-Time Hyper-Scaling with KV Cache Compression](inference-time_hyper-scaling_with_kv_cache_compression.md)
+
+<!-- RELATED:END -->

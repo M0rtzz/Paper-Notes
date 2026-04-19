@@ -139,3 +139,15 @@ LLMBraces 在不修改原始 LLM 参数的前提下，为每个 FFN 层引入一
 - **实用性**: ★★★★★ — 极低参数量、即插即用、同时支持性能提升和可控生成，实用价值高
 - **实验充分度**: ★★★★☆ — 覆盖三个模型、多任务场景，消融充分；但缺乏大规模模型和推理速度对比
 - **写作质量**: ★★★★☆ — 行文清晰，从动机到方法到实验逻辑连贯
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM-AT: Automatic Transmission for LLM Tiers Optimizing Cost and Accuracy](automatic_transmission_for_llm_tiers_optimizing_cost_and_accuracy_in_large_langu.md)
+- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
+- [RoCoFT: Efficient Finetuning of Large Language Models with Row-Column Updates](rocoft_efficient_finetuning_of_large_language_models_with_row-column_updates.md)
+- [GUIDE: Guided Updates for In-context Decision Evolution in LLM-Driven Spacecraft Operations](../../CVPR2026/llm_nlp/guide_guided_updates_for_in-context_decision_evolution_in_llm-driven_spacecraft_.md)
+- [Towards Geo-Culturally Grounded LLM Generations](geocultural_grounded_llm.md)
+
+<!-- RELATED:END -->

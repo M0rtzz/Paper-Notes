@@ -128,3 +128,15 @@ SPLINCE是一种线性代数方法，计算一个投影矩阵 $\mathbf{P}^*_{SPL
 - 实验充分度: ⭐⭐⭐⭐ 多个NLP和CV数据集，多种LM模型，消融完整
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，直觉解释到位，图示说明精良
 - 价值: ⭐⭐⭐⭐ 解决了概念擦除领域的核心痛点，理论和实践价值兼具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causally Reliable Concept Bottleneck Models](causally_reliable_concept_bottleneck_models.md)
+- [Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor](nearly-linear_time_private_hypothesis_selection_with_the_optimal_approximation_f.md)
+- [Factor Decorrelation Enhanced Data Removal from Deep Predictive Models](factor_decorrelation_enhanced_data_removal_from_deep_predictive_models.md)
+- [Fairness under Competition](fairness_under_competition.md)
+- [Matchings Under Biased and Correlated Evaluations](matchings_under_biased_and_correlated_evaluations.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ DA 损失提供稳定的优化方向（所有批次对齐到同一目标），EM
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6 个数据集、i.i.d./非 i.i.d./连续域三种设定、多维度消融和鲁棒性分析
 - **写作质量**: ⭐⭐⭐⭐ 动机推导清晰，从问题分析到方法设计逻辑自洽
 - **价值**: ⭐⭐⭐⭐ 对非 i.i.d. TTA 这一实际重要场景有显著推进，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BATCLIP: Bimodal Online Test-Time Adaptation for CLIP](../../ICCV2025/llm_evaluation/batclip_bimodal_online_test-time_adaptation_for_clip.md)
+- [Test-Time Adaptation by Causal Trimming](../../NeurIPS2025/llm_evaluation/test-time_adaptation_by_causal_trimming.md)
+- [Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](../../AAAI2026/llm_evaluation/graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
+- [MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](../../AAAI2026/llm_evaluation/moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
+- [Eliminating Warping Shakes for Unsupervised Online Video Stitching](eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
+
+<!-- RELATED:END -->

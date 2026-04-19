@@ -113,3 +113,15 @@ VIR-Bench定义了一个层次化的visiting order graph：
 - 实验充分度: ⭐⭐⭐⭐ 8种模型、消融分析、agent案例验证
 - 写作质量: ⭐⭐⭐⭐ 任务定义清晰，数据集构建规范
 - 价值: ⭐⭐⭐⭐ 填补了macro-scale视频理解评估的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning over Video: Evaluating How MLLMs Extract, Integrate, and Reconstruct Spatiotemporal Evidence](../../CVPR2025/video_understanding/reasoning_over_video_evaluating_how_mllms_extract_integrate_and_reconstruct_spat.md)
+- [TSPO: Temporal Sampling Policy Optimization for Long-form Video Language Understanding](tspo_temporal_sampling_policy_optimization_for_long-form_video_language_understa.md)
+- [VirtueBench: Evaluating Trustworthiness under Uncertainty in Long Video Understanding](../../CVPR2026/video_understanding/virtuebench_evaluating_trustworthiness_under_uncertainty_in_long_video_understan.md)
+- [RecToM: A Benchmark for Evaluating Machine Theory of Mind in LLM-based Conversational Recommender Systems](rectom_a_benchmark_for_evaluating_machine_theory_of_mind_in_llm-based_conversati.md)
+- [PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics](pragworld_a_benchmark_evaluating_llms_local_world_model_under_minimal_linguistic.md)
+
+<!-- RELATED:END -->

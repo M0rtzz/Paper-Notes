@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多优化器×多规模×消融，非常彻底
 - 写作质量: ⭐⭐⭐⭐⭐ 清晰系统，Table 1 总结缩放规则一目了然
 - 价值: ⭐⭐⭐⭐⭐ 直接解决了社区争议，提供了可操作的实用指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Don't Be Lazy: CompleteP Enables Compute-Efficient Deep Transformers](dont_be_lazy_completep_enables_compute-efficient_deep_transformers.md)
+- [Systematic Generalization in Language Models Scales with Information Entropy](../../ACL2025/llm_nlp/systematic_generalization_in_language_models_scales_with_information_entropy.md)
+- [OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](../../ACL2025/llm_nlp/bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
+- [Weight Decay may matter more than μP for Learning Rate Transfer in Practice](../../ICLR2026/llm_nlp/weight_decay_may_matter_more_than_mup_for_learning_rate_transfer_in_practice.md)
+- [Geometric Signatures of Compositionality Across a Language Model's Lifetime](../../ACL2025/llm_nlp/geometric_compositionality_lifetime.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ $$B_k^{\tau+1} = B_k^\tau - \frac{\gamma\alpha}{r}\left(\frac{\partial l}{\parti
 ⭐⭐⭐⭐ (4/5)
 - 方法设计巧妙，理论保证完整，实验在真正大模型上验证
 - 两轮通信的实际延迟和本地A固定的限制是主要弱点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedSVD: Adaptive Orthogonalization for Private Federated Learning with LoRA](fedsvd_adaptive_orthogonalization_for_private_federated_learning_with_lora.md)
+- [Enabling Differentially Private Federated Learning for Speech Recognition: Benchmarks, Adaptive Optimizers and Gradient Clipping](enabling_differentially_private_federated_learning_for_speech_recognition_benchm.md)
+- [Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy](spectral_perturbation_bounds_for_low-rank_approximation_with_applications_to_pri.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+- [On the Sample Complexity of Differentially Private Policy Optimization](on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+
+<!-- RELATED:END -->

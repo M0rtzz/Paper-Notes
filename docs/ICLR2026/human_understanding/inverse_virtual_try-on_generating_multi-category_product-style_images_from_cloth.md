@@ -171,3 +171,15 @@ One Model for All统一VTON和VTOFF为单一框架，在LPIPS(22.50)和DISTS(19.
 - **实验充分度**: ⭐⭐⭐⭐⭐ 两数据集+6种指标+完整消融+跨数据集泛化+下游VTON增强实验→评估体系全面
 - **写作质量**: ⭐⭐⭐⭐ 动机分析透彻(掩码硬/文本软判别器)，方法描述层次分明，实验对比公平
 - **实用价值**: ⭐⭐⭐⭐ 对电商平台有直接应用价值，下游增益实验验证了实际可用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RefTon: Reference Person Shot Assist Virtual Try-on](../../CVPR2026/human_understanding/refton_reference_person_shot_assist_virtual_try-on.md)
+- [Mobile-VTON: High-Fidelity On-Device Virtual Try-On](../../CVPR2026/human_understanding/mobile_vton_ondevice_virtual_tryon.md)
+- [UniFit: Towards Universal Virtual Try-on with MLLM-Guided Semantic Alignment](../../AAAI2026/human_understanding/unifit_towards_universal_virtual_try-on_with_mllm-guided_semantic_alignment.md)
+- [Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback](../../CVPR2026/human_understanding/referencefree_image_quality_assessment_for_virtual.md)
+- [AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations](autofigure_generating_and_refining_publication-ready_scientific_illustrations.md)
+
+<!-- RELATED:END -->

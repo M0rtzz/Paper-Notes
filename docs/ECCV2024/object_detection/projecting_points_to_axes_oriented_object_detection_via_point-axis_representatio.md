@@ -176,3 +176,15 @@ $$\mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} (\lambda_1 \mathcal{L}_{proj} + \lamb
 - **实验充分度**: ⭐⭐⭐⭐ — 四个数据集 + 详细消融，但缺少推理速度对比
 - **写作质量**: ⭐⭐⭐⭐ — 图示清晰（尤其 Figure 2-3），概念解释直观
 - **实用价值**: ⭐⭐⭐⭐ — 在航空遥感目标检测上取得明确 SOTA，DETR 端到端设计利于部署
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TAPTR: Tracking Any Point with Transformers as Detection](taptr_tracking_any_point_with_transformers_as_detection.md)
+- [MutDet: Mutually Optimizing Pre-training for Remote Sensing Object Detection](mutdet_mutually_optimizing_pre-training_for_remote_sensing_object_detection.md)
+- [Fourier Angle Alignment for Oriented Object Detection in Remote Sensing](../../CVPR2026/object_detection/fourier_angle_alignment_for_oriented_object_detection_in_remote_sensing.md)
+- [SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection](../../ICLR2026/object_detection/spwood_sparse_partial_weakly-supervised_oriented_object_detection.md)
+- [Stepwise Multi-grained Boundary Detector for Point-Supervised Temporal Action Localization](stepwise_multi-grained_boundary_detector_for_point-supervised_temporal_action_lo.md)
+
+<!-- RELATED:END -->

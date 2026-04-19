@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个架构×11基准×4 baseline 的完整矩阵，消融覆盖各维度
 - 写作质量: ⭐⭐⭐⭐⭐ 问题诊断清晰，梯度推导严密，图表设计精良
 - 价值: ⭐⭐⭐⭐⭐ 对 MoE 训练实践有直接指导价值，即插即用的 23.79% 提升很实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Expert Divergence Learning for MoE-based Language Models](../../ICLR2026/llm_efficiency/expert_divergence_learning_for_moe-based_language_models.md)
+- [SkyLadder: Better and Faster Pretraining via Context Window Scheduling](skyladder_better_and_faster_pretraining_via_context_window_scheduling.md)
+- [Mozart: Modularized and Efficient MoE Training on 3.5D Wafer-Scale Chiplet Architectures](mozart_modularized_and_efficient_moe_training_on_35d_wafer-scale_chiplet_archite.md)
+- [EasyInv: Toward Fast and Better DDIM Inversion](../../ICML2025/llm_efficiency/easyinv_toward_fast_and_better_ddim_inversion.md)
+- [Efficient Data Driven Mixture-of-Expert Extraction from Trained Networks](../../CVPR2025/llm_efficiency/efficient_data_driven_mixture-of-expert_extraction_from_trained_networks.md)
+
+<!-- RELATED:END -->

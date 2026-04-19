@@ -152,3 +152,15 @@ $$A = A_{\max}\left(1 - (1-\delta)^{\left(\frac{B}{b}+\alpha\right)^\beta}\right
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 CIFAR-10/100 和 ImageNet 子集，多种 AL 策略和 SSL 方法，但缺少下游任务验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学推导严谨，逻辑链条清晰
 - **价值**: ⭐⭐⭐⭐ — 为 AL 社区提供了统一的评估工具，对实际标注预算规划有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid Autoencoders for Tabular Data: Leveraging Model-Based Augmentation in Low-Label Settings](../../NeurIPS2025/self_supervised/hybrid_autoencoders_for_tabular_data_leveraging_model-based_augmentation_in_low-.md)
+- [BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning](../../CVPR2025/self_supervised/boss_a_best-of-strategies_selector_as_an_oracle_for_deep_active_learning.md)
+- [Deep Learning is Not So Mysterious or Different](../../ICML2025/self_supervised/deep_learning_is_not_so_mysterious_or_different.md)
+- [LoftUp: Learning a Coordinate-Based Feature Upsampler for Vision Foundation Models](loftup_learning_a_coordinatebased_feature_upsampler_for_visi.md)
+- [A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)](a_tokenlevel_text_image_foundation_model_for_document_unders.md)
+
+<!-- RELATED:END -->

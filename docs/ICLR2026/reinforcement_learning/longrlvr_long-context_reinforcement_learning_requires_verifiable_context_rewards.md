@@ -129,3 +129,15 @@ $$r_{ctx}(y,Z,G) = \eta \cdot F_\beta(Z,G) + (1-\eta) \cdot r_{ans}(y) \cdot F_\
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型、多基准、丰富消融，数据覆盖全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 理论与实验衔接紧密，论述逻辑清晰
 - **实用价值**: ⭐⭐⭐⭐ — 对长上下文 RLVR 训练有直接指导意义，但需合成标注数据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for RL of Open-ended Generation](from_verifiable_dot_to_reward_chain_harnessing_verifiable_reference-based_reward.md)
+- [SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
+- [Reasoning Gym: Reasoning Environments for Reinforcement Learning with Verifiable Rewards](../../NeurIPS2025/reinforcement_learning/reasoning_gym_reasoning_environments_for_reinforcement_learning_with_verifiable_.md)
+- [Chain-of-Context Learning: Dynamic Constraint Understanding for Multi-Task VRPs](chain-of-context_learning_dynamic_constraint_understanding_for_multi-task_vrps.md)
+- [Towards Provable Emergence of In-Context Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/towards_provable_emergence_of_in-context_reinforcement_learning.md)
+
+<!-- RELATED:END -->

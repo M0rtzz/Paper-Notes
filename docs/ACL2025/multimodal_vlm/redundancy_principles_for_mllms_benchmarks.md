@@ -131,3 +131,15 @@ $$\rho(Y_i) = \frac{1}{l-1}\sum_{j \neq i}\text{CORR}(K_i, K_j)$$
 **优点**：提出了一个非常实用且系统化的框架来分析基准冗余，实验全面覆盖20+基准和100+模型，结论对社区有直接指导价值。
 
 **不足**：方法本身较直接（基于排名相关性），缺乏更深层的能力建模；分析依赖于现有评测数据，无法预测新兴基准的冗余情况。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniAlign-V: Towards Enhanced Alignment of MLLMs with Human Preference](omnialign-v_towards_enhanced_alignment_of_mllms_with_human_preference.md)
+- [Centurio: On Drivers of Multilingual Ability of Large Vision-Language Model](centurio_multilingual_vlm.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](trimllm_layer_dropping.md)
+- [MadaKV: Adaptive Modality-Perception KV Cache Eviction for Efficient Multimodal Long-Context Inference](madakv_adaptive_modality-perception_kv_cache_eviction_for_efficient_multimodal_l.md)
+
+<!-- RELATED:END -->

@@ -170,3 +170,15 @@ $$\mathcal{L}_c = -\frac{1}{D_c}\sum_{i=1}^{D_c}\sum_{r=1}^{|\mathcal{C}_u|} y_r
 | 写作质量 | 8 | 逻辑清晰，方法阐述详尽 |
 | 实用价值 | 7 | 广义设定更贴近实际，但预知 novel 数量的假设仍有限制 |
 | 总分 | 8 | 高质量工作，对 OpenRE 领域有实质推动 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Variational Approach for Mitigating Entity Bias in Relation Extraction](a_variational_approach_for_mitigating_entity_bias_in_relation_extraction.md)
+- [Generating Diverse Training Samples for Relation Extraction with Large Language Models](generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+- [Beyond Prompting: An Efficient Embedding Framework for Open-Domain Question Answering](embqa_embedding_odqa.md)
+- [Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA](hierarchical_retrieval_with_evidence_curation_for_open-domain_financial_question.md)
+- [Dynamic Order Template Prediction for Generative Aspect-Based Sentiment Analysis](dot_absa_template.md)
+
+<!-- RELATED:END -->

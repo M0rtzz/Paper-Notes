@@ -89,3 +89,15 @@ $L_{trans} = \beta_o L_o + \beta_P L_P + L_a$（终止分类 + 编码簿KL + 属
 - 实验充分度: ⭐⭐⭐⭐ 消融细致，缺跨数据集验证
 - 写作质量: ⭐⭐⭐⭐⭐ 图表清晰，逻辑严密
 - 价值: ⭐⭐⭐⭐ 机器人/数字孪生应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LotusFilter: Fast Diverse Nearest Neighbor Search via a Learned Cutoff Table](lotusfilter_fast_diverse_nearest_neighbor_search_via_a_learned_cutoff_table.md)
+- [ATGen: A Framework for Active Text Generation](../../ACL2025/nlp_generation/atgen_a_framework_for_active_text_generation.md)
+- [Personalized Text Generation with Contrastive Activation Steering](../../ACL2025/nlp_generation/personalized_text_generation_with_contrastive_activation_steering.md)
+- [Writing Like the Best: Exemplar-Based Expository Text Generation](../../ACL2025/nlp_generation/writing_like_best_exemplar.md)
+- [Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems](../../ACL2025/nlp_generation/dehumanizing_machines_anthropomorphic.md)
+
+<!-- RELATED:END -->

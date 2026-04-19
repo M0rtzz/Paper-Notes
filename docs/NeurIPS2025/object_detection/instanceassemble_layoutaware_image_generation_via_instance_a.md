@@ -159,3 +159,15 @@ InstanceAssemble 支持两种 DiT 骨架——Flux.1-dev（28步推理）、Flux
 - 实验充分度: ⭐⭐⭐⭐ 提出了新 benchmark（DenseLayout）和新指标（LGS），在两种 DiT 骨架（SD3、Flux）上验证，有消融实验和风格 LoRA 兼容性验证；遗憾的是论文全文 HTML 版本不可用，无法验证定量结果的具体数值
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，从"特征串扰"问题出发推导出"实例级隔离"的解决方案逻辑链流畅；代码结构清晰，开源质量高
 - 价值: ⭐⭐⭐⭐⭐ DiT 时代 L2I 的实用方案——轻量（LoRA）、灵活（兼容风格 LoRA）、效果好（密集布局 SOTA），适用于设计工具、电商素材、游戏场景等需要精确布局控制的实际应用场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OverLayBench: A Benchmark for Layout-to-Image Generation with Dense Overlaps](overlaybench_a_benchmark_for_layout-to-image_generation_with_dense_overlaps.md)
+- [Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation](../../ECCV2024/object_detection/be_yourself_bounded_attention_for_multi-subject_text-to-image_generation.md)
+- [MSTAR: Box-Free Multi-Query Scene Text Retrieval with Attention Recycling](mstar_box-free_multi-query_scene_text_retrieval_with_attention_recycling.md)
+- [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
+
+<!-- RELATED:END -->

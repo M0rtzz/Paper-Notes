@@ -142,3 +142,15 @@ Popular 数据集上的逻辑蕴含泛化指标（GPT2-XL）：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖传统指标、逻辑蕴含、上下文鲁棒性、消融等多维度，但仅在 GPT2-XL 和 LLaMA 2-7B 上验证
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，方法推导自然，图表信息量大
 - 价值: ⭐⭐⭐⭐ OT 映射的知识编辑范式有较强的通用性和扩展潜力，对后续研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model Editing as a Double-Edged Sword: Steering Agent Ethical Behavior](../../AAAI2026/knowledge_editing/model_editing_as_a_double-edged_sword_steering_agent_ethical_behavior_toward_ben.md)
+- [ScEdit: Script-based Assessment of Knowledge Editing](scedit_script-based_assessment_of_knowledge_editing.md)
+- [Revealing the Deceptiveness of Knowledge Editing: A Mechanistic Analysis of Superficial Editing](revealing_the_deceptiveness_of_knowledge_editing_a_mechanistic_analysis_of_super.md)
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [CompKe: Complex Question Answering under Knowledge Editing](compke_complex_question_answering_under_knowledge_editing.md)
+
+<!-- RELATED:END -->

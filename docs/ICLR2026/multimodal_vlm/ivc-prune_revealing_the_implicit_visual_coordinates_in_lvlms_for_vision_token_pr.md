@@ -170,3 +170,15 @@ IVC-Prune 是完全**训练免**的方法，不需要任何额外训练或微调
 - **实用性**: ⭐⭐⭐⭐⭐ — 训练免即插即用，效率提升明显
 - **写作质量**: ⭐⭐⭐⭐⭐ — 从理论发现到方法设计逻辑清晰
 - **综合**: ⭐⭐⭐⭐⭐ (9.5/10)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgilePruner: An Empirical Study of Attention and Diversity for Adaptive Visual Token Pruning in LVLMs](agilepruner_an_empirical_study_of_attention_and_diversity_for_adaptive_visual_to.md)
+- [HAWK: Head Importance-Aware Visual Token Pruning in Multimodal Models](../../CVPR2026/multimodal_vlm/hawk_head_importance-aware_visual_token_pruning_in_multimodal_models.md)
+- [Rethinking Visual Token Reduction in LVLMs under Cross-Modal Misalignment](../../AAAI2026/multimodal_vlm/rethinking_visual_token_reduction_in_lvlms_under_cross-modal_misalignment.md)
+- [HiDrop: Hierarchical Vision Token Reduction in MLLMs via Late Injection, Concave Pyramid Pruning, and Early Exit](hidrop_hierarchical_vision_token_reduction_in_mllms_via_late_injection_concave_p.md)
+- [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](../../ECCV2024/multimodal_vlm/ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+
+<!-- RELATED:END -->

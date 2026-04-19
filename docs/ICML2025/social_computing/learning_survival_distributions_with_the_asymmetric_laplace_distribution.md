@@ -128,3 +128,15 @@ CQRNN 基于 Portnoy 估计器的 pinball loss，需要预定义分位数网格 
 - 实验充分度: ⭐⭐⭐⭐⭐ — 21 个数据集、9 个指标、10 次重复、统计检验，实验设计非常扎实
 - 写作质量: ⭐⭐⭐⭐ — 数学推导清晰，与 CQRNN 的对比深入透彻
 - 价值: ⭐⭐⭐⭐ — 为生存分析提供了一个实用且优雅的参数化新选项
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distribution-Aware Robust Learning from Long-Tailed Data with Noisy Labels](../../ECCV2024/social_computing/distribution-aware_robust_learning_from_long-tailed_data_with_noisy_labels.md)
+- [Noise-Robustness Through Noise: A Framework Combining Asymmetric LoRA with Poisoning MoE](../../NeurIPS2025/social_computing/noise-robustness_through_noise_a_framework_combining_asymmetric_lora_with_poison.md)
+- [Learning from Neighbors: Category Extrapolation for Long-Tail Learning](../../CVPR2025/social_computing/learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)
+- [Gradient Extrapolation for Debiased Representation Learning](../../ICCV2025/social_computing/gradient_extrapolation_for_debiased_representation_learning.md)
+- [GraphKeeper: Graph Domain-Incremental Learning via Knowledge Disentanglement and Preservation](../../NeurIPS2025/social_computing/graphkeeper_graph_domain-incremental_learning_via_knowledge_disentanglement_and_.md)
+
+<!-- RELATED:END -->

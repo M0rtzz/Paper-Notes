@@ -126,3 +126,15 @@ FADE 在完全擦除目标的同时，对其他类的保留准确率显著优于
 ## 评分
 
 ⭐⭐⭐⭐ — 问题定义清晰、方法设计严谨、实验充分，首次系统性解决扩散模型遗忘中的邻接问题。ERB 指标的提出也为后续研究提供了统一评价标准。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning](../../NeurIPS2025/3d_vision/mesh-rft_enhancing_mesh_generation_via_fine-grained_reinforcement_fine-tuning.md)
+- [Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation](kiss3dgen_repurposing_image_diffusion_models_for_3d_asset_generation.md)
+- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/3d_vision/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+- [Parameter-Free Fine-tuning via Redundancy Elimination for Vision Foundation Models](../../AAAI2026/3d_vision/parameter-free_fine-tuning_via_redundancy_elimination_for_vision_foundation_mode.md)
+- [Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](../../ECCV2024/3d_vision/open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)
+
+<!-- RELATED:END -->

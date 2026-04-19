@@ -131,3 +131,15 @@ ICM（Implicit Choice-Modification）分为三步：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种属性 × 三种架构 × 多种干预方式，分析非常深入
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事优雅，从假设到验证到应用的逻辑链完整
 - 价值: ⭐⭐⭐⭐ 对理解扩散模型内部机制有基础贡献，去偏应用实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CountSteer: Steering Attention for Object Counting in Diffusion Models](../../AAAI2026/image_generation/countsteer_steering_attention_for_object_counting_in_diffusion_models.md)
+- [HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models](ham_a_training-free_style_transfer_approach_via_heterogeneous_attention_modulati.md)
+- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+- [Precise Object and Effect Removal with Adaptive Target-Aware Attention](precise_object_and_effect_removal_with_adaptive_target-aware_attention.md)
+- [CTCal: Rethinking Text-to-Image Diffusion Models via Cross-Timestep Self-Calibration](ctcal_rethinking_text-to-image_diffusion_models_via_cross-timestep_self-calibrat.md)
+
+<!-- RELATED:END -->

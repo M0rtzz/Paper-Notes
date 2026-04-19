@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多场景(6个设置)×多数据集×多架构×详尽消融×效率分析，32页论文含附录
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑严密，研究问题定义清晰，实验设计周到
 - 价值: ⭐⭐⭐⭐⭐ 为3D域适应开辟了新方向，实用性强，开源完善
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reliable Spatial-Temporal Voxels For Multi-Modal Test-Time Adaptation](reliable_spatial-temporal_voxels_for_multi-modal_test-time_adaptation.md)
+- [3D Test-time Adaptation via Graph Spectral Driven Point Shift](../../ICCV2025/3d_vision/3d_testtime_adaptation_via_graph_spectral_driven_point_shift.md)
+- [Progressive Classifier and Feature Extractor Adaptation for Unsupervised Domain Adaptation on Point Clouds](progressive_classifier_and_feature_extractor_adaptation_for_unsupervised_domain_.md)
+- [Adapt-As-You-Walk Through the Clouds: Training-Free Online Test-Time Adaptation of 3D Vision-Language Foundation Models](../../AAAI2026/3d_vision/adapt-as-you-walk_through_the_clouds_training-free_online_te.md)
+- [PointMAC: Meta-Learned Adaptation for Robust Test-Time Point Cloud Completion](../../NeurIPS2025/3d_vision/pointmac_meta-learned_adaptation_for_robust_test-time_point_cloud_completion.md)
+
+<!-- RELATED:END -->

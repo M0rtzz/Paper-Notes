@@ -131,3 +131,15 @@ $$\frac{d}{(1-2p)^2} \log \frac{d}{(1-2p)^2} \lesssim n \lesssim \frac{d^2}{(1-2
 | 实验充分性 | ⭐⭐⭐⭐ | 覆盖视觉和语言任务，多个DP参数和噪声鲁棒方法对比，但规模偏小 |
 | 实用价值 | ⭐⭐⭐⭐⭐ | 即插即用、零额外隐私代价、实现极其简单，Label DP 实践中非常实用 |
 | 写作质量 | ⭐⭐⭐⭐ | 动机清晰、直觉解释好（Figure 1），理论与实验衔接自然 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
+- [Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures](../../AAAI2026/ai_safety/ghost_in_the_transformer_detecting_model_reuse_with_invariant_spectral_signature.md)
+- [Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](../../AAAI2026/ai_safety/privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
+- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
+- [ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](../../ACL2025/ai_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)
+
+<!-- RELATED:END -->

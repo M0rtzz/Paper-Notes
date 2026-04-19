@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐（多个细粒度数据集和详细消融）
 - 写作质量: ⭐⭐⭐
 - 价值: ⭐⭐⭐（OWSSL是有前景的方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning](sec-promptsemantic_complementary_prompting_for_few-shot_class-incremental_learni.md)
+- [Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention](exposure-slot_exposure-centric_representations_learning_with_slot-in-slot_attent.md)
+- [Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](../../AAAI2026/llm_nlp/conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
+- [System Prompt Optimization with Meta-Learning](../../NeurIPS2025/llm_nlp/system_prompt_optimization_with_meta-learning.md)
+- [From Selection to Generation: A Survey of LLM-based Active Learning](../../ACL2025/llm_nlp/from_selection_to_generation_a_survey_of_llm-based_active_learning.md)
+
+<!-- RELATED:END -->

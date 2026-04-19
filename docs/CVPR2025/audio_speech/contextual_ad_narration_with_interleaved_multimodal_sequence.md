@@ -130,3 +130,15 @@ Uni-AD 以交错多模态序列作为 LLM 的输入：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+消融完整
 - 写作质量: ⭐⭐⭐⭐ 框架清晰易理解
 - 价值: ⭐⭐⭐⭐ 对视障辅助和电影理解有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniM: A Unified Any-to-Any Interleaved Multimodal Benchmark](../../CVPR2026/audio_speech/unim_a_unified_any-to-any_interleaved_multimodal_benchmark.md)
+- [MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls](video-guided_foley_sound_generation_with_multimodal_controls.md)
+- [DistinctAD: Distinctive Audio Description Generation in Contexts](distinctad_distinctive_audio_description_generation_in_contexts.md)
+- [Team LEYA in 10th ABAW Competition: Multimodal Ambivalence/Hesitancy Recognition Approach](team_leya_in_10th_abaw_competition_multimodal_ambivalencehesitancy_recognition_a.md)
+- [Dynamic Parameter Memory: Temporary LoRA-Enhanced LLM for Long-Sequence Emotion Recognition in Conversation](../../ICLR2026/audio_speech/dynamic_parameter_memory_temporary_lora-enhanced_llm_for_long-sequence_emotion_r.md)
+
+<!-- RELATED:END -->

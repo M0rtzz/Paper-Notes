@@ -128,3 +128,15 @@ tags:
 - 实验: ⭐⭐⭐⭐⭐ — 模型覆盖极广，评估指标全面，包含人类专家验证
 - 写作: ⭐⭐⭐⭐ — 结构清晰，数据统计详尽
 - 实用性: ⭐⭐⭐⭐ — 数据集和评估框架对法律翻译有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding](kitab-bench_a_comprehensive_multi-domain_benchmark_for_arabic_ocr_and_document_u.md)
+- [PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation](../../NeurIPS2025/llm_evaluation/parrot_a_benchmark_for_evaluating_llms_in_cross-system_sql_translation.md)
+- [RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases](../../NeurIPS2025/llm_evaluation/rdb2g-bench_a_comprehensive_benchmark_for_automatic_graph_modeling_of_relational.md)
+- [TUMLU: A Unified and Native Language Understanding Benchmark for Turkic Languages](tumlu_a_unified_and_native_language_understanding_benchmark_for_turkic_languages.md)
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+
+<!-- RELATED:END -->

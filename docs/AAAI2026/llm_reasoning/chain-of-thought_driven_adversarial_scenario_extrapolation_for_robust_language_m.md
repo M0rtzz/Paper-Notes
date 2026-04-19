@@ -121,3 +121,15 @@ ASE 在推理时添加两步 CoT 推理作为"预热"：$x \rightarrow r_{scenar
 - 实验充分度: ⭐⭐⭐⭐⭐ 4模型×4威胁×6基线，20K越狱样本，人工标注验证
 - 写作质量: ⭐⭐⭐⭐ 动机论证充分，方法原理清晰
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强的推理时防御方案，对 LLM 安全部署有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BadThink: Triggered Overthinking Attacks on Chain-of-Thought Reasoning in Large Language Models](badthink_triggered_overthinking_attacks_on_chain-of-thought_reasoning_in_large_l.md)
+- [Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](../../ICLR2026/llm_reasoning/are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
+- [AIMCoT: Active Information-driven Multimodal Chain-of-Thought for Vision-Language Reasoning](../../ICLR2026/llm_reasoning/aimcot_active_information-driven_multimodal_chain-of-thought_for_vision-language.md)
+- [Adversarial Manipulation of Reasoning Models using Internal Representations](../../ICML2025/llm_reasoning/adversarial_manipulation_of_reasoning_models_using_internal_representations.md)
+- [The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
+
+<!-- RELATED:END -->

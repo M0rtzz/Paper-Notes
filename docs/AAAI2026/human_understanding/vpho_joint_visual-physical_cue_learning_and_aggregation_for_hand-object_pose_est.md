@@ -212,3 +212,15 @@ $$\mathcal{L}_{phy} = \lambda_F \mathcal{L}_{mse}(F', \tilde{F}') + \lambda_c \m
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个基准的精度+物理全面评估，完整消融）
 - 写作质量: ⭐⭐⭐⭐ （方法描述清晰，公式推导严谨）
 - 价值: ⭐⭐⭐⭐⭐ （首次同时达到精度和物理合理性的 SOTA，打破了长期存在的权衡）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [New Synthetic Goldmine: Hand Joint Angle-Driven EMG Data Generation Framework for Micro-Gesture Recognition](new_synthetic_goldmine_hand_joint_angle-driven_emg_data_generation_framework_for.md)
+- [CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation](../../ICCV2025/human_understanding/cleanpose_category-level_object_pose_estimation_via_causal_learning_and_knowledg.md)
+- [3D Hand Pose Estimation in Everyday Egocentric Images](../../ECCV2024/human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)
+- [FoundPose: Unseen Object Pose Estimation with Foundation Features](../../ECCV2024/human_understanding/foundpose_unseen_object_pose_estimation_with_foundation_features.md)
+- [Learning Dense Hand Contact Estimation from Imbalanced Data](../../NeurIPS2025/human_understanding/learning_dense_hand_contact_estimation_from_imbalanced_data.md)
+
+<!-- RELATED:END -->

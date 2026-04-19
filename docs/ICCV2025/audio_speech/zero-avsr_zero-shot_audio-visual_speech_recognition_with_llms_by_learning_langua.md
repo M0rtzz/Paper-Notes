@@ -127,3 +127,15 @@ Zero-AVSR 由两个核心组件组成：(1) AV-Romanizer：将多语言视听语
 - **实验充分度**: ⭐⭐⭐⭐⭐ 12个消融实验、8种语言的全面评估、多个LLM对比
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，动机阐述充分
 - **价值**: ⭐⭐⭐⭐ 82种语言的多语言视听识别，数据集和方法均有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Text-to-Speech for Vietnamese](../../ACL2025/audio_speech/zero-shot_text-to-speech_for_vietnamese.md)
+- [ControlSpeech: Towards Simultaneous and Independent Zero-shot Speaker Cloning and Zero-shot Language Style Control](../../ACL2025/audio_speech/controlspeech_zero_shot.md)
+- [TCSinger 2: Customizable Multilingual Zero-shot Singing Voice Synthesis](../../ACL2025/audio_speech/tcsinger_2_customizable_multilingual_zero-shot_singing_voice_synthesis.md)
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](../../ACL2025/audio_speech/advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition](../../NeurIPS2025/audio_speech/mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)
+
+<!-- RELATED:END -->

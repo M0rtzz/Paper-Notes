@@ -137,3 +137,15 @@ L4Q 的核心思想是**"先合并，再量化"**：
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖多模型(3B-33B)、多精度(3/4-bit)、多基准(CSQA/MMLU)、内存和推理速度全面对比
 - **实际价值**: ⭐⭐⭐⭐⭐ — 在LLM量化部署中非常实用，解决了QLoRA族方法的核心痛点
 - **总体推荐**: ⭐⭐⭐⭐ — 工程品味优秀的工作，在量化+微调的交叉领域提出了真正实用的统一方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedEx-LoRA: Exact Aggregation for Federated and Efficient Fine-Tuning of Large Language Models](fedex_lora_federated_exact_aggregation.md)
+- [EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](state_offset_tuning_ssm_peft.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models](trans_peft_transferable.md)
+
+<!-- RELATED:END -->

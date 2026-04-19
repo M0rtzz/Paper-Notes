@@ -182,3 +182,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{rec} + \beta \mathcal{L}_{diff}$$
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、三个缩放因子、11 种对比方法、详细消融（SD/TD/损失/帧数）、复杂度分析、PCA 可视化，实验全面
 - **写作质量**: ⭐⭐⭐⭐ — 统计分析→问题发现→方法设计的叙事逻辑清晰，图表质量高，直方图对比直观展示长尾缓解效果
 - **价值**: ⭐⭐⭐⭐ — 在 VDSR 任务上取得显著提升（×16 平均 27.6%），长尾分布视角可推广到其他恢复任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal Inconsistency Guidance for Super-resolution Video Quality Assessment](temporal_inconsistency_guidance_for_super-resolution_video_quality_assessment.md)
+- [MFmamba: A Multi-function Network for Panchromatic Image Resolution Restoration Based on State-Space Model](mfmamba_a_multi-function_network_for_panchromatic_image_resolution_restoration_b.md)
+- [UCAN: Unified Convolutional Attention Network for Expansive Receptive Fields in Lightweight Super-Resolution](../../CVPR2026/image_restoration/ucan_unified_convolutional_attention_network_for_expansive_receptive_fields_in_l.md)
+- [SD-PSFNet: Sequential and Dynamic Point Spread Function Network for Image Deraining](sd-psfnet_sequential_and_dynamic_point_spread_function_netwo.md)
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](../../CVPR2026/image_restoration/disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ $\gamma_0 = 1.2$ 在文图对齐和图像质量之间取得最佳平衡。过大
 - 技术深度：⭐⭐⭐⭐ — 数学推导清晰，问题根因分析有说服力
 - 实验充分度：⭐⭐⭐ — 定量评估指标略单一（仅 T2I-CompBench）
 - 实用价值：⭐⭐⭐⭐⭐ — 极低成本可直接应用于现有 MM-DiT 模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Multimodal Diffusion Transformers for Enhanced Prompt-based Image Editing](exploring_multimodal_diffusion_transformers_for_enhanced_prompt-based_image_edit.md)
+- [StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion](stylemotif_multi-modal_motion_stylization_using_style-content_cross_fusion.md)
+- [IRGPT: Understanding Real-world Infrared Image with Bi-cross-modal Curriculum on Large-scale Benchmark](irgpt_understanding_real-world_infrared_image_with_bi-cross-modal_curriculum_on_.md)
+- [CTCal: Rethinking Text-to-Image Diffusion Models via Cross-Timestep Self-Calibration](../../CVPR2026/image_generation/ctcal_rethinking_text-to-image_diffusion_models_via_cross-timestep_self-calibrat.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+
+<!-- RELATED:END -->

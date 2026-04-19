@@ -115,3 +115,15 @@ RAPTR接收多视角雷达热图（水平-深度 $\mathbf{Y}_{\text{hor}} \in \m
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多个基线、详细消融和定性分析
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，架构描述详尽
 - 价值: ⭐⭐⭐⭐ 降低雷达姿态估计的标注成本，贴近实用需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](../../CVPR2025/human_understanding/hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [3D Face Reconstruction From Radar Images](../../CVPR2025/human_understanding/3d_face_reconstruction_from_radar_images.md)
+- [Cycle-Sync: Robust Global Camera Pose Estimation through Enhanced Cycle-Consistent Synchronization](cycle-sync_robust_global_camera_pose_estimation_through_enhanced_cycle-consisten.md)
+- [Analyzing the Synthetic-to-Real Domain Gap in 3D Hand Pose Estimation](../../CVPR2025/human_understanding/analyzing_the_synthetic-to-real_domain_gap_in_3d_hand_pose_estimation.md)
+
+<!-- RELATED:END -->

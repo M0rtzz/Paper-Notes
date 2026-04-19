@@ -173,3 +173,15 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \alpha \mathcal{L}_{LB} + \beta \mathcal{L}_{
 - 实验充分度: ⭐⭐⭐⭐⭐ (大量系统性扫描、多种消融、GRPO+TTC 验证、代码任务扩展)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图表信息密度高，讨论诚实)
 - 价值: ⭐⭐⭐⭐⭐ (对 MoE 模型工程和 scaling law 研究具有直接实用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Upcycling Instruction Tuning from Dense to Mixture-of-Experts via Parameter Merging](../../ACL2025/llm_alignment/upcycling_instruction_tuning_from_dense_to_mixture-of-experts_via_parameter_merg.md)
+- [Hierarchy-of-Groups Policy Optimization for Long-Horizon Agentic Tasks](hierarchy-of-groups_policy_optimization_for_long-horizon_agentic_tasks.md)
+- [AVERE: Improving Audiovisual Emotion Reasoning with Preference Optimization](avere_improving_audiovisual_emotion_reasoning_with_preference_optimization.md)
+- [Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models (UltraBreak)](toward_universal_and_transferable_jailbreak_attacks_on_vision-language_models.md)
+- [Jailbreak-Zero: A Path to Pareto Optimal Red Teaming for Large Language Models](../../NeurIPS2025/llm_alignment/jailbreak-zero_a_path_to_pareto_optimal_red_teaming_for_large_language_models.md)
+
+<!-- RELATED:END -->

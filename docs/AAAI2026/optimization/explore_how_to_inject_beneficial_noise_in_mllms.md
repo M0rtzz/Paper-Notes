@@ -136,3 +136,15 @@ $$L \approx \frac{1}{n \cdot m} \sum_{i=1}^{n} \sum_{j=1}^{m} [-\log q(A_i | X_V
 - 实验充分度: ⭐⭐⭐⭐ 在两个主流MLLM上进行了广泛实验，消融和可视化分析详尽，但LLaVA上的改进有限，且缺少生成类任务验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，实验组织合理，但Related Work中与特征增强方法的对比不够充分
 - 价值: ⭐⭐⭐⭐ 提供了一种新的MLLM微调范式（修改输入而非模型参数），对PEFT领域有启发意义，但实际应用中需要权衡TTFT增加带来的延迟
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Learning Dynamics of Two-Layer Linear Networks with Label Noise SGD](on_the_learning_dynamics_of_two-layer_linear_networks_with_label_noise_sgd.md)
+- [How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias](../../ICML2025/optimization/how_transformers_learn_regular_language_recognition_a_theoretical_study_on_train.md)
+- [Training Robust Graph Neural Networks by Modeling Noise Dependencies](../../NeurIPS2025/optimization/training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)
+- [A Unified Approach to Submodular Maximization Under Noise](../../NeurIPS2025/optimization/a_unified_approach_to_submodular_maximization_under_noise.md)
+- [Isotropic Noise in Stochastic and Quantum Convex Optimization](../../NeurIPS2025/optimization/isotropic_noise_in_stochastic_and_quantum_convex_optimization.md)
+
+<!-- RELATED:END -->

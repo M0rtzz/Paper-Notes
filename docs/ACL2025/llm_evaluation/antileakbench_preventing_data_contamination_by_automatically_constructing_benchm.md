@@ -132,3 +132,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12个LLM×8种任务设置，截止前后对比有力，人工质量验证充分
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述详细，但部分公式符号较密集
 - 价值: ⭐⭐⭐⭐⭐ 对LLM评测基础设施有重要贡献，全自动可持续更新是实用价值核心
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TripTailor: A Real-World Benchmark for Personalized Travel Planning](triptailor_a_real-world_benchmark_for_personalized_travel_planning.md)
+- [How Much Can We Forget about Data Contamination?](../../ICML2025/llm_evaluation/how_much_can_we_forget_about_data_contamination.md)
+- [Something's Fishy In The Data Lake: A Critical Re-evaluation of Table Union Search Benchmarks](somethings_fishy_in_the_data_lake_a_critical_re-evaluation_of_table_union_search.md)
+- [A Real-world Display Inverse Rendering Dataset](../../ICCV2025/llm_evaluation/a_realworld_display_inverse_rendering_dataset.md)
+- [RuleArena: A Benchmark for Rule-Guided Reasoning with LLMs in Real-World Scenarios](rulearena_rule_guided_reasoning.md)
+
+<!-- RELATED:END -->

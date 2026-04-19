@@ -154,3 +154,15 @@ $$D_\alpha(G_v, G_w) \leq \frac{\alpha nl \Delta^2}{4(d-n)\sigma_\theta^2} + o(d
 - 实验充分度: ⭐⭐⭐ — 以理论为主，数值验证支撑理论预测
 - 写作质量: ⭐⭐⭐⭐⭐ — 论文结构清晰，从简单到复杂层层递进
 - 价值: ⭐⭐⭐⭐ — 为合成数据隐私提供了理论基础，尽管限于线性回归
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Increasing the Utility of Synthetic Images through Chamfer Guidance](../../NeurIPS2025/image_generation/increasing_the_utility_of_synthetic_images_through_chamfer_guidance.md)
+- [Enhancing Vision-Language Compositional Understanding with Multimodal Synthetic Data (SPARCL)](../../CVPR2025/image_generation/enhancing_vision-language_compositional_understanding_with_multimodal_synthetic_.md)
+- [SMOTE and Mirrors: Exposing Privacy Leakage from Synthetic Minority Oversampling](../../ICLR2026/image_generation/smote_and_mirrors_exposing_privacy_leakage_from_synthetic_minority_oversampling.md)
+- [Generating Multi-Image Synthetic Data for Text-to-Image Customization](../../ICCV2025/image_generation/generating_multi-image_synthetic_data_for_text-to-image_customization.md)
+- [Distillation of Discrete Diffusion through Dimensional Correlations (Di4C)](distillation_of_discrete_diffusion_through_dimensional_correlations.md)
+
+<!-- RELATED:END -->

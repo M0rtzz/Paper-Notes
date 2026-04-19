@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ MNIST上的实验设计完整（单变换/复合变换/消融），但缺乏真实数据集验证让说服力大打折扣
 - 写作质量: ⭐⭐⭐⭐ 写作清晰、结构合理，用最简设置讲清楚故事。Discussion部分对局限性的坦诚讨论也很有价值
 - 价值: ⭐⭐⭐ 作为概念验证有意义——清晰展示了潜空间等变算子的外推能力和实用推理方案。但离实际应用还有很长的路，更像是一个有启发性的Workshop level work
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics](latent_particle_world_models_self-supervised_object-centric_stochastic_dynamics_.md)
+- [The Invisibility Hypothesis: Promises of AGI and the Future of the Global South](the_invisibility_hypothesis_promises_of_agi_and_the_future_of_the_global_south.md)
+- [Out of the Shadows: Exploring a Latent Space for Neural Network Verification](out_of_the_shadows_exploring_a_latent_space_for_neural_network_verification.md)
+- [Latent Fourier Transform](latent_fourier_transform.md)
+- [Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation](distributionally_robust_classification_for_multi-source_unsupervised_domain_adap.md)
+
+<!-- RELATED:END -->

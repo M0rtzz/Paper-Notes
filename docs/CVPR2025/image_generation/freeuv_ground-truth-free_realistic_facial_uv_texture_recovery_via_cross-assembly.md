@@ -119,3 +119,15 @@ FreeUV 基于预训练 Stable Diffusion v1.5，包含两个独立训练的网络
 - 实验充分度: ⭐⭐⭐⭐ 跨三个数据集与多种方法对比，消融研究全面
 - 写作质量: ⭐⭐⭐⭐ 表格总结（Tab.1）清晰展示跨域选择逻辑，动机阐述透彻
 - 价值: ⭐⭐⭐⭐ 大幅降低面部 UV 纹理生成的数据门槛，具有实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realistic Face Reconstruction from Facial Embeddings via Diffusion Models](../../AAAI2026/image_generation/realistic_face_reconstruction_from_facial_embeddings_via_diffusion_models.md)
+- [Realistic Human Motion Generation with Cross-Diffusion Models](../../ECCV2024/image_generation/realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition](../../ICML2025/image_generation/broadband_ground_motion_synthesis_by_diffusion_model_with_minimal_condition.md)
+- [Free-viewpoint Human Animation with Pose-correlated Reference Selection](free-viewpoint_human_animation_with_pose-correlated_reference_selection.md)
+- [Diffusion-based 3D Hand Motion Recovery with Intuitive Physics](../../ICCV2025/image_generation/diffusion-based_3d_hand_motion_recovery_with_intuitive_physics.md)
+
+<!-- RELATED:END -->

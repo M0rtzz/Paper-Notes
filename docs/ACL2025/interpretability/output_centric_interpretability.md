@@ -108,3 +108,15 @@ tags:
 | 总评 | 8/10 |
 
 > **总结**: 本文的核心贡献在于将特征描述从单一的输入视角扩展为输入-输出双面问题，提出的VocabProj方法计算成本极低且效果可观。死特征复活实验尤为亮眼，直接证明了输出导向方法的不可替代性。对可解释性研究社区具有重要的方法论启示。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees](../../ICLR2026/interpretability/formal_mechanistic_interpretability_automated_circuit_discovery_with_provable_gu.md)
+- [Mechanistic Interpretability of Emotion Inference in Large Language Models](mechanistic_interpretability_of_emotion_inference_in_large_language_models.md)
+- [Normalized AOPC: Fixing Misleading Faithfulness Metrics for Feature Attribution Explainability](normalized_aopc_faithfulness_metrics.md)
+- [VL-SAE: Interpreting and Enhancing Vision-Language Alignment with a Unified Concept Set](../../NeurIPS2025/interpretability/vlsae_interpreting_and_enhancing_visionlanguage_alignment_wi.md)
+- [MIB: A Mechanistic Interpretability Benchmark](../../ICML2025/interpretability/mib_a_mechanistic_interpretability_benchmark.md)
+
+<!-- RELATED:END -->

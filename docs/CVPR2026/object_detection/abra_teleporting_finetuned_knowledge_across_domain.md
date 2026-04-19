@@ -155,3 +155,15 @@ ParamΔ 在 SDGOD 上崩溃（恒等映射在激进域偏移下失效），ABRA 
 - 实验充分度: ⭐⭐⭐⭐ 多域偏移场景、完整消融、few-shot 分析
 - 写作质量: ⭐⭐⭐⭐ 清晰的问题定义和方法推导，数学符号一致
 - 价值: ⭐⭐⭐⭐ 权重空间传送的实用价值高，闭式解使部署友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+- [NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)
+- [VK-Det: Visual Knowledge Guided Prototype Learning for Open-Vocabulary Aerial Object Detection](../../AAAI2026/object_detection/vk-det_visual_knowledge_guided_prototype_learning_for_open-vocabulary_aerial_obj.md)
+- [Detecting Unknown Objects via Energy-based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)
+- [A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps](a_closer_look_at_cross-domain_few-shot_object_detection_fine-tuning_matters_and_.md)
+
+<!-- RELATED:END -->

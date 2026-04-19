@@ -237,3 +237,15 @@ SplatHLoc 是一个分层重定位流水线：输入查询图像，先通过 VPR
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、完整消融、效率对比、可视化分析都很充分
 - 写作质量: ⭐⭐⭐⭐ 条理清晰，图表信息丰富
 - 价值: ⭐⭐⭐⭐ 实用性强，在效率和精度上都有明确提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
+- [Scaling View Synthesis Transformers (SVSM)](scaling_view_synthesis_transformers.md)
+- [DropAnSH-GS: Dropping Anchor and Spherical Harmonics for Sparse-view Gaussian Splatting](dropping_anchor_and_spherical_harmonics_for_sparse-view_gaussian_splatting.md)
+- [GeodesicNVS: Probability Density Geodesic Flow Matching for Novel View Synthesis](geodesicnvs_flow_matching_novel_view_synthesis.md)
+- [Cross-Instance Gaussian Splatting Registration via Geometry-Aware Feature-Guided Alignment](cross-instance_gaussian_splatting_registration_via_geometry-aware_feature-guided.md)
+
+<!-- RELATED:END -->

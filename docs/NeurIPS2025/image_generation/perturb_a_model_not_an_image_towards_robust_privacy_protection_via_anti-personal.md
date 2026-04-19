@@ -153,3 +153,15 @@ APDM的DINO仅为0.1167（vs 最优基线0.4411），即使所有输入图像均
 - **实验充分度**: ⭐⭐⭐⭐ 多种主体、多种场景对比充分，消融完整，但缺少更多模型的验证
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机→理论分析→方法→实验的故事线非常流畅
 - **价值**: ⭐⭐⭐⭐⭐ 解决了隐私保护中的核心实际痛点，对服务提供商合规有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Anti-Tamper Protection for Unauthorized Individual Image Generation](../../ICCV2025/image_generation/anti-tamper_protection_for_unauthorized_individual_image_generation.md)
+- [ObCLIP: Oblivious Cloud-Device Hybrid Image Generation with Privacy Preservation](obclip_oblivious_cloud-device_hybrid_image_generation_with_privacy_preservation.md)
+- [Where and How to Perturb: On the Design of Perturbation Guidance in Diffusion and Flow Models](where_and_how_to_perturb_on_the_design_of_perturbation_guidance_in_diffusion_and.md)
+- [Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation](vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)
+- [Nearly Zero-Cost Protection Against Mimicry by Personalized Diffusion Models](../../CVPR2025/image_generation/nearly_zero-cost_protection_against_mimicry_by_personalized_diffusion_models.md)
+
+<!-- RELATED:END -->

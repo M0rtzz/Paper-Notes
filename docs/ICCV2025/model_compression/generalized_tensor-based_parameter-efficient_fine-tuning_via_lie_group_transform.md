@@ -145,3 +145,15 @@ Taylor 近似影响（ConvNeXt-V2-B, r=16）：
 - **实验充分度**: ⭐⭐⭐⭐ CV/NLP 多任务多模型验证充分，消融全面
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，但符号较多需要一定背景
 - **实用价值**: ⭐⭐⭐⭐⭐ 即插即用，一行代码改动即可使用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [TR-PTS: Task-Relevant Parameter and Token Selection for Efficient Tuning](tr-pts_task-relevant_parameter_and_token_selection_for_efficient_tuning.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+- [L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on Large Language Models](../../ACL2025/model_compression/l4q_parameter_efficient_quantization_aware_finetuning.md)
+- [Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models](../../ACL2025/model_compression/trans_peft_transferable.md)
+
+<!-- RELATED:END -->

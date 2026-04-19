@@ -183,3 +183,15 @@ RAG在LooGLE v2上普遍导致性能下降。Llama-3.1-8B在top-128 RAG下从26.
 - 写作质量: ⭐⭐⭐⭐ (任务设计清晰,实验结果直观,不足分析坦诚)
 - 实际价值: ⭐⭐⭐⭐ (与真实应用(法律AI、财报分析、代码理解)直接相关,推进模型评估科学性)
 - 总体: ⭐⭐⭐⭐ (19分/20)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
+- [PHATNet: A Physics-guided Haze Transfer Network for Domain-adaptive Real-world Image Dehazing](../../ICCV2025/llm_efficiency/phatnet_a_physics-guided_haze_transfer_network_for_domain-adaptive_real-world_im.md)
+- [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](long-context_modeling_with_dynamic_hierarchical_sparse_attention_for_on-device_l.md)
+- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [Silent Tokens, Loud Effects: Padding in LLMs](silent_tokens_loud_effects_padding_in_llms.md)
+
+<!-- RELATED:END -->

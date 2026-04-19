@@ -125,3 +125,15 @@ GMug 的输出虽然具有均匀光照和完整覆盖，但分辨率受限于 St
 - 实验充分度: ⭐⭐⭐⭐ — 消融实验完整，但缺少用户研究和定量比较基线较少
 - 写作质量: ⭐⭐⭐⭐ — 思路清晰，动机表达充分
 - 价值: ⭐⭐⭐⭐ — 对消费级头像生成有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging Generalization Gap of Heterogeneous Federated Clients Using Generative Models](../../ICLR2026/image_generation/bridging_generalization_gap_of_heterogeneous_federated_clients_using_generative_.md)
+- [RodinHD: High-Fidelity 3D Avatar Generation with Diffusion Models](rodinhd_high-fidelity_3d_avatar_generation_with_diffusion_models.md)
+- [Bridging the Skeleton-Text Modality Gap: Diffusion-Powered Modality Alignment for Zero-shot Skeleton-based Action Recognition](../../ICCV2025/image_generation/bridging_the_skeleton-text_modality_gap_diffusion-powered_modality_alignment_for.md)
+- [HOI-IDiff: An Image-like Diffusion Method for Human-Object Interaction Detection](../../CVPR2025/image_generation/an_image-like_diffusion_method_for_human-object_interaction_detection.md)
+- [Image Referenced Sketch Colorization Based on Animation Creation Workflow](../../CVPR2025/image_generation/image_referenced_sketch_colorization_based_on_animation_creation_workflow.md)
+
+<!-- RELATED:END -->

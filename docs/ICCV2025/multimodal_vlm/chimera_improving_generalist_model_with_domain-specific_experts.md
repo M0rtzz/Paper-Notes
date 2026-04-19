@@ -179,3 +179,15 @@ Chimera 由以下组件构成：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖推理和提取两大场景，2B/4B/8B三个规模，多个基准（MathVista/MathVerse/ChartQA-SE/Table-SE/Doc-SE），领域级分析细致
 - **写作质量**: ⭐⭐⭐⭐ — 框架图清晰，渐进式方法描述合理，训练策略有层次
 - **价值**: ⭐⭐⭐⭐⭐ — 为 LMM 快速获取领域能力提供了低成本、高效的框架方案，使用公开数据和模型即可复现，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
+- [Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
+- [CompCap: Improving Multimodal Large Language Models with Composite Captions](compcap_improving_multimodal_large_language_models_with_composite_captions.md)
+- [Effective Training Data Synthesis for Improving MLLM Chart Understanding](effective_training_data_synthesis_for_improving_mllm_chart_understanding.md)
+- [CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance](coa-vla_improving_vision-language-action_models_via_visual-text_chain-of-afforda.md)
+
+<!-- RELATED:END -->

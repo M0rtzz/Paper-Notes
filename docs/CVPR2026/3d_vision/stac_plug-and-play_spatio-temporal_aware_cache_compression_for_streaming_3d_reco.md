@@ -121,3 +121,15 @@ STAC将STream3R的内存从19.75GB降至2.20GB（运行时仅0.86GB），FPS从2
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多基线、详细消融、内存/速度/质量全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析深入，图表清晰，从观察到设计的逻辑链完整
 - 价值: ⭐⭐⭐⭐ 实际应用价值高（10倍内存缩减+4倍加速），免训练特性使其易于集成
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+- [LongStream: Long-Sequence Streaming Autoregressive Visual Geometry](longstream_long-sequence_streaming_autoregressive_visual_geometry.md)
+- [Protecting NeRFs' Copyright via Plug-And-Play Watermarking Base Model](../../ECCV2024/3d_vision/protecting_nerfsapos_copyright_via_plug-and-play_watermarking_base_model.md)
+- [Human Interaction-Aware 3D Reconstruction from a Single Image](human_interaction-aware_3d_reconstruction_from_a_single_image.md)
+- [ActionMesh: Animated 3D Mesh Generation with Temporal 3D Diffusion](actionmesh_animated_3d_mesh_generation_with_temporal_3d_diffusion.md)
+
+<!-- RELATED:END -->

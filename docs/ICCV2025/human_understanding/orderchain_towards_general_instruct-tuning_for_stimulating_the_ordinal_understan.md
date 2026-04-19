@@ -128,3 +128,15 @@ $$N_i = \frac{N_{init}}{k^i} + 1$$
 - **技术深度**: ⭐⭐⭐ — 提示工程为主，无模型结构创新
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 4 个不同领域数据集，消融全面
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，示例丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](../../ICLR2026/human_understanding/uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
+- [OpenAnimals: Revisiting Person Re-Identification for Animals Towards Better Generalization](openanimals_revisiting_person_re-identification_for_animals_towards_better_gener.md)
+- [WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction](wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction.md)
+- [Sequential Keypoint Density Estimator: An Overlooked Baseline of Skeleton-Based Video Anomaly Detection](sequential_keypoint_density_estimator_an_overlooked_baseline_of_skeleton-based_v.md)
+- [SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)
+
+<!-- RELATED:END -->

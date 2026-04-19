@@ -163,3 +163,15 @@ THUNDER 本身不训练模型，评估使用：
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 23模型×16数据集，极其全面
 - **实际影响**: ⭐⭐⭐⭐⭐ — 对病理AI社区有重要参考价值
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，便于查阅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedXpertQA: Benchmarking Expert-Level Medical Reasoning and Understanding](../../ICML2025/medical_imaging/medxpertqa_benchmarking_expert-level_medical_reasoning_and_understanding.md)
+- [FGBench: A Dataset and Benchmark for Molecular Property Reasoning at Functional Group-Level in Large Language Models](fgbench_a_dataset_and_benchmark_for_molecular_property_reasoning_at_functional_g.md)
+- [OphNet: A Large-Scale Video Benchmark for Ophthalmic Surgical Workflow Understanding](../../ECCV2024/medical_imaging/ophnet_a_large-scale_video_benchmark_for_ophthalmic_surgical_workflow_understand.md)
+- [CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays](cxreasonbench_a_benchmark_for_evaluating_structured_diagnostic_reasoning_in_ches.md)
+- [HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?](../../ICCV2025/medical_imaging/hrscene_how_far_are_vlms_from_effective_high-resolution_image_understanding.md)
+
+<!-- RELATED:END -->

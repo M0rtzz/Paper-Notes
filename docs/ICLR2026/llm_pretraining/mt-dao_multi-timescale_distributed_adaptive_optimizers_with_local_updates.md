@@ -155,3 +155,15 @@ Worker 对齐度（余弦相似度）：
 - **实验充分度**: ⭐⭐⭐⭐ — 16M/125M/720M 三个规模系统评估，余弦相似度和互信息的可视化有力支撑了理论分析；但缺少更大规模验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 从问题诊断→理论分析→算法设计→实验验证的叙述逻辑极为流畅，图表设计精良
 - **价值**: ⭐⭐⭐⭐ — 对于通信受限的分布式训练场景有直接的实用价值，特别适用于跨数据中心和边缘计算场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stochastic Self-Organization in Multi-Agent Systems](stochastic_self-organization_in_multi-agent_systems.md)
+- [CHAMMI-75: Pre-training multi-channel models with heterogeneous microscopy images](chammi-75_pre-training_multi-channel_models_with_heterogeneous_microscopy_images.md)
+- [Gemstones: A Model Suite for Multi-Faceted Scaling Laws](../../NeurIPS2025/llm_pretraining/gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](../../ACL2025/llm_pretraining/pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [Synthesizing Post-Training Data for LLMs through Multi-Agent Simulation](../../ACL2025/llm_pretraining/synthesizing_post-training_data_for_llms_through_multi-agent_simulation.md)
+
+<!-- RELATED:END -->

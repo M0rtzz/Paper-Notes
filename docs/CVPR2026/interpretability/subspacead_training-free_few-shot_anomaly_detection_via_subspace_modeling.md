@@ -126,3 +126,15 @@ SubspaceAD 只有两个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ MVTec-AD+VisA 全面覆盖，0/1/2/4-shot 全测，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑清晰，反复强调"为什么简单方法work"
 - 价值: ⭐⭐⭐⭐⭐ 工业界可直接部署的方案，审稿即可被论文的简洁性打动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](../../NeurIPS2025/interpretability/vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [Cut to the Chase: Training-free Multimodal Summarization via Chain-of-Events](cut_to_the_chase_training-free_multimodal_summarization_via_chain-of-events.md)
+- [From Weights to Concepts: Data-Free Interpretability of CLIP via Singular Vector Decomposition](from_weights_to_concepts_data-free_interpretability_of_clip_via_singular_vector_.md)
+- [Induce, Align, Predict: Zero-Shot Stance Detection via Cognitive Inductive Reasoning](../../AAAI2026/interpretability/induce_align_predict_zero-shot_stance_detection_via_cognitive_inductive_reasonin.md)
+- [DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification](dino-qpm_adapting_visual_foundation_models_for_globally_interpretable_image_clas.md)
+
+<!-- RELATED:END -->

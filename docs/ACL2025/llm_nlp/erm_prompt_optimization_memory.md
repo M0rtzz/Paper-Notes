@@ -111,3 +111,15 @@ ERM（Exemplar-Guided Reflection with Memory）包含三个核心组件：输入
 - 实验充分度: ⭐⭐⭐⭐ 7个数据集、充分的消融实验和效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示说明到位
 - 价值: ⭐⭐⭐⭐ 实用性强，prompt 优化效率提升明显
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RiOT: Efficient Prompt Refinement with Residual Optimization Tree](riot_efficient_prompt_refinement_with_residual_optimization_tree.md)
+- [Efficient Universal Goal Hijacking with Semantics-guided Prompt Organization](goal_hijacking_attack.md)
+- [OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
+- [A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)
+- [GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization](gapo_preferential_prompt.md)
+
+<!-- RELATED:END -->

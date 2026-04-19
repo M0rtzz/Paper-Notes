@@ -157,3 +157,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (三个任务覆盖全面，含医学分析和统计检验)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，论证逻辑完整)
 - 价值: ⭐⭐⭐⭐ (对医学AI公平性的实践推动有现实意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Bias in Generative Data Augmentation for Medical AI: a Frequency Recalibration Approach](../../AAAI2026/medical_imaging/rethinking_bias_in_generative_data_augmentation_for_medical_ai_a_frequency_recal.md)
+- [The Boundaries of Fair AI in Medical Image Prognosis: A Causal Perspective](../../NeurIPS2025/medical_imaging/the_boundaries_of_fair_ai_in_medical_image_prognosis_a_causal_perspective.md)
+- [Aligning AI Research with the Needs of Clinical Coding Workflows: Eight Recommendations Based on US Data Analysis and Critical Review](clinical_coding_eight_recommendations.md)
+- [UKBOB: One Billion MRI Labeled Masks for Generalizable 3D Medical Image Segmentation](../../ICCV2025/medical_imaging/ukbob_one_billion_mri_labeled_masks_for_generalizable_3d_medical_image_segmentat.md)
+- [One Small Step with Fingerprints, One Giant Leap for De Novo Molecule Generation from Mass Spectra](../../NeurIPS2025/medical_imaging/one_small_step_with_fingerprints_one_giant_leap_for_de_novo_molecule_generation_.md)
+
+<!-- RELATED:END -->

@@ -162,3 +162,15 @@ $$\mathcal{L} = -\sum_{t=1}^{T_c+T_e} \log P(x_t|x_{<t}, q; \theta) - \gamma \su
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、域内/域外评估、详细消融、多规模/多骨干分析、效率评估
 - 写作质量: ⭐⭐⭐⭐ 技术细节充实，公式化清晰，但部分内容较密集
 - 价值: ⭐⭐⭐⭐⭐ 提出了RAG的新范式，在性能和效率上均有显著优势，对未来RAG系统设计有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Knowledge Integration for Evidence-Driven Counter-Argument Generation with Large Language Models](dynamic_knowledge_integration_for_evidence-driven_counter-argument_generation_wi.md)
+- [HFT: Half Fine-Tuning for Large Language Models](hft_half_fine-tuning_for_large_language_models.md)
+- [Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models](salience_sparse_fine_tuning.md)
+- [Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
+- [PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models](plugin_finetuning_bridge.md)
+
+<!-- RELATED:END -->

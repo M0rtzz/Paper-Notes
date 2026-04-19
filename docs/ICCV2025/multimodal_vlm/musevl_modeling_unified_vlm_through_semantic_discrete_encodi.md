@@ -125,3 +125,15 @@ Tokenizer对比（同LLM Yi-1.5-9B，同数据）:
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个理解benchmark + 2个生成benchmark，tokenizer对比，消融，缩放实验全面
 - 写作质量: ⭐⭐⭐⭐ 清晰，问题定义准确
 - 价值: ⭐⭐⭐⭐⭐ 为统一VLM提供了一条简洁高效的路径，SDE tokenizer可作为通用组件复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](metamorph_multimodal_understanding_and_generation_via_instru.md)
+- [Background Invariance Testing According to Semantic Proximity](background_invariance_testing_according_to_semantic_proximity.md)
+- [Unified Multimodal Understanding via Byte-Pair Visual Encoding](unified_multimodal_understanding_via_byte-pair_visual_encoding.md)
+- [Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
+- [Harmonizing Visual Representations for Unified Multimodal Understanding and Generation](harmonizing_visual_representations_for_unified_multimodal_un.md)
+
+<!-- RELATED:END -->

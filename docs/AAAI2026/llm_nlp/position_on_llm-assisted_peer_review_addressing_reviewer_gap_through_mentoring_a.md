@@ -122,3 +122,15 @@ tags:
 - 与近期相关工作的结合（如与 RL/MCTS/多模态方法的交叉）有潜在研究价值
 - 建议结合实际应用需求评估该方法的部署可行性和计算效率
 - 数据集和评估指标的选择可能影响结论的普适性，需在更多 benchmark 上交叉验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AIMSCheck: Leveraging LLMs for AI-Assisted Review of Modern Slavery Statements Across Jurisdictions](../../ACL2025/llm_nlp/aimscheck_modern_slavery.md)
+- [Scaling Equitable Reflection Assessment in Education via Large Language Models and Role-Based Feedback Agents](scaling_equitable_reflection_assessment_in_education_via_large_language_models_a.md)
+- [Computation Mechanism Behind LLM Position Generalization](../../ACL2025/llm_nlp/computation_mechanism_behind_llm_position_generalization.md)
+- [STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model](stem_efficient_relative_capability_evaluation_of_llms_through_structured_transit.md)
+- [KVComm: Enabling Efficient LLM Communication through Selective KV Sharing](../../ICLR2026/llm_nlp/kvcomm_enabling_efficient_llm_communication_through_selective_kv_sharing.md)
+
+<!-- RELATED:END -->

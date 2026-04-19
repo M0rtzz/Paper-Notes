@@ -10,19 +10,19 @@ description: >-
 
 **🧪 ICML2025** · **16** 篇论文解读
 
-**[Causal Abstraction Inference Under Lossy Representations](causal_abstraction_inference_under_lossy_representations.md)**
+**[Causal Abstraction Inference under Lossy Representations](causal_abstraction_inference_under_lossy_representations.md)**
 
 :   提出 **投影抽象（Projected Abstraction）** 框架，突破现有因果抽象理论对"抽象不变性条件（AIC）"的依赖，使得在有损/降维表示下仍能进行数学一致的因果推断，并给出图模型层面的可识别性判据。
 
-**[Causal Discovery Of Latent Variables In Galactic Archaeology](causal_discovery_of_latent_variables_in_galactic_archaeology.md)**
+**[Causal Discovery of Latent Variables in Galactic Archaeology](causal_discovery_of_latent_variables_in_galactic_archaeology.md)**
 
 :   利用基于秩的潜变量因果发现算法（RLCD），仅从五个可观测恒星属性中，以纯数据驱动的方式自动恢复出两个物理上有意义的潜变量——出生半径和引导半径，验证了因果发现方法在天体物理学中发现隐藏物理量的潜力。
 
-**[Causal Effect Identification In Lvlingam From Higher-Order Cumulants](causal_effect_identification_in_lvlingam_from_higher-order_cumulants.md)**
+**[Causal Effect Identification in lvLiNGAM from Higher-Order Cumulants](causal_effect_identification_in_lvlingam_from_higher-order_cumulants.md)**
 
 :   在存在潜在混淆的线性非高斯无环模型（lvLiNGAM）中，利用高阶累积量（而非仅协方差矩阵）识别因果效应，解决了两个挑战性设置：(1) 单个可能影响处理的代理变量; (2) 工具变量数少于处理变量数的欠定工具变量问题。两种情况下均证明了可识别性并提供了一致估计方法。
 
-**[Causal Evidence For The Primordiality Of Colors In Trans-Neptunian Objects](causal_evidence_for_the_primordiality_of_colors_in_trans-neptunian_objects.md)**
+**[Causal Evidence for the Primordiality of Colors in Trans-Neptunian Objects](causal_evidence_for_the_primordiality_of_colors_in_trans-neptunian_objects.md)**
 
 :   利用模型无关的因果发现方法（FCI算法），以 98.7% 的置信度证明海王星外天体（TNO）的颜色是其轨道倾角分布的根本原因，从而强有力地支持了 TNO 颜色的"原生性"假说——即颜色反映的是形成位置而非后期碰撞演化的结果。
 
@@ -30,43 +30,43 @@ description: >-
 
 :   提出利用 Wasserstein 重心将原始样本与反事实样本融合为类别原型，从而在有限查询预算下高保真地重建目标二分类器，有效缓解了朴素使用反事实样本导致的决策边界偏移问题。
 
-**[E-Lda Toward Interpretable Lda Topic Models With Strong Guarantees In Logarithmi](e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)**
+**[E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)**
 
 :   提出 E-LDA（Exemplar-LDA），通过将 LDA 的 MAP 主题-词分配问题重新形式化为单调子模函数最大化问题，首次获得了具有 $1-1/e$ 近似保证的实用算法，并且在对数并行时间内收敛，同时保证每个学到的主题都具有基于关键词的形式化可解释性。
 
-**[Estimating Causal Effects In Gaussian Linear Scms With Finite Data](estimating_causal_effects_in_gaussian_linear_scms_with_finite_data.md)**
+**[Estimating Causal Effects in Gaussian Linear SCMs with Finite Data](estimating_causal_effects_in_gaussian_linear_scms_with_finite_data.md)**
 
 :   提出 Centralized Gaussian Linear SCM (CGL-SCM)，通过将外生变量标准化为 $\mathcal{N}(0,1)$ 大幅减少参数量，并设计基于 EM 的估计算法，在有限观测数据下准确恢复可识别的因果效应。
 
-**[Exogenous Isomorphism For Counterfactual Identifiability](exogenous_isomorphism_for_counterfactual_identifiability.md)**
+**[Exogenous Isomorphism for Counterfactual Identifiability](exogenous_isomorphism_for_counterfactual_identifiability.md)**
 
 :   提出**外生同构（Exogenous Isomorphism, EI）**概念，证明 $\sim_{\mathrm{EI}}$-identifiability 蕴含 $\sim_{\mathcal{L}_3}$-identifiability（完整反事实层可辨识性），并在双射SCM和三角单调SCM两类特殊模型上给出实现EI的充分条件，统一并推广了已有反事实可辨识性理论。
 
-**[Isolated Causal Effects Of Natural Language](isolated_causal_effects_of_natural_language.md)**
+**[Isolated Causal Effects of Natural Language](isolated_causal_effects_of_natural_language.md)**
 
 :   提出"孤立因果效应"（Isolated Causal Effect）的形式化估计框架，通过双重稳健估计器和遗漏变量偏差（OVB）敏感性分析，将焦点语言属性的因果效应从相关的非焦点语言中隔离出来。
 
-**[Latent Variable Causal Discovery Under Selection Bias](latent_variable_causal_discovery_under_selection_bias.md)**
+**[Latent Variable Causal Discovery under Selection Bias](latent_variable_causal_discovery_under_selection_bias.md)**
 
 :   首次将秩约束推广到选择偏差场景，证明在线性选择机制下有偏协方差矩阵的秩仍保留因果结构和选择机制的信息，提出广义 t-separation 图准则，并在单因子模型上证明了可识别性，在合成和真实数据（World Value Survey、Big Five 人格）上验证了有效性。
 
-**[Learning Time-Aware Causal Representation For Model Generalization In Evolving D](learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)**
+**[Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains](learning_time-aware_causal_representation_for_model_generalization_in_evolving_d.md)**
 
 :   提出时间感知结构因果模型 (time-aware SCM) 和 SYNC 方法，通过同时学习静态与动态因果表示并建模因果机制漂移，在演化域泛化 (EDG) 任务中有效消除虚假相关，实现优越的时序泛化性能。
 
-**[Mpf Aligning And Debiasing Language Models Post Deployment Via Multi Perspective](mpf_aligning_and_debiasing_language_models_post_deployment_via_multi_perspective.md)**
+**[MPF: Aligning and Debiasing Language Models post Deployment via Multi Perspective Fusion](mpf_aligning_and_debiasing_language_models_post_deployment_via_multi_perspective.md)**
 
 :   提出 Multiperspective Fusion (MPF)，一种无需微调的后部署对齐框架，通过将基线情感分布分解为可解释的视角成分，引导 LLM 生成与人类基线对齐的响应，有效缓解模型偏见。
 
-**[Position Causal Machine Learning Requires Rigorous Synthetic Experiments For Bro](position_causal_machine_learning_requires_rigorous_synthetic_experiments_for_bro.md)**
+**[Position: Causal Machine Learning Requires Rigorous Synthetic Experiments for Broader Adoption](position_causal_machine_learning_requires_rigorous_synthetic_experiments_for_bro.md)**
 
 :   本文是一篇 Position Paper，主张合成实验对因果机器学习 (Causal ML) 方法的严格评估**不可或缺**，但当前的合成实验设计存在偏差和复杂度不足，需要遵循一套原则来提高实验质量，从而推动 Causal ML 的广泛采用。
 
-**[Rate Causal Explainability Of Reward Models With Imperfect Counterfactuals](rate_causal_explainability_of_reward_models_with_imperfect_counterfactuals.md)**
+**[RATE: Causal Explainability of Reward Models with Imperfect Counterfactuals](rate_causal_explainability_of_reward_models_with_imperfect_counterfactuals.md)**
 
 :   提出 RATE（Rewrite-based Attribute Treatment Estimator），通过"双重重写"策略消除 LLM 不完美反事实重写引入的偏差，从而正确估计高层属性对奖励模型评分的因果效应。
 
-**[Re-Imagine Symbolic Benchmark Synthesis For Reasoning Evaluation](re-imagine_symbolic_benchmark_synthesis_for_reasoning_evaluation.md)**
+**[RE-IMAGINE: Symbolic Benchmark Synthesis for Reasoning Evaluation](re-imagine_symbolic_benchmark_synthesis_for_reasoning_evaluation.md)**
 
 :   受 Pearl 因果阶梯启发，提出 RE-IMAGINE 框架，通过将问题转化为中间符号表示（代码）并在计算图上执行多层级变异，生成不可通过记忆化解决的基准变体，系统评估 LLM 的真实推理能力。
 

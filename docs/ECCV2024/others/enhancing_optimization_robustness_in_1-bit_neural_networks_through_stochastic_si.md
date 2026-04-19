@@ -124,3 +124,15 @@ Diode不需要修改任务的损失函数——它是一个通用的优化器，
 - 实验充分度: ⭐⭐⭐⭐ 覆盖视觉和NLP任务，多个架构，有详细消融
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，从问题分析自然导出方法设计
 - 价值: ⭐⭐⭐⭐ 对BNN社区有重要贡献，显著简化训练流程且提升性能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](../../NeurIPS2025/others/learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [DS-ATGO: Dual-Stage Synergistic Learning via Forward Adaptive Threshold and Backward Gradient Optimization for Spiking Neural Networks](../../AAAI2026/others/ds-atgo_dual-stage_synergistic_learning_via_forward_adaptive_threshold_and_backw.md)
+- [Depth-Bounds for Neural Networks via the Braid Arrangement](../../NeurIPS2025/others/depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
+- [Permutation Equivariant Neural Networks for Symmetric Tensors](../../ICML2025/others/permutation_equivariant_neural_networks_for_symmetric_tensors.md)
+- [A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](a_framework_for_efficient_model_evaluation_through_stratific.md)
+
+<!-- RELATED:END -->

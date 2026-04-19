@@ -125,3 +125,15 @@ $$\mathcal{L}_{\text{HGPO}}(\theta) = \mathbb{E}\left[-\log\sigma\left(\beta\lef
 - 实验充分度: ⭐⭐⭐⭐⭐ 开环+闭环+交叉评估+消融+理论验证，覆盖全面
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，理论推导严谨，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ 为自动驾驶安全测试提供了高效且理论可靠的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Composing Driving Worlds through Disentangled Control for Adversarial Scenario Generation](../../CVPR2026/autonomous_driving/composing_driving_worlds_through_disentangled_cont.md)
+- [CompoSIA: Composing Driving Worlds through Disentangled Control for Adversarial Scenario Generation](../../CVPR2026/autonomous_driving/composing_driving_worlds_through_disentangled_control_for_adversarial_scenario_g.md)
+- [Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](../../CVPR2026/autonomous_driving/drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)
+- [TT-Occ: Test-Time 3D Occupancy Prediction](../../CVPR2026/autonomous_driving/test-time_3d_occupancy_prediction.md)
+- [MetaDAT: Generalizable Trajectory Prediction via Meta Pre-training and Data-Adaptive Test-Time Updating](../../CVPR2026/autonomous_driving/metadat_generalizable_trajectory_prediction_via_me.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论论文无实验，但有丰富的具体例子（USAT、图路径、LLM验证器集合等）弥补了直观性
 - 写作质量: ⭐⭐⭐⭐⭐ 定义清晰、定理陈述精确、证明简洁，从弱到强的递进结构读起来非常流畅
 - 价值: ⭐⭐⭐⭐ 为CoT验证器的数据需求提供了基本理论指导，交集封闭性条件和验证-生成等价性有潜在的实践影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Chain-of-Thought for Visual Reasoning](latent_chain-of-thought_for_visual_reasoning.md)
+- [Curriculum Abductive Learning](curriculum_abductive_learning.md)
+- [GPO: Learning from Critical Steps to Improve LLM Reasoning](gpo_learning_from_critical_steps_to_improve_llm_reasoning.md)
+- [Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought](reasoning_by_superposition_a_theoretical_perspective_on_chain_of_continuous_thou.md)
+- [CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)
+
+<!-- RELATED:END -->

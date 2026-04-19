@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 32 个图、5 个领域、3 种评估范式，覆盖面足够广
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但符号较多需要反复对照
 - 价值: ⭐⭐⭐⭐ 为图基础模型提供了理论基础和实用框架，但特征对齐假设限制了通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mixed-Curvature Decision Trees and Random Forests](mixed-curvature_decision_trees_and_random_forests.md)
+- [From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)
+- [Reasoning Meets Representation: Envisioning Neuro-Symbolic Wireless Foundation Models](../../NeurIPS2025/graph_learning/reasoning_meets_representation_envisioning_neuro-symbolic_wireless_foundation_mo.md)
+- [WILTing Trees: Interpreting the Distance Between MPNN Embeddings](wilting_trees_interpreting_the_distance_between_mpnn_embeddings.md)
+- [Graph-constrained Reasoning: Faithful Reasoning on Knowledge Graphs with Large Language Models](graph-constrained_reasoning_faithful_reasoning_on_knowledge_graphs_with_large_la.md)
+
+<!-- RELATED:END -->

@@ -212,3 +212,15 @@ $$\mathcal{L}=\frac{1}{B}\sum_{i=1}^{B}s_i\cdot\mathcal{L}_{\text{infoNCE}}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ （离线多指标+线上1.9亿用户A/B+多规模模型+消融+人工验证）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，但部分段落偏冗长）
 - 价值: ⭐⭐⭐⭐⭐ （实际部署验证，解决真实的工业问题）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization Bounds for Semi-supervised Matrix Completion with Distributional Side Information](generalization_bounds_for_semi-supervised_matrix_completion_with_distributional_.md)
+- [CroPS: Improving Dense Retrieval with Cross-Perspective Positive Samples in Short-Video Search](crops_improving_dense_retrieval_with_cross-perspective_positive_samples_in_short.md)
+- [Length-Adaptive Interest Network for Balancing Long and Short Sequence Modeling in CTR Prediction](length-adaptive_interest_network_for_balancing_long_and_short_sequence_modeling_.md)
+- [FineVQ: Fine-Grained User Generated Content Video Quality Assessment](../../CVPR2025/recommender/finevq_fine-grained_user_generated_content_video_quality_assessment.md)
+- [When Top-ranked Recommendations Fail: Modeling Multi-Granular Negative Feedback for Explainable and Robust Video Recommendation](when_top-ranked_recommendations_fail_modeling_multi-granular_negative_feedback_f.md)
+
+<!-- RELATED:END -->

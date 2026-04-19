@@ -187,3 +187,15 @@ $$\mathcal{L} = -\mathbb{E}_{(X,Y)}[\log P_{\mathcal{M} \circ \mathcal{I}}(Y | f
 | 实用性 | ⭐⭐⭐⭐⭐ | 即插即用，代码开源，实现简单 |
 | 写作质量 | ⭐⭐⭐⭐ | 逻辑清晰，从动机到方法到实验环环相扣 |
 | **综合** | **⭐⭐⭐⭐** | 思路简洁有效，实验扎实，是表示干预领域的有价值改进 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Correlated Errors in Large Language Models](correlated_errors_in_large_language_models.md)
+- [Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention](../../NeurIPS2025/llm_evaluation/generalization_error_analysis_for_selective_state-space_models_through_the_lens_.md)
+- [Sampling Control for Imbalanced Calibration in Semi-Supervised Learning](../../AAAI2026/llm_evaluation/sampling_control_for_imbalanced_calibration_in_semi-supervised_learning.md)
+- [G-Sim: Generative Simulations with Large Language Models and Gradient-Free Calibration](g-sim_generative_simulations_with_large_language_models_and_gradient-free_calibr.md)
+- [Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](../../AAAI2026/llm_evaluation/streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)
+
+<!-- RELATED:END -->

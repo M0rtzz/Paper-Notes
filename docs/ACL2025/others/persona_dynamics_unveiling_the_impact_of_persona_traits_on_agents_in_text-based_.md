@@ -155,3 +155,15 @@ $$\pi(a_t = a_t^i | s_t) = \frac{\exp(Q(s_t, a_t^i))}{\sum_{j=1}^{|A_t|} \exp(Q(
 - **实验充分性**：25 个游戏、16 种人格配置、统计检验和轨迹分析，较为全面（+0.5）
 - **实际影响力**：发现开放性人格有利于探索，为值对齐和人格化 AI 提供了参考（+0.5）
 - **扣分**：未在 LLM 智能体上验证、部分游戏无效、环境较为单一（-1）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unveiling Dual Quality in Product Reviews: An NLP-Based Approach](unveiling_dual_quality_in_product_reviews_an_nlp-based_approach.md)
+- [Evolutionary Prediction Games](../../NeurIPS2025/others/evolutionary_prediction_games.md)
+- [Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](../../NeurIPS2025/others/efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)
+- [Normalization in Attention Dynamics](../../NeurIPS2025/others/normalization_in_attention_dynamics.md)
+- [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+
+<!-- RELATED:END -->

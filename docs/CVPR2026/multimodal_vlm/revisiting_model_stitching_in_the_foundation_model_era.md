@@ -144,3 +144,15 @@ MLP在所有拼接点上一致优于Linear和LoRA，LoRA尽管表达能力更强
 - 实验充分度: ⭐⭐⭐⭐⭐ — 覆盖多VFM、多数据集、多任务、多拼接层、多拼接深度，控制实验设计优秀
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑清晰，问题-分析-方案-验证的叙事流畅，自拼接基线的引入令人信服
 - 价值: ⭐⭐⭐⭐ — VST为多VFM系统效率优化提供了实用方案，但弱源模型的限制和有限的MLLM评估稍减实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AnomalyVFM -- Transforming Vision Foundation Models into Zero-Shot Anomaly Detectors](anomalyvfm_--_transforming_vision_foundation_models_into_zero-shot_anomaly_detec.md)
+- [Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention](tell_model_where_to_look_mitigating_hallucinations_in_mllms_by_vision-guided_att.md)
+- [World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](rehearsevla_simulated_post-training_for_vlas_with_physically-consistent_world_mo.md)
+- [Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](do_vision-language_models_leak_what_they_learn_adaptive_token-weighted_model_inv.md)
+- [Revisiting Multimodal KV Cache Compression: A Frequency-Domain-Guided Outlier-KV-Aware Approach](revisiting_multimodal_kv_cache_compression_a_frequency-domain-guided_outlier-kv-.md)
+
+<!-- RELATED:END -->

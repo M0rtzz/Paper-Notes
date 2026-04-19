@@ -111,3 +111,15 @@ $$\mathcal{L}_\text{avg} = \frac{1}{N+1}\sum_{k=0}^N \mathcal{L}(\hat{\mathbf{y}
 ## 评分
 
 ⭐⭐⭐⭐ — 理论优美，将控制论视角系统化地应用于标准 ResNet，但实验规模限制了实际影响力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Compute-Optimal Quantization-Aware Training](../../ICLR2026/model_compression/compute-optimal_quantization-aware_training.md)
+- [Best Subset Selection: Optimal Pursuit for Feature Selection and Elimination](best_subset_selection_optimal_pursuit_for_feature_selection_and_elimination.md)
+- [Training a Generally Curious Agent (Paprika)](training_a_generally_curious_agent.md)
+- [Rethinking the Stability-Plasticity Trade-off in Continual Learning from an Architectural Perspective](rethinking_the_stability-plasticity_trade-off_in_continual_learning_from_an_arch.md)
+- [BoA: Attention-aware Post-training Quantization without Backpropagation](boa_attention-aware_post-training_quantization_without_backpropagation.md)
+
+<!-- RELATED:END -->

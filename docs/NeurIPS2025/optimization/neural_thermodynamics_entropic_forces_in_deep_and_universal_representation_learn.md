@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 实验以理论验证为主，缺乏大规模模型验证
 - 写作质量: ⭐⭐⭐⭐ 理论叙述严谨，但物理背景要求较高，非统计力学读者需额外努力
 - 价值: ⭐⭐⭐⭐⭐ 为理解深度学习提供了全新的理论框架，首次证明 Platonic 表征假说，具有长远影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
+- [PROFIT: A Specialized Optimizer for Deep Fine Tuning](profit_a_specialized_optimizer_for_deep_fine_tuning.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [Learning to Insert for Constructive Neural Vehicle Routing Solver](learning_to_insert_for_constructive_neural_vehicle_routing_solver.md)
+- [Deep Taxonomic Networks for Unsupervised Hierarchical Prototype Discovery](deep_taxonomic_networks_for_unsupervised_hierarchical_prototype_discovery.md)
+
+<!-- RELATED:END -->

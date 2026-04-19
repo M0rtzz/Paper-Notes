@@ -150,3 +150,15 @@ ERDM 的 NFE 减少 5×，总推理时间反而略快，但内存占用翻倍。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 双基准（流体+天气）、多基线、全面消融、功率谱分析、校准评估
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨，算法描述清晰，图示直观
 - 价值: ⭐⭐⭐⭐⭐ — 为科学动力系统的扩散预测提供了强大通用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Conditionally Whitened Generative Models for Probabilistic Time Series Forecasting](../../ICLR2026/image_generation/conditionally_whitened_generative_models_for_probabilistic_time_series_forecasti.md)
+- [Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models](understanding_representation_dynamics_of_diffusion_models_via_low-dimensional_mo.md)
+- [Cross-fluctuation Phase Transitions Reveal Sampling Dynamics in Diffusion Models](cross-fluctuation_phase_transitions_reveal_sampling_dynamics_in_diffusion_models.md)
+- [Probabilistic Weather Forecasting with Deterministic Guidance-Based Diffusion Model](../../ECCV2024/image_generation/probabilistic_weather_forecasting_with_deterministic_guidance-based_diffusion_mo.md)
+- [SMGDiff: Soccer Motion Generation using Diffusion Probabilistic Models](../../ICCV2025/image_generation/smgdiff_soccer_motion_generation_using_diffusion_probabilistic_models.md)
+
+<!-- RELATED:END -->

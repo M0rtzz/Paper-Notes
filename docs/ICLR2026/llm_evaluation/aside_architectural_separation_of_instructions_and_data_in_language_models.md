@@ -118,3 +118,15 @@ ASIDE 的 utility（AlpacaEval、SEP Utility）与 Vanilla 基本持平。
 - 实验充分度: ⭐⭐⭐⭐ 6 个模型 × 8 个安全基准 + 分离度评估 + 可解释性分析，但未测试 Instruct 模型
 - 写作质量: ⭐⭐⭐⭐⭐ 动机来自计算机安全的经典原则，行文流畅，逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 提供了一条全新的安全增强路径，实用且理论基础扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ConInstruct: Evaluating Large Language Models on Conflict Detection and Resolution in Instructions](../../AAAI2026/llm_evaluation/coninstruct_evaluating_large_language_models_on_conflict_detection_and_resolutio.md)
+- [Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
+- [ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation](../../CVPR2026/llm_evaluation/reflexsplit_single_image_reflection_separation_via_layer_fusion-separation.md)
+- [TabStruct: Measuring Structural Fidelity of Tabular Data](tabstruct_measuring_structural_fidelity_of_tabular_data.md)
+- [Revisiting the Past: Data Unlearning with Model State History](revisiting_the_past_data_unlearning_with_model_state_history.md)
+
+<!-- RELATED:END -->

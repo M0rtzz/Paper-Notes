@@ -73,3 +73,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基线+数据消融+扩展性验证
 - 写作质量: ⭐⭐⭐⭐ 两阶段流程描述清晰
 - 价值: ⭐⭐⭐⭐ 对电商虚拟试穿有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamCache: Finetuning-Free Lightweight Personalized Image Generation via Feature Caching](dreamcache_finetuning-free_lightweight_personalized_image_generation_via_feature.md)
+- [ConceptGuard: Continual Personalized Text-to-Image Generation with Forgetting and Confusion Mitigation](conceptguard_continual_personalized_text-to-image_generation_with_forgetting_and.md)
+- [SceneDesigner: Controllable Multi-Object Image Generation with 9-DoF Pose Manipulation](../../NeurIPS2025/image_generation/scenedesigner_controllable_multi-object_image_generation_with_9-dof_pose_manipul.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [Learning Flow Fields in Attention for Controllable Person Image Generation](learning_flow_fields_in_attention_for_controllable_person_image_generation.md)
+
+<!-- RELATED:END -->

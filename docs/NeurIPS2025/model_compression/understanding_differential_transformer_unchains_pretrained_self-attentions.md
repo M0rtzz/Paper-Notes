@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多角度分析（秩、分布、信息流），但下游改进验证有限
 - 写作质量: ⭐⭐⭐⭐⭐ 分析深入而直觉可达，"unchaining"隐喻恰当
 - 价值: ⭐⭐⭐⭐ 为注意力机制设计提供了理论指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Elastic ViTs from Pretrained Models without Retraining](elastic_vits_from_pretrained_models_without_retraining.md)
+- [Deterministic Continuous Replacement: Fast and Stable Module Replacement in Pretrained Transformers](deterministic_continuous_replacement_fast_and_stable_module_replacement_in_pretr.md)
+- [ReplaceMe: Network Simplification via Depth Pruning and Transformer Block Linearization](replaceme_network_simplification_via_depth_pruning_and_transformer_block_lineari.md)
+- [Spark Transformer: Reactivating Sparsity in FFN and Attention](spark_transformer_reactivating_sparsity_in_ffn_and_attention.md)
+- [Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](specialization_after_generalization_towards_understanding_test-time_training_in_.md)
+
+<!-- RELATED:END -->

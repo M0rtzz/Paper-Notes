@@ -147,3 +147,15 @@ $$\mathrm{KL}_{t \to s}^{(i)} = \frac{1}{|y_i^*|}\sum_{u=1}^{|y_i^*|}\mathrm{KL}
 - **实验充分度**: ⭐⭐⭐⭐ — 多范式(Coconut/CODI)×多backbone(GPT-2/Llama/Qwen)×多任务(GSM8K/CommonsenseQA/StrategyQA)
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构极清晰，"现象→机制→本质"的递进逻辑贯穿全文
 - **实用价值**: ⭐⭐⭐⭐ — 对隐式推理系统设计有重要启发(路由/提交而非堆步数)，但未提出具体改进方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Chain-of-Thought for Visual Reasoning](../../NeurIPS2025/llm_reasoning/latent_chain-of-thought_for_visual_reasoning.md)
+- [Reasoning or Retrieval? A Study of Answer Attribution on Large Reasoning Models](reasoning_or_retrieval_a_study_of_answer_attribution_on_large_reasoning_models.md)
+- [L2V-CoT: Cross-Modal Transfer of Chain-of-Thought Reasoning via Latent Intervention](../../AAAI2026/llm_reasoning/l2v-cot_cross-modal_transfer_of_chain-of-thought_reasoning_v.md)
+- [Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models](dynamics-predictive_sampling_for_active_rl_finetuning_of_large_reasoning_models.md)
+- [Inference-Time Chain-of-Thought Pruning with Latent Informativeness Signals](../../NeurIPS2025/llm_reasoning/inference-time_chain-of-thought_pruning_with_latent_informativeness_signals.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ $$\sum_j \left[ \partial_j(J_{ji}^+) + J_{ji}^+ \partial_j[\log q(\vec{z})] \rig
 - **实验充分度**: ⭐⭐ — 以理论分析为主，仅有验证性数值演示，缺乏真实数据集上的系统实验
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学推导严谨自洽，物理直觉清晰，从PCA特殊情况到一般理论层层递进
 - **价值**: ⭐⭐⭐⭐ — 为降维理论提供了统一的数学基础，对理解非线性降维和扩散模型有深远启发，但实际应用价值有待验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Variational Autoencoder with Normalizing Flow for X-ray Spectral Fitting](variational_autoencoder_with_normalizing_flow_for_x-ray_spectral_fitting.md)
+- [DCA: Graph-Guided Deep Embedding Clustering for Brain Atlases](dca_graph-guided_deep_embedding_clustering_for_brain_atlases.md)
+- [Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement](far_from_the_shallow_brain-predictive_reasoning_embedding_through_residual_disen.md)
+- [H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis](h-ddx_a_hierarchical_evaluation_framework_for_differential_diagnosis.md)
+- [FOXES: A Framework For Operational X-ray Emission Synthesis](foxes_a_framework_for_operational_x-ray_emission_synthesis.md)
+
+<!-- RELATED:END -->

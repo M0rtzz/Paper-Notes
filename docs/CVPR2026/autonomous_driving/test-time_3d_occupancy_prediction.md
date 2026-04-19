@@ -142,3 +142,15 @@ TT-Occ 遵循"提升-跟踪-体素化"三步流水线，提供 LiDAR 版本（TT
 - 实验充分度: ⭐⭐⭐⭐ — 两个数据集、两种模态变体、多VFM组合消融、RayIoU评估，较为全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，Lift-Track-Voxelize框架直观易懂
 - 价值: ⭐⭐⭐⭐⭐ — 指出VFM时代训练占用模型的必要性可能不再，对自动驾驶感知范式有深远影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](m2-occ_resilient_3d_semantic_occupancy_prediction_for_autonomous_driving_with_in.md)
+- [MetaDAT: Generalizable Trajectory Prediction via Meta Pre-training and Data-Adaptive Test-Time Updating](metadat_generalizable_trajectory_prediction_via_meta_pre-training_and_data-adapt.md)
+- [Dr.Occ: Depth- and Region-Guided 3D Occupancy from Surround-View Cameras for Autonomous Driving](drocc_depth-_and_region-guided_3d_occupancy_from_surround-view_cameras_for_auton.md)
+- [ProOOD: Prototype-Guided Out-of-Distribution 3D Occupancy Prediction](proood_prototype-guided_out-of-distribution_3d_occupancy_prediction.md)
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction_for_quadruped_robots.md)
+
+<!-- RELATED:END -->

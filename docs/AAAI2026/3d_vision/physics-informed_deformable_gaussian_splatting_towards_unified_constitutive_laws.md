@@ -122,3 +122,15 @@ PIDG由三个核心模块组成：(1) 正则哈希空间中的动态建模——
 
 <!-- 附注：PIDG数据集包含5个场景(Balls Reaction/Mechanics Cloth/Motion Kuro/Rubber Duck/Dry Ice)，
      每个场景150帧、1600×900分辨率，由Blender物理求解器生成 -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiffWind: Physics-Informed Differentiable Modeling of Wind-Driven Object Dynamics](../../ICLR2026/3d_vision/diffwind_physics-informed_differentiable_modeling_of_wind-driven_object_dynamics.md)
+- [RetimeGS: Continuous-Time Reconstruction of 4D Gaussian Splatting](../../CVPR2026/3d_vision/retimegs_continuous-time_reconstruction_of_4d_gaussian_splatting.md)
+- [Per-Gaussian Embedding-Based Deformation for Deformable 3D Gaussian Splatting](../../ECCV2024/3d_vision/per-gaussian_embedding-based_deformation_for_deformable_3d_gaussian_splatting.md)
+- [Dynamic Black-hole Emission Tomography with Physics-informed Neural Fields](../../CVPR2026/3d_vision/dynamic_black-hole_emission_tomography_with_physics-informed_neural_fields.md)
+- [Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting](../../ICLR2026/3d_vision/augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting.md)
+
+<!-- RELATED:END -->

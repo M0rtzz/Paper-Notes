@@ -132,3 +132,15 @@ DIVA-GRPO 由三个核心模块组成：(1) 基于历史 rollout 的动态难度
 - 实验充分度: ⭐⭐⭐⭐ — 六个基准+详细消融+效率分析+理论证明，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 问题阐述清晰，方法动机层层递进
 - 价值: ⭐⭐⭐⭐ — 解决 GRPO 训练的实际痛点，RRB 组件可即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
+- [Enhancing Multi-Image Understanding through Delimiter Token Scaling](enhancing_multi-image_understanding_through_delimiter_token_scaling.md)
+- [Revisiting the Data Sampling in Multimodal Post-training from a Difficulty-Distinguish View](../../AAAI2026/multimodal_vlm/revisiting_the_data_sampling_in_multimodal_post-training_from_a_difficulty-disti.md)
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](../../NeurIPS2025/multimodal_vlm/srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+- [Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs](through_the_lens_of_contrast_self-improving_visual_reasoning_in_vlms.md)
+
+<!-- RELATED:END -->

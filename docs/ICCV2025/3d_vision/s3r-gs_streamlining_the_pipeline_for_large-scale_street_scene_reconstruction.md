@@ -131,3 +131,15 @@ $$\frac{d\mathbf{z}(t)}{dt} = f(\mathbf{z}(t), t, c)$$
 - **实用性**: ⭐⭐⭐⭐⭐ — 显著加速且提升质量，2D框降低标注门槛
 - **实验完整度**: ⭐⭐⭐⭐ — 三个数据集全面验证，有消融
 - **写作质量**: ⭐⭐⭐⭐ — 问题分析到位，方案简洁有效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction](../../ICLR2026/3d_vision/urbangs_a_scalable_and_efficient_architecture_for_geometrically_accurate_large-s.md)
+- [Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion](disentangling_instance_and_scene_contexts_for_3d_semantic_scene_completion.md)
+- [Discretized Gaussian Representation for Tomographic Reconstruction](discretized_gaussian_representation_for_tomographic_reconstruction.md)
+- [HORT: Monocular Hand-held Objects Reconstruction with Transformers](hort_monocular_hand-held_objects_reconstruction_with_transformers.md)
+- [InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes](instascene_towards_complete_3d_instance_decomposition_and_reconstruction_from_cl.md)
+
+<!-- RELATED:END -->

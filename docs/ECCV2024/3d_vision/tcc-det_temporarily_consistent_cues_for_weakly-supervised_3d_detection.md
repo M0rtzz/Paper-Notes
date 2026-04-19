@@ -116,3 +116,15 @@ TCC-Det的训练分为两个阶段：(1) 伪标签生成阶段：输入是多帧
 - 实验充分度: ⭐⭐⭐⭐ 在KITTI和Waymo两大基准上验证，消融实验完整
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，管线逻辑通顺
 - 价值: ⭐⭐⭐⭐ 实用价值高，零标注训练3D检测器对工业应用意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection](../../CVPR2026/3d_vision/virpro_visual-referred_probabilistic_prompt_learning_for_weakly-supervised_monoc.md)
+- [TC-Stereo: Temporally Consistent Stereo Matching](temporally_consistent_stereo_matching.md)
+- [Interactive 3D Object Detection with Prompts](interactive_3d_object_detection_with_prompts.md)
+- [Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation](../../CVPR2026/3d_vision/rewis3d_reconstruction_improves_weaklysupervised_s.md)
+- [Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
+
+<!-- RELATED:END -->

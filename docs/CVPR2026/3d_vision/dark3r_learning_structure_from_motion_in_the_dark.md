@@ -139,3 +139,15 @@ Dark3R位姿 + Dark3R-NeRF组合在无Oracle条件下取得最优综合表现。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 自建大规模数据集，全面消融，多基线对比，跨相机验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，图表精美，问题动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ — 打开了暗光被动3D感知的新方向，数据集和方法均有长期影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PromptStereo: Zero-Shot Stereo Matching via Structure and Motion Prompts](promptstereo_zero-shot_stereo_matching_via_structure_and_motion_prompts.md)
+- [Dense-SfM: Structure from Motion with Dense Consistent Matching](../../CVPR2025/3d_vision/dense-sfm_structure_from_motion_with_dense_consistent_matching.md)
+- [Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos](learning_explicit_continuous_motion_representation_for_dynamic_gaussian_splattin.md)
+- [AnthroTAP: Learning Point Tracking with Real-World Motion](anthrotap_learning_point_tracking_with_real-world_motion.md)
+- [Light3R-SfM: Towards Feed-forward Structure-from-Motion](../../CVPR2025/3d_vision/light3r-sfm_towards_feed-forward_structure-from-motion.md)
+
+<!-- RELATED:END -->

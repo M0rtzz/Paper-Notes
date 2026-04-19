@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集+真实噪声
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐⭐ 为噪声+长尾的联邦学习提供了实用框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning](../../NeurIPS2025/optimization/fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)
+- [SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning](scope_semantic_coreset_with_orthogonal_projection_embeddings_for_federated_learn.md)
+- [Federated Learning with Domain Shift Eraser](federated_learning_with_domain_shift_eraser.md)
+- [Asymptotically Stable Quaternionic Hopfield Structured Neural Network with Supervised Projection-based Manifold Learning](../../NeurIPS2025/optimization/asymptotically_stable_quaternion-valued_hopfield-structured_neural_network_with_.md)
+- [Oracle-Efficient Combinatorial Semi-Bandits](../../NeurIPS2025/optimization/oracle-efficient_combinatorial_semi-bandits.md)
+
+<!-- RELATED:END -->

@@ -154,3 +154,15 @@ Adam 优化器 + 线性学习率衰减，batch size 1024，每个正样本生成
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 模型 × 4 数据集 + 真实场景 + BERT 扩展
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰
 - 价值: ⭐⭐⭐⭐ 大幅降低多维度 KGE 的训练和部署成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RSCF: Relation-Semantics Consistent Filter for Entity Embedding of Knowledge Graph](rscf_relationsemantics_consistent_filter_for_entity.md)
+- [Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning](beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)
+- [Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)](kg_rag_recommendation.md)
+- [Predicate-Conditional Conformalized Answer Sets for Knowledge Graph Embeddings](predicate-conditional_conformalized_answer_sets_for_knowledge_graph_embeddings.md)
+- [FiDeLiS: Faithful Reasoning in Large Language Model for Knowledge Graph Question Answering](fidelis_faithful_reasoning_in_large_language_model_for_knowledge_graph_question_.md)
+
+<!-- RELATED:END -->

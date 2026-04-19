@@ -104,3 +104,15 @@ SANA-Sprint基于预训练的SANA模型，三步走：(1) 无损数学变换将f
 - 实验充分度: ⭐⭐⭐⭐⭐ 6种方法在1/2/4步全面对比，稳定化技术逐项消融，时间步搜索分析详尽
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨（含完整证明），Figure 1/2极具说服力
 - 价值: ⭐⭐⭐⭐⭐ 消费级GPU实时T2I的里程碑，开源代码+模型，对社区影响巨大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems](flowdps_flow-driven_posterior_sampling_for_inverse_problems.md)
+- [CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
+- [Inference-Time Diffusion Model Distillation](inference-time_diffusion_model_distillation.md)
+- [StreamDiffusion: A Pipeline-level Solution for Real-time Interactive Generation](streamdiffusion_a_pipeline-level_solution_for_real-time_interactive_generation.md)
+- [Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal](compression-aware_one-step_diffusion_model_for_jpeg_artifact_removal.md)
+
+<!-- RELATED:END -->

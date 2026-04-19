@@ -130,3 +130,15 @@ ABIDE 在 COMPAS 数据集上识别出 ChatGPT-4o 对 African-American 群体存
 - **实验充分度** ⭐⭐⭐⭐：合成+训练+LLM 三层实验
 - **写作质量** ⭐⭐⭐⭐⭐：理论推导严谨
 - **价值** ⭐⭐⭐⭐：为 AI 公平性提供透明且有理论保证的偏见检测范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Gender Bias in Emotion Recognition by Large Language Models](gender_bias_in_emotion_recognition_by_large_language_models.md)
+- [ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias](problog4fairness_a_neurosymbolic_approach_to_modeling_and_mitigating_bias.md)
+- [From Single to Societal: Analyzing Persona-Induced Bias in Multi-Agent Interactions](from_single_to_societal_analyzing_persona-induced_bias_in_multi-agent_interactio.md)
+- [Towards Multiple Missing Values-Resistant Unsupervised Graph Anomaly Detection](towards_multiple_missing_values-resistant_unsupervised_graph_anomaly_detection.md)
+- [The Confidence Trap: Gender Bias and Predictive Certainty in LLMs](the_confidence_trap_gender_bias_and_predictive_certainty_in_llms.md)
+
+<!-- RELATED:END -->

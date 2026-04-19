@@ -129,3 +129,15 @@ $$\mathbf{X} = \text{softmax}\left(\mathbf{M} + \frac{\mathbf{Q}\mathbf{K}^T}{\s
 - 技术深度：⭐⭐⭐⭐ — 三个组件设计合理互补
 - 实验充分度：⭐⭐⭐⭐ — 多数据集、多提示类型全面验证
 - 实用价值：⭐⭐⭐⭐ — 边缘细节保持能力强，适合工业应用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GameFactory: Creating New Games with Generative Interactive Videos](gamefactory_creating_new_games_with_generative_interactive_videos.md)
+- [StreamDiffusion: A Pipeline-level Solution for Real-time Interactive Generation](streamdiffusion_a_pipeline-level_solution_for_real-time_interactive_generation.md)
+- [MotionDiff: Training-Free Zero-Shot Interactive Motion Editing via Flow-Assisted Multi-View Diffusion](motiondiff_training-free_zero-shot_interactive_motion_editing_via_flow-assisted_.md)
+- [Lazy Diffusion Transformer for Interactive Image Editing](../../ECCV2024/image_generation/lazy_diffusion_transformer_for_interactive_image_editing.md)
+- [MagicQuill: An Intelligent Interactive Image Editing System](../../CVPR2025/image_generation/magicquill_an_intelligent_interactive_image_editing_system.md)
+
+<!-- RELATED:END -->

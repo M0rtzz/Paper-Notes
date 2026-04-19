@@ -166,3 +166,15 @@ Resizer 的设计使得推理时编码器计算量恒定，高分辨率信息由
 - **实验**: ⭐⭐⭐⭐⭐ — 三任务全面评估，消融详尽（数据源/数据量/模型尺寸/多任务），FLOPs 对比清晰
 - **写作**: ⭐⭐⭐⭐ — 论述清晰，Figure 2/4 的真值对比直观有力
 - **价值**: ⭐⭐⭐⭐ — 对"数据中心AI"范式有直接实证支持，开源数据集和模型增强了可复现性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bootstrap3D: Improving Multi-view Diffusion Model with Synthetic Data](bootstrap3d_improving_multi-view_diffusion_model_with_synthetic_data.md)
+- [Seeing and Seeing Through the Glass: Real and Synthetic Data for Multi-Layer Depth Estimation](seeing_and_seeing_through_the_glass_real_and_synthetic_data_for_multi-layer_dept.md)
+- [Towards Scalable Spatial Intelligence via 2D-to-3D Data Lifting](towards_scalable_spatial_intelligence_via_2d-to-3d_data_lifting.md)
+- [ViT-Split: Unleashing the Power of Vision Foundation Models via Efficient Splitting Heads](vit-split_unleashing_the_power_of_vision_foundation_models_via_efficient_splitti.md)
+- [Adversarial Exploitation of Data Diversity Improves Visual Localization](adversarial_exploitation_of_data_diversity_improves_visual_localization.md)
+
+<!-- RELATED:END -->

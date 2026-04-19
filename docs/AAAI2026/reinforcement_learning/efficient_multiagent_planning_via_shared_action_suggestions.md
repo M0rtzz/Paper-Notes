@@ -305,3 +305,15 @@ MCAS不涉及传统意义上的训练损失，而是通过以下离线-在线流
 - 实验充分度: ⭐⭐⭐⭐ （7个基准问题的多种变体，比较全面，但缺乏大规模实际应用验证）
 - 写作质量: ⭐⭐⭐⭐⭐ （符号定义清晰，算法描述详细，餐厅隐喻贯穿始终）
 - 价值: ⭐⭐⭐⭐ （为可扩展的多智能体规划和人机协作提供了有价值的框架）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Object-Centric Latent Action Learning](object-centric_latent_action_learning.md)
+- [One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](../../ICLR2026/reinforcement_learning/one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
+- [Good-for-MDP State Reduction for Stochastic LTL Planning](good-for-mdp_state_reduction_for_stochastic_ltl_planning.md)
+- [Partial Action Replacement: Tackling Distribution Shift in Offline MARL](partial_action_replacement_tackling_distribution_shift_in_offline_marl.md)
+- [BEAST: Efficient Tokenization of B-Splines Encoded Action Sequences for Imitation Learning](../../NeurIPS2025/reinforcement_learning/beast_efficient_tokenization_of_b-splines_encoded_action_sequences_for_imitation.md)
+
+<!-- RELATED:END -->

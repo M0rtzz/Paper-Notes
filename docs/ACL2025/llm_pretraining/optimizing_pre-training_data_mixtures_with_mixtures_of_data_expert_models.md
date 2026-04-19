@@ -166,3 +166,15 @@ $$p^*_\lambda(y|x) = \sum_{i=1}^{k}\lambda'_i(x)p^*_i(y|x)$$
 - **实验充分性**：⭐⭐⭐⭐ 多尺度、多回归模型、学习曲线分析全面
 - **实用价值**：⭐⭐⭐⭐ 对大规模LLM预训练的数据配方优化有直接指导意义
 - **写作质量**：⭐⭐⭐⭐ 结构清晰，理论部分易读
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](metarater_a_multidimensional_data_selection_method.md)
+- [Improving Continual Pre-training Through Seamless Data Packing](improving_continual_pre-training_through_seamless_data_packing.md)
+- [Data-Constrained Synthesis of Training Data for De-Identification](data-constrained_synthesis_of_training_data_for_de-identification.md)
+- [Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](stealing_training_data_from_large_language_models_in_decentralized_training_thro.md)
+- [Nemotron-CLIMB: CLustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training](../../NeurIPS2025/llm_pretraining/nemotron-climb_clustering-based_iterative_data_mixture_bootstrapping_for_languag.md)
+
+<!-- RELATED:END -->

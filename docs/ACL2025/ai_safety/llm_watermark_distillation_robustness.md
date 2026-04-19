@@ -141,3 +141,15 @@ Teacher: GLM-4-9b-chat, Student: Llama-7b / Llama-3.2-1b。水印方案: KGW (n=
 - 实验充分度: ⭐⭐⭐⭐⭐ 2种模型对 × 2种水印方案 × 3种窗口大小 × 多基准评估，非常完整
 - 写作质量: ⭐⭐⭐⭐⭐ 攻击模型定义清晰，放射性因素分析系统深入
 - 价值: ⭐⭐⭐⭐⭐ 对 LLM 水印保护社区敲响警钟，有很高的实际影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](../../NeurIPS2025/ai_safety/saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
+- [Ensemble Watermarks for Large Language Models](ensemble_watermarks_llm.md)
+- [Efficient Verified Machine Unlearning for Distillation](../../NeurIPS2025/ai_safety/efficient_verified_machine_unlearning_for_distillation.md)
+- [Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)
+- [Estimating Privacy Leakage of Augmented Contextual Knowledge in Language Models](estimating_privacy_leakage_of_augmented_contextual_knowledge_in_language_models.md)
+
+<!-- RELATED:END -->

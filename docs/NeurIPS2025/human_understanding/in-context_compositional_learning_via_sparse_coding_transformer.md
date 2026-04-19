@@ -153,3 +153,15 @@ $$\phi(\mathbf{X}) = \text{ReLU}(\mathbf{W}_{qk}^{(h)} \mathbf{X}), \quad \psi(\
 - 实验充分度: ⭐⭐⭐ — 合成数据集验证充分，但缺乏大规模真实任务验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导和分析清晰
 - 价值: ⭐⭐⭐⭐ — 为理解和改进 Transformer 组合推理提供了新思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer](../../AAAI2026/human_understanding/enhancing_noise_resilience_in_face_clustering_via_sparse_differential_transforme.md)
+- [Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [Scalable In-Context Q-Learning](../../ICLR2026/human_understanding/scalable_in-context_q-learning.md)
+- [SpecAttn: Speculating Sparse Attention](specattn_speculating_sparse_attention.md)
+
+<!-- RELATED:END -->

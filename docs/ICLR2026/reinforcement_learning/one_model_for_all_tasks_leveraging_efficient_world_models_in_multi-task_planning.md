@@ -119,3 +119,15 @@ ScaleZero 基于 UniZero 架构升级：(1) 编码器从 ResNet 换为 ViT；(2)
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个不同模态基准（Atari/DMC/Jericho），系统性架构消融，可塑性指标分析
 - 写作质量: ⭐⭐⭐⭐ 问题诊断→方案设计→实验验证的逻辑链清晰完整
 - 价值: ⭐⭐⭐⭐ 为多任务世界模型提供了实用的架构蓝图，代码开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Estimation of Kernel Surrogate Models for Task Attribution](efficient_estimation_of_kernel_surrogate_models_for_task_attribution.md)
+- [WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [Deep SPI: Safe Policy Improvement via World Models](deep_spi_safe_policy_improvement_via_world_models.md)
+- [Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+- [GraphOmni: A Comprehensive and Extensible Benchmark Framework for Large Language Models on Graph-theoretic Tasks](graphomni_a_comprehensive_and_extensible_benchmark_framework_for_large_language_.md)
+
+<!-- RELATED:END -->

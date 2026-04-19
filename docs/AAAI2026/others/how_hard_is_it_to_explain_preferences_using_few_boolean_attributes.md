@@ -155,3 +155,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作无实验，但复杂性分析覆盖面很全，留下的开放问题清晰
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，动机阐述充分，Table 1 结果概览一目了然，证明思路讲解到位
 - 价值: ⭐⭐⭐⭐ 对偏好建模理论贡献显著，复杂性二分定理优美，但实际应用影响有待后续工作验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How Hard Is It to Rig a Tournament When Few Players Can Beat or Be Beaten by the Favorite?](how_hard_is_it_to_rig_a_tournament_when_few_players_can_beat_or_be_beaten_by_the.md)
+- [Model Counting for Dependency Quantified Boolean Formulas](model_counting_for_dependency_quantified_boolean_formulas.md)
+- [From Decision Trees to Boolean Logic: A Fast and Unified SHAP Algorithm](from_decision_trees_to_boolean_logic_a_fast_and_unified_shap_algorithm.md)
+- [How Wide and How Deep? Mitigating Over-Squashing of GNNs via Channel Capacity Constrained Estimation](how_wide_and_how_deep_mitigating_over-squashing_of_gnns_via_channel_capacity_con.md)
+- [How to Marginalize in Causal Structure Learning?](how_to_marginalize_in_causal_structure_learning.md)
+
+<!-- RELATED:END -->

@@ -169,3 +169,15 @@ straQ\* 的长期价值（累积回报）显著高于基线，验证了 Q-learni
 - **实验充分度** ⭐⭐⭐⭐⭐：域内/域外测试、人类评价、消融、敏感性分析、case study 齐全
 - **实用价值** ⭐⭐⭐⭐：即插即用的轻量规划器思路可迁移至其他需要长期策略规划的对话场景
 - **写作质量** ⭐⭐⭐：论文整体清晰，但符号较多，部分推导可进一步精简
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unintended Harms of Value-Aligned LLMs: Psychological and Empirical Insights](unintended_harms_of_value-aligned_llms_psychological_and_empirical_insights.md)
+- [Generative Psycho-Lexical Approach for Constructing Value Systems in Large Language Models](generative_psycholexical_approach_for_constructing_value.md)
+- [Training Language Model to Critique for Better Refinement](training_language_model_to_critique_for_better_refinement.md)
+- [Circuit Stability Characterizes Language Model Generalization](circuit_stability_characterizes_language_model_generalization.md)
+- [Representation Bending for Large Language Model Safety](repbend_representation_bending_safety.md)
+
+<!-- RELATED:END -->

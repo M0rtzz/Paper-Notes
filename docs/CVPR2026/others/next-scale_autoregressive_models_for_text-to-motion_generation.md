@@ -149,3 +149,15 @@ KIT-ML：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个基准、用户研究、文本复杂度分析、详细消融，全面且有说服力
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰、方法表述流畅、实验分析深入
 - 价值: ⭐⭐⭐⭐ 对运动生成领域贡献大，跨尺度自回归的思路有通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Advancing Sequential Numerical Prediction in Autoregressive Models](../../ACL2025/others/advancing_sequential_numerical_prediction_in_autoregressive_models.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_largescale_multimodal_dataset_for_cad.md)
+- [Cautious Next Token Prediction](../../ACL2025/others/cautious_next_token_prediction.md)
+- [Order Matters: 3D Shape Generation from Sequential VR Sketches](order_matters_3d_shape_generation_from_sequential_vr_sketches.md)
+- [MeshA*: Efficient Path Planning With Motion Primitives](../../AAAI2026/others/mesha_efficient_path_planning_with_motion_primitives.md)
+
+<!-- RELATED:END -->

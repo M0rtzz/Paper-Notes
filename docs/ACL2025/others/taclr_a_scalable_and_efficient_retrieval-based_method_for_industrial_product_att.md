@@ -146,3 +146,15 @@ $$\mathcal{L}_a = -\log \frac{\exp(s(i, v_a^+)/\tau)}{\exp(s(i, v_a^+)/\tau) + \
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 大规模工业数据集+公开数据集+多范式对比+效率分析+消融全面
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，问题定义精确
 - **价值**: ⭐⭐⭐⭐⭐ — 已在真实电商平台部署，工业应用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Value Residual Learning](value_residual_learning.md)
+- [Divide-Then-Aggregate: An Efficient Tool Learning Method via Parallel Tool Invocation](dta_llama_parallel_tool_invocation.md)
+- [GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)
+- [HATA: Trainable and Hardware-Efficient Hash-Aware Top-k Attention for Scalable Large Model Inference](hata_trainable_and_hardware-efficient_hash-aware_top-k_attention_for_scalable_la.md)
+- [HASH-RAG: Bridging Deep Hashing with Retriever for Efficient, Fine Retrieval and Augmented Generation](hash-rag_bridging_deep_hashing_with_retriever_for_efficient_fine_retrieval_and_a.md)
+
+<!-- RELATED:END -->

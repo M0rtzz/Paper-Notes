@@ -169,3 +169,15 @@ ConfRover 生成构象的几何质量和能量水平均接近 MD 参考，远优
 - 实验充分度: ⭐⭐⭐⭐ 三种任务+消融+质量评估全面，但 baseline 数量有限
 - 写作质量: ⭐⭐⭐⭐⭐ 叙事清晰，从观察到方法推导自然，图表设计优秀
 - 综合价值: ⭐⭐⭐⭐ 首个统一蛋白质构象+动力学的生成框架，对计算生物学领域有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aligning Protein Conformation Ensemble Generation with Physical Feedback](../../ICML2025/medical_imaging/aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
+- [Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
+- [Posterior Sampling by Combining Diffusion Models with Annealed Langevin Dynamics](posterior_sampling_by_combining_diffusion_models_with_annealed_langevin_dynamics.md)
+- [Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](../../CVPR2026/medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+
+<!-- RELATED:END -->

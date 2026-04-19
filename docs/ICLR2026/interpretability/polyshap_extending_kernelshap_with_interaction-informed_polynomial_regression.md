@@ -113,3 +113,15 @@ PolySHAP 求解的是带约束的加权最小二乘问题，约束条件为 Shap
 - 实验充分度: ⭐⭐⭐⭐⭐ 15 个博弈覆盖表格/图像/语言，多种基线对比全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，图表直观，叙述流畅
 - 价值: ⭐⭐⭐⭐ 对 XAI 领域的 Shapley 值估计方法有实质推进，配对采样理论解释意义深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Scaling Laws for Symbolic Regression](../../NeurIPS2025/interpretability/towards_scaling_laws_for_symbolic_regression.md)
+- [Are Greedy Task Orderings Better Than Random in Continual Linear Regression?](../../NeurIPS2025/interpretability/are_greedy_task_orderings_better_than_random_in_continual_linear_regression.md)
+- [Ab Initio Nonparametric Variable Selection for Scalable Symbolic Regression with Large p](../../ICML2025/interpretability/ab_initio_nonparametric_variable_selection_for_scalable_symbolic_regression_with.md)
+- [Bias Attribution in Filipino Language Models: Extending a Bias Interpretability Metric for Application on Agglutinative Languages](../../ACL2025/interpretability/bias_attribution_in_filipino_language_models_extending_a_bias_interpretability_m.md)
+- [Provably Explaining Neural Additive Models](provably_explaining_neural_additive_models.md)
+
+<!-- RELATED:END -->

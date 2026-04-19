@@ -113,3 +113,15 @@ ParallelPrompt包含三个组件：(1) **数据筛选管道**：从LMSYS-Chat-1M
 - 实验充分度: ⭐⭐⭐⭐ 37000+查询、多任务类别、质量分析详尽，但模型覆盖有限
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化丰富，但某些部分重复冗长
 - 价值: ⭐⭐⭐⭐⭐ 对LLM serving有直接的工程价值，基准数据集将推动该方向研究
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
+- [Exploring the Translation Mechanism of Large Language Models](exploring_the_translation_mechanism_of_large_language_models.md)
+- [Group then Scale: Dynamic Mixture-of-Experts Multilingual Language Model](../../ACL2025/multilingual_mt/group_then_scale_dynamic_mixture-of-experts_multilingual_language_model.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](../../ACL2025/multilingual_mt/cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](../../ACL2025/multilingual_mt/disentangle_language_culture.md)
+
+<!-- RELATED:END -->

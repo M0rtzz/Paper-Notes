@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集、多种技能、丰富的消融和对比、物理属性鲁棒性测试
 - 写作质量: ⭐⭐⭐⭐ 图示清晰、结构完整，但符号较多需要反复对照
 - 价值: ⭐⭐⭐⭐ 为 HOI 模仿学习提供了一个简洁统一的基线，数据驱动的可扩展性是关键优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Utilities from Demonstrations in Markov Decision Processes](../../ICML2025/reinforcement_learning/learning_utilities_from_demonstrations_in_markov_decision_processes.md)
+- [Learning from Demonstrations via Capability-Aware Goal Sampling](../../NeurIPS2025/reinforcement_learning/learning_from_demonstrations_via_capability-aware_goal_sampling.md)
+- [Leveraging Skills from Unlabeled Prior Data for Efficient Online Exploration](../../ICML2025/reinforcement_learning/leveraging_skills_from_unlabeled_prior_data_for_efficient_online_exploration.md)
+- [ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation](../../AAAI2026/reinforcement_learning/manilong-shot_interaction-aware_one-shot_imitation_learning_for_long-horizon_man.md)
+- [Thinker: Training LLMs in Hierarchical Thinking for Deep Search via Multi-Turn Interaction](../../AAAI2026/reinforcement_learning/thinker_training_llms_in_hierarchical_thinking_for_deep_search_via_multi-turn_in.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 创新的频域分析视角 + 免训练实用性强，但局限于特定 T2V 模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
+- [Improved Video VAE for Latent Video Diffusion Model](improved_video_vae_for_latent_video_diffusion_model.md)
+- [Exploring Temporally-Aware Features for Point Tracking](exploring_temporally-aware_features_for_point_tracking.md)
+- [Target-Aware Video Diffusion Models](../../ICLR2026/video_generation/target-aware_video_diffusion_models.md)
+- [Training-free Motion Factorization for Compositional Video Generation](../../CVPR2026/video_generation/training-free_motion_factorization_for_compositional_video_generation.md)
+
+<!-- RELATED:END -->

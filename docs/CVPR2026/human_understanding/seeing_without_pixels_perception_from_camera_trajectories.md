@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个数据集、10 个任务、多种位姿来源对比、第一/第三人称全覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 以问答形式组织实验节，引人入胜，图表设计精美
 - 价值: ⭐⭐⭐⭐⭐ 为视频理解引入了一种轻量、鲁棒、隐私友好的新模态，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Face Time Traveller: Travel Through Ages Without Losing Identity](face_time_traveller_travel_through_ages_without_losing_identity.md)
+- [AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception](../../ICLR2026/human_understanding/anytouch_2_general_optical_tactile_representation_learning_for_dynamic_tactile_p.md)
+- [ADen: Adaptive Density Representations for Sparse-view Camera Pose Estimation](../../ECCV2024/human_understanding/aden_adaptive_density_representations_for_sparseview_camera.md)
+- [Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](../../ICLR2026/human_understanding/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
+- [Perceive What Matters: Relevance-Driven Scheduling for Multimodal Streaming Perception](../../CVPR2025/human_understanding/perceive_what_matters_relevance-driven_scheduling_for_multimodal_streaming_perce.md)
+
+<!-- RELATED:END -->

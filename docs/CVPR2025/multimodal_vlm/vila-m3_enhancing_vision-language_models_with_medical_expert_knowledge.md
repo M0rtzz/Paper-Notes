@@ -107,3 +107,15 @@ VILA-M3基于VILA架构，采用自回归多模态LLM设计：图像被编码为
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖VQA/报告生成/分类/分割，多尺度模型+多数据集+消融全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ 开源+实际临床价值高，对医学AI社区影响深远
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Understanding How Knowledge Evolves in Large Vision-Language Models](towards_understanding_how_knowledge_evolves_in_large_vision-language_models.md)
+- [ExGra-Med: Extended Context Graph Alignment for Medical Vision-Language Models](../../NeurIPS2025/multimodal_vlm/exgra-med_extended_context_graph_alignment_for_medical_vision-language_models.md)
+- [MIMO: A Medical Vision Language Model with Visual Referring Multimodal Input and Pixel Grounding Multimodal Output](mimo_a_medical_vision_language_model_with_visual_referring_multimodal_input_and_.md)
+- [Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback](../../ACL2025/multimodal_vlm/improving_medical_large_vision-language_models_with_abnormal-aware_feedback.md)
+- [HSCR: Hierarchical Self-Contrastive Rewarding for Aligning Medical Vision Language Models](../../ACL2025/multimodal_vlm/hscr_hierarchical_self-contrastive_rewarding_for_aligning_medical_vision_languag.md)
+
+<!-- RELATED:END -->

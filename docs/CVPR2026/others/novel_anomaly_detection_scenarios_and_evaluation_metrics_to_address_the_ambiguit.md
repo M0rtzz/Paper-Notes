@@ -124,3 +124,15 @@ RePaste 纯粹是训练时数据增强，不修改模型架构和损失函数。
 - 实验充分度: ⭐⭐⭐ 仅在 MVTec AD 一个数据集上评估，对比了较多方法但消融不够深入
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，场景描述详尽，但公式符号略显冗余
 - 价值: ⭐⭐⭐⭐ 提出了一个重要且被忽视的实际问题，对工业异常检测有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Integration of Deep Generative Anomaly Detection Algorithm in High-Speed Industrial Line](integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
+- [AnomalyNCD: Towards Novel Anomaly Class Discovery in Industrial Scenarios](../../CVPR2025/others/anomalyncd_towards_novel_anomaly_class_discovery_in_industrial_scenarios.md)
+- [RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection](../../AAAI2026/others/rcae_recursive_reconstruction_framework_for_unsupervised_industrial_anomaly_dete.md)
+- [ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization](enhancing_outofdistribution_detection_with_extende.md)
+- [Distribution Prototype Diffusion Learning for Open-set Supervised Anomaly Detection](../../CVPR2025/others/distribution_prototype_diffusion_learning_for_open-set_supervised_anomaly_detect.md)
+
+<!-- RELATED:END -->

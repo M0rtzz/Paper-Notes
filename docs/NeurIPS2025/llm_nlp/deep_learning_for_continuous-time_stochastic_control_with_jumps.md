@@ -167,3 +167,15 @@ GPI-PINN vs GPI-CBU：
 - 实验充分度: ⭐⭐⭐⭐ (理论验证充分，有解析解对比，多维度扩展，但实际应用场景有限)
 - 写作质量: ⭐⭐⭐⭐⭐ (数学推导严谨，算法描述清晰，理论与实验结合紧密)
 - 价值: ⭐⭐⭐⭐ (为高维含跳跃随机控制提供了首个实用的深度学习求解方案)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Don't Be Lazy: CompleteP Enables Compute-Efficient Deep Transformers](dont_be_lazy_completep_enables_compute-efficient_deep_transformers.md)
+- [SubSpec: Speculate Deep and Accurate — Lossless and Training-Free Acceleration for Offloaded LLMs](speculate_deep_and_accurate_lossless_and_training-free_acceleration_for_offloade.md)
+- [Wider or Deeper: Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search](wider_or_deeper_scaling_llm_inference-time_compute_with_adaptive_branching_tree_.md)
+- [System Prompt Optimization with Meta-Learning](system_prompt_optimization_with_meta-learning.md)
+- [Test-Time Visual In-Context Tuning](../../CVPR2025/llm_nlp/test-time_visual_in-context_tuning.md)
+
+<!-- RELATED:END -->

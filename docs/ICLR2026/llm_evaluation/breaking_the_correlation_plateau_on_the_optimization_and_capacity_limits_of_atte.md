@@ -127,3 +127,15 @@ $$\mathcal{L}_{\text{Total}} = \mathcal{L}_{\text{MSE}} + \lambda_{\text{PCC}} \
 - 实验充分度: ⭐⭐⭐⭐ (合成+UCI+病理+情感四个维度，消融完整)
 - 写作质量: ⭐⭐⭐⭐⭐ (理论推导清晰，图表精美，故事线流畅)
 - 价值: ⭐⭐⭐⭐ (即插即用模块，理论可迁移)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)
+- [Spectral Attention Steering for Prompt Highlighting](spectral_attention_steering_for_prompt_highlighting.md)
+- [Soft Quality-Diversity Optimization](soft_quality-diversity_optimization.md)
+- [Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
+- [PaTH Attention: Position Encoding via Accumulating Householder Transformations](../../NeurIPS2025/llm_evaluation/path_attention_position_encoding_via_accumulating_householder_transformations.md)
+
+<!-- RELATED:END -->

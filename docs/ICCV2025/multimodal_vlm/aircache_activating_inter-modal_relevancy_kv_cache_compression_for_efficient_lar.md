@@ -236,3 +236,15 @@ Token pruning 在极端压缩比下性能崩溃，AirCache 仍保持良好性能
 - 实验充分度: ⭐⭐⭐⭐⭐ （3个模型架构、多种保留率、丰富消融、延迟/吞吐实测）
 - 写作质量: ⭐⭐⭐⭐⭐ （动机分析清晰，消融设计层层递进）
 - 价值: ⭐⭐⭐⭐ （实用性强，但 prefill 无加速限制了整体价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MadaKV: Adaptive Modality-Perception KV Cache Eviction for Efficient Multimodal Long-Context Inference](../../ACL2025/multimodal_vlm/madakv_adaptive_modality-perception_kv_cache_eviction_for_efficient_multimodal_l.md)
+- [Mixing Importance with Diversity: Joint Optimization for KV Cache Compression in Large Vision-Language Models](../../ICLR2026/multimodal_vlm/mixing_importance_with_diversity_joint_optimization_for_kv_cache_compression_in_.md)
+- [FlashCache: Frequency-Domain-Guided Outlier-KV-Aware Multimodal KV Cache Compression](../../CVPR2026/multimodal_vlm/flashcache_frequency_kv_cache_compression.md)
+- [Revisiting Multimodal KV Cache Compression: A Frequency-Domain-Guided Outlier-KV-Aware Approach](../../CVPR2026/multimodal_vlm/revisiting_multimodal_kv_cache_compression_a_frequency-domain-guided_outlier-kv-.md)
+- [The Inter-Intra Modal Measure: A Predictive Lens on Fine-Tuning Outcomes in Vision-Language Models](the_inter-intra_modal_measure_a_predictive_lens_on_fine-tuning_outcomes_in_visio.md)
+
+<!-- RELATED:END -->

@@ -113,3 +113,15 @@ LycheeDecode 是一个头级稀疏解码框架，包含两个核心组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ 长上下文理解+数学推理+效率测试+消融全面覆盖，模型覆盖Llama3和Qwen3
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图表丰富，动机阐述充分
 - 价值: ⭐⭐⭐⭐ 对长上下文LLM推理加速有实际意义，方法实用且训练开销低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Star Attention: Efficient LLM Inference over Long Sequences](../../ICML2025/llm_efficiency/star_attention_efficient_llm_inference_over_long_sequences.md)
+- [When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework](when_does_divide_and_conquer_work_for_long_context_llm_a_noise_decomposition_fra.md)
+- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
+- [Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference](../../ICML2025/llm_efficiency/ladder-residual_parallelism-aware_architecture_for_accelerating_large_model_infe.md)
+- [DISC: Dynamic Decomposition Improves LLM Inference Scaling](../../NeurIPS2025/llm_efficiency/disc_dynamic_decomposition_improves_llm_inference_scaling.md)
+
+<!-- RELATED:END -->

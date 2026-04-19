@@ -138,3 +138,15 @@ $$\mathcal{L}_{\text{ACD}} = \mathbb{E}_{x^t,q^m} \mathbb{E}_{k \sim \mathcal{K}
 - 实验充分度: ⭐⭐⭐⭐⭐ (两个数据集+多基线+详尽消融+注意力漂移分析)
 - 写作质量: ⭐⭐⭐⭐ (动机阐述清晰，混淆矩阵可视化出色)
 - 价值: ⭐⭐⭐⭐ (隐私保护+性能提升的实际意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Privacy-protected Retrieval-Augmented Generation for Knowledge Graph Question Answering](../../AAAI2026/ai_safety/privacy-protected_retrieval-augmented_generation_for_knowledge_graph_question_an.md)
+- [Private Continual Counting of Unbounded Streams](../../NeurIPS2025/ai_safety/private_continual_counting_of_unbounded_streams.md)
+- [Model Inversion with Layer-Specific Modeling and Alignment for Data-Free Continual Learning](../../NeurIPS2025/ai_safety/model_inversion_with_layer-specific_modeling_and_alignment_for_data-free_continu.md)
+- [FedMeNF: Privacy-Preserving Federated Meta-Learning for Neural Fields](fedmenf_privacy-preserving_federated_meta-learning_for_neural_fields.md)
+- [A Framework for Double-Blind Federated Adaptation of Foundation Models](a_framework_for_double-blind_federated_adaptation_of_foundation_models.md)
+
+<!-- RELATED:END -->

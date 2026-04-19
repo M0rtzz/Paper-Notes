@@ -132,3 +132,15 @@ Search-Align 使用标准的 next-token prediction loss 在对话式推理 trace
 - 实验充分度: ⭐⭐⭐⭐ 6个MLLM + 多维度分析（链长/过检索/模态偏差/错误类型），但模型覆盖可以更广
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，形式化完整，图表丰富，但内容密度大导致部分细节需要多次阅读
 - 价值: ⭐⭐⭐⭐⭐ 为多模态 agentic search 领域提供了急需的评估基础设施和训练方法，Search-Align 的效果也验证了数据的训练价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LiveNewsBench: Evaluating LLM Web Search Capabilities with Freshly Curated News](livenewsbench_evaluating_llm_web_search_capabilities_with_freshly_curated_news.md)
+- [Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding](../../NeurIPS2025/llm_agent/deep_video_discovery_agentic_search_with_tool_use_for_longfo.md)
+- [WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning](tooltree_efficient_llm_agent_tool_planning_via_dual-feedback_monte_carlo_tree_se.md)
+- [Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools](../../ACL2025/llm_agent/agentic_reasoning_tools.md)
+
+<!-- RELATED:END -->

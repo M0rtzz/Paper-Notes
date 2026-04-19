@@ -109,3 +109,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 个递进实验设计精巧，多种基线对比，有定性分析，但样本量偏小
 - 写作质量: ⭐⭐⭐⭐⭐ 论述逻辑清晰，图表设计出色，实验细节充分
 - 价值: ⭐⭐⭐⭐ 对高风险场景的 AI 文本检测策略有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Who Writes What: Unveiling the Impact of Author Roles on AI-generated Text Detection](who_writes_what_ai_detection.md)
+- [BAID: A Benchmark for Bias Assessment of AI Detectors](../../AAAI2026/aigc_detection/baid_a_benchmark_for_bias_assessment_of_ai_detectors.md)
+- [Are We in the AI-Generated Text World Already? Quantifying and Monitoring AIGT on Social Media](aigt_social_media_monitoring.md)
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [DuoLens: A Framework for Robust Detection of Machine-Generated Multilingual Text and Code](../../NeurIPS2025/aigc_detection/duolens_a_framework_for_robust_detection_of_machine-generated_multilingual_text_.md)
+
+<!-- RELATED:END -->

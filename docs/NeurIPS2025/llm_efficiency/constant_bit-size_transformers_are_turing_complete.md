@@ -110,3 +110,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，无实验
 - 写作质量: ⭐⭐⭐⭐⭐ 证明结构清晰，motivation 和 remark 很好地连接了理论和实践意义
 - 价值: ⭐⭐⭐⭐⭐ 对 Transformer 计算理论的里程碑式贡献，直接影响架构设计哲学
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](zeros_zero-sum_linear_attention_for_efficient_transformers.md)
+- [From Shortcut to Induction Head: How Data Diversity Shapes Algorithm Selection in Transformers](from_shortcut_to_induction_head_how_data_diversity_shapes_algorithm_selection_in.md)
+- [Critical Batch Size Revisited: A Simple Empirical Approach to Large-Batch Language Model Training](critical_batch_size_revisited_a_simple_empirical_approach_to_large-batch_languag.md)
+- [Attention Retention for Continual Learning with Vision Transformers](../../AAAI2026/llm_efficiency/attention_retention_for_continual_learning_with_vision_transformers.md)
+- [Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws](../../ICLR2026/llm_efficiency/fast_catch-up_late_switching_optimal_batch_size_scheduling_via_functional_scalin.md)
+
+<!-- RELATED:END -->

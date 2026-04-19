@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个大规模驾驶数据集、公开榜单验证、详细的效率分析和跨域泛化实验
 - 写作质量: ⭐⭐⭐⭐ 图示清晰（特别是三种多帧策略的对比图），方法描述简洁易懂
 - 价值: ⭐⭐⭐⭐⭐ 解决了多帧场景流估计的核心可扩展性问题，开源代码和预训练权重，对自动驾驶社区价值很大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KTAE: A Model-Free Algorithm to Key-Tokens Advantage Estimation in Mathematical Reasoning](ktae_a_model-free_algorithm_to_key-tokens_advantage_estimation_in_mathematical_r.md)
+- [C-LoRA: Contextual Low-Rank Adaptation for Uncertainty Estimation in Large Language Models](c-lora_contextual_low-rank_adaptation_for_uncertainty_estimation_in_large_langua.md)
+- [Position: LLM Social Simulations Are a Promising Research Method](../../ICML2025/model_compression/llm_social_simulations_are_a_promising_research_method.md)
+- [DAGE: Dual-Stream Architecture for Efficient and Fine-Grained Geometry Estimation](../../CVPR2026/model_compression/dage_dual-stream_architecture_for_efficient_and_fine-grained_geometry_estimation.md)
+- [Gaze-LLE: Gaze Target Estimation via Large-Scale Learned Encoders](../../CVPR2025/model_compression/gaze-lle_gaze_target_estimation_via_large-scale_learned_encoders.md)
+
+<!-- RELATED:END -->

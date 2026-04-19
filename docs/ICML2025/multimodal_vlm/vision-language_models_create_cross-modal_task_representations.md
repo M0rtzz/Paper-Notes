@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型多任务验证，有t-SNE可视化和详细消融，但任务复杂度偏低
 - 写作质量: ⭐⭐⭐⭐⭐ 故事线清晰，四个递进的发现（Finding 1-4）组织得很好
 - 价值: ⭐⭐⭐⭐⭐ 对理解VLM内部工作机制有重要贡献，兼具理论洞察和实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment](../../NeurIPS2025/multimodal_vlm/guiding_cross-modal_representations_with_mllm_priors_via_preference_alignment.md)
+- [Cross-modal Information Flow in Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/cross-modal_information_flow_in_multimodal_large_language_models.md)
+- [Core Knowledge Deficits in Multi-Modal Language Models](core_knowledge_deficits_in_multi-modal_language_models.md)
+- [Cross-modal Proxy Evolving for OOD Detection with Vision-Language Models](../../AAAI2026/multimodal_vlm/cross-modal_proxy_evolving_for_ood_detection_with_vision-lan.md)
+- [On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](../../NeurIPS2025/multimodal_vlm/on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
+
+<!-- RELATED:END -->

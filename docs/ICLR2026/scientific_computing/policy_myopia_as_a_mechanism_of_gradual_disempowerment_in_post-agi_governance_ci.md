@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐ 仅有简化的数值模拟，缺乏实证支撑和严格的理论证明
 - 写作质量: ⭐⭐⭐ 论证有力但部分推理跳跃较大，一些段落过于断言式
 - 价值: ⭐⭐⭐ 提出了重要的概念框架，但从研究可操作性角度实际影响有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning-guided Kansa Collocation for Forward and Inverse PDE Problems](learning-guided_kansa_collocation_for_forward_and_inverse_pde_problems.md)
+- [One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
+- [Astral: Training Physics-Informed Neural Networks with Error Majorants](astral_training_physics-informed_neural_networks_with_error_majorants.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [Deep Learning for Subspace Regression](deep_learning_for_subspace_regression.md)
+
+<!-- RELATED:END -->

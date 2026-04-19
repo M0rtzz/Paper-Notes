@@ -137,3 +137,15 @@ $$L(r) = \max_{\mathcal{S}_{\text{draft}}, \mathcal{S}_{\text{target}}} \text{WS
 | 有效性 | ⭐⭐⭐⭐ |
 | 可复现性 | ⭐⭐⭐⭐ |
 | 实用性 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](../../ACL2025/ai_safety/from_tradeoff_to_synergy_a_versatile.md)
+- [Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret](../../ICML2025/ai_safety/connecting_thompson_sampling_and_ucb_towards_more_efficient_trade-offs_between_p.md)
+- [Improved Unbiased Watermark for Large Language Models](../../ACL2025/ai_safety/improved_unbiased_watermark_for_large_language.md)
+- [Watermark-based Detection and Attribution of AI-Generated Content](watermark-based_attribution_of_ai-generated_content.md)
+- [Breaking the Adversarial Robustness-Performance Trade-off in Text Classification via Manifold Purification](../../AAAI2026/ai_safety/breaking_the_adversarial_robustness-performance_trade-off_in_text_classification.md)
+
+<!-- RELATED:END -->

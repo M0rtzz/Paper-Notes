@@ -162,3 +162,15 @@ $$
 - 技术深度：⭐⭐⭐⭐ — 完整的分析-发现-解决链路，预激活值约束设计巧妙
 - 实验充分度：⭐⭐⭐⭐⭐ — 5 个模型 × 3 种语言 × 6 个基准，全面覆盖
 - 实用价值：⭐⭐⭐⭐⭐ — 直接解决多语言 LLM 部署中的痛点问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATLAS: Adaptive Transfer Scaling Laws for Multilingual Pretraining, Finetuning, and Decoding the Curse of Multilinguality](atlas_adaptive_transfer_scaling_laws_for_multilingual_pretraining_finetuning_and.md)
+- [KnowCoder-X: Boosting Multilingual Information Extraction via Code](../../ACL2025/multilingual_mt/knowcoder-x_boosting_multilingual_information_extraction_via_code.md)
+- [CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution](../../ACL2025/multilingual_mt/cruxeval-x_a_benchmark_for_multilingual_code_reasoning_understanding_and_executi.md)
+- [MMTIT-Bench: A Multilingual and Multi-Scenario Benchmark with Cognition-Perception-Reasoning Guided Text-Image Machine Translation](../../CVPR2026/multilingual_mt/mmtit-bench_a_multilingual_and_multi-scenario_benchmark_with_cognition-perceptio.md)
+- [THOR-MoE: Hierarchical Task-Guided and Context-Responsive Routing for Neural Machine Translation](../../ACL2025/multilingual_mt/thor-moe_hierarchical_task-guided_and_context-responsive_routing_for_neural_mach.md)
+
+<!-- RELATED:END -->

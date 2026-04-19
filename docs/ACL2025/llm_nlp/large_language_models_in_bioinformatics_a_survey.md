@@ -126,3 +126,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 综述无自有实验，但模型覆盖面广且包含计算成本量化
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，分类体系合理，Table 1 非常有价值
 - 价值: ⭐⭐⭐⭐ 对于想了解 LLM 在生物信息学应用全貌的读者是很好的入门材料
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+- [Recent Advances in Speech Language Models: A Survey](recent_advances_in_speech_language_models_a_survey.md)
+- [A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)
+- [When Large Language Models Meet Speech: A Survey on Integration Approaches](when_large_language_models_meet_speech_a_survey_on_integration_approaches.md)
+- [Pragmatics in the Era of Large Language Models: A Survey on Datasets, Evaluation, Opportunities and Challenges](pragmatics_survey.md)
+
+<!-- RELATED:END -->

@@ -126,3 +126,15 @@ FID最大降低达12个点。
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖NLU、NLG、视觉分类、图像生成四个领域，消融详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，算法描述规范，消融设计有说服力
 - 价值: ⭐⭐⭐⭐ 提供了即插即用的LoRA改进方案，代码已开源，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraLoRA: Granular Low-Rank Adaptation for Parameter-Efficient Fine-Tuning](gralora_granular_low-rank_adaptation_for_parameter-efficient_fine-tuning.md)
+- [Flat-LoRA: Low-Rank Adaptation over a Flat Loss Landscape](../../ICML2025/image_generation/flat-lora_low-rank_adaptation_over_a_flat_loss_landscape.md)
+- [IntLoRA: Integral Low-rank Adaptation of Quantized Diffusion Models](../../ICML2025/image_generation/intlora_integral_low-rank_adaptation_of_quantized_diffusion_models.md)
+- [Transformed Low-rank Adaptation via Tensor Decomposition and Its Applications to Text-to-image Models](../../ICCV2025/image_generation/transformed_low-rank_adaptation_via_tensor_decomposition_and_its_applications_to.md)
+- [EEGReXferNet: A Lightweight Gen-AI Framework for EEG Subspace Reconstruction via Cross-Subject Transfer Learning and Channel-Aware Embedding](eegrexfernet_a_lightweight_gen-ai_framework_for_eeg_subspace_reconstruction_via_.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ $$\mathcal{L}^{\text{QRD}}(\theta) = \alpha_t \cdot \mathbb{E}_{\tau_i \sim \mat
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖三大领域（机器人/驾驶/仿真）、多种量化器、真实硬件部署
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，问题定义精确，可视化质量高
 - **价值**: ⭐⭐⭐⭐ — 对 VLA 大模型的边缘部署有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Risk-Aware Self-Consistent Imitation Learning for Trajectory Planning in Autonomous Driving](../../ECCV2024/autonomous_driving/risk-aware_self-consistent_imitation_learning_for_trajectory_planning_in_autonom.md)
+- [CoopTrack: Exploring End-to-End Learning for Efficient Cooperative Sequential Perception](cooptrack_exploring_end-to-end_learning_for_efficient_cooperative_sequential_per.md)
+- [Resonance: Learning to Predict Social-Aware Pedestrian Trajectories as Co-Vibrations](resonance_learning_to_predict_social-aware_pedestrian_trajectories_as_co-vibrati.md)
+- [Wavelet Policy: Lifting Scheme for Policy Learning in Long-Horizon Tasks](wavelet_policy_lifting_scheme_for_policy_learning_in_long-horizon_tasks.md)
+- [Future-Aware Interaction Network For Motion Forecasting](future-aware_interaction_network_for_motion_forecasting.md)
+
+<!-- RELATED:END -->

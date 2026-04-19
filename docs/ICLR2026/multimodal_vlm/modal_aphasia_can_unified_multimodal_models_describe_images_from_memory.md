@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 前沿模型真实数据 + 开源模型合成控制 + 安全案例三层递进设计严谨，但安全案例偏概念验证、缺乏真实有害内容测试
 - 写作质量: ⭐⭐⭐⭐⭐ 现象命名精准、认知科学类比自然、论证逻辑清晰、实验设计的控制变量思路值得学习
 - 价值: ⭐⭐⭐⭐⭐ 对多模态模型架构设计有根本性启示（统一训练≠统一理解），对AI安全研究有直接实践意义（单模态对齐不充分）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TIGeR: A Unified Framework for Time, Images and Geo-location Retrieval](../../CVPR2026/multimodal_vlm/tiger_a_unified_framework_for_time_images_and_geo-location_retrieval.md)
+- [Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
+- [Can MLLMs Understand the Deep Implication Behind Chinese Images?](../../ACL2025/multimodal_vlm/can_mllms_understand_the_deep_implication_behind_chinese_images.md)
+- [SpatiaLab: Can Vision-Language Models Perform Spatial Reasoning in the Wild?](spatialab_can_vision-language_models_perform_spatial_reasoning_in_the_wild.md)
+- [Spatial-DISE: A Unified Benchmark for Evaluating Spatial Reasoning in Vision-Language Models](spatial-dise_a_unified_benchmark_for_evaluating_spatial_reasoning_in_vision-lang.md)
+
+<!-- RELATED:END -->

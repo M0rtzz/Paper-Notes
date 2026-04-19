@@ -151,3 +151,15 @@ $$p(X_A|X_V, Z_P, X_Q) = \prod_{i=1}^{L} p_\Theta(x_i | X_V, Z_P, X_Q, X_{A,<i})
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖 4 个传统数据集 + 自建基准，消融实验完整
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，图表丰富，描述分析部分很有说服力
 - **价值**: ⭐⭐⭐⭐ 为 FABA 社区打开了 MLLM 时代的大门
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
+- [Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)
+- [Behavior Tokens Speak Louder: Disentangled Explainable Recommendation with Behavior Vocabulary](../../AAAI2026/human_understanding/behavior_tokens_speak_louder_disentangled_explainable_recommendation_with_behavi.md)
+- [Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors](../../CVPR2026/human_understanding/breaking_the_tuning_barrier_zerohyperparameters_yi.md)
+- [MIDB: Multilingual Instruction Data Booster for Enhancing Cultural Equality in Multilingual Instruction Synthesis](../../AAAI2026/human_understanding/midb_multilingual_instruction_data_booster_for_enhancing_cultural_equality_in_mu.md)
+
+<!-- RELATED:END -->

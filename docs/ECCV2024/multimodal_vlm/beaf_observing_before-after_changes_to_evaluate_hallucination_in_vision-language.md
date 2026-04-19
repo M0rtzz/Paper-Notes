@@ -114,3 +114,15 @@ BEAF 是评估基准，不涉及模型训练。所有评估采用零样本推理
 - 实验充分度: ⭐⭐⭐ 评估模型数量较少，数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，指标定义严谨
 - 价值: ⭐⭐⭐⭐ 揭示了现有评估的盲区，对 VLM 幻觉研究有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](../../ICML2025/multimodal_vlm/look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)
+- [Can Vision-Language Models Evaluate Handwritten Math?](../../ACL2025/multimodal_vlm/can_vision-language_models_evaluate_handwritten_math.md)
+- [m&m's: A Benchmark to Evaluate Tool-Use for Multi-step Multi-modal Tasks](m_ampmaposs_a_benchmark_to_evaluate_tool-use_for_multi-step_multi-modal_tasks.md)
+- [LLaVA-Critic: Learning to Evaluate Multimodal Models](../../CVPR2025/multimodal_vlm/llava-critic_learning_to_evaluate_multimodal_models.md)
+- [FIHA: Autonomous Fine-grained Hallucination Evaluation in Vision-Language Models with Davidson Scene Graphs](../../ACL2025/multimodal_vlm/fiha_autonomous_hallucination_evaluation_in_vision-language_models_with_davidson.md)
+
+<!-- RELATED:END -->

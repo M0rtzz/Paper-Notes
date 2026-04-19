@@ -155,3 +155,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 全面对比在线/离线 baseline，消融详实，速度分析到位
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表丰富，问题-方案对应关系明确
 - 价值: ⭐⭐⭐⭐⭐ 对机器人巡检和长期场景监控有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LTGS: Long-Term Gaussian Scene Chronology From Sparse View Updates](ltgs_long-term_gaussian_scene_chronology_from_sparse_view_updates.md)
+- [R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection# R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](r4det_4d_radar_camera_fusion_3d_detection.md)
+- [EmbodiedSplat: Online Feed-Forward Semantic 3DGS for Open-Vocabulary 3D Scene Understanding](embodiedsplat_online_feed-forward_semantic_3dgs_for_open-vocabulary_3d_scene_und.md)
+- [Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass](coherent_humanscene_reconstruction_from_multiperso.md)
+- [Real-Time 3D Object Detection with Inference-Aligned Learning](../../AAAI2026/3d_vision/real-time_3d_object_detection_with_inference-aligned_learning.md)
+
+<!-- RELATED:END -->

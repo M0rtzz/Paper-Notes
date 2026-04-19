@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 五个数据集+完整消融+一致性分析+多种强基线对比，评估全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰（Table 1 功能对比一目了然），三个训练目标各自独立又互补，方法形式化完整
 - 价值: ⭐⭐⭐⭐ 对对话搜索系统有直接实用价值，减少部署成本同时提升一致性，是对话 AI 产品化的重要进展方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Position: Uncertainty Quantification Needs Reassessment for Large-language Model Agents](../../ICML2025/dialogue/position_uncertainty_quantification_needs_reassessment_for_large-language_model_.md)
+- [ReflectDiffu: Reflect between Emotion-intent Contagion and Mimicry for Empathetic Response Generation via a RL-Diffusion Framework](reflectdiffu_empathetic_response.md)
+- [AQuA: Toward Strategic Response Generation for Ambiguous Visual Questions](../../ICLR2026/dialogue/aqua_toward_strategic_response_generation_for_ambiguous_visual_questions.md)
+- [When Harry Meets Superman: The Role of The Interlocutor in Persona-Based Dialogue Generation](when_harry_meets_superman_the_role_of_the_interlocutor_in_persona-based_dialogue.md)
+- [Wizard of Shopping: Target-Oriented E-commerce Dialogue Generation with Decision Tree Branching](wizard_of_shopping_target-oriented_e-commerce_dialogue_generation_with_decision_.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 页面级+元素级全面评估，多个 benchmark，消融实验充分
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，图表丰富，可视化案例说服力强
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强，开源代码+模型，对文档理解领域有直接推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Anchor Token Matching: Implicit Structure Locking for Training-free AR Image Editing](../../ICCV2025/object_detection/anchor_token_matching_implicit_structure_locking_for_training-free_ar_image_edit.md)
+- [PandaPose: 3D Human Pose Lifting from a Single Image via Propagating 2D Pose Prior to 3D Anchor Space](../../NeurIPS2025/object_detection/pandapose_3d_human_pose_lifting_from_a_single_image_via_propagating_2d_pose_prio.md)
+- [Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection](../../CVPR2026/object_detection/beyond_prompt_degradation_prototype-guided_dual-pool_prompting_for_incremental_o.md)
+- [The COTe Score: A Decomposable Framework for Evaluating Document Layout Analysis Models](../../CVPR2026/object_detection/the_cote_score_a_decomposable_framework_for_evaluating_document_layout_analysis_.md)
+- [ESCAPE: Equivariant Shape Completion via Anchor Point Encoding](../../CVPR2025/object_detection/escape_equivariant_shape_completion_via_anchor_point_encoding.md)
+
+<!-- RELATED:END -->

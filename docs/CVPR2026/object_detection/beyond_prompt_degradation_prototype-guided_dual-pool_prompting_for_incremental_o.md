@@ -155,3 +155,15 @@ PPG 使旧知识保持率 mAP@P 提升 +13.9%，同时新类适应 mAP@C 提升 
 - **技术深度**: ★★★★☆ — 方法设计完整，各模块动机清晰
 - **实验充分性**: ★★★★★ — 多数据集、多设置、详细消融
 - **写作清晰度**: ★★★★☆ — 图示清晰，问题-方案对应关系明确
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VK-Det: Visual Knowledge Guided Prototype Learning for Open-Vocabulary Aerial Object Detection](../../AAAI2026/object_detection/vk-det_visual_knowledge_guided_prototype_learning_for_open-vocabulary_aerial_obj.md)
+- [EW-DETR: Evolving World Object Detection via Incremental Low-Rank DEtection TRansformer](ewdetr_evolving_world_object_detection.md)
+- [CD-Buffer: Complementary Dual-Buffer Framework for Test-Time Adaptation in Adverse Weather Object Detection](cd-buffer_complementary_dual-buffer_framework_for_test-time_adaptation_in_advers.md)
+- [Parameter-Efficient Semantic Augmentation for Enhancing Open-Vocabulary Object Detection](parameter-efficient_semantic_augmentation_for_enhancing_open-vocabulary_object_d.md)
+- [DualReg: Dual-Space Filtering and Reinforcement for Rigid Registration](dualreg_dual-space_filtering_and_reinforcement_for_rigid_registration.md)
+
+<!-- RELATED:END -->

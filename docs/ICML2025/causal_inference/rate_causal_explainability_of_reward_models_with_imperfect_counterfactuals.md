@@ -134,3 +134,15 @@ $$\widehat{\text{ATE}}_{\text{RATE}} = \frac{n_1}{n_0 + n_1} \widehat{\text{ATT}
 - 实验充分度: ⭐⭐⭐⭐ — 半合成 + 真实 RM 验证充分，但缺少下游对齐实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、图表直观、理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐ — 对 RM 可解释性领域有实质贡献，"长度偏差是伪影"的发现有实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cyclic Counterfactuals under Shift–Scale Interventions](../../NeurIPS2025/causal_inference/cyclic_counterfactuals_under_shift-scale_interventions.md)
+- [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+- [E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)
+- [From Black-box to Causal-box: Towards Building More Interpretable Models](../../NeurIPS2025/causal_inference/from_black-box_to_causal-box_towards_building_more_interpretable_models.md)
+- [Retrieving Counterfactuals Improves Visual In-Context Learning](../../CVPR2026/causal_inference/retrieving_counterfactuals_improves_visual_in-context_learning.md)
+
+<!-- RELATED:END -->

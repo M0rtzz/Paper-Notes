@@ -138,3 +138,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 数据分析全面深入，但新方法论缺乏实验验证
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、论证有力、建议具体可行
 - 价值: ⭐⭐⭐⭐ 对临床编码领域的研究方向有重要指导意义，八条建议非常实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RedactX: An LLM-Powered Framework for Automatic Clinical Data De-Identification](redactor_an_llm-powered_framework_for_automatic_clinical_data_de-identification.md)
+- [CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research](../../NeurIPS2025/medical_imaging/cgbench_benchmarking_language_model_scientific_reasoning_for_clinical_genetics_r.md)
+- [Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](../../NeurIPS2025/medical_imaging/position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)
+- [One Size Fits None: Rethinking Fairness in Medical AI](one_size_fits_none_rethinking_fairness_in_medical_ai.md)
+- [Nyxus: A Next Generation Image Feature Extraction Library for the Big Data and AI Era](../../CVPR2025/medical_imaging/nyxus_a_next_generation_image_feature_extraction_library_for_the_big_data_and_ai.md)
+
+<!-- RELATED:END -->

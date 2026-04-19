@@ -209,3 +209,15 @@ AdaIN-mean 消融：
 - **实验充分度**: ★★★★★ — 定量对比、消融、原始照片+风格化照片生成覆盖全面
 - **写作质量**: ★★★★☆ — 方法描述清晰，图示丰富
 - **实用价值**: ★★★★☆ — 商业级身份保持生成，但训练成本是门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability](../../ICCV2025/image_generation/dynamicid_zero-shot_multi-id_image_personalization_with_flexible_facial_editabil.md)
+- [LCM-Lookahead for Encoder-based Text-to-Image Personalization](lcm-lookahead_for_encoder-based_text-to-image_personalization.md)
+- [MagicEraser: Erasing Any Objects via Semantics-Aware Control](magiceraser_erasing_any_objects_via_semantics-aware_control.md)
+- [Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement](unveiling_advanced_frequency_disentanglement_paradigm_for_low-light_image_enhanc.md)
+- [Generating 3D House Wireframes with Semantics](generating_3d_house_wireframes_with_semantics.md)
+
+<!-- RELATED:END -->

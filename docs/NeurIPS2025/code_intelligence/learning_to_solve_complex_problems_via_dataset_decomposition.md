@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 数学+代码跨域验证，但数据集和模型规模有限
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，案例研究直观
 - 价值: ⭐⭐⭐⭐⭐ 极高的样本效率对小模型训练有重要实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation](qimeng-salv_signal-aware_learning_for_verilog_code_generation.md)
+- [Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning](co-evolving_llm_coder_and_unit_tester_via_reinforcement_learning.md)
+- [MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
+- [Robust Learning of Diverse Code Edits (NextCoder)](../../ICML2025/code_intelligence/robust_learning_of_diverse_code_edits.md)
+- [Learning to Reason without External Rewards](../../ICLR2026/code_intelligence/learning_to_reason_without_external_rewards.md)
+
+<!-- RELATED:END -->

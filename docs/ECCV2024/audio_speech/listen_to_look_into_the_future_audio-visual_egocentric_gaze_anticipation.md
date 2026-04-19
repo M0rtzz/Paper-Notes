@@ -168,3 +168,15 @@ $$\mathcal{L} = \mathcal{L}_{kld} + \alpha \mathcal{L}_{cntr}$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个数据集，极其详尽的消融（模块消融、融合策略对比、对比学习策略对比），逐帧分析和可视化
 - 写作质量: ⭐⭐⭐⭐ 动机阐述清晰，方法描述系统，融合公式推导完整
 - 价值: ⭐⭐⭐⭐ 为第一人称感知和 AR 应用提供了重要的多模态基线，后融合对比学习策略有通用参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Siamese Vision Transformers are Scalable Audio-Visual Learners](siamese_vision_transformers_are_scalable_audio-visual_learners.md)
+- [CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing](coleaf_a_contrastive-collaborative_learning_framework_for_weakly_supervised_audi.md)
+- [Label-Anticipated Event Disentanglement for Audio-Visual Video Parsing](label-anticipated_event_disentanglement_for_audio-visual_video_parsing.md)
+- [MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing](../../ICCV2025/audio_speech/mug_pseudo_labeling_augmented_audio-visual_mamba_network_for_audio-visual_video_.md)
+- [Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents](../../NeurIPS2025/audio_speech/benchmarking_egocentric_multimodal_goal_inference_for_assist.md)
+
+<!-- RELATED:END -->

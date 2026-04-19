@@ -119,3 +119,15 @@ $$\mathcal{L}_{rec} = \mathbb{E}_{x,t}\left[\|v_\theta(x_t, M, t, \tau) - \frac{
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机-方法-验证逻辑流畅
 - 价值: ⭐⭐⭐ 应用场景（logo提取）相对小众，但框架思想可泛化
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition](from_inpainting_to_layer_decomposition_repurposing_generative_inpainting_models_.md)
+- [EchoGen: Cycle-Consistent Learning for Unified Layout-Image Generation and Understanding](../../AAAI2026/image_generation/echogen_cycle-consistent_learning_for_unified_layout-image_generation_and_unders.md)
+- [Match-and-Fuse: Consistent Generation from Unstructured Image Sets](match-and-fuse_consistent_generation_from_unstructured_image_sets.md)
+- [Ouroboros: Single-step Diffusion Models for Cycle-consistent Forward and Inverse Rendering](../../ICCV2025/image_generation/ouroboros_single-step_diffusion_models_for_cycle-consistent_forward_and_inverse_.md)
+- [AlignVAR: Towards Globally Consistent Visual Autoregression for Image Super-Resolution](alignvar_towards_globally_consistent_visual_autoregression_for_image_super-resol.md)
+
+<!-- RELATED:END -->

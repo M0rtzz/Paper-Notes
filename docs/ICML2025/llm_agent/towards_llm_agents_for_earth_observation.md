@@ -134,3 +134,15 @@ tags:
 基准构建质量高，发现有价值（特别是33%准确率和$r=0.87$），但作为研究贡献偏轻——主要是基准构建+现有模型评估，缺少针对性的解决方案。基准规模（140题）偏小，且仅限 yes/no 格式。不过该工作对 EO 社区和 AI+Science 方向有明确的指引意义。
 
 值得强调的是，本文揭示了一个更深层的问题：LLM Agent 在专业科学领域的瓶颈不在推理能力，而在领域知识的准确召回——"Wrong Asset Name"是最常见的错误模式。这提示未来的改进方向应聚焦于：(1) 通过 RAG 机制提供 GEE 数据目录的实时检索；(2) 在微调数据中增加 EO 编程范例；(3) 构建 GEE API 的结构化工具描述供 Agent 调用。140 个问题虽小但覆盖了 13 个主题和 17 种传感器，质量远胜数量。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LegalAgentBench: Evaluating LLM Agents in Legal Domain](../../ACL2025/llm_agent/legalagentbench_evaluating_llm_agents_in_legal_domain.md)
+- [MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents](../../ACL2025/llm_agent/multiagentbench_evaluating_the_collaboration_and_competition_of_llm_agents.md)
+- [AgentMisalignment: Measuring the Propensity for Misaligned Behaviour in LLM-Based Agents](../../NeurIPS2025/llm_agent/agentmisalignment_measuring_the_propensity_for_misaligned_behaviour_in_llm-based.md)
+- [GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning](guardagent_safeguard_llm_agents_by_a_guard_agent_via_knowledge-enabled_reasoning.md)
+- [A-MEM: Agentic Memory for LLM Agents](../../NeurIPS2025/llm_agent/a-mem_agentic_memory_for_llm_agents.md)
+
+<!-- RELATED:END -->

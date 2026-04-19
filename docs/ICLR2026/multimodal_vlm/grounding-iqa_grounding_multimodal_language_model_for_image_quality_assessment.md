@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型验证 + 消融，但缺少与专业 IQA 方法的对比
 - 写作质量: ⭐⭐⭐⭐ 标注流水线描述详细
 - 价值: ⭐⭐⭐⭐ 数据集和任务定义的贡献大于方法本身
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking](self-evolving_vision-language_models_for_image_quality_assessment_via_voting_and.md)
+- [VisJudge-Bench: Aesthetics and Quality Assessment of Visualizations](visjudge-bench_aesthetics_and_quality_assessment_of_visualizations.md)
+- [Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models](../../ECCV2024/multimodal_vlm/groma_localized_visual_tokenization_for_grounding_multimodal_large_language_mode.md)
+- [FluoCLIP: Stain-Aware Focus Quality Assessment in Fluorescence Microscopy](../../CVPR2026/multimodal_vlm/fluoclip_stain-aware_focus_quality_assessment_in_fluorescence_microscopy.md)
+- [MCMoE: Completing Missing Modalities with Mixture of Experts for Incomplete Multimodal Action Quality Assessment](../../AAAI2026/multimodal_vlm/mcmoe_completing_missing_modalities_with_mixture_of_experts_for_incomplete_multi.md)
+
+<!-- RELATED:END -->

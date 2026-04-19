@@ -143,3 +143,15 @@ $$L_t = \mathbb{E}_{t, \mathbf{x}_0, \epsilon_t} \left[\|\epsilon_t - \epsilon_\
 - **实验充分度**: ⭐⭐⭐⭐ — 生成/补全/GAN先验三个任务，定量+定性全面
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，模块设计有明确的物理直觉
 - **价值**: ⭐⭐⭐⭐ — 多视角深度作为3D表示的潜力值得更多研究跟进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Models for Monocular Depth Estimation: Overcoming Challenging Conditions](diffusion_models_for_monocular_depth_estimation_overcoming_challenging_condition.md)
+- [SEDiff: Structure Extraction for Domain Adaptive Depth Estimation via Denoising Diffusion Models](sediff_structure_extraction_for_domain_adaptive_depth_estimation_via_denoising_d.md)
+- [DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation](diffusiondepth_diffusion_denoising_approach_for_monocular_depth_estimation.md)
+- [DreamDrone: Text-to-Image Diffusion Models are Zero-shot Perpetual View Generators](dreamdrone_text-to-image_diffusion_models_are_zero-shot_perpetual_view_generator.md)
+- [Transferable 3D Adversarial Shape Completion using Diffusion Models](transferable_3d_adversarial_shape_completion_using_diffusion_models.md)
+
+<!-- RELATED:END -->

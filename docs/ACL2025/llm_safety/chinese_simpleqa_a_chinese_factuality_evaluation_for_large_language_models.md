@@ -222,3 +222,15 @@ Claude-3.5-Sonnet 拒绝率最高（27.4%），但也因此避免了大量错误
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 填补中文事实性评估空白的重要工作，数据质量极高、评估覆盖全面、发现（对齐税、RAG均衡效应、中文文化差异）有深刻实践价值，是中文 LLM 开发者的必读基准。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)
+- [Beyond Facts: Evaluating Intent Hallucination in Large Language Models](intent_hallucination_eval.md)
+- [Unveiling and Addressing Pseudo Forgetting in Large Language Models](unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)
+- [Opt-Out: Investigating Entity-Level Unlearning for Large Language Models via Optimal Transport](opt-out_investigating_entity-level_unlearning_for_large_language_models_via_opti.md)
+- [Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering](aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md)
+
+<!-- RELATED:END -->

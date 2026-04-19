@@ -139,3 +139,15 @@ $$\text{TCS} = \text{SPS} \cdot \text{ACS}$$
 - ⭐ 实验充分度: 4/5 — 消融充分，定性分析丰富，但测试集较小（150 序列）
 - ⭐ 写作质量: 4/5 — 问题驱动清晰，两个"How"问题引导方法设计
 - ⭐ 价值: 4/5 — 为遥感时空分析建立了理解驱动生成的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resampling Augmentation for Time Series Contrastive Learning: Application to Remote Sensing](../../ICML2025/remote_sensing/resampling_augmentation_for_time_series_contrastive_learning_application_to_remo.md)
+- [EcoCast: A Spatio-Temporal Model for Continual Biodiversity and Climate Risk Forecasting](../../NeurIPS2025/remote_sensing/ecocast_a_spatio-temporal_model_for_continual_biodiversity_and_climate_risk_fore.md)
+- [Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models](../../NeurIPS2025/remote_sensing/connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)
+- [WildSAT: Learning Satellite Image Representations from Wildlife Observations](../../ICCV2025/remote_sensing/wildsat_learning_satellite_image_representations_from_wildlife_observations.md)
+- [TDCNet: Spatio-Temporal Context Learning with Temporal Difference Convolution for Moving IRSTD](../../AAAI2026/remote_sensing/spatio-temporal_context_learning_with_temporal_difference_convolution_for_moving.md)
+
+<!-- RELATED:END -->

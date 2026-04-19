@@ -134,3 +134,15 @@ Camelyon16 各组件贡献：
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集五种 shot 设置全面评估，消融充分，还有肿瘤定位的额外验证
 - 写作质量: ⭐⭐⭐⭐ 技术描述详细清晰，公式推导完整，动机论证有力
 - 价值: ⭐⭐⭐⭐ 在医学图像少样本场景下实用性强，参数减少+性能提升的组合对资源受限环境有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MUSE: Harnessing Precise and Diverse Semantics for Few-Shot Whole Slide Image Classification](muse_harnessing_precise_and_diverse_semantics_for_few-shot_whole_slide_image_cla.md)
+- [Exploiting Low-Dimensional Manifold of Features for Few-Shot Whole Slide Image Classification](../../ICLR2026/medical_imaging/exploiting_low-dimensional_manifold_of_features_for_few-shot_whole_slide_image_c.md)
+- [Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification](../../ECCV2024/medical_imaging/pathology-knowledge_enhanced_multi-instance_prompt_learning_for_few-shot_whole_s.md)
+- [Act Like a Pathologist: Tissue-Aware Whole Slide Image Reasoning](act_like_a_pathologist_tissue-aware_whole_slide_image_reasoning.md)
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+
+<!-- RELATED:END -->

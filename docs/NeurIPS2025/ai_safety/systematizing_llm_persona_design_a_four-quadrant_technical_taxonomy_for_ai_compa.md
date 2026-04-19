@@ -234,3 +234,15 @@ LLM 不再只是文本生成工具，已成为驱动各类个性化 AI agent 的
 - 实验充分度: ⭐⭐ 纯综述文章，无实验验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，四层分析框架设计合理
 - 价值: ⭐⭐⭐⭐ 提供了全局视角，对跨领域研究者和产品设计者有很好的参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Distributed and Decentralised Training: Technical Governance Challenges in a Shifting AI Landscape](../../ICML2025/ai_safety/distributed_and_decentralised_training_technical_governance_challenges_in_a_shif.md)
+- [When AI Democratizes Exploitation: LLM-Assisted Strategic Manipulation of Fair Division Algorithms](when_ai_democratizes_exploitation_llm-assisted_strategic_manipulation_of_fair_di.md)
+- [DESIGN: Encrypted GNN Inference via Server-Side Input Graph Pruning](design_encrypted_gnn_inference_via_server-side_input_graph_pruning.md)
+- [Understanding Challenges to the Interpretation of Disaggregated Evaluations of AI](understanding_challenges_to_the_interpretation_of_disaggregated_evaluations_of_a.md)
+- [CTRL-ALT-DECEIT: Sabotage Evaluations for Automated AI R&D](ctrl-alt-deceit_sabotage_evaluations_for_automated_ai_rd.md)
+
+<!-- RELATED:END -->

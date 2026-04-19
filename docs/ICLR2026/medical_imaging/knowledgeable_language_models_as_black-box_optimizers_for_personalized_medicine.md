@@ -134,3 +134,15 @@ LEON 本身不需要训练 LLM。源批评模型 $c^*$ 通过 Wasserstein 对偶
 - **实验**：⭐⭐⭐⭐ 5 个真实临床任务 + 10 个基线，全面深入
 - **写作**：⭐⭐⭐⭐ 理论推导清晰，但公式符号较多
 - **实用性**：⭐⭐⭐ 依赖多种外部知识源和 LLM API，部署门槛较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](../../NeurIPS2025/medical_imaging/from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)
+- [DesignX: Human-Competitive Algorithm Designer for Black-Box Optimization](../../NeurIPS2025/medical_imaging/designx_human-competitive_algorithm_designer_for_black-box_optimization.md)
+- [Tracing Pharmacological Knowledge in Large Language Models](tracing_pharmacological_knowledge_in_large_language_models.md)
+- [Deep Hierarchical Learning with Nested Subspace Networks for Large Language Models](deep_hierarchical_learning_with_nested_subspace_networks_for_large_language_mode.md)
+- [Controlling Repetition in Protein Language Models](controlling_repetition_in_protein_language_models.md)
+
+<!-- RELATED:END -->

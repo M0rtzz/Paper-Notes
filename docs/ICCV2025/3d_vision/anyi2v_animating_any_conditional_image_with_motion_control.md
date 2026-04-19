@@ -130,3 +130,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融实验全面（5个变体+超参分析），但缺少用户研究和更多骨干网络的量化评估
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，特征分析可视化直观，motivation论述充分
 - 价值: ⭐⭐⭐⭐ 免训练+任意模态的组合有很强实用价值，但在DiT时代的适用性存疑
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
+- [Compass Control: Multi Object Orientation Control for Text-to-Image Generation](../../CVPR2025/3d_vision/compass_control_multi_object_orientation_control_for_text-to-image_generation.md)
+- [GAP: Gaussianize Any Point Clouds with Text Guidance](gap_gaussianize_any_point_clouds_with_text_guidance.md)
+- [SAS: Segment Any 3D Scene with Integrated 2D Priors](sas_segment_any_3d_scene_with_integrated_2d_priors.md)
+- [Find Any Part in 3D](find_any_part_in_3d.md)
+
+<!-- RELATED:END -->

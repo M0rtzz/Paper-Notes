@@ -140,3 +140,15 @@ tags:
 - ⭐ 实验充分度: 3/5 — 控制条件丰富，但模型数量和刺激类型受限
 - ⭐ 写作质量: 4/5 — 逻辑清晰，图表直观，认知科学背景阐述充分
 - ⭐ 价值: 3/5 — Workshop paper 深度适中，但为 VLM 语用能力评估开辟了有意义的方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly](mmlongbench_benchmarking_longcontext_visionlanguage_models_e.md)
+- [HoPE: Hybrid of Position Embedding for Long Context Vision-Language Models](hope_hybrid_of_position_embedding_for_long_context_visionlan.md)
+- [ExGra-Med: Extended Context Graph Alignment for Medical Vision-Language Models](exgra-med_extended_context_graph_alignment_for_medical_vision-language_models.md)
+- [NeedleInATable: Exploring Long-Context Capability of Large Language Models towards Long-Structured Tables](needleinatable_exploring_long-context_capability_of_large_language_models_toward.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](../../ICCV2025/multimodal_vlm/physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+
+<!-- RELATED:END -->

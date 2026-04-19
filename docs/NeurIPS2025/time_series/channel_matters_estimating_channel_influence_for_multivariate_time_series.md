@@ -114,3 +114,15 @@ ChInf 是一个后处理可解释性工具。给定训练好的 MTS 模型，ChI
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ 通道级影响函数是自然但有效的新概念，推导简洁
 - 实验充分度: ⭐⭐⭐⭐ 5 个数据集 + 公平基准 + 多模型验证 + 通道剪枝，全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Channel Normalization for Time Series Channel Identification](../../ICML2025/time_series/channel_normalization_for_time_series_channel_identification.md)
+- [Structured Temporal Causality for Interpretable Multivariate Time Series Anomaly Detection](structured_temporal_causality_for_interpretable_multivariate_time_series_anomaly.md)
+- [IMTS is Worth Time × Channel Patches: Visual Masked Autoencoders for Irregular Multivariate Time Series Prediction](../../ICML2025/time_series/imts_is_worth_time_times_channel_patches_visual_masked_autoencoders_for_irregula.md)
+- [CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](../../ICLR2026/time_series/cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time.md)
+- [T1: One-to-One Channel-Head Binding for Multivariate Time-Series Imputation](../../ICLR2026/time_series/t1_one-to-one_channel-head_binding_for_multivariate_time-series_imputation.md)
+
+<!-- RELATED:END -->

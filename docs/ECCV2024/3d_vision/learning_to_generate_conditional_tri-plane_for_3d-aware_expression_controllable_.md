@@ -139,3 +139,15 @@ EAdaLN vs 交叉注意力：EAdaLN在CSIM（0.811 vs 0.678）和AED（0.082 vs 0
 ## 评分
 
 ⭐⭐⭐⭐ — 对外观-表情纠缠问题提出了优雅的解决方案，对比预训练+正交基+EAdaLN的组合设计新颖，跨身份表情转移效果优异。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HyPlaneHead: Rethinking Tri-plane-like Representations in Full-Head Image Synthesis](../../NeurIPS2025/3d_vision/hyplanehead_rethinking_tri-plane-like_representations_in_full-head_image_synthes.md)
+- [Learning 3D-Aware GANs from Unposed Images with Template Feature Field](learning_3d-aware_gans_from_unposed_images_with_template_feature_field.md)
+- [SceneVerse: Scaling 3D Vision-Language Learning for Grounded Scene Understanding](sceneverse_scaling_3d_vision-language_learning_for_grounded_scene_understanding.md)
+- [Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting](repaint123_fast_and_high-quality_one_image_to_3d_generation_with_progressive_con.md)
+- [SAGS: Structure-Aware 3D Gaussian Splatting](sags_structure-aware_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

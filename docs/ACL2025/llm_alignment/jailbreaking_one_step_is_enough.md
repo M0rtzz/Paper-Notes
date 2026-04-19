@@ -144,3 +144,15 @@ REDA由三个核心组件构成：
 - 实验充分度: ⭐⭐⭐⭐ 7个模型全面测试，消融分析完整，参数探索充分
 - 写作质量: ⭐⭐⭐ 核心思路清晰但部分推导（RIM理论）较粗糙，排版有小问题
 - 价值: ⭐⭐⭐⭐ 对LLM安全防御有重要警示作用，揭示了现有安全对齐的盲区
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Chain-of-Jailbreak Attack for Image Generation Models via Editing Step by Step](chain-of-jailbreak_attack_for_image_generation_models_via_editing_step_by_step.md)
+- [QueryAttack: Jailbreaking Aligned Large Language Models Using Structured Non-natural Query Language](queryattack_jailbreaking_aligned_large_language_models_using_structured_non-natu.md)
+- [Adjacent Words, Divergent Intents: Jailbreaking Large Language Models via Task Concurrency](../../NeurIPS2025/llm_alignment/adjacent_words_divergent_intents_jailbreaking_large_language_models_via_task_con.md)
+- [Red Queen: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking](red_queen_safeguarding_large_language_models_against_concealed_multi-turn_jailbr.md)
+- [Provably Efficient Online RLHF with One-Pass Reward Modeling](../../NeurIPS2025/llm_alignment/provably_efficient_online_rlhf_with_one-pass_reward_modeling.md)
+
+<!-- RELATED:END -->

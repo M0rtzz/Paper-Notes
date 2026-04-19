@@ -188,3 +188,15 @@ $$D_\phi(\lambda^*, \lambda_t) \leq (1 - \mu\eta)^t \cdot D_\phi(\lambda^*, \lam
 - 实验充分度：★★★★☆（实验设计与理论验证紧密对应）
 - 实用价值：★★★★☆（对 VI 实践者有明确指导意义）
 - 写作质量：★★★★★（理论论文的典范，结构清晰、动机明确）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+- [Learning Sparse Approximate Inverse Preconditioners for Conjugate Gradient Solvers on GPUs](learning_sparse_approximate_inverse_preconditioners_for_conjugate_gradient_solve.md)
+- [Emergence in Non-Neural Models: Grokking Modular Arithmetic via Average Gradient Outer Product](../../ICML2025/optimization/emergence_in_non-neural_models_grokking_modular_arithmetic_via_average_gradient_.md)
+- [Subspace Optimization for Large Language Models with Convergence Guarantees](../../ICML2025/optimization/subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
+- [Non-Stationary Bandit Convex Optimization: A Comprehensive Study](non-stationary_bandit_convex_optimization_a_comprehensive_study.md)
+
+<!-- RELATED:END -->

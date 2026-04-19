@@ -137,3 +137,15 @@ MetaGS在合成数据上平均PSNR比NRHints高约3-9dB，比GS3高约2-8dB。
 - **实验充分度**: ⭐⭐⭐⭐ OOD/colocated/环境贴图三种设置全面评估，消融清晰
 - **写作质量**: ⭐⭐⭐⭐ 问题动机阐述清晰，算法框架描述规范
 - **价值**: ⭐⭐⭐⭐ 对3D重光照的鲁棒性有重要实践意义，元学习范式有推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PointMAC: Meta-Learned Adaptation for Robust Test-Time Point Cloud Completion](pointmac_meta-learned_adaptation_for_robust_test-time_point_cloud_completion.md)
+- [A Unified Interpretation of Training-Time Out-of-Distribution Detection](../../ICCV2025/3d_vision/a_unified_interpretation_of_training-time_out-of-distribution_detection.md)
+- [ROGR: Relightable 3D Objects using Generative Relighting](rogr_relightable_3d_objects_using_generative_relighting.md)
+- [From Programs to Poses: Factored Real-World Scene Generation via Learned Program Libraries](from_programs_to_poses_factored_real-world_scene_generation_via_learned_program_.md)
+- [URDF-Anything: Constructing Articulated Objects with 3D Multimodal Language Model](urdf-anything_constructing_articulated_objects_with_3d_multimodal_language_model.md)
+
+<!-- RELATED:END -->

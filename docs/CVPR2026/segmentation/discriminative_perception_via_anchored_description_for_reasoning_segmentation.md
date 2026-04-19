@@ -124,3 +124,15 @@ GRPO优化，采样组大小G用于组内相对排名。训练基于标准的RL 
 - 实验充分度: ⭐⭐⭐ 仅ReasonSeg一个benchmark，可扩展
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述清晰，方法逻辑链完整
 - 对我的价值: ⭐⭐⭐⭐⭐ RL reward设计范式具有广泛迁移价值，anchored description思路可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Context-Aware Image Anonymization with Multi-Agent Reasoning](towards_context-aware_image_anonymization_with_multi-agent_reasoning.md)
+- [CoReS: Orchestrating the Dance of Reasoning and Segmentation](../../ECCV2024/segmentation/cores_orchestrating_the_dance_of_reasoning_and_segmentation.md)
+- [Towards Omnimodal Expressions and Reasoning in Referring Audio-Visual Segmentation](../../ICCV2025/segmentation/towards_omnimodal_expressions_and_reasoning_in_referring_audio-visual_segmentati.md)
+- [Can Generative Geospatial Diffusion Models Excel as Discriminative Geospatial Foundation Models?](../../ICCV2025/segmentation/can_generative_geospatial_diffusion_models_excel_as_discriminative_geospatial_fo.md)
+- [Reasoning with Pixel-level Precision: QVLM Architecture and SQuID Dataset for Quantitative Geospatial Analytics](reasoning_with_pixel-level_precision_qvlm_architecture_and_squid_dataset_for_qua.md)
+
+<!-- RELATED:END -->

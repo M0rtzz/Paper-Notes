@@ -195,3 +195,15 @@ VeriMaAS 在 token 成本上接近轻量级 CoT，远低于 SelfRefine（约 2×
 - **实验质量**: ⭐⭐⭐⭐ — 覆盖 6 个模型 × 2 个 benchmark，含成本分析和 PPA 消融
 - **实用性**: ⭐⭐⭐⭐⭐ — 低训练成本、即插即用、适用于多种 LLM，落地价值高
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，但 workshop paper 篇幅限制了部分细节
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies](../../ICLR2026/llm_agent/multi-agent_design_optimizing_agents_with_better_prompts_and_topologies.md)
+- [Benchmarking Agentic Systems in Automated Scientific Information Extraction with ChemX](benchmarking_agentic_systems_in_automated_scientific_information_extraction_with.md)
+- [Automated Composition of Agents: A Knapsack Approach for Agentic Component Selection](automated_composition_of_agents_a_knapsack_approach_for_agentic_component_select.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [MAT-Agent: Adaptive Multi-Agent Training Optimization](mat-agent_adaptive_multi-agent_training_optimization.md)
+
+<!-- RELATED:END -->

@@ -156,4 +156,14 @@ Agentic Retoucher 在 Plausibility 上从 44.21 提升至 47.10（+2.89），83.
 - 写作质量: ⭐⭐⭐⭐ 架构描述清晰，数据集构建透明，动机阐述有说服力
 - 价值: ⭐⭐⭐⭐⭐ GenBlemish-27K数据集+即插即用后处理框架，对T2I实际应用有直接帮助
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [Vinedresser3D: Agentic Text-guided 3D Editing](vinedresser3d_agentic_text-guided_3d_editing.md)
+- [CTCal: Rethinking Text-to-Image Diffusion Models via Cross-Timestep Self-Calibration](ctcal_rethinking_text-to-image_diffusion_models_via_cross-timestep_self-calibrat.md)
+- [Resolving the Identity Crisis in Text-to-Image Generation](resolving_the_identity_crisis_in_text-to-image_generation.md)
+- [Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](improving_text-to-image_generation_with_intrinsic_self-confidence_rewards.md)
+- [FontCrafter: High-Fidelity Element-Driven Artistic Font Creation with Visual In-Context Generation](fontcrafter_high-fidelity_element-driven_artistic_font_creation_with_visual_in-c.md)
+
+<!-- RELATED:END -->

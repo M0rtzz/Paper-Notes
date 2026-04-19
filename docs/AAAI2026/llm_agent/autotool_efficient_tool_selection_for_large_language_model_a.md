@@ -188,3 +188,15 @@ AutoTool在Table 1中是唯一同时满足Efficiency、LLM Offloading、Inertia 
 - 评测环境工具集偏小且模式重复性高，对方法的普适性检验不够
 - 缺少与fine-tuning方法的直接对比
 - 部分数据集上出现退化（tok-out反增），说明方法的适用边界尚不清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](../../ACL2025/llm_agent/toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)
+- [ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models](../../ICLR2026/llm_agent/toolweaver_weaving_collaborative_semantics_for_scalable_tool_use_in_large_langua.md)
+- [Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning](../../NeurIPS2025/llm_agent/zero-shot_large_language_model_agents_for_fully_automated_radiotherapy_treatment.md)
+- [MedLA: A Logic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models](medla_a_logic-driven_multi-agent_framework_for_complex_medic.md)
+- [Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](../../ACL2025/llm_agent/meco_metacognition_tool_use.md)
+
+<!-- RELATED:END -->

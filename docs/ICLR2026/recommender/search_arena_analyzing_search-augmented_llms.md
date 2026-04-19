@@ -135,3 +135,15 @@ Search Arena 平台（Chatbot Arena 的搜索 tab）→ 匿名并排展示两个
 - 实验充分度: ⭐⭐⭐⭐⭐ 24K 对话 + 12K 投票 + 多维度深入分析 + 跨场景评估
 - 写作质量: ⭐⭐⭐⭐ 分析层层深入，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 对搜索 LLM 评估和设计有深远影响，开源数据集价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAE: A Neural Network Dimensionality Reduction Method for Nearest Neighbors Preservation in Vector Search](rae_a_neural_network_dimensionality_reduction_method_for_nearest_neighbors_prese.md)
+- [CroPS: Improving Dense Retrieval with Cross-Perspective Positive Samples in Short-Video Search](../../AAAI2026/recommender/crops_improving_dense_retrieval_with_cross-perspective_positive_samples_in_short.md)
+- [Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling](../../AAAI2026/recommender/semi-supervised_synthetic_data_generation_with_fine-grained_relevance_control_fo.md)
+- [Preference is More Than Comparisons: Rethinking Dueling Bandits with Augmented Human Feedback](../../AAAI2026/recommender/preference_is_more_than_comparisons_rethinking_dueling_bandits_with_augmented_hu.md)
+- [Evaluating LLMs for Police Decision-Making: A Framework Based on Police Action Scenarios](../../AAAI2026/recommender/evaluating_llms_for_police_decision-making_a_framework_based_on_police_action_sc.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论贡献，缺乏数值验证
 - 写作质量: ⭐⭐⭐⭐ 逻辑链清晰（概念→结构性质→算法→保证），但数学密度高
 - 价值: ⭐⭐⭐⭐⭐ 解决了双层优化中的根本理论问题，集合光滑性概念有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [An Adaptive Algorithm for Bilevel Optimization on Riemannian Manifolds](an_adaptive_algorithm_for_bilevel_optimization_on_riemannian_manifolds.md)
+- [Problem-Parameter-Free Decentralized Bilevel Optimization](problem-parameter-free_decentralized_bilevel_optimization.md)
+- [Learning Theory for Kernel Bilevel Optimization](learning_theory_for_kernel_bilevel_optimization.md)
+- [A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)
+- [Escaping Saddle Points without Lipschitz Smoothness: The Power of Nonlinear Preconditioning](escaping_saddle_points_without_lipschitz_smoothness_the_power_of_nonlinear_preco.md)
+
+<!-- RELATED:END -->

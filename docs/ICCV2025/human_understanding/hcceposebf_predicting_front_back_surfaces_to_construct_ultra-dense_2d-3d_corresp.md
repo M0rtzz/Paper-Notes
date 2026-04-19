@@ -127,3 +127,15 @@ IC-BIN数据集上不同编码方法消融（ADD(-S) AR%）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ BOP七大数据集全面评测，消融实验细致
 - **写作质量**: ⭐⭐⭐⭐ 逻辑清晰，公式推导完整
 - **价值**: ⭐⭐⭐⭐ 实际提升显著，技术路线可推广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PoseSyn: Synthesizing Diverse 3D Pose Data from In-the-Wild 2D Data](posesyn_synthesizing_diverse_3d_pose_data_from_in-the-wild_2d_data.md)
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](../../NeurIPS2025/human_understanding/raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [High-Resolution Spatiotemporal Modeling with Global-Local State Space Models for Video-Based Human Pose Estimation](high-resolution_spatiotemporal_modeling_with_global-local_state_space_models_for.md)
+- [Learning Dense Hand Contact Estimation from Imbalanced Data](../../NeurIPS2025/human_understanding/learning_dense_hand_contact_estimation_from_imbalanced_data.md)
+- [HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation](../../CVPR2025/human_understanding/hipart_hierarchical_pose_autoregressive_transformer_for_occluded_3d_human_pose_e.md)
+
+<!-- RELATED:END -->

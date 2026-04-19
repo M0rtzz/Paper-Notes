@@ -146,3 +146,15 @@ Pipeline 分为三个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个模型族 × 2 个数据集 + 3 个跨领域数据集 + 缩放实验 + 详尽消融 + 实际延迟测量，非常扎实
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，从观察到方法到实验的推导自然，图表丰富
 - 价值: ⭐⭐⭐⭐ 对 LLM 推理效率有直接实用意义，特别是对 thinking model 的效率优化有启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cool-Fusion: Fuse Large Language Models without Training](cool-fusion_fuse_large_language_models_without_training.md)
+- [Disentangling Memory and Reasoning Ability in Large Language Models](disentangle_memory_reasoning.md)
+- [The Role of Deductive and Inductive Reasoning in Large Language Models](the_role_of_deductive_and_inductive_reasoning_in_large_language_models.md)
+- [ExpliCa: Evaluating Explicit Causal Reasoning in Large Language Models](explica_evaluating_explicit_causal_reasoning_in_large_language_models.md)
+- [Do Large Language Models Perform Latent Multi-Hop Reasoning without Exploiting Shortcuts?](do_large_language_models_perform_latent_multi-hop_reasoning_without_exploiting_s.md)
+
+<!-- RELATED:END -->

@@ -163,3 +163,15 @@ $$P_{\text{induction(fuzzy)}}(w_i | x) = \frac{c_{\text{fuzzy}}(w_{i-k-1:i-1} w_
 | 实验充分度 | 5 | 多数据集、多tokenizer、两大应用场景 |
 | 实用性 | 4 | 可直接用于推测解码和fMRI分析 |
 | 写作质量 | 4 | 结构清晰，动机表述好 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Roll the Dice & Look Before You Leap: Going Beyond the Creative Limits of Next-Token Prediction](../../ICML2025/medical_imaging/roll_the_dice_look_before_you_leap_going_beyond_the_creative_limits_of_next-toke.md)
+- [STAMP: Spatial-Temporal Adapter with Multi-Head Pooling](stamp_spatial-temporal_adapter_with_multi-head_pooling.md)
+- [MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding](more-brain_routed_mixture_of_experts_for_interpretable_and_generalizable_cross-s.md)
+- [Robust or Suggestible? Exploring Non-Clinical Induction in LLM Drug-Safety Decisions](robust_or_suggestible_exploring_non-clinical_induction_in_llm_drug-safety_decisi.md)
+- [FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification](firegnn_neuro-symbolic_graph_neural_networks_with_trainable_fuzzy_rules_for_inte.md)
+
+<!-- RELATED:END -->

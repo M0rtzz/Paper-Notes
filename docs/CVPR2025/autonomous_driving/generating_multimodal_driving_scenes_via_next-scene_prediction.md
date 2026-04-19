@@ -117,3 +117,15 @@ UMGen 在所有 MMD 指标上大幅超越对比方法，说明其生成的场景
 - 实验充分度: ⭐⭐⭐ 定性结果丰富但定量评估主要限于 MMD，缺少下游任务验证
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，方法描述完整
 - 价值: ⭐⭐⭐⭐ 为自动驾驶仿真提供了有前景的多模态生成方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
+- [Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots](panoramic_multimodal_semantic_occupancy_prediction_for_quadruped_robots.md)
+- [FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes](freesim_toward_free-viewpoint_camera_simulation_in_driving_scenes.md)
+- [ModeSeq: Taming Sparse Multimodal Motion Prediction with Sequential Mode Modeling](modeseq_taming_sparse_multimodal_motion_prediction_with_sequential_mode_modeling.md)
+- [UniScene: Unified Occupancy-centric Driving Scene Generation](uniscene_unified_occupancy-centric_driving_scene_generation.md)
+
+<!-- RELATED:END -->

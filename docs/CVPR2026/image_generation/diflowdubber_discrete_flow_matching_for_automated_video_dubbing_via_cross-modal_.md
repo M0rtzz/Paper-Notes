@@ -150,3 +150,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{align}} + \lambda_1 \mathcal{L
 ## 评分
 
 ⭐⭐⭐⭐ — 系统性强、模块设计合理、同步性显著提升，但评测规模有限且文字较冗长
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Modal Emotion Transfer for Emotion Editing in Talking Face Video](cross-modal_emotion_transfer_for_emotion_editing_in_talking_face_video.md)
+- [Score2Instruct: Scaling Up Video Quality-Centric Instructions via Automated Dimension Scoring](score2instruct_scaling_up_video_quality-centric_instructions_via_automated_dimen.md)
+- [MOS: Mitigating Optical-SAR Modality Gap for Cross-Modal Ship Re-Identification](mos_mitigating_optical-sar_modality_gap_for_cross-modal_ship_re-identification.md)
+- [Discrete Adjoint Matching](../../ICLR2026/image_generation/discrete_adjoint_matching.md)
+- [VeCoR — Velocity Contrastive Regularization for Flow Matching](vecor_--_velocity_contrastive_regularization_for_flow_matching.md)
+
+<!-- RELATED:END -->

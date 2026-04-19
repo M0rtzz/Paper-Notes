@@ -127,3 +127,15 @@ LoGos 在围棋基准上达到 88.6%，超越模拟顶级人类棋手的 KataGo-
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融实验全面，包含冷启动必要性、模板设计、奖励函数设计、数据量影响等
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，叙述有说服力
 - 价值: ⭐⭐⭐⭐⭐ 方法论贡献大，对领域专业知识注入通用 LLM 的研究具有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning](k-decore_facilitating_knowledge_transfer_in_continual_structured_knowledge_reaso.md)
+- [If Open Source Is to Win, It Must Go Public](../../ICML2025/human_understanding/if_open_source_is_to_win_it_must_go_public.md)
+- [MixRI: Mixing Features of Reference Images for Novel Object Pose Estimation](../../ICCV2025/human_understanding/mixri_mixing_features_of_reference_images_for_novel_object_pose_estimation.md)
+- [Distributionally Robust Online Markov Game with Linear Function Approximation](../../AAAI2026/human_understanding/distributionally_robust_online_markov_game_with_linear_function_approximation.md)
+- [Weakly Supervised Visible-Infrared Person Re-Identification via Heterogeneous Expert Collaborative Consistency Learning](../../ICCV2025/human_understanding/weakly_supervised_visible-infrared_person_re-identification_via_heterogeneous_ex.md)
+
+<!-- RELATED:END -->

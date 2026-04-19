@@ -144,3 +144,15 @@ $$E(\theta, t, \beta) = \lambda_1 \frac{1}{N} \sum_{j \in \mathcal{J}} \lambda_p
 - **实验充分度**: ⭐⭐⭐ 基线适配合理但数量有限，缺少更深入的分析
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数据集统计分析详尽
 - **价值**: ⭐⭐⭐⭐ 数据集对多人运动生成和舞蹈AI社区有重要推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RapVerse: Coherent Vocals and Whole-Body Motion Generation from Text](rapverse_coherent_vocals_and_whole-body_motion_generation_from_text.md)
+- [GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation](genm3_generative_pretrained_multi-path_motion_model_for_text_conditional_human_m.md)
+- [HUMOTO: A 4D Dataset of Mocap Human Object Interactions](humoto_a_4d_dataset_of_mocap_human_object_interactions.md)
+- [Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/human_understanding/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
+- [Align Your Rhythm: Generating Highly Aligned Dance Poses with Gating-Enhanced Rhythm-Aware Feature Representation](align_your_rhythm_generating_highly_aligned_dance_poses_with_gating-enhanced_rhy.md)
+
+<!-- RELATED:END -->

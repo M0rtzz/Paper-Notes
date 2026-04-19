@@ -112,3 +112,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 内存/速度/精度三维评估完整，消融详细
 - 写作质量: ⭐⭐⭐⭐ 灵敏度分析图表直观
 - 价值: ⭐⭐⭐⭐ 对大规模模型训练的实际加速有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation](delt_a_simple_diversity-driven_earlylate_training_for_dataset_distillation.md)
+- [FIMA-Q: Post-Training Quantization for Vision Transformers by Fisher Information Matrix Approximation](fima-q_post-training_quantization_for_vision_transformers_by_fisher_information_.md)
+- [Training a Generally Curious Agent (Paprika)](../../ICML2025/model_compression/training_a_generally_curious_agent.md)
+- [Towards an Optimal Control Perspective of ResNet Training](../../ICML2025/model_compression/towards_an_optimal_control_perspective_of_resnet_training.md)
+- [Memory-Efficient Training with In-Place FFT Implementation](../../NeurIPS2025/model_compression/memory-efficient_training_with_in-place_fft_implementation.md)
+
+<!-- RELATED:END -->

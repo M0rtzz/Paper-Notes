@@ -123,3 +123,15 @@ Face Controller（~1M 参数）比 ControlNet（~360M）和 ControlNeXt（~3M）
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计精巧且各组件动机清晰，视频训练策略和 RCG 是亮点，但分辨率受限、3DMM 依赖是遗留问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
+- [Monocular Facial Appearance Capture in the Wild](../../ICCV2025/human_understanding/monocular_facial_appearance_capture_in_the_wild.md)
+- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
+- [A Differential and Pointwise Control Approach to Reinforcement Learning](../../NeurIPS2025/human_understanding/a_differential_and_pointwise_control_approach_to_reinforceme.md)
+- [Generalizable Facial Expression Recognition](../../ECCV2024/human_understanding/generalizable_facial_expression_recognition.md)
+
+<!-- RELATED:END -->

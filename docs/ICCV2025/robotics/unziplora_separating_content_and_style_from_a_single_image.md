@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 用户研究+自动指标+消融+跨架构验证全面，但缺少更大规模的定量评估
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机展开清晰，方法讲解层层递进，图示丰富直观
 - 价值: ⭐⭐⭐⭐ 对创意生成和设计工作流有明确价值，但与机器人领域的关联稍弱
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruction-based Image Manipulation by Watching How Things Move](../../CVPR2025/robotics/instruction-based_image_manipulation_by_watching_how_things_move.md)
+- [MIP against Agent: Malicious Image Patches Hijacking Multimodal OS Agents](../../NeurIPS2025/robotics/mip_against_agent_malicious_image_patches_hijacking_multimod.md)
+- [Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping](../../ICLR2026/robotics/constructive_distortion_improving_mllms_with_attention-guided_image_warping.md)
+- [One Demo Is All It Takes: Planning Domain Derivation with LLMs from A Single Demonstration](../../ICLR2026/robotics/one_demo_is_all_it_takes_planning_domain_derivation_with_llms_from_a_single_demo.md)
+- [TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](../../ICLR2026/robotics/twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
+
+<!-- RELATED:END -->

@@ -124,3 +124,15 @@ $$\mathcal{L}_\pi(t, \tau_i, \ell_i) = \|\hat{a}_i^t - a_i^t\| + \lambda_\text{m
 - 实验充分度: ⭐⭐⭐⭐ — 11 种基线、3 种评估设置、2 种策略、真实机器人
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、动机和设计之间的联系紧密
 - 综合价值: ⭐⭐⭐⭐⭐ — 对机器人操作表示学习有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [mmWalk: Towards Multi-modal Multi-view Walking Assistance](mmwalk_towards_multi-modal_multi-view_walking_assistance.md)
+- [Task-aware MoILE: Hierarchical-Task-Aware Multi-modal Mixture of Incremental LoRA Experts for Embodied Continual Learning](../../ACL2025/robotics/hierarchical-task-aware_multi-modal_mixture_of_incremental_lora_experts_for_embo.md)
+- [ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](../../CVPR2025/robotics/asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)
+- [DexFlyWheel: A Scalable Self-Improving Data Generation Framework for Dexterous Manipulation](dexflywheel_a_scalable_and_self-improving_data_generation_framework_for_dexterou.md)
+- [Operation Veja: Fixing Fundamental Concepts Missing from Modern Roleplaying Training Paradigms](operation_veja_fixing_fundamental_concepts_missing_from_modern_roleplaying_train.md)
+
+<!-- RELATED:END -->

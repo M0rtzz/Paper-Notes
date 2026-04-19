@@ -136,3 +136,15 @@ AGORA（Agent Graph-based Orchestration for Reasoning and Assessment）构建于
 - **实验充分度**: ⭐⭐⭐⭐ — 10 种算法 × 多种模型 × 3 个数学基准 + 1 个多模态基准，发现有洞察力
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，关键发现提炼精准，实践指导性强
 - **价值**: ⭐⭐⭐⭐ — 为 Agent 开发者提供了"先 CoT 后复杂"的选型依据和可复用的评测框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Agent Collaboration via Cross-Team Orchestration](multi-agent_collaboration_via_cross-team_orchestration.md)
+- [CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate](cortexdebate_debating_sparsely_and_equally_for_multi-agent_debate.md)
+- [Preventing Rogue Agents Improves Multi-Agent Collaboration](preventing_rogue_agents_improves_multi-agent_collaboration.md)
+- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](beyond_frameworks_multi_agent_collaboration.md)
+- [DocAgent: A Multi-Agent System for Automated Code Documentation Generation](docagent_a_multi-agent_system_for_automated_code_documentation_generation.md)
+
+<!-- RELATED:END -->

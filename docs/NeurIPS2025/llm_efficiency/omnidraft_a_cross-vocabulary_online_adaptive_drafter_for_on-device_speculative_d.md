@@ -123,3 +123,15 @@ OmniDraft 包含三个核心组件：（1）跨词表 n-gram 缓存用于草稿/
 - 实验充分度: ⭐⭐⭐⭐ 多任务多目标模型，消融完整，但缺少与更多基线对比
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，公式推导详细，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 端侧通用草稿模型是重要实际需求，框架完整且可落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
+- [SAM Decoding: Speculative Decoding via Suffix Automaton](../../ACL2025/llm_efficiency/sam_decoding_speculative_decoding_via_suffix_automaton.md)
+- [Tetris: Optimal Draft Token Selection for Batch Speculative Decoding](../../ACL2025/llm_efficiency/tetris_optimal_draft_token_selection_for_batch_speculative_decoding.md)
+- [Vocabulary Customization for Efficient Domain-Specific LLM Deployment](vocabulary_customization_for_efficient_domain-specific_llm_deployment.md)
+- [CLaSp: In-Context Layer Skip for Self-Speculative Decoding](../../ACL2025/llm_efficiency/clasp_self_speculative_decoding.md)
+
+<!-- RELATED:END -->

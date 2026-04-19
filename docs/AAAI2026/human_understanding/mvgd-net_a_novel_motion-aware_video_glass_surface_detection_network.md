@@ -178,3 +178,15 @@ $$\mathcal{L} = \alpha \mathcal{L}_P + \mathcal{L}_M$$
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 与 11 种方法对比、详尽消融、数据集分析到位
 - **写作质量**: ⭐⭐⭐⭐ — 物理动机阐述清晰，图示说服力强
 - **实用价值**: ⭐⭐⭐⭐ — 对机器人/自动驾驶场景有直接价值，但速度需要优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Failures to Surface Harmful Contents in Video Large Language Models](failures_to_surface_harmful_contents_in_video_large_language_models.md)
+- [Personality-guided Public-Private Domain Disentangled Hypergraph-Former Network for Multimodal Depression Detection](personality-guided_public-private_domain_disentangled_hypergraph-former_network_.md)
+- [SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/human_understanding/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [Renormalization Group Guided Tensor Network Structure Search](renormalization_group_guided_tensor_network_structure_search.md)
+- [Unleashing Vision-Language Semantics for Deepfake Video Detection](../../CVPR2026/human_understanding/unleashing_vision-language_semantics_for_deepfake_video_detection.md)
+
+<!-- RELATED:END -->

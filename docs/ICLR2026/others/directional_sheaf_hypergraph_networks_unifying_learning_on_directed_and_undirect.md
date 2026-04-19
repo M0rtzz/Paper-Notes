@@ -138,3 +138,15 @@ DSHN 三步走：(1) 定义 Directed Hypergraph Cellular Sheaf（复值 restrict
 - **实验充分度**: ⭐⭐⭐⭐ 7 个数据集、13 个 baseline、完整消融
 - **写作质量**: ⭐⭐⭐⭐ 数学推导清晰，符号系统较重但定义精确
 - **价值**: ⭐⭐⭐⭐ 修正了已有方法缺陷并提供统一框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sheaf Cohomology of Linear Predictive Coding Networks](../../NeurIPS2025/others/sheaf_cohomology_of_linear_predictive_coding_networks.md)
+- [Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
+- [Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
+- [On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
+- [Learning Fair Representations with Kolmogorov-Arnold Networks](../../AAAI2026/others/learning_fair_representations_with_kolmogorov-arnold_networks.md)
+
+<!-- RELATED:END -->

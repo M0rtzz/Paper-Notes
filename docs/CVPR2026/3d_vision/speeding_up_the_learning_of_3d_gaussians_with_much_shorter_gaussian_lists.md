@@ -176,3 +176,15 @@ $$\mathcal{L}_{\text{base}} = (1-\lambda)\mathcal{L}_1 + \lambda \mathcal{L}_{\t
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个标准数据集、详尽消融、与多种替代方案对比、timing breakdown 分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 实现 9× 加速具有实际意义，方法简洁易于集成到现有 3DGS 流程
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastGS: Training 3D Gaussian Splatting in 100 Seconds](fastgs_training_3d_gaussian_splatting_in_100_seconds.md)
+- [MEGS2: Memory-Efficient Gaussian Splatting via Spherical Gaussians and Unified Pruning](../../ICLR2026/3d_vision/megs2_memory-efficient_gaussian_splatting_via_spherical_gaussians_and_unified_pr.md)
+- [MegaSynth: Scaling Up 3D Scene Reconstruction with Synthesized Data](../../CVPR2025/3d_vision/megasynth_scaling_up_3d_scene_reconstruction_with_synthesized_data.md)
+- [PhyGaP: Physically-Grounded Gaussians with Polarization Cues](phygap_physically-grounded_gaussians_with_polarization_cues.md)
+- [AAA-Gaussians: Anti-Aliased and Artifact-Free 3D Gaussian Rendering](../../ICCV2025/3d_vision/aaagaussians_antialiased_and_artifactfree_3d_gaussian_render.md)
+
+<!-- RELATED:END -->

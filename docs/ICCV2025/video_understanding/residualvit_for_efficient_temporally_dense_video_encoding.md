@@ -118,3 +118,15 @@ $$\mathcal{J}_{L \rightarrow V} = -\sum_{i=1}^{B}\sum_{k=1}^{N}\sum_{j=1}^{B} \s
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个任务五个数据集，零样本和有监督设置均覆盖，消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，动机-方法-实验逻辑链完整，图表精美
 - 价值: ⭐⭐⭐⭐ 对时间密集视频任务有实际工程价值，但通用性还需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AllTracker: Efficient Dense Point Tracking at High Resolution](alltracker_efficient_dense_point_tracking_at_high_resolution.md)
+- [Factorized Learning for Temporally Grounded Video-Language Models](factorized_learning_for_temporally_grounded_video-language_models.md)
+- [TOGA: Temporally Grounded Open-Ended Video QA with Weak Supervision](toga_temporally_grounded_open-ended_video_qa_with_weak_supervision.md)
+- [EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation](../../CVPR2025/video_understanding/edcflow_exploring_temporally_dense_difference_maps_for_event-based_optical_flow_.md)
+- [General Compression Framework for Efficient Transformer Object Tracking](general_compression_framework_for_efficient_transformer_object_tracking.md)
+
+<!-- RELATED:END -->

@@ -113,3 +113,15 @@ LUMINA 的工作流分为三步：(1) 数据收集与整理——来自 6 个厂
 - 实验充分度: ⭐⭐⭐⭐ 三任务、多模型、多分辨率、消融+可视化+能量分析均覆盖
 - 写作质量: ⭐⭐⭐⭐ 表格和图表丰富，实验设置透明，数据集对比表格有说服力
 - 价值: ⭐⭐⭐⭐ 多厂商基准数据集对社区有直接贡献，已在 OSF/Kaggle/GitHub 三平台公开
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](milpf_multiple_instance_learning_on_precomputed_fe.md)
+- [A protocol for evaluating robustness to H&E staining variation in computational pathology models](a_protocol_for_evaluating_robustness_to_he_stainin.md)
+- [MedGEN-Bench: Contextually Entangled Benchmark for Open-Ended Multimodal Medical Generation](medgen-bench_contextually_entangled_benchmark_for_open-ended_multimodal_medical_.md)
+- [Pancakes: Consistent Multi-Protocol Image Segmentation Across Biomedical Domains](../../NeurIPS2025/medical_imaging/pancakes_consistent_multi-protocol_image_segmentation_across_biomedical_domains.md)
+- [Energy-induced Explicit Quantification for Multi-modality MRI Fusion](../../ECCV2024/medical_imaging/energy-induced_explicit_quantification_for_multi-modality_mri_fusion.md)
+
+<!-- RELATED:END -->

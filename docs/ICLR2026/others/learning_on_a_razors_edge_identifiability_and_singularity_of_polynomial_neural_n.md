@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，仅有附录中的小规模符号计算验证
 - 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，定义清晰，定理间逻辑环环相扣，proof sketch 帮助读者抓住核心思路
 - 价值: ⭐⭐⭐⭐ 为理解 NN 的学习过程提供了深层理论基础，MLP vs CNN 差异的几何解释对架构设计有启发意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
+- [On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
+- [Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
+- [Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs](directional_sheaf_hypergraph_networks_unifying_learning_on_directed_and_undirect.md)
+- [Training Deep Normalization-Free Spiking Neural Networks with Lateral Inhibition](training_deep_normalization-free_spiking_neural_networks_with_lateral_inhibition.md)
+
+<!-- RELATED:END -->

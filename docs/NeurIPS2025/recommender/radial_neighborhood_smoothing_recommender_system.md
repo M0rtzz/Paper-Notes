@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 多个真实数据集但缺少深度学习 baseline
 - 写作质量: ⭐⭐⭐⭐ 数学严谨，理论推导清晰
 - 价值: ⭐⭐⭐⭐ 为推荐系统提供了新的理论洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Think before Recommendation: Autonomous Reasoning-enhanced Recommender](think_before_recommendation_autonomous_reasoning-enhanced_recommender.md)
+- [R²ec: Towards Large Recommender Models with Reasoning](r2ec_towards_large_recommender_models_with_reasoning.md)
+- [Rejuvenating Cross-Entropy Loss in Knowledge Distillation for Recommender Systems](../../ICLR2026/recommender/rejuvenating_cross-entropy_loss_in_knowledge_distillation_for_recommender_system.md)
+- [CoVE: Compressed Vocabulary Expansion Makes Better LLM-based Recommender Systems](../../ACL2025/recommender/cove_compressed_vocabulary_expansion_makes_better_llm-based_recommender_systems.md)
+- [Token-Efficient Item Representation via Images for LLM Recommender Systems](../../ICLR2026/recommender/token-efficient_item_representation_via_images_for_llm_recommender_systems.md)
+
+<!-- RELATED:END -->

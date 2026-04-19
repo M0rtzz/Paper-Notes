@@ -242,3 +242,15 @@ $k=3$ 时性能已接近最优，报告以此为准。
 - 实验充分度: ⭐⭐⭐⭐（4个环境+全面消融+泛化分析+速度对比）
 - 写作质量: ⭐⭐⭐⭐（逻辑清晰，从动机到方法到实验递进自然）
 - 价值: ⭐⭐⭐⭐⭐（高效的任务分组方法有广泛的多目标RL应用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management](mars_a_meta-adaptive_reinforcement_learning_framework_for_risk-aware_multi-agent.md)
+- [Provably Efficient Multi-Objective Bandit Algorithms under Preference-Centric Customization](provably_efficient_multi-objective_bandit_algorithms_under_preference-centric_cu.md)
+- [Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](../../NeurIPS2025/reinforcement_learning/multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
+- [RLP: Reinforcement as a Pretraining Objective](../../ICLR2026/reinforcement_learning/rlp_reinforcement_as_a_pretraining_objective.md)
+- [Explaining Decentralized Multi-Agent Reinforcement Learning Policies](explaining_decentralized_multi-agent_reinforcement_learning_policies.md)
+
+<!-- RELATED:END -->

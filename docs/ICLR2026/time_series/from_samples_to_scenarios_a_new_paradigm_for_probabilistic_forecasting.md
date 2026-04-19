@@ -120,3 +120,15 @@ $N=625$ 时性能收益趋于饱和。
 - 实验充分度: ⭐⭐⭐⭐ 5个数据集+多基线+消融+可视化，但仅限时间序列领域
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，从问题到方案的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 为概率预测开辟新方向，极简模型即达SOTA具有极强说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Scaling LLM Speculative Decoding: Non-Autoregressive Forecasting in Large-Batch Scenarios](../../AAAI2026/time_series/scaling_llm_speculative_decoding_non-autoregressive_forecasting_in_large-batch_s.md)
+- [Winner-takes-all for Multivariate Probabilistic Time Series Forecasting](../../ICML2025/time_series/winner-takes-all_for_multivariate_probabilistic_time_series_forecasting.md)
+- [Benchmarking Probabilistic Time Series Forecasting Models on Neural Activity](../../NeurIPS2025/time_series/benchmarking_probabilistic_time_series_forecasting_models_on_neural_activity.md)
+- [Risk and Cross Validation in Ridge Regression with Correlated Samples](../../ICML2025/time_series/risk_and_cross_validation_in_ridge_regression_with_correlated_samples.md)
+- [AERO: A Redirection-Based Optimization Framework Inspired by Judo for Robust Probabilistic Forecasting](../../NeurIPS2025/time_series/aero_a_redirection-based_optimization_framework_inspired_by_judo_for_robust_prob.md)
+
+<!-- RELATED:END -->

@@ -117,3 +117,15 @@ $\mathcal{L} = \mathcal{L}_{\text{LM}} + \lambda_1 \mathcal{L}_{\text{span}} + \
 - 实验充分度: ⭐⭐⭐⭐ 多基线对比、消融完整、text+segmentation 双评估
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，论据充分
 - 价值: ⭐⭐⭐⭐⭐ 揭示 LMM 的重要盲区，benchmark + 方法论双贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [F-LMM: Grounding Frozen Large Multimodal Models](../../CVPR2025/segmentation/f-lmm_grounding_frozen_large_multimodal_models.md)
+- [PartNeXt: A Next-Generation Dataset for Fine-Grained and Hierarchical 3D Part Understanding](partnext_a_next-generation_dataset_for_fine-grained_and_hierarchical_3d_part_und.md)
+- [UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning](unipixel_unified_object_referring_and_segmentation_for_pixel-level_visual_reason.md)
+- [OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models](../../ECCV2024/segmentation/openpsg_open-set_panoptic_scene_graph_generation_via_large_multimodal_models.md)
+- [LangHOPS: Language Grounded Hierarchical Open-Vocabulary Part Segmentation](langhops_language_grounded_hierarchical_open-vocabulary_part_segmentation.md)
+
+<!-- RELATED:END -->

@@ -165,3 +165,15 @@ $$\mathcal{L}_{Match} = \lambda_{Mass} \mathcal{L}_{Mass} + \lambda_{OT} \mathca
 - 实验充分度: ⭐⭐⭐⭐ （覆盖模拟和多个真实数据集，有消融和噪声鲁棒性分析）
 - 写作质量: ⭐⭐⭐⭐⭐ （数学推导严谨，框架描述清晰）
 - 价值: ⭐⭐⭐⭐ （对单细胞生物学的轨迹推断具有实用价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Quantifying Lexical Semantic Shift via Unbalanced Optimal Transport](../../ACL2025/others/quantifying_lexical_semantic_shift_via_unbalanced_optimal_transport.md)
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](../../ICML2025/others/hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+- [LaCoOT: Layer Collapse through Optimal Transport](../../ICCV2025/others/lacoot_layer_collapse_through_optimal_transport.md)
+- [Lightspeed Geometric Dataset Distance via Sliced Optimal Transport](../../ICML2025/others/lightspeed_geometric_dataset_distance_via_sliced_optimal_transport.md)
+- [Semi-Supervised High Dynamic Range Image Reconstructing via Bi-Level Uncertain Area Masking](semi-supervised_high_dynamic_range_image_reconstructing_via_bi-level_uncertain_a.md)
+
+<!-- RELATED:END -->

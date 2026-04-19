@@ -139,3 +139,15 @@ InvSR单步即在无参考感知质量指标上全面领先，且参数量（33.
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多指标、多步数消融、与9种方法对比、运行时间对比全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、推导严谨、图表规范，整体逻辑流畅
 - 价值: ⭐⭐⭐⭐ 方法简洁高效且效果好，有实际应用价值和方法论推广潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution](faithdiff_unleashing_diffusion_priors_for_faithful_image_super-resolution.md)
+- [Image Super-Resolution with Guarantees via Conformalized Generative Models](../../NeurIPS2025/image_generation/image_super-resolution_with_guarantees_via_conformalized_generative_models.md)
+- [PatchScaler: An Efficient Patch-Independent Diffusion Model for Image Super-Resolution](../../ICCV2025/image_generation/patchscaler_an_efficient_patch-independent_diffusion_model_for_image_super-resol.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](../../ECCV2024/image_generation/xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [Realism Control One-step Diffusion for Real-World Image Super-Resolution](../../AAAI2026/image_generation/realism_control_one-step_diffusion_for_real-world_image_super-resolution.md)
+
+<!-- RELATED:END -->

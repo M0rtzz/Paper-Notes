@@ -165,3 +165,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐（多维度、多模型、多条件的全面评测）
 - 写作质量: ⭐⭐⭐⭐（逻辑清晰，但篇幅较长）
 - 价值: ⭐⭐⭐⭐⭐（揭示了MLLM的重要盲区，对社区有重要警示作用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Concept-RuleNet: Grounded Multi-Agent Neurosymbolic Reasoning in Vision Language Models](concept-rulenet_grounded_multi-agent_neurosymbolic_reasoning.md)
+- [ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](../../CVPR2025/multimodal_vlm/ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)
+- [Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/seeing_is_believing_mitigating_ocr_hallucinations_in_multimodal_large_language_m.md)
+- [SDEval: Safety Dynamic Evaluation for Multimodal Large Language Models](sdeval_safety_dynamic_evaluation_for_multimodal_large_language_models.md)
+- [VP-Bench: A Comprehensive Benchmark for Visual Prompting in Multimodal Large Language Models](vp-bench_a_comprehensive_benchmark_for_visual_prompting_in_m.md)
+
+<!-- RELATED:END -->

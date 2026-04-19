@@ -113,3 +113,15 @@ CPNN 的核心假设：slide/patch 级基因表达 = 各细胞类型原型表达
 - **实验充分度**: ⭐⭐⭐⭐ 6 个数据集，slide/patch 两种设置，消融完整
 - **写作质量**: ⭐⭐⭐⭐ 问题建模清晰，公式推导规范
 - **价值**: ⭐⭐⭐⭐ 可解释性+性能提升，对计算病理学有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics](../../NeurIPS2025/medical_imaging/learning_relative_gene_expression_trends_from_pathology_images_in_spatial_transc.md)
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [Intrinsic Lorentz Neural Network](../../ICLR2026/medical_imaging/intrinsic_lorentz_neural_network.md)
+- [Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control](beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ (两个模型家族、多个基线、详尽消融、跨数据集验证)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，逻辑流畅)
 - 价值: ⭐⭐⭐⭐ (对认知神经科学与语音 AI 交叉领域有实质推动)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](../../ICML2025/medical_imaging/the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
+- [The Human Brain as a Combinatorial Complex](the_human_brain_as_a_combinatorial_complex.md)
+- [Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry](riemannian_flow_matching_for_brain_connectivity_matrices_via_pullback_geometry.md)
+- [Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens](brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int.md)
+- [From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)
+
+<!-- RELATED:END -->

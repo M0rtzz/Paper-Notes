@@ -127,3 +127,15 @@ tags:
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ Mistake Log 概念和 Pilot-Copilot 框架新颖，但 logits 修正本身不算全新
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 个基准 + 3 类任务 + 多种 Pilot + 理论分析 + 可视化 + 迁移性/可扩展性分析，非常全面
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning](overcoming_sparsity_artifacts_in_crosscoders_to_interpret_chat-tuning.md)
+- [RecLM: Recommendation Instruction Tuning](../../ACL2025/recommender/reclm_recommendation_instruction_tuning.md)
+- [Validating LLM-as-a-Judge Systems under Rating Indeterminacy](validating_llm-as-a-judge_systems_under_rating_indeterminacy.md)
+- [FineVQ: Fine-Grained User Generated Content Video Quality Assessment](../../CVPR2025/recommender/finevq_fine-grained_user_generated_content_video_quality_assessment.md)
+- [ASAP: An Agentic Solution to Auto-Optimize Performance of Large-Scale LLM Training](asap_an_agentic_solution_to_auto-optimize_performance_of_large-scale_llm_trainin.md)
+
+<!-- RELATED:END -->

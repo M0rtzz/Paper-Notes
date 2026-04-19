@@ -143,3 +143,15 @@ FERMAT的构建分为四个阶段：
 - 实验充分度: ⭐⭐⭐⭐ 9个VLM、多种评估策略和消融实验，但缺少对不同手写质量的精细分析
 - 写作质量: ⭐⭐⭐⭐ 清晰的任务定义和实验设置，图表信息量大
 - 价值: ⭐⭐⭐⭐ 对教育科技应用有直接参考价值，扰动分类法可被广泛复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Judging the Judges: Can Large Vision-Language Models Fairly Evaluate Chart Comprehension and Reasoning?](judging_the_judges_can_large_vision-language_models_fairly_evaluate_chart_compre.md)
+- [NegVQA: Can Vision Language Models Understand Negation?](negvqa_can_vision_language_models_understand_negation.md)
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?](cordial_can_multimodal_large_language_models_effectively_understand_coherence_re.md)
+
+<!-- RELATED:END -->

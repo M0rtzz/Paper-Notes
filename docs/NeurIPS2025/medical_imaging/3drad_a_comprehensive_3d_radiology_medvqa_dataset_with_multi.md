@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖4个3D Med-VLM + 多个通用VLM，zero-shot/fine-tune/数据规模消融/跨任务消融/失败案例分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富；但部分章节（如相关工作）过度引用自身团队的工作
 - 价值: ⭐⭐⭐⭐⭐ 填补3D Med-VQA领域空白，开源数据集+代码，136K训练集有实际使用价值，揭示了时序推理的关键瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
+- [MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks](medagentboard_benchmarking_multi-agent_collaboration_with_conventional_methods_f.md)
+- [RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis](rad_towards_trustworthy_retrieval-augmented_multi-modal_clinical_diagnosis.md)
+- [STAMP: Spatial-Temporal Adapter with Multi-Head Pooling](stamp_spatial-temporal_adapter_with_multi-head_pooling.md)
+- [Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
+
+<!-- RELATED:END -->

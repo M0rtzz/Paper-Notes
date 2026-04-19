@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个目标模型(含GPT-4o/Claude-4/Grok-4)，8个baseline，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 问题建模清晰，但部分公式可以更简化
 - 价值: ⭐⭐⭐⭐⭐ 对理解LLM多轮安全漏洞和改进防御有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Sample Complexity of Differentially Private Policy Optimization](../../NeurIPS2025/ai_safety/on_the_sample_complexity_of_differentially_private_policy_optimization.md)
+- [OFMU: Optimization-Driven Framework for Machine Unlearning](ofmu_optimization-driven_framework_for_machine_unlearning.md)
+- [Efficient Resource-Constrained Training of Transformers via Subspace Optimization](efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
+- [VPI-Bench: Visual Prompt Injection Attacks for Computer-Use Agents](vpi-bench_visual_prompt_injection_attacks_for_computer-use_agents.md)
+- [Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
+
+<!-- RELATED:END -->

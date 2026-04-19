@@ -146,3 +146,15 @@ $$\mathcal{L}_{all} = \mathcal{L}_{task} + \lambda_1 \mathcal{L}_{kd} + \lambda_
 - 实验充分度: ⭐⭐⭐⭐ — 3 个数据集、6 种模型组合、7 种基线对比，消融完整
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰、符号表统一、理论推导完备
 - 价值: ⭐⭐⭐⭐ — 打开了弱语义一致性下跨模态蒸馏的新方向，有实际应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization](uniabg_unified_adversarial_view_bridging_and_graph_correspondence_for_unsupervis.md)
+- [Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](../../CVPR2026/remote_sensing/cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](../../ICCV2025/remote_sensing/geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+- [Consistency-based Abductive Reasoning over Perceptual Errors of Multiple Pre-trained Models in Novel Environments](consistency-based_abductive_reasoning_over_perceptual_errors_of_multiple_pre-tra.md)
+- [C3PO: Cross-View Cross-Modality Correspondence by Pointmap Prediction](../../NeurIPS2025/remote_sensing/c3po_cross-view_cross-modality_correspondence_by_pointmap_prediction.md)
+
+<!-- RELATED:END -->

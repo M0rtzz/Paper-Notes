@@ -121,3 +121,15 @@ SAIL 弱监督在多数指标上超越全监督方法 CM2 和 E2DVC。
 - 写作质量: ⭐⭐⭐⭐ 动机分析透彻，固定掩码实验的洞察非常有说服力
 - 价值: ⭐⭐⭐ 弱监督超全监督有实际意义，但改进幅度不大
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Stay in your Lane: Role Specific Queries with Overlap Suppression Loss for Dense Video Captioning](stay_in_your_lane_role_specific_queries_with_overlap_suppression_loss_for_dense_.md)
+- [Explicit Temporal-Semantic Modeling for Dense Video Captioning via Context-Aware Cross-Modal Interaction](../../AAAI2026/video_understanding/explicit_temporal-semantic_modeling_for_dense_video_captioning_via_context-aware.md)
+- [Mamba-VMR: Multimodal Query Augmentation via Generated Videos for Precise Temporal Grounding](mamba-vmr_multimodal_query_augmentation_via_generated_videos_for_precise_tempora.md)
+- [TimeCraft: Navigate Weakly-Supervised Temporal Grounded Video Question Answering via Bi-directional Reasoning](../../ECCV2024/video_understanding/timecraft_navigate_weakly-supervised_temporal_grounded_video_question_answering_.md)
+- [CVA: Context-aware Video-text Alignment for Video Temporal Grounding](cva_context-aware_video-text_alignment_for_video_temporal_grounding.md)
+
+<!-- RELATED:END -->

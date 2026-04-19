@@ -138,3 +138,15 @@ tags:
 **实验充分度**: ⭐⭐⭐⭐ 定量+定性+用户研究+数据效率分析全面  
 **写作质量**: ⭐⭐⭐⭐ 图示丰富直观，方法描述清晰  
 **实用价值**: ⭐⭐⭐⭐⭐ 极低训练数据需求 + 即插即用设计，实际应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Space Imaging](latent_space_imaging.md)
+- [LaTexBlend: Scaling Multi-concept Customized Generation with Latent Textual Blending](latexblend_scaling_multi-concept_customized_generation_with_latent_textual_blend.md)
+- [Dynamic Motion Blending for Versatile Motion Editing (MotionReFit)](dynamic_motion_blending_for_versatile_motion_editing.md)
+- [CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation](clip_under_the_microscope_a_fine-grained_analysis_of_multi-object_representation.md)
+- [FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs](finelip_extending_clips_reach_via_fine-grained_alignment_with_longer_text_inputs.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ $$\mathcal{F}(\boldsymbol{x}) = \frac{Ar_{tri} \cdot (\mathbb{I}_x + 2r) + Ar_{s
 - 实验充分度: ⭐⭐⭐ — 有验证性实验支持理论，但缺少实际 NAS 场景对比
 - 写作质量: ⭐⭐⭐⭐ — 证明框架清晰，符号体系一致
 - 价值: ⭐⭐⭐ — 理论意义突出但实际影响有限，适用范围受理想化假设约束
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improved Runtime Guarantees for the SPEA2 Multi-Objective Optimizer](../../AAAI2026/llm_evaluation/improved_runtime_guarantees_for_the_spea2_multi-objective_optimizer.md)
+- [A Standardized Benchmark for Multilabel Antimicrobial Peptide Classification](../../NeurIPS2025/llm_evaluation/a_standardized_benchmark_for_multilabel_antimicrobial_peptide_classification.md)
+- [BESSTIE: A Benchmark for Sentiment and Sarcasm Classification for Varieties of English](../../ACL2025/llm_evaluation/besstie_a_benchmark_for_sentiment_and_sarcasm_classification_for_varieties_of_en.md)
+- [HybriDLA: Hybrid Generation for Document Layout Analysis](../../AAAI2026/llm_evaluation/hybridla_hybrid_generation_for_document_layout_analysis.md)
+- [RealHiTBench: A Comprehensive Realistic Hierarchical Table Benchmark for Evaluating LLM-Based Table Analysis](../../ACL2025/llm_evaluation/realhitbench_a_comprehensive_realistic_hierarchical_table_benchmark_for_evaluati.md)
+
+<!-- RELATED:END -->

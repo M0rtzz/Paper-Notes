@@ -132,3 +132,15 @@ Infogen 包含两个主要模块：
 - 实验充分度: ⭐⭐⭐⭐ 自动评估+人类评估+定性分析，基线覆盖广
 - 写作质量: ⭐⭐⭐⭐ 架构图清晰，但部分细节散落在附录中
 - 价值: ⭐⭐⭐⭐ 应用价值较高，数据集和任务定义有基准贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Re-identification of De-identified Documents with Autoregressive Infilling](reidentification_deidentified.md)
+- [Statistical Deficiency for Task Inclusion Estimation](statistical_deficiency_task_inclusion.md)
+- [Generating Synthetic Relational Tabular Data via Structural Causal Models](generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
+- [Statistical Inference Under Performativity](../../NeurIPS2025/others/statistical_inference_under_performativity.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](distractor_gen_multiple_choice.md)
+
+<!-- RELATED:END -->

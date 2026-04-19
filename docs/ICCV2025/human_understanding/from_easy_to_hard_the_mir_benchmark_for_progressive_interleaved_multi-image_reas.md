@@ -122,3 +122,15 @@ Qwen2-VL 在 MIR 上的各阶段表现：
 - **实验充分度**: ⭐⭐⭐⭐ 5 个 MLLM × 3 种训练策略 × 多个基准，消融充分
 - **写作质量**: ⭐⭐⭐⭐ 结构完整，图表清晰，案例分析直观
 - **价值**: ⭐⭐⭐⭐ 为多图像交错推理提供了重要基准和有效训练策略
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition](lvface_progressive_cluster_optimization_for_large_vision_models_in_face_recognit.md)
+- [Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants](../../NeurIPS2025/human_understanding/face-human-bench_a_comprehensive_benchmark_of_face_and_human_understanding_for_m.md)
+- [MM-CondChain: A Programmatically Verified Benchmark for Visually Grounded Deep Compositional Reasoning](../../CVPR2025/human_understanding/mm-condchain_a_programmatically_verified_benchmark_for_visually_grounded_deep_co.md)
+- [LLaVA-ReID: Selective Multi-Image Questioner for Interactive Person Re-Identification](../../ICML2025/human_understanding/llava-reid_selective_multi-image_questioner_for_interactive_person_re-identifica.md)
+- [Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2025/human_understanding/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+
+<!-- RELATED:END -->

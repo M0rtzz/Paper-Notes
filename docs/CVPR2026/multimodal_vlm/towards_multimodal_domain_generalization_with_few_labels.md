@@ -116,3 +116,14 @@ tags:
 - 写作质量: ⭐⭐⭐⭐ 问题定义和方法描述清晰
 - 价值: ⭐⭐⭐⭐ 填补了三线交叉未被探索的空白，基准有社区价值
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Single Domain Generalization for Few-Shot Counting via Universal Representation Matching](../../CVPR2025/multimodal_vlm/single_domain_generalization_for_few-shot_counting_via_universal_representation_.md)
+- [Reasoning-Driven Multimodal LLM for Domain Generalization](../../ICLR2026/multimodal_vlm/reasoning-driven_multimodal_llm_for_domain_generalization.md)
+- [FlashCache: Frequency-Domain-Guided Outlier-KV-Aware Multimodal KV Cache Compression](flashcache_frequency_kv_cache_compression.md)
+- [Conditional Factuality Controlled LLMs with Generalization Certificates via Conformal Sampling](conditional_factuality_controlled_llms_with_generalization_certificates_via_conf.md)
+- [Activation Matters: Test-time Activated Negative Labels for OOD Detection with Vision-Language Models](activation_matters_test-time_activated_negative_labels_for_ood_detection_with_vi.md)
+
+<!-- RELATED:END -->

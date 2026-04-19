@@ -123,3 +123,15 @@ MedQA-Followup构建了一个**二维分类法**来组织所有评估方式：
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个模型、14种干预技术、累积分析、长度消融、领域分析
 - 写作质量: ⭐⭐⭐⭐ 分类法清晰，实验组织有条理
 - 价值: ⭐⭐⭐⭐⭐ 直击LLM临床部署的核心安全问题，发现具有重大实践意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Note2Chat: Improving LLMs for Multi-Turn Clinical History Taking Using Medical Notes](../../AAAI2026/medical_imaging/note2chat_improving_llms_for_multi-turn_clinical_history_taking_using_medical_no.md)
+- [EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis](endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en.md)
+- [Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge](../../ACL2025/medical_imaging/biore_llm_judge_evaluation.md)
+- [The Biased Oracle: Assessing LLMs' Understandability and Empathy in Medical Diagnoses](the_biased_oracle_assessing_llms_understandability_and_empathy_in_medical_diagno.md)
+- [Evaluation of LLMs in Medical Text Summarization: The Role of Vocabulary Adaptation in High OOV Settings](../../ACL2025/medical_imaging/evaluation_of_llms_in_medical_text_summarization_the_role_of_vocabulary_adaptati.md)
+
+<!-- RELATED:END -->

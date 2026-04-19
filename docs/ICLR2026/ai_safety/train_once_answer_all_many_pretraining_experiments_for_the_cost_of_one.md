@@ -152,3 +152,15 @@ CPDT 依赖性测试结果：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 10 个实验、4 个模型规模、5 个成功复现、3 个新实验，实验设计极为充分
 - **写作质量**: ⭐⭐⭐⭐ — 论文结构清晰，数学化定义严谨，图表直观；但实验细节因篇幅被移入附录
 - **价值**: ⭐⭐⭐⭐⭐ — 有望改变 LLM 预训练实验的范式，为资源有限的研究者提供了实质性帮助
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing](../../ICML2025/ai_safety/can_one_safety_loop_guard_them_all_agentic_guard_rails_for_federated_computing.md)
+- [Attention Smoothing Is All You Need For Unlearning](attention_smoothing_is_all_you_need_for_unlearning.md)
+- [Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis](../../ICCV2025/ai_safety/oasis_one_image_is_all_you_need_for_multimodal_instruction_data_synthesis.md)
+- [Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
+- [Federated In-Context Learning: Iterative Refinement for Improved Answer Quality](../../ICML2025/ai_safety/federated_in-context_learning_iterative_refinement_for_improved_answer_quality.md)
+
+<!-- RELATED:END -->

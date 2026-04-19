@@ -125,3 +125,15 @@ TPL 在以下任务上优于现有方法：
 - **实验充分度**: ⭐⭐⭐ 因缓存不完整无法完整评估，但项目页面展示了丰富的定性结果
 - **写作质量**: ⭐⭐⭐ 摘要和框架描述清晰，但缓存问题影响了完整评估
 - **价值**: ⭐⭐⭐⭐ AI生成视频同步是有前瞻意义的新问题，原型方法有实际可扩展性优势
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)
+- [Multiple Object Tracking as ID Prediction](../../CVPR2025/object_detection/multiple_object_tracking_as_id_prediction.md)
+- [Anchored Answers: Unravelling Positional Bias in GPT-2's Multiple-Choice Questions](../../ACL2025/object_detection/anchored_answers_unravelling_positional_bias_in_gpt-2s_multiple-choice_questions.md)
+- [HumanMM: Global Human Motion Recovery from Multi-shot Videos](../../CVPR2025/object_detection/humanmm_global_human_motion_recovery_from_multi-shot_videos.md)
+- [When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking](../../AAAI2026/object_detection/when_trackers_date_fish_a_benchmark_and_framework_for_underwater_multiple_fish_t.md)
+
+<!-- RELATED:END -->

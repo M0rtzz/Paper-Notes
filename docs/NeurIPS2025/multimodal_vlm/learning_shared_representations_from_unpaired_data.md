@@ -126,3 +126,15 @@ $f_\mathcal{X} = Q_\mathcal{X} \circ S_\mathcal{X}$，$f_\mathcal{Y} = F_\theta 
 - 实验充分度: ⭐⭐⭐⭐ 覆盖检索、生成、算术、零样本、分类等多个任务，消融清晰，但绝对性能有限
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，直觉解释清晰，图示优美，整体叙事从理论到实验流畅
 - 价值: ⭐⭐⭐⭐ 开启了非配对多模态学习的新范式，对数据稀缺领域有重要意义，但离实际应用仍有差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIDAS: Misalignment-based Data Augmentation Strategy for Imbalanced Multimodal Learning](midas_misalignment-based_data_augmentation_strategy_for_imbalanced_multimodal_le.md)
+- [Learning Optimal Multimodal Information Bottleneck Representations](../../ICML2025/multimodal_vlm/learning_optimal_multimodal_information_bottleneck_representations.md)
+- [Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment](guiding_cross-modal_representations_with_mllm_priors_via_preference_alignment.md)
+- [FOCUS: Internal MLLM Representations for Efficient Fine-Grained Visual Question Answering](focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)
+- [Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](../../ECCV2024/multimodal_vlm/decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear.md)
+
+<!-- RELATED:END -->

@@ -166,3 +166,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 12 个模型评估、多粒度指标、Hard/Soft 双重匹配
 - **写作质量**: ⭐⭐⭐⭐ 数据集构建过程描述详尽，标注体系清晰
 - **价值**: ⭐⭐⭐⭐⭐ 为中文仇恨言论检测领域提供了重要基础资源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ImpliHateVid: Implicit Hate Speech Detection in Videos](implihatevid_video_hate.md)
+- [Exploring Multimodal Challenges in Toxic Chinese Detection: Taxonomy, Benchmark, and Findings](exploring_multimodal_challenges_in_toxic_chinese_detection_taxonomy_benchmark_an.md)
+- [HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter](hateday_global_hate_speech.md)
+- [Silencing Empowerment, Allowing Bigotry: Auditing the Moderation of Hate Speech on Twitch](silencing_empowerment_allowing_bigotry_auditing_the_moderation_of_hate_speech_on.md)
+- [MDiT-Bench: Evaluating the Dual-Implicit Toxicity in Large Multimodal Models](mdit-bench_evaluating_the_dual-implicit_toxicity_in_large_multimodal_models.md)
+
+<!-- RELATED:END -->

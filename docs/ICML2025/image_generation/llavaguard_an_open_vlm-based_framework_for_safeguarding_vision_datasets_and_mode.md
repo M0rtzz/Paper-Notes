@@ -147,3 +147,15 @@ $$\text{PES} = \frac{2 \times \text{PER} \times \text{Acc}}{\text{PER} + \text{A
 - 实验充分度: ⭐⭐⭐⭐ — 对比全面（含 GPT-4o、多种开源模型），但测试集较小
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表丰富，定性定量分析结合良好
 - 价值: ⭐⭐⭐⭐⭐ — 解决了视觉安全审核领域的关键空白，实用价值极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge Distillation Detection for Open-weights Models](../../NeurIPS2025/image_generation/knowledge_distillation_detection_for_open-weights_models.md)
+- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
+- [AvatarArtist: Open-Domain 4D Avatarization](../../CVPR2025/image_generation/avatarartist_open-domain_4d_avatarization.md)
+- [Synthetic Face Datasets Generation via Latent Space Exploration from Brownian Identity Diffusion](synthetic_face_datasets_generation_via_latent_space_exploration_from_brownian_id.md)
+- [DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models](../../NeurIPS2025/image_generation/dexter_diffusion-guided_explanations_with_textual_reasoning_for_vision_models.md)
+
+<!-- RELATED:END -->

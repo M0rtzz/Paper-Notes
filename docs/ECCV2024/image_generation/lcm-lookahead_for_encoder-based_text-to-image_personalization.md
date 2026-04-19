@@ -123,3 +123,15 @@ $$\mathcal{L} = \mathcal{L}_{Diffusion} + \lambda \mathcal{L}_{LH}$$
 - **实用性**: ⭐⭐⭐⭐ — 轻量级改进可直接应用于现有编码器骨干
 - **实验充分度**: ⭐⭐⭐⭐ — 定量+用户研究+充分消融，但 InstantID 差距仍大
 - **论文质量**: ⭐⭐⭐⭐ — 写作规范，分析深入，但组件较多导致方法偏复杂
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Guard: a Safety Framework for Text-to-Image Generation](latent_guard_a_safety_framework_for_text-to-image_generation.md)
+- [Removing Distributional Discrepancies in Captions Improves Image-Text Alignment](removing_distributional_discrepancies_in_captions_improves_image-text_alignment.md)
+- [Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning](powerful_and_flexible_personalized_text-to-image_generation_via_reinforcement_le.md)
+- [LivePhoto: Real Image Animation with Text-guided Motion Control](livephoto_real_image_animation_with_text-guided_motion_control.md)
+- [MixDQ: Memory-Efficient Few-Step Text-to-Image Diffusion Models with Metric-Decoupled Mixed Precision Quantization](mixdq_memory-efficient_few-step_text-to-image_diffusion_models_with_metric-decou.md)
+
+<!-- RELATED:END -->

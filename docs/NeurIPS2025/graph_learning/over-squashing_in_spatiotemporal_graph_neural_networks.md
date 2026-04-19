@@ -109,3 +109,15 @@ tags:
 ## 评分
 - 新颖性: ⭐⭐⭐⭐⭐ 首次形式化时空 over-squashing，反直觉发现有重要理论价值
 - 实验充分度: ⭐⭐⭐⭐ 合成+真实数据验证，但真实数据仅限交通预测
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Mitigating Over-Squashing in Graph Neural Networks by Spectrum-Preserving Sparsification](../../ICML2025/graph_learning/mitigating_over-squashing_in_graph_neural_networks_by_spectrum-preserving_sparsi.md)
+- [Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks](self-supervised_discovery_of_neural_circuits_in_spatially_patterned_neural_respo.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+- [Graph Neural Networks for Efficient AC Power Flow Prediction in Power Grids](graph_neural_networks_for_efficient_ac_power_flow_prediction_in_power_grids.md)
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+
+<!-- RELATED:END -->

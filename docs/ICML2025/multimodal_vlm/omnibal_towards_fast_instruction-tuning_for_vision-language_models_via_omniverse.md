@@ -122,3 +122,15 @@ OmniBal 从三个紧密关联的角度解决计算不平衡：数据→模型→
 ## 评分
 
 ⭐⭐⭐⭐ — 工程贡献扎实，1.8× 加速对大规模 VLM 训练有实际价值。方法设计系统、实验全面。偏系统优化方向，理论新颖性有限但实用性很高。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Parrot: Multilingual Visual Instruction Tuning](parrot_multilingual_visual_instruction_tuning.md)
+- [Dynamic Mixture of Curriculum LoRA Experts for Continual Multimodal Instruction Tuning](dynamic_mixture_of_curriculum_lora_experts_for_continual_multimodal_instruction_.md)
+- [Visual Instruction Bottleneck Tuning](../../NeurIPS2025/multimodal_vlm/visual_instruction_bottleneck_tuning.md)
+- [Understanding and Mitigating Miscalibration in Prompt Tuning for Vision-Language Models](understanding_and_mitigating_miscalibration_in_prompt_tuning_for_vision-language.md)
+- [Learning to Instruct for Visual Instruction Tuning](../../NeurIPS2025/multimodal_vlm/learning_to_instruct_for_visual_instruction_tuning.md)
+
+<!-- RELATED:END -->

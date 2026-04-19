@@ -224,3 +224,15 @@ $$\mathcal{L}_{RL}(\theta) = \mathbb{E}\left[r\|v_\theta^+ - v\|_2^2 + (1-r)\|v_
 | 写作质量 | 4.0 | 结构清晰，但部分公式与设计的直觉解释可更充分 |
 | 实用价值 | 3.5 | 方法有效但资源门槛极高，实际部署成本限制了应用范围 |
 | **总分** | **4.2** | 在生成式 SR 的 RLHF 方向上做出系统性贡献，工作完成度极高 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FRAMER: Frequency-Aligned Self-Distillation with Adaptive Modulation Leveraging Diffusion Priors for Real-World Image Super-Resolution](framer_frequency-aligned_self-distillation_with_adaptive_modulation_leveraging_d.md)
+- [DiffusionNFT: Online Diffusion Reinforcement with Forward Process](../../ICLR2026/image_generation/diffusionnft_online_diffusion_reinforcement_with_forward_process.md)
+- [Continuous Degradation Modeling via Latent Flow Matching for Real-World Super-Resolution](../../AAAI2026/image_generation/continuous_degradation_modeling_via_latent_flow_matching_for_real-world_super-re.md)
+- [AlignVAR: Towards Globally Consistent Visual Autoregression for Image Super-Resolution](alignvar_towards_globally_consistent_visual_autoregression_for_image_super-resol.md)
+- [Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution](../../AAAI2026/image_generation/mixture_of_ranks_with_degradation-aware_routing_for_one-step_real-world_image_su.md)
+
+<!-- RELATED:END -->

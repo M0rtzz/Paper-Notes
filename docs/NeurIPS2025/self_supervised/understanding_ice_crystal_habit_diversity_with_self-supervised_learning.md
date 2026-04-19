@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 分类验证和多样性分析都做了，但缺少更多定量对比
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，问题和方法的连接自然
 - 价值: ⭐⭐⭐ 对气候科学领域有实际价值，但方法创新性有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning](t-regs_minimum_spanning_tree_regularization_for_self-supervised_learning.md)
+- [Adv-SSL: Adversarial Self-Supervised Representation Learning with Theoretical Guarantees](adv-ssl_adversarial_self-supervised_representation_learning_with_theoretical_gua.md)
+- [Clustering Properties of Self-Supervised Learning](../../ICML2025/self_supervised/clustering_properties_of_self-supervised_learning.md)
+- [Collapse-Proof Non-Contrastive Self-Supervised Learning](../../ICML2025/self_supervised/collapse-proof_non-contrastive_self-supervised_learning.md)
+- [MoSiC: Optimal-Transport Motion Trajectory for Dense Self-Supervised Learning](../../ICCV2025/self_supervised/mosic_optimal-transport_motion_trajectory_for_dense_self-supervised_learning.md)
+
+<!-- RELATED:END -->

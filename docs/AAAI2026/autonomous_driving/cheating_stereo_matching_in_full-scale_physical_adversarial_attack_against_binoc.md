@@ -168,3 +168,15 @@ SAR是有效攻击SM的基础（无SAR则 $\mathcal{E}_{cover}$ 极低），Merg
 | 实验质量 | ★★★★★ | 5模型+CARLA+物理验证+Apollo系统级 |
 | 写作质量 | ★★★★☆ | 结构清晰，图示丰富 |
 | 实用价值 | ★★★★☆ | 揭示双目感知安全隐患，有防御研究参考价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MOBA: A Material-Oriented Backdoor Attack against LiDAR-based 3D Object Detection](moba_a_material-oriented_backdoor_attack_against_lidar-based_3d_object_detection.md)
+- [Invisible Triggers, Visible Threats! Road-Style Adversarial Creation Attack for Visual 3D Detection in Autonomous Driving](invisible_triggers_visible_threats_road-style_adversarial_creation_attack_for_vi.md)
+- [Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](../../CVPR2025/autonomous_driving/helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
+- [PTC-Depth: Pose-Refined Monocular Depth Estimation with Temporal Consistency](../../CVPR2026/autonomous_driving/ptc-depth_pose-refined_monocular_depth_estimation_with_temporal_consistency.md)
+- [Towards Open-World Generation of Stereo Images and Unsupervised Matching](../../ICCV2025/autonomous_driving/towards_open-world_generation_of_stereo_images_and_unsupervised_matching.md)
+
+<!-- RELATED:END -->

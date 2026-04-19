@@ -162,3 +162,15 @@ EGCA 相比 GRPO 提升 +3.1 / +1.5，相比 StepCoder +3.4 / +1.9，相比 Code
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述精确
 - **实用价值**: ⭐⭐⭐⭐ — 即插即用，开销合理
 - **综合推荐**: ⭐⭐⭐⭐ (4/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning Through Execution: Unifying Process and Outcome Rewards for Code Generation](../../ICML2025/code_intelligence/reasoning_through_execution_unifying_process_and_outcome_rewards_for_code_genera.md)
+- [Breaking the SFT Plateau: Multimodal Structured Reinforcement Learning for Chart-to-Code Generation](breaking_the_sft_plateau_multimodal_structured_reinforcement_learning_for_chart-.md)
+- [CodePercept: Code-Grounded Visual STEM Perception for MLLMs](../../CVPR2026/code_intelligence/codepercept_codegrounded_visual_stem_perception_fo.md)
+- [MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction](../../CVPR2026/code_intelligence/mm-recoder_advancing_chart-to-code_generation_with_reinforcement_learning_and_se.md)
+- [ReCode: Updating Code API Knowledge with Reinforcement Learning](../../AAAI2026/code_intelligence/recode_updating_code_api_knowledge_with_reinforcement_learning.md)
+
+<!-- RELATED:END -->

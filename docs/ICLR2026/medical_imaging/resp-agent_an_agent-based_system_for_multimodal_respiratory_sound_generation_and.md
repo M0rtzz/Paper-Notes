@@ -126,3 +126,15 @@ Thinker-A2CA 在全部指标上最优，将 Macro-F1 从基线 0.212 提升至 0
 - 实验充分度: ⭐⭐⭐⭐⭐ （7 组实验涵盖诊断/生成/消融/跨域/样本效率/解耦验证/LoSO）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰、公式规范，但系统复杂度高导致部分细节需反复查阅附录）
 - 价值: ⭐⭐⭐⭐⭐ （数据集+框架+模型全开源，对医学音频 AI 领域有显著推动作用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LungNoduleAgent: A Collaborative Multi-Agent System for Precision Diagnosis of Lung Nodules](../../AAAI2026/medical_imaging/lungnoduleagent_a_collaborative_multi-agent_system_for_precision_diagnosis_of_lu.md)
+- [MMedAgent-RL: Optimizing Multi-Agent Collaboration for Multimodal Medical Reasoning](mmedagent-rl_optimizing_multi-agent_collaboration_for_multimodal_medical_reasoni.md)
+- [EMR-AGENT: Automating Cohort and Feature Extraction from EMR Databases](emr-agent_automating_cohort_and_feature_extraction_from_emr_databases.md)
+- [EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease](../../CVPR2026/medical_imaging/emad_evidence-centric_grounded_multimodal_diagnosis_for_alzheimers_disease.md)
+- [UltrasoundAgents: Hierarchical Multi-Agent Evidence-Chain Reasoning for Breast Ultrasound Diagnosis](../../CVPR2025/medical_imaging/ultrasoundagents_hierarchical_multi-agent_evidence-chain_reasoning_for_breast_ul.md)
+
+<!-- RELATED:END -->

@@ -148,3 +148,15 @@ $$\mathbf{M}_{i,j} = Q_i \cdot H_{i,j} \cdot K_j$$
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 Mamba-1/2 多规模 + GPT-2/Llama/Mistral，窗口大小消融完整，大量可视化
 - **写作质量**: ⭐⭐⭐⭐ — 图表丰富（10+ 张信息流热图），方法阐述清晰，共性与特性的对比框架组织得当
 - **价值**: ⭐⭐⭐⭐ — 对理解新兴 SSM 架构内部机制有重要贡献，特征敲除为未来 SSM 剪枝和微调提供了方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REVS: Unlearning Sensitive Information in Language Models via Rank Editing in the Vocabulary Space](revs_unlearning_sensitive_information_in_language_models_via_rank_editing_in_the.md)
+- [UAQFact: Evaluating Factual Knowledge Utilization of LLMs on Unanswerable Questions](uaqfact_evaluating_factual_knowledge_utilization_of_llms_on_unanswerable_questio.md)
+- [Factual Knowledge in Language Models: Robustness and Anomalies under Simple Temporal Context Variations](factual_knowledge_in_language_models_robustness_and_anomalies_under_simple_tempo.md)
+- [Odysseus Navigates the Sirens' Song: Dynamic Focus Decoding for Factual and Diverse Open-Ended Text Generation](odysseus_dynamic_focus_decoding.md)
+- [ZJUKLAB at SemEval-2025 Task 4: Unlearning via Model Merging](zjuklab_at_semeval-2025_task_4_unlearning_via_model_merging.md)
+
+<!-- RELATED:END -->

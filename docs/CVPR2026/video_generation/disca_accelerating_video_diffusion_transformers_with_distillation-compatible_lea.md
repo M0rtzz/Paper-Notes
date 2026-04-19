@@ -121,3 +121,15 @@ DisCa 包含两个核心模块：**Restricted MeanFlow**（稳定蒸馏）+ **Le
 - 实验充分度: ⭐⭐⭐⭐ — VBench 多维度评测 + 消融完整，但仅单模型验证
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、图表丰富，数学推导呈现清楚
 - 价值: ⭐⭐⭐⭐⭐ — 为视频扩散模型加速提供了实用性极强的新范式，11.8× 加速具有显著工业价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation](linvideo_a_post-training_framework_towards_on_attention_in_efficient_video_gener.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+- [PreciseCache: Precise Feature Caching for Efficient and High-fidelity Video Generation](../../ICLR2026/video_generation/precisecache_precise_feature_caching_for_efficient_and_high-fidelity_video_gener.md)
+- [Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation](diff4splat_controllable_4d_scene_generation_with_latent_dynamic_reconstruction_m.md)
+- [I'm a Map! Interpretable Motion-Attentive Maps: Spatio-Temporally Localizing Concepts in Video Diffusion Transformers](interpretable_motion-attentive_maps_spatio-temporally_localizing_concepts_in_vid.md)
+
+<!-- RELATED:END -->

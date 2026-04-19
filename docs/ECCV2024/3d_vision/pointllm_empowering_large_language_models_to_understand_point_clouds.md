@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 分类+描述两个任务，多种评估指标，投影层/数据量/pooling 消融完整
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，评估指标讨论深入
 - 价值: ⭐⭐⭐⭐ 开创性地连接点云与 LLM，数据集和代码开源，为后续 3D 多模态 LLM 奠基
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RadarLLM: Empowering Large Language Models to Understand Human Motion from Millimeter-Wave Point Cloud Sequence](../../AAAI2026/3d_vision/radarllm_empowering_large_language_models_to_understand_human_motion_from_millim.md)
+- [Empowering Large Language Models with 3D Situation Awareness](../../CVPR2025/3d_vision/empowering_large_language_models_with_3d_situation_awareness.md)
+- [SegPoint: Segment Any Point Cloud via Large Language Model](segpoint_segment_any_point_cloud_via_large_language_model.md)
+- [Progressive Classifier and Feature Extractor Adaptation for Unsupervised Domain Adaptation on Point Clouds](progressive_classifier_and_feature_extractor_adaptation_for_unsupervised_domain_.md)
+- [SEED: A Simple and Effective 3D DETR in Point Clouds](seed_a_simple_and_effective_3d_detr_in_point_clouds.md)
+
+<!-- RELATED:END -->

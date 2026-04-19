@@ -120,3 +120,15 @@ GOATex 完全不需要微调预训练扩散模型，使用预训练的 Stable Di
 - 实验充分度: ⭐⭐⭐⭐ 人类和多个 GPT 模型评估，消融全面，但缺少传统量化指标
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，方法描述逐步推进，图示丰富
 - 价值: ⭐⭐⭐⭐ 解决了实际存在的痛点，双提示功能有应用价值，但局限于封闭/半封闭物体
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeoComplete: Geometry-Aware Diffusion for Reference-Driven Image Completion](geocomplete_geometry-aware_diffusion_for_reference-driven_image_completion.md)
+- [OccluGaussian: Occlusion-Aware Gaussian Splatting for Large Scene Reconstruction and Rendering](../../ICCV2025/3d_vision/occlugaussian_occlusion-aware_gaussian_splatting_for_large_scene_reconstruction_.md)
+- [SeeThrough3D: Occlusion Aware 3D Control in Text-to-Image Generation](../../CVPR2026/3d_vision/seethrough3d_occlusion_aware_3d_control_in_text-to-image_generation.md)
+- [Geometry Distributions](../../ICCV2025/3d_vision/geometry_distributions.md)
+- [TAPIP3D: Tracking Any Point in Persistent 3D Geometry](tapip3d_tracking_any_point_in_persistent_3d_geometry.md)
+
+<!-- RELATED:END -->

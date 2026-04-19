@@ -149,3 +149,15 @@ TokenMoE 贡献最大，MI 校准提供进一步的稳定提升。
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：提出了推荐系统中一个被忽视但重要的问题——跨域 item tokenization，方法设计清晰（TokenMoE + MI 校准），理论分析扎实，实验覆盖广泛且提升显著（最高 51.89%）。扣分原因是未使用协同信号的设计决策使得方法更偏向于内容推荐而非完整推荐场景，且 HSIC 在大规模场景下的可扩展性存疑。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Align³GR: Unified Multi-Level Alignment for LLM-based Generative Recommendation](align3gr_unified_multi-level_alignment_for_llm-based_generat.md)
+- [When Top-ranked Recommendations Fail: Modeling Multi-Granular Negative Feedback for Explainable and Robust Video Recommendation](when_top-ranked_recommendations_fail_modeling_multi-granular_negative_feedback_f.md)
+- [Token-Efficient Item Representation via Images for LLM Recommender Systems](../../ICLR2026/recommender/token-efficient_item_representation_via_images_for_llm_recommender_systems.md)
+- [Bid Farewell to Seesaw: Towards Accurate Long-tail Session-based Recommendation via Dual Constraints of Hybrid Intents](bid_farewell_to_seesaw_towards_accurate_long-tail_session-based_recommendation_v.md)
+- [FreqRec: Exploiting Inter-Session Information with Frequency-enhanced Dual-Path Networks for Sequential Recommendation](exploiting_inter-session_information_with_frequency-enhanced_dual-path_networks_.md)
+
+<!-- RELATED:END -->

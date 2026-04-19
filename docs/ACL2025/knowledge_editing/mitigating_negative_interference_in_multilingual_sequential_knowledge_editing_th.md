@@ -134,3 +134,15 @@ LangEdit 在英、德、荷、法四种语言上 Efficacy 超越了单语 AlphaE
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 3 模型 × 2 数据集 × 6 语言 × 4 下游任务 × 多基线 × 逐语言分析 × 负干扰量化
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，数学推导完整，图表信息量大
 - **价值**: ⭐⭐⭐⭐ — 为多语言 LLM 知识维护提供了实用框架，有明确的工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Memorizing is Not Enough: Deep Knowledge Injection Through Reasoning](memorizing_is_not_enough_deep_knowledge_injection_through_reasoning.md)
+- [ToxEdit: Adaptive Detoxification Safeguarding General Capabilities of LLMs through Toxicity-Aware Knowledge Editing](adaptive_detoxification_safeguarding_general_capabilities_of_llms_through_toxici.md)
+- [ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains](chainedit_propagating_ripple_effects_in_llm.md)
+- [Neuron-Level Sequential Editing for Large Language Models](neuron-level_sequential_editing_for_large_language_models.md)
+- [Multiplicative Orthogonal Sequential Editing for Language Models (MOSE)](../../AAAI2026/knowledge_editing/multiplicative_orthogonal_sequential_editing_for_language_models.md)
+
+<!-- RELATED:END -->

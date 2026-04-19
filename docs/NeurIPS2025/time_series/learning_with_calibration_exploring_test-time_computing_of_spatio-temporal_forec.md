@@ -138,3 +138,15 @@ ST-TTC 包含两个协同组件：
 ⭐⭐⭐⭐⭐
 
 NeurIPS 2025 Spotlight，思路清晰、动机充分、设计简洁、实验全面。频域校准 + 闪电更新的组合非常优雅，解决了一个实际且重要的问题。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StRap: Spatio-Temporal Pattern Retrieval for Out-of-Distribution Generalization](strap_spatio-temporal_pattern_retrieval_for_out-of-distribution_generalization.md)
+- [Exploring Neural Granger Causality with xLSTMs: Unveiling Temporal Dependencies in Complex Data](exploring_neural_granger_causality_with_xlstms_unveiling_temporal_dependencies_i.md)
+- [Probability Calibration for Precipitation Nowcasting](probability_calibration_for_precipitation_nowcasting.md)
+- [SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)
+- [V2XPnP: Vehicle-to-Everything Spatio-Temporal Fusion for Multi-Agent Perception and Prediction](../../ICCV2025/time_series/v2xpnp_vehicle-to-everything_spatio-temporal_fusion_for_multi-agent_perception_a.md)
+
+<!-- RELATED:END -->

@@ -156,3 +156,15 @@ SPAM 标签训练下游跟踪器 vs GT 标签（MOT17 验证集）：
 - 实验充分度: ⭐⭐⭐⭐⭐ （MOT17/20/DanceTrack 三数据集 + 完整消融 + 域差距分析 + 下游验证）
 - 写作质量: ⭐⭐⭐⭐ （系统描述清晰，实验组织合理）
 - 价值: ⭐⭐⭐⭐⭐ （对跟踪数据集的扩展有直接实用价值，3% 标注量的结论非常有吸引力）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OneTrack: Demystifying the Conflict Between Detection and Tracking in End-to-End 3D Trackers](onetrack_demystifying_the_conflict_between_detection_and_tracking_in_end-to-end_.md)
+- [VideoMamba: State Space Model for Efficient Video Understanding](videomamba_state_space_model_for_efficient_video_understanding.md)
+- [XTrack: Multimodal Training Boosts RGB-X Video Object Trackers](../../ICCV2025/video_understanding/xtrack_multimodal_training_boosts_rgb-x_video_object_trackers.md)
+- [SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging](safnet_selective_alignment_fusion_network_for_efficient_hdr_imaging.md)
+- [SEA-RAFT: Simple, Efficient, Accurate RAFT for Optical Flow](sea-raft_simple_efficient_accurate_raft_for_optical_flow.md)
+
+<!-- RELATED:END -->

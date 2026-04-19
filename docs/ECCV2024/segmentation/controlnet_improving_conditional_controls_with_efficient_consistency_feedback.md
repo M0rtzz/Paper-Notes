@@ -160,3 +160,15 @@ ControlNet++ 在所有条件控制下显著优于现有方法。
 - 实验充分度: 5/5 - 6种条件、5个基线、多维度消融、生成数据验证
 - 写作质量: 4/5 - 动机清晰，图示丰富
 - 价值: 5/5 - 直击可控生成痛点，提升幅度显著，已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SiLC: Improving Vision Language Pretraining with Self-Distillation](silc_improving_vision_language_pretraining_with_self-distillation.md)
+- [CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation](cpm_class-conditional_prompting_machine_for_audio-visual_segmentation.md)
+- [CoLA: Conditional Dropout and Language-Driven Robust Dual-Modal Salient Object Detection](cola_conditional_dropout_and_language-driven_robust_dual-modal_salient_object_de.md)
+- [SeiT++: Masked Token Modeling Improves Storage-Efficient Training](seit_masked_token_modeling_improves_storage-efficient_training.md)
+- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
+
+<!-- RELATED:END -->

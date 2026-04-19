@@ -98,3 +98,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集、多backbone、详细消融和定性分析，但tieredImageNet上accuracy低于SOTA
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨、对评估指标的分析深入，补充材料极其详尽
 - 价值: ⭐⭐⭐⭐ 从理论和方法上推进了层次化分类，HOPS指标有独立价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SATTC: Structure-Aware Label-Free Test-Time Calibration for Cross-Subject EEG-to-Image Retrieval](sattc_structure-aware_label-free_test-time_calibration_for_cross-subject_eeg-to-.md)
+- [Free-Grained Hierarchical Visual Recognition](free-grained_hierarchical_visual_recognition.md)
+- [HeSS: Head Sensitivity Score for Sparsity Redistribution in VGGT](hess_head_sensitivity_score_for_sparsity_redistribution_in_vggt.md)
+- [CryoHype: Reconstructing a Thousand Cryo-EM Structures with Transformer-Based Hypernetworks](cryohype_reconstructing_a_thousand_cryo-em_structures_with_transformer-based_hyp.md)
+- [Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning](weakly_supervised_video_anomaly_detection_with_anomaly-connected_components_and_.md)
+
+<!-- RELATED:END -->

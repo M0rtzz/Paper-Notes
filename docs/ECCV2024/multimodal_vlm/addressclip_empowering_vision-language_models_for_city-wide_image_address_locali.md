@@ -206,3 +206,15 @@ AddressCLIP 无需检索数据库，存储仅 0.34GB，推理内存仅 0.64MB，
 | 写作质量 | 8 | 结构清晰，问题动机阐述到位 |
 | 实用价值 | 8 | 端到端地址预测在社交媒体/导航等场景有直接应用 |
 | **总分** | **8.0** | 问题定义新颖，方法有效，实验全面 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Omniview-Tuning: Boosting Viewpoint Invariance of Vision-Language Pre-training Models](omniview-tuning_boosting_viewpoint_invariance_of_vision-language_pre-training_mo.md)
+- [Towards Real-World Adverse Weather Image Restoration: Enhancing Clearness and Semantics with Vision-Language Models](towards_real-world_adverse_weather_image_restoration_enhancing_clearness_and_sem.md)
+- [The Hard Positive Truth about Vision-Language Compositionality](the_hard_positive_truth_about_vision-language_compositionality.md)
+- [Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities](self-adapting_large_visual-language_models_to_edge_devices_across_visual_modalit.md)
+- [Attention Prompting on Image for Large Vision-Language Models](attention_prompting_on_image_for_large_vision-language_models.md)
+
+<!-- RELATED:END -->

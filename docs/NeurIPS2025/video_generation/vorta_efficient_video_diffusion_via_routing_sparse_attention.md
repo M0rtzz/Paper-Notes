@@ -165,3 +165,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{CFM}} + \lambda_{\text{distill}} \cdot \text{
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多骨干、多调度器、多组合的全面评估+详细运行时分析
 - 写作质量: ⭐⭐⭐⭐⭐ — 分类学清晰，图表设计出色
 - 价值: ⭐⭐⭐⭐⭐ — 实际加速效果显著，已开源代码和权重
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation](radial_attention_onlog_n_sparse_attention_with_energy_decay_for_long_video_gener.md)
+- [VSA: Faster Video Diffusion with Trainable Sparse Attention](vsa_faster_video_diffusion_with_trainable_sparse_attention.md)
+- [S²Q-VDiT: Accurate Quantized Video Diffusion Transformer with Salient Data and Sparse Token Distillation](s2q-vdit_accurate_quantized_video_diffusion_transformer_with_salient_data_and_sp.md)
+- [LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation](lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)
+- [Training-Free Efficient Video Generation via Dynamic Token Carving (Jenga)](training-free_efficient_video_generation_via_dynamic_token_carving.md)
+
+<!-- RELATED:END -->

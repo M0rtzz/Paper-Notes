@@ -123,3 +123,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 理论为主，数值验证仅在 $d=50$ 的小规模下
 - 写作质量: ⭐⭐⭐⭐⭐ 统一框架阐述清晰，三个实例的逐步展开节奏优秀
 - 价值: ⭐⭐⭐⭐⭐ 揭示了SGD复杂度中学习率的基本角色，对理解神经网络特征学习有深远意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Orthogonal Multi-Index Models: A Fine-Grained Information Exponent Analysis](learning_orthogonal_multi-index_models_a_fine-grained_information_exponent_analy.md)
+- [Evaluating LLMs for Combinatorial Optimization: One-Phase and Two-Phase Heuristics for 2D Bin-Packing](evaluating_llms_for_combinatorial_optimization_one-phase_and_two-phase_heuristic.md)
+- [Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules](functional_scaling_laws_in_kernel_regression_loss_dynamics_and_learning_rate_sch.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws](learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)
+
+<!-- RELATED:END -->

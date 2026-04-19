@@ -130,3 +130,15 @@ ViT-G/14 backbone:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、2个backbone、详细消融、MLLM对比、失败案例分析极其充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，motivation说服力强
 - 价值: ⭐⭐⭐⭐ 免训练ZS-CIR的新SOTA，反思性CoT范式可迁移到其他推理任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos](../../ICLR2026/llm_reasoning/cot-rvs_zero-shot_chain-of-thought_reasoning_segmentation_for_videos.md)
+- [VideoEspresso: A Large-Scale Chain-of-Thought Dataset for Fine-Grained Video Reasoning via Core Frame Selection](videoespresso_a_large-scale_chain-of-thought_dataset_for_fine-grained_video_reas.md)
+- [GRAZE: Grounded Refinement and Motion-Aware Zero-Shot Event Localization](../../CVPR2026/llm_reasoning/graze_grounded_refinement_and_motion-aware_zero-shot_event_localization.md)
+- [Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](../../ICLR2026/llm_reasoning/native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
+- [Let LRMs Break Free from Overthinking via Self-Braking Tuning](../../NeurIPS2025/llm_reasoning/let_lrms_break_free_from_overthinking_via_self-braking_tuning.md)
+
+<!-- RELATED:END -->

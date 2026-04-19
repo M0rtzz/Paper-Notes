@@ -145,3 +145,15 @@ $$\theta_T^{(t)} = \alpha \cdot \theta_T^{(t-1)} + (1-\alpha) \cdot \theta_S^{(t
 - 实验充分度: ⭐⭐⭐ — 多数据集评估和跨域实验有说服力，但缺少与更多 WSSS 方法的对比和消融实验细节
 - 写作质量: ⭐⭐⭐ — 结构清晰，定位明确，但方法细节在摘要层面较为简略
 - 价值: ⭐⭐⭐⭐ — 切实解决病理标注成本问题，对临床落地有直接推动价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Semi-Supervised Framework for Breast Ultrasound Segmentation with Training-Free Pseudo-Label Generation and Label Refinement](a_semisupervised_framework_for_breast_ultrasound_s.md)
+- [DualFete: Revisiting Teacher-Student Interactions from a Feedback Perspective for Semi-supervised Medical Image Segmentation](../../AAAI2026/medical_imaging/dualfete_revisiting_teacher-student_interactions_from_a_feedback_perspective_for.md)
+- [Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions](adaptation_of_weakly_supervised_localization_in_histopathology_by_debiasing_pred.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)
+
+<!-- RELATED:END -->

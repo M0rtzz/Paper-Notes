@@ -126,3 +126,15 @@ M3Dphormer 包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ 9 数据集 15 baseline，消融详尽，包含效率分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论-实验-设计三线并行，逻辑顺畅
 - 价值: ⭐⭐⭐⭐ 对 GT 设计提供了统一理论视角和实用方法论
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Relieving the Over-Aggregating Effect in Graph Transformers](relieving_the_over-aggregating_effect_in_graph_transformers.md)
+- [Multimodal Transformers are Hierarchical Modal-wise Heterogeneous Graphs](../../ACL2025/graph_learning/multimodal_transformers_are_hierarchical_modal-wise_heterogeneous_graphs.md)
+- [Unifying Text Semantics and Graph Structures for Temporal Text-attributed Graphs with LLMs](unifying_text_semantics_and_graph_structures_for_temporal_text-attributed_graphs.md)
+- [From Sequence to Structure: Uncovering Substructure Reasoning in Transformers](from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)
+- [Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)
+
+<!-- RELATED:END -->

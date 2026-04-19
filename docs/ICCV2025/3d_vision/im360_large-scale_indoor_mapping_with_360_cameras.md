@@ -154,3 +154,15 @@ Stanford2D3D 注册率对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ （两个大规模数据集，SfM+渲染全面评估，多方法对比）
 - 写作质量: ⭐⭐⭐⭐ （流水线描述清晰，但部分细节分散在补充材料）
 - 价值: ⭐⭐⭐⭐⭐ （填补全景相机室内建图工具链空白，实际应用价值高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Indoor Asset Detection in Large Scale 360° Drone-Captured Imagery via 3D Gaussian Splatting](../../CVPR2026/3d_vision/indoor_asset_detection_in_large_scale_360_drone-captured_imagery_via_3d_gaussian.md)
+- [3D-SLNR: A Super Lightweight Neural Representation for Large-scale 3D Mapping](../../CVPR2025/3d_vision/3d-slnr_a_super_lightweight_neural_representation_for_large-scale_3d_mapping.md)
+- [S3R-GS: Streamlining the Pipeline for Large-Scale Street Scene Reconstruction](s3r-gs_streamlining_the_pipeline_for_large-scale_street_scene_reconstruction.md)
+- [HumanOLAT: A Large-Scale Dataset for Full-Body Human Relighting and Novel-View Synthesis](humanolat_a_large-scale_dataset_for_full-body_human_relighting_and_novel-view_sy.md)
+- [Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation](bring_your_rear_cameras_for_egocentric_3d_human_pose_estimat.md)
+
+<!-- RELATED:END -->

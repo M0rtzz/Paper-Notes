@@ -138,3 +138,15 @@ FineVAU 包含三个核心贡献：
 - 实验充分度: ⭐⭐⭐⭐⭐ （人类对齐验证完善，多维度消融充分）
 - 写作质量: ⭐⭐⭐⭐⭐ （逻辑清晰，图表丰富）
 - 价值: ⭐⭐⭐⭐ （为VAU评估提供了更好的标准，但应用范围较窄）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Text-guided Fine-Grained Video Anomaly Understanding](../../CVPR2026/interpretability/text-guided_fine-grained_video_anomaly_understanding.md)
+- [ElementaryNet: A Non-Strategic Neural Network for Predicting Human Behavior in Normal-Form Games](elementarynet_a_non-strategic_neural_network_for_predicting_human_behavior_in_no.md)
+- [GateRA: Token-Aware Modulation for Parameter-Efficient Fine-Tuning](gatera_token-aware_modulation_for_parameter-efficient_fine-tuning.md)
+- [FlashKAT: Understanding and Addressing Performance Bottlenecks in the Kolmogorov-Arnold Transformer](flashkat_understanding_and_addressing_performance_bottlenecks_in_the_kolmogorov-.md)
+- [Voices, Faces, and Feelings: Multi-modal Emotion-Cognition Captioning for Mental Health Understanding](voices_faces_and_feelings_multi-modal_emotion-cognition_captioning_for_mental_he.md)
+
+<!-- RELATED:END -->

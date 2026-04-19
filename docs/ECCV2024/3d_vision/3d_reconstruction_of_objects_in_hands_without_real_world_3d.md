@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融实验全面覆盖了各设计选择，多个评估设置（物体泛化/视角泛化）令人信服
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，动机阐述充分，图示直观
 - 价值: ⭐⭐⭐⭐ 为弱监督手持物体重建提供了实用框架，但CD指标上不如DDFHO，实际部署仍依赖手部姿态估计器精度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reconstruction and Simulation of Elastic Objects with Spring-Mass 3D Gaussians](reconstruction_and_simulation_of_elastic_objects_with_spring-mass_3d_gaussians.md)
+- [ICTPolarReal: A Polarized Reflection and Material Dataset of Real World Objects](../../CVPR2026/3d_vision/ictpolarreal_a_polarized_reflection_and_material_dataset_of_real_world_objects.md)
+- [Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation](mesh2nerf_direct_mesh_supervision_for_neural_radiance_field_representation_and_g.md)
+- [HeadGaS: Real-Time Animatable Head Avatars via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)
+- [A Compact Dynamic 3D Gaussian Representation for Real-Time Dynamic View Synthesis](a_compact_dynamic_3d_gaussian_representation_for_realtime_dy.md)
+
+<!-- RELATED:END -->

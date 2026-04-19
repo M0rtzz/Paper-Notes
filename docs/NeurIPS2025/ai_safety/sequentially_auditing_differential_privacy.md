@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖均值估计和 DP-SGD，与先前方法对比充分
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导清晰，动机陈述有力
 - 价值: ⭐⭐⭐⭐⭐ — 实用价值极高，大幅降低 DP 审计的计算成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
+- [Multi-Class Support Vector Machine with Differential Privacy](multi-class_support_vector_machine_with_differential_privacy.md)
+- [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
+- [Differential Privacy for Euclidean Jordan Algebra with Applications to Private Symmetric Cone Programming](differential_privacy_for_euclidean_jordan_algebra_with_applications_to_private_s.md)
+
+<!-- RELATED:END -->

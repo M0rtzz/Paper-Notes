@@ -132,3 +132,15 @@ tags:
 - **实验充分度**: ⭐⭐ 纯方案设计论文，无实验结果
 - **写作质量**: ⭐⭐⭐⭐ 框架描述系统完整，伪代码清晰，但重复性高
 - **价值**: ⭐⭐⭐ 有前瞻性但作为 Workshop 论文缺乏验证，更偏向路线图/提案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bootstrap Off-policy with World Model](boundary-to-region_supervision_for_offline_safe_reinforcement_learning.md)
+- [Bootstrap Off-policy with World Model (BOOM)](bootstrap_off-policy_with_world_model.md)
+- [Neural Motion Simulator: Pushing the Limit of World Models in Reinforcement Learning](../../CVPR2025/reinforcement_learning/neural_motion_simulator_pushing_the_limit_of_world_models_in_reinforcement_learn.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+- [Learning Interestingness in Automated Mathematical Theory Formation](learning_interestingness_in_automated_mathematical_theory_formation.md)
+
+<!-- RELATED:END -->

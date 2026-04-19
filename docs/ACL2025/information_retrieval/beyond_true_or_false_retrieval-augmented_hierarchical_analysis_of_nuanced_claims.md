@@ -149,3 +149,15 @@ $$n(s_i, T_{\neq i}^h) = 0.5 \times \text{mean}_j(p(s_i, W_j)) + 0.5 \times \max
 - **实验充分性**: ★★★★☆ — 两个领域大规模数据集 + 人类评估 + 消融 + 成对比较
 - **实用性**: ★★★★☆ — 零训练方案可直接应用，代码开源
 - **写作质量**: ★★★★☆ — 原则驱动叙述，结构清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Document Refinement for Long-context Retrieval-augmented Generation](hierarchical_document_refinement_for_long-context_retrieval-augmented_generation.md)
+- [Hierarchical Retrieval: The Geometry and a Pretrain-Finetune Recipe](../../NeurIPS2025/information_retrieval/hierarchical_retrieval_the_geometry_and_a_pretrain-finetune_recipe.md)
+- [VISA: Retrieval Augmented Generation with Visual Source Attribution](visa_retrieval_augmented_generation_with_visual_source_attribution.md)
+- [Pandora's Box or Aladdin's Lamp: A Comprehensive Analysis Revealing the Role of RAG Noise in Large Language Models](pandora_box_rag_noise.md)
+- [Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)
+
+<!-- RELATED:END -->

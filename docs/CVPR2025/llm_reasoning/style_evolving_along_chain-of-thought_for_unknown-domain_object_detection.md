@@ -138,3 +138,15 @@ Real-to-Art 跨域检测（VOC → 艺术域）：
 - 实验充分度: ⭐⭐⭐⭐ 五种天气场景+跨域艺术检测，消融全面
 - 写作质量: ⭐⭐⭐⭐ 方法动机阐述清晰，层级设计逻辑连贯
 - 价值: ⭐⭐⭐ 方法有效但应用场景相对窄，主要针对单域泛化检测
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interleaved-Modal Chain-of-Thought](interleaved-modal_chain-of-thought.md)
+- [CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models](cot-vla_visual_chain-of-thought_reasoning_for_vision-language-action_models.md)
+- [On The Fragility of Benchmark Contamination Detection in Reasoning Models](../../ICLR2026/llm_reasoning/on_the_fragility_of_benchmark_contamination_detection_in_reasoning_models.md)
+- [Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
+- [DreamPRM: Domain-Reweighted Process Reward Model for Multimodal Reasoning](../../NeurIPS2025/llm_reasoning/dreamprm_domain-reweighted_process_reward_model_for_multimodal_reasoning.md)
+
+<!-- RELATED:END -->

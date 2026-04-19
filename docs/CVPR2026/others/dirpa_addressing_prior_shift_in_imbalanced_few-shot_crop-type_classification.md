@@ -166,3 +166,15 @@ DirPA 作为一种任务层面的增强方法 (task-level augmentation)，可以
 - 实验充分度: ⭐⭐⭐⭐ — 28 张表覆盖多国多场景，消融实验丰富；但缺少通用 benchmark 验证
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法描述严谨；20 页篇幅充实
 - 价值: ⭐⭐⭐ — 领域较垂直（农业遥感 FSL），方法本身具有通用性但未在其他领域验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](your_classifier_can_do_more_towards_balancing_the.md)
+- [Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model](rethinking_snn_online_training_and_deployment_gradient-coherent_learning_via_hyb.md)
+- [SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_a.md)
+
+<!-- RELATED:END -->

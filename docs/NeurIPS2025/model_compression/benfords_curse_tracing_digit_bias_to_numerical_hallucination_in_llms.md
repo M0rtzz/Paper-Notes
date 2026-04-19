@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4 个模型族 + 7 个任务 + 层级分析 + 剪枝验证
 - 写作质量: ⭐⭐⭐⭐⭐ 故事线从观察→机制→干预层层递进，非常吸引人
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 LLM 数值幻觉的一个根本原因，对模型改进有直接指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steer LLM Latents for Hallucination Detection](../../ICML2025/model_compression/steer_llm_latents_for_hallucination_detection.md)
+- [Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation](rectifying_soft-label_entangled_bias_in_long-tailed_dataset_distillation.md)
+- [Matryoshka Pilot: Learning to Drive Black-Box LLMs with LLMs](matryoshka_pilot_learning_to_drive_black-box_llms_with_llms.md)
+- [Who Taught You That? Tracing Teachers in Model Distillation](../../ACL2025/model_compression/who_taught_you_that_tracing_teachers_in_model_distillation.md)
+- [Accurate KV Cache Quantization with Outlier Tokens Tracing](../../ACL2025/model_compression/accurate_kv_cache_quantization_with_outlier_tokens_tracing.md)
+
+<!-- RELATED:END -->

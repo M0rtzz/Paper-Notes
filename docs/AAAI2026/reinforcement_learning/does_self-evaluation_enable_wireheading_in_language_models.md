@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ （对照精巧但规模有限）
 - 写作质量: ⭐⭐⭐⭐⭐ （叙事清晰，图表直观）
 - 价值: ⭐⭐⭐⭐⭐ （对AI safety领域有重要启示）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](../../ICLR2026/reinforcement_learning/spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
+- [Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](../../ICLR2026/reinforcement_learning/co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
+- [Towards Strategic Persuasion with Language Models](../../ICLR2026/reinforcement_learning/towards_strategic_persuasion_with_language_models.md)
+- [A Course Correction in Steerability Evaluation: Revealing Miscalibration and Side Effects in LLMs](a_course_correction_in_steerability_evaluation_revealing_mis.md)
+- [Self-Improving Embodied Foundation Models](../../NeurIPS2025/reinforcement_learning/self-improving_embodied_foundation_models.md)
+
+<!-- RELATED:END -->

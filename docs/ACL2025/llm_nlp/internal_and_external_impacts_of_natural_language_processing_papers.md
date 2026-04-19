@@ -201,3 +201,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 覆盖合理
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐ 对特定社区有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Transformation from Natural Language to Signal Temporal Logic Using LLMs with Diverse External Knowledge](enhancing_transformation_from_natural_language_to_signal_temporal_logic_using_ll.md)
+- [Natural Language Processing in Support of Evidence-based Medicine: A Scoping Review](natural_language_processing_in_support_of_evidence-based_medicine_a_scoping_revi.md)
+- [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [Direct Confidence Alignment: Aligning Verbalized Confidence with Internal Confidence In Large Language Models](direct_confidence_alignment_aligning_verbalized_confidence_with_internal_confide.md)
+- [Enhancing Character-Level Understanding in LLMs through Token Internal Structure Learning](character_level_understanding.md)
+
+<!-- RELATED:END -->

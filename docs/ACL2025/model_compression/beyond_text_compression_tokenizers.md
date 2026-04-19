@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 tokenizer × 2 scale × 3 task 类型，非常系统全面
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，统计分析严谨，表格丰富
 - 价值: ⭐⭐⭐⭐ 对 LLM 开发者选择 tokenizer 有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [APB: Accelerating Distributed Long-Context Inference by Passing Compressed Context Blocks across GPUs](apb_distributed_long_context.md)
+- [Binary Quadratic Quantization: Beyond First-Order Quantization for Real-Valued Matrix Compression](../../NeurIPS2025/model_compression/binary_quadratic_quantization_beyond_first-order_quantization_for_real-valued_ma.md)
+- [Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching](flipping_kd_small_to_large.md)
+- [Text-to-LoRA: Instant Transformer Adaption](../../ICML2025/model_compression/text-to-lora_instant_transformer_adaption.md)
+- [Beyond Communication Overhead: A Multilevel Monte Carlo Approach for Mitigating Compression Bias in Distributed Learning](../../ICML2025/model_compression/beyond_communication_overhead_a_multilevel_monte_carlo_approach_for_mitigating_c.md)
+
+<!-- RELATED:END -->

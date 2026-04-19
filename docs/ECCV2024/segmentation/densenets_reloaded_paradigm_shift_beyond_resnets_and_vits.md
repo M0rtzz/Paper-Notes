@@ -133,3 +133,15 @@ DenseNet 的密集拼接连接是否真的不如 ResNet 式的加法连接？能
 - 实验充分度: ⭐⭐⭐⭐ 覆盖分类/分割/检测，但大规模预训练实验不足
 - 写作质量: ⭐⭐⭐⭐ 渐进式改造叙述清晰，pilot study 有说服力
 - 对我的价值: ⭐⭐⭐⭐ 提供了一种被忽视的架构范式，对网络设计有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection](../../ICCV2025/segmentation/hybrid-tta_continual_test-time_adaptation_via_dynamic_domain_shift_detection.md)
+- [Concept-Guided Fine-Tuning: Steering ViTs away from Spurious Correlations to Improve Robustness](../../CVPR2026/segmentation/concept-guided_fine-tuning_steering_vits_away_from_spurious_correlations_to_impr.md)
+- [Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](../../CVPR2026/segmentation/seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)
+- [CLIP Is Shortsighted: Paying Attention Beyond the First Sentence](../../CVPR2026/segmentation/clip_is_shortsighted_paying_attention_beyond_the_first_sentence.md)
+- [PartField: Learning 3D Feature Fields for Part Segmentation and Beyond](../../ICCV2025/segmentation/partfield_learning_3d_feature_fields_for_part_segmentation_and_beyond.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 34 个模型的评估有一定规模，但仅限加法器案例，缺乏验证优先架构的实际实现
 - 写作质量: ⭐⭐⭐⭐⭐ Position paper 写作清晰，三个立场层层递进，案例选择恰当
 - 价值: ⭐⭐⭐⭐ 对 AI4Science 社区有重要的方向性指导意义，验证优先范式适用范围广
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks](../../CVPR2025/physics/atp_adaptive_threshold_pruning_for_efficient_data_encoding_in_quantum_neural_net.md)
+- [Adaptive Fidelity Estimation for Quantum Programs with Graph-Guided Noise Awareness](adaptive_fidelity_estimation_for_quantum_programs_with_graph.md)
+- [Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data](../../ICML2025/physics/mixture-of-expert_variational_autoencoders_for_cross-modality_embedding_of_type_.md)
+- [Sublinear Time Quantum Algorithm for Attention Approximation](../../ICLR2026/physics/sublinear_time_quantum_algorithm_for_attention_approximation.md)
+- [Feedback-driven Recurrent Quantum Neural Network Universality](../../ICLR2026/physics/feedback-driven_recurrent_quantum_neural_network_universality.md)
+
+<!-- RELATED:END -->

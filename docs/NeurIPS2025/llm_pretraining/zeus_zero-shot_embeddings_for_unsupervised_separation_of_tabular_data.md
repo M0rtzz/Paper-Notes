@@ -142,3 +142,15 @@ $$\mathcal{L} = \mathcal{L}_{prob} + \lambda_{cp}\mathcal{L}_{cp} + \lambda_{sep
 - **实验充分度**: ⭐⭐⭐⭐ 34 个真实数据集 + 40 个合成数据集，消融全面，但大规模场景未验证
 - **写作质量**: ⭐⭐⭐⭐⭐ 逻辑清晰，理论推导严谨，实验组织良好
 - **价值**: ⭐⭐⭐⭐ 在表格数据聚类领域具有标杆意义，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts](../../ACL2025/llm_pretraining/autonomous_data_selection_with_zero-shot_generative_classifiers_for_mathematical.md)
+- [Prompting Language-Informed Distribution for Compositional Zero-Shot Learning](../../ECCV2024/llm_pretraining/prompting_language-informed_distribution_for_compositional_zero-shot_learning.md)
+- [Unsupervised Morphological Tree Tokenizer](../../ACL2025/llm_pretraining/unsupervised_morphological_tree_tokenizer.md)
+- [The Scene Language: Representing Scenes with Programs, Words, and Embeddings](../../CVPR2025/llm_pretraining/the_scene_language_representing_scenes_with_programs_words_and_embeddings.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+
+<!-- RELATED:END -->

@@ -130,3 +130,15 @@ CLEME2.0 的流程分为三步：
 - 实验充分度: ⭐⭐⭐⭐⭐ 两个人工评判数据集、六个参考集、corpus/sentence 两级、多种加权方式，消融分析和 case study 充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导明确，但部分表格信息密度过高
 - 对我的价值: ⭐⭐⭐⭐ 对 GEC 评估领域有重要参考价值，四维解耦分析的思路可迁移到其他 NLP 评估任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](shortcut_neuron_eval.md)
+- [To Steer or Not to Steer? Mechanistic Error Reduction with Abstention for Language Models](../../ICML2025/interpretability/to_steer_or_not_to_steer_mechanistic_error_reduction_with_abstention_for_languag.md)
+- [EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations](expert_an_explainable_image_captioning_evaluation_metric_with_structured_explana.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](../../CVPR2026/interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+- [A Dual-Perspective NLG Meta-Evaluation Framework with Automatic Benchmark and Better Interpretability](a_dual-perspective_nlg_meta-evaluation_framework_with_automatic_benchmark_and_be.md)
+
+<!-- RELATED:END -->

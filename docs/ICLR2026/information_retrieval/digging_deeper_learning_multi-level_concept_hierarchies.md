@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ Workshop 论文篇幅限制，实验规模偏小，缺少定量消融和大规模验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述紧凑，与主会论文 HiCEMs 的关系交代得当
 - 价值: ⭐⭐⭐⭐ 多层概念层级是概念模型从"可用"到"好用"的关键一步，面向实际部署场景有意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Concept-based Interpretable Models](hierarchical_concept-based_interpretable_models.md)
+- [Multi-Label Cluster Discrimination for Visual Representation Learning](../../ECCV2024/information_retrieval/multi-label_cluster_discrimination_for_visual_representation_learning.md)
+- [Learning Task-Agnostic Representations through Multi-Teacher Distillation](../../NeurIPS2025/information_retrieval/learning_task-agnostic_representations_through_multi-teacher_distillation.md)
+- [Deep Research Brings Deeper Harm](../../NeurIPS2025/information_retrieval/deep_research_brings_deeper_harm.md)
+- [Query-Level Uncertainty in Large Language Models](query-level_uncertainty_in_large_language_models.md)
+
+<!-- RELATED:END -->

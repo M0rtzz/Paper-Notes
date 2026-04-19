@@ -136,3 +136,15 @@ RM 训练：标准 Bradley-Terry loss。RL 训练：Reinforcement++ 算法，rol
 - 实验充分度: ⭐⭐⭐⭐⭐ Best-of-N + RL + R1-style + 多基准
 - 写作质量: ⭐⭐⭐⭐ 管线描述完整，实验设计严谨
 - 价值: ⭐⭐⭐⭐⭐ 释放了代码生成 RL 的巨大潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [Instruction-Tuning Data Synthesis from Scratch via Web Reconstruction](instruction-tuning_data_synthesis_from_scratch_via_web_reconstruction.md)
+- [Understanding Common Ground Misalignment in Goal-Oriented Dialog: A Case-Study with Ubuntu Chat Logs](understanding_common_ground_misalignment_in_goal-oriented_dialog_a_case-study_wi.md)
+- [ComfyUI-Copilot: An Intelligent Assistant for Automated Workflow Development](comfyui-copilot_an_intelligent_assistant_for_automated_workflow_development.md)
+- [DocAgent: A Multi-Agent System for Automated Code Documentation Generation](docagent_a_multi-agent_system_for_automated_code_documentation_generation.md)
+
+<!-- RELATED:END -->

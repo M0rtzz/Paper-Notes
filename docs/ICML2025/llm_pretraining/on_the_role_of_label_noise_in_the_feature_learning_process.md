@@ -122,3 +122,15 @@ Logistic loss $\ell(f, \tilde{y}) = \log(1 + \exp(-f \cdot \tilde{y}))$，全批
 - 实验充分度: ⭐⭐⭐ 以理论为主，合成+小规模CIFAR验证
 - 写作质量: ⭐⭐⭐⭐⭐ 定理→直觉→证明思路的叙述层次清晰
 - 价值: ⭐⭐⭐⭐ 为早停和样本选择提供坚实理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Alternating Gradient Flows: A Theory of Feature Learning in Two-layer Neural Networks](../../NeurIPS2025/llm_pretraining/alternating_gradient_flows_a_theory_of_feature_learning_in_two-layer_neural_netw.md)
+- [Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+- [Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning](revisiting_continuity_of_image_tokens_for_cross-domain_few-shot_learning.md)
+- [The Dark Side of the Forces: Assessing Non-Conservative Force Models for Atomistic Machine Learning](the_dark_side_of_the_forces_assessing_non-conservative_force_models_for_atomisti.md)
+- [A Square Peg in a Square Hole: Meta-Expert for Long-Tailed Semi-Supervised Learning](a_square_peg_in_a_square_hole_meta-expert_for_long-tailed_semi-supervised_learni.md)
+
+<!-- RELATED:END -->

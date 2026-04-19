@@ -165,3 +165,15 @@ SEGA 损失本质上是加权的策略梯度损失，权重 $w_i$ 与优势 $A_i
 - 实验覆盖通用和领域特定场景，消融实验充分验证各组件贡献
 - 样本效率分析提供了良好的实用参考
 - 扣分点：仅单一基础模型，医学评估深度不足，分类归入 medical_imaging 有偏差
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein as a Second Language for LLMs](../../ICLR2026/medical_imaging/protein_as_a_second_language_for_llms.md)
+- [Thompson Sampling via Fine-Tuning of LLMs](../../ICLR2026/medical_imaging/thompson_sampling_via_fine-tuning_of_llms.md)
+- [GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
+- [Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+
+<!-- RELATED:END -->

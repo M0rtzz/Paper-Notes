@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多个基准、充分消融、可扩展性验证
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，设计逻辑自然流畅
 - 价值: ⭐⭐⭐⭐ 提出了可扩展的框架，对注视目标检测领域有实际推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GazeOnce360: Fisheye-Based 360° Multi-Person Gaze Estimation with Global-Local Feature Fusion](../../CVPR2026/others/gazeonce360_fisheye-based_360_multi-person_gaze_estimation_with_global-local_fea.md)
+- [De-confounded Gaze Estimation](de-confounded_gaze_estimation.md)
+- [Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)
+- [Momentum Auxiliary Network for Supervised Local Learning](momentum_auxiliary_network_for_supervised_local_learning.md)
+- [Harnessing Feature Resonance under Arbitrary Target Alignment for Out-of-Distribution Node Detection](../../NeurIPS2025/others/harnessing_feature_resonance_under_arbitrary_target_alignment_for_out-of-distrib.md)
+
+<!-- RELATED:END -->

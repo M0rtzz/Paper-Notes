@@ -245,3 +245,15 @@ FinMMR 的构建分为两条路径：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 15个模型、3种提示方法、错误分析、视觉过滤、知识增强、模型协作等全面评估
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，RQ 驱动的实验组织方式便于理解
 - **价值**: ⭐⭐⭐⭐⭐ 填补了金融领域多模态推理评测的空白，对 MLLM 改进具有明确指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GRAB: A Challenging GRaph Analysis Benchmark for Large Multimodal Models](grab_a_challenging_graph_analysis_benchmark_for_large_multimodal_models.md)
+- [FinMME: Benchmark Dataset for Financial Multi-Modal Reasoning Evaluation](../../ACL2025/multimodal_vlm/finmme_benchmark_dataset_for_financial_multi-modal_reasoning_evaluation.md)
+- [LongDocURL: a Comprehensive Multimodal Long Document Benchmark Integrating Understanding, Reasoning, and Locating](../../ACL2025/multimodal_vlm/longdocurl_multimodal_long_doc.md)
+- [FinMMDocR: Benchmarking Financial Multimodal Reasoning with Scenario Awareness, Document Understanding, and Multi-Step Computation](../../AAAI2026/multimodal_vlm/finmmdocr_benchmarking_financial_multimodal_reasoning_with_scenario_awareness_do.md)
+- [MMMU-Pro: A More Robust Multi-discipline Multimodal Understanding Benchmark](../../ACL2025/multimodal_vlm/mmmupro_a_more_robust_multidiscipline_multimodal.md)
+
+<!-- RELATED:END -->

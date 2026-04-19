@@ -169,3 +169,15 @@ $$w_{i,e}^t = w_{i,e-1}^t - \eta_i^t \left[\sum_{r=1}^{e}(m_i^t)^r \nabla F_{i,e
 - 实验完整度：⭐⭐⭐⭐⭐ — 三种任务 + 8 基线 + 消融 + 超参分析 + 系统设置分析
 - 实用性：⭐⭐⭐⭐ — 低额外开销，可扩展性好
 - 写作质量：⭐⭐⭐⭐ — 结构清晰，图表丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Layer-wise Update Aggregation with Recycling for Communication-Efficient Federated Learning](layer-wise_update_aggregation_with_recycling_for_communication-efficient_federat.md)
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [Learning Reconfigurable Representations for Multimodal Federated Learning with Missing Data](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)
+- [Oracle-Efficient Combinatorial Semi-Bandits](oracle-efficient_combinatorial_semi-bandits.md)
+- [Multiplayer Federated Learning: Reaching Equilibrium with Less Communication](multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ LookaheadKV 在预填充阶段追加可学习的前瞻token，它们的注意力
 - 实验充分度: ⭐⭐⭐⭐⭐ 6模型×4基准×多预算×多上下文长度的全面评测
 - 写作质量: ⭐⭐⭐⭐⭐ 问题陈述清晰，理论与实验紧密结合
 - 价值: ⭐⭐⭐⭐⭐ 解决了KV缓存淘汰的核心权衡，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Accurate KV Cache Quantization with Outlier Tokens Tracing](../../ACL2025/model_compression/accurate_kv_cache_quantization_with_outlier_tokens_tracing.md)
+- [RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression](../../ICML2025/model_compression/rocketkv_accelerating_long-context_llm_inference_via_two-stage_kv_cache_compress.md)
+- [KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments](../../NeurIPS2025/model_compression/keydiff_key_similarity-based_kv_cache_eviction_for_long-context_llm_inference_in.md)
+- [TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
+- [Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
+
+<!-- RELATED:END -->

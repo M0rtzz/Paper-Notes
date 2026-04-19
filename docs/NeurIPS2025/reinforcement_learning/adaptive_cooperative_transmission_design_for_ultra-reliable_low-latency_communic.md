@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 与 one-shot 和不同 RL 算法的对比充分，但缺少与其他 MARL 方案的对比
 - 写作质量: ⭐⭐⭐⭐ 问题建模清晰，公式推导完整
 - 价值: ⭐⭐⭐ 对 5G URLLC 中继系统有实际应用价值，学术新颖性一般
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Deep RL Needs Deep Behavior Analysis: Exploring Implicit Planning by Model-Free Agents](deep_rl_needs_deep_behavior_analysis_exploring_implicit_planning_by_model-free_a.md)
+- [Scalable Neural Incentive Design with Parameterized Mean-Field Approximation](scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)
+- [DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning](deepdiver_adaptive_search_intensity_scaling_via_open-web_reinforcement_learning.md)
+- [Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning](mean-field_sampling_for_cooperative_multi-agent_reinforcement_learning.md)
+- [RL Tango: Reinforcing Generator and Verifier Together for Language Reasoning](rl_tango_reinforcing_generator_and_verifier_together_for_lan.md)
+
+<!-- RELATED:END -->

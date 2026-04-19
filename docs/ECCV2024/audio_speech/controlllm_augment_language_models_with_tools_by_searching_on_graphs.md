@@ -160,3 +160,15 @@ Adaptive 策略在性能和效率间取得最佳平衡：平均访问 236 个工
 - 实验充分度: ⭐⭐⭐⭐ (设计了完整指标体系，多维度消融，但 benchmark 规模偏小)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图示直观，动机阐述充分)
 - 价值: ⭐⭐⭐⭐ (对 tool-augmented LLM 领域有实质推进，对 agent 系统设计有参考价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Controllable Examination for Long-Context Language Models](../../NeurIPS2025/audio_speech/a_controllable_examination_for_longcontext_language_models.md)
+- [AudSemThinker: Enhancing Audio-Language Models through Reasoning over Semantics of Sound](../../NeurIPS2025/audio_speech/audsemthinker_enhancing_audio-language_models_through_reasoning_over_semantics_o.md)
+- [EMoVA: Empowering Language Models to See, Hear and Speak with Vivid Emotions](../../CVPR2025/audio_speech/emova_empowering_language_models_to_see_hear_and_speak_with_vivid_emotions.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](../../ACL2025/audio_speech/investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [Stitch: Simultaneous Thinking and Talking with Chunked Reasoning for Spoken Language Models](../../ICLR2026/audio_speech/stitch_simultaneous_thinking_and_talking_with_chunked_reasoning_for_spoken_langu.md)
+
+<!-- RELATED:END -->

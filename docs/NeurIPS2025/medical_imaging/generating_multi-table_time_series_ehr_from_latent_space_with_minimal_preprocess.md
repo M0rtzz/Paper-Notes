@@ -187,3 +187,15 @@ RawMed 在 11 个临床预测任务上的 AUROC 仅比真实数据低 0.02–0.0
 | 实用价值 | 8 | 直接解决医疗 AI 数据稀缺痛点，代码开源 |
 | 写作质量 | 8 | 结构清晰，问题定义精确，评估框架的贡献独立成章 |
 | **总分** | **8.0** | 问题定义准确、解法完整、实验有说服力的优秀工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
+- [Towards Self-Supervised Foundation Models for Critical Care Time Series](towards_self-supervised_foundation_models_for_critical_care_time_series.md)
+- [MIRA: Medical Time Series Foundation Model for Real-World Health Data](mira_medical_time_series_foundation_model_for_real-world_health_data.md)
+- [Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data](self-supervised_learning_via_flow-guided_neural_operator_on_time-series_data.md)
+- [Manipulating 3D Molecules in a Fixed-Dimensional E(3)-Equivariant Latent Space](manipulating_3d_molecules_in_a_fixed-dimensional_e3-equivariant_latent_space.md)
+
+<!-- RELATED:END -->

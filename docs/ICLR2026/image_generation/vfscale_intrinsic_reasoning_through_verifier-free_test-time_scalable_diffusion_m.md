@@ -118,3 +118,15 @@ $\mathcal{L} = \mathcal{L}_{\text{MSE}} + \mathcal{L}_{\text{Contrast}} + \mathc
 - 实验充分度: ⭐⭐⭐⭐ Maze和Sudoku充分验证，但任务类型较单一
 - 写作质量: ⭐⭐⭐⭐⭐ 动机→分析→解决方案的展开逻辑清晰
 - 价值: ⭐⭐⭐⭐⭐ 为扩散模型的推理能力和测试时缩放开辟新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Iterative Error Correction for Efficient Diffusion Models](test-time_iterative_error_correction_for_efficient_diffusion_models.md)
+- [Compose Your Policies! Improving Diffusion-based or Flow-based Robot Policies via Test-time Distribution-level Composition](compose_your_policies_improving_diffusion-based_or_flow-based_robot_policies_via.md)
+- [Verifier-Constrained Flow Expansion for Discovery Beyond the Data](verifier-constrained_flow_expansion_for_discovery_beyond_the_data.md)
+- [SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
+- [Beyond Confidence: The Rhythms of Reasoning in Generative Models](beyond_confidence_the_rhythms_of_reasoning_in_generative_models.md)
+
+<!-- RELATED:END -->

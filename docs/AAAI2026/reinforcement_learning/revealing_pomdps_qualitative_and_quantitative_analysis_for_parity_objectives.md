@@ -195,3 +195,15 @@ $$\text{Belief-Reach}(\mathcal{X}) := \{\rho \in \Omega : \exists t \geq 0, B_t(
 - 实验充分度: ⭐⭐⭐⭐（理论工作，证明完整）
 - 写作质量: ⭐⭐⭐⭐⭐（结构清晰，从概览到细节递进优秀）
 - 价值: ⭐⭐⭐⭐（完成了揭示型POMDPs的完整复杂度刻画，有理论标杆意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Course Correction in Steerability Evaluation: Revealing Miscalibration and Side Effects in LLMs](a_course_correction_in_steerability_evaluation_revealing_mis.md)
+- [Scalable Policy-Based RL Algorithms for POMDPs](../../NeurIPS2025/reinforcement_learning/scalable_policy-based_rl_algorithms_for_pomdps.md)
+- [Know your Trajectory -- Trustworthy Reinforcement Learning Deployment through Importance-Based Trajectory Analysis](know_your_trajectory_--_trustworthy_reinforcement_learning_deployment_through_im.md)
+- [Sequential Monte Carlo for Policy Optimization in Continuous POMDPs](../../NeurIPS2025/reinforcement_learning/sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)
+- [Optimizing Language Models for Inference Time Objectives using Reinforcement Learning](../../ICML2025/reinforcement_learning/optimizing_language_models_for_inference_time_objectives_using_reinforcement_lea.md)
+
+<!-- RELATED:END -->

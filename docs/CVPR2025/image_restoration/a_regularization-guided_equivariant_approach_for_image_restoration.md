@@ -147,3 +147,15 @@ $$\mathcal{L}_{ch}^{(l)} = \mathbb{E}_{x, k} \left[ \| f_l(\sigma_k(x)) - \sigma
 - E(2)-Steerable CNN: 连续旋转等变卷积网络
 - Augerino: 通过学习增强策略近似等变性
 - SwinIR / Restormer: 基于 Transformer 的图像复原方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement](../../NeurIPS2025/image_restoration/latent_harmony_synergistic_unified_uhd_image_restoration_via_latent_space_regula.md)
+- [Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration](../../ECCV2024/image_restoration/seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)
+- [DarkIR: Robust Low-Light Image Restoration](darkir_robust_low-light_image_restoration.md)
+- [MaIR: A Locality- and Continuity-Preserving Mamba for Image Restoration](mair_a_locality-_and_continuity-preserving_mamba_for_image_restoration.md)
+- [Degradation-Aware Feature Perturbation for All-in-One Image Restoration](degradation-aware_feature_perturbation_for_all-in-one_image_restoration.md)
+
+<!-- RELATED:END -->

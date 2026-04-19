@@ -142,3 +142,15 @@ Holmes-VAU 的整体流程为：输入一个长视频，首先通过冻结的视
 - 实验充分度: ⭐⭐⭐⭐⭐ 在检测和推理两个维度上与大量方法对比，消融实验覆盖数据粒度、采样策略和微调参数
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，motivation 推导自然，但部分技术细节需参考附录
 - 价值: ⭐⭐⭐⭐ HIVAU-70k 数据集和 ATS 采样器对视频异常理解领域有较好实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Ego-Exo Correspondence with Long-Term Memory](../../NeurIPS2025/segmentation/robust_ego-exo_correspondence_with_long-term_memory.md)
+- [FineCaption: Compositional Image Captioning Focusing on Wherever You Want at Any Granularity](finecaption_compositional_image_captioning_focusing_on_wherever_you_want_at_any_.md)
+- [SAP: Segment Any 4K Panorama](sap_segment_any_4k_panorama.md)
+- [GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation](glus_global-local_reasoning_unified_into_a_single_large_language_model_for_video.md)
+- [Generative Video Propagation](generative_video_propagation.md)
+
+<!-- RELATED:END -->

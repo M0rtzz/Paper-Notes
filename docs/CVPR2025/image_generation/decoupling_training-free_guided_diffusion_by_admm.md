@@ -68,3 +68,15 @@ CLIP Score (文本引导): ADMMDiff **26.85** vs FreeDoM 25.9, MPGD 25.1
 - 实验充分度: ⭐⭐⭐⭐ 多种引导类型+理论分析
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨，命题和证明清晰
 - 价值: ⭐⭐⭐⭐ 为训练免费引导提供了原则性框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework](taming_score-based_denoisers_in_admm_a_convergent_plug-and-play_framework.md)
+- [MatchDiffusion: Training-free Generation of Match-Cuts](../../ICCV2025/image_generation/matchdiffusion_training-free_generation_of_match-cuts.md)
+- [BooW-VTON: Boosting In-the-Wild Virtual Try-On via Mask-Free Pseudo Data Training](boow-vton_boosting_in-the-wild_virtual_try-on_via_mask-free_pseudo_data_training.md)
+- [Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
+- [Training-Free Constrained Generation with Stable Diffusion Models](../../NeurIPS2025/image_generation/training-free_constrained_generation_with_stable_diffusion_models.md)
+
+<!-- RELATED:END -->

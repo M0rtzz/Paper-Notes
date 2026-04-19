@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — benchmark 构建严谨 + 消融全面 + 跨模型/算法验证
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，但论文篇幅较长需要仔细跟踪大量表格
 - 价值: ⭐⭐⭐⭐⭐ — 为图像编辑领域的 RL 训练铺平道路，代码/模型/数据全开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+- [Training-Free Reward-Guided Image Editing via Trajectory Optimal Control](training-free_reward-guided_image_editing_via_trajectory_optimal_control.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [DiffusionNFT: Online Diffusion Reinforcement with Forward Process](diffusionnft_online_diffusion_reinforcement_with_forward_process.md)
+- [Trust Your Critic: Robust Reward Modeling and Reinforcement Learning for Faithful Image Editing and Generation](../../CVPR2025/image_generation/trust_your_critic_robust_reward_modeling_and_reinforcement_learning_for_faithful.md)
+
+<!-- RELATED:END -->

@@ -151,3 +151,15 @@ $$score(p|x) = \alpha \cdot score_1(t|prompt_t(x)) + (1-\alpha) \cdot score_2(p|
 - **实用性**: ⭐⭐⭐⭐ — 在 KILT 基准上验证有效，但索引构建和推理成本仍需优化
 - **实验充分度**: ⭐⭐⭐⭐ — 6 个任务全面评估，包含页面级、段落级和下游任务三层指标
 - **写作质量**: ⭐⭐⭐⭐ — 认知启发的叙事清晰，技术细节充分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [FRACTAL: Fine-Grained Scoring from Aggregate Text Labels](fractal_fine-grained_scoring_from_aggregate_text_labels.md)
+
+<!-- RELATED:END -->

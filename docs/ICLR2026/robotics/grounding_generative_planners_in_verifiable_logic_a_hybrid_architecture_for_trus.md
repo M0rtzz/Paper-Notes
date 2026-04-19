@@ -130,3 +130,15 @@ SAFER 使用多 LLM 委员会生成自然语言安全批评，能解释为何计
 - ⭐⭐⭐⭐ 实验充分度：多维度消融（VIRF-Reject/RAG/Manual）、知识悖论发现、鲁棒性测试、扩展性分析，实验设计全面
 - ⭐⭐⭐⭐ 实用价值：0% HAR + 高 GCR 的组合对安全关键应用有直接部署价值，TAS 知识工程流程具有可复制性
 - ⭐⭐⭐ 清晰度：论文结构清晰、图表丰富，但方法涉及三大支柱、多个子系统协同，整体复杂度较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [D2E: Scaling Vision-Action Pretraining on Desktop Data for Transfer to Embodied AI](d2e_scaling_vision-action_pretraining_on_desktop_data_for_transfer_to_embodied_a.md)
+- [GRIM: Task-Oriented Grasping with Conditioning on Generative Examples](../../AAAI2026/robotics/grim_task-oriented_grasping_with_conditioning_on_generative_examples.md)
+- [From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors](from_spatial_to_actions_grounding_vision-language-action_model_in_spatial_founda.md)
+- [FOUNDER: Grounding Foundation Models in World Models for Open-Ended Embodied Decision Making](../../ICML2025/robotics/founder_grounding_foundation_models_in_world_models_for_open-ended_embodied_deci.md)
+- [REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?](rei-bench_can_embodied_agents_understand_vague_human_instructions_in_task_planni.md)
+
+<!-- RELATED:END -->

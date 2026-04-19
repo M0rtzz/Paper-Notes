@@ -116,3 +116,15 @@ ISG（Inverting Stochasticity from Gradients）框架分为两个阶段。第一
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了多种 SNN 类型，消融实验详细，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 论证逻辑严密，安全分析角度专业
 - 价值: ⭐⭐⭐⭐⭐ 对联邦学习隐私保护研究有重要的警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Resilience of Entropy Model in Distributed Neural Networks](resilience_of_entropy_model_in_distributed_neural_networks.md)
+- [Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](../../NeurIPS2025/ai_safety/unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
+- [Neural Gate: Mitigating Privacy Risks in LVLMs via Neuron-Level Gradient Gating](../../CVPR2025/ai_safety/neural_gate_mitigating_privacy_risks_in_lvlms_via_neuron-level_gradient_gating.md)
+- [Noise-Assisted Prompt Learning for Image Forgery Detection and Localization](noise-assisted_prompt_learning_for_image_forgery_detection_and_localization.md)
+- [FicGCN: Unveiling the Homomorphic Encryption Efficiency from Irregular Graph Convolutional Networks](../../ICML2025/ai_safety/ficgcn_unveiling_the_homomorphic_encryption_efficiency_from_irregular_graph_conv.md)
+
+<!-- RELATED:END -->

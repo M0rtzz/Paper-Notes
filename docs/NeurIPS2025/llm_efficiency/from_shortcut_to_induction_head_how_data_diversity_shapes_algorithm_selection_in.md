@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 理论和合成实验紧密契合，三层Transformer的验证增加可信度，但缺少真实语料的实验
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，直觉解释到位，图示（attention heatmap）非常有效
 - 价值: ⭐⭐⭐⭐ 对理解Transformer学习机制有重要理论价值，对数据设计有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs](../../ACL2025/llm_efficiency/ladm_long_context_data.md)
+- [Constant Bit-Size Transformers Are Turing Complete](constant_bit-size_transformers_are_turing_complete.md)
+- [MoH: Multi-Head Attention as Mixture-of-Head Attention](../../ICML2025/llm_efficiency/moh_multi-head_attention_as_mixture-of-head_attention.md)
+- [ZeroS: Zero-Sum Linear Attention for Efficient Transformers](zeros_zero-sum_linear_attention_for_efficient_transformers.md)
+- [Token-level Data Selection for Safe LLM Fine-tuning](../../ICLR2026/llm_efficiency/token-level_data_selection_for_safe_llm_fine-tuning.md)
+
+<!-- RELATED:END -->

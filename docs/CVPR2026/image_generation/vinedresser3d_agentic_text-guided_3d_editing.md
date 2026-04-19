@@ -160,3 +160,15 @@ $$X_{i-1} = X_i + (t_{i-1} - t_i) v_\theta(X_i, t_i) + \frac{1}{2}(t_{i-1} - t_i
 ⭐⭐⭐⭐ (4/5)
 
 将 MLLM 智能体用于 3D 编辑是一个有吸引力的方向，方法设计合理，实验结果在文本对齐和用户偏好上明显领先。自动掩码检测消除了用户手动标注的需求，显著提升了易用性。不足在于评估规模较小、与 Trellis 耦合较深、推理成本未充分讨论。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+- [Agentic Retoucher for Text-To-Image Generation](agentic_retoucher_for_texttoimage_generation.md)
+- [BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation](bimotion_b-spline_motion_for_text-guided_dynamic_3d_character_generation.md)
+- [FG-Portrait: 3D Flow Guided Editable Portrait Animation](fg-portrait_3d_flow_guided_editable_portrait_animation.md)
+- [MorphAny3D: Unleashing the Power of Structured Latent in 3D Morphing](morphany3d_unleashing_the_power_of_structured_latent_in_3d_morphing.md)
+
+<!-- RELATED:END -->

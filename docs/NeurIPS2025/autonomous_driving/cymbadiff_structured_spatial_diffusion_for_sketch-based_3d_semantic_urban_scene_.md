@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 生成+补全两个任务，消融全面，但仅限 KITTI 家族
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富
 - 价值: ⭐⭐⭐⭐ 开源数据集+代码对社区有较大价值，但更偏 benchmark 贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SPIRAL: Semantic-Aware Progressive LiDAR Scene Generation and Understanding](spiral_semantic-aware_progressive_lidar_scene_generation_and_understanding.md)
+- [Decoupled Diffusion Sparks Adaptive Scene Generation](../../ICCV2025/autonomous_driving/decoupled_diffusion_sparks_adaptive_scene_generation.md)
+- [Neurosymbolic Diffusion Models](neurosymbolic_diffusion_models.md)
+- [FlowScene: Learning Temporal 3D Semantic Scene Completion via Optical Flow Guidance](learning_temporal_3d_semantic_scene_completion_via_optical_flow_guidance.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+
+<!-- RELATED:END -->

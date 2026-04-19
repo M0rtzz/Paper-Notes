@@ -165,3 +165,15 @@ MATA承接ViperGPT → HYDRA → NAVER的发展脉络，首次实现可学习的
 - **实用性**: ⭐⭐⭐⭐ — 框架通用但推理成本较高
 - **写作质量**: ⭐⭐⭐⭐⭐ — 形式化清晰，表述严谨
 - **综合**: ⭐⭐⭐⭐⭐ (9.0/10)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auditing Cascading Risks in Multi-Agent Systems via Semantic–Geometric Co-evolution](auditing_cascading_risks_in_multi-agent_systems_via_semanti-geometric_co-evolut.md)
+- [ToC: Tree-of-Claims Search with Multi-Agent Language Models](../../AAAI2026/interpretability/toc_tree-of-claims_search_with_multi-agent_language_models.md)
+- [iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](../../AAAI2026/interpretability/imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)
+- [Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+- [AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](../../NeurIPS2025/interpretability/agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
+
+<!-- RELATED:END -->

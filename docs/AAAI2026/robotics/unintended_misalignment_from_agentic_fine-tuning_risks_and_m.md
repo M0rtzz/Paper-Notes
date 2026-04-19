@@ -116,3 +116,15 @@ PING 不需要任何模型训练——仅在推理时 prepend 自然语言前缀
 - 实验充分度: ⭐⭐⭐⭐⭐ 5模型×2领域×多基线，线性探针分析+对抗鲁棒性+护栏叠加实验
 - 写作质量: ⭐⭐⭐⭐⭐ 从问题发现→洞察→方法→分析的逻辑链非常流畅
 - 价值: ⭐⭐⭐⭐⭐ 对Agent安全领域有重要贡献，WebDojo benchmark和PING方法对社区实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Expert Pyramid Tuning: Efficient Parameter Fine-Tuning for Expertise-Driven Task Allocation](../../CVPR2026/robotics/expert_pyramid_tuning_efficient_parameter_fine-tuning_for_expertise-driven_task_.md)
+- [Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems](shadows_in_the_code_exploring_the_risks_and_defenses_of_llm-.md)
+- [Characterizing AI Manipulation Risks in Brazilian YouTube Climate Discourse](characterizing_ai_manipulation_risks_in_brazilian_youtube_climate_discourse.md)
+- [Affordance-Guided Coarse-to-Fine Exploration for Base Placement in Open-Vocabulary Mobile Manipulation](affordance-guided_coarse-to-fine_exploration_for_base_placem.md)
+- [When Agents Persuade: Propaganda Generation and Mitigation in LLMs](../../ICLR2026/robotics/when_agents_persuade_propaganda_generation_and_mitigation_in_llms.md)
+
+<!-- RELATED:END -->

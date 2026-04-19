@@ -167,3 +167,15 @@ FiLM (Feature-wise Linear Modulation) 融合机制的核心流程：
 - **实验充分度**: ⭐⭐⭐ — 消融实验详尽（层+时间步二维网格），但数据集仅 2 个，缺乏与最新基础模型的对比
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述系统，双重层级分析框架表述清楚
 - **价值**: ⭐⭐⭐⭐ — 为遥感少标注场景提供了实用的预训练模型迁移方案，对跨域特征迁移理论有贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IntLoRA: Integral Low-rank Adaptation of Quantized Diffusion Models](intlora_integral_low-rank_adaptation_of_quantized_diffusion_models.md)
+- [FocalCodec: Low-Bitrate Speech Coding via Focal Modulation Networks](../../NeurIPS2025/image_generation/focalcodec_low-bitrate_speech_coding_via_focal_modulation_networks.md)
+- [Spectral Image Tokenizer](../../ICCV2025/image_generation/spectral_image_tokenizer.md)
+- [Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation](../../ICCV2025/image_generation/efficient_input-level_backdoor_defense_on_text-to-image_synthesis_via_neuron_act.md)
+- [CleanDIFT: Diffusion Features without Noise](../../CVPR2025/image_generation/cleandift_diffusion_features_without_noise.md)
+
+<!-- RELATED:END -->

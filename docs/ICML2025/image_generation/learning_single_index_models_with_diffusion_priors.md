@@ -138,3 +138,15 @@ $$\frac{\sigma_{t^*}}{\alpha_{t^*}} = \frac{C_s}{\sqrt{m}}$$
 - 实验充分度: ⭐⭐⭐⭐ — 多数据集、多测量模型、多基线对比，附录含丰富消融
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，符号规范，三种方法的对比图示直观
 - 价值: ⭐⭐⭐⭐ — 为非线性逆问题提供了高效且通用的扩散模型解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Visual Generative Priors without Text](../../CVPR2025/image_generation/learning_visual_generative_priors_without_text.md)
+- [Joint Diffusion Models in Continual Learning](../../ICCV2025/image_generation/joint_diffusion_models_in_continual_learning.md)
+- [DiffLocks: Generating 3D Hair from a Single Image using Diffusion Models](../../CVPR2025/image_generation/difflocks_generating_3d_hair_from_a_single_image_using_diffusion_models.md)
+- [Composition and Alignment of Diffusion Models using Constrained Learning](../../NeurIPS2025/image_generation/composition_and_alignment_of_diffusion_models_using_constrai.md)
+- [Golden Noise for Diffusion Models: A Learning Framework](../../ICCV2025/image_generation/golden_noise_for_diffusion_models_a_learning_framework.md)
+
+<!-- RELATED:END -->

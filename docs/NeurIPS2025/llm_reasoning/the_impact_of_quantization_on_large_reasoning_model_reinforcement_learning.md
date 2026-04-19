@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 4个模型规模×多种量化方案的矩阵实验设计合理，但只有数学推理一个领域
 - 写作质量: ⭐⭐⭐⭐ Workshop paper 写得简洁清晰，结论明确
 - 价值: ⭐⭐⭐⭐ 对 LRM 部署实践具有直接指导意义，结论意外且重要（QAFT 反而最差）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+- [SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning](sql-r1_training_natural_language_to_sql_reasoning_model_by_reinforcement_learnin.md)
+- [Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement](../../AAAI2026/llm_reasoning/incorporating_self-rewriting_into_large_language_model_reasoning_reinforcement.md)
+- [ARM: Adaptive Reasoning Model](arm_adaptive_reasoning_model.md)
+- [SERL: Self-Examining Reinforcement Learning on Open-Domain](../../AAAI2026/llm_reasoning/serl_self-examining_reinforcement_learning_on_open-domain.md)
+
+<!-- RELATED:END -->

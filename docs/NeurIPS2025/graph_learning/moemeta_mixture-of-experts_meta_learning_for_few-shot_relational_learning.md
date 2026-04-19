@@ -149,3 +149,15 @@ $$\mathcal{L}(\mathcal{S}_r) = \sum_{(h_i,r,t_i) \in \mathcal{S}_r} \max\{0, \te
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三数据集+16个基线+消融+可视化+关系类型分析
 - 写作质量: ⭐⭐⭐⭐ — 动机阐述清晰，方法设计有理有据
 - 价值: ⭐⭐⭐⭐ — 少样本KG推理的实用性强，框架可迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [S'MoRE: Structural Mixture of Residual Experts for Parameter-Efficient LLM Fine-tuning](smore_structural_mixture_of_residual_experts_for_parameter-efficient_llm_fine-tu.md)
+- [Moscat: Mixture of Scope Experts at Test for Generalizing Deeper GNNs](mixture_of_scope_experts_at_test_generalizing_deeper_graph_neural_networks_with_.md)
+- [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
+- [Relatron: Automating Relational Machine Learning over Relational Databases](../../ICLR2026/graph_learning/relatron_automating_relational_machine_learning_over_relational_databases.md)
+- [Inductive Transfer Learning for Graph-Based Recommenders](inductive_transfer_learning_for_graph-based_recommenders.md)
+
+<!-- RELATED:END -->

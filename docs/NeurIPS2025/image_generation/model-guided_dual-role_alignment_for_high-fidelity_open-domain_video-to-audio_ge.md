@@ -159,3 +159,15 @@ FAD降至0.40，相比次优MMAudio(0.71)提升43%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个消融维度覆盖全面，数据效率和可扩展性分析深入，UMAP可视化直观
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，但related work部分较冗长
 - 价值: ⭐⭐⭐⭐⭐ 以极小模型实现大幅SOTA提升，数据效率发现对领域有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FlashAudio: Rectified Flows for Fast and High-Fidelity Text-to-Audio Generation](../../ACL2025/image_generation/flashaudio_rectified_flow_tta.md)
+- [AvatarArtist: Open-Domain 4D Avatarization](../../CVPR2025/image_generation/avatarartist_open-domain_4d_avatarization.md)
+- [Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation](vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)
+- [From Cradle to Cane: A Two-Pass Framework for High-Fidelity Lifespan Face Aging](from_cradle_to_cane_a_two-pass_framework_for_high-fidelity_lifespan_face_aging.md)
+- [Knowledge Distillation Detection for Open-weights Models](knowledge_distillation_detection_for_open-weights_models.md)
+
+<!-- RELATED:END -->

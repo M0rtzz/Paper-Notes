@@ -169,3 +169,15 @@ $$\hat{w} = \frac{\int dw \, p(w) w \prod_{k=1}^{n-1} p(y_k | x_k, w)}{\int dw \
 ## 评分
 
 ⭐⭐⭐⭐ — 实验设计优雅，发现了clean且robust的相变现象，对理解ICL泛化机制有重要理论启发。但简化设定限制了对LLM实际ICL行为的直接推广。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+- [In-Context Adaptation to Concept Drift for Learned Database Operations](in-context_adaptation_to_concept_drift_for_learned_database_operations.md)
+- [Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](../../NeurIPS2025/llm_pretraining/retrospective_incontext_learning_for_temporal_credit_assignm.md)
+- [Prompting Language-Informed Distribution for Compositional Zero-Shot Learning](../../ECCV2024/llm_pretraining/prompting_language-informed_distribution_for_compositional_zero-shot_learning.md)
+- [Density Ratio Estimation-based Bayesian Optimization with Semi-Supervised Learning](density_ratio_estimation-based_bayesian_optimization_with_semi-supervised_learni.md)
+
+<!-- RELATED:END -->

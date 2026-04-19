@@ -163,3 +163,15 @@ Full Fine-tuning 效果差可能因灾难性遗忘；AquaStyle Aligner 通过显
 - 实验充分度: 4/5（两个数据集、充分消融、多策略对比，但缺速度分析）
 - 写作质量: 4/5（结构清晰，动机阐述充分）
 - 价值: 4/5（为水下视觉领域提供了强基线，迁移思路有通用性）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empowering Semantic-Sensitive Underwater Image Enhancement with VLM](empowering_semantic-sensitive_underwater_image_enhancement_with_vlm.md)
+- [A Mixed Diet Makes DINO An Omnivorous Vision Encoder](../../CVPR2026/segmentation/mixed_diet_dino_omnivorous_encoder.md)
+- [UniFS: Universal Few-Shot Instance Perception with Point Representations](../../ECCV2024/segmentation/unifs_universal_few-shot_instance_perception_with_point_representations.md)
+- [ELVIS: Enhance Low-Light for Video Instance Segmentation in the Dark](../../CVPR2026/segmentation/elvis_enhance_low-light_for_video_instance_segmentation_in_the_dark.md)
+- [Phrase-Instance Alignment for Generalized Referring Segmentation](../../CVPR2026/segmentation/phrase-instance_alignment_for_generalized_referring_segmentation.md)
+
+<!-- RELATED:END -->

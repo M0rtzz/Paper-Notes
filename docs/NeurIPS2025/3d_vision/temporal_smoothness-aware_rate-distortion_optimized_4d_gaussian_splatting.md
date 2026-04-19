@@ -127,3 +127,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ N3V 和 Technicolor 两个数据集、6 个压缩等级、详尽的消融研究
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融分析有说服力
 - 价值: ⭐⭐⭐⭐ 使 4DGS 实际可部署到边缘设备，填补了重要的技术空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Orientation-anchored Hyper-Gaussian for 4D Reconstruction from Casual Videos](orientation-anchored_hyper-gaussian_for_4d_reconstruction_from_casual_videos.md)
+- [4D Gaussian Splatting SLAM](../../ICCV2025/3d_vision/4d_gaussian_splatting_slam.md)
+- [Compression of 3D Gaussian Splatting with Optimized Feature Planes and Standard Video Codecs](../../ICCV2025/3d_vision/compression_of_3d_gaussian_splatting_with_optimized_feature_planes_and_standard_.md)
+- [7DGS: Unified Spatial-Temporal-Angular Gaussian Splatting](../../ICCV2025/3d_vision/7dgs_unified_spatialtemporalangular_gaussian_splatting.md)
+- [MEGA: Memory-Efficient 4D Gaussian Splatting for Dynamic Scenes](../../ICCV2025/3d_vision/mega_memory-efficient_4d_gaussian_splatting_for_dynamic_scenes.md)
+
+<!-- RELATED:END -->

@@ -118,3 +118,15 @@ DropoutGS 由两个互补模块组成：（1）Random Dropout Regularization（R
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集 + 兼容性验证 + 深度图可视化 + 梯度图分析 + 点云可视化
 - 写作质量: ⭐⭐⭐⭐ 动机分析透彻，pilot study 有说服力，方法阐述清晰
 - 价值: ⭐⭐⭐⭐ 即插即用的通用正则化模块，在 DTU 上提升显著，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DropGaussian: Structural Regularization for Sparse-view Gaussian Splatting](dropgaussian_structural_regularization_for_sparse-view_gaussian_splatting.md)
+- [DropAnSH-GS: Dropping Anchor and Spherical Harmonics for Sparse-view Gaussian Splatting](../../CVPR2026/3d_vision/dropping_anchor_and_spherical_harmonics_for_sparse-view_gaussian_splatting.md)
+- [MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views](matcha_gaussians_atlas_of_charts_for_high-quality_geometry_and_photorealism_from.md)
+- [iSegMan: Interactive Segment-and-Manipulate 3D Gaussians](isegman_interactive_segment-and-manipulate_3d_gaussians.md)
+- [CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis](comapgs_covisibility_map-based_gaussian_splatting_for_sparse_novel_view_synthesi.md)
+
+<!-- RELATED:END -->

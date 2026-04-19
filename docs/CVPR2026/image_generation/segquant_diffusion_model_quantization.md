@@ -119,3 +119,15 @@ SegLinear 在敏感层上大幅降低量化误差。
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种架构、三个数据集、多种精度设置、详细消融和实际效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机明确，术语统一
 - 价值: ⭐⭐⭐⭐ 解决了扩散模型量化的工程化部署痛点，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking](trace_structure-aware_character_encoding_for_robust_and_generalizable_document_w.md)
+- [Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models](neighbor-aware_localized_concept_erasure_in_text-to-image_diffusion_models.md)
+- [Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge](quantization_with_unified_adaptive_distillation_to_enable_multi-lora_based_one-f.md)
+- [Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection](layer_consistency_matters_elegant_latent_transition_discrepancy_for_generalizabl.md)
+- [RAZOR: Ratio-Aware Layer Editing for Targeted Unlearning in Vision Transformers and Diffusion Models](razor_ratio_aware_unlearning_vit_diffusion.md)
+
+<!-- RELATED:END -->

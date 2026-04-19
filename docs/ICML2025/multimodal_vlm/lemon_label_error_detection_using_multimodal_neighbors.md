@@ -160,3 +160,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个数据集、12个基线、理论分析、消融彻底、真实世界验证
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、理论+实验+消融+真实验证层层递进
 - 价值: ⭐⭐⭐⭐ 方法实用、泛化性好，对数据质量控制有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Error-driven Data-efficient Large Multimodal Model Tuning](../../ACL2025/multimodal_vlm/error-driven_data-efficient_large_multimodal_model_tuning.md)
+- [LADA: Scalable Label-Specific CLIP Adapter for Continual Learning](lada_scalable_label-specific_clip_adapter_for_continual_learning.md)
+- [Unifying Vision-Language Latents for Zero-Label Image Caption Enhancement](../../NeurIPS2025/multimodal_vlm/unifying_vision-language_latents_for_zero-label_image_caption_enhancement.md)
+- [NLPrompt: Noise-Label Prompt Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/nlprompt_noise-label_prompt_learning_for_vision-language_models.md)
+- [Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection](unlocking_the_capabilities_of_large_vision-language_models_for_generalizable_and.md)
+
+<!-- RELATED:END -->

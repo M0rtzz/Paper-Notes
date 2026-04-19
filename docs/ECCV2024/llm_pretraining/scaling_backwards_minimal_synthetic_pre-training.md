@@ -149,3 +149,15 @@ ViT-Base 在 ImageNet-1k 微调：1p-frac（1 张图）达到 82.1%，超越 Ima
 - 实验充分度: ⭐⭐⭐⭐⭐ 从探索/超参/扩展/分析/应用五个维度全面验证
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，数学形式优雅，实验设计层层递进
 - 价值: ⭐⭐⭐⭐⭐ 对预训练本质的深层洞察，且有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PreLAR: World Model Pre-training with Learnable Action Representation](prelar_world_model_pre-training_with_learnable_action_representation.md)
+- [Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](../../NeurIPS2025/llm_pretraining/power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [Scaling and Transferability of Annealing Strategies in Large Language Model Training](../../AAAI2026/llm_pretraining/scaling_and_transferability_of_annealing_strategies_in_large_language_model_trai.md)
+- [Metadata Conditioning Accelerates Language Model Pre-training](../../ICML2025/llm_pretraining/metadata_conditioning_accelerates_language_model_pre-training.md)
+- [Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning](../../ACL2025/llm_pretraining/training_dynamics_underlying_language_model_scaling_laws_loss_deceleration_and_z.md)
+
+<!-- RELATED:END -->

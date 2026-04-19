@@ -115,3 +115,15 @@ PSDF在最优配置（$\tau_T=0.5, \tau_Q=0.4, \ell_Q=25$）下达到约124 tok/
 - 实验充分度: ⭐⭐ 仅一个数据集（CSQA）、一组模型家族（LLaMA），超参消融虽然细致但任务多样性不足
 - 写作质量: ⭐⭐⭐⭐ 公式推导清楚，动机-方法-实验的逻辑链完整，熵梯度分析增加了说服力
 - 价值: ⭐⭐⭐ 作为一种即插即用的加速方案有实用价值，但受限于同家族模型的要求和单一评测，影响力可能有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAM Decoding: Speculative Decoding via Suffix Automaton](../../ACL2025/llm_efficiency/sam_decoding_speculative_decoding_via_suffix_automaton.md)
+- [OmniDraft: A Cross-Vocabulary Online Adaptive Drafter for On-Device Speculative Decoding](omnidraft_a_cross-vocabulary_online_adaptive_drafter_for_on-device_speculative_d.md)
+- [Tetris: Optimal Draft Token Selection for Batch Speculative Decoding](../../ACL2025/llm_efficiency/tetris_optimal_draft_token_selection_for_batch_speculative_decoding.md)
+- [CLaSp: In-Context Layer Skip for Self-Speculative Decoding](../../ACL2025/llm_efficiency/clasp_self_speculative_decoding.md)
+- [Yggdrasil: Bridging Dynamic Speculation and Static Runtime for Latency-Optimal Tree-Based LLM Decoding](yggdrasil_bridging_dynamic_speculation_and_static_runtime_for_latency-optimal_tr.md)
+
+<!-- RELATED:END -->

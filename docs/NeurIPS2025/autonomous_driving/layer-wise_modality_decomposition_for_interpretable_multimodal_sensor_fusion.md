@@ -152,3 +152,15 @@ tags:
 - **技术深度**：⭐⭐⭐⭐ — 对激活层、BatchNorm、LayerNorm 分别推导线性化方案并证明保持原始功能，理论体系完整；但核心思想（线性化+叠加）相对直观
 - **实验充分性**：⭐⭐⭐⭐ — 覆盖 radar-camera、LiDAR-camera、三模态融合配置，提出新评估指标；但主要在 SimpleBEV 一个基础架构上验证
 - **实用价值**：⭐⭐⭐⭐ — 对自动驾驶安全审计和故障诊断有直接应用价值，计算开销极低；代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Availability-aware Sensor Fusion via Unified Canonical Space](availability-aware_sensor_fusion_via_unified_canonical_space.md)
+- [Self-Supervised Sparse Sensor Fusion for Long Range Perception](../../ICCV2025/autonomous_driving/self-supervised_sparse_sensor_fusion_for_long_range_perception.md)
+- [DBLoss: Decomposition-based Loss Function for Time Series Forecasting](dbloss_decomposition-based_loss_function_for_time_series_forecasting.md)
+- [SiMO: Single-Modality-Operable Multimodal Collaborative Perception](../../ICLR2026/autonomous_driving/simo_single-modality-operable_multimodal_collaborative_perceptio.md)
+- [x2-Fusion: Cross-Modality and Cross-Dimension Flow Estimation in Event Edge Space](../../CVPR2026/autonomous_driving/x2-fusion_cross-modality_and_cross-dimension_flow_estimation_in_event_edge_space.md)
+
+<!-- RELATED:END -->

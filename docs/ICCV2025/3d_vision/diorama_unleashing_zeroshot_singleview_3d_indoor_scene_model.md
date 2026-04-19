@@ -151,3 +151,15 @@ Diorama 相比 DiffCAD 的最大优势是泛化性——DiffCAD 在 ScanNet 的 
 - **实验充分度**: ⭐⭐⭐⭐ — 合成+真实数据评估，详细消融，用户研究，多维度指标，补充材料丰富
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，图表精美，问题分解逻辑严密，读起来像一个工程故事
 - **对我的价值**: ⭐⭐⭐⭐ — 模块化零样本的系统设计哲学、分阶段优化策略、多模态检索思路都有借鉴意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Inexact CAD Model Alignment from a Single Image](zero-shot_inexact_cad_model_alignment_from_a_single_image.md)
+- [MonoMobility: Zero-Shot 3D Mobility Analysis from Monocular Videos](monomobility_zero-shot_3d_mobility_analysis_from_monocular_videos.md)
+- [Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning](accelerate_3d_object_detection_models_via_zero-shot_attention_key_pruning.md)
+- [Can3Tok: Canonical 3D Tokenization and Latent Modeling of Scene-Level 3D Gaussians](can3tok_canonical_3d_tokenization_and_latent_modeling_of_sce.md)
+- [BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes](buffer-x_towards_zero-shot_point_cloud_registration_in_diverse_scenes.md)
+
+<!-- RELATED:END -->

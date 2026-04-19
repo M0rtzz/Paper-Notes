@@ -154,3 +154,15 @@ $$\mathcal{L}_x(\hat{x}_1, x_1) = \frac{1}{M}\sum_{m=1}^M w^{(m)} \cdot |x_1^{(m
 - 实验充分度: ⭐⭐⭐⭐ — 多基准对比、消融全面，含真实图像定性分析
 - 写作质量: ⭐⭐⭐⭐ — 思路清晰，公式推导完整，图示直观
 - 价值: ⭐⭐⭐⭐ — 实用性强，计算高效，数据集贡献有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [JointDreamer: Ensuring Geometry Consistency and Text Congruence in Text-to-3D Generation via Joint Score Distillation](../../ECCV2024/3d_vision/jointdreamer_ensuring_geometry_consistency_and_text_congruence_in_text-to-3d_gen.md)
+- [LiTo: Surface Light Field Tokenization](lito_surface_light_field_tokenization.md)
+- [AnchorHOI: Zero-shot Generation of 4D Human-Object Interaction via Anchor-based Prior Distillation](../../AAAI2026/3d_vision/anchorhoi_zero-shot_generation_of_4d_human-object_interactio.md)
+- [Ctrl&Shift: High-Quality Geometry-Aware Object Manipulation in Visual Generation](ctrlshift_high-quality_geometry-aware_object_manipulation_in_visual_generation.md)
+- [Geometry Meets Light: Leveraging Geometric Priors for Universal Photometric Stereo under Limited Multi-Illumination Cues](../../AAAI2026/3d_vision/geometry_meets_light_leveraging_geometric_priors_for_universal_photometric_stere.md)
+
+<!-- RELATED:END -->

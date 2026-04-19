@@ -172,3 +172,15 @@ GPT-4o 在 14 项任务中有 6 项排名第一，11 项进入前三。开源模
 ## 评分
 
 ⭐⭐⭐⭐⭐ — 填补了 LAM 交互式评估的重要空白，核心发现（静态基准几乎无法预测用户偏好）对整个领域有深远影响。数据收集规模可观（7,500+交互），分析维度丰富（使用场景、偏好原因、基准预测力），实验设计严谨。Pipeline 模型胜出的反直觉结果极具洞察力。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VGGSounder: Audio-Visual Evaluations for Foundation Models](../../ICCV2025/audio_speech/vggsounder_audio-visual_evaluations_for_foundation_models.md)
+- [Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models](who_can_withstand_chat-audio_attacks_an_evaluation_benchmark_for_large_audio-lan.md)
+- [Benchmarking Open-ended Audio Dialogue Understanding for Large Audio-Language Models](audio_dialogue_benchmark.md)
+- [Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)
+- [Towards Reliable Large Audio Language Model](towards_reliable_large_audio_language_model.md)
+
+<!-- RELATED:END -->

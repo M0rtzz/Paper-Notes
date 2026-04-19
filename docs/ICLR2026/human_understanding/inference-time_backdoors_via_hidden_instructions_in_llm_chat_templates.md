@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 18模型、7家族、4引擎、多攻击类型、生态系统审计
 - 写作质量: ⭐⭐⭐⭐ 威胁模型清晰，攻击链完整
 - 价值: ⭐⭐⭐⭐⭐ 对开源LLM供应链安全有紧迫警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LLM Unlearning with LLM Beliefs](llm_unlearning_with_llm_beliefs.md)
+- [LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference](../../CVPR2026/human_understanding/lamogen_language_to_motion_generation_through_llm-guided_symbolic_inference.md)
+- [SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests](socialharmbench_revealing_llm_vulnerabilities_to_socially_harmful_requests.md)
+- [Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval](evoking_user_memory_personalizing_llm_via_recollection-familiarity_adaptive_retr.md)
+- [W2S-AlignTree: Weak-to-Strong Inference-Time Alignment for Large Language Models via Monte Carlo Tree Search](../../AAAI2026/human_understanding/w2s-aligntree_weak-to-strong_inference-time_alignment_for_large_language_models_.md)
+
+<!-- RELATED:END -->

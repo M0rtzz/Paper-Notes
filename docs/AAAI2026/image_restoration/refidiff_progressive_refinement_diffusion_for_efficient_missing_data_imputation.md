@@ -101,3 +101,15 @@ $$\mathcal{L}_{\text{SM}}(\theta_2) = \mathbb{E}_{X_0,\varepsilon,t}\left[\|\the
 ## 评分
 
 ⭐⭐⭐⭐ — 方法设计优雅，理论与实验完整，MNAR 场景贡献突出，但数据规模和特征类型覆盖仍有扩展空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Horizon Imagination: Efficient On-Policy Rollout in Diffusion World Models](../../ICLR2026/image_restoration/horizon_imagination_efficient_on-policy_rollout_in_diffusion_world_models.md)
+- [Efficient Diffusion as Low Light Enhancer (ReDDiT)](../../CVPR2025/image_restoration/efficient_diffusion_as_low_light_enhancer.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](../../ECCV2024/image_restoration/efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [Enhancing Infrared Vision: Progressive Prompt Fusion Network and Benchmark](../../NeurIPS2025/image_restoration/enhancing_infrared_vision_progressive_prompt_fusion_network_and_benchmark.md)
+- [Spectral Super-Resolution via Adversarial Unfolding and Data-Driven Spectrum Regularization](../../CVPR2026/image_restoration/spectral_super-resolution_via_adversarial_unfolding_and_data-driven_spectrum_reg.md)
+
+<!-- RELATED:END -->

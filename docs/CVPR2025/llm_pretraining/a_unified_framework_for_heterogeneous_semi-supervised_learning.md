@@ -114,3 +114,15 @@ $\mathcal{L}_{total} = \mathcal{L}_{cl}^L + \lambda_{pl} \mathcal{L}_{pl}^U + \l
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集、多种baseline对比，但缺乏详细消融和大规模数据验证
 - 写作质量: ⭐⭐⭐⭐ 问题形式化清晰，方法描述完整，但符号较多
 - 价值: ⭐⭐⭐⭐ 为异构数据场景的SSL提供了统一解决方案，有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Density Ratio Estimation-based Bayesian Optimization with Semi-Supervised Learning](../../ICML2025/llm_pretraining/density_ratio_estimation-based_bayesian_optimization_with_semi-supervised_learni.md)
+- [A Square Peg in a Square Hole: Meta-Expert for Long-Tailed Semi-Supervised Learning](../../ICML2025/llm_pretraining/a_square_peg_in_a_square_hole_meta-expert_for_long-tailed_semi-supervised_learni.md)
+- [An Effective Incorporating Heterogeneous Knowledge Curriculum Learning for Sequence Labeling](../../ACL2025/llm_pretraining/dual_stage_curriculum_learning_sequence_labeling.md)
+- [ConstStyle: Robust Domain Generalization with Unified Style Transformation](../../ICCV2025/llm_pretraining/conststyle_robust_domain_generalization_with_unified_style_transformation.md)
+- [MoMa: A Simple Modular Deep Learning Framework for Material Property Prediction](../../ICLR2026/llm_pretraining/moma_a_modular_deep_learning_framework_for_material_property_prediction.md)
+
+<!-- RELATED:END -->

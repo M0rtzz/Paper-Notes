@@ -130,3 +130,15 @@ ProjectorKD：$\mathcal{L}_{\text{Proj}} = \text{MSE}(\text{Projector}(\mathbf{A
 - 实验充分度: ⭐⭐⭐⭐ 分析非常充分（频谱+熵+幅值+蒸馏演化），但蒸馏方法验证偏少，且仅ImageNet分类
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑严密，从现象→分析→解释→验证层层递进，配图精美直观
 - 价值: ⭐⭐⭐⭐⭐ 为ViT压缩提供fundamental theoretical guidance，对后续蒸馏方法设计有长期影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](../../CVPR2026/video_understanding/beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
+- [From Teacher to Student: Tracking Memorization Through Model Distillation](../../ACL2025/video_understanding/from_teacher_to_student_tracking_memorization_through_model_distillation.md)
+- [Enhancing Video-LLM Reasoning via Agent-of-Thoughts Distillation](../../CVPR2025/video_understanding/enhancing_video-llm_reasoning_via_agent-of-thoughts_distillation.md)
+- [Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training](../../ECCV2024/video_understanding/boosting_3d_single_object_tracking_with_2d_matching_distillation_and_3d_pre-trai.md)
+- [Predicting Video Slot Attention Queries from Random Slot-Feature Pairs](predicting_video_slot_attention_queries_from_random_slot-feature_pairs.md)
+
+<!-- RELATED:END -->

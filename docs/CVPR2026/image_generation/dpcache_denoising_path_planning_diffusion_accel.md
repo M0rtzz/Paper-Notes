@@ -125,3 +125,15 @@ DPCache 是完全 training-free 的方法。校准阶段仅需运行标准前向
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个模型（DiT/FLUX/HunyuanVideo）、三个任务、完整消融，压倒性地优于所有基线
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，图示直观，算法描述规范
 - 价值: ⭐⭐⭐⭐⭐ 即插即用的 training-free 加速框架，兼顾效率与质量，实用性极强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration](adaptive_spectral_feature_forecasting_for_diffusion_sampling_acceleration.md)
+- [TC-Padé: Trajectory-Consistent Padé Approximation for Diffusion Acceleration](tc-padé_trajectory-consistent_padé_approximation_for_diffusion_acceleration.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [LESA: Learnable Stage-Aware Predictors for Diffusion Model Acceleration](lesa_learnable_stage-aware_predictors_for_diffusion_model_acceleration.md)
+- [Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models](flash-unified_a_training-free_and_task-aware_acceleration_framework_for_native_u.md)
+
+<!-- RELATED:END -->

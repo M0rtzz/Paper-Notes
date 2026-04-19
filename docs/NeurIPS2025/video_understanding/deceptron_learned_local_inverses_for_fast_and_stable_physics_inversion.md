@@ -124,3 +124,15 @@ DNet v0 在相同公平协议下仅用固定 6 步即达到最低误差。
 - 实验充分度: ⭐⭐⭐ — 公平协议严谨，但问题规模偏小，缺乏大规模验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，公平对比协议描述详尽
 - 价值: ⭐⭐⭐ — 方向有潜力但当前验证的实际场景有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+- [Less is More: Local Intrinsic Dimensions of Contextual Language Models](less_is_more_local_intrinsic_dimensions_of_contextual_language_models.md)
+- [KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills](kungfubot_physics-based_humanoid_whole-body_control_for_learning_highly-dynamic_.md)
+- [Local All-Pair Correspondence for Point Tracking](../../ECCV2024/video_understanding/local_all-pair_correspondence_for_point_tracking.md)
+- [GoalForce: Teaching Video Models to Accomplish Physics-Conditioned Goals](../../CVPR2026/video_understanding/goal_force_teaching_video_models_to_accomplish_physics-conditioned_goals.md)
+
+<!-- RELATED:END -->

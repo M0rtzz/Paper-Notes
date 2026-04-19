@@ -112,3 +112,15 @@ MSE 损失 $f(w) = \frac{1}{2}\|Aw - y\|_2^2$，IHT 更新 $w^{k+1} = H_{\tilde{
 - 实验充分度: ⭐⭐⭐ 实验规模偏小，仅做 MNIST 和简单任务验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，假设条件清晰
 - 价值: ⭐⭐⭐⭐ 为稀疏神经网络训练提供了理论基础，但实用性仍需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
+- [Fine-tuning Quantized Neural Networks with Zeroth-order Optimization](fine-tuning_quantized_neural_networks_with_zeroth-order_optimization.md)
+- [PASER: Post-Training Data Selection for Efficient Pruned Large Language Model Recovery](paser_post-training_data_selection_for_efficient_pruned_large_language_model_rec.md)
+- [FASA: Frequency-aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
+- [Improved Exploration in GFlowNets via Enhanced Epistemic Neural Networks](../../ICML2025/model_compression/improved_exploration_in_gflownets_via_enhanced_epistemic_neural_networks.md)
+
+<!-- RELATED:END -->

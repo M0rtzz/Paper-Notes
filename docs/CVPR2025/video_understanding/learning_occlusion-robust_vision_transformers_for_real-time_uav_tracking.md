@@ -117,3 +117,15 @@ ORTrack-D-DeiT（蒸馏版）在4个基准平均 Prec. 83.7%、Succ. 63.7%，速
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个 UAV 基准 + 通用跟踪对比 + 详细消融
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨但 Cox 过程部分对非数学背景读者偏硬核
 - 价值: ⭐⭐⭐⭐ 实用性强，"训练约束+推理零开销"范式可广泛迁移
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Occlusion-Aware SORT: Observing Occlusion for Robust Multi-Object Tracking](../../CVPR2026/video_understanding/occlusion-aware_sort_observing_occlusion_for_robust_multi-object_tracking.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking](must_the_first_dataset_and_unified_framework_for_multispectral_uav_single_object.md)
+- [EgoPoser: Robust Real-Time Egocentric Pose Estimation from Sparse and Intermittent Observations Everywhere](../../ECCV2024/video_understanding/egoposer_robust_real-time_egocentric_pose_estimation_from_sparse_and_intermitten.md)
+- [Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](../../AAAI2026/video_understanding/distillation_dynamics_towards_understanding_feature-based_di.md)
+
+<!-- RELATED:END -->

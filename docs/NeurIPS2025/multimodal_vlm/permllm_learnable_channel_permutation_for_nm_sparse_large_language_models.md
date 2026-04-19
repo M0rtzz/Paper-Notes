@@ -153,3 +153,15 @@ PermLLM是一个后训练剪枝框架，与现有one-shot剪枝方法（Wanda、
 - 实验充分度: ⭐⭐⭐⭐⭐ 7个模型×多个基准×详细消融×推理速度分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，数学推导严谨
 - 价值: ⭐⭐⭐⭐⭐ 通道排列方法具有广泛的实用价值，代码开源，84×CUDA加速很实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse Autoencoders Learn Monosemantic Features in Vision-Language Models](sparse_autoencoders_learn_monosemantic_features_in_visionlan.md)
+- [MMInference: Accelerating Pre-filling for Long-Context VLMs via Modality-Aware Permutation Sparse Attention](../../ICML2025/multimodal_vlm/mminference_accelerating_pre-filling_for_long-context_vlms_via_modality-aware_pe.md)
+- [CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models](choice_benchmarking_the_remote_sensing_capabilities_of_large_vision-language_mod.md)
+- [Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models](seeing_is_believing_mitigating_ocr_hallucinations_in_multimodal_large_language_m.md)
+- [FlexAC: Towards Flexible Control of Associative Reasoning in Multimodal Large Language Models](flexac_towards_flexible_control_of_associative_reasoning_in_multimodal_large_lan.md)
+
+<!-- RELATED:END -->

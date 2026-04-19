@@ -99,3 +99,15 @@ LoftUp是一个轻量级的2层cross-attention transformer（<20%的VFM参数）
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个异质性下游任务、多种VFM backbone、逐组件消融、伪GT对比、效率分析
 - 写作质量: ⭐⭐⭐⭐⭐ 问题分解清晰（架构+训练目标），Table 1/2的pseudo-GT属性对比表格很有教学价值
 - 价值: ⭐⭐⭐⭐⭐ 可以作为所有VFM的标配增强模块，对dense prediction社区有很大影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Proxy-FDA: Proxy-based Feature Distribution Alignment for Fine-tuning Vision Foundation Models without Forgetting](../../ICML2025/self_supervised/proxy-fda_proxy-based_feature_distribution_alignment_for_fine-tuning_vision_foun.md)
+- [Implicit Modeling for Transferability Estimation of Vision Foundation Models](../../NeurIPS2025/self_supervised/implicit_modeling_for_transferability_estimation_of_vision_foundation_models.md)
+- [A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)](a_tokenlevel_text_image_foundation_model_for_document_unders.md)
+- [TALO: Pushing 3D Vision Foundation Models Towards Globally Consistent Online Reconstruction](../../CVPR2026/self_supervised/talo_pushing_3d_vision_foundation_models_towards_globally_consistent_online_reco.md)
+- [To Label or Not to Label: PALM – A Predictive Model for Evaluating Sample Efficiency in Active Learning Models](to_label_or_not_to_label_palm_-_a_predictive_model_for_evaluating_sample_efficie.md)
+
+<!-- RELATED:END -->

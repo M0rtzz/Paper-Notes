@@ -108,3 +108,15 @@ $$R_i = w_f R_{\mathrm{format}}(y|x) + w_a R_{\mathrm{accuracy}}(y|x)$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个 benchmark + 详细消融 + 组件变体对比
 - 写作质量: ⭐⭐⭐⭐ 公式化严谨，框架描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 极高的数据效率和无需 3D 先验的特点使其具有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token Warping Helps MLLMs Look from Nearby Viewpoints](token_warping_helps_mllms_look_from_nearby_viewpoints.md)
+- [Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)
+- [It's Time to Get It Right: Improving Analog Clock Reading and Clock-Hand Spatial Reasoning in Vision-Language Models](its_time_to_get_it_right_improving_analog_clock_reading_and_clock-hand_spatial_r.md)
+- [Think360: Evaluating the Width-centric Reasoning Capability of MLLMs Beyond Depth](think_360_evaluating_the_width-centric_reasoning_capability_of_mllms_beyond_dept.md)
+- [Spatial CAPTCHA: Generatively Benchmarking Spatial Reasoning for Human-Machine Differentiation](../../ICLR2026/multimodal_vlm/spatial_captcha_generatively_benchmarking_spatial_reasoning_for_human-machine_di.md)
+
+<!-- RELATED:END -->

@@ -135,3 +135,15 @@ SafeFlowMatcher 相比基线方法：
 - 理论性：⭐⭐⭐⭐⭐ — 前向不变性和收敛性证明完整
 - 实验：⭐⭐⭐⭐ — 多任务验证 + 充分消融
 - 实用性：⭐⭐⭐⭐ — 对安全关键的机器人部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation](senseflow_scaling_distribution_matching_for_flow-based_text-to-image_distillatio.md)
+- [DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment](densegrpo_from_sparse_to_dense_reward_for_flow_matching_model_alignment.md)
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+
+<!-- RELATED:END -->

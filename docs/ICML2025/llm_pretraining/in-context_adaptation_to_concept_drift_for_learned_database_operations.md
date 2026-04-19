@@ -152,3 +152,15 @@ DDE 是 FLAIR 的核心，负责基于上下文进行动态预测。
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖多个数据库任务，与 PostgreSQL 集成验证了实用性，但缓存不完整导致无法详细评估全部实验
 - 写作质量: ⭐⭐⭐⭐ — 问题-解决方案的呈现逻辑清晰，形式化定义严谨
 - 价值: ⭐⭐⭐⭐ — 解决了 learned database operations 的关键实际问题，框架设计实用且优雅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Can In-Context Learning Generalize Out of Task Distribution?](when_can_in-context_learning_generalize_out_of_task_distribution.md)
+- [TokAlign: Efficient Vocabulary Adaptation via Token Alignment](../../ACL2025/llm_pretraining/tokalign_vocab_adaptation.md)
+- [ETA: Energy-based Test-time Adaptation for Depth Completion](../../ICCV2025/llm_pretraining/eta_energy-based_test-time_adaptation_for_depth_completion.md)
+- [Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models](../../NeurIPS2025/llm_pretraining/retrospective_incontext_learning_for_temporal_credit_assignm.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](../../ACL2025/llm_pretraining/data_whisperer_data_selection.md)
+
+<!-- RELATED:END -->

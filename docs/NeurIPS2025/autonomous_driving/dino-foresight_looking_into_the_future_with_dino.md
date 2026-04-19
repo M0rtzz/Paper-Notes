@@ -161,3 +161,15 @@ VAE latent 特征空间完全无法支撑场景理解任务（33.4 vs 71.8），
 - 实验充分度: ⭐⭐⭐⭐ 4 种任务 + 多种消融实验，但仅在两个城市驾驶数据集上验证
 - 写作质量: ⭐⭐⭐⭐ 思路清晰，实验设计合理，动机论述有说服力
 - 实用价值: ⭐⭐⭐⭐⭐ 范式级贡献，模块化设计对工程部署友好，为场景预测开辟了高效新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Aha: Predicting What Matters Next — Online Highlight Detection Without Looking Ahead](aha_predicting_what_matters_next_online_highlight_detection.md)
+- [Foresight in Motion: Reinforcing Trajectory Prediction with Reward Heuristics](../../ICCV2025/autonomous_driving/foresight_in_motion_reinforcing_trajectory_prediction_with_reward_heuristics.md)
+- [Future-Aware Interaction Network For Motion Forecasting](../../ICCV2025/autonomous_driving/future-aware_interaction_network_for_motion_forecasting.md)
+- [Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution](future-aware_end-to-end_driving_bidirectional_modeling_of_trajectory_planning_an.md)
+- [SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction](sdtagnet_leveraging_text-annotated_navigation_maps_for_online_hd_map_constructio.md)
+
+<!-- RELATED:END -->

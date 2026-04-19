@@ -122,3 +122,15 @@ $$\nabla_\theta J_{\text{SPIRAL}}(\theta) = \mathbb{E}_{G \sim \mathcal{G}} \mat
 - 理论深度: ⭐⭐⭐ — RAE 有直觉说明但缺严格理论分析
 - 实验充分性: ⭐⭐⭐⭐⭐ — 4 个模型家族 × 8 个推理基准 × 详细消融 × CoT 分析
 - 实用价值: ⭐⭐⭐⭐ — 无需领域数据提升推理，但计算成本较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Play Multi-Follower Bayesian Stackelberg Games](learning_to_play_multi-follower_bayesian_stackelberg_games.md)
+- [Perturbing Best Responses in Zero-Sum Games](../../AAAI2026/reinforcement_learning/perturbing_best_responses_in_zero-sum_games.md)
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+- [Solving Zero-Sum Convex Markov Games](../../ICML2025/reinforcement_learning/solving_zero-sum_convex_markov_games.md)
+- [Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](continuous-time_value_iteration_for_multi-agent_reinforcement_learning.md)
+
+<!-- RELATED:END -->

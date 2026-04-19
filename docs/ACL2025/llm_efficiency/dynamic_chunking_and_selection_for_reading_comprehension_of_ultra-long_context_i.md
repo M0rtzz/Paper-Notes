@@ -147,3 +147,15 @@ Single-hop 代表性成绩：Loogle_SD 45.10（原始 21.25），Factrecall 29.8
 - 实验充分度: ⭐⭐⭐⭐ — 12 个数据集、3 个 LLM、超参消融、ablation、超长文本测试，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 公式推导清晰，图示直观，动机阐述到位
 - 价值: ⭐⭐⭐⭐ — 简单有效的长文本处理方案，实用性强，适合工程落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](longsafety_evaluating_long-context_safety_of_large_language_models.md)
+- [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+- [How to Train Long-Context Language Models (Effectively)](train_long_context_effectively.md)
+- [Literary Evidence Retrieval via Long-Context Language Models](literary_evidence_retrieval_via_long-context_language_models.md)
+
+<!-- RELATED:END -->

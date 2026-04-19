@@ -156,3 +156,15 @@ $$L_{\text{ID}} = w(t) \cdot (x_t - \hat{x}_t)$$
 - **实验充分度**: ⭐⭐⭐⭐ — 覆盖 3D（NeRF/3DGS）和 2D（PIE-Bench）编辑，有用户研究和消融实验，但缺少定量消融表格
 - **写作质量**: ⭐⭐⭐ — 公式推导清晰但 LaTeX 符号使用偶有不一致，部分语法有小问题
 - **价值**: ⭐⭐⭐⭐ — 对 score distillation 编辑领域有实际推进，框架兼容性好，即插即用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
+- [Identity Preserving 3D Head Stylization with Multiview Score Distillation](identity_preserving_3d_head_stylization_with_multiview_score_distillation.md)
+- [SegmentDreamer: Towards High-Fidelity Text-to-3D Synthesis with Segmented Consistency Trajectory Distillation](segmentdreamer_towards_high-fidelity_text-to-3d_synthesis_with_segmented_consist.md)
+- [Generating Physically Stable and Buildable Brick Structures from Text](generating_physically_stable_and_buildable_brick_structures_from_text.md)
+- [AnimatableDreamer: Text-Guided Non-rigid 3D Model Generation and Reconstruction with Canonical Score Distillation](../../ECCV2024/3d_vision/animatabledreamer_text-guided_non-rigid_3d_model_generation_and_reconstruction_w.md)
+
+<!-- RELATED:END -->

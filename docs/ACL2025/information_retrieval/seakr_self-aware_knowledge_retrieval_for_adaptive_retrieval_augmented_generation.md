@@ -124,3 +124,15 @@ SeaKR 是无需训练的方法（tuning-free）。所有组件都基于 LLaMA-2-
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、详细消融、组件贡献分析清晰
 - 写作质量: ⭐⭐⭐⭐ 问题定义明确，框架结构清晰
 - 价值: ⭐⭐⭐⭐ 开创了不确定性驱动的自适应 RAG 范式，尤其在复合 QA 上效果显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation](towards_adaptive_memory-based_optimization_for_enhanced_retrieval-augmented_gene.md)
+- [Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)
+- [Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](../../NeurIPS2025/information_retrieval/windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+- [EXIT: Context-Aware Extractive Compression for Enhancing Retrieval-Augmented Generation](exit_context-aware_extractive_compression_for_enhancing_retrieval-augmented_gene.md)
+- [HybGRAG: Hybrid Retrieval-Augmented Generation on Textual and Relational Knowledge Bases](hybgrag_hybrid_rag_skb.md)
+
+<!-- RELATED:END -->

@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ LRGB基准全面
 - 写作质量: ⭐⭐⭐⭐⭐ 理论动机清晰
 - 价值: ⭐⭐⭐⭐ 对GNN长程依赖问题有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](../../ICLR2026/llm_evaluation/improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
+- [Fully Heteroscedastic Count Regression with Deep Double Poisson Networks](fully_heteroscedastic_count_regression_with_deep_double_poisson_networks.md)
+- [Improving Generalization with Flat Hilbert Bayesian Inference](improving_generalization_with_flat_hilbert_bayesian_inference.md)
+- [Potential Field Based Deep Metric Learning](../../CVPR2025/llm_evaluation/potential_field_based_deep_metric_learning.md)
+- [AdaBet: Gradient-free Layer Selection for Efficient Training of Deep Neural Networks](../../CVPR2026/llm_evaluation/adabet_gradient-free_layer_selection_for_efficient_training_of_deep_neural_netwo.md)
+
+<!-- RELATED:END -->

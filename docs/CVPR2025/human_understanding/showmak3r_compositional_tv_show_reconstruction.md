@@ -80,3 +80,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多种视频类型
 - 写作质量: ⭐⭐⭐⭐ 流水线描述清晰
 - 价值: ⭐⭐⭐⭐ 为娱乐内容3D化开辟了新路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](../../NeurIPS2025/human_understanding/in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [MM-CondChain: A Programmatically Verified Benchmark for Visually Grounded Deep Compositional Reasoning](mm-condchain_a_programmatically_verified_benchmark_for_visually_grounded_deep_co.md)
+- [Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/human_understanding/learning_visual_proxy_for_compositional_zero-shot_learning.md)
+- [NGD: Neural Gradient Based Deformation for Monocular Garment Reconstruction](../../ICCV2025/human_understanding/ngd_neural_gradient_based_deformation_for_monocular_garment_reconstruction.md)
+
+<!-- RELATED:END -->

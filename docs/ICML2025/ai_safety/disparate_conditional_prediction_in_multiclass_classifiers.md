@@ -166,3 +166,15 @@ $$\min_{\boldsymbol{\beta}, \{\mathbf{M}_a\}} \sum_{a \in \mathcal{A}} w_a \sum_
 | 实用价值 | 8 | 黑盒审计能力在合规审查中价值很高 |
 | 写作质量 | 8 | 条理清晰，符号定义严谨，结构完整 |
 | **总评** | **7.5** | 扎实的公平性审计工作，DCP 可解释性是核心亮点 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization in Federated Learning: A Conditional Mutual Information Framework](generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
+- [On the Hardness of Conditional Independence Testing In Practice](../../NeurIPS2025/ai_safety/on_the_hardness_of_conditional_independence_testing_in_practice.md)
+- [Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](../../NeurIPS2025/ai_safety/mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+- [Taught Well, Learned Ill: Towards Distillation-Conditional Backdoor Attack](../../NeurIPS2025/ai_safety/taught_well_learned_ill_towards_distillation-conditional_backdoor_attack.md)
+- [Breaking the Dyadic Barrier: Rethinking Fairness in Link Prediction Beyond Demographic Parity](../../AAAI2026/ai_safety/breaking_the_dyadic_barrier_rethinking_fairness_in_link_prediction_beyond_demogr.md)
+
+<!-- RELATED:END -->

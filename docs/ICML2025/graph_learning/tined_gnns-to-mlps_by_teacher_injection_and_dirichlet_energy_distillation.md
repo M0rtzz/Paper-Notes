@@ -112,3 +112,15 @@ GLNN 仅用软标签蒸馏，忽略 GNN 层内部的细粒度知识。
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个数据集 x 多种教师
 - 写作质量: ⭐⭐⭐⭐⭐ 理论严谨、观察新颖
 - 价值: ⭐⭐⭐⭐⭐ GNN 加速的高效方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Balancing Efficiency and Expressiveness: Subgraph GNNs with Walk-Based Centrality](balancing_efficiency_and_expressiveness_subgraph_gnns_with_walk-based_centrality.md)
+- [PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification](../../NeurIPS2025/graph_learning/preference-driven_knowledge_distillation_for_few-shot_node_classification.md)
+- [LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification](llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md)
+- [Machines and Mathematical Mutations: Using GNNs to Characterize Quiver Mutation Classes](machines_and_mathematical_mutations_using_gnns_to_characterize_quiver_mutation_c.md)
+- [What Expressivity Theory Misses: Message Passing Complexity for GNNs](../../NeurIPS2025/graph_learning/what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)
+
+<!-- RELATED:END -->

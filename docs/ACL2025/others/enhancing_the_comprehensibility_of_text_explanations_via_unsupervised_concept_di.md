@@ -145,3 +145,15 @@ ECO-Concept 由三个模块组成：
 | 实验充分度 | 4.5 | 7 个数据集 + 三种人类评估 + 充分消融 |
 | 写作质量 | 4 | 结构清晰，方法阐述详细 |
 | 价值 | 4 | 为无监督概念可解释性提供了实用且有原则的解决方案 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Foveate: Enhancing Diversity and Difficulty of Synthesized Instructions from Unsupervised Text via Multi-Level Foveation](self-foveate_enhancing_diversity_and_difficulty_of_synthesized_instructions_from.md)
+- [U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models](../../CVPR2026/others/clipfree_label_free_unsupervised_concept_bottlenec.md)
+- [Partial Colexifications Improve Concept Embeddings](partial_colexifications_improve_concept_embeddings.md)
+- [Synthia: Novel Concept Design with Affordance Composition](synthia_novel_concept_design_with_affordance_composition.md)
+- [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+
+<!-- RELATED:END -->

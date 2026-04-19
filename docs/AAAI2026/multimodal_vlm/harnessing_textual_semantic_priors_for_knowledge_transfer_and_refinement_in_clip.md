@@ -177,3 +177,15 @@ SECA基于CLIP构建，包含冻结的视觉和文本编码器、可学习的文
 - 实验充分度: ⭐⭐⭐⭐⭐ （多基准+多消融+多对比策略+超参分析，极为充分）
 - 写作质量: ⭐⭐⭐⭐ （公式推导完整，但符号较多需要反复对照）
 - 价值: ⭐⭐⭐⭐⭐ （为CLIP-based持续学习提供了新范式，无replay超SOTA有重要意义）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Select and Distill: Selective Dual-Teacher Knowledge Transfer for Continual Learning on Vision-Language Models](../../ECCV2024/multimodal_vlm/select_and_distill_selective_dual-teacher_knowledge_transfer_for_continual_learn.md)
+- [Branch, or Layer? Zeroth-Order Optimization for Continual Learning of Vision-Language Models](branch_or_layer_zeroth-order_optimization_for_continual_lear.md)
+- [Continual Learning with Vision-Language Models via Semantic-Geometry Preservation](../../CVPR2026/multimodal_vlm/continual_learning_with_vision-language_models_via_semantic-geometry_preservatio.md)
+- [LADA: Scalable Label-Specific CLIP Adapter for Continual Learning](../../ICML2025/multimodal_vlm/lada_scalable_label-specific_clip_adapter_for_continual_learning.md)
+- [BOFA: Bridge-Layer Orthogonal Low-Rank Fusion for CLIP-Based Class-Incremental Learning](bofa_bridge-layer_orthogonal_low-rank_fusion_for_clip-based_.md)
+
+<!-- RELATED:END -->

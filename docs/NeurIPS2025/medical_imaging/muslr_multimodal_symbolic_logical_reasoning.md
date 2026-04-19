@@ -116,3 +116,15 @@ LogiCAM基于GPT-4.1的提示工程，采用三样本CoT设置，温度设为0.0
 - 实验充分度: ⭐⭐⭐⭐ 7个VLM评测全面，错误分析深入，但数据集规模偏小
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，案例分析生动
 - 价值: ⭐⭐⭐⭐ 为VLM的形式推理能力提供了重要评测维度，有深远的研究引导价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification](firegnn_neuro-symbolic_graph_neural_networks_with_trainable_fuzzy_rules_for_inte.md)
+- [Neuro-Symbolic Decoding of Neural Activity](../../ICLR2026/medical_imaging/neuro-symbolic_decoding_of_neural_activity.md)
+- [FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](fairgrpo_fair_reinforcement_learning_for_equitable_clinical_reasoning.md)
+- [CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays](cxreasonbench_a_benchmark_for_evaluating_structured_diagnostic_reasoning_in_ches.md)
+- [CureAgent: A Training-Free Executor-Analyst Framework for Clinical Reasoning](cureagent_a_training-free_executor-analyst_framework_for_clinical_reasoning.md)
+
+<!-- RELATED:END -->

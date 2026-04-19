@@ -125,3 +125,15 @@ GNN 面临局部与全局信息的根本矛盾：
 - 实验充分度: ⭐⭐⭐⭐ 多基准验证 + 合成数据表达能力 + 消融全面
 - 写作质量: ⭐⭐⭐⭐ 问题和方法清晰，理论严谨
 - 价值: ⭐⭐⭐⭐⭐ 可能改变 GNN 社区对图 Transformer 必要性的认知
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Improving Long-Range Interactions in Graph Neural Simulators via Hamiltonian Dynamics](../../ICLR2026/graph_learning/improving_long-range_interactions_in_graph_neural_simulators_via_hamiltonian_dyn.md)
+- [On Measuring Long-Range Interactions in Graph Neural Networks](../../ICML2025/graph_learning/on_measuring_long-range_interactions_in_graph_neural_networks.md)
+- [Beyond Message Passing: Neural Graph Pattern Machine](../../ICML2025/graph_learning/beyond_message_passing_neural_graph_pattern_machine.md)
+- [What Expressivity Theory Misses: Message Passing Complexity for GNNs](../../NeurIPS2025/graph_learning/what_expressivity_theory_misses_message_passing_complexity_for_gnns.md)
+- [Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks](../../NeurIPS2025/graph_learning/sketch-augmented_features_improve_learning_long-range_dependencies_in_graph_neur.md)
+
+<!-- RELATED:END -->

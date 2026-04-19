@@ -148,3 +148,15 @@ ZeroAttention将所有输出变为"无变化"（变化准确率降为0%，无变
 - 技术深度：4/5（架构修改简洁但insight深刻，因果性实验严谨）
 - 实验充分度：4/5（三个数据集、描述+定位+干预三维评估）
 - 写作质量：4/5（逻辑清晰，图示直观）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+- [MaTVLM: Hybrid Mamba-Transformer for Efficient Vision-Language Modeling](matvlm_hybrid_mamba-transformer_for_efficient_vision-language_modeling.md)
+- [Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
+- [Mitigating Object Hallucinations via Sentence-Level Early Intervention](mitigating_object_hallucinations_via_sentence-level_early_intervention.md)
+- [CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models](../../CVPR2025/multimodal_vlm/test-time_attention_purification_for_backdoored_large_vision_language_models.md)
+
+<!-- RELATED:END -->

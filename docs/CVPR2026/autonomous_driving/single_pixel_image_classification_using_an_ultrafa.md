@@ -138,3 +138,15 @@ DMD显示二值化MNIST图像→microLED投影器依次投射288个Hadamard patt
 - 实验充分度: ⭐⭐⭐⭐ 多种pattern策略、两种模型、噪声分析、学习曲线分析都很系统
 - 写作质量: ⭐⭐⭐⭐ 清晰易读，实验设置和光路描述详细，图表直观
 - 价值: ⭐⭐⭐ 有趣的系统集成工作，但MNIST验证距实际应用有很大差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OneOcc: Semantic Occupancy Prediction for Legged Robots with a Single Panoramic Camera](oneocc_semantic_occupancy_prediction_for_legged_robots_with_a_single_panoramic_c.md)
+- [Learning Mutual View Information Graph for Adaptive Adversarial Collaborative Perception](learning_mutual_view_information_graph_for_adaptive_adversarial_collaborative_pe.md)
+- [Efficient Equivariant Transformer for Self-Driving Agent Modeling](efficient_equivariant_transformer_for_self-driving_agent_modeling.md)
+- [Le MuMo JEPA: Multi-Modal Self-Supervised Representation Learning with Learnable Fusion Tokens](le_mumo_jepa_multi-modal_self-supervised_representation_learning_with_learnable_.md)
+- [A Prediction-as-Perception Framework for 3D Object Detection](a_predictionasperception_framework_for_3d_object_d.md)
+
+<!-- RELATED:END -->

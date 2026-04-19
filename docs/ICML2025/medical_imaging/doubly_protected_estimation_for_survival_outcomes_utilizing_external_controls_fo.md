@@ -130,3 +130,15 @@ $$\theta_\tau = \int_0^\tau \{S_1(t|R=1) - S_0(t|R=1)\} dt$$
 - 实验充分度: ⭐⭐⭐⭐ — 五种FDA关注场景+真实数据，但缺少高维协变量实验
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，但符号密集需耐心阅读
 - 价值: ⭐⭐⭐⭐⭐ — 直接回应FDA指南需求，实用性极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Statistical Validity and Power in Hybrid Controlled Trials: A Randomization Inference Approach with Conformal Selective Borrowing](enhancing_statistical_validity_and_power_in_hybrid_controlled_trials_a_randomiza.md)
+- [SurvHTE-Bench: A Benchmark for Heterogeneous Treatment Effect Estimation in Survival Analysis](../../ICLR2026/medical_imaging/survhte-bench_a_benchmark_for_heterogeneous_treatment_effect_estimation_in_survi.md)
+- [Dual Mixture-of-Experts Framework for Discrete-Time Survival Analysis](../../NeurIPS2025/medical_imaging/dual_mixture-of-experts_framework_for_discrete-time_survival_analysis.md)
+- [EEG-Language Pretraining for Highly Label-Efficient Clinical Phenotyping](eeg-language_pretraining_for_highly_label-efficient_clinical_phenotyping.md)
+- [Foundation Models for Clinical Records at Health System Scale](foundation_models_for_clinical_records_at_health_system_scale.md)
+
+<!-- RELATED:END -->

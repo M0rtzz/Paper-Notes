@@ -119,3 +119,15 @@ $$\mathcal{L} = \mathbb{E}_{t,\mathbf{x}_0,\mathbf{x}_1}\left[\|v_\theta(\mathbf
 - 实验充分度: ⭐⭐⭐⭐ 对比全面+用户研究+消融，但测试规模有限
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，探索性实验（mask配置）有教学价值
 - 价值: ⭐⭐⭐⭐ 为视频编辑提供了灵活、轻量、无需架构修改的实用方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [First Frame Is the Place to Go for Video Content Customization](../../CVPR2026/video_generation/first_frame_is_the_place_to_go_for_video_content_customization.md)
+- [Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models](frame_guidance_training-free_guidance_for_frame-level_control_in_video_diffusion.md)
+- [MotionCharacter: Fine-Grained Motion Controllable Human Video Generation](../../AAAI2026/video_generation/motioncharacter_fine-grained_motion_controllable_human_video_generation.md)
+- [Target-Aware Video Diffusion Models](target-aware_video_diffusion_models.md)
+- [MotionAgent: Fine-grained Controllable Video Generation via Motion Field Agent](../../ICCV2025/video_generation/motionagent_fine-grained_controllable_video_generation_via_motion_field_agent.md)
+
+<!-- RELATED:END -->

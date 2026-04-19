@@ -171,3 +171,15 @@ $$q(\mathbf{z}_*|\mathbf{Y}) = \int p(\mathbf{z}_*|\mathbf{Z}_{n(*)}) q(\mathbf{
 | 实用性 | 4 | 支持任意核、Faiss 加速、标准架构，工程友好 |
 | 写作质量 | 4 | 逻辑清晰，符号统一，动机阐述充分 |
 | 综合评分 | 4 | 在 GPVAE 可扩展性这一重要问题上提供了实用且优雅的解决方案 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AdaWorld: Learning Adaptable World Models with Latent Actions](adaworld_learning_adaptable_world_models_with_latent_actions.md)
+- [InfoNCE Induces Gaussian Distribution](../../ICLR2026/self_supervised/infonce_induces_gaussian_distribution.md)
+- [Enhancing Molecular Property Predictions by Learning from Bond Modelling and Interactions](../../ICLR2026/self_supervised/enhancing_molecular_property_predictions_by_learning_from_bond_modelling_and_int.md)
+- [Escaping Plato's Cave: Towards the Alignment of 3D and Text Latent Spaces](../../CVPR2025/self_supervised/escaping_platos_cave_towards_the_alignment_of_3d_and_text_latent_spaces.md)
+- [From Linearity to Non-Linearity: How Masked Autoencoders Capture Spatial Correlations](../../ICCV2025/self_supervised/from_linearity_to_non-linearity_how_masked_autoencoders_capture_spatial_correlat.md)
+
+<!-- RELATED:END -->

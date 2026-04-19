@@ -117,3 +117,15 @@ CVRP基准测试（Gap%相对于LKH）：
 ## 评分
 
 - ⭐⭐⭐⭐ — 理论推导扎实，改进一致且显著，但问题相对垂直，通用性验证有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OR-R1: Automating Modeling and Solving of Operations Research Optimization Problems](../../AAAI2026/others/or-r1_automating_modeling_and_solving_of_operations_research_optimization_proble.md)
+- [Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training](../../ICLR2026/others/evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t.md)
+- [Hanging in the Balance: Pivotal Moments in Crisis Counseling Conversations](../../ACL2025/others/hanging_in_the_balance_pivotal_moments_in_crisis_counseling_conversations.md)
+- [Foster Adaptivity and Balance in Learning with Noisy Labels](../../ECCV2024/others/foster_adaptivity_and_balance_in_learning_with_noisy_labels.md)
+- [Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](../../ICML2025/others/near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)
+
+<!-- RELATED:END -->

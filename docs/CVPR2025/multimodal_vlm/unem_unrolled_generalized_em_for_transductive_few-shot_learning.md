@@ -114,3 +114,15 @@ UNEM将广义EM算法的L次迭代展开为L层神经网络。每层对应一次
 
 ## 评分
 ⭐⭐⭐⭐ — 方法思路清晰优雅，将经典的算法展开范式创新性地应用于少样本学习，用极少的可学习参数实现了显著的性能提升。统一的GEM框架理论贡献扎实，实验覆盖全面。在CLIP转导式少样本学习的研究空白中做出重要贡献。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning](visual_and_semantic_prompt_collaboration_for_generalized_zero-shot_learning.md)
+- [Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model](generalized_few-shot_3d_point_cloud_segmentation_with_vision-language_model.md)
+- [Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning](../../ICCV2025/multimodal_vlm/causal_disentanglement_and_cross-modal_alignment_for_enhanced_few-shot_learning.md)
+- [VT-FSL: Bridging Vision and Text with LLMs for Few-Shot Learning](../../NeurIPS2025/multimodal_vlm/vt-fsl_bridging_vision_and_text_with_llms_for_few-shot_learning.md)
+- [Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages](rethinking_few-shot_adaptation_of_vision-language_models_in_two_stages.md)
+
+<!-- RELATED:END -->

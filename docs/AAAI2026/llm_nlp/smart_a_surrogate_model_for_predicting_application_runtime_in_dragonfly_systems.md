@@ -171,3 +171,15 @@ Smart 虽最慢，但仍不到最短 PDES 迭代时间的 6.4%，相比最长仿
 | 写作质量 | 7 | 结构清晰，问题定义规范，但表格密集可读性一般 |
 | 实用价值 | 8 | 0.515s 推理替代 36-66h 仿真，有明确落地场景 |
 | **综合** | **7.5** | 面向重要 HPC 问题的实用系统，首创 GNN+LLM 融合方案效果显著，但组件组合创新有限 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PERSIST: Persistent Instability in LLM's Personality Measurements](persistent_instability_in_llms_personality_measurements_effects_of_scale_reasoni.md)
+- [Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents](scalable_and_accurate_graph_reasoning_with_llm-based_multi-agents.md)
+- [VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation](vspo_validating_semantic_pitfalls_in_ontology_via_llm-based_cq_generation.md)
+- [ICL-Router: In-Context Learned Model Representations for LLM Routing](icl-router_in-context_learned_model_representations_for_llm_routing.md)
+- [SolverLLM: 通过LLM引导的搜索利用测试时缩放求解优化问题](../../NeurIPS2025/llm_nlp/solverllm_leveraging_test-time_scaling_for_optimization_problem_via_llm-guided_s.md)
+
+<!-- RELATED:END -->

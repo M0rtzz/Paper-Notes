@@ -119,3 +119,14 @@ FlashMotion 采用三阶段训练流程：
 - 写作质量: ⭐⭐⭐ 摘要清晰、问题定义明确
 - 价值: ⭐⭐⭐⭐ 轨迹可控视频生成的实际加速需求强烈，方法通用性好
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DOLLAR: Few-Step Video Generation via Distillation and Latent Reward Optimization](../../ICCV2025/video_generation/dollar_fewstep_video_generation_via_distillation_and_latent.md)
+- [SWIFT: Sliding Window Reconstruction for Few-Shot Training-Free Generated Video Attribution](swift_sliding_window_reconstruction_for_few-shot_training-free_generated_video_a.md)
+- [AutoCut: End-to-end Advertisement Video Editing Based on Multimodal Discretization and Controllable Generation](autocut_end-to-end_advertisement_video_editing_based_on_multimodal_discretizatio.md)
+- [Learning Video Generation for Robotic Manipulation with Collaborative Trajectory Control](../../ICLR2026/video_generation/learning_video_generation_for_robotic_manipulation_with_collaborative_trajectory.md)
+- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
+
+<!-- RELATED:END -->

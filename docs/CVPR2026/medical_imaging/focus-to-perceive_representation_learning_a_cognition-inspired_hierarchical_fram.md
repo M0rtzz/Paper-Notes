@@ -156,3 +156,15 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{Rec} + \lambda_2 \mathcal{L}_{Ali
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 11 个数据集、4 个下游任务、丰富的消融实验覆盖了掩码策略/比例/架构/损失等多个维度
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法描述系统，但数学符号较多可能增加阅读负担
 - **价值**: ⭐⭐⭐⭐ — 对内窥镜视频领域的自监督学习有实质性推进，认知启发的设计思路可推广到其他医学影像分析任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Benchmarking Endoscopic Surgical Image Restoration and Beyond](benchmarking_endoscopic_surgical_image_restoration_and_beyond.md)
+- [MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding](medgrpo_multi-task_reinforcement_learning_for_heterogeneous_medical_video_unders.md)
+- [MedEyes: Learning Dynamic Visual Focus for Medical Progressive Diagnosis](../../AAAI2026/medical_imaging/medeyes_learning_dynamic_visual_focus_for_medical_progressive_diagnosis.md)
+- [H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis](../../NeurIPS2025/medical_imaging/h-ddx_a_hierarchical_evaluation_framework_for_differential_diagnosis.md)
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+
+<!-- RELATED:END -->

@@ -188,3 +188,15 @@ L2H 在所有数据集上全面碾压专用深度层次聚类模型，NMI 提升
 | 实用性 | 5 | 无需训练，CPU 即可运行，代码简洁，即插即用 |
 | 写作质量 | 4 | 论述清晰，图表丰富，对现有方法的批判性分析有说服力 |
 | **总分** | **4.2** | 实用价值极高的工作，以极简方法取得了令人信服的 SOTA 结果 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems](erwin_a_tree-based_hierarchical_transformer_for_large-scale_physical_systems.md)
+- [VideoClusterNet: Self-Supervised and Adaptive Face Clustering for Videos](../../ECCV2024/human_understanding/videoclusternet_self-supervised_and_adaptive_face_clustering_for_videos.md)
+- [A Simple Linear Patch Revives Layer-Pruned Large Language Models](../../NeurIPS2025/human_understanding/a_simple_linear_patch_revives_layerpruned_large_language_mod.md)
+- [HEIE: MLLM-Based Hierarchical Explainable AIGC Image Implausibility Evaluator](../../CVPR2025/human_understanding/heie_mllm-based_hierarchical_explainable_aigc_image_implausibility_evaluator.md)
+- [SCAPE: A Simple and Strong Category-Agnostic Pose Estimator](../../ECCV2024/human_understanding/scape_a_simple_and_strong_category-agnostic_pose_estimator.md)
+
+<!-- RELATED:END -->

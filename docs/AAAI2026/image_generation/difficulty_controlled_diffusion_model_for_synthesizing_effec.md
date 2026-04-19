@@ -123,3 +123,15 @@ ImageNet上ResNet-50分类精度（表2）：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集多架构验证，消融和可视化完整
 - 写作质量: ⭐⭐⭐⭐⭐ 动机链清晰（两难→解耦→验证），图表设计优秀
 - 价值: ⭐⭐⭐⭐ 对数据合成领域有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-NPO: Data-Free Diffusion Model Enhancement via Truncated Diffusion Fine-Tuning](self-npo_data-free_diffusion_model_enhancement_via_truncated_diffusion_fine-tuni.md)
+- [DMin: Scalable Training Data Influence Estimation for Diffusion Models](../../CVPR2026/image_generation/dmin_scalable_training_data_influence_estimation_for_diffusion_models.md)
+- [RetrySQL: Text-to-SQL Training with Retry Data for Self-Correcting Query Generation](retrysql_text-to-sql_training_with_retry_data_for_self-correcting_query_generati.md)
+- [Diffusion Reconstruction-Based Data Likelihood Estimation for Core-Set Selection](diffusion_reconstruction-based_data_likelihood_estimation_for_core-set_selection.md)
+- [Backdoors in Conditional Diffusion: Threats to Responsible Synthetic Data Pipelines](backdoors_in_conditional_diffusion_threats_to_responsible_synthetic_data_pipelin.md)
+
+<!-- RELATED:END -->

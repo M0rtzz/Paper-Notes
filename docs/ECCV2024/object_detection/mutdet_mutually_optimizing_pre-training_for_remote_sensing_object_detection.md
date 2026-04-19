@@ -176,3 +176,15 @@ $$\mathcal{L}_{det}^{aux} = \mathcal{L}_{ca}^{aux} + \mathcal{L}_{cls}^{aux} + \
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 3 个数据集、多个训练设定（低数据/少 epoch）、详细消融
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，动机和方法阐述到位
 - **价值**: ⭐⭐⭐⭐ — 遥感检测预训练的开创性工作，低数据场景下提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Fourier Angle Alignment for Oriented Object Detection in Remote Sensing](../../CVPR2026/object_detection/fourier_angle_alignment_for_oriented_object_detection_in_remote_sensing.md)
+- [Projecting Points to Axes: Oriented Object Detection via Point-Axis Representation](projecting_points_to_axes_oriented_object_detection_via_point-axis_representatio.md)
+- [OpenRSD: Towards Open-prompts for Object Detection in Remote Sensing Images](../../ICCV2025/object_detection/openrsd_towards_open-prompts_for_object_detection_in_remote_sensing_images.md)
+- [SM3Det: A Unified Model for Multi-Modal Remote Sensing Object Detection](../../AAAI2026/object_detection/sm3det_a_unified_model_for_multi-modal_remote_sensing_object_detection.md)
+- [Weak-to-Strong Compositional Learning from Generative Models for Language-based Object Detection](weak-to-strong_compositional_learning_from_generative_models_for_language-based_.md)
+
+<!-- RELATED:END -->

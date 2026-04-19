@@ -153,3 +153,15 @@ $$L = L_{recon} + L_{det}$$
 - 实验充分度: 7/10 — 消融详尽但仅限 KITTI 单一数据集
 - 写作质量: 8/10 — 结构清晰，公式和算法描述规范
 - 价值: 7/10 — 即插即用且无推理开销，实用性强；但 KITTI 单一验证削弱了说服力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Prediction-as-Perception Framework for 3D Object Detection](../../CVPR2026/autonomous_driving/a_prediction-as-perception_framework_for_3d_object_detection.md)
+- [LabelAny3D: Label Any Object 3D in the Wild](../../NeurIPS2025/autonomous_driving/labelany3d_label_any_object_3d_in_the_wild.md)
+- [MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection](../../ECCV2024/autonomous_driving/monowad_weather-adaptive_diffusion_model_for_robust_monocular_3d_object_detectio.md)
+- [DriveFlow: Rectified Flow Adaptation for Robust 3D Object Detection in Autonomous Driving](driveflow_rectified_flow_adaptation_for_robust_3d_object_detection_in_autonomous.md)
+- [MOBA: A Material-Oriented Backdoor Attack against LiDAR-based 3D Object Detection](moba_a_material-oriented_backdoor_attack_against_lidar-based_3d_object_detection.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ VidChapters-7M 数据集（YouTube 视频，最长 12 小时）：
 - 实验充分度: ⭐⭐⭐⭐⭐ MAD+VidChapters-7M两个数据集，累积消融+变体对比+长度鲁棒性+泛化实验
 - 写作质量: ⭐⭐⭐⭐ 从问题到方法到实验逻辑通顺
 - 价值: ⭐⭐⭐⭐⭐ 开辟了VLM在小时级视频时序定位的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Video-XL: Extra-Long Vision Language Model for Hour-Scale Video Understanding](video-xl_extra-long_vision_language_model_for_hour-scale_video_understanding.md)
+- [Sharper and Faster mean Better: Towards More Efficient Vision-Language Model for Hour-scale Long Video Understanding](../../ACL2025/multimodal_vlm/sophia_efficient_long_video.md)
+- [Your Large Vision-Language Model Only Needs a Few Attention Heads for Visual Grounding](your_large_vision-language_model_only_needs_a_few_attention_heads_for_visual_gro.md)
+- [Enrich and Detect: Video Temporal Grounding with Multimodal LLMs](../../ICCV2025/multimodal_vlm/enrich_and_detect_video_temporal_grounding_with_multimodal_llms.md)
+- [Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?](can_large_vision-language_models_correct_semantic_grounding_errors_by_themselves.md)
+
+<!-- RELATED:END -->

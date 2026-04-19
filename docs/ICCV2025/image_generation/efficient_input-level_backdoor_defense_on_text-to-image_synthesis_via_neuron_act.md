@@ -139,3 +139,15 @@ $$\mathcal{D}(c) = \mathbb{1}[\mathcal{S}(c) > \mu_\text{clean} + m \cdot \sigma
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 种攻击、多数据集、效率分析、自适应攻击分析、消融实验齐全
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，方法讲解配合图示非常直观
 - 价值: ⭐⭐⭐⭐⭐ 直接解决了 T2I 部署中的安全痛点，方法简洁高效，具有很高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disrupting Model Merging: A Parameter-Level Defense Without Sacrificing Accuracy](disrupting_model_merging_a_parameter-level_defense_without_sacrificing_accuracy.md)
+- [Your Text Encoder Can Be An Object-Level Watermarking Controller](your_text_encoder_can_be_an_object-level_watermarking_controller.md)
+- [Dense2MoE: Restructuring Diffusion Transformer to MoE for Efficient Text-to-Image Generation](dense2moe_restructuring_diffusion_transformer_to_moe_for_efficient_text-to-image.md)
+- [Event-T2M: Event-level Conditioning for Complex Text-to-Motion Synthesis](../../ICLR2026/image_generation/event-t2m_event-level_conditioning_for_complex_text-to-motion_synthesis.md)
+- [Towards Robust Defense against Customization via Protective Perturbation Resistant to Diffusion-based Purification](towards_robust_defense_against_customization_via_protective_perturbation_resista.md)
+
+<!-- RELATED:END -->

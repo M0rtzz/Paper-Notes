@@ -178,3 +178,15 @@ SweetTok 包含两个核心组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ 重建/生成/图像/理解全面验证+详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，对比充分
 - 价值: ⭐⭐⭐⭐⭐ 对视频 tokenizer 领域贡献大，压缩效率和质量均达 SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BF-STVSR: B-Splines and Fourier—Best Friends for High Fidelity Spatial-Temporal Video Super-Resolution](../../CVPR2025/video_generation/bf-stvsr_b-splines_and_fourier---best_friends_for_high_fidelity_spatial-temporal.md)
+- [TEAR: Temporal-aware Automated Red-teaming for Text-to-Video Models](../../CVPR2026/video_generation/tear_temporal-aware_automated_red-teaming_for_text-to-video_models.md)
+- [Disentangled World Models: Learning to Transfer Semantic Knowledge from Distracting Videos for Reinforcement Learning](disentangled_world_models_learning_to_transfer_semantic_knowledge_from_distracti.md)
+- [MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling](../../CVPR2025/video_generation/mimo_controllable_character_video_synthesis_with_spatial_decomposed_modeling.md)
+- [AutoCut: End-to-end Advertisement Video Editing Based on Multimodal Discretization and Controllable Generation](../../CVPR2026/video_generation/autocut_end-to-end_advertisement_video_editing_based_on_multimodal_discretizatio.md)
+
+<!-- RELATED:END -->

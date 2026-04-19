@@ -142,3 +142,15 @@ SOLD在MFE和SS优化上比DDPO快**23倍**，比DPOK快**30倍**。
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰，数学推导完整)
 - **实际影响力**: ⭐⭐⭐⭐ (RNA药物设计领域有实际应用潜力)
 - **综合推荐**: ⭐⭐⭐⭐ (4.5/5)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RIDER: 3D RNA Inverse Design with Reinforcement Learning-Guided Diffusion](../../ICLR2026/image_generation/rider_3d_rna_inverse_design_with_reinforcement_learning-guided_diffusion.md)
+- [Steering One-Step Diffusion Model with Fidelity-Rich Decoder for Fast Image Compression](steering_one-step_diffusion_model_with_fidelity-rich_decoder_for_fast_image_comp.md)
+- [Piloting Structure-Based Drug Design via Modality-Specific Optimal Schedule](../../ICML2025/image_generation/piloting_structure-based_drug_design_via_modality-specific_optimal_schedule.md)
+- [PPO-MI: Efficient Black-Box Model Inversion via Proximal Policy Optimization](../../ICML2025/image_generation/ppo-mi_efficient_black-box_model_inversion_via_proximal_policy_optimization.md)
+- [Latent Diffusion Model without Variational Autoencoder](../../ICLR2026/image_generation/latent_diffusion_model_without_variational_autoencoder.md)
+
+<!-- RELATED:END -->

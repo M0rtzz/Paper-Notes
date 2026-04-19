@@ -165,3 +165,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 人类数据+多 LLM probe+多子任务，非常全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，认知科学背景介绍充分
 - 价值: ⭐⭐⭐⭐ — 对理解 LLM 语义组织和认知对齐有重要参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How to Enable Effective Cooperation Between Humans and NLP Models: A Survey of Principles, Formalizations, and Beyond](human_nlp_cooperation_survey.md)
+- [From Data to Knowledge: Evaluating How Efficiently Language Models Learn Facts](from_data_to_knowledge_evaluating_how_efficiently_language_models_learn_facts.md)
+- [MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments](mirage_exploring_how_large_language_models_perform_in_complex_social_interactive.md)
+- [HiCUPID: Exploring the Potential of LLMs as Personalized Assistants](exploring_the_potential_of_llms_as.md)
+- [Psycholinguistic Word Features: A New Approach for the Evaluation of LLMs Alignment with Humans](psycholinguistic_word_features_a_new_approach_for_the_evaluation_of_llms_alignme.md)
+
+<!-- RELATED:END -->

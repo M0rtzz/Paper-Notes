@@ -134,3 +134,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ (四种视觉模型×五种划分策略的完整矩阵,但仅单一数据集和线性探测)
 - 写作质量: ⭐⭐⭐⭐ (结构紧凑、图表直观、贡献描述准确)
 - 价值: ⭐⭐⭐⭐ (对属性预测/零样本学习的评测公平性具有根本性启示,提供了可复现的划分工具)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tensor Product Attention Is All You Need](tensor_product_attention_is_all_you_need.md)
+- [One Prompt Fits All: Universal Graph Adaptation for Pretrained Models](one_prompt_fits_all_universal_graph_adaptation_for_pretrained_models.md)
+- [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](../../ICML2025/llm_efficiency/fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
+- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](../../ICLR2026/llm_efficiency/understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
+- [Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure](../../ICLR2026/llm_efficiency/rethinking_uncertainty_estimation_in_llms_a_principled_single-sequence_measure.md)
+
+<!-- RELATED:END -->

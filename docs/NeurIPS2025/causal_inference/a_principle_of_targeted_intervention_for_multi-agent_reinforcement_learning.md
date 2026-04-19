@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ MPE+Hanabi两个环境覆盖同步/序贯决策，消融和对比充分，但环境规模偏小，缺乏更复杂的实际场景验证
 - 写作质量: ⭐⭐⭐⭐ 形式化定义清晰，MAID图示直观，但符号较多，因果推断部分对非该领域读者门槛较高
 - 价值: ⭐⭐⭐⭐ 提供了分析和设计MARL交互机制的新理论工具，目标干预思路对大规模系统有实际意义，但当前仅限于简单环境验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Robust Intervention Representations with Delta Embeddings](../../ICLR2026/causal_inference/learning_robust_intervention_representations_with_delta_embeddings.md)
+- [AgentTrace: Causal Graph Tracing for Root Cause Analysis in Deployed Multi-Agent Systems](../../ICLR2026/causal_inference/agenttrace_causal_graph_tracing_for_root_cause_analysis_in_deployed_multi-agent_.md)
+- [MUG: Multi-agent Undercover Gaming — Hallucination Removal via Counterfactual Test for Multimodal Reasoning](../../AAAI2026/causal_inference/multi-agent_undercover_gaming_hallucination_removal_via_coun.md)
+- [Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning](../../CVPR2025/causal_inference/joint_scheduling_of_causal_prompts_and_tasks_for_multi-task_learning.md)
+- [Alignment of Large Language Models with Constrained Learning](alignment_of_large_language_models_with_constrained_learning.md)
+
+<!-- RELATED:END -->

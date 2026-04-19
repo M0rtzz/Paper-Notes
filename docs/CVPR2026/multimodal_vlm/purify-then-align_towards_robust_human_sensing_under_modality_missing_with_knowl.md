@@ -139,3 +139,15 @@ MM-Fi上的模块消融（MPJPE mm ↓）：
 - 实验充分度: ⭐⭐⭐⭐ 两个大数据集，7种模态组合全覆盖，消融分析深入（含单模块消融和edge case分析）
 - 写作质量: ⭐⭐⭐⭐ 因果关系的motivate非常有说服力，但符号较多需要仔细阅读
 - 价值: ⭐⭐⭐⭐ 对多模态人体感知社区有重要贡献，Purify-then-Align范式可推广到更广泛的多模态学习场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BALM: A Model-Agnostic Framework for Balanced Multimodal Learning under Imbalanced Missing Rates](balm_a_model-agnostic_framework_for_balanced_multimodal_learning_under_imbalance.md)
+- [Disentangle-then-Align: Non-Iterative Hybrid Multimodal Image Registration via Cross-Scale Feature Disentanglement](disentangle-then-align_non-iterative_hybrid_multimodal_image_registration_via_cr.md)
+- [Uncertainty-Aware Knowledge Distillation for Multimodal Large Language Models](uncertainty-aware_knowledge_distillation_for_multimodal_large_language_models.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [Synergistic Prompting for Robust Visual Recognition with Missing Modalities](../../ICCV2025/multimodal_vlm/synergistic_prompting_for_robust_visual_recognition_with_missing_modalities.md)
+
+<!-- RELATED:END -->

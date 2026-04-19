@@ -113,3 +113,15 @@ LLaMA3-8B 零样本准确率：
 - 实验充分度: ⭐⭐⭐⭐ 多模型、全路径量化、硬件分析
 - 写作质量: ⭐⭐⭐⭐ 分析透彻，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 对下一代量化硬件设计有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](../../ACL2025/model_compression/moqae_mixed_precision_kv_cache.md)
+- [Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation](sketch_to_adapt_fine-tunable_sketches_for_efficient_llm_adaptation.md)
+- [OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference](orthorank_token_selection_via_sink_token_orthogonality_for_efficient_llm_inferen.md)
+- [TreeLoRA: Efficient Continual Learning via Layer-Wise LoRAs Guided by a Hierarchical Gradient-Similarity Tree](treelora_efficient_continual_learning_via_layer-wise_loras_guided_by_a_hierarchi.md)
+- [ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](../../ICLR2026/model_compression/paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
+
+<!-- RELATED:END -->

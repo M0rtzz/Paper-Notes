@@ -139,3 +139,15 @@ Spectrum 的核心流程：在 $N$ 步扩散采样中，选定一部分时步集
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖4个SOTA模型（图像+视频），两个加速档位，完整消融
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，从Taylor误差分析自然引出动机，逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 4-5×加速且质量近无损，training-free，实际价值很高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Denoising as Path Planning: Training-Free Acceleration of Diffusion Models with DPCache](dpcache_denoising_path_planning_diffusion_accel.md)
+- [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
+- [ProCache: Constraint-Aware Feature Caching with Selective Computation for Diffusion Transformer Acceleration](../../AAAI2026/image_generation/procache_constraint-aware_feature_caching_with_selective_computation_for_diffusi.md)
+- [TC-Padé: Trajectory-Consistent Padé Approximation for Diffusion Acceleration](tc-padé_trajectory-consistent_padé_approximation_for_diffusion_acceleration.md)
+- [SADA: Stability-guided Adaptive Diffusion Acceleration](../../ICML2025/image_generation/sada_stability-guided_adaptive_diffusion_acceleration.md)
+
+<!-- RELATED:END -->

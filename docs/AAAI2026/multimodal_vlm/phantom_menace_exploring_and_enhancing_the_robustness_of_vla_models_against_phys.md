@@ -150,3 +150,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Defending LVLMs Against Vision Attacks through Partial-Perception Supervision](../../ICML2025/multimodal_vlm/defending_lvlms_against_vision_attacks_through_partial-perception_supervision.md)
+- [Exploring LLMs for Scientific Information Extraction using the SciEx Framework](exploring_llms_for_scientific_information_extraction_using_the_sciex_framework.md)
+- [FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models](ft-ncfm_an_influence-aware_data_distillation_framework_for_efficient_vla_models.md)
+- [Format Matters: The Robustness of Multimodal LLMs in Reviewing Evidence from Tables and Charts](format_matters_the_robustness_of_multimodal_llms_in_reviewing_evidence_from_tabl.md)
+- [ForceVLA: Enhancing VLA Models with a Force-aware MoE for Contact-rich Manipulation](../../NeurIPS2025/multimodal_vlm/forcevla_enhancing_vla_models_with_a_force-aware_moe_for_contact-rich_manipulati.md)
+
+<!-- RELATED:END -->

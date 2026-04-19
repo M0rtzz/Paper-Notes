@@ -132,3 +132,15 @@ $$\dot{\tilde{w}}^\circ(t)=-\mathrm{grad}_{\mathcal{M}}\ell_2(\tilde{w}^\circ(t)
 - 实验充分度: ⭐⭐⭐ — 线性回归/矩阵补全/ReLU/对角网络覆盖广，但均为合成任务，缺少真实数据集和大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 行文极其清晰，直觉+形式化+实验的三重对照出色，sketch of proof 非常易读
 - 价值: ⭐⭐⭐⭐ — 为理解 weight decay 的深层作用提供了坚实的理论基础，对 implicit regularization 和 SAM 等方向有广泛启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Impact of Layer Norm on Memorization and Generalization in Transformers](impact_of_layer_norm_on_memorization_and_generalization_in_transformers.md)
+- [Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](../../ICML2025/others/efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)
+- [Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis](double_descent_meets_out-of-distribution_detection_theoretical_insights_and_empi.md)
+- [REP: Keys to Robust Edits — From Theoretical Insights to Practical Advances](../../ACL2025/others/rep_robust_knowledge_editing.md)
+- [Theoretical Performance Guarantees for Partial Domain Adaptation via Partial Optimal Transport](../../ICML2025/others/theoretical_performance_guarantees_for_partial_domain_adaptation_via_partial_opt.md)
+
+<!-- RELATED:END -->

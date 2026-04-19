@@ -139,3 +139,15 @@ FLARE 在所有模型上平均排名第一。
 - 新颖性: ⭐⭐⭐⭐ LoRA内语言融合
 - 实验充分度: ⭐⭐⭐⭐ 多任务多模型
 - 价值: ⭐⭐⭐⭐ 实用的参数高效跨语言方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Semantic Aware Linear Transfer by Recycling Pre-trained Language Models for Cross-Lingual Transfer](semantic_aware_linear_transfer_by_recycling_pre-trained_language_models_for_cros.md)
+- [Translation and Fusion Improves Zero-shot Cross-lingual Information Extraction](translation_and_fusion_improves_cross-lingual_information_extraction.md)
+- [Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon](cross-lingual_transfer_of_cultural_knowledge_an_asymmetric_phenomenon.md)
+- [Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models](statement-tuning_enables_efficient_cross-lingual_generalization_in_encoder-only_.md)
+
+<!-- RELATED:END -->

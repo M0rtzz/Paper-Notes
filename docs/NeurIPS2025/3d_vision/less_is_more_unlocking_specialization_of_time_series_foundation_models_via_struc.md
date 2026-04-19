@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 7个 TSFM、6个数据集、多维度分析、完整消融
 - 写作质量: ⭐⭐⭐⭐ — 实证分析→方法→实验链条清晰
 - 价值: ⭐⭐⭐⭐⭐ — 为 TSFM 部署提供了简单有效的标准流程
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
+- [Frequency Matters: When Time Series Foundation Models Fail Under Spectral Shift](frequency_matters_when_time_series_foundation_models_fail_under_spectral_shift.md)
+- [Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos](../../AAAI2026/3d_vision/uncovering_zero-shot_generalization_gaps_in_time-series_foundation_models_using_.md)
+- [FeDaL: Federated Dataset Learning for General Time Series Foundation Models](../../ICLR2026/3d_vision/fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
+- [More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+
+<!-- RELATED:END -->

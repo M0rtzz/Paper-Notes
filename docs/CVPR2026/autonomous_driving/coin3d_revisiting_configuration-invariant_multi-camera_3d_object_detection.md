@@ -147,3 +147,15 @@ CoIn3D 是首个统一适用于三大 MC3D 范式的跨配置泛化框架。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集×三个范式×四种设置，消融详尽，对比全面
 - 写作质量: ⭐⭐⭐⭐ — 问题分析系统清晰，配图直观，公式推导完整
 - 价值: ⭐⭐⭐⭐ — 解决了 MC3D 跨平台部署的实际痛点，工业应用潜力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection](r4det_4d_radar-camera_fusion_for_high-performance_3d_object_detection.md)
+- [On the Feasibility and Opportunity of Autoregressive 3D Object Detection](on_the_feasibility_and_opportunity_of_autoregressive_3d_object_detection.md)
+- [CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection](ccf_complementary_collaborative_fusion_for_domain_generalized_multi-modal_3d_obj.md)
+- [A Prediction-as-Perception Framework for 3D Object Detection](a_predictionasperception_framework_for_3d_object_d.md)
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](../../ECCV2024/autonomous_driving/detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+
+<!-- RELATED:END -->

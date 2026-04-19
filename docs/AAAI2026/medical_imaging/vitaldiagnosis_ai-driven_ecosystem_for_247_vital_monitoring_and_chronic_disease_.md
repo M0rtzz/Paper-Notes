@@ -124,3 +124,15 @@ VitalDiagnosis是一个端到端的生态系统，由多个专门化的LLM组件
 - 实验充分度: ⭐⭐ 几乎无定量实验，缺乏benchmark对比和消融分析，仅为系统描述
 - 写作质量: ⭐⭐⭐⭐ 系统架构描述清晰，工作流呈现逻辑性强，但缺少技术细节
 - 价值: ⭐⭐⭐⭐ 提出了一个颇具前瞻性的慢性病管理范式，若能通过临床试点验证，实际影响很大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Human-in-the-Loop Interactive Report Generation for Chronic Disease Adherence](human-in-the-loop_interactive_report_generation_for_chronic_disease_adherence.md)
+- [Rethinking Bias in Generative Data Augmentation for Medical AI: a Frequency Recalibration Approach](rethinking_bias_in_generative_data_augmentation_for_medical_ai_a_frequency_recal.md)
+- [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
+- [A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment](a_principle-driven_adaptive_policy_for_group_cognitive_stimu.md)
+- [Sim4Seg: Boosting Multimodal Multi-disease Medical Diagnosis Segmentation with Region-Aware Vision-Language Similarity Masks](sim4seg_boosting_multimodal_multi-disease_medical_diagnosis_segmentation_with_re.md)
+
+<!-- RELATED:END -->

@@ -166,3 +166,15 @@ TC-Padé + 量化在 batch=1 时将生成延迟从 9s 降至 1.83s（约 6× 加
 ⭐⭐⭐⭐ (4/5)
 
 数学动机清晰、方法设计 elegant，实验充分覆盖图像和视频生成。在低步数特征缓存加速这一赛道上取得了明显进步。不过方法核心更偏工程优化层面改进，理论深度和通用性尚有提升空间。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Denoising as Path Planning: Training-Free Acceleration of Diffusion Models with DPCache](dpcache_denoising_path_planning_diffusion_accel.md)
+- [LESA: Learnable Stage-Aware Predictors for Diffusion Model Acceleration](lesa_learnable_stage-aware_predictors_for_diffusion_model_acceleration.md)
+- [Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration](adaptive_spectral_feature_forecasting_for_diffusion_sampling_acceleration.md)
+- [Cycle-Consistent Tuning for Layered Image Decomposition](cycle-consistent_tuning_for_layered_image_decomposition.md)
+- [TAP: A Token-Adaptive Predictor Framework for Training-Free Diffusion Acceleration](tap_a_token-adaptive_predictor_framework_for_training-free_diffusion_acceleratio.md)
+
+<!-- RELATED:END -->

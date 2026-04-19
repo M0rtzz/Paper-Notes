@@ -150,3 +150,15 @@ $$\mathcal{L} = \mathcal{L}_{det} + \lambda \mathcal{L}_{desc}$$
 - 实验充分度: ⭐⭐⭐⭐ UCR 大量数据集，速度+精度双重评估
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，动机链条自然
 - 价值: ⭐⭐⭐⭐ DTW 加速是实际痛点，解决方案优雅
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning](../../NeurIPS2025/time_series/universal_spectral_tokenization_via_self-supervised_panchromatic_representation_.md)
+- [OmniSat: Self-Supervised Modality Fusion for Earth Observation](../../ECCV2024/time_series/omnisat_self-supervised_modality_fusion_for_earth_observation.md)
+- [IMTS is Worth Time × Channel Patches: Visual Masked Autoencoders for Irregular Multivariate Time Series Prediction](imts_is_worth_time_times_channel_patches_visual_masked_autoencoders_for_irregula.md)
+- [Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
+- [Time-O1: Time-Series Forecasting Needs Transformed Label Alignment](../../NeurIPS2025/time_series/time-o1_time-series_forecasting_needs_transformed_label_alignment.md)
+
+<!-- RELATED:END -->

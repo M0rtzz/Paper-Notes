@@ -129,3 +129,15 @@ $$\forall i: \Pr_{x \sim \mathcal{D}}[t(x) = d_t[i{+}1:] \circ \gamma_i \circ d_
 - 实验充分度: ⭐⭐⭐ — 两个案例分析完整，但规模受限
 - 写作质量: ⭐⭐⭐⭐ — 形式化严谨清晰，案例解析详尽
 - 价值: ⭐⭐⭐⭐ — 为机制可解释性建立了评估基准，对领域有方向性意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [nnterp: A Standardized Interface for Mechanistic Interpretability of Transformers](../../NeurIPS2025/human_understanding/nnterp_a_standardized_interface_for_mechanistic_interpretability_of_transformers.md)
+- [Mechanistic Interpretability of RNNs Emulating Hidden Markov Models](../../NeurIPS2025/human_understanding/mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)
+- [A Differential and Pointwise Control Approach to Reinforcement Learning](../../NeurIPS2025/human_understanding/a_differential_and_pointwise_control_approach_to_reinforceme.md)
+- [Team RAS in 10th ABAW Competition: Multimodal Valence and Arousal Estimation Approach](../../CVPR2025/human_understanding/team_ras_in_10th_abaw_competition_multimodal_valence_and_arousal_estimation_appr.md)
+- [SAMO: A Lightweight Sharpness-Aware Approach for Multi-Task Optimization with Joint Global-Local Perturbation](../../ICCV2025/human_understanding/samo_a_lightweight_sharpness-aware_approach_for_multi-task_optimization_with_joi.md)
+
+<!-- RELATED:END -->

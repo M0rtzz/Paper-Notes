@@ -128,3 +128,15 @@ MSE 排序一致：FBP > LASSO > VG，且 VG 方差更小。
 - 实验充分度: ⭐⭐⭐⭐ 三种任务、多个数据集、统计重复、公平比较协议
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，统一框架叙述流畅
 - 价值: ⭐⭐⭐ 偏理论分析，实用影响有限但洞察有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FiRe: Fixed-points of Restoration Priors for Solving Inverse Problems](fire_fixed-points_of_restoration_priors_for_solving_inverse_problems.md)
+- [Learning Cocoercive Conservative Denoisers via Helmholtz Decomposition for Poisson Inverse Problems](../../NeurIPS2025/image_restoration/learning_cocoercive_conservative_denoisers_via_helmholtz_decomposition_for_poiss.md)
+- [AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
+- [Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise](generalized_recorrupted-to-recorrupted_self-supervised_learning_beyond_gaussian_.md)
+- [EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation](echomimicv2_towards_striking_simplified_and_semi-body_human_animation.md)
+
+<!-- RELATED:END -->

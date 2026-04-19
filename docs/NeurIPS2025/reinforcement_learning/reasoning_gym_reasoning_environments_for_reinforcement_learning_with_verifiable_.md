@@ -128,3 +128,15 @@ Reasoning Gym（RG）包含三层设计：(1) **任务生成器**——每个推
 - 实验充分度: ⭐⭐⭐⭐⭐ 零样本评估、域内/跨域迁移、外部基准迁移、课程学习消融全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 实验发现的组织极为清晰，每个实验都有明确的research question和takeaway
 - 价值: ⭐⭐⭐⭐⭐ 作为开源基础设施对RLVR研究有直接推动作用，跨域迁移发现对理解推理本质有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](../../ICLR2026/reinforcement_learning/longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+- [From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for RL of Open-ended Generation](../../ICLR2026/reinforcement_learning/from_verifiable_dot_to_reward_chain_harnessing_verifiable_reference-based_reward.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+- [Generalizing Verifiable Instruction Following](generalizing_verifiable_instruction_following.md)
+- [Forecasting in Offline Reinforcement Learning for Non-stationary Environments](forecasting_in_offline_reinforcement_learning_for_non-stationary_environments.md)
+
+<!-- RELATED:END -->

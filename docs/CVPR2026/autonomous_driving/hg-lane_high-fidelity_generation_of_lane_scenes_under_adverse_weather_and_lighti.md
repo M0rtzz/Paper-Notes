@@ -173,3 +173,15 @@ Control Information Fusion相比单一控制信号提升明显。Stage-II对nigh
 | 实用性 | 4.5 | 零标注成本、全预训练权重、30K benchmark开源，实际应用价值极高 |
 | 实验充分度 | 4.0 | 多检测器验证、消融完整、与风格迁移对比充分，缺少FID等独立生成质量评估 |
 | 写作质量 | 3.5 | 方法描述清晰，两阶段流程结构化好，但部分细节（prompt具体内容、超参选择）不够充分 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TSBOW: Traffic Surveillance Benchmark for Occluded Vehicles Under Various Weather Conditions](../../AAAI2026/autonomous_driving/tsbow_traffic_surveillance_benchmark_for_occluded_vehicles_under_various_weather.md)
+- [Rascene: High-Fidelity 3D Scene Imaging with mmWave Communication Signals](rascene_high-fidelity_3d_scene_imaging_with_mmwave_communication_signals.md)
+- [Fine-Grained Representation for Lane Topology Reasoning](../../AAAI2026/autonomous_driving/fine-grained_representation_for_lane_topology_reasoning.md)
+- [SeqGrowGraph: Learning Lane Topology as a Chain of Graph Expansions](../../ICCV2025/autonomous_driving/seqgrowgraph_learning_lane_topology_as_a_chain_of_graph_expansions.md)
+- [X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability](../../NeurIPS2025/autonomous_driving/x-scene_large-scale_driving_scene_generation_with_high_fidelity_and_flexible_con.md)
+
+<!-- RELATED:END -->

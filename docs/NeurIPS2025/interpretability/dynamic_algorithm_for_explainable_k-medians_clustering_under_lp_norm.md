@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作无实验验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导缜密，三类切割分析框架清晰
 - 价值: ⭐⭐⭐⭐ 对可解释 AI 理论基础贡献显著，动态化对流数据场景有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SpEx: A Spectral Approach to Explainable Clustering](spex_a_spectral_approach_to_explainable_clustering.md)
+- [Beyond Accuracy: Dissecting Mathematical Reasoning for LLMs Under Reinforcement Learning](beyond_accuracy_dissecting_mathematical_reasoning_for_llms_u.md)
+- [VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity](vadtree_explainable_training-free_video_anomaly_detection_via_hierarchical_granu.md)
+- [Empowering Decision Trees via Shape Function Branching](empowering_decision_trees_via_shape_function_branching.md)
+- [Rethinking Explainable Machine Learning as Applied Statistics](../../ICML2025/interpretability/rethinking_explainable_machine_learning_as_applied_statistics.md)
+
+<!-- RELATED:END -->

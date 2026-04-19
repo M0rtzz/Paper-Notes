@@ -136,3 +136,15 @@ tags:
 - ⭐ 实验充分度: 4/5 — 主实验设计严谨、标注规模可观，但前沿模型实验规模偏小
 - ⭐ 写作质量: 4.5/5 — 论文结构清晰，统计建模严谨，表述专业
 - ⭐ 实用价值: 4/5 — 对创造力评估和 AI 写作质量评估领域有直接指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+- [Calibrating Verbalized Confidence with Self-Generated Distractors](calibrating_verbalized_confidence_with_self-generated_distractors.md)
+- [PoliCon: Evaluating LLMs on Achieving Diverse Political Consensus Objectives](policon_evaluating_llms_on_achieving_diverse_political_consensus_objectives.md)
+- [DMAP: A Distribution Map for Text](dmap_a_distribution_map_for_text.md)
+- [CLARC: C/C++ Benchmark for Robust Code Search](clarc_cc_benchmark_for_robust_code_search.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ $$1 - \alpha \leq \mathbb{P}[B(F_{\hat{q}}(x_{n+1}); y^*_{n+1}) \geq \beta] < 1 
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集、9种评分函数、400次随机划分验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，实验设计系统
 - 价值: ⭐⭐⭐⭐ 对高风险摘要应用有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels](../../ACL2025/llm_efficiency/cnnsum_exploring_long-context_summarization_with_large_language_models_in_chines.md)
+- [3-Model Speculative Decoding (PyramidSD)](3model_speculative_decoding.md)
+- [Learning in Compact Spaces with Approximately Normalized Transformer](learning_in_compact_spaces_with_approximately_normalized_transformer.md)
+- [Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention](dynamics_of_spontaneous_topic_changes_in_next_token_prediction_with_self-attenti.md)
+- [The PokeAgent Challenge: Competitive and Long-Context Learning at Scale](the_pokeagent_challenge_competitive_and_long-context_learning_at_scale.md)
+
+<!-- RELATED:END -->

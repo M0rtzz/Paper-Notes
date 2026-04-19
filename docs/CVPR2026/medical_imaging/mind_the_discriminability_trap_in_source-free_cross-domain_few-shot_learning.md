@@ -136,3 +136,15 @@ Gap 越小表示模态对齐越好，增强视觉学习显著恶化对齐，而 
 - 实验充分度: ⭐⭐⭐⭐⭐ — 多 VLM backbone + 多微调范式 + 15 个数据集 + 理论分析 + 消融 + 可视化
 - 写作质量: ⭐⭐⭐⭐⭐ — 双阀排水类比精彩，论证逻辑严密
 - 价值: ⭐⭐⭐⭐ — 即插即用的通用方法，但仅限分类任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reclaiming Lost Text Layers for Source-Free Cross-Domain Few-Shot Learning](reclaiming_lost_text_layers_for_source-free_cross-domain_few-shot_learning.md)
+- [Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment](interpretable_cross-domain_few-shot_learning_with_rectified_target-domain_local_.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multi-modal_learning_for_single_source_domain_general.md)
+- [Tell2Adapt: A Unified Framework for Source Free Unsupervised Domain Adaptation via Vision Foundation Model](tell2adapt_a_unified_framework_for_source_free_unsupervised_domain_adaptation_vi.md)
+- [MUSE: Harnessing Precise and Diverse Semantics for Few-Shot Whole Slide Image Classification](muse_harnessing_precise_and_diverse_semantics_for_few-shot_whole_slide_image_cla.md)
+
+<!-- RELATED:END -->

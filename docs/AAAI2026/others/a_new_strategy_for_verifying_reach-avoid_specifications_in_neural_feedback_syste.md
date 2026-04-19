@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐ 论文无实验数据，核心主张尚未经验证
 - 写作质量: ⭐⭐⭐ 数学定义严谨，但作为完整论文缺少实验部分
 - 价值: ⭐⭐⭐ 方向重要且理论框架完整，但需实验支撑才能评估实际影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Expressive Temporal Specifications for Reward Monitoring](expressive_temporal_specifications_for_reward_monitoring.md)
+- [Private Frequency Estimation via Residue Number Systems](private_frequency_estimation_via_residue_number_systems.md)
+- [From Sequential to Recursive: Enhancing Decision-Focused Learning with Bidirectional Feedback](from_sequential_to_recursive_enhancing_decision-focused_learning_with_bidirectio.md)
+- [A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent.md)
+- [Modeling Neural Activity with Conditionally Linear Dynamical Systems](../../NeurIPS2025/others/modeling_neural_activity_with_conditionally_linear_dynamical_systems.md)
+
+<!-- RELATED:END -->

@@ -119,3 +119,15 @@ CP 是纯推理时干预，可与 PromptEOL、Pretended CoT、Knowledge、MetaEO
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖 4 种基线方法、3 种 LLM backbone、STS + 分类双维度评估、干预位置/层/缩放因子/辅助提示全面消融
 - **写作质量**: ⭐⭐⭐⭐ 动机通过解码概率实验直观展示，方法三步流程清晰，图表丰富
 - **实用价值**: ⭐⭐⭐⭐ 即插即用无需训练，开销极小（+15%），可直接集成到生产系统的句子嵌入管道
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
+- [Nudging: Inference-time Alignment of LLMs via Guided Decoding](nudging_inference_time_alignment.md)
+- [Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs](input_dependent_soft_prompting.md)
+- [Steering off Course: Reliability Challenges in Steering Language Models](steering_off_course_reliability_challenges_in_steering_language_models.md)
+- [Explain-then-Process: Using Grammar Prompting to Enhance Grammatical Acceptability Judgments](explain-then-process_using_grammar_prompting_to_enhance_grammatical_acceptabilit.md)
+
+<!-- RELATED:END -->

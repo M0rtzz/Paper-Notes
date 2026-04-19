@@ -108,3 +108,15 @@ Wikipedia 语料统计事实频率 -> 在同一语料上预训练多种模型 ->
 - 实验充分度: ⭐⭐⭐⭐ 控制变量充分，多架构多规模
 - 写作质量: ⭐⭐⭐⭐ 指标设计精巧
 - 价值: ⭐⭐⭐⭐ 对预训练数据策略和模型比较有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Evaluating Language Models as Synthetic Data Generators](evaluating_lms_synthetic_data_gen.md)
+- [KazMMLU: Evaluating Language Models on Kazakh, Russian, and Regional Knowledge of Kazakhstan](kazmmlu_evaluating_language_models_on_kazakh_russian_and_regional_knowledge_of_k.md)
+- [How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian](conceptual_knowledge_org.md)
+- [CogSteer: Cognition-Inspired Selective Layer Intervention for Efficiently Steering Large Language Models](cogsteer_cognition-inspired_selective_layer_intervention_for_efficiently_steerin.md)
+- [Knowledge Boundary of Large Language Models: A Survey](knowledge_boundary_survey.md)
+
+<!-- RELATED:END -->

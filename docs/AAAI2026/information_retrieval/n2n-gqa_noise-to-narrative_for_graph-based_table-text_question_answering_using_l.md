@@ -129,3 +129,15 @@ OTT-QA（开放域，500 样本），零样本：
 - 实验充分度: ⭐⭐⭐⭐ 两数据集、三读者、渐进消融清晰
 - 写作质量: ⭐⭐⭐⭐ 问题定义精确，消融设计好
 - 价值: ⭐⭐⭐⭐ 证明了图结构对 RAG 的重要性，零样本部署有直接实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [REAP: Enhancing RAG with Recursive Evaluation and Adaptive Planning for Multi-Hop Question Answering](reap_enhancing_rag_with_recursive_evaluation_and_adaptive_planning_for_multi-hop.md)
+- [GRAF: Graph Retrieval Augmented by Facts for Romanian Legal Multi-Choice Question Answering](../../ACL2025/information_retrieval/graf_graph_retrieval_augmented_by_facts_for_romanian_legal_multi-choice_question.md)
+- [Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs](does_less_hallucination_mean_less_creativity_an_empirical_investigation_in_llms.md)
+- [ComoRAG: A Cognitive-Inspired Memory-Organized RAG for Stateful Long Narrative Reasoning](comorag_a_cognitive-inspired_memory-organized_rag_for_stateful_long_narrative_re.md)
+- [LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning](llms_for_game_theory_entropy-guided_in-context_learning_and_adaptive_cot_reasoni.md)
+
+<!-- RELATED:END -->

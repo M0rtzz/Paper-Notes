@@ -186,3 +186,15 @@ $$\text{score}_{\text{agg}}(s) = \prod_{\phi_j \in \Phi} \hat{P}(\phi_j(s)|\phi_
 | 实用性 | ⭐⭐⭐⭐⭐ | 开源、低成本（RTX 4090 即可）、可复现 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，理论与实验平衡好 |
 | 总评 | ⭐⭐⭐⭐½ | 工程与理论结合典范，开源 ARC SOTA，极具实用价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PromptIQA: Boosting the Performance and Generalization for No-Reference Image Quality Assessment via Prompts](../../ECCV2024/llm_nlp/promptiqa_boosting_the_performance_and_generalization_for_no-reference_image_qua.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](../../ACL2025/llm_nlp/boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+- [PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights](../../ACL2025/llm_nlp/praise_enhancing_product_descriptions_with_llm-driven_structured_insights.md)
+- [Out-of-distribution Generalisation is Hard: Evidence from ARC-like Tasks](../../NeurIPS2025/llm_nlp/out-of-distribution_generalisation_is_hard_evidence_from_arc-like_tasks.md)
+- [Spectral Conditioning of Attention Improves Transformer Performance](../../NeurIPS2025/llm_nlp/spectral_conditioning_of_attention_improves_transformer_performance.md)
+
+<!-- RELATED:END -->

@@ -188,3 +188,15 @@ CIFAR-100 上同样大幅领先（Vanilla: FGSM +18.35%；AT: FGSM +16.35%）。
 - 实验充分度: ⭐⭐⭐⭐⭐（3 数据集 × 2 架构 × 4 攻击 × 3 SG 函数 × 3 编码 × AT/非AT）
 - 写作质量: ⭐⭐⭐⭐（理论→方法→实验的逻辑链清晰）
 - 价值: ⭐⭐⭐⭐⭐（为 SNN 鲁棒性提供了理论根基扎实的通用防御策略）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Spiking Neural Networks Against Adversarial Attacks](../../ICLR2026/ai_safety/robust_spiking_neural_networks_against_adversarial_attacks.md)
+- [Angular Gradient Sign Method: Uncovering Vulnerabilities in Hyperbolic Networks](angular_gradient_sign_method_uncovering_vulnerabilities_in_h.md)
+- [Robust Watermarking on Gradient Boosting Decision Trees](robust_watermarking_on_gradient_boosting_decision_trees.md)
+- [Diversifying Counterattacks: Orthogonal Exploration for Robust CLIP Inference](diversifying_counterattacks_orthogonal_exploration_for_robust_clip_inference.md)
+- [Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking](yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md)
+
+<!-- RELATED:END -->

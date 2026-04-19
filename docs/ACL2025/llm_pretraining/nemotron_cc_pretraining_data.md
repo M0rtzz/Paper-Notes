@@ -144,3 +144,15 @@ Nemotron-CC-HQ 在 1T 短训练中就超 DCLM **+5.6 MMLU**、**+3.1 均分**；
 - 实验充分度: ⭐⭐⭐⭐⭐ 1T和15T训练+详细消融+超越Llama 3.1
 - 写作质量: ⭐⭐⭐⭐ 清晰有条理，表格丰富
 - 价值: ⭐⭐⭐⭐⭐ 6.3T开源数据集+超越Llama 3.1的实验结果，极高实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Data Caricatures: On the Representation of African American Language in Pretraining Corpora](data_caricatures_on_the_representation_of_african_american_language_in_pretraini.md)
+- [Dataset Ownership Verification for Pre-trained Masked Models](../../ICCV2025/llm_pretraining/dataset_ownership_verification_for_pre-trained_masked_models.md)
+- [Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases](between_circuits_chomsky.md)
+- [Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation](emergent_abilities_continued_pt.md)
+- [FictionalQA: A Dataset for Studying Memorization and Knowledge Acquisition](../../ICLR2026/llm_pretraining/fictionalqa_a_dataset_for_studying_memorization_and_knowledge_acquisition.md)
+
+<!-- RELATED:END -->

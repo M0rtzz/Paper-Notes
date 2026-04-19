@@ -107,3 +107,15 @@ SFS接受用户提供的歌曲结构$(\\hat{s}_{1:M}, \\hat{e}_{1:M}, \\hat{l}_{
 - 技术深度：⭐⭐⭐⭐（分割算法+位置编码+训练策略设计精细）
 - 实验完整性：⭐⭐⭐⭐（客观指标+用户研究44人）
 - 实用价值：⭐⭐⭐⭐⭐（实时生成+Web交互工具+开源）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OverLayBench: A Benchmark for Layout-to-Image Generation with Dense Overlaps](overlaybench_a_benchmark_for_layout-to-image_generation_with_dense_overlaps.md)
+- [InstanceAssemble: Layout-Aware Image Generation via Instance Assembling Attention](instanceassemble_layoutaware_image_generation_via_instance_a.md)
+- [DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](../../CVPR2025/object_detection/diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
+- [YOLO-Count: Differentiable Object Counting for Text-to-Image Generation](../../ICCV2025/object_detection/yolo-count_differentiable_object_counting_for_text-to-image_generation.md)
+- [Large-scale Pre-training for Grounded Video Caption Generation](../../ICCV2025/object_detection/large-scale_pre-training_for_grounded_video_caption_generation.md)
+
+<!-- RELATED:END -->

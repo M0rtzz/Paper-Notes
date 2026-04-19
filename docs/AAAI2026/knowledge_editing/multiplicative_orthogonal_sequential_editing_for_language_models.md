@@ -115,3 +115,15 @@ MOSE 将知识编辑从"加法更新"转变为"乘法更新"：不是 $W' = W_0 
 - 实验充分度: ⭐⭐⭐⭐ 三个模型、两种数据集、六种基线对比全面
 - 写作质量: ⭐⭐⭐⭐⭐ 统计分析→数学证明→方法设计→实验验证的逻辑链完美
 - 价值: ⭐⭐⭐⭐⭐ 对连续知识编辑这一实际需求有根本性解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neuron-Level Sequential Editing for Large Language Models](../../ACL2025/knowledge_editing/neuron-level_sequential_editing_for_large_language_models.md)
+- [Context-Robust Knowledge Editing for Language Models](../../ACL2025/knowledge_editing/context-robust_knowledge_editing_for_language_models.md)
+- [MEGen: Generative Backdoor into Large Language Models via Model Editing](../../ACL2025/knowledge_editing/megen_generative_backdoor_into_large_language_models_via_model_editing.md)
+- [Model Editing as a Double-Edged Sword: Steering Agent Ethical Behavior](model_editing_as_a_double-edged_sword_steering_agent_ethical_behavior_toward_ben.md)
+- [Energy-Regularized Sequential Model Editing on Hyperspheres](../../ICLR2026/knowledge_editing/energy-regularized_sequential_model_editing_on_hyperspheres.md)
+
+<!-- RELATED:END -->

@@ -168,3 +168,15 @@ PhantomWiki 本身是评测工具而非训练方法。但论文探索了在 Phan
 | 实用性 | ⭐⭐⭐⭐ | pip install 即可使用，HuggingFace 有示例数据 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，图表信息量大 |
 | 综合评分 | ⭐⭐⭐⭐ | 优秀的评测基础设施工作，解耦推理与检索的思路有价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models](../../ACL2025/llm_evaluation/retrieval_models_arent_tool-savvy_benchmarking_tool_retrieval_for_large_language.md)
+- [ConText-CIR: Learning from Concepts in Text for Composed Image Retrieval](../../CVPR2025/llm_evaluation/context-cir_learning_from_concepts_in_text_for_composed_image_retrieval.md)
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](../../ACL2025/llm_evaluation/mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+- [Position: AI Evaluation Should Learn from How We Test Humans](position_ai_evaluation_should_learn_from_how_we_test_humans.md)
+- [Sync from the Sea: Retrieving Alignable Videos from Large-Scale Datasets](../../ECCV2024/llm_evaluation/sync_from_the_sea_retrieving_alignable_videos_from_large-scale_datasets.md)
+
+<!-- RELATED:END -->

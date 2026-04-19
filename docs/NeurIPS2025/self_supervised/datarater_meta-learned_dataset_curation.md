@@ -120,3 +120,15 @@ DataRater 是一个双层优化框架：
 ## 评分
 - ⭐⭐⭐⭐ (4/5)
 - 理由: 方法优雅且实用，元梯度端到端优化数据筛选的思路有很强的理论吸引力；大规模实验充分，跨尺度泛化结论令人信服；但元训练成本较高，且在高质量数据集上增益有限，实际落地仍有门槛。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaWriter: Personalized Handwritten Text Recognition Using Meta-Learned Prompt Tuning](../../CVPR2025/self_supervised/metawriter_personalized_handwritten_text_recognition_using_meta-learned_prompt_t.md)
+- [T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning](t-regs_minimum_spanning_tree_regularization_for_self-supervised_learning.md)
+- [Know Thyself by Knowing Others: Learning Neuron Identity from Population Context](know_thyself_by_knowing_others_learning_neuron_identity_from_population_context.md)
+- [Understanding Ice Crystal Habit Diversity with Self-Supervised Learning](understanding_ice_crystal_habit_diversity_with_self-supervised_learning.md)
+- [Soft Task-Aware Routing of Experts for Equivariant Representation Learning](soft_task-aware_routing_of_experts_for_equivariant_representation_learning.md)
+
+<!-- RELATED:END -->

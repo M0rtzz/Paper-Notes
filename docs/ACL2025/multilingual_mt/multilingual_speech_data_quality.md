@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 40+ 种语言的人工审核 + 挪威语 ASR 验证实验有说服力，但自动化工具缺失
 - 写作质量: ⭐⭐⭐⭐⭐ 案例分析生动深入（nan_tw、挪威语、粤语），论述层次分明，指南清晰可操作
 - 价值: ⭐⭐⭐⭐⭐ 对多语言数据集创建者和使用者都有直接指导价值，诊断了 Whisper 等模型问题的数据根源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Alleviating Distribution Shift in Synthetic Data for Machine Translation Quality Estimation](alleviating_distribution_shift_in_synthetic_data_for_machine_translation_quality.md)
+- [Disentangling Language and Culture for Evaluating Multilingual Large Language Models](disentangle_language_culture.md)
+- [Watching the Watchers: Exposing Gender Disparities in Machine Translation Quality Estimation](watching_the_watchers_exposing_gender_disparities_in_machine_translation_quality.md)
+- [X-MuTest: A Multilingual Benchmark for Explainable Hate Speech Detection](../../AAAI2026/multilingual_mt/x-mutest_a_multilingual_benchmark_for_explainable_hate_speech_detection_and_a_no.md)
+- [LangSAMP: Language-Script Aware Multilingual Pretraining](langsamp_multilingual_pretraining.md)
+
+<!-- RELATED:END -->

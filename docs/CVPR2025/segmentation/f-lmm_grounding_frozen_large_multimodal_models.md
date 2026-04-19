@@ -115,3 +115,15 @@ F-LMM 在对话 benchmark 上完全保持原始 LMM 的性能（MME 1500+ vs 微
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 10+ LMM、QA + RES + PNG + 推理分割 + GCG 五类任务，消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题提出清晰，动机强烈（Table 1 中微调方法的 0 分非常有冲击力）
 - 价值: ⭐⭐⭐⭐⭐ 提出了一种实用的"两全其美"方案，对构建通用 AI 助手有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding](../../NeurIPS2025/segmentation/partonomy_large_multimodal_models_with_part-level_visual_understanding.md)
+- [HiMTok: Learning Hierarchical Mask Tokens for Image Segmentation with Large Multimodal Model](../../ICCV2025/segmentation/himtok_learning_hierarchical_mask_tokens_for_image_segmentation_with_large_multi.md)
+- [OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models](../../ECCV2024/segmentation/openpsg_open-set_panoptic_scene_graph_generation_via_large_multimodal_models.md)
+- [Latent Expression Generation for Referring Image Segmentation and Grounding](../../ICCV2025/segmentation/latent_expression_generation_for_referring_image_segmentation_and_grounding.md)
+- [ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations](../../ICCV2025/segmentation/referdino_referring_video_object_segmentation_with_visual_grounding_foundations.md)
+
+<!-- RELATED:END -->

@@ -140,3 +140,15 @@ DLF 采用双分支编码架构：输入图像 $X \in \mathbb{R}^{3 \times H \ti
 - **实验充分度**: ⭐⭐⭐⭐ — 多数据集评估 + 完整消融 + 复杂度分析，较为充分
 - **写作质量**: ⭐⭐⭐⭐⭐ — 动机清晰，从 VQ 局限性出发推导出方案，逻辑流畅
 - **价值**: ⭐⭐⭐⭐ — 在极低码率压缩领域取得显著进展，对 tokenizer-based 压缩方向有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generative Video Compression with One-Dimensional Latent Representation](../../CVPR2026/model_compression/generative_video_compression_with_one-dimensional_latent_representation.md)
+- [Learned Image Compression with Hierarchical Progressive Context Modeling](learned_image_compression_with_hierarchical_progressive_context_modeling.md)
+- [Strategic Fusion Optimizes Transformer Compression](../../ICML2025/model_compression/strategic_fusion_optimizes_transformer_compression.md)
+- [Fuse Before Transfer: Knowledge Fusion for Heterogeneous Distillation](fuse_before_transfer_knowledge_fusion_for_heterogeneous_distillation.md)
+- [CoA: Towards Real Image Dehazing via Compression-and-Adaptation](../../CVPR2025/model_compression/coa_towards_real_image_dehazing_via_compression-and-adaptation.md)
+
+<!-- RELATED:END -->

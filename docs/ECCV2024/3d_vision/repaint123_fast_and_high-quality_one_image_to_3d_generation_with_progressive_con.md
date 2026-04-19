@@ -125,3 +125,15 @@ Repaint123 采用两阶段框架。粗阶段：使用 3D Gaussian Splatting + SD
 - 实验充分度: ⭐⭐⭐⭐ 多数据集对比、详细消融、NeRF版本验证、角度分析等较为充分
 - 写作质量: ⭐⭐⭐⭐ 图示清晰，方法描述条理分明，pipeline易于理解
 - 价值: ⭐⭐⭐⭐ 提供了一种实用的快速高质量单图3D生成方案，对后续工作有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [Compress3D: a Compressed Latent Space for 3D Generation from a Single Image](compress3d_a_compressed_latent_space_for_3d_generation_from_a_single_image.md)
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+- [Track Everything Everywhere Fast and Robustly](track_everything_everywhere_fast_and_robustly.md)
+- [CityGaussian: Real-Time High-Quality Large-Scale Scene Rendering with Gaussians](citygaussian_real-time_high-quality_large-scale_scene_rendering_with_gaussians.md)
+
+<!-- RELATED:END -->

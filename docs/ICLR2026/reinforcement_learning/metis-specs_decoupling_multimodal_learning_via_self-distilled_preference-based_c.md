@@ -124,3 +124,15 @@ Stage 3 使用 GRPO，奖励函数 $R_{\text{total}} = R_{\text{format}} + R_{\t
 - 实验充分度: ⭐⭐⭐⭐ 多基准覆盖全面，消融设计精细（蒸馏源/数据策略/冷启动方法）
 - 写作质量: ⭐⭐⭐ 内容扎实但略显冗长，GF 度量的阐述可更简洁
 - 价值: ⭐⭐⭐⭐ 为 VLM 的 RL 训练提供了更优的冷启动范式，对 MLLM-r1 生态有实践指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
+- [Spotlight on Token Perception for Multimodal Reinforcement Learning](spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
+- [PreferThinker: Reasoning-based Personalized Image Preference Assessment](preferthinker_reasoning-based_personalized_image_preference_assessment.md)
+- [Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
+- [Diving into Self-Evolving Training for Multimodal Reasoning](../../ICML2025/reinforcement_learning/diving_into_self-evolving_training_for_multimodal_reasoning.md)
+
+<!-- RELATED:END -->

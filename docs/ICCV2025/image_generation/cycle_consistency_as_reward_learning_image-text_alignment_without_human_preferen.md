@@ -154,3 +154,15 @@ DPO结果（I2T方向，Qwen-VL-Chat）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 指标评估+BoN采样+DPO三个维度，I2T和T2I双方向，消融极其详尽
 - **写作质量**: ⭐⭐⭐⭐⭐ 逻辑清晰，动机有力，图表直观，实验设计严谨
 - **价值**: ⭐⭐⭐⭐⭐ 提供了廉价可扩展的对齐信号，对RLHF/偏好学习领域有重要启发价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Reward Models for High-quality Image Generation: Beyond Text-Image Alignment](enhancing_reward_models_for_high-quality_image_generation_beyond_text-image_alig.md)
+- [Ouroboros: Single-step Diffusion Models for Cycle-consistent Forward and Inverse Rendering](ouroboros_single-step_diffusion_models_for_cycle-consistent_forward_and_inverse_.md)
+- [ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)
+- [Fair Generation without Unfair Distortions: Debiasing Text-to-Image Generation with Entanglement-Free Attention](fair_generation_without_unfair_distortions_debiasing_text-to-image_generation_wi.md)
+- [PLA: Prompt Learning Attack against Text-to-Image Generative Models](pla_prompt_learning_attack_against_text-to-image_generative_models.md)
+
+<!-- RELATED:END -->

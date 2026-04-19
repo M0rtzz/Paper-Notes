@@ -129,3 +129,15 @@ vHeat-B 比 Swin-B 高 0.5%，吞吐量高 40%，GPU 显存少 80%，FLOPs 少 3
 - 实验充分度: ⭐⭐⭐⭐ 分类+检测+分割+低级视觉全覆盖
 - 写作质量: ⭐⭐⭐⭐ 物理动机阐述清晰
 - 价值: ⭐⭐⭐⭐ 提供了 attention 之外的全新信息传播范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior](bridging_the_vision-brain_gap_with_an_uncertainty-aware_blur_prior.md)
+- [Learning Spatial Decay for Vision Transformers](../../AAAI2026/llm_nlp/learning_spatial_decay_for_vision_transformers.md)
+- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
+- [Vision Transformers are Circulant Attention Learners](../../AAAI2026/llm_nlp/vision_transformers_are_circulant_attention_learners.md)
+- [L-SWAG: Layer-Sample Wise Activation with Gradients Information for Zero-Shot NAS on Vision Transformers](l-swag_layer-sample_wise_activation_with_gradients_information_for_zero-shot_nas.md)
+
+<!-- RELATED:END -->

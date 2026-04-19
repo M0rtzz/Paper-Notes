@@ -137,3 +137,15 @@ ETTA 在公开数据训练的模型中达到最优，与专有数据训练的模
 - 实验充分度: ⭐⭐⭐⭐⭐ 大规模系统消融，覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验全面
 - 价值: ⭐⭐⭐⭐ 为 TTA 社区提供了实用的设计指南和强基线
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reimagining Parameter Space Exploration with Diffusion Models](reimagining_parameter_space_exploration_with_diffusion_models.md)
+- [Elucidating Flow Matching ODE Dynamics via Data Geometry and Denoisers](elucidating_flow_matching_ode_dynamics_with_respect_to_data_geometries_and_denoi.md)
+- [Hessian Geometry of Latent Space in Generative Models](hessian_geometry_of_latent_space_in_generative_models.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](parameter-efficient_fine-tuning_of_state_space_models.md)
+- [IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling](impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation_with_.md)
+
+<!-- RELATED:END -->

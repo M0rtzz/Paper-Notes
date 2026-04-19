@@ -136,3 +136,15 @@ PCD 的核心思路是：将感知输出（IoU × 置信度）建模为距离 $x
 - 实验充分度: ⭐⭐⭐ — 多模型多条件系统评估，但仅限自有数据集，缺乏在主流 benchmark 上的验证
 - 写作质量: ⭐⭐⭐⭐ — 数学表述清晰，示例直观，图表设计良好
 - 价值: ⭐⭐⭐⭐ — 对 ADS 安全评估有实际意义，可补充现有评估体系，但需更广泛的实证验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RoadSceneVQA: Benchmarking Visual Question Answering in Roadside Perception Systems for Intelligent Transportation System](../../AAAI2026/autonomous_driving/roadscenevqa_benchmarking_visual_question_answering_in_roadside_perception_syste.md)
+- [TSBOW: Traffic Surveillance Benchmark for Occluded Vehicles Under Various Weather Conditions](../../AAAI2026/autonomous_driving/tsbow_traffic_surveillance_benchmark_for_occluded_vehicles_under_various_weather.md)
+- [AdaRadar: Rate Adaptive Spectral Compression for Radar-based Perception](adaradar_rate_adaptive_spectral_compression_for_radar-based_perception.md)
+- [A Prediction-as-Perception Framework for 3D Object Detection](a_predictionasperception_framework_for_3d_object_d.md)
+- [Walking Further: Semantic-aware Multimodal Gait Recognition Under Long-Range Conditions](../../AAAI2026/autonomous_driving/walking_further_semantic-aware_multimodal_gait_recognition_under_long-range_cond.md)
+
+<!-- RELATED:END -->

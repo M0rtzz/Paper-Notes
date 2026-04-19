@@ -106,3 +106,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ TOFU+CIFAR多场景，但缺少大规模LLM实验
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨
 - 价值: ⭐⭐⭐⭐ 为机器遗忘提供了理论严格的优化框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](../../NeurIPS2025/ai_safety/rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Efficient Verified Machine Unlearning for Distillation](../../NeurIPS2025/ai_safety/efficient_verified_machine_unlearning_for_distillation.md)
+- [Position: Bridge the Gaps between Machine Unlearning and AI Regulation](../../NeurIPS2025/ai_safety/position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)
+- [Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning](erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning.md)
+- [The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples](../../NeurIPS2025/ai_safety/the_unseen_threat_residual_knowledge_in_machine_unlearning_under_perturbed_sampl.md)
+
+<!-- RELATED:END -->

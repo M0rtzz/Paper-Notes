@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 种设置 × 3 种 order × 多基线
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述系统
 - 价值: ⭐⭐⭐⭐ 层次化持续学习设置有启发性，SVD 正交 LoRA 可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](../../CVPR2026/robotics/geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [DRAE: Dynamic Retrieval-Augmented Expert Networks for Lifelong Learning and Task Adaptation in Robotics](drae_dynamic_retrieval-augmented_expert_networks_for_lifelong_learning_and_task_.md)
+- [Learning Spatial-Aware Manipulation Ordering](../../NeurIPS2025/robotics/learning_spatial-aware_manipulation_ordering.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](../../CVPR2026/robotics/learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](../../ICCV2025/robotics/rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)
+
+<!-- RELATED:END -->

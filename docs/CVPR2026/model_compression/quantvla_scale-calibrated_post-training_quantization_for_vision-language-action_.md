@@ -151,3 +151,15 @@ $$\beta(l) = \text{clip}(\beta_{\text{raw}}(l), \beta_{\min}, \beta_{\max})$$
 - ⭐⭐⭐⭐ 实用性：免训练、零推理开销、70% 内存节省，对机器人部署极具价值
 - ⭐⭐⭐ 实验充分度：两个模型、多个精度和配置的消融较完整，但缺乏真实机器人验证
 - ⭐⭐⭐⭐ 写作质量：理论分析严谨，从敏感性分析到方法设计逻辑链完整清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](../../ICLR2026/model_compression/ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
+- [S2R-HDR: A Large-Scale Rendered Dataset for HDR Fusion](../../ICLR2026/model_compression/s2r-hdr_a_large-scale_rendered_dataset_for_hdr_fusion.md)
+- [Post Training Quantization for Efficient Dataset Condensation](../../AAAI2026/model_compression/post_training_quantization_for_efficient_dataset_condensation.md)
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [FIMA-Q: Post-Training Quantization for Vision Transformers by Fisher Information Matrix Approximation](../../CVPR2025/model_compression/fima-q_post-training_quantization_for_vision_transformers_by_fisher_information_.md)
+
+<!-- RELATED:END -->

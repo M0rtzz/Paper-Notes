@@ -104,3 +104,14 @@ CART：Gini 指数（分类）或 MSE（回归），代价复杂度剪枝+交叉
 - 写作质量: ⭐⭐⭐⭐⭐ 定理-实验对应清晰，逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 对因果推断方法论有根本性启示
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transferring Causal Effects using Proxies](../../NeurIPS2025/causal_inference/transferring_causal_effects_using_proxies.md)
+- [Isolated Causal Effects of Natural Language](../../ICML2025/causal_inference/isolated_causal_effects_of_natural_language.md)
+- [CaDyT: Causal Structure Learning for Dynamical Systems with Theoretical Score Analysis](causal_structure_learning_for_dynamical_systems_with_theoretical_score_analysis.md)
+- [Conformal Prediction for Causal Effects of Continuous Treatments](../../NeurIPS2025/causal_inference/conformal_prediction_for_causal_effects_of_continuous_treatments.md)
+- [Sparse Additive Model Pruning for Order-Based Causal Structure Learning](sparse_additive_model_pruning_for_order-based_causal_structure_learning.md)
+
+<!-- RELATED:END -->

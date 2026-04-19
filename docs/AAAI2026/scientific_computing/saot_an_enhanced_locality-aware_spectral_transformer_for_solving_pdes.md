@@ -171,3 +171,15 @@ SAOT 在 Darcy、NS、Airfoil、Plasticity 上均取得最优，NS 和 Plasticit
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 6 个基准、11+ 个 baseline、详细消融、能量谱分析、超分辨率泛化测试、与谱 Transformer 的额外对比
 - **写作质量**: ⭐⭐⭐⭐ — 动机链条清晰（谱偏差→小波局部性→互补融合），能量谱可视化直观有力
 - **实用价值**: ⭐⭐⭐⭐ — 为算子学习的频域注意力设计提供了新方向，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Knowledge-Guided Masked Autoencoder with Linear Spectral Mixing and Spectral-Angle-Aware Reconstruction](knowledge-guided_masked_autoencoder_with_linear_spectral_mixing_and_spectral-ang.md)
+- [DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](../../ICLR2026/scientific_computing/drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
+- [DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/scientific_computing/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [Towards a Foundation Model for Partial Differential Equations Across Physics Domains](towards_a_foundation_model_for_partial_differential_equations_across_physics_dom.md)
+- [NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training](../../CVPR2026/scientific_computing/nestor_a_nested_moe-based_neural_operator_for_large-scale_pde_pre-training.md)
+
+<!-- RELATED:END -->

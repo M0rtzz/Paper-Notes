@@ -131,3 +131,15 @@ AGrail (Claude-3.5) 保留了 95.6% 的正常动作，同时将 Prompt Injection
 - **实用性**: ★★★★☆ — 可直接应用于各类 LLM Agent 系统的安全增强
 - **实验充分度**: ★★★★☆ — 5 个数据集、多种攻击类型、充分的消融和迁移实验
 - **写作质量**: ★★★☆☆ — 整体清晰，但符号和公式较多，部分描述冗余
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)
+- [Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering](aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md)
+- [HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)
+- [Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)
+- [BECAME: BayEsian Continual Learning with Adaptive Model MErging](../../ICML2025/llm_safety/became_bayesian_continual_learning_with_adaptive_model_merging.md)
+
+<!-- RELATED:END -->

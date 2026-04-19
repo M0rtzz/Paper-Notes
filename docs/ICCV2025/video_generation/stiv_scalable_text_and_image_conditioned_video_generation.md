@@ -135,3 +135,15 @@ TI2V 图像条件整合方式消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ 消融极其全面，从T2I到T2V到TI2V每步都有详细ablation
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，recipe式呈现对实践者友好
 - 价值: ⭐⭐⭐⭐⭐ 作为视频生成的系统性 recipe，对社区有极高参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks](generating_fast_and_slow_scalable_parallel_video_generation_with_video_interface.md)
+- [OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models](omnihuman-1_rethinking_the_scaling-up_of_one-stage_conditioned_human_animation_m.md)
+- [TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation](tip-i2v_a_million-scale_real_text_and_image_prompt_dataset_for_image-to-video_ge.md)
+- [Evaluating Text-to-Visual Generation with Image-to-Text Generation](../../ECCV2024/video_generation/evaluating_text-to-visual_generation_with_image-to-text_generation.md)
+- [Versatile Transition Generation with Image-to-Video Diffusion](versatile_transition_generation_with_image-to-video_diffusion.md)
+
+<!-- RELATED:END -->

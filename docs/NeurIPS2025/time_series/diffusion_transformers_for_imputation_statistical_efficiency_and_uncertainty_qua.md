@@ -151,3 +151,15 @@ $$\tilde{O}\left(\frac{\sqrt{Hd^2\kappa^5}}{\sqrt{n}}\right)$$
 - **实验充分性**: ★★★☆☆ — 合成数据实验充分，真实数据实验偏少
 - **写作质量**: ★★★★☆ — 论文结构清晰，理论和实验平衡良好
 - **实用性**: ★★★☆☆ — 偏理论，混合掩码策略有一定实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diffusion Transformers as Open-World Spatiotemporal Foundation Models](diffusion_transformers_as_open-world_spatiotemporal_foundation_models.md)
+- [Relational Feature Caching for Accelerating Diffusion Transformers](../../ICLR2026/time_series/relational_feature_caching_for_accelerating_diffusion_transformers.md)
+- [Statistical Guarantees for High-Dimensional Stochastic Gradient Descent](statistical_guarantees_for_high-dimensional_stochastic_gradient_descent.md)
+- [PlanU: Large Language Model Reasoning through Planning under Uncertainty](planu_large_language_model_reasoning_through_planning_under_uncertainty.md)
+- [Neural MJD: Neural Non-Stationary Merton Jump Diffusion for Time Series Prediction](neural_mjd_neural_non-stationary_merton_jump_diffusion_for_time_series_predictio.md)
+
+<!-- RELATED:END -->

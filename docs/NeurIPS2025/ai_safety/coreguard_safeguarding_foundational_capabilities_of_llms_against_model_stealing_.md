@@ -138,3 +138,15 @@ CoreGuard 安全性与黑盒上界几乎持平（1.17× vs 1.00×），远优于
 - 实验充分度: ⭐⭐⭐⭐ 4 模型 × 4 任务 × 8 基线，安全性和效率评估全面
 - 写作质量: ⭐⭐⭐⭐ 威胁模型定义清晰，安全分析严谨
 - 价值: ⭐⭐⭐⭐ 边缘 LLM 保护是实际工业需求，方案即插即用可落地
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties](trans-env_a_framework_for_evaluating_the_linguistic_robustness_of_llms_against_e.md)
+- [MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction](masksql_safeguarding_privacy_for_llm-based_text-to-sql_via_abstraction.md)
+- [Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs](bits_leaked_per_query_information-theoretic_bounds_on_adversarial_attacks_agains.md)
+- [Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
+- [Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries](../../ACL2025/ai_safety/multi-task_adversarial_attacks_against_black-box_model_with_few-shot_queries.md)
+
+<!-- RELATED:END -->

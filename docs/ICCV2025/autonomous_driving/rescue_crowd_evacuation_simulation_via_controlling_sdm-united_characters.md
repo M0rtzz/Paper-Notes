@@ -114,3 +114,15 @@ $$F_{\text{evasive}} = A \, \text{sgn}(o_i \cdot p_i) \, p_i$$
 - **技术深度**: ⭐⭐⭐⭐ — 多模块深度整合
 - **实验充分性**: ⭐⭐⭐⭐⭐ — 多场景分析，用户研究
 - **写作质量**: ⭐⭐⭐⭐ — 可视化丰富
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeqGrowGraph: Learning Lane Topology as a Chain of Graph Expansions](seqgrowgraph_learning_lane_topology_as_a_chain_of_graph_expansions.md)
+- [Resonance: Learning to Predict Social-Aware Pedestrian Trajectories as Co-Vibrations](resonance_learning_to_predict_social-aware_pedestrian_trajectories_as_co-vibrati.md)
+- [World4Drive: End-to-End Autonomous Driving via Intention-aware Physical Latent World Model](world4drive_end-to-end_autonomous_driving_via_intention-aware_physical_latent_wo.md)
+- [Point-to-Region Loss for Semi-Supervised Point-Based Crowd Counting](../../CVPR2025/autonomous_driving/point-to-region_loss_for_semi-supervised_point-based_crowd_counting.md)
+- [LangTraj: Diffusion Model and Dataset for Language-Conditioned Trajectory Simulation](langtraj_diffusion_model_and_dataset_for_language-conditioned_trajectory_simulat.md)
+
+<!-- RELATED:END -->

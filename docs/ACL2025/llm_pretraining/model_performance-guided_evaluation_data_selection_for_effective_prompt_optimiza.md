@@ -147,3 +147,15 @@ IPOMP 额外开销 < 1%，Anchor-Point 预热增加 ~50% 时间。
 - **实验充分度**: ⭐⭐⭐⭐ — 多数据集、多模型、多优化技术、详细消融
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，方法描述系统
 - **价值**: ⭐⭐⭐⭐ — Stage 2 的通用插件实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DavIR: Data Selection via Implicit Reward for Large Language Models](davir_data_selection_via_implicit_reward_for_large_language_models.md)
+- [LLM Data Selection and Utilization via Dynamic Bi-level Optimization](../../ICML2025/llm_pretraining/llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
+- [Predicting Training Re-evaluation Curves Enables Effective Data Curriculums](../../ICLR2026/llm_pretraining/predicting_training_re-evaluation_curves_enables_effective_data_curriculums_for_.md)
+- [AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts](autonomous_data_selection_with_zero-shot_generative_classifiers_for_mathematical.md)
+- [Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](data_whisperer_data_selection.md)
+
+<!-- RELATED:END -->

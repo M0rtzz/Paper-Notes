@@ -136,3 +136,15 @@ CoA-VLA 基于 DiffusionVLA（Qwen2-VL + 扩散策略头）构建。核心思路
 - 实验充分度: ⭐⭐⭐⭐ 真实机器人 + 仿真双重验证，7 个真实任务覆盖面广
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示详尽，可供性概念可视化直观
 - 价值: ⭐⭐⭐⭐ 提出了一种将推理能力融入 VLA 的可行路径，对机器人基础模型设计有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy](dita_scaling_diffusion_transformer_for_generalist_visionlang.md)
+- [CompCap: Improving Multimodal Large Language Models with Composite Captions](compcap_improving_multimodal_large_language_models_with_composite_captions.md)
+- [ForceVLA: Enhancing VLA Models with a Force-aware MoE for Contact-rich Manipulation](../../NeurIPS2025/multimodal_vlm/forcevla_enhancing_vla_models_with_a_force-aware_moe_for_contact-rich_manipulati.md)
+- [FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models](fedmvp_federated_multimodal_visual_prompt_tuning_for_vision-language_models.md)
+- [Instruction-Grounded Visual Projectors for Continual Learning of Generative Vision-Language Models](instruction-grounded_visual_projectors_for_continual_learning_of_generative_visi.md)
+
+<!-- RELATED:END -->

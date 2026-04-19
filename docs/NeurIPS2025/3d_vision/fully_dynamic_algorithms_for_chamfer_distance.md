@@ -129,3 +129,15 @@ tags:
 ## 启发与关联
 
 ## 评分
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](../../CVPR2025/3d_vision/fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
+- [DGH: Dynamic Gaussian Hair](dgh_dynamic_gaussian_hair.md)
+- [GaussianUDF: Inferring Unsigned Distance Functions through 3D Gaussian Splatting](../../CVPR2025/3d_vision/gaussianudf_inferring_unsigned_distance_functions_through_3d_gaussian_splatting.md)
+- [RGB-Only Supervised Camera Parameter Optimization in Dynamic Scenes](rgb-only_supervised_camera_parameter_optimization_in_dynamic_scenes.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+
+<!-- RELATED:END -->

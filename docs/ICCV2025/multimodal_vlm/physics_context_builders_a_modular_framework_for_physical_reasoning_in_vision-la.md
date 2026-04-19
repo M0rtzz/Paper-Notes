@@ -131,3 +131,15 @@ PCB 在稳定性任务上为 GPT-4o 带来 **+25.5%** 的塔稳定性提升。
 ## 评分 ⭐⭐⭐⭐
 
 思路简洁优雅，实验结论清晰且有洞察力。感知-推理分离的视角对理解 VLM 的能力边界很有价值。PCB 框架的模块化和实用性强。主要遗憾是评估范围和真实世界数据规模偏小。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Training-Free Personalization via Retrieval and Reasoning on Fingerprints](training-free_personalization_via_retrieval_and_reasoning_on_fingerprints.md)
+- [MaTVLM: Hybrid Mamba-Transformer for Efficient Vision-Language Modeling](matvlm_hybrid_mamba-transformer_for_efficient_vision-language_modeling.md)
+- [Can Vision Language Models Understand Mimed Actions?](../../ACL2025/multimodal_vlm/can_vision_language_models_understand_mimed_actions.md)
+- [FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models](../../AAAI2026/multimodal_vlm/ft-ncfm_an_influence-aware_data_distillation_framework_for_efficient_vla_models.md)
+- [MadaKV: Adaptive Modality-Perception KV Cache Eviction for Efficient Multimodal Long-Context Inference](../../ACL2025/multimodal_vlm/madakv_adaptive_modality-perception_kv_cache_eviction_for_efficient_multimodal_l.md)
+
+<!-- RELATED:END -->

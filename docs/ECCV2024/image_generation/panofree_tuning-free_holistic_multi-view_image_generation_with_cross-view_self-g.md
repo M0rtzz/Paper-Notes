@@ -121,3 +121,15 @@ PanoFree是完全无训练的推理时方法，不涉及传统的损失函数。
 - 实验充分度: ⭐⭐⭐⭐ 三种全景格式、用户研究和效率分析全面
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，每个技术组件有充分的动机说明
 - 价值: ⭐⭐⭐⭐ 无微调方法的高效率使其更具实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Realistic Human Motion Generation with Cross-Diffusion Models](realistic_human_motion_generation_with_cross-diffusion_models.md)
+- [A Data-Driven Prism: Multi-View Source Separation with Diffusion Model Priors](../../NeurIPS2025/image_generation/a_data-driven_prism_multi-view_source_separation_with_diffusion_model_priors.md)
+- [XPSR: Cross-modal Priors for Diffusion-based Image Super-Resolution](xpsr_cross-modal_priors_for_diffusion-based_image_super-resolution.md)
+- [MultiGen: Zero-Shot Image Generation from Multi-modal Prompts](multigen_zero-shot_image_generation_from_multi-modal_prompts.md)
+- [MVPortrait: Text-Guided Motion and Emotion Control for Multi-View Vivid Portrait Animation](../../CVPR2025/image_generation/mvportrait_text-guided_motion_and_emotion_control_for_multi-view_vivid_portrait_.md)
+
+<!-- RELATED:END -->

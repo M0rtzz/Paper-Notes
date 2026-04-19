@@ -124,3 +124,15 @@ Rhio-7B相比SFT-7B提升12.84%忠实度，Rhio-13B超越GPT-4o达1.74%。
 - 实验充分度: ⭐⭐⭐⭐⭐ 提出新基准GroundBench，消融实验充分，含人工评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，从先导实验到完整方法层层推进
 - 价值: ⭐⭐⭐⭐⭐ 小模型超越GPT-4o的忠实度，方法实用，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CogniBench: A Legal-inspired Framework and Dataset for Assessing Cognitive Faithfulness of Large Language Models](cognibench_cognitive_faithfulness.md)
+- [Investigating Context-Faithfulness in Large Language Models: The Roles of Memory Strength and Evidence Style](investigating_context-faithfulness_in_large_language_models_the_roles_of_memory_.md)
+- [Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](gapo_multi_objective_alignment.md)
+- [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](astute_rag_knowledge_conflicts.md)
+- [Binary Classifier Optimization for Large Language Model Alignment](bco_binary_classifier_alignment.md)
+
+<!-- RELATED:END -->

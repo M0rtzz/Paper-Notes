@@ -124,3 +124,15 @@ Proxy-FDA 将代理拼接到真实特征和相似度中扩展 FDA：$\mathcal{L}
 ## 评分
 
 ⭐⭐⭐⭐ — 结构级特征对齐思路新颖有效，从逐点到邻域结构的概念升级清晰优雅。OTDD 相关性分析有洞察力，代理生成器设计轻巧实用。实验覆盖 end-to-end/few-shot/continual/多模态，说服力强。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LoftUp: Learning a Coordinate-Based Feature Upsampler for Vision Foundation Models](../../ICCV2025/self_supervised/loftup_learning_a_coordinatebased_feature_upsampler_for_visi.md)
+- [Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [Implicit Modeling for Transferability Estimation of Vision Foundation Models](../../NeurIPS2025/self_supervised/implicit_modeling_for_transferability_estimation_of_vision_foundation_models.md)
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+
+<!-- RELATED:END -->

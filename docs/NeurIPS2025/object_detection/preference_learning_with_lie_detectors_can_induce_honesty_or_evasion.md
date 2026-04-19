@@ -144,3 +144,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖多算法/多系数/多模型/多数据集，附录丰富，但模型规模上限仍有限
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、实验设计严谨、结论和建议直接可操作
 - 价值: ⭐⭐⭐⭐⭐ — 对AI安全社区极具实践意义，为检测器辅助训练提供了首个系统性风险评估框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can OOD Object Detectors Learn from Foundation Models?](../../ECCV2024/object_detection/can_ood_object_detectors_learn_from_foundation_models.md)
+- [Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
+- [You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
+- [CTPD: Cross Tokenizer Preference Distillation](../../AAAI2026/object_detection/ctpd_cross_tokenizer_preference_distillation.md)
+- [M-GRPO: Stabilizing Self-Supervised Reinforcement Learning for Large Language Models with Momentum-Anchored Policy Optimization](m-grpo_stabilizing_self-supervised_reinforcement_learning_for_large_language_mod.md)
+
+<!-- RELATED:END -->

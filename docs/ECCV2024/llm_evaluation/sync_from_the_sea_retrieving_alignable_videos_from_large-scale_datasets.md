@@ -135,3 +135,15 @@ DRAQ 越低说明最优对齐相对随机对齐提升越大，即两个视频越
 | 实验充分性 | 4 | 3 个数据集、多种特征、多种设置下的全面评估 |
 | 实用性 | 4 | 即插即用、无需训练，直接适用于大规模视频数据库 |
 | 总体 | 4 | 定义了一个重要且实际的新任务，提出了简洁有效的基线方案 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty](../../CVPR2025/llm_evaluation/lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty.md)
+- [PhantomWiki: On-Demand Datasets for Reasoning and Retrieval Evaluation](../../ICML2025/llm_evaluation/phantomwiki_on-demand_datasets_for_reasoning_and_retrieval_evaluation.md)
+- [CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](../../ICLR2026/llm_evaluation/counselbench_llm_mental_health_qa.md)
+- [HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning](../../ACL2025/llm_evaluation/hellaswag-pro_a_large-scale_bilingual_benchmark_for_evaluating_the_robustness_of.md)
+- [MOSIV: Multi-Object System Identification from Videos](../../ICLR2026/llm_evaluation/mosiv_multi-object_system_identification_from_videos.md)
+
+<!-- RELATED:END -->

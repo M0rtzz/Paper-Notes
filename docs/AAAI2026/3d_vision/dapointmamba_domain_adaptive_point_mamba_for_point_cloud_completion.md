@@ -173,3 +173,15 @@ $$\mathcal{L}_{total} = Loss_{(CD)} + \lambda L_{sp} + \beta L_{ch}$$
 - 实验充分度: ⭐⭐⭐⭐ （多个 benchmark + 真实数据 + 效率对比 + 可视化）
 - 写作质量: ⭐⭐⭐⭐ （逻辑清晰，图表丰富）
 - 价值: ⭐⭐⭐⭐ （为 Mamba 在域自适应 3D 任务中的应用开辟了新方向）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Simba: Towards High-Fidelity and Geometrically-Consistent Point Cloud Completion via Transformation Diffusion](simba_towards_high-fidelity_and_geometrically-consistent_point_cloud_completion_.md)
+- [Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective](rethinking_multimodal_point_cloud_completion_a_completion-by-correction_perspect.md)
+- [Mamba Learns in Context: Structure-Aware Domain Generalization for Multi-Task Point Cloud Understanding](../../CVPR2026/3d_vision/mamba_learns_in_context_structure-aware_domain_generalization_for_multi-task_poi.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [3D-ANC: Adaptive Neural Collapse for Robust 3D Point Cloud Recognition](3d-anc_adaptive_neural_collapse_for_robust_3d_point_cloud_re.md)
+
+<!-- RELATED:END -->

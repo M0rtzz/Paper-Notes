@@ -145,3 +145,15 @@ OVB 上界：$|\tau_{DR_s} - \tau^*|^2 \leq \sigma^2 \nu^2 C_Y^2 C_D^2$
 - 实验充分度: ⭐⭐⭐⭐ — 半合成+真实世界两类数据，多种表示对比充分，但置信区间宽
 - 写作质量: ⭐⭐⭐⭐⭐ — 形式化严谨，逻辑清晰，图表信息量大
 - 价值: ⭐⭐⭐⭐ — 为 NLP×因果推断交叉领域提供了重要的理论工具和实践指南
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Transferring Causal Effects using Proxies](../../NeurIPS2025/causal_inference/transferring_causal_effects_using_proxies.md)
+- [Estimating Causal Effects in Gaussian Linear SCMs with Finite Data](estimating_causal_effects_in_gaussian_linear_scms_with_finite_data.md)
+- [Conformal Prediction for Causal Effects of Continuous Treatments](../../NeurIPS2025/causal_inference/conformal_prediction_for_causal_effects_of_continuous_treatments.md)
+- [On the Reliability of Large Language Models for Causal Discovery](../../ACL2025/causal_inference/llm_causal_discovery_reliability.md)
+- [Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual](../../CVPR2025/causal_inference/image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)
+
+<!-- RELATED:END -->

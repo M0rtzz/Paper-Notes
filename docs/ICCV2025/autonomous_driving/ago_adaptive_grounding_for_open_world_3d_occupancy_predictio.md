@@ -102,3 +102,15 @@ mIoU提升+4.09（vs VEON），且参数量仅为VEON的9.2%
 - 实验充分度: ⭐⭐⭐⭐⭐ 闭集+开放世界3阶段评估+多基准+充分消融+Waymo验证
 - 写作质量: ⭐⭐⭐⭐ 问题描述清晰，消融层层推进
 - 对我的价值: ⭐⭐⭐⭐ 开放世界占位预测方法论有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Open-World Generation of Stereo Images and Unsupervised Matching](towards_open-world_generation_of_stereo_images_and_unsupervised_matching.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](../../CVPR2025/autonomous_driving/o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
+- [GaussianWorld: Gaussian World Model for Streaming 3D Occupancy Prediction](../../CVPR2025/autonomous_driving/gaussianworld_gaussian_world_model_for_streaming_3d_occupancy_prediction.md)
+- [Semantic Causality-Aware Vision-Based 3D Occupancy Prediction](semantic_causality-aware_vision-based_3d_occupancy_prediction.md)
+- [EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding](embodiedocc_embodied_3d_occupancy_prediction_for_vision-based_online_scene_under.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ ANQ 的核心是定义自适应邻域约束 $\mathcal{C}_{AN}(s) = \{\tilde{a} \
 - 实验充分度: ⭐⭐⭐⭐ D4RL 标准验证 + 鲁棒性分析 + 消融完整
 - 写作质量: ⭐⭐⭐⭐⭐ 约束分类系统清晰，理论推导严谨，行文逻辑好
 - 价值: ⭐⭐⭐⭐ 对离线 RL 约束设计提供新视角，方法简洁实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Automaton Constrained Q-Learning](automaton_constrained_q-learning.md)
+- [Risk-Averse Constrained Reinforcement Learning with Optimized Certainty Equivalents](risk-averse_constrained_reinforcement_learning_with_optimized_certainty_equivale.md)
+- [Sample-Efficient Tabular Self-Play for Offline Robust Reinforcement Learning](sample-efficient_tabular_self-play_for_offline_robust_reinforcement_learning.md)
+- [Online Optimization for Offline Safe Reinforcement Learning](online_optimization_for_offline_safe_reinforcement_learning.md)
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+
+<!-- RELATED:END -->

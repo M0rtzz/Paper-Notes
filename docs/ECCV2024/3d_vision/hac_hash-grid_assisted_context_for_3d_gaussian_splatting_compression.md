@@ -138,3 +138,15 @@ $$\mathcal{L} = L_{\text{Scaffold}} + \lambda_e \frac{1}{N(D^a+6+3K)}(L_{\text{e
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 5个数据集、完整消融、比特分配可视化、RD曲线
 - **写作质量**: ⭐⭐⭐⭐ — 逻辑清晰，从互信息验证到条件概率建模层层递进
 - **实用价值**: ⭐⭐⭐⭐⭐ — 75×压缩率使3DGS大规模部署成为可能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting](gaussianimage_1000_fps_image_representation_and_compression_by_2d_gaussian_splat.md)
+- [Analytic-Splatting: Anti-Aliased 3D Gaussian Splatting via Analytic Integration](analytic-splatting_anti-aliased_3d_gaussian_splatting_via_analytic_integration.md)
+- [SAGS: Structure-Aware 3D Gaussian Splatting](sags_structure-aware_3d_gaussian_splatting.md)
+- [3iGS: Factorised Tensorial Illumination for 3D Gaussian Splatting](3igs_factorised_tensorial_illumination_for_3d_gaussian_splatting.md)
+- [G2fR: Frequency Regularization in Grid-Based Feature Encoding Neural Radiance Fields](g2fr_frequency_regularization_in_grid-based_feature_encoding_neural_radiance_fie.md)
+
+<!-- RELATED:END -->

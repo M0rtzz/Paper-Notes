@@ -128,3 +128,15 @@ ICU 预测任务（纵向CXR+EHR设置）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 大规模公开数据集、多任务评估、丰富的消融研究、注意力可视化、鲁棒性分析，非常完整
 - **写作质量**: ⭐⭐⭐⭐ 框架图清晰，但模块较多使得方法部分较长
 - **价值**: ⭐⭐⭐⭐⭐ 对纵向多模态临床预测有重要实践价值，直接面向ICU临床决策支持
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Few-Shot Learning from Gigapixel Images via Hierarchical Vision-Language Alignment and Modeling](few-shot_learning_from_gigapixel_images_via_hierarchical_vision-language_alignme.md)
+- [Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement](far_from_the_shallow_brain-predictive_reasoning_embedding_through_residual_disen.md)
+- [Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](../../CVPR2026/medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](../../CVPR2025/medical_imaging/multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+- [Towards Multiscale Graph-based Protein Learning with Geometric Secondary Structural Motifs](towards_multiscale_graph-based_protein_learning_with_geometric_secondary_structu.md)
+
+<!-- RELATED:END -->

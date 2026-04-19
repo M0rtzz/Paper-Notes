@@ -145,3 +145,15 @@ PPE-3B仅用3B参数+55%压缩即在MMBench上超越7B的PACT和4B的InternVL2.5
 ⭐⭐⭐⭐
 
 **推荐理由**：找到了token压缩的核心瓶颈（位置信息丢失）并给出了优雅的解决方案。RoPE维度独立性→多位置编码的映射非常自然，零参数即插即用的设计使其具有极高的实际应用价值。在布局敏感任务上的巨大提升进一步验证了方法的有效性。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SoPE: Spherical Coordinate-Based Positional Embedding for 3D LVLMs](../../CVPR2026/multimodal_vlm/sope_spherical_positional_encoding_3d_lvlm.md)
+- [Mixing Importance with Diversity: Joint Optimization for KV Cache Compression in Large Vision-Language Models](mixing_importance_with_diversity_joint_optimization_for_kv_cache_compression_in_.md)
+- [ApET: Approximation-Error Guided Token Compression for Efficient VLMs](../../CVPR2026/multimodal_vlm/apet_approximation-error_guided_token_compression_for_efficient_vlms.md)
+- [U-MARVEL: Unveiling Key Factors for Universal Multimodal Retrieval via Embedding Learning](u-marvel_unveiling_key_factors_for_universal_multimodal_retrieval_via_embedding_.md)
+- [Directional Embedding Smoothing for Robust Vision Language Models](directional_embedding_smoothing_for_robust_vision_language_models.md)
+
+<!-- RELATED:END -->

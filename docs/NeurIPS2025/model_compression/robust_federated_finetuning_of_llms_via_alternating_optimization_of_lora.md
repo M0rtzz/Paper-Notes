@@ -143,3 +143,15 @@ FFA-LoRA 在大模型上几乎崩溃，RoLoRA 大幅领先。
 ⭐⭐⭐⭐ (4/5)
 
 方法简洁有效，理论分析清晰，实验全面且性能优势显著。主要不足是理论与实践之间的 gap（线性 vs 多层非线性）。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Kernel Design for Bayesian Optimization Is a Piece of CAKE with LLMs](adaptive_kernel_design_for_bayesian_optimization_is_a_piece_of_cake_with_llms.md)
+- [FedEx-LoRA: Exact Aggregation for Federated and Efficient Fine-Tuning of Large Language Models](../../ACL2025/model_compression/fedex_lora_federated_exact_aggregation.md)
+- [Make LoRA Great Again: Boosting LoRA with Adaptive Singular Values and Mixture-of-Experts Optimization Alignment](../../ICML2025/model_compression/make_lora_great_again_boosting_lora_with_adaptive_singular_values_and_mixture-of.md)
+- [Unraveling LoRA Interference: Orthogonal Subspaces for Robust Model Merging](../../ACL2025/model_compression/osrm_lora_merging_orthogonal.md)
+- [C-LoRA: Contextual Low-Rank Adaptation for Uncertainty Estimation in Large Language Models](c-lora_contextual_low-rank_adaptation_for_uncertainty_estimation_in_large_langua.md)
+
+<!-- RELATED:END -->

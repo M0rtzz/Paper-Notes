@@ -148,3 +148,15 @@ LaDA 平均成功率 67%，比 Phoenix 高 9%，比 CLIP-RT* 高 16%，在多步
 - ⭐⭐⭐⭐ 实用性：0.6B 参数即达 SOTA、框架通用性强，对实际部署友好
 - ⭐⭐⭐⭐ 实验充分度：两个仿真基准 + 真机 + 全面消融 + 泛化测试，覆盖面广
 - ⭐⭐⭐ 写作质量：结构清晰，但部分符号和公式可进一步统一简化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer](geco-srt_geometry-aware_continual_adaptation_for_robotic_cross-task_sim-to-real_.md)
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](lada_robotic_manipulation.md)
+- [LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](../../CVPR2025/robotics/language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [HiF-VLA: Hindsight, Insight and Foresight through Motion Representation for Vision-Language-Action Models](hif-vla_hindsight_insight_and_foresight_through_motion_representation_for_vision.md)
+- [SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_active_perception_manipulation_vla_roboti.md)
+
+<!-- RELATED:END -->

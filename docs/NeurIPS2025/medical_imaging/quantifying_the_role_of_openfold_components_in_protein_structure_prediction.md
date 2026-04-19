@@ -140,3 +140,15 @@ OpenFold 的蛋白质结构预测分三个阶段：
 - **实验设计**: ★★★★☆（系统全面，涵盖注意力/非注意力/表征/长度多个维度）
 - **实用性**: ★★★★☆（对蛋白质结构预测模型的优化和简化有直接指导意义）
 - **清晰度**: ★★★★★（论文结构清晰，图表直观）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multiscale Guidance of Protein Structure Prediction with Heterogeneous Cryo-EM Data](multiscale_guidance_of_protein_structure_prediction_with_heterogeneous_cryo-em_d.md)
+- [Protein Structure Tokenization: Benchmarking and New Recipe](../../ICML2025/medical_imaging/protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](../../ICML2025/medical_imaging/flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [Protein Design with Dynamic Protein Vocabulary](protein_design_with_dynamic_protein_vocabulary.md)
+- [Protriever: End-to-End Differentiable Protein Homology Search for Fitness Prediction](../../ICML2025/medical_imaging/protriever_end-to-end_differentiable_protein_homology_search_for_fitness_predict.md)
+
+<!-- RELATED:END -->

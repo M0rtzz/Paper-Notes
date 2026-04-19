@@ -122,3 +122,15 @@ EchoWorld 在所有 10 个标准切面上的平均引导误差最低，相比最
 - 实验充分度: ⭐⭐⭐⭐⭐ 10 个标准切面、大规模数据、对比广泛的 baseline、定性可视化分析全面
 - 写作质量: ⭐⭐⭐⭐⭐ 思路清晰，从世界模型到超声引导的类比非常自然，图示优秀
 - 价值: ⭐⭐⭐⭐⭐ 对超声自动化有直接推动作用，框架可推广到其他影像引导任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos](uncertainty-aware_concept_and_motion_segmentation_for_semi-supervised_angiograph.md)
+- [EchoONE: Segmenting Multiple Echocardiography Planes in One Model](echoone_segmenting_multiple_echocardiography_planes_in_one_model.md)
+- [Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting](prototype-based_knowledge_guidance_for_fine-grained_structured_radiology_reporti.md)
+- [EchoAgent: Towards Reliable Echocardiography Interpretation with "Eyes", "Hands" and "Minds"](../../CVPR2026/medical_imaging/echoagent_towards_reliable_echocardiography_interpretation_with_eyeshands_and_mi.md)
+- [Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design](../../NeurIPS2025/medical_imaging/uncertainty-aware_multi-objective_reinforcement_learning-guided_diffusion_models.md)
+
+<!-- RELATED:END -->

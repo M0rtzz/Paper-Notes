@@ -158,3 +158,15 @@ tags:
 - 实验充分度: ⭐⭐⭐（检测和分类实验较充分，但垩白实验规模偏小）
 - 写作质量: ⭐⭐⭐（结构清晰、国标引用规范，但部分实验分析较浅）
 - 价值: ⭐⭐⭐（工程应用价值较高，学术贡献有限）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [YOLOE: Real-Time Seeing Anything](../../ICCV2025/object_detection/yoloe_realtime_seeing_anything.md)
+- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](../../CVPR2026/object_detection/streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
+- [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](../../CVPR2025/object_detection/mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
+- [Perceive, Act and Correct: Confidence Is Not Enough for Hyperspectral Classification](perceive_act_and_correct_confidence_is_not_enough_for_hyperspectral_classificati.md)
+- [Test-time Diverse Reasoning by Riemannian Activation Steering](test-time_diverse_reasoning_by_riemannian_activation_steering.md)
+
+<!-- RELATED:END -->

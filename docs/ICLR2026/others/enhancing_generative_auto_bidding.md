@@ -123,3 +123,15 @@ AIGB-Pearl 由三部分组成：(1) **生成式规划器**（Planner）：基于
 - 实验充分度: ⭐⭐⭐⭐⭐ 模拟 + 淘宝真实系统大规模 A/B 测试，消融和理论验证完整
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨清晰
 - 价值: ⭐⭐⭐⭐⭐ 在淘宝级别部署验证的实用系统，直接产生商业价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Auto-GAS: Automated Proxy Discovery for Training-Free Generative Architecture Search](../../ECCV2024/others/auto-gas_automated_proxy_discovery_for_training-free_generative_architecture_sea.md)
+- [Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
+- [Enhancing Control Policy Smoothness by Aligning Actions with Predictions from Preceding States](../../AAAI2026/others/enhancing_control_policy_smoothness_by_aligning_actions_with_predictions_from_pr.md)
+- [Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training](evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t.md)
+- [Expressive Temporal Specifications for Reward Monitoring](../../AAAI2026/others/expressive_temporal_specifications_for_reward_monitoring.md)
+
+<!-- RELATED:END -->

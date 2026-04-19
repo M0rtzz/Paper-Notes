@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 数据分析详尽且有策略×人格的交互分析，但评估/生成模型实验偏初步，最佳相关性偏低
 - 写作质量: ⭐⭐⭐⭐ 理论框架清晰，数据构建流程严谨，心理学背景交代充分
 - 价值: ⭐⭐⭐⭐ 为个性化视觉说服研究提供了首个综合资源，数据集可复用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](../../ICCV2025/others/learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
+- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](beyond_frameworks_multi_agent_collaboration.md)
+- [Kaputt: A Large-Scale Dataset for Visual Defect Detection](../../ICCV2025/others/kaputt_a_large-scale_dataset_for_visual_defect_detection.md)
+- [Principled Content Selection to Generate Diverse and Personalized Multi-Document Summaries](dpp_diverse_multidoc_summary.md)
+- [Towards Text-Image Interleaved Retrieval](towards_text-image_interleaved_retrieval.md)
+
+<!-- RELATED:END -->

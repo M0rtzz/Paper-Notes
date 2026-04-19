@@ -142,3 +142,15 @@ $$\phi_R(M) = \frac{1}{|\mathcal{D}_R|} \sum_{(s,t) \in \mathcal{D}_R} \mathbb{1
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6个模型x20种关系，相关性/因果/泛化三重验证，含人工评估
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，图表信息量大，动机和方法阐述准确到位
 - 价值: ⭐⭐⭐⭐ — 为LLM可解释性提供了高效实用的工具，架构洞察有启发性，但对更复杂计算的解释力有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Hidden Attention of Mamba Models](the_hidden_attention_of_mamba_models.md)
+- [Segment-Based Attention Masking for GPTs](segment-based_attention_masking_for_gpts.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Inferring Stochastic Dynamics with Growth from Cross-Sectional Data](../../NeurIPS2025/others/inferring_stochastic_dynamics_with_growth_from_cross-sectional_data.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ MetaAPO在所有三个benchmark上一致超越offline、online和hybrid基线。
 - 实验充分度: ⭐⭐⭐⭐ 三个主流benchmark+多基线+消融+成本分析很全面
 - 写作质量: ⭐⭐⭐⭐⭐ 梯度分析提供直觉，Algorithm 1清晰，理论和实验相辅相成
 - 价值: ⭐⭐⭐⭐ 在偏好对齐中平衡offline/online数据是实际部署中的核心问题，方法实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation](dual-ipo_dual-iterative_preference_optimization_for_text-to-video_generation.md)
+- [Towards Understanding Valuable Preference Data for Large Language Model Alignment](towards_understanding_valuable_preference_data_for_large_language_model_alignmen.md)
+- [Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
+- [MPO: Multilingual Safety Alignment via Reward Gap Optimization](../../ACL2025/llm_alignment/mpo_multilingual_safety_alignment.md)
+- [AVERE: Improving Audiovisual Emotion Reasoning with Preference Optimization](avere_improving_audiovisual_emotion_reasoning_with_preference_optimization.md)
+
+<!-- RELATED:END -->

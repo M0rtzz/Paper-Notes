@@ -127,3 +127,15 @@ $$\min_{X \succeq 0} -\text{tr}(NX) \quad \text{s.t.} \quad X_{ii} = I, \quad X_
 - **实验充分度**: ⭐⭐⭐⭐ — 合成+11个真实SfM数据集，消融全面，但缺少与局部优化方法的直接对比
 - **写作质量**: ⭐⭐⭐⭐⭐ — 数学推导严谨清晰，从问题动机到定理再到算法的逻辑链条堪称教科书级别
 - **对我的价值**: ⭐⭐ — 与我当前的研究方向关联较弱，但"不确定性→代价加权"的思路有迁移价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Stop: Deep Learning for Mean Field Optimal Stopping](../../ICML2025/robotics/learning_to_stop_deep_learning_for_mean_field_optimal_stopping.md)
+- [STAR: Learning Diverse Robot Skill Abstractions through Rotation-Augmented Vector Quantization](../../ICML2025/robotics/star_learning_diverse_robot_skill_abstractions_through_rotation-augmented_vector.md)
+- [To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance](../../AAAI2026/robotics/to_align_or_not_to_align_strategic_multimodal_representation_alignment_for_optim.md)
+- [Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning](rep-mtl_unleashing_the_power_of_representation-level_task_saliency_for_multi-tas.md)
+- [Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)
+
+<!-- RELATED:END -->

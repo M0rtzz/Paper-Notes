@@ -131,3 +131,15 @@ $$\mathcal{L}_{step3} = \underbrace{\frac{2}{\beta}\mathbb{E}\log\sigma\left(-\b
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 种规律性 × 10 种发现率 × 多种模型/优化器/数据集，消融全面
 - 写作质量: ⭐⭐⭐⭐⭐ 故事讲述极为清晰，Fig. 1 直观展示核心发现，Fig. 5 compelling 地验证重定向机制
 - 价值: ⭐⭐⭐⭐⭐ 首个通用损坏数据遗忘方法，框架性贡献对未来研究有指导意义，来自 Google DeepMind
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Perturbation-Induced Linearization: Constructing Unlearnable Data with Solely Linear Classifiers](perturbation-induced_linearization_constructing_unlearnable_data_with_solely_lin.md)
+- [Adversarial Robust Memory-Based Continual Learner](../../ICCV2025/llm_safety/adversarial_robust_memory-based_continual_learner.md)
+- [Ewe: Improving Factuality with Explicit Working Memory](../../ACL2025/llm_safety/improving_factuality_with_explicit_working_memory.md)
+- [Association and Consolidation: Evolutionary Memory-Enhanced Incremental Multi-View Clustering](../../CVPR2026/llm_safety/association_and_consolidation_evolutionary_memory-enhanced_incremental_multi-vie.md)
+- [From Misleading Queries to Accurate Answers: A Three-Stage Fine-Tuning Method for LLMs](../../ACL2025/llm_safety/from_misleading_queries_to_accurate_answers_a_three-stage_fine-tuning_method_for.md)
+
+<!-- RELATED:END -->

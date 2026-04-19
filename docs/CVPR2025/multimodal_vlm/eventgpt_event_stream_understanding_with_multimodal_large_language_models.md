@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 与通用 MLLM 的对比清晰，但缺少与事件专用方法在下游任务上的定量对比
 - 写作质量: ⭐⭐⭐⭐ 三阶段训练的动机讲解清楚，数据集构建描述详细
 - 价值: ⭐⭐⭐⭐ 对事件相机社区有开拓性意义，数据集贡献重要
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/situat3dchange_situated_3d_change_understanding_dataset_for_multimodal_large_lan.md)
+- [Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
+- [Cross-modal Information Flow in Multimodal Large Language Models](cross-modal_information_flow_in_multimodal_large_language_models.md)
+- [RAP: Retrieval-Augmented Personalization for Multimodal Large Language Models](rap_retrieval-augmented_personalization_for_multimodal_large_language_models.md)
+- [4D LangSplat: 4D Language Gaussian Splatting via Multimodal Large Language Models](4d_langsplat_4d_language_gaussian_splatting_via_multimodal_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ DINO-BoC 自监督学习：单通道输入 ViT-small，student-teacher 框架。
 - 实验充分度: ⭐⭐⭐⭐⭐ 7 个 benchmark、6 因素消融、3 维度 scaling、BoC vs MCA 对比极其全面
 - 写作质量: ⭐⭐⭐⭐⭐ 数据集的动机、构建过程、实验设计都叙述清晰，图表丰富
 - 价值: ⭐⭐⭐⭐⭐ 对生物成像基础模型领域有开创性贡献，数据+代码+模型全部开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pre-Training Curriculum for Multi-Token Prediction in Language Models](../../ACL2025/llm_pretraining/pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
+- [Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](../../ACL2025/llm_pretraining/metarater_a_multidimensional_data_selection_method.md)
+- [Stochastic Self-Organization in Multi-Agent Systems](stochastic_self-organization_in_multi-agent_systems.md)
+- [Common Corpus: The Largest Collection of Ethical Data for LLM Pre-Training](common_corpus_ethical_data_for_llm_pretraining.md)
+- [MT-DAO: Multi-Timescale Distributed Adaptive Optimizers with Local Updates](mt-dao_multi-timescale_distributed_adaptive_optimizers_with_local_updates.md)
+
+<!-- RELATED:END -->

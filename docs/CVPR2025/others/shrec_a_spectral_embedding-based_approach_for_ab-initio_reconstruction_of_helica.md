@@ -118,3 +118,15 @@ SHREC 管线包含四个阶段：(1) 数据预处理（运动校正、CTF 估计
 - 实验充分度: ⭐⭐⭐ 在三个公开数据集上验证，但缺少与其他方法的直接定量对比
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰完整，从定义到定理层层递进
 - 价值: ⭐⭐⭐ 对冷冻电镜螺旋重建领域有重要贡献，但应用范围较窄
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Wear Classification of Abrasive Flap Wheels using a Hierarchical Deep Learning Approach](wear_classification_of_abrasive_flap_wheels_using_a_hierarchical_deep_learning_a.md)
+- [ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)
+- [SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)
+- [Integration of deep generative Anomaly Detection algorithm in high-speed industrial line](integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr.md)
+- [Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sensors_from_deterministic_to_gen.md)
+
+<!-- RELATED:END -->

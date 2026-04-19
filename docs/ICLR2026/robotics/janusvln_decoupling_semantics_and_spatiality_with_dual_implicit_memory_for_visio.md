@@ -135,3 +135,15 @@ KV 缓存方式推理开销降低 69%-90%，同时性能还略有提升。
 - 实验充分度: ⭐⭐⭐⭐ （消融全面，但真实世界实验偏定性）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，类比直观，图表丰富）
 - 价值: ⭐⭐⭐⭐⭐ （开创新范式，SOTA 显著，对后续 VLN 研究方向有引领作用）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
+- [DISCO: Embodied Navigation and Interaction via Differentiable Scene Semantics and Dual-Level Control](../../ECCV2024/robotics/disco_embodied_navigation_and_interaction_via_differentiable_scene_semantics_and.md)
+- [All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation](all-day_multi-scenes_lifelong_vision-and-language_navigation_with_tucker_adaptat.md)
+- [ProFocus: Proactive Perception and Focused Reasoning in Vision-and-Language Navigation](../../CVPR2026/robotics/profocus_proactive_perception_and_focused_reasoning_in_vision-and-language_navig.md)
+- [Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation](../../AAAI2026/robotics/recursive_visual_imagination_and_adaptive_linguistic_grounding_for_vision_langua.md)
+
+<!-- RELATED:END -->

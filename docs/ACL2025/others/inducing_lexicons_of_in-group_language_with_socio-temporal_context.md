@@ -178,3 +178,15 @@ LISTN 分为两步：
 - **实验充分度**: ⭐⭐⭐⭐ — 6 种方法变体 + 多种基线 + 专家标注测试集 + 嵌入分析；但只在一个社区（manosphere）上验证
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题动机清晰，分析与社会学文献的对话很有价值，伦理考量到位
 - **价值**: ⭐⭐⭐⭐ — 方法通用（不限于特定群体或语言），产出的词典有直接研究价值，嵌入分析揭示了有意义的社会语言学洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Autalic: A Dataset for Anti-Autistic Ableist Language In Context](autalic_a_dataset_for_anti-autistic_ableist_language_in_context.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [GA-S3: Comprehensive Social Network Simulation with Group Agents](ga-s3_comprehensive_social_network_simulation_with_group_agents.md)
+- [Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
+- [The Time Scale of Redundancy between Prosody and Linguistic Context](the_time_scale_of_redundancy_between_prosody_and_linguistic_context.md)
+
+<!-- RELATED:END -->

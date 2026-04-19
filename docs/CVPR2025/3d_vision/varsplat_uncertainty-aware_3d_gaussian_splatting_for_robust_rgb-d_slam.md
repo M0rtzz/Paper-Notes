@@ -126,3 +126,15 @@ $$\mathcal{L}_{\text{map}} = \lambda_{\text{color}} \cdot \mathcal{L}_{\text{col
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集、多个 baseline、详细消融、运行时间分析
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，数学和直觉解释都到位
 - 价值: ⭐⭐⭐⭐ 为 3DGS-SLAM 提供了一种简洁有效的不确定性建模方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
+- [ActiveGAMER: Active GAussian Mapping through Efficient Rendering](activegamer_active_gaussian_mapping_through_efficient_rendering.md)
+- [GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting](guardsplat_efficient_and_robust_watermarking_for_3d_gaussian_splatting.md)
+- [3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)
+- [Mani-GS: Gaussian Splatting Manipulation with Triangular Mesh](mani-gs_gaussian_splatting_manipulation_with_triangular_mesh.md)
+
+<!-- RELATED:END -->

@@ -157,3 +157,15 @@ IDA 和 IDEN 的效果（LPIPS↓）：
 - **实验充分度**: ⭐⭐⭐⭐ 退化迁移/复现/胶片颗粒/盲恢复多任务验证，消融详细
 - **写作质量**: ⭐⭐⭐⭐ 理论推导严谨，但正文受限于篇幅、大量内容在补充材料中
 - **价值**: ⭐⭐⭐⭐⭐ 解决了一个长期存在的基础性问题，有广泛应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatially-Variant Degradation Model for Dataset-free Super-resolution](../../ECCV2024/image_restoration/spatially-variant_degradation_model_for_dataset-free_super-resolution.md)
+- [UniRes: Universal Image Restoration for Complex Degradations](unires_universal_image_restoration_for_complex_degradations.md)
+- [MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration](../../NeurIPS2025/image_restoration/modem_a_morton-order_degradation_estimation_mechanism_for_adverse_weather_image_.md)
+- [MP-HSIR: A Multi-Prompt Framework for Universal Hyperspectral Image Restoration](mp-hsir_a_multi-prompt_framework_for_universal_hyperspectral_image_restoration.md)
+- [Degradation-Aware Feature Perturbation for All-in-One Image Restoration](../../CVPR2025/image_restoration/degradation-aware_feature_perturbation_for_all-in-one_image_restoration.md)
+
+<!-- RELATED:END -->

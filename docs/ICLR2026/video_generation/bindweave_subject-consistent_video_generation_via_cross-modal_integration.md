@@ -125,3 +125,15 @@ BindWeave 用多模态大语言模型（MLLM）替代传统的浅层融合机制
 - 实验充分度: ⭐⭐⭐⭐ OpenS2V 标准基准 + 开源/商业方法全面对比
 - 写作质量: ⭐⭐⭐⭐ 架构描述清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ 解决了多主体视频生成的关键痛点，实际应用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions](../../CVPR2026/video_generation/uniavgen_unified_audio_and_video_generation_with_asymmetric_cross-modal_interact.md)
+- [MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](../../AAAI2026/video_generation/mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
+- [MoSA: Motion-Coherent Human Video Generation via Structure-Appearance Decoupling](mosa_motion-coherent_human_video_generation_via_structure-appearance_decoupling.md)
+- [JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization](javisdit_joint_audio-video_diffusion_transformer_with_hierarchical_spatio-tempor.md)
+- [AnimateAnything: Consistent and Controllable Animation for Video Generation](../../CVPR2025/video_generation/animateanything_consistent_and_controllable_animation_for_video_generation.md)
+
+<!-- RELATED:END -->

@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多规模模型、方向性验证、与REPA叠加、消融超参
 - 写作质量: ⭐⭐⭐⭐⭐ 直觉清晰("没有老师从格尔尼卡教起")
 - 价值: ⭐⭐⭐⭐⭐ 极低成本的通用训练加速策略，对扩散模型社区有广泛实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Making Training-Free Diffusion Segmentors Scale with the Generative Power](making_training-free_diffusion_segmentors_scale_with_the_generative_power.md)
+- [SGMA: Semantic-Guided Modality-Aware Segmentation for Remote Sensing with Incomplete Multimodal Data](sgma_semanticguided_modalityaware_segmentation_for.md)
+- [Task-Oriented Data Synthesis and Control-Rectify Sampling for Remote Sensing Semantic Segmentation](task-oriented_data_synthesis_and_control-rectify_sampling_for_remote_sensing_sem.md)
+- [SpikeVideoFormer: An Efficient Spike-Driven Video Transformer with Hamming Attention and $\mathcal{O}(T)$ Complexity](../../ICML2025/segmentation/spikevideoformer_an_efficient_spike-driven_video_transformer_with_hamming_attent.md)
+- [SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons](semlayer_semantic-aware_generative_segmentation_and_layer_construction_for_abstr.md)
+
+<!-- RELATED:END -->

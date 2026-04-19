@@ -158,3 +158,15 @@ keywords: ["change detection", "3D Gaussian Splatting", "pose-agnostic", "unsupe
 - 实用性：⭐⭐⭐⭐ — 对机器人环境理解和基础设施监测有直接价值
 - 实验充分度：⭐⭐⭐⭐⭐ — 三个数据集、多个基线、详细消融、视角数量分析
 - 写作清晰度：⭐⭐⭐⭐⭐ — 方法描述层次分明，图表配合优秀
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVSAnywhere: Zero-Shot Multi-View Stereo](mvsanywhere_zero-shot_multi-view_stereo.md)
+- [Changes in Real Time: Online Scene Change Detection with Multi-View Fusion](../../CVPR2026/3d_vision/changes_in_real_time_online_scene_change_detection_with_multi-view_fusion.md)
+- [Category-Agnostic Neural Object Rigging](category-agnostic_neural_object_rigging.md)
+- [Cross-View Completion Models are Zero-shot Correspondence Estimators](cross-view_completion_models_are_zero-shot_correspondence_estimators.md)
+- [CoMatcher: Multi-View Collaborative Feature Matching](comatcher_multi-view_collaborative_feature_matching.md)
+
+<!-- RELATED:END -->

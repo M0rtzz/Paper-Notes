@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 11个模型x5个benchmark，分析极其详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 从分析到方法到验证的逻辑链极其清晰
 - 对我的价值: ⭐⭐⭐⭐ 即插即用的幻觉缓解方法，实践价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](../../ICCV2025/multimodal_vlm/only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)
+- [Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models](retrieval_visual_contrastive_decoding_to_mitigate_object_hallucinations_in_large.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](../../CVPR2026/multimodal_vlm/hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [Adaptive Linguistic Prompting (ALP) Enhances Phishing Webpage Detection in Multimodal Large Language Models](adaptive_linguistic_prompting_alp_enhances_phishing_webpage_detection_in_multimo.md)
+- [Synergistic Prompting for Robust Visual Recognition with Missing Modalities](../../ICCV2025/multimodal_vlm/synergistic_prompting_for_robust_visual_recognition_with_missing_modalities.md)
+
+<!-- RELATED:END -->

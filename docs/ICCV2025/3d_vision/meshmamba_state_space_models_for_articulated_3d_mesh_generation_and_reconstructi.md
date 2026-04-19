@@ -153,3 +153,15 @@ $$L = \lambda_{3D}^V L^V + \lambda_{3D}^J (L_{3D}^J + L_{reg3D}^J) + \lambda_{2D
 ## 评分 ⭐⭐⭐⭐
 
 首次将 Mamba 引入 3D 网格生成与重建，方法新颖，序列化设计合理。效率提升显著（6-9 倍速度提升），在生成和重建任务上均达到 SOTA。实验充分，消融分析细致。局限在于拓扑固定和泛化能力，但作为开创性工作完成度高。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Global-Aware Monocular Semantic Scene Completion with State Space Models](global-aware_monocular_semantic_scene_completion_with_state_space_models.md)
+- [UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling](ust-ssm_unified_spatio-temporal_state_space_models_for_point_cloud_video_modelin.md)
+- [Mesh Mamba: A Unified State Space Model for Saliency Prediction in Non-Textured and Textured Meshes](../../CVPR2025/3d_vision/mesh_mamba_a_unified_state_space_model_for_saliency_prediction_in_non-textured_a.md)
+- [Nautilus: Locality-aware Autoencoder for Scalable Mesh Generation](nautilus_locality-aware_autoencoder_for_scalable_mesh_generation.md)
+- [Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
+
+<!-- RELATED:END -->

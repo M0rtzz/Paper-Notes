@@ -117,3 +117,15 @@ tags:
 - **实用性**: ⭐⭐⭐⭐⭐ — 直接影响行业偏见评估实践，警示了盲目依赖标准基准的风险
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型、多指标、多鲁棒性检验，但偏见维度覆盖有限
 - **写作质量**: ⭐⭐⭐⭐⭐ — 论证严密，概念清晰，结构优秀
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning](veracity_bias_llm_hidden_beliefs.md)
+- [Attention Speaks Volumes: Localizing and Mitigating Bias in Language Models](attention_speaks_volumes_localizing_and_mitigating_bias_in_language_models.md)
+- [Evaluating Implicit Bias in Large Language Models by Attacking from a Psychometric Perspective](evaluating_implicit_bias_in_large_language_models_by_attacking_from_a_psychometr.md)
+- [Deontological Keyword Bias: The Impact of Modal Expressions on Normative Judgments of Language Models](deontological_keyword_bias.md)
+- [Leveraging Large Language Models to Measure Gender Representation Bias in Gendered Language Corpora](leveraging_large_language_models_to_measure_gender_representation_bias_in_gender.md)
+
+<!-- RELATED:END -->

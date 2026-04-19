@@ -124,3 +124,15 @@ BiCo在主观Overall Quality上比前作DualReal提升 **+54.67%**（3.00→4.64
 - 实验充分度: ⭐⭐⭐⭐⭐ — 定量自动+人工评估+详细消融+可视化案例全面
 - 写作质量: ⭐⭐⭐⭐ — 概念清晰，DAM/TDS设计动机阐述充分
 - 价值: ⭐⭐⭐⭐⭐ — 对视觉内容创作具有直接和广泛的应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Composing Linear Layers from Irreducibles](../../NeurIPS2025/llm_nlp/composing_linear_layers_from_irreducibles.md)
+- [Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts](../../ACL2025/llm_nlp/cross_model_transferability_sv.md)
+- [Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos](../../ECCV2024/llm_nlp/propose_assess_search_harnessing_llms_for_goal-oriented_planning_in_instructiona.md)
+- [OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers](../../ACL2025/llm_nlp/bandit-based_prompt_design_strategy_selection_improves_prompt_optimizers.md)
+- [System Prompt Optimization with Meta-Learning](../../NeurIPS2025/llm_nlp/system_prompt_optimization_with_meta-learning.md)
+
+<!-- RELATED:END -->

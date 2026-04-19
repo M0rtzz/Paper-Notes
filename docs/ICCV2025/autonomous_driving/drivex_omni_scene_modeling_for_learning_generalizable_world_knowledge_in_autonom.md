@@ -169,3 +169,15 @@ DriveX 包含两阶段训练：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 点云预测+占据预测+流估计+端到端驾驶四个任务全面验证，消融充分
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰，方法和实验组织有条理
 - **价值**: ⭐⭐⭐⭐⭐ — 为自动驾驶世界模型提供了统一框架，参数冻结实验和 scaling 实验都有很强的实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+- [Passing the Driving Knowledge Test](passing_the_driving_knowledge_test.md)
+- [OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving](../../ECCV2024/autonomous_driving/occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving.md)
+- [Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation](hermes_a_unified_self-driving_world_model_for_simultaneous_3d_scene_understandin.md)
+- [Prioritizing Perception-Guided Self-Supervision: A New Paradigm for Causal Modeling in End-to-End Autonomous Driving](../../NeurIPS2025/autonomous_driving/prioritizing_perception-guided_self-supervision_a_new_paradigm_for_causal_modeli.md)
+
+<!-- RELATED:END -->

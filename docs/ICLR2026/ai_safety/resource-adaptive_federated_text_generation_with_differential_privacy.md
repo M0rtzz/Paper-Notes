@@ -151,3 +151,15 @@ Control code（如标签、主题、元数据）是本框架的关键设计：
 - 实验充分度: 8/10 — IID/non-IID、多数据集、多指标，消融充分；模型规模偏小
 - 写作质量: 8/10 — 结构清晰，问题定义明确，符号一致
 - 价值: 7/10 — 解决了计算异构下联邦合成数据生成的实际痛点
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy](../../NeurIPS2025/ai_safety/invisibleink_high-utility_and_low-cost_text_generation_with_differential_privacy.md)
+- [Sequentially Auditing Differential Privacy](../../NeurIPS2025/ai_safety/sequentially_auditing_differential_privacy.md)
+- [Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
+- [Efficient Resource-Constrained Training of Transformers via Subspace Optimization](efficient_resource-constrained_training_of_transformers_via_subspace_optimizatio.md)
+- [FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA](../../AAAI2026/ai_safety/fedalt_federated_fine-tuning_through_adaptive_local_training_with_rest-of-world_.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ TFB 在不做任何训练的情况下，ECE（校准误差）大幅下降：MLE 
 - 实验充分度: ⭐⭐⭐⭐⭐ 多 LLM 架构 + 多数据集 + 多基权重 + 多指标，非常全面
 - 写作质量: ⭐⭐⭐⭐ 理论部分严谨，实验部分清晰
 - 价值: ⭐⭐⭐⭐⭐ 极高实用价值，可直接用于生产环境中的 LLM 不确定性估计
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Large Language Bayes](large_language_bayes.md)
+- [Doubly Robust Alignment for Large Language Models](doubly_robust_alignment_for_large_language_models.md)
+- [Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Perturbation Bounds for Low-Rank Inverse Approximations under Noise](perturbation_bounds_for_low-rank_inverse_approximations_under_noise.md)
+
+<!-- RELATED:END -->

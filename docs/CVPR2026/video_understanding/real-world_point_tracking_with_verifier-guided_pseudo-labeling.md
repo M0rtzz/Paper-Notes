@@ -135,3 +135,15 @@ Track-On-R 在全部数据集上取得最高分，EgoPoints 比最强竞争者 A
 - 实验充分度: ⭐⭐⭐⭐⭐ — 4 个基准全面对比 + 教师组合/数据配比/推理集成三组消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题动机（Oracle 图）说服力强
 - 价值: ⭐⭐⭐⭐ — 提供了通用的伪标签质量控制范式，可推广到其他密集预测自训练任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [Echoes of Ownership: Adversarial-Guided Dual Injection for Copyright Protection in MLLMs](echoes_of_ownership_adversarial-guided_dual_injection_for_copyright_protection_i.md)
+- [RAGTrack: Language-aware RGBT Tracking with Retrieval-Augmented Generation](ragtrack_language-aware_rgbt_tracking_with_retrieval-augmented_generation.md)
+- [UTPTrack: Towards Simple and Unified Token Pruning for Visual Tracking](utptrack_towards_simple_and_unified_token_pruning_for_visual_tracking.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_for_efficient_video_understanding.md)
+
+<!-- RELATED:END -->

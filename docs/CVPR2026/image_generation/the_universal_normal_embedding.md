@@ -140,3 +140,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多模型高斯性检验、跨空间映射、线性编辑、共享子空间实验全面，但数据集局限于 CelebA
 - 写作质量: ⭐⭐⭐⭐⭐ 从假说到理论到实验的叙述流畅、逻辑清晰，图表设计精美
 - 价值: ⭐⭐⭐⭐⭐ 提出了一个可能深远影响表示学习和生成模型领域的统一视角
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Monocular Normal Estimation via Shading Sequence Estimation](../../ICLR2026/image_generation/monocular_normal_estimation_via_shading_sequence_estimation.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](../../ICCV2025/image_generation/ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+- [Bridging Degradation Discrimination and Generation for Universal Image Restoration](../../ICLR2026/image_generation/bridging_degradation_discrimination_and_generation_for_universal_image_restorati.md)
+- [REGEN: Learning Compact Video Embedding with (Re-)Generative Decoder](../../ICCV2025/image_generation/regen_learning_compact_video_embedding_with_re-generative_decoder.md)
+- [OmniVTON: Training-Free Universal Virtual Try-On](../../ICCV2025/image_generation/omnivton_training-free_universal_virtual_try-on.md)
+
+<!-- RELATED:END -->

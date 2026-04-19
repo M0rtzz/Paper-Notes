@@ -149,3 +149,15 @@ tags: ["MLLM", "visual feature fusion", "layer selection", "multi-layer", "LLaVA
 ## 评分
 
 ⭐⭐⭐⭐ — 系统性强，实验扎实，结论实用且可直接指导工程实践；但层选择机制仍偏经验化，缺乏自动化方案。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons](from_multimodal_llms_to_generalist_embodied_agents_methods_and_lessons.md)
+- [Vision Function Layer in Multimodal LLMs](../../NeurIPS2025/multimodal_vlm/vision_function_layer_in_multimodal_llms.md)
+- [Multi-Modal Image Fusion via Intervention-Stable Feature Learning](../../CVPR2026/multimodal_vlm/multi-modal_image_fusion_via_intervention-stable_feature_learning.md)
+- [MM1: Methods, Analysis & Insights from Multimodal LLM Pre-training](../../ECCV2024/multimodal_vlm/mm1_methods_analysis_and_insights_from_multimodal_llm_pre-training.md)
+- [TrimLLM: Progressive Layer Dropping for Domain-Specific LLMs](../../ACL2025/multimodal_vlm/trimllm_layer_dropping.md)
+
+<!-- RELATED:END -->

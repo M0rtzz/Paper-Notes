@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 消融详尽，但仅单一数据集
 - 写作质量: ⭐⭐⭐⭐ 动机分析清晰，理论与实验结合良好
 - 价值: ⭐⭐⭐⭐ 对自动驾驶和机器人导航有应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation](../../ICCV2025/3d_vision/advancing_text-to-3d_generation_with_linearized_lookahead_variational_score_dist.md)
+- [Gaussian Splatting Feature Fields for Privacy-Preserving Visual Localization](gaussian_splatting_feature_fields_for_privacy-preserving_visual_localization.md)
+- [Flowing from Words to Pixels: A Noise-Free Framework for Cross-Modality Evolution](flowing_from_words_to_pixels_a_noise-free_framework_for_cross-modality_evolution.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization](evolving_high-quality_rendering_and_reconstruction_in_a_unified_framework_with_c.md)
+
+<!-- RELATED:END -->

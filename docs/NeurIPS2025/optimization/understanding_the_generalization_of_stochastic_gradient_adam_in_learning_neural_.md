@@ -129,3 +129,15 @@ tags:
 - 值得关注该团队后续发表的相关扩展工作
 - 对于理论方向的初学者，本文的 proof sketch 部分提供了很好的技术路线图
 - 从方法论角度，本文展示了如何通过精心的数学建模将复杂问题简化为可分析的框架
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Do Neural Networks Need Gradient Descent to Generalize? A Theoretical Study](do_neural_networks_need_gradient_descent_to_generalize_a_theoretical_study.md)
+- [Understanding Adam Requires Better Rotation Dependent Assumptions](understanding_adam_requires_better_rotation_dependent_assumptions.md)
+- [Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
+- [Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks](emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks.md)
+- [In Search of Adam's Secret Sauce](in_search_of_adams_secret_sauce.md)
+
+<!-- RELATED:END -->

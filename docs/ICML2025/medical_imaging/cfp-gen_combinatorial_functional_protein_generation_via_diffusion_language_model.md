@@ -142,3 +142,15 @@ CFP-Gen 基于 ESM 架构的扩散语言模型：
 - 实验充分度: ⭐⭐⭐⭐ 多任务（功能生成/逆折叠/多功能设计），但缺 wet lab
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，模块设计合理
 - 价值: ⭐⭐⭐⭐⭐ 对蛋白质工程有重大实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Steering Protein Language Models](steering_protein_language_models.md)
+- [Elucidating the Design Space of Multimodal Protein Language Models](elucidating_the_design_space_of_multimodal_protein_language_models.md)
+- [Aligning Protein Conformation Ensemble Generation with Physical Feedback](aligning_protein_conformation_ensemble_generation_with_physical_feedback.md)
+- [Training Flexible Models of Genetic Variant Effects from Functional Annotations using Accelerated Linear Algebra](training_flexible_models_of_genetic_variant_effects_from_functional_annotations_.md)
+- [Controlling Repetition in Protein Language Models](../../ICLR2026/medical_imaging/controlling_repetition_in_protein_language_models.md)
+
+<!-- RELATED:END -->

@@ -159,3 +159,15 @@ DEF在10个比较中有9个取得SOTA。
 - 实验充分度: ⭐⭐⭐⭐⭐ — 5个数据集、多种基线、多样性/效率/消融分析齐全
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，但部分记号较多需要仔细跟读
 - 价值: ⭐⭐⭐⭐⭐ — 解决了长程事件预测的根本性问题，方法通用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Predicting the Future by Retrieving the Past](predicting_the_future_by_retrieving_the_past.md)
+- [Optimal Look-back Horizon for Time Series Forecasting in Federated Learning](optimal_look-back_horizon_for_time_series_forecasting_in_federated_learning.md)
+- [Winner-takes-all for Multivariate Probabilistic Time Series Forecasting](../../ICML2025/time_series/winner-takes-all_for_multivariate_probabilistic_time_series_forecasting.md)
+- [DejaVid: Encoder-Agnostic Learned Temporal Matching for Video Classification](../../CVPR2025/time_series/dejavid_encoder-agnostic_learned_temporal_matching_for_video_classification.md)
+- [When Will It Fail?: Anomaly to Prompt for Forecasting Future Anomalies in Time Series](../../ICML2025/time_series/when_will_it_fail_anomaly_to_prompt_for_forecasting_future_anomalies_in_time_ser.md)
+
+<!-- RELATED:END -->

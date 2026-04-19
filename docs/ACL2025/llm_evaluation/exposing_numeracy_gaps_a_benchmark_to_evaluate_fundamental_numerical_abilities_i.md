@@ -162,3 +162,15 @@ GSM8K 测试多步数学应用题，MathBench 覆盖代数/几何等结构化问
 - 实验充分度: ⭐⭐⭐⭐ 多模型 × 6 数据集 × 真实+合成
 - 写作质量: ⭐⭐⭐⭐ 分类清晰
 - 价值: ⭐⭐⭐⭐ 对数值感知 LLM 开发有直接指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeedBench: A Multi-task Benchmark for Evaluating Large Language Models in Seed Science](seedbench_a_multi-task_benchmark_for_evaluating_large_language_models_in_seed_sc.md)
+- [CodeMEnv: Benchmarking Large Language Models on Code Migration](codemenv_benchmarking_large_language_models_on_code_migration.md)
+- [Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [Creativity or Brute Force? Using Brainteasers as a Window into the Problem-Solving Abilities of Large Language Models](../../NeurIPS2025/llm_evaluation/creativity_or_brute_force_using_brainteasers_as_a_window_into_the_problem-solvin.md)
+- [McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models](mcbe_a_multi-task_chinese_bias_evaluation_benchmark_for_large_language_models.md)
+
+<!-- RELATED:END -->

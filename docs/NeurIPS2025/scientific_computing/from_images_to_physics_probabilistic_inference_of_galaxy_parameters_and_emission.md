@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ (单一数据集 SDSS，缺少与更多方法的对比和跨巡天验证)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，物理讨论充分)
 - 价值: ⭐⭐⭐⭐ (为大规模巡天提供实用的概率推断工具)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Images to Physics: Probabilistic Inference of Galaxy Parameters and Emission Lines via VAE–Normalizing Flows](one-shot_transfer_learning_for_nonlinear_pdes_with_perturbative_pinns.md)
+- [Physics-Guided Machine Learning for Uncertainty Quantification in Turbulence Models](physics-guided_machine_learning_for_uncertainty_quantification_in_turbulence_mod.md)
+- [INC: An Indirect Neural Corrector for Auto-Regressive Hybrid PDE Solvers](inc_an_indirect_neural_corrector_for_auto-regressive_hybrid_pde_solvers.md)
+- [From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics](from_black_hole_to_galaxy_neural_operator_framework_for_accretion_and_feedback_d.md)
+- [Neuro-Spectral Architectures for Causal Physics-Informed Networks](neuro-spectral_architectures_for_causal_physics-informed_networks.md)
+
+<!-- RELATED:END -->

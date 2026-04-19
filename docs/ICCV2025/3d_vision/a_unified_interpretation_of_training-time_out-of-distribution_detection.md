@@ -154,3 +154,15 @@ $$SIM_{near} = \frac{\| \min(\tilde{I}_{ID}(v), \tilde{I}_{near\text{-}OOD}(v)) 
 - 实验充分度: ⭐⭐⭐⭐
 - 写作质量: ⭐⭐⭐⭐
 - 价值: ⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting](../../NeurIPS2025/3d_vision/metags_a_meta-learned_gaussian-phong_model_for_out-of-distribution_3d_scene_reli.md)
+- [Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)
+- [Faster and Better 3D Splatting via Group Training](faster_and_better_3d_splatting_via_group_training.md)
+- [4D Visual Pre-training for Robot Learning](4d_visual_pre-training_for_robot_learning.md)
+- [7DGS: Unified Spatial-Temporal-Angular Gaussian Splatting](7dgs_unified_spatial-temporal-angular_gaussian_splatting.md)
+
+<!-- RELATED:END -->

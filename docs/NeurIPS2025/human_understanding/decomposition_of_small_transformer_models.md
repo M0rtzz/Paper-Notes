@@ -116,3 +116,15 @@ $\mathcal{L}_{faithful} = 3 \times 10^{-9}$，$\mathcal{L}_{recon} = 1 \times 10
 - 实验充分度: ⭐⭐⭐ Workshop 规模限制，实验主要定性
 - 写作质量: ⭐⭐⭐⭐ 动机方法清晰，定位准确
 - 价值: ⭐⭐⭐⭐ 参数空间可解释性在 Transformer 上的重要一步
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning](../../AAAI2026/human_understanding/small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod.md)
+- [Discovering Transformer Circuits via a Hybrid Attribution and Pruning Framework](discovering_transformer_circuits_via_a_hybrid_attribution_and_pruning_framework.md)
+- [In-Context Compositional Learning via Sparse Coding Transformer](in-context_compositional_learning_via_sparse_coding_transformer.md)
+- [RAPTR: Radar-Based 3D Pose Estimation Using Transformer](raptr_radar-based_3d_pose_estimation_using_transformer.md)
+- [Erwin: A Tree-based Hierarchical Transformer for Large-scale Physical Systems](../../ICML2025/human_understanding/erwin_a_tree-based_hierarchical_transformer_for_large-scale_physical_systems.md)
+
+<!-- RELATED:END -->

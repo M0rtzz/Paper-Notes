@@ -168,3 +168,15 @@ NEURO-LOOP 流程：
 
 ## 评分 ⭐⭐⭐ (3/5)
 探索性工作，概念新颖但当前分类准确率有限。数据集贡献有价值，但距离实际 RLNF 系统还有较大差距。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neural Graph Navigation for Intelligent Subgraph Matching](neural_graph_navigation_for_intelligent_subgraph_matching.md)
+- [A Snapshot of Influence: A Local Data Attribution Framework for Online Reinforcement Learning](../../NeurIPS2025/robotics/a_snapshot_of_influence_a_local_data_attribution_framework_f.md)
+- [EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
+- [Adaptive Theory of Mind for LLM-based Multi-Agent Coordination](adaptive_theory_of_mind_for_llm-based_multi-agent_coordination.md)
+- [To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance](to_align_or_not_to_align_strategic_multimodal_representation_alignment_for_optim.md)
+
+<!-- RELATED:END -->

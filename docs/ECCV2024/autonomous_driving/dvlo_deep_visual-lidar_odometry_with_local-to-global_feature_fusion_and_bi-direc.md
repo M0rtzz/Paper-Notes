@@ -162,3 +162,15 @@ DVLO 的核心优势在于：不仅精度全面领先，而且推理速度也是
 - 实验充分度: ⭐⭐⭐⭐ （KITTI 里程计 + FlyingThings3D 场景流 + 详细消融，但缺少更多数据集）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰，公式完整，图示直观）
 - 价值: ⭐⭐⭐⭐ （实时性强、泛化性好，对多模态融合研究有参考价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
+- [MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion](../../ICCV2025/autonomous_driving/mgsfm_multi-camera_geometry_driven_global_structure-from-motion.md)
+- [LiDAR-Event Stereo Fusion with Hallucinations](lidar-event_stereo_fusion_with_hallucinations.md)
+- [Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
+- [Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping](../../ICCV2025/autonomous_driving/splat-loam_gaussian_splatting_lidar_odometry_and_mapping.md)
+
+<!-- RELATED:END -->

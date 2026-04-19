@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 定性定量对比+消融+用户研究，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示丰富，动机论述流畅
 - 价值: ⭐⭐⭐⭐ 对动画产业的草图上色自动化有直接应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AniDoc: Animation Creation Made Easier](anidoc_animation_creation_made_easier.md)
+- [MangaNinja: Line Art Colorization with Precise Reference Following](manganinja_line_art_colorization_with_precise_reference_following.md)
+- [Free-viewpoint Human Animation with Pose-correlated Reference Selection](free-viewpoint_human_animation_with_pose-correlated_reference_selection.md)
+- [Consistent and Controllable Image Animation with Motion Diffusion Models](consistent_and_controllable_image_animation_with_motion_diffusion_models.md)
+- [Panel-by-Panel Souls: A Performative Workflow for Expressive Faces in AI-Assisted Manga Creation](../../NeurIPS2025/image_generation/panel-by-panel_souls_a_performative_workflow_for_expressive_faces_in_ai-assisted.md)
+
+<!-- RELATED:END -->

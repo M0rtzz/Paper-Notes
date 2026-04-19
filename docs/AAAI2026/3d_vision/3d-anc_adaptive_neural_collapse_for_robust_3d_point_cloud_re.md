@@ -97,3 +97,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 3个模型×2个数据集×9种攻击×7种baseline防御，消融细致，含效率分析和可视化
 - 写作质量: ⭐⭐⭐⭐ pilot study的motivating分析很有说服力，方法描述清晰，附录详尽
 - 对我的价值: ⭐⭐⭐ NC作为设计工具的思路可借鉴，但点云对抗鲁棒性不是我的核心方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Point Cloud Quantization through Multimodal Prompting for 3D Understanding](point_cloud_quantization_through_multimodal_prompting_for_3d_understanding.md)
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+- [RPBG: Towards Robust Neural Point-based Graphics in the Wild](../../ECCV2024/3d_vision/rpbg_towards_robust_neural_point-based_graphics_in_the_wild.md)
+- [MICAS: Multi-grained In-Context Adaptive Sampling for 3D Point Cloud Processing](../../CVPR2025/3d_vision/micas_multi-grained_in-context_adaptive_sampling_for_3d_point_cloud_processing.md)
+
+<!-- RELATED:END -->

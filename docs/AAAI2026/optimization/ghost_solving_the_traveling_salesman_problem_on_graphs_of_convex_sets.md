@@ -206,3 +206,15 @@ $$\min_{y_{\hat{p}}} \sum_{\hat{p} \in \hat{\mathcal{P}}} b(\hat{p}) y_{\hat{p}}
 - 实验充分度: ⭐⭐⭐⭐ — 三种问题类型+多个基线+消融充分，但缺少大规模实验
 - 写作质量: ⭐⭐⭐⭐⭐ — 问题建模、算法描述和理论证明都非常清晰
 - 价值: ⭐⭐⭐⭐ — 解决了机器人运动规划中的重要组合优化问题，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AutoOpt: A Dataset and a Unified Framework for Automating Optimization Problem Solving](../../NeurIPS2025/optimization/autoopt_a_dataset_and_a_unified_framework_for_automating_optimization_problem_so.md)
+- [CogFlow: Bridging Perception and Reasoning through Knowledge Internalization for Visual Mathematical Problem Solving](../../ICLR2026/optimization/cogflow_bridging_perception_and_reasoning_through_knowledge_internalization_for_.md)
+- [Convex Clustering Redefined: Robust Learning with the Median of Means Estimator](convex_clustering_redefined_robust_learning_with_the_median_of_means_estimator.md)
+- [Learning to Solve Orienteering Problem with Time Windows and Variable Profits](../../ICLR2026/optimization/learning_to_solve_orienteering_problem_with_time_windows_and_variable_profits.md)
+- [Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](../../ICLR2026/optimization/convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
+
+<!-- RELATED:END -->

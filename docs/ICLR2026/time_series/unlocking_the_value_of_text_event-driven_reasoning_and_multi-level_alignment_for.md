@@ -131,3 +131,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{ts}} + \mathcal{L}_{\text{alig
 ## 评分 ⭐⭐⭐⭐⭐
 
 方法设计全面精巧，在 10 个领域 20 项指标上全面第一实属罕见。将 LLM 的推理能力真正引入时序预测，HIC 和 AFF 的设计都很有新意。唯一遗憾是计算开销较大，实际部署需权衡。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
+- [TimeSliver: Symbolic-Linear Decomposition for Explainable Time Series Classification](timesliver_symbolic-linear_decomposition_for_explainable_time_series_classificat.md)
+- [From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting](from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting.md)
+- [Relational Transformer: Toward Zero-Shot Foundation Models for Relational Data](relational_transformer_toward_zero-shot_foundation_models_for_relational_data.md)
+- [Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework](towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo.md)
+
+<!-- RELATED:END -->

@@ -222,3 +222,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 多模型、多架构、多分词方式、学习轨迹分析全面
 - **写作质量**: ⭐⭐⭐⭐⭐ — 逻辑清晰，动机与实验紧密衔接，图表精美
 - **价值**: ⭐⭐⭐⭐ — 对理解 LM 内部词汇表征有重要意义，对 BabyLM 社区尤为关键
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Support Samples of Next Word Prediction](on_support_samples_of_next_word_prediction.md)
+- [Is Linguistically-Motivated Data Augmentation Worth It?](is_linguistically-motivated_data_augmentation_worth_it.md)
+- [MockConf: A Student Interpretation Dataset: Analysis, Word- and Span-level Alignment and Baselines](mockconf_a_student_interpretation_dataset_analysis_word-_and_span-level_alignmen.md)
+- [Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race](aligned_but_blind_implicit_bias.md)
+- [It's Not a Walk in the Park! Challenges of Idiom Translation in Speech-to-text Systems](its_not_a_walk_in_the_park_challenges_of_idiom_translation_in_speech-to-text_sys.md)
+
+<!-- RELATED:END -->

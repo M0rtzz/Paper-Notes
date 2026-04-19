@@ -117,3 +117,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论工作，无实验验证
 - 写作质量: ⭐⭐⭐⭐ 证明思路清晰，递归分析方法优雅
 - 价值: ⭐⭐⭐⭐ 为扩散语言模型的采样加速提供了坚实的理论基础
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Morse: Dual-Sampling for Lossless Acceleration of Diffusion Models](../../ICML2025/image_generation/morse_dual-sampling_for_lossless_acceleration_of_diffusion_models.md)
+- [Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
+- [Provable Maximum Entropy Manifold Exploration via Diffusion Models](../../ICML2025/image_generation/provable_maximum_entropy_manifold_exploration_via_diffusion_models.md)
+- [Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
+- [Cross-fluctuation Phase Transitions Reveal Sampling Dynamics in Diffusion Models](cross-fluctuation_phase_transitions_reveal_sampling_dynamics_in_diffusion_models.md)
+
+<!-- RELATED:END -->

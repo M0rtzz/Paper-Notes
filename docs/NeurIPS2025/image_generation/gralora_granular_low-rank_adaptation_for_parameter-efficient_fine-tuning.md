@@ -172,3 +172,15 @@ Best GraLoRA 平均 86.0%，超越 LoRA (84.2%)、VeRA (85.2%)、FourierFT (85.0
 - 实验充分度: ⭐⭐⭐⭐⭐ (5 任务、多模型、多 rank、消融实验齐全)
 - 写作质量: ⭐⭐⭐⭐ (分析清晰，图表丰富)
 - 价值: ⭐⭐⭐⭐⭐ (现成可用，改动最小，收益明确)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models](../../ICML2025/image_generation/zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)
+- [Flat-LoRA: Low-Rank Adaptation over a Flat Loss Landscape](../../ICML2025/image_generation/flat-lora_low-rank_adaptation_over_a_flat_loss_landscape.md)
+- [StelLA: Subspace Learning in Low-rank Adaptation using Stiefel Manifold](stella_subspace_learning_in_low-rank_adaptation_using_stiefel_manifold.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/image_generation/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [IntLoRA: Integral Low-rank Adaptation of Quantized Diffusion Models](../../ICML2025/image_generation/intlora_integral_low-rank_adaptation_of_quantized_diffusion_models.md)
+
+<!-- RELATED:END -->

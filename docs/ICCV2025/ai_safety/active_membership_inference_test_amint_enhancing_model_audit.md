@@ -133,3 +133,15 @@ $$\mathcal{L}_{\text{Multi-task}} = \lambda_1 \frac{\mathcal{L}_{\text{Audited}}
 - 实验充分度: ⭐⭐⭐⭐⭐ 6种架构×5个数据集×3种setup配置，覆盖面非常广，对比也充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，概念定义明确，部署讨论增强实用性
 - 价值: ⭐⭐⭐⭐ 为AI合规审计提供了新工具，但实际部署还需解决大规模验证和信任机制问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning](find_a_scapegoat_poisoning_membership_inference_attack_and_defense_to_federated_.md)
+- [Vulnerability-Aware Spatio-Temporal Learning for Generalizable Deepfake Video Detection](vulnerability-aware_spatio-temporal_learning_for_generalizable_deepfake_video_de.md)
+- [FRET: Feature Redundancy Elimination for Test Time Adaptation](fret_feature_redundancy_elimination_for_test_time_adaptation.md)
+- [Enhancing Adversarial Transferability by Balancing Exploration and Exploitation with Gradient-Guided Sampling](enhancing_adversarial_transferability_by_balancing_exploration_and_exploitation_.md)
+- [Backdooring Self-Supervised Contrastive Learning by Noisy Alignment](backdooring_self-supervised_contrastive_learning_by_noisy_alignment.md)
+
+<!-- RELATED:END -->

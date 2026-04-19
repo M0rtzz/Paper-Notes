@@ -128,3 +128,15 @@ ProGait是一个多用途视频数据集，支持三项核心任务：
 - 实验充分度: ⭐⭐⭐⭐ 三项任务基准完整，多种对比方法
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，临床背景介绍到位
 - 价值: ⭐⭐⭐⭐ 对假肢用户辅助技术研究有直接推动作用，但数据规模有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RAM-W600: A Multi-Task Wrist Dataset and Benchmark for Rheumatoid Arthritis](../../NeurIPS2025/medical_imaging/ram-w600_a_multi-task_wrist_dataset_and_benchmark_for_rheumatoid_arthritis.md)
+- [AfriMed-QA: A Pan-African, Multi-Specialty, Medical Question-Answering Benchmark Dataset](../../ACL2025/medical_imaging/afrimed_qa_pan_african.md)
+- [Interactive Medical Image Segmentation: A Benchmark Dataset and Baseline](../../CVPR2025/medical_imaging/interactive_medical_image_segmentation_a_benchmark_dataset_and_baseline.md)
+- [PVChat: Personalized Video Chat with One-Shot Learning](pvchat_personalized_video_chat_with_one-shot_learning.md)
+- [SciVid: Cross-Domain Evaluation of Video Models in Scientific Applications](scivid_cross-domain_evaluation_of_video_models_in_scientific_applications.md)
+
+<!-- RELATED:END -->

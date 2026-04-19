@@ -124,3 +124,15 @@ $$L_{\text{corr}} = 1 - \frac{1}{5}\sum_{i=1}^{5} g\left(|\mathbf{R}_i^{\mathcal
 - 实验充分度: ⭐⭐⭐⭐ 仿真(COLOSSEUM+RLBench)+真实世界+消融全面，但真实实验规模偏小
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰，双曲空间预备知识充分，结构工整
 - 价值: ⭐⭐⭐⭐ 为具身智能的非欧几何表征学习开辟了新方向，3D-MOV数据集有复用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation](ada3drift_adaptive_trainingtime_drifting_for_onest.md)
+- [RoboTron-Mani: All-in-One Multimodal Large Model for Robotic Manipulation](../../ICCV2025/3d_vision/robotron-mani_all-in-one_multimodal_large_model_for_robotic_manipulation.md)
+- [DynaRend: Learning 3D Dynamics via Masked Future Rendering for Robotic Manipulation](../../NeurIPS2025/3d_vision/dynarend_learning_3d_dynamics_via_masked_future_rendering_for_robotic_manipulati.md)
+- [Stepper: Stepwise Immersive Scene Generation with Multiview Panoramas](stepper_stepwise_immersive_scene_generation_with_multiview_panoramas.md)
+- [Ego-1K: A Large-Scale Multiview Video Dataset for Egocentric Vision](ego-1k_--_a_large-scale_multiview_video_dataset_for_egocentric_vision.md)
+
+<!-- RELATED:END -->

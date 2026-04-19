@@ -158,3 +158,15 @@ DPO 多偏好对齐策略对比：
 - 实验充分度: ⭐⭐⭐⭐⭐ 12个对比系统、完整主观+客观评估、详细消融
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，技术描述详尽
 - 价值: ⭐⭐⭐⭐⭐ 开源歌曲生成的里程碑式工作，缩小了学术界与工业界的差距
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Advancing Zero-shot Text-to-Speech Intelligibility across Diverse Domains via Preference Alignment](../../ACL2025/audio_speech/advancing_zero-shot_text-to-speech_intelligibility_across_diverse_domains_via_pr.md)
+- [A TRIANGLE Enables Multimodal Alignment Beyond Cosine Similarity](a_triangle_enables_multimodal_alignment_beyond_cosine_simila.md)
+- [Multi-head Temporal Latent Attention](multi-head_temporal_latent_attention.md)
+- [DeepASA: An Object-Oriented Multi-Purpose Network for Auditory Scene Analysis](deepasa_an_object-oriented_multi-purpose_network_for_auditory_scene_analysis.md)
+- [MEGADance: Mixture-of-Experts Architecture for Genre-Aware 3D Dance Generation](megadance_mixture-of-experts_architecture_for_genre-aware_3d_dance_generation.md)
+
+<!-- RELATED:END -->

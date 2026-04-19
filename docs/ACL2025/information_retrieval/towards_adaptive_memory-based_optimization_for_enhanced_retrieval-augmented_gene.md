@@ -131,3 +131,15 @@ Amber 是一个自适应记忆更新的迭代式 RAG 框架，由三个核心组
 - **实验充分度**: ⭐⭐⭐⭐ — 六个数据集覆盖单跳/多跳/长文本QA，三种基础LLM，与多种baseline对比
 - **写作质量**: ⭐⭐⭐ — 框架描述较清楚但部分符号使用不够一致
 - **价值**: ⭐⭐⭐⭐ — 对RAG领域的迭代式检索和记忆管理方向具有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SeaKR: Self-aware Knowledge Retrieval for Adaptive Retrieval Augmented Generation](seakr_self-aware_knowledge_retrieval_for_adaptive_retrieval_augmented_generation.md)
+- [Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)
+- [Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](../../NeurIPS2025/information_retrieval/windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+- [Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
+- [A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
+
+<!-- RELATED:END -->

@@ -103,3 +103,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 检测/steering/ablation 全流程，多临床任务
 - 写作质量: ⭐⭐⭐⭐⭐ 诚实报告负面结果，分析深入
 - 价值: ⭐⭐⭐⭐ 对医疗 AI 公平性研究有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+- [Thompson Sampling via Fine-Tuning of LLMs](thompson_sampling_via_fine-tuning_of_llms.md)
+- [Moving Beyond Medical Exams: A Clinician-Annotated Fairness Dataset of Real-World Tasks and Ambiguity in Mental Healthcare](moving_beyond_medical_exams_a_clinician-annotated_fairness_dataset_of_real-world.md)
+- [Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?](../../CVPR2026/medical_imaging/can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy.md)
+- [Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge](../../ACL2025/medical_imaging/biore_llm_judge_evaluation.md)
+
+<!-- RELATED:END -->

@@ -133,3 +133,15 @@ tags:
 | 实验充分度 | ⭐⭐⭐ | 理论验证充分但实用规模偏小，缺少大模型和多领域实验 |
 | 写作质量 | ⭐⭐⭐⭐ | 多个具象例子帮助理解抽象理论，但页面较长 |
 | 实用性 | ⭐⭐⭐⭐ | HFA 零额外计算即可提升 perplexity，值得大规模验证 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Diving into Self-Evolving Training for Multimodal Reasoning](diving_into_self-evolving_training_for_multimodal_reasoning.md)
+- [Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts](../../NeurIPS2025/reinforcement_learning/zero-shot_context_generalization_in_reinforcement_learning_from_few_training_con.md)
+- [Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
+- [Sliding Puzzles Gym: A Scalable Benchmark for State Representation in Visual Reinforcement Learning](sliding_puzzles_gym_a_scalable_benchmark_for_state_representation_in_visual_rein.md)
+- [Extending NGU to Multi-Agent RL: A Preliminary Study](../../NeurIPS2025/reinforcement_learning/extending_ngu_to_multi-agent_rl_a_preliminary_study.md)
+
+<!-- RELATED:END -->

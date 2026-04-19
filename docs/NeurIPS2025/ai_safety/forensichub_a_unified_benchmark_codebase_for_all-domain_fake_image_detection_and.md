@@ -122,3 +122,15 @@ ForensicHub 采用模块化架构，由四个核心组件构成：Datasets（数
 - 实验充分度: ⭐⭐⭐⭐⭐ 42 个模型、23 个数据集、16 种跨域评估，规模空前
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但表格和数据量大导致阅读负担较重
 - 价值: ⭐⭐⭐⭐⭐ 对 FIDL 领域有里程碑意义，将成为社区标准基础设施
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking VLMs for Image Forgery Detection and Localization](../../CVPR2026/ai_safety/rethinking_vlms_for_image_forgery_detection_and_localization.md)
+- [Noise-Assisted Prompt Learning for Image Forgery Detection and Localization](../../ECCV2024/ai_safety/noise-assisted_prompt_learning_for_image_forgery_detection_and_localization.md)
+- [ORBIT -- Open Recommendation Benchmark for Reproducible Research with Hidden Tests](orbit_--_open_recommendation_benchmark_for_reproducible_research_with_hidden_tes.md)
+- [CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming](cpret_a_dataset_benchmark_and_model_for_retrieval_in_competitive_programming.md)
+- [On the Empirical Power of Goodness-of-Fit Tests in Watermark Detection](on_the_empirical_power_of_goodness-of-fit_tests_in_watermark_detection.md)
+
+<!-- RELATED:END -->

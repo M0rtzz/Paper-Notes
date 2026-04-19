@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 个评测基准+详细 scaling 分析+跨架构消融，极其全面
 - 写作质量: ⭐⭐⭐⭐ 数据集构建描述详细，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 数据集+方法论对 AI 安全领域有重大影响，数据集已公开
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Flatten Graphs as Sequences: Transformers are Scalable Graph Generators](../../NeurIPS2025/image_generation/flatten_graphs_as_sequences_transformers_are_scalable_graph_generators.md)
+- [Visual Language Models as Zero-Shot Deepfake Detectors](../../ICML2025/image_generation/visual_language_models_as_zero-shot_deepfake_detectors.md)
+- [SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images](../../CVPR2026/image_generation/simlbr_learning_to_detect_fake_images_by_learning_to_detect_real_images.md)
+- [DreamOmni: Unified Image Generation and Editing](dreamomni_unified_image_generation_and_editing.md)
+- [Language-Guided Image Tokenization for Generation](language-guided_image_tokenization_for_generation.md)
+
+<!-- RELATED:END -->

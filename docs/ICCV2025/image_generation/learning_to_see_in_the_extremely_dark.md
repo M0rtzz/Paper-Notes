@@ -169,3 +169,15 @@ $$\mathcal{L}_{ccl} = \sum_{c \in [0,C)} \mathcal{H}_{\hat{\mathcal{F}}_{rgb}^c}
 ## 评分
 
 ⭐⭐⭐⭐ — 数据集贡献突出（填补极暗场景空白），方法设计合理有效，但实验主要在自建数据集上验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Joint Diffusion Models in Continual Learning](joint_diffusion_models_in_continual_learning.md)
+- [SCFlow: Implicitly Learning Style and Content Disentanglement with Flow Models](scflow_implicitly_learning_style_and_content_disentanglement_with_flow_models.md)
+- [REGEN: Learning Compact Video Embedding with (Re-)Generative Decoder](regen_learning_compact_video_embedding_with_re-generative_decoder.md)
+- [MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space](motionstreamer_streaming_motion_generation_via_diffusion-based_autoregressive_mo.md)
+- [LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models](loraverse_a_submodular_framework_to_retrieve_diverse_adapters_for_diffusion_mode.md)
+
+<!-- RELATED:END -->

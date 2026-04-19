@@ -228,3 +228,15 @@ FLUX-1.dev实验：
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 25概念、800提示对、多秩设置、6种初始化、用户研究、多图、跨架构，极其全面
 - **写作质量**: ⭐⭐⭐⭐ — 动机分析实验（Figure 2）很有说服力，从观察到方法的逻辑链清晰
 - **价值**: ⭐⭐⭐⭐ — 对单图像定制这一高实用价值场景提供了简洁有效的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Latent Diffusion Model without Variational Autoencoder](../../ICLR2026/image_generation/latent_diffusion_model_without_variational_autoencoder.md)
+- [MOLM: Mixture of LoRA Markers](../../ICLR2026/image_generation/molm_mixture_of_lora_markers.md)
+- [L-DiffER: Single Image Reflection Removal with Language-Based Diffusion Model](../../ECCV2024/image_generation/l-differ_single_image_reflection_removal_with_language-based_diffusion_model.md)
+- [PersonalVideo: High ID-Fidelity Video Customization without Dynamic and Semantic Degradation](../../ICCV2025/image_generation/personalvideo_high_id-fidelity_video_customization_without_dynamic_and_semantic_.md)
+- [GEWDiff: Geometric Enhanced Wavelet-based Diffusion Model for Hyperspectral Image Super-resolution](gewdiff_geometric_enhanced_wavelet-based_diffusion_model_for_hyperspectral_image.md)
+
+<!-- RELATED:END -->

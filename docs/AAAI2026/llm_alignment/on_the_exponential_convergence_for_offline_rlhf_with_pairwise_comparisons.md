@@ -128,3 +128,15 @@ $$\hat{r}_{k,i,j} = \sum_{k',i',j'} w^{(k,i,j)}_{k',i',j'} \log\frac{B^{CLP}_{k'
 ⭐⭐⭐⭐
 
 扎实的理论贡献，首次在离线RLHF成对比较问题中建立了指数收敛的完整图景（匹配的上下界）。局部最优权重的设计富有洞察力。不足在于假设较强（线性奖励+BTL模型）且缺乏实验验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Pairwise: Empowering LLM Alignment With Ranked Choice Modeling](../../ICLR2026/llm_alignment/beyond_pairwise_empowering_llm_alignment_with_ranked_choice_modeling.md)
+- [When Human Preferences Flip: An Instance-Dependent Robust Loss for RLHF](when_human_preferences_flip_an_instance-dependent_robust_loss_for_rlhf.md)
+- [DeCoRL: Decoupling Reasoning Chains via Parallel Sub-Step Generation and Cascaded Reinforcement for Interpretable and Scalable RLHF](decorl_decoupling_reasoning_chains_via_parallel_sub-step_gen.md)
+- [General Exploratory Bonus for Optimistic Exploration in RLHF](../../ICLR2026/llm_alignment/general_exploratory_bonus_for_optimistic_exploration_in_rlhf.md)
+- [Unifying Stable Optimization and Reference Regularization in RLHF (DAR)](../../ICLR2026/llm_alignment/unifying_stable_optimization_and_reference_regularization_in_rlhf.md)
+
+<!-- RELATED:END -->

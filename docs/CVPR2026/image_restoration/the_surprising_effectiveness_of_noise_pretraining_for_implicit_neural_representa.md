@@ -141,3 +141,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 覆盖多种噪声类型、多个数据集、多个任务、多种可解释性分析，实验设计极为系统
 - **写作质量**: ⭐⭐⭐⭐⭐ — 叙事流畅、图表直观、从实验到机理解释的逻辑链完整
 - **价值**: ⭐⭐⭐⭐ — 对 INR 社区有深远的理论指导意义，实用价值在数据缺乏的科学成像场景尤为突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PNG: Diffusion-Based sRGB Real Noise Generation via Prompt-Driven Noise Representation Learning](diffusion-based_srgb_real_noise_generation_via_prompt-driven_noise_representatio.md)
+- [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](../../NeurIPS2025/image_restoration/implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
+- [Learning to Translate Noise for Robust Image Denoising](learning_to_translate_noise_for_robust_image_denoising.md)
+- [NEC-Diff: Noise-Robust Event–RAW Complementary Diffusion for Seeing Motion in Extreme Darkness](nec-diff_noise-robust_event-raw_complementary_diffusion_for_seeing_motion_in_ext.md)
+- [DiffusionBlocks: Block-wise Neural Network Training via Diffusion Interpretation](../../ICLR2026/image_restoration/diffusionblocks_block-wise_neural_network_training_via_diffusion_interpretation.md)
+
+<!-- RELATED:END -->

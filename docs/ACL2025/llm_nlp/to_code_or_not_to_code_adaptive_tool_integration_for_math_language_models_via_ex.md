@@ -135,3 +135,15 @@ ToRA和Mammoth是早期CoT-Code混合方法的代表，但都依赖SFT从curated
 - 实验充分度: 7/10 — 消融充分但benchmark主要为数学，跨领域泛化和与o1类模型的对比缺失
 - 写作质量: 8/10 — 动机清晰，数学推导完整，可视化（Figure 5/6）说服力强
 - 价值: 8/10 — 为LLM自主工具使用提供了可行且高效的训练框架，实际提升显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models](toolcoder_code_empowered_tool_learning.md)
+- [OpenCoder: The Open Cookbook for Top-Tier Code Large Language Models](opencoder_the_open_cookbook_for_top-tier_code_large_language_models.md)
+- [Interactive and Expressive Code-Augmented Planning with Large Language Models](interactive_and_expressive_code-augmented_planning_with_large_language_models.md)
+- [STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing](stem-pom_evaluating_language_models_math-symbol_reasoning_in_document_parsing.md)
+- [WarriorCoder: Learning from Expert Battles to Augment Code Large Language Models](warriorcoder_learning_from_expert_battles_to_augment_code_large_language_models.md)
+
+<!-- RELATED:END -->

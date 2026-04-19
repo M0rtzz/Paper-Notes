@@ -153,3 +153,15 @@ $$\mathcal{L} = \mathcal{L}_{MAE} + \lambda_{Con} \cdot \mathcal{L}_{Con} + \lam
 - 实验充分度: ⭐⭐⭐⭐ — 6个数据集 + 充分消融 + 可视化分析
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰，图示直观
 - 价值: ⭐⭐⭐⭐ — 提出的 SSDL 模块具有广泛的即插即用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DBLoss: Decomposition-based Loss Function for Time Series Forecasting](dbloss_decomposition-based_loss_function_for_time_series_forecasting.md)
+- [Self-Supervised Learning of Graph Representations for Network Intrusion Detection](self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)
+- [FutureSightDrive: Thinking Visually with Spatio-Temporal CoT for Autonomous Driving](futuresightdrive_thinking_visually_with_spatiotemporal_cot_f.md)
+- [ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset](chronograph_a_real-world_graph-based_multivariate_time_series_dataset.md)
+- [Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection](../../ECCV2024/autonomous_driving/equivariant_spatio-temporal_self-supervision_for_lidar_object_detection.md)
+
+<!-- RELATED:END -->

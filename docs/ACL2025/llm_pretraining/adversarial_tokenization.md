@@ -117,3 +117,15 @@ Pipeline 分为三步：
 - 实验充分度: ⭐⭐⭐⭐ 覆盖3个SOTA LLM和多个数据集，但细节受限于论文篇幅（SRW）
 - 写作质量: ⭐⭐⭐⭐ 问题表述清晰，motivation compelling
 - 价值: ⭐⭐⭐⭐⭐ 揭示了安全对齐的系统性盲区，对LLM安全社区有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Splintering Nonconcatenative Languages for Better Tokenization](splintering_nonconcatenative_languages_for_better_tokenization.md)
+- [Tokenization is Sensitive to Language Variation](tokenization_is_sensitive_to_language_variation.md)
+- [Incorporating Domain Knowledge into Materials Tokenization](incorporating_domain_knowledge_into_materials_tokenization.md)
+- [Differentiable Hierarchical Visual Tokenization](../../NeurIPS2025/llm_pretraining/differentiable_hierarchical_visual_tokenization.md)
+- [On the Clean Generalization and Robust Overfitting in Adversarial Training from Two Theoretical Views: Representation Complexity and Training Dynamics](../../ICML2025/llm_pretraining/on_the_clean_generalization_and_robust_overfitting_in_adversarial_training_from_.md)
+
+<!-- RELATED:END -->

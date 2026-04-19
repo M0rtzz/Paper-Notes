@@ -129,3 +129,15 @@ $$U_k(Y) = P_k^\top \begin{bmatrix} Y & 0 \\ 0 & I_{n-r} \end{bmatrix} P_k, \qua
 - 实验充分度: ⭐⭐⭐ — 合成任务验证充分，但缺少大规模实际应用
 - 写作质量: ⭐⭐⭐⭐⭐ — 理论推导完整，框架清晰，包含统一性分析
 - 价值: ⭐⭐⭐⭐ — 为大规模正交约束优化提供了可扩展的新工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)
+- [Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures](randomized_dimensionality_reduction_for_euclidean_maximization_and_diversity_mea.md)
+- [TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification](../../ACL2025/others/taclr_a_scalable_and_efficient_retrieval-based_method_for_industrial_product_att.md)
+- [Divide-Then-Aggregate: An Efficient Tool Learning Method via Parallel Tool Invocation](../../ACL2025/others/dta_llama_parallel_tool_invocation.md)
+- [K²IE: Kernel Method-based Kernel Intensity Estimators for Inhomogeneous Poisson Processes](k2ie_kernel_method-based_kernel_intensity_estimators_for_inhomogeneous_poisson_p.md)
+
+<!-- RELATED:END -->

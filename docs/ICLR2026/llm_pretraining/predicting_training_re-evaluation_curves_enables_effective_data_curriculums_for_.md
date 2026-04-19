@@ -163,3 +163,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ (600+ TRECs，111M到3.9B，多调度多超参)
 - 写作质量: ⭐⭐⭐⭐⭐ (逻辑清晰，层层递进，图表精美)
 - 价值: ⭐⭐⭐⭐⭐ (对LLM训练的数据策略有直接实践指导意义)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Model Performance-Guided Evaluation Data Selection for Effective Prompt Optimization](../../ACL2025/llm_pretraining/model_performance-guided_evaluation_data_selection_for_effective_prompt_optimiza.md)
+- [Towards Effective and Efficient Continual Pre-training of Large Language Models](../../ACL2025/llm_pretraining/towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [A Law of Data Reconstruction for Random Features (and Beyond)](a_law_of_data_reconstruction_for_random_features_and_beyond.md)
+- [Common Corpus: The Largest Collection of Ethical Data for LLM Pre-Training](common_corpus_ethical_data_for_llm_pretraining.md)
+- [Intrinsic Training Dynamics of Deep Neural Networks](intrinsic_training_dynamics_of_deep_neural_networks.md)
+
+<!-- RELATED:END -->

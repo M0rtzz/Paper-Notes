@@ -125,3 +125,15 @@ SITH 在不牺牲安全查询性能的前提下，通过权重编辑抑制 NSFW 
 - 实验充分度: ⭐⭐⭐⭐⭐ 可解释性验证+权重编辑应用+微调分析，实验全面
 - 写作质量: ⭐⭐⭐⭐⭐ 图表精美，概念清晰，从方法到应用层层递进
 - 价值: ⭐⭐⭐⭐ 对理解 VLM 内部机制有重要贡献，权重编辑应用有实用性但效果幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](../../NeurIPS2025/interpretability/beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+- [Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
+- [Cut to the Chase: Training-free Multimodal Summarization via Chain-of-Events](cut_to_the_chase_training-free_multimodal_summarization_via_chain-of-events.md)
+- [SubspaceAD: Training-Free Few-Shot Anomaly Detection via Subspace Modeling](subspacead_training-free_few-shot_anomaly_detection_via_subspace_modeling.md)
+- [Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](../../ICLR2026/interpretability/exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+
+<!-- RELATED:END -->

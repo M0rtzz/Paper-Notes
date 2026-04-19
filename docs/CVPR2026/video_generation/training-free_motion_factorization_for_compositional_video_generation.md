@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 自建 benchmark 覆盖多种语言模式，消融详尽，但缺少与 SOTA 商业模型的对比
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，公式完整，但符号定义较多
 - 价值: ⭐⭐⭐⭐ 免训练+架构无关的特性使其实用性强，运动分解思路有普适性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SwitchCraft: Training-Free Multi-Event Video Generation with Attention Controls](switchcraft_training-free_multi-event_video_generation_with_attention_controls.md)
+- [LAMP: Language-Assisted Motion Planning for Controllable Video Generation](lamp_language-assisted_motion_planning_for_controllable_video_generation.md)
+- [Free-Lunch Long Video Generation via Layer-Adaptive O.O.D Correction](free-lunch_long_video_generation_via_layer-adaptive_ood_correction.md)
+- [SWIFT: Sliding Window Reconstruction for Few-Shot Training-Free Generated Video Attribution](swift_sliding_window_reconstruction_for_few-shot_training-free_generated_video_a.md)
+- [When to Lock Attention: Training-Free KV Control in Video Diffusion](when_to_lock_attention_training-free_kv_control_in_video_diffusion.md)
+
+<!-- RELATED:END -->

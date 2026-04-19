@@ -105,3 +105,15 @@ MAC-Ego3D 由三大核心组件构成：(1) 各智能体独立运行的基于 3D
 - 动态场景（移动物体）的处理未详细讨论——动态高斯可能在共识融合中引起冲突
 - 通信延迟和带宽限制在真实网络环境中的影响需要实际验证
 - 目前仅验证了室内/小型户外场景，城市尺度的大规模协作重建能力有待检验
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots](mne-slam_multi-agent_neural_slam_for_mobile_robots.md)
+- [MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM](magic-slam_multi-agent_gaussian_globally_consistent_slam.md)
+- [Estimating Body and Hand Motion in an Ego-sensed World](estimating_body_and_hand_motion_in_an_ego-sensed_world.md)
+- [ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration](colabsfm_collaborative_structure-from-motion_by_point_cloud_registration.md)
+- [MASt3R-SLAM: Real-Time Dense SLAM with 3D Reconstruction Priors](mast3r-slam_real-time_dense_slam_with_3d_reconstruction_priors.md)
+
+<!-- RELATED:END -->

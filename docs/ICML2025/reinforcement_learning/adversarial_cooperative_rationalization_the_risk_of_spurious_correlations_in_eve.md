@@ -91,3 +91,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 文本+图，多架构
 - 写作质量: ⭐⭐⭐⭐ 分析深入
 - 价值: ⭐⭐⭐⭐ 对可解释AI研究有重要警示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Cooperative Multi-Agent Reinforcement Learning with State Modelling and Adversarial Exploration](enhancing_cooperative_multi-agent_reinforcement_learning_with_state_modelling_an.md)
+- [Learning to Clean: Reinforcement Learning for Noisy Label Correction](../../NeurIPS2025/reinforcement_learning/learning_to_clean_reinforcement_learning_for_noisy_label_correction.md)
+- [Risk-Averse Total-Reward Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/risk-averse_total-reward_reinforcement_learning.md)
+- [Learning to Incentivize in Repeated Principal-Agent Problems with Adversarial Agent Arrivals](learning_to_incentivize_in_repeated_principal-agent_problems_with_adversarial_ag.md)
+- [Risk-Averse Constrained Reinforcement Learning with Optimized Certainty Equivalents](../../NeurIPS2025/reinforcement_learning/risk-averse_constrained_reinforcement_learning_with_optimized_certainty_equivale.md)
+
+<!-- RELATED:END -->

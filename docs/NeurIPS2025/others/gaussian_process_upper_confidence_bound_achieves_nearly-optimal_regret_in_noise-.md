@@ -124,3 +124,15 @@ GP-UCB在每步选择使 $\mu(\bm{x}; \mathbf{X}_{t-1}) + \beta^{1/2}\sigma(\bm{
 - 实验充分度: ⭐⭐⭐ 理论为主，实验仅为验证性
 - 写作质量: ⭐⭐⭐⭐⭐ 定理陈述清晰，证明结构严谨
 - 价值: ⭐⭐⭐⭐⭐ 对GP bandit和贝叶斯优化理论有重要推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reward Redistribution via Gaussian Process Likelihood Estimation](../../AAAI2026/others/reward_redistribution_via_gaussian_process_likelihood_estimation.md)
+- [Optimism Without Regularization: Constant Regret in Zero-Sum Games](optimism_without_regularization_constant_regret_in_zero-sum_games.md)
+- [4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)
+- [Coresets for Clustering Under Stochastic Noise](coresets_for_clustering_under_stochastic_noise.md)
+- [Intuitive Fine-Tuning: Towards Simplifying Alignment into a Single Process](../../ACL2025/others/intuitive_fine_tuning.md)
+
+<!-- RELATED:END -->

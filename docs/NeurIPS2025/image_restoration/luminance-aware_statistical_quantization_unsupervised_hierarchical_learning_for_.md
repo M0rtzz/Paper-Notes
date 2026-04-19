@@ -165,3 +165,15 @@ LASQ 在保持扩散模型性能优势的同时，推理效率接近非扩散方
 - 实验充分度: ⭐⭐⭐⭐ 配对/无参考/消融/计算效率/超参数敏感性全面覆盖
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，物理直觉清晰，但数学符号略显密集
 - 价值: ⭐⭐⭐⭐⭐ 无监督+物理驱动+泛化强，对实际部署（无需配对数据）有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Outlier-Aware Post-Training Quantization for Image Super-Resolution](../../ICCV2025/image_restoration/outlier-aware_post-training_quantization_for_image_super-resolution.md)
+- [Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)](../../ICCV2025/image_restoration/low-light_image_enhancement_using_event-based_illumination_estimation.md)
+- [ICLR: Inter-Chrominance and Luminance Interaction for Natural Color Restoration in Low-Light Image Enhancement](../../AAAI2026/image_restoration/iclr_inter-chrominance_and_luminance_interaction_for_natural_color_restoration_i.md)
+- [ProtoTS: Learning Hierarchical Prototypes for Explainable Time Series Forecasting](../../ICLR2026/image_restoration/protots_learning_hierarchical_prototypes_for_explainable_time_series_forecasting.md)
+- [A Flag Decomposition for Hierarchical Datasets](../../CVPR2025/image_restoration/a_flag_decomposition_for_hierarchical_datasets.md)
+
+<!-- RELATED:END -->

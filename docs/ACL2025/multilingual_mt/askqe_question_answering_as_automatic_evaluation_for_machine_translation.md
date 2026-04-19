@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 控制实验(ContraTICO)+真实错误(BioMQM)+5语言对+15配置+决策模拟
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，实际场景驱动，图2的框架图极清晰
 - 价值: ⭐⭐⭐⭐⭐ 对高风险翻译场景有直接实用价值，可操作性远超现有 QE
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MTVQA: Benchmarking Multilingual Text-Centric Visual Question Answering](mtvqa_benchmarking_multilingual_text-centric_visual_question_answering.md)
+- [Has Machine Translation Evaluation Achieved Human Parity?](mt_eval_human_parity.md)
+- [M-MAD: Multidimensional Multi-Agent Debate for Advanced Machine Translation Evaluation](m-mad_multidimensional_multi-agent_debate_for_advanced_machine_translation_evalu.md)
+- [Alleviating Distribution Shift in Synthetic Data for Machine Translation Quality Estimation](alleviating_distribution_shift_in_synthetic_data_for_machine_translation_quality.md)
+- [Unveiling the Power of Source: Source-based Minimum Bayes Risk Decoding for Neural Machine Translation](unveiling_the_power_of_source_source-based_minimum_bayes_risk_decoding_for_neura.md)
+
+<!-- RELATED:END -->

@@ -183,3 +183,15 @@ Co-EPG是一个自迭代训练框架，核心是建立Planning和Grounding之间
 - 实验充分度: ⭐⭐⭐⭐ 在Web/Mobile/Desktop三个benchmark上验证，消融实验覆盖了主要组件，但缺少trajectory-level评估和在线交互实验
 - 写作质量: ⭐⭐⭐⭐ 整体逻辑清晰，框架图易懂，公式推导完整。但Section 4与Table 1的排版位置有些混乱
 - 实用价值: ⭐⭐⭐⭐ 数据效率高是很大的优点，但GRPO训练需要多个大模型做奖励评估，部署门槛较高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards GUI Agents: Vision-Language Diffusion Models for GUI Grounding](../../CVPR2026/llm_agent/towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)
+- [History-Aware Reasoning for GUI Agents](history-aware_reasoning_for_gui_agents.md)
+- [D-GARA: A Dynamic Benchmarking Framework for GUI Agent Robustness in Real-World Anomalies](d-gara_a_dynamic_benchmarking_framework_for_gui_agent_robust.md)
+- [TongUI: Internet-Scale Trajectories from Multimodal Web Tutorials for Generalized GUI Agents](tongui_internet-scale_trajectories_from_multimodal_web_tutor.md)
+- [Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction](../../ICML2025/llm_agent/aguvis_unified_pure_vision_agents_for_autonomous_gui_interaction.md)
+
+<!-- RELATED:END -->

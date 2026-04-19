@@ -94,3 +94,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅模拟数据
 - 写作质量: ⭐⭐⭐⭐ 因果动机清晰
 - 价值: ⭐⭐⭐⭐ 对科学基础模型有重要方法论启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MapEval: A Map-Based Evaluation of Geo-Spatial Reasoning in Foundation Models](mapeval_a_map-based_evaluation_of_geo-spatial_reasoning_in_foundation_models.md)
+- [Mass Conservation on Rails – Rethinking Physics-Informed Learning of Ice Flow Vector Fields](../../NeurIPS2025/remote_sensing/mass_conservation_on_rails_--_rethinking_physics-informed_learning_of_ice_flow_v.md)
+- [Towards a Unified Copernicus Foundation Model for Earth Vision](../../ICCV2025/remote_sensing/towards_a_unified_copernicus_foundation_model_for_earth_visi.md)
+- [Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models](../../NeurIPS2025/remote_sensing/connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)
+- [GeoLink: Empowering Remote Sensing Foundation Model with OpenStreetMap Data](../../NeurIPS2025/remote_sensing/geolink_empowering_remote_sensing_foundation_model_with_openstreetmap_data.md)
+
+<!-- RELATED:END -->

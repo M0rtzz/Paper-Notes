@@ -178,3 +178,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 消融覆盖 6 个设计维度、6+ 基准、3 种架构，含成本分析和样本效率曲线
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，表格丰富，结论逐条可操作，易于复现
 - **价值**: ⭐⭐⭐⭐ — 对立体匹配社区的数据工程实践有直接指导意义，开源代码进一步放大影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [WMGStereo: What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?](what_makes_good_synthetic_training_data_for_zerosh.md)
+- [Lite Any Stereo: Efficient Zero-Shot Stereo Matching](lite_any_stereo_efficient_zero-shot_stereo_matching.md)
+- [PromptStereo: Zero-Shot Stereo Matching via Structure and Motion Prompts](promptstereo_zero-shot_stereo_matching_via_structure_and_motion_prompts.md)
+- [PIP-Stereo: Progressive Iterations Pruner for Iterative Optimization based Stereo Matching](pip-stereo_progressive_iterations_pruner_for_iterative_optimization_based_stereo.md)
+- [Generalized Geometry Encoding Volume for Real-time Stereo Matching](../../AAAI2026/3d_vision/generalized_geometry_encoding_volume_for_real-time_stereo_matching.md)
+
+<!-- RELATED:END -->

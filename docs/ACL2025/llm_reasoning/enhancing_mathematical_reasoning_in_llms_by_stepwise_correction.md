@@ -127,3 +127,15 @@ StepCo的工作流程：
 - 实验充分度: ⭐⭐⭐⭐⭐ 8个数学基准+2个非数学任务，3种LLM后端，多种消融和分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机阐述clear，方法描述严谨，实验分析深入
 - 价值: ⭐⭐⭐⭐ 实用性强，77.8%的token节省对实际部署有直接意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification](safe_math_reasoning.md)
+- [BPP-Search: Enhancing Tree of Thought Reasoning for Mathematical Modeling Problem Solving](bpp-search_enhancing_tree_of_thought_reasoning_for_mathematical_modeling_problem.md)
+- [Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models](chain-of-reasoning_towards_unified_mathematical_reasoning_in_large_language_mode.md)
+- [Linguistic Generalizability of Test-Time Scaling in Mathematical Reasoning](mclm_multilingual_test_time_scaling.md)
+- [ClozeMath: Improving Mathematical Reasoning in Language Models by Learning to Fill Equations](clozemath_improving_mathematical_reasoning_in_language_models_by_learning_to_fil.md)
+
+<!-- RELATED:END -->

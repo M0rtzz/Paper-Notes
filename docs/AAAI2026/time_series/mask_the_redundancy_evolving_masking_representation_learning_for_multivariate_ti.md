@@ -91,3 +91,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{contra} + \alpha \mathcal{L}_{intra} + \bet
 - 实验充分度: ⭐⭐⭐⭐ — 15 数据集、8 对比方法、多组消融，覆盖全面
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图示直观，公式表达规范
 - 价值: ⭐⭐⭐⭐ — 为 MTS 冗余抑制提供了有效的动态方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Abstain Mask Retain Core: Time Series Prediction by Adaptive Masking Loss with Representation Consistency](../../NeurIPS2025/time_series/abstain_mask_retain_core_time_series_prediction_by_adaptive.md)
+- [C3RL: Rethinking the Combination of Channel-independence and Channel-mixing from Representation Learning](c3rl_rethinking_the_combination_of_channel-independence_and_channel-mixing_from_.md)
+- [GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data](../../ICLR2026/time_series/gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)
+- [iTimER: Reconstruction Error-Guided Irregularly Sampled Time Series Representation Learning](beyond_observations_reconstruction_error-guided_irregularly_sampled_time_series_.md)
+- [PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](../../ICLR2026/time_series/paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
+
+<!-- RELATED:END -->

@@ -147,3 +147,15 @@ UNO 基于 FLUX.1 dev（MM-DiT 架构），包含两大核心系统：(1) 合成
 - 实验充分度: ⭐⭐⭐⭐ 单/多主体评测全面，消融详细，但缺少更多主体(>2)的评估
 - 写作质量: ⭐⭐⭐⭐ 方法阐述清晰，但数据管道部分稍显冗长
 - 价值: ⭐⭐⭐⭐⭐ 开源代码，实用性强，ByteDance 的商业级方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Less is More: Improving Motion Diffusion Models with Sparse Keyframes](less_is_more_improving_motion_diffusion_models_with_sparse_keyframes.md)
+- [Erasing More Than Intended? How Concept Erasure Degrades the Generation of Non-Target Concepts](erasing_more_than_intended_how_concept_erasure_degrades_the_generation_of_non-ta.md)
+- [VisualCloze: A Universal Image Generation Framework via Visual In-Context Learning](visualcloze_a_universal_image_generation_framework_via_visua.md)
+- [Unlocking the Potential of Diffusion Priors in Blind Face Restoration](unlocking_the_potential_of_diffusion_priors_in_blind_face_restoration.md)
+- [BVINet: Unlocking Blind Video Inpainting with Zero Annotations](bvinet_unlocking_blind_video_inpainting_with_zero_annotations.md)
+
+<!-- RELATED:END -->

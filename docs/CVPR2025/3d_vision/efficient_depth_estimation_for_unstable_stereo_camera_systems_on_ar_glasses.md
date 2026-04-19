@@ -120,3 +120,15 @@ tags: ["深度估计", "AR眼镜", "立体匹配", "代价体积", "3D视觉"]
 ## 评分
 
 ⭐⭐⭐⭐ — 工程价值极高，系统性延迟分析+针对性优化的思路值得借鉴；多任务单应性估计消除预处理的方案新颖实用。但理论创新有限，更多是将已有技术（LayerNorm、多头注意力、单应性）巧妙组合。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera](depth_any_camera_zero-shot_metric_depth_estimation_from_any_camera.md)
+- [DEFOM-Stereo: Depth Foundation Model Based Stereo Matching](defom-stereo_depth_foundation_model_based_stereo_matching.md)
+- [Blurry-Edges: Photon-Limited Depth Estimation from Defocused Boundaries](blurry-edges_photon-limited_depth_estimation_from_defocused_boundaries.md)
+- [3D Visual Illusion Depth Estimation](../../NeurIPS2025/3d_vision/3d_visual_illusion_depth_estimation.md)
+- [RePoseD: Efficient Relative Pose Estimation with Known Depth Information](../../ICCV2025/3d_vision/reposed_efficient_relative_pose_estimation_with_known_depth_information.md)
+
+<!-- RELATED:END -->

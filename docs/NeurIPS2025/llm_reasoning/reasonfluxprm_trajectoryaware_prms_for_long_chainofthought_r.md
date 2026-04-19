@@ -126,3 +126,15 @@ ReasonFlux-PRM 发现现有 PRM 无法有效评估推理模型的中间思考轨
 - 实验充分度: ⭐⭐⭐⭐⭐ 离线/在线/测试时三场景 + 消融 + 效率分析 + 案例研究 + 端到端验证
 - 写作质量: ⭐⭐⭐⭐ 问题分析清晰，三个 Takeaway 很有说服力
 - 价值: ⭐⭐⭐⭐⭐ 直接解决了推理模型时代 PRM 的核心问题，7B 模型即开源可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DRT: Deep Reasoning Translation via Long Chain-of-Thought](../../ACL2025/llm_reasoning/drt_deep_reasoning_translation_via_long_chain-of-thought.md)
+- [Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](../../ACL2025/llm_reasoning/can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)
+- [Let Me Think! A Long Chain-of-Thought Can Be Worth Exponentially Many Short Ones](let_me_think_a_long_chainofthought_can_be_worth_exponentiall.md)
+- [Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)
+- [TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning](../../ACL2025/llm_reasoning/tract_regression_cot.md)
+
+<!-- RELATED:END -->

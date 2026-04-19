@@ -177,3 +177,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 五种基线方法 × 三个数据集的全面验证，Dropout 概率、噪声尺度、推理策略的详细消融，训练动态分析，视觉对比均非常充分。
 - 写作质量: ⭐⭐⭐⭐⭐ 从现象观察到度量定义到策略设计到实验验证的逻辑链条极其清晰，Figure 2 的 co-adaptation 可视化解释直观易懂。
 - 价值: ⭐⭐⭐⭐ 提出的 co-adaptation 视角和 CA 指标对理解和改进稀疏视角 3DGS 有概念性贡献，两种即插即用策略实用性强且集成成本极低，但长远影响取决于社区是否围绕这一概念发展更高级的缓解机制。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization](../../ECCV2024/3d_vision/cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization.md)
+- [Metropolis-Hastings Sampling for 3D Gaussian Reconstruction](metropolis-hastings_sampling_for_3d_gaussian_reconstruction.md)
+- [VA-GS: Enhancing the Geometric Representation of Gaussian Splatting via View Alignment](va-gs_enhancing_the_geometric_representation_of_gaussian_splatting_via_view_alig.md)
+- [MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images](../../ECCV2024/3d_vision/mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)
+- [DropGaussian: Structural Regularization for Sparse-view Gaussian Splatting](../../CVPR2025/3d_vision/dropgaussian_structural_regularization_for_sparse-view_gaussian_splatting.md)
+
+<!-- RELATED:END -->

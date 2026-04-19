@@ -149,3 +149,15 @@ Rollout 数量缩放分析（M-GRPO+IQR）：
 - 实验充分度: ⭐⭐⭐⭐ 多 benchmark、多规模验证，缩放分析完整
 - 写作质量: ⭐⭐⭐⭐ 问题阐述清晰，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 解决了 SS-RLVR 中的关键实践障碍，对 LLM 自进化训练意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models](../../CVPR2026/object_detection/neighbor_grpo_contrastive_ode_policy_optimization_aligns_flow_models.md)
+- [XIFBench: Evaluating Large Language Models on Multilingual Instruction Following](xifbench_evaluating_large_language_models_on_multilingual_instruction_following.md)
+- [SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs](sstag_structure-aware_self-supervised_learning_method_for_text-attributed_graphs.md)
+- [Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection](../../CVPR2025/object_detection/large_self-supervised_models_bridge_the_gap_in_domain_adaptive_object_detection.md)
+- [Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning](sample_complexity_of_distributionally_robust_average-reward_reinforcement_learni.md)
+
+<!-- RELATED:END -->

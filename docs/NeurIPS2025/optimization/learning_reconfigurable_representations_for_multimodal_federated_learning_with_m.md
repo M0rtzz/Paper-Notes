@@ -143,3 +143,15 @@ PEPSY 在严重数据不完整情况下性能提升最为显著：
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集、多种缺失配置的系统对比，但缺少更多领域验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，理论分析扎实，符号体系一致
 - 价值: ⭐⭐⭐⭐ 解决了MMFL中一个重要且实际的问题，36.45%的提升说明了方法的有效性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Streaming Federated Learning with Markovian Data](streaming_federated_learning_with_markovian_data.md)
+- [Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data](../../ICCV2025/optimization/federated_prompt-tuning_with_heterogeneous_and_incomplete_multimodal_client_data.md)
+- [Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients](efficient_federated_learning_against_byzantine_attacks_and_data_heterogeneity_vi.md)
+- [Personalized Subgraph Federated Learning with Differentiable Auxiliary Projections](personalized_subgraph_federated_learning_with_differentiable_auxiliary_projectio.md)
+- [Multiplayer Federated Learning: Reaching Equilibrium with Less Communication](multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)
+
+<!-- RELATED:END -->

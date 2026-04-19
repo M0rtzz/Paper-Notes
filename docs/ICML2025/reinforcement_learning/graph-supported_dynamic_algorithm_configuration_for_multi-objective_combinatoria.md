@@ -140,3 +140,15 @@ $$\Delta_{\text{current}} = \frac{HV_{\text{current}} - HV_{\text{initial}}}{HV_
 - 实验充分度: ⭐⭐⭐⭐ — 两类问题、多种规模、泛化实验、MOPSO 适配、消融研究，较为全面
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、方法描述完整、图示直观
 - 价值: ⭐⭐⭐⭐ — 为 MOEA 在组合优化中的自动配置提供了实用且可泛化的方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sequential Multi-Agent Dynamic Algorithm Configuration](../../NeurIPS2025/reinforcement_learning/sequential_multi-agent_dynamic_algorithm_configuration.md)
+- [DCcluster-Opt: Benchmarking Dynamic Multi-Objective Optimization for Geo-Distributed Data Center Workloads](../../NeurIPS2025/reinforcement_learning/dccluster-opt_benchmarking_dynamic_multi-objective_optimization_for_geo-distribu.md)
+- [Meta-Black-Box-Optimization through Offline Q-function Learning (Q-Mamba)](meta-black-box-optimization_through_offline_q-function_learning.md)
+- [Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning](graph-assisted_stitching_for_offline_hierarchical_reinforcement_learning.md)
+- [Wasserstein Policy Optimization](wasserstein_policy_optimization.md)
+
+<!-- RELATED:END -->

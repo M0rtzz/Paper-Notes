@@ -206,3 +206,15 @@ In-context 示例数量的影响（以 Depth→Image 为例）：
 - **实验充分性**: ⭐⭐⭐⭐ — 覆盖条件生成、修复、风格迁移、主体驱动四类任务，含 dev vs fill 的关键消融
 - **实用性**: ⭐⭐⭐⭐⭐ — 基于 FLUX.1-Fill-dev 的 LoRA 微调，工程成本极低，LoRA 可组合使用
 - **总评**: ⭐⭐⭐⭐⭐ — 定义了 universal image generation 的新范式，Graph200K 数据集和 Visual ICL 方法论均有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pretrained Reversible Generation as Unsupervised Visual Representation Learning](pretrained_reversible_generation_as_unsupervised_visual_representation_learning.md)
+- [Golden Noise for Diffusion Models: A Learning Framework](golden_noise_for_diffusion_models_a_learning_framework.md)
+- [Less-to-More Generalization: Unlocking More Controllability by In-Context Generation](less-to-more_generalization_unlocking_more_controllability_by_in-context_generat.md)
+- [A Unified Framework for Motion Reasoning and Generation in Human Interaction](a_unified_framework_for_motion_reasoning_and_generation_in_human_interaction.md)
+- [OminiControl: Minimal and Universal Control for Diffusion Transformer](ominicontrol_minimal_and_universal_control_for_diffusion_transformer.md)
+
+<!-- RELATED:END -->

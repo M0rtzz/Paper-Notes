@@ -134,3 +134,15 @@ Banana100 通过让 Nano Banana Pro 迭代复制图像 100 次来系统性研究
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个模型 × 23 种指标 × 多种编辑方式，覆盖极为全面
 - 写作质量: ⭐⭐⭐⭐ 分类清晰，案例丰富，但论文结构略散
 - 价值: ⭐⭐⭐⭐⭐ 对整个图像生成和评估生态系统有重要警示意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ReNoise: Real Image Inversion Through Iterative Noising](../../ECCV2024/image_generation/renoise_real_image_inversion_through_iterative_noising.md)
+- [Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation](../../NeurIPS2025/image_generation/evaluating_the_evaluators_metrics_for_compositional_text-to-image_generation.md)
+- [Test-Time Iterative Error Correction for Efficient Diffusion Models](../../ICLR2026/image_generation/test-time_iterative_error_correction_for_efficient_diffusion_models.md)
+- [Breaking the Modality Barrier: Generative Modeling for Accurate Molecule Retrieval from Mass Spectra](../../AAAI2026/image_generation/breaking_the_modality_barrier_generative_modeling_for_accurate_molecule_retrieva.md)
+- [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](../../NeurIPS2025/image_generation/equivariant_flow_matching_for_symmetry-breaking_bifurcation_problems.md)
+
+<!-- RELATED:END -->

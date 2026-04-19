@@ -119,3 +119,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ — 在可穿戴行为数据基础模型的空白领域做了重要奠基。数据规模和任务覆盖面（57 项任务）出色。系统化 tokenizer×架构消融对从业者极有参考价值。主要遗憾在于数据和模型不可公开。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [TabSTAR: A Tabular Foundation Model for Tabular Data with Text Fields](../../NeurIPS2025/self_supervised/tabstar_a_tabular_foundation_model_for_tabular_data_with_text_fields.md)
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [TabArena: A Living Benchmark for Machine Learning on Tabular Data](../../NeurIPS2025/self_supervised/tabarena_a_living_benchmark_for_machine_learning_on_tabular_data.md)
+- [What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models](what_has_a_foundation_model_found_using_inductive_bias_to_probe_for_world_models.md)
+
+<!-- RELATED:END -->

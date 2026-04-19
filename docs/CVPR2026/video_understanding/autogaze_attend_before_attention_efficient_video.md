@@ -276,3 +276,15 @@ AutoGaze 由卷积编码器和自回归 Transformer 解码器组成，仅 3M 参
 - 实验充分度: ⭐⭐⭐⭐⭐ 行为分析+效率测试+基准对比+消融+OOD测试+新基准
 - 写作质量: ⭐⭐⭐⭐⭐ 图表精美，直觉清晰，人类注视的类比恰到好处
 - 实用价值: ⭐⭐⭐⭐⭐ 直接解决MLLM处理长高分辨率视频的核心瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Attend Before Attention: Efficient and Scalable Video Understanding via Autoregressive Gazing](attend_before_attention_efficient_and_scalable_video_understanding_via_autoregre.md)
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](streamingtom_streaming_token_compression_video.md)
+- [TrajTok: Learning Trajectory Tokens Enhances Video Understanding](trajtok_trajectory_token_video_understanding.md)
+- [Understanding Temporal Logic Consistency in Video-Language Models through Cross-Modal Attention Discriminability](understanding_temporal_logic_consistency_in_video-language_models_through_cross-.md)
+- [VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning](videochatm1_collaborative_policy_planning_for_vide.md)
+
+<!-- RELATED:END -->

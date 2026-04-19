@@ -112,3 +112,15 @@ MonoPlace3D在两个检测器上均大幅领先。注意Lift3D在GUPNet上反而
 ## 评分
 
 ⭐⭐⭐⭐ — 核心洞察深刻（放置>渲染），方法设计清晰，实验充分且说服力强，40%数据匹配全量数据的结果令人印象深刻。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MonoSAOD: Monocular 3D Object Detection with Sparsely Annotated Label](../../CVPR2026/3d_vision/monosaod_monocular_3d_object_detection_with_sparsely_annotated_label.md)
+- [MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection](../../AAAI2026/3d_vision/monoclue_object-aware_clustering_enhances_monocular_3d_object_detection.md)
+- [PlaceIt3D: Language-Guided Object Placement in Real 3D Scenes](../../ICCV2025/3d_vision/placeit3d_language-guided_object_placement_in_real_3d_scenes.md)
+- [Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection](learning_class_prototypes_for_unified_sparse-supervised_3d_object_detection.md)
+- [FSHNet: Fully Sparse Hybrid Network for 3D Object Detection](fshnet_fully_sparse_hybrid_network_for_3d_object_detection.md)
+
+<!-- RELATED:END -->

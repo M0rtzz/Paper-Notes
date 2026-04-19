@@ -114,3 +114,15 @@ tags:
 - **技术深度**: ★★★☆☆ — 以统计分析和 LLM 标注为主，无新模型或新算法
 - **实验充分性**: ★★★★☆ — 66.4 万条大规模数据 + 人工验证 + 多角度多粒度分析
 - **实用性**: ★★★★★ — 对社交平台虚假信息治理政策有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts](../../ICML2025/social_computing/defame_dynamic_evidence-based_fact-checking_with_multimodal_experts.md)
+- [Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System](../../AAAI2026/social_computing/fact2fiction_targeted_poisoning_attack_to_agentic_fact-check.md)
+- [Measuring Social Biases in Masked Language Models by Proxy of Prediction Quality](measuring_social_biases_in_masked_language_models_by_proxy_of_prediction_quality.md)
+- [HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter](hateday_global_hate_speech.md)
+- [BanStereoSet: A Dataset to Measure Stereotypical Social Biases in LLMs for Bangla](banstereoset_a_dataset_to_measure_stereotypical_social_biases_in_llms_for_bangla.md)
+
+<!-- RELATED:END -->

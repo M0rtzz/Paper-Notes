@@ -133,3 +133,15 @@ $$f_{k+1} = f_k - \epsilon \nabla_f D_{\text{KL}}(q_{[I+f]} \| p(\cdot|\mathcal{
 - 实验充分度: ⭐⭐⭐⭐ （19 数据集 × 9 基线，多指标）
 - 写作质量: ⭐⭐⭐⭐ （理论推导清晰，图示直观）
 - 价值: ⭐⭐⭐⭐ （贝叶斯推断+泛化理论的有意义融合）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces](function_encoders_a_principled_approach_to_transfer_learning_in_hilbert_spaces.md)
+- [Set-Valued Predictions for Robust Domain Generalization](set_valued_predictions_for_robust_domain_generalization.md)
+- [IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness](promoting_ensemble_diversity_with_interactive_bayesian_distributional_robustness.md)
+- [Bayesian Evaluation of Large Language Model Behavior](../../NeurIPS2025/llm_evaluation/bayesian_evaluation_of_large_language_model_behavior.md)
+- [Unlocking Post-hoc Dataset Inference with Synthetic Data](unlocking_post-hoc_dataset_inference_with_synthetic_data.md)
+
+<!-- RELATED:END -->

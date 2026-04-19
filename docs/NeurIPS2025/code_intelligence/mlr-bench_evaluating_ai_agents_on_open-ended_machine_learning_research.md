@@ -169,3 +169,15 @@ MLR-Bench 包含三个核心组件和两种评估模式：
 - 实验充分度: ⭐⭐⭐⭐ 6 个模型 ×201 任务的分步评估充分，但实验/写作步骤仅 10 个任务偏少
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，研究问题驱动，案例分析生动展示了失败模式
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 自动化科学发现的现状提供了清醒评估，对社区有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FEA-Bench: A Benchmark for Evaluating Repository-Level Code Generation for Feature Implementation](../../ACL2025/code_intelligence/feabench_repo_code_gen.md)
+- [UTBoost: Rigorous Evaluation of Coding Agents on SWE-Bench](../../ACL2025/code_intelligence/utboost_rigorous_evaluation_of_coding_agents_on_swe-bench.md)
+- [InnoGym: Benchmarking the Innovation Potential of AI Agents](../../ICLR2026/code_intelligence/innogym_benchmarking_the_innovation_potential_of_ai_agents.md)
+- [ShieldedCode: Learning Robust Representations for Virtual Machine Protected Code](../../ICLR2026/code_intelligence/shieldedcode_learning_robust_representations_for_virtual_machine_protected_code.md)
+- [Paper2Code: Automating Code Generation from Scientific Papers in Machine Learning](../../ICLR2026/code_intelligence/paper2code_automating_code_generation_from_scientific_papers_in_machine_learning.md)
+
+<!-- RELATED:END -->

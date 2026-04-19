@@ -117,3 +117,15 @@ NeuSA 将经典谱方法与 Neural ODE 结合，先将 PDE 投影到谱基（Fou
 - 实验充分度: ⭐⭐⭐⭐ 三类 PDE 五个基准全面评测，但缺乏大规模/复杂几何验证
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，方法动机清晰，figure质量高
 - 价值: ⭐⭐⭐⭐⭐ 为 PINN 领域提供了一个具有理论保证的新架构方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Causal-PIK: Causality-based Physical Reasoning with a Physics-Informed Kernel](../../ICML2025/scientific_computing/causal-pik_causality-based_physical_reasoning_with_a_physics-informed_kernel.md)
+- [Differentiable Stellar Atmospheres with Physics-Informed Neural Networks](../../ICML2025/scientific_computing/differentiable_stellar_atmospheres_with_physics-informed_neural_networks.md)
+- [Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding](physics-informed_neural_networks_with_fourier_features_and_attention-driven_deco.md)
+- [Astral: Training Physics-Informed Neural Networks with Error Majorants](../../ICLR2026/scientific_computing/astral_training_physics-informed_neural_networks_with_error_majorants.md)
+- [Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data](multi-trajectory_physics-informed_neural_networks_for_hjb_equations_with_hard-ze.md)
+
+<!-- RELATED:END -->

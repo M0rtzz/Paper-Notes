@@ -116,3 +116,15 @@ WSD 框架的核心思想是：用一个小型对齐模型（draft model）m 生
 - **实验充分度**: ⭐⭐⭐⭐⭐ 多模型、多基准、消融、可扩展性、时间效率、case study 全面覆盖
 - **写作质量**: ⭐⭐⭐⭐ 论述流畅，motivation 部分尤其精彩
 - **价值**: ⭐⭐⭐⭐ 实用价值高，低资源场景下的偏好对齐有广泛需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Synergistic Weak-Strong Collaboration by Aligning Preferences](synergistic_weak-strong_collaboration_by_aligning_preferences.md)
+- [Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling](understanding_cross-domain_adaptation_in_low-resource_topic_modeling.md)
+- [How to Mitigate Overfitting in Weak-to-Strong Generalization?](how_to_mitigate_overfitting_in_weak-to-strong_generalization.md)
+- [Revisiting Weak-to-Strong Generalization: Reverse KL vs. Forward KL](revisiting_weak-to-strong_generalization_in_theory_and_practice_reverse_kl_vs_fo.md)
+- [Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)
+
+<!-- RELATED:END -->

@@ -114,3 +114,15 @@ Focal reward 是唯一能掌握全部四个困难技能的方法。
 - 实验充分度: ⭐⭐⭐⭐ — 单任务/多任务/泛化的实验设计层层递进，消融充分
 - 写作质量: ⭐⭐⭐⭐ — 动机清晰、方法阐述详细
 - 价值: ⭐⭐⭐⭐ — 为 VLM 与 RL 结合提供了实用且有启发性的范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](../../AAAI2026/reinforcement_learning/start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
+- [Human-Inspired Multi-Level Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/human-inspired_multi-level_reinforcement_learning.md)
+- [Learning Interactive World Model for Object-Centric Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
+- [Object-Centric Latent Action Learning](../../AAAI2026/reinforcement_learning/object-centric_latent_action_learning.md)
+- [Object-Centric World Models for Causality-Aware Reinforcement Learning](../../AAAI2026/reinforcement_learning/object-centric_world_models_for_causality-aware_reinforcement_learning.md)
+
+<!-- RELATED:END -->

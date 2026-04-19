@@ -114,3 +114,15 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论/综述论文，无新实验
 - 写作质量: ⭐⭐⭐⭐⭐ 极其清晰的教学性写作，Q&A 格式易于理解，元科学讨论发人深省
 - 价值: ⭐⭐⭐⭐ 纠正了广泛存在的误解和错误归因，为 Transformer 理论提供了缺失的教学材料
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
+- [Enhancing Transformers for Generalizable First-Order Logical Entailment](enhancing_fol_entailment.md)
+- [Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks](principled_generalization_arithmetic.md)
+- [Advancing Sequential Numerical Prediction in Autoregressive Models](advancing_sequential_numerical_prediction_in_autoregressive_models.md)
+- [Hierarchical Bracketing Encodings for Dependency Parsing as Tagging](hierarchical_bracketing_dep_parsing.md)
+
+<!-- RELATED:END -->

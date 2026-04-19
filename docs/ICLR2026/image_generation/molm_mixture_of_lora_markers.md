@@ -121,3 +121,15 @@ $$\mathcal{L}_{\text{ver}} = \mathbb{E}_{T \sim \Pi} \frac{1}{NM} \sum_{n,m} [-\
 - 技术深度：⭐⭐⭐⭐ — 框架设计完整，攻击评估全面
 - 实验完整性：⭐⭐⭐⭐ — 多种攻击、多数据集、多架构验证
 - 实用价值：⭐⭐⭐⭐ — 高效可部署的水印方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Implicit Style-Content Separation using B-LoRA](../../ECCV2024/image_generation/implicit_style-content_separation_using_b-lora.md)
+- [T-LoRA: Single Image Diffusion Model Customization Without Overfitting](../../AAAI2026/image_generation/t-lora_single_image_diffusion_model_customization_without_overfitting.md)
+- [MoFRR: Mixture of Diffusion Models for Face Retouching Restoration](../../ICCV2025/image_generation/mofrr_mixture_of_diffusion_models_for_face_retouching_restoration.md)
+- [Gaussian Mixture Flow Matching Models](../../ICML2025/image_generation/gaussian_mixture_flow_matching_models.md)
+- [Flat-LoRA: Low-Rank Adaptation over a Flat Loss Landscape](../../ICML2025/image_generation/flat-lora_low-rank_adaptation_over_a_flat_loss_landscape.md)
+
+<!-- RELATED:END -->

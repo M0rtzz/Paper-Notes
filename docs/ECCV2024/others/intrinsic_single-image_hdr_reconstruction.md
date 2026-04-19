@@ -139,3 +139,15 @@ $$\mathcal{L} = \mathcal{L}_{shading} + \mathcal{L}_{albedo}$$
 ## 评分
 
 ⭐⭐⭐⭐ — 问题分解思路新颖, 有物理依据, 但增加了流程复杂度
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Active Generation for Image Classification](active_generation_for_image_classification.md)
+- [AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm](../../ICCV2025/others/afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons.md)
+- [Image Demoiréing in RAW and sRGB Domains](image_demoiréing_in_raw_and_srgb_domains.md)
+- [COIN-Matting: Confounder Intervention for Image Matting](coin-matting_confounder_intervention_for_image_matting.md)
+- [CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)
+
+<!-- RELATED:END -->

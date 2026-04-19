@@ -122,3 +122,15 @@ SALMUBench 提供完整的遗忘评估生态系统，包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 9 种基线方法、多预算对比、三种失败模式分析完整，但主实验仅 ViT-B/16 一种架构
 - 写作质量: ⭐⭐⭐⭐⭐ 数据集构建、评估协议、失败模式分类均写得清晰严谨
 - 价值: ⭐⭐⭐⭐⭐ 为多模态机器遗忘领域建立了新标准，公开全部数据+模型+评估代码
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Targeted Unlearning with Single Layer Unlearning Gradient](../../ICML2025/multimodal_vlm/targeted_unlearning_with_single_layer_unlearning_gradient.md)
+- [Mixture of States (MoS): Routing Token-Level Dynamics for Multimodal Generation](mos_mixture_of_states_multimodal_generation.md)
+- [Modality-Aware Neuron Pruning for Unlearning in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/manu_modality_aware_unlearning.md)
+- [PointAlign: Feature-Level Alignment Regularization for 3D Vision-Language Models](pointalign_feature-level_alignment_regularization_for_3d_vision-language_models.md)
+- [Approximate Domain Unlearning for Vision-Language Models](../../NeurIPS2025/multimodal_vlm/approximate_domain_unlearning_for_visionlanguage_models.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ $F = f(\hat{y}_\theta; x) + \frac{\rho}{2}\|y_\theta - \hat{y}_\theta\|_2^2$
 - 实验充分度: ⭐⭐⭐⭐⭐ — 凸/非凸/光滑/非光滑全覆盖
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰理论实验对照好
 - 价值: ⭐⭐⭐⭐⭐ — 解决约束满足关键痛点，开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning (Approximately) Equivariant Networks via Constrained Optimization](learning_approximately_equivariant_networks_via_constrained_optimization.md)
+- [Semi-infinite Nonconvex Constrained Min-Max Optimization](semi-infinite_nonconvex_constrained_min-max_optimization.md)
+- [Neural Network for Simulating Radio Emission from Extensive Air Showers](neural_network_for_simulating_radio_emission_from_extensive_air_showers.md)
+- [TANGO: Clustering with Typicality-Aware Nonlocal Mode-Seeking and Graph-Cut Optimization](../../ICML2025/others/tango_clustering_with_typicality-aware_nonlocal_mode-seeking_and_graph-cut_optim.md)
+- [MiCADangelo: Fine-Grained Reconstruction of Constrained CAD Models from 3D Scans](micadangelo_fine-grained_reconstruction_of_constrained_cad_models_from_3d_scans.md)
+
+<!-- RELATED:END -->

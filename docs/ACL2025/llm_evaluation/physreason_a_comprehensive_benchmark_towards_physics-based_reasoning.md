@@ -150,3 +150,15 @@ PSAS 框架的评估准确率超过 98%，远超 LLM 直接评估。
 - 实验充分度: ⭐⭐⭐⭐⭐ 15 个模型的全面评估，评估框架可靠性验证充分，错误类型分析深入
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，基准设计有理有据，但部分 LaTeX 公式排版较密
 - 价值: ⭐⭐⭐⭐⭐ 填补了物理推理评估的重要空白，PSAS 框架对多步推理评估有广泛参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark](../../ICCV2025/llm_evaluation/3dsrbench_a_comprehensive_3d_spatial_reasoning_benchmark.md)
+- [FinanceReasoning: Benchmarking Financial Numerical Reasoning More Credible, Comprehensive and Challenging](financereasoning_benchmarking_financial_numerical_reasoning_more.md)
+- [ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](elaboration_competitive_programming.md)
+- [KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding](kitab-bench_a_comprehensive_multi-domain_benchmark_for_arabic_ocr_and_document_u.md)
+- [CFBench: A Comprehensive Constraints-Following Benchmark for LLMs](cfbench_a_comprehensive_constraints-following_benchmark_for_llms.md)
+
+<!-- RELATED:END -->

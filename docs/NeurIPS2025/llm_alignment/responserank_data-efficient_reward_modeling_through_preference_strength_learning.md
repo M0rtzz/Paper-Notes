@@ -138,3 +138,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{BT}} + \lambda \mathcal{L}_{\text{rank}}$$
 - ⭐ 创新性: 8/10 — 局部分层+相对排名的设计简洁有效
 - ⭐ 实用性: 8/10 — 5倍样本效率提升对实际标注很有价值
 - ⭐ 写作质量: 8/10 — 实验涵盖合成、语言、RL三个场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis](limited_preference_data_learning_better_reward_model_with_latent_space_synthesis.md)
+- [Provably Efficient Online RLHF with One-Pass Reward Modeling](provably_efficient_online_rlhf_with_one-pass_reward_modeling.md)
+- [What Makes a Reward Model a Good Teacher? An Optimization Perspective](what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+- [Improving Data Efficiency for LLM Reinforcement Fine-tuning Through Difficulty-targeted Online Data Selection and Rollout Replay](improving_data_efficiency_for_llm_reinforcement_fine-tuning_through_difficulty-t.md)
+- [Ask a Strong LLM Judge when Your Reward Model is Uncertain](ask_a_strong_llm_judge_when_your_reward_model_is_uncertain.md)
+
+<!-- RELATED:END -->

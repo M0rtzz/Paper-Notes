@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 合成和真实数据均有测试
 - 写作质量: ⭐⭐⭐⭐ 理论表述清晰
 - 价值: ⭐⭐⭐⭐ 对动态 Wasserstein 估计有重要意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
+- [Semi-Supervised High Dynamic Range Image Reconstructing via Bi-Level Uncertain Area Masking](../../AAAI2026/others/semi-supervised_high_dynamic_range_image_reconstructing_via_bi-level_uncertain_a.md)
+- [Score Matching with Missing Data](score_matching_with_missing_data.md)
+- [Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures](randomized_dimensionality_reduction_for_euclidean_maximization_and_diversity_mea.md)
+- [Diversity by Design: Leveraging Distribution Matching for Offline Model-Based Optimization](diversity_by_design_leveraging_distribution_matching_for_offline_model-based_opt.md)
+
+<!-- RELATED:END -->

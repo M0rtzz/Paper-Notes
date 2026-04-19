@@ -163,3 +163,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多基线多 SNR 对比、消融完整、跨数据集泛化测试
 - 写作质量: ⭐⭐⭐⭐ 系统架构清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ 压缩率和速度突破使语义通信实时应用成为可能
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](../../ECCV2024/segmentation/efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
+- [Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective](../../NeurIPS2025/segmentation/towards_robust_pseudo-label_learning_in_semantic_segmentation_an_encoding_perspe.md)
+- [MatAnyone: Stable Video Matting with Consistent Memory Propagation](../../CVPR2025/segmentation/matanyone_stable_video_matting_with_consistent_memory_propagation.md)
+- [Harnessing Massive Satellite Imagery with Efficient Masked Image Modeling](../../ICCV2025/segmentation/harnessing_massive_satellite_imagery_with_efficient_masked_image_modeling.md)
+- [2DMamba: Efficient State Space Model for Image Representation with Applications on Giga-Pixel Whole Slide Image Classification](../../CVPR2025/segmentation/2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)
+
+<!-- RELATED:END -->

@@ -134,3 +134,15 @@ tags:
 - **实验充分度** ⭐⭐⭐⭐：11 个 VLM + 2 种策略 + OCR 基线 + 5 场景分析，评估全面
 - **写作质量** ⭐⭐⭐⭐：威胁模型定义规范，实验设计清晰
 - **价值** ⭐⭐⭐⭐：为 AR 安全领域提供首个标准化评估工具，填补研究空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning](graphvlm_benchmark_vlm_graph_learning.md)
+- [Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks](vlm_model_inversion_adaptive_token_weight.md)
+- [CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts](../../ECCV2024/multimodal_vlm/clap_isolating_content_from_style_through_contrastive_learning_with_augmented_pr.md)
+- [Multi-Crit: Benchmarking Multimodal Judges on Pluralistic Criteria-Following](multi-crit_benchmarking_multimodal_judges_on_pluralistic_criteria-following.md)
+- [World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training](rehearsevla_simulated_posttraining_world_model.md)
+
+<!-- RELATED:END -->

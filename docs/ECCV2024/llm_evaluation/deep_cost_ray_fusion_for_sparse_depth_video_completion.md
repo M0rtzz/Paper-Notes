@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集（室内/室外/不同传感器），丰富的消融和泛化实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，公式规范
 - 价值: ⭐⭐⭐⭐ 极致参数效率 + 多数据集 SOTA，射线 attention 思路可迁移性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OGNI-DC: Robust Depth Completion with Optimization-Guided Neural Iterations](ogni-dc_robust_depth_completion_with_optimization-guided_neural_iterations.md)
+- [ColorMNet: A Memory-based Deep Spatial-Temporal Feature Propagation Network for Video Colorization](colormnet_a_memory-based_deep_spatial-temporal_feature_propagation_network_for_v.md)
+- [SIGMA: Sinkhorn-Guided Masked Video Modeling](sigma_sinkhorn-guided_masked_video_modeling.md)
+- [Eliminating Warping Shakes for Unsupervised Online Video Stitching](eliminating_warping_shakes_for_unsupervised_online_video_stitching.md)
+- [ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation](../../CVPR2026/llm_evaluation/reflexsplit_single_image_reflection_separation_via_layer_fusion-separation.md)
+
+<!-- RELATED:END -->

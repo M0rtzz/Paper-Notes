@@ -119,3 +119,15 @@ Pipeline 分为两个阶段：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6个数据集、多个任务、充分的对比和消融
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，理论支撑扎实
 - **价值**: ⭐⭐⭐⭐⭐ 为3D位姿估计提供了新的统一范式，影响力大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PCSTracker: Long-Term Scene Flow Estimation for Point Cloud Sequences](../../CVPR2026/3d_vision/pcstracker_long-term_scene_flow_estimation_for_point_cloud_sequences.md)
+- [Efficient Spiking Point Mamba for Point Cloud Analysis](../../ICCV2025/3d_vision/efficient_spiking_point_mamba_for_point_cloud_analysis.md)
+- [U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching](u-can_unsupervised_point_cloud_denoising_with_consistency-aware_noise2noise_matc.md)
+- [PointMAC: Meta-Learned Adaptation for Robust Test-Time Point Cloud Completion](pointmac_meta-learned_adaptation_for_robust_test-time_point_cloud_completion.md)
+- [milliFlow: Scene Flow Estimation on mmWave Radar Point Cloud for Human Motion Sensing](../../ECCV2024/3d_vision/milliflow_scene_flow_estimation_on_mmwave_radar_point_cloud_for_human_motion_sen.md)
+
+<!-- RELATED:END -->

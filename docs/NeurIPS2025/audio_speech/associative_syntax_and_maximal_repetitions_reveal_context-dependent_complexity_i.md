@@ -132,3 +132,14 @@ tags:
 
 Workshop 论文，贡献在于方法论层面的跨学科迁移（计算语言学 → 动物通信）。核心发现（冲突通信更复杂）合理但并不令人惊讶。最大重复子序列作为复杂度指标的提出是主要亮点。实验规模有限，需要跨物种验证来确认指标的通用性。
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Controllable Examination for Long-Context Language Models](a_controllable_examination_for_longcontext_language_models.md)
+- [Does Your Voice Assistant Remember? Analyzing Conversational Context Recall and Utilization in Voice Interaction Models](../../ACL2025/audio_speech/does_your_voice_assistant_remember_analyzing_conversational_context_recall_and_u.md)
+- [Echoes of Humanity: Exploring the Perceived Humanness of AI Music](echoes_of_humanity_exploring_the_perceived_humanness_of_ai_music.md)
+- [A TRIANGLE Enables Multimodal Alignment Beyond Cosine Similarity](a_triangle_enables_multimodal_alignment_beyond_cosine_simila.md)
+- [LeVo: High-Quality Song Generation with Multi-Preference Alignment](levo_high-quality_song_generation_with_multi-preference_alignment.md)
+
+<!-- RELATED:END -->

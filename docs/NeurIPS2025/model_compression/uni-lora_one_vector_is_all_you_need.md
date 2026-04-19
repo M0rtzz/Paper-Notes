@@ -142,3 +142,15 @@ $$\theta_D = \text{Concat}(\text{vec}(B^1), \text{vec}(A^1), \cdots, \text{vec}(
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖 NLU/数学推理/指令微调/CV 四类任务，对比全面
 - 写作质量: ⭐⭐⭐⭐⭐ 框架图直观，理论证明简洁，伪代码可直接实现
 - 价值: ⭐⭐⭐⭐ 极致参数效率有实际部署价值，但 LoRA 本身已足够轻量
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Is Retain Set All You Need in Machine Unlearning? Restoring Performance of Unlearned Models with Out-Of-Distribution Images](../../ECCV2024/model_compression/is_retain_set_all_you_need_in_machine_unlearning_restoring_performance_of_unlear.md)
+- [C-LoRA: Contextual Low-Rank Adaptation for Uncertainty Estimation in Large Language Models](c-lora_contextual_low-rank_adaptation_for_uncertainty_estimation_in_large_langua.md)
+- [EMLoC: Emulator-based Memory-efficient Fine-tuning with LoRA Correction](emloc_emulator-based_memory-efficient_fine-tuning_with_lora_correction.md)
+- [Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA](robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)
+- [Ultrametric Cluster Hierarchies: I Want 'em All!](ultrametric_cluster_hierarchies_i_want_em_all.md)
+
+<!-- RELATED:END -->

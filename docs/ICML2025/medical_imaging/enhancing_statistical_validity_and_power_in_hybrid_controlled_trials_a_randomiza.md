@@ -156,3 +156,15 @@ $$\hat{\tau}_\gamma = \frac{1}{n_\mathcal{R}} \sum_{i=1}^n \left[S_i \hat{\mu}_{
 - 实验充分度: ⭐⭐⭐⭐ — 模拟+真实肺癌数据，但仅实验了连续结局
 - 写作质量: ⭐⭐⭐⭐⭐ — 逻辑严密，理论与直觉并重，图表信息量大
 - 价值: ⭐⭐⭐⭐⭐ — 直接解决FDA重点关注的小样本混合对照试验推断问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials](doubly_protected_estimation_for_survival_outcomes_utilizing_external_controls_fo.md)
+- [Multivariate Conformal Selection](multivariate_conformal_selection.md)
+- [Radiation-Preserving Selective Imaging for Pediatric Hip Dysplasia: A Cross-Modal Approach](../../AAAI2026/medical_imaging/radiation-preserving_selective_imaging_for_pediatric_hip_dysplasia_a_cross-modal.md)
+- [Bayesian Inference for Correlated Human Experts and Classifiers](bayesian_inference_for_correlated_human_experts_and_classifiers.md)
+- [From Token to Rhythm: A Multi-Scale Approach for ECG-Language Pretraining](from_token_to_rhythm_a_multi-scale_approach_for_ecg-language_pretraining.md)
+
+<!-- RELATED:END -->

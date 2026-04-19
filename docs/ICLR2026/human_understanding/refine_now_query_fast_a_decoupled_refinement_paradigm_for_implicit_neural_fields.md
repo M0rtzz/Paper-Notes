@@ -131,3 +131,15 @@ DRR-Net 在 Nyx 上 PSNR 最高（44.69 vs FA-INR 42.79），推理速度比 FA-
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、四种基线、条件泛化/时空泛化/数据增强消融全面覆盖，定量分析充分
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，图表信息量大
 - 价值: ⭐⭐⭐⭐ 对 INR 代理建模领域贡献显著，DRR 范式具有广泛的架构指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Probability-guided Sampler for Neural Implicit Surface Rendering](../../ECCV2024/human_understanding/a_probabilityguided_sampler_for_neural_implicit_surface_rend.md)
+- [VI3NR: Variance Informed Initialization for Implicit Neural Representations](../../CVPR2025/human_understanding/vi3nr_variance_informed_initialization_for_implicit_neural_representations.md)
+- [PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](../../ECCV2024/human_understanding/pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)
+- [Maximizing Asynchronicity in Event-based Neural Networks](maximizing_asynchronicity_in_event-based_neural_networks.md)
+- [Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks](time_is_all_it_takes_spike-retiming_attacks_on_event-driven_spiking_neural_netwo.md)
+
+<!-- RELATED:END -->

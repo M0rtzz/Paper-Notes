@@ -110,3 +110,15 @@ L2D在冻结的LLM主路径旁引入一条并行"扩散路径"。训练时，对
 - 实验充分度: ⭐⭐⭐⭐ 4个模型、6个任务、多种缩放方式、消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 从单步扩散到多步扩散的叙事链条清晰优雅
 - 价值: ⭐⭐⭐⭐⭐ 开辟LLM推理缩放的新维度，与传统方法正交兼容
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [PonderLM: Pretraining Language Models to Ponder in Continuous Space](../../ICLR2026/self_supervised/ponderlm_pretraining_language_models_to_ponder_in_continuous_space.md)
+- [From Pretrain to Pain: Adversarial Vulnerability of Video Foundation Models without Finetuning](../../AAAI2026/self_supervised/from_pretrain_to_pain_adversarial_vulnerability_of_video_foundation_models_witho.md)
+- [Scaling Language-Free Visual Representation Learning](../../ICCV2025/self_supervised/scaling_languagefree_visual_representation_learning.md)
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+
+<!-- RELATED:END -->

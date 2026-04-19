@@ -181,3 +181,15 @@ LLaMA 0.25B on OpenWebText, 50K steps：
 | 实用价值 | 5 | 实现极简、迁移性强、加速显著、可叠加内存优化 |
 | 写作质量 | 4 | 结构清晰，图表丰富，逻辑流畅 |
 | **综合** | **4.5** | 高质量工作，兼具理论深度和实用价值 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Metadata Conditioning Accelerates Language Model Pre-training](metadata_conditioning_accelerates_language_model_pre-training.md)
+- [Nemotron-CLIMB: CLustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training](../../NeurIPS2025/llm_pretraining/nemotron-climb_clustering-based_iterative_data_mixture_bootstrapping_for_languag.md)
+- [Language Model Developers Should Report Train-Test Overlap](language_model_developers_should_report_train-test_overlap.md)
+- [Through the River: Understanding the Benefit of Schedule-Free Methods for Language Model Training](../../NeurIPS2025/llm_pretraining/through_the_river_understanding_the_benefit_of_schedule-free_methods_for_languag.md)
+- [Large Language Models are Demonstration Pre-Selectors for Themselves](large_language_models_are_demonstration_pre-selectors_for_themselves.md)
+
+<!-- RELATED:END -->

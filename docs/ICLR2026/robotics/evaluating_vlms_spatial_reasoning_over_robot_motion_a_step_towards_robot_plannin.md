@@ -146,3 +146,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 查询方法、VLM 类型、偏好类型、任务类型覆盖全面
 - 写作质量: ⭐⭐⭐ — 结构清晰但部分图表呈现可改进
 - 价值: ⭐⭐⭐⭐ — 为 VLM 融入运动规划 pipeline 提供了扎实的基准和可行性证据
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAWN: Pixel Motion Diffusion is What We Need for Robot Control](../../CVPR2026/robotics/dawn_pixel_motion_diffusion_robot_control.md)
+- [ExoPredicator: Learning Abstract Models of Dynamic Worlds for Robot Planning](exopredicator_learning_abstract_models_of_dynamic_worlds_for_robot_planning.md)
+- [CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning](../../CVPR2026/robotics/como_learning_continuous_latent_motion_from_internet_videos_for_scalable_robot_l.md)
+- [RoboPARA: Dual-Arm Robot Planning with Parallel Allocation and Recomposition Across Tasks](robopara_dual-arm_robot_planning_with_parallel_allocation_and_recomposition_acro.md)
+- [Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](../../ICCV2025/robotics/interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)
+
+<!-- RELATED:END -->

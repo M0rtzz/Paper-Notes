@@ -133,3 +133,15 @@ FastDraft 采用三阶段流水线：
 - **实验充分度**: ⭐⭐⭐⭐ 消融实验全面且扎实，覆盖数据量、CP 策略、KD 损失、架构宽深、硬件部署等维度
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，图表丰富，实验设计有条理
 - **价值**: ⭐⭐⭐⭐ 为工业界和边缘部署场景提供了一套切实可行且低成本的 draft 训练方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Your Model is Overconfident, and Other Lies We Tell Ourselves](your_model_is_overconfident_and_other_lies_we_tell_ourselves.md)
+- [How to Mitigate Overfitting in Weak-to-Strong Generalization?](how_to_mitigate_overfitting_in_weak-to-strong_generalization.md)
+- [Using Shapley Interactions to Understand How Models Use Structure](using_shapley_interactions_to_understand_how_models_use_structure.md)
+- [From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [The AI Gap: How Socioeconomic Status Affects Language Technology Interactions](the_ai_gap_how_socioeconomic_status_affects_language_technology_interactions.md)
+
+<!-- RELATED:END -->

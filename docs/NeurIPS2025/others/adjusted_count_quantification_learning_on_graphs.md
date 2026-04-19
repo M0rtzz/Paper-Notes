@@ -155,3 +155,15 @@ $$L_{cls} = -\sum_{v \in V_{train}} \log p(y_v | x_v, G)$$
 - 实验充分性：⭐⭐⭐⭐ （多数据集验证，包含不同偏移程度的分析）
 - 写作质量：⭐⭐⭐⭐ （19页完整论文，结构清晰）
 - 综合评分：⭐⭐⭐⭐ （扎实的理论工作，可能对量化学习社区产生影响）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Optimized Learned Count-Min Sketch](optimized_learned_count-min_sketch.md)
+- [Position: There Is No Free Bayesian Uncertainty Quantification](position_there_is_no_free_bayesian_uncertainty_quantification.md)
+- [Uncertainty Quantification for Reduced-Order Surrogate Models Applied to Cloud Microphysics](uncertainty_quantification_for_reduced-order_surrogate_models_applied_to_cloud_m.md)
+- [A Practical Approach for Building Production-Grade Conversational Agents with Workflow Graphs](../../ACL2025/others/a_practical_approach_for_building_production-grade_conversational_agents_with_wo.md)
+- [Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)
+
+<!-- RELATED:END -->

@@ -123,3 +123,15 @@ Multi-task + LA 相比单任务基线 Final Score 提升 1.86 个百分点，相
 - 实验充分度: ⭐⭐⭐ 消融充分，但数据集太小（~1500 样本），缺少与域自适应方法的对比
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，实验分析细致（特别是 per-source 分析和 $\gamma$ 敏感性分析）
 - 价值: ⭐⭐ 方法过于简单，场景（COVID-19 CT）已不再前沿，实际影响力有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multimodal_learning_for.md)
+- [WDT-MD: Wavelet Diffusion Transformers for Microaneurysm Detection in Fundus Images](../../AAAI2026/medical_imaging/wdt-md_wavelet_diffusion_transformers_for_microaneurysm_detection_in_fundus_imag.md)
+- [Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [Towards Effective and Efficient Context-aware Nucleus Detection in Histopathology Whole Slide Images](../../AAAI2026/medical_imaging/towards_effective_and_efficient_context-aware_nucleus_detection_in_histopatholog.md)
+
+<!-- RELATED:END -->

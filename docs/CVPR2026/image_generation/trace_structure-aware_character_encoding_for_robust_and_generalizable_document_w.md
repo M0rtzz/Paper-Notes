@@ -166,3 +166,15 @@ TRACE 在鲁棒性和隐蔽性上同时达到最优，PSNR 比 StegaStamp 高 6+
 ⭐⭐⭐⭐
 
 这是一篇思路非常巧妙的工作——利用字符骨架结构的天然稳定性作为水印载体，完美匹配了文档水印的核心需求。MPE 的自动化评分机制设计精细，TPE 基于笔画方向的移动策略保证了编码-解码的同步性。实验覆盖中英文 × 多字体 × 多尺寸 × 多传输通道（截图/打印扫描/拍照），验证非常充分。在已有方法难以兼顾的鲁棒性-泛化性-隐蔽性三维空间中实现了全面领先。1 bit/字符的容量限制和扩散模型的计算开销是主要瓶颈，但作为范式创新的首作，贡献值得肯定。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)
+- [SPDMark: Selective Parameter Displacement for Robust Video Watermarking](spdmark_selective_parameter_displacement_for_robust_video_watermarking.md)
+- [Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking](editing_away_the_evidence_diffusionbased_image_man.md)
+- [Rel-Zero: Harnessing Patch-Pair Invariance for Robust Zero-Watermarking Against AI Editing](rel-zero_harnessing_patch-pair_invariance_for_robust_zero-watermarking_against_a.md)
+- [SegQuant: A Semantics-Aware and Generalizable Quantization Framework for Diffusion Models](segquant_diffusion_model_quantization.md)
+
+<!-- RELATED:END -->

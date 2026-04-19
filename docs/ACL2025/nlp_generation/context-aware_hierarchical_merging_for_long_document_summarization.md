@@ -134,3 +134,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 两个数据集、两个模型规模、6 变体 + 人工评估
 - **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，分析深入，图示直观
 - **价值**: ⭐⭐⭐⭐ — 为超长文档摘要提供实用且可复现的改进方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-document Summarization through Multi-document Event Relation Graph Reasoning in LLMs](event_graph_bias_mitigation_summarization.md)
+- [Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+- [DTCRS: Dynamic Tree Construction for Recursive Summarization](dtcrs_dynamic_tree_construction_for_recursive_summarization.md)
+- [Theme-Explanation Structure for Table Summarization Using Large Language Models](theme-explanation_structure_for_table_summarization_using_large_language_models_.md)
+- [An Empirical Study of Many-to-Many Summarization with Large Language Models](an_empirical_study_of_manytomany_summarization.md)
+
+<!-- RELATED:END -->

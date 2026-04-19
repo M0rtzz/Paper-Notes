@@ -178,3 +178,15 @@ DreamVideo-Omni 基于 Wan2.1-1.3B T2V DiT，采用两阶段训练：
 - 实验充分度: ⭐⭐⭐⭐⭐ (自建 benchmark + 大量消融 + 用户研究，非常全面)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰但篇幅较长，部分内容可精简)
 - 价值: ⭐⭐⭐⭐⭐ (多主体+全运动的统一框架有重大实用价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HumanMM: Global Human Motion Recovery from Multi-shot Videos](humanmm_global_human_motion_recovery_from_multi-shot_videos.md)
+- [Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need](boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)
+- [MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism](mi-detr_an_object_detection_model_with_multi-time_inquiries_mechanism.md)
+- [DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
+- [Generalized Diffusion Detector: Mining Robust Features from Diffusion Models for Domain-Generalized Detection](generalized_diffusion_detector_mining_robust_features_from_diffusion_models_for_.md)
+
+<!-- RELATED:END -->

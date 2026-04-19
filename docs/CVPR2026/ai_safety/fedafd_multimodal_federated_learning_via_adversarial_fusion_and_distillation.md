@@ -145,3 +145,15 @@ Non-IID 设置。IID 设置下优势更大：CIFAR-100 上 FedAFD 61.04% vs FedE
 - **实验充分度**: ⭐⭐⭐⭐ 消融实验完整，IID/Non-IID双设置 + T-SNE可视化 + 公共数据量分析，附录含超参和通信开销分析
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式推导详实
 - **价值**: ⭐⭐⭐⭐ 是 MFL 领域较为完整的解决方案，对异构联邦学习有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HealSplit: Towards Self-Healing through Adversarial Distillation in Split Federated Learning](../../AAAI2026/ai_safety/healsplit_towards_self-healing_through_adversarial_distillation_in_split_federat.md)
+- [CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation](../../AAAI2026/ai_safety/core-fed_bridging_collaborative_and_representation_fairness_via_federated_embedd.md)
+- [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](domain-skewed_federated_learning_with_feature_decoupling_and_calibration.md)
+- [ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)
+- [FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)
+
+<!-- RELATED:END -->

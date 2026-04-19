@@ -184,3 +184,15 @@ GCA损失的边距校准策略：
 - **实验充分度**: ★★★★☆ — 多尺度不平衡、多数据集验证
 - **实用价值**: ★★★★☆ — 可直接替换现有损失函数
 - **写作质量**: ★★★★★ — 来自理论社区顶级团队，行文规范
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Robust Graph Condensation via Classification Complexity Mitigation](robust_graph_condensation_via_classification_complexity_mitigation.md)
+- [Enhancing Graph Classification Robustness with Singular Pooling](enhancing_graph_classification_robustness_with_singular_pooling.md)
+- [Rewind-to-Delete: Certified Machine Unlearning for Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)
+- [Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
+- [CryptoMoE: Privacy-Preserving and Scalable Mixture of Experts Inference via Balanced Expert Routing](cryptomoe_privacy-preserving_and_scalable_mixture_of_experts_inference_via_balan.md)
+
+<!-- RELATED:END -->

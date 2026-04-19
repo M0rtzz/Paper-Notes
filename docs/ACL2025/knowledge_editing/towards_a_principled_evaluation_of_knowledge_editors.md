@@ -233,3 +233,15 @@ LLM-as-a-judge（Qwen-32B）在人工评估真值上略优于精确匹配。
 - **实验充分度**: ⭐⭐⭐⭐ — 四个数据集、四种编辑器、多种批量大小，加人工评估，但模型规模偏小
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，图表丰富，论证逻辑严密
 - **价值**: ⭐⭐⭐⭐ — 对知识编辑领域的评估规范化具有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Context-Robust Knowledge Editing for Language Models](context-robust_knowledge_editing_for_language_models.md)
+- [SAKE: Steering Activations for Knowledge Editing](sake_steering_activations_for_knowledge_editing.md)
+- [Efficient Knowledge Editing via Minimal Precomputation](efficient_knowledge_editing.md)
+- [ScEdit: Script-based Assessment of Knowledge Editing](scedit_script-based_assessment_of_knowledge_editing.md)
+- [CompKe: Complex Question Answering under Knowledge Editing](compke_complex_question_answering_under_knowledge_editing.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ MMTok将视觉token选择形式化为**最大覆盖问题**，通过子模函数
 - 实验充分度: ⭐⭐⭐⭐⭐ （5个VLM×9个数据集×多压缩比+极端压缩+效率分析）
 - 写作质量: ⭐⭐⭐⭐ （方法清晰，理论保证完整，实验详实）
 - 价值: ⭐⭐⭐⭐ （实用性强，training-free+参数鲁棒，易于部署）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Classification via Total Correlation Maximization](multimodal_classification_via_total_correlation_maximization.md)
+- [SparseVLM: Visual Token Sparsification for Efficient Vision-Language Model Inference](../../ICML2025/multimodal_vlm/sparsevlm_visual_token_sparsification_for_efficient_vision-language_model_infere.md)
+- [SCOPE: Saliency-Coverage Oriented Token Pruning for Efficient Multimodal LLMs](../../NeurIPS2025/multimodal_vlm/scope_saliency-coverage_oriented_token_pruning_for_efficient_multimodel_llms.md)
+- [DUET-VLM: Dual Stage Unified Efficient Token Reduction for VLM Training and Inference](../../CVPR2026/multimodal_vlm/duet-vlm_dual_stage_unified_efficient_token_reduction_for_vlm_training_and_infer.md)
+- [SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](../../ICCV2025/multimodal_vlm/sparsevila_decoupling_visual_sparsity_for_efficient_vlm_infe.md)
+
+<!-- RELATED:END -->

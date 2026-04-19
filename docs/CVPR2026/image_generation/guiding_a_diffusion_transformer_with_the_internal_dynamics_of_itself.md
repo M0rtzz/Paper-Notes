@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型规模、详细消融、2D可视化、训练加速延伸、SOTA结果，非常全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，2D 玩具实验的可视化解释力极强
 - 价值: ⭐⭐⭐⭐⭐ FID=1.19 SOTA + 训练加速 + 即插即用，理论和实践双丰收
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Guiding a Diffusion Model by Swapping Its Tokens](guiding_a_diffusion_model_by_swapping_its_tokens.md)
+- [Guiding Diffusion Models with Semantically Degraded Conditions (CDG)](cdg_condition_degradation_guidance_diffusion.md)
+- [DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](dit-ic_aligned_diffusion_transformer_for_efficient_image_compression.md)
+- [Guiding Diffusion Models with Semantically Degraded Conditions](guiding_diffusion_models_with_semantically_degraded_conditions.md)
+- [MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching](mpdit_multi-patch_global-to-local_transformer_architecture_for_efficient_flow_ma.md)
+
+<!-- RELATED:END -->

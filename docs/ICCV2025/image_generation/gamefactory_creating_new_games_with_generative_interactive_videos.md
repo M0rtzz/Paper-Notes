@@ -163,3 +163,15 @@ $$\mathcal{L}_{\mathbf{a}}(\phi) = \mathbb{E}[||\boldsymbol{\epsilon}_\phi(\math
 - **实验完整性**: ⭐⭐⭐ — 消融充分但缺乏与同类方法的定量对比，基础模型不公开
 - **实用性**: ⭐⭐⭐ — 概念验证阶段，距实际游戏应用仍有差距
 - **写作质量**: ⭐⭐⭐⭐ — 问题定义清晰，方法描述详细
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SDMatte: Grafting Diffusion Models for Interactive Matting](sdmatte_grafting_diffusion_models_for_interactive_matting.md)
+- [Market Games for Generative Models: Equilibria, Welfare, and Strategic Entry](../../ICLR2026/image_generation/market_games_for_generative_models_equilibria_welfare_and_strategic_entry.md)
+- [StreamDiffusion: A Pipeline-level Solution for Real-time Interactive Generation](streamdiffusion_a_pipeline-level_solution_for_real-time_interactive_generation.md)
+- [EC-Flow: Enabling Versatile Robotic Manipulation from Action-Unlabeled Videos via Equivariant Flow Matching](ec-flow_enabling_versatile_robotic_manipulation_from_action-unlabeled_videos_via.md)
+- [MotionDiff: Training-Free Zero-Shot Interactive Motion Editing via Flow-Assisted Multi-View Diffusion](motiondiff_training-free_zero-shot_interactive_motion_editing_via_flow-assisted_.md)
+
+<!-- RELATED:END -->

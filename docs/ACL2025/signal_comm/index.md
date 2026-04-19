@@ -10,10 +10,10 @@ description: >-
 
 **💬 ACL2025** · **2** 篇论文解读
 
-**[Toolspectrum Towards Personalized Tool Utilization For Large Language Models](toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)**
+**[ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](toolspectrum_towards_personalized_tool_utilization_for_large_language_models.md)**
 
 :   提出ToolSpectrum基准，首次定义并评估LLM的个性化工具使用能力——根据用户画像和环境因素选择最合适的工具，实验表明个性化显著提升用户体验，但现有LLM在联合推理用户和环境因素时能力有限。
 
-**[Wirelessmathbench A Mathematical Modeling Benchmark For Llms In Wireless Communi](wirelessmathbench_a_mathematical_modeling_benchmark_for_llms_in_wireless_communi.md)**
+**[WirelessMathBench: A Mathematical Modeling Benchmark for LLMs in Wireless Communications](wirelessmathbench_a_mathematical_modeling_benchmark_for_llms_in_wireless_communi.md)**
 
 :   本文提出WirelessMathBench，一个包含587道题目的无线通信数学建模基准，从40篇前沿论文中提取，系统评估LLM在领域特定数学推导上的能力，揭示即使最强的DeepSeek-R1平均准确率也仅38.05%，完整公式推导仅7.83%。

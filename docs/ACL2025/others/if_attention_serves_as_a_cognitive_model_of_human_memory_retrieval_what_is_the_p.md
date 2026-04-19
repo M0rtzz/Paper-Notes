@@ -103,3 +103,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ — 主实验 + 独立贡献测试 + POS 分析 + COMPOSE 消融 + 干扰 vs 衰减分离，分析链非常完整
 - **写作质量**: ⭐⭐⭐⭐⭐ — 逻辑清晰、动机铺垫自然、技术与认知理论的衔接流畅
 - **价值**: ⭐⭐⭐⭐ — 为计算心理语言学和 NLP 的交叉研究提供了重要实证和理论贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unique Hard Attention: A Tale of Two Sides](unique_hard_attention_a_tale_of_two_sides.md)
+- [MindRef: Mimicking Human Memory for Hierarchical Reference Retrieval with Fine-Grained Location Awareness](mindref_mimicking_human_memory_hierarchical_reference_retrieval.md)
+- [HATA: Trainable and Hardware-Efficient Hash-Aware Top-k Attention for Scalable Large Model Inference](hata_trainable_and_hardware-efficient_hash-aware_top-k_attention_for_scalable_la.md)
+- [Hierarchical Memory Organization for Wikipedia Generation](hierarchical_memory_wikipedia_gen.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+
+<!-- RELATED:END -->

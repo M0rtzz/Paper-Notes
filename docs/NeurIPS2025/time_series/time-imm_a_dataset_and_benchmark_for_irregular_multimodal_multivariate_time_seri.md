@@ -118,3 +118,15 @@ Time-IMM 包含 9 个数据集：触发型（GDELT 事件/RepoHealth 自适应/M
 - 文本模态用 GPT-4.1 Nano 生成五句话摘要，仅保留语义相关的文档
 - IMM-TSF 支持两种融合策略：recency-aware averaging（时间加权平均）和 attention-based integration
 - 三个不规则性度量：特征可观测性熵、时间可观测性熵、平均观测间隔
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series](maestro_adaptive_sparse_attention_and_robust_learning_for_multimodal_dynamic_tim.md)
+- [HyperIMTS: Hypergraph Neural Network for Irregular Multivariate Time Series Forecasting](../../ICML2025/time_series/hyperimts_hypergraph_neural_network_for_irregular_multivariate_time_series_forec.md)
+- [IMTS is Worth Time × Channel Patches: Visual Masked Autoencoders for Irregular Multivariate Time Series Prediction](../../ICML2025/time_series/imts_is_worth_time_times_channel_patches_visual_masked_autoencoders_for_irregula.md)
+- [Channel Matters: Estimating Channel Influence for Multivariate Time Series](channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
+- [CausalDynamics: A Large-Scale Benchmark for Structural Discovery of Dynamical Causal Models](causaldynamics_a_large-scale_benchmark_for_structural_discovery_of_dynamical_cau.md)
+
+<!-- RELATED:END -->

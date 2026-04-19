@@ -124,3 +124,15 @@ TAlignDiff包含两个模块：（1）PRN（点云回归网络）：以错颌牙
 - 实验充分度: ⭐⭐⭐ 数据集太小（124例），缺乏大规模验证和临床评估
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，方法描述详细，但可视化结果可以更丰富
 - 价值: ⭐⭐⭐⭐ 对正畸AI有直接临床价值，小样本扩散辅助回归的思路可迁移到其他医学场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](../../ICLR2026/medical_imaging/discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
+- [WDT-MD: Wavelet Diffusion Transformers for Microaneurysm Detection in Fundus Images](wdt-md_wavelet_diffusion_transformers_for_microaneurysm_detection_in_fundus_imag.md)
+- [SPA: Achieving Consensus in LLM Alignment via Self-Priority Optimization](spa_achieving_consensus_in_llm_alignment_via_self-priority_optimization.md)
+- [Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics](dual-path_knowledge-augmented_contrastive_alignment_network_for_spatially_resolv.md)
+- [Divide, Conquer and Unite: Hierarchical Style-Recalibrated Prototype Alignment for Federated Medical Segmentation](divide_conquer_and_unite_hierarchical_style-recalibrated_prototype_alignment_for.md)
+
+<!-- RELATED:END -->

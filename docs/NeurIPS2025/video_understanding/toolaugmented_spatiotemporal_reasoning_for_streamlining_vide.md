@@ -126,3 +126,15 @@ NExT-QA 测试集（STAR vs 最优基线 AKeyS 78.1%）：
 - 实验充分度: ⭐⭐⭐⭐ 四个 benchmark 全面评测，消融研究详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表直观
 - 价值: ⭐⭐⭐⭐ 为视频 Agent 系统设计提供了可复现的框架和设计原则
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding](vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)
+- [A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](../../ICLR2026/video_understanding/air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
+- [EgoTextVQA: Towards Egocentric Scene-Text Aware Video Question Answering](../../CVPR2025/video_understanding/egotextvqa_towards_egocentric_scene-text_aware_video_question_answering.md)
+- [Bimba: Selective-Scan Compression for Long-Range Video Question Answering](../../CVPR2025/video_understanding/bimba_selective-scan_compression_for_long-range_video_question_answering.md)
+- [DSAS: A Universal Plug-and-Play Framework for Attention Optimization in Multi-Document Question Answering](dsas_a_universal_plug-and-play_framework_for_attention_optimization_in_multi-doc.md)
+
+<!-- RELATED:END -->

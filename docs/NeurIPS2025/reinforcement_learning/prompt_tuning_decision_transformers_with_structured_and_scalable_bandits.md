@@ -138,3 +138,15 @@ $$\mathcal{L}(\phi_j) = \text{MSE}(\hat{y}_j, y)$$
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖多环境、ID/OOD、数据质量消融、regret分析、注意力分析
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、理论推导严谨，附录详实
 - 价值: ⭐⭐⭐⭐ 提供了实用的推理时适配方案，计算开销低
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Structured Reinforcement Learning for Combinatorial Decision-Making](structured_reinforcement_learning_for_combinatorial_decision-making.md)
+- [Greedy Algorithm for Structured Bandits: A Sharp Characterization of Asymptotic Success / Failure](greedy_algorithm_for_structured_bandits_a_sharp_characterization_of_asymptotic_s.md)
+- [Blending Complementary Memory Systems in Hybrid Quadratic-Linear Transformers](blending_complementary_memory_systems_in_hybrid_quadratic-linear_transformers.md)
+- [A Near-optimal, Scalable and Parallelizable Framework for Stochastic Bandits Robust to Adversarial Corruptions and Beyond](a_nearoptimal_scalable_and_parallelizable_framework_for_stoc.md)
+- [Parameter Efficient Fine-tuning via Explained Variance Adaptation](parameter_efficient_fine-tuning_via_explained_variance_adaptation.md)
+
+<!-- RELATED:END -->

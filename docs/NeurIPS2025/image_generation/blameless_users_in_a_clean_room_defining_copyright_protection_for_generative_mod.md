@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 纯理论工作，无实验但定理严谨
 - 写作质量: ⭐⭐⭐⭐⭐ 法律和数学的结合罕见且优秀
 - 价值: ⭐⭐⭐⭐⭐ 对 AI 版权理论和政策有基础性影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StableGuard: Towards Unified Copyright Protection and Tamper Localization in Latent Diffusion Models](stableguard_towards_unified_copyright_protection_and_tamper_localization_in_late.md)
+- [Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models](perturb_a_model_not_an_image_towards_robust_privacy_protection_via_anti-personal.md)
+- [Why Knowledge Distillation Works in Generative Models: A Minimal Working Explanation](why_knowledge_distillation_works_in_generative_models_a_minimal_working_explanat.md)
+- [BlurGuard: A Simple Approach for Robustifying Image Protection Against AI-Powered Edit](blurguard_a_simple_approach_for_robustifying_image_protection_against_ai-powered.md)
+- [EditInfinity: Image Editing with Binary-Quantized Generative Models](editinfinity_image_editing_with_binary-quantized_generative_models.md)
+
+<!-- RELATED:END -->

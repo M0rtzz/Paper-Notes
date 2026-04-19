@@ -115,3 +115,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 提供了六个案例研究覆盖理论分布和真实挑战赛，但可以加入更多大规模实际竞赛数据
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨清晰，但符号较多，对非理论背景读者有一定门槛
 - 价值: ⭐⭐⭐⭐ 为评估实践提供了严格理论基础，但对现有结论的实际影响可能不大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [I Can't Believe It's Not Scene Flow!](../../ECCV2024/others/i_canapost_believe_itaposs_not_scene_flow.md)
+- [How Hard Is It to Rig a Tournament When Few Players Can Beat or Be Beaten by the Favorite?](../../AAAI2026/others/how_hard_is_it_to_rig_a_tournament_when_few_players_can_beat_or_be_beaten_by_the.md)
+- [Bounds on Agreement between Subjective and Objective Measurements](bounds_on_agreement_between_subjective_and_objecti.md)
+- [How Hard is it to Explain Preferences Using Few Boolean Attributes?](../../AAAI2026/others/how_hard_is_it_to_explain_preferences_using_few_boolean_attributes.md)
+- [Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](your_classifier_can_do_more_towards_balancing_the_gaps_in_classification_robustn.md)
+
+<!-- RELATED:END -->

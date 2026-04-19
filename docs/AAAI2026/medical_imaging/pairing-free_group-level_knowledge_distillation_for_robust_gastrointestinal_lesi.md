@@ -202,3 +202,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{pro} + \mathcal{L}_{den} + \mathcal{L}_{cls
 - 实验: ⭐⭐⭐⭐⭐ — 四个数据集、8个SOTA对比、充分消融、公平设置
 - 写作: ⭐⭐⭐⭐⭐ — 逻辑严谨，问题动机和方法设计环环相扣
 - 实用性: ⭐⭐⭐⭐⭐ — 解决真实临床痛点，提供代码，推理仅需WLI分类器
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Momentum Memory for Knowledge Distillation in Computational Pathology](../../CVPR2026/medical_imaging/momentum_memory_for_knowledge_distillation_in_computational_pathology.md)
+- [Error Correction in Radiology Reports: A Knowledge Distillation-Based Multi-Stage Framework](error_correction_in_radiology_reports_a_knowledge_distillation-based_multi-stage.md)
+- [A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment](a_principle-driven_adaptive_policy_for_group_cognitive_stimu.md)
+- [FGBench: A Dataset and Benchmark for Molecular Property Reasoning at Functional Group-Level in Large Language Models](../../NeurIPS2025/medical_imaging/fgbench_a_dataset_and_benchmark_for_molecular_property_reasoning_at_functional_g.md)
+- [Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification](../../CVPR2026/medical_imaging/diffusionbased_feature_denoising_and_using_nnmf_fo.md)
+
+<!-- RELATED:END -->

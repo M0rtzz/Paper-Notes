@@ -171,3 +171,15 @@ CGRS 在标准自回归解码过程中嵌入两个组件：
 - 实验充分度: ⭐⭐⭐⭐⭐ （8个模型×4个基准，消融/案例分析完整）
 - 写作质量: ⭐⭐⭐⭐⭐ （结构清晰，动机阐述到位）
 - 价值: ⭐⭐⭐⭐⭐ （即插即用，实用价值极高）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Landscape of Thoughts: Visualizing the Reasoning Process of Large Language Models](../../ICLR2026/model_compression/landscape_of_thoughts_visualizing_the_reasoning_process_of_large_language_models.md)
+- [Efficient Reasoning with Balanced Thinking](../../ICLR2026/model_compression/efficient_reasoning_with_balanced_thinking.md)
+- [InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](../../ICLR2026/model_compression/inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
+- [BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models](../../ICLR2026/model_compression/beyondbench_contamination-resistant_evaluation_of_reasoning_in_language_models.md)
+- [Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models](../../ICLR2026/model_compression/scaling_reasoning_hop_exposes_weaknesses_demystifying_and_improving_hop_generali.md)
+
+<!-- RELATED:END -->

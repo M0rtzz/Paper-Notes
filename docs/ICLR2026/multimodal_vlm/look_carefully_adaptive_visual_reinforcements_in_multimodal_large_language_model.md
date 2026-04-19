@@ -125,3 +125,15 @@ AIR 工作在 Transformer 每层的 FFN 阶段，由两个组件串联构成：(
 - 实验充分度: ⭐⭐⭐⭐ 三个模型、多个幻觉基准、通用能力验证、消融完整
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，动机图示清晰
 - 价值: ⭐⭐⭐⭐ MLLM 幻觉缓解的实用无训练方案，即插即用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models](dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis.md)
+- [Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](../../ICML2025/multimodal_vlm/look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+- [Self-Aug: Query and Entropy Adaptive Decoding for Large Vision-Language Models](self-aug_query_and_entropy_adaptive_decoding_for_large_vision-language_models.md)
+- [Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation](../../CVPR2026/multimodal_vlm/locate-then-sparsify_attribution_guided_sparse_strategy_for_visual_hallucination.md)
+
+<!-- RELATED:END -->

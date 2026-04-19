@@ -108,3 +108,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 两个数据集，但实验偏少，缺少详细消融和更多baseline对比
 - 写作质量: ⭐⭐⭐⭐ 问题定义和motivation清晰，评价指标设计合理
 - 价值: ⭐⭐⭐ 方向有前景但当前性能差距大，更像是一个proof-of-concept
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation](exploring_scene_affinity_for_semi-supervised_lidar_semantic_segmentation.md)
+- [Leveraging Depth and Language for Open-Vocabulary Domain-Generalized Semantic Segmentation](../../NeurIPS2025/autonomous_driving/leveraging_depth_and_language_for_open-vocabulary_domain-generalized_semantic_se.md)
+- [O3N: Omnidirectional Open-Vocabulary Occupancy Prediction](o3n_omnidirectional_open-vocabulary_occupancy_prediction.md)
+- [Open-Vocabulary Domain Generalization in Urban-Scene Segmentation](../../CVPR2026/autonomous_driving/open-vocabulary_domain_generalization_in_urban-scene_segmentation.md)
+- [RAPiD-Seg: Range-Aware Pointwise Distance Distribution Networks for 3D LiDAR Segmentation](../../ECCV2024/autonomous_driving/rapid-seg_range-aware_pointwise_distance_distribution_networks_for_3d_lidar_segm.md)
+
+<!-- RELATED:END -->

@@ -143,3 +143,15 @@ DOGR 在 grounding 性能上大幅领先：$F1_{all}$ 在 $G_a$ 上达到73.0，
 - **实验充分度**: ⭐⭐⭐⭐ 多维度评测（grounding/referring/传统VQA），覆盖闭源和开源模型
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，数据引擎的流程图详尽
 - **价值**: ⭐⭐⭐⭐⭐ 填补文档grounding评测空白，数据引擎和基准对社区有重要推动作用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Visual Intention Grounding for Egocentric Assistants](visual_intention_grounding_for_egocentric_assistants.md)
+- [Relation-Rich Visual Document Generator for Visual Information Extraction](../../CVPR2025/multimodal_vlm/relation-rich_visual_document_generator_for_visual_information_extraction.md)
+- [MC-Bench: A Benchmark for Multi-Context Visual Grounding in the Era of MLLMs](mc-bench_a_benchmark_for_multi-context_visual_grounding_in_the_era_of_mllms.md)
+- [MIMO: A Medical Vision Language Model with Visual Referring Multimodal Input and Pixel Grounding Multimodal Output](../../CVPR2025/multimodal_vlm/mimo_a_medical_vision_language_model_with_visual_referring_multimodal_input_and_.md)
+- [Aria-UI: Visual Grounding for GUI Instructions](../../ACL2025/multimodal_vlm/aria-ui_visual_grounding_for_gui_instructions.md)
+
+<!-- RELATED:END -->

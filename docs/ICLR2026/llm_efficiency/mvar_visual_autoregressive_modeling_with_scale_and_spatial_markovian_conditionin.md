@@ -168,3 +168,15 @@ $$\text{SA}_i^l = \text{SoftMax}(\mathbf{S}_i^l / \sqrt{d}) \, \mathbf{V}_i^l$$
 - **实验充分度**: ⭐⭐⭐⭐ — 从零训练 + 微调 + 多维度消融，但数据集较单一
 - **实用价值**: ⭐⭐⭐⭐⭐ — 大幅降低训练和推理成本，8×4090 可训练
 - **总体推荐**: ⭐⭐⭐⭐ — 实用导向的优秀工作，同时保持理论美感
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SparVAR: Exploring Sparsity in Visual Autoregressive Modeling for Training-Free Acceleration](../../CVPR2026/llm_efficiency/sparvar_exploring_sparsity_in_visual_autoregressive_modeling_for_training-free_a.md)
+- [Spatial-TTT: Streaming Visual-based Spatial Intelligence with Test-Time Training](../../CVPR2025/llm_efficiency/spatial-ttt_streaming_visual-based_spatial_intelligence_with_test-time_training.md)
+- [Boosting Quantitive and Spatial Awareness for Zero-Shot Object Counting](../../CVPR2026/llm_efficiency/boosting_quantitive_and_spatial_awareness_for_zero-shot_object_counting.md)
+- [StoryTailor: A Zero-Shot Pipeline for Action-Rich Multi-Subject Visual Narratives](../../CVPR2026/llm_efficiency/storytailora_zero-shot_pipeline_for_action-rich_multi-subject_visual_narratives.md)
+- [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
+
+<!-- RELATED:END -->

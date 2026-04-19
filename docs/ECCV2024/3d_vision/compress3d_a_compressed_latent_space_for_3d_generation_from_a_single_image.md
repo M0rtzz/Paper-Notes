@@ -168,3 +168,15 @@ $$L_R = \lambda_1 L_{rgb} + \lambda_2 L_{mask} + \lambda_3 L_{depth} - \lambda_{
 | 写作质量 | 7 |
 | 实用价值 | 8 |
 | **总分** | **7.6** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vista3D: Unravel the 3D Darkside of a Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)
+- [LN3Diff: Scalable Latent Neural Fields Diffusion for Speedy 3D Generation](ln3diff_scalable_latent_neural_fields_diffusion_for_speedy_3d_generation.md)
+- [ZeST: Zero-Shot Material Transfer from a Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)
+- [CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model](crm_single_image_to_3d_textured_mesh_with_convolutional_reconstruction_model.md)
+- [Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting](repaint123_fast_and_high-quality_one_image_to_3d_generation_with_progressive_con.md)
+
+<!-- RELATED:END -->

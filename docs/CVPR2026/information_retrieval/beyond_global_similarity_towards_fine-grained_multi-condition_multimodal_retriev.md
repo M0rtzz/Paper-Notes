@@ -151,3 +151,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5检索器+7重排器、3种模态设置、候选侧/查询侧消融、约束数量消融，非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，实验分析深入，基准对比表（Tab.1）一目了然
 - 价值: ⭐⭐⭐⭐ 填补了多条件跨模态检索基准的空白，重排器vs检索器的差距分析具有指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [M4-RAG: A Massive-Scale Multilingual Multi-Cultural Multimodal RAG](m4-rag_a_massive-scale_multilingual_multi-cultural_multimodal_rag.md)
+- [GOAL: Global-Local Object Alignment Learning](../../CVPR2025/information_retrieval/goal_global-local_object_alignment_learning.md)
+- [Beyond Perplexity: Let the Reader Select Retrieval Summaries via Spectrum Projection Score](../../AAAI2026/information_retrieval/beyond_perplexity_let_the_reader_select_retrieval_summaries_via_spectrum_project.md)
+- [Improving Consistency in Retrieval-Augmented Systems with Group Similarity Rewards](../../NeurIPS2025/information_retrieval/improving_consistency_in_retrieval-augmented_systems_with_group_similarity_rewar.md)
+- [Magnitude Matters: A Superior Class of Similarity Metrics for Holistic Semantic Understanding](../../AAAI2026/information_retrieval/magnitude_matters_a_superior_class_of_similarity_metrics_for_holistic_semantic_u.md)
+
+<!-- RELATED:END -->

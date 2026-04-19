@@ -184,3 +184,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 种材质定量对比 + 多视图重建消融 + 用户研究；缺少真实世界定量评估
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，两阶段动机充分；方法描述详实
 - 价值: ⭐⭐⭐⭐⭐ 从根本上改变了物理 4D 合成的范式——从小时级优化到秒级推理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Particulate: Feed-Forward 3D Object Articulation](particulate_feed-forward_3d_object_articulation.md)
+- [MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer](more_motion-aware_feed-forward_4d_reconstruction_transformer.md)
+- [Off The Grid: Detection of Primitives for Feed-Forward 3D Gaussian Splatting](off_the_grid_detection_of_primitives_for_feed-forward_3d_gaussian_splatting.md)
+- [AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors](anchorsplat_feed-forward_3d_gaussian_splatting_with_3d_geometric_priors.md)
+- [PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery](panovggt_feed-forward_3d_reconstruction_from_panoramic_imagery.md)
+
+<!-- RELATED:END -->

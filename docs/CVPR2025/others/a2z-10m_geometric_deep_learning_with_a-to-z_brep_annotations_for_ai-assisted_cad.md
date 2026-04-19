@@ -136,3 +136,15 @@ A2Z数据集包含四大类标注，总存储量近5TB：
 - 实验充分度: ⭐⭐⭐⭐ (多角度评估数据质量+基础模型基准，但下游任务验证有限)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，技术细节充分)
 - 价值: ⭐⭐⭐⭐⭐ (填补CAD逆向工程数据空白，开源有巨大推动作用)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)
+- [Full-DoF Egomotion Estimation for Event Cameras Using Geometric Solvers](full-dof_egomotion_estimation_for_event_cameras_using_geometric_solvers.md)
+- [MOS: Modeling Object-Scene Associations in Generalized Category Discovery](mos_modeling_object-scene_associations_in_generalized_category_discovery.md)
+- [SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)
+- [Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
+
+<!-- RELATED:END -->

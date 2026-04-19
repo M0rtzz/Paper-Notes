@@ -135,3 +135,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4个数据集+完整消融+可视化+开源代码，部分提升偏小
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，公式完整，逻辑连贯
 - 价值: ⭐⭐⭐⭐ UCOD方向SOTA且开源，$S_{\text{mc}}$ 度量和STAF融合方案可复用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning](fcl-cod_weakly_supervised_camouflaged_object_detection_with_frequency-aware_and_.md)
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semisupervised_framework.md)
+- [Kαlos finds Consensus: A Meta-Algorithm for Evaluating Inter-Annotator Agreement in Complex Vision Tasks](kαlos_finds_consensus_a_meta-algorithm_for_evaluating_inter-annotator_agreement_.md)
+- [Empowering Semantic-Sensitive Underwater Image Enhancement with VLM](empowering_semanticsensitive_underwater_image_enha.md)
+- [Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance](efficient_rgbd_scene_understanding_via_multitask_a.md)
+
+<!-- RELATED:END -->

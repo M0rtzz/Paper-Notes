@@ -122,3 +122,15 @@ $$\mathcal{L} = \mathcal{L}_{reg} + \mathcal{L}_{giou} + \mathcal{L}_{obj} + \ma
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、两种设置、充分消融、预训练对比均有覆盖
 - 写作质量: ⭐⭐⭐⭐ 问题动机和方法设计的叙述清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 为OVSGG提供了有效的交互中心范式，但场景图生成领域本身的应用影响力相对有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ESCA: Contextualizing Embodied Agents via Scene-Graph Generation](esca_contextualizing_embodied_agents_via_scene-graph_generation.md)
+- [Inductive Transfer Learning for Graph-Based Recommenders](inductive_transfer_learning_for_graph-based_recommenders.md)
+- [Unbiased Video Scene Graph Generation via Visual and Semantic Dual Debiasing](../../CVPR2025/graph_learning/unbiased_video_scene_graph_generation_via_visual_and_semantic_dual_debiasing.md)
+- [Toward Data-centric Directed Graph Learning: An Entropy-driven Approach](../../ICML2025/graph_learning/toward_data-centric_directed_graph_learning_an_entropy-driven_approach.md)
+- [WSGG: Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2026/graph_learning/wsgg_spatiotemporal_world_scene_graph.md)
+
+<!-- RELATED:END -->

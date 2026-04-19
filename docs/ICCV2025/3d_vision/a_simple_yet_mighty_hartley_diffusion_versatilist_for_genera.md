@@ -114,3 +114,15 @@ HarDiff 基于扩散模型进行稠密视觉预测，核心创新是引入离散
 - 实验充分度: ⭐⭐⭐⭐ 12 个基准 3 类任务覆盖广泛
 - 写作质量: ⭐⭐⭐⭐ 方法动机清晰，框架简洁优雅
 - 价值: ⭐⭐⭐⭐ 频域思路对域泛化研究有启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Easy3D: A Simple Yet Effective Method for 3D Interactive Segmentation](easy3d_a_simple_yet_effective_method_for_3d_interactive_segmentation.md)
+- [LLaVA-3D: A Simple yet Effective Pathway to Empowering LMMs with 3D Capabilities](llava-3d_a_simple_yet_effective_pathway_to_empowering_lmms_with_3d_capabilities.md)
+- [A Unified Image-Dense Annotation Generation Model for Underwater Scenes](../../CVPR2025/3d_vision/a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
+- [Boost 3D Reconstruction using Diffusion-based Monocular Camera Calibration](boost_3d_reconstruction_using_diffusion-based_monocular_camera_calibration.md)
+- [DAViD: Data-efficient and Accurate Vision Models from Synthetic Data](david_data-efficient_and_accurate_vision_models_from_synthetic_data.md)
+
+<!-- RELATED:END -->

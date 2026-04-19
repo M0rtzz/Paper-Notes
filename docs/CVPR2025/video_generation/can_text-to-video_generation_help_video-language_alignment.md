@@ -100,3 +100,15 @@ $\mathcal{L} = \mathcal{L}_{real} + \mathcal{L}_{syn}^\phi + \lambda_{scr} \cdot
 - 实验充分度: ⭐⭐⭐⭐ 多 T2V 模型、多 VLM 基线、详细消融
 - 写作质量: ⭐⭐⭐⭐ 分析视角全面
 - 价值: ⭐⭐⭐⭐ 对利用合成数据训练视频模型有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ETVA: Evaluation of Text-to-Video Alignment via Fine-Grained Question Generation and Answering](../../ICCV2025/video_generation/etva_evaluation_of_text-to-video_alignment_via_fine-grained_question_generation_.md)
+- [Identity-Preserving Text-to-Video Generation by Frequency Decomposition](identity-preserving_text-to-video_generation_by_frequency_decomposition.md)
+- [ViReS: Video Instance Repainting via Sketch and Text Guided Generation](vires_video_instance_repainting_via_sketch_and_text_guided_generation.md)
+- [Force Prompting: Video Generation Models Can Learn and Generalize Physics-based Control Signals](../../NeurIPS2025/video_generation/force_prompting_video_generation_models_can_learn_and_generalize_physics-based_c.md)
+- [Mimir: Improving Video Diffusion Models for Precise Text Understanding](mimir_improving_video_diffusion_models_for_precise_text_understanding.md)
+
+<!-- RELATED:END -->

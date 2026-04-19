@@ -150,3 +150,15 @@ GFP 建立编码器-解码器架构与目标生成网络（TGN）之间的双向
 - **实验充分度**: ⭐⭐⭐⭐⭐ 三个数据集、识别+检索+半监督多任务、详尽消融（目标类型/TGN输入/架构/投影器层数）
 - **写作质量**: ⭐⭐⭐⭐ 问题动机阐述充分，效率对比直观（表1包含FLOPs和训练时间）
 - **价值**: ⭐⭐⭐⭐⭐ 6.2倍加速+SOTA性能的组合极具实用价值，为骨架自监督学习设立了新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [General Compression Framework for Efficient Transformer Object Tracking](general_compression_framework_for_efficient_transformer_object_tracking.md)
+- [Data Collection-Free Masked Video Modeling](../../ECCV2024/video_understanding/data_collection-free_masked_video_modeling.md)
+- [Online Time Series Prediction Using Feature Adjustment](../../ICLR2026/video_understanding/online_time_series_prediction_using_feature_adjustment.md)
+- [Bootstrap Your Own Views: Masked Ego-Exo Modeling for Fine-Grained View-Invariant Video Representations](../../CVPR2025/video_understanding/bootstrap_your_own_views_masked_ego-exo_modeling_for_fine-grained_view-invariant.md)
+- [BlinkTrack: Feature Tracking over 80 FPS via Events and Images](blinktrack_feature_tracking_over_80_fps_via_events_and_images.md)
+
+<!-- RELATED:END -->

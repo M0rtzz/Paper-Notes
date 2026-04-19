@@ -126,3 +126,15 @@ $$\mathbb{E}[\widehat{\text{KCI}}_n] = \mathbb{E}\left[k_C(C,C')\langle\Delta_{A
 - 实验充分度: ⭐⭐⭐ — 合成实验设计精巧且理论-实验吻合度高，但真实数据验证不足
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，理论表述严谨，从动机到分析层层递进
 - 价值: ⭐⭐⭐⭐ — 对CI检验领域的核心困难提供了迄今最清晰的诊断，对因果发现和公平性检验的实践者有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Taught Well, Learned Ill: Towards Distillation-Conditional Backdoor Attack](taught_well_learned_ill_towards_distillation-conditional_backdoor_attack.md)
+- [Disparate Conditional Prediction in Multiclass Classifiers](../../ICML2025/ai_safety/disparate_conditional_prediction_in_multiclass_classifiers.md)
+- [Generalization in Federated Learning: A Conditional Mutual Information Framework](../../ICML2025/ai_safety/generalization_in_federated_learning_a_conditional_mutual_information_framework.md)
+- [PinPoint: Evaluation of Composed Image Retrieval with Explicit Negatives, Multi-Image Queries, and Paraphrase Testing](../../CVPR2026/ai_safety/pinpoint_evaluation_of_composed_image_retrieval_with_explicit_negatives_multi-im.md)
+- [Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification](keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)
+
+<!-- RELATED:END -->

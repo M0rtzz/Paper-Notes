@@ -134,3 +134,15 @@ ArtLLM 将铰接物体生成建模为语言生成问题，使用 3D 多模态 LL
 - 实验充分度: ⭐⭐⭐⭐ 定量比较充分，消融完整，有 Real2Sim 验证
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，离散化设计描述详细
 - 价值: ⭐⭐⭐⭐⭐ 对机器人学习和仿真有直接且显著的应用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience](3drawagent_teaching_llm_to_draw_in_3d_with_early_contrastive_experience.md)
+- [ArtHOI: Taming Foundation Models for Monocular 4D Reconstruction of Hand-Articulated-Object Interactions](arthoi_taming_foundation_models_for_monocular_4d_reconstruction_of_hand-articula.md)
+- [MeshArt: Generating Articulated Meshes with Structure-Guided Transformers](../../CVPR2025/3d_vision/meshart_generating_articulated_meshes_with_structure-guided_transformers.md)
+- [FreeArtGS: Articulated Gaussian Splatting Under Free-Moving Scenario](freeartgs_articulated_gaussian_splatting_under_free-moving_scenario.md)
+- [Mind the Hitch: Dynamic Calibration and Articulated Perception for Autonomous Trucks](mind_the_hitch_dynamic_calibration_and_articulated_perception_for_autonomous_tru.md)
+
+<!-- RELATED:END -->

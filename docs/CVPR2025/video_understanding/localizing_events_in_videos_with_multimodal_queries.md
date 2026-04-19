@@ -135,3 +135,15 @@ ICQ 包含三大贡献：
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 模型 × 4 方法 × 4 风格，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图表丰富，略显冗长
 - 价值: ⭐⭐⭐⭐⭐ 开创新方向，受众广泛，数据集有长期价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [BlinkTrack: Feature Tracking over 80 FPS via Events and Images](../../ICCV2025/video_understanding/blinktrack_feature_tracking_over_80_fps_via_events_and_images.md)
+- [Mamba-VMR: Multimodal Query Augmentation via Generated Videos for Precise Temporal Grounding](../../CVPR2026/video_understanding/mamba-vmr_multimodal_query_augmentation_via_generated_videos_for_precise_tempora.md)
+- [Coarse Correspondences Boost Spatial-Temporal Reasoning in Multimodal Language Models](coarse_correspondences_boost_spatial-temporal_reasoning_in_multimodal_language_m.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [OVG-HQ: Online Video Grounding with Hybrid-modal Queries](../../ICCV2025/video_understanding/ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)
+
+<!-- RELATED:END -->

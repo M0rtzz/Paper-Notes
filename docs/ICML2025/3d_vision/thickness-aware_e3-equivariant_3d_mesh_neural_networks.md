@@ -178,3 +178,15 @@ $$\mathbf{z}_i^{(l+1)} \leftarrow f_{\text{thick}}^V(\mathbf{z}_i^{\text{surf},(
 | 实用价值 | 4 | 计算高效，直接可用于工业 CAE 场景 |
 | 写作质量 | 4 | 结构清晰，图示直观 |
 | **总分** | **3.8** | 实用导向的等变网格方法，工业适用性强 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Copresheaf Topological Neural Networks: A Generalized Deep Learning Framework](../../NeurIPS2025/3d_vision/copresheaf_topological_neural_networks_a_generalized_deep_learning_framework.md)
+- [AJAHR: Amputated Joint Aware 3D Human Mesh Recovery](../../ICCV2025/3d_vision/ajahr_amputated_joint_aware_3d_human_mesh_recovery.md)
+- [FlowDrag: 3D-aware Drag-based Image Editing with Mesh-guided Deformation Vector Flow Fields](flowdrag_3d-aware_drag-based_image_editing_with_mesh-guided_deformation_vector_f.md)
+- [SE(3)-Equivariant Diffusion Policy in Spherical Fourier Space](se3-equivariant_diffusion_policy_in_spherical_fourier_space.md)
+- [HeatFormer: A Neural Optimizer for Multiview Human Mesh Recovery](../../CVPR2025/3d_vision/heatformer_a_neural_optimizer_for_multiview_human_mesh_recovery.md)
+
+<!-- RELATED:END -->

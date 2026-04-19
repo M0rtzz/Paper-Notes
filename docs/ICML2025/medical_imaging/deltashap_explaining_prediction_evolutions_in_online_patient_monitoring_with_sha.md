@@ -241,3 +241,15 @@ DeltaSHAP 在 AUPD 上超越次优方法 62%（22.59 vs 13.95），AUPP 降低 7
 **优点**：问题定义精准、方法设计简洁高效、效果显著（62%提升+33%加速）、临床一致性强、评估指标体系完善。
 
 **不足**：仅在LSTM上验证、未处理延迟效应、实验数据集仅两个。整体是一项扎实的工作，在临床XAI领域有重要的实践价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](../../ICLR2026/medical_imaging/compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
+- [The Brain's Bitter Lesson: Scaling Speech Decoding With Self-Supervised Learning](the_brains_bitter_lesson_scaling_speech_decoding_with_self-supervised_learning.md)
+- [Protein Structure Tokenization: Benchmarking and New Recipe](protein_structure_tokenization_benchmarking_and_new_recipe.md)
+- [The Four Color Theorem for Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)
+- [Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
+
+<!-- RELATED:END -->

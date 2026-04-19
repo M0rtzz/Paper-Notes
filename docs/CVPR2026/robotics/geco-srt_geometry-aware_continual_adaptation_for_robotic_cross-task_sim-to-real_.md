@@ -124,3 +124,15 @@ GeCo-SRT 平均成功率 63.3%，比基线高 52%；平均遗忘率 N-NBT 仅 26
 - ⭐⭐⭐⭐ 实用性：显著降低新任务适应的数据成本，对真实机器人部署有直接价值
 - ⭐⭐⭐ 实验充分度：真机实验完整但任务规模偏小（4个任务），缺少更多样化场景
 - ⭐⭐⭐ 写作质量：结构清晰、动机充分，但部分公式符号不够一致
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
+- [Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)
+- [RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation](rcnf_robot_conditioned_normalizing_flow_anomaly.md)
+- [Action–Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation](actiongeometry_prediction_with_3d_geometric_prior.md)
+- [MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent](mergevla_cross-skill_model_merging_toward_a_generalist_vision-language-action_ag.md)
+
+<!-- RELATED:END -->

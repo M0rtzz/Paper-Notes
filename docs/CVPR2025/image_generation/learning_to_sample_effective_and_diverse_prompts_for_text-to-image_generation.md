@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多奖励函数、跨模型迁移、消融实验都很充分
 - 写作质量: ⭐⭐⭐⭐ 问题分析深入，动机阐述清晰
 - 价值: ⭐⭐⭐⭐ 对GFlowNet社区和T2I优化都有重要参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DiverseFlow: Sample-Efficient Diverse Mode Coverage in Flows](diverseflow_sample-efficient_diverse_mode_coverage_in_flows.md)
+- [A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation](a_comprehensive_study_of_decoder-only_llms_for_text-to-image_generation.md)
+- [LumiCtrl: Learning Illuminant Prompts for Lighting Control in Personalized Text-to-Image Models](../../CVPR2026/image_generation/lumictrl_learning_illuminant_prompts_for_lighting_control_in_personalized_text-t.md)
+- [Evolve to Inspire: Novelty Search for Diverse Image Generation](../../NeurIPS2025/image_generation/evolve_to_inspire_novelty_search_for_diverse_image_generation.md)
+- [Learning Visual Generative Priors without Text](learning_visual_generative_priors_without_text.md)
+
+<!-- RELATED:END -->

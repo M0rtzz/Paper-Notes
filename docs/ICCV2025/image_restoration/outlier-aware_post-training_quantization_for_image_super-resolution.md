@@ -151,3 +151,15 @@ PLQ 单独贡献最大（Set5 +3.67 dB），SAFT 优于普通微调（VFT）。
 - **实验充分度**: ⭐⭐⭐⭐ 多模型多数据集验证，PTQ/QAT 对比全面，含消融和视觉分析
 - **写作质量**: ⭐⭐⭐⭐ 观察→动机→方法的叙事流畅，图表清晰
 - **实用价值**: ⭐⭐⭐⭐⭐ 高效 PTQ 方案对 SR 模型部署极具价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emulating Self-Attention with Convolution for Efficient Image Super-Resolution](emulating_self-attention_with_convolution_for_efficient_image_super-resolution.md)
+- [Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
+- [Luminance-Aware Statistical Quantization: Unsupervised Hierarchical Learning for Illumination Enhancement](../../NeurIPS2025/image_restoration/luminance-aware_statistical_quantization_unsupervised_hierarchical_learning_for_.md)
+- [Spend Wisely: Maximizing Post-Training Gains in Iterative Synthetic Data Bootstrapping](../../NeurIPS2025/image_restoration/spend_wisely_maximizing_post-training_gains_in_iterative_synthetic_data_bootstra.md)
+- [FoundIR: Unleashing Million-scale Training Data to Advance Foundation Models for Image Restoration](foundir_unleashing_million-scale_training_data_to_advance_foundation_models_for_.md)
+
+<!-- RELATED:END -->

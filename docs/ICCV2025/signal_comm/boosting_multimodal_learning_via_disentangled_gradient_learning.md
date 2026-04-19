@@ -130,3 +130,15 @@ DGL在标准多模态模型的基础上做了三个梯度操作（如Fig.2所示
 - 实验充分度: ⭐⭐⭐⭐ 多模态、多任务、多融合方法验证，消融充分
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，动机-分析-方法-验证逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 对多模态学习领域有基础性贡献，方法通用性极高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Molecular Chirality via Chiral Determinant Kernels](../../ICLR2026/signal_comm/learning_molecular_chirality_via_chiral_determinant_kernels.md)
+- [Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](../../ICML2025/signal_comm/large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)
+- [Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning](../../NeurIPS2025/signal_comm/contrastive_consolidation_of_top-down_modulations_achieves_sparsely_supervised_c.md)
+- [Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology](../../NeurIPS2025/signal_comm/multi-modal_masked_autoencoders_for_learning_image-spectrum_associations_for_gal.md)
+- [Dual-Imbalance Continual Learning for Real-World Food Recognition](../../CVPR2026/signal_comm/dual-imbalance_continual_learning_for_real-world_food_recognition.md)
+
+<!-- RELATED:END -->

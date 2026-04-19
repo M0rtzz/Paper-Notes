@@ -97,3 +97,15 @@ YOLOE基于标准YOLO架构（backbone + PAN + 回归头 + 分割头），将分
 - 实验充分度: ⭐⭐⭐⭐⭐ LVIS/COCO全面评估，三种prompt模式各有详细消融，还有下游迁移实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，roadmap table展示从baseline到最终方案的每步贡献，非常直观
 - 价值: ⭐⭐⭐⭐⭐ 实用性极强的开放检测方案，有望成为工业界首选的开放世界YOLO方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
+- [An Overall Real-Time Mechanism for Classification and Quality Evaluation of Rice](../../AAAI2026/object_detection/an_overall_real-time_mechanism_for_classification_and_quality_evaluation_of_rice.md)
+- [StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](../../CVPR2026/object_detection/streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)
+- [Diffusion Curriculum: Synthetic-to-Real Data Curriculum via Image-Guided Diffusion](diffusion_curriculum_synthetic-to-real_data_curriculum_via_image-guided_diffusio.md)
+- [VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions](voccl3d_a_video_benchmark_dataset_for_3d_human_pose_and_shape_estimation_under_r.md)
+
+<!-- RELATED:END -->

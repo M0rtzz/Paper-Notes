@@ -91,3 +91,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多模型多基线多评估维度，认知可解释性分析深入
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，从认知科学到NLP的叙事流畅
 - 价值: ⭐⭐⭐⭐ 科学价值大，但实际应用需更高准确率
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MovieRecapsQA: A Multimodal Open-Ended Video Question-Answering Benchmark](../../CVPR2026/video_understanding/movierecapsqa_a_multimodal_open-ended_video_question-answering_benchmark.md)
+- [TOGA: Temporally Grounded Open-Ended Video QA with Weak Supervision](../../ICCV2025/video_understanding/toga_temporally_grounded_open-ended_video_qa_with_weak_supervision.md)
+- [Map the Flow: Revealing Hidden Pathways of Information in VideoLLMs](map_the_flow_revealing_hidden_pathways_of_information_in_videollms.md)
+- [GoalForce: Teaching Video Models to Accomplish Physics-Conditioned Goals](../../CVPR2026/video_understanding/goal_force_teaching_video_models_to_accomplish_physics-conditioned_goals.md)
+- [VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking](../../CVPR2026/video_understanding/videoseek_long-horizon_video_agent_with_tool-guided_seeking.md)
+
+<!-- RELATED:END -->

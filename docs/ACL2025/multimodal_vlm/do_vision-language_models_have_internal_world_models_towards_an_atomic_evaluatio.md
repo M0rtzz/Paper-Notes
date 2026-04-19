@@ -156,3 +156,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 15 个模型、6 个模拟器、23 维度、660 组实验+人类基线
 - **写作质量**: ⭐⭐⭐⭐ — 框架逻辑严密，但论文较长、信息密度大
 - **价值**: ⭐⭐⭐⭐⭐ — 为 VLM 世界建模研究提供系统性诊断工具，"解耦缺失"等发现具有高影响力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Words or Vision: Do Vision-Language Models Have Blind Faith in Text?](../../CVPR2025/multimodal_vlm/words_or_vision_do_vision-language_models_have_blind_faith_in_text.md)
+- [SPHERE: Unveiling Spatial Blind Spots in Vision-Language Models Through Hierarchical Evaluation](sphere_unveiling_spatial_blind_spots_in.md)
+- [FIHA: Autonomous Fine-grained Hallucination Evaluation in Vision-Language Models with Davidson Scene Graphs](fiha_autonomous_hallucination_evaluation_in_vision-language_models_with_davidson.md)
+- [Burn After Reading: Do Multimodal Large Language Models Truly Capture Order of Events in Image Sequences?](burn_after_reading_do_multimodal_large_language_models_truly_capture_order_of_ev.md)
+- [JailBound: Jailbreaking Internal Safety Boundaries of Vision-Language Models](../../NeurIPS2025/multimodal_vlm/jailbound_jailbreaking_internal_safety_boundaries_of_vision-language_models.md)
+
+<!-- RELATED:END -->

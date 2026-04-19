@@ -126,3 +126,15 @@ DynFocus分三部分：(1) 视觉+文本编码器提取特征；(2) 动态协作
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个benchmark覆盖短视频/长视频/幻觉检测，消融全面
 - 写作质量: ⭐⭐⭐⭐ 生物学类比恰当，公式严谨
 - 价值: ⭐⭐⭐⭐ 为LLM视频理解的token效率问题提供了有效解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Dynamic Updates for Language Adaptation in Visual-Language Tracking](dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
+- [Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](../../NeurIPS2025/video_understanding/enhancing_temporal_understanding_in_videollms_through_stacke.md)
+- [UFVideo: Towards Unified Fine-Grained Video Cooperative Understanding with Large Language Models](../../CVPR2026/video_understanding/ufvideo_towards_unified_fine-grained_video_cooperative_understanding_with_large_.md)
+- [Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](../../ACL2025/video_understanding/sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)
+- [FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
+
+<!-- RELATED:END -->

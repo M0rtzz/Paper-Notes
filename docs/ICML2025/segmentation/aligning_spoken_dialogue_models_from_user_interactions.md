@@ -116,3 +116,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 客观指标+人类评估双重验证，消融充分，但缺少与更多基线模型的对比
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，动机阐述充分，实验设计严谨
 - 价值: ⭐⭐⭐⭐⭐ 对语音对话AI的对齐研究具有开创性意义，框架可推广到其他全双工模型
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What If: Understanding Motion Through Sparse Interactions](../../ICCV2025/segmentation/what_if_understanding_motion_through_sparse_interactions.md)
+- [From Attribution to Action: Jointly ALIGNing Predictions and Explanations](../../AAAI2026/segmentation/from_attribution_to_action_jointly_aligning_predictions_and_explanations.md)
+- [DEF-DTS: Deductive Reasoning for Open-domain Dialogue Topic Segmentation](../../ACL2025/segmentation/def-dts_deductive_reasoning_for_open-domain_dialogue_topic_segmentation.md)
+- [Can Generative Geospatial Diffusion Models Excel as Discriminative Geospatial Foundation Models?](../../ICCV2025/segmentation/can_generative_geospatial_diffusion_models_excel_as_discriminative_geospatial_fo.md)
+- [EditAR: Unified Conditional Generation with Autoregressive Models](../../CVPR2025/segmentation/editar_unified_conditional_generation_with_autoregressive_models.md)
+
+<!-- RELATED:END -->

@@ -187,3 +187,15 @@ DiverseDiT 包含两个互补组件：
 ## 评分
 
 ⭐⭐⭐⭐ 扎实的分析驱动工作，从 CKA 观察到方法设计逻辑自洽，两个组件简洁有效且与现有方法互补，实验充分覆盖多基线多规模；轻微不足在于自适应权重设计偏经验性，且缺乏对更广泛生成场景的验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [No Other Representation Component Is Needed: Diffusion Transformers Can Provide Representation Guidance by Themselves](../../ICLR2026/self_supervised/no_other_representation_component_is_needed_diffusion_transformers_can_provide_r.md)
+- [Vision Transformers Need More Than Registers](vision_transformers_need_more_than_registers.md)
+- [Representation Learning for Spatiotemporal Physical Systems](representation_learning_for_spatiotemporal_physical_systems.md)
+- [TrackMAE: Video Representation Learning via Track, Mask, and Predict](trackmae_video_representation_learning_via_track_mask_and_predict.md)
+- [D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping](d2dewarp_dual_dimensions_geometric_representation_learning_based_document_image_.md)
+
+<!-- RELATED:END -->

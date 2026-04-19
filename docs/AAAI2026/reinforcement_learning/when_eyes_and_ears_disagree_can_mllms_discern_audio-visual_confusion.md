@@ -208,3 +208,15 @@ $$\mathcal{L}_{OP} = \underbrace{-\frac{1}{T}\sum_{t=1}^{T} \log \pi_\theta(o_t 
 - 实验充分度: ⭐⭐⭐⭐ — Music-AVQA/AVQA/AVHBench/AV-ConfuseBench 四个基准，消融充分，但 AV-ConfuseBench 规模偏小
 - 写作质量: ⭐⭐⭐⭐ — 问题动机清晰，方法描述较完整，公式标注准确
 - 价值: ⭐⭐⭐⭐⭐ — 揭示了多模态 LLM 的根本性缺陷，为多模态推理的可靠性研究开辟了新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Echo: Towards Advanced Audio Comprehension via Audio-Interleaved Reasoning](../../ICLR2026/reinforcement_learning/echo_towards_advanced_audio_comprehension_via_audio-interleaved_reasoning.md)
+- [When Can Model-Free Reinforcement Learning be Enough for Thinking?](../../NeurIPS2025/reinforcement_learning/when_can_model-free_reinforcement_learning_be_enough_for_thinking.md)
+- [Linking Perception, Confidence and Accuracy in MLLMs](../../CVPR2026/reinforcement_learning/linking_perception_confidence_and_accuracy_in_mllms.md)
+- [Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding](start_small_think_big_curriculum-based_relative_policy_optimization_for_visual_g.md)
+- [ReAG: Reasoning-Augmented Generation for Knowledge-based Visual Question Answering](../../CVPR2026/reinforcement_learning/reag_reasoning-augmented_generation_for_knowledge-based_visual_question_answerin.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ iManip 的输入是多视角 RGB-D 图像和语言指令，输出是机器人动
 - 实验充分度: ⭐⭐⭐⭐ 消融充分，多种设置对比，有真实机器人实验，但真实世界实验规模偏小
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，方法描述详尽，图示直观
 - 价值: ⭐⭐⭐⭐ 为机器人持续学习提供了实用的 benchmark 和 baseline，有很好的实际应用前景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos](moto_latent_motion_token_as_the_bridging_language_for_learning_robot_manipulatio.md)
+- [Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)
+- [Task-aware MoILE: Hierarchical-Task-Aware Multi-modal Mixture of Incremental LoRA Experts for Embodied Continual Learning](../../ACL2025/robotics/hierarchical-task-aware_multi-modal_mixture_of_incremental_lora_experts_for_embo.md)
+- [STAR: Learning Diverse Robot Skill Abstractions through Rotation-Augmented Vector Quantization](../../ICML2025/robotics/star_learning_diverse_robot_skill_abstractions_through_rotation-augmented_vector.md)
+- [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](../../CVPR2025/robotics/roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
+
+<!-- RELATED:END -->

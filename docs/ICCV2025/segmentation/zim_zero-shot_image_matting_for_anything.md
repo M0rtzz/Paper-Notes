@@ -124,3 +124,15 @@ ZIM基于SAM架构，包含四个组件：(1) 图像编码器（ViT-B, stride 16
 - 实验充分度: ⭐⭐⭐⭐⭐ (23个数据集零样本评估+多下游任务+详尽消融)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图表丰富)
 - 价值: ⭐⭐⭐⭐⭐ (实际应用价值极高，填补零样本抠图空白)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DSS: Discover, Segment, and Select - A Progressive Mechanism for Zero-shot Camouflaged Object Segmentation](../../CVPR2026/segmentation/dss_discover_segment_select_zero_shot_cos.md)
+- [DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation](../../CVPR2026/segmentation/discover_segment_and_select_a_progressive_mechanism_for_zero-shot_camouflaged_ob.md)
+- [Efficient and Versatile Robust Fine-Tuning of Zero-shot Models](../../ECCV2024/segmentation/efficient_and_versatile_robust_fine-tuning_of_zero-shot_models.md)
+- [Object-level Correlation for Few-Shot Segmentation](object-level_correlation_for_few-shot_segmentation.md)
+- [OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation](omnisam_omnidirectional_segment_anything_model_for_uda_in_panoramic_semantic_seg.md)
+
+<!-- RELATED:END -->

@@ -127,3 +127,15 @@ Hermes 在 3s 点云生成上 Chamfer Distance 为 1.17，比 ViDAR 降低 32.4%
 - **实验充分度**: ⭐⭐⭐⭐ 消融全面（world queries/BEV大小/LLM规模/任务交互），但仅限 nuScenes
 - **写作质量**: ⭐⭐⭐⭐ 动机清晰，图示直观，方法阐述通顺
 - **价值**: ⭐⭐⭐⭐⭐ 开创统一驾驶世界模型范式，对后续研究有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Controllable 3D Outdoor Scene Generation via Scene Graphs](controllable_3d_outdoor_scene_generation_via_scene_graphs.md)
+- [UniScene: Unified Occupancy-centric Driving Scene Generation](../../CVPR2025/autonomous_driving/uniscene_unified_occupancy-centric_driving_scene_generation.md)
+- [Epona: Autoregressive Diffusion World Model for Autonomous Driving](epona_autoregressive_diffusion_world_model_for_autonomous_driving.md)
+- [EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding](embodiedocc_embodied_3d_occupancy_prediction_for_vision-based_online_scene_under.md)
+- [MCAM: Multimodal Causal Analysis Model for Ego-Vehicle-Level Driving Video Understanding](mcam_multimodal_causal_analysis_model_for_ego-vehicle-level_driving_video_unders.md)
+
+<!-- RELATED:END -->

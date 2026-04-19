@@ -163,3 +163,15 @@ $$\mathcal{L}_T = \lambda_1 \frac{T_\xi(\mathbf{t}) \cdot \mathbf{t}}{\|T_\xi(\m
 - 实验充分度: ⭐⭐⭐⭐ — 22 个模型评测全面，但防御实验偏少
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 对事件视觉安全有重要警示，开辟新研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SkyMask: Attack-Agnostic Robust Federated Learning with Fine-Grained Learnable Masks](skymask_attack-agnostic_robust_federated_learning_with_fine-grained_learnable_ma.md)
+- [Resilience of Entropy Model in Distributed Neural Networks](resilience_of_entropy_model_in_distributed_neural_networks.md)
+- [Preventing Catastrophic Overfitting in Fast Adversarial Training: A Bi-level Optimization Perspective](preventing_catastrophic_overfitting_in_fast_adversarial_training_a_bi-level_opti.md)
+- [Towards Multi-modal Transformers in Federated Learning](towards_multi-modal_transformers_in_federated_learning.md)
+- [Fisher Calibration for Backdoor-Robust Heterogeneous Federated Learning](fisher_calibration_for_backdoor-robust_heterogeneous_federated_learning.md)
+
+<!-- RELATED:END -->

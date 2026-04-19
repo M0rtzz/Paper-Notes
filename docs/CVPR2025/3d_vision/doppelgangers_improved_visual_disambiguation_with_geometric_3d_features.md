@@ -121,3 +121,15 @@ Doppelgangers++ 在所有场景上 IR 均优于或等于 DG-OG，且使用统一
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个测试集×两种训练配置、21个SfM场景、完整消融
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，数据集构建规则详细，评估方法可复现
 - 价值: ⭐⭐⭐⭐ 对SfM在重复结构场景的鲁棒性有直接且显著的提升
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The NeRFect Match: Exploring NeRF Features for Visual Localization](../../ECCV2024/3d_vision/the_nerfect_match_exploring_nerf_features_for_visual_localization.md)
+- [Formula-Supervised Visual-Geometric Pre-training (FSVGP)](../../ECCV2024/3d_vision/formula-supervised_visual-geometric_pre-training.md)
+- [Pano360: Perspective to Panoramic Vision with Geometric Consistency](pano360_perspective_to_panoramic_vision_with_geometric_consistency.md)
+- [Not All Frame Features Are Equal: Video-to-4D Generation via Decoupling Dynamic-Static Features](../../ICCV2025/3d_vision/not_all_frame_features_are_equal_video-to-4d_generation_via_decoupling_dynamic-s.md)
+- [Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions](grounding_3d_object_affordance_with_language_instructions_visual_observations_an.md)
+
+<!-- RELATED:END -->

@@ -141,3 +141,15 @@ $$\mathcal{L}(\theta, \phi; \tau) = \mathbb{E}_{z \sim q_\phi}[\log p_\theta(a_{
 - **实验充分度**: ⭐⭐⭐⭐ — 涵盖 3 种群体（FCP/MEP/BP）× 4 种地图 + 119 人用户研究 + 消融实验，人类实验设计规范（混合设计、主观问卷）
 - **写作质量**: ⭐⭐⭐⭐ — 结构清晰，数学形式化完整（HiP-MDP、tracking regret bound），算法伪代码详尽
 - **价值**: ⭐⭐⭐⭐ — human-agent 协作的实用方法，人类实验结果有统计显著性，框架可推广到其他合作场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [KEA: Keeping Exploration Alive by Proactively Coordinating Exploration Strategies](../../ICML2025/reinforcement_learning/kea_keeping_exploration_alive_by_proactively_coordinating_exploration_strategies.md)
+- [Inverse Optimization Latent Variable Models for Learning Costs Applied to Route Problems](inverse_optimization_latent_variable_models_for_learning_costs_applied_to_route_.md)
+- [Hybrid Latent Reasoning via Reinforcement Learning](hybrid_latent_reasoning_via_reinforcement_learning.md)
+- [VIKI-R: Coordinating Embodied Multi-Agent Cooperation via Reinforcement Learning](viki-r_coordinating_embodied_multi-agent_cooperation_via_reinforcement_learning.md)
+- [Dynamics-Aligned Latent Imagination in Contextual World Models for Zero-Shot Generalization](dynamics-aligned_latent_imagination_in_contextual_world_models_for_zero-shot_gen.md)
+
+<!-- RELATED:END -->

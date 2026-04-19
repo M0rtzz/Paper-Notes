@@ -154,3 +154,15 @@ GPT-4o 与人类评估均确认高一致性（总体 89% / 75%）。
 ## 评分
 
 ⭐⭐⭐⭐ — 开创性地将机械可解释性工具引入 LMM 领域，提供了丰富的案例洞察。情感特征和幻觉因果分析给人留下深刻印象。不足在于定量评估较少，可复现性受限于计算资源。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Multimodal Large Language Models Understand Spatial Relations?](../../ACL2025/multimodal_vlm/spatialmqa_mllm_spatial_relations.md)
+- [R1-VL: Learning to Reason with Multimodal Large Language Models via Step-wise Group Relative Policy Optimization](r1-vl_learning_to_reason_with_multimodal_large_language_models_via_step-wise_gro.md)
+- [Can Vision Language Models Understand Mimed Actions?](../../ACL2025/multimodal_vlm/can_vision_language_models_understand_mimed_actions.md)
+- [ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)
+- [Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models](physics_context_builders_a_modular_framework_for_physical_reasoning_in_vision-la.md)
+
+<!-- RELATED:END -->

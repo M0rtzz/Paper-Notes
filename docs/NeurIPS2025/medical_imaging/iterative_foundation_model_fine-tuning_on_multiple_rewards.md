@@ -153,3 +153,15 @@ $m$ 值对性能的影响揭示了一个关键规律：
 - 实验充分度: ⭐⭐⭐⭐ 涵盖三个领域，但每个领域的任务设置相对简单
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，理论与实验结合好，部分符号可以更简洁
 - 价值: ⭐⭐⭐⭐ 解决了多目标微调的实际痛点，方法简单可用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [NeurIPT: Foundation Model for Neural Interfaces](neuript_foundation_model_for_neural_interfaces.md)
+- [Flow Density Control: Generative Optimization Beyond Entropy-Regularized Fine-Tuning](flow_density_control_generative_optimization_beyond_entropy-regularized_fine-tun.md)
+- [JanusDNA: A Powerful Bi-directional Hybrid DNA Foundation Model](janusdna_a_powerful_bi-directional_hybrid_dna_foundation_model.md)
+- [Thompson Sampling via Fine-Tuning of LLMs](../../ICLR2026/medical_imaging/thompson_sampling_via_fine-tuning_of_llms.md)
+- [Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens](brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int.md)
+
+<!-- RELATED:END -->

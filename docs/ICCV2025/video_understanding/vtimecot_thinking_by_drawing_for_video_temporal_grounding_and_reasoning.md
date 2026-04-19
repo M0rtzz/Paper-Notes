@@ -167,3 +167,15 @@ VTimeCoT 在 QVHighlights 上 mIoU 提升 16.83%（GPT4o 基线）。
 | 实验 | ⭐⭐⭐⭐ |
 | 写作 | ⭐⭐⭐⭐ |
 | 价值 | ⭐⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [When Thinking Drifts: Evidential Grounding for Robust Video Reasoning](../../NeurIPS2025/video_understanding/when_thinking_drifts_evidential_grounding_for_robust_video_reasoning.md)
+- [Towards Video Thinking Test: A Holistic Benchmark for Advanced Video Reasoning and Understanding](towards_video_thinking_test_a_holistic_benchmark_for_advanced_video_reasoning_an.md)
+- [TimeExpert: An Expert-Guided Video LLM for Video Temporal Grounding](timeexpert_an_expert-guided_video_llm_for_video_temporal_grounding.md)
+- [Moment Quantization for Video Temporal Grounding](moment_quantization_for_video_temporal_grounding.md)
+- [Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding](hierarchical_event_memory_for_accurate_and_low-latency_online_video_temporal_gro.md)
+
+<!-- RELATED:END -->

@@ -209,3 +209,15 @@ Yo'City 在所有维度上全面压制基线，VQAScore 最高（0.7151），对
 | 理论深度 | ⭐⭐⭐ |
 | 实验充分度 | ⭐⭐⭐ |
 | 工程实用性 | ⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [From Orbit to Ground: Generative City Photogrammetry from Extreme Off-Nadir Satellite Images](from_orbit_to_ground_generative_city_photogrammetry_from_extreme_off-nadir_satel.md)
+- [Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion](../../ICCV2025/3d_vision/sat2city_3d_city_generation_from_a_single_satellite_image_with_cascaded_latent_d.md)
+- [Benchmarking Egocentric Visual-Inertial SLAM at City Scale](../../ICCV2025/3d_vision/benchmarking_egocentric_visualinertial_slam_at_city_scale.md)
+- [GeoProg3D: Compositional Visual Reasoning for City-Scale 3D Language Fields](../../ICCV2025/3d_vision/geoprog3d_compositional_visual_reasoning_for_city-scale_3d_language_fields.md)
+- [VerseCrafter: Dynamic Realistic Video World Model with 4D Geometric Control](versecrafter_dynamic_realistic_video_world_model_with_4d_geometric_control.md)
+
+<!-- RELATED:END -->

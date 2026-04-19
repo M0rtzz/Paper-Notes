@@ -144,3 +144,15 @@ $$\mathcal{L}_{\text{fusion}} = \|\mathcal{D}_S(\tilde{\mathbf{H}}) - \mathbf{Z}
 - 实验充分度: ⭐⭐⭐⭐ — 6 个下游基准 + 消融 + token 缩放 + 可解释性分析
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图表精美，神经科学动机阐述到位
 - 价值: ⭐⭐⭐⭐ — 为脑影像领域建立了多模态基础模型范式，但具体性能提升幅度有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model](../../ICLR2026/medical_imaging/brain-semantoks_learning_semantic_tokens_of_brain_dynamics_with_a_self-distilled.md)
+- [NeurIPT: Foundation Model for Neural Interfaces](neuript_foundation_model_for_neural_interfaces.md)
+- [Toward a Vision-Language Foundation Model for Medical Data: Multimodal Dataset and Benchmarks for Vietnamese PET/CT Report Generation](toward_a_vision-language_foundation_model_for_medical_data_multimodal_dataset_an.md)
+- [Iterative Foundation Model Fine-Tuning on Multiple Rewards](iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
+- [JanusDNA: A Powerful Bi-directional Hybrid DNA Foundation Model](janusdna_a_powerful_bi-directional_hybrid_dna_foundation_model.md)
+
+<!-- RELATED:END -->

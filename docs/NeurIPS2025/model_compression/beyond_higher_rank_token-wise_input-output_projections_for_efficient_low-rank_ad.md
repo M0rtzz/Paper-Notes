@@ -121,3 +121,15 @@ TopLoRA 从输入-输出投影角度分析 LoRA 的表达能力，发现所有 t
 - 写作质量: ⭐⭐⭐⭐ 动机推导清晰，公式推导严谨
 - 价值: ⭐⭐⭐⭐ 对 LoRA 家族方法的理论理解和实践改进都有贡献
 - 价值: ⭐⭐⭐⭐ 为 LoRA 改进提供了新的维度（投影多样性 vs 秩），实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GoRA: Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)
+- [RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models](reflora_refactored_low-rank_adaptation_for_efficient_fine-tuning_of_large_models.md)
+- [Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning](data_efficient_adaptation_in_large_language_models_via_continuous_low-rank_fine-.md)
+- [Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models](gated_integration_of_low-rank_adaptation_for_continual_learning_of_large_languag.md)
+- [Accurate and Efficient Low-Rank Model Merging in Core Space](accurate_and_efficient_low-rank_model_merging_in_core_space.md)
+
+<!-- RELATED:END -->

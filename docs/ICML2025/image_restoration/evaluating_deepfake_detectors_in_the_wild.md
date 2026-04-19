@@ -105,3 +105,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个检测器×2个生成器×3个数据集×4种增强，交叉评估非常全面
 - 写作质量: ⭐⭐⭐⭐ 问题层次清晰，评估设计合理
 - 价值: ⭐⭐⭐⭐ 对deepfake检测社区有警示价值，数据集和代码公开
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Adaptive Estimation and Learning under Temporal Distribution Shift](adaptive_estimation_and_learning_under_temporal_distribution_shift.md)
+- [HarmoniCa: Harmonizing Training and Inference for Better Feature Caching in Diffusion Transformer Acceleration](harmonica_harmonizing_training_and_inference_for_better_feature_caching_in_diffu.md)
+- [ε-VAE: Denoising as Visual Decoding](epsilon-vae_denoising_as_visual_decoding.md)
+- [TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation](timedart_a_diffusion_autoregressive_transformer_for_self-supervised_time_series_.md)
+- [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](../../NeurIPS2025/image_restoration/implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
+
+<!-- RELATED:END -->

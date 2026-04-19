@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个模型×6个数据集的大规模验证,消融充分,还涵盖了幻觉和自反思实验
 - 写作质量: ⭐⭐⭐⭐ 结构清晰,实验表格信息量大,但公式推导部分较为复杂
 - 价值: ⭐⭐⭐⭐ 方法简单通用,实用价值高,视觉自反思的方向值得探索
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Vary: Scaling up the Vision Vocabulary for Large Vision-Language Models](vary_scaling_up_the_vision_vocabulary_for_large_vision-language_model.md)
+- [AdaShield: Safeguarding Multimodal Large Language Models from Structure-based Attack via Adaptive Shield Prompting](adashield_safeguarding_multimodal_large_language_models_from_structure-based_att.md)
+- [IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
+- [AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization](addressclip_empowering_visionlanguage_models_for_citywide_im.md)
+- [Towards Real-World Adverse Weather Image Restoration: Enhancing Clearness and Semantics with Vision-Language Models](towards_real-world_adverse_weather_image_restoration_enhancing_clearness_and_sem.md)
+
+<!-- RELATED:END -->

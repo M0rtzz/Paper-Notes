@@ -111,3 +111,15 @@ FPR95改善幅度巨大（XSUM降低23+个百分点）。
 - 实验充分度: ⭐⭐⭐ XSUM结果极强但实验范围较窄（2个任务）
 - 写作质量: ⭐⭐⭐⭐⭐ Figure 1-2的说明性例子极好，理论推导清晰
 - 价值: ⭐⭐⭐⭐ 为NLP-OOD检测提供了简单有效的改进思路
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IMPARA-GED: Grammatical Error Detection is Boosting Reference-free Grammatical Error Quality Estimator](../../ACL2025/nlp_generation/impara-ged_grammatical_error_detection_is_boosting_reference-free_grammatical_er.md)
+- [FS-DFM: Fast and Accurate Long Text Generation with Few-Step Diffusion Language Model](fs-dfm_fast_and_accurate_long_text_generation_with_few-step_diffusion_language_m.md)
+- [C3TG: Conflict-aware, Composite, and Collaborative Controlled Text Generation](../../AAAI2026/nlp_generation/c3tg_conflict-aware_composite_and_collaborative_controlled_text_generation.md)
+- [AutoMalDesc: Large-Scale Script Analysis for Cyber Threat Research](../../AAAI2026/nlp_generation/automaldesc_large-scale_script_analysis_for_cyber_threat_research.md)
+- [What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations](../../ACL2025/nlp_generation/video_text_summarization.md)
+
+<!-- RELATED:END -->

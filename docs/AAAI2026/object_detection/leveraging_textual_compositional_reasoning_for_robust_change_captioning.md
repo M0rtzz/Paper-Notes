@@ -160,3 +160,15 @@ CORTEX（COmpositional Reasoning-aware TEXt-guided）是一个即插即用框架
 - 实验充分度: ⭐⭐⭐⭐⭐ — 三个数据集、三个基线、详细消融、多种VLM对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机阐述充分
 - 价值: ⭐⭐⭐⭐ — 即插即用的设计实用性强，代码已开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Boundaries: Leveraging Vision Foundation Models for Source-Free Object Detection](beyond_boundaries_leveraging_vision_foundation_models_for_so.md)
+- [PASE: Leveraging the Phonological Prior of WavLM for Low-Hallucination Generative Speech Enhancement](pase_leveraging_the_phonological_prior_of_wavlm_for_low-hallucination_generative.md)
+- [Connecting the Dots: Training-Free Visual Grounding via Agentic Reasoning](connecting_the_dots_training-free_visual_grounding_via_agent.md)
+- [Test-time Diverse Reasoning by Riemannian Activation Steering](test-time_diverse_reasoning_by_riemannian_activation_steering.md)
+- [Advancing Textual Prompt Learning with Anchored Attributes](../../ICCV2025/object_detection/advancing_textual_prompt_learning_with_anchored_attributes.md)
+
+<!-- RELATED:END -->

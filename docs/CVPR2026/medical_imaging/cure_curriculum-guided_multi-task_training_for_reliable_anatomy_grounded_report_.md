@@ -171,3 +171,15 @@ CURE 在 CheXbert Cosine Similarity (0.792) 和 F1-Ma (0.415) 上取得最佳，
 ## 评分
 
 ⭐⭐⭐⭐ 方法简洁高效、实验充分扎实，在不增加数据和模型复杂度的前提下实现了定位和可靠性的显著提升，但文本生成质量仍有提升空间，且仅限 CXR 领域验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding](medgrpo_multi-task_reinforcement_learning_for_heterogeneous_medical_video_unders.md)
+- [GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](../../AAAI2026/medical_imaging/guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
+- [PriorRG: Prior-Guided Contrastive Pre-training and Coarse-to-Fine Decoding for Chest X-ray Report Generation](../../AAAI2026/medical_imaging/priorrg_prior-guided_contrastive_pre-training_and_coarse-to-fine_decoding_for_ch.md)
+- [Unleashing Video Language Models for Fine-grained HRCT Report Generation](unleashing_video_language_models_for_fine-grained_hrct_report_generation.md)
+- [EchoAgent: Towards Reliable Echocardiography Interpretation with "Eyes", "Hands" and "Minds"](echoagent_towards_reliable_echocardiography_interpretation_with_eyeshands_and_mi.md)
+
+<!-- RELATED:END -->

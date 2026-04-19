@@ -201,3 +201,15 @@ $$IE_\gamma(f) = \frac{s \cdot p + (\gamma - s) \cdot \frac{\pi - s \cdot p}{1 -
 - **实验充分度**: ⭐⭐⭐⭐ — 合成实验极为充分（90万次重复），真实数据实验规模偏小
 - **写作质量**: ⭐⭐⭐⭐ — 数学推导清晰严谨，理论证明完整，但正文与附录比例失衡（大量内容在附录）
 - **实用价值**: ⭐⭐⭐⭐ — 对资源受限的临床部署场景有直接应用价值，σ 调参问题制约了即插即用的易用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis](pulsemind_a_multi-modal_medical_model_for_real-world_clinical_diagnosis.md)
+- [A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)
+- [Learning Cell-Aware Hierarchical Multi-Modal Representations for Robust Molecular Modeling](learning_cell-aware_hierarchical_multi-modal_representations.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](../../CVPR2026/medical_imaging/chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+
+<!-- RELATED:END -->

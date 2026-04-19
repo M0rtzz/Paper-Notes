@@ -138,3 +138,15 @@ MTVQA 的构建遵循三个阶段：（1）多源文本丰富图像采集；（2
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 评估了 20+ 模型，含闭源和开源，有人类基线和详细错误分析
 - **写作质量**: ⭐⭐⭐⭐ — 数据集构建过程描述详尽，实验分析深入
 - **价值**: ⭐⭐⭐⭐⭐ — 填补了多语言 TEC-VQA 的重要空白，揭示了 MLLM 的巨大改进空间
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AskQE: Question Answering as Automatic Evaluation for Machine Translation](askqe_question_answering_as_automatic_evaluation_for_machine_translation.md)
+- [MiLiC-Eval: Benchmarking Multilingual LLMs for China's Minority Languages](milic-eval_benchmarking_multilingual_llms_for_chinas_minority_languages.md)
+- [Data Quality Issues in Multilingual Speech Datasets: The Need for Sociolinguistic Awareness and Proactive Language Planning](multilingual_speech_data_quality.md)
+- [GrammaMT: Improving Machine Translation with Grammar-Informed In-Context Learning](grammamt_improving_machine_translation_with_grammar-informed_in-context_learning.md)
+- [Cross-Lingual Transfer of Cultural Knowledge: An Asymmetric Phenomenon](cross-lingual_transfer_of_cultural_knowledge_an_asymmetric_phenomenon.md)
+
+<!-- RELATED:END -->

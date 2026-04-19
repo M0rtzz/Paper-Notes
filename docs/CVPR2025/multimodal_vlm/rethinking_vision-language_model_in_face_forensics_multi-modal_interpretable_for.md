@@ -139,3 +139,15 @@ M2F2-Det 由四个组件构成：(1) 冻结的 CLIP 图像编码器 $\mathcal{E}
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个检测数据集+1个解释数据集，域内域外全覆盖，消融详尽
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，组件关系说明完善
 - 价值: ⭐⭐⭐⭐ 为深度伪造检测引入了可解释性维度，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MMRL: Multi-Modal Representation Learning for Vision-Language Models](mmrl_multi-modal_representation_learning_for_vision-language_models.md)
+- [Can Vision-Language Models Answer Face to Face Questions in the Real-World?](../../ICLR2026/multimodal_vlm/can_vision-language_models_answer_face_to_face_questions_in_the_real-world.md)
+- [EgoLM: Multi-Modal Language Model of Egocentric Motions](egolm_multi-modal_language_model_of_egocentric_motions.md)
+- [Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
+- [Interpretable Zero-Shot Learning with Locally-Aligned Vision-Language Model](../../ICCV2025/multimodal_vlm/interpretable_zero-shot_learning_with_locally-aligned_vision-language_model.md)
+
+<!-- RELATED:END -->

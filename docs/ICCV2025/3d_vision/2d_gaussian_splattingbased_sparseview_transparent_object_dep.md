@@ -167,4 +167,14 @@ $$\mathcal{L} = a_\text{color}\mathcal{L}_c + a_\text{mask}\mathcal{L}_m + a_\te
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法描述详细，图表质量高；整体结构合理
 - 价值: ⭐⭐⭐⭐ 在机器人操作透明物体场景有实际价值，极快的速度和对稀疏视角的鲁棒性是实用的；但对分割的强依赖限制了通用性
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [PhysSplat: Efficient Physics Simulation for 3D Scenes via MLLM-Guided Gaussian Splatting](physsplat_efficient_physics_simulation_for_3d_scenes_via_mllm-guided_gaussian_sp.md)
+- [GaussianUpdate: Continual 3D Gaussian Splatting Update for Changing Environments](gaussianupdate_continual_3d_gaussian_splatting_update_for_changing_environments.md)
+- [RegGS: Unposed Sparse Views Gaussian Splatting with 3DGS Registration](reggs_unposed_sparse_views_gaussian_splatting_with_3dgs_registration.md)
+- [PhysicsNeRF: Physics-Guided 3D Reconstruction from Sparse Views](../../ICML2025/3d_vision/physicsnerf_physics-guided_3d_reconstruction_from_sparse_views.md)
+- [SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](../../AAAI2026/3d_vision/sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)
+
+<!-- RELATED:END -->

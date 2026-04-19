@@ -145,3 +145,15 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{seg}} + \lambda_{\text{gen}}\m
 - 实验充分度: ⭐⭐⭐ 两个数据集+低标注+噪声鲁棒性实验到位，但缺消融和跨域验证
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式规范，但 introduction 偏长
 - 价值: ⭐⭐⭐⭐ 在医学分割低标注鲁棒性上有实用价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [T-Gated Adapter: A Lightweight Temporal Adapter for Vision-Language Medical Segmentation](t-gated_adapter_a_lightweight_temporal_adapter_for_vision-language_medical_segme.md)
+- [Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study](are_generalpurpose_vision_models_all_we_need_for_2.md)
+- [MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)
+- [CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration](crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ AMA 在所有任务上均优于 uniform mixing 和 model merging，最大提升 
 - 实验充分度: ⭐⭐⭐⭐ 多种设置和消融，但实验主要在中等规模模型上
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，问题动机清晰
 - 价值: ⭐⭐⭐⭐ 多任务数据混合是实际部署中的核心问题，AMA 提供了自动化方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Boosting Vulnerability Detection of LLMs via Curriculum Preference Optimization with Synthetic Reasoning Data](boosting_vulnerability_detection_of_llms_via_curriculum_preference_optimization_.md)
+- [AMoPO: Adaptive Multi-objective Preference Optimization without Reward Models and Reference Models](amopo_adaptive_multi-objective_preference_optimization_without_reward_models_and.md)
+- [PKU-SafeRLHF: Towards Multi-Level Safety Alignment for LLMs with Human Preference](pku-saferlhf_towards_multi-level_safety_alignment_for_llms_with_human_preference.md)
+- [Atyaephyra at SemEval-2025 Task 4: Low-Rank Negative Preference Optimization](atyaephyra_at_semeval-2025_task_4_low-rank_negative_preference_optimization.md)
+- [MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming](mtsa_multi-turn_safety_alignment_for_llms_through_multi-round_red-teaming.md)
+
+<!-- RELATED:END -->

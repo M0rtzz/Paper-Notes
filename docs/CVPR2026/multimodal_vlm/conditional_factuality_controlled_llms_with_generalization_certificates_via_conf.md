@@ -294,3 +294,15 @@ CFC是一个纯后验层（post-hoc），不需要微调基础生成模型。工
 - 实验充分度: ⭐⭐⭐⭐ — 合成+真实+VLM三层验证，含充分消融
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导清晰，图示直观，动机到方法到实验逻辑顺畅
 - 价值: ⭐⭐⭐⭐ — 为LLM可靠性部署提供了实用且有理论保障的工具
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Proof-of-Perception: Certified Tool-Using Multimodal Reasoning with Compositional Conformal Guarantees](pop_proof_of_perception_conformal_reasoning.md)
+- [Towards Multimodal Domain Generalization with Few Labels](towards_multimodal_domain_generalization_with_few_labels.md)
+- [Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging](../../ACL2025/multimodal_vlm/exploring_compositional_generalization_of_multimodal_llms_for_medical_imaging.md)
+- [GroundVTS: Visual Token Sampling in Multimodal Large Language Models for Video Temporal Grounding](groundvts_visual_token_sampling_in_multimodal_large_language_models_for_video_te.md)
+- [Customized Visual Storytelling with Unified Multimodal LLMs](customized_visual_storytelling_with_unified_multimodal_llms.md)
+
+<!-- RELATED:END -->

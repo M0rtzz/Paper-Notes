@@ -84,3 +84,15 @@ VAE: $L_{VAE} = \mathbb{E}[\|x - \text{decode}(z)\|^2] + \beta D_{KL}$。扩散:
 - 实验充分度: ⭐⭐⭐⭐⭐ nuPlan+Waymo 双数据集，RL 评估
 - 写作质量: ⭐⭐⭐⭐ 系统设计清晰
 - 价值: ⭐⭐⭐⭐⭐ 为自动驾驶仿真提供了高效的数据驱动方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating Multimodal Driving Scenes via Next-Scene Prediction](generating_multimodal_driving_scenes_via_next-scene_prediction.md)
+- [Long-term Traffic Simulation with Interleaved Autoregressive Motion and Scenario Generation](../../ICCV2025/autonomous_driving/long-term_traffic_simulation_with_interleaved_autoregressive_motion_and_scenario.md)
+- [FreeSim: Toward Free-Viewpoint Camera Simulation in Driving Scenes](freesim_toward_free-viewpoint_camera_simulation_in_driving_scenes.md)
+- [CompoSIA: Composing Driving Worlds through Disentangled Control for Adversarial Scenario Generation](composing_driving_worlds_through_disentangled_control_for_adversarial_scenario_g.md)
+- [Driving by the Rules: A Benchmark for Integrating Traffic Sign Regulations into Vectorized HD Map](driving_by_the_rules_a_benchmark_for_integrating_traffic_sign_regulations_into_v.md)
+
+<!-- RELATED:END -->

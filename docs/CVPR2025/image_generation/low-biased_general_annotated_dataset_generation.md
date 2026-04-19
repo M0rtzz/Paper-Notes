@@ -131,3 +131,15 @@ $$\mathcal{L} = \mathcal{L}_{bi} + \lambda_1 \mathcal{L}_q$$
 ## 评分
 
 ⭐⭐⭐⭐ — 切入点新颖（首次从生成端解决数据偏差），实验充分且涵盖偏差度量，反直觉结果令人信服；但依赖 CLIP 语义空间的假设需更多理论支撑。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CaMiT: A Time-Aware Car Model Dataset for Classification and Generation](../../NeurIPS2025/image_generation/camit_a_time-aware_car_model_dataset_for_classification_and_generation.md)
+- [VIGFace: Virtual Identity Generation for Privacy-Free Face Recognition Dataset](../../ICCV2025/image_generation/vigface_virtual_identity_generation_for_privacy-free_face_recognition_dataset.md)
+- [Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge](../../NeurIPS2025/image_generation/towards_general_modality_translation_with_contrastive_and_predictive_latent_diff.md)
+- [A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](../../ICCV2025/image_generation/a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
+- [CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](../../ICCV2025/image_generation/cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ $$\theta_m = \arg\max_{\theta} \sum_{i=1}^{n} \mathbb{E}_{(c,y) \sim \pi_{m-1}(\
 - **实验充分度**: ⭐⭐⭐⭐ 三种模型、多个基准、训练效率分析，但缺少大模型实验
 - **写作质量**: ⭐⭐⭐⭐⭐ 理论推导清晰，动机到方法逻辑连贯
 - **价值**: ⭐⭐⭐⭐ 为自监督LLM推理提供了更实用的训练范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sample-Efficient Tabular Self-Play for Offline Robust Reinforcement Learning](sample-efficient_tabular_self-play_for_offline_robust_reinforcement_learning.md)
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+- [Forecasting in Offline Reinforcement Learning for Non-stationary Environments](forecasting_in_offline_reinforcement_learning_for_non-stationary_environments.md)
+- [Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)
+- [Online Optimization for Offline Safe Reinforcement Learning](online_optimization_for_offline_safe_reinforcement_learning.md)
+
+<!-- RELATED:END -->

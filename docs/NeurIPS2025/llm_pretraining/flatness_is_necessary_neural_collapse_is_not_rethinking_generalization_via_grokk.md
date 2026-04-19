@@ -190,3 +190,15 @@ flatness 的理论保证还依赖于 **representativeness**（训练特征对真
 | 论述清晰度 | 9 — 论证逻辑严密，从观察到干预到理论一气呵成 |
 | 实用价值 | 6 — Relative flatness 作为诊断指标有价值，但对训练优化的指导有限 |
 | **总分** | **7.8** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Explaining Grokking and Information Bottleneck through Neural Collapse Emergence](../../ICLR2026/llm_pretraining/explaining_grokking_and_information_bottleneck_through_neural_collapse_emergence.md)
+- [Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
+- [Generalization Bounds for Rank-sparse Neural Networks](generalization_bounds_for_rank-sparse_neural_networks.md)
+- [Gradient-Weight Alignment as a Train-Time Proxy for Generalization in Classification Tasks](gradient-weight_alignment_as_a_train-time_proxy_for_generalization_in_classifica.md)
+- [Superposition Yields Robust Neural Scaling](superposition_yields_robust_neural_scaling.md)
+
+<!-- RELATED:END -->

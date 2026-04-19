@@ -135,3 +135,15 @@ CORE框架包含三个层次：
 - 实验充分度: ⭐⭐⭐ 多模型评估但世界模型较简单，缺少大规模真实任务验证
 - 写作质量: ⭐⭐⭐⭐ 形式化定义清晰，有直觉性的例子辅助理解
 - 价值: ⭐⭐⭐⭐ 对Agent安全部署有实际指导意义，尤其是边缘计算场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AgentAuditor: Human-Level Safety and Security Evaluation for LLM Agents](agentauditor_humanlevel_safety_and_security_evaluation_for_l.md)
+- [AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](agentdam_privacy_leakage_evaluation_for_autonomous_web_agent.md)
+- [AgentChangeBench: A Multi-Dimensional Evaluation Framework for Goal-Shift Robustness](agentchangebench_a_multi-dimensional_evaluation_framework_for_goal-shift_robustn.md)
+- [Beyond Numeric Rewards: In-Context Dueling Bandits with LLM Agents](../../ACL2025/llm_agent/beyond_numeric_rewards_in-context_dueling_bandits_with_llm_agents.md)
+- [AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML](../../ICML2025/llm_agent/automl-agent_a_multi-agent_llm_framework_for_full-pipeline_automl.md)
+
+<!-- RELATED:END -->

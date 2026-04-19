@@ -153,3 +153,15 @@ DDL 内部 CE 与 MMD 的消融（Office-Home，$|\mathcal{D}_{\text{forget}}|=1
 - 实验充分度: ⭐⭐⭐⭐ 四个数据集、多种遗忘域数量配置、完整消融和可视化分析，但仅限 CLIP 一个模型
 - 写作质量: ⭐⭐⭐⭐⭐ 问题定义清晰，动机阐述到位，图表直观
 - 价值: ⭐⭐⭐⭐ 开辟了域级遗忘的新方向，但距离实际部署还需解决域标签依赖等问题
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Targeted Unlearning with Single Layer Unlearning Gradient](../../ICML2025/multimodal_vlm/targeted_unlearning_with_single_layer_unlearning_gradient.md)
+- [VaMP: Variational Multi-Modal Prompt Learning for Vision-Language Models](vamp_variational_multi-modal_prompt_learning_for_vision-language_models.md)
+- [Modality-Aware Neuron Pruning for Unlearning in Multimodal Large Language Models](../../ACL2025/multimodal_vlm/manu_modality_aware_unlearning.md)
+- [Sparse Autoencoders Learn Monosemantic Features in Vision-Language Models](sparse_autoencoders_learn_monosemantic_features_in_visionlan.md)
+- [DOTA: DistributiOnal Test-time Adaptation of Vision-Language Models](dota_distributional_testtime_adaptation_of_visionlanguage_mo.md)
+
+<!-- RELATED:END -->

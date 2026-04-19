@@ -120,3 +120,15 @@ APPLE 是一个**教师-学生框架**，分为三个阶段：
 - 实验充分度: ⭐⭐⭐⭐⭐ 多维度定量评估+详尽消融，论证严谨
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，动机和方法的推导链条完整
 - 价值: ⭐⭐⭐⭐ 属性保留是 face swapping 的核心难题，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)
+- [High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning](high-fidelity_diffusion_face_swapping_with_id-constrained_facial_conditioning.md)
+- [Guiding a Diffusion Model by Swapping Its Tokens](guiding_a_diffusion_model_by_swapping_its_tokens.md)
+- [All-in-One Slider for Attribute Manipulation in Diffusion Models](all_in_one_slider_attribute_manipulation.md)
+- [FDeID-Toolbox: Face De-Identification Toolbox](fdeid-toolbox_face_de-identification_toolbox.md)
+
+<!-- RELATED:END -->

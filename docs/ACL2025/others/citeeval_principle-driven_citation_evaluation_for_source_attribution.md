@@ -125,3 +125,15 @@ CiteEval 将引用评估问题形式化为 $r_i = f_\theta(\mathcal{C}_i; \mathc
 - 实验充分度: ⭐⭐⭐⭐⭐ 多数据集、多模型、多对比方法、消融实验和应用探索都很充分
 - 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，原则阐述有理有据，图表直观
 - 价值: ⭐⭐⭐⭐ 对 RAG 引用评估是重要贡献，但实际部署的成本问题需要解决
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Noisy Path from Source to Citation: Measuring How Scholars Engage with Past Research](the_noisy_path_from_source_to_citation_measuring_how_scholars_engage_with_past_r.md)
+- [ChartLens: Fine-Grained Visual Attribution in Charts](chartlens_fine-grained_visual_attribution_in_charts.md)
+- [LAQuer: Localized Attribution Queries in Content-grounded Generation](laquer_localized_attribution.md)
+- [Using Source-Side Confidence Estimation for Reliable Translation into Unfamiliar Languages](using_source-side_confidence_estimation_for_reliable_translation_into_unfamiliar.md)
+- [Are Bias Evaluation Methods Biased?](are_bias_evaluation_methods_biased.md)
+
+<!-- RELATED:END -->

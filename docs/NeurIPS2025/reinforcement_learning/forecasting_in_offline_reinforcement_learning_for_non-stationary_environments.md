@@ -124,3 +124,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 5 个真实世界时序数据 × 8 个 D4RL 环境，消融充分，但缺少真实机器人验证
 - 写作质量: ⭐⭐⭐⭐ 问题动机和方法描述清晰，图表直观（尤其 Fig.3 的迷宫例子很好理解）
 - 价值: ⭐⭐⭐⭐ 填补了离线 RL 部署中非平稳观测适应的空白，框架模块化易于扩展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics](solving_continuous_mean_field_games_deep_reinforcement_learning_for_non-stationa.md)
+- [Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)
+- [RoiRL: Efficient, Self-Supervised Reasoning with Offline Iterative Reinforcement Learning](roirl_efficient_self-supervised_reasoning_with_offline_iterative_reinforcement_l.md)
+- [Non-stationary Online Learning for Curved Losses: Improved Dynamic Regret via Mixability](../../ICML2025/reinforcement_learning/non-stationary_online_learning_for_curved_losses_improved_dynamic_regret_via_mix.md)
+- [Reasoning Gym: Reasoning Environments for Reinforcement Learning with Verifiable Rewards](reasoning_gym_reasoning_environments_for_reinforcement_learning_with_verifiable_.md)
+
+<!-- RELATED:END -->

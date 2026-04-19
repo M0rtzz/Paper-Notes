@@ -147,3 +147,15 @@ $$\mathcal{L} = -\mathbb{1}_{l=\text{"Yes"}} \log P(\text{"Yes"}) - (1 - \mathbb
 - **实验** ⭐⭐⭐⭐⭐: 4 个数据集、2 种 reader 规模、详细消融和延迟分析
 - **实用性** ⭐⭐⭐⭐⭐: 即插即用、延迟低、效果好，工业部署价值高
 - **写作** ⭐⭐⭐⭐: 图表清晰，延迟分析直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
+- [Hierarchical Document Refinement for Long-context Retrieval-augmented Generation](hierarchical_document_refinement_for_long-context_retrieval-augmented_generation.md)
+- [Typed-RAG: Type-Aware Decomposition of Non-Factoid Questions for Retrieval-Augmented Generation](typed-rag_type-aware_decomposition_of_non-factoid_questions_for_retrieval-augmen.md)
+- [Graph of Records: Boosting Retrieval Augmented Generation for Long-context Summarization with Graphs](gor_rag_long_context_summary.md)
+- [FaithfulRAG: Fact-Level Conflict Modeling for Context-Faithful Retrieval-Augmented Generation](faithfulrag_fact_level_conflict.md)
+
+<!-- RELATED:END -->

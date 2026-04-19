@@ -166,3 +166,15 @@ ICQL-QS vs CFCQL 验证了核心权衡：
 - 实验充分度: ⭐⭐⭐⭐ （4个任务×4种数据集全面覆盖，权重可视化直观，但环境复杂度有限）
 - 写作质量: ⭐⭐⭐⭐⭐ （理论推导严谨清晰，动机阐述到位，Figure 1/2 直观解释几何直觉）
 - 价值: ⭐⭐⭐⭐⭐ （为离线 MARL 提供了更乐观的理论视角，方法论层面的贡献）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Oryx: a Scalable Sequence Model for Many-Agent Coordination in Offline MARL](../../NeurIPS2025/reinforcement_learning/oryx_a_scalable_sequence_model_for_many-agent_coordination_in_offline_marl.md)
+- [Object-Centric Latent Action Learning](object-centric_latent_action_learning.md)
+- [Efficient Multiagent Planning via Shared Action Suggestions](efficient_multiagent_planning_via_shared_action_suggestions.md)
+- [Intention-Guided Cognitive Reasoning for Egocentric Long-Term Action Anticipation](intention-guided_cognitive_reasoning_for_egocentric_long-term_action_anticipatio.md)
+- [SafeMIL: Learning Offline Safe Imitation Policy from Non-Preferred Trajectories](safemil_learning_offline_safe_imitation_policy_from_non-preferred_trajectories.md)
+
+<!-- RELATED:END -->

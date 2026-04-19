@@ -190,3 +190,15 @@ CNTP 可以作为 Self-Consistency 的"内层"优化：在 SC 的每个独立推
 | 实用价值 | ⭐⭐⭐⭐ training-free即插即用 |
 | 写作质量 | ⭐⭐⭐⭐ 动机清晰、理论+实验结合 |
 | 总体推荐 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Support Samples of Next Word Prediction](on_support_samples_of_next_word_prediction.md)
+- [LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models](latim_measuring_latent_token-to-token_interactions_in_mamba_models.md)
+- [MEXMA: Token-level Objectives Improve Sentence Representations](mexma_token-level_objectives_improve_sentence_representations.md)
+- [Advancing Sequential Numerical Prediction in Autoregressive Models](advancing_sequential_numerical_prediction_in_autoregressive_models.md)
+- [Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction](distractor_gen_multiple_choice.md)
+
+<!-- RELATED:END -->

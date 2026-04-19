@@ -156,3 +156,15 @@ Shiny数据集上PSNR提升超过**5.2 dB**，同时高斯数量更少。
 - 实验充分度: ⭐⭐⭐⭐⭐ 四个数据集，详细消融和定性分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式推导完整
 - 价值: ⭐⭐⭐⭐⭐ 在多个基准上刷新SOTA，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Anti-Aliased 2D Gaussian Splatting](anti-aliased_2d_gaussian_splatting.md)
+- [Gaussian Splatting for Efficient Satellite Image Photogrammetry (EOGS)](../../CVPR2025/3d_vision/gaussian_splatting_for_efficient_satellite_image_photogrammetry.md)
+- [Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos](dynamic_gaussian_splatting_from_defocused_and_motion-blurred_monocular_videos.md)
+- [Quantifying and Alleviating Co-Adaptation in Sparse-View 3D Gaussian Splatting](quantifying_and_alleviating_co-adaptation_in_sparse-view_3d_gaussian_splatting.md)
+- [EF-3DGS: Event-Aided Free-Trajectory 3D Gaussian Splatting](ef-3dgs_event-aided_free-trajectory_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

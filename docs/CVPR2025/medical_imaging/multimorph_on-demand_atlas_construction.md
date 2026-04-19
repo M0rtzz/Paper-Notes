@@ -125,3 +125,15 @@ $$\mathcal{L}(\phi_i) = \mathcal{L}_{sim}(\mathbf{t}, \mathbf{x}_i \circ \phi_i)
 - ⭐ 实验完备性：9/10 — 多数据集、多模态、子群分析、消融全面
 - ⭐ 实用价值：9/10 — 100倍加速+零样本泛化，直接可用
 - ⭐ 总体：8.5/10 — 实用性极强的医学影像基础工具，设计简洁且效果全面超越SOTA
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](../../ICLR2026/medical_imaging/human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
+- [BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)
+- [Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)](multi-modal_vision_pre-training_for_medical_image_analysis.md)
+- [Knowledge Bridger: Towards Training-Free Missing Modality Completion](knowledge_bridger_towards_training-free_missing_modality_completion.md)
+- [DFLMoE: Decentralized Federated Learning via Mixture of Experts for Medical Data](dflmoe_decentralized_federated_learning_via_mixture_of_experts_for_medical_data_.md)
+
+<!-- RELATED:END -->

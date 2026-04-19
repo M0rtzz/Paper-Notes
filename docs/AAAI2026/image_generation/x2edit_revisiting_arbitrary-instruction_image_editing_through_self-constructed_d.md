@@ -105,3 +105,15 @@ $$\mathcal{L}_{task} = -\frac{1}{b}\sum_{i=1}^{N}\log\frac{\sum_j \exp(-D_{ij}/\
 - 实验充分度: ⭐⭐⭐⭐ — 4 个 benchmark + DreamBench + plug-and-play + 消融，但 user study 偏弱
 - 写作质量: ⭐⭐⭐½ — 内容全面但结构略冗长
 - 价值: ⭐⭐⭐⭐ — 数据集+模型双开源，对社区贡献大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SAIR: Learning Semantic-aware Implicit Representation](../../ECCV2024/image_generation/sair_learning_semantic-aware_implicit_representation.md)
+- [Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
+- [SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing](../../ICCV2025/image_generation/superedit_rectifying_and_facilitating_supervision_for_instruction-based_image_ed.md)
+- [InsightEdit: Towards Better Instruction Following for Image Editing](../../CVPR2025/image_generation/insightedit_towards_better_instruction_following_for_image_editing.md)
+- [EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](../../ICLR2026/image_generation/editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+
+<!-- RELATED:END -->

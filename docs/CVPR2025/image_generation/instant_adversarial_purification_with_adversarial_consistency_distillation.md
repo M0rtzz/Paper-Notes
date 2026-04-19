@@ -156,3 +156,15 @@ OSCP 由两个组件构成：
 ## 评分
 
 ⭐⭐⭐⭐ — 对 LCM 一致性在对抗场景下失效的分析透彻，GAND+CAP 设计有理论支撑且实验效果优异，100 倍加速具有重要实用价值；主要局限在攻击覆盖度和干净图性能损失。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IDProtector: An Adversarial Noise Encoder to Protect Against ID-Preserving Image Generation](idprotector_an_adversarial_noise_encoder_to_protect_against_id-preserving_image_.md)
+- [Learning Differentially Private Diffusion Models via Stochastic Adversarial Distillation](../../ECCV2024/image_generation/learning_differentially_private_diffusion_models_via_stochastic_adversarial_dist.md)
+- [Exploring Semantic-constrained Adversarial Example with Instruction Uncertainty Reduction](../../NeurIPS2025/image_generation/exploring_semantic-constrained_adversarial_example_with_instruction_uncertainty_.md)
+- [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](../../ICCV2025/image_generation/sanasprint_onestep_diffusion_with_continuoustime_consistency.md)
+- [Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network](../../NeurIPS2025/image_generation/denoising_weak_lensing_mass_maps_with_diffusion_model_and_generative_adversarial.md)
+
+<!-- RELATED:END -->

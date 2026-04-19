@@ -144,3 +144,15 @@ $$a_{i,j} = \mathbf{q}_i^T \mathbf{R}_\Delta^{i,j} \mathbf{k}_j, \quad \mathbf{R
 - 实验充分度: ⭐⭐⭐⭐ — 多维度评估（质量/条件/新视角/运动），但仅限驾驶场景
 - 写作质量: ⭐⭐⭐⭐⭐ — 数学推导严密，图示优秀
 - 价值: ⭐⭐⭐⭐⭐ — 开创了几何无关世界模型的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DuoMo: Dual Motion Diffusion for World-Space Human Reconstruction](duomo_dual_motion_diffusion_for_world-space_human_reconstruction.md)
+- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+- [OpenVO: Open-World Visual Odometry with Temporal Dynamics Awareness](openvo_open-world_visual_odometry_with_temporal_dynamics_awareness.md)
+- [GLINT: Modeling Scene-Scale Transparency via Gaussian Radiance Transport](glint_modeling_scene-scale_transparency_via_gaussian_radiance_transport.md)
+- [UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling](../../ICCV2025/3d_vision/ust-ssm_unified_spatio-temporal_state_space_models_for_point_cloud_video_modelin.md)
+
+<!-- RELATED:END -->

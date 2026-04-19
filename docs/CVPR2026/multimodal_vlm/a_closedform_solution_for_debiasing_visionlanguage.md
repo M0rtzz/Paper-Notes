@@ -142,3 +142,15 @@ tags:
 ## 评分
 
 ⭐⭐⭐⭐ 理论推导严谨完备（闭式解+Pareto最优+效用上界证明），实验覆盖三大任务×多数据集×多backbone且包含人工标注评估，但核心数学工具（正交分解/Chebyshev标量化）本身已成熟，创新性更多在于问题形式化和巧妙应用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Interpretable Debiasing of Vision-Language Models for Social Fairness](interpretable_debiasing_of_vision-language_models_for_social_fairness.md)
+- [HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)
+- [GTR-Turbo: Merged Checkpoint is Secretly a Free Teacher for Agentic VLM Training](gtr-turbo_merged_checkpoint_is_secretly_a_free_teacher_for_agentic_vlm_training.md)
+- [CrossHOI-Bench: A Unified Benchmark for HOI Evaluation across Vision-Language Models and HOI-Specific Methods](crosshoi-bench_a_unified_benchmark_for_hoi_evaluation_across_vision-language_mod.md)
+- [HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks](hificl_high-fidelity_in-context_learning_for_multimodal_tasks.md)
+
+<!-- RELATED:END -->

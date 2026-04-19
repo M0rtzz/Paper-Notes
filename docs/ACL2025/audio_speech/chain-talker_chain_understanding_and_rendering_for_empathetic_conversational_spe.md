@@ -155,3 +155,15 @@ CSS-EmCap 标注质量：
 - **实验充分度**: ⭐⭐⭐⭐ (三个数据集+充分消融+可视化分析)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰，图表丰富)
 - **价值**: ⭐⭐⭐⭐ (CSS-EmCap管道和链式设计对社区有参考价值)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Autoregressive Speech Synthesis without Vector Quantization](autoregressive_speech_synthesis_without_vq.md)
+- [SpeechIQ: Speech-Agentic Intelligence Quotient Across Cognitive Levels in Voice Understanding by Large Language Models](speechiq_speechagentic_intelligence_quotient_across_cognitive.md)
+- [Does Your Voice Assistant Remember? Analyzing Conversational Context Recall and Utilization in Voice Interaction Models](does_your_voice_assistant_remember_analyzing_conversational_context_recall_and_u.md)
+- [EchoMind: An Interrelated Multi-level Benchmark for Evaluating Empathetic Speech Language Models](../../ICLR2026/audio_speech/echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)
+- [E2E-VGuard: Adversarial Prevention for Production LLM-based End-To-End Speech Synthesis](../../NeurIPS2025/audio_speech/e2e-vguard_adversarial_prevention_for_production_llm-based_end-to-end_speech_syn.md)
+
+<!-- RELATED:END -->

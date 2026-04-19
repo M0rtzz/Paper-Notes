@@ -161,3 +161,15 @@ OmiGraph作为增强模块应用于多种基线检测器（"+ Ours"表示加入O
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 双语数据集、8种基线、消融全面、案例分析清晰
 - **实用性**: ⭐⭐⭐⭐ — 即插即用设计实用，但依赖外部语料和LLM有成本
 - **写作质量**: ⭐⭐⭐⭐⭐ — 问题定义清晰，motivation层层递进，案例引人入胜
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Beyond Detection: Exploring Evidence-based Multi-Agent Debate for Misinformation Intervention and Persuasion](beyond_detection_exploring_evidence-based_multi-agent_debate_for_misinformation_.md)
+- [T2Agent: A Tool-augmented Multimodal Misinformation Detection Agent with Monte Carlo Tree Search](t2agent_a_tool-augmented_multimodal_misinformation_detection_agent_with_monte_ca.md)
+- [BiasGuard: A Reasoning-Enhanced Bias Detection Tool for Large Language Models](../../ACL2025/social_computing/biasguard_a_reasoning-enhanced_bias_detection_tool_for_large_language_models.md)
+- [STATE ToxiCN: A Benchmark for Span-level Target-Aware Toxicity Extraction in Chinese Hate Speech Detection](../../ACL2025/social_computing/state_toxicn_a_benchmark_for_span-level_target-aware_toxicity_extraction_in_chin.md)
+- [FairSteer: Inference Time Debiasing for LLMs with Dynamic Activation Steering](../../ACL2025/social_computing/fairsteer_inference_time_debiasing_for_llms_with_dynamic_activation_steering.md)
+
+<!-- RELATED:END -->

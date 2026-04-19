@@ -167,3 +167,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ — 4领域2算法+用户研究，但缺少连续环境和更大规模验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，算法描述完整，理论与实验结合紧密
 - 价值: ⭐⭐⭐⭐ — 填补重要空白，但实际应用尚需进一步验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management](mars_a_meta-adaptive_reinforcement_learning_framework_for_risk-aware_multi-agent.md)
+- [Think, Speak, Decide: Language-Augmented Multi-Agent Reinforcement Learning for Economic Decision-Making](think_speak_decide_language-augmented_multi-agent_reinforcement_learning_for_eco.md)
+- [Beyond Monotonicity: Revisiting Factorization Principles in Multi-Agent Q-Learning](beyond_monotonicity_revisiting_factorization_principles_in_multi-agent_q-learnin.md)
+- [HCPO: Hierarchical Conductor-Based Policy Optimization in Multi-Agent Reinforcement Learning](hcpo_hierarchical_conductor-based_policy_optimization_in_multi-agent_reinforceme.md)
+- [One-Step Generative Policies with Q-Learning: A Reformulation of MeanFlow](one-step_generative_policies_with_q-learning_a_reformulation_of_meanflow.md)
+
+<!-- RELATED:END -->

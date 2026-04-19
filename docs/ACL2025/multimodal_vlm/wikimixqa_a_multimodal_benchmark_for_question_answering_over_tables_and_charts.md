@@ -149,3 +149,15 @@ WikiMixQA 的独特价值在于：(1) 每道题严格要求跨模态推理；(2)
 - 实验充分度: ⭐⭐⭐⭐ — 12 个模型、三种设置、按主题/模态类型细分，分析全面
 - 写作质量: ⭐⭐⭐⭐ — 构建管线描述清晰，图表丰富，附录详实
 - 价值: ⭐⭐⭐⭐ — 揭示了 VLLM 在长上下文多模态推理中的关键短板，对社区有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MAGIC-VQA: Multimodal and Grounded Inference with Commonsense Knowledge for Visual Question Answering](magic-vqa_multimodal_and_grounded_inference_with_commonsense_knowledge_for_visua.md)
+- [ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering](../../ICCV2025/multimodal_vlm/reasonvqa_a_multi-hop_reasoning_benchmark_with_structural_knowledge_for_visual_q.md)
+- [Are Vision Language Models Ready for Clinical Diagnosis? A 3D Medical Benchmark for Tumor-centric Visual Question Answering](../../NeurIPS2025/multimodal_vlm/are_vision_language_models_ready_for_clinical_diagnosis_a_3d_medical_benchmark_f.md)
+- [WearVQA: A Visual Question Answering Benchmark for Wearables in Egocentric Authentic Real-world scenarios](../../NeurIPS2025/multimodal_vlm/wearvqa_a_visual_question_answering_benchmark_for_wearables_in_egocentric_authen.md)
+- [Format Matters: The Robustness of Multimodal LLMs in Reviewing Evidence from Tables and Charts](../../AAAI2026/multimodal_vlm/format_matters_the_robustness_of_multimodal_llms_in_reviewing_evidence_from_tabl.md)
+
+<!-- RELATED:END -->

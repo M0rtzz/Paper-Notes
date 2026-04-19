@@ -141,3 +141,15 @@ SymDPO + RICES（检索式示例选择）叠加效果：
 - 实验充分度: ⭐⭐⭐⭐ 多模型+多benchmark+ablation充分，但架构覆盖可更广
 - 写作质量: ⭐⭐⭐⭐ 问题motivation展示清晰（blank image实验），整体逻辑流畅
 - 价值: ⭐⭐⭐⭐ 揭示了LMM ICL的根本缺陷并提供了优雅解决方案，对多模态ICL研究有重要推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
+- [Curriculum Direct Preference Optimization for Diffusion and Consistency Models](curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)
+- [Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
+- [MMedPO: Aligning Medical Vision-Language Models with Clinical-Aware Multimodal Preference Optimization](../../ICML2025/llm_alignment/mmedpo_aligning_medical_vision-language_models_with_clinical-aware_multimodal_pr.md)
+- [$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](../../CVPR2026/llm_alignment/φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)
+
+<!-- RELATED:END -->

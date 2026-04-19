@@ -156,3 +156,15 @@ $$L(\rho) = -\mathbb{E}_{(y_i, y_{i+1}, I) \sim \mathcal{D}} \left( r_{s_i} + \g
 - **实验完整性**: ⭐⭐⭐⭐⭐ — 覆盖 3 个基础模型、多种基线、人类评估，且有自训练验证
 - **实用性**: ⭐⭐⭐ — 推理成本增加限制了实际部署
 - **写作质量**: ⭐⭐⭐⭐ — 思路清晰，公式推导完整
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Instruction-Oriented Preference Alignment for Enhancing Multi-Modal Comprehension Capability of MLLMs](instruction-oriented_preference_alignment_for_enhancing_multi-modal_comprehensio.md)
+- [LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)
+- [Understanding Museum Exhibits using Vision-Language Reasoning](understanding_museum_exhibits_using_vision-language_reasoning.md)
+- [GEOBench-VLM: Benchmarking Vision-Language Models for Geospatial Tasks](geobench-vlm_benchmarking_vision-language_models_for_geospatial_tasks.md)
+- [SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](sparsevila_decoupling_visual_sparsity_for_efficient_vlm_infe.md)
+
+<!-- RELATED:END -->

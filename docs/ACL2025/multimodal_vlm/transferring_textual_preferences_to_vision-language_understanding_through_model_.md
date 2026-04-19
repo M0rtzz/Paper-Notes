@@ -151,3 +151,15 @@ $$\theta^{\text{MERGE}} = \{\theta^{\text{LVLM}}_{\text{venc}}, \theta^{\text{LV
 - 实验充分度: ⭐⭐⭐⭐ — 多基准、消融实验、超参数分析完整，但缺少与训练式方法的对比
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，动机表述合理，定性案例分析有助于理解
 - 价值: ⭐⭐⭐⭐ — 实用性强，提供了一种低成本构建VLRM的可行路径
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Bring Reason to Vision: Understanding Perception and Reasoning through Model Merging](../../ICML2025/multimodal_vlm/bring_reason_to_vision_understanding_perception_and_reasoning_through_model_merg.md)
+- [Value-Spectrum: Quantifying Preferences of Vision-Language Models via Value Decomposition](value_spectrum_vlm_pref.md)
+- [RobustMerge: Parameter-Efficient Model Merging for MLLMs with Direction Robustness](../../NeurIPS2025/multimodal_vlm/robustmerge_parameter-efficient_model_merging_for_mllms_with_direction_robustnes.md)
+- [Jailbreak Large Vision-Language Models Through Multi-Modal Linkage](jailbreak_large_vision-language_models_through_multi-modal_linkage.md)
+- [CoSyn: Scaling Text-Rich Image Understanding via Code-Guided Synthetic Multimodal Data Generation](cosyn_code_guided_synthetic_data.md)
+
+<!-- RELATED:END -->

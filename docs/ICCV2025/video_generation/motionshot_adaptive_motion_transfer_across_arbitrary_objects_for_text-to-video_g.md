@@ -167,3 +167,15 @@ MotionShot 是**完全无训练**的框架：
 - **实验充分度**: ⭐⭐⭐⭐ 定量+用户研究+详细消融，但缺少更多定量指标（自动化运动保真度评估）
 - **写作质量**: ⭐⭐⭐⭐ 方法描述清晰，图示丰富，动机论述到位
 - **价值**: ⭐⭐⭐⭐⭐ 用户研究中几乎满分的表现证明了方法的实际价值，无训练设计降低使用门槛
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DualReal: Adaptive Joint Training for Lossless Identity-Motion Fusion in Video Customization](dualreal_adaptive_joint_training_for_lossless_identity-motion_fusion_in_video_cu.md)
+- [EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models](efficientmt_efficient_temporal_adaptation_for_motion_transfer_in_text-to-video_d.md)
+- [Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
+- [VMBench: A Benchmark for Perception-Aligned Video Motion Generation](vmbench_a_benchmark_for_perception-aligned_video_motion_generation.md)
+- [Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer](decouple_and_track_benchmarking_and_improving_video_diffusion_transformers_for_m.md)
+
+<!-- RELATED:END -->

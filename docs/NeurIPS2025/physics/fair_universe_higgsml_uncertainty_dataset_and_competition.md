@@ -133,3 +133,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 280M事件规模、多方案对比、详细的竞赛分析和方法拆解
 - 写作质量: ⭐⭐⭐⭐ 物理动机与ML方法论的连接清晰，对两个社区读者都友好
 - 价值: ⭐⭐⭐⭐⭐ 对物理ML社区有重大推动作用的标准化基准，填补了重要空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Platonic Universe: Do Foundation Models See the Same Sky?](the_platonic_universe_do_foundation_models_see_the_same_sky.md)
+- [POLARIS: A High-contrast Polarimetric Imaging Benchmark Dataset for Exoplanetary Disk Representation Learning](polaris_a_high-contrast_polarimetric_imaging_benchmark_dataset_for_exoplanetary_.md)
+- [FEAT: Free Energy Estimators with Adaptive Transport](feat_free_energy_estimators_with_adaptive_transport.md)
+- [Knowledge is Overrated: A Zero-Knowledge ML and Cryptographic Hashing-Based Framework for Verifiable, Low Latency Inference at the LHC](knowledge_is_overrated_a_zero-knowledge_machine_learning_and_cryptographic_hashi.md)
+- [Quantum Doubly Stochastic Transformers](quantum_doubly_stochastic_transformers.md)
+
+<!-- RELATED:END -->

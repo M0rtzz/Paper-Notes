@@ -156,3 +156,15 @@ MuST 超越先前最优 3.6 个百分点，接近使用近场麦克风的 Oracle
 | 实验充分性 | 4.5 | 三个不同任务/数据集 + 丰富消融，充分验证了方法的有效性和通用性 |
 | 实用性 | 4 | 依赖 IMU 数据，但现代 AR/VR 设备普遍配备 |
 | 总体 | 4.5 | 在第一人称视频理解领域具有范式意义的工作 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
+- [Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos](../../CVPR2026/video_understanding/mistake_attribution_fine-grained_mistake_understanding_in_egocentric_videos.md)
+- [Fine-grained Spatiotemporal Grounding on Egocentric Videos](../../ICCV2025/video_understanding/fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
+- [PreFM: Online Audio-Visual Event Parsing via Predictive Future Modeling](../../NeurIPS2025/video_understanding/prefm_online_audio-visual_event_parsing_via_predictive_future_modeling.md)
+- [LayeredFlow: A Real-World Benchmark for Non-Lambertian Multi-Layer Optical Flow](layeredflow_a_real-world_benchmark_for_non-lambertian_multi-layer_optical_flow.md)
+
+<!-- RELATED:END -->

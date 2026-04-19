@@ -124,4 +124,14 @@ WaDi 基于 VSD 框架：教师 $\epsilon_\psi$（冻结的多步扩散模型）
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析极有说服力（替换实验 + SVD 分析），论证逻辑严密
 - 价值: ⭐⭐⭐⭐⭐ 参数高效蒸馏的新标准，LoRaD 可迁移到其他微调场景
 
+<!-- RELATED:START -->
 
+## 相关论文
+
+- [DUO-VSR: Dual-Stream Distillation for One-Step Video Super-Resolution](duo-vsr_dual-stream_distillation_for_one-step_video_super-resolution.md)
+- [ChordEdit: One-Step Low-Energy Transport for Image Editing](chordedit_one-step_low-energy_transport_for_image_editing.md)
+- [PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion](pixelrush_ultra-fast_training-free_high-resolution_image_generation_via_one-step.md)
+- [Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation](../../NeurIPS2025/image_generation/distilled_decoding_2_onestep_sampling_of_image_autoregressiv.md)
+- [SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation](../../ICCV2025/image_generation/sana-sprint_one-step_diffusion_with_continuous-time_consistency_distillation.md)
+
+<!-- RELATED:END -->

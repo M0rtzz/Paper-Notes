@@ -139,3 +139,15 @@ DTPTrack 作为即插即用模块集成到现有跟踪器中，工作在主 Tran
 - 实验充分度: ⭐⭐⭐⭐⭐ （7 个基准、3 种宿主架构、详尽消融）
 - 写作质量: ⭐⭐⭐⭐ （动机清晰，实验分析详尽）
 - 价值: ⭐⭐⭐⭐⭐ （即插即用设计实用性极强，效果一致显著，代码开源）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TRACE: A Generalizable Drift Detector for Streaming Data-Driven Optimization](../../AAAI2026/object_detection/trace_a_generalizable_drift_detector_for_streaming_data-driven_optimization.md)
+- [CineSRD: Leveraging Visual, Acoustic, and Linguistic Cues for Open-World Visual Media Speaker Diarization](cinesrd_leveraging_visual_acoustic_and_linguistic_cues_for_open-world_visual_med.md)
+- [Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection](foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob.md)
+- [HieraMamba: Video Temporal Grounding via Hierarchical Anchor-Mamba Pooling](hieramamba_video_temporal_grounding_via_hierarchical_anchor-mamba_pooling.md)
+- [Training-free Detection of Generated Videos via Spatial-Temporal Likelihoods](training-free_detection_of_generated_videos_via_spatial-temporal_likelihoods.md)
+
+<!-- RELATED:END -->

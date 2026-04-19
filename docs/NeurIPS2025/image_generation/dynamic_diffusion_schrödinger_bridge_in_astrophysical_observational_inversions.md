@@ -163,3 +163,15 @@ M2（Observable Enhancement）对 OOD 泛化至关重要——没有它 σ 从 2
 - 实验充分性：⭐⭐⭐⭐⭐（ID/OOD 双重评估、真实观测、完整消融、公平对比）
 - 实用性：⭐⭐⭐⭐（天文领域有实际价值，75% 训练节省有吸引力）
 - 表达清晰度：⭐⭐⭐⭐（天文背景介绍充分，对 ML 读者友好）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Schrödinger Bridge Matching for Tree-Structured Costs and Entropic Wasserstein Barycentres](schrödinger_bridge_matching_for_tree-structured_costs_and_entropic_wasserstein_b.md)
+- [Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges](grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)
+- [Branched Schrödinger Bridge Matching](../../ICLR2026/image_generation/branched_schrödinger_bridge_matching.md)
+- [System-Embedded Diffusion Bridge Models](system-embedded_diffusion_bridge_models.md)
+- [Counterfactual Identifiability via Dynamic Optimal Transport](counterfactual_identifiability_via_dynamic_optimal_transport.md)
+
+<!-- RELATED:END -->

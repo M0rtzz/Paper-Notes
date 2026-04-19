@@ -117,3 +117,15 @@ Pipeline:
 - 实验充分度: ⭐⭐ 纯理论工作，无实验
 - 写作质量: ⭐⭐⭐⭐ 理论清晰，但高度技术性
 - 价值: ⭐⭐⭐⭐⭐ 对隐私图算法领域意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Skirting Additive Error Barriers for Private Turnstile Streams](../../ICLR2026/ai_safety/skirting_additive_error_barriers_for_private_turnstile_streams.md)
+- [An Efficient Private GPT Never Autoregressively Decodes](an_efficient_private_gpt_never_autoregressively_decodes.md)
+- [Relative Error Fair Clustering in the Weak-Strong Oracle Model](relative_error_fair_clustering_in_the_weak-strong_oracle_model.md)
+- [Private Model Personalization Revisited](private_model_personalization_revisited.md)
+- [Faster Rates for Private Adversarial Bandits](faster_rates_for_private_adversarial_bandits.md)
+
+<!-- RELATED:END -->

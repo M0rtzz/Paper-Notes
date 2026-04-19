@@ -121,3 +121,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 11模型、12领域、多消融分析全面，但缺少非推理模型的改进路径
 - 写作质量: ⭐⭐⭐⭐ 基准设计动机清晰，实验分析深入
 - 价值: ⭐⭐⭐⭐⭐ 为LLM科学发现能力提供了严格评估工具，代码工具悖论对agent设计有重要启示
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SR-Scientist: Scientific Equation Discovery With Agentic AI](sr-scientist_scientific_equation_discovery_with_agentic_ai.md)
+- [Evaluating Retrieval-Augmented Generation Agents for Autonomous Scientific Discovery in Astrophysics](../../ICML2025/llm_agent/evaluating_retrieval-augmented_generation_agents_for_autonomous_scientific_disco.md)
+- [Gaia2: Benchmarking LLM Agents on Dynamic and Asynchronous Environments](gaia2_benchmarking_llm_agents_on_dynamic_and_asynchronous_environments.md)
+- [FeatureBench: Benchmarking Agentic Coding for Complex Feature Development](featurebench_benchmarking_agentic_coding_for_complex_feature_development.md)
+- [Open Source Planning & Control System with Language Agents for Autonomous Scientific Discovery](../../ICML2025/llm_agent/open_source_planning_control_system_with_language_agents_for_autonomous_scientif.md)
+
+<!-- RELATED:END -->

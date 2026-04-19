@@ -99,3 +99,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 4类场景（Dense Traffic/High-Speed/Complex Lighting/Static）、完整消融、效率分析
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，公式推导完整，图表丰富（定性对比直观）
 - 价值: ⭐⭐⭐⭐ 在自动驾驶3DGS领域贡献了新的模态融合思路，对仿真数据生成有实际价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [F3DGS: Federated 3D Gaussian Splatting for Decentralized Multi-Agent World Modeling](f3dgs_federated_3d_gaussian_splatting_for_decentralized_multi-agent_world_modeli.md)
+- [Towards Balanced Multi-Modal Learning in 3D Human Pose Estimation](towards_balanced_multimodal_learning_in_3d_human_p.md)
+- [BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images](bev-sld_self-supervised_scene_landmark_detection_for_global_localization_with_li.md)
+- [Efficient Equivariant Transformer for Self-Driving Agent Modeling](efficient_equivariant_transformer_for_self-driving_agent_modeling.md)
+- [TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR](terraseg_self-supervised_ground_segmentation_for_any_lidar.md)
+
+<!-- RELATED:END -->

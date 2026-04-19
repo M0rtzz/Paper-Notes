@@ -151,3 +151,15 @@ $$\mathcal{L}_{\text{TSCL}}(x;\theta) = \frac{1}{d_c} \sum_{i=0}^{d_c-1} \mathca
 - 实验充分度: 9/10 — 覆盖监督/OOD/混合检测/鲁棒性/压缩等多维度，消融实验完整
 - 写作质量: 8/10 — 结构清晰，理论推导完整，图表信息量丰富
 - 价值: 8/10 — 方法设计合理且实用，数据集贡献显著，对实际 AI 文本审核有直接参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning](../../CVPR2026/object_detection/clcr_cross-level_semantic_collaborative_representation_for_multimodal_learning.md)
+- [Think Straight, Stop Smart: Structured Reasoning for Efficient Multi-Hop RAG](think_straight_stop_smart_structured_reasoning_for_efficient_multi-hop_rag.md)
+- [Global Context-aware Representation Learning for Spatially Resolved Transcriptomics](../../ICML2025/object_detection/global_context-aware_representation_learning_for_spatially_resolved_transcriptom.md)
+- [Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](../../ICML2025/object_detection/self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
+- [Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](../../CVPR2026/object_detection/show_dont_tell_detecting_novel_objects_by_watching.md)
+
+<!-- RELATED:END -->

@@ -122,3 +122,15 @@ $\mathcal{L}_\text{GCLR} = -\log\frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_i
 - 实验充分度: ⭐⭐⭐⭐ 跨多个标注比例的系统评估 + PCA 可视化定性分析
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，数据集分析透彻
 - 价值: ⭐⭐⭐⭐ 为标注稀缺场景下的在线地图构建提供了实用且高效的半监督方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [InteractionMap: Improving Online Vectorized HDMap Construction with Interaction](interactionmap_improving_online_vectorized_hdmap_construction_with_interaction.md)
+- [Driving by the Rules: A Benchmark for Integrating Traffic Sign Regulations into Vectorized HD Map](driving_by_the_rules_a_benchmark_for_integrating_traffic_sign_regulations_into_v.md)
+- [LiMoE: Mixture of LiDAR Representation Learners from Automotive Scenes](limoe_mixture_of_lidar_representation_learners_from_automotive_scenes.md)
+- [Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation](exploring_scene_affinity_for_semi-supervised_lidar_semantic_segmentation.md)
+- [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
+
+<!-- RELATED:END -->

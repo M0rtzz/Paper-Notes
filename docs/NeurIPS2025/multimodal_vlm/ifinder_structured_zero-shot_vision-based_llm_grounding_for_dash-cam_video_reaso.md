@@ -163,3 +163,15 @@ CenterTrack 进行3D检测，提取 yaw 角 $\theta_{t,i} \in [-\pi, \pi]$，通
 - 写作质量: ⭐⭐⭐⭐ — 流水线描述清晰，图示丰富
 - 价值: ⭐⭐⭐⭐ — 模块化免训练设计具有很强的实用性和可扩展性
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting](zero-shot_robustness_of_vision_language_models_via_confidence-aware_weighting.md)
+- [Training-free Online Video Step Grounding](training-free_online_video_step_grounding.md)
+- [Video-R1: Reinforcing Video Reasoning in MLLMs](video-r1_reinforcing_video_reasoning_in_mllms.md)
+- [TOMCAT: Test-time Comprehensive Knowledge Accumulation for Compositional Zero-Shot Learning](tomcat_test-time_comprehensive_knowledge_accumulation_for_compositional_zero-sho.md)
+- [No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection](../../CVPR2026/multimodal_vlm/no_need_for_real_anomaly_mllm_empowered_zero-shot_video_anomaly_detection.md)
+
+<!-- RELATED:END -->

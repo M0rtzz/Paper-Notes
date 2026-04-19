@@ -133,3 +133,15 @@ $$\mathcal{L} = \mathbb{E}_{x_0 \sim P_{\text{data}}} \mathbb{E}_{x \sim P(x_t |
 - 实验充分度: ⭐⭐⭐⭐ — 三个不同噪声类型的复原任务，医学+自然图像覆盖，消融充分
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，图示直观，但部分符号稍密集
 - 价值: ⭐⭐⭐⭐ — 为扩散模型复原任务提供了更高效的统一框架，53 倍加速具有实际意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models](eda_arbitrary_noise_diffusion_design_space.md)
+- [InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models](invad_inversion-based_reconstruction-free_anomaly_detection_with_diffusion_model.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilist.md)
+- [Elucidating the Design Space of Multimodal Protein Language Models](../../ICML2025/medical_imaging/elucidating_the_design_space_of_multimodal_protein_language_models.md)
+- [MRI Contrast Enhancement Kinetics World Model](mri_contrast_enhancement_kinetics_world_model.md)
+
+<!-- RELATED:END -->

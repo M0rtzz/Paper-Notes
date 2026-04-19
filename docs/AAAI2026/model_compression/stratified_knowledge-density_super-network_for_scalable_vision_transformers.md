@@ -166,3 +166,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — 大量对比实验、详细消融、跨模型验证
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨，图示清晰
 - 价值: ⭐⭐⭐⭐⭐ — 实用性极强，显著降低多尺度部署成本
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientFSL: Enhancing Few-Shot Classification via Query-Only Tuning in Vision Transformers](efficientfsl_enhancing_few-shot_classification_via_query-only_tuning_in_vision_t.md)
+- [Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers](compensating_distribution_drifts_in_class-incremental_learning_of_pre-trained_vi.md)
+- [BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers](../../CVPR2026/model_compression/binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers.md)
+- [HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers](../../CVPR2026/model_compression/hiap_a_multigranular_stochastic_autopruning_framew.md)
+- [Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams](../../ICML2025/model_compression/lego_sketch_a_scalable_memory-augmented_neural_network_for_sketching_data_stream.md)
+
+<!-- RELATED:END -->

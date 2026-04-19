@@ -142,3 +142,15 @@ NLL 生存分析损失 + 辅助损失（$\beta=0.05, \gamma$ 交叉验证）；$
 - **实验充分度** ⭐⭐⭐⭐⭐：13 个数据集、多类 baseline、消融、可视化、超参分析均完备
 - **写作质量** ⭐⭐⭐⭐：问题定义清晰，理论分析+可视化辅助证据充分
 - **价值** ⭐⭐⭐⭐：为计算病理学的跨癌种知识迁移提供了高效方案，超网络聚合具有通用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparse Task Vector Mixup with Hypernetworks for Efficient Knowledge Transfer in Whole-Slide Image Prognosis](sparse_task_vector_mixup_with_hypernetworks_for_efficient_knowledge_transfer_in_.md)
+- [Cross-Slice Knowledge Transfer via Masked Multi-Modal Heterogeneous Graph Contrastive Learning for Spatial Gene Expression Inference](cross-slice_knowledge_transfer_via_masked_multi-modal_heterogeneous_graph_contra.md)
+- [Association of Radiologic PPFE Change with Mortality in Lung Cancer Screening Cohorts](association_of_radiologic_ppfe_change_with_mortality_in_lung_cancer_screening_co.md)
+- [MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding](medgrpo_multi-task_reinforcement_learning_for_heterogeneous_medical_video_unders.md)
+- [GaussianPile: A Unified Sparse Gaussian Splatting Framework for Slice-based Volumetric Reconstruction](gaussianpile_a_unified_sparse_gaussian_splatting_framework_for_slice-based_volum.md)
+
+<!-- RELATED:END -->

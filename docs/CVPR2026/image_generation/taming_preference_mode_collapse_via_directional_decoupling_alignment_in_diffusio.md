@@ -146,3 +146,15 @@ Flow-GRPO 多样性崩溃最严重（ASC 0.044 vs FLUX 0.179），验证了 PMC 
 - 实验充分度: ⭐⭐⭐⭐ — 质量+多样性双维评估+消融+用户研究，但仅在 FLUX 上验证
 - 写作质量: ⭐⭐⭐⭐ — 动机引导清晰，从现象观察到方法设计的逻辑链完整
 - 实用价值: ⭐⭐⭐⭐⭐ — PMC 是实际部署中的真实痛点，$\bm{b}_v$ 可迁移到其他方法，DivGenBench 可成为标准基准
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Refining Few-Step Text-to-Multiview Diffusion via Reinforcement Learning](refining_few-step_text-to-multiview_diffusion_via_reinforcement_learning.md)
+- [Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models](../../ICLR2026/image_generation/diffusion_blend_inference-time_multi-preference_alignment_for_diffusion_models.md)
+- [DiP: Taming Diffusion Models in Pixel Space](dip_taming_diffusion_models_in_pixel_space.md)
+- [Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion](../../ICLR2026/image_generation/hierarchical_entity-centric_reinforcement_learning_with_factored_subgoal_diffusi.md)
+- [Spatial-SSRL: Enhancing Spatial Understanding via Self-Supervised Reinforcement Learning](spatial-ssrl_enhancing_spatial_understanding_via_self-supervised_reinforcement_l.md)
+
+<!-- RELATED:END -->

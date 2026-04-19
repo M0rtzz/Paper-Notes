@@ -116,3 +116,15 @@ SPADE-UNet 生成器，以三种信号为条件：(1) UNI 稠密空间 token，(
 - 实验充分度: 4/5 — 两数据集+多基线+消融+分辨率扩展+失败分析全面
 - 写作质量: 5/5 — 论文结构清晰，动机论证有力，实验分析深入透彻
 - 价值: 4/5 — 对计算病理学的虚拟染色方向有实质推进
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](mil-pf_multiple_instance_learning_on_precomputed_features_for_mammography_classi.md)
+- [Multiscale Structure-Guided Latent Diffusion for Multimodal MRI Translation](multiscale_structure-guided_latent_diffusion_for_multimodal_mri_translation.md)
+- [Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography](developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit.md)
+- [Enhancing Virtual Try-On with Synthetic Pairs and Error-Aware Noise Scheduling](enhancing_virtual_try-on_with_synthetic_pairs_and_error-aware_noise_scheduling.md)
+- [Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning](accelerating_stroke_mri_with_diffusion_probabilistic_models_through_large-scale_.md)
+
+<!-- RELATED:END -->

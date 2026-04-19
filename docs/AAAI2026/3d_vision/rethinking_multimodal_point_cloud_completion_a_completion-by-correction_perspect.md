@@ -176,3 +176,15 @@ $$\mathcal{L} = \frac{1}{K+1}\left(\mathcal{L}_{\text{CD}}(P_c, P_{gt}) + \sum_{
 - 实验充分度: ⭐⭐⭐⭐ — 消融全面但仅一个数据集，缺少真实场景验证
 - 写作质量: ⭐⭐⭐⭐⭐ — 动机清晰、图示精美、叙述连贯
 - 价值: ⭐⭐⭐⭐ — 为多模态点云补全开辟新方向，但实际部署需验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion](dapointmamba_domain_adaptive_point_mamba_for_point_cloud_completion.md)
+- [Simba: Towards High-Fidelity and Geometrically-Consistent Point Cloud Completion via Transformation Diffusion](simba_towards_high-fidelity_and_geometrically-consistent_point_cloud_completion_.md)
+- [TOSC: Task-Oriented Shape Completion for Open-World Dexterous Grasp Generation from Partial Point Clouds](tosc_task-oriented_shape_completion_for_open-world_dexterous_grasp_generation_fr.md)
+- [DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion](dance_density-agnostic_and_class-aware_network_for_point_cloud_completion.md)
+- [Revisiting Point Cloud Completion: Are We Ready For The Real-World?](../../ICCV2025/3d_vision/revisiting_point_cloud_completion_are_we_ready_for_the_real-world.md)
+
+<!-- RELATED:END -->

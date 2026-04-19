@@ -143,3 +143,15 @@ CRIT Benchmark 结果（CoT 评测，EM/F1）：
 - 实验充分度: ⭐⭐⭐⭐ — 多模型对比 + 多基准迁移 + 数据扩展 + 错误分析
 - 写作质量: ⭐⭐⭐⭐ — 三阶段 pipeline 描述清晰，Fig.2 的流程图信息量大
 - 价值: ⭐⭐⭐⭐⭐ — 开创性地定义并解决了跨模态多跳推理的数据和评测瓶颈
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-Crit: Benchmarking Multimodal Judges on Pluralistic Criteria-Following](multi-crit_benchmarking_multimodal_judges_on_pluralistic_criteria-following.md)
+- [Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](../../ICLR2026/multimodal_vlm/multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion](videofusion_a_spatiotemporal_collaborative_network.md)
+- [ImageBindDC: Compressing Multi-modal Data with ImageBind-based Condensation](../../AAAI2026/multimodal_vlm/imagebinddc_compressing_multi-modal_data_with_imagebind-based_condensation.md)
+- [DynamicGTR: Leveraging Graph Topology Representation Preferences to Boost VLM Capabilities on Graph QAs](dynamicgtr_leveraging_graph_topology_representation_preferences_to_boost_vlm_cap.md)
+
+<!-- RELATED:END -->

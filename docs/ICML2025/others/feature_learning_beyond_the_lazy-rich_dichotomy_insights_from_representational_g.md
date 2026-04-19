@@ -148,3 +148,15 @@ VGG-11 在 CIFAR-10 上训练，尽管训练 / 测试精度快速饱和，流形
 - 实验充分度: ⭐⭐⭐⭐ (理论+合成+CNN+RNN+OOD，覆盖面广，但模型规模偏小)
 - 写作质量: ⭐⭐⭐⭐⭐ (结构清晰，图文匹配好，直觉解释充分)
 - 价值: ⭐⭐⭐⭐⭐ (为表征学习理论提供了新的分析范式，跨领域适用性强)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Johnson-Lindenstrauss Lemma Beyond Euclidean Geometry](../../NeurIPS2025/others/johnson-lindenstrauss_lemma_beyond_euclidean_geometry.md)
+- [Reliable Active Learning from Unreliable Labels via Neural Collapse Geometry](../../NeurIPS2025/others/reliable_active_learning_from_unreliable_labels_via_neural_collapse_geometry.md)
+- [On a Geometry of Interbrain Networks](../../NeurIPS2025/others/on_a_geometry_of_interbrain_networks.md)
+- [Hierarchical Refinement: Optimal Transport to Infinity and Beyond](hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)
+- [Training the Untrainable: Introducing Inductive Bias via Representational Alignment](../../NeurIPS2025/others/training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)
+
+<!-- RELATED:END -->

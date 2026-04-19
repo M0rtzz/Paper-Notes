@@ -150,3 +150,15 @@ GSM 使所有模型的导航误差下降超过 50%，成功率提升数倍。
 - 实验充分度: ⭐⭐⭐⭐ 三种基线×有无 GSM + 训练数据消融 + 鲁棒性评测
 - 写作质量: ⭐⭐⭐⭐⭐ 数据集论文应有的全面性：任务定义、采集流程、统计分析、基线对比
 - 价值: ⭐⭐⭐⭐ 为空中 VLN 社区提供了关键基础设施，人机差距指明了明确的研究方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments](../../CVPR2026/remote_sensing/olbedo_an_albedo_and_shading_aerial_dataset_for_large-scale_outdoor_environments.md)
+- [RSCC: A Large-Scale Remote Sensing Change Caption Dataset for Disaster Events](../../NeurIPS2025/remote_sensing/rscc_a_large-scale_remote_sensing_change_caption_dataset_for_disaster_events.md)
+- [Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark](../../CVPR2026/remote_sensing/cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)
+- [OrbitZoo: Real Orbital Systems Challenges for Reinforcement Learning](../../NeurIPS2025/remote_sensing/orbitzoo_real_orbital_systems_challenges_for_reinforcement_learning.md)
+- [GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization](geodistill_geometry-guided_self-distillation_for_weakly_supervised_cross-view_lo.md)
+
+<!-- RELATED:END -->

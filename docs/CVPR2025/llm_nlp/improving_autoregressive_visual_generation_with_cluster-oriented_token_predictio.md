@@ -82,3 +82,15 @@ IAR包含三个核心组件：(1) 码本重排——对VQGAN码本中的token按
 - 码本重排策略对不同VQGAN模型需要重新计算
 - 当前仅验证了图像生成，视频等序列生成场景待验证
 - 层次化预测引入的额外参数（两个分类头）在超大码本时成本显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ScaMo: Exploring the Scaling Law in Autoregressive Motion Generation Model](scamo_exploring_the_scaling_law_in_autoregressive_motion_generation_model.md)
+- [Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers](classifier-to-bias_toward_unsupervised_automatic_bias_detection_for_visual_class.md)
+- [Test-Time Visual In-Context Tuning](test-time_visual_in-context_tuning.md)
+- [AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer](../../ICLR2026/llm_nlp/assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)
+- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
+
+<!-- RELATED:END -->

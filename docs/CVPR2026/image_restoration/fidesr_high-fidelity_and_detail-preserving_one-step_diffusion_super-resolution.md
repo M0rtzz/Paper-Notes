@@ -142,3 +142,15 @@ FiDeSR 基于 SD 2.1-base，采用 LoRA 微调的单步扩散框架：
 - 实验充分度: ⭐⭐⭐⭐ 3 个数据集、9 种指标、与 8 种方法对比、消融全面
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，三个组件的动机和关联讲解流畅
 - 价值: ⭐⭐⭐⭐ 单步扩散 SR 的实用性强，同时解决保真和细节恢复是重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Disentangled Textual Priors for Diffusion-based Image Super-Resolution](disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
+- [Detail-Preserving Latent Diffusion for Stable Shadow Removal](../../CVPR2025/image_restoration/detail-preserving_latent_diffusion_for_stable_shadow_removal.md)
+- [Statistical Characteristic-Guided Denoising for Rapid High-Resolution Transmission Electron Microscopy Imaging](statistical_characteristic-guided_denoising_for_rapid_high-resolution_transmissi.md)
+- [Bridging the Perception Gap in Image Super-Resolution Evaluation](bridging_the_perception_gap_in_image_super-resolution_evaluation.md)
+- [RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution](raw-domain_degradation_models_for_realistic_smartphone_super-resolution.md)
+
+<!-- RELATED:END -->

@@ -160,3 +160,15 @@ $$r_{\mathrm{UCB}}(s, z) = r_\zeta(s, z) + \alpha \|g_\phi(s, z) - \bar{g}(s, z)
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 42 个任务、8 个领域、系统的消融和敏感性分析，附录极为详尽
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰、方法描述完整、图表设计良好
 - **价值**: ⭐⭐⭐⭐ — 为利用无标签先验数据加速在线 RL 探索提供了实用且有效的方案，在 HRL+探索领域具有参考意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Pre-Training for Offline-to-Online Reinforcement Learning](online_pre-training_for_offline-to-online_reinforcement_learning.md)
+- [KEA: Keeping Exploration Alive by Proactively Coordinating Exploration Strategies](kea_keeping_exploration_alive_by_proactively_coordinating_exploration_strategies.md)
+- [SkillMimic: Learning Basketball Interaction Skills from Demonstrations](../../CVPR2025/reinforcement_learning/skillmimic_learning_basketball_interaction_skills_from_demonstrations.md)
+- [One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](../../ICLR2026/reinforcement_learning/one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
+- [Heterogeneous Data Game: Characterizing the Model Competition Across Multiple Data Sources](heterogeneous_data_game_characterizing_the_model_competition_across_multiple_dat.md)
+
+<!-- RELATED:END -->

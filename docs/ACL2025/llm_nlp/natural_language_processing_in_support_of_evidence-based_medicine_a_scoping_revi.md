@@ -164,3 +164,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ (129篇论文系统纳入、严格PRISMA流程、4数据库检索、双标注者验证)
 - 写作质量: ⭐⭐⭐⭐⭐ (5A框架组织清晰、覆盖全面、附录元数据丰富、图表质量高)
 - 价值: ⭐⭐⭐⭐ (为NLP+EBM交叉领域提供了最全面的全景索引和资源入口)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Internal and External Impacts of Natural Language Processing Papers](internal_and_external_impacts_of_natural_language_processing_papers.md)
+- [What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence](selfelicit_evidence_highlighting.md)
+- [A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)
+- [On the Risk of Evidence Pollution for Malicious Social Text Detection in the Era of LLMs](on_the_risk_of_evidence_pollution_for_malicious_social_text_detection_in_the_era.md)
+
+<!-- RELATED:END -->

@@ -168,3 +168,15 @@ GVGEN分为两大阶段：
 - 实验充分度: ⭐⭐⭐⭐ 定性定量对比充分，消融研究清晰，但定量指标较少(仅CLIP Score)
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，CPS算法伪代码规范，但部分细节需参考补充材料
 - 价值: ⭐⭐⭐⭐ 开辟新方向有意义，但在生成质量上与优化方法仍有差距，实际应用需更高分辨率
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)
+- [DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors](dreamdissector_learning_disentangled_text-to-3d_generation_from_2d_diffusion_pri.md)
+- [DreamScene360: Unconstrained Text-to-3D Scene Generation with Panoramic Gaussian Splatting](dreamscene360_unconstrained_text-to-3d_scene_generation_with_panoramic_gaussian_.md)
+
+<!-- RELATED:END -->

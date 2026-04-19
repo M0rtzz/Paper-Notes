@@ -137,3 +137,15 @@ EDIT 分三阶段：
 - 实验充分度: ⭐⭐⭐⭐ 多模型规模/架构消融、DPO 对比、错误类型分析都很扎实，但缺少 GSM8K/MATH 等主流数学推理 benchmark
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，图示直观，动机阐述到位，prompt 模板完整公开
 - 对我的价值: ⭐⭐⭐⭐ 关键步骤定位思想和 DPO 失效分析对理解 CoT 蒸馏和偏好学习都有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Graph Counselor: Adaptive Graph Exploration via Multi-Agent Synergy to Enhance LLM Reasoning](graph_counselor_multiagent_graphrag.md)
+- [Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching](flipping_kd_small_to_large.md)
+- [KTAE: A Model-Free Algorithm to Key-Tokens Advantage Estimation in Mathematical Reasoning](../../NeurIPS2025/model_compression/ktae_a_model-free_algorithm_to_key-tokens_advantage_estimation_in_mathematical_r.md)
+- [Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models](../../ICLR2026/model_compression/scaling_reasoning_hop_exposes_weaknesses_demystifying_and_improving_hop_generali.md)
+- [QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks](../../NeurIPS2025/model_compression/quadenhancer_leveraging_quadratic_transformations_to_enhance_deep_neural_network.md)
+
+<!-- RELATED:END -->

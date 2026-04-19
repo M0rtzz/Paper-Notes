@@ -115,3 +115,15 @@ Tokenizer 训练：重建损失 $\mathcal{L} = \mathbb{E}[\|d(t\epsilon + (1-t)x
 - 实验充分度: ⭐⭐⭐⭐ 覆盖生成、编辑、理解多个任务
 - 写作质量: ⭐⭐⭐⭐⭐ 动机分析深入，语言验证实验精彩
 - 价值: ⭐⭐⭐⭐⭐ 为统一多模态模型提供了新的 tokenization 范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Efficient Generative Modeling with Residual Vector Quantization-Based Tokens](../../ICML2025/image_generation/efficient_generative_modeling_with_residual_vector_quantization-based_tokens.md)
+- [DoraCycle: Domain-Oriented Adaptation of Unified Generative Model in Multimodal Cycles](doracycle_domain-oriented_adaptation_of_unified_generative_model_in_multimodal_c.md)
+- [Timestep-Aware Diffusion Model for Extreme Image Rescaling](../../ICCV2025/image_generation/timestep-aware_diffusion_model_for_extreme_image_rescaling.md)
+- [Multimodal Generative Flows for LHC Jets](../../NeurIPS2025/image_generation/multimodal_generative_flows_for_lhc_jets.md)
+- [Constrained Discrete Diffusion](../../NeurIPS2025/image_generation/constrained_discrete_diffusion.md)
+
+<!-- RELATED:END -->

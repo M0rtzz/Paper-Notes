@@ -144,3 +144,15 @@ M3HG 是端到端模型，包含四个核心组件：
 - **实验充分度**: ⭐⭐⭐⭐ (两个数据集上全面对比，模态消融、GPT-4o 对比均有)
 - **写作质量**: ⭐⭐⭐⭐ (结构清晰，图示表意准确)
 - **价值**: ⭐⭐⭐⭐ (MECAD 数据集 + M3HG 模型双重贡献，推动了多模态情感原因分析领域)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multimodal Transformers are Hierarchical Modal-wise Heterogeneous Graphs](multimodal_transformers_are_hierarchical_modal-wise_heterogeneous_graphs.md)
+- [DVHGNN: Multi-Scale Dilated Vision HGNN for Efficient Vision Recognition](../../CVPR2025/graph_learning/dvhgnn_multi-scale_dilated_vision_hgnn_for_efficient_vision_recognition.md)
+- [Heterogeneous Swarms: Jointly Optimizing Model Roles and Weights for Multi-LLM Systems](../../NeurIPS2025/graph_learning/heterogeneous_swarms_jointly_optimizing_model_roles_and_weights_for_multi-llm_sy.md)
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](../../AAAI2026/graph_learning/s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training](../../ICML2025/graph_learning/modeling_all-atom_glycan_structures_via_hierarchical_message_passing_and_multi-s.md)
+
+<!-- RELATED:END -->

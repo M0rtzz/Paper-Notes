@@ -203,3 +203,15 @@ $$R^{true}(W) = \|W\Sigma_{xx}^{1/2} - \Sigma_{xy}^T\Sigma_{xx}^{-1/2}\|_F^2 - \
 - 实验充分度: ⭐⭐⭐⭐ — 三个大规模真实数据集、多个正则化参数的完整实验，但缺少与其他LAE变体的比较
 - 写作质量: ⭐⭐⭐⭐ — 数学推导严谨清晰，结构递进流畅，但公式密度高对非理论读者有一定门槛
 - 价值: ⭐⭐⭐⭐ — 为LAE推荐模型提供了首个严格的理论泛化界，且与实际指标相关，对理论和应用均有价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization Bounds for Semi-supervised Matrix Completion with Distributional Side Information](../../AAAI2026/recommender/generalization_bounds_for_semi-supervised_matrix_completion_with_distributional_.md)
+- [Who You Are Matters: Bridging Topics and Social Roles via LLM-Enhanced Logical Recommendation](who_you_are_matters_bridging_topics_and_social_roles_via_llm-enhanced_logical_re.md)
+- [R²ec: Towards Large Recommender Models with Reasoning](r2ec_towards_large_recommender_models_with_reasoning.md)
+- [Wide-Horizon Thinking and Simulation-Based Evaluation for Real-World LLM Planning with Multifaceted Constraints](wide-horizon_thinking_and_simulation-based_evaluation_for_real-world_llm_plannin.md)
+- [Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning](overcoming_sparsity_artifacts_in_crosscoders_to_interpret_chat-tuning.md)
+
+<!-- RELATED:END -->

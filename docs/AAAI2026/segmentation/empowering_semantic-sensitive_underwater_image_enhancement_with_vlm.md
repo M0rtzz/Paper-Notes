@@ -129,3 +129,15 @@ $$\mathcal{L}_{total} = \mathcal{L}_{recon} + \lambda_{align} \sum_{l \in L} \ma
 - 实验充分度: 8/10 — 五个基线 + 三个 UIE 数据集 + 两个下游任务 + 消融实验，覆盖全面
 - 写作质量: 8/10 — 动机阐述清晰，实验组织系统
 - 价值: 7/10 — 即插即用的实用性强，对水下视觉社区有价值，但计算成本分析缺失影响实际部署评估
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Empowering DINO Representations for Underwater Instance Segmentation via Aligner and Prompter](empowering_dino_representations_for_underwater_instance_segmentation_via_aligner.md)
+- [Breaking the Stealth-Potency Trade-off in Clean-Image Backdoors with Generative Trigger Optimization](breaking_the_stealth-potency_trade-off_in_clean-image_backdoors_with_generative_.md)
+- [Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation](../../CVPR2026/segmentation/spatio-semantic_expert_routing_architecture_with_mixture-of-experts_for_referrin.md)
+- [LWGANet: Addressing Spatial and Channel Redundancy in Remote Sensing Visual Tasks with Light-Weight Grouped Attention](lwganet_addressing_spatial_and_channel_redundancy_in_remote_sensing_visual_tasks.md)
+- [AMLRIS: Alignment-aware Masked Learning for Referring Image Segmentation](../../ICLR2026/segmentation/amlris_alignment-aware_masked_learning_for_referring_image_segmentation.md)
+
+<!-- RELATED:END -->

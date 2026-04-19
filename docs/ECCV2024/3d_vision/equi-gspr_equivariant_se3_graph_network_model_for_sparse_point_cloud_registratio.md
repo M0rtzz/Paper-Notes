@@ -175,3 +175,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 室内外双数据集，多采样点数，全面消融，效率对比
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，图示清晰
 - 价值: ⭐⭐⭐⭐ 0.12秒推理使其具有实时配准的应用潜力
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ECKConv: Learning Coordinate-based Convolutional Kernels for Continuous SE(3) Equivariant Point Cloud Analysis](../../CVPR2026/3d_vision/learning_coordinate-based_convolutional_kernels_for_continuous_se3_equivariant_a.md)
+- [CMHANet: A Cross-Modal Hybrid Attention Network for Point Cloud Registration](../../CVPR2026/3d_vision/cmhanet_a_cross-modal_hybrid_attention_network_for_point_cloud_registration.md)
+- [Explicitly Guided Information Interaction Network for Cross-modal Point Cloud Completion](explicitly_guided_information_interaction_network_for_cross-modal_point_cloud_co.md)
+- [SegPoint: Segment Any Point Cloud via Large Language Model](segpoint_segment_any_point_cloud_via_large_language_model.md)
+- [TurboReg: TurboClique for Robust and Efficient Point Cloud Registration](../../ICCV2025/3d_vision/turboreg_turboclique_for_robust_and_efficient_point_cloud_registration.md)
+
+<!-- RELATED:END -->

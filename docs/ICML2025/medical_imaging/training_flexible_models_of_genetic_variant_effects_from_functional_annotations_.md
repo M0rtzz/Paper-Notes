@@ -142,3 +142,15 @@ DeepWAS 的整体 pipeline 如下：
 - 实验充分度: ⭐⭐⭐⭐ 在多个表型上验证，有 held-out 预测 + 对比实验，但缓存中缺少完整数值
 - 写作质量: ⭐⭐⭐⭐ 引言逻辑清晰，从问题到方案的推导流畅，背景介绍对非领域读者友好
 - 价值: ⭐⭐⭐⭐ 对计算遗传学社区意义重大，全似然 + 深度网络的组合可能改变该领域的建模范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
+- [AFD-INSTRUCTION: A Comprehensive Antibody Instruction Dataset with Functional Annotations for LLM-Based Understanding and Design](../../ICLR2026/medical_imaging/afd-instruction_a_comprehensive_antibody_instruction_dataset_with_functional_ann.md)
+- [Certification for Differentially Private Prediction in Gradient-Based Training](certification_for_differentially_private_prediction_in_gradient-based_training.md)
+- [FGBench: A Dataset and Benchmark for Molecular Property Reasoning at Functional Group-Level in Large Language Models](../../NeurIPS2025/medical_imaging/fgbench_a_dataset_and_benchmark_for_molecular_property_reasoning_at_functional_g.md)
+- [SGD Jittering: A Training Strategy for Robust and Accurate Model-Based Architectures](sgd_jittering_a_training_strategy_for_robust_and_accurate_model-based_architectu.md)
+
+<!-- RELATED:END -->

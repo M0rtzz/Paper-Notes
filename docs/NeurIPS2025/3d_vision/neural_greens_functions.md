@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 简单域+复杂 3D 零件，与多个 SOTA 对比
 - 写作质量: ⭐⭐⭐⭐⭐ 数学推导严谨，与物理/数学结构的对齐关系阐述清晰
 - 价值: ⭐⭐⭐⭐⭐ 对科学计算 AI 有变革性意义——一次训练、任意求解
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Implicit Filtering for Learning Neural Signed Distance Functions from 3D Point Clouds](../../ECCV2024/3d_vision/implicit_filtering_for_learning_neural_signed_distance_functions_from_3d_point_c.md)
+- [Learning Neural Exposure Fields for View Synthesis](learning_neural_exposure_fields_for_view_synthesis.md)
+- [Hybrid Physical-Neural Simulator for Fast Cosmological Hydrodynamics](hybrid_physical-neural_simulator_for_fast_cosmological_hydrodynamics.md)
+- [A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions](../../CVPR2025/3d_vision/a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)
+- [GaussianUDF: Inferring Unsigned Distance Functions through 3D Gaussian Splatting](../../CVPR2025/3d_vision/gaussianudf_inferring_unsigned_distance_functions_through_3d_gaussian_splatting.md)
+
+<!-- RELATED:END -->

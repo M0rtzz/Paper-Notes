@@ -95,3 +95,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 分类/检测/分割/迁移多任务
 - 写作质量: ⭐⭐⭐⭐ 清晰
 - 价值: ⭐⭐⭐ 增量性提升，对 SSM 社区有参考价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EfficientViM: Efficient Vision Mamba with Hidden State Mixer based State Space Duality](efficientvim_efficient_vision_mamba_with_hidden_state_mixer_based_state_space_du.md)
+- [MobileMamba: Lightweight Multi-Receptive Visual Mamba Network](mobilemamba_lightweight_multi-receptive_visual_mamba_network.md)
+- [JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba](jamma_ultra-lightweight_local_feature_matching_with_joint_mamba.md)
+- [Parameter-Efficient Fine-Tuning of State Space Models](../../ICML2025/model_compression/parameter-efficient_fine-tuning_of_state_space_models.md)
+- [State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models](../../ACL2025/model_compression/state_offset_tuning_ssm_peft.md)
+
+<!-- RELATED:END -->

@@ -109,3 +109,15 @@ Graph Counselor 提出了一个多智能体协作的 GraphRAG 推理框架，通
 - 实验充分度: ⭐⭐⭐⭐ 多个数据集+多个基线模型+消融+不同领域
 - 写作质量: ⭐⭐⭐⭐ 框架图清晰，Agent角色描述明确
 - 价值: ⭐⭐⭐⭐ 为GraphRAG提供了实用的多Agent推理范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+- [Entropy-based Exploration Conduction for Multi-step Reasoning](entropy-based_exploration_conduction_for_multi-step_reasoning.md)
+- [Magnet: Multi-turn Tool-use Data Synthesis and Distillation via Graph Translation](magnet_multi-turn_tool-use_data_synthesis_and_distillation_via_graph_translation.md)
+- [Graver: Generative Graph Vocabularies for Robust Graph Foundation Models Fine-tuning](../../NeurIPS2025/model_compression/graver_generative_graph_vocabularies_for_robust_graph_foundation_models_fine-tun.md)
+- [Graph Your Own Prompt](../../NeurIPS2025/model_compression/graph_your_own_prompt.md)
+
+<!-- RELATED:END -->

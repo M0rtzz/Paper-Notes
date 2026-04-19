@@ -131,3 +131,15 @@ RLVR-World 将不同模态的世界模型统一到自回归序列建模框架下
 - **实验充分度**: ⭐⭐⭐⭐ 涵盖文本游戏、网页导航、机器人操作等多种场景，消融充分，但缺少更大规模基础模型的实验
 - **写作质量**: ⭐⭐⭐⭐⭐ 论文结构清晰，动机 articulation 精准，图表设计优秀
 - **价值**: ⭐⭐⭐⭐⭐ 提出的通用范式可广泛应用于各类生成模型的后训练优化
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Long-Context State-Space Video World Models](../../ICCV2025/image_generation/long-context_state-space_video_world_models.md)
+- [Aether: Geometric-Aware Unified World Modeling](../../ICCV2025/image_generation/aether_geometricaware_unified_world_modeling.md)
+- [Co-Reinforcement Learning for Unified Multimodal Understanding and Generation](coreinforcement_learning_for_unified_multimodal_understandin.md)
+- [Towards Robust Zero-Shot Reinforcement Learning](towards_robust_zero-shot_reinforcement_learning.md)
+- [Controlling the World by Sleight of Hand](../../ECCV2024/image_generation/controlling_the_world_by_sleight_of_hand.md)
+
+<!-- RELATED:END -->

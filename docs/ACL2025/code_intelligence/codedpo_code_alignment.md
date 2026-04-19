@@ -114,3 +114,15 @@ RPO 格式 loss，10 epochs，lr=5e-6，线性调度 + warmup，16 × A100，Dee
 - 实验充分度: ⭐⭐⭐⭐⭐ 8 个模型 × 4 个基准 + 效率评估 + 详细消融 + 数据扩展分析
 - 写作质量: ⭐⭐⭐⭐ 方法叙述清晰，消融实验设计合理
 - 价值: ⭐⭐⭐⭐ 低成本高效的代码对齐方法
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisit Self-Debugging with Self-Generated Tests for Code Generation](revisit_self-debugging_with_self-generated_tests_for_code_generation.md)
+- [GALLa: Graph Aligned Large Language Models for Improved Source Code Understanding](galla_graph_aligned_large_language_models.md)
+- [Personality-Guided Code Generation Using Large Language Models](personality_guided_code_gen.md)
+- [CodeReviewQA: The Code Review Comprehension Assessment for Large Language Models](codereviewqa_the_code_review_comprehension_assessment_for_large_language_models.md)
+- [DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)
+
+<!-- RELATED:END -->

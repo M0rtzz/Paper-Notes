@@ -228,3 +228,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 个数据集 4 个类别 17 个基线，消融和分析丰富
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，但符号较多，需要一定的消化时间
 - 价值: ⭐⭐⭐⭐ 为多 LLM 系统设计提供了统一的优化框架，但计算成本限制了实用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastJAM: a Fast Joint Alignment Model for Images](fastjam_a_fast_joint_alignment_model_for_images.md)
+- [M3HG: Multimodal, Multi-scale, and Multi-type Node Heterogeneous Graph for Emotion Cause Triplet Extraction in Conversations](../../ACL2025/graph_learning/m3hg_multimodal_multi-scale_and_multi-type_node_heterogeneous_graph_for_emotion_.md)
+- [GFM-RAG: Graph Foundation Model for Retrieval Augmented Generation](gfm-rag_graph_foundation_model_for_retrieval_augmented_generation.md)
+- [S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](../../AAAI2026/graph_learning/s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [ReMindRAG: Low-Cost LLM-Guided Knowledge Graph Traversal for Efficient RAG](remindrag_low-cost_llm-guided_knowledge_graph_traversal_for_efficient_rag.md)
+
+<!-- RELATED:END -->

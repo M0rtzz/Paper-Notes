@@ -121,3 +121,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 覆盖 RM 验证 + DPO 策略 + 社会偏差 + 数据选择 + 消融，双基座验证
 - **写作质量**: ⭐⭐⭐⭐ 理论推导严谨，从资源分配到公平度量到具体方法层层递进
 - **实用价值**: ⭐⭐⭐⭐ FC 即插即用、对 $\tau$ 健壮、不牺牲效用，对 RLHF 实际部署有直接价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reward Generalization in RLHF: A Topological Perspective](reward_generalization_in_rlhf_a_topological_perspective.md)
+- [Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective](../../ICML2025/llm_alignment/can_rlhf_be_more_efficient_with_imperfect_reward_models_a_policy_coverage_perspe.md)
+- [What Makes a Reward Model a Good Teacher? An Optimization Perspective](../../NeurIPS2025/llm_alignment/what_makes_a_reward_model_a_good_teacher_an_optimization_perspective.md)
+- [SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings](sea_lowresource_safety_alignment_for_multimodal.md)
+- [Cheems: A Practical Guidance for Building and Evaluating Chinese Reward Models from Scratch](cheems_chinese_reward_models.md)
+
+<!-- RELATED:END -->

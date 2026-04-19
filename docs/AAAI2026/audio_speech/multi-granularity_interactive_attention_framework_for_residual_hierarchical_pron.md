@@ -169,3 +169,15 @@ HIA在词重音上PCC达0.436，较Gradformer提升30.5%（+0.102），是最显
 - 实验充分度: ⭐⭐⭐⭐⭐ — 消融涵盖几乎所有设计选择，数据相关性分析增加说服力
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，问题动机论述充分，图表直观
 - 价值: ⭐⭐⭐⭐ — 在发音评估这一细分领域达到全面SOTA，实用价值高，但应用范围相对有限
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Multi-head Temporal Latent Attention](../../NeurIPS2025/audio_speech/multi-head_temporal_latent_attention.md)
+- [MAPSS: Manifold-Based Assessment of Perceptual Source Separation](../../ICLR2026/audio_speech/mapss_manifold-based_assessment_of_perceptual_source_separation.md)
+- [Listen Like a Teacher: Mitigating Whisper Hallucinations using Adaptive Layer Attention and Knowledge Distillation](listen_like_a_teacher_mitigating_whisper_hallucinations_using_adaptive_layer_att.md)
+- [Efficient Audio-Visual Speech Separation with Discrete Lip Semantics and Multi-Scale Global-Local Attention](../../ICLR2026/audio_speech/efficient_audio-visual_speech_separation_with_discrete_lip_semantics_and_multi-s.md)
+- [Cross-Space Synergy: A Unified Framework for Multimodal Emotion Recognition in Conversation](cross-space_synergy_a_unified_framework_for_multimodal_emotion_recognition_in_co.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ GoalLadder 在所有 7 个任务上接近 Oracle 性能，在 Drawer Open 任务
 - 实验充分度: ⭐⭐⭐⭐ (7个任务全面验证，但缺少真实机器人实验)
 - 写作质量: ⭐⭐⭐⭐⭐ (动机清晰，方法自然流畅，图示直观)
 - 价值: ⭐⭐⭐⭐⭐ (显著优于竞争方法，实用价值高)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Unified Reinforcement and Imitation Learning for Vision-Language Models](unified_reinforcement_and_imitation_learning_for_vision-language_models.md)
+- [RoboRefer: Towards Spatial Referring with Reasoning in Vision-Language Models for Robotics](roborefer_towards_spatial_referring_with_reasoning_in_vision-language_models_for.md)
+- [HoPE: Hybrid of Position Embedding for Long Context Vision-Language Models](hope_hybrid_of_position_embedding_for_long_context_visionlan.md)
+- [Diagnosing and Repairing Unsafe Channels in Vision-Language Models via Causal Discovery and Dual-Modal Safety Subspace Projection](../../CVPR2026/multimodal_vlm/diagnosing_and_repairing_unsafe_channels_in_vision-language_models_via_causal_di.md)
+- [Adapting Vision-Language Models for Evaluating World Models](adapting_visionlanguage_models_for_evaluating_world_models.md)
+
+<!-- RELATED:END -->

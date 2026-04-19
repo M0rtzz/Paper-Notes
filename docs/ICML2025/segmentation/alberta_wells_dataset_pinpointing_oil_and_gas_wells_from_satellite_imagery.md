@@ -189,3 +189,15 @@ tags:
 | 实用价值 | ⭐⭐⭐⭐⭐ | 直接服务于气候变化缓解的实际需求，数据集公开且附代码 |
 | 写作质量 | ⭐⭐⭐⭐ | 结构清晰，包含详尽的 Datasheet 和附录 |
 | 综合评分 | ⭐⭐⭐⭐ | 优秀的 benchmark 数据集论文，社会影响力大 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Harnessing Massive Satellite Imagery with Efficient Masked Image Modeling](../../ICCV2025/segmentation/harnessing_massive_satellite_imagery_with_efficient_masked_image_modeling.md)
+- [Using Multiple Input Modalities Can Improve Data-Efficiency and O.O.D. Generalization for ML with Satellite Imagery](using_multiple_input_modalities_can_improve_data-efficiency_and_ood_generalizati.md)
+- [Generalizable Slum Detection from Satellite Imagery with Mixture-of-Experts](../../AAAI2026/segmentation/generalizable_slum_detection_from_satellite_imagery_with_mixture-of-experts.md)
+- [Self-supervised Synthetic Pretraining for Inference of Stellar Mass Embedded in Dense Gas](../../NeurIPS2025/segmentation/self-supervised_synthetic_pretraining_for_inference_of_stellar_mass_embedded_in_.md)
+- [Plain-Det: A Plain Multi-Dataset Object Detector](../../ECCV2024/segmentation/plain-det_a_plain_multi-dataset_object_detector.md)
+
+<!-- RELATED:END -->

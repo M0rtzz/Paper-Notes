@@ -115,3 +115,15 @@ ARM将3D重建任务分为几何阶段和外观阶段，几何由GeoRM生成mesh
 - 实验充分度: ⭐⭐⭐⭐⭐ 三个数据集、多种指标、消融实验和定性对比非常充分
 - 写作质量: ⭐⭐⭐⭐ 流程清晰，图表精美，motivation阐述到位
 - 价值: ⭐⭐⭐⭐⭐ 可重光照3D生成是实际应用（游戏/元宇宙）的刚需，方法质量显著领先
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HRAvatar: High-Quality and Relightable Gaussian Head Avatar](hravatar_high-quality_and_relightable_gaussian_head_avatar.md)
+- [High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)
+- [4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)
+- [GenFusion: Closing the Loop between Reconstruction and Generation via Videos](genfusion_closing_the_loop_between_reconstruction_and_generation_via_videos.md)
+- [A Unified Image-Dense Annotation Generation Model for Underwater Scenes](a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)
+
+<!-- RELATED:END -->

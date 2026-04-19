@@ -117,3 +117,15 @@ URDF-Anything由三个阶段构成：（1）输入表示——从单视角或多
 - 实验充分度: ⭐⭐⭐⭐ 消融设计深思熟虑，但数据集单一（仅PartNet-Mobility）
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，动机论述充分，但部分细节需看附录
 - 价值: ⭐⭐⭐⭐⭐ 对机器人仿真和具身AI有直接应用价值，端到端范式有望推广到更多3D结构推理任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments](../../CVPR2025/3d_vision/iaao_interactive_affordance_learning_for_articulated_objects_in_3d_environments.md)
+- [ROGR: Relightable 3D Objects using Generative Relighting](rogr_relightable_3d_objects_using_generative_relighting.md)
+- [OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects](onlinesplatter_pose-free_online_3d_reconstruction_for_free-moving_objects.md)
+- [CLIPGaussian: Universal and Multimodal Style Transfer Based on Gaussian Splatting](clipgaussian_universal_and_multimodal_style_transfer_based_on_gaussian_splatting.md)
+- [From Objects to Anywhere: A Holistic Benchmark for Multi-level Visual Grounding in 3D Scenes](from_objects_to_anywhere_a_holistic_benchmark_for_multi-level_visual_grounding_i.md)
+
+<!-- RELATED:END -->

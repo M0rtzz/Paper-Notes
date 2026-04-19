@@ -128,3 +128,15 @@ FluNet 包含三个部分：patch embedding 层 $F_p$（单层卷积）、编码
 - 实验充分度: ⭐⭐⭐⭐⭐ 23 种方法的全面 benchmark + 详尽消融实验 + 多维度分析
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，行文结构完整，figure 设计直观
 - 价值: ⭐⭐⭐⭐ 填补了流畅度评估空白，对视频生成质量评估和视频处理优化有实际指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TacSIm: A Dataset and Benchmark for Football Tactical Style Imitation](tacsim_a_dataset_and_benchmark_for_football_tactical_style_imitation.md)
+- [AnesSuite: A Comprehensive Benchmark and Dataset Suite for Anesthesiology Reasoning](../../ICLR2026/llm_evaluation/anessuite_a_comprehensive_benchmark_and_dataset_suite_for_anesthesiology_reasoni.md)
+- [MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](../../ACL2025/llm_evaluation/mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
+- [RGB-to-Polarization Estimation: A New Task and Benchmark Study](../../NeurIPS2025/llm_evaluation/rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)
+- [Out of Sight, Out of Mind? Evaluating State Evolution in Video World Models](out_of_sight_out_of_mind_evaluating_state_evolutio.md)
+
+<!-- RELATED:END -->

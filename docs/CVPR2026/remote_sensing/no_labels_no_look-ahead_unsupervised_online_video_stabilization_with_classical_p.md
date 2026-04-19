@@ -141,3 +141,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 5个数据集+完整消融+用户研究+嵌入式平台测试+丰富可视化，非常全面
 - 写作质量: ⭐⭐⭐⭐ 论文结构清晰，公式推导完整，补充材料极为详尽
 - 价值: ⭐⭐⭐⭐ 在线稳定首次媲美离线、无监督训练、新数据集，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Lumosaic: Hyperspectral Video via Active Illumination and Coded-Exposure Pixels](lumosaic_hyperspectral_video_via_active_illumination_and_coded-exposure_pixels.md)
+- [Exploring Spatiotemporal Feature Propagation for Video-Level Compressive Spectral Reconstruction](exploring_spatiotemporal_feature_propagation_for_video-level_compressive_spectra.md)
+- [Spectral Gaps and Spatial Priors: Studying Hyperspectral Downstream Adaptation Using TerraMind](../../ICLR2026/remote_sensing/spectral_gaps_and_spatial_priors_studying_hyperspectral_downstream_adaptation_us.md)
+- [UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization](../../AAAI2026/remote_sensing/uniabg_unified_adversarial_view_bridging_and_graph_correspondence_for_unsupervis.md)
+- [Cross-Platform Video Person ReID: A New Benchmark Dataset and Adaptation Approach](../../ECCV2024/remote_sensing/cross-platform_video_person_reid_a_new_benchmark_dataset_and_adaptation_approach.md)
+
+<!-- RELATED:END -->

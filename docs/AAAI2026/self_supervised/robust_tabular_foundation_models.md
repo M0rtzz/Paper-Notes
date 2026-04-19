@@ -145,3 +145,15 @@ RTFM 在 TabPertNet 上将 TabPFN 的平均归一化 AUC 从 0.7483 提升至 **
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：论文提出了一个理论扎实、实践高效的 TFM 对抗训练框架，DRO 视角的引入有较强的理论贡献，实验结果统计显著。主要扣分点在于实验范围偏窄（仅分类、仅 TabPFN、仅 MLP-SCM），对框架通用性的实证支撑不足。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Test-Time Canonicalization by Foundation Models for Robust Perception](../../ICML2025/self_supervised/test-time_canonicalization_by_foundation_models_for_robust_perception.md)
+- [Towards Benchmarking Foundation Models for Tabular Data With Text](../../ICML2025/self_supervised/towards_benchmarking_foundation_models_for_tabular_data_with_text.md)
+- [FedGRPO: Privately Optimizing Foundation Models with Group-Relative Rewards from Domain Clients](fedgrpo_privately_optimizing_foundation_models_with_group-relative_rewards_from_.md)
+- [From Pretrain to Pain: Adversarial Vulnerability of Video Foundation Models without Finetuning](from_pretrain_to_pain_adversarial_vulnerability_of_video_foundation_models_witho.md)
+- [Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models](../../NeurIPS2025/self_supervised/mitra_mixed_synthetic_priors_for_enhancing_tabular_foundation_models.md)
+
+<!-- RELATED:END -->

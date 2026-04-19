@@ -142,3 +142,15 @@ GLVQ-32D 在所有模型规模上均取得最低困惑度，Llama2-70B 2-bit 下
 - 实验充分度: ⭐⭐⭐⭐ Llama 1/2 全系列、PPL+zero-shot 双评估、8D/32D两个配置对比，但缺少更多模型族
 - 写作质量: ⭐⭐⭐⭐⭐ 方法推导严谨，pipeline 图清晰，算法伪代码完整，存储/延迟分析透彻
 - 价值: ⭐⭐⭐⭐⭐ 在极低比特量化这个工程价值极高的方向上取得实质性突破，代码开源、延迟增加微小，部署友好
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Q-Palette: Fractional-Bit Quantizers Toward Optimal Bit Allocation for Efficient LLM Deployment](q-palette_fractional-bit_quantizers_toward_optimal_bit_allocation_for_efficient_.md)
+- [ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization](paretoq_improving_scaling_laws_in_extremely_low-bit_llm_quantization.md)
+- [LittleBit: Ultra Low-Bit Quantization via Latent Factorization](littlebit_ultra_low-bit_quantization_via_latent_factorization.md)
+- [FALQON: Accelerating LoRA Fine-tuning with Low-Bit Floating-Point Arithmetic](falqon_accelerating_lora_fine-tuning_with_low-bit_floating-point_arithmetic.md)
+- [A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings](a-thought_efficient_reasoning_via_bidirectional_compression_for_low-resource_set.md)
+
+<!-- RELATED:END -->

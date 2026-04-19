@@ -165,3 +165,15 @@ RAM 压缩比：msf-CNN 相比 Vanilla 减少 87%–96%，相比 MCUNetV2/Stream
 - ⭐⭐⭐ **局限性**：仅限 CNN、缓存策略单一、未与 NAS 方法系统对比
 
 **总评**: ⭐⭐⭐⭐ (3.5/5) — 扎实的系统优化工作，图论建模思路优雅，多平台验证令人信服。主要不足是仅限 CNN 架构和缓存策略的局限性。对 TinyML 领域有实际工程价值。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STAA-SNN: Spatial-Temporal Attention Aggregator for Spiking Neural Networks](../../CVPR2025/llm_nlp/staa-snn_spatial-temporal_attention_aggregator_for_spiking_neural_networks.md)
+- [CAT: Circular-Convolutional Attention for Sub-Quadratic Transformers](cat_circular-convolutional_attention_for_sub-quadratic_transformers.md)
+- [Opinion Maximization in Social Networks by Modifying Internal Opinions](opinion_maximization_in_social_networks_by_modifying_internal_opinions.md)
+- [Large Language Models Miss the Multi-Agent Mark](large_language_models_miss_the_multi-agent_mark.md)
+- [PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)
+
+<!-- RELATED:END -->

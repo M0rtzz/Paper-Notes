@@ -128,3 +128,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ADNI/AIBL/OASIS 三基准 + 8 种对比方法 + 详细消融 + 长期预测分析
 - 写作质量: ⭐⭐⭐⭐ 动机清晰、公式推导简洁、可视化有说服力
 - 价值: ⭐⭐⭐⭐⭐ 对医学影像生成和疾病进展建模有重要贡献，Δ-RMAE 可能成为领域标准指标
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [EvoFlows: Evolutionary Edit-Based Flow-Matching for Protein Engineering](evoflows_evolutionary_edit-based_flow-matching_for_protein_engineering.md)
+- [Efficient Molecular Conformer Generation with SO(3)-Averaged Flow Matching and Reflow](../../ICML2025/medical_imaging/efficient_molecular_conformer_generation_with_so3-averaged_flow_matching_and_ref.md)
+- [Scalable Generation of Spatial Transcriptomics from Histology Images via Whole-Slide Flow Matching](../../ICML2025/medical_imaging/scalable_generation_of_spatial_transcriptomics_from_histology_images_via_whole-s.md)
+- [Ambiguity-aware Truncated Flow Matching for Ambiguous Medical Image Segmentation](../../AAAI2026/medical_imaging/ambiguity-aware_truncated_flow_matching_for_ambiguous_medica.md)
+- [Flexibility-conditioned Protein Structure Design with Flow Matching](../../ICML2025/medical_imaging/flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+
+<!-- RELATED:END -->

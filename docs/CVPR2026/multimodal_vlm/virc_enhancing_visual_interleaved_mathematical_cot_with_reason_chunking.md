@@ -125,3 +125,15 @@ ViRC 框架包含三个核心组件：
 - 实验充分度: ⭐⭐⭐⭐ 多基准验证 + 全面消融，18.8% 提升令人信服，但缺少大模型验证
 - 写作质量: ⭐⭐⭐⭐ 从认知科学到方法到实验的逻辑链完整
 - 价值: ⭐⭐⭐⭐⭐ 为多模态推理提供了新范式，数据集和代码均开源
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning](reason-svg_enhancing_structured_reasoning_for_vector_graphics_generation_with_re.md)
+- [LLaVA-CoT: Let Vision Language Models Reason Step-by-Step](../../ICCV2025/multimodal_vlm/llavacot_let_vision_language_models_reason_stepbystep.md)
+- [CoVR-R: Reason-Aware Composed Video Retrieval](covr-rreason-aware_composed_video_retrieval.md)
+- [VisioMath: Benchmarking Figure-based Mathematical Reasoning in LMMs](../../ICLR2026/multimodal_vlm/visiomath_benchmarking_figure-based_mathematical_reasoning_in_lmms.md)
+- [Mitigating Visual Forgetting via Take-along Visual Conditioning for Multi-modal Long CoT Reasoning](../../ACL2025/multimodal_vlm/tvc_mitigating_visual_forgetting.md)
+
+<!-- RELATED:END -->

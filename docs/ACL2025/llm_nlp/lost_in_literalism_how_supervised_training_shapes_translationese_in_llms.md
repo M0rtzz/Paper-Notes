@@ -122,3 +122,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 涵盖人工评估、自动指标、多模型、多语言方向的全面评估
 - 写作质量: ⭐⭐⭐⭐⭐ 论证逻辑清晰，从现象观察到原因分析再到解决方案，层层递进
 - 价值: ⭐⭐⭐⭐ 揭示了LLM翻译中一个被忽视的重要问题，方法实用且易于复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs](how_llms_comprehend_temporal_meaning_in_narratives_a_case_study_in_cognitive_eva.md)
+- [How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian](conceptual_knowledge_org.md)
+- [How Numerical Precision Affects Arithmetical Reasoning Capabilities of LLMs](how_numerical_precision_affects_arithmetical_reasoning_capabilities_of_llms.md)
+- [Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs](token_prepending_training_free.md)
+- [Refuse Whenever You Feel Unsafe: Improving Safety in LLMs via Decoupled Refusal Training](derta_decoupled_refusal.md)
+
+<!-- RELATED:END -->

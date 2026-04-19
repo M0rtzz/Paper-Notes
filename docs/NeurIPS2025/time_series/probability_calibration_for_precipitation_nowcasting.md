@@ -153,3 +153,15 @@ $$\hat{p} = \begin{cases} \sigma_{\text{softmax}}(z), & \text{if } \hat{y} = y \
 - **实验充分性**: 3.5/5 — 消融实验完整，但仅单一数据集
 - **实用价值**: 4/5 — 方法极轻量，可直接部署到实际天气预报系统
 - **写作质量**: 4/5 — 结构清晰，图表直观
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning with Calibration: Exploring Test-Time Computing of Spatio-Temporal Forecasting](learning_with_calibration_exploring_test-time_computing_of_spatio-temporal_forec.md)
+- [Time-O1: Time-Series Forecasting Needs Transformed Label Alignment](time-o1_time-series_forecasting_needs_transformed_label_alignment.md)
+- [In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)
+- [Improving Time Series Forecasting via Instance-aware Post-hoc Revision (PIR)](improving_time_series_forecasting_via_instance-aware_post-hoc_revision.md)
+- [TimePerceiver: An Encoder-Decoder Framework for Generalized Time-Series Forecasting](timeperceiver_an_encoder-decoder_framework_for_generalized_time-series_forecasti.md)
+
+<!-- RELATED:END -->

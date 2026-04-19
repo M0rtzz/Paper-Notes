@@ -127,3 +127,15 @@ McNemar检验证实AgentTrace显著优于所有基线（p<0.001），与LLM Anal
 - 实验充分度: ⭐⭐⭐ 消融完整但全部是合成数据，缺乏真实系统验证
 - 写作质量: ⭐⭐⭐⭐ 简洁清晰，问题动机和方法描述到位
 - 价值: ⭐⭐⭐⭐ 定义了一个重要的新问题（multiagent RCA），提供了实用的baseline方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Root Cause Analysis of Outliers with Missing Structural Knowledge](../../NeurIPS2025/causal_inference/root_cause_analysis_of_outliers_with_missing_structural_knowledge.md)
+- [CaDyT: Causal Structure Learning for Dynamical Systems with Theoretical Score Analysis](../../AAAI2026/causal_inference/causal_structure_learning_for_dynamical_systems_with_theoretical_score_analysis.md)
+- [MUG: Multi-agent Undercover Gaming — Hallucination Removal via Counterfactual Test for Multimodal Reasoning](../../AAAI2026/causal_inference/multi-agent_undercover_gaming_hallucination_removal_via_coun.md)
+- [A Principle of Targeted Intervention for Multi-Agent Reinforcement Learning](../../NeurIPS2025/causal_inference/a_principle_of_targeted_intervention_for_multi-agent_reinforcement_learning.md)
+- [Efficient Ensemble Conditional Independence Test Framework for Causal Discovery](efficient_ensemble_conditional_independence_test_framework_for_causal_discovery.md)
+
+<!-- RELATED:END -->

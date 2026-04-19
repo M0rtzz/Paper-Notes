@@ -152,3 +152,15 @@ $$
 | 影响力 | ⭐⭐⭐⭐ |
 
 **综合**: ⭐⭐⭐⭐ — 诊断性基准论文，实验全面、发现有洞察力（U 型缩放），对 VLM 安全部署具有重要警示意义。技术深度相对有限，但选题精准、结论扎实。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Can Vision Language Models Understand Mimed Actions?](can_vision_language_models_understand_mimed_actions.md)
+- [Can Multimodal Large Language Models Understand Spatial Relations?](spatialmqa_mllm_spatial_relations.md)
+- [CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?](cordial_can_multimodal_large_language_models_effectively_understand_coherence_re.md)
+- [Can MLLMs Understand the Deep Implication Behind Chinese Images?](can_mllms_understand_the_deep_implication_behind_chinese_images.md)
+- [Can Vision-Language Models Evaluate Handwritten Math?](can_vision-language_models_evaluate_handwritten_math.md)
+
+<!-- RELATED:END -->

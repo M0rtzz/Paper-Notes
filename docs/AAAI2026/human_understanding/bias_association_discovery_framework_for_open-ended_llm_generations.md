@@ -133,3 +133,15 @@ BADF 作为偏见关联发现框架，包含三个核心阶段：(1) **关联提
 ⭐⭐⭐⭐ (4/5)
 
 工作扎实、系统全面、实验规模大。提出的 BADF 框架在方法论上有创新性，发现了有价值的新偏见关联。扣一分原因：对 LLM 辅助步骤本身引入的偏见缺乏深入讨论，且方法的可扩展性（到更多语言、更多任务类型）尚未验证。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [HiLoMix: Robust High- and Low-Frequency Graph Learning Framework for Mixing Address Association](hilomix_robust_high-_and_low-frequency_graph_learning_framework_for_mixing_addre.md)
+- [GUIDE: A Benchmark for Understanding and Assisting Users in Open-Ended GUI Tasks](../../CVPR2026/human_understanding/guide_a_benchmark_for_understanding_and_assisting_users_in_open-ended_gui_tasks.md)
+- [Modality-Aware Bias Mitigation and Invariance Learning for Unsupervised Visible-Infrared Person Re-Identification](modality-aware_bias_mitigation_and_invariance_learning_for_unsupervised_visible-.md)
+- [Towards a Common Framework for Autoformalization](towards_a_common_framework_for_autoformalization.md)
+- [LLM Unlearning with LLM Beliefs](../../ICLR2026/human_understanding/llm_unlearning_with_llm_beliefs.md)
+
+<!-- RELATED:END -->

@@ -116,3 +116,15 @@ WOSAC 验证集（车辆）：
 - 实验充分度: ⭐⭐⭐⭐⭐ WOSAC 标准基准+闭环规划器评估+参考模型质量消融+VRU评估+效率对比
 - 写作质量: ⭐⭐⭐⭐ 框架清晰，实验分析深入，对 WOSAC 指标的批判性讨论有见地
 - 价值: ⭐⭐⭐⭐⭐ 提供了实用的大规模交通仿真方案——10× 速度+接近人类真实性，填补了速度与真实性之间的空白
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](../../AAAI2026/autonomous_driving/fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
+- [ST4VLA: Spatially Guided Training for Vision-Language-Action Models](st4vla_spatially_guided_training_for_vision-language-action_models.md)
+- [ETA: Efficiency through Thinking Ahead, A Dual Approach to Self-Driving with Large Models](../../ICCV2025/autonomous_driving/eta_efficiency_through_thinking_ahead_a_dual_approach_to_self-driving_with_large.md)
+- [DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
+- [Neurosymbolic Diffusion Models](../../NeurIPS2025/autonomous_driving/neurosymbolic_diffusion_models.md)
+
+<!-- RELATED:END -->

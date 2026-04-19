@@ -137,3 +137,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 多任务评估（位姿估计、多视图注册、NVS），在真实数据上零样本评测
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述极其清晰，实验设计合理，图示直观
 - 价值: ⭐⭐⭐⭐⭐ 数据集将推动整个地空3D重建领域发展，框架可扩展到更多场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Horizon-GS: Unified 3D Gaussian Splatting for Large-Scale Aerial-to-Ground Scenes](horizon-gs_unified_3d_gaussian_splatting_for_large-scale_aerial-to-ground_scenes.md)
+- [DiffPortrait360: Consistent Portrait Diffusion for 360° View Synthesis](diffportrait360_consistent_portrait_diffusion_for_360_view_synthesis.md)
+- [Floating No More: Object-Ground Reconstruction from a Single Image](floating_no_more_object-ground_reconstruction_from_a_single_image.md)
+- [Griffin: Aerial-Ground Cooperative Detection and Tracking Dataset and Benchmark](../../AAAI2026/3d_vision/griffin_aerial-ground_cooperative_detection_and_tracking_dataset_and_benchmark.md)
+- [EventFly: Event Camera Perception from Ground to the Sky](eventfly_event_camera_perception_from_ground_to_the_sky.md)
+
+<!-- RELATED:END -->

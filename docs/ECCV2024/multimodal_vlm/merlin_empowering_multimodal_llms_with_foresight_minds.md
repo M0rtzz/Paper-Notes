@@ -211,3 +211,15 @@ Merlin 在所有场景下均大幅超越现有方法，"yes" 比率接近 50%，
 | 实验充分性 | 4.0 | 多任务评估全面，但未来推理基准相对简单 |
 | 表达清晰度 | 4.0 | 写作流畅，图示丰富，方法论述清晰 |
 | **总体** | **4.0** | 在MLLM未来推理方向的先驱工作，思路新颖，验证充分 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Genixer: Empowering Multimodal Large Language Model as a Powerful Data Generator](genixer_empowering_multimodal_large_language_model_as_a_powerful_data_generator.md)
+- [AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization](addressclip_empowering_visionlanguage_models_for_citywide_im.md)
+- [Eyes Closed, Safety On: Protecting Multimodal LLMs via Image-to-Text Transformation](eyes_closed_safety_on_protecting_multimodal_llms_via_image-to-text_transformatio.md)
+- [VisuoThink: Empowering LVLM Reasoning with Multimodal Tree Search](../../ACL2025/multimodal_vlm/visuothink_empowering_lvlm_reasoning_with_multimodal_tree_search.md)
+- [From Black Boxes to Transparent Minds: Evaluating and Enhancing the Theory of Mind in Multimodal Large Language Models](../../ICML2025/multimodal_vlm/from_black_boxes_to_transparent_minds_evaluating_and_enhancing_the_theory_of_min.md)
+
+<!-- RELATED:END -->

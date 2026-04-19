@@ -132,3 +132,15 @@ Stable Preference在标准的偏好模型训练框架上进行改进。输入仍
 - 实验充分度: ⭐⭐⭐⭐ 消融实验充分，在多个数据集上验证，可视化分析也较丰富
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，两个问题的分析到位
 - 价值: ⭐⭐⭐⭐ 对生成式AI的偏好对齐有实用价值，方法简单可复现
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [OmniSSR: Zero-shot Omnidirectional Image Super-Resolution using Stable Diffusion Model](omnissr_zero-shot_omnidirectional_image_super-resolution_using_stable_diffusion_.md)
+- [Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement](unveiling_advanced_frequency_disentanglement_paradigm_for_low-light_image_enhanc.md)
+- [Text2Place: Affordance-aware Text Guided Human Placement](text2place_affordance-aware_text_guided_human_placement.md)
+- [Pixel-Aware Stable Diffusion for Realistic Image Super-Resolution and Personalized Stylization](pixel-aware_stable_diffusion_for_realistic_image_super-resolution_and_personaliz.md)
+- [HPSv3: Towards Wide-Spectrum Human Preference Score](../../ICCV2025/image_generation/hpsv3_towards_wide-spectrum_human_preference_score.md)
+
+<!-- RELATED:END -->

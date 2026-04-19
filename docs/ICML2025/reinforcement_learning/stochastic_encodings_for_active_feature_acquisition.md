@@ -164,3 +164,15 @@ SEFA 接近最优（Syn 1/2 最优为 3，Syn 3 最优为 5）。
 ⭐⭐⭐⭐⭐ (5/5)
 
 方法设计优美而深思熟虑——每个组件都有清晰的动机和理论支持。在全部数据集上的一致优势令人信服。CMI 缺陷的理论分析和癌症分类的可解释性验证是亮点。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ALINE: Joint Amortization for Bayesian Inference and Active Data Acquisition](../../NeurIPS2025/reinforcement_learning/aline_joint_amortization_for_bayesian_inference_and_active_data_acquisition.md)
+- [Exploration via Feature Perturbation in Contextual Bandits](../../NeurIPS2025/reinforcement_learning/exploration_via_feature_perturbation_in_contextual_bandits.md)
+- [LineFlow: A Framework to Learn Active Control of Production Lines](lineflow_a_framework_to_learn_active_control_of_production_lines.md)
+- [Real-World Reinforcement Learning of Active Perception Behaviors](../../NeurIPS2025/reinforcement_learning/real-world_reinforcement_learning_of_active_perception_behaviors.md)
+- [Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling](../../NeurIPS2025/reinforcement_learning/robust_adversarial_reinforcement_learning_in_stochastic_games_via_sequence_model.md)
+
+<!-- RELATED:END -->

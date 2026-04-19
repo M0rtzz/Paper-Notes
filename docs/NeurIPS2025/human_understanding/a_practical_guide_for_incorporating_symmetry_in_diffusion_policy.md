@@ -122,3 +122,15 @@ MimicGen 12 个机器人操作任务，100 个专家演示训练，50 次 rollou
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 个任务、多种消融、3 种方法对比、3 种动作表征 × 2 种观测，非常彻底
 - 写作质量: ⭐⭐⭐⭐⭐ 理论推导清晰，实验组织系统，图表直观
 - 价值: ⭐⭐⭐⭐ 对机器人策略学习领域非常实用，提供了低成本引入对称性的最佳实践指南
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Policy Compatible Skill Incremental Learning via Lazy Learning Interface](policy_compatible_skill_incremental_learning_via_lazy_learning_interface.md)
+- [Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control](succeed_or_learn_slowly_sample_efficient_off-policy_reinforcement_learning_for_m.md)
+- [HOI-Dyn: Learning Interaction Dynamics for Human-Object Motion Diffusion](hoi-dyn_learning_interaction_dynamics_for_human-object_motion_diffusion.md)
+- [PoseSOR: Human Pose Can Guide Our Attention](../../ECCV2024/human_understanding/posesor_human_pose_can_guide_our_attention.md)
+- [Offline Policy Evaluation of Multi-Turn LLM Health Coaching with Real Users](offline_policy_evaluation_of_multi-turn_llm_health_coaching_with_real_users.md)
+
+<!-- RELATED:END -->

@@ -120,3 +120,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 探测、神经元分析、生成操控三级验证，但模型规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 叙述流畅，从假说到实验到结论的逻辑链非常清晰
 - 价值: ⭐⭐⭐⭐⭐ 对理解多语言模型的工作机制有深刻贡献，高资源偏见发现对公平性研究有重要启发
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models](statement-tuning_enables_efficient_cross-lingual_generalization_in_encoder-only_.md)
+- [A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs](a_case_study_of_cross-lingual_zero-shot_generalization_for_classical_languages_i.md)
+- [Cross-Lingual Optimization for Language Transfer in Large Language Models](cross-lingual_optimization_for_language_transfer_in_large_language_models.md)
+- [Cross-Lingual Pitfalls: Automatic Probing Cross-Lingual Weakness of Multilingual Large Language Models](crosslingual_pitfalls.md)
+- [Language Fusion for Parameter-Efficient Cross-lingual Transfer (FLARE)](flare_crosslingual_lora.md)
+
+<!-- RELATED:END -->

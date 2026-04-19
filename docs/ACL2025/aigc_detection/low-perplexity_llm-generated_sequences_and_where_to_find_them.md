@@ -159,3 +159,15 @@ tags:
 - 实验充分度: ⭐⭐⭐ 仅用 Pythia，4 个领域，规模有限但消融实验较完整
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，可视化好，分类框架直观易懂
 - 价值: ⭐⭐⭐⭐ 对训练数据归因和 AIGC 检测领域提供有用的实证洞察
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning to Rewrite: Generalized LLM-Generated Text Detection](learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [Comparing LLM-generated and human-authored news text using formal syntactic theory](llm_vs_human_formal_syntax.md)
+- [A Rose by Any Other Name: LLM-Generated Explanations Are Good Proxies for Human Explanations to Collect Label Distributions on NLI](a_rose_by_any_other_name_llm-generated_explanations_are_good_proxies_for_human_e.md)
+- [CLAWS: Creativity Detection for LLM-Generated Solutions Using Attention Window of Sections](../../NeurIPS2025/aigc_detection/clawscreativity_detection_for_llm-generated_solutions_using_attention_window_of_.md)
+- [Optimized Algorithms for Text Clustering with LLM-Generated Constraints](../../AAAI2026/aigc_detection/optimized_algorithms_for_text_clustering_with_llm-generated_constraints.md)
+
+<!-- RELATED:END -->

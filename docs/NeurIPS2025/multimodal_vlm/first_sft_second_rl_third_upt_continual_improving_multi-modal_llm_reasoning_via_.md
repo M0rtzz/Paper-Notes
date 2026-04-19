@@ -117,3 +117,15 @@ MM-UPT 作为无监督方法，与有监督 GRPO 打平（均为 53.17 avg），
 - 实验充分度: ⭐⭐⭐⭐ 多个模型、多个数据集、两种场景，分析较全面
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，三阶段范式的定位很好
 - 价值: ⭐⭐⭐⭐ 指出了无监督后训练这个重要方向，方法简单实用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
+- [Enhancing Outcome Reward-Based RL Training of MLLMs with Self-Consistency Sampling](enhancing_the_outcome_reward-based_rl_training_of_mllms_with_self-consistency_sa.md)
+- [Towards Comprehensive Scene Understanding: Integrating First and Third-Person Views for LVLMs](towards_comprehensive_scene_understanding_integrating_first_and_third-person_vie.md)
+- [DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding](danmakutppbench_a_multimodal_benchmark_for_temporal_point_pr.md)
+- [What Can RL Bring to VLA Generalization? An Empirical Study](what_can_rl_bring_to_vla_generalization_an_empirical_study.md)
+
+<!-- RELATED:END -->

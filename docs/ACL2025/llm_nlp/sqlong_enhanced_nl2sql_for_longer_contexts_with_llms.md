@@ -121,3 +121,15 @@ Spider-Syn 和 Spider-Realistic 通过同义词替换和移除显式列名来测
 - 实验充分度: ⭐⭐⭐⭐ (5个基准×9个长度级别=45个测试集，短长上下文全面评估，含位置鲁棒性分析)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，流水线描述完整，图表丰富)
 - 价值: ⭐⭐⭐⭐ (首次系统化定义长上下文NL2SQL任务，提供实用增强方案和评估基准)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [CER: Confidence Enhanced Reasoning in LLMs](cer_confidence_enhanced_reasoning.md)
+- [Towards Enhanced Immersion and Agency for LLM-based Interactive Drama](towards_enhanced_immersion_and_agency_for_llm-based_interactive_drama.md)
+- [Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning](boosting_llms_molecular_structure_elucidation_with_knowledge_enhanced_tree_searc.md)
+- [ReCall: Library-Like Behavior In Language Models is Enhanced by Self-Referencing Causal Cycles](library-like_behavior_in_language_models_is_enhanced_by_self-referencing_causal_.md)
+- [Beyond Output Matching: Bidirectional Alignment for Enhanced In-Context Learning](beyond_output_matching_bidirectional_alignment_for_enhanced_in-context_learning.md)
+
+<!-- RELATED:END -->

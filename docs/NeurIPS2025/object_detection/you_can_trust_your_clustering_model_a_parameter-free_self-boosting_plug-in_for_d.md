@@ -160,3 +160,15 @@ $$L_{ins} = \|g(f_o(\mathcal{T}^1(x)) + \sigma\varepsilon) - f_t(\mathcal{T}^2(x
 - **实验充分度**: ★★★★★ — 5 个数据集、6 个基线、大量消融和对比实验，非常全面
 - **实用性**: ★★★★★ — 即插即用、无参数、通用性强，实际应用价值高
 - **写作质量**: ★★★★☆ — 动机阐述清晰，实验组织合理
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Angular Constraint Embedding via SpherePair Loss for Constrained Clustering](angular_constraint_embedding_via_spherepair_loss_for_constrained_clustering.md)
+- [Deep Incomplete Multi-View Clustering via Hierarchical Imputation and Alignment](../../AAAI2026/object_detection/deep_incomplete_multi-view_clustering_via_hierarchical_imputation_and_alignment.md)
+- [Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
+- [All You Need is One: Capsule Prompt Tuning with a Single Vector](all_you_need_is_one_capsule_prompt_tuning_with_a_single_vector.md)
+- [Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need](../../CVPR2025/object_detection/boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)
+
+<!-- RELATED:END -->

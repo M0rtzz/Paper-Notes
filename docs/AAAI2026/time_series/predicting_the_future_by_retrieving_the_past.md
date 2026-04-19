@@ -155,3 +155,15 @@ GMB 相关消融：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 7 数据集×4 基线，全面的 GMB/PFRP 消融，超参数敏感性，大模型增强实验
 - 写作质量: ⭐⭐⭐⭐ — 图示清晰，方法描述完整，对比分析到位
 - 价值: ⭐⭐⭐⭐ — 即插即用、开销小、效果稳定；但单变量限制了实用范围
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Detecting the Future: All-at-Once Event Sequence Forecasting with Horizon Matching](detecting_the_future_all-at-once_event_sequence_forecasting_with_horizon_matchin.md)
+- [When Will It Fail?: Anomaly to Prompt for Forecasting Future Anomalies in Time Series](../../ICML2025/time_series/when_will_it_fail_anomaly_to_prompt_for_forecasting_future_anomalies_in_time_ser.md)
+- [Finding Time Series Anomalies using Granular-ball Vector Data Description](finding_time_series_anomalies_using_granular-ball_vector_data_description.md)
+- [HN-MVTS: HyperNetwork-based Multivariate Time Series Forecasting](hn-mvts_hypernetwork-based_multivariate_time_series_forecasting.md)
+- [C3RL: Rethinking the Combination of Channel-independence and Channel-mixing from Representation Learning](c3rl_rethinking_the_combination_of_channel-independence_and_channel-mixing_from_.md)
+
+<!-- RELATED:END -->

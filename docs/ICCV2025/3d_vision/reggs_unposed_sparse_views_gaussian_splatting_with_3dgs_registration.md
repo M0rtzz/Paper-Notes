@@ -153,3 +153,15 @@ tags:
 - **实验充分度**: ⭐⭐⭐⭐ 两个数据集、多视角设定、完整消融，但缺少户外大场景评估
 - **写作质量**: ⭐⭐⭐⭐ 方法阐述清晰，但公式符号较多
 - **价值**: ⭐⭐⭐⭐ 为无位姿多视角3DGS重建提供了实用的解决方案，位姿估计精度突出
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Sparfels: Fast Reconstruction from Sparse Unposed Imagery](sparfels_fast_reconstruction_from_sparse_unposed_imagery.md)
+- [No Pose at All: Self-Supervised Pose-Free 3D Gaussian Splatting from Sparse Views](no_pose_at_all_self-supervised_pose-free_3d_gaussian_splatting_from_sparse_views.md)
+- [3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt](3dgslm_faster_gaussiansplatting_optimization_with_levenbergm.md)
+- [SpatialSplat: Efficient Semantic 3D from Sparse Unposed Images](spatialsplat_efficient_semantic_3d_from_sparse_unposed_images.md)
+- [LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
+
+<!-- RELATED:END -->

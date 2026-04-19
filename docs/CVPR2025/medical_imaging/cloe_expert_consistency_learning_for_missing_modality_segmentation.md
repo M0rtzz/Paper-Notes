@@ -121,3 +121,15 @@ CLoE 由并行模态编码器、一致性驱动门控模块和共享融合解码
 - 实验充分度: ⭐⭐⭐⭐ 15 种缺失组合 + 两个数据集 + 完整消融，但缺少更多器官/模态的验证
 - 写作质量: ⭐⭐⭐⭐ 问题定义清晰，公式推导完整，但论文较短
 - 价值: ⭐⭐⭐⭐ 方法轻量有效，一致性→可靠性的映射思路有广泛适用性
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SimMLM: A Simple Framework for Multi-modal Learning with Missing Modality](../../ICCV2025/medical_imaging/simmlm_a_simple_framework_for_multi-modal_learning_with_missing_modality.md)
+- [Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)
+- [Knowledge Bridger: Towards Training-Free Missing Modality Completion](knowledge_bridger_towards_training-free_missing_modality_completion.md)
+- [Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+
+<!-- RELATED:END -->

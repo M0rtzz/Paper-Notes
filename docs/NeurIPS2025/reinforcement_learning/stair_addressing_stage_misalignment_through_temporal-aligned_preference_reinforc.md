@@ -166,3 +166,15 @@ $$I(\sigma_0, \sigma_1) = (c_{\text{stage}} - d_{\text{stage}}(\sigma_0, \sigma_
 - 实验充分度: ⭐⭐⭐⭐⭐ 多域实验+消融+人类实验+噪声鲁棒性+反馈效率全面覆盖
 - 写作质量: ⭐⭐⭐⭐⭐ 问题驱动式写作，理论分析→人类验证→方法设计→实验验证环环相扣
 - 价值: ⭐⭐⭐⭐⭐ 对PbRL领域的实际应用有直接指导意义，方法简洁有效
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Temporal-Difference Variational Continual Learning](temporal-difference_variational_continual_learning.md)
+- [Enhancing Interpretability in Deep Reinforcement Learning through Semantic Clustering](enhancing_interpretability_in_deep_reinforcement_learning_through_semantic_clust.md)
+- [Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning](improving_retrieval-augmented_generation_through_multi-agent_reinforcement_learn.md)
+- [Incremental Sequence Classification with Temporal Consistency](incremental_sequence_classification_with_temporal_consistency.md)
+- [Modulation of Temporal Decision-Making in a Deep Reinforcement Learning Agent under the Dual-Task Paradigm](modulation_of_temporal_decision-making_in_a_deep_reinforcement_learning_agent_un.md)
+
+<!-- RELATED:END -->

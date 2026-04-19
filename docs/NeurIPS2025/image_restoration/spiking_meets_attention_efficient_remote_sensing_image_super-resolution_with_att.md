@@ -147,3 +147,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3 个遥感数据集全面对比+详细消融，30 个场景类型分解分析
 - 写作质量: ⭐⭐⭐⭐ 动机清晰，方法图详细，但部分公式可更简洁
 - 价值: ⭐⭐⭐⭐ 为 SNN 在低级视觉任务的应用开辟新方向，对遥感社区有实际部署价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Emulating Self-Attention with Convolution for Efficient Image Super-Resolution](../../ICCV2025/image_restoration/emulating_self-attention_with_convolution_for_efficient_image_super-resolution.md)
+- [Learning Exhaustive Correlation for Spectral Super-Resolution: Where Spatial-Spectral Attention Meets Linear Dependence](../../ECCV2024/image_restoration/learning_exhaustive_correlation_for_spectral_super-resolution_where_spatial-spec.md)
+- [UCAN: Unified Convolutional Attention Network for Expansive Receptive Fields in Lightweight Super-Resolution](../../CVPR2026/image_restoration/ucan_unified_convolutional_attention_network_for_expansive_receptive_fields_in_l.md)
+- [Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](../../ECCV2024/image_restoration/efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution](implicit_augmentation_from_distributional_symmetry_in_turbulence_super-resolutio.md)
+
+<!-- RELATED:END -->

@@ -224,3 +224,15 @@ Griffin由三部分组成：
 - 实验充分度: ⭐⭐⭐⭐⭐ — 6种方法×4个高度×3种干扰类型，评估极为全面
 - 写作质量: ⭐⭐⭐⭐⭐ — 数据集构建细节和实验分析都非常深入
 - 价值: ⭐⭐⭐⭐⭐ — 填补AGC感知研究的关键数据空白，"高度鲁棒性"发现对后续研究有重要指导意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Event-based Tiny Object Detection: A Benchmark Dataset and Baseline](../../ICCV2025/3d_vision/event-based_tiny_object_detection_a_benchmark_dataset_and_baseline.md)
+- [AerialMegaDepth: Learning Aerial-Ground Reconstruction and View Synthesis](../../CVPR2025/3d_vision/aerialmegadepth_learning_aerial-ground_reconstruction_and_view_synthesis.md)
+- [Exploring Surround-View Fisheye Camera 3D Object Detection](exploring_surround-view_fisheye_camera_3d_object_detection.md)
+- [Distilling Future Temporal Knowledge with Masked Feature Reconstruction for 3D Object Detection](distilling_future_temporal_knowledge_with_masked_feature_reconstruction_for_3d_o.md)
+- [Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection](multi-modal_assistance_for_unsupervised_domain_adaptation_on_point_cloud_3d_obje.md)
+
+<!-- RELATED:END -->

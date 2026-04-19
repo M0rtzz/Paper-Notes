@@ -118,3 +118,15 @@ GSM8K上也有一致提升。
 - 实验充分度: ⭐⭐⭐⭐ 两个基准+两种搜索策略+两个模型系列，但数据量和模型规模偏小
 - 写作质量: ⭐⭐⭐⭐ 理论推导严谨，数学符号清晰，但实践部分的近似讨论不够详细
 - 价值: ⭐⭐⭐⭐ 对PRM训练有实用改进，零额外成本这一特性很有工程价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Jupiter: Enhancing LLM Data Analysis Capabilities via Notebook and Inference-Time Value-Guided Search](jupiter_enhancing_llm_data_analysis_capabilities_via_notebook_and_inference-time.md)
+- [Improving Rationality in the Reasoning Process of Language Models through Self-playing Game](../../ICML2025/llm_reasoning/improving_rationality_in_the_reasoning_process_of_language_models_through_self-p.md)
+- [SAPO: Self-Adaptive Process Optimization Makes Small Reasoners Stronger](sapo_self-adaptive_process_optimization_makes_small_reasoners_stronger.md)
+- [SPARE: Single-Pass Annotation with Reference-Guided Evaluation for Automatic Process Supervision](spare_single-pass_annotation_with_reference-guided_evaluation_for_automatic_proc.md)
+- [RPM-MCTS: Knowledge-Retrieval as Process Reward Model with Monte Carlo Tree Search for Code Generation](rpm-mcts_knowledge-retrieval_as_process_reward_model_with_monte_carlo_tree_searc.md)
+
+<!-- RELATED:END -->

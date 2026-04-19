@@ -122,3 +122,15 @@ $$\mathbf{z} = (\mathbf{\Lambda}\tilde{\mathbf{y}}) \odot \tilde{\mathbf{y}} + \
 - 实验充分度: ⭐⭐⭐⭐ 覆盖三个任务（CV、NLP、LLM微调），有消融和scaling分析
 - 写作质量: ⭐⭐⭐⭐⭐ 推导清晰，逐步化简的过程易于理解
 - 价值: ⭐⭐⭐⭐ 即插即用的增强方案实用性强，但需要更大规模验证
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression](../../ICML2025/model_compression/fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)
+- [Global Minimizers of ℓp-Regularized Objectives Yield the Sparsest ReLU Neural Networks](global_minimizers_of_ellp-regularized_objectives_yield_the_sparsest_relu_neural_.md)
+- [Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing](synergy_between_the_strong_and_the_weak_spiking_neural_networks_are_inherently_s.md)
+- [Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks](spiking_brain_compression_post-training_second-order_compression_for_spiking_neu.md)
+- [Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching](../../ACL2025/model_compression/flipping_kd_small_to_large.md)
+
+<!-- RELATED:END -->

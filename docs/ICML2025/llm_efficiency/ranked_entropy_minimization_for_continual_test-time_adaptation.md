@@ -194,3 +194,15 @@ $$\mathcal{L}_{REM} = \mathcal{L}_{MCL} + \lambda \cdot \mathcal{L}_{ERL}$$
 | 写作质量 | ⭐⭐⭐⭐ | 动机清晰，Achilles 与乌龟的类比生动，图表设计好 |
 | 实用价值 | ⭐⭐⭐⭐⭐ | 0.03M 参数、单模型、即插即用，工程部署价值极高 |
 | **综合** | **⭐⭐⭐⭐☆** | 简洁优雅的方法，以极低代价实现 SOTA，值得重点关注 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spatial-TTT: Streaming Visual-based Spatial Intelligence with Test-Time Training](../../CVPR2025/llm_efficiency/spatial-ttt_streaming_visual-based_spatial_intelligence_with_test-time_training.md)
+- [On the Entropy Calibration of Language Models](../../NeurIPS2025/llm_efficiency/on_the_entropy_calibration_of_language_models.md)
+- [KAC: Kolmogorov-Arnold Classifier for Continual Learning](../../CVPR2025/llm_efficiency/kac_kolmogorov-arnold_classifier_for_continual_learning.md)
+- [Attention Retention for Continual Learning with Vision Transformers](../../AAAI2026/llm_efficiency/attention_retention_for_continual_learning_with_vision_transformers.md)
+- [xLSTM Scaling Laws: Competitive Performance with Linear Time-Complexity](../../ICLR2026/llm_efficiency/xlstm_scaling_laws_competitive_performance_with_linear_time-complexity.md)
+
+<!-- RELATED:END -->

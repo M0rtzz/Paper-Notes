@@ -154,3 +154,15 @@ VSSD-T 在 box AP 上领先 Swin-T +4.2，mask AP 领先 +3.3。
 - **技术深度**: ⭐⭐⭐⭐ — 数学推导严谨，架构设计合理
 - **实验**: ⭐⭐⭐⭐ — 分类/检测/分割全面覆盖，ERF 可视化直观
 - **写作**: ⭐⭐⭐⭐ — 两个挑战的提出和解决逻辑清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [DefMamba: Deformable Visual State Space Model](../../CVPR2025/segmentation/defmamba_deformable_visual_state_space_model.md)
+- [TinyViM: Frequency Decoupling for Tiny Hybrid Vision Mamba](tinyvim_frequency_decoupling_for_tiny_hybrid_vision_mamba.md)
+- [Exploiting Temporal State Space Sharing for Video Semantic Segmentation](../../CVPR2025/segmentation/exploiting_temporal_state_space_sharing_for_video_semantic_segmentation.md)
+- [GroupMamba: Efficient Group-Based Visual State Space Model](../../CVPR2025/segmentation/groupmamba_efficient_group-based_visual_state_space_model.md)
+- [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
+
+<!-- RELATED:END -->

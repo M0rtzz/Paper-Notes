@@ -113,3 +113,15 @@ tags:
 - 写作质量: ⭐⭐⭐⭐（公式推导严谨,结构清晰）
 - 价值: ⭐⭐⭐（卫星通信领域有价值,但与CV领域关联不大）
 <!-- 非视觉论文，信号处理/通信方向，分类存疑 -->
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Think and Answer ME: Benchmarking and Exploring Multi-Entity Reasoning Grounding in Remote Sensing](think_and_answer_me_benchmarking_and_exploring_multi-entity_reasoning_grounding_.md)
+- [MFogHub: Bridging Multi-Regional and Multi-Satellite Data for Global Marine Fog Detection and Forecasting](mfoghub_bridging_multi-regional_and_multi-satellite_data_for_global_marine_fog_d.md)
+- [Hierarchical Dual-Change Collaborative Learning for UAV Scene Change Captioning](hierarchical_dual-change_collaborative_learning_for_uav_scene_change_captioning.md)
+- [MetaSpectra+: A Compact Broadband Metasurface Camera for Snapshot Hyperspectral+ Imaging](metaspectra_a_compact_broadband_metasurface_camera_for_snapshot_hyperspectral_im.md)
+- [EarthDial: Turning Multi-sensory Earth Observations to Interactive Dialogues](earthdial_turning_multi-sensory_earth_observations_to_interactive_dialogues.md)
+
+<!-- RELATED:END -->

@@ -167,3 +167,15 @@ tags:
 - **写作质量**: ⭐⭐⭐⭐⭐ — 伦理考量详尽，背景阐述深入，案例分析直观
 - **实用价值**: ⭐⭐⭐⭐ — 数据集公开，对内容审核策略有重要警示
 - **局限**: 数据规模小、仅英语、无法微调 LLM 进行更深入对比
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Inducing Lexicons of In-Group Language with Socio-Temporal Context](inducing_lexicons_of_in-group_language_with_socio-temporal_context.md)
+- [ConECT Dataset: Overcoming Data Scarcity in Context-Aware E-Commerce MT](conect_dataset_overcoming_data_scarcity_in_context-aware_e-commerce_mt.md)
+- [QualiSpeech: A Speech Quality Assessment Dataset with Natural Language Reasoning](qualispeech_a_speech_quality_assessment_dataset_with_natural_language_reasoning_.md)
+- [Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
+- [Task-Informed Anti-Curriculum by Masking Improves Downstream Performance on Text](task-informed_anti-curriculum_by_masking_improves_downstream_performance_on_text.md)
+
+<!-- RELATED:END -->

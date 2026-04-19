@@ -128,3 +128,15 @@ REM 在域外泛化上大幅领先，尤其在 Ref-VPS 上超越 UNINEXT 达 21.
 - **实验充分度**: ⭐⭐⭐⭐⭐ 6 个基准全面评估，包含新建的 Ref-VPS 基准，消融实验细致
 - **写作质量**: ⭐⭐⭐⭐⭐ 动机清晰，逻辑递进，消融分析深入
 - **价值**: ⭐⭐⭐⭐⭐ 为开放世界视频分割提供了新范式，新基准有望推动社区发展
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Learning Precise Affordances from Egocentric Videos for Robotic Manipulation](learning_precise_affordances_from_egocentric_videos_for_robotic_manipulation.md)
+- [Open-World Skill Discovery from Unsegmented Demonstration Videos](open-world_skill_discovery_from_unsegmented_demonstration_videos.md)
+- [2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos](2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide.md)
+- [Can Generative Geospatial Diffusion Models Excel as Discriminative Geospatial Foundation Models?](can_generative_geospatial_diffusion_models_excel_as_discriminative_geospatial_fo.md)
+- [ConnectomeBench: Can LLMs Proofread the Connectome?](../../NeurIPS2025/segmentation/connectomebench_can_llms_proofread_the_connectome.md)
+
+<!-- RELATED:END -->

@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ COMPAS+COCO+ImSitu 三个数据集，9个模型，设计了控制实验
 - 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，指标设计逻辑严密，实验设计巧妙
 - 价值: ⭐⭐⭐⭐ 对 ML 公平性实践有直接帮助，消除了多指标交叉验证的困扰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Measure of the System Dependence of Automated Metrics](../../ACL2025/others/a_measure_of_the_system_dependence_of_automated_metrics.md)
+- [The Persistence of Neural Collapse Despite Low-Rank Bias](the_persistence_of_neural_collapse_despite_low-rank_bias.md)
+- [One Sample is Enough to Make Conformal Prediction Robust](one_sample_is_enough_to_make_conformal_prediction_robust.md)
+- [Training the Untrainable: Introducing Inductive Bias via Representational Alignment](training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)
+- [Improved Learning via k-DTW: A Novel Dissimilarity Measure for Curves](../../ICML2025/others/improved_learning_via_k-dtw_a_novel_dissimilarity_measure_for_curves.md)
+
+<!-- RELATED:END -->

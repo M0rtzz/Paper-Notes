@@ -121,3 +121,15 @@ Coarse Correspondences由四个步骤组成：(1) 跟踪对应关系 → (2) 稀
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖3D QA、视频QA、导航、开源/闭源模型、训练/推理等多维度，消融详尽
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，方法简单易懂，实验展示有力
 - 价值: ⭐⭐⭐⭐⭐ 实用价值极高，可即插即用增强任何支持多图输入的MLLM，且开辟了视觉提示增强空间时序推理的新方向
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [VCBench: A Streaming Counting Benchmark for Spatial-Temporal State Maintenance in Long Videos](vcbench_a_streaming_counting_benchmark_for_spatial-temporal_state_maintenance_in.md)
+- [Cloud4D: Estimating Cloud Properties at a High Spatial and Temporal Resolution](../../NeurIPS2025/video_understanding/cloud4d_estimating_cloud_properties_at_a_high_spatial_and_temporal_resolution.md)
+- [Efficient Transfer Learning for Video-language Foundation Models](efficient_transfer_learning_for_video-language_foundation_models.md)
+- [MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking](mambavlt_time-evolving_multimodal_state_space_model_for_vision-language_tracking.md)
+- [Dynamic Updates for Language Adaptation in Visual-Language Tracking](dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
+
+<!-- RELATED:END -->

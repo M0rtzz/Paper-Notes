@@ -152,3 +152,15 @@ tags:
 | 实验充分性 | 5 |
 | 写作质量 | 4 |
 | **总评** | **4.0** |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Revisiting Weak-to-Strong Generalization: Reverse KL vs. Forward KL](revisiting_weak-to-strong_generalization_in_theory_and_practice_reverse_kl_vs_fo.md)
+- [Synergistic Weak-Strong Collaboration by Aligning Preferences](synergistic_weak-strong_collaboration_by_aligning_preferences.md)
+- [Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding](well_begun_is_half_done_low-resource_preference_alignment_by_weak-to-strong_deco.md)
+- [Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning](micro_act_knowledge_conflict_reasoning.md)
+- [FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)
+
+<!-- RELATED:END -->

@@ -142,3 +142,15 @@ MC²F 包含两个核心模块：(1) SR-CNF 进行对抗样本检测；(2) Geode
 - 实验充分度: ⭐⭐⭐⭐ 3 数据集 × 3 攻击 × 4 基线 + 消融 + 预研验证，但缺少大模型和更多攻击类型的测试
 - 写作质量: ⭐⭐⭐⭐⭐ 从实证假设到方法设计到实验验证的逻辑链极为清晰，数学表述严谨
 - 价值: ⭐⭐⭐⭐ 解决了文本分类中鲁棒性-精度 trade-off 这一长期痛点，实用价值高
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [TopoReformer: Mitigating Adversarial Attacks Using Topological Purification in OCR Models](toporeformer_mitigating_adversarial_attacks_using_topological_purification_in_oc.md)
+- [Enhancing Graph Classification Robustness with Singular Pooling](../../NeurIPS2025/ai_safety/enhancing_graph_classification_robustness_with_singular_pooling.md)
+- [Improving the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models](../../ICLR2026/ai_safety/improving_the_trade-off_between_watermark_strength_and_speculative_sampling_effi.md)
+- [Breaking the Dyadic Barrier: Rethinking Fairness in Link Prediction Beyond Demographic Parity](breaking_the_dyadic_barrier_rethinking_fairness_in_link_prediction_beyond_demogr.md)
+- [From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](../../ACL2025/ai_safety/from_tradeoff_to_synergy_a_versatile.md)
+
+<!-- RELATED:END -->

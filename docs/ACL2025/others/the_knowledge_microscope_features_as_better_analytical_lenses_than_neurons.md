@@ -143,3 +143,15 @@ Gemma-2 9B 上:
 - 实验充分度: ⭐⭐⭐⭐⭐ 从多个角度（知识表达、可解释性、单义性、下游任务）系统验证，统计检验充分，可视化直观
 - 写作质量: ⭐⭐⭐⭐ 研究问题层层递进（Q1→Q2→Q3）的结构清晰，但公式较密集
 - 价值: ⭐⭐⭐⭐⭐ 为 LLM 可解释性研究提供了更好的分析工具和方法论，FeatureEdit 有实际应用价值（隐私保护）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Byte Latent Transformer: Patches Scale Better Than Tokens](byte_latent_transformer.md)
+- [Better Embeddings with Coupled Adam](better_embeddings_with_coupled_adam.md)
+- [FastLSQ: Solving PDEs in One Shot via Fourier Features with Exact Analytical Derivatives](../../ICLR2026/others/fastlsq_solving_pdes_in_one_shot_via_fourier_features_with_exact_analytical_deri.md)
+- [Neuron Empirical Gradient: Discovering and Quantifying Neurons' Global Linear Controllability](neuron_empirical_gradient_discovering_and_quantifying_neurons_global_linear_cont.md)
+- [Hierarchical Attention Generates Better Proofs](hierarchical_attention_generates_better_proofs.md)
+
+<!-- RELATED:END -->

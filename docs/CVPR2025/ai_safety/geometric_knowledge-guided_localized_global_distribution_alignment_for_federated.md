@@ -107,3 +107,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多异质度、单域+多域
 - 写作质量: ⭐⭐⭐⭐ 数学推导清晰
 - 价值: ⭐⭐⭐⭐ 对联邦学习数据异质性问题有重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+- [Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection](detecting_backdoor_attacks_in_federated_learning_via_direction_alignment_inspect.md)
+- [ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](../../CVPR2026/ai_safety/proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)
+- [Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning](../../ICCV2025/ai_safety/geminio_language-guided_gradient_inversion_attacks_in_federated_learning.md)
+- [Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing](../../ICCV2025/ai_safety/client2vec_improving_federated_learning_by_distribution_shifts_aware_client_inde.md)
+
+<!-- RELATED:END -->

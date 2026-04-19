@@ -129,3 +129,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ — AndroidWorld真实环境评估，多基线对比充分
 - 写作质量: ⭐⭐⭐⭐☆ — 结构清晰，动机阐述到位
 - 价值: ⭐⭐⭐⭐⭐ — 小模型+RL击败GPT-4o，实践意义重大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Differential and Pointwise Control Approach to Reinforcement Learning](a_differential_and_pointwise_control_approach_to_reinforceme.md)
+- [Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](../../ICML2025/human_understanding/log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
+- [Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning](counteractive_rl_rethinking_core_principles_for_efficient_and_scalable_deep_rein.md)
+- [Preference-based Reinforcement Learning beyond Pairwise Comparisons: Benefits of Multiple Options](preference-based_reinforcement_learning_beyond_pairwise_comparisons_benefits_of_.md)
+- [TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search](tensorrl-qas_reinforcement_learning_with_tensor_networks_for_improved_quantum_ar.md)
+
+<!-- RELATED:END -->

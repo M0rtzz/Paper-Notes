@@ -128,3 +128,15 @@ $$\text{Decrease Acc} = \frac{1}{|K|} \sum_{k \in K} \mathbb{1}[\Delta s(k) < -\
 - 实验充分度: ⭐⭐⭐⭐⭐ (18 种指标 × 8/10 个设置，理论+实验双重验证)
 - 写作质量: ⭐⭐⭐⭐⭐ (形式化清晰，toy example 直观，表格丰富)
 - 价值: ⭐⭐⭐⭐ (为可解释性社区提供明确的评估指标选择指南，实用价值高)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Unified Reasoning Framework for Holistic Zero-Shot Video Anomaly Analysis](../../NeurIPS2025/interpretability/a_unified_reasoning_framework_for_holistic_zeroshot_video_an.md)
+- [Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis](../../ACL2025/interpretability/shortcut_neuron_eval.md)
+- [Evaluating LLMs in Open-Source Games](../../NeurIPS2025/interpretability/evaluating_llms_in_open-source_games.md)
+- [Minerva: Evaluating Complex Video Reasoning](../../ICCV2025/interpretability/minerva_evaluating_complex_video_reasoning.md)
+- [Explaining, Fast and Slow: Abstraction and Refinement of Provable Explanations](explaining_fast_and_slow_abstraction_and_refinement_of_provable_explanations.md)
+
+<!-- RELATED:END -->

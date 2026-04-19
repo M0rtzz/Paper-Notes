@@ -138,3 +138,15 @@ Margin 过滤阈值对样本效率的影响 (模拟实验):
 - ⭐ 创新性: 8/10 — 归约+过滤的组合简洁而有效
 - ⭐ 实用性: 5/10 — 纯理论贡献,无实验验证
 - ⭐ 写作质量: 9/10 — 理论推导严谨,与先前工作的比较清晰
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On Agnostic PAC Learning in the Small Error Regime](on_agnostic_pac_learning_in_the_small_error_regime.md)
+- [Statistical Inference for Gradient Boosting Regression](statistical_inference_for_gradient_boosting_regression.md)
+- [Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians](recurrent_self-attention_dynamics_an_energy-agnostic_perspective_from_jacobians.md)
+- [Toward Material-Agnostic System Identification from Videos](../../ICCV2025/others/toward_material-agnostic_system_identification_from_videos.md)
+- [Revisiting the Predictability of Performative, Social Events](../../ICML2025/others/revisiting_the_predictability_of_performative_social_events.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ $$\mathcal{L}_{signal} = \sum_{b,l} \|(\Psi^l + \beta_b I)^{-1}\Phi^l - (\Psi_s^
 - 实验充分性：⭐⭐⭐⭐ — CIFAR/ImageNet 全面验证
 - 实用价值：⭐⭐⭐⭐ — CFM 简单有效，实践门槛低
 - 写作质量：⭐⭐⭐⭐⭐ — 框架清晰，表格和可视化出色
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Grounding and Enhancing Informativeness and Utility in Dataset Distillation](grounding_and_enhancing_informativeness_and_utility_in_dataset_distillation.md)
+- [Dataset Distillation as Pushforward Optimal Quantization](dataset_distillation_as_pushforward_optimal_quantization.md)
+- [Hyperbolic Dataset Distillation](../../NeurIPS2025/model_compression/hyperbolic_dataset_distillation.md)
+- [Rectified Decoupled Dataset Distillation: A Closer Look for Fair and Comprehensive Evaluation](rectified_decoupled_dataset_distillation_a_closer_look_for_fair_and_comprehensiv.md)
+- [Null-Space Filtering for Data-Free Continual Model Merging: Preserving Stability, Promoting Plasticity](null-space_filtering_for_data-free_continual_model_merging_preserving_stability_.md)
+
+<!-- RELATED:END -->

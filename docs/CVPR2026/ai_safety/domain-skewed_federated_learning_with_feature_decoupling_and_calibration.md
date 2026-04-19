@@ -140,3 +140,15 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \frac{1}{|L|}\sum_{j=1}^{|L|}(\lambda_1 \cdot
 - **实验充分度**: ⭐⭐⭐⭐ — 三个数据集、9 种对比方法、完整消融、模块化验证、效率分析、可视化齐全
 - **写作质量**: ⭐⭐⭐⭐ — 动机清晰、图表丰富（Grad-CAM/T-SNE/SVD 可视化）
 - **价值**: ⭐⭐⭐⭐ — 模块化设计使其易于集成到现有 FL 框架，实用性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](../../CVPR2025/ai_safety/a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
+- [FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation](fedafd_multimodal_federated_learning_via_adversarial_fusion_and_distillation.md)
+- [ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)
+- [FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)
+- [FecalFed: Privacy-Preserving Poultry Disease Detection via Federated Learning](fecalfed_privacy-preserving_poultry_disease_detection_via_federated_learning.md)
+
+<!-- RELATED:END -->

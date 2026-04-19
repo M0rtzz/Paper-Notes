@@ -125,3 +125,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 4 个 LRM（DS-R1-7B/32B, QwQ-32B, Qwen3-8B），4+ 个 benchmark，大量消融和案例分析
 - 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，System 1/2 的类比准确，图表直观
 - 价值: ⭐⭐⭐⭐⭐ 无训练 plug-in 设计极具部署价值，JSD 难度信号可迁移到其他推理优化场景
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity](the_illusion_of_thinking_understanding_the_strengths_and_limitations_of_reasonin.md)
+- [Does Thinking More Always Help? Mirage of Test-Time Scaling in Reasoning Models](does_thinking_more_always_help_mirage_of_test-time_scaling_in_reasoning_models.md)
+- [Towards Thinking-Optimal Scaling of Test-Time Compute for LLM Reasoning](towards_thinking-optimal_scaling_of_test-time_compute_for_llm_reasoning.md)
+- [Rethinking External Slow-Thinking: From Snowball Errors to Probability of Correct Reasoning](../../ICML2025/llm_reasoning/rethinking_external_slow-thinking_from_snowball_errors_to_probability_of_correct.md)
+- [The Hawthorne Effect in Reasoning Models: Evaluating and Steering Test Awareness](the_hawthorne_effect_in_reasoning_models_evaluating_and_steering_test_awareness.md)
+
+<!-- RELATED:END -->

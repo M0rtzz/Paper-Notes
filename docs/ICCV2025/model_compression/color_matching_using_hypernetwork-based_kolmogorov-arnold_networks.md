@@ -131,3 +131,15 @@ y_hat_j = sum_i (u_ij·silu(x_i) + v_ij · sum_m c_ijm·B_ijm(x_i))
 - 实验充分度: ⭐⭐⭐⭐⭐ 三种任务×三种场景+消融+用户研究+新数据集
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰但架构描述稍冗长
 - 价值: ⭐⭐⭐⭐⭐ 极轻量+高精度+多场景通用
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Colors See Colors Ignore: Clothes Changing ReID with Color Disentanglement](colors_see_colors_ignore_clothes_changing_reid_with_color_disentanglement.md)
+- [ARGMatch: Adaptive Refinement Gathering for Efficient Dense Matching](argmatch_adaptive_refinement_gathering_for_efficient_dense_matching.md)
+- [Variance-Based Pruning for Accelerating and Compressing Trained Networks](variance-based_pruning_for_accelerating_and_compressing_trained_networks.md)
+- [Universal Cross-Tokenizer Distillation via Approximate Likelihood Matching](../../NeurIPS2025/model_compression/universal_cross-tokenizer_distillation_via_approximate_likelihood_matching.md)
+- [JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba](../../CVPR2025/model_compression/jamma_ultra-lightweight_local_feature_matching_with_joint_mamba.md)
+
+<!-- RELATED:END -->

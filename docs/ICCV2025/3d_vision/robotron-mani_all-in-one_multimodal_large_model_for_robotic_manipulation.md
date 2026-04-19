@@ -253,3 +253,15 @@ $$l = l_a + \lambda_{\text{image}}(l_{simg} + l_{gimg}) + \lambda_{\text{occ}} l
 - **实验充分度**: ⭐⭐⭐⭐⭐ 5 个数据集全面评估，消融实验详尽
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，公式规范，但部分章节较冗长
 - **价值**: ⭐⭐⭐⭐⭐ 为跨 embodiment 机器人学习提供了完整的数据 + 模型解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Matrix3D: Large Photogrammetry Model All-in-One](../../CVPR2025/3d_vision/matrix3d_large_photogrammetry_model_all-in-one.md)
+- [RoboPearls: Editable Video Simulation for Robot Manipulation](robopearls_editable_video_simulation_for_robot_manipulation.md)
+- [RayZer: A Self-supervised Large View Synthesis Model](rayzer_a_self-supervised_large_view_synthesis_model.md)
+- [Mani-GS: Gaussian Splatting Manipulation with Triangular Mesh](../../CVPR2025/3d_vision/mani-gs_gaussian_splatting_manipulation_with_triangular_mesh.md)
+- [HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation](../../CVPR2026/3d_vision/hyperbolic_multiview_pretraining_for_robotic_manipulation.md)
+
+<!-- RELATED:END -->

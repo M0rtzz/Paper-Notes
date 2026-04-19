@@ -153,3 +153,15 @@ $$\hat{y}_t^{ao} = \hat{y}_t^a \odot (1 - \hat{y}_t^v)$$
 - 实验充分度: ⭐⭐⭐⭐ (消融全面但数据集偏少)
 - 写作质量: ⭐⭐⭐⭐ (动机清晰，公式完整)
 - 价值: ⭐⭐⭐⭐ (通用框架+新指标，对领域有推动)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Label-Anticipated Event Disentanglement for Audio-Visual Video Parsing](label-anticipated_event_disentanglement_for_audio-visual_video_parsing.md)
+- [UWAV: Uncertainty-Weighted Weakly-Supervised Audio-Visual Video Parsing](../../CVPR2025/audio_speech/uwav_uncertainty-weighted_weakly-supervised_audio-visual_video_parsing.md)
+- [Siamese Vision Transformers are Scalable Audio-Visual Learners](siamese_vision_transformers_are_scalable_audio-visual_learners.md)
+- [Listen to Look into the Future: Audio-Visual Egocentric Gaze Anticipation](listen_to_look_into_the_future_audio-visual_egocentric_gaze_anticipation.md)
+- [Latent-INR: A Flexible Framework for Implicit Representations of Videos with Discriminative Semantics](latent-inr_a_flexible_framework_for_implicit_representations_of_videos_with_disc.md)
+
+<!-- RELATED:END -->

@@ -131,3 +131,15 @@ S3DIS实例分割上LAM3C超越仅使用真实扫描训练的Sonata-real。
 - 实验充分度: ⭐⭐⭐⭐⭐ 4个数据集、语义+实例分割、线性探测+微调、数据规模消融、正则化消融
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰、pipeline描述完整、可视化直观
 - 价值: ⭐⭐⭐⭐⭐ 解除了3D数据瓶颈，对3D视觉领域有范式影响
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training](e-rayzer_self-supervised_3d_reconstruction_as_spatial_visual_pre-training.md)
+- [JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas](jopp-3d_joint_open_vocabulary_semantic_segmentation_on_point_clouds_and_panorama.md)
+- [GaussianGrow: Geometry-aware Gaussian Growing from 3D Point Clouds with Text Guidance](gaussiangrow_geometry-aware_gaussian_growing_from_3d_point_clouds_with_text_guid.md)
+- [S2AM3D: Scale-controllable Part Segmentation of 3D Point Clouds](s2am3d_scale-controllable_part_segmentation_of_3d_point_cloud.md)
+- [Fast3Dcache: Training-free 3D Geometry Synthesis Acceleration](fast3dcache_training-free_3d_geometry_synthesis_acceleration.md)
+
+<!-- RELATED:END -->

@@ -139,3 +139,15 @@ Apollonius 圆——两个以不同速度运动的点同时到达的几何轨迹
 - 实验充分度: ⭐⭐⭐ 仅有仿真验证，无物理实验，场景相对简单
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，几何可视化直观
 - 价值: ⭐⭐⭐ 对多智能体控制社区有理论价值，但应用场景偏窄且实验验证不足
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Local Guidance for Configuration-Based Multi-Agent Pathfinding](local_guidance_for_configuration-based_multi-agent_pathfinding.md)
+- [Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems](../../ACL2025/others/beyond_frameworks_multi_agent_collaboration.md)
+- [Symbolic Planning and Multi-Agent Path Finding in Extremely Dense Environments with Unassigned Agents](symbolic_planning_and_multi-agent_path_finding_in_extremely_dense_environments_w.md)
+- [Semi-Supervised High Dynamic Range Image Reconstructing via Bi-Level Uncertain Area Masking](semi-supervised_high_dynamic_range_image_reconstructing_via_bi-level_uncertain_a.md)
+- [An Epistemic Perspective on Agent Awareness](an_epistemic_perspective_on_agent_awareness.md)
+
+<!-- RELATED:END -->

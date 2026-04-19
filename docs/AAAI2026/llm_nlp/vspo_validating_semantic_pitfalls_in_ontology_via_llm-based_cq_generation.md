@@ -134,3 +134,15 @@ Type 4 对齐场景下 VSPO 达到 96.7 精度 / 80.4 F1，表明模型不仅学
 ⭐⭐⭐⭐ (4/5)
 
 **理由**：问题定义新颖且有实际价值，错位注入的数据构造策略精巧，实验结果令人信服。扣一分因为应用场景相对小众（本体工程），且缺少 CQ 到实际验证的端到端闭环评估。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Pitfalls of Scale: Investigating the Inverse Task of Redefinition in Large Language Models](../../ACL2025/llm_nlp/pitfalls_of_scale_investigating_the_inverse_task_of_redefinition_in_large_langua.md)
+- [Quantifying Semantic Emergence in Language Models](../../ACL2025/llm_nlp/quantifying_semantic_emergence_in_language_models.md)
+- [LoopLLM: Transferable Energy-Latency Attacks in LLMs via Repetitive Generation](loopllm_transferable_energy-latency_attacks_in_llms_via_repetitive_generation.md)
+- [The Change You Want To Detect: Semantic Change Detection In Earth Observation With Hybrid Data Generation](../../CVPR2025/llm_nlp/the_change_you_want_to_detect_semantic_change_detection_in_earth_observation_wit.md)
+- [From Selection to Generation: A Survey of LLM-based Active Learning](../../ACL2025/llm_nlp/from_selection_to_generation_a_survey.md)
+
+<!-- RELATED:END -->

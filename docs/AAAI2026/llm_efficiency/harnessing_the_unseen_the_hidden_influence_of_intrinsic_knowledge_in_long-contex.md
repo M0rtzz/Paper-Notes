@@ -133,3 +133,15 @@ Hybrid NIAH核心结果：
 - 实验充分度: ⭐⭐⭐⭐ 多数据集、多模型、多设置的全面验证，但缺少闭源模型
 - 写作质量: ⭐⭐⭐⭐⭐ 三段式推进（现象→Trade-off→解决方案）逻辑清晰
 - 价值: ⭐⭐⭐⭐ Hybrid NIAH应成为长上下文评估的标配，Trade-off发现对模型设计有重要指导
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models](../../ACL2025/llm_efficiency/ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la.md)
+- [How to Train Long-Context Language Models (Effectively)](../../ACL2025/llm_efficiency/train_long_context_effectively.md)
+- [Literary Evidence Retrieval via Long-Context Language Models](../../ACL2025/llm_efficiency/literary_evidence_retrieval_via_long-context_language_models.md)
+- [Learning from the Undesirable: Robust Adaptation of Language Models without Forgetting](learning_from_the_undesirable_robust_adaptation_of_language_models_without_forge.md)
+- [LongSafety: Evaluating Long-Context Safety of Large Language Models](../../ACL2025/llm_efficiency/longsafety_evaluating_long-context_safety_of_large_language_models.md)
+
+<!-- RELATED:END -->

@@ -147,3 +147,15 @@ InternVL3-8B 上（压缩比 $2^{-3}$）：
 - **实验充分度**: ⭐⭐⭐⭐⭐ 4个 benchmark、4个模型、多种压缩比、详细速度对比，实验设计周全
 - **写作质量**: ⭐⭐⭐⭐ 问题定义清晰，与聚类方法的对比论述有说服力，算法描述规范
 - **价值**: ⭐⭐⭐⭐⭐ 无训练、即插即用的特性使其具有极高实用价值，对长视频理解社区贡献显著
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [StreamingTOM: Streaming Token Compression for Efficient Video Understanding](../../CVPR2026/video_understanding/streamingtom_streaming_token_compression_video.md)
+- [Question-guided Visual Compression with Memory Feedback for Long-Term Video Understanding](../../CVPR2026/video_understanding/question-guided_visual_compression_with_memory_feedback_for_long-term_video_unde.md)
+- [APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval](../../AAAI2026/video_understanding/apvr_hour-level_long_video_understanding_with_adaptive_pivot.md)
+- [Video-KTR: 通过关键 Token 归因增强视频推理](video-ktr_reinforcing_video_reasoning_via_key_token_attribution.md)
+- [Unified Spatiotemporal Token Compression for Video-LLMs at Ultra-Low Retention](../../CVPR2026/video_understanding/unified_spatiotemporal_token_compression_for_video-llms_at_ultra-low_retention.md)
+
+<!-- RELATED:END -->

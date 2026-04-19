@@ -140,3 +140,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{bridge}} + \mathcal{L}_{\text{pred}} + \mathc
 - **实验充分度**: ⭐⭐⭐⭐⭐ 涵盖 3D、超分、场景生成、音频-图像翻译等多个任务，消融详尽
 - **写作质量**: ⭐⭐⭐⭐ 结构清晰，动机与设计逻辑链完整
 - **价值**: ⭐⭐⭐⭐ 提供了通用 MT 的强基线，但实际应用仍受限于配对数据需求
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [System-Embedded Diffusion Bridge Models](system-embedded_diffusion_bridge_models.md)
+- [CORAL: Disentangling Latent Representations in Long-Tailed Diffusion](coral_disentangling_latent_representations_in_longtailed_dif.md)
+- [EBDM: Exemplar-guided Image Translation with Brownian-bridge Diffusion Models](../../ECCV2024/image_generation/ebdm_exemplar-guided_image_translation_with_brownian-bridge_diffusion_models.md)
+- [LoRACLR: Contrastive Adaptation for Customization of Diffusion Models](../../CVPR2025/image_generation/loraclr_contrastive_adaptation_for_customization_of_diffusion_models.md)
+- [Contrastive Flow Matching (ΔFM)](../../ICCV2025/image_generation/contrastive_flow_matching.md)
+
+<!-- RELATED:END -->

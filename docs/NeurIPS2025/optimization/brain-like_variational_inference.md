@@ -136,3 +136,15 @@ FOND 框架分两层：
 - 实验充分度: ⭐⭐⭐⭐ 模型比较全面系统（9 个模型×多个超参数），但数据集规模有限
 - 写作质量: ⭐⭐⭐⭐⭐ 论文组织优秀，从背景统一→框架定义→具体推导→实验验证层层递进
 - 价值: ⭐⭐⭐⭐ 为计算神经科学和机器学习之间搭建了有意义的桥梁
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Least Squares Variational Inference](least_squares_variational_inference.md)
+- [VIKING: Deep Variational Inference with Stochastic Projections](viking_deep_variational_inference_with_stochastic_projections.md)
+- [NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](neuro-symbolic_entity_alignment_via_variational_inference.md)
+- [VERA: Variational Inference Framework for Jailbreaking Large Language Models](vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
+- [Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies](natural_gradient_descent_for_improving_variational_inference_based_classificatio.md)
+
+<!-- RELATED:END -->

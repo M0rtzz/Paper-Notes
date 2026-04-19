@@ -121,3 +121,14 @@ DenseGRPO 在 Flow-GRPO 基础上做两个改进：
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰，Fig 3 的可视化直观展示了探索空间问题
 - 价值: ⭐⭐⭐⭐⭐ 对 GRPO 对齐范式的重要改进，密集奖励是正确方向
 
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
+- [Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
+- [Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
+- [SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation](senseflow_scaling_distribution_matching_for_flow-based_text-to-image_distillatio.md)
+
+<!-- RELATED:END -->

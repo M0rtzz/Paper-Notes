@@ -140,3 +140,15 @@ FreeSim在3m偏移时FID仅18.6，相比PVG baseline降低了**60.8%**。
 ⭐⭐⭐⭐⭐ (5/5)
 
 问题重要且困难，核心思路（退化增强+渐进扩展）优雅且有效。实验结果在大偏移场景下大幅超越所有基线，消融实验详尽。整体完成度高，对驾驶仿真领域有重要推动作用。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generating Multimodal Driving Scenes via Next-Scene Prediction](generating_multimodal_driving_scenes_via_next-scene_prediction.md)
+- [Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments](scenario_dreamer_vectorized_latent_diffusion_for_generating_driving_simulation_e.md)
+- [SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model](scenediffuser_city-scale_traffic_simulation_via_a_generative_world_model.md)
+- [LiDAR-RT: Gaussian-based Ray Tracing for Dynamic LiDAR Re-Simulation](lidar-rt_gaussian-based_ray_tracing_for_dynamic_lidar_re-simulation.md)
+- [M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs](m2-occ_resilient_3d_semantic_occupancy_prediction_for_autonomous_driving_with_in.md)
+
+<!-- RELATED:END -->

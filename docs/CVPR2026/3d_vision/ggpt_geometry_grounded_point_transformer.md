@@ -117,3 +117,15 @@ tags:
 ⭐⭐⭐⭐⭐ (5/5)
 
 **理由**：方法设计优雅且有充分的动机（3D空间 vs 2D空间refinement），实验极其全面（5种前馈方法×5个数据集，含域外医学/人体数据），泛化能力惊人（仅训练一个配置即可通用提升），消融实验详尽且结论清晰。改进SfM管线和3D Point Transformer的设计都有独立价值。是sparse-view 3D重建领域的高质量工作。
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MVGGT: Multimodal Visual Geometry Grounded Transformer for Multiview 3D Referring Expression Segmentation](mvggt_multimodal_visual_geometry_grounded_transformer_for_multiview_3d_referring.md)
+- [Quantized Visual Geometry Grounded Transformer](../../ICLR2026/3d_vision/quantized_visual_geometry_grounded_transformer.md)
+- [LitePT: Lighter Yet Stronger Point Transformer](litept_lighter_yet_stronger_point_transformer.md)
+- [RnG: A Unified Transformer for Complete 3D Modeling from Partial Observations](rng_a_unified_transformer_for_complete_3d_modeling_from_partial_observations.md)
+- [MimiCAT: Mimic with Correspondence-Aware Cascade-Transformer for Category-Free 3D Pose Transfer](mimicat_mimic_with_correspondence-aware_cascade-transformer_for_category-free_3d.md)
+
+<!-- RELATED:END -->

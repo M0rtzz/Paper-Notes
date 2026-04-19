@@ -131,3 +131,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ FID/KID+库评估+pose消融+人类评估全面
 - 写作质量: ⭐⭐⭐⭐⭐ 方法层次清晰，图表优美
 - 价值: ⭐⭐⭐⭐⭐ 对真实场景生成有重大推动
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting](metags_a_meta-learned_gaussian-phong_model_for_out-of-distribution_3d_scene_reli.md)
+- [Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2025/3d_vision/towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
+- [Demeter: A Parametric Model of Crop Plant Morphology from the Real World](../../ICCV2025/3d_vision/demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
+- [Revisiting Point Cloud Completion: Are We Ready For The Real-World?](../../ICCV2025/3d_vision/revisiting_point_cloud_completion_are_we_ready_for_the_real-world.md)
+- [MetaScenes: Towards Automated Replica Creation for Real-world 3D Scans](../../CVPR2025/3d_vision/metascenes_towards_automated_replica_creation_for_real-world_3d_scans.md)
+
+<!-- RELATED:END -->

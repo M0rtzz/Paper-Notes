@@ -119,3 +119,15 @@ $$\nabla_\nu D_{LV}^{q_{\alpha,\nu}^*}(q_{\alpha,\nu}, p_{\phi,\nu}) = \mathbb{E
 - 实验充分度: ⭐⭐⭐⭐⭐ 覆盖两种架构（CMCD/DBS）、三种损失（rKL-R/LV/rKL-LD）、贝叶斯和合成目标，消融研究充分
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，但符号较多需要反复对照
 - 价值: ⭐⭐⭐⭐⭐ 扩散桥采样器社区的重要实践指导，直接可用的改进方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rethinking Evaluation of Infrared Small Target Detection](rethinking_evaluation_of_infrared_small_target_detection.md)
+- [Erase Diffusion: Empowering Object Removal Through Calibrating Diffusion Pathways (EraDiff)](../../CVPR2025/llm_evaluation/erase_diffusion_empowering_object_removal_through_calibrating_diffusion_pathways.md)
+- [Gradient Aligned Regression via Pairwise Losses](../../ICML2025/llm_evaluation/gradient_aligned_regression_via_pairwise_losses.md)
+- [Lost in Benchmarks? Rethinking Large Language Model Benchmarking with Item Response Theory](../../AAAI2026/llm_evaluation/lost_in_benchmarks_rethinking_large_language_model_benchmarking_with_item_respon.md)
+- [Test-Time Adaptation by Causal Trimming](test-time_adaptation_by_causal_trimming.md)
+
+<!-- RELATED:END -->

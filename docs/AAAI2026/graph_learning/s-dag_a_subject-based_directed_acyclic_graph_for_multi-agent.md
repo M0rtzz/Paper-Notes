@@ -104,3 +104,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 3个benchmark+9个基线+完整消融，但只有MCQ格式
 - 写作质量: ⭐⭐⭐⭐ 方法描述清晰，消融分析透彻
 - 价值: ⭐⭐⭐⭐⭐ 小模型池超越大模型的结果有实际部署价值，DAG比全连接更好的发现有理论意义
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Assemble Your Crew: Automatic Multi-agent Communication Topology Design via Autoregressive Graph Generation](assemble_your_crew_automatic_multi-agent_communication_topol.md)
+- [Pairwise is Not Enough: Hypergraph Neural Networks for Multi-Agent Pathfinding](../../ICLR2026/graph_learning/pairwise_is_not_enough_hypergraph_neural_networks_for_multi-agent_pathfinding.md)
+- [Spiking Heterogeneous Graph Attention Networks](spiking_heterogeneous_graph_attention_networks.md)
+- [Disentangled Multi-span Evolutionary Network against Temporal Knowledge Graph Reasoning](../../ACL2025/graph_learning/disentangled_multi-span_evolutionary_network_against_temporal_knowledge_graph_re.md)
+- [EchoLess: Label-Based Pre-Computation for Memory-Efficient Heterogeneous Graph Learning](echoless_label-based_pre-computation_for_memory-efficient_heterogeneous_graph_le.md)
+
+<!-- RELATED:END -->

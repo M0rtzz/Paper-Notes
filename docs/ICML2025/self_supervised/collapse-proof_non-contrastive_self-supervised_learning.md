@@ -154,3 +154,15 @@ $$\forall i \in [n], \exists! j \in [c] \text{ s.t. } \mathbf{h}_i = \alpha_{ij}
 | 写作质量 | 4 | 结构清晰，理论推导严谨 |
 | 实用价值 | 4 | 简化 SSL 训练管线，但需大规模验证 |
 | **综合** | **4.2** | 理论贡献突出的方法论文，实验规模待扩展 |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings](generalization_analysis_for_supervised_contrastive_representation_learning_under.md)
+- [Clustering Properties of Self-Supervised Learning](clustering_properties_of_self-supervised_learning.md)
+- [Why Prototypes Collapse: Diagnosing and Preventing Partial Collapse in Prototypical Self-Supervised Learning](../../ICLR2026/self_supervised/why_prototypes_collapse_diagnosing_and_preventing_partial_collapse_in_prototypic.md)
+- [WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning](../../ACL2025/self_supervised/whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con.md)
+- [CLARIFY: Contrastive Preference Reinforcement Learning for Untangling Ambiguous Queries](clarify_contrastive_preference_reinforcement_learning_for_untangling_ambiguous_q.md)
+
+<!-- RELATED:END -->

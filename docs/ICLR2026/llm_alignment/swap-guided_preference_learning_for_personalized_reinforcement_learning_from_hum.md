@@ -99,3 +99,15 @@ $\mathcal{L}(\phi, \psi) = -\text{ELBO} + \lambda \mathcal{L}_{guide}$
 - 实验充分度: ⭐⭐⭐ 多模型验证但应用场景有限
 - 写作质量: ⭐⭐⭐⭐ 问题分析（崩坏→swap 观察→方法设计）的叙事线清晰
 - 价值: ⭐⭐⭐⭐ 为个性化对齐提供了实用且有理论支撑的解决方案
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](../../ACL2025/llm_alignment/synthesizeme_persona_prompts.md)
+- [No Prompt Left Behind: Exploiting Zero-Variance Prompts in LLM Reinforcement Learning via Entropy-Guided Advantage Shaping](no_prompt_left_behind_exploiting_zero-variance_prompts_in_llm_reinforcement_lear.md)
+- [Token-Importance Guided Direct Preference Optimization (TI-DPO)](token-importance_guided_direct_preference_optimization.md)
+- [General Exploratory Bonus for Optimistic Exploration in RLHF](general_exploratory_bonus_for_optimistic_exploration_in_rlhf.md)
+- [Learning Ordinal Probabilistic Reward from Preferences (OPRM)](learning_ordinal_probabilistic_reward_from_preferences.md)
+
+<!-- RELATED:END -->

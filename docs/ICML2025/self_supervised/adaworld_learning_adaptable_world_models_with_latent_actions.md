@@ -113,3 +113,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 多环境、动作迁移、规划任务
 - 写作质量: ⭐⭐⭐⭐⭐ 图示精美，方法描述清晰
 - 价值: ⭐⭐⭐⭐⭐ 世界模型适应性的重要突破
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models](what_has_a_foundation_model_found_using_inductive_bias_to_probe_for_world_models.md)
+- [CheXWorld: Image World Modeling for Radiograph Representation Learning](../../CVPR2025/self_supervised/chexworld_exploring_image_world_modeling_for_radiograph_representation_learning.md)
+- [Neighbour-Driven Gaussian Process Variational Autoencoders for Scalable Structured Latent Modelling](neighbour-driven_gaussian_process_variational_autoencoders_for_scalable_structur.md)
+- [Regularized Latent Dynamics Prediction is a Strong Baseline for Behavioral Foundation Models](../../ICLR2026/self_supervised/regularized_latent_dynamics_prediction_is_a_strong_baseline_for_behavioral_found.md)
+- [L2D: Large Language Models to Diffusion Finetuning](large_language_models_to_diffusion_finetuning.md)
+
+<!-- RELATED:END -->

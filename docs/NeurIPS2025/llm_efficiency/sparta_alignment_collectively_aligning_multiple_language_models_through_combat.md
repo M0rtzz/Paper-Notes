@@ -111,3 +111,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 12个数据集、多个基线对比、消融分析完整，但只在7B规模上实验
 - 写作质量: ⭐⭐⭐⭐ 算法描述清晰，博弈论动机阐述得当
 - 价值: ⭐⭐⭐⭐ 为多模型协同对齐开辟了新思路，但实际部署的计算成本需权衡
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [On the Entropy Calibration of Language Models](on_the_entropy_calibration_of_language_models.md)
+- [GigaChat Family: Efficient Russian Language Modeling Through Mixture of Experts Architecture](../../ACL2025/llm_efficiency/gigachat_family_efficient_russian_language_modeling_through_mixture_of_experts_a.md)
+- [L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context for Large Language Models](l-mtp_leap_multi-token_prediction_beyond_adjacent_context_for_large_language_mod.md)
+- [Long-Short Alignment for Effective Long-Context Modeling in LLMs](../../ICML2025/llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)
+- [Scaling Inference-Efficient Language Models](../../ICML2025/llm_efficiency/scaling_inference-efficient_language_models.md)
+
+<!-- RELATED:END -->

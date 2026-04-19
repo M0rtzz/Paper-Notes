@@ -156,3 +156,15 @@ MultiFloor3D 在所有指标上大幅超越基线方法，且不需要使用 gro
 - 实验充分度: ⭐⭐⭐⭐ (HouseLayout3D + ScanNet++ + 充分消融)
 - 写作质量: ⭐⭐⭐⭐ (结构清晰，图示丰富)
 - 价值: ⭐⭐⭐⭐ (基准贡献持久，暴露了现有方法的根本局限)
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Symmetry-Robust 3D Orientation Estimation](../../ICML2025/others/symmetry-robust_3d_orientation_estimation.md)
+- [Active Measurement: Efficient Estimation at Scale](active_measurement_efficient_estimation_at_scale.md)
+- [Sign-In to the Lottery: Reparameterized Sparse Training from Scratch](sign-in_to_the_lottery_reparameterizing_sparse_training_from_scratch.md)
+- [Uncertainty Estimation by Flexible Evidential Deep Learning](uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+- [Training the Untrainable: Introducing Inductive Bias via Representational Alignment](training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)
+
+<!-- RELATED:END -->

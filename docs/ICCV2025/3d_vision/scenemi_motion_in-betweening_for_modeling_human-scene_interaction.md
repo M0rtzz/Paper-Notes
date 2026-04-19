@@ -195,3 +195,15 @@ $$\mathcal{L} = \mathcal{L}_{\text{simple}} + \lambda_{\text{joints}} \mathcal{L
 - **实验充分度**: ⭐⭐⭐⭐⭐ — 无噪声 + 含噪声 + 真实世界 + 视频重建，消融全面
 - **写作质量**: ⭐⭐⭐⭐ — 问题动机清晰，实验组织有序
 - **价值**: ⭐⭐⭐⭐⭐ — 实际应用价值高，为 HSI 领域提供了实用的新范式
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling](atlas_decoupling_skeletal_and_shape_parameters_for_expressive_parametric_human_m.md)
+- [Global Motion Corresponder for 3D Point-Based Scene Interpolation under Large Motion](global_motion_corresponder_for_3d_point-based_scene_interpolation_under_large_mo.md)
+- [HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)
+- [HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D](../../CVPR2025/3d_vision/hoi3dgen_generating_high-quality_human-object-interactions_in_3d.md)
+- [Can3Tok: Canonical 3D Tokenization and Latent Modeling of Scene-Level 3D Gaussians](can3tok_canonical_3d_tokenization_and_latent_modeling_of_sce.md)
+
+<!-- RELATED:END -->

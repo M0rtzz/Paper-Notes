@@ -144,3 +144,15 @@ $$\tilde{\bm{S}_e} = \sum_{i=\text{start}}^{\text{end}} \frac{\tilde{\tilde{\lam
 - 实验充分度: ⭐⭐⭐⭐ — 覆盖 2D 图像、3D 形状、合成数据，与 FR/BN 全面对比
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，公式到算法的转化流畅
 - 价值: ⭐⭐⭐⭐ — INR 领域有实际应用价值，可控调节频谱偏差是重要贡献
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Implicit Bias and Loss of Plasticity in Matrix Completion: Depth Promotes Low-Rank](../../ICLR2026/llm_pretraining/implicit_bias_and_loss_of_plasticity_in_matrix_completion_depth_promotes_low-ran.md)
+- [Alternating Gradient Flows: A Theory of Feature Learning in Two-layer Neural Networks](../../NeurIPS2025/llm_pretraining/alternating_gradient_flows_a_theory_of_feature_learning_in_two-layer_neural_netw.md)
+- [Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](../../NeurIPS2025/llm_pretraining/neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
+- [Understanding and Enhancing Mask-Based Pretraining towards Universal Representations](../../NeurIPS2025/llm_pretraining/understanding_and_enhancing_mask-based_pretraining_towards_universal_representat.md)
+- [Gradient-Weight Alignment as a Train-Time Proxy for Generalization in Classification Tasks](../../NeurIPS2025/llm_pretraining/gradient-weight_alignment_as_a_train-time_proxy_for_generalization_in_classifica.md)
+
+<!-- RELATED:END -->

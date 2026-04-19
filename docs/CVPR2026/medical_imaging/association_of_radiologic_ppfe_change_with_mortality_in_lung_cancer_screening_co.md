@@ -148,3 +148,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 双队列独立验证，多种临床终点，调整充分的多变量模型
 - 写作质量: ⭐⭐⭐⭐ 临床论文风格严谨，统计报告规范
 - 价值: ⭐⭐⭐⭐ 为 LCS 提供了一种低成本的附加风险分层工具，实际临床可转化性强
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [STEPH: Sparse Task Vector Mixup with Hypernetworks for Efficient Knowledge Transfer in WSI Prognosis](sparse_task_vector_mixup_wsi_prognosis.md)
+- [Novel Architecture of RPA in Oral Cancer Lesion Detection](novel_architecture_of_rpa_in_oral_cancer_lesion_de.md)
+- [Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning](fair_lung_disease_diagnosis_from_chest_ct_via_gender-adversarial_attention_multi.md)
+- [CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)
+- [Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification](mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification.md)
+
+<!-- RELATED:END -->

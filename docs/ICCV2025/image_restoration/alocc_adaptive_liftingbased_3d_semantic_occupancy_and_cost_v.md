@@ -145,3 +145,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ （3个benchmark, 多变体, 详尽消融）
 - 写作质量: ⭐⭐⭐⭐ （结构清晰, 公式多但逻辑连贯）
 - 价值: ⭐⭐⭐⭐ （速度-精度权衡有实际工程价值）
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Enhancing Image Restoration Transformer via Adaptive Translation Equivariance](enhancing_image_restoration_transformer_via_adaptive_translation_equivariance.md)
+- [Metric Convolutions: A Unifying Theory to Adaptive Image Convolutions](metric_convolutions_a_unifying_theory_to_adaptive_image_convolutions.md)
+- [Learning Pixel-adaptive Multi-layer Perceptrons for Real-time Image Enhancement](learning_pixel-adaptive_multi-layer_perceptrons_for_real-time_image_enhancement.md)
+- [EAMamba: Efficient All-Around Vision State Space Model for Image Restoration](eamamba_efficient_all-around_vision_state_space_model_for_image_restoration.md)
+- [Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration](devil_is_in_the_uniformity_exploring_diverse_learners_within_transformer_for_ima.md)
+
+<!-- RELATED:END -->

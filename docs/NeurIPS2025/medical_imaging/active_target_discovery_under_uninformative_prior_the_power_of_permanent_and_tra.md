@@ -157,3 +157,15 @@ $$\text{Score}_{(\phi,\eta)}(q_t) = \alpha(\mathcal{B}) \cdot \text{expl}_\phi^{
 - 实验充分度: ⭐⭐⭐⭐ — 两个领域、多预算设定、丰富消融实验，但缺少医学影像等核心应用场景验证
 - 写作质量: ⭐⭐⭐⭐ — 理论推导清晰，动机阐述充分，图示直观，可读性强
 - 价值: ⭐⭐⭐⭐ — 在数据极度稀缺的高成本采样场景有重要实用价值，理论贡献扎实
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Online Feedback Efficient Active Target Discovery in Partially Observable Environments](online_feedback_efficient_active_target_discovery_in_partially_observable_enviro.md)
+- [Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number](prior-guided_flow_matching_for_target-aware_molecule_design_with_learnable_atom_.md)
+- [Compressing Biology: Evaluating the Stable Diffusion VAE for Phenotypic Drug Discovery](compressing_biology_evaluating_the_stable_diffusion_vae_for_phenotypic_drug_disc.md)
+- [Amortized Active Generation of Pareto Sets](amortized_active_generation_of_pareto_sets.md)
+- [AANet: Virtual Screening under Structural Uncertainty via Alignment and Aggregation](aanet_virtual_screening_under_structural_uncertainty_via_alignment_and_aggregati.md)
+
+<!-- RELATED:END -->

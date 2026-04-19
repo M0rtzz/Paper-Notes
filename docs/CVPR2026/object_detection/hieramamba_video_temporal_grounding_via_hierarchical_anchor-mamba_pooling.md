@@ -137,3 +137,15 @@ HieraMamba 是唯一一个同时避免了所有四种不良特性的方法。
 - 实验充分度: ⭐⭐⭐⭐ 三个基准 SOTA，方法特性对比系统全面
 - 写作质量: ⭐⭐⭐⭐⭐ 动机清晰，对比表格设计巧妙，图示直观易懂
 - 价值: ⭐⭐⭐⭐ 为长视频时间定位提供了清晰的范式——线性复杂度 + 层次化内容压缩
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding](../../ECCV2024/object_detection/shine_saliency-aware_hierarchical_negative_ranking_for_compositional_temporal_gr.md)
+- [Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding](../../ICCV2025/object_detection/sparse-dense_side-tuner_for_efficient_video_temporal_grounding.md)
+- [DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)
+- [TubeRMC: Tube-conditioned Reconstruction with Mutual Constraints for Weakly-supervised Spatio-Temporal Video Grounding](../../AAAI2026/object_detection/tubermc_tube-conditioned_reconstruction_with_mutual_constraints_for_weakly-super.md)
+- [Drift-Resilient Temporal Priors for Visual Tracking](drift-resilient_temporal_priors_for_visual_tracking.md)
+
+<!-- RELATED:END -->

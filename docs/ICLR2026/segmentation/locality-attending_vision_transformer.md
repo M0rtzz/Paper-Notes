@@ -138,3 +138,15 @@ PRR 可视为 GAP 的替代方案：GAP 对所有 patch 施加均匀梯度，PRR
 | 有效性 | ⭐⭐⭐⭐⭐ |
 | 可复现性 | ⭐⭐⭐⭐⭐ |
 | 实用性 | ⭐⭐⭐⭐ |
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Rotary Position Embedding for Vision Transformer](../../ECCV2024/segmentation/rotary_position_embedding_for_vision_transformer.md)
+- [Revisiting \[CLS\] and Patch Token Interaction in Vision Transformers](revisiting_cls_and_patch_token_interaction_in_vision_transformers.md)
+- [MambaVision: A Hybrid Mamba-Transformer Vision Backbone](../../CVPR2025/segmentation/mambavision_a_hybrid_mamba-transformer_vision_backbone.md)
+- [Thicker and Quicker: A Jumbo Token for Fast Plain Vision Transformers](thicker_and_quicker_a_jumbo_token_for_fast_plain_vision_transformers.md)
+- [GiT: Towards Generalist Vision Transformer through Universal Language Interface](../../ECCV2024/segmentation/git_towards_generalist_vision_transformer_through_universal_language_interface.md)
+
+<!-- RELATED:END -->

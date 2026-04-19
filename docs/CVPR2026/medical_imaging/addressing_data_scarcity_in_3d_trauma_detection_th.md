@@ -125,3 +125,15 @@ $\mathcal{L}_{total} = \mathcal{L}_{supervised} + \lambda(t) \times (\mathcal{L}
 - 实验充分度: ⭐⭐⭐⭐ 消融全面(检测+分类双任务)，训练动态分析透彻(坍塌→稳定的可视化)
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，实验细节充分，代码开源，可复现性好
 - 价值: ⭐⭐⭐ 对医学影像少标注场景有实用参考价值，方法框架可迁移到其他 3D 检测任务
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)
+- [Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing.md)
+- [SCDL: Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation](semantic_class_distribution_learning_for_debiasing_semi-supervised_medical_image.md)
+- [NeuroSeg Meets DINOv3: Transferring 2D Self-Supervised Visual Priors to 3D Neuron Segmentation via DINOv3 Initialization](neuroseg_meets_dinov3_transferring_2d_self-supervised_visual_priors_to_3d_neuron.md)
+- [Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos](uncertainty-aware_concept_and_motion_segmentation_for_semi-supervised_angiograph.md)
+
+<!-- RELATED:END -->

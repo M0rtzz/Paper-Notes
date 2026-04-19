@@ -92,3 +92,15 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6个消融，5个数据集，超参分析详细
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，图表精美
 - 价值: ⭐⭐⭐⭐⭐ 推动SNN-ANN差距缩小，神经形态计算指导意义大
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Spiking Transformer with Spatial-Temporal Attention](spiking_transformer_with_spatial-temporal_attention.md)
+- [Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers](rethinking_spiking_self-attention_mechanism_implementing_a-xnor_similarity_calcu.md)
+- [Breaking the Low-Rank Dilemma of Linear Attention](breaking_the_low-rank_dilemma_of_linear_attention.md)
+- [msf-CNN: Patch-based Multi-Stage Fusion with Convolutional Neural Networks for TinyML](../../NeurIPS2025/llm_nlp/msf-cnn_patch-based_multi-stage_fusion_with_convolutional_neural_networks_for_ti.md)
+- [SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers](sata_spatial_autocorrelation_token_analysis_for_enhancing_the_robustness_of_visi.md)
+
+<!-- RELATED:END -->

@@ -158,3 +158,15 @@ Vote2Cap-DETR++ 虽然解耦了定位和描述 query，但其解耦 query 仍是
 - 实验充分度: ⭐⭐⭐⭐ — 两个基准、多种设置、详细消融
 - 写作质量: ⭐⭐⭐⭐ — 结构清晰，图示直观
 - 价值: ⭐⭐⭐⭐ — Oral 论文，SOTA，解耦思想有迁移价值
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [View Selection for 3D Captioning via Diffusion Ranking](view_selection_for_3d_captioning_via_diffusion_ranking.md)
+- [TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)
+- [ScatterFormer: Efficient Voxel Transformer with Scattered Linear Attention](scatterformer_efficient_voxel_transformer_with_scattered_linear_attention.md)
+- [FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance](falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)
+- [From One to More: Contextual Part Latents for 3D Generation](../../ICCV2025/3d_vision/from_one_to_more_contextual_part_latents_for_3d_generation.md)
+
+<!-- RELATED:END -->

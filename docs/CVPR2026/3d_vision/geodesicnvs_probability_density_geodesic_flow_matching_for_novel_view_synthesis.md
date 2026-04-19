@@ -121,3 +121,15 @@ Geodesic FM vs Linear FM:
 - 写作质量: ⭐⭐⭐⭐ 数学推导严谨，框架清晰，图示直观
 - 价值: ⭐⭐⭐⭐ 为 Flow Matching 的几何正则化开辟了新方向，对生成模型社区有启发
 - 价值: 待评
+
+<!-- RELATED:START -->
+
+## 相关论文
+
+- [Physically Inspired Gaussian Splatting for HDR Novel View Synthesis](physically_inspired_gaussian_splatting_for_hdr_novel_view_synthesis.md)
+- [PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis](pr-iqa_partial-reference_image_quality_assessment_for_diffusion-based_novel_view.md)
+- [Hierarchical Visual Relocalization with Nearest View Synthesis from Feature Gaussian Splatting](hierarchical_visual_relocalization_with_nearest_view_synthesis_from_feature_gaus.md)
+- [Scaling View Synthesis Transformers (SVSM)](scaling_view_synthesis_transformers.md)
+- [Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow](easy3e_feed-forward_3d_asset_editing_via_rectified_voxel_flow.md)
+
+<!-- RELATED:END -->
